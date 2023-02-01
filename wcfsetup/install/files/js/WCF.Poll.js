@@ -68,10 +68,10 @@ if (COMPILER_TARGET_DEFAULT) {
 			if (editorId) {
 				this._editorId = editorId;
 
-				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
-				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
-				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + editorId, this._validate.bind(this));
-				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'handleError_' + editorId, this._handleError.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'reset_' + editorId, this._reset.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'submit_' + editorId, this._submit.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'validate_' + editorId, this._validate.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'handleError_' + editorId, this._handleError.bind(this));
 			}
 			else {
 				this._container.closest('form').submit($.proxy(this._submit, this));

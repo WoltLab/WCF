@@ -371,7 +371,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					},
 					valid: true
 				};
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'validate_' + elData(redactorLayer, 'element-id'), data);
+				WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'validate_' + elData(redactorLayer, 'element-id'), data);
 				
 				if (!data.valid && scrollToEditor === null) {
 					scrollToEditor = redactorLayer.parentNode;

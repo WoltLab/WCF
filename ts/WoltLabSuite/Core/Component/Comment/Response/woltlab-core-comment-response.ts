@@ -114,13 +114,13 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
       },
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${this.#editorId}`, parameters.data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
 
     if (!this.#validateEdit(parameters)) {
       return;
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${this.#editorId}`, parameters);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
 
     this.#showLoadingIndicator();
 
@@ -189,7 +189,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
       valid: true,
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this.#editorId}`, data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this.#editorId}`, data);
 
     return data.valid;
   }
@@ -204,8 +204,8 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   }
 
   #destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this.#editorId}`);
-    EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this.#editorId}`);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this.#editorId}`);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this.#editorId}`);
   }
 
   get #editorContainer(): HTMLElement {

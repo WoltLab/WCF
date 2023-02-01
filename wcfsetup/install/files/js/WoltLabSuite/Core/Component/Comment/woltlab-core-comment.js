@@ -86,11 +86,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
                     message: "",
                 },
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${this.#editorId}`, parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
             if (!this.#validateEdit(parameters)) {
                 return;
             }
-            EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${this.#editorId}`, parameters);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
             this.#showLoadingIndicator();
             let response;
             try {
@@ -145,7 +145,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
                 parameters: parameters,
                 valid: true,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this.#editorId}`, data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this.#editorId}`, data);
             return data.valid;
         }
         #cancelEdit() {
@@ -155,8 +155,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             this.querySelector(".htmlContent").hidden = false;
         }
         #destroyEditor() {
-            EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this.#editorId}`);
-            EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this.#editorId}`);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this.#editorId}`);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this.#editorId}`);
         }
         get #editorContainer() {
             let div = this.querySelector(".comment__editor");

@@ -345,13 +345,6 @@ if (COMPILER_TARGET_DEFAULT) {
 				const innerError = this._textarea[0].parentElement.querySelector(".innerError");
 				if (innerError) {
 					innerError.remove();
-				} else {
-					// Error messages that are present on page load are placed after
-					// the `.redactor-box` parent.
-					const sibling = this._textarea[0].parentElement.nextElementSibling;
-					if (sibling && sibling.classList.contains("innerError")) {
-						sibling.remove();
-					}
 				}
 
 				elInnerError(this._getCkeditor().element, WCF.Language.get("wcf.global.form.error.empty"));
@@ -1341,11 +1334,6 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Handles clicks on 'Show quotes'.
 		 */
 		_click: function () {
-			var editor = document.activeElement;
-			if (editor.classList.contains('redactor-layer')) {
-				$('#' + elData(editor, 'element-id')).redactor('selection.save');
-			}
-			
 			if (this._hasTemplate) {
 				this._dialog.wcfDialog('open');
 			}
@@ -1944,7 +1932,7 @@ $.widget('wcf.messageTabMenu', {
 		
 		var wysiwygContainerId = elData(this.element[0], 'wysiwyg-container-id');
 		if (wysiwygContainerId) {
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + wysiwygContainerId, (function () {
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'reset_' + wysiwygContainerId, (function () {
 				for (var i = 0, length = this._tabs.length; i < length; i++) {
 					this._tabs[i].container.removeClass('active');
 					this._tabs[i].tab.removeClass('active');

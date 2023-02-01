@@ -116,7 +116,7 @@ class UiPollEditor {
 
     if (this.options.isAjax) {
       ["handleError", "reset", "submit", "validate"].forEach((event) => {
-        EventHandler.add("com.woltlab.wcf.redactor2", event + "_" + this.wysiwygId, (...args: unknown[]) =>
+        EventHandler.add("com.woltlab.wcf.ckeditor5", event + "_" + this.wysiwygId, (...args: unknown[]) =>
           this[event](...args),
         );
       });

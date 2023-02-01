@@ -110,11 +110,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				this._insertAllButton.show();
 			}
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'submit_' + this._editorId, this._submitInline.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'reset_' + this._editorId, this._reset.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId, (function (data) {
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'autosaveMetaData_' + this._editorId, (function (data) {
 				if (!data.tmpHashes || !Array.isArray(data.tmpHashes)) {
 					data.tmpHashes = [];
 				}
@@ -134,7 +134,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				// Read any cached `tmpHash` values from the autosave feature.
 				const metaData = {};
 				form.dataset.attachmentTmpHashes = "";
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
+				WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'getMetaData_' + this._editorId, metaData);
 				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
 					// Caching the values here preserves them from the removal
 					// caused by the automated cleanup that runs on form submit
@@ -156,7 +156,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				});
 			}
 			
-			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, (function (data) {
+			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'metacode_attach_' + this._editorId, (function (data) {
 				var images = this._getImageAttachments();
 				var attachmentId = data.attributes[0] || 0;
 				if (images.hasOwnProperty(attachmentId)) {
@@ -182,17 +182,17 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 			}).bind(this));
 			
-			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, this._sync.bind(this));
+			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, this._sync.bind(this));
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'destroy_' + this._editorId, (function () {
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'submit_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'destroy_' + this._editorId, (function () {
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'submit_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'reset_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'insertAttachment_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'autosaveMetaData_' + this._editorId);
 				
-				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
-				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, syncUuid);
+				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
+				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, syncUuid);
 			}).bind(this));
 		}
 	},
@@ -258,7 +258,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			data.tmpHash = this._tmpHash;
 			
 			var metaData = {};
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
+			WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'getMetaData_' + this._editorId, metaData);
 			if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
 				data.tmpHash += ',' + metaData.tmpHashes.join(',');
 			}
@@ -611,7 +611,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					if (!$li.hasClass('uploadFailed')) {
 						var img = this._replaceOnLoad[uploadID];
 						if (img && img.parentNode) {
-							WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'replaceAttachment_' + this._editorId, {
+							WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'replaceAttachment_' + this._editorId, {
 								attachmentId: attachmentData.attachmentID,
 								img: img,
 								src: (attachmentData.thumbnailURL) ? attachmentData.thumbnailURL : attachmentData.url
@@ -694,7 +694,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param        {Event}                event
 	 */
 	_insert: function (event) {
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId, {
+		WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'insertAttachment_' + this._editorId, {
 			attachmentId: elData(event.currentTarget, 'object-id'),
 			url: elData(event.currentTarget, 'url')
 		});
@@ -857,7 +857,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param {Object} data
 	 */
 	_triggerSync: function (type, data) {
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, {
+		WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, {
 			source: this,
 			type: type,
 			data: data

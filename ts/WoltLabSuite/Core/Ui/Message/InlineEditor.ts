@@ -471,7 +471,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
         });
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${id}`, parameters.data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
 
     let validateResult: unknown = this._validate(parameters);
 
@@ -486,7 +486,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     (validateResult as Promise<void[]>).then(
       () => {
-        EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${id}`, parameters);
+        EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${id}`, parameters);
 
         Ajax.api(this, {
           actionName: "save",
@@ -516,7 +516,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       promises: [],
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this._getEditorId()}`, data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this._getEditorId()}`, data);
 
     if (data.valid) {
       data.promises.push(Promise.resolve());
@@ -624,8 +624,8 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Destroys the editor instance.
    */
   protected _destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this._getEditorId()}`);
-    EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this._getEditorId()}`);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this._getEditorId()}`);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this._getEditorId()}`);
   }
 
   /**

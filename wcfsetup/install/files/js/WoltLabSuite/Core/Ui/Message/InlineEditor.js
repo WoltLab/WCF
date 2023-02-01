@@ -368,7 +368,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${id}`, parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
             let validateResult = this._validate(parameters);
             // Legacy validation methods returned a plain boolean.
             if (!(validateResult instanceof Promise)) {
@@ -380,7 +380,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 }
             }
             validateResult.then(() => {
-                EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${id}`, parameters);
+                EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${id}`, parameters);
                 Ajax.api(this, {
                     actionName: "save",
                     parameters: parameters,
@@ -403,7 +403,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 valid: true,
                 promises: [],
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this._getEditorId()}`, data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this._getEditorId()}`, data);
             if (data.valid) {
                 data.promises.push(Promise.resolve());
             }
@@ -490,8 +490,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Destroys the editor instance.
          */
         _destroyEditor() {
-            EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this._getEditorId()}`);
-            EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this._getEditorId()}`);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this._getEditorId()}`);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this._getEditorId()}`);
         }
         /**
          * Returns the hash added to the url after successfully editing a message.
