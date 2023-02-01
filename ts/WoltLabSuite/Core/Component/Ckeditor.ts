@@ -8,13 +8,7 @@ import { fire as fireEvent } from "../Event/Handler";
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
-
-type Features = {
-  attachment: boolean;
-  autosave: string;
-  media: boolean;
-  mention: boolean;
-};
+import type { Features } from "./Ckeditor/Configuration";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -191,6 +185,14 @@ export async function setupCkeditor(
 
     if (features.autosave) {
       setupRestoreDraft(cke, features.autosave);
+    }
+
+    if (features.media) {
+      void import("../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
+        new MediaManagerEditor({
+          ckeditor: editor,
+        });
+      });
     }
 
     instances.set(element, editor);
