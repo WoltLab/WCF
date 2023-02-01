@@ -24,10 +24,6 @@
 
 		{event name='features'}
 
-		const config = createConfiguration(element, features)
-
-		{event name='config'}
-
 		const woltlabToolbarGroup = {
 			format: {
 				icon: "ellipsis;false",
@@ -39,7 +35,7 @@
 			},
 		};
 
-		let woltlabBbcode = [
+		const woltlabBbcode = [
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
 					icon: '{@$__bbcode->wysiwygIcon|encodeJS}',
@@ -58,10 +54,11 @@
 			});
 		}
 
-		{event name='bbcode'}
-
+		const config = createConfiguration(element, features);
 		config.woltlabBbcode = woltlabBbcode;
 		config.woltlabToolbarGroup = woltlabToolbarGroup;
+		
+		{event name='config'}
 
 		void setupCkeditor(element, config, features);
 	});

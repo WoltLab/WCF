@@ -214,6 +214,11 @@ export async function setupCkeditor(
 
   instances.set(element, editor);
 
+  const event = new CustomEvent<CKEditor>("ckeditorReady", {
+    detail: editor,
+  });
+  element.dispatchEvent(event);
+
   return editor;
 }
 

@@ -176,6 +176,10 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             });
         }
         instances.set(element, editor);
+        const event = new CustomEvent("ckeditorReady", {
+            detail: editor,
+        });
+        element.dispatchEvent(event);
         return editor;
     }
     exports.setupCkeditor = setupCkeditor;
