@@ -12,6 +12,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             this.#features = features;
             (0, Quote_1.setup)(this);
         }
+        destroy() {
+            return this.#editor.destroy();
+        }
         discardDraft() {
             if (this.#features.autosave) {
                 (0, Autosave_1.deleteDraft)(this.#features.autosave);

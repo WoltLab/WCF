@@ -156,32 +156,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				});
 			}
 			
-			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'metacode_attach_' + this._editorId, (function (data) {
-				var images = this._getImageAttachments();
-				var attachmentId = data.attributes[0] || 0;
-				if (images.hasOwnProperty(attachmentId)) {
-					var thumbnailWidth = ~~$('#' + this._editorId).data('redactor').opts.woltlab.attachmentThumbnailWidth;
-					
-					var thumbnail = data.attributes[2];
-					thumbnail = (thumbnail === true || thumbnail === 'true' || (~~thumbnail && ~~thumbnail <= thumbnailWidth));
-					
-					var image = elCreate('img');
-					image.className = 'woltlabAttachment';
-					image.src = images[attachmentId][(thumbnail ? 'thumbnailUrl' : 'url')];
-					elData(image, 'attachment-id', attachmentId);
-					
-					var float = data.attributes[1] || 'none';
-					if (float === 'left') image.classList.add('messageFloatObjectLeft');
-					else if (float === 'right') image.classList.add('messageFloatObjectRight');
-					
-					var metacode = data.metacode;
-					metacode.parentNode.insertBefore(image, metacode);
-					elRemove(metacode);
-					
-					data.cancel = true;
-				}
-			}).bind(this));
-			
 			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, this._sync.bind(this));
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'destroy_' + this._editorId, (function () {
@@ -191,7 +165,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'autosaveMetaData_' + this._editorId);
 				
-				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
 				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, syncUuid);
 			}).bind(this));
 		}

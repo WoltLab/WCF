@@ -31,6 +31,10 @@ class Ckeditor {
     setupQuotes(this);
   }
 
+  destroy(): Promise<void> {
+    return this.#editor.destroy();
+  }
+
   discardDraft(): void {
     if (this.#features.autosave) {
       deleteDraft(this.#features.autosave);
