@@ -1,15 +1,21 @@
+{if $wysiwygSelector|isset}{assign var=wysiwygSelector value='text'}{/if}
+
+{event name='wysiwyg'}
+
 <script data-relocate="true">
 	require([
+		"WoltLabSuite/Core/Event/Handler"
 		"WoltLabSuite/Core/Component/Ckeditor",
 		"WoltLabSuite/Core/Component/Ckeditor/Configuration",
 		"/wcf/editor/dist/bundle.js",
 	], (
+		EventHandler,
 		{ setupCkeditor },
 		{ createConfiguration },
 	) => {
 		{jsphrase name='wcf.editor.restoreDraft'}
 
-		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
+		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
 
 		const features = {
 			attachment: element.dataset.disableAttachments !== "true",
@@ -22,7 +28,8 @@
 			url: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}true{else}false{/if},
 		};
 
-		{event name='features'}
+		EventHandler.fire("com.woltlab.wcf.ckeditor5", `setupFeatures_${ element.id }`, features);
+		EventHandler.removeAll("com.woltlab.wcf.ckeditor5", `setupFeatures_${ element.id }`);
 
 		const woltlabToolbarGroup = {
 			format: {
@@ -57,8 +64,9 @@
 		const config = createConfiguration(element, features);
 		config.woltlabBbcode = woltlabBbcode;
 		config.woltlabToolbarGroup = woltlabToolbarGroup;
-		
-		{event name='config'}
+
+		EventHandler.fire("com.woltlab.wcf.ckeditor5", `setupConfig_${ element.id }`, config);
+		EventHandler.removeAll("com.woltlab.wcf.ckeditor5", `setupConfig_${ element.id }`, config);
 
 		void setupCkeditor(element, config, features);
 	});
