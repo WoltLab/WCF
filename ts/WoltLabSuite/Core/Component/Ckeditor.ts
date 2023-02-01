@@ -155,48 +155,64 @@ function enableMentions(configuration: EditorConfig): void {
   configuration.mention = getMentionConfiguration();
 }
 
+type WoltlabBbcodeItem = {
+  icon: string;
+  name: string;
+  label: string;
+};
+
+function enableFeatures(element: HTMLElement, configuration: EditorConfig, features: Features): void {
+  if (features.attachment) {
+    enableAttachments(element, configuration);
+  } else if (features.media) {
+    enableMedia(element, configuration);
+  }
+
+  if (features.mention) {
+    enableMentions(configuration);
+  }
+
+  if (features.autosave !== "") {
+    enableAutosave(features.autosave, configuration);
+  }
+
+  const bbcodes = (configuration as any).woltlabBbcode as WoltlabBbcodeItem[];
+  for (const { name } of bbcodes) {
+    (configuration.toolbar as any).push(`woltlabBbcode_${name}`);
+  }
+}
+
 export async function setupCkeditor(
   element: HTMLElement,
   configuration: EditorConfig,
   features: Features,
 ): Promise<CKEditor> {
-  let editor = instances.get(element);
-  if (editor === undefined) {
-    if (features.attachment) {
-      enableAttachments(element, configuration);
-    } else if (features.media) {
-      enableMedia(element, configuration);
-    }
-
-    if (features.mention) {
-      enableMentions(configuration);
-    }
-
-    if (features.autosave !== "") {
-      enableAutosave(features.autosave, configuration);
-    }
-
-    const cke = await window.CKEditor5.create(element, configuration);
-    editor = new Ckeditor(cke, features);
-
-    if (features.attachment) {
-      setupRemoveAttachment(editor);
-    }
-
-    if (features.autosave) {
-      setupRestoreDraft(cke, features.autosave);
-    }
-
-    if (features.media) {
-      void import("../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
-        new MediaManagerEditor({
-          ckeditor: editor,
-        });
-      });
-    }
-
-    instances.set(element, editor);
+  if (instances.has(element)) {
+    throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
+
+  enableFeatures(element, configuration, features);
+
+  const cke = await window.CKEditor5.create(element, configuration);
+  const editor = new Ckeditor(cke, features);
+
+  if (features.attachment) {
+    setupRemoveAttachment(editor);
+  }
+
+  if (features.autosave) {
+    setupRestoreDraft(cke, features.autosave);
+  }
+
+  if (features.media) {
+    void import("../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
+      new MediaManagerEditor({
+        ckeditor: editor,
+      });
+    });
+  }
+
+  instances.set(element, editor);
 
   return editor;
 }

@@ -87,7 +87,9 @@ class BBCodeHandler extends SingletonFactory
         $coreBBCodes = [
             'align',
             'b',
+            'code',
             'color',
+            'html',
             'i',
             'img',
             'list',
@@ -96,7 +98,9 @@ class BBCodeHandler extends SingletonFactory
             'sub',
             'sup',
             'quote',
+            'spoiler',
             'table',
+            'tt',
             'u',
             'url',
         ];

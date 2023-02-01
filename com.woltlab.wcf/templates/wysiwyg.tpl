@@ -26,6 +26,8 @@
 
 		const config = createConfiguration(element, features)
 
+		{event name='config'}
+
 		const woltlabToolbarGroup = {
 			format: {
 				icon: "ellipsis;false",
@@ -56,29 +58,11 @@
 			});
 		}
 
-		// TODO: This removes already exisitng functionalities and perhaps
-		// should be handled on the server?
-		woltlabBbcode = woltlabBbcode.filter(({ name }) => {
-			return name !== "html"
-				&& name !== "tt"
-				&& name !== "code"
-				&& name !== "spoiler";
-		});
-
 		{event name='bbcode'}
 
-		woltlabBbcode.forEach(({ name }) => {
-			toolbar.push(`woltlabBbcode_${ name }`);
-		});
+		config.woltlabBbcode = woltlabBbcode;
+		config.woltlabToolbarGroup = woltlabToolbarGroup;
 
-		void setupCkeditor(
-			element,
-			{
-				toolbar,
-				woltlabBbcode,
-				woltlabToolbarGroup,
-			},
-			features,
-		);
+		void setupCkeditor(element, config, features);
 	});
 </script>

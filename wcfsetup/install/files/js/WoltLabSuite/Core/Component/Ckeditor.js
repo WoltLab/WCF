@@ -137,38 +137,45 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
     function enableMentions(configuration) {
         configuration.mention = (0, Mention_1.getMentionConfiguration)();
     }
-    async function setupCkeditor(element, configuration, features) {
-        let editor = instances.get(element);
-        if (editor === undefined) {
-            if (features.attachment) {
-                enableAttachments(element, configuration);
-            }
-            else if (features.media) {
-                enableMedia(element, configuration);
-            }
-            if (features.mention) {
-                enableMentions(configuration);
-            }
-            if (features.autosave !== "") {
-                enableAutosave(features.autosave, configuration);
-            }
-            const cke = await window.CKEditor5.create(element, configuration);
-            editor = new Ckeditor(cke, features);
-            if (features.attachment) {
-                (0, Attachment_1.setupRemoveAttachment)(editor);
-            }
-            if (features.autosave) {
-                (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
-            }
-            if (features.media) {
-                void new Promise((resolve_1, reject_1) => { require(["../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
-                    new MediaManagerEditor({
-                        ckeditor: editor,
-                    });
-                });
-            }
-            instances.set(element, editor);
+    function enableFeatures(element, configuration, features) {
+        if (features.attachment) {
+            enableAttachments(element, configuration);
         }
+        else if (features.media) {
+            enableMedia(element, configuration);
+        }
+        if (features.mention) {
+            enableMentions(configuration);
+        }
+        if (features.autosave !== "") {
+            enableAutosave(features.autosave, configuration);
+        }
+        const bbcodes = configuration.woltlabBbcode;
+        for (const { name } of bbcodes) {
+            configuration.toolbar.push(`woltlabBbcode_${name}`);
+        }
+    }
+    async function setupCkeditor(element, configuration, features) {
+        if (instances.has(element)) {
+            throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
+        }
+        enableFeatures(element, configuration, features);
+        const cke = await window.CKEditor5.create(element, configuration);
+        const editor = new Ckeditor(cke, features);
+        if (features.attachment) {
+            (0, Attachment_1.setupRemoveAttachment)(editor);
+        }
+        if (features.autosave) {
+            (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
+        }
+        if (features.media) {
+            void new Promise((resolve_1, reject_1) => { require(["../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
+                new MediaManagerEditor({
+                    ckeditor: editor,
+                });
+            });
+        }
+        instances.set(element, editor);
         return editor;
     }
     exports.setupCkeditor = setupCkeditor;
