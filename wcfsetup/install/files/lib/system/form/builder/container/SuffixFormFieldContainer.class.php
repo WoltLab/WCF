@@ -178,15 +178,17 @@ class SuffixFormFieldContainer extends FormContainer
      */
     public function suffixHasSelectableOptions()
     {
-        if ($this->getSuffixField() === null) {
+        $suffixField = $this->getSuffixField();
+
+        if ($suffixField === null) {
             return false;
         }
 
-        if ($this->getSuffixField() instanceof IImmutableFormField && $this->getSuffixField()->isImmutable()) {
+        if ($suffixField instanceof IImmutableFormField && $suffixField->isImmutable()) {
             return false;
         }
 
-        foreach ($this->getSuffixField()->getNestedOptions() as $option) {
+        foreach ($suffixField->getNestedOptions() as $option) {
             if ($option['isSelectable']) {
                 return true;
             }
