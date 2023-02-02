@@ -5,14 +5,13 @@ namespace wcf\http\middleware;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
-use GuzzleHttp\Psr7\Header;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\Helper;
 use wcf\system\valinor\formatter\PrependPath;
 use wcf\system\WCF;
 
@@ -38,8 +37,13 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
             $errors = Messages::flattenFromNode($e->node())
                 ->formatWith(new PrependPath());
 
-            if ($this->prefersJson($request)) {
-                return new JsonResponse(
+            $preferredType = Helper::getPreferredContentType($request, [
+                'text/html',
+                'application/json',
+            ]);
+
+            return match ($preferredType) {
+                'application/json' => new JsonResponse(
                     [
                         'message' => $message,
                         'errors' => \array_map(
@@ -50,10 +54,9 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                     400,
                     [],
                     \JSON_PRETTY_PRINT
-                );
-            } else {
-                // TODO: Create a more generically reusable template for this type of error message.
-                return new HtmlResponse(
+                ),
+                'text/html' => new HtmlResponse(
+                    // TODO: Create a more generically reusable template for this type of error message.
                     WCF::getTPL()->fetchStream(
                         'userException',
                         'wcf',
@@ -69,24 +72,8 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                         ]
                     ),
                     400
-                );
-            }
+                ),
+            };
         }
-    }
-
-    // TODO: Move this into a reusable function.
-    private function prefersJson(MessageInterface $m)
-    {
-        if (!$m->hasHeader('accept')) {
-            return false;
-        }
-
-        $headers = Header::parse($m->getHeaderLine('accept'));
-        
-        \usort($headers, static function ($a, $b) {
-            return ($b['q'] ?? 1) <=> ($a['q'] ?? 1);
-        });
-
-        return isset($headers[0][0]) && $headers[0][0] === 'application/json';
     }
 }
