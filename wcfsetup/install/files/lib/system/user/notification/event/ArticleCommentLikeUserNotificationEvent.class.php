@@ -91,7 +91,7 @@ class ArticleCommentLikeUserNotificationEvent extends AbstractSharedUserNotifica
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment' . $this->getCommentID();
     }

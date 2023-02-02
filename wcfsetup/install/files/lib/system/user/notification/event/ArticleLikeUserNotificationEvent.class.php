@@ -99,7 +99,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return ViewableArticleRuntimeCache::getInstance()
             ->getObject($this->getUserNotificationObject()->objectID)

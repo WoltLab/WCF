@@ -70,7 +70,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         // external link
         if (!$this->menuItemController) {

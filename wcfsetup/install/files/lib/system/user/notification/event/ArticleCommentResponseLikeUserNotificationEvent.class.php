@@ -107,7 +107,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink()
             . '#comment' . $this->additionalData['commentID'] . '/response' . $this->getUserNotificationObject()->objectID;

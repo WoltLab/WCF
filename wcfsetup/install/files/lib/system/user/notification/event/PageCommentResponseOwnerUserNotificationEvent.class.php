@@ -115,7 +115,7 @@ class PageCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNo
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return PageCache::getInstance()->getPage($this->additionalData['objectID'])->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
     }

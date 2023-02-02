@@ -105,7 +105,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getModerationQueue()->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
     }

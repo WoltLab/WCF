@@ -64,7 +64,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('UsersOnlineList');
     }

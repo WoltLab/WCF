@@ -45,10 +45,8 @@ class ACPSearchResult
 
     /**
      * Returns the item link.
-     *
-     * @return  string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }

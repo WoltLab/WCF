@@ -33,7 +33,7 @@ class DefaultUserMenuItemProvider extends DatabaseObjectDecorator implements IUs
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         // explicit call to satisfy our interface
         return $this->getDecoratedObject()->getLink();

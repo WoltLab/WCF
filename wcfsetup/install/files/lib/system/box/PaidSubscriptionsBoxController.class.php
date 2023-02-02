@@ -25,7 +25,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList');
     }

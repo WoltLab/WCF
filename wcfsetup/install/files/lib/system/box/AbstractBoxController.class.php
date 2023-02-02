@@ -79,7 +79,7 @@ abstract class AbstractBoxController implements IBoxController
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return '';
     }

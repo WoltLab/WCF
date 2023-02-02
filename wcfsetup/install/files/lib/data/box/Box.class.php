@@ -417,10 +417,8 @@ class Box extends DatabaseObject
 
     /**
      * Returns the URL of this box.
-     *
-     * @return  string
      */
-    public function getLink()
+    public function getLink(): string
     {
         if ($this->boxType == 'system') {
             return $this->getController()->getLink();

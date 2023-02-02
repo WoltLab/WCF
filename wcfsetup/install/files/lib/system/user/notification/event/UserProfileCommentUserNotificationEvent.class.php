@@ -99,7 +99,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink()
             . '#wall/comment' . $this->getUserNotificationObject()->commentID;

@@ -87,7 +87,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('RecentActivityList');
     }

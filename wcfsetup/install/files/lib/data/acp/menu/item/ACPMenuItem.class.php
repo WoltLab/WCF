@@ -54,7 +54,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         // external link
         if (!$this->menuItemController) {

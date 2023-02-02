@@ -132,7 +132,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink()
             . '#wall/comment' . $this->getUserNotificationObject()->commentID;

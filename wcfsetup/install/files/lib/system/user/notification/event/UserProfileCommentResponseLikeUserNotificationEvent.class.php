@@ -112,7 +112,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         $owner = WCF::getUser();
         if ($this->additionalData['objectID'] != WCF::getUser()->userID) {

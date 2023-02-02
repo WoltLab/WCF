@@ -42,10 +42,8 @@ class PageLanguage
 
     /**
      * Returns the link to this version of the page.
-     *
-     * @return  string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
     }
