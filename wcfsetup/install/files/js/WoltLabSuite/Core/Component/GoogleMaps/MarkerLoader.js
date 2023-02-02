@@ -26,6 +26,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             this.#clusterer = new markerclusterer_1.MarkerClusterer({
                 map,
             });
+            void this.#initLoadMarkers();
+        }
+        async #initLoadMarkers() {
+            if (this.#map.getBounds()) {
+                // The map has already been loaded and the 'idle'
+                // event listener is therefore not called initially.
+                await this.#loadMarkers();
+            }
             this.#map.addListener("idle", () => {
                 void this.#loadMarkers();
             });
