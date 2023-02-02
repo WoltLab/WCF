@@ -1,0 +1,30 @@
+{
+    "name": "willdurand/negotiation",
+    "description": "Content Negotiation tools for PHP provided as a standalone library.",
+    "keywords": [ "content", "negotiation", "format", "accept", "header" ],
+    "license": "MIT",
+    "homepage": "http://williamdurand.fr/Negotiation/",
+    "authors": [
+        {
+            "name": "William Durand",
+            "email": "will+git@drnd.me"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": { "Negotiation\\": "src/Negotiation" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Negotiation\\Tests\\": "tests/Negotiation/Tests" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.0"
+    }
+}
