@@ -176,7 +176,7 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             });
         }
         instances.set(element, editor);
-        const event = new CustomEvent("ckeditorReady", {
+        const event = new CustomEvent("ckeditor5:ready", {
             detail: editor,
         });
         element.dispatchEvent(event);

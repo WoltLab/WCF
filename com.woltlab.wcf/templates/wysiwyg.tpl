@@ -1,15 +1,13 @@
-{if $wysiwygSelector|isset}{assign var=wysiwygSelector value='text'}{/if}
+{if !$wysiwygSelector|isset}{assign var=wysiwygSelector value='text'}{/if}
 
 {event name='wysiwyg'}
 
 <script data-relocate="true">
 	require([
-		"WoltLabSuite/Core/Event/Handler"
 		"WoltLabSuite/Core/Component/Ckeditor",
 		"WoltLabSuite/Core/Component/Ckeditor/Configuration",
 		"/wcf/editor/dist/bundle.js",
 	], (
-		EventHandler,
 		{ setupCkeditor },
 		{ createConfiguration },
 	) => {
@@ -28,8 +26,11 @@
 			url: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}true{else}false{/if},
 		};
 
-		EventHandler.fire("com.woltlab.wcf.ckeditor5", `setupFeatures_${ element.id }`, features);
-		EventHandler.removeAll("com.woltlab.wcf.ckeditor5", `setupFeatures_${ element.id }`);
+		element.dispatchEvent(
+			new CustomEvent("ckeditor5:features", {
+				detail: features,
+			}),
+		);
 
 		const woltlabToolbarGroup = {
 			format: {
@@ -65,8 +66,11 @@
 		config.woltlabBbcode = woltlabBbcode;
 		config.woltlabToolbarGroup = woltlabToolbarGroup;
 
-		EventHandler.fire("com.woltlab.wcf.ckeditor5", `setupConfig_${ element.id }`, config);
-		EventHandler.removeAll("com.woltlab.wcf.ckeditor5", `setupConfig_${ element.id }`, config);
+		element.dispatchEvent(
+			new CustomEvent("ckeditor5:config", {
+				detail: config,
+			}),
+		);
 
 		void setupCkeditor(element, config, features);
 	});

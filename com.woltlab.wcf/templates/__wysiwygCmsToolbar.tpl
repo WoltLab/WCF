@@ -1,5 +1,7 @@
+{if !$wysiwygSelector|isset}{assign var=wysiwygSelector value='text'}{/if}
+
 <script data-relocate="true">
-	require(['Language'], function (Language) {
+	require(["WoltLabSuite/Core/Component/Article/EditorButton", 'Language'], function ({ setup: setupArticle }, Language) {
 		Language.addObject({
 			'wcf.article.search': '{jslang}wcf.article.search{/jslang}',
 			'wcf.article.search.error.tooShort': '{jslang}wcf.article.search.error.tooShort{/jslang}',
@@ -12,7 +14,10 @@
 			'wcf.page.search.name': '{jslang}wcf.page.search.name{/jslang}',
 			'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
 		});
-	})
+
+		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
+		setupArticle(element);
+	});
 </script>
 
 {capture append='__redactorJavaScript'}
