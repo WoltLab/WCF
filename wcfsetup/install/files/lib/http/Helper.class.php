@@ -5,7 +5,7 @@ namespace wcf\http;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Provides various helper methods for PSR-7/PSR-15 request processing.
@@ -21,7 +21,7 @@ final class Helper
      * Returns whether the request's 'x-requested-with' header is equal
      * to 'XMLHttpRequest'.
      */
-    public static function isAjaxRequest(ServerRequestInterface $request): bool
+    public static function isAjaxRequest(RequestInterface $request): bool
     {
         return $request->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
     }
