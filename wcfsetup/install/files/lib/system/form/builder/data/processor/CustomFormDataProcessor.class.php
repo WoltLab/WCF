@@ -13,7 +13,7 @@ use wcf\system\form\builder\IFormDocument;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class CustomFormDataProcessor extends AbstractFormDataProcessor
+final class CustomFormDataProcessor extends AbstractFormDataProcessor
 {
     /**
      * callable processing the form data

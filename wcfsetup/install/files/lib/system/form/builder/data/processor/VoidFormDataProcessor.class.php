@@ -12,7 +12,7 @@ use wcf\system\form\builder\IFormDocument;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class VoidFormDataProcessor extends AbstractFormDataProcessor
+final class VoidFormDataProcessor extends AbstractFormDataProcessor
 {
     /**
      * is `true` if the property is stored in the `data` array
