@@ -17,12 +17,12 @@ final class VoidFormDataProcessor extends AbstractFormDataProcessor
     /**
      * is `true` if the property is stored in the `data` array
      */
-    protected bool $isDataProperty;
+    private bool $isDataProperty;
 
     /**
      * name of the voided property
      */
-    protected string $property;
+    private string $property;
 
     /**
      * Initializes a new CustomFormFieldDataProcessor object.
