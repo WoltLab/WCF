@@ -19,18 +19,18 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
      * callable processing the form data
      * @var callable
      */
-    protected $formDataProcessor;
+    private $formDataProcessor;
 
     /**
      * processor id primarily used for error messages
      */
-    protected string $id;
+    private string $id;
 
     /**
      * callable processing the object data
      * @var callable
      */
-    protected $objectDataProcessor;
+    private $objectDataProcessor;
 
     /**
      * Initializes a new CustomFormFieldDataProcessor object.
