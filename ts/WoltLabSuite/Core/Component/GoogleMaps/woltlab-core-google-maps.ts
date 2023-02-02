@@ -26,6 +26,17 @@ const loadGoogleMaps = (apiKey: string): Promise<void> => {
   return callbackPromise;
 };
 
+type Bounds = {
+  southWest: {
+    latitude: number;
+    longitude: number;
+  };
+  northEast: {
+    latitude: number;
+    longitude: number;
+  };
+};
+
 export class WoltlabCoreGoogleMapsElement extends HTMLElement {
   #map?: google.maps.Map;
   #mapLoaded: Promise<void>;
@@ -93,9 +104,25 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
       },
     });
 
+    void this.#setBounds();
+
     if (this.#mapLoadedResolve) {
       this.#mapLoadedResolve();
       this.#mapLoadedResolve = undefined;
+    }
+  }
+
+  async #setBounds(): Promise<void> {
+    await this.#mapLoaded;
+
+    const bounds = this.bounds;
+    if (bounds) {
+      this.#map!.fitBounds(
+        new google.maps.LatLngBounds(
+          new google.maps.LatLng(bounds.southWest.latitude, bounds.southWest.longitude),
+          new google.maps.LatLng(bounds.northEast.latitude, bounds.northEast.longitude),
+        ),
+      );
     }
   }
 
@@ -125,6 +152,14 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
 
   get zoom(): number {
     return this.getAttribute("zoom") ? parseInt(this.getAttribute("zoom")!) : 13;
+  }
+
+  get bounds(): Bounds | null {
+    if (this.getAttribute("bounds")) {
+      return JSON.parse(this.getAttribute("bounds")!) as Bounds;
+    }
+
+    return null;
   }
 
   async getGeocoder(): Promise<google.maps.Geocoder> {

@@ -11,6 +11,7 @@
     zoom="{GOOGLE_MAPS_ZOOM}"
     lat="{if !$googleMapsLat|empty}{$googleMapsLat}{else}{GOOGLE_MAPS_DEFAULT_LATITUDE}{/if}"
     lng="{if !$googleMapsLng|empty}{$googleMapsLng}{else}{GOOGLE_MAPS_DEFAULT_LONGITUDE}{/if}"
+    {if !$googleMapsBounds|empty}bounds="{$googleMapsBounds|json}"{/if}
     {if !$accessUserLocation|empty}access-user-location{/if}
     {if $googleMapsHidden}hidden{/if}
 ></woltlab-core-google-maps>
