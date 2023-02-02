@@ -13,36 +13,35 @@ use wcf\system\form\builder\IFormDocument;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class CustomFormDataProcessor extends AbstractFormDataProcessor
+final class CustomFormDataProcessor extends AbstractFormDataProcessor
 {
     /**
      * callable processing the form data
      * @var callable
      */
-    protected $formDataProcessor;
+    private $formDataProcessor;
 
     /**
      * processor id primarily used for error messages
-     * @var string
      */
-    protected $id;
+    private string $id;
 
     /**
      * callable processing the object data
      * @var callable
      */
-    protected $objectDataProcessor;
+    private $objectDataProcessor;
 
     /**
      * Initializes a new CustomFormFieldDataProcessor object.
      *
-     * @param string $id processor id primarily used for error messages, does not have to be unique
-     * @param callable $formDataProcessor form data processor callable
-     * @param callable $objectDataProcessor object data processor callable
+     * @param $id processor id primarily used for error messages, does not have to be unique
+     * @param callable(IFormDocument,array):array $formDataProcessor form data processor callable
+     * @param callable(IFormDocument,array,IStorableObject):array $objectDataProcessor object data processor callable
      *
      * @throws  \InvalidArgumentException       if either id or processor callable are invalid
      */
-    public function __construct($id, ?callable $formDataProcessor = null, ?callable $objectDataProcessor = null)
+    public function __construct(string $id, ?callable $formDataProcessor = null, ?callable $objectDataProcessor = null)
     {
         if (\preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");
@@ -149,10 +148,8 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
 
     /**
      * Returns the id of the data processor (which is primarily used for error messages).
-     *
-     * @return  string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }

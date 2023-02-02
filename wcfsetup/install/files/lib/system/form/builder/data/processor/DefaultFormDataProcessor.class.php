@@ -17,7 +17,7 @@ use wcf\system\form\builder\IFormParentNode;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class DefaultFormDataProcessor extends AbstractFormDataProcessor
+final class DefaultFormDataProcessor extends AbstractFormDataProcessor
 {
     /**
      * @inheritDoc
