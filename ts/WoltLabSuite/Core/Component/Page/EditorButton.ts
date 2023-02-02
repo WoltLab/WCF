@@ -1,16 +1,16 @@
 import type { CKEditor } from "../Ckeditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import { getPhrase } from "../../Language";
-import { open as searchArticle } from "../../Ui/Article/Search";
+import { open as searchPage } from "../../Ui/Page/Search";
 
 function setupBbcode(editor: CKEditor): void {
   editor.sourceElement.addEventListener("bbcode", (evt: CustomEvent<string>) => {
     const bbcode = evt.detail;
-    if (bbcode === "wsa") {
+    if (bbcode === "wsp") {
       evt.preventDefault();
 
-      searchArticle((articleId) => {
-        editor.insertText(`[wsa='${articleId}'][/wsa]`);
+      searchPage((articleId) => {
+        editor.insertText(`[wsp='${articleId}'][/wsp]`);
       });
     }
   });
@@ -21,9 +21,9 @@ export function setup(element: HTMLElement) {
     "ckeditor5:config",
     (event: CustomEvent<EditorConfig>) => {
       (event.detail as any).woltlabBbcode.push({
-        icon: "file-word;false",
-        name: "wsa",
-        label: getPhrase("wcf.editor.button.article"),
+        icon: "file-lines;false",
+        name: "wsp",
+        label: getPhrase("wcf.editor.button.page"),
       });
     },
     { once: true },

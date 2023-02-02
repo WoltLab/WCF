@@ -39,7 +39,7 @@
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	
-	{include file='__wysiwygCmsToolbar'}
+	{include file='__wysiwygCmsToolbar' wysiwygSelector=$__pageContentID}
 	{include file='wysiwyg' wysiwygSelector=$__pageContentID}
 {else}
 	<div dir="ltr">
