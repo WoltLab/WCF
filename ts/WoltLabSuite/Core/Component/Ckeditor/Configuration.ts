@@ -65,10 +65,22 @@ export function createConfiguration(features: Features): EditorConfig {
     items: blocks,
   });
 
-  const config: EditorConfig = {
-    // The typings for the toolbar are outdated.
-    toolbar: toolbar as any,
+  const woltlabToolbarGroup = {
+    format: {
+      icon: "ellipsis;false",
+      label: "TODO: Format text",
+    },
+    list: {
+      icon: "list;false",
+      label: "TODO: Insert list",
+    },
   };
 
-  return config;
+  // TODO: The typings are both outdated and incomplete.
+  const config: Record<string, unknown> = {
+    toolbar,
+    woltlabToolbarGroup,
+  };
+
+  return config as EditorConfig;
 }

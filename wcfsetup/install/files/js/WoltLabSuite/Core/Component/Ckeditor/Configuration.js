@@ -40,9 +40,20 @@ define(["require", "exports"], function (require, exports) {
             icon: "plus",
             items: blocks,
         });
+        const woltlabToolbarGroup = {
+            format: {
+                icon: "ellipsis;false",
+                label: "TODO: Format text",
+            },
+            list: {
+                icon: "list;false",
+                label: "TODO: Insert list",
+            },
+        };
+        // TODO: The typings are both outdated and incomplete.
         const config = {
-            // The typings for the toolbar are outdated.
-            toolbar: toolbar,
+            toolbar,
+            woltlabToolbarGroup,
         };
         return config;
     }
