@@ -29,7 +29,8 @@
         "psr/log": "^3.0",
         "scssphp/scssphp": "^1.11",
         "sebastian/diff": "^4.0.4",
-        "symfony/polyfill-php82": "^1.27.0"
+        "symfony/polyfill-php82": "^1.27.0",
+        "willdurand/negotiation": "^3.1"
     },
     "type": "project"
 }

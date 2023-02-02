@@ -55,6 +55,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'Pelago\\Emogrifier\\' => 18,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
+        'N' => 
+        array (
+            'Negotiation\\' => 12,
+        ),
         'L' => 
         array (
             'Laminas\\Stdlib\\' => 15,
@@ -133,6 +137,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'ParagonIE\\ConstantTime\\' => 
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'Negotiation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation',
         ),
         'Laminas\\Stdlib\\' => 
         array (
@@ -971,6 +979,23 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Laminas\\Stdlib\\StringWrapper\\MbString' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/MbString.php',
         'Laminas\\Stdlib\\StringWrapper\\Native' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/Native.php',
         'Laminas\\Stdlib\\StringWrapper\\StringWrapperInterface' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/StringWrapperInterface.php',
+        'Negotiation\\AbstractNegotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AbstractNegotiator.php',
+        'Negotiation\\Accept' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Accept.php',
+        'Negotiation\\AcceptCharset' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AcceptCharset.php',
+        'Negotiation\\AcceptEncoding' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AcceptEncoding.php',
+        'Negotiation\\AcceptHeader' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AcceptHeader.php',
+        'Negotiation\\AcceptLanguage' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AcceptLanguage.php',
+        'Negotiation\\AcceptMatch' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/AcceptMatch.php',
+        'Negotiation\\BaseAccept' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/BaseAccept.php',
+        'Negotiation\\CharsetNegotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/CharsetNegotiator.php',
+        'Negotiation\\EncodingNegotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/EncodingNegotiator.php',
+        'Negotiation\\Exception\\Exception' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/Exception.php',
+        'Negotiation\\Exception\\InvalidArgument' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/InvalidArgument.php',
+        'Negotiation\\Exception\\InvalidHeader' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/InvalidHeader.php',
+        'Negotiation\\Exception\\InvalidLanguage' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/InvalidLanguage.php',
+        'Negotiation\\Exception\\InvalidMediaType' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/InvalidMediaType.php',
+        'Negotiation\\LanguageNegotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/LanguageNegotiator.php',
+        'Negotiation\\Negotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Negotiator.php',
         'ParagonIE\\ConstantTime\\Base32' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base32.php',
         'ParagonIE\\ConstantTime\\Base32Hex' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base32Hex.php',
         'ParagonIE\\ConstantTime\\Base64' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base64.php',
