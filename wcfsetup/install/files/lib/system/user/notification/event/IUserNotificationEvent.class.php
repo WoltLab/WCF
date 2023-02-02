@@ -3,6 +3,8 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\IDatabaseObjectProcessor;
+use wcf\data\ILinkableObject;
+use wcf\data\ITitledObject;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
@@ -18,7 +20,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  *
  * @mixin   UserNotificationEvent
  */
-interface IUserNotificationEvent extends IDatabaseObjectProcessor
+interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObject, ITitledObject
 {
     /**
      * Returns a short title used for the notification overlay, e.g. "New follower".
