@@ -5,10 +5,13 @@ import { uploadMedia } from "./Ckeditor/Media";
 import { deleteDraft, removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
 import { fire as fireEvent } from "../Event/Handler";
 
+import "./Ckeditor/woltlab-core-ckeditor";
+
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
 import type { Features } from "./Ckeditor/Configuration";
+import WoltlabCoreCkeditorElement from "./Ckeditor/woltlab-core-ckeditor";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -182,6 +185,20 @@ function enableFeatures(element: HTMLElement, configuration: EditorConfig, featu
   }
 }
 
+export function initializeCkeditor(elementId: string): void {
+  const element = document.getElementById(elementId);
+  if (element === null) {
+    throw new Error(`Unable to find the source element '${elementId}' for the editor.`);
+  }
+
+  if (element.nodeName !== "TEXTAREA") {
+    throw new Error(`Expected a <textarea> as the source element '${elementId}' for the editor.`);
+  }
+
+  const ckeditor = document.createElement("woltlab-core-ckeditor");
+  ckeditor.setSourceElement(element as HTMLTextAreaElement);
+}
+
 export async function setupCkeditor(
   element: HTMLElement,
   configuration: EditorConfig,
@@ -233,6 +250,17 @@ export function getCkeditorById(id: string): Ckeditor | undefined {
   }
 
   return getCkeditor(element);
+}
+
+// TODO: The name of this function should be `getCkeditor()`,
+//       but this way it is easier for development purposes.
+export function getCkeditor2(elementId: string): WoltlabCoreCkeditorElement {
+  const element = document.querySelector<WoltlabCoreCkeditorElement>(`woltlab-core-ckeditor[source="${elementId}"]`);
+  if (element === null) {
+    throw new Error(`There is no editor instance for the source '${elementId}'.`);
+  }
+
+  return element;
 }
 
 export type CKEditor = InstanceType<typeof Ckeditor>;

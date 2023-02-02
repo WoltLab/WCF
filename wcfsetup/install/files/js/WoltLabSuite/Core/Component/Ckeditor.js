@@ -21,10 +21,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "../Event/Handler"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Handler_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "../Event/Handler", "./Ckeditor/woltlab-core-ckeditor"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
+    exports.getCkeditor2 = exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = exports.initializeCkeditor = void 0;
     const instances = new WeakMap();
     class Ckeditor {
         #editor;
@@ -155,6 +155,18 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             configuration.toolbar.push(`woltlabBbcode_${name}`);
         }
     }
+    function initializeCkeditor(elementId) {
+        const element = document.getElementById(elementId);
+        if (element === null) {
+            throw new Error(`Unable to find the source element '${elementId}' for the editor.`);
+        }
+        if (element.nodeName !== "TEXTAREA") {
+            throw new Error(`Expected a <textarea> as the source element '${elementId}' for the editor.`);
+        }
+        const ckeditor = document.createElement("woltlab-core-ckeditor");
+        ckeditor.setSourceElement(element);
+    }
+    exports.initializeCkeditor = initializeCkeditor;
     async function setupCkeditor(element, configuration, features) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -195,4 +207,14 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         return getCkeditor(element);
     }
     exports.getCkeditorById = getCkeditorById;
+    // TODO: The name of this function should be `getCkeditor()`,
+    //       but this way it is easier for development purposes.
+    function getCkeditor2(elementId) {
+        const element = document.querySelector(`woltlab-core-ckeditor[source="${elementId}"]`);
+        if (element === null) {
+            throw new Error(`There is no editor instance for the source '${elementId}'.`);
+        }
+        return element;
+    }
+    exports.getCkeditor2 = getCkeditor2;
 });
