@@ -99,14 +99,6 @@ final class NotificationConfirmAction extends AbstractAction
             $this->notification->additionalData
         );
 
-        // The notification link can be `null` (e.g. for some moderation notifications).
-        // This would trigger an exception further in the code, because Laminas' RedirectResponse
-        // expect a real URL. For this reason, we rewrite `null` with a link to the NotificationListPage.
-        $link = $notificationEvent->getLink();
-        if ($link === null) {
-            $link = LinkHandler::getInstance()->getControllerLink(NotificationListPage::class);
-        }
-
-        return new RedirectResponse($link);
+        return new RedirectResponse($notificationEvent->getLink());
     }
 }

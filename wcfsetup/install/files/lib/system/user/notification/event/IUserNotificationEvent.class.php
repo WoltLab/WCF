@@ -3,6 +3,8 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\IDatabaseObjectProcessor;
+use wcf\data\ILinkableObject;
+use wcf\data\ITitledObject;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
@@ -18,14 +20,12 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  *
  * @mixin   UserNotificationEvent
  */
-interface IUserNotificationEvent extends IDatabaseObjectProcessor
+interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObject, ITitledObject
 {
     /**
      * Returns a short title used for the notification overlay, e.g. "New follower".
-     *
-     * @return  string
      */
-    public function getTitle();
+    public function getTitle(): string;
 
     /**
      * Returns the notification event message, e.g. "dtdesign is now following you".
@@ -36,15 +36,8 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
 
     /**
      * Returns object link.
-     *
-     * The returned value can be `null` however, this should be avoided as much as possible.
-     * If the returned value is `null`, the NotificationListPage will be used a link, on any
-     * place, where the link is required (e.g. in the NotificationConfirmAction). After the
-     * confirmation of the notification, the notification is not clickable anymore.
-     *
-     * @return  ?string
      */
-    public function getLink();
+    public function getLink(): string;
 
     /**
      * Returns the full title for this notification, e.g. for use with e-mails.
