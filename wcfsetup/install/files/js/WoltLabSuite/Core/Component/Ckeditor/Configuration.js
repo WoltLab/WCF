@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "../../Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createConfiguration = void 0;
@@ -36,18 +36,18 @@ define(["require", "exports"], function (require, exports) {
             blocks.push("woltlabBbcode_media");
         }
         toolbar.push({
-            label: "TODO: Insert block",
+            label: (0, Language_1.getPhrase)("wcf.editor.button.group.block"),
             icon: "plus",
             items: blocks,
         });
         const woltlabToolbarGroup = {
             format: {
                 icon: "ellipsis;false",
-                label: "TODO: Format text",
+                label: (0, Language_1.getPhrase)("wcf.editor.button.group.format"),
             },
             list: {
                 icon: "list;false",
-                label: "TODO: Insert list",
+                label: (0, Language_1.getPhrase)("wcf.editor.button.group.list"),
             },
         };
         // TODO: The typings are both outdated and incomplete.

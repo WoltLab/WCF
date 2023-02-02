@@ -1,3 +1,5 @@
+import { getPhrase } from "../../Language";
+
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 
 // The typings for CKEditor’s toolbar are outdated.
@@ -60,7 +62,7 @@ export function createConfiguration(features: Features): EditorConfig {
   }
 
   toolbar.push({
-    label: "TODO: Insert block",
+    label: getPhrase("wcf.editor.button.group.block"),
     icon: "plus",
     items: blocks,
   });
@@ -68,11 +70,11 @@ export function createConfiguration(features: Features): EditorConfig {
   const woltlabToolbarGroup = {
     format: {
       icon: "ellipsis;false",
-      label: "TODO: Format text",
+      label: getPhrase("wcf.editor.button.group.format"),
     },
     list: {
       icon: "list;false",
-      label: "TODO: Insert list",
+      label: getPhrase("wcf.editor.button.group.list"),
     },
   };
 

@@ -11,6 +11,9 @@
 		{ setupCkeditor },
 		{ createConfiguration },
 	) => {
+		{jsphrase name='wcf.editor.button.group.block'}
+		{jsphrase name='wcf.editor.button.group.format'}
+		{jsphrase name='wcf.editor.button.group.list'}
 		{jsphrase name='wcf.editor.restoreDraft'}
 
 		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
@@ -45,7 +48,7 @@
 			woltlabBbcode.push({
 				icon: "file-circle-plus;false",
 				name: "media",
-				label: "TODO: woltlab media bbcode"
+				label: '{jslang}wcf.editor.button.media{/jslang}',
 			});
 		}
 

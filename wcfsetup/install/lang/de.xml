@@ -3760,7 +3760,6 @@ Dateianhänge:
 		<item name="wcf.editor.autosave.keep"><![CDATA[Hinweis ausblenden]]></item>
 		<item name="wcf.editor.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
 		<item name="wcf.editor.button.alignment"><![CDATA[Ausrichtung]]></item>
-		<item name="wcf.editor.button.article"><![CDATA[CMS-Artikel]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
@@ -3775,8 +3774,6 @@ Dateianhänge:
 		<item name="wcf.editor.button.italic"><![CDATA[Kursiv]]></item>
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
-		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
-		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Wiederholen]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Schriftgröße]]></item>
@@ -3847,6 +3844,12 @@ Dateianhänge:
 		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Zeile darunter einfügen]]></item>
 		<item name="wcf.editor.table.rows"><![CDATA[Zeilen]]></item>
 
+		<item name="wcf.editor.button.article"><![CDATA[CMS-Artikel]]></item>
+		<item name="wcf.editor.button.group.block"><![CDATA[Block einfügen]]></item>
+		<item name="wcf.editor.button.group.format"><![CDATA[Text formatieren]]></item>
+		<item name="wcf.editor.button.group.list"><![CDATA[Listen]]></item>
+		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Möchten Sie den zwischengespeicherten Entwurf wiederherstellen?]]></item>
 	</category>
 	<category name="wcf.global">
