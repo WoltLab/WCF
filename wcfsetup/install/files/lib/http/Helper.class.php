@@ -5,7 +5,8 @@ namespace wcf\http;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
-use GuzzleHttp\Psr7\Header;
+use Negotiation\Accept;
+use Negotiation\Negotiator;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -43,48 +44,19 @@ final class Helper
             // Anything is acceptable, use the server-preferred type.
             return $availableTypes[0];
         }
+        
+        $negotiator = new Negotiator();
 
-        $acceptedTypes = Header::parse($request->getHeaderLine('accept'));
-
-        \usort($acceptedTypes, static function ($a, $b) {
-            return ($b['q'] ?? 1) <=> ($a['q'] ?? 1);
-        });
-
-        foreach ($acceptedTypes as [$acceptedType]) {
-            // A MIME type withut a slash is malformatted.
-            if (!\str_contains($acceptedType, '/')) {
-                continue;
-            }
-
-            [$major, $minor] = \explode('/', $acceptedType, 2);
-
-            // A MIME type with major '*', but a non '*' minor is malformatted.
-            if ($major === '*' && $minor !== '*') {
-                continue;
-            }
-
-            foreach ($availableTypes as $availableType) {
-                // An exact match is acceptable.
-                if ($acceptedType === $availableType) {
-                    return $availableType;
-                }
-
-                // If the minor is '*', then anything that starts with the major is acceptable.
-                if ($minor === '*') {
-                    if (\str_starts_with($availableType, $major . '/')) {
-                        return $availableType;
-                    }
-                }
-
-                // If the major is '*', then anything is acceptable.
-                if ($major === '*') {
-                    return $availableType;
-                }
-            }
+        $best = $negotiator->getBest($request->getHeaderLine('accept'), $availableTypes);
+        
+        if ($best === null) {
+            // Nothing is acceptable, use the server-preferred type.
+            return $availableTypes[0];
         }
 
-        // Nothing is acceptable, use the server-preferred type.
-        return $availableTypes[0];
+        \assert($best instanceof Accept);
+
+        return $best->getValue();
     }
 
     /**
