@@ -49,7 +49,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
         return $this->level;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return \preg_replace_callback('/^\s*(\d+)([\.):]|\s*-)\s*/', function ($matches) {
             // Strip of a enumeration prefix if the prefixed number matches

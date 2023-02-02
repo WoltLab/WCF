@@ -255,10 +255,8 @@ class Box extends DatabaseObject
 
     /**
      * Returns the title for the rendered version of this box.
-     *
-     * @return  string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if ($this->boxType == 'menu') {
             return $this->getMenu()->getTitle();

@@ -40,7 +40,7 @@ class PageCommentUserNotificationEvent extends AbstractSharedUserNotificationEve
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
