@@ -66,11 +66,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Registers a new element id, returns false if element id is already set.
-     *
-     * @param string $elementID
-     * @return  bool
      */
-    public function register($elementID)
+    public function register(string $elementID): bool
     {
         if (\in_array($elementID, $this->elementIDs)) {
             return false;
@@ -86,10 +83,9 @@ final class I18nHandler extends SingletonFactory
      *
      * Does nothing if no such element exists.
      *
-     * @param string $elementID
      * @since   5.2
      */
-    public function unregister($elementID)
+    public function unregister(string $elementID): void
     {
         $index = \array_search($elementID, $this->elementIDs);
         if ($index !== false) {
@@ -102,10 +98,10 @@ final class I18nHandler extends SingletonFactory
     /**
      * Reads plain and i18n values from request data.
      *
-     * @param array|null $requestData used request data (if `null`, `$_POST` is used)
+     * @param $requestData used request data (if `null`, `$_POST` is used)
      * @throws  SystemException
      */
-    public function readValues(?array $requestData = null)
+    public function readValues(?array $requestData = null): void
     {
         if ($requestData === null) {
             $requestData = $_POST;
@@ -135,11 +131,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Returns true if given element has disabled i18n functionality.
-     *
-     * @param string $elementID
-     * @return  bool
      */
-    public function isPlainValue($elementID)
+    public function isPlainValue(string $elementID): bool
     {
         if (isset($this->plainValues[$elementID])) {
             return true;
@@ -150,11 +143,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Returns true if given element has enabled i18n functionality.
-     *
-     * @param string $elementID
-     * @return  bool
      */
-    public function hasI18nValues($elementID)
+    public function hasI18nValues(string $elementID): bool
     {
         if (isset($this->i18nValues[$elementID])) {
             return true;
@@ -166,11 +156,9 @@ final class I18nHandler extends SingletonFactory
     /**
      * Returns the plain value for the given element.
      *
-     * @param string $elementID
-     * @return  string
      * @see     \wcf\system\language\I18nHandler::isPlainValue()
      */
-    public function getValue($elementID)
+    public function getValue(string $elementID): string
     {
         return $this->plainValues[$elementID];
     }
@@ -180,10 +168,9 @@ final class I18nHandler extends SingletonFactory
      * the multilingual values are returned, otherwise the plain value is
      * returned for each language id.
      *
-     * @param string $elementID
      * @return  string[]
      */
-    public function getValues($elementID)
+    public function getValues(string $elementID): array
     {
         if ($this->hasI18nValues($elementID)) {
             return $this->i18nValues[$elementID];
@@ -203,12 +190,10 @@ final class I18nHandler extends SingletonFactory
      * Sets the value for the given element. If the element is multilingual,
      * the given value is set for every available language.
      *
-     * @param string $elementID
-     * @param string $plainValue
-     * @param bool $forceAsPlainValue if `true`, the value is added as a plain value in any case
+     * @param $forceAsPlainValue if `true`, the value is added as a plain value in any case
      * @throws  SystemException
      */
-    public function setValue($elementID, $plainValue, $forceAsPlainValue = false)
+    public function setValue(string $elementID, string $plainValue, bool $forceAsPlainValue = false): void
     {
         if (!\is_string($plainValue)) {
             throw new SystemException(
@@ -233,11 +218,10 @@ final class I18nHandler extends SingletonFactory
      * Sets the values for the given element. If the element is not multilingual,
      * use I18nHandler::setValue() instead.
      *
-     * @param string $elementID
      * @param string[] $i18nValues
      * @throws  SystemException
      */
-    public function setValues($elementID, array $i18nValues)
+    public function setValues(string $elementID, array $i18nValues): void
     {
         if (empty($i18nValues)) {
             throw new SystemException(
@@ -256,13 +240,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Returns true if the value with the given id is valid.
-     *
-     * @param string $elementID
-     * @param bool $requireI18n
-     * @param bool $permitEmptyValue
-     * @return  bool
      */
-    public function validateValue($elementID, $requireI18n = false, $permitEmptyValue = false)
+    public function validateValue(string $elementID, bool $requireI18n = false, bool $permitEmptyValue = false): bool
     {
         // do not force i18n if only one language is available
         if ($requireI18n && \count($this->availableLanguages) == 1) {
@@ -299,11 +278,8 @@ final class I18nHandler extends SingletonFactory
      * Saves language variable for i18n.
      *
      * @param string|string[] $elementID either the id of the element or externally passed array `languageID => value`
-     * @param string $languageVariable
-     * @param string $languageCategory
-     * @param int $packageID
      */
-    public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID)
+    public function save($elementID, string $languageVariable, string $languageCategory, int $packageID = PACKAGE_ID)
     {
         LanguageEditor::validateItemName($languageVariable, $languageCategory);
 
@@ -404,10 +380,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Removes previously created i18n language variables.
-     *
-     * @param string $languageVariable
      */
-    public function remove($languageVariable)
+    public function remove(string $languageVariable): void
     {
         $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?";
@@ -422,11 +396,8 @@ final class I18nHandler extends SingletonFactory
      * Sets additional options for elements, required if updating values.
      *
      * @param int $elementID
-     * @param int $packageID
-     * @param string $value
-     * @param string $pattern
      */
-    public function setOptions($elementID, $packageID, $value, $pattern)
+    public function setOptions($elementID, int $packageID, string $value, string $pattern): void
     {
         $this->elementOptions[$elementID] = [
             'packageID' => $packageID,
@@ -438,10 +409,8 @@ final class I18nHandler extends SingletonFactory
     /**
      * Assigns element values to template. Using request data once reading
      * initial database data is explicitly disallowed.
-     *
-     * @param bool $useRequestData
      */
-    public function assignVariables($useRequestData = true)
+    public function assignVariables(bool $useRequestData = true): void
     {
         $elementValues = [];
         $elementValuesI18n = [];
@@ -516,23 +485,20 @@ final class I18nHandler extends SingletonFactory
     /**
      * Resets internally stored data after creating a new object through a form.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->i18nValues = $this->plainValues = [];
     }
 
     /**
      * Returns true if given string equals a language variable.
-     *
-     * @param string $string
-     * @return  bool
      */
-    protected function isLanguageVariable($string)
+    protected function isLanguageVariable(string $string): bool
     {
         if ($this->regex === null) {
             $this->regex = new Regex('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$');
         }
 
-        return $this->regex->match($string);
+        return !!$this->regex->match($string);
     }
 }
