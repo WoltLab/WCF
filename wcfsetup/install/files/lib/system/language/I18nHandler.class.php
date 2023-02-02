@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class I18nHandler extends SingletonFactory
+final class I18nHandler extends SingletonFactory
 {
     /**
      * list of available languages
