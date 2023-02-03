@@ -37,10 +37,9 @@ class Notice extends DatabaseObject implements IRouteController
     /**
      * Returns the textual representation of the notice.
      *
-     * @return  string
      * @since   3.0
      */
-    public function __toString()
+    public function __toString(): string
     {
         // replace `{$username}` with the active user's name and `{$email}`
         // with the active user's email address

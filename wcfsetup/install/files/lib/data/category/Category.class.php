@@ -270,7 +270,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

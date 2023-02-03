@@ -78,7 +78,7 @@ class ContactAttachment extends DatabaseObject implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

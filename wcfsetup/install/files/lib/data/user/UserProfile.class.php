@@ -122,7 +122,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getDecoratedObject()->__toString();
     }

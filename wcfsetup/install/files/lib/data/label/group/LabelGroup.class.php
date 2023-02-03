@@ -31,10 +31,8 @@ class LabelGroup extends DatabaseObject implements IRouteController
 
     /**
      * Returns label group title.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

@@ -70,7 +70,7 @@ class ValidateActionException extends \Exception
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->message;
     }

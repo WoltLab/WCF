@@ -137,10 +137,8 @@ class Mailbox
 
     /**
      * Returns a string representation for use in a RFC 5322 message.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->name === null || $this->name === $this->address) {
             return $this->address;

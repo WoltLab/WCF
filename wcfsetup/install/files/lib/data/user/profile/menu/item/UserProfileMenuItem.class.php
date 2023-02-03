@@ -80,10 +80,7 @@ class UserProfileMenuItem extends DatabaseObject
         return $this->contentManager;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return WCF::getLanguage()->get('wcf.user.profile.menu.' . $this->menuItem);
     }

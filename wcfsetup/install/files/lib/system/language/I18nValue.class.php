@@ -142,7 +142,7 @@ class I18nValue
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFieldName();
     }

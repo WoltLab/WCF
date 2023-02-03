@@ -114,10 +114,8 @@ class ViewableMedia extends DatabaseObjectDecorator
 
     /**
      * Returns a textual representation of the media file to be used in templates.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->isImage) {
             return '<img src="' . StringUtil::encodeHTML($this->getLink()) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '') . '/>';

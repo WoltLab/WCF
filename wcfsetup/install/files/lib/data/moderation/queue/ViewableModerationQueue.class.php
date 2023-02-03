@@ -155,7 +155,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

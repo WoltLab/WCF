@@ -87,7 +87,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->object->getTitle();
     }

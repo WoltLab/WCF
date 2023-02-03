@@ -79,10 +79,8 @@ class Style extends DatabaseObject
 
     /**
      * Returns the name of this style.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->styleName;
     }

@@ -60,10 +60,9 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     /**
      * Returns the title of the trophy.
      *
-     * @return      string
      * @since       5.3
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

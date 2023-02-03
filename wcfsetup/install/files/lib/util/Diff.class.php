@@ -346,7 +346,7 @@ class Diff
     /**
      * @deprecated 6.0 Use sebastian/diff instead.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUnixDiff();
     }

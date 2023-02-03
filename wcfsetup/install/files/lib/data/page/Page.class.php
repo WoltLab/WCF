@@ -301,10 +301,8 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
 
     /**
      * Returns the page's internal name.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
