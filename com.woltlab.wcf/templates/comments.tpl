@@ -8,19 +8,19 @@
 			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
 
-		setup('{@$commentContainerID}');
+		setup('{@$commentContainerID|encodeJS}');
 	});
 </script>
 
 {event name='javascriptInclude'}
 
 <div class="commentListContainer"
-	id="{@$commentContainerID}"
+	id="{$commentContainerID}"
 	data-can-add="{if $commentCanAdd}true{else}false{/if}"
-	data-object-id="{@$commentObjectID}"
-	data-object-type-id="{@$commentObjectTypeID}"
-	data-comments="{@$commentList->countObjects()}"
-	data-last-comment-time="{@$lastCommentTime}"
+	data-object-id="{$commentObjectID}"
+	data-object-type-id="{$commentObjectTypeID}"
+	data-comments="{$commentList->countObjects()}"
+	data-last-comment-time="{$lastCommentTime}"
 	data-enable-reactions="{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && ($__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike'))}true{else}false{/if}"
 >
 	<div class="commentList">
