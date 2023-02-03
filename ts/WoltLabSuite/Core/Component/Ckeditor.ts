@@ -11,6 +11,9 @@ import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
+type CkeditorResetEventPayload = CKEditor;
+export type CkeditorResetEvent = CustomEvent<CkeditorConfigurationEventPayload>;
+
 class Ckeditor {
   readonly #editor: ClassicEditor;
   readonly #features: Features;
@@ -72,7 +75,11 @@ class Ckeditor {
   reset(): void {
     this.setHtml("");
 
-    this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset"));
+    this.sourceElement.dispatchEvent(
+      new CustomEvent<CkeditorResetEventPayload>("ckeditor5:reset", {
+        detail: this,
+      }),
+    );
   }
 
   get element(): HTMLElement {
@@ -121,9 +128,12 @@ type WoltlabBbcodeItem = {
   label: string;
 };
 
+type CkeditorFeaturesEventPayload = Features;
+export type CkeditorFeaturesEvent = CustomEvent<CkeditorFeaturesEventPayload>;
+
 function initializeFeatures(element: HTMLElement, features: Features): void {
   element.dispatchEvent(
-    new CustomEvent<Features>("ckeditor5:features", {
+    new CustomEvent<CkeditorFeaturesEventPayload>("ckeditor5:features", {
       detail: features,
     }),
   );
