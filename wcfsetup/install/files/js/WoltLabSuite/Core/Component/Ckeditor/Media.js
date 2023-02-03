@@ -48,7 +48,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 uploadImage: (file, abortController) => uploadMedia(element, file, abortController),
                 uploadOther: (file) => uploadMedia(element, file),
             };
-            (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
+            (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
                 void new Promise((resolve_1, reject_1) => { require(["../../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
                     new MediaManagerEditor({
                         ckeditor,

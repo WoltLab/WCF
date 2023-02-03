@@ -49,7 +49,7 @@ export function setup(element: HTMLElement): void {
       uploadOther: (file: File) => uploadMedia(element, file),
     };
 
-    listenToCkeditor(element).ready((ckeditor) => {
+    listenToCkeditor(element).ready(({ ckeditor }) => {
       void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
         new MediaManagerEditor({
           ckeditor,

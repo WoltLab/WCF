@@ -27,7 +27,7 @@ type CkeditorInsertQuoteEventPayload = {
 export type CkeditorInsertQuoteEvent = CustomEvent<CkeditorInsertQuoteEventPayload>;
 
 export function setup(element: HTMLElement): void {
-  listenToCkeditor(element).ready((ckeditor) => {
+  listenToCkeditor(element).ready(({ ckeditor }) => {
     element.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<CkeditorInsertQuoteEventPayload>) => {
       insertQuote(ckeditor, event.detail);
     });

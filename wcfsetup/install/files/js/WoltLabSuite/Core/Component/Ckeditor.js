@@ -50,7 +50,9 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
         reset() {
             this.setHtml("");
-            (0, Event_1.dispatchToCkeditor)(this.sourceElement).reset(this);
+            (0, Event_1.dispatchToCkeditor)(this.sourceElement).reset({
+                ckeditor: this,
+            });
         }
         get element() {
             return this.#editor.ui.element;
@@ -84,7 +86,9 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
     }
     function initializeFeatures(element, features) {
-        (0, Event_1.dispatchToCkeditor)(element).setupFeatures(features);
+        (0, Event_1.dispatchToCkeditor)(element).setupFeatures({
+            features,
+        });
         Object.freeze(features);
     }
     function initializeConfiguration(element, features, bbcodes) {
@@ -113,13 +117,15 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         (0, Quote_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
-        const editor = new Ckeditor(cke, features);
+        const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
         }
-        instances.set(element, editor);
-        (0, Event_1.dispatchToCkeditor)(element).ready(editor);
-        return editor;
+        instances.set(element, ckeditor);
+        (0, Event_1.dispatchToCkeditor)(element).ready({
+            ckeditor,
+        });
+        return ckeditor;
     }
     exports.setupCkeditor = setupCkeditor;
     function getCkeditor(element) {

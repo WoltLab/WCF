@@ -73,7 +73,9 @@ class Ckeditor {
   reset(): void {
     this.setHtml("");
 
-    dispatchToCkeditor(this.sourceElement).reset(this);
+    dispatchToCkeditor(this.sourceElement).reset({
+      ckeditor: this,
+    });
   }
 
   get element(): HTMLElement {
@@ -123,7 +125,9 @@ type WoltlabBbcodeItem = {
 };
 
 function initializeFeatures(element: HTMLElement, features: Features): void {
-  dispatchToCkeditor(element).setupFeatures(features);
+  dispatchToCkeditor(element).setupFeatures({
+    features,
+  });
 
   Object.freeze(features);
 }
@@ -167,17 +171,19 @@ export async function setupCkeditor(
   const configuration = initializeConfiguration(element, features, bbcodes);
 
   const cke = await window.CKEditor5.create(element, configuration);
-  const editor = new Ckeditor(cke, features);
+  const ckeditor = new Ckeditor(cke, features);
 
   if (features.autosave) {
     setupRestoreDraft(cke, features.autosave);
   }
 
-  instances.set(element, editor);
+  instances.set(element, ckeditor);
 
-  dispatchToCkeditor(element).ready(editor);
+  dispatchToCkeditor(element).ready({
+    ckeditor,
+  });
 
-  return editor;
+  return ckeditor;
 }
 
 export function getCkeditor(element: HTMLElement): CKEditor | undefined {

@@ -85,7 +85,7 @@ export function setup(element: HTMLElement): void {
       uploadOther: (file: File) => uploadAttachment(element, file),
     };
 
-    listenToCkeditor(element).ready((ckeditor) => {
+    listenToCkeditor(element).ready(({ ckeditor }) => {
       setupInsertAttachment(ckeditor);
       setupRemoveAttachment(ckeditor);
     });

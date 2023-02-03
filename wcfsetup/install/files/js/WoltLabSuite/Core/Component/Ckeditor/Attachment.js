@@ -45,7 +45,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
                 uploadOther: (file) => uploadAttachment(element, file),
             };
-            (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
+            (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
                 setupInsertAttachment(ckeditor);
                 setupRemoveAttachment(ckeditor);
             });

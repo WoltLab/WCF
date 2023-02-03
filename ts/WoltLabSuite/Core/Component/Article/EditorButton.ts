@@ -26,7 +26,7 @@ export function setup(element: HTMLElement) {
     });
   });
 
-  listenToCkeditor(element).ready((ckeditor) => {
+  listenToCkeditor(element).ready(({ ckeditor }) => {
     setupBbcode(ckeditor);
   });
 }

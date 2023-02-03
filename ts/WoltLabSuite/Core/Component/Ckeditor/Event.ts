@@ -9,9 +9,15 @@ const enum EventNames {
   SetupFeatures = "ckeditor5:setup-features",
 }
 
-type ReadyEventPayload = CKEditor;
-type ResetEventPayload = CKEditor;
-type SetupFeaturesEventPayload = Features;
+type ReadyEventPayload = {
+  ckeditor: CKEditor;
+};
+type ResetEventPayload = {
+  ckeditor: CKEditor;
+};
+type SetupFeaturesEventPayload = {
+  features: Features;
+};
 type SetupConfigurationEventPayload = {
   configuration: EditorConfig;
   features: Features;

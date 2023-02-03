@@ -21,7 +21,7 @@ define(["require", "exports", "../../Language", "../../Ui/Article/Search", "../C
                 label: (0, Language_1.getPhrase)("wcf.editor.button.article"),
             });
         });
-        (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
+        (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
             setupBbcode(ckeditor);
         });
     }

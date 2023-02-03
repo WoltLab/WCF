@@ -12,7 +12,7 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
         editor.insertHtml(`<woltlab-ckeditor-blockquote author="${author}" link="${link}">${content}</woltlab-ckeditor-blockquote>`);
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
+        (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
             element.addEventListener("ckeditor5:insert-quote", (event) => {
                 insertQuote(ckeditor, event.detail);
             });
