@@ -115,10 +115,8 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
     }
     function initializeConfiguration(element, features, bbcodes) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
-        if (features.attachment) {
-            (0, Attachment_1.initializeAttachment)(element, configuration);
-        }
-        else if (features.media) {
+        configuration.woltlabBbcode = bbcodes;
+        if (!features.attachment && features.media) {
             (0, Media_1.initializeMedia)(element, configuration);
         }
         if (features.mention) {
@@ -127,9 +125,11 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
-        configuration.woltlabBbcode = bbcodes;
         element.dispatchEvent(new CustomEvent("ckeditor5:configuration", {
-            detail: configuration,
+            detail: {
+                configuration,
+                features,
+            },
         }));
         for (const { name } of bbcodes) {
             configuration.toolbar.push(`woltlabBbcode_${name}`);
@@ -141,13 +141,10 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         initializeFeatures(element, features);
+        (0, Attachment_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);
-        if (features.attachment) {
-            (0, Attachment_1.setupInsertAttachment)(editor);
-            (0, Attachment_1.setupRemoveAttachment)(editor);
-        }
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
         }

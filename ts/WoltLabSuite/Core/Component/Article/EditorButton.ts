@@ -1,7 +1,7 @@
-import type { CKEditor } from "../Ckeditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import { getPhrase } from "../../Language";
 import { open as searchArticle } from "../../Ui/Article/Search";
+
+import type { CKEditor, CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
 
 function setupBbcode(editor: CKEditor): void {
   editor.sourceElement.addEventListener("bbcode", (evt: CustomEvent<string>) => {
@@ -19,8 +19,9 @@ function setupBbcode(editor: CKEditor): void {
 export function setup(element: HTMLElement) {
   element.addEventListener(
     "ckeditor5:configuration",
-    (event: CustomEvent<EditorConfig>) => {
-      (event.detail as any).woltlabBbcode.push({
+    (event: CkeditorConfigurationEvent) => {
+      const { configuration } = event.detail;
+      (configuration as any).woltlabBbcode.push({
         icon: "file-word;false",
         name: "wsa",
         label: getPhrase("wcf.editor.button.article"),
@@ -31,7 +32,7 @@ export function setup(element: HTMLElement) {
 
   element.addEventListener(
     "ckeditor5:ready",
-    (event: CustomEvent<CKEditor>) => {
+    (event: CkeditorReadyEvent) => {
       setupBbcode(event.detail);
     },
     { once: true },

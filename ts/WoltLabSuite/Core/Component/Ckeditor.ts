@@ -1,6 +1,6 @@
 import { initializeMention } from "./Ckeditor/Mention";
-import { setup as setupQuotes } from "./Ckeditor/Quote";
-import { initializeAttachment, setupInsertAttachment, setupRemoveAttachment } from "./Ckeditor/Attachment";
+import { setup as setupQuote } from "./Ckeditor/Quote";
+import { setup as setupAttachment } from "./Ckeditor/Attachment";
 import { initializeMedia } from "./Ckeditor/Media";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
 
@@ -19,7 +19,7 @@ class Ckeditor {
     this.#editor = editor;
     this.#features = features;
 
-    setupQuotes(this);
+    setupQuote(this);
   }
 
   destroy(): Promise<void> {
@@ -132,11 +132,20 @@ function initializeFeatures(element: HTMLElement, features: Features): void {
   Object.freeze(features);
 }
 
+type CkeditorConfigurationEventPayload = {
+  configuration: EditorConfig;
+  features: Features;
+};
+export type CkeditorConfigurationEvent = CustomEvent<CkeditorConfigurationEventPayload>;
+
+type CkeditorReadyEventPayload = CKEditor;
+export type CkeditorReadyEvent = CustomEvent<CkeditorReadyEventPayload>;
+
 function initializeConfiguration(element: HTMLElement, features: Features, bbcodes: WoltlabBbcodeItem[]): EditorConfig {
   const configuration = createConfigurationFor(features);
-  if (features.attachment) {
-    initializeAttachment(element, configuration);
-  } else if (features.media) {
+  (configuration as any).woltlabBbcode = bbcodes;
+
+  if (!features.attachment && features.media) {
     initializeMedia(element, configuration);
   }
 
@@ -148,11 +157,12 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
     initializeAutosave(features.autosave, configuration);
   }
 
-  (configuration as any).woltlabBbcode = bbcodes;
-
   element.dispatchEvent(
-    new CustomEvent("ckeditor5:configuration", {
-      detail: configuration,
+    new CustomEvent<CkeditorConfigurationEventPayload>("ckeditor5:configuration", {
+      detail: {
+        configuration,
+        features,
+      },
     }),
   );
 
@@ -174,15 +184,12 @@ export async function setupCkeditor(
 
   initializeFeatures(element, features);
 
+  setupAttachment(element);
+
   const configuration = initializeConfiguration(element, features, bbcodes);
 
   const cke = await window.CKEditor5.create(element, configuration);
   const editor = new Ckeditor(cke, features);
-
-  if (features.attachment) {
-    setupInsertAttachment(editor);
-    setupRemoveAttachment(editor);
-  }
 
   if (features.autosave) {
     setupRestoreDraft(cke, features.autosave);
@@ -198,7 +205,7 @@ export async function setupCkeditor(
 
   instances.set(element, editor);
 
-  const event = new CustomEvent<CKEditor>("ckeditor5:ready", {
+  const event = new CustomEvent<CkeditorReadyEventPayload>("ckeditor5:ready", {
     detail: editor,
   });
   element.dispatchEvent(event);

@@ -15,7 +15,8 @@ define(["require", "exports", "../../Language", "../../Ui/Article/Search"], func
     }
     function setup(element) {
         element.addEventListener("ckeditor5:configuration", (event) => {
-            event.detail.woltlabBbcode.push({
+            const { configuration } = event.detail;
+            configuration.woltlabBbcode.push({
                 icon: "file-word;false",
                 name: "wsa",
                 label: (0, Language_1.getPhrase)("wcf.editor.button.article"),

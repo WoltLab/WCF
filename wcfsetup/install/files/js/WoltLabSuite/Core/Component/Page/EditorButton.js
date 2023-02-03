@@ -15,7 +15,8 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search"], functio
     }
     function setup(element) {
         element.addEventListener("ckeditor5:configuration", (event) => {
-            event.detail.woltlabBbcode.push({
+            const { configuration } = event.detail;
+            configuration.woltlabBbcode.push({
                 icon: "file-lines;false",
                 name: "wsp",
                 label: (0, Language_1.getPhrase)("wcf.editor.button.page"),

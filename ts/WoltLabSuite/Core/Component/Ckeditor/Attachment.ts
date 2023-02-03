@@ -1,5 +1,4 @@
-import type { CKEditor } from "../Ckeditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { CKEditor, CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -45,7 +44,7 @@ type InsertAttachmentPayload = {
   url: string;
 };
 
-export function setupInsertAttachment(ckeditor: CKEditor): void {
+function setupInsertAttachment(ckeditor: CKEditor): void {
   ckeditor.sourceElement.addEventListener(
     "ckeditor5:insert-attachment",
     (event: CustomEvent<InsertAttachmentPayload>) => {
@@ -62,7 +61,7 @@ export function setupInsertAttachment(ckeditor: CKEditor): void {
   );
 }
 
-export function setupRemoveAttachment(ckeditor: CKEditor): void {
+function setupRemoveAttachment(ckeditor: CKEditor): void {
   ckeditor.sourceElement.addEventListener(
     "ckeditor5:remove-attachment",
     ({ detail: attachmentId }: CustomEvent<number>) => {
@@ -72,10 +71,31 @@ export function setupRemoveAttachment(ckeditor: CKEditor): void {
   );
 }
 
-export function initializeAttachment(element: HTMLElement, configuration: EditorConfig): void {
-  // TODO: The typings do not include our custom plugins yet.
-  (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
-    uploadOther: (file: File) => uploadAttachment(element, file),
-  };
+export function setup(element: HTMLElement): void {
+  element.addEventListener(
+    "ckeditor5:configuration",
+    (event: CkeditorConfigurationEvent) => {
+      const { configuration, features } = event.detail;
+
+      if (!features.attachment) {
+        return;
+      }
+
+      // TODO: The typings do not include our custom plugins yet.
+      (configuration as any).woltlabUpload = {
+        uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
+        uploadOther: (file: File) => uploadAttachment(element, file),
+      };
+
+      element.addEventListener(
+        "ckeditor5:ready",
+        ({ detail: ckeditor }: CkeditorReadyEvent) => {
+          setupInsertAttachment(ckeditor);
+          setupRemoveAttachment(ckeditor);
+        },
+        { once: true },
+      );
+    },
+    { once: true },
+  );
 }
