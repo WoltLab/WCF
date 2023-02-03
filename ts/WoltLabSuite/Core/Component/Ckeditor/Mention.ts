@@ -1,6 +1,7 @@
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type { MentionConfig } from "@ckeditor/ckeditor5-mention/src/mention";
 
 type SearchResultItem = {
@@ -37,7 +38,7 @@ export async function getPossibleMentions(query: string): Promise<UserMention[]>
   });
 }
 
-export function getMentionConfiguration(): MentionConfig {
+function getMentionConfiguration(): MentionConfig {
   return {
     feeds: [
       {
@@ -56,4 +57,8 @@ export function getMentionConfiguration(): MentionConfig {
       },
     ],
   };
+}
+
+export function initializeMention(configuration: EditorConfig): void {
+  configuration.mention = getMentionConfiguration();
 }

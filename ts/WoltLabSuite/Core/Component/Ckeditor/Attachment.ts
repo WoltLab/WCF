@@ -1,4 +1,5 @@
 import type { CKEditor } from "../Ckeditor";
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -18,11 +19,7 @@ type DragAndDropEventData = {
   promise?: Promise<AttachmentData>;
 };
 
-export function uploadAttachment(
-  element: HTMLElement,
-  file: File,
-  abortController?: AbortController,
-): Promise<UploadResult> {
+function uploadAttachment(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
   const data: DragAndDropEventData = { abortController, file };
 
   element.dispatchEvent(
@@ -73,4 +70,12 @@ export function setupRemoveAttachment(ckeditor: CKEditor): void {
       ckeditor.removeAll("imageInline", { attachmentId });
     },
   );
+}
+
+export function initializeAttachment(element: HTMLElement, configuration: EditorConfig): void {
+  // TODO: The typings do not include our custom plugins yet.
+  (configuration as any).woltlabUpload = {
+    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
+    uploadOther: (file: File) => uploadAttachment(element, file),
+  };
 }

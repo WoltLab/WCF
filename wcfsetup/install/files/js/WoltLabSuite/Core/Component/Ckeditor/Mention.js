@@ -1,7 +1,7 @@
 define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function (require, exports, Backend_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getMentionConfiguration = exports.getPossibleMentions = void 0;
+    exports.initializeMention = exports.getPossibleMentions = void 0;
     async function getPossibleMentions(query) {
         // TODO: Provide the URL as a parameter.
         const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
@@ -40,5 +40,8 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function 
             ],
         };
     }
-    exports.getMentionConfiguration = getMentionConfiguration;
+    function initializeMention(configuration) {
+        configuration.mention = getMentionConfiguration();
+    }
+    exports.initializeMention = initializeMention;
 });

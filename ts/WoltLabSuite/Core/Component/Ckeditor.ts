@@ -1,8 +1,8 @@
-import { getMentionConfiguration } from "./Ckeditor/Mention";
+import { initializeMention } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
-import { setupInsertAttachment, setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
-import { uploadMedia } from "./Ckeditor/Media";
-import { deleteDraft, removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
+import { initializeAttachment, setupInsertAttachment, setupRemoveAttachment } from "./Ckeditor/Attachment";
+import { initializeMedia } from "./Ckeditor/Media";
+import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
@@ -117,40 +117,6 @@ function* findModelForRemoval(
       yield* findModelForRemoval(child, model, attributes);
     }
   }
-}
-
-function initializeAttachment(element: HTMLElement, configuration: EditorConfig): void {
-  // TODO: The typings do not include our custom plugins yet.
-  (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
-    uploadOther: (file: File) => uploadAttachment(element, file),
-  };
-}
-
-function initializeAutosave(autosave: string, configuration: EditorConfig): void {
-  removeExpiredDrafts();
-
-  configuration.autosave = {
-    save(editor) {
-      saveDraft(autosave, editor.data.get());
-
-      return Promise.resolve();
-    },
-    // TODO: This should be longer, because exporting the data is potentially expensive.
-    waitingTime: 2_000,
-  };
-}
-
-function initializeMedia(element: HTMLElement, configuration: EditorConfig): void {
-  // TODO: The typings do not include our custom plugins yet.
-  (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
-    uploadOther: (file: File) => uploadMedia(element, file),
-  };
-}
-
-function initializeMention(configuration: EditorConfig): void {
-  configuration.mention = getMentionConfiguration();
 }
 
 type WoltlabBbcodeItem = {

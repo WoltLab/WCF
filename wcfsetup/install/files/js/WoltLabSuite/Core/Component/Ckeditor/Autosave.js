@@ -1,7 +1,7 @@
 define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"], function (require, exports, Core_1, Language_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.removeExpiredDrafts = exports.setupRestoreDraft = exports.saveDraft = exports.deleteDraft = void 0;
+    exports.initializeAutosave = exports.setupRestoreDraft = exports.deleteDraft = void 0;
     function getLocalStorageKey(identifier) {
         return `${(0, Core_1.getStoragePrefix)()}ckeditor5-${identifier}`;
     }
@@ -50,7 +50,6 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             console.warn("Unable to write to the local storage.", e);
         }
     }
-    exports.saveDraft = saveDraft;
     function setupRestoreDraft(editor, identifier) {
         let value = undefined;
         try {
@@ -132,5 +131,16 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             }
         });
     }
-    exports.removeExpiredDrafts = removeExpiredDrafts;
+    function initializeAutosave(autosave, configuration) {
+        removeExpiredDrafts();
+        configuration.autosave = {
+            save(editor) {
+                saveDraft(autosave, editor.data.get());
+                return Promise.resolve();
+            },
+            // TODO: This should be longer, because exporting the data is potentially expensive.
+            waitingTime: 2000,
+        };
+    }
+    exports.initializeAutosave = initializeAutosave;
 });

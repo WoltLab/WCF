@@ -108,46 +108,18 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
         }
     }
-    function initializeAttachment(element, configuration) {
-        // TODO: The typings do not include our custom plugins yet.
-        configuration.woltlabUpload = {
-            uploadImage: (file, abortController) => (0, Attachment_1.uploadAttachment)(element, file, abortController),
-            uploadOther: (file) => (0, Attachment_1.uploadAttachment)(element, file),
-        };
-    }
-    function initializeAutosave(autosave, configuration) {
-        (0, Autosave_1.removeExpiredDrafts)();
-        configuration.autosave = {
-            save(editor) {
-                (0, Autosave_1.saveDraft)(autosave, editor.data.get());
-                return Promise.resolve();
-            },
-            // TODO: This should be longer, because exporting the data is potentially expensive.
-            waitingTime: 2000,
-        };
-    }
-    function initializeMedia(element, configuration) {
-        // TODO: The typings do not include our custom plugins yet.
-        configuration.woltlabUpload = {
-            uploadImage: (file, abortController) => (0, Media_1.uploadMedia)(element, file, abortController),
-            uploadOther: (file) => (0, Media_1.uploadMedia)(element, file),
-        };
-    }
-    function initializeMention(configuration) {
-        configuration.mention = (0, Mention_1.getMentionConfiguration)();
-    }
     function initializeFeatures(element, configuration, features) {
         if (features.attachment) {
-            initializeAttachment(element, configuration);
+            (0, Attachment_1.initializeAttachment)(element, configuration);
         }
         else if (features.media) {
-            initializeMedia(element, configuration);
+            (0, Media_1.initializeMedia)(element, configuration);
         }
         if (features.mention) {
-            initializeMention(configuration);
+            (0, Mention_1.initializeMention)(configuration);
         }
         if (features.autosave !== "") {
-            initializeAutosave(features.autosave, configuration);
+            (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
         const bbcodes = configuration.woltlabBbcode;
         for (const { name } of bbcodes) {

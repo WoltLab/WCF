@@ -1,3 +1,5 @@
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+
 type UploadResult = {
   [key: string]: unknown;
   urls: {
@@ -37,4 +39,12 @@ export function uploadMedia(
   // Rejecting the upload promise will cause CKEditor to
   // stop caring about the file so that we regain control.
   return Promise.reject();
+}
+
+export function initializeMedia(element: HTMLElement, configuration: EditorConfig): void {
+  // TODO: The typings do not include our custom plugins yet.
+  (configuration as any).woltlabUpload = {
+    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
+    uploadOther: (file: File) => uploadMedia(element, file),
+  };
 }

@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupRemoveAttachment = exports.setupInsertAttachment = exports.uploadAttachment = void 0;
+    exports.initializeAttachment = exports.setupRemoveAttachment = exports.setupInsertAttachment = void 0;
     function uploadAttachment(element, file, abortController) {
         const data = { abortController, file };
         element.dispatchEvent(new CustomEvent("ckeditor5:drop", {
@@ -18,7 +18,6 @@ define(["require", "exports"], function (require, exports) {
             });
         });
     }
-    exports.uploadAttachment = uploadAttachment;
     function setupInsertAttachment(ckeditor) {
         ckeditor.sourceElement.addEventListener("ckeditor5:insert-attachment", (event) => {
             const { attachmentId, url } = event.detail;
@@ -38,4 +37,12 @@ define(["require", "exports"], function (require, exports) {
         });
     }
     exports.setupRemoveAttachment = setupRemoveAttachment;
+    function initializeAttachment(element, configuration) {
+        // TODO: The typings do not include our custom plugins yet.
+        configuration.woltlabUpload = {
+            uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
+            uploadOther: (file) => uploadAttachment(element, file),
+        };
+    }
+    exports.initializeAttachment = initializeAttachment;
 });

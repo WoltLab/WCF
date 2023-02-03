@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.uploadMedia = void 0;
+    exports.initializeMedia = exports.uploadMedia = void 0;
     function uploadMedia(element, file, abortController) {
         const data = { abortController, file };
         element.dispatchEvent(new CustomEvent("ckeditor5:drop", {
@@ -16,4 +16,12 @@ define(["require", "exports"], function (require, exports) {
         return Promise.reject();
     }
     exports.uploadMedia = uploadMedia;
+    function initializeMedia(element, configuration) {
+        // TODO: The typings do not include our custom plugins yet.
+        configuration.woltlabUpload = {
+            uploadImage: (file, abortController) => uploadMedia(element, file, abortController),
+            uploadOther: (file) => uploadMedia(element, file),
+        };
+    }
+    exports.initializeMedia = initializeMedia;
 });

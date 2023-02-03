@@ -3,6 +3,7 @@ import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 
 type Payload = {
   html: string;
@@ -44,7 +45,7 @@ export function deleteDraft(identifier: string): void {
   }
 }
 
-export function saveDraft(identifier: string, html: string): void {
+function saveDraft(identifier: string, html: string): void {
   if (html === "") {
     deleteDraft(identifier);
 
@@ -124,7 +125,7 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
   });
 }
 
-export function removeExpiredDrafts(): void {
+function removeExpiredDrafts(): void {
   const oneWeekAgo = Date.now() - 7 * 86_400;
 
   Object.keys(localStorage)
@@ -159,4 +160,18 @@ export function removeExpiredDrafts(): void {
         }
       }
     });
+}
+
+export function initializeAutosave(autosave: string, configuration: EditorConfig): void {
+  removeExpiredDrafts();
+
+  configuration.autosave = {
+    save(editor) {
+      saveDraft(autosave, editor.data.get());
+
+      return Promise.resolve();
+    },
+    // TODO: This should be longer, because exporting the data is potentially expensive.
+    waitingTime: 2_000,
+  };
 }
