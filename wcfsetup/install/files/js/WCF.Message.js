@@ -1203,13 +1203,20 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// event forwarding
 			WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function (data) {
-				//noinspection JSUnresolvedVariable
-				WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
-					author: data.quote.username,
-					content: data.quote.text,
-					isText: !data.quote.isFullQuote,
-					link: data.quote.link
-				});
+				const element = document.getElementById(
+					this._editorIdAlternative ? this._editorIdAlternative : this._editorId
+				);
+
+				element.dispatchEvent(
+					new CustomEvent("ckeditor5:insert-quote", {
+						detail: {
+							author: data.quote.username,
+							content: data.quote.text,
+							isText: !data.quote.isFullQuote,
+							link: data.quote.link
+						},
+					}),
+				);
 			}).bind(this));
 		},
 		
@@ -1471,13 +1478,21 @@ if (COMPILER_TARGET_DEFAULT) {
 			var author = message.data('username');
 			var link = message.data('link');
 			var isText = !elDataBool(listItem[0], 'is-full-quote');
-			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
-				author: author,
-				content: text,
-				isText: isText,
-				link: link
-			});
+
+			const element = document.getElementById(
+				this._editorIdAlternative ? this._editorIdAlternative : this._editorId
+			);
+
+			element.dispatchEvent(
+				new CustomEvent("ckeditor5:insert-quote", {
+					detail: {
+						author,
+						content: text,
+						isText,
+						link,
+					},
+				}),
+			);
 			
 			// remove quote upon submit or upon request
 			this._removeOnSubmit.push(listItem.data('quote-id'));
@@ -1932,12 +1947,13 @@ $.widget('wcf.messageTabMenu', {
 		
 		var wysiwygContainerId = elData(this.element[0], 'wysiwyg-container-id');
 		if (wysiwygContainerId) {
-			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'reset_' + wysiwygContainerId, (function () {
+			const element = document.getElementById(wysiwygContainerId);
+			element.addEventListener("ckeditor5:reset", () => {
 				for (var i = 0, length = this._tabs.length; i < length; i++) {
 					this._tabs[i].container.removeClass('active');
 					this._tabs[i].tab.removeClass('active');
 				}
-			}).bind(this));
+			});
 		}
 	},
 	

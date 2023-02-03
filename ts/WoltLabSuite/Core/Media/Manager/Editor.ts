@@ -48,9 +48,8 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
     if (this._options.ckeditor !== undefined) {
       const ckeditor = this._options.ckeditor;
       if (!ckeditor.features.attachment) {
-        const editorId = ckeditor.sourceElement.id;
-        EventHandler.add("com.woltlab.wcf.ckeditor5", `dragAndDrop_${editorId}`, (data: MediaDragAndDropEventData) => {
-          this._editorUpload(data);
+        ckeditor.sourceElement.addEventListener("ckeditor5:drop", (event: CustomEvent<MediaDragAndDropEventData>) => {
+          this._editorUpload(event.detail);
         });
       }
     }

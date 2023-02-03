@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "../Event/Handler"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Handler_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -75,8 +75,7 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         }
         reset() {
             this.setHtml("");
-            const identifier = this.sourceElement.id;
-            (0, Handler_1.fire)("com.woltlab.wcf.ckeditor5", `reset_${identifier}`);
+            this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset"));
         }
         get element() {
             return this.#editor.ui.element;
@@ -109,14 +108,14 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
         }
     }
-    function enableAttachments(element, configuration) {
+    function initializeAttachment(element, configuration) {
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
-            uploadImage: (file, abortController) => (0, Attachment_1.uploadAttachment)(element.id, file, abortController),
-            uploadOther: (file) => (0, Attachment_1.uploadAttachment)(element.id, file),
+            uploadImage: (file, abortController) => (0, Attachment_1.uploadAttachment)(element, file, abortController),
+            uploadOther: (file) => (0, Attachment_1.uploadAttachment)(element, file),
         };
     }
-    function enableAutosave(autosave, configuration) {
+    function initializeAutosave(autosave, configuration) {
         (0, Autosave_1.removeExpiredDrafts)();
         configuration.autosave = {
             save(editor) {
@@ -127,28 +126,28 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             waitingTime: 2000,
         };
     }
-    function enableMedia(element, configuration) {
+    function initializeMedia(element, configuration) {
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
-            uploadImage: (file, abortController) => (0, Media_1.uploadMedia)(element.id, file, abortController),
-            uploadOther: (file) => (0, Media_1.uploadMedia)(element.id, file),
+            uploadImage: (file, abortController) => (0, Media_1.uploadMedia)(element, file, abortController),
+            uploadOther: (file) => (0, Media_1.uploadMedia)(element, file),
         };
     }
-    function enableMentions(configuration) {
+    function initializeMention(configuration) {
         configuration.mention = (0, Mention_1.getMentionConfiguration)();
     }
-    function enableFeatures(element, configuration, features) {
+    function initializeFeatures(element, configuration, features) {
         if (features.attachment) {
-            enableAttachments(element, configuration);
+            initializeAttachment(element, configuration);
         }
         else if (features.media) {
-            enableMedia(element, configuration);
+            initializeMedia(element, configuration);
         }
         if (features.mention) {
-            enableMentions(configuration);
+            initializeMention(configuration);
         }
         if (features.autosave !== "") {
-            enableAutosave(features.autosave, configuration);
+            initializeAutosave(features.autosave, configuration);
         }
         const bbcodes = configuration.woltlabBbcode;
         for (const { name } of bbcodes) {
@@ -159,10 +158,11 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
-        enableFeatures(element, configuration, features);
+        initializeFeatures(element, configuration, features);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);
         if (features.attachment) {
+            (0, Attachment_1.setupInsertAttachment)(editor);
             (0, Attachment_1.setupRemoveAttachment)(editor);
         }
         if (features.autosave) {

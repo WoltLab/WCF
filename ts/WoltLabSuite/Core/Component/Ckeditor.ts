@@ -1,9 +1,8 @@
 import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
-import { setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
+import { setupInsertAttachment, setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
 import { uploadMedia } from "./Ckeditor/Media";
 import { deleteDraft, removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
-import { fire as fireEvent } from "../Event/Handler";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
@@ -77,8 +76,7 @@ class Ckeditor {
   reset(): void {
     this.setHtml("");
 
-    const identifier = this.sourceElement.id;
-    fireEvent("com.woltlab.wcf.ckeditor5", `reset_${identifier}`);
+    this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset"));
   }
 
   get element(): HTMLElement {
@@ -121,15 +119,15 @@ function* findModelForRemoval(
   }
 }
 
-function enableAttachments(element: HTMLElement, configuration: EditorConfig): void {
+function initializeAttachment(element: HTMLElement, configuration: EditorConfig): void {
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element.id, file, abortController),
-    uploadOther: (file: File) => uploadAttachment(element.id, file),
+    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
+    uploadOther: (file: File) => uploadAttachment(element, file),
   };
 }
 
-function enableAutosave(autosave: string, configuration: EditorConfig): void {
+function initializeAutosave(autosave: string, configuration: EditorConfig): void {
   removeExpiredDrafts();
 
   configuration.autosave = {
@@ -143,15 +141,15 @@ function enableAutosave(autosave: string, configuration: EditorConfig): void {
   };
 }
 
-function enableMedia(element: HTMLElement, configuration: EditorConfig): void {
+function initializeMedia(element: HTMLElement, configuration: EditorConfig): void {
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element.id, file, abortController),
-    uploadOther: (file: File) => uploadMedia(element.id, file),
+    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
+    uploadOther: (file: File) => uploadMedia(element, file),
   };
 }
 
-function enableMentions(configuration: EditorConfig): void {
+function initializeMention(configuration: EditorConfig): void {
   configuration.mention = getMentionConfiguration();
 }
 
@@ -161,19 +159,19 @@ type WoltlabBbcodeItem = {
   label: string;
 };
 
-function enableFeatures(element: HTMLElement, configuration: EditorConfig, features: Features): void {
+function initializeFeatures(element: HTMLElement, configuration: EditorConfig, features: Features): void {
   if (features.attachment) {
-    enableAttachments(element, configuration);
+    initializeAttachment(element, configuration);
   } else if (features.media) {
-    enableMedia(element, configuration);
+    initializeMedia(element, configuration);
   }
 
   if (features.mention) {
-    enableMentions(configuration);
+    initializeMention(configuration);
   }
 
   if (features.autosave !== "") {
-    enableAutosave(features.autosave, configuration);
+    initializeAutosave(features.autosave, configuration);
   }
 
   const bbcodes = (configuration as any).woltlabBbcode as WoltlabBbcodeItem[];
@@ -191,12 +189,13 @@ export async function setupCkeditor(
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
 
-  enableFeatures(element, configuration, features);
+  initializeFeatures(element, configuration, features);
 
   const cke = await window.CKEditor5.create(element, configuration);
   const editor = new Ckeditor(cke, features);
 
   if (features.attachment) {
+    setupInsertAttachment(editor);
     setupRemoveAttachment(editor);
   }
 

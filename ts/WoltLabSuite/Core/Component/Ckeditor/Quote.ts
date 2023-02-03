@@ -1,4 +1,3 @@
-import * as EventHandler from "../../Event/Handler";
 import { escapeHTML } from "../../StringUtil";
 import type { CKEditor } from "../Ckeditor";
 
@@ -23,8 +22,8 @@ function insertQuote(editor: CKEditor, content: string, contentIsText: boolean, 
 }
 
 export function setup(editor: CKEditor): void {
-  EventHandler.add("com.woltlab.wcf.ckeditor5", `insertQuote_${editor.sourceElement.id}`, (data: Payload) => {
-    const { author, content, isText, link } = data;
+  editor.sourceElement.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<Payload>) => {
+    const { author, content, isText, link } = event.detail;
 
     insertQuote(editor, content, isText, author, link);
   });

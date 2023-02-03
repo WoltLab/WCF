@@ -1,5 +1,3 @@
-import * as EventHandler from "../../Event/Handler";
-
 type UploadResult = {
   [key: string]: unknown;
   urls: {
@@ -19,9 +17,18 @@ export type MediaDragAndDropEventData = {
   promise?: Promise<MediaData>;
 };
 
-export function uploadMedia(elementId: string, file: File, abortController?: AbortController): Promise<UploadResult> {
+export function uploadMedia(
+  element: HTMLElement,
+  file: File,
+  abortController?: AbortController,
+): Promise<UploadResult> {
   const data: MediaDragAndDropEventData = { abortController, file };
-  EventHandler.fire("com.woltlab.wcf.ckeditor5", `dragAndDrop_${elementId}`, data);
+
+  element.dispatchEvent(
+    new CustomEvent<MediaDragAndDropEventData>("ckeditor5:drop", {
+      detail: data,
+    }),
+  );
 
   // The media system works differently compared to the
   // attachments, because uploading a file will offer

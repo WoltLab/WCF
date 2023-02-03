@@ -115,7 +115,12 @@ class UiPollEditor {
     });
 
     if (this.options.isAjax) {
-      ["handleError", "reset", "submit", "validate"].forEach((event) => {
+      const element = document.getElementById(this.wysiwygId)!;
+      element.addEventListener("reset", () => {
+        this.reset();
+      });
+
+      ["handleError", "submit", "validate"].forEach((event) => {
         EventHandler.add("com.woltlab.wcf.ckeditor5", event + "_" + this.wysiwygId, (...args: unknown[]) =>
           this[event](...args),
         );

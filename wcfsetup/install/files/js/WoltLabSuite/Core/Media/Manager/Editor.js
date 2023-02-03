@@ -39,9 +39,8 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             if (this._options.ckeditor !== undefined) {
                 const ckeditor = this._options.ckeditor;
                 if (!ckeditor.features.attachment) {
-                    const editorId = ckeditor.sourceElement.id;
-                    EventHandler.add("com.woltlab.wcf.ckeditor5", `dragAndDrop_${editorId}`, (data) => {
-                        this._editorUpload(data);
+                    ckeditor.sourceElement.addEventListener("ckeditor5:drop", (event) => {
+                        this._editorUpload(event.detail);
                     });
                 }
             }

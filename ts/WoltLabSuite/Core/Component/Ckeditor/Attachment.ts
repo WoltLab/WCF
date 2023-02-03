@@ -1,4 +1,3 @@
-import * as EventHandler from "../../Event/Handler";
 import type { CKEditor } from "../Ckeditor";
 
 type UploadResult = {
@@ -20,12 +19,17 @@ type DragAndDropEventData = {
 };
 
 export function uploadAttachment(
-  elementId: string,
+  element: HTMLElement,
   file: File,
   abortController?: AbortController,
 ): Promise<UploadResult> {
   const data: DragAndDropEventData = { abortController, file };
-  EventHandler.fire("com.woltlab.wcf.ckeditor5", `dragAndDrop_${elementId}`, data);
+
+  element.dispatchEvent(
+    new CustomEvent<DragAndDropEventData>("ckeditor5:drop", {
+      detail: data,
+    }),
+  );
 
   return new Promise<UploadResult>((resolve) => {
     void data.promise!.then(({ attachmentId, url }) => {
@@ -39,11 +43,32 @@ export function uploadAttachment(
   });
 }
 
+type InsertAttachmentPayload = {
+  attachmentId: number;
+  url: string;
+};
+
+export function setupInsertAttachment(ckeditor: CKEditor): void {
+  ckeditor.sourceElement.addEventListener(
+    "ckeditor5:insert-attachment",
+    (event: CustomEvent<InsertAttachmentPayload>) => {
+      const { attachmentId, url } = event.detail;
+
+      if (url === "") {
+        ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
+      } else {
+        ckeditor.insertHtml(
+          `<img src="${url}" class="woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`,
+        );
+      }
+    },
+  );
+}
+
 export function setupRemoveAttachment(ckeditor: CKEditor): void {
-  EventHandler.add(
-    "com.woltlab.wcf.ckeditor5",
-    `removeEmbeddedAttachment_${ckeditor.sourceElement.id}`,
-    ({ attachmentId }) => {
+  ckeditor.sourceElement.addEventListener(
+    "ckeditor5:remove-attachment",
+    ({ detail: attachmentId }: CustomEvent<number>) => {
       ckeditor.removeAll("imageBlock", { attachmentId });
       ckeditor.removeAll("imageInline", { attachmentId });
     },

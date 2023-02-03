@@ -1,11 +1,12 @@
-define(["require", "exports", "tslib", "../../Event/Handler"], function (require, exports, tslib_1, EventHandler) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.uploadMedia = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    function uploadMedia(elementId, file, abortController) {
+    function uploadMedia(element, file, abortController) {
         const data = { abortController, file };
-        EventHandler.fire("com.woltlab.wcf.ckeditor5", `dragAndDrop_${elementId}`, data);
+        element.dispatchEvent(new CustomEvent("ckeditor5:drop", {
+            detail: data,
+        }));
         // The media system works differently compared to the
         // attachments, because uploading a file will offer
         // the user to insert the content in different formats.

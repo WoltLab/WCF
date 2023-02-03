@@ -1,8 +1,7 @@
-define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"], function (require, exports, tslib_1, EventHandler, StringUtil_1) {
+define(["require", "exports", "../../StringUtil"], function (require, exports, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
     function insertQuote(editor, content, contentIsText, author, link) {
         if (contentIsText) {
             content = (0, StringUtil_1.escapeHTML)(content);
@@ -12,8 +11,8 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"
         editor.insertHtml(`<woltlab-ckeditor-blockquote author="${author}" link="${link}">${content}</woltlab-ckeditor-blockquote>`);
     }
     function setup(editor) {
-        EventHandler.add("com.woltlab.wcf.ckeditor5", `insertQuote_${editor.sourceElement.id}`, (data) => {
-            const { author, content, isText, link } = data;
+        editor.sourceElement.addEventListener("ckeditor5:insert-quote", (event) => {
+            const { author, content, isText, link } = event.detail;
             insertQuote(editor, content, isText, author, link);
         });
     }
