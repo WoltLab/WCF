@@ -1,4 +1,4 @@
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -19,11 +19,7 @@ export type MediaDragAndDropEventData = {
   promise?: Promise<MediaData>;
 };
 
-export function uploadMedia(
-  element: HTMLElement,
-  file: File,
-  abortController?: AbortController,
-): Promise<UploadResult> {
+function uploadMedia(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
   const data: MediaDragAndDropEventData = { abortController, file };
 
   element.dispatchEvent(
@@ -41,10 +37,34 @@ export function uploadMedia(
   return Promise.reject();
 }
 
-export function initializeMedia(element: HTMLElement, configuration: EditorConfig): void {
-  // TODO: The typings do not include our custom plugins yet.
-  (configuration as any).woltlabUpload = {
-    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
-    uploadOther: (file: File) => uploadMedia(element, file),
-  };
+export function setup(element: HTMLElement): void {
+  element.addEventListener(
+    "ckeditor5:configuration",
+    (event: CkeditorConfigurationEvent) => {
+      const { configuration, features } = event.detail;
+
+      if (features.attachment || !features.media) {
+        return;
+      }
+
+      // TODO: The typings do not include our custom plugins yet.
+      (configuration as any).woltlabUpload = {
+        uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
+        uploadOther: (file: File) => uploadMedia(element, file),
+      };
+
+      element.addEventListener(
+        "ckeditor5:ready",
+        ({ detail: ckeditor }: CkeditorReadyEvent) => {
+          void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
+            new MediaManagerEditor({
+              ckeditor,
+            });
+          });
+        },
+        { once: true },
+      );
+    },
+    { once: true },
+  );
 }

@@ -1,7 +1,7 @@
 import { initializeMention } from "./Ckeditor/Mention";
 import { setup as setupQuote } from "./Ckeditor/Quote";
 import { setup as setupAttachment } from "./Ckeditor/Attachment";
-import { initializeMedia } from "./Ckeditor/Media";
+import { setup as setupMedia } from "./Ckeditor/Media";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -145,10 +145,6 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
   const configuration = createConfigurationFor(features);
   (configuration as any).woltlabBbcode = bbcodes;
 
-  if (!features.attachment && features.media) {
-    initializeMedia(element, configuration);
-  }
-
   if (features.mention) {
     initializeMention(configuration);
   }
@@ -185,6 +181,7 @@ export async function setupCkeditor(
   initializeFeatures(element, features);
 
   setupAttachment(element);
+  setupMedia(element);
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 
@@ -193,14 +190,6 @@ export async function setupCkeditor(
 
   if (features.autosave) {
     setupRestoreDraft(cke, features.autosave);
-  }
-
-  if (features.media) {
-    void import("../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
-      new MediaManagerEditor({
-        ckeditor: editor,
-      });
-    });
   }
 
   instances.set(element, editor);

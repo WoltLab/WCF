@@ -1,26 +1,3 @@
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "./Ckeditor/Configuration"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Configuration_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -116,9 +93,6 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
     function initializeConfiguration(element, features, bbcodes) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
         configuration.woltlabBbcode = bbcodes;
-        if (!features.attachment && features.media) {
-            (0, Media_1.initializeMedia)(element, configuration);
-        }
         if (features.mention) {
             (0, Mention_1.initializeMention)(configuration);
         }
@@ -142,18 +116,12 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         }
         initializeFeatures(element, features);
         (0, Attachment_1.setup)(element);
+        (0, Media_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
-        }
-        if (features.media) {
-            void new Promise((resolve_1, reject_1) => { require(["../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
-                new MediaManagerEditor({
-                    ckeditor: editor,
-                });
-            });
         }
         instances.set(element, editor);
         const event = new CustomEvent("ckeditor5:ready", {
