@@ -1,4 +1,6 @@
-import type { CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
+import { listenToCkeditor } from "./Event";
+
+import type { CkeditorConfigurationEvent } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -53,17 +55,13 @@ export function setup(element: HTMLElement): void {
         uploadOther: (file: File) => uploadMedia(element, file),
       };
 
-      element.addEventListener(
-        "ckeditor5:ready",
-        ({ detail: ckeditor }: CkeditorReadyEvent) => {
-          void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
-            new MediaManagerEditor({
-              ckeditor,
-            });
+      listenToCkeditor(element).ready((ckeditor) => {
+        void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
+          new MediaManagerEditor({
+            ckeditor,
           });
-        },
-        { once: true },
-      );
+        });
+      });
     },
     { once: true },
   );

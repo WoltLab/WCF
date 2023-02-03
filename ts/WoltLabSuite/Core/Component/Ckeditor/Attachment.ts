@@ -1,4 +1,6 @@
-import type { CKEditor, CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
+import { listenToCkeditor } from "./Event";
+
+import type { CKEditor, CkeditorConfigurationEvent } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -87,14 +89,10 @@ export function setup(element: HTMLElement): void {
         uploadOther: (file: File) => uploadAttachment(element, file),
       };
 
-      element.addEventListener(
-        "ckeditor5:ready",
-        ({ detail: ckeditor }: CkeditorReadyEvent) => {
-          setupInsertAttachment(ckeditor);
-          setupRemoveAttachment(ckeditor);
-        },
-        { once: true },
-      );
+      listenToCkeditor(element).ready((ckeditor) => {
+        setupInsertAttachment(ckeditor);
+        setupRemoveAttachment(ckeditor);
+      });
     },
     { once: true },
   );

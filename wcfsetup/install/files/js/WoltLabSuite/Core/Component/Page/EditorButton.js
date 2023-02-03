@@ -1,14 +1,14 @@
-define(["require", "exports", "../../Language", "../../Ui/Page/Search"], function (require, exports, Language_1, Search_1) {
+define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Ckeditor/Event"], function (require, exports, Language_1, Search_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    function setupBbcode(editor) {
-        editor.sourceElement.addEventListener("bbcode", (evt) => {
+    function setupBbcode(ckeditor) {
+        ckeditor.sourceElement.addEventListener("bbcode", (evt) => {
             const bbcode = evt.detail;
             if (bbcode === "wsp") {
                 evt.preventDefault();
                 (0, Search_1.open)((articleId) => {
-                    editor.insertText(`[wsp='${articleId}'][/wsp]`);
+                    ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
                 });
             }
         });
@@ -22,9 +22,9 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search"], functio
                 label: (0, Language_1.getPhrase)("wcf.editor.button.page"),
             });
         }, { once: true });
-        element.addEventListener("ckeditor5:ready", (event) => {
-            setupBbcode(event.detail);
-        }, { once: true });
+        (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
+            setupBbcode(ckeditor);
+        });
     }
     exports.setup = setup;
 });

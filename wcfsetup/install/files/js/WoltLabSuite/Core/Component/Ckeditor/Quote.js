@@ -1,4 +1,4 @@
-define(["require", "exports", "../../StringUtil"], function (require, exports, StringUtil_1) {
+define(["require", "exports", "../../StringUtil", "./Event"], function (require, exports, StringUtil_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -12,11 +12,11 @@ define(["require", "exports", "../../StringUtil"], function (require, exports, S
         editor.insertHtml(`<woltlab-ckeditor-blockquote author="${author}" link="${link}">${content}</woltlab-ckeditor-blockquote>`);
     }
     function setup(element) {
-        element.addEventListener("ckeditor5:ready", ({ detail: editor }) => {
+        (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
             element.addEventListener("ckeditor5:insert-quote", (event) => {
-                insertQuote(editor, event.detail);
+                insertQuote(ckeditor, event.detail);
             });
-        }, { once: true });
+        });
     }
     exports.setup = setup;
 });

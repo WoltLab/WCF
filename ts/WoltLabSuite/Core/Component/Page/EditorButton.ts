@@ -1,16 +1,17 @@
 import { getPhrase } from "../../Language";
 import { open as searchPage } from "../../Ui/Page/Search";
+import { listenToCkeditor } from "../Ckeditor/Event";
 
-import type { CKEditor, CkeditorConfigurationEvent, CkeditorReadyEvent } from "../Ckeditor";
+import type { CKEditor, CkeditorConfigurationEvent } from "../Ckeditor";
 
-function setupBbcode(editor: CKEditor): void {
-  editor.sourceElement.addEventListener("bbcode", (evt: CustomEvent<string>) => {
+function setupBbcode(ckeditor: CKEditor): void {
+  ckeditor.sourceElement.addEventListener("bbcode", (evt: CustomEvent<string>) => {
     const bbcode = evt.detail;
     if (bbcode === "wsp") {
       evt.preventDefault();
 
       searchPage((articleId) => {
-        editor.insertText(`[wsp='${articleId}'][/wsp]`);
+        ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
       });
     }
   });
@@ -31,11 +32,7 @@ export function setup(element: HTMLElement) {
     { once: true },
   );
 
-  element.addEventListener(
-    "ckeditor5:ready",
-    (event: CkeditorReadyEvent) => {
-      setupBbcode(event.detail);
-    },
-    { once: true },
-  );
+  listenToCkeditor(element).ready((ckeditor) => {
+    setupBbcode(ckeditor);
+  });
 }

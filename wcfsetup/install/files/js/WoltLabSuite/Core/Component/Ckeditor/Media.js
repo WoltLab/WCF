@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -49,13 +49,13 @@ define(["require", "exports"], function (require, exports) {
                 uploadImage: (file, abortController) => uploadMedia(element, file, abortController),
                 uploadOther: (file) => uploadMedia(element, file),
             };
-            element.addEventListener("ckeditor5:ready", ({ detail: ckeditor }) => {
+            (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
                 void new Promise((resolve_1, reject_1) => { require(["../../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
                     new MediaManagerEditor({
                         ckeditor,
                     });
                 });
-            }, { once: true });
+            });
         }, { once: true });
     }
     exports.setup = setup;

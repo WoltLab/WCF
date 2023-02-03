@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration"], function (require, exports, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1) {
+define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event"], function (require, exports, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -50,7 +50,9 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
         reset() {
             this.setHtml("");
-            this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset"));
+            this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset", {
+                detail: this,
+            }));
         }
         get element() {
             return this.#editor.ui.element;
@@ -122,10 +124,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
         }
         instances.set(element, editor);
-        const event = new CustomEvent("ckeditor5:ready", {
-            detail: editor,
-        });
-        element.dispatchEvent(event);
+        (0, Event_1.dispatchToCkeditor)(element).ready(editor);
         return editor;
     }
     exports.setupCkeditor = setupCkeditor;

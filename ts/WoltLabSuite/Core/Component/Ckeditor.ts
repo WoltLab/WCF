@@ -8,6 +8,7 @@ import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiced
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
+import { dispatchToCkeditor } from "./Ckeditor/Event";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -146,9 +147,6 @@ type CkeditorConfigurationEventPayload = {
 };
 export type CkeditorConfigurationEvent = CustomEvent<CkeditorConfigurationEventPayload>;
 
-type CkeditorReadyEventPayload = CKEditor;
-export type CkeditorReadyEvent = CustomEvent<CkeditorReadyEventPayload>;
-
 function initializeConfiguration(element: HTMLElement, features: Features, bbcodes: WoltlabBbcodeItem[]): EditorConfig {
   const configuration = createConfigurationFor(features);
   (configuration as any).woltlabBbcode = bbcodes;
@@ -200,10 +198,7 @@ export async function setupCkeditor(
 
   instances.set(element, editor);
 
-  const event = new CustomEvent<CkeditorReadyEventPayload>("ckeditor5:ready", {
-    detail: editor,
-  });
-  element.dispatchEvent(event);
+  dispatchToCkeditor(element).ready(editor);
 
   return editor;
 }

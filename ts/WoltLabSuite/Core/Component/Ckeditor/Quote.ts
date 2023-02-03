@@ -1,6 +1,7 @@
 import { escapeHTML } from "../../StringUtil";
+import { listenToCkeditor } from "./Event";
 
-import type { CKEditor, CkeditorReadyEvent } from "../Ckeditor";
+import type { CKEditor } from "../Ckeditor";
 
 function insertQuote(editor: CKEditor, payload: CkeditorInsertQuoteEventPayload) {
   let { author, content, link } = payload;
@@ -26,13 +27,9 @@ type CkeditorInsertQuoteEventPayload = {
 export type CkeditorInsertQuoteEvent = CustomEvent<CkeditorInsertQuoteEventPayload>;
 
 export function setup(element: HTMLElement): void {
-  element.addEventListener(
-    "ckeditor5:ready",
-    ({ detail: editor }: CkeditorReadyEvent) => {
-      element.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<CkeditorInsertQuoteEventPayload>) => {
-        insertQuote(editor, event.detail);
-      });
-    },
-    { once: true },
-  );
+  listenToCkeditor(element).ready((ckeditor) => {
+    element.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<CkeditorInsertQuoteEventPayload>) => {
+      insertQuote(ckeditor, event.detail);
+    });
+  });
 }

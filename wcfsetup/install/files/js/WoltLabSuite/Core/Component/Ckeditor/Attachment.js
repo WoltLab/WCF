@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -46,10 +46,10 @@ define(["require", "exports"], function (require, exports) {
                 uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
                 uploadOther: (file) => uploadAttachment(element, file),
             };
-            element.addEventListener("ckeditor5:ready", ({ detail: ckeditor }) => {
+            (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
                 setupInsertAttachment(ckeditor);
                 setupRemoveAttachment(ckeditor);
-            }, { once: true });
+            });
         }, { once: true });
     }
     exports.setup = setup;
