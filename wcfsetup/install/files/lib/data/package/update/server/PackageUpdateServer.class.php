@@ -87,7 +87,7 @@ class PackageUpdateServer extends DatabaseObject
      * @param int[] $packageUpdateServerIDs
      * @return  PackageUpdateServer[]
      */
-    final public static function getActiveUpdateServers(array $packageUpdateServerIDs = [])
+    final public static function getActiveUpdateServers(array $packageUpdateServerIDs = []): array
     {
         if (!empty($packageUpdateServerIDs)) {
             throw new \InvalidArgumentException("Filtering package update servers by ID is no longer supported.");
@@ -163,7 +163,7 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * @deprecated 6.0 This method was only used in PackageUpdateServerAddForm.
      */
-    public static function isValidServerURL($serverURL)
+    public static function isValidServerURL($serverURL): bool
     {
         $parsedURL = Url::parse($serverURL);
 
@@ -219,7 +219,7 @@ class PackageUpdateServer extends DatabaseObject
         #[\SensitiveParameter]
         $password,
         $saveCredentials = false
-    ) {
+    ): void {
         $packageUpdateAuthData = @\unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
         if ($packageUpdateAuthData === null || !\is_array($packageUpdateAuthData)) {
             $packageUpdateAuthData = [];
@@ -245,20 +245,16 @@ class PackageUpdateServer extends DatabaseObject
 
     /**
      * Returns true if update server requires license data instead of username/password.
-     *
-     * @return  int
      */
-    final public function requiresLicense()
+    final public function requiresLicense(): bool
     {
-        return Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);
+        return !!Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);
     }
 
     /**
      * Returns the highlighted server URL.
-     *
-     * @return  string
      */
-    public function getHighlightedURL()
+    public function getHighlightedURL(): string
     {
         $host = Url::parse($this->serverURL)['host'];
 
@@ -267,10 +263,8 @@ class PackageUpdateServer extends DatabaseObject
 
     /**
      * Returns the list endpoint for package servers.
-     *
-     * @return  string
      */
-    public function getListURL()
+    public function getListURL(): string
     {
         $url = new Uri($this->serverURL);
 
@@ -287,10 +281,8 @@ class PackageUpdateServer extends DatabaseObject
 
     /**
      * Returns the download endpoint for package servers.
-     *
-     * @return  string
      */
-    public function getDownloadURL()
+    public function getDownloadURL(): string
     {
         $url = new Uri($this->serverURL);
 
@@ -314,7 +306,7 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * @deprecated 6.0 This method always returns true. Package servers must use TLS.
      */
-    public function attemptSecureConnection()
+    public function attemptSecureConnection(): bool
     {
         return true;
     }
@@ -322,10 +314,9 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns whether the current user may delete this update server.
      *
-     * @return      bool
      * @since       5.3
      */
-    final public function canDelete()
+    final public function canDelete(): bool
     {
         return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
     }
@@ -333,30 +324,25 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns whether the current user may disable this update server.
      *
-     * @return      bool
      * @since       5.3
      */
-    final public function canDisable()
+    final public function canDisable(): bool
     {
         return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
     }
 
     /**
      * Returns true if the host is `update.woltlab.com`.
-     *
-     * @return      bool
      */
-    final public function isWoltLabUpdateServer()
+    final public function isWoltLabUpdateServer(): bool
     {
         return Url::parse($this->serverURL)['host'] === 'update.woltlab.com';
     }
 
     /**
      * Returns true if the host is `store.woltlab.com`.
-     *
-     * @return      bool
      */
-    final public function isWoltLabStoreServer()
+    final public function isWoltLabStoreServer(): bool
     {
         return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
     }
@@ -364,10 +350,8 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns true if this server is trusted and is therefore allowed to distribute
      * official updates for packages whose identifier starts with "com.woltlab.".
-     *
-     * @return      bool
      */
-    final public function isTrustedServer()
+    final public function isTrustedServer(): bool
     {
         return $this->isWoltLabUpdateServer();
     }
@@ -375,10 +359,9 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns whether the official update servers will point to WCF::AVAILABLE_UPGRADE_VERSION.
      *
-     * @return bool
      * @since 5.3
      */
-    final public static function isUpgradeOverrideEnabled()
+    final public static function isUpgradeOverrideEnabled(): bool
     {
         if (WCF::AVAILABLE_UPGRADE_VERSION === null) {
             return false;
@@ -406,7 +389,7 @@ class PackageUpdateServer extends DatabaseObject
      * Resets all update servers into their original state and purges
      * the package cache.
      */
-    public static function resetAll()
+    public static function resetAll(): void
     {
         // purge package cache
         WCF::getDB()->prepareStatement("DELETE FROM wcf" . WCF_N . "_package_update")->execute();
