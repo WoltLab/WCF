@@ -86,9 +86,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
     }
     function initializeFeatures(element, features) {
-        element.dispatchEvent(new CustomEvent("ckeditor5:features", {
-            detail: features,
-        }));
+        (0, Event_1.dispatchToCkeditor)(element).features(features);
         Object.freeze(features);
     }
     function initializeConfiguration(element, features, bbcodes) {
@@ -97,12 +95,10 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
-        element.dispatchEvent(new CustomEvent("ckeditor5:configuration", {
-            detail: {
-                configuration,
-                features,
-            },
-        }));
+        (0, Event_1.dispatchToCkeditor)(element).configuration({
+            configuration,
+            features,
+        });
         for (const { name } of bbcodes) {
             configuration.toolbar.push(`woltlabBbcode_${name}`);
         }

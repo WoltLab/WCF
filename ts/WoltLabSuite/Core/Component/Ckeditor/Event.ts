@@ -1,10 +1,19 @@
 import type { CKEditor } from "../Ckeditor";
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { Features } from "./Configuration";
 
 const enum EventNames {
   Ready = "ckeditor5:ready",
+  SetupConfiguration = "ckeditor5:setup-configuration",
+  SetupFeatures = "ckeditor5:setup-features",
 }
 
-type CkeditorReadyEventPayload = CKEditor;
+type ReadyEventPayload = CKEditor;
+type SetupFeaturesEventPayload = Features;
+type SetupConfigurationEventPayload = {
+  configuration: EditorConfig;
+  features: Features;
+};
 
 class EventDispatcher {
   readonly #element: HTMLElement;
@@ -13,9 +22,25 @@ class EventDispatcher {
     this.#element = element;
   }
 
-  ready(payload: CkeditorReadyEventPayload): void {
+  configuration(payload: SetupConfigurationEventPayload): void {
     this.#element.dispatchEvent(
-      new CustomEvent<CkeditorReadyEventPayload>(EventNames.Ready, {
+      new CustomEvent<SetupConfigurationEventPayload>(EventNames.SetupConfiguration, {
+        detail: payload,
+      }),
+    );
+  }
+
+  features(payload: SetupFeaturesEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<SetupFeaturesEventPayload>(EventNames.SetupFeatures, {
+        detail: payload,
+      }),
+    );
+  }
+
+  ready(payload: ReadyEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<ReadyEventPayload>(EventNames.Ready, {
         detail: payload,
       }),
     );
@@ -29,10 +54,30 @@ class EventListener {
     this.#element = element;
   }
 
-  ready(callback: (payload: CkeditorReadyEventPayload) => void): void {
+  configuration(callback: (payload: SetupConfigurationEventPayload) => void): void {
+    this.#element.addEventListener(
+      EventNames.SetupConfiguration,
+      (event: CustomEvent<SetupConfigurationEventPayload>) => {
+        callback(event.detail);
+      },
+      { once: true },
+    );
+  }
+
+  features(callback: (payload: SetupFeaturesEventPayload) => void): void {
+    this.#element.addEventListener(
+      EventNames.SetupFeatures,
+      (event: CustomEvent<SetupFeaturesEventPayload>) => {
+        callback(event.detail);
+      },
+      { once: true },
+    );
+  }
+
+  ready(callback: (payload: ReadyEventPayload) => void): void {
     this.#element.addEventListener(
       EventNames.Ready,
-      (event: CustomEvent<CkeditorReadyEventPayload>) => {
+      (event: CustomEvent<ReadyEventPayload>) => {
         callback(event.detail);
       },
       { once: true },

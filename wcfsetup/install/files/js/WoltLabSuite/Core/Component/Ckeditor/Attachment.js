@@ -36,8 +36,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         });
     }
     function setup(element) {
-        element.addEventListener("ckeditor5:configuration", (event) => {
-            const { configuration, features } = event.detail;
+        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration, features }) => {
             if (!features.attachment) {
                 return;
             }
@@ -50,7 +49,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 setupInsertAttachment(ckeditor);
                 setupRemoveAttachment(ckeditor);
             });
-        }, { once: true });
+        });
     }
     exports.setup = setup;
 });

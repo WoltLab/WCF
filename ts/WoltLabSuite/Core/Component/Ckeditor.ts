@@ -13,7 +13,7 @@ import { dispatchToCkeditor } from "./Ckeditor/Event";
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 type CkeditorResetEventPayload = CKEditor;
-export type CkeditorResetEvent = CustomEvent<CkeditorConfigurationEventPayload>;
+export type CkeditorResetEvent = CustomEvent<CkeditorResetEventPayload>;
 
 class Ckeditor {
   readonly #editor: ClassicEditor;
@@ -129,23 +129,11 @@ type WoltlabBbcodeItem = {
   label: string;
 };
 
-type CkeditorFeaturesEventPayload = Features;
-export type CkeditorFeaturesEvent = CustomEvent<CkeditorFeaturesEventPayload>;
-
 function initializeFeatures(element: HTMLElement, features: Features): void {
-  element.dispatchEvent(
-    new CustomEvent<CkeditorFeaturesEventPayload>("ckeditor5:features", {
-      detail: features,
-    }),
-  );
+  dispatchToCkeditor(element).features(features);
+
   Object.freeze(features);
 }
-
-type CkeditorConfigurationEventPayload = {
-  configuration: EditorConfig;
-  features: Features;
-};
-export type CkeditorConfigurationEvent = CustomEvent<CkeditorConfigurationEventPayload>;
 
 function initializeConfiguration(element: HTMLElement, features: Features, bbcodes: WoltlabBbcodeItem[]): EditorConfig {
   const configuration = createConfigurationFor(features);
@@ -155,14 +143,10 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
     initializeAutosave(features.autosave, configuration);
   }
 
-  element.dispatchEvent(
-    new CustomEvent<CkeditorConfigurationEventPayload>("ckeditor5:configuration", {
-      detail: {
-        configuration,
-        features,
-      },
-    }),
-  );
+  dispatchToCkeditor(element).configuration({
+    configuration,
+    features,
+  });
 
   for (const { name } of bbcodes) {
     (configuration.toolbar as any).push(`woltlabBbcode_${name}`);

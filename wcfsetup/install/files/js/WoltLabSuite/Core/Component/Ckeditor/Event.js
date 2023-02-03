@@ -7,6 +7,16 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        configuration(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:setup-configuration" /* EventNames.SetupConfiguration */, {
+                detail: payload,
+            }));
+        }
+        features(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:setup-features" /* EventNames.SetupFeatures */, {
+                detail: payload,
+            }));
+        }
         ready(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
                 detail: payload,
@@ -17,6 +27,16 @@ define(["require", "exports"], function (require, exports) {
         #element;
         constructor(element) {
             this.#element = element;
+        }
+        configuration(callback) {
+            this.#element.addEventListener("ckeditor5:setup-configuration" /* EventNames.SetupConfiguration */, (event) => {
+                callback(event.detail);
+            }, { once: true });
+        }
+        features(callback) {
+            this.#element.addEventListener("ckeditor5:setup-features" /* EventNames.SetupFeatures */, (event) => {
+                callback(event.detail);
+            }, { once: true });
         }
         ready(callback) {
             this.#element.addEventListener("ckeditor5:ready" /* EventNames.Ready */, (event) => {

@@ -1,8 +1,8 @@
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 
-import type { CkeditorConfigurationEvent } from "../Ckeditor";
 import type { MentionConfig } from "@ckeditor/ckeditor5-mention/src/mention";
+import { listenToCkeditor } from "./Event";
 
 type SearchResultItem = {
   avatarTag: string;
@@ -60,17 +60,11 @@ function getMentionConfiguration(): MentionConfig {
 }
 
 export function setup(element: HTMLElement): void {
-  element.addEventListener(
-    "ckeditor5:configuration",
-    (event: CkeditorConfigurationEvent) => {
-      const { configuration, features } = event.detail;
+  listenToCkeditor(element).configuration(({ configuration, features }) => {
+    if (!features.mention) {
+      return;
+    }
 
-      if (!features.mention) {
-        return;
-      }
-
-      configuration.mention = getMentionConfiguration();
-    },
-    { once: true },
-  );
+    configuration.mention = getMentionConfiguration();
+  });
 }

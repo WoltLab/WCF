@@ -14,14 +14,13 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Cked
         });
     }
     function setup(element) {
-        element.addEventListener("ckeditor5:configuration", (event) => {
-            const { configuration } = event.detail;
+        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration }) => {
             configuration.woltlabBbcode.push({
                 icon: "file-lines;false",
                 name: "wsp",
                 label: (0, Language_1.getPhrase)("wcf.editor.button.page"),
             });
-        }, { once: true });
+        });
         (0, Event_1.listenToCkeditor)(element).ready((ckeditor) => {
             setupBbcode(ckeditor);
         });

@@ -1,6 +1,6 @@
 import { listenToCkeditor } from "./Event";
 
-import type { CKEditor, CkeditorConfigurationEvent } from "../Ckeditor";
+import type { CKEditor } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -74,26 +74,20 @@ function setupRemoveAttachment(ckeditor: CKEditor): void {
 }
 
 export function setup(element: HTMLElement): void {
-  element.addEventListener(
-    "ckeditor5:configuration",
-    (event: CkeditorConfigurationEvent) => {
-      const { configuration, features } = event.detail;
+  listenToCkeditor(element).configuration(({ configuration, features }) => {
+    if (!features.attachment) {
+      return;
+    }
 
-      if (!features.attachment) {
-        return;
-      }
+    // TODO: The typings do not include our custom plugins yet.
+    (configuration as any).woltlabUpload = {
+      uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
+      uploadOther: (file: File) => uploadAttachment(element, file),
+    };
 
-      // TODO: The typings do not include our custom plugins yet.
-      (configuration as any).woltlabUpload = {
-        uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
-        uploadOther: (file: File) => uploadAttachment(element, file),
-      };
-
-      listenToCkeditor(element).ready((ckeditor) => {
-        setupInsertAttachment(ckeditor);
-        setupRemoveAttachment(ckeditor);
-      });
-    },
-    { once: true },
-  );
+    listenToCkeditor(element).ready((ckeditor) => {
+      setupInsertAttachment(ckeditor);
+      setupRemoveAttachment(ckeditor);
+    });
+  });
 }

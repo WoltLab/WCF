@@ -1,7 +1,5 @@
 import { listenToCkeditor } from "./Event";
 
-import type { CkeditorConfigurationEvent } from "../Ckeditor";
-
 type UploadResult = {
   [key: string]: unknown;
   urls: {
@@ -40,29 +38,23 @@ function uploadMedia(element: HTMLElement, file: File, abortController?: AbortCo
 }
 
 export function setup(element: HTMLElement): void {
-  element.addEventListener(
-    "ckeditor5:configuration",
-    (event: CkeditorConfigurationEvent) => {
-      const { configuration, features } = event.detail;
+  listenToCkeditor(element).configuration(({ configuration, features }) => {
+    if (features.attachment || !features.media) {
+      return;
+    }
 
-      if (features.attachment || !features.media) {
-        return;
-      }
+    // TODO: The typings do not include our custom plugins yet.
+    (configuration as any).woltlabUpload = {
+      uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
+      uploadOther: (file: File) => uploadMedia(element, file),
+    };
 
-      // TODO: The typings do not include our custom plugins yet.
-      (configuration as any).woltlabUpload = {
-        uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
-        uploadOther: (file: File) => uploadMedia(element, file),
-      };
-
-      listenToCkeditor(element).ready((ckeditor) => {
-        void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
-          new MediaManagerEditor({
-            ckeditor,
-          });
+    listenToCkeditor(element).ready((ckeditor) => {
+      void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
+        new MediaManagerEditor({
+          ckeditor,
         });
       });
-    },
-    { once: true },
-  );
+    });
+  });
 }

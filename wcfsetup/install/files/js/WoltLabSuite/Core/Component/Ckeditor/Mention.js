@@ -1,4 +1,4 @@
-define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function (require, exports, Backend_1, Util_1) {
+define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"], function (require, exports, Backend_1, Util_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -40,13 +40,12 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function 
         };
     }
     function setup(element) {
-        element.addEventListener("ckeditor5:configuration", (event) => {
-            const { configuration, features } = event.detail;
+        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration, features }) => {
             if (!features.mention) {
                 return;
             }
             configuration.mention = getMentionConfiguration();
-        }, { once: true });
+        });
     }
     exports.setup = setup;
 });
