@@ -5,11 +5,9 @@
 <script data-relocate="true">
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",
-		"WoltLabSuite/Core/Component/Ckeditor/Configuration",
 		"/wcf/editor/dist/bundle.js",
 	], (
 		{ setupCkeditor },
-		{ createConfiguration },
 	) => {
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
@@ -17,6 +15,9 @@
 		{jsphrase name='wcf.editor.restoreDraft'}
 
 		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
+		if (element === null) {
+			throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.")
+		}
 
 		const features = {
 			attachment: element.dataset.disableAttachments !== "true",
@@ -29,13 +30,7 @@
 			url: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}true{else}false{/if},
 		};
 
-		element.dispatchEvent(
-			new CustomEvent("ckeditor5:features", {
-				detail: features,
-			}),
-		);
-
-		const woltlabBbcode = [
+		const bbcodes = [
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
 					icon: '{@$__bbcode->wysiwygIcon|encodeJS}',
@@ -45,22 +40,13 @@
 			{/foreach}
 		];
 		if (features.media) {
-			woltlabBbcode.push({
+			bbcodes.push({
 				icon: "file-circle-plus;false",
 				name: "media",
 				label: '{jslang}wcf.editor.button.media{/jslang}',
 			});
 		}
 
-		const config = createConfiguration(element, features);
-		config.woltlabBbcode = woltlabBbcode;
-
-		element.dispatchEvent(
-			new CustomEvent("ckeditor5:config", {
-				detail: config,
-			}),
-		);
-
-		void setupCkeditor(element, config, features);
+		void setupCkeditor(element, features, bbcodes);
 	});
 </script>

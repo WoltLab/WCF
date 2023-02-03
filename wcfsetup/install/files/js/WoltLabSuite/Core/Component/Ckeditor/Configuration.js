@@ -1,8 +1,8 @@
 define(["require", "exports", "../../Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createConfiguration = void 0;
-    function createConfiguration(features) {
+    exports.createConfigurationFor = void 0;
+    function createConfigurationFor(features) {
         const toolbar = [
             "heading",
             "|",
@@ -57,5 +57,5 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         };
         return config;
     }
-    exports.createConfiguration = createConfiguration;
+    exports.createConfigurationFor = createConfigurationFor;
 });

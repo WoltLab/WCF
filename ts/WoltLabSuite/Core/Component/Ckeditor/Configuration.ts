@@ -17,7 +17,7 @@ export type Features = {
   url: boolean;
 };
 
-export function createConfiguration(features: Features): EditorConfig {
+export function createConfigurationFor(features: Features): EditorConfig {
   const toolbar: ToolbarConfig = [
     "heading",
 

@@ -14,7 +14,7 @@ define(["require", "exports", "../../Language", "../../Ui/Article/Search"], func
         });
     }
     function setup(element) {
-        element.addEventListener("ckeditor5:config", (event) => {
+        element.addEventListener("ckeditor5:configuration", (event) => {
             event.detail.woltlabBbcode.push({
                 icon: "file-word;false",
                 name: "wsa",

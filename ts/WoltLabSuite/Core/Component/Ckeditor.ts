@@ -7,7 +7,7 @@ import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/A
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
-import type { Features } from "./Ckeditor/Configuration";
+import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -17,8 +17,6 @@ class Ckeditor {
 
   constructor(editor: ClassicEditor, features: Features) {
     this.#editor = editor;
-
-    Object.freeze(features);
     this.#features = features;
 
     setupQuotes(this);
@@ -125,7 +123,17 @@ type WoltlabBbcodeItem = {
   label: string;
 };
 
-function initializeFeatures(element: HTMLElement, configuration: EditorConfig, features: Features): void {
+function initializeFeatures(element: HTMLElement, features: Features): void {
+  element.dispatchEvent(
+    new CustomEvent<Features>("ckeditor5:features", {
+      detail: features,
+    }),
+  );
+  Object.freeze(features);
+}
+
+function initializeConfiguration(element: HTMLElement, features: Features, bbcodes: WoltlabBbcodeItem[]): EditorConfig {
+  const configuration = createConfigurationFor(features);
   if (features.attachment) {
     initializeAttachment(element, configuration);
   } else if (features.media) {
@@ -140,22 +148,33 @@ function initializeFeatures(element: HTMLElement, configuration: EditorConfig, f
     initializeAutosave(features.autosave, configuration);
   }
 
-  const bbcodes = (configuration as any).woltlabBbcode as WoltlabBbcodeItem[];
+  (configuration as any).woltlabBbcode = bbcodes;
+
+  element.dispatchEvent(
+    new CustomEvent("ckeditor5:configuration", {
+      detail: configuration,
+    }),
+  );
+
   for (const { name } of bbcodes) {
     (configuration.toolbar as any).push(`woltlabBbcode_${name}`);
   }
+
+  return configuration;
 }
 
 export async function setupCkeditor(
   element: HTMLElement,
-  configuration: EditorConfig,
   features: Features,
+  bbcodes: WoltlabBbcodeItem[],
 ): Promise<CKEditor> {
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
 
-  initializeFeatures(element, configuration, features);
+  initializeFeatures(element, features);
+
+  const configuration = initializeConfiguration(element, features, bbcodes);
 
   const cke = await window.CKEditor5.create(element, configuration);
   const editor = new Ckeditor(cke, features);

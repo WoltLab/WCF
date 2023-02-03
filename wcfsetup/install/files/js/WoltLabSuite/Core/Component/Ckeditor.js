@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "./Ckeditor/Configuration"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Configuration_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -31,7 +31,6 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         #features;
         constructor(editor, features) {
             this.#editor = editor;
-            Object.freeze(features);
             this.#features = features;
             (0, Quote_1.setup)(this);
         }
@@ -108,7 +107,14 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
         }
     }
-    function initializeFeatures(element, configuration, features) {
+    function initializeFeatures(element, features) {
+        element.dispatchEvent(new CustomEvent("ckeditor5:features", {
+            detail: features,
+        }));
+        Object.freeze(features);
+    }
+    function initializeConfiguration(element, features, bbcodes) {
+        const configuration = (0, Configuration_1.createConfigurationFor)(features);
         if (features.attachment) {
             (0, Attachment_1.initializeAttachment)(element, configuration);
         }
@@ -121,16 +127,21 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
-        const bbcodes = configuration.woltlabBbcode;
+        configuration.woltlabBbcode = bbcodes;
+        element.dispatchEvent(new CustomEvent("ckeditor5:configuration", {
+            detail: configuration,
+        }));
         for (const { name } of bbcodes) {
             configuration.toolbar.push(`woltlabBbcode_${name}`);
         }
+        return configuration;
     }
-    async function setupCkeditor(element, configuration, features) {
+    async function setupCkeditor(element, features, bbcodes) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
-        initializeFeatures(element, configuration, features);
+        initializeFeatures(element, features);
+        const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);
         if (features.attachment) {

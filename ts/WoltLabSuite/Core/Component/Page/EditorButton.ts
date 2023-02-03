@@ -18,7 +18,7 @@ function setupBbcode(editor: CKEditor): void {
 
 export function setup(element: HTMLElement) {
   element.addEventListener(
-    "ckeditor5:config",
+    "ckeditor5:configuration",
     (event: CustomEvent<EditorConfig>) => {
       (event.detail as any).woltlabBbcode.push({
         icon: "file-lines;false",
