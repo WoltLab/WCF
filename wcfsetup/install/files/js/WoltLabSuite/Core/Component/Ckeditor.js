@@ -50,9 +50,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
         reset() {
             this.setHtml("");
-            this.sourceElement.dispatchEvent(new CustomEvent("ckeditor5:reset", {
-                detail: this,
-            }));
+            (0, Event_1.dispatchToCkeditor)(this.sourceElement).reset(this);
         }
         get element() {
             return this.#editor.ui.element;
@@ -86,7 +84,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         }
     }
     function initializeFeatures(element, features) {
-        (0, Event_1.dispatchToCkeditor)(element).features(features);
+        (0, Event_1.dispatchToCkeditor)(element).setupFeatures(features);
         Object.freeze(features);
     }
     function initializeConfiguration(element, features, bbcodes) {
@@ -95,7 +93,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
-        (0, Event_1.dispatchToCkeditor)(element).configuration({
+        (0, Event_1.dispatchToCkeditor)(element).setupConfiguration({
             configuration,
             features,
         });

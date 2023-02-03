@@ -40,7 +40,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
         };
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration, features }) => {
+        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
             if (!features.mention) {
                 return;
             }

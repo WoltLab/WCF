@@ -4,11 +4,13 @@ import type { Features } from "./Configuration";
 
 const enum EventNames {
   Ready = "ckeditor5:ready",
+  Reset = "ckeditor5:reset",
   SetupConfiguration = "ckeditor5:setup-configuration",
   SetupFeatures = "ckeditor5:setup-features",
 }
 
 type ReadyEventPayload = CKEditor;
+type ResetEventPayload = CKEditor;
 type SetupFeaturesEventPayload = Features;
 type SetupConfigurationEventPayload = {
   configuration: EditorConfig;
@@ -22,7 +24,23 @@ class EventDispatcher {
     this.#element = element;
   }
 
-  configuration(payload: SetupConfigurationEventPayload): void {
+  ready(payload: ReadyEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<ReadyEventPayload>(EventNames.Ready, {
+        detail: payload,
+      }),
+    );
+  }
+
+  reset(payload: ResetEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<ResetEventPayload>(EventNames.Reset, {
+        detail: payload,
+      }),
+    );
+  }
+
+  setupConfiguration(payload: SetupConfigurationEventPayload): void {
     this.#element.dispatchEvent(
       new CustomEvent<SetupConfigurationEventPayload>(EventNames.SetupConfiguration, {
         detail: payload,
@@ -30,17 +48,9 @@ class EventDispatcher {
     );
   }
 
-  features(payload: SetupFeaturesEventPayload): void {
+  setupFeatures(payload: SetupFeaturesEventPayload): void {
     this.#element.dispatchEvent(
       new CustomEvent<SetupFeaturesEventPayload>(EventNames.SetupFeatures, {
-        detail: payload,
-      }),
-    );
-  }
-
-  ready(payload: ReadyEventPayload): void {
-    this.#element.dispatchEvent(
-      new CustomEvent<ReadyEventPayload>(EventNames.Ready, {
         detail: payload,
       }),
     );
@@ -54,7 +64,23 @@ class EventListener {
     this.#element = element;
   }
 
-  configuration(callback: (payload: SetupConfigurationEventPayload) => void): void {
+  ready(callback: (payload: ReadyEventPayload) => void): void {
+    this.#element.addEventListener(
+      EventNames.Ready,
+      (event: CustomEvent<ReadyEventPayload>) => {
+        callback(event.detail);
+      },
+      { once: true },
+    );
+  }
+
+  reset(callback: (payload: ResetEventPayload) => void): void {
+    this.#element.addEventListener(EventNames.Reset, (event: CustomEvent<ResetEventPayload>) => {
+      callback(event.detail);
+    });
+  }
+
+  setupConfiguration(callback: (payload: SetupConfigurationEventPayload) => void): void {
     this.#element.addEventListener(
       EventNames.SetupConfiguration,
       (event: CustomEvent<SetupConfigurationEventPayload>) => {
@@ -64,20 +90,10 @@ class EventListener {
     );
   }
 
-  features(callback: (payload: SetupFeaturesEventPayload) => void): void {
+  setupFeatures(callback: (payload: SetupFeaturesEventPayload) => void): void {
     this.#element.addEventListener(
       EventNames.SetupFeatures,
       (event: CustomEvent<SetupFeaturesEventPayload>) => {
-        callback(event.detail);
-      },
-      { once: true },
-    );
-  }
-
-  ready(callback: (payload: ReadyEventPayload) => void): void {
-    this.#element.addEventListener(
-      EventNames.Ready,
-      (event: CustomEvent<ReadyEventPayload>) => {
         callback(event.detail);
       },
       { once: true },

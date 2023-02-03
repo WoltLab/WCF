@@ -7,18 +7,23 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
-        configuration(payload) {
+        ready(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
+                detail: payload,
+            }));
+        }
+        reset(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:reset" /* EventNames.Reset */, {
+                detail: payload,
+            }));
+        }
+        setupConfiguration(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:setup-configuration" /* EventNames.SetupConfiguration */, {
                 detail: payload,
             }));
         }
-        features(payload) {
+        setupFeatures(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:setup-features" /* EventNames.SetupFeatures */, {
-                detail: payload,
-            }));
-        }
-        ready(payload) {
-            this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
                 detail: payload,
             }));
         }
@@ -28,18 +33,23 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
-        configuration(callback) {
+        ready(callback) {
+            this.#element.addEventListener("ckeditor5:ready" /* EventNames.Ready */, (event) => {
+                callback(event.detail);
+            }, { once: true });
+        }
+        reset(callback) {
+            this.#element.addEventListener("ckeditor5:reset" /* EventNames.Reset */, (event) => {
+                callback(event.detail);
+            });
+        }
+        setupConfiguration(callback) {
             this.#element.addEventListener("ckeditor5:setup-configuration" /* EventNames.SetupConfiguration */, (event) => {
                 callback(event.detail);
             }, { once: true });
         }
-        features(callback) {
+        setupFeatures(callback) {
             this.#element.addEventListener("ckeditor5:setup-features" /* EventNames.SetupFeatures */, (event) => {
-                callback(event.detail);
-            }, { once: true });
-        }
-        ready(callback) {
-            this.#element.addEventListener("ckeditor5:ready" /* EventNames.Ready */, (event) => {
                 callback(event.detail);
             }, { once: true });
         }

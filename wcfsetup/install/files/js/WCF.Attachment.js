@@ -109,11 +109,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
 				this._insertAllButton.show();
 			}
+
+			require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ listenToCkeditor }) => {
+				listenToCkeditor(this._sourceElement).reset(() => {
+					this._reset();
+				});
+			});
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'submit_' + this._editorId, this._submitInline.bind(this));
-			this._sourceElement.addEventListener("ckeditor5:reset", () => {
-				this._reset();
-			});
 			this._sourceElement.addEventListener("ckeditor5:drop", (event) => {
 				this._editorUpload(event.detail);
 			});

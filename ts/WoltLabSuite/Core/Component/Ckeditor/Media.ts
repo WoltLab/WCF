@@ -38,7 +38,7 @@ function uploadMedia(element: HTMLElement, file: File, abortController?: AbortCo
 }
 
 export function setup(element: HTMLElement): void {
-  listenToCkeditor(element).configuration(({ configuration, features }) => {
+  listenToCkeditor(element).setupConfiguration(({ configuration, features }) => {
     if (features.attachment || !features.media) {
       return;
     }

@@ -14,7 +14,7 @@ define(["require", "exports", "../../Language", "../../Ui/Article/Search", "../C
         });
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration }) => {
+        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration }) => {
             configuration.woltlabBbcode.push({
                 icon: "file-word;false",
                 name: "wsa",

@@ -60,7 +60,7 @@ function getMentionConfiguration(): MentionConfig {
 }
 
 export function setup(element: HTMLElement): void {
-  listenToCkeditor(element).configuration(({ configuration, features }) => {
+  listenToCkeditor(element).setupConfiguration(({ configuration, features }) => {
     if (!features.mention) {
       return;
     }

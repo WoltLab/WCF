@@ -74,7 +74,7 @@ function setupRemoveAttachment(ckeditor: CKEditor): void {
 }
 
 export function setup(element: HTMLElement): void {
-  listenToCkeditor(element).configuration(({ configuration, features }) => {
+  listenToCkeditor(element).setupConfiguration(({ configuration, features }) => {
     if (!features.attachment) {
       return;
     }

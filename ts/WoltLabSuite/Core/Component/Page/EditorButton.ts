@@ -18,7 +18,7 @@ function setupBbcode(ckeditor: CKEditor): void {
 }
 
 export function setup(element: HTMLElement) {
-  listenToCkeditor(element).configuration(({ configuration }) => {
+  listenToCkeditor(element).setupConfiguration(({ configuration }) => {
     (configuration as any).woltlabBbcode.push({
       icon: "file-lines;false",
       name: "wsp",

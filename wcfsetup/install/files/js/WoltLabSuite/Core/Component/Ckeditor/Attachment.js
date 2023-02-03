@@ -36,7 +36,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         });
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration, features }) => {
+        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
             if (!features.attachment) {
                 return;
             }

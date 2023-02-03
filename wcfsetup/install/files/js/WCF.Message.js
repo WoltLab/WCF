@@ -1948,11 +1948,14 @@ $.widget('wcf.messageTabMenu', {
 		var wysiwygContainerId = elData(this.element[0], 'wysiwyg-container-id');
 		if (wysiwygContainerId) {
 			const element = document.getElementById(wysiwygContainerId);
-			element.addEventListener("ckeditor5:reset", () => {
-				for (var i = 0, length = this._tabs.length; i < length; i++) {
-					this._tabs[i].container.removeClass('active');
-					this._tabs[i].tab.removeClass('active');
-				}
+
+			require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ listenToCkeditor }) => {
+				listenToCkeditor(element).reset(() => {
+					for (var i = 0, length = this._tabs.length; i < length; i++) {
+						this._tabs[i].container.removeClass('active');
+						this._tabs[i].tab.removeClass('active');
+					}
+				});
 			});
 		}
 	},

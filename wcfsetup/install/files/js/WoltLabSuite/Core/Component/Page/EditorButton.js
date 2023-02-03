@@ -14,7 +14,7 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Cked
         });
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration }) => {
+        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration }) => {
             configuration.woltlabBbcode.push({
                 icon: "file-lines;false",
                 name: "wsp",

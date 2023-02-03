@@ -68,9 +68,12 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._editorId = editorId;
 				const element = document.getElementById(this._editorId);
 
-				element.addEventListener("ckeditor5:reset", () => {
-					this._reset();
+				require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ listenToCkeditor }) => {
+					listenToCkeditor(element).reset(() => {
+						this._reset();
+					});
 				});
+				
 				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'submit_' + editorId, this._submit.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'validate_' + editorId, this._validate.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'handleError_' + editorId, this._handleError.bind(this));

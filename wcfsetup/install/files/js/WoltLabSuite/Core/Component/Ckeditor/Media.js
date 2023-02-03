@@ -39,7 +39,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         return Promise.reject();
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).configuration(({ configuration, features }) => {
+        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
             if (features.attachment || !features.media) {
                 return;
             }
