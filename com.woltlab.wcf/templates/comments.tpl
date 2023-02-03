@@ -8,24 +8,24 @@
 			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
 
-        setup('{@$commentContainerID}');
+		setup('{@$commentContainerID}');
 	});
 </script>
 
 {event name='javascriptInclude'}
 
 <div class="commentListContainer"
-    id="{@$commentContainerID}"
-    data-can-add="{if $commentCanAdd}true{else}false{/if}"
-    data-object-id="{@$commentObjectID}"
-    data-object-type-id="{@$commentObjectTypeID}"
-    data-comments="{@$commentList->countObjects()}"
-    data-last-comment-time="{@$lastCommentTime}"
+	id="{@$commentContainerID}"
+	data-can-add="{if $commentCanAdd}true{else}false{/if}"
+	data-object-id="{@$commentObjectID}"
+	data-object-type-id="{@$commentObjectTypeID}"
+	data-comments="{@$commentList->countObjects()}"
+	data-last-comment-time="{@$lastCommentTime}"
 	data-enable-reactions="{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && ($__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike'))}true{else}false{/if}"
 >
-    <div class="commentList">
-    	{if $commentCanAdd}
-            {capture assign=_commentAddWysiwygSelector}{$commentContainerID}AddComment{/capture}
+	<div class="commentList">
+		{if $commentCanAdd}
+			{capture assign=_commentAddWysiwygSelector}{$commentContainerID}AddComment{/capture}
 			<div class="commentList__item">
 				<div class="commentAdd commentAdd--collapsed">
 					<div class="commentAdd__avatar">
@@ -61,44 +61,44 @@
 						</div>
 					</div>
 				</div>
-            </div>
-        {/if}
+			</div>
+		{/if}
 		
-    	{include file='commentList'}
-    </div>
+		{include file='commentList'}
+	</div>
 
-    {if $commentCanAdd}
-        {* comment response, editor instance will be re-used *}
-        {capture assign=_commentResponseWysiwygSelector}{$commentContainerID}AddCommentResponse{/capture}
-        <div class="commentResponseAdd" hidden>
+	{if $commentCanAdd}
+		{* comment response, editor instance will be re-used *}
+		{capture assign=_commentResponseWysiwygSelector}{$commentContainerID}AddCommentResponse{/capture}
+		<div class="commentResponseAdd" hidden>
 			<div class="commentResponseAdd__avatar">
 				{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
 			</div>
 
-        	<div class="commentResponseAdd__content jsOuterEditorContainer">
+			<div class="commentResponseAdd__content jsOuterEditorContainer">
 				<div class="commentResponseAdd__editor">
-            		{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
-            			<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>
-            		{/if}
-            		
-            		<textarea id="{$_commentResponseWysiwygSelector}" name="text" class="wysiwygTextarea"
-            		          data-disable-attachments="true"
-            		          data-support-mention="true"
-            		></textarea>
-            		{include file='messageFormTabsInline' wysiwygSelector=$_commentResponseWysiwygSelector}
-            		
-            		{* in-template call for full backwards-compatibility *}
-            		{$commentList->getCommentManager()->setDisallowedBBCodes()}
-            		
-            		{include file='wysiwyg' wysiwygSelector=$_commentResponseWysiwygSelector}
-            		
-            		<div class="formSubmit">
-            			<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
-            			
-            			{include file='messageFormPreviewButton' previewMessageFieldID=$_commentResponseWysiwygSelector previewButtonID=$_commentResponseWysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment.response' previewMessageObjectID=0}
-            		</div>
-            	</div>
-            </div>
-        </div>
-    {/if}
+					{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
+						<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>
+					{/if}
+					
+					<textarea id="{$_commentResponseWysiwygSelector}" name="text" class="wysiwygTextarea"
+							  data-disable-attachments="true"
+							  data-support-mention="true"
+					></textarea>
+					{include file='messageFormTabsInline' wysiwygSelector=$_commentResponseWysiwygSelector}
+					
+					{* in-template call for full backwards-compatibility *}
+					{$commentList->getCommentManager()->setDisallowedBBCodes()}
+					
+					{include file='wysiwyg' wysiwygSelector=$_commentResponseWysiwygSelector}
+					
+					<div class="formSubmit">
+						<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
+						
+						{include file='messageFormPreviewButton' previewMessageFieldID=$_commentResponseWysiwygSelector previewButtonID=$_commentResponseWysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment.response' previewMessageObjectID=0}
+					</div>
+				</div>
+			</div>
+		</div>
+	{/if}
 </div>
