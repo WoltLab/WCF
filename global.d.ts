@@ -6,7 +6,6 @@ import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
-import type WoltlabCoreCkeditorElement from "./ts/WoltLabSuite/Core/Component/Ckeditor/woltlab-core-ckeditor";
 import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "./ts/WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
@@ -125,7 +124,6 @@ declare global {
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
-    "woltlab-core-ckeditor": WoltlabCoreCkeditorElement;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;

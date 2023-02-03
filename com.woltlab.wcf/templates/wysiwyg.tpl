@@ -1,11 +1,5 @@
 {if !$wysiwygSelector|isset}{assign var=wysiwygSelector value='text'}{/if}
 
-<script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/Ckeditor"], ({ initializeCkeditor }) => {
-		initializeCkeditor('{$wysiwygSelector|encodeJS}');
-	});
-</script>
-
 {event name='wysiwyg'}
 
 <script data-relocate="true">
