@@ -2,19 +2,21 @@ define(["require", "exports", "../../StringUtil"], function (require, exports, S
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    function insertQuote(editor, content, contentIsText, author, link) {
-        if (contentIsText) {
+    function insertQuote(editor, payload) {
+        let { author, content, link } = payload;
+        if (payload.isText) {
             content = (0, StringUtil_1.escapeHTML)(content);
         }
         author = (0, StringUtil_1.escapeHTML)(author);
         link = (0, StringUtil_1.escapeHTML)(link);
         editor.insertHtml(`<woltlab-ckeditor-blockquote author="${author}" link="${link}">${content}</woltlab-ckeditor-blockquote>`);
     }
-    function setup(editor) {
-        editor.sourceElement.addEventListener("ckeditor5:insert-quote", (event) => {
-            const { author, content, isText, link } = event.detail;
-            insertQuote(editor, content, isText, author, link);
-        });
+    function setup(element) {
+        element.addEventListener("ckeditor5:ready", ({ detail: editor }) => {
+            element.addEventListener("ckeditor5:insert-quote", (event) => {
+                insertQuote(editor, event.detail);
+            });
+        }, { once: true });
     }
     exports.setup = setup;
 });

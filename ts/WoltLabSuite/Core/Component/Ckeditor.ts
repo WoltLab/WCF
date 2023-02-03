@@ -18,8 +18,6 @@ class Ckeditor {
   constructor(editor: ClassicEditor, features: Features) {
     this.#editor = editor;
     this.#features = features;
-
-    setupQuote(this);
   }
 
   destroy(): Promise<void> {
@@ -179,6 +177,7 @@ export async function setupCkeditor(
   setupAttachment(element);
   setupMedia(element);
   setupMention(element);
+  setupQuote(element);
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 

@@ -9,7 +9,6 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         constructor(editor, features) {
             this.#editor = editor;
             this.#features = features;
-            (0, Quote_1.setup)(this);
         }
         destroy() {
             return this.#editor.destroy();
@@ -115,6 +114,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         (0, Attachment_1.setup)(element);
         (0, Media_1.setup)(element);
         (0, Mention_1.setup)(element);
+        (0, Quote_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);

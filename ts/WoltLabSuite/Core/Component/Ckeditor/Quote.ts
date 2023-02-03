@@ -1,15 +1,11 @@
 import { escapeHTML } from "../../StringUtil";
-import type { CKEditor } from "../Ckeditor";
 
-type Payload = {
-  author: string;
-  content: string;
-  isText: boolean;
-  link: string;
-};
+import type { CKEditor, CkeditorReadyEvent } from "../Ckeditor";
 
-function insertQuote(editor: CKEditor, content: string, contentIsText: boolean, author: string, link: string) {
-  if (contentIsText) {
+function insertQuote(editor: CKEditor, payload: CkeditorInsertQuoteEventPayload) {
+  let { author, content, link } = payload;
+
+  if (payload.isText) {
     content = escapeHTML(content);
   }
 
@@ -21,10 +17,22 @@ function insertQuote(editor: CKEditor, content: string, contentIsText: boolean, 
   );
 }
 
-export function setup(editor: CKEditor): void {
-  editor.sourceElement.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<Payload>) => {
-    const { author, content, isText, link } = event.detail;
+type CkeditorInsertQuoteEventPayload = {
+  author: string;
+  content: string;
+  isText: boolean;
+  link: string;
+};
+export type CkeditorInsertQuoteEvent = CustomEvent<CkeditorInsertQuoteEventPayload>;
 
-    insertQuote(editor, content, isText, author, link);
-  });
+export function setup(element: HTMLElement): void {
+  element.addEventListener(
+    "ckeditor5:ready",
+    ({ detail: editor }: CkeditorReadyEvent) => {
+      element.addEventListener("ckeditor5:insert-quote", (event: CustomEvent<CkeditorInsertQuoteEventPayload>) => {
+        insertQuote(editor, event.detail);
+      });
+    },
+    { once: true },
+  );
 }
