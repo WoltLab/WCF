@@ -19,8 +19,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         });
     }
     function setupInsertAttachment(ckeditor) {
-        ckeditor.sourceElement.addEventListener("ckeditor5:insert-attachment", (event) => {
-            const { attachmentId, url } = event.detail;
+        (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).insertAttachment(({ attachmentId, url }) => {
             if (url === "") {
                 ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
             }
@@ -30,7 +29,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         });
     }
     function setupRemoveAttachment(ckeditor) {
-        ckeditor.sourceElement.addEventListener("ckeditor5:remove-attachment", ({ detail: attachmentId }) => {
+        (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).removeAttachment(({ attachmentId }) => {
             ckeditor.removeAll("imageBlock", { attachmentId });
             ckeditor.removeAll("imageInline", { attachmentId });
         });

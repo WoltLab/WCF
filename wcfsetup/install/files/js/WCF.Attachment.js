@@ -296,11 +296,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		if (this._sourceElement && data.button) {
-			this._sourceElement.dispatchEvent(
-				new CustomEvent("ckeditor5:remove-attachment", {
-					detail: parseInt(data.button.data('objectID')),
-				}),
-			);
+			this._removeAttachmentFromEditor(data.button.data('objectID'));
 		}
 	},
 	
@@ -661,14 +657,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		const attachmentId = parseInt(event.currentTarget.dataset.objectId);
 		const url = event.currentTarget.dataset.url || "";
 
-		this._sourceElement.dispatchEvent(
-			new CustomEvent("ckeditor5:insert-attachment", {
-				detail: {
-					attachmentId,
-					url,
-				}
-			})
-		);
+		require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+			dispatchToCkeditor(this._sourceElement).insertAttachment({
+				attachmentId,
+				url,
+			});
+		});
 	},
 	
 	/**
@@ -778,11 +772,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._removeLimitError({});
 
-		this._sourceElement.dispatchEvent(
-			new CustomEvent("ckeditor5:remove-attachment", {
-				detail: parseInt(objectId),
-			}),
-		);
+		this._removeAttachmentFromEditor(objectId);
 	},
 	
 	/**
@@ -834,6 +824,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			source: this,
 			type: type,
 			data: data
+		});
+	},
+
+	_removeAttachmentFromEditor(attachmentId) {
+		require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+			dispatchToCkeditor(this._sourceElement).removeAttachment({
+				attachmentId: parseInt(attachmentId),
+			});
 		});
 	}
 });

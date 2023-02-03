@@ -7,8 +7,18 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        insertAttachment(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, {
+                detail: payload,
+            }));
+        }
         ready(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
+                detail: payload,
+            }));
+        }
+        removeAttachment(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:remove-attachment" /* EventNames.RemoveAttachment */, {
                 detail: payload,
             }));
         }
@@ -33,10 +43,20 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        insertAttachment(callback) {
+            this.#element.addEventListener("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, (event) => {
+                callback(event.detail);
+            });
+        }
         ready(callback) {
             this.#element.addEventListener("ckeditor5:ready" /* EventNames.Ready */, (event) => {
                 callback(event.detail);
             }, { once: true });
+        }
+        removeAttachment(callback) {
+            this.#element.addEventListener("ckeditor5:remove-attachment" /* EventNames.RemoveAttachment */, (event) => {
+                callback(event.detail);
+            });
         }
         reset(callback) {
             this.#element.addEventListener("ckeditor5:reset" /* EventNames.Reset */, (event) => {

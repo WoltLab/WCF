@@ -41,36 +41,32 @@ function uploadAttachment(element: HTMLElement, file: File, abortController?: Ab
   });
 }
 
-type InsertAttachmentPayload = {
+export type InsertAttachmentPayload = {
   attachmentId: number;
   url: string;
 };
 
 function setupInsertAttachment(ckeditor: CKEditor): void {
-  ckeditor.sourceElement.addEventListener(
-    "ckeditor5:insert-attachment",
-    (event: CustomEvent<InsertAttachmentPayload>) => {
-      const { attachmentId, url } = event.detail;
-
-      if (url === "") {
-        ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
-      } else {
-        ckeditor.insertHtml(
-          `<img src="${url}" class="woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`,
-        );
-      }
-    },
-  );
+  listenToCkeditor(ckeditor.sourceElement).insertAttachment(({ attachmentId, url }) => {
+    if (url === "") {
+      ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
+    } else {
+      ckeditor.insertHtml(
+        `<img src="${url}" class="woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`,
+      );
+    }
+  });
 }
 
+export type RemoveAttachmentPayload = {
+  attachmentId: number;
+};
+
 function setupRemoveAttachment(ckeditor: CKEditor): void {
-  ckeditor.sourceElement.addEventListener(
-    "ckeditor5:remove-attachment",
-    ({ detail: attachmentId }: CustomEvent<number>) => {
-      ckeditor.removeAll("imageBlock", { attachmentId });
-      ckeditor.removeAll("imageInline", { attachmentId });
-    },
-  );
+  listenToCkeditor(ckeditor.sourceElement).removeAttachment(({ attachmentId }) => {
+    ckeditor.removeAll("imageBlock", { attachmentId });
+    ckeditor.removeAll("imageInline", { attachmentId });
+  });
 }
 
 export function setup(element: HTMLElement): void {
