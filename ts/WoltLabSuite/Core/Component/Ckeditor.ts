@@ -1,7 +1,7 @@
-import { initializeMention } from "./Ckeditor/Mention";
-import { setup as setupQuote } from "./Ckeditor/Quote";
 import { setup as setupAttachment } from "./Ckeditor/Attachment";
 import { setup as setupMedia } from "./Ckeditor/Media";
+import { setup as setupMention } from "./Ckeditor/Mention";
+import { setup as setupQuote } from "./Ckeditor/Quote";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -145,10 +145,6 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
   const configuration = createConfigurationFor(features);
   (configuration as any).woltlabBbcode = bbcodes;
 
-  if (features.mention) {
-    initializeMention(configuration);
-  }
-
   if (features.autosave !== "") {
     initializeAutosave(features.autosave, configuration);
   }
@@ -182,6 +178,7 @@ export async function setupCkeditor(
 
   setupAttachment(element);
   setupMedia(element);
+  setupMention(element);
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 

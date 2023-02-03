@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "./Ckeditor/Configuration"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Configuration_1) {
+define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration"], function (require, exports, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -93,9 +93,6 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
     function initializeConfiguration(element, features, bbcodes) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
         configuration.woltlabBbcode = bbcodes;
-        if (features.mention) {
-            (0, Mention_1.initializeMention)(configuration);
-        }
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
         }
@@ -117,6 +114,7 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         initializeFeatures(element, features);
         (0, Attachment_1.setup)(element);
         (0, Media_1.setup)(element);
+        (0, Mention_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const editor = new Ckeditor(cke, features);

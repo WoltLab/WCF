@@ -1,7 +1,7 @@
 define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function (require, exports, Backend_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.initializeMention = exports.getPossibleMentions = void 0;
+    exports.setup = void 0;
     async function getPossibleMentions(query) {
         // TODO: Provide the URL as a parameter.
         const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
@@ -19,7 +19,6 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function 
             };
         });
     }
-    exports.getPossibleMentions = getPossibleMentions;
     function getMentionConfiguration() {
         return {
             feeds: [
@@ -40,8 +39,14 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util"], function 
             ],
         };
     }
-    function initializeMention(configuration) {
-        configuration.mention = getMentionConfiguration();
+    function setup(element) {
+        element.addEventListener("ckeditor5:configuration", (event) => {
+            const { configuration, features } = event.detail;
+            if (!features.mention) {
+                return;
+            }
+            configuration.mention = getMentionConfiguration();
+        }, { once: true });
     }
-    exports.initializeMention = initializeMention;
+    exports.setup = setup;
 });

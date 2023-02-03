@@ -1,7 +1,7 @@
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { CkeditorConfigurationEvent } from "../Ckeditor";
 import type { MentionConfig } from "@ckeditor/ckeditor5-mention/src/mention";
 
 type SearchResultItem = {
@@ -18,7 +18,7 @@ type UserMention = {
   icon: string;
 };
 
-export async function getPossibleMentions(query: string): Promise<UserMention[]> {
+async function getPossibleMentions(query: string): Promise<UserMention[]> {
   // TODO: Provide the URL as a parameter.
   const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
   url.searchParams.set("query", query);
@@ -59,6 +59,18 @@ function getMentionConfiguration(): MentionConfig {
   };
 }
 
-export function initializeMention(configuration: EditorConfig): void {
-  configuration.mention = getMentionConfiguration();
+export function setup(element: HTMLElement): void {
+  element.addEventListener(
+    "ckeditor5:configuration",
+    (event: CkeditorConfigurationEvent) => {
+      const { configuration, features } = event.detail;
+
+      if (!features.mention) {
+        return;
+      }
+
+      configuration.mention = getMentionConfiguration();
+    },
+    { once: true },
+  );
 }
