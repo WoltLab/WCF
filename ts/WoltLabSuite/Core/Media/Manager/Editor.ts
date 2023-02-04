@@ -16,12 +16,13 @@ import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
 import * as Clipboard from "../../Controller/Clipboard";
 import DomUtil from "../../Dom/Util";
-import type { MediaDragAndDropEventData } from "../../Component/Ckeditor/Media";
+import type { UploadMediaEventPayload } from "../../Component/Ckeditor/Media";
+import { listenToCkeditor } from "../../Component/Ckeditor/Event";
 
 export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _mediaToInsert = new Map<number, Media>();
   protected _mediaToInsertByClipboard = false;
-  protected _uploadData?: MediaDragAndDropEventData;
+  protected _uploadData?: UploadMediaEventPayload;
   protected _uploadId: number | null = null;
 
   constructor(options: Partial<MediaManagerEditorOptions>) {
@@ -48,8 +49,8 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
     if (this._options.ckeditor !== undefined) {
       const ckeditor = this._options.ckeditor;
       if (!ckeditor.features.attachment) {
-        ckeditor.sourceElement.addEventListener("ckeditor5:drop", (event: CustomEvent<MediaDragAndDropEventData>) => {
-          this._editorUpload(event.detail);
+        listenToCkeditor(ckeditor.sourceElement).uploadMedia((payload) => {
+          this._editorUpload(payload);
         });
       }
     }
@@ -156,7 +157,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
   /**
    * Handles pasting and dragging and dropping files into the editor.
    */
-  protected _editorUpload(data: MediaDragAndDropEventData): void {
+  protected _editorUpload(data: UploadMediaEventPayload): void {
     this._uploadData = data;
 
     UiDialog.open(this);

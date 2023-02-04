@@ -26,10 +26,8 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     function uploadMedia(element, file, abortController) {
-        const data = { abortController, file };
-        element.dispatchEvent(new CustomEvent("ckeditor5:drop", {
-            detail: data,
-        }));
+        const payload = { abortController, file };
+        (0, Event_1.dispatchToCkeditor)(element).uploadMedia(payload);
         // The media system works differently compared to the
         // attachments, because uploading a file will offer
         // the user to insert the content in different formats.

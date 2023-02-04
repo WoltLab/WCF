@@ -42,6 +42,11 @@ define(["require", "exports"], function (require, exports) {
                 detail: payload,
             }));
         }
+        uploadMedia(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:upload-media" /* EventNames.UploadMedia */, {
+                detail: payload,
+            }));
+        }
     }
     class EventListener {
         #element;
@@ -86,6 +91,12 @@ define(["require", "exports"], function (require, exports) {
         }
         uploadAttachment(callback) {
             this.#element.addEventListener("ckeditor5:upload-attachment" /* EventNames.UploadAttachment */, (event) => {
+                callback(event.detail);
+            });
+            return this;
+        }
+        uploadMedia(callback) {
+            this.#element.addEventListener("ckeditor5:upload-media" /* EventNames.UploadMedia */, (event) => {
                 callback(event.detail);
             });
             return this;

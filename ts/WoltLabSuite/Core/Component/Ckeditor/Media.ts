@@ -1,4 +1,4 @@
-import { listenToCkeditor } from "./Event";
+import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -13,20 +13,16 @@ type MediaData = {
   url: string;
 };
 
-export type MediaDragAndDropEventData = {
+export type UploadMediaEventPayload = {
   abortController?: AbortController;
   file: File;
   promise?: Promise<MediaData>;
 };
 
 function uploadMedia(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
-  const data: MediaDragAndDropEventData = { abortController, file };
+  const payload: UploadMediaEventPayload = { abortController, file };
 
-  element.dispatchEvent(
-    new CustomEvent<MediaDragAndDropEventData>("ckeditor5:drop", {
-      detail: data,
-    }),
-  );
+  dispatchToCkeditor(element).uploadMedia(payload)
 
   // The media system works differently compared to the
   // attachments, because uploading a file will offer

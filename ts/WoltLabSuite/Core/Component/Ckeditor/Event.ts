@@ -2,6 +2,7 @@ import type { CKEditor } from "../Ckeditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type { Features } from "./Configuration";
 import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
+import { UploadMediaEventPayload } from "./Media";
 
 const enum EventNames {
   InsertAttachment = "ckeditor5:insert-attachment",
@@ -11,6 +12,7 @@ const enum EventNames {
   SetupConfiguration = "ckeditor5:setup-configuration",
   SetupFeatures = "ckeditor5:setup-features",
   UploadAttachment = "ckeditor5:upload-attachment",
+  UploadMedia = "ckeditor5:upload-media",
 }
 
 type ReadyEventPayload = {
@@ -89,6 +91,14 @@ class EventDispatcher {
       }),
     );
   }
+
+  uploadMedia(payload: UploadMediaEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<UploadMediaEventPayload>(EventNames.UploadMedia, {
+        detail: payload,
+      }),
+    );
+  }
 }
 
 class EventListener {
@@ -160,6 +170,14 @@ class EventListener {
 
   uploadAttachment(callback: (payload: UploadAttachmentEventPayload) => void): this {
     this.#element.addEventListener(EventNames.UploadAttachment, (event: CustomEvent<UploadAttachmentEventPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
+  }
+
+  uploadMedia(callback: (payload: UploadMediaEventPayload) => void): this {
+    this.#element.addEventListener(EventNames.UploadMedia, (event: CustomEvent<UploadMediaEventPayload>) => {
       callback(event.detail);
     });
 
