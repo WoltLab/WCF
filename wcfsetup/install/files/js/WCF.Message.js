@@ -1484,9 +1484,9 @@ if (COMPILER_TARGET_DEFAULT) {
 			require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
 				dispatchToCkeditor(element).insertQuote({
 					author,
-						content: text,
-						isText,
-						link,
+					content: text,
+					isText,
+					link,
 				});
 			});
 			

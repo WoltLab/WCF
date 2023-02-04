@@ -100,7 +100,6 @@
     "userConditions",
     "userOptionsCondition",
     "worker",
-    "wysiwyg",
-    "wysiwygToolbar"
+    "wysiwyg"
   ]
 }
