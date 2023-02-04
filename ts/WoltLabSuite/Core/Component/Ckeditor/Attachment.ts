@@ -1,4 +1,4 @@
-import { listenToCkeditor } from "./Event";
+import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
 import type { CKEditor } from "../Ckeditor";
 
@@ -14,23 +14,19 @@ type AttachmentData = {
   url: string;
 };
 
-type DragAndDropEventData = {
+export type UploadAttachmentEventPayload = {
   abortController?: AbortController;
   file: File;
   promise?: Promise<AttachmentData>;
 };
 
 function uploadAttachment(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
-  const data: DragAndDropEventData = { abortController, file };
+  const payload: UploadAttachmentEventPayload = { abortController, file };
 
-  element.dispatchEvent(
-    new CustomEvent<DragAndDropEventData>("ckeditor5:drop", {
-      detail: data,
-    }),
-  );
+  dispatchToCkeditor(element).uploadAttachment(payload);
 
   return new Promise<UploadResult>((resolve) => {
-    void data.promise!.then(({ attachmentId, url }) => {
+    void payload.promise!.then(({ attachmentId, url }) => {
       resolve({
         "data-attachment-id": attachmentId.toString(),
         urls: {

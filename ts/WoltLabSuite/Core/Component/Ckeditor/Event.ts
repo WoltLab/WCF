@@ -1,7 +1,7 @@
 import type { CKEditor } from "../Ckeditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type { Features } from "./Configuration";
-import type { InsertAttachmentPayload, RemoveAttachmentPayload } from "./Attachment";
+import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
 
 const enum EventNames {
   InsertAttachment = "ckeditor5:insert-attachment",
@@ -10,6 +10,7 @@ const enum EventNames {
   Reset = "ckeditor5:reset",
   SetupConfiguration = "ckeditor5:setup-configuration",
   SetupFeatures = "ckeditor5:setup-features",
+  UploadAttachment = "ckeditor5:upload-attachment",
 }
 
 type ReadyEventPayload = {
@@ -80,6 +81,14 @@ class EventDispatcher {
       }),
     );
   }
+
+  uploadAttachment(payload: UploadAttachmentEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<UploadAttachmentEventPayload>(EventNames.UploadAttachment, {
+        detail: payload,
+      }),
+    );
+  }
 }
 
 class EventListener {
@@ -89,13 +98,15 @@ class EventListener {
     this.#element = element;
   }
 
-  insertAttachment(callback: (payload: InsertAttachmentPayload) => void): void {
+  insertAttachment(callback: (payload: InsertAttachmentPayload) => void): this {
     this.#element.addEventListener(EventNames.InsertAttachment, (event: CustomEvent<InsertAttachmentPayload>) => {
       callback(event.detail);
     });
+
+    return this;
   }
 
-  ready(callback: (payload: ReadyEventPayload) => void): void {
+  ready(callback: (payload: ReadyEventPayload) => void): this {
     this.#element.addEventListener(
       EventNames.Ready,
       (event: CustomEvent<ReadyEventPayload>) => {
@@ -103,21 +114,27 @@ class EventListener {
       },
       { once: true },
     );
+
+    return this;
   }
 
-  removeAttachment(callback: (payload: RemoveAttachmentPayload) => void): void {
+  removeAttachment(callback: (payload: RemoveAttachmentPayload) => void): this {
     this.#element.addEventListener(EventNames.RemoveAttachment, (event: CustomEvent<RemoveAttachmentPayload>) => {
       callback(event.detail);
     });
+
+    return this;
   }
 
-  reset(callback: (payload: ResetEventPayload) => void): void {
+  reset(callback: (payload: ResetEventPayload) => void): this {
     this.#element.addEventListener(EventNames.Reset, (event: CustomEvent<ResetEventPayload>) => {
       callback(event.detail);
     });
+
+    return this;
   }
 
-  setupConfiguration(callback: (payload: SetupConfigurationEventPayload) => void): void {
+  setupConfiguration(callback: (payload: SetupConfigurationEventPayload) => void): this {
     this.#element.addEventListener(
       EventNames.SetupConfiguration,
       (event: CustomEvent<SetupConfigurationEventPayload>) => {
@@ -125,9 +142,11 @@ class EventListener {
       },
       { once: true },
     );
+
+    return this;
   }
 
-  setupFeatures(callback: (payload: SetupFeaturesEventPayload) => void): void {
+  setupFeatures(callback: (payload: SetupFeaturesEventPayload) => void): this {
     this.#element.addEventListener(
       EventNames.SetupFeatures,
       (event: CustomEvent<SetupFeaturesEventPayload>) => {
@@ -135,6 +154,16 @@ class EventListener {
       },
       { once: true },
     );
+
+    return this;
+  }
+
+  uploadAttachment(callback: (payload: UploadAttachmentEventPayload) => void): this {
+    this.#element.addEventListener(EventNames.UploadAttachment, (event: CustomEvent<UploadAttachmentEventPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
   }
 }
 

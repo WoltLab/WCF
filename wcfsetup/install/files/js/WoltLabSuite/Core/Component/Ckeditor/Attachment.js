@@ -3,12 +3,10 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     function uploadAttachment(element, file, abortController) {
-        const data = { abortController, file };
-        element.dispatchEvent(new CustomEvent("ckeditor5:drop", {
-            detail: data,
-        }));
+        const payload = { abortController, file };
+        (0, Event_1.dispatchToCkeditor)(element).uploadAttachment(payload);
         return new Promise((resolve) => {
-            void data.promise.then(({ attachmentId, url }) => {
+            void payload.promise.then(({ attachmentId, url }) => {
                 resolve({
                     "data-attachment-id": attachmentId.toString(),
                     urls: {
