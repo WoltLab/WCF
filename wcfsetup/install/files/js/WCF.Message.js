@@ -1207,16 +1207,14 @@ if (COMPILER_TARGET_DEFAULT) {
 					this._editorIdAlternative ? this._editorIdAlternative : this._editorId
 				);
 
-				element.dispatchEvent(
-					new CustomEvent("ckeditor5:insert-quote", {
-						detail: {
-							author: data.quote.username,
-							content: data.quote.text,
-							isText: !data.quote.isFullQuote,
-							link: data.quote.link
-						},
-					}),
-				);
+				require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+					dispatchToCkeditor(element).insertQuote({
+						author: data.quote.username,
+						content: data.quote.text,
+						isText: !data.quote.isFullQuote,
+						link: data.quote.link,
+					});
+				});
 			}).bind(this));
 		},
 		
@@ -1483,16 +1481,14 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._editorIdAlternative ? this._editorIdAlternative : this._editorId
 			);
 
-			element.dispatchEvent(
-				new CustomEvent("ckeditor5:insert-quote", {
-					detail: {
-						author,
+			require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+				dispatchToCkeditor(element).insertQuote({
+					author,
 						content: text,
 						isText,
 						link,
-					},
-				}),
-			);
+				});
+			});
 			
 			// remove quote upon submit or upon request
 			this._removeOnSubmit.push(listItem.data('quote-id'));

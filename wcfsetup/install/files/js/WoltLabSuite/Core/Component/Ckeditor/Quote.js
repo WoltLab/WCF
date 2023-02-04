@@ -13,8 +13,8 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
     }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
-            element.addEventListener("ckeditor5:insert-quote", (event) => {
-                insertQuote(ckeditor, event.detail);
+            (0, Event_1.listenToCkeditor)(element).insertQuote((payload) => {
+                insertQuote(ckeditor, payload);
             });
         });
     }

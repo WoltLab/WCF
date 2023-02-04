@@ -12,6 +12,11 @@ define(["require", "exports"], function (require, exports) {
                 detail: payload,
             }));
         }
+        insertQuote(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-quote" /* EventNames.InsertQuote */, {
+                detail: payload,
+            }));
+        }
         ready(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
                 detail: payload,
@@ -55,6 +60,12 @@ define(["require", "exports"], function (require, exports) {
         }
         insertAttachment(callback) {
             this.#element.addEventListener("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, (event) => {
+                callback(event.detail);
+            });
+            return this;
+        }
+        insertQuote(callback) {
+            this.#element.addEventListener("ckeditor5:insert-quote" /* EventNames.InsertQuote */, (event) => {
                 callback(event.detail);
             });
             return this;

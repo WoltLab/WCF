@@ -2,10 +2,12 @@ import type { CKEditor } from "../Ckeditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type { Features } from "./Configuration";
 import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
-import { UploadMediaEventPayload } from "./Media";
+import type { UploadMediaEventPayload } from "./Media";
+import type { InsertQuoteEventPayload } from "./Quote";
 
 const enum EventNames {
   InsertAttachment = "ckeditor5:insert-attachment",
+  InsertQuote = "ckeditor5:insert-quote",
   Ready = "ckeditor5:ready",
   RemoveAttachment = "ckeditor5:remove-attachment",
   Reset = "ckeditor5:reset",
@@ -39,6 +41,14 @@ class EventDispatcher {
   insertAttachment(payload: InsertAttachmentPayload): void {
     this.#element.dispatchEvent(
       new CustomEvent<InsertAttachmentPayload>(EventNames.InsertAttachment, {
+        detail: payload,
+      }),
+    );
+  }
+
+  insertQuote(payload: InsertQuoteEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<InsertQuoteEventPayload>(EventNames.InsertQuote, {
         detail: payload,
       }),
     );
@@ -110,6 +120,14 @@ class EventListener {
 
   insertAttachment(callback: (payload: InsertAttachmentPayload) => void): this {
     this.#element.addEventListener(EventNames.InsertAttachment, (event: CustomEvent<InsertAttachmentPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
+  }
+
+  insertQuote(callback: (payload: InsertQuoteEventPayload) => void): this {
+    this.#element.addEventListener(EventNames.InsertQuote, (event: CustomEvent<InsertQuoteEventPayload>) => {
       callback(event.detail);
     });
 
