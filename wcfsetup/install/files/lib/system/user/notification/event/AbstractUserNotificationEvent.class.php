@@ -323,7 +323,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFormattedMessage();
     }

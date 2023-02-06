@@ -485,10 +485,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns username.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->username ?: '';
     }

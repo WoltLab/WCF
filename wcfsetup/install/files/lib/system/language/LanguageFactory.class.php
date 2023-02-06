@@ -2,6 +2,8 @@
 
 namespace wcf\system\language;
 
+use Negotiation\AcceptLanguage;
+use Negotiation\LanguageNegotiator;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
@@ -186,25 +188,25 @@ class LanguageFactory extends SingletonFactory
     /**
      * Determines the preferred language of the current user.
      *
-     * @param array $availableLanguageCodes
-     * @param string $defaultLanguageCode
-     * @return  string
+     * @param string[] $availableLanguageCodes
      */
-    public static function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode)
+    public static function getPreferredLanguage(array $availableLanguageCodes, string $defaultLanguageCode): string
     {
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
-            $acceptedLanguages = \explode(',', \str_replace('_', '-', \strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
-            foreach ($acceptedLanguages as $acceptedLanguage) {
-                foreach ($availableLanguageCodes as $availableLanguageCode) {
-                    $fixedCode = \strtolower(self::fixLanguageCode($availableLanguageCode));
+            $negotiator = new LanguageNegotiator();
 
-                    if (
-                        $fixedCode == $acceptedLanguage
-                        || $fixedCode == \preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)
-                    ) {
-                        return $availableLanguageCode;
-                    }
-                }
+            $preferredLanguage = $negotiator->getBest(
+                $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+                \array_map(
+                    static fn ($availableLanguageCode) => \strtolower(self::fixLanguageCode($availableLanguageCode)),
+                    $availableLanguageCodes
+                )
+            );
+
+            if ($preferredLanguage !== null) {
+                \assert($preferredLanguage instanceof AcceptLanguage);
+
+                return $preferredLanguage->getValue();
             }
         }
 

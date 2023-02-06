@@ -67,7 +67,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMessage();
     }

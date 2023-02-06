@@ -41,10 +41,9 @@ class Like extends DatabaseObject
     /**
      * Returns the title of the associated reaction type.
      *
-     * @return      string
      * @since       5.3
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getReactionType()->getTitle();
     }

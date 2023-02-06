@@ -397,7 +397,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

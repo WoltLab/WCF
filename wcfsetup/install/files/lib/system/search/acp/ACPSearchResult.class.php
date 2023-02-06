@@ -74,7 +74,7 @@ class ACPSearchResult
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }

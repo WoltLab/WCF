@@ -161,7 +161,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFormattedMessage();
     }

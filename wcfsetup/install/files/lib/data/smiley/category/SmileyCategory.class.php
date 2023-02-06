@@ -150,10 +150,8 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 
     /**
      * Returns the category's name.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return WCF::getLanguage()->get($this->title);
     }
