@@ -24,7 +24,10 @@
 	}
 }
 
-/* workaround for broken iframes without height on mobile */
 iframe.instagram-media {
+	/* workaround for broken iframes without height on mobile */
 	min-height: 530px;
+
+	/* Prevent the <iframe> from overlapping adjacent elements. */
+	position: relative !important;
 }
