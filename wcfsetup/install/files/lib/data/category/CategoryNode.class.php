@@ -29,14 +29,16 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
     /**
      * Returns true if this category is visible in a nested menu item list.
      *
-     * @param AbstractDecoratedCategory $activeCategory
-     * @return  bool
      * @since       5.2
      */
-    public function isVisibleInNestedList(?AbstractDecoratedCategory $activeCategory = null)
+    public function isVisibleInNestedList(?AbstractDecoratedCategory $activeCategory = null, bool $showChildCategories = false): bool
     {
-        if (!$this->getParentCategory() || !$this->getParentCategory()->getParentCategory()) {
-            // level 1 & 2 are always visible
+        if (!$this->getParentCategory()) {
+            // level 1 is always visible
+            return true;
+        }
+
+        if ($showChildCategories && !$this->getParentCategory()->getParentCategory()) {
             return true;
         }
 

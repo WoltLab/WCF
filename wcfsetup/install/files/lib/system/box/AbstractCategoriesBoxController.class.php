@@ -2,6 +2,7 @@
 
 namespace wcf\system\box;
 
+use wcf\data\box\Box;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\category\CategoryNodeTree;
 use wcf\system\WCF;
@@ -14,7 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   6.0
  */
-abstract class AbstractCategoriesBoxController extends AbstractBoxController
+abstract class AbstractCategoriesBoxController extends AbstractBoxController implements IConditionBoxController
 {
     /**
      * @inheritDoc
@@ -27,6 +28,8 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController
         'contentBottom',
         'footer',
     ];
+
+    protected bool $showChildCategories = false;
 
     /**
      * @inheritDoc
@@ -44,6 +47,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController
                     'categoryList' => $categoryList,
                     'activeCategory' => $this->getActiveCategory(),
                     'resetLink' => $this->getResetLink(),
+                    'showChildCategories' => $this->showChildCategories,
                 ],
                 true
             );
@@ -60,5 +64,70 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController
     protected function getResetLink(): string
     {
         return '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readConditions()
+    {
+        if (!empty($_POST['showChildCategories'])) {
+            $this->showChildCategories = true;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateConditions()
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getConditionDefinition()
+    {
+        return '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getConditionObjectTypes()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getConditionsTemplate()
+    {
+        return WCF::getTPL()->fetch('boxCategoryConditions', 'wcf', [
+            'showChildCategories' => $this->showChildCategories,
+        ], true);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getAdditionalData()
+    {
+        return [
+            'showChildCategories' => $this->showChildCategories,
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setBox(Box $box, $setConditionData = true)
+    {
+        parent::setBox($box);
+
+        if ($setConditionData) {
+            $this->showChildCategories = $this->box->showChildCategories;
+        }
     }
 }
