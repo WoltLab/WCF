@@ -164,7 +164,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
                     notification = new window.Notification(pollData.notification.title, {
                         body: StringUtil.unescapeHTML(pollData.notification.message)
                             .replace(/&#x202F;/g, "\u202F")
-                            .replace(/&#39;/g, "'"),
+                            .replace(/&#039;/g, "'"),
                         icon: this.icon,
                     });
                 }
