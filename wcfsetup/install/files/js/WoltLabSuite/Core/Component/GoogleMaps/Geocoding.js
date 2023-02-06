@@ -12,37 +12,69 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
     exports.setup = void 0;
     class Geocoding {
         #element;
-        #geocoder;
         #map;
         #marker;
-        constructor(element, map, geocoder) {
+        #initialMarkerPosition;
+        constructor(element, map) {
             this.#element = element;
             this.#map = map;
-            this.#geocoder = geocoder;
-            if (this.#element.hasAttribute("data-google-maps-marker")) {
-                void this.#setupMarker();
-            }
-            if (element.value) {
-                this.#moveMarker(element.value);
-            }
-            (0, Suggestion_1.setup)(this.#element, this.#geocoder, (item) => {
-                this.#moveMarker(item.dataset.label);
-                return true;
+            this.#initEvents();
+            void this.#map.getGeocoder().then((geocoder) => {
+                if (this.#element.hasAttribute("data-google-maps-marker")) {
+                    void this.#setupMarker();
+                }
+                if (element.value) {
+                    void this.#moveMarkerToAddress(element.value);
+                }
+                (0, Suggestion_1.setup)(this.#element, geocoder, (item) => {
+                    void this.#moveMarkerToAddress(item.dataset.label);
+                    return true;
+                });
+            });
+        }
+        #initEvents() {
+            this.#element.addEventListener("geocoding:move-marker", (event) => {
+                void this.#moveMarkerToLocation(event.detail.latitude, event.detail.longitude);
+            });
+            this.#element.addEventListener("geocoding:resolve", (event) => {
+                void this.#map.getGeocoder().then((geocoder) => {
+                    const location = new google.maps.LatLng(event.detail.latitude, event.detail.longitude);
+                    void geocoder.geocode({ location }, (results, status) => {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            event.detail.callback(results[0].formatted_address);
+                        }
+                    });
+                });
+            });
+            this.#element.addEventListener("geocoding:reset-marker", () => {
+                if (this.#initialMarkerPosition) {
+                    void this.#moveMarkerToLocation(this.#initialMarkerPosition.lat(), this.#initialMarkerPosition.lng());
+                }
             });
         }
         async #setupMarker() {
             this.#marker = await (0, Marker_1.addDraggableMarker)(this.#map);
+            this.#initialMarkerPosition = this.#marker.getPosition();
             this.#marker.addListener("dragend", () => {
-                void this.#geocoder.geocode({ location: this.#marker.getPosition() }, (results, status) => {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        this.#element.value = results[0].formatted_address;
-                        this.#setLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-                    }
+                void this.#map.getGeocoder().then((geocoder) => {
+                    void geocoder.geocode({ location: this.#marker.getPosition() }, (results, status) => {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            this.#element.value = results[0].formatted_address;
+                            this.#setLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                        }
+                    });
                 });
             });
         }
-        #moveMarker(address) {
-            void this.#geocoder.geocode({ address }, async (results, status) => {
+        async #moveMarkerToLocation(latitude, longitude) {
+            const location = new google.maps.LatLng(latitude, longitude);
+            this.#marker?.setPosition(location);
+            (await this.#map.getMap()).setCenter(location);
+            this.#setLocation(latitude, longitude);
+        }
+        async #moveMarkerToAddress(address) {
+            const geocoder = await this.#map.getGeocoder();
+            void geocoder.geocode({ address }, async (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK) {
                     this.#marker?.setPosition(results[0].geometry.location);
                     (await this.#map.getMap()).setCenter(results[0].geometry.location);
@@ -70,10 +102,9 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         }
     }
     function setup() {
-        (0, Selector_1.wheneverFirstSeen)("[data-google-maps-geocoding]", async (element) => {
+        (0, Selector_1.wheneverFirstSeen)("[data-google-maps-geocoding]", (element) => {
             const map = document.getElementById(element.dataset.googleMapsGeocoding);
-            const geocoder = await map.getGeocoder();
-            new Geocoding(element, map, geocoder);
+            new Geocoding(element, map);
         });
     }
     exports.setup = setup;

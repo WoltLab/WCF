@@ -14,46 +14,95 @@ import type WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 
 import "./woltlab-core-google-maps";
 
+export type MoveMarkerEventPayload = {
+  latitude: number;
+  longitude: number;
+};
+
+export type ResolveEventPayload = {
+  callback: (location: string) => void;
+  latitude: number;
+  longitude: number;
+};
+
 class Geocoding {
   readonly #element: HTMLInputElement;
-  readonly #geocoder: google.maps.Geocoder;
   readonly #map: WoltlabCoreGoogleMapsElement;
   #marker?: google.maps.Marker;
+  #initialMarkerPosition?: google.maps.LatLng;
 
-  constructor(element: HTMLInputElement, map: WoltlabCoreGoogleMapsElement, geocoder: google.maps.Geocoder) {
+  constructor(element: HTMLInputElement, map: WoltlabCoreGoogleMapsElement) {
     this.#element = element;
     this.#map = map;
-    this.#geocoder = geocoder;
 
-    if (this.#element.hasAttribute("data-google-maps-marker")) {
-      void this.#setupMarker();
-    }
+    this.#initEvents();
 
-    if (element.value) {
-      this.#moveMarker(element.value);
-    }
+    void this.#map.getGeocoder().then((geocoder) => {
+      if (this.#element.hasAttribute("data-google-maps-marker")) {
+        void this.#setupMarker();
+      }
 
-    setupSuggestion(this.#element, this.#geocoder, (item: HTMLElement) => {
-      this.#moveMarker(item.dataset.label!);
+      if (element.value) {
+        void this.#moveMarkerToAddress(element.value);
+      }
 
-      return true;
+      setupSuggestion(this.#element, geocoder, (item: HTMLElement) => {
+        void this.#moveMarkerToAddress(item.dataset.label!);
+
+        return true;
+      });
+    });
+  }
+
+  #initEvents(): void {
+    this.#element.addEventListener("geocoding:move-marker", (event: CustomEvent<MoveMarkerEventPayload>) => {
+      void this.#moveMarkerToLocation(event.detail.latitude, event.detail.longitude);
+    });
+
+    this.#element.addEventListener("geocoding:resolve", (event: CustomEvent<ResolveEventPayload>) => {
+      void this.#map.getGeocoder().then((geocoder) => {
+        const location = new google.maps.LatLng(event.detail.latitude, event.detail.longitude);
+        void geocoder.geocode({ location }, (results, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            event.detail.callback(results![0].formatted_address);
+          }
+        });
+      });
+    });
+
+    this.#element.addEventListener("geocoding:reset-marker", () => {
+      if (this.#initialMarkerPosition) {
+        void this.#moveMarkerToLocation(this.#initialMarkerPosition.lat(), this.#initialMarkerPosition.lng());
+      }
     });
   }
 
   async #setupMarker(): Promise<void> {
     this.#marker = await addDraggableMarker(this.#map);
+    this.#initialMarkerPosition = this.#marker.getPosition() as google.maps.LatLng;
+
     this.#marker.addListener("dragend", () => {
-      void this.#geocoder.geocode({ location: this.#marker!.getPosition() }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          this.#element.value = results![0].formatted_address;
-          this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());
-        }
+      void this.#map.getGeocoder().then((geocoder) => {
+        void geocoder.geocode({ location: this.#marker!.getPosition() }, (results, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            this.#element.value = results![0].formatted_address;
+            this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());
+          }
+        });
       });
     });
   }
 
-  #moveMarker(address: string): void {
-    void this.#geocoder.geocode({ address }, async (results, status) => {
+  async #moveMarkerToLocation(latitude: number, longitude: number): Promise<void> {
+    const location = new google.maps.LatLng(latitude, longitude);
+    this.#marker?.setPosition(location);
+    (await this.#map.getMap()).setCenter(location);
+    this.#setLocation(latitude, longitude);
+  }
+
+  async #moveMarkerToAddress(address: string): Promise<void> {
+    const geocoder = await this.#map.getGeocoder();
+    void geocoder.geocode({ address }, async (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
         this.#marker?.setPosition(results![0].geometry.location);
 
@@ -87,10 +136,9 @@ class Geocoding {
 }
 
 export function setup(): void {
-  wheneverFirstSeen("[data-google-maps-geocoding]", async (element: HTMLInputElement) => {
+  wheneverFirstSeen("[data-google-maps-geocoding]", (element: HTMLInputElement) => {
     const map = document.getElementById(element.dataset.googleMapsGeocoding!) as WoltlabCoreGoogleMapsElement;
-    const geocoder = await map.getGeocoder();
 
-    new Geocoding(element, map, geocoder);
+    new Geocoding(element, map);
   });
 }
