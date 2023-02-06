@@ -3,6 +3,7 @@
 namespace wcf\data\category;
 
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\ILinkableObject;
 use wcf\data\IObjectTreeNode;
 use wcf\data\TObjectTreeNode;
 
@@ -40,9 +41,12 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
         }
 
         if ($activeCategory) {
+            $decoratedObject = $this->getDecoratedObject();
             if (
                 $activeCategory->categoryID == $this->categoryID
-                || $activeCategory->isParentCategory($this->getDecoratedObject())
+                || ($decoratedObject instanceof AbstractDecoratedCategory
+                    && $activeCategory->isParentCategory($decoratedObject)
+                )
             ) {
                 // is the active category or a parent of the active category
                 return true;
@@ -55,5 +59,23 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
         }
 
         return false;
+    }
+
+    /**
+     * Returns number of items in the category.
+     */
+    public function getItems(): int
+    {
+        return 0;
+    }
+
+    public function getLink(): string
+    {
+        $decoratedObject = $this->getDecoratedObject();
+        if ($decoratedObject instanceof ILinkableObject) {
+            return $decoratedObject->getLink();
+        }
+
+        return '';
     }
 }
