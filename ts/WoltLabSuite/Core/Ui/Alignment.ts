@@ -288,6 +288,32 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
     if (verticalFlipped.result) {
       vertical = verticalFlipped;
+    } else {
+      // The element fits neither to the top nor the bottom. This is
+      // especially an issue on mobile devices where the element might
+      // exceed the window boundary if we are stubborn about the alignment.
+      //
+      // The last thing we can try is to check if the element fits inside the
+      // viewport and then align it at the top / bottom boundary, whichever
+      // is closest to the boundary of the reference element.
+      if (elDimensions.height === windowHeight) {
+        vertical = {
+          align: "top",
+          bottom: 0,
+          result: true,
+          top: 0,
+        };
+      } else if (elDimensions.height < windowHeight) {
+        const distanceToBottomBoundary = windowHeight - (refOffsets.top + refDimensions.height);
+        const preferTop = refOffsets.top <= distanceToBottomBoundary;
+
+        vertical = {
+          align: preferTop ? "top" : "bottom",
+          bottom: preferTop ? 0 : "auto",
+          result: true,
+          top: preferTop ? "auto" : 0,
+        };
+      }
     }
   }
 
