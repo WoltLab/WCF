@@ -176,7 +176,7 @@ class EditHistoryPage extends AbstractPage
         $this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
         $this->objectList->readObjects();
 
-        $differ = new Differ();
+        $differ = Diff::getDefaultDiffer();
 
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {

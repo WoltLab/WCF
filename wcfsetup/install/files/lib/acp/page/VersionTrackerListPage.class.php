@@ -171,7 +171,7 @@ class VersionTrackerListPage extends AbstractPage
     {
         parent::readData();
 
-        $differ = new Differ();
+        $differ = Diff::getDefaultDiffer();
 
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
