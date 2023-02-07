@@ -28,7 +28,7 @@
         "psr/http-server-middleware": "^1.0.1",
         "psr/log": "^3.0",
         "scssphp/scssphp": "^1.11",
-        "sebastian/diff": "^4.0.4",
+        "sebastian/diff": "^5.0.0",
         "symfony/polyfill-php82": "^1.27.0",
         "willdurand/negotiation": "^3.1"
     },
