@@ -150,14 +150,10 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             return data.valid;
         }
         #cancelEdit() {
-            this.#destroyEditor();
+            void (0, Ckeditor_1.getCkeditorById)(this.#editorId).destroy();
             this.#editorContainer.remove();
             this.menu.querySelector(".commentResponse__option--edit").hidden = false;
             this.querySelector(".htmlContent").hidden = false;
-        }
-        #destroyEditor() {
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this.#editorId}`);
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this.#editorId}`);
         }
         get #editorContainer() {
             let div = this.querySelector(".commentResponse__editor");

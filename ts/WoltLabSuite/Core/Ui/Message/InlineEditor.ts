@@ -8,6 +8,7 @@
 
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
+import { getCkeditorById } from "../../Component/Ckeditor";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
@@ -581,7 +582,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     this._updateHistory(this._getHash(this._getObjectId(activeElement)));
 
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${editorId}`);
+    getCkeditorById(this._getEditorId())!.discardDraft();
 
     UiNotification.show();
 
@@ -624,8 +625,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Destroys the editor instance.
    */
   protected _destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this._getEditorId()}`);
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this._getEditorId()}`);
+    void getCkeditorById(this._getEditorId())!.destroy();
   }
 
   /**

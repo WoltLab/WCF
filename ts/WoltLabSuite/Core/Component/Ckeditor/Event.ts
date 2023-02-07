@@ -6,6 +6,7 @@ import type { UploadMediaEventPayload } from "./Media";
 import type { InsertQuoteEventPayload } from "./Quote";
 
 const enum EventNames {
+  Destroy = "ckeditor5:destroy",
   InsertAttachment = "ckeditor5:insert-attachment",
   InsertQuote = "ckeditor5:insert-quote",
   Ready = "ckeditor5:ready",
@@ -36,6 +37,10 @@ class EventDispatcher {
 
   constructor(element: HTMLElement) {
     this.#element = element;
+  }
+
+  destroy(): void {
+    this.#element.dispatchEvent(new CustomEvent<void>(EventNames.Destroy));
   }
 
   insertAttachment(payload: InsertAttachmentPayload): void {
@@ -116,6 +121,14 @@ class EventListener {
 
   constructor(element: HTMLElement) {
     this.#element = element;
+  }
+
+  destroy(callback: () => void): this {
+    this.#element.addEventListener(EventNames.Destroy, () => {
+      callback();
+    });
+
+    return this;
   }
 
   insertAttachment(callback: (payload: InsertAttachmentPayload) => void): this {

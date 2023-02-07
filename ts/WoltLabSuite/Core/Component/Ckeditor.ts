@@ -22,6 +22,8 @@ class Ckeditor {
   }
 
   destroy(): Promise<void> {
+    dispatchToCkeditor(this.sourceElement).destroy();
+
     return this.#editor.destroy();
   }
 

@@ -7,6 +7,9 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        destroy() {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:destroy" /* EventNames.Destroy */));
+        }
         insertAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, {
                 detail: payload,
@@ -57,6 +60,12 @@ define(["require", "exports"], function (require, exports) {
         #element;
         constructor(element) {
             this.#element = element;
+        }
+        destroy(callback) {
+            this.#element.addEventListener("ckeditor5:destroy" /* EventNames.Destroy */, () => {
+                callback();
+            });
+            return this;
         }
         insertAttachment(callback) {
             this.#element.addEventListener("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, (event) => {

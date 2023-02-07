@@ -11,6 +11,7 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
             this.#features = features;
         }
         destroy() {
+            (0, Event_1.dispatchToCkeditor)(this.sourceElement).destroy();
             return this.#editor.destroy();
         }
         discardDraft() {

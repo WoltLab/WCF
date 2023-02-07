@@ -195,17 +195,12 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
   }
 
   #cancelEdit(): void {
-    this.#destroyEditor();
+    void getCkeditorById(this.#editorId)!.destroy();
 
     this.#editorContainer.remove();
 
     this.menu!.querySelector<HTMLElement>(".comment__option--edit")!.hidden = false;
     this.querySelector<HTMLElement>(".htmlContent")!.hidden = false;
-  }
-
-  #destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${this.#editorId}`);
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `destroy_${this.#editorId}`);
   }
 
   get #editorContainer(): HTMLElement {
