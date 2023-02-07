@@ -46,7 +46,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
                 [
                     'categoryList' => $categoryList,
                     'activeCategory' => $this->getActiveCategory(),
-                    'resetLink' => $this->getResetLink(),
+                    'resetFilterLink' => $this->getResetFilterLink(),
                     'showChildCategories' => $this->showChildCategories,
                 ],
                 true
@@ -61,7 +61,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         return null;
     }
 
-    protected function getResetLink(): string
+    protected function getResetFilterLink(): string
     {
         return '';
     }

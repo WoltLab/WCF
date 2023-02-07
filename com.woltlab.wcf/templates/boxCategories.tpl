@@ -10,9 +10,9 @@
 		{/if}
 	{/foreach}
 	
-	{if $activeCategory && $resetLink}
+	{if $activeCategory && $resetFilterLink}
 		<li class="boxMenuResetFilter">
-			<a href="{$resetLink}" class="boxMenuLink">
+			<a href="{$resetFilterLink}" class="boxMenuLink">
 				<span class="boxMenuLinkTitle">{lang}wcf.global.button.resetFilter{/lang}</span>
 			</a>
 		</li>

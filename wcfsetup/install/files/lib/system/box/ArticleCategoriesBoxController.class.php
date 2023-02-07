@@ -40,7 +40,7 @@ class ArticleCategoriesBoxController extends AbstractCategoriesBoxController
         return $activeCategory;
     }
 
-    protected function getResetLink(): string
+    protected function getResetFilterLink(): string
     {
         return LinkHandler::getInstance()->getControllerLink(ArticleListPage::class);
     }
