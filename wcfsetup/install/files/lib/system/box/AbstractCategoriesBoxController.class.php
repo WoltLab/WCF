@@ -69,7 +69,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    public function readConditions()
+    public function readConditions(): void
     {
         if (!empty($_POST['showChildCategories'])) {
             $this->showChildCategories = true;
@@ -79,14 +79,14 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    public function validateConditions()
+    public function validateConditions(): void
     {
     }
 
     /**
      * @inheritDoc
      */
-    public function getConditionDefinition()
+    public function getConditionDefinition(): string
     {
         return '';
     }
@@ -94,7 +94,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    public function getConditionObjectTypes()
+    public function getConditionObjectTypes(): array
     {
         return [];
     }
@@ -102,7 +102,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    public function getConditionsTemplate()
+    public function getConditionsTemplate(): string
     {
         return WCF::getTPL()->fetch('boxCategoryConditions', 'wcf', [
             'showChildCategories' => $this->showChildCategories,
@@ -112,7 +112,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    protected function getAdditionalData()
+    protected function getAdditionalData(): array
     {
         return [
             'showChildCategories' => $this->showChildCategories,
@@ -122,7 +122,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    public function setBox(Box $box, $setConditionData = true)
+    public function setBox(Box $box, $setConditionData = true): void
     {
         parent::setBox($box);
 
