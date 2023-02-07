@@ -135,7 +135,7 @@ class TemplateDiffPage extends AbstractPage
         if ($this->parent->templateID) {
             $a = \explode("\n", StringUtil::unifyNewlines($this->parent->getSource()));
             $b = \explode("\n", StringUtil::unifyNewlines($this->template->getSource()));
-            $differ = new Differ();
+            $differ = Diff::getDefaultDiffer();
             $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
         }
     }

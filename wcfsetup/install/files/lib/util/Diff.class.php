@@ -3,6 +3,7 @@
 namespace wcf\util;
 
 use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 
 /**
  * Diff calculates the longest common subsequence of two given
@@ -341,6 +342,16 @@ class Diff
                 $entry[0],
             ];
         }, $arrayDiff);
+    }
+
+    /**
+     * Returns a default instance of sebastian/diff's differ.
+     *
+     * @since 6.0
+     */
+    public static function getDefaultDiffer(): Differ
+    {
+        return new Differ(new UnifiedDiffOutputBuilder());
     }
 
     /**
