@@ -430,6 +430,9 @@ class WCF
                 if (@\ini_get('zend.assertions') >= 0) {
                     @\ini_set('zend.assertions', 1);
                 }
+
+                \spl_autoload_unregister([self::class, 'autoload']);
+                \spl_autoload_register([self::class, 'autoloadDebug'], true, true);
             }
         }
     }
@@ -806,9 +809,7 @@ class WCF
     }
 
     /**
-     * Includes the required util or exception classes automatically.
-     *
-     * @see     spl_autoload_register()
+     * Autoloads classes within the application directories.
      */
     final public static function autoload(string $className): void
     {
@@ -828,6 +829,26 @@ class WCF
                 if (\file_exists($classPath)) {
                     include_once($classPath);
                 }
+            }
+        }
+    }
+
+    /**
+     * Checks the class name casing after autoloading.
+     */
+    final public static function autoloadDebug(string $className): void
+    {
+        self::autoload($className);
+
+        if (\class_exists($className)) {
+            $reflection = new \ReflectionClass($className);
+
+            if ($className !== $reflection->getName()) {
+                throw new \Exception(\sprintf(
+                    "Loaded class '%s' with mismatching case '%s'. This will cause issues on case-sensitive file systems.",
+                    $reflection->getName(),
+                    $className,
+                ));
             }
         }
     }
