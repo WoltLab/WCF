@@ -126,7 +126,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     {
         parent::setBox($box);
 
-        if ($setConditionData) {
+        if ($setConditionData && $this->box->showChildCategories) {
             $this->showChildCategories = $this->box->showChildCategories;
         }
     }
