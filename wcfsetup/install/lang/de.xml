@@ -253,6 +253,7 @@
 		<item name="wcf.acp.box.conditions.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.box.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
 		<item name="wcf.acp.box.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
+		<item name="wcf.acp.box.showChildCategories"><![CDATA[Unterkategorien der obersten Ebene standardmäßig anzeigen]]></item>
 	</category>
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>

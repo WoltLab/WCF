@@ -28,12 +28,7 @@ class ArticleCategoryNode extends CategoryNode
      */
     protected $articles;
 
-    /**
-     * Returns number of articles in the category.
-     *
-     * @return  int
-     */
-    public function getArticles()
+    public function getItems(): int
     {
         if ($this->articles === null) {
             $this->articles = ArticleCategoryCache::getInstance()->getArticles($this->categoryID);

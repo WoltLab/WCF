@@ -3,6 +3,7 @@
 namespace wcf\data\category;
 
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\ILinkableObject;
 use wcf\data\IObjectTreeNode;
 use wcf\data\TObjectTreeNode;
 
@@ -28,21 +29,26 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
     /**
      * Returns true if this category is visible in a nested menu item list.
      *
-     * @param AbstractDecoratedCategory $activeCategory
-     * @return  bool
      * @since       5.2
      */
-    public function isVisibleInNestedList(?AbstractDecoratedCategory $activeCategory = null)
+    public function isVisibleInNestedList(?AbstractDecoratedCategory $activeCategory = null, bool $showChildCategories = false): bool
     {
-        if (!$this->getParentCategory() || !$this->getParentCategory()->getParentCategory()) {
-            // level 1 & 2 are always visible
+        if (!$this->getParentCategory()) {
+            // level 1 is always visible
+            return true;
+        }
+
+        if ($showChildCategories && !$this->getParentCategory()->getParentCategory()) {
             return true;
         }
 
         if ($activeCategory) {
+            $decoratedObject = $this->getDecoratedObject();
             if (
                 $activeCategory->categoryID == $this->categoryID
-                || $activeCategory->isParentCategory($this->getDecoratedObject())
+                || ($decoratedObject instanceof AbstractDecoratedCategory
+                    && $activeCategory->isParentCategory($decoratedObject)
+                )
             ) {
                 // is the active category or a parent of the active category
                 return true;
@@ -55,5 +61,23 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
         }
 
         return false;
+    }
+
+    /**
+     * Returns number of items in the category.
+     */
+    public function getItems(): int
+    {
+        return 0;
+    }
+
+    public function getLink(): string
+    {
+        $decoratedObject = $this->getDecoratedObject();
+        if ($decoratedObject instanceof ILinkableObject) {
+            return $decoratedObject->getLink();
+        }
+
+        return '';
     }
 }
