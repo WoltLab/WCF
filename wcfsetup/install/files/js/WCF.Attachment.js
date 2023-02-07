@@ -120,46 +120,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					});
 			});
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'submit_' + this._editorId, this._submitInline.bind(this));
-			
-			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'autosaveMetaData_' + this._editorId, (function (data) {
-				if (!data.tmpHashes || !Array.isArray(data.tmpHashes)) {
-					data.tmpHashes = [];
-				}
-				
-				// Remove any existing entries for this tmpHash.
-				data.tmpHashes = data.tmpHashes.filter((item) => item !== tmpHash);
-				
-				var count = this._fileListSelector.children('li:not(.uploadFailed)').length;
-				if (count > 0) {
-					// Add a new entry for this tmpHash if files have been uploaded.
-					data.tmpHashes.push(tmpHash);
-				}
-			}).bind(this));
-
 			const form = this._fileListSelector[0].closest("form");
 			if (form) {
-				// Read any cached `tmpHash` values from the autosave feature.
-				const metaData = {};
-				form.dataset.attachmentTmpHashes = "";
-				WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'getMetaData_' + this._editorId, metaData);
-				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
-					// Caching the values here preserves them from the removal
-					// caused by the automated cleanup that runs on form submit
-					// and is bound before our event listener.
-					form.dataset.attachmentTmpHashes = metaData.tmpHashes.join(',');
-				}
-
-				form.addEventListener("submit", (event) => {
-					let tmpHash = this._tmpHash
-					if (form.dataset.attachmentTmpHashes) {
-						tmpHash += `,${form.dataset.attachmentTmpHashes}`;
-					}
-					
-
+				form.addEventListener("submit", () => {
 					const input = form.querySelector('input[name="tmpHash"]');
 					if (input) {
-						input.value = tmpHash;
+						input.value = this._tmpHash;
 					}
 				});
 			}
@@ -167,9 +133,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, this._sync.bind(this));
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'destroy_' + this._editorId, (function () {
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'submit_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'autosaveMetaData_' + this._editorId);
-				
 				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, syncUuid);
 			}).bind(this));
 		}
@@ -203,44 +166,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 			);
 		});
-	},
-	
-	/**
-	 * Sets the attachments representing an image.
-	 *
-	 * @return      {Object}
-	 */
-	_getImageAttachments: function () {
-		var images = {};
-		
-		this._fileListSelector.children('li').each(function (index, attachment) {
-			var $attachment = $(attachment);
-			if ($attachment.data('isImage')) {
-				images[~~$attachment.data('objectID')] = {
-					thumbnailUrl: $attachment.find('.jsButtonAttachmentInsertThumbnail').data('url'),
-					url: $attachment.find('.jsButtonAttachmentInsertFull').data('url')
-				};
-			}
-		});
-		
-		return images;
-	},
-	
-	/**
-	 * Adds parameters for the inline editor.
-	 *
-	 * @param        object                data
-	 */
-	_submitInline: function (data) {
-		if (this._tmpHash) {
-			data.tmpHash = this._tmpHash;
-			
-			var metaData = {};
-			WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'getMetaData_' + this._editorId, metaData);
-			if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
-				data.tmpHash += ',' + metaData.tmpHashes.join(',');
-			}
-		}
 	},
 	
 	/**
@@ -487,18 +412,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		return $li;
-	},
-	
-	/**
-	 * Returns true if thumbnails are enabled and should be
-	 * used instead of the original images.
-	 *
-	 * @return      {boolean}
-	 * @protected
-	 * @deprecated 5.3
-	 */
-	_useThumbnail: function() {
-		return true;
 	},
 	
 	/**
