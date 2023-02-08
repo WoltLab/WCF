@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "cuyz/valinor",
-            "version": "1.2.0",
-            "version_normalized": "1.2.0.0",
+            "version": "1.3.0",
+            "version_normalized": "1.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "c463f7dee12fec5a839ef0c730b1aea8832355f5"
+                "reference": "d49784828d93f678fa6a102a630f27c1b22d90c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/c463f7dee12fec5a839ef0c730b1aea8832355f5",
-                "reference": "c463f7dee12fec5a839ef0c730b1aea8832355f5",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/d49784828d93f678fa6a102a630f27c1b22d90c8",
+                "reference": "d49784828d93f678fa6a102a630f27c1b22d90c8",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "rector/rector": "^0.12.23",
                 "vimeo/psalm": "^5.0"
             },
-            "time": "2023-01-09T12:55:12+00:00",
+            "time": "2023-02-08T09:39:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -66,7 +66,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CuyZ/Valinor/issues",
-                "source": "https://github.com/CuyZ/Valinor/tree/1.2.0"
+                "source": "https://github.com/CuyZ/Valinor/tree/1.3.0"
             },
             "funding": [
                 {
