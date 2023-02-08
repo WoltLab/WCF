@@ -67,11 +67,21 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
             });
         }
         async softDelete(title, askForReason = false) {
+            let question;
+            if (title === undefined) {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete.indeterminate");
+            }
+            else {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete", { title });
+            }
+            return this.withReason(question, askForReason);
+        }
+        async withReason(question, askForReason) {
             const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
             let reason = undefined;
             if (askForReason) {
                 const id = DomUtil.getUniqueId();
-                const label = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete.reason");
+                const label = (0, Language_1.getPhrase)("wcf.dialog.confirmation.reason");
                 const dl = document.createElement("dl");
                 dl.innerHTML = `
         <dt><label for="${id}">${label}</label></dt>
@@ -79,13 +89,6 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
       `;
                 reason = dl.querySelector("textarea");
                 dialog.content.append(dl);
-            }
-            let question;
-            if (title === undefined) {
-                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete.indeterminate");
-            }
-            else {
-                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete", { title });
             }
             dialog.show(question);
             return new Promise((resolve) => {
