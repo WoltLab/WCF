@@ -1,0 +1,22 @@
+name: SQL
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - wcfsetup/setup/db/install.sql
+  pull_request:
+    paths:
+    - wcfsetup/setup/db/install.sql
+
+jobs:
+  syntax:
+    name: "Check install.sql"
+    runs-on: ubuntu-latest
+    steps:
+    - run: sudo service mysql start
+    - run: mysqladmin -uroot -proot create test
+    - uses: actions/checkout@v3
+    - run: |
+        cat wcfsetup/setup/db/install.sql |mysql -uroot -proot -Dtest
