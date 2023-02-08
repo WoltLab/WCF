@@ -102,6 +102,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="userOption" />
 
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_favicon.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_trophies.php</instruction>
 
 		<!-- Clean Up. -->
 		<instruction type="fileDelete" />
