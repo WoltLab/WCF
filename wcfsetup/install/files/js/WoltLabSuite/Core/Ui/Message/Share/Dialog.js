@@ -36,16 +36,57 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
     function getDialogElements(shareButton) {
         const permalink = shareButton.href;
         let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
-        if (shareButton.dataset.bbcode) {
-            dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode);
-        }
-        if (permalink && shareButton.dataset.linkTitle) {
-            if (!shareButton.dataset.bbcode) {
-                dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`);
-            }
-            dialogOptions += getDialogElement("wcf.message.share.permalink.html", `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`);
-        }
+        getBBCodes(shareButton).forEach(([label, value]) => {
+            dialogOptions += getDialogElement(label, value);
+        });
+        getPermalinkHtml(shareButton).forEach(([label, value]) => {
+            dialogOptions += getDialogElement(label, value);
+        });
         return dialogOptions;
+    }
+    function getPermalinkHtml(shareButton) {
+        const payload = {
+            permalinkHtml: [],
+        };
+        const event = new CustomEvent("share:permalink-html", {
+            cancelable: true,
+            detail: payload,
+        });
+        shareButton.dispatchEvent(event);
+        if (event.defaultPrevented) {
+            return payload.permalinkHtml;
+        }
+        if (shareButton.href && shareButton.dataset.linkTitle) {
+            return [
+                [
+                    "wcf.message.share.permalink.html",
+                    `<a href="${StringUtil.escapeHTML(shareButton.href)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
+                ],
+            ];
+        }
+        return [];
+    }
+    function getBBCodes(shareButton) {
+        const payload = {
+            bbcodes: [],
+        };
+        const event = new CustomEvent("share:bbcodes", {
+            cancelable: true,
+            detail: payload,
+        });
+        shareButton.dispatchEvent(event);
+        if (event.defaultPrevented) {
+            return payload.bbcodes;
+        }
+        if (shareButton.dataset.bbcode) {
+            return [["wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode]];
+        }
+        else if (shareButton.href && shareButton.dataset.linkTitle) {
+            return [
+                ["wcf.message.share.permalink.bbcode", `[url='${shareButton.href}']${shareButton.dataset.linkTitle}[/url]`],
+            ];
+        }
+        return [];
     }
     /**
      * Returns a dialog element with the given label and input field value.

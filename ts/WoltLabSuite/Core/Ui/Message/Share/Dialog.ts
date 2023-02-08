@@ -18,6 +18,10 @@ import { getShareProviders } from "./Providers";
 import { dialogFactory } from "../../../Component/Dialog";
 import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
 
+type Label = string;
+type Value = string;
+type DialogElement = [Label, Value];
+
 const shareButtons = new WeakSet<HTMLElement>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
@@ -46,24 +50,68 @@ function getDialogElements(shareButton: HTMLAnchorElement): string {
 
   let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
 
-  if (shareButton.dataset.bbcode) {
-    dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode);
-  }
-  if (permalink && shareButton.dataset.linkTitle) {
-    if (!shareButton.dataset.bbcode) {
-      dialogOptions += getDialogElement(
-        "wcf.message.share.permalink.bbcode",
-        `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`,
-      );
-    }
+  getBBCodes(shareButton).forEach(([label, value]) => {
+    dialogOptions += getDialogElement(label, value);
+  });
 
-    dialogOptions += getDialogElement(
-      "wcf.message.share.permalink.html",
-      `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
-    );
-  }
+  getPermalinkHtml(shareButton).forEach(([label, value]) => {
+    dialogOptions += getDialogElement(label, value);
+  });
 
   return dialogOptions;
+}
+
+function getPermalinkHtml(shareButton: HTMLAnchorElement): DialogElement[] {
+  const payload = {
+    permalinkHtml: [],
+  };
+  const event = new CustomEvent("share:permalink-html", {
+    cancelable: true,
+    detail: payload,
+  });
+
+  shareButton.dispatchEvent(event);
+  if (event.defaultPrevented) {
+    return payload.permalinkHtml;
+  }
+
+  if (shareButton.href && shareButton.dataset.linkTitle) {
+    return [
+      [
+        "wcf.message.share.permalink.html",
+        `<a href="${StringUtil.escapeHTML(shareButton.href)}">${StringUtil.escapeHTML(
+          shareButton.dataset.linkTitle,
+        )}</a>`,
+      ],
+    ];
+  }
+
+  return [];
+}
+
+function getBBCodes(shareButton: HTMLAnchorElement): DialogElement[] {
+  const payload = {
+    bbcodes: [],
+  };
+  const event = new CustomEvent("share:bbcodes", {
+    cancelable: true,
+    detail: payload,
+  });
+
+  shareButton.dispatchEvent(event);
+  if (event.defaultPrevented) {
+    return payload.bbcodes;
+  }
+
+  if (shareButton.dataset.bbcode) {
+    return [["wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode]];
+  } else if (shareButton.href && shareButton.dataset.linkTitle) {
+    return [
+      ["wcf.message.share.permalink.bbcode", `[url='${shareButton.href}']${shareButton.dataset.linkTitle}[/url]`],
+    ];
+  }
+
+  return [];
 }
 
 /**
