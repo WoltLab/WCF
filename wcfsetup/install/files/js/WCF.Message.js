@@ -1707,6 +1707,8 @@ WCF.Message.Share = { };
 
 /**
  * Displays a dialog overlay for permalinks.
+ * 
+ * @deprecated	6.0 Use `WoltLabSuite/Core/Ui/Message/Share/Dialog` instead.
  */
 WCF.Message.Share.Content = Class.extend({
 	/**
