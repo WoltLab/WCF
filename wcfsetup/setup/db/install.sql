@@ -935,7 +935,7 @@ CREATE TABLE wcf1_package_audit_log (
 	payload MEDIUMTEXT NOT NULL,
 	time VARCHAR(255) NOT NULL,
 	wcfVersion VARCHAR(255) NOT NULL,
-	requestId VARCHAR(255) NOT NULL,
+	requestId VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_package_exclusion;
