@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Manages audit logging (wcf1_package_audit_log) for the package system.
  *
  * @author  Tim Duesterhus
- * @copyright   2001-2020 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   6.0
  */
@@ -22,13 +22,14 @@ final class AuditLogger
         $time = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $sql = "INSERT INTO wcf1_package_audit_log
-                            (time, wcfVersion, payload)
-                VALUES      (?, ?, ?)";
+                            (time, wcfVersion, payload, requestId)
+                VALUES      (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $time->format('Y-m-d\TH:i:s.uP'),
             \WCF_VERSION,
             $payload,
+            \wcf\getRequestId(),
         ]);
     }
 }
