@@ -8,7 +8,11 @@ on:
     - "5.4"
     - "5.5"
     - master
+    paths:
+    - '*.php'
   pull_request:
+    paths:
+    - '*.php'
 
 jobs:
   syntax:
