@@ -31,6 +31,7 @@ return [
                 ->notNull(),
             NotNullVarchar255DatabaseTableColumn::create('time'),
             NotNullVarchar255DatabaseTableColumn::create('wcfVersion'),
+            NotNullVarchar255DatabaseTableColumn::create('requestId'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

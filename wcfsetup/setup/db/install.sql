@@ -934,7 +934,8 @@ CREATE TABLE wcf1_package_audit_log (
 	logID BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	payload MEDIUMTEXT NOT NULL,
 	time VARCHAR(255) NOT NULL,
-	wcfVersion VARCHAR(255) NOT NULL
+	wcfVersion VARCHAR(255) NOT NULL,
+	requestId VARCHAR(255) NOT NULL,
 );
 
 DROP TABLE IF EXISTS wcf1_package_exclusion;
