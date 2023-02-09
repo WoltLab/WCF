@@ -127,28 +127,20 @@ class ConfirmationPrefab {
 
     const dl = document.createElement("dl");
     dl.innerHTML = `
-        <dt><label for="${id}">${label}</label></dt>
-        <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
-      `;
+      <dt><label for="${id}">${label}</label></dt>
+      <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
+    `;
     reason = dl.querySelector("textarea")!;
 
     dialog.content.append(dl);
 
     dialog.show(question);
 
-    if (!isOptional) {
-      dialog.addEventListener("validate", (event) => {
-        if (reason!.value.trim() === "") {
-          event.preventDefault();
-        }
-      });
-    }
-
     return new Promise<ResultConfirmationWithReason>((resolve) => {
       dialog.addEventListener("primary", () => {
         resolve({
           result: true,
-          reason: reason ? reason.value.trim() : "",
+          reason: reason!.value.trim(),
         });
       });
 
