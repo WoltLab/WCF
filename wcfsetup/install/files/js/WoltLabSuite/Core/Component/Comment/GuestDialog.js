@@ -4,7 +4,6 @@
  * @author Marcel Werk
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Component/Comment/GuestDialog
  * @since 6.0
  */
 define(["require", "exports", "tslib", "../../Controller/Captcha", "../../Language", "../Dialog"], function (require, exports, tslib_1, Captcha_1, Language_1, Dialog_1) {

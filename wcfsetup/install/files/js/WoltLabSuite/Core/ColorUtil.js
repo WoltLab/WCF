@@ -4,8 +4,6 @@
  * @author      Alexander Ebert
  * @copyright  2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  ColorUtil (alias)
- * @module      WoltLabSuite/Core/ColorUtil
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";

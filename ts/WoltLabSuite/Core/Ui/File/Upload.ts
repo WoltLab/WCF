@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg, Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/File/Upload
  * @since  5.2
  * @woltlabExcludeBundle tiny
  */

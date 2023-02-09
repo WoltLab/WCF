@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Component/Confirmation/Custom
  * @since 6.0
  */
 define(["require", "exports", "tslib", "../Dialog", "../../Language"], function (require, exports, tslib_1, Dialog_1, Language) {

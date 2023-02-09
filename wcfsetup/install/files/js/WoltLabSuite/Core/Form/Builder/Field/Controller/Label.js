@@ -4,7 +4,6 @@
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright 2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Form/Builder/Field/Controller/Label
  * @since 5.2
  */
 define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language, Simple_1) {

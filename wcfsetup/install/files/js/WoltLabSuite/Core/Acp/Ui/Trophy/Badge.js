@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Acp/Ui/Trophy/Badge
  */
 define(["require", "exports", "tslib", "../../../Ui/Style/FontAwesome", "../../../Ui/Color/Picker", "../../../Dom/Util"], function (require, exports, tslib_1, FontAwesome_1, Picker_1, Util_1) {
     "use strict";

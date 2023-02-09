@@ -4,7 +4,6 @@
  * @author  Tim Duesterhus, Maximilian Mader
  * @copyright  2001-2020 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Image/Resizer
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], function (require, exports, tslib_1, FileUtil, ExifUtil, pica_1) {

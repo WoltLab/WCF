@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Ui/Alignment (alias)
- * @module  WoltLabSuite/Core/Ui/Alignment
  */
 define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Language"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language) {
     "use strict";

@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Component/Dialog/Setup
  * @since 6.0
  */
 define(["require", "exports", "../../Component/Dialog", "../../Language", "../../Ui/Notification"], function (require, exports, Dialog_1, Language_1, Notification_1) {

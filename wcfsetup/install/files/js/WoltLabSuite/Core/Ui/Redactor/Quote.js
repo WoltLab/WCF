@@ -4,7 +4,6 @@
  * @author      Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Ui/Redactor/Quote
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./Metacode", "./PseudoHeader", "../Scroll"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorMetacode, UiRedactorPseudoHeader, UiScroll) {

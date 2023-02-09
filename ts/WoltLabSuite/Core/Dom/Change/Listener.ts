@@ -5,8 +5,6 @@
  * @author  Tim Duesterhus
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Dom/ChangeListener (alias)
- * @module  WoltLabSuite/Core/Dom/Change/Listener
  * @deprecated 6.0 Use the helper functions in `WoltLabSuite/Core/Helper/Selector` instead.
  */
 

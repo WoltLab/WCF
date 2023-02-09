@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Form/Acp/Builder/Field/Devtools/Project/RequiredPackages
  * @see module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since 5.2
  */

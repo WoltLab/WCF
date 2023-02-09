@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Acp/Ui/Trophy/Editor
  */
 define(["require", "exports", "./Badge"], function (require, exports, Badge_1) {
     "use strict";

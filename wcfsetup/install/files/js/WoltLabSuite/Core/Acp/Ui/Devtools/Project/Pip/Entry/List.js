@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List
  */
 define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Ui/Confirmation", "../../../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Language, Confirmation_1, UiNotification) {
     "use strict";

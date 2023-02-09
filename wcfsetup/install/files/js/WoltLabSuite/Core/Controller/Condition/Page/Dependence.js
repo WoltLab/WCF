@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Controller/Condition/Page/Dependence
  * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Event/Handler"], function (require, exports, tslib_1, Util_1, EventHandler) {

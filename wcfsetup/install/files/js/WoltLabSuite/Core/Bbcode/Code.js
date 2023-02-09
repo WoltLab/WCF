@@ -4,7 +4,6 @@
  * @author	Tim Duesterhus
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Bbcode/Code
  */
 define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Notification", "../Prism", "../Prism/Helper"], function (require, exports, tslib_1, Language, Clipboard, UiNotification, Prism_1, PrismHelper) {
     "use strict";

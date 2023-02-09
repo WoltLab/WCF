@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
  */
 define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Request_1, Language, Dialog_1, Util_1) {
     "use strict";

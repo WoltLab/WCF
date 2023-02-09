@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/Moderation/Report
  * @since 6.0
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Util", "../../Helper/Selector", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, Selector_1, Language, UiNotification) {

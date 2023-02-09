@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Confirmation", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Confirmation_1, ControllerClipboard, Core, Util_1, EventHandler, Language, Dialog_1, UiNotification) {
     "use strict";

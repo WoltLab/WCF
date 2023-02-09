@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/User/Menu/Data/ModerationQueue
  * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1) {

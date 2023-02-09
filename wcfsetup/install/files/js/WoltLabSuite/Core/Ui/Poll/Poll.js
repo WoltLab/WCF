@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Poll
  * @since   5.5
  */
 define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../StringUtil", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Listener_1, Util_1, StringUtil_1, Participants_1, Results_1, Vote_1, Vote_2) {

@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright 2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Form/Builder/Field/Controller/Rating
  * @since 5.2
  */
 

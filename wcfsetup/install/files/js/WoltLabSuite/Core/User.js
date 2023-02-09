@@ -4,8 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  User (alias)
- * @module  WoltLabSuite/Core/User
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";

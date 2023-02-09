@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup
  */
 define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Util_1) {
     "use strict";

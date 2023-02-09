@@ -4,7 +4,6 @@
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/ItemList/Static
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Language", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, DomTraverse, Language, Simple_1) {
     "use strict";

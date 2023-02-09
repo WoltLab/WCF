@@ -4,7 +4,6 @@
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/Pagination/JumpToPage
  * @since 6.0
  */
 define(["require", "exports", "../../Component/Dialog", "../../Helper/Selector", "../../Language"], function (require, exports, Dialog_1, Selector_1, Language_1) {

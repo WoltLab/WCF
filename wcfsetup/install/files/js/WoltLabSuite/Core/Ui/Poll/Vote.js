@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Vote
  * @since   5.5
  */
 define(["require", "exports", "tslib", "./Poll", "../../Ajax"], function (require, exports, tslib_1, Poll_1, Ajax) {

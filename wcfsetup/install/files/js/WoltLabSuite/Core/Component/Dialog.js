@@ -14,7 +14,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Component/Dialog
  * @since 6.0
  */
 define(["require", "exports", "./Dialog/Setup", "../Element/woltlab-core-dialog", "../Element/woltlab-core-dialog-control"], function (require, exports, Setup_1) {

@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Bootstrap
  */
 define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Menu", "./Ui/Page/Menu/Main/Backend"], function (require, exports, tslib_1, Core, Bootstrap_1, UiPageMenu, Backend_1) {
     "use strict";

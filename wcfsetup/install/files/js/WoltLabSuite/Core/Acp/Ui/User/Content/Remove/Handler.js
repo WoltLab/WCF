@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler
  * @since       5.2
  */
 define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Dialog"], function (require, exports, tslib_1, Worker_1, Ajax, Language, Dialog_1) {

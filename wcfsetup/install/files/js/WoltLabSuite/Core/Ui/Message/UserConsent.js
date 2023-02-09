@@ -4,7 +4,6 @@
  * @author      Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Ui/Message/UserConsent
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, User_1) {
     "use strict";

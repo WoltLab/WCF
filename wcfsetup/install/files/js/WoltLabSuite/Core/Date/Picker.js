@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Date/Picker
  */
 define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, focus_trap_1) {
     "use strict";

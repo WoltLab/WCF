@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Controller/Popover
  */
 define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment, PageOverlay_1) {
     "use strict";

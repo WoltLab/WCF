@@ -7,7 +7,6 @@
  * @author  Tim Duesterhus
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Form/Builder/Field/CheckedVoid
  * @since 5.4
  */
 

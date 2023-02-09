@@ -4,7 +4,6 @@
  * @author Marcel Werk
  * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Password
  */
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"], function (require, exports, tslib_1, Listener_1, Language) {
     "use strict";

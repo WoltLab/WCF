@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Message/Share/Dialog
  */
 define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers", "../../../Component/Dialog"], function (require, exports, tslib_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1, Dialog_1) {
     "use strict";

@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler
  */
 define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Page/Search/Handler"], function (require, exports, tslib_1, Util_1, Language, UiPageSearchHandler) {
     "use strict";

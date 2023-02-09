@@ -4,7 +4,6 @@
  * @author  Marcel Werk
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Moderation/MarkAsRead
  * @since 6.0
  */
 

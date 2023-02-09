@@ -4,7 +4,6 @@
  * @author	Marcel Werk
  * @copyright	2001-2022 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/User/ObjectWatch
  * @since 6.0
  */
 define(["require", "exports", "tslib", "../../Ajax", "../Notification", "../../Language", "../../Event/Handler"], function (require, exports, tslib_1, Ajax, UiNotification, Language, EventHandler) {

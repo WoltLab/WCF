@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Object/Action/Toggle
  */
 define(["require", "exports", "tslib", "../../../Language", "./Handler"], function (require, exports, tslib_1, Language, Handler_1) {
     "use strict";

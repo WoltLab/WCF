@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
  * @woltlabExcludeBundle all
  * @deprecated 6.0 This feature is discontinued, opening Google Maps in a separate window already offers a route planer.
  */

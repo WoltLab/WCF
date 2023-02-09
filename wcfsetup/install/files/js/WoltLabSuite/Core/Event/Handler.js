@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  EventHandler (alias)
- * @module  WoltLabSuite/Core/Event/Handler
  */
 define(["require", "exports", "tslib", "../Core", "../Devtools"], function (require, exports, tslib_1, Core, Devtools_1) {
     "use strict";

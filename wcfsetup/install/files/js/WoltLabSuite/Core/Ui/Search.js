@@ -6,7 +6,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/Search
  */
 define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Simple", "./Screen", "../Environment", "../Dom/Util"], function (require, exports, tslib_1, EventHandler, UiAlignment, CloseOverlay_1, Simple_1, UiScreen, Environment, Util_1) {
     "use strict";

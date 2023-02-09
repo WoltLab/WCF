@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ajax/Backend
  * @since 6.0
  */
 define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], function (require, exports, tslib_1, LoadingIndicator, Error_1, Core_1) {

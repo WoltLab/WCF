@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/Page/Menu/Main
  */
 define(["require", "exports", "tslib", "./Container", "../../../Language", "../../../Dom/Util", "../../Dropdown/Simple"], function (require, exports, tslib_1, Container_1, Language, Util_1, DropDownSimple) {
     "use strict";

@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  AjaxJsonp (alias)
- * @module  WoltLabSuite/Core/Ajax/Jsonp
  * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {

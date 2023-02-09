@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Mobile
  */
 define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen", "../Language"], function (require, exports, tslib_1, focus_trap_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen, Language) {
     "use strict";

@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Ui/SimpleDropdown (alias)
- * @module  WoltLabSuite/Core/Ui/Dropdown/Simple
  */
 define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../../Helper/PageOverlay", "../../Helper/Selector"], function (require, exports, tslib_1, CallbackList_1, Core, DomTraverse, Util_1, UiAlignment, CloseOverlay_1, PageOverlay_1, Selector_1) {
     "use strict";

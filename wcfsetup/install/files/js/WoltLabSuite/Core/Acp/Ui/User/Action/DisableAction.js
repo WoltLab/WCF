@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
 define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "../../../../Ui/Notification", "./Abstract", "../../../../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, UiNotification, Abstract_1, EventHandler) {

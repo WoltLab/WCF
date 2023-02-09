@@ -4,7 +4,6 @@
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright  2001-2020 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Editor
  * @woltlabExcludeBundle all
  */
 

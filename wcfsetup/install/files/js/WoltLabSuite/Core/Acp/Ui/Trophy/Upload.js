@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Trophy/Upload
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Notification", "../../../Upload"], function (require, exports, tslib_1, Core, Util_1, Language, UiNotification, Upload_1) {
     "use strict";

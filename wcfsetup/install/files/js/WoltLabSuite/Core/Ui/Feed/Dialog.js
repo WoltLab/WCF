@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Feed/Dialog
  */
 define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../Language", "../../Clipboard", "../Notification"], function (require, exports, tslib_1, Dialog_1, StringUtil, Language, Clipboard, UiNotification) {
     "use strict";

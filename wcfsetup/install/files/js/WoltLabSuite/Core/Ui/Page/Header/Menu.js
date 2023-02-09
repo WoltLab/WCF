@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Page/Header/Menu
  */
 define(["require", "exports", "tslib", "../../../Environment", "../../../Language", "../../Screen"], function (require, exports, tslib_1, Environment, Language, UiScreen) {
     "use strict";

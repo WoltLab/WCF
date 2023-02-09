@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Ajax (alias)
- * @module  WoltLabSuite/Core/Ajax
  */
 
 import AjaxRequest from "./Ajax/Request";

@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Controller/Style/Changer
  * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language, Dialog_1) {

@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Tooltip
  */
 define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay", "../Helper/Selector", "./Alignment"], function (require, exports, tslib_1, Environment, PageOverlay_1, Selector_1, UiAlignment) {
     "use strict";

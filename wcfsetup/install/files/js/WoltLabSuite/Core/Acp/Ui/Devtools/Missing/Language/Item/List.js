@@ -2,7 +2,6 @@
  * @author  Matthias Schmidt
  * @copyright 2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Devtools/Missing/Language/Item/List
  * @since 5.4
  */
 define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Ui/Dialog"], function (require, exports, tslib_1, UiConfirmation, Ajax, Language, Dialog_1) {

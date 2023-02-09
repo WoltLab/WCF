@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/User/Menu/Manager
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util", "../../Screen", "../../../Helper/PageOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1, UiScreen, PageOverlay_1) {

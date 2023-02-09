@@ -4,7 +4,6 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2020 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard
  * @since       5.4
  */
 

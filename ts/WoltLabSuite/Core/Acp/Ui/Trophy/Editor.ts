@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Acp/Ui/Trophy/Editor
  */
 
 import { setup as setupBadgeEditor } from "./Badge";

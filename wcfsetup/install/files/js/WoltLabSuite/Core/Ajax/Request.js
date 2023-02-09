@@ -6,8 +6,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  AjaxRequest (alias)
- * @module  WoltLabSuite/Core/Ajax/Request
  */
 define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1) {
     "use strict";

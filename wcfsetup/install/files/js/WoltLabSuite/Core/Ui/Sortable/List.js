@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Sortable/List
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../Screen"], function (require, exports, tslib_1, Core, UiScreen) {

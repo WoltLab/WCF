@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Like/Handler
  * @deprecated  5.2 use ReactionHandler instead
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener", "../../Language", "../../StringUtil", "../Reaction/Handler", "../../User"], function (require, exports, tslib_1, Core, Listener_1, Language, StringUtil, Handler_1, User_1) {

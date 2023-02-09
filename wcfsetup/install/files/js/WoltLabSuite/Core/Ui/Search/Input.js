@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Search/Input
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Util", "../Dropdown/Simple"], function (require, exports, tslib_1, Ajax, Core, Util_1, Simple_1) {
     "use strict";

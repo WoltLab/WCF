@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2018 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Option/EmailSmtpTest
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Util_1, Language) {
     "use strict";

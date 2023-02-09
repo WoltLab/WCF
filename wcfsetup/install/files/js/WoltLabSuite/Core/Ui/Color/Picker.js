@@ -5,7 +5,6 @@
  * @author      Alexander Ebert, Matthias Schmidt
  * @copyright  2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Ui/Color/Picker
  * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Util", "../../Language", "../../ColorUtil"], function (require, exports, tslib_1, Core, Dialog_1, Util_1, Language, ColorUtil) {

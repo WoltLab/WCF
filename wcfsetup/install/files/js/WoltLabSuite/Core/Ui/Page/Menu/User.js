@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ui/Page/Menu/User
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler", "../../Screen"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler, Screen_1) {

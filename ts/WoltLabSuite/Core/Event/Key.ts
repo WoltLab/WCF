@@ -5,8 +5,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  EventKey (alias)
- * @module  WoltLabSuite/Core/Event/Key
  */
 
 function _test(event: KeyboardEvent, key: string, which: number) {

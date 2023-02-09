@@ -4,7 +4,6 @@
  * @author      Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Listener_1, Language, UiConfirmation, UiNotification) {
     "use strict";

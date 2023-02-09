@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Media/Manager/Search
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Util_1) {

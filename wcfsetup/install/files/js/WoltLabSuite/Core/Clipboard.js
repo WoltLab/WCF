@@ -4,7 +4,6 @@
  * @author	Tim Duesterhus
  * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Clipboard
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";

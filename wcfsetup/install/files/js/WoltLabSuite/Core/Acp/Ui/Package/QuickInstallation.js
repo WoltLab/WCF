@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", "../../../Core", "../../../Language", "../../../Dom/Util", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax_1, AjaxStatus, Core_1, Language, Util_1, Dialog_1) {
     "use strict";

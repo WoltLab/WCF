@@ -5,7 +5,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ajax/DboAction
  * @since 5.5
  */
 define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], function (require, exports, tslib_1, Error_1, AjaxStatus, Core) {

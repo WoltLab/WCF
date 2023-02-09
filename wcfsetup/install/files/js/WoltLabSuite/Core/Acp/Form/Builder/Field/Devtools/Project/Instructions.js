@@ -4,7 +4,6 @@
  * @author  Matthias Schmidt
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions
  * @since 5.2
  */
 define(["require", "exports", "tslib", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util", "../../../../../../Ui/Sortable/List", "../../../../../../Ui/Dialog", "../../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Core, Language, DomTraverse, Listener_1, Util_1, List_1, Dialog_1, UiConfirmation) {

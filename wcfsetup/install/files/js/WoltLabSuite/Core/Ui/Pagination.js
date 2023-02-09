@@ -6,7 +6,6 @@ define(["require", "exports"], function (require, exports) {
      * @author Alexander Ebert
      * @copyright 2001-2022 WoltLab GmbH
      * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-     * @module WoltLabSuite/Core/Ui/Pagination
      * @deprecated 6.0 Use `<woltlab-core-pagination>` directly.
      */
     class UiPagination {

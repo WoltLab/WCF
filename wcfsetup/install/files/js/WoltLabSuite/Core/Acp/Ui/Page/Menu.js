@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Page/Menu
  */
 define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, perfect_scrollbar_1, EventHandler, UiScreen) {
     "use strict";

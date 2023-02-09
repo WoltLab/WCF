@@ -9,8 +9,6 @@
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Dictionary (alias)
- * @module  WoltLabSuite/Core/Dictionary
  */
 
 /** @deprecated 5.4 Use a `Map` instead. */

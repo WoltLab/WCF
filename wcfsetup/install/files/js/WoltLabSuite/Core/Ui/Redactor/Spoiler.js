@@ -4,7 +4,6 @@
  * @author      Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Ui/Redactor/Spoiler
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dialog", "./PseudoHeader"], function (require, exports, tslib_1, Util_1, EventHandler, Language, Dialog_1, UiRedactorPseudoHeader) {

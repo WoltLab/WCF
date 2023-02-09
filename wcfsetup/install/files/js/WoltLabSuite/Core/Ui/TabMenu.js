@@ -4,8 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  Ui/TabMenu (alias)
- * @module  WoltLabSuite/Core/Ui/TabMenu
  */
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", "./TabMenu/Simple", "./CloseOverlay", "./Screen", "./Scroll"], function (require, exports, tslib_1, Listener_1, Util_1, Simple_1, CloseOverlay_1, UiScreen, UiScroll) {
     "use strict";

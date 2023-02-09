@@ -4,7 +4,6 @@
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Ajax/Error
  * @since 5.5
  */
 define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language"], function (require, exports, tslib_1, Dialog_1, Core, Language) {

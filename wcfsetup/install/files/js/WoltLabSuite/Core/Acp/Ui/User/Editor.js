@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
 define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Dropdown/Simple", "../../../Dom/Util", "./Action/SendNewPasswordAction", "./Action/ToggleConfirmEmailAction", "./Action/DisableAction", "./Action/BanAction", "./Action/DeleteAction"], function (require, exports, tslib_1, Handler_1, Core, EventHandler, Language, Simple_1, Util_1, SendNewPasswordAction_1, ToggleConfirmEmailAction_1, DisableAction_1, BanAction_1, DeleteAction_1) {
