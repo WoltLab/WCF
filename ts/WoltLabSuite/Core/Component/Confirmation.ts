@@ -121,7 +121,6 @@ class ConfirmationPrefab {
   async withReason(question: string, isOptional: boolean): Promise<ResultConfirmationWithReason> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
-    let reason: HTMLTextAreaElement | undefined = undefined;
     const id = DomUtil.getUniqueId();
     const label = getPhrase(isOptional ? "wcf.dialog.confirmation.reason.optional" : "wcf.dialog.confirmation.reason");
 
@@ -130,7 +129,7 @@ class ConfirmationPrefab {
       <dt><label for="${id}">${label}</label></dt>
       <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
     `;
-    reason = dl.querySelector("textarea")!;
+    const reason = dl.querySelector("textarea")!;
 
     dialog.content.append(dl);
 
@@ -140,7 +139,7 @@ class ConfirmationPrefab {
       dialog.addEventListener("primary", () => {
         resolve({
           result: true,
-          reason: reason!.value.trim(),
+          reason: reason.value.trim(),
         });
       });
 

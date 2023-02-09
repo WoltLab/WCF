@@ -94,7 +94,6 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
         }
         async withReason(question, isOptional) {
             const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
-            let reason = undefined;
             const id = DomUtil.getUniqueId();
             const label = (0, Language_1.getPhrase)(isOptional ? "wcf.dialog.confirmation.reason.optional" : "wcf.dialog.confirmation.reason");
             const dl = document.createElement("dl");
@@ -102,7 +101,7 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
       <dt><label for="${id}">${label}</label></dt>
       <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
     `;
-            reason = dl.querySelector("textarea");
+            const reason = dl.querySelector("textarea");
             dialog.content.append(dl);
             dialog.show(question);
             return new Promise((resolve) => {
