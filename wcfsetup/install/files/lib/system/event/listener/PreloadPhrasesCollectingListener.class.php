@@ -46,7 +46,6 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.dialog.confirmation.delete.indeterminate');
         $event->preload('wcf.dialog.confirmation.softDelete');
         $event->preload('wcf.dialog.confirmation.softDelete.indeterminate');
-        $event->preload('wcf.dialog.confirmation.reason');
         $event->preload('wcf.dialog.confirmation.restore');
         $event->preload('wcf.dialog.confirmation.restore.indeterminate');
 
@@ -98,6 +97,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.page.pagination');
         $event->preload('wcf.global.page.previous');
         $event->preload('wcf.global.reason');
+        $event->preload('wcf.global.reason.optional');
         $event->preload('wcf.global.scrollUp');
         $event->preload('wcf.global.select');
         $event->preload('wcf.global.success');

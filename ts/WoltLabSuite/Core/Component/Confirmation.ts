@@ -27,6 +27,9 @@ import { getPhrase } from "../Language";
 import * as DomUtil from "../Dom/Util";
 import { ConfirmationCustom } from "./Confirmation/Custom";
 
+type ResultSoftDeleteWithoutReason = {
+  result: boolean;
+};
 type ResultConfirmationWithReason = {
   result: boolean;
   reason: string;
@@ -77,7 +80,14 @@ class ConfirmationPrefab {
     });
   }
 
-  async softDelete(title?: string, askForReason = false): Promise<ResultConfirmationWithReason> {
+  async softDelete(): Promise<ResultSoftDeleteWithoutReason>;
+  async softDelete(title: string): Promise<ResultSoftDeleteWithoutReason>;
+  async softDelete(title: string, askForReason: false): Promise<ResultSoftDeleteWithoutReason>;
+  async softDelete(title: string, askForReason: true): Promise<ResultConfirmationWithReason>;
+  async softDelete(
+    title?: string,
+    askForReason = false,
+  ): Promise<ResultConfirmationWithReason | ResultSoftDeleteWithoutReason> {
     let question: string;
     if (title === undefined) {
       question = getPhrase("wcf.dialog.confirmation.softDelete.indeterminate");
@@ -85,26 +95,42 @@ class ConfirmationPrefab {
       question = getPhrase("wcf.dialog.confirmation.softDelete", { title });
     }
 
-    return this.withReason(question, askForReason);
+    if (askForReason) {
+      return this.withReason(question, true);
+    }
+
+    const dialog = dialogFactory().withoutContent().asConfirmation();
+    dialog.show(question);
+
+    return new Promise<ResultSoftDeleteWithoutReason>((resolve) => {
+      dialog.addEventListener("primary", () => {
+        resolve({
+          result: true,
+        });
+      });
+
+      dialog.addEventListener("cancel", () => {
+        resolve({
+          result: false,
+        });
+      });
+    });
   }
 
-  async withReason(question: string, askForReason: boolean): Promise<ResultConfirmationWithReason> {
+  async withReason(question: string, isOptional: boolean): Promise<ResultConfirmationWithReason> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
-    let reason: HTMLTextAreaElement | undefined = undefined;
-    if (askForReason) {
-      const id = DomUtil.getUniqueId();
-      const label = getPhrase("wcf.dialog.confirmation.reason");
+    const id = DomUtil.getUniqueId();
+    const label = getPhrase(isOptional ? "wcf.dialog.confirmation.reason.optional" : "wcf.dialog.confirmation.reason");
 
-      const dl = document.createElement("dl");
-      dl.innerHTML = `
-        <dt><label for="${id}">${label}</label></dt>
-        <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
-      `;
-      reason = dl.querySelector("textarea")!;
+    const dl = document.createElement("dl");
+    dl.innerHTML = `
+      <dt><label for="${id}">${label}</label></dt>
+      <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
+    `;
+    const reason = dl.querySelector("textarea")!;
 
-      dialog.content.append(dl);
-    }
+    dialog.content.append(dl);
 
     dialog.show(question);
 
@@ -112,7 +138,7 @@ class ConfirmationPrefab {
       dialog.addEventListener("primary", () => {
         resolve({
           result: true,
-          reason: reason ? reason.value.trim() : "",
+          reason: reason.value.trim(),
         });
       });
 

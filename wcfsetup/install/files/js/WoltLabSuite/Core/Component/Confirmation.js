@@ -73,28 +73,41 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
             else {
                 question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete", { title });
             }
-            return this.withReason(question, askForReason);
-        }
-        async withReason(question, askForReason) {
-            const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
-            let reason = undefined;
             if (askForReason) {
-                const id = DomUtil.getUniqueId();
-                const label = (0, Language_1.getPhrase)("wcf.dialog.confirmation.reason");
-                const dl = document.createElement("dl");
-                dl.innerHTML = `
-        <dt><label for="${id}">${label}</label></dt>
-        <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
-      `;
-                reason = dl.querySelector("textarea");
-                dialog.content.append(dl);
+                return this.withReason(question, true);
             }
+            const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => {
                     resolve({
                         result: true,
-                        reason: reason ? reason.value.trim() : "",
+                    });
+                });
+                dialog.addEventListener("cancel", () => {
+                    resolve({
+                        result: false,
+                    });
+                });
+            });
+        }
+        async withReason(question, isOptional) {
+            const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
+            const id = DomUtil.getUniqueId();
+            const label = (0, Language_1.getPhrase)(isOptional ? "wcf.dialog.confirmation.reason.optional" : "wcf.dialog.confirmation.reason");
+            const dl = document.createElement("dl");
+            dl.innerHTML = `
+      <dt><label for="${id}">${label}</label></dt>
+      <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
+    `;
+            const reason = dl.querySelector("textarea");
+            dialog.content.append(dl);
+            dialog.show(question);
+            return new Promise((resolve) => {
+                dialog.addEventListener("primary", () => {
+                    resolve({
+                        result: true,
+                        reason: reason.value.trim(),
                     });
                 });
                 dialog.addEventListener("cancel", () => {

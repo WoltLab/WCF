@@ -3729,7 +3729,6 @@ Dateianhänge:
 		<item name="wcf.dialog.confirmation.delete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} dies wirklich löschen?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ in den Papierkorb verschieben?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies in den Papierkorb verschieben?]]></item>
-		<item name="wcf.dialog.confirmation.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ wiederherstellen?]]></item>
 		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies wiederherstellen?]]></item>
 	</category>
@@ -3942,6 +3941,7 @@ Dateianhänge:
 		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
+		<item name="wcf.global.reason.optional"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <strong>ohne zusätzliche Sicherheitsabfrage</strong> aus!]]></item>
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
@@ -7519,5 +7519,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.comment.description"/>
 	<item name="wcf.comment.response.add"/>
 	<item name="wcf.dialog.confirmation.softDelete.reason"/>
+	<item name="wcf.dialog.confirmation.reason"/>
 </delete>
 </language>
