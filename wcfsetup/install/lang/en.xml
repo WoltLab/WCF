@@ -3678,7 +3678,6 @@ Attachments:
 		<item name="wcf.dialog.confirmation.delete.indeterminate"><![CDATA[Are you sure you want to delete this?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[Do you want to move “{$title}” to the trash bin?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[Do you want to move this to the trash bin?]]></item>
-		<item name="wcf.dialog.confirmation.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[Do you want to restore “{$title}”?]]></item>
 		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[Do you want to restore this?]]></item>
 	</category>
@@ -3891,6 +3890,7 @@ Attachments:
 		<item name="wcf.global.noItems"><![CDATA[There are no items at the moment.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Display All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
+		<item name="wcf.global.reason.optional"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Warning! The bulk processing will be processed <strong>without further confirmation</strong> for all items matching your criteria.]]></item>
 		<item name="wcf.global.search"><![CDATA[Search]]></item>
@@ -7409,5 +7409,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.comment.description"/>
 	<item name="wcf.comment.response.add"/>
 	<item name="wcf.dialog.confirmation.softDelete.reason"/>
+	<item name="wcf.dialog.confirmation.reason"/>
 </delete>
 </language>
