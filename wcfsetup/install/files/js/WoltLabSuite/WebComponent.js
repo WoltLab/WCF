@@ -29,6 +29,10 @@
     return to;
   };
   var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
@@ -343,6 +347,7 @@
                 throw new Error(str);
               }
             },
+            // resets the lexer, sets new input
             setInput: function(input, yy) {
               this.yy = yy || this.yy || {};
               this._input = input;
@@ -362,6 +367,7 @@
               this.offset = 0;
               return this;
             },
+            // consumes and returns one char from the input
             input: function() {
               var ch = this._input[0];
               this.yytext += ch;
@@ -382,6 +388,7 @@
               this._input = this._input.slice(1);
               return ch;
             },
+            // unshifts one char (or a string) into the input
             unput: function(ch) {
               var len = ch.length;
               var lines = ch.split(/(?:\r\n?|\n)/g);
@@ -407,10 +414,12 @@
               this.yyleng = this.yytext.length;
               return this;
             },
+            // When called from action, caches matched text and appends it on next action
             more: function() {
               this._more = true;
               return this;
             },
+            // When called from action, signals the lexer that this rule fails to match the input, so the next matching rule (regex) should be tested instead.
             reject: function() {
               if (this.options.backtrack_lexer) {
                 this._backtrack = true;
@@ -423,13 +432,16 @@
               }
               return this;
             },
+            // retain first n characters of the match
             less: function(n) {
               this.unput(this.match.slice(n));
             },
+            // displays already matched input, i.e. for error messages
             pastInput: function() {
               var past = this.matched.substr(0, this.matched.length - this.match.length);
               return (past.length > 20 ? "..." : "") + past.substr(-20).replace(/\n/g, "");
             },
+            // displays upcoming input, i.e. for error messages
             upcomingInput: function() {
               var next = this.match;
               if (next.length < 20) {
@@ -437,11 +449,13 @@
               }
               return (next.substr(0, 20) + (next.length > 20 ? "..." : "")).replace(/\n/g, "");
             },
+            // displays the character position where the lexing error occurred, i.e. for error messages
             showPosition: function() {
               var pre = this.pastInput();
               var c = new Array(pre.length + 1).join("-");
               return pre + this.upcomingInput() + "\n" + c + "^";
             },
+            // test the lexed token: return FALSE when not a match, otherwise return token
             test_match: function(match, indexed_rule) {
               var token, lines, backup;
               if (this.options.backtrack_lexer) {
@@ -504,6 +518,7 @@
               }
               return false;
             },
+            // return next match in input
             next: function() {
               if (this.done) {
                 return this.EOF;
@@ -554,6 +569,7 @@
                 });
               }
             },
+            // return next match that has a token
             lex: function lex() {
               var r = this.next();
               if (r) {
@@ -562,9 +578,11 @@
                 return this.lex();
               }
             },
+            // activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
             begin: function begin(condition) {
               this.conditionStack.push(condition);
             },
+            // pop the previously active lexer condition state off the condition stack
             popState: function popState() {
               var n = this.conditionStack.length - 1;
               if (n > 0) {
@@ -573,6 +591,7 @@
                 return this.conditionStack[0];
               }
             },
+            // produce the lexer rule set which is active for the currently active lexer condition state
             _currentRules: function _currentRules() {
               if (this.conditionStack.length && this.conditionStack[this.conditionStack.length - 1]) {
                 return this.conditions[this.conditionStack[this.conditionStack.length - 1]].rules;
@@ -580,6 +599,7 @@
                 return this.conditions["INITIAL"].rules;
               }
             },
+            // return the currently active lexer condition state; when an index argument is provided it produces the N-th previous condition state, if available
             topState: function topState(n) {
               n = this.conditionStack.length - 1 - Math.abs(n || 0);
               if (n >= 0) {
@@ -588,9 +608,11 @@
                 return "INITIAL";
               }
             },
+            // alias for begin(condition)
             pushState: function pushState(condition) {
               this.begin(condition);
             },
+            // return the number of states currently on the stack
             stateStackSize: function stateStackSize() {
               return this.conditionStack.length;
             },
@@ -832,6 +854,9 @@
         throw e;
       }
     }
+    /**
+     * Evaluates the Template using the given parameters.
+     */
     fetch(v) {
       return this.compiled(LanguageStore_exports, { selectPlural, escapeHTML, formatNumeric }, v);
     }
@@ -1209,7 +1234,7 @@
     let todayDayStart;
     let yesterdayDayStart;
     const updateTodayAndYesterday = () => {
-      const now = new Date();
+      const now = /* @__PURE__ */ new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       if (todayDayStart !== today.getTime()) {
         todayDayStart = today.getTime();
@@ -1224,15 +1249,20 @@
       TodayOrYesterday2[TodayOrYesterday2["Yesterday"] = -1] = "Yesterday";
     })(TodayOrYesterday || (TodayOrYesterday = {}));
     const DateFormatter = {
+      // Example: November 17, 2022
       Date: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone }),
+      // Example: November 17, 2022 at 11:41 AM
       DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short", timeZone }),
+      // Example: Thursday 11:41 AM
       DayOfWeekAndTime: new Intl.DateTimeFormat(locale, {
         weekday: "long",
         hour: "2-digit",
         minute: "2-digit",
         timeZone
       }),
+      // Example: 16 minutes ago
       Minutes: new Intl.RelativeTimeFormat(locale),
+      // Example: today
       TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" })
     };
     let TimePeriod;
@@ -1306,6 +1336,15 @@
         value = value.charAt(0).toUpperCase() + value.slice(1);
         this.#timeElement.textContent = value;
       }
+      /**
+       * The date formatter does not provide a reliable way to generate
+       * the “date” portion as a relative value such as “today” or
+       * “tomorrow” _along_ with the time.
+       *
+       * This workaround will generate the date using the day of week
+       * and the time, but replace the day of week with the relative
+       * value.
+       */
       #formatTodayOrYesterday(date, dayOffset) {
         let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
         const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
@@ -1534,6 +1573,9 @@
         li.append(button);
         return li;
       }
+      /**
+       * Generates page numbers that are adjacent to the current page.
+       */
       #getLinkItems() {
         const items = [];
         let start;
@@ -1573,6 +1615,12 @@
         li.append(button);
         return li;
       }
+      /**
+       * On smaller screens the ellipsis is shown when there
+       * is at least one page in-between the current page and
+       * the first or last page. On larger screens the ellipsis
+       * is only shown if it hides at least two numbers.
+       */
       get thresholdForEllipsis() {
         if (getMediaQueryScreenXs().matches) {
           return 1;
@@ -1693,19 +1741,11 @@
   window.WoltLabTemplate = Template;
   window.HTMLParsedElement = html_parsed_element_default;
 })();
-/*! (c) Andrea Giammarchi - ISC */
 /**
  * Handles the low level management of language items.
  *
  * @author  Tim Duesterhus
  * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- */
-/**
- * Manages language items.
- *
- * @author  Tim Duesterhus
- * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 /**
@@ -1717,6 +1757,14 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+/**
+ * Manages language items.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+/*! (c) Andrea Giammarchi - ISC */
 /**
  * The `<woltlab-core-date-time>` element formats a date time
  * string based on the user’s timezone and website locale. For
