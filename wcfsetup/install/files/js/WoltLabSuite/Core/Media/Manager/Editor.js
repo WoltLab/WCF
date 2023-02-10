@@ -29,8 +29,8 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             }, options);
             super(options);
             this._forceClipboard = true;
-            this._options.ckeditor?.sourceElement.addEventListener("bbcode", (event) => {
-                const bbcode = event.detail;
+            this._options.ckeditor?.sourceElement.addEventListener("ckeditor5:bbcode", (event) => {
+                const { bbcode } = event.detail;
                 if (bbcode === "media") {
                     event.preventDefault();
                     this._click(event);

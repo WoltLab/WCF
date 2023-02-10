@@ -22,7 +22,7 @@ export type UploadMediaEventPayload = {
 function uploadMedia(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
   const payload: UploadMediaEventPayload = { abortController, file };
 
-  dispatchToCkeditor(element).uploadMedia(payload)
+  dispatchToCkeditor(element).uploadMedia(payload);
 
   // The media system works differently compared to the
   // attachments, because uploading a file will offer
@@ -34,23 +34,27 @@ function uploadMedia(element: HTMLElement, file: File, abortController?: AbortCo
 }
 
 export function setup(element: HTMLElement): void {
-  listenToCkeditor(element).setupConfiguration(({ configuration, features }) => {
-    if (features.attachment || !features.media) {
-      return;
-    }
+  listenToCkeditor(element)
+    .setupConfiguration(({ configuration, features }) => {
+      if (features.attachment || !features.media) {
+        return;
+      }
 
-    // TODO: The typings do not include our custom plugins yet.
-    (configuration as any).woltlabUpload = {
-      uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
-      uploadOther: (file: File) => uploadMedia(element, file),
-    };
+      // TODO: The typings do not include our custom plugins yet.
+      (configuration as any).woltlabUpload = {
+        uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
+        uploadOther: (file: File) => uploadMedia(element, file),
+      };
+    })
+    .ready(({ ckeditor }) => {
+      if (!ckeditor.features.media) {
+        return;
+      }
 
-    listenToCkeditor(element).ready(({ ckeditor }) => {
       void import("../../Media/Manager/Editor").then(({ MediaManagerEditor }) => {
         new MediaManagerEditor({
           ckeditor,
         });
       });
     });
-  });
 }

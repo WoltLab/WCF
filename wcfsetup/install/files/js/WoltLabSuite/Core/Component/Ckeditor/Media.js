@@ -37,7 +37,8 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         return Promise.reject();
     }
     function setup(element) {
-        (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
+        (0, Event_1.listenToCkeditor)(element)
+            .setupConfiguration(({ configuration, features }) => {
             if (features.attachment || !features.media) {
                 return;
             }
@@ -46,11 +47,14 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 uploadImage: (file, abortController) => uploadMedia(element, file, abortController),
                 uploadOther: (file) => uploadMedia(element, file),
             };
-            (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
-                void new Promise((resolve_1, reject_1) => { require(["../../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
-                    new MediaManagerEditor({
-                        ckeditor,
-                    });
+        })
+            .ready(({ ckeditor }) => {
+            if (!ckeditor.features.media) {
+                return;
+            }
+            void new Promise((resolve_1, reject_1) => { require(["../../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
+                new MediaManagerEditor({
+                    ckeditor,
                 });
             });
         });

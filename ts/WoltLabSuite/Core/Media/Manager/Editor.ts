@@ -37,14 +37,17 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
 
     this._forceClipboard = true;
 
-    this._options.ckeditor?.sourceElement.addEventListener("bbcode", (event: CustomEvent) => {
-      const bbcode = event.detail as string;
-      if (bbcode === "media") {
-        event.preventDefault();
+    this._options.ckeditor?.sourceElement.addEventListener(
+      "ckeditor5:bbcode",
+      (event: CustomEvent<{ bbcode: string }>) => {
+        const { bbcode } = event.detail;
+        if (bbcode === "media") {
+          event.preventDefault();
 
-        this._click(event);
-      }
-    });
+          this._click(event);
+        }
+      },
+    );
 
     if (this._options.ckeditor !== undefined) {
       const ckeditor = this._options.ckeditor;
