@@ -26,6 +26,7 @@ final class Psr15DialogForm extends FormDocument
         string $title
     ) {
         $this->id($id);
+        $this->prefix($id);
         $this->title = $title;
 
         $this->ajax = true;
