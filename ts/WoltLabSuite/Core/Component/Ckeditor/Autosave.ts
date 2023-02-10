@@ -4,6 +4,7 @@ import { escapeHTML } from "../../StringUtil";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import { dispatchToCkeditor } from "./Event";
 
 type Payload = {
   html: string;
@@ -120,6 +121,10 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
   dialog.querySelector('button[data-type="cancel"]')!.addEventListener("click", () => {
     editor.data.set(originalValue);
     deleteDraft(identifier);
+
+    if (originalValue === "") {
+      dispatchToCkeditor(editor.sourceElement!).discardRecoveredData();
+    }
 
     revertEditor();
   });

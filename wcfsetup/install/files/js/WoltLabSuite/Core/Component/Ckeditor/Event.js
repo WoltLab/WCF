@@ -10,6 +10,9 @@ define(["require", "exports"], function (require, exports) {
         destroy() {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:destroy" /* EventNames.Destroy */));
         }
+        discardRecoveredData() {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:discard-recovered-data" /* EventNames.DiscardRecoveredData */));
+        }
         insertAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, {
                 detail: payload,
@@ -65,6 +68,12 @@ define(["require", "exports"], function (require, exports) {
             this.#element.addEventListener("ckeditor5:destroy" /* EventNames.Destroy */, () => {
                 callback();
             });
+            return this;
+        }
+        discardRecoveredData(callback) {
+            this.#element.addEventListener("ckeditor5:discard-recovered-data" /* EventNames.DiscardRecoveredData */, () => {
+                callback();
+            }, { once: true });
             return this;
         }
         insertAttachment(callback) {

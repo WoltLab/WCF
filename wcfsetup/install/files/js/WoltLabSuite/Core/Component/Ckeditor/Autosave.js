@@ -1,4 +1,4 @@
-define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"], function (require, exports, Core_1, Language_1, StringUtil_1) {
+define(["require", "exports", "../../Core", "../../Language", "../../StringUtil", "./Event"], function (require, exports, Core_1, Language_1, StringUtil_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.initializeAutosave = exports.setupRestoreDraft = exports.deleteDraft = void 0;
@@ -93,6 +93,9 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         dialog.querySelector('button[data-type="cancel"]').addEventListener("click", () => {
             editor.data.set(originalValue);
             deleteDraft(identifier);
+            if (originalValue === "") {
+                (0, Event_1.dispatchToCkeditor)(editor.sourceElement).discardRecoveredData();
+            }
             revertEditor();
         });
     }

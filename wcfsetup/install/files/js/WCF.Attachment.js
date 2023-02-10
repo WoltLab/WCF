@@ -110,14 +110,42 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				this._insertAllButton.show();
 			}
 
-			require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ listenToCkeditor }) => {
+			require([
+				"WoltLabSuite/Core/Component/Ckeditor",
+				"WoltLabSuite/Core/Component/Ckeditor/Event"
+			], (
+				{ getCkeditor },
+				{ listenToCkeditor },
+			) => {
+				const discardAllAttachments = () => {
+					this._fileListSelector[0]
+							.querySelectorAll('li:not(.uploadFailed) .jsObjectAction[data-object-action="delete"]')
+							.forEach((button) => {
+								// This is both awful and required to bypass the confirmation
+								// dialog when programmatically triggering the delete button.
+								delete button.dataset.confirmMessage;
+
+								button.click();
+							});
+				}
+
 				listenToCkeditor(this._sourceElement)
 					.reset(() => {
 						this._reset();
 					})
 					.uploadAttachment((payload) => {
 						this._editorUpload(payload);
+					})
+					.discardRecoveredData(() => {
+						discardAllAttachments();
 					});
+				
+				const ckeditor = getCkeditor(this._sourceElement);
+				if (ckeditor.getHtml() === "") {
+					// This check is performed during the CKEditor initialization,
+					// but the triggered event occurs too early for jQuery code.
+					discardAllAttachments();
+				}
 			});
 			
 			const form = this._fileListSelector[0].closest("form");

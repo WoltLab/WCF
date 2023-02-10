@@ -185,6 +185,10 @@ export async function setupCkeditor(
     ckeditor,
   });
 
+  if (ckeditor.getHtml() === "") {
+    dispatchToCkeditor(element).discardRecoveredData();
+  }
+
   return ckeditor;
 }
 

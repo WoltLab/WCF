@@ -126,6 +126,9 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         (0, Event_1.dispatchToCkeditor)(element).ready({
             ckeditor,
         });
+        if (ckeditor.getHtml() === "") {
+            (0, Event_1.dispatchToCkeditor)(element).discardRecoveredData();
+        }
         return ckeditor;
     }
     exports.setupCkeditor = setupCkeditor;

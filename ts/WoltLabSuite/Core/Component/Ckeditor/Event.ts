@@ -7,6 +7,7 @@ import type { InsertQuoteEventPayload } from "./Quote";
 
 const enum EventNames {
   Destroy = "ckeditor5:destroy",
+  DiscardRecoveredData = "ckeditor5:discard-recovered-data",
   InsertAttachment = "ckeditor5:insert-attachment",
   InsertQuote = "ckeditor5:insert-quote",
   Ready = "ckeditor5:ready",
@@ -41,6 +42,10 @@ class EventDispatcher {
 
   destroy(): void {
     this.#element.dispatchEvent(new CustomEvent<void>(EventNames.Destroy));
+  }
+
+  discardRecoveredData(): void {
+    this.#element.dispatchEvent(new CustomEvent<void>(EventNames.DiscardRecoveredData));
   }
 
   insertAttachment(payload: InsertAttachmentPayload): void {
@@ -127,6 +132,18 @@ class EventListener {
     this.#element.addEventListener(EventNames.Destroy, () => {
       callback();
     });
+
+    return this;
+  }
+
+  discardRecoveredData(callback: () => void): this {
+    this.#element.addEventListener(
+      EventNames.DiscardRecoveredData,
+      () => {
+        callback();
+      },
+      { once: true },
+    );
 
     return this;
   }
