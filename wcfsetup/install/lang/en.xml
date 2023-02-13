@@ -2690,8 +2690,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[The official PHP extensions provide additional capabilities and features that are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Available Memory (“memory_limit”)]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Processes may require large amounts of memory at peak, requiring a limit of at least {$phpMemoryLimit} MB.]]></item>
-		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Support for SHA-256]]></item>
-		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[The cryptographic function SHA-256 is required for a safe and secure operation of the software.]]></item>
 		<item name="wcf.acp.systemCheck.php.x64"><![CDATA[64-bit Support]]></item>
 		<item name="wcf.acp.systemCheck.php.x64.description"><![CDATA[The PHP version must support 64-bit integers to correctly process numbers larger than ~2.1 billion.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.mysqlnd"><![CDATA[MySQL Native Driver used]]></item>

@@ -2758,8 +2758,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[Die offiziellen Erweiterungen von PHP stellen zusätzliche Funktionen bereit, die für den Betrieb der Software notwendig sind.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Verfügbarer Arbeitsspeicher („memory_limit“)]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Einige Prozesse benötigen in Spitzenzeiten eine große Menge Arbeitsspeicher, für den einwandfreien Betrieb werden mindestens {$phpMemoryLimit} MB benötigt.]]></item>
-		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Unterstützung für SHA-256]]></item>
-		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[Die kryptographische Funktion SHA-256 wird für den sicheren Betrieb der Software benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.php.x64"><![CDATA[64-Bit-Unterstützung]]></item>
 		<item name="wcf.acp.systemCheck.php.x64.description"><![CDATA[Die eingesetzte PHP-Version muss die Verarbeitung von 64-Bit-Ganzzahlen unterstützen, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.mysqlnd"><![CDATA[MySQL Native Driver verwendet]]></item>
