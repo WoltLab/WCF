@@ -181,7 +181,6 @@ class PackageArchive
             switch ($element->tagName) {
                 case 'packagename':
                 case 'packagedescription':
-                case 'readme':
                 case 'license':
                     // fix case-sensitive names
                     $name = $element->tagName;
