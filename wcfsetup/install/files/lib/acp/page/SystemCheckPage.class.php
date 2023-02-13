@@ -66,12 +66,9 @@ class SystemCheckPage extends AbstractPage
         'dom',
         'exif',
         'gd',
-        'hash',
         'intl',
-        'json',
         'libxml',
         'mbstring',
-        'pcre',
         'pdo_mysql',
         'pdo',
         'zlib',
@@ -146,7 +143,6 @@ class SystemCheckPage extends AbstractPage
                 'result' => false,
                 'value' => '0',
             ],
-            'sha256' => false,
             'opcache' => null,
             'version' => [
                 'result' => 'unsupported',
@@ -318,10 +314,6 @@ class SystemCheckPage extends AbstractPage
             }
         }
 
-        if (\extension_loaded('hash')) {
-            $this->results['php']['sha256'] = \in_array('sha256', \hash_algos());
-        }
-
         try {
             // Attempt to reset ourselves to perform a functional check.
             WCF::resetZendOpcache(__FILE__);
@@ -334,7 +326,6 @@ class SystemCheckPage extends AbstractPage
         }
 
         $this->results['status']['php'] = empty($this->results['php']['extension'])
-            && $this->results['php']['sha256']
             && $this->results['php']['opcache'] !== false;
     }
 

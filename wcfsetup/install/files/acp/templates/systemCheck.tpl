@@ -109,18 +109,6 @@
 		</dd>
 	</dl>
 	
-	<dl{if !$results[php][sha256]} class="formError"{/if}>
-		<dt>{lang}wcf.acp.systemCheck.php.sha256{/lang}</dt>
-		<dd>
-			{if $results[php][sha256]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
-			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
-			{/if}
-			<small>{lang}wcf.acp.systemCheck.php.sha256.description{/lang}</small>
-		</dd>
-	</dl>
-
 	<dl{if $results[php][opcache] === false} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php.opcache{/lang}</dt>
 		<dd>

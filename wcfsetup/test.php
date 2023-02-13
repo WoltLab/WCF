@@ -215,12 +215,9 @@ $requiredExtensions = [
 	'ctype',
 	'dom',
 	'exif',
-	'json',
-	'hash',
 	'intl',
 	'libxml',
 	'mbstring',
-	'pcre',
 	'pdo',
 	'pdo_mysql',
 	'zlib',
@@ -254,14 +251,6 @@ $phrases = [
 	'php_extension_gd_or_imagick_webp_failure' => [
 		'de' => 'Unterstützung für WebP-Grafiken in %s fehlt',
 		'en' => 'Support for WebP images in %s missing',
-	],
-	'php_sha256_success' => [
-		'de' => 'Unterstützung für SHA-256-Hashfunktion vorhanden',
-		'en' => 'Support for SHA-256 algorithm available',
-	],
-	'php_sha256_failure' => [
-		'de' => 'Unterstützung für SHA-256-Hashfunktion fehlt',
-		'en' => 'Support for SHA-256 algorithm missing',
 	],
 	'php_memory_limit_success' => [
 		'de' => 'Arbeitsspeicher-Limit %s',
@@ -349,13 +338,10 @@ function checkMemoryLimit() {
 	
 	return false;
 }
-function checkHashAlgorithms() {
-	return extension_loaded('hash') && in_array('sha256', hash_algos());
-}
 function checkResult() {
 	global $requiredExtensions;
 	
-	if (!checkPHPVersion() || !checkHashAlgorithms() || !checkMemoryLimit() || !checkOpcache()) return false;
+	if (!checkPHPVersion() || !checkMemoryLimit() || !checkOpcache()) return false;
 	
 	foreach ($requiredExtensions as $extension) {
 		if (!extension_loaded($extension)) return false;
@@ -418,12 +404,6 @@ function checkOpcache() {
 				<?php } ?>
 			<?php } else { ?>	
 				<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_failure')?></li>
-			<?php } ?>
-			
-			<?php if (checkHashAlgorithms()) { ?>
-				<li class="success"><?=getPhrase('php_sha256_success')?></li>
-			<?php } else { ?>
-				<li class="failure"><?=getPhrase('php_sha256_failure')?></li>
 			<?php } ?>
 			
 			<?php if (checkMemoryLimit()) { ?>
