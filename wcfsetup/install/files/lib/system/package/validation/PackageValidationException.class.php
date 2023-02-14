@@ -174,6 +174,20 @@ class PackageValidationException extends SystemException
     const INVALID_REQUIRED_PACKAGE_VERSION_NUMBER = 23;
 
     /**
+     * an unknown tag is given in the <packageinformation>
+     * @var int
+     * @since 6.0
+     */
+    const UNKNOWN_PACKAGE_INFORMATION = 24;
+
+    /**
+     * an unknown tag is given in the <authorinformation>
+     * @var int
+     * @since 6.0
+     */
+    const UNKNOWN_AUTHOR_INFORMATION = 25;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
