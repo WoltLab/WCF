@@ -17,7 +17,6 @@ class ReauthenticationForm extends \wcf\form\ReauthenticationForm
     public function __run()
     {
         WCF::getTPL()->assign([
-            '__wcfAcpIsLogin' => true,
             '__isLogin' => true,
         ]);
 

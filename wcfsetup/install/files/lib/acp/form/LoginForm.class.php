@@ -62,7 +62,6 @@ class LoginForm extends AbstractCaptchaForm
     public function __run()
     {
         WCF::getTPL()->assign([
-            '__wcfAcpIsLogin' => true,
             '__isLogin' => true,
         ]);
 
