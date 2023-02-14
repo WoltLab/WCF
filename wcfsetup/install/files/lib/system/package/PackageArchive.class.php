@@ -277,6 +277,12 @@ class PackageArchive
             }
         }
 
+        if (!isset($this->authorInfo['author']) || $this->authorInfo['author'] === '') {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_AUTHOR_INFORMATION
+            );
+        }
+
         // get required packages
         $elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
         foreach ($elements as $element) {

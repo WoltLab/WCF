@@ -188,6 +188,13 @@ class PackageValidationException extends SystemException
     const UNKNOWN_AUTHOR_INFORMATION = 25;
 
     /**
+     * no author information is given
+     * @var int
+     * @since 6.0
+     */
+    const MISSING_AUTHOR_INFORMATION = 26;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
