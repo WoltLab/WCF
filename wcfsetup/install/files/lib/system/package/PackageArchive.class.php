@@ -10,6 +10,7 @@ use wcf\system\package\validation\PackageValidationException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**
@@ -200,7 +201,7 @@ class PackageArchive
                             $languageCode = $element->getAttribute('language');
                         }
 
-                        $this->packageInfo[$name][$languageCode] = $element->nodeValue;
+                        $this->packageInfo[$name][$languageCode] = StringUtil::trim($element->nodeValue);
                         break;
 
                     case 'isapplication':
@@ -259,7 +260,7 @@ class PackageArchive
                             $name = 'authorURL';
                         }
 
-                        $this->authorInfo[$name] = $element->nodeValue;
+                        $this->authorInfo[$name] = StringUtil::trim($element->nodeValue);
                         break;
                     default:
                         throw new PackageValidationException(
