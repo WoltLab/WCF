@@ -472,10 +472,9 @@ class PackageArchive
     /**
      * Returns information about the author of this package archive.
      *
-     * @param string $name name of the requested information
      * @return  string|null
      */
-    public function getAuthorInfo($name)
+    public function getAuthorInfo(string $name)
     {
         return $this->authorInfo[$name] ?? null;
     }
@@ -483,20 +482,17 @@ class PackageArchive
     /**
      * Returns information about this package.
      *
-     * @param string $name name of the requested information
      * @return  mixed|null
      */
-    public function getPackageInfo($name)
+    public function getPackageInfo(string $name)
     {
         return $this->packageInfo[$name] ?? null;
     }
 
     /**
      * Returns a localized information about this package.
-     *
-     * @param string $name
      */
-    public function getLocalizedPackageInfo($name): string
+    public function getLocalizedPackageInfo(string $name): string
     {
         if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
             return $this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()];
