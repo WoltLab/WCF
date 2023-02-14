@@ -174,6 +174,10 @@ class PackageArchive
 
         $this->packageInfo['name'] = $packageName;
 
+        // set default values
+        $this->packageInfo['isApplication'] = 0;
+        $this->packageInfo['packageURL'] = '';
+
         // get package information
         $packageInformation = $xpath->query('./ns:packageinformation', $package)->item(0);
         if ($packageInformation !== null) {
@@ -438,14 +442,6 @@ class PackageArchive
             } else {
                 $this->instructions['update'][$fromVersion] = $instructionData;
             }
-        }
-
-        // set default values
-        if (!isset($this->packageInfo['isApplication'])) {
-            $this->packageInfo['isApplication'] = 0;
-        }
-        if (!isset($this->packageInfo['packageURL'])) {
-            $this->packageInfo['packageURL'] = '';
         }
     }
 
