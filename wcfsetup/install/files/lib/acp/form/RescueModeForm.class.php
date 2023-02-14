@@ -83,7 +83,6 @@ final class RescueModeForm extends AbstractForm
         }
 
         WCF::getTPL()->assign([
-            '__wcfAcpIsLogin' => true,
             '__isLogin' => true,
         ]);
 
