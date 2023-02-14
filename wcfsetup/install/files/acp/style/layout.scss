@@ -288,7 +288,7 @@ html {
 		grid-template-areas: "logo woltlab jumpToPage search user menu";
 		grid-template-columns: auto repeat(5, max-content);
 
-		&[data-is-login="true"] {
+		.pageHeaderContainerIsLogin & {
 			grid-template-areas: "logo";
 			grid-template-columns: auto;
 		}
