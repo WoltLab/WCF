@@ -154,12 +154,10 @@ class PackageStartInstallForm extends AbstractForm
         if (!PackageValidationManager::getInstance()->validate($filename, false)) {
             $exception = PackageValidationManager::getInstance()->getException();
             if ($exception instanceof PackageValidationException) {
-                switch ($exception->getCode()) {
-                    case PackageValidationException::INVALID_PACKAGE_NAME:
-                    case PackageValidationException::MISSING_PACKAGE_XML:
-                        throw new UserInputException('uploadPackage', 'noValidPackage');
-                        break;
-                }
+                WCF::getTPL()->assign([
+                    'validationException' => $exception,
+                ]);
+                throw new UserInputException('uploadPackage', 'noValidPackage');
             }
         }
 
