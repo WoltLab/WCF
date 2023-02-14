@@ -1751,7 +1751,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps cannot be installed via CLI.]]></item>
 		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[The file exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
 		<item name="wcf.acp.package.error.noUniqueAbbreviation"><![CDATA[There is already an app installed which has the same abbreviation.]]></item>
-		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
+		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid: {@$validationException->getMessage()}]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove Existing Tables]]></item>
@@ -1885,6 +1885,10 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.validation.errorCode.21"><![CDATA[No dependency on “com.woltlab.wcf” has been defined.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.22"><![CDATA[The package “com.woltlab.wcf” must be required in version 5.4.22 or later.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.23"><![CDATA[The version “{$version}” of the required package “{$packageName}” is invalid.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.24"><![CDATA[The &lt;packageinformation&gt; contain the unknown child element “{$tag}”.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.25"><![CDATA[The &lt;authorinformation&gt; contain the unknown child element “{$tag}”.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.26"><![CDATA[No (valid) &lt;authorinformation&gt; have been given.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.27"><![CDATA[No (valid) &lt;packagename&gt; have been given.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[The evaluation period of <strong>{$packageName}</strong> has expired. For a legal use of this software, please update to the latest available version.{if $pluginStoreFileID || $isWoltLab}<br>The latest version can be purchased quickly and securely <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">in the WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/en/purchase/">on WoltLab.com</a>{/if}</strong>.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[The evaluation period of the apps listed below will expire on <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}). The apps will automatically disable themselves after this date and become unusable, you'll need to install the latest versions of the apps to active them again.

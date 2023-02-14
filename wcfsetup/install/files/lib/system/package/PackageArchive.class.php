@@ -10,6 +10,7 @@ use wcf\system\package\validation\PackageValidationException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**
@@ -173,75 +174,127 @@ class PackageArchive
 
         $this->packageInfo['name'] = $packageName;
 
+        // set default values
+        $this->packageInfo['isApplication'] = 0;
+        $this->packageInfo['packageURL'] = '';
+
         // get package information
         $packageInformation = $xpath->query('./ns:packageinformation', $package)->item(0);
-        $elements = $xpath->query('child::*', $packageInformation);
-        /** @var \DOMElement $element */
-        foreach ($elements as $element) {
-            switch ($element->tagName) {
-                case 'packagename':
-                case 'packagedescription':
-                case 'readme':
-                case 'license':
-                    // fix case-sensitive names
-                    $name = $element->tagName;
-                    if ($name == 'packagename') {
-                        $name = 'packageName';
-                    } elseif ($name == 'packagedescription') {
-                        $name = 'packageDescription';
-                    }
+        if ($packageInformation !== null) {
+            $elements = $xpath->query('child::*', $packageInformation);
+            /** @var \DOMElement $element */
+            foreach ($elements as $element) {
+                switch ($element->tagName) {
+                    case 'packagename':
+                    case 'packagedescription':
+                    case 'license':
+                        // fix case-sensitive names
+                        $name = $element->tagName;
+                        if ($name == 'packagename') {
+                            $name = 'packageName';
+                        } elseif ($name == 'packagedescription') {
+                            $name = 'packageDescription';
+                        }
 
-                    if (!isset($this->packageInfo[$name])) {
-                        $this->packageInfo[$name] = [];
-                    }
+                        if (!isset($this->packageInfo[$name])) {
+                            $this->packageInfo[$name] = [];
+                        }
 
-                    $languageCode = 'default';
-                    if ($element->hasAttribute('language')) {
-                        $languageCode = $element->getAttribute('language');
-                    }
+                        $languageCode = 'default';
+                        if ($element->hasAttribute('language')) {
+                            $languageCode = $element->getAttribute('language');
+                        }
 
-                    $this->packageInfo[$name][$languageCode] = $element->nodeValue;
-                    break;
+                        $this->packageInfo[$name][$languageCode] = StringUtil::trim($element->nodeValue);
+                        break;
 
-                case 'isapplication':
-                    $this->packageInfo['isApplication'] = \intval($element->nodeValue);
-                    break;
+                    case 'isapplication':
+                        $this->packageInfo['isApplication'] = \intval($element->nodeValue);
+                        break;
 
-                case 'applicationdirectory':
-                    if (\preg_match('~^[a-z0-9\-\_]+$~', $element->nodeValue)) {
-                        $this->packageInfo['applicationDirectory'] = $element->nodeValue;
-                    }
-                    break;
+                    case 'applicationdirectory':
+                        if (\preg_match('~^[a-z0-9\-\_]+$~', $element->nodeValue)) {
+                            $this->packageInfo['applicationDirectory'] = $element->nodeValue;
+                        }
+                        break;
 
-                case 'packageurl':
-                    $this->packageInfo['packageURL'] = $element->nodeValue;
-                    break;
+                    case 'packageurl':
+                        $this->packageInfo['packageURL'] = $element->nodeValue;
+                        break;
 
-                case 'version':
-                    if (!Package::isValidVersion($element->nodeValue)) {
+                    case 'version':
+                        if (!Package::isValidVersion($element->nodeValue)) {
+                            throw new PackageValidationException(
+                                PackageValidationException::INVALID_PACKAGE_VERSION,
+                                ['packageVersion' => $element->nodeValue]
+                            );
+                        }
+
+                        $this->packageInfo['version'] = $element->nodeValue;
+                        break;
+
+                    case 'date':
+                        DateUtil::validateDate($element->nodeValue);
+
+                        $this->packageInfo['date'] = @\strtotime($element->nodeValue);
+                        break;
+
+                    default:
                         throw new PackageValidationException(
-                            PackageValidationException::INVALID_PACKAGE_VERSION,
-                            ['packageVersion' => $element->nodeValue]
+                            PackageValidationException::UNKNOWN_PACKAGE_INFORMATION,
+                            [
+                                'tag' => $element->tagName,
+                            ]
                         );
-                    }
-
-                    $this->packageInfo['version'] = $element->nodeValue;
-                    break;
-
-                case 'date':
-                    DateUtil::validateDate($element->nodeValue);
-
-                    $this->packageInfo['date'] = @\strtotime($element->nodeValue);
-                    break;
+                }
             }
         }
 
         // get author information
         $authorInformation = $xpath->query('./ns:authorinformation', $package)->item(0);
-        $elements = $xpath->query('child::*', $authorInformation);
-        foreach ($elements as $element) {
-            $tagName = ($element->tagName == 'authorurl') ? 'authorURL' : $element->tagName;
-            $this->authorInfo[$tagName] = $element->nodeValue;
+        if ($authorInformation !== null) {
+            $elements = $xpath->query('child::*', $authorInformation);
+            foreach ($elements as $element) {
+                switch ($element->tagName) {
+                    case 'author':
+                    case 'authorurl':
+                        // fix case-sensitive names
+                        $name = $element->tagName;
+                        if ($name == 'authorurl') {
+                            $name = 'authorURL';
+                        }
+
+                        $this->authorInfo[$name] = StringUtil::trim($element->nodeValue);
+                        break;
+                    default:
+                        throw new PackageValidationException(
+                            PackageValidationException::UNKNOWN_AUTHOR_INFORMATION,
+                            [
+                                'tag' => $element->tagName,
+                            ]
+                        );
+                }
+            }
+        }
+
+        if (!isset($this->packageInfo['packageName'])) {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_DISPLAY_NAME
+            );
+        }
+
+        foreach ($this->packageInfo['packageName'] as $name) {
+            if ($name === '') {
+                throw new PackageValidationException(
+                    PackageValidationException::MISSING_DISPLAY_NAME
+                );
+            }
+        }
+
+        if (!isset($this->authorInfo['author']) || $this->authorInfo['author'] === '') {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_AUTHOR_INFORMATION
+            );
         }
 
         // get required packages
@@ -410,14 +463,6 @@ class PackageArchive
                 $this->instructions['update'][$fromVersion] = $instructionData;
             }
         }
-
-        // set default values
-        if (!isset($this->packageInfo['isApplication'])) {
-            $this->packageInfo['isApplication'] = 0;
-        }
-        if (!isset($this->packageInfo['packageURL'])) {
-            $this->packageInfo['packageURL'] = '';
-        }
     }
 
     /**
@@ -473,10 +518,9 @@ class PackageArchive
     /**
      * Returns information about the author of this package archive.
      *
-     * @param string $name name of the requested information
      * @return  string|null
      */
-    public function getAuthorInfo($name)
+    public function getAuthorInfo(string $name)
     {
         return $this->authorInfo[$name] ?? null;
     }
@@ -484,20 +528,17 @@ class PackageArchive
     /**
      * Returns information about this package.
      *
-     * @param string $name name of the requested information
      * @return  mixed|null
      */
-    public function getPackageInfo($name)
+    public function getPackageInfo(string $name)
     {
         return $this->packageInfo[$name] ?? null;
     }
 
     /**
      * Returns a localized information about this package.
-     *
-     * @param string $name
      */
-    public function getLocalizedPackageInfo($name): string
+    public function getLocalizedPackageInfo(string $name): string
     {
         if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
             return $this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()];

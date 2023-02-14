@@ -494,7 +494,7 @@ class PackageInstallationNodeBuilder
                 'packageURL' => $this->installation->getArchive()->getPackageInfo('packageURL'),
                 'isApplication' => $this->installation->getArchive()->getPackageInfo('isApplication'),
                 'author' => $this->installation->getArchive()->getAuthorInfo('author'),
-                'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
+                'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') ?: '',
                 'installDate' => TIME_NOW,
                 'updateDate' => TIME_NOW,
                 'requirements' => $this->requirements,
