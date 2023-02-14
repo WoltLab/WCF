@@ -287,11 +287,11 @@ html {
 	.pageHeader {
 		grid-template-areas: "logo woltlab jumpToPage search user menu";
 		grid-template-columns: auto repeat(5, max-content);
+	}
 
-		.pageHeaderContainerIsLogin & {
-			grid-template-areas: "logo";
-			grid-template-columns: auto;
-		}
+	.pageHeaderContainerIsLogin .pageHeader {
+		grid-template-areas: "logo";
+		grid-template-columns: auto;
 	}
 
 	.pageHeaderPanel > .layoutBoundary {
