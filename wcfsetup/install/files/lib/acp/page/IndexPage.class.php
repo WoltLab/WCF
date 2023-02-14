@@ -24,6 +24,11 @@ use wcf\system\WCF;
 class IndexPage extends AbstractPage
 {
     /**
+     * @inheritDoc
+     */
+    public $neededPermissions = ['admin.general.canUseAcp'];
+
+    /**
      * server information
      * @var string[]
      */
