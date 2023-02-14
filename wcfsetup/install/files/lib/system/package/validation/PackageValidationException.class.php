@@ -195,6 +195,13 @@ class PackageValidationException extends SystemException
     const MISSING_AUTHOR_INFORMATION = 26;
 
     /**
+     * no display name is given
+     * @var int
+     * @since 6.0
+     */
+    const MISSING_DISPLAY_NAME = 27;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code

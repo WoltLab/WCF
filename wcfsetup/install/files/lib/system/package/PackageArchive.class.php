@@ -277,6 +277,20 @@ class PackageArchive
             }
         }
 
+        if (!isset($this->packageInfo['packageName'])) {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_DISPLAY_NAME
+            );
+        }
+
+        foreach ($this->packageInfo['packageName'] as $name) {
+            if ($name === '') {
+                throw new PackageValidationException(
+                    PackageValidationException::MISSING_DISPLAY_NAME
+                );
+            }
+        }
+
         if (!isset($this->authorInfo['author']) || $this->authorInfo['author'] === '') {
             throw new PackageValidationException(
                 PackageValidationException::MISSING_AUTHOR_INFORMATION
