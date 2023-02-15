@@ -138,7 +138,7 @@ class LanguageExportForm extends AbstractForm
             $package->package,
             $this->language->languageCode
         ));
-        $this->language->export([$this->packageID], $this->exportCustomValues);
+        $this->language->export($this->packageID, $this->exportCustomValues);
 
         exit;
     }
