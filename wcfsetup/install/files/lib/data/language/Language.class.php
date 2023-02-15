@@ -66,44 +66,25 @@ class Language extends DatabaseObject
 
     /**
      * Returns the fixed language code of this language.
-     *
-     * @return  string
      */
-    public function getFixedLanguageCode()
+    public function getFixedLanguageCode(): string
     {
         return LanguageFactory::fixLanguageCode($this->languageCode);
     }
 
     /**
      * Returns the page direction of this language.
-     *
-     * @return  string
      */
-    public function getPageDirection()
+    public function getPageDirection(): string
     {
         return $this->get('wcf.global.pageDirection');
     }
 
     /**
      * Returns a single language variable.
-     *
-     * @param string $item
-     * @param bool $optional
-     * @return  string
      */
-    public function get($item, $optional = false)
+    public function get(string $item, bool $optional = false): string
     {
-        if (
-            \defined('ENABLE_DEBUG_MODE')
-            && ENABLE_DEBUG_MODE
-            && \defined('ENABLE_DEVELOPER_TOOLS')
-            && ENABLE_DEVELOPER_TOOLS
-            && \is_array($optional)
-            && !empty($optional)
-        ) {
-            throw new \InvalidArgumentException("The second parameter of Language::get() does not support non-empty arrays. Did you mean to use Language::getDynamicVariable()?");
-        }
-
         if (!isset($this->items[$item])) {
             // load category file
             $explodedItem = \explode('.', $item);
@@ -147,13 +128,8 @@ class Language extends DatabaseObject
 
     /**
      * Executes template scripting in a language variable.
-     *
-     * @param string $item
-     * @param array $variables
-     * @param bool $optional
-     * @return  string      result
      */
-    public function getDynamicVariable($item, array $variables = [], $optional = false)
+    public function getDynamicVariable(string $item, array $variables = [], bool $optional = false): string
     {
         $staticItem = $this->get($item, $optional);
         if (!$staticItem) {
@@ -187,12 +163,10 @@ class Language extends DatabaseObject
     /**
      * Shortcut method to reduce the code repetition in the compiled template code.
      *
-     * @param string $item
      * @param mixed[] $tagStackData
-     * @return string
      * @since 5.2
      */
-    public function tplGet($item, array &$tagStackData)
+    public function tplGet(string $item, array $tagStackData): string
     {
         $optional = !empty($tagStackData['__optional']);
 
@@ -211,11 +185,8 @@ class Language extends DatabaseObject
 
     /**
      * Loads category files.
-     *
-     * @param string $category
-     * @return  bool
      */
-    protected function loadCategory($category)
+    protected function loadCategory(string $category): bool
     {
         if (!LanguageFactory::getInstance()->isValidCategory($category)) {
             return false;
@@ -253,11 +224,8 @@ class Language extends DatabaseObject
 
     /**
      * Returns true if given items includes template scripting.
-     *
-     * @param string $item
-     * @return  bool
      */
-    public function isDynamicItem($item)
+    public function isDynamicItem(string $item): bool
     {
         if (isset($this->dynamicItems[$item])) {
             return true;
@@ -268,10 +236,8 @@ class Language extends DatabaseObject
 
     /**
      * Returns language icon path.
-     *
-     * @return  string
      */
-    public function getIconPath()
+    public function getIconPath(): string
     {
         return WCF::getPath() . 'icon/flag/' . $this->countryCode . '.svg';
     }
