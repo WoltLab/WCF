@@ -166,7 +166,7 @@ class Language extends DatabaseObject
      * @param mixed[] $tagStackData
      * @since 5.2
      */
-    public function tplGet(string $item, array &$tagStackData): string
+    public function tplGet(string $item, array $tagStackData): string
     {
         $optional = !empty($tagStackData['__optional']);
 
