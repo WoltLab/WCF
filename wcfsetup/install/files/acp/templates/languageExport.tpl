@@ -34,18 +34,25 @@
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt><label for="selectedPackages">{lang}wcf.acp.language.export.selectPackages{/lang}</label></dt>
+		<dl{if $errorField == 'packageID'} class="formError"{/if}>
+			<dt><label for="packageID">{lang}wcf.acp.language.export.package{/lang}</label></dt>
 			<dd>
-				<select id="selectedPackages" name="selectedPackages[]" multiple size="20" class="long monospace" dir="ltr">
-					<option value="*"{if $selectAllPackages} selected{/if}>{lang}wcf.acp.language.export.allPackages{/lang}</option>
-					<option value="-">--------------------</option>
+				<select id="packageID" name="packageID">
+					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$packages item=package}
-						{assign var=loop value=$packageNameLength-$package->packageNameLength}
-						<option value="{$package->packageID}"{if $selectedPackages[$package->packageID]|isset} selected{/if}>{$package->getName()} {section name=i loop=$loop}&nbsp;{/section}&nbsp;&nbsp;{$package->package}</option>
+						<option value="{$package->packageID}"{if $package->packageID == $packageID} selected{/if}>{$package->getName()} ({$package->package})</option>
 					{/foreach}
 				</select>
-				<small>{lang}wcf.global.multiSelect{/lang}</small>
+				{if $errorField == 'packageID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.language.export.package.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.language.export.package.description{/lang}</small>
 			</dd>
 		</dl>
 		
