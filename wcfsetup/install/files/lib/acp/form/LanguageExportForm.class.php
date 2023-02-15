@@ -4,12 +4,12 @@ namespace wcf\acp\form;
 
 use wcf\data\language\LanguageEditor;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Shows the language export form.
@@ -44,19 +44,11 @@ class LanguageExportForm extends AbstractForm
 
     /**
      * selected packages
-     * @var string[]
      */
-    public $selectedPackages = [];
-
-    /**
-     * available packages
-     * @var string[]
-     */
-    public $packages = [];
+    public $packageID = 0;
 
     /**
      * true to export custom variables
-     * @var bool
      */
     public $exportCustomValues = false;
 
@@ -85,12 +77,8 @@ class LanguageExportForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['selectedPackages']) && \is_array($_POST['selectedPackages'])) {
-            $selectedPackages = ArrayUtil::toIntegerArray($_POST['selectedPackages']);
-            $this->selectedPackages = \array_combine($selectedPackages, $selectedPackages);
-            if (isset($this->selectedPackages[0])) {
-                unset($this->selectedPackages[0]);
-            }
+        if (isset($_POST['packageID'])) {
+            $this->packageID = \intval($_POST['packageID']);
         }
 
         if (isset($_POST['exportCustomValues'])) {
@@ -113,6 +101,10 @@ class LanguageExportForm extends AbstractForm
             throw new UserInputException('languageID', 'noValidSelection');
         }
         $this->language = new LanguageEditor($language);
+
+        if (!PackageCache::getInstance()->getPackage($this->packageID)) {
+            throw new UserInputException('packageID');
+        }
     }
 
     /**
@@ -129,8 +121,6 @@ class LanguageExportForm extends AbstractForm
             }
             $this->language = new LanguageEditor($language);
         }
-
-        $this->readPackages();
     }
 
     /**
@@ -140,10 +130,15 @@ class LanguageExportForm extends AbstractForm
     {
         parent::save();
 
-        // send headers
+        $package = PackageCache::getInstance()->getPackage($this->packageID);
+
         \header('Content-Type: text/xml; charset=UTF-8');
-        \header('Content-Disposition: attachment; filename="' . $this->language->languageCode . '.xml"');
-        $this->language->export($this->selectedPackages, $this->exportCustomValues);
+        \header(\sprintf(
+            'Content-Disposition: attachment; filename="%s_%s.xml"',
+            $package->package,
+            $this->language->languageCode
+        ));
+        $this->language->export($this->packageID, $this->exportCustomValues);
 
         exit;
     }
@@ -155,32 +150,18 @@ class LanguageExportForm extends AbstractForm
     {
         parent::assignVariables();
 
+        $packages = PackageCache::getInstance()->getPackages();
+        \usort($packages, static function (Package $a, Package $b) {
+            return $a->getName() <=> $b->getName();
+        });
+
         WCF::getTPL()->assign([
             'languageID' => $this->languageID,
             'languages' => LanguageFactory::getInstance()->getLanguages(),
-            'selectedPackages' => $this->selectedPackages,
-            'packages' => $this->packages,
+            'packageID' => $this->packageID,
+            'packages' => $packages,
             'selectAllPackages' => true,
             'packageNameLength' => $this->packageNameLength,
         ]);
-    }
-
-    /**
-     * Read available packages.
-     */
-    protected function readPackages()
-    {
-        $sql = "SELECT      *
-                FROM        wcf" . WCF_N . "_package
-                ORDER BY    packageName";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute();
-        while ($row = $statement->fetchArray()) {
-            $row['packageNameLength'] = \mb_strlen(WCF::getLanguage()->get($row['packageName']));
-            $this->packages[] = new Package(null, $row);
-            if ($row['packageNameLength'] > $this->packageNameLength) {
-                $this->packageNameLength = $row['packageNameLength'];
-            }
-        }
     }
 }
