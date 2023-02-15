@@ -19,7 +19,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             },
             "alignment",
         ];
-        if (features.url) {
+        if (features.link) {
             toolbar.push("link");
         }
         if (features.image) {

@@ -7,14 +7,25 @@ type ToolbarItem = string | { label: string; icon?: string; items: string[] };
 type ToolbarConfig = ToolbarItem[];
 
 export type Features = {
+  alignment: boolean;
   attachment: boolean;
   autosave: string;
+  code: boolean;
+  codeBlock: boolean;
+  heading: boolean;
   html: boolean;
   image: boolean;
+  link: boolean;
+  list: boolean;
   media: boolean;
   mention: boolean;
+  quoteBlock: boolean;
   spoiler: boolean;
-  url: boolean;
+  strikethrough: boolean;
+  subscript: boolean;
+  superscript: boolean;
+  table: boolean;
+  underline: boolean;
 };
 
 export function createConfigurationFor(features: Features): EditorConfig {
@@ -40,7 +51,7 @@ export function createConfigurationFor(features: Features): EditorConfig {
     "alignment",
   ];
 
-  if (features.url) {
+  if (features.link) {
     toolbar.push("link");
   }
 
