@@ -3587,9 +3587,9 @@ Attachments:
 		<item name="wcf.date.timezone.atlantic.south_georgia"><![CDATA[(UTC-02:00) South Georgia and the South Sandwich Islands]]></item>
 		<item name="wcf.date.timezone.atlantic.azores"><![CDATA[(UTC-01:00) Azores]]></item>
 		<item name="wcf.date.timezone.atlantic.cape_verde"><![CDATA[(UTC-01:00) Cape Verde]]></item>
-		<item name="wcf.date.timezone.africa.casablanca"><![CDATA[(UTC) Casablanca]]></item>
-		<item name="wcf.date.timezone.europe.london"><![CDATA[(UTC) Dublin, Edinburgh, Lisbon, London]]></item>
-		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC) Monrovia, Reykjavík]]></item>
+		<item name="wcf.date.timezone.africa.casablanca"><![CDATA[(UTC+00:00) Casablanca]]></item>
+		<item name="wcf.date.timezone.europe.london"><![CDATA[(UTC+00:00) Dublin, Edinburgh, Lisbon, London]]></item>
+		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC+00:00) Monrovia, Reykjavík]]></item>
 		<item name="wcf.date.timezone.europe.berlin"><![CDATA[(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna]]></item>
 		<item name="wcf.date.timezone.europe.belgrade"><![CDATA[(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague]]></item>
 		<item name="wcf.date.timezone.europe.paris"><![CDATA[(UTC+01:00) Brussels, Copenhagen, Madrid, Paris]]></item>
@@ -3650,6 +3650,7 @@ Attachments:
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fiji]]></item>
 		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nukuʻalofa]]></item>
 		<item name="wcf.date.timezone.pacific.apia"><![CDATA[(UTC+13:00) Samoa]]></item>
+		<item name="wcf.date.timezone.utc"><![CDATA[UTC]]></item>
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
 		<item name="wcf.date.period.end"><![CDATA[to]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[0]]></item>
