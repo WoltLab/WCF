@@ -3,42 +3,141 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createConfigurationFor = void 0;
     function createConfigurationFor(features) {
-        const toolbar = [
-            "heading",
-            "|",
-            "bold",
-            "italic",
-            {
+        const Divider = "|";
+        // TODO: This works, but is pretty much unreadable.
+        const removePlugins = [];
+        let toolbar = [];
+        if (features.heading) {
+            toolbar.push("heading");
+        }
+        else {
+            removePlugins.push("Heading");
+        }
+        toolbar.push(Divider);
+        toolbar.push("bold", "italic");
+        let items = [];
+        if (features.underline) {
+            items.push("underline");
+        }
+        else {
+            removePlugins.push("Underline");
+        }
+        if (features.strikethrough) {
+            items.push("strikethrough");
+        }
+        else {
+            removePlugins.push("Strikethrough");
+        }
+        if (features.subscript) {
+            items.push("subscript");
+        }
+        else {
+            removePlugins.push("Subscript");
+        }
+        if (features.superscript) {
+            items.push("superscript");
+        }
+        else {
+            removePlugins.push("Superscript");
+        }
+        if (features.code) {
+            items.push("code");
+        }
+        else {
+            removePlugins.push("Code");
+        }
+        if (items.length > 0) {
+            toolbar.push({
                 label: "woltlabToolbarGroup_format",
-                items: ["underline", "strikethrough", "subscript", "superscript", "code"],
-            },
-            "|",
-            {
+                items,
+            });
+        }
+        toolbar.push(Divider);
+        if (features.list) {
+            toolbar.push({
                 label: "woltlabToolbarGroup_list",
                 items: ["bulletedList", "numberedList"],
-            },
-            "alignment",
-        ];
+            });
+        }
+        else {
+            removePlugins.push("List");
+        }
+        if (features.alignment) {
+            toolbar.push("alignment");
+        }
+        else {
+            removePlugins.push("Alignment");
+        }
         if (features.link) {
             toolbar.push("link");
         }
-        if (features.image) {
-            ("insertImage");
+        else {
+            removePlugins.push("Link", "LinkImage");
         }
-        const blocks = ["insertTable", "blockQuote", "codeBlock"];
+        if (features.image) {
+            toolbar.push("insertImage");
+        }
+        else {
+            removePlugins.push("Image", "ImageInsertUI", "ImageToolbar", "ImageStyle", "ImageUpload", "ImageUploadUI");
+            if (features.link) {
+                removePlugins.push("LinkImage");
+            }
+        }
+        items = [];
+        if (features.table) {
+            items.push("insertTable");
+        }
+        else {
+            removePlugins.push("Table", "TableToolbar");
+        }
+        if (features.quoteBlock) {
+            items.push("blockQuote");
+        }
+        else {
+            removePlugins.push("BlockQuote", "WoltlabBlockQuote");
+        }
+        if (features.codeBlock) {
+            items.push("codeBlock");
+        }
+        else {
+            removePlugins.push("CodeBlock", "WoltlabCodeBlock");
+        }
         if (features.spoiler) {
-            blocks.push("spoiler");
+            items.push("spoiler");
+        }
+        else {
+            removePlugins.push("WoltlabSpoiler");
         }
         if (features.html) {
-            blocks.push("htmlEmbed");
+            items.push("htmlEmbed");
+        }
+        else {
+            removePlugins.push("HtmlEmbed");
         }
         if (features.media) {
-            blocks.push("woltlabBbcode_media");
+            items.push("woltlabBbcode_media");
         }
-        toolbar.push({
-            label: (0, Language_1.getPhrase)("wcf.editor.button.group.block"),
-            icon: "plus",
-            items: blocks,
+        else {
+            removePlugins.push("WoltlabMedia");
+        }
+        if (items.length > 0) {
+            toolbar.push({
+                label: (0, Language_1.getPhrase)("wcf.editor.button.group.block"),
+                icon: "plus",
+                items,
+            });
+        }
+        let allowDivider = false;
+        toolbar = toolbar.filter((item) => {
+            if (typeof item === "string" && item === Divider) {
+                if (!allowDivider) {
+                    return false;
+                }
+                allowDivider = false;
+                return true;
+            }
+            allowDivider = true;
+            return true;
         });
         const woltlabToolbarGroup = {
             format: {
