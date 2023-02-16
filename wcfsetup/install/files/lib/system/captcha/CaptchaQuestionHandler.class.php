@@ -108,6 +108,8 @@ class CaptchaQuestionHandler implements ICaptchaHandler
         $this->question = $this->questions[$questionID];
 
         do {
+            // A random ID needs to be generated, otherwise an attacker will
+            // trivially be able to select a specific question.
             $this->captchaQuestion = StringUtil::getRandomID();
         } while (WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion) !== null);
 
