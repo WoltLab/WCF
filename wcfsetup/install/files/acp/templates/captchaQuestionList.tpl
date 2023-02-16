@@ -27,6 +27,9 @@
 				<tr>
 					<th class="columnID columnQuestionID active ASC" colspan="2">{lang}wcf.global.objectID{/lang}</th>
 					<th class="columnText columnQuestion">{lang}wcf.acp.captcha.question.question{/lang}</th>
+					<th class="columnDigits columnViews">{lang}wcf.acp.captcha.question.views{/lang}</th>
+					<th class="columnDigits columnCorrectSubmissions">{lang}wcf.acp.captcha.question.correctSubmissions{/lang}</th>
+					<th class="columnDigits columnIncorrectSubmissions">{lang}wcf.acp.captcha.question.incorrectSubmissions{/lang}</th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -44,6 +47,9 @@
 						</td>
 						<td class="columnID columnQuestionID">{$question->questionID}</td>
 						<td class="columnText columnQuestion"><a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}">{$question->getQuestion()}</a></td>
+						<td class="columnDigits columnViews">{#$question->views}</td>
+						<td class="columnDigits columnCorrectSubmissions">{#$question->correctSubmissions}</td>
+						<td class="columnDigits columnIncorrectSubmissions">{#$question->incorrectSubmissions}</td>
 						
 						{event name='columns'}
 					</tr>

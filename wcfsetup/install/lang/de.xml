@@ -284,6 +284,9 @@
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Frage]]></item>
+		<item name="wcf.acp.captcha.question.views"><![CDATA[Angezeigt]]></item>
+		<item name="wcf.acp.captcha.question.correctSubmissions"><![CDATA[Richtige Antworten]]></item>
+		<item name="wcf.acp.captcha.question.incorrectSubmissions"><![CDATA[Falsche Antworten]]></item>
 	</category>
 	<category name="wcf.acp.contact">
 		<item name="wcf.acp.contact.options"><![CDATA[Eingabefelder]]></item>

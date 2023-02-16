@@ -283,6 +283,9 @@
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Question]]></item>
+		<item name="wcf.acp.captcha.question.views"><![CDATA[Views]]></item>
+		<item name="wcf.acp.captcha.question.correctSubmissions"><![CDATA[Correct Answers]]></item>
+		<item name="wcf.acp.captcha.question.incorrectSubmissions"><![CDATA[Incorrect Answers]]></item>
 	</category>
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
