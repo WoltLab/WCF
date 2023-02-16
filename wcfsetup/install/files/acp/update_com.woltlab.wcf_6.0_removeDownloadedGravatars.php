@@ -10,8 +10,11 @@
 
 use wcf\system\package\SplitNodeException;
 
-$deleted = 0;
+if (!\is_dir(WCF_DIR . 'images/avatars/gravatars/')) {
+    return;
+}
 
+$deleted = 0;
 foreach (new \DirectoryIterator(WCF_DIR . 'images/avatars/gravatars/') as $fileInfo) {
     if (!$fileInfo->isFile()) {
         continue;
