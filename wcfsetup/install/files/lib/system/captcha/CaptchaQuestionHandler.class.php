@@ -2,6 +2,7 @@
 
 namespace wcf\system\captcha;
 
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\captcha\question\CaptchaQuestion;
 use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
 use wcf\system\exception\UserInputException;
@@ -107,11 +108,9 @@ class CaptchaQuestionHandler implements ICaptchaHandler
         $questionID = \array_rand($this->questions);
         $this->question = $this->questions[$questionID];
 
-        do {
-            // A random ID needs to be generated, otherwise an attacker will
-            // trivially be able to select a specific question.
-            $this->captchaQuestion = StringUtil::getRandomID();
-        } while (WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion) !== null);
+        // A random ID needs to be generated, otherwise an attacker will
+        // trivially be able to select a specific question.
+        $this->captchaQuestion = Hex::encode(\random_bytes(16));
 
         WCF::getSession()->register('captchaQuestion_' . $this->captchaQuestion, $questionID);
     }
