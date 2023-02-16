@@ -11,9 +11,9 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 // change the priority of the PIPs to "1"
-$sql = "UPDATE  wcf" . WCF_N . "_package_installation_plugin
+$sql = "UPDATE  wcf1_package_installation_plugin
         SET     priority = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
+$statement = WCF::getDB()->prepare($sql);
 $statement->execute([1]);
 
 // Clear any outdated cached data from WCFSetup.
@@ -21,11 +21,11 @@ UserStorageHandler::getInstance()->clear();
 
 // get server timezone
 if ($timezone = @\date_default_timezone_get()) {
-    if ($timezone != 'Europe/London' && \in_array($timezone, DateUtil::getAvailableTimezones())) {
-        $sql = "UPDATE  wcf" . WCF_N . "_option
+    if (\in_array($timezone, DateUtil::getAvailableTimezones())) {
+        $sql = "UPDATE  wcf1_option
                 SET     optionValue = ?
                 WHERE   optionName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $timezone,
             'timezone',

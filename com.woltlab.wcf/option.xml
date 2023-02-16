@@ -718,7 +718,7 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 			<option name="timezone">
 				<categoryname>general.system.date</categoryname>
 				<optiontype>timezone</optiontype>
-				<defaultvalue>Europe/London</defaultvalue>
+				<defaultvalue>UTC</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
 			<!-- general.system.googleMaps -->
