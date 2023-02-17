@@ -33,15 +33,14 @@ class SetupLanguage extends Language
      */
     protected function loadCategory(string $category): bool
     {
-        return false;
-    }
+        if ($category !== 'wcf.global') {
+            return false;
+        }
 
-    /**
-     * Loads the compiled language file.
-     * Compiles the language file before if necessary.
-     */
-    public function loadLanguage()
-    {
+        if ($this->items !== []) {
+            throw new \LogicException('Unreachable');
+        }
+
         // We must not access LanguageFactory, because it is not usable in
         // early WCFSetup initialization.
         $compiler = new TemplateScriptingCompiler(WCF::getTPL());
@@ -64,5 +63,7 @@ class SetupLanguage extends Language
                 $this->dynamicItems[$name] = $compiled['template'];
             }
         }
+
+        return true;
     }
 }
