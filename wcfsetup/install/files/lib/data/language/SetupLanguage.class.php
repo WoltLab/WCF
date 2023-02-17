@@ -37,9 +37,7 @@ class SetupLanguage extends Language
             return false;
         }
 
-        if ($this->items !== []) {
-            throw new \LogicException('Unreachable');
-        }
+        \assert($this->items === []);
 
         // We must not access LanguageFactory, because it is not usable in
         // early WCFSetup initialization.
