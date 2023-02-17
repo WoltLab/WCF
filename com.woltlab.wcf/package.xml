@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.5.9 dev 2</version>
-		<date>2023-02-16</date>
+		<version>5.5.9</version>
+		<date>2023-02-17</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -50,7 +50,6 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 
-	<!-- Run wcfsetup/install/files/acp/update_com.woltlab.wcf_5.5.9_systemId.php -->
 	<instructions type="update" fromversion="5.5.8">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
@@ -59,7 +58,7 @@
 
 		<instruction type="script">acp/update_com.woltlab.wcf_5.5.9_systemId.php</instruction>
 	</instructions>
-	<instructions type="update" fromversion="5.5.9 dev 1">
+	<instructions type="update" fromversion="5.5.9 dev 2">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
