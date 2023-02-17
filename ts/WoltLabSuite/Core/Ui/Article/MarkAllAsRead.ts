@@ -2,53 +2,29 @@
  * Handles the 'mark as read' action for articles.
  *
  * @author  Marcel Werk
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2023 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
 
-import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
+import { dboAction } from "../../Ajax";
 import * as UiNotification from "../Notification";
 
-class UiArticleMarkAllAsRead implements AjaxCallbackObject {
-  constructor() {
-    document.querySelectorAll(".markAllAsReadButton").forEach((button) => {
-      button.addEventListener("click", this.click.bind(this));
-    });
-  }
+async function markAllAsRead(): Promise<void> {
+  await dboAction("markAllAsRead", "wcf\\data\\article\\ArticleAction").dispatch();
 
-  private click(event: MouseEvent): void {
-    event.preventDefault();
+  document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el: HTMLElement) => el.remove());
+  document.querySelectorAll(".boxMenu .active .badge").forEach((el: HTMLElement) => el.remove());
 
-    Ajax.api(this);
-  }
-
-  _ajaxSuccess(): void {
-    /* remove obsolete badges */
-    // main menu
-    document.querySelectorAll(".mainMenu .active .badge").forEach((badge) => badge.remove());
-    // mobile page menu badge
-    document.querySelectorAll(".pageMainMenuMobile .active").forEach((container) => {
-      container.closest(".menuOverlayItem")?.querySelector(".badge")?.remove();
-    });
-
-    // article list
-    document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
-
-    UiNotification.show();
-  }
-
-  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
-    return {
-      data: {
-        actionName: "markAllAsRead",
-        className: "wcf\\data\\article\\ArticleAction",
-      },
-    };
-  }
+  UiNotification.show();
 }
 
-export function init(): void {
-  new UiArticleMarkAllAsRead();
+export function setup(): void {
+  document.querySelectorAll(".markAllAsReadButton").forEach((el: HTMLElement) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      void markAllAsRead();
+    });
+  });
 }
