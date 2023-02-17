@@ -31,7 +31,7 @@ class SetupLanguage extends Language
     /**
      * @inheritDoc
      */
-    protected function loadCategory($category)
+    protected function loadCategory(string $category): bool
     {
         return false;
     }
