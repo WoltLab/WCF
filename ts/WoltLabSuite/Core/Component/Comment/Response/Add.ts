@@ -17,6 +17,7 @@ import * as UiNotification from "../../../Ui/Notification";
 import { StatusNotOk } from "../../../Ajax/Error";
 import { showGuestDialog } from "../GuestDialog";
 import { CKEditor, getCkeditor } from "../../Ckeditor";
+import { listenToCkeditor } from "../../Ckeditor/Event";
 
 type ResponseAddResponse = {
   guestDialog?: string;
@@ -49,6 +50,13 @@ export class CommentResponseAdd {
       event.preventDefault();
 
       void this.#submit();
+    });
+
+    listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
+      features.heading = false;
+      features.quoteBlock = false;
+      features.spoiler = false;
+      features.table = false;
     });
   }
 

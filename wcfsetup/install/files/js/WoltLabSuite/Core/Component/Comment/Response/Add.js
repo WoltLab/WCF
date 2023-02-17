@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog", "../../Ckeditor"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1, Ckeditor_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog", "../../Ckeditor", "../../Ckeditor/Event"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1, Ckeditor_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentResponseAdd = void 0;
@@ -35,6 +35,12 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             submitButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 void this.#submit();
+            });
+            (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
+                features.heading = false;
+                features.quoteBlock = false;
+                features.spoiler = false;
+                features.table = false;
             });
         }
         show(commentId) {

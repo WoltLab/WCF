@@ -16,6 +16,7 @@ import DomUtil from "../../Dom/Util";
 import { showGuestDialog } from "./GuestDialog";
 import * as Core from "../../Core";
 import { CKEditor, getCkeditor } from "../Ckeditor";
+import { listenToCkeditor } from "../Ckeditor/Event";
 
 type ResponseAddComment = {
   guestDialog?: string;
@@ -67,6 +68,13 @@ export class CommentAdd {
       event.preventDefault();
 
       void this.#submit();
+    });
+
+    listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
+      features.heading = false;
+      features.quoteBlock = false;
+      features.spoiler = false;
+      features.table = false;
     });
   }
 
