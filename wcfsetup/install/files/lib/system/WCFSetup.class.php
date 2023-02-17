@@ -89,8 +89,6 @@ final class WCFSetup extends WCF
         static::getLanguageSelection();
         $this->initLanguage();
         $this->initTPL();
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::getLanguage()->loadLanguage();
 
         $emitter = new SapiEmitter();
         $response = $this->dispatch();

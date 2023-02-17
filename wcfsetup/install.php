@@ -1291,10 +1291,6 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	}
 	$tar->close();
 	
-	// create cache folders
-	@mkdir(TMP_DIR . 'setup/lang/cache/', 0777);
-	BasicFileUtil::makeWritable(TMP_DIR . 'setup/lang/cache/');
-	
 	@mkdir(TMP_DIR . 'setup/template/compiled/', 0777);
 	BasicFileUtil::makeWritable(TMP_DIR . 'setup/template/compiled/');
 }
