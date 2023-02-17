@@ -232,9 +232,7 @@ class LanguageFactory extends SingletonFactory
      */
     protected function loadCache()
     {
-        if (\defined('WCF_N')) {
-            $this->cache = LanguageCacheBuilder::getInstance()->getData();
-        }
+        $this->cache = LanguageCacheBuilder::getInstance()->getData();
     }
 
     /**
