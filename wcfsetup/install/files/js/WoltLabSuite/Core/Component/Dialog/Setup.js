@@ -21,6 +21,10 @@ define(["require", "exports", "tslib", "./Controls", "../../Dom/Util", "../FormB
             }
             const dialog = document.createElement("woltlab-core-dialog");
             dialog.content.append(element);
+            if (element instanceof HTMLElement) {
+                // Unhide any elements that are promoted to a dialog.
+                element.hidden = false;
+            }
             return new Controls_1.default(dialog);
         }
         fromId(id) {
