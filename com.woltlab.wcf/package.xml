@@ -84,7 +84,14 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_landingPage.php</instruction>
 
 		<!-- Migrate the database as early as possible. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step2.php</instruction>
+
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0.php</instruction>
+
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step2.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step3.php</instruction>
 
 		<!-- Deploy the new application code again to build the hashes in wcf1_package_installation_file_log. -->
 		<instruction type="file" />
