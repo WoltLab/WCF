@@ -21,6 +21,11 @@ export class DialogSetup {
     const dialog = document.createElement("woltlab-core-dialog");
     dialog.content.append(element);
 
+    if (element instanceof HTMLElement) {
+      // Unhide any elements that are promoted to a dialog.
+      element.hidden = false;
+    }
+
     return new DialogControls(dialog);
   }
 
