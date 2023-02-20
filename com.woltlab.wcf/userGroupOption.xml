@@ -663,7 +663,7 @@ pdf</defaultvalue>
 				<defaultvalue>500</defaultvalue>
 				<options>module_user_signature</options>
 				<minvalue>100</minvalue>
-				<maxvalue>65535</maxvalue>
+				<maxvalue>65000</maxvalue>
 				<suffix>chars</suffix>
 				<admindefaultvalue>10000</admindefaultvalue>
 				<usersonly>1</usersonly>
@@ -782,7 +782,7 @@ bmp</defaultvalue>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1000</defaultvalue>
 				<minvalue>100</minvalue>
-				<maxvalue>65535</maxvalue>
+				<maxvalue>65000</maxvalue>
 				<suffix>chars</suffix>
 				<admindefaultvalue>10000</admindefaultvalue>
 			</option>
