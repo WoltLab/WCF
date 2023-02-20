@@ -4,14 +4,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.4
  */
-define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Ui/Dialog"], function (require, exports, tslib_1, UiConfirmation, Ajax, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Component/Dialog"], function (require, exports, tslib_1, UiConfirmation, Ajax, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.List = void 0;
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Ajax = tslib_1.__importStar(Ajax);
     Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class List {
         clearExistingLogButton;
         clearLogButton;
@@ -56,22 +55,8 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../
         }
         showStackTrace(event) {
             const target = event.currentTarget;
-            const dialog = Dialog_1.default.openStatic("logEntryStackTrace", target.dataset.stackTrace, {
-                title: Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"),
-            });
-            dialog.dialog
-                .querySelector(".jsOutputFormatToggle")
-                .addEventListener("click", (ev) => this.toggleStacktraceFormat(ev));
-        }
-        toggleStacktraceFormat(event) {
-            const target = event.currentTarget;
-            const pre = target.nextElementSibling;
-            if (pre.style.whiteSpace) {
-                pre.style.whiteSpace = "";
-            }
-            else {
-                pre.style.whiteSpace = "pre-wrap";
-            }
+            const dialog = (0, Dialog_1.dialogFactory)().fromHtml(target.dataset.stackTrace).withoutControls();
+            dialog.show(Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"));
         }
     }
     exports.List = List;
