@@ -32,7 +32,7 @@ class AboutMeOptionType extends MessageOptionType
         }
 
         // There is a hardlimit in the database column size.
-        if (\mb_strlen($htmlContent) > 65535) {
+        if (\mb_strlen($htmlContent) > 65000) {
             throw new UserInputException($option->optionName, 'tooLong');
         }
 
