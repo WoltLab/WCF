@@ -38,12 +38,12 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         \array_shift($stackTraceData);
         $stackTrace = JSON::encode($stackTraceData);
 
-        $sql = "INSERT INTO             wcf" . WCF_N . "_devtools_missing_language_item
+        $sql = "INSERT INTO             wcf1_devtools_missing_language_item
                                         (languageID, languageItem, lastTime, stackTrace)
                 VALUES                  (?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE lastTime = ?,
                                         stackTrace = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->parameters['language']->languageID,
             $this->parameters['languageItem'],
@@ -84,8 +84,8 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function clearLog()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_devtools_missing_language_item";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_devtools_missing_language_item";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
     }
 
@@ -111,11 +111,11 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
     public function clearExistingLog(): void
     {
         $sql = "DELETE      devtools_missing_language_item
-                FROM        wcf" . WCF_N . "_devtools_missing_language_item devtools_missing_language_item
-                INNER JOIN  wcf" . WCF_N . "_language_item language_item
+                FROM        wcf1_devtools_missing_language_item devtools_missing_language_item
+                INNER JOIN  wcf1_language_item language_item
                 ON          language_item.languageItem = devtools_missing_language_item.languageItem
                         AND language_item.languageID = devtools_missing_language_item.languageID";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
     }
 }
