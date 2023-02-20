@@ -1403,8 +1403,8 @@ CREATE TABLE wcf1_tracked_visit (
 	objectID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	visitTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, objectID, userID),
-	KEY (userID, visitTime)
+	UNIQUE KEY userID_objectTypeID_objectID (userID, objectTypeID, objectID),
+	KEY visitTime (visitTime)
 );
 
 DROP TABLE IF EXISTS wcf1_tracked_visit_type;
@@ -1412,8 +1412,8 @@ CREATE TABLE wcf1_tracked_visit_type (
 	objectTypeID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	visitTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, userID),
-	KEY (userID, visitTime)
+	UNIQUE KEY userID_objectTypeID (userID, objectTypeID),
+	KEY visitTime (visitTime)
 );
 
 DROP TABLE IF EXISTS wcf1_trophy;
