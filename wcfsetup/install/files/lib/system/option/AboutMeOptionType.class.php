@@ -24,11 +24,19 @@ class AboutMeOptionType extends MessageOptionType
     {
         parent::validate($option, $newValue);
 
-        if (WCF::getSession()->getPermission('user.profile.aboutMeMaxLength') < \mb_strlen($newValue)) {
+        $htmlContent = $this->htmlInputProcessor->getHtml();
+        $textContent = $this->htmlInputProcessor->getTextContent();
+
+        if (\mb_strlen($textContent) > WCF::getSession()->getPermission('user.profile.aboutMeMaxLength')) {
             throw new UserInputException($option->optionName, 'tooLong');
         }
 
-        $censoredWords = Censorship::getInstance()->test($newValue);
+        // There is a hardlimit in the database column size.
+        if (\mb_strlen($htmlContent) > 65535) {
+            throw new UserInputException($option->optionName, 'tooLong');
+        }
+
+        $censoredWords = Censorship::getInstance()->test($textContent);
         if ($censoredWords) {
             WCF::getTPL()->assign('censoredWords', $censoredWords);
             throw new UserInputException($option->optionName, 'censoredWordsFound');
