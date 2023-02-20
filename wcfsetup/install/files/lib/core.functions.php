@@ -716,7 +716,7 @@ EXPLANATION;
 												case 'NULL':
 													return 'null';
 												case 'string':
-													return "'" . addcslashes(StringUtil::encodeHTML($item), "\\'") . "'";
+													return "'" . StringUtil::encodeHTML(addcslashes($item, "\\'")) . "'";
 												case 'boolean':
 													return $item ? 'true' : 'false';
 												case 'array':
