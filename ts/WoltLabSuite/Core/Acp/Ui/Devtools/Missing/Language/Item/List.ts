@@ -9,7 +9,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../../../../Ajax/Da
 import * as UiConfirmation from "../../../../../../Ui/Confirmation";
 import * as Ajax from "../../../../../../Ajax";
 import * as Language from "../../../../../../Language";
-import UiDialog from "../../../../../../Ui/Dialog";
+import { dialogFactory } from "../../../../../../Component/Dialog";
 
 export class List implements AjaxCallbackObject {
   protected readonly clearExistingLogButton: HTMLAnchorElement;
@@ -64,24 +64,8 @@ export class List implements AjaxCallbackObject {
   protected showStackTrace(event: Event): void {
     const target = event.currentTarget as HTMLElement;
 
-    const dialog = UiDialog.openStatic("logEntryStackTrace", target.dataset.stackTrace!, {
-      title: Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"),
-    });
-
-    dialog.dialog
-      .querySelector(".jsOutputFormatToggle")!
-      .addEventListener("click", (ev) => this.toggleStacktraceFormat(ev));
-  }
-
-  protected toggleStacktraceFormat(event: Event): void {
-    const target = event.currentTarget as HTMLElement;
-
-    const pre = target.nextElementSibling! as HTMLPreElement;
-    if (pre.style.whiteSpace) {
-      pre.style.whiteSpace = "";
-    } else {
-      pre.style.whiteSpace = "pre-wrap";
-    }
+    const dialog = dialogFactory().fromHtml(target.dataset.stackTrace!).withoutControls();
+    dialog.show(Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"));
   }
 }
 

@@ -7,6 +7,7 @@ use wcf\data\IDeleteAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Executes missing language item log entry-related actions.
@@ -31,11 +32,43 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function logLanguageItem()
     {
-        $stackTraceData = \wcf\functions\exception\sanitizeStacktrace(new \Exception(), true);
-        // Remove stack entries related to logging.
-        \array_shift($stackTraceData);
-        \array_shift($stackTraceData);
-        \array_shift($stackTraceData);
+        $stackTraceData = \array_map(static function ($item) {
+            $item['args'] = \implode(', ', \array_map(static function ($item) {
+                switch (\gettype($item)) {
+                    case 'integer':
+                    case 'double':
+                        return $item;
+                    case 'NULL':
+                        return 'null';
+                    case 'string':
+                        return "'" . StringUtil::encodeHTML(\addcslashes(StringUtil::truncate($item), "\\'\n\r\t")) . "'";
+                    case 'boolean':
+                        return $item ? 'true' : 'false';
+                    case 'array':
+                        $keys = \array_keys($item);
+                        if (\count($keys) > 5) {
+                            return "[ " . \count($keys) . " items ]";
+                        }
+
+                        return '[ ' . \implode(', ', \array_map(static function ($item) {
+                            return $item . ' => ';
+                        }, $keys)) . ']';
+                    case 'object':
+                        if ($item instanceof \UnitEnum) {
+                            return $item::class . '::' . $item->name;
+                        }
+
+                        return $item::class;
+                    case 'resource':
+                        return 'resource(' . \get_resource_type($item) . ')';
+                    case 'resource (closed)':
+                        return 'resource (closed)';
+                }
+            }, $item['args']));
+
+            return $item;
+        }, \wcf\functions\exception\sanitizeStacktrace(new \Exception(), true));
+      
         $stackTrace = JSON::encode($stackTraceData);
 
         $sql = "INSERT INTO             wcf1_devtools_missing_language_item
