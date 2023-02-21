@@ -327,6 +327,8 @@ final class UserStorageHandler extends SingletonFactory
                 \usleep(\random_int(0, .1e6)); // 0 to .1 seconds
             }
         }
+
+        $this->cache = [];
     }
 
     /**
