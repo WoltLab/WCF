@@ -13,27 +13,27 @@ use wcf\system\WCF;
  * Handles the persistent user data storage.
  *
  * @author  Tim Duesterhus, Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserStorageHandler extends SingletonFactory
+final class UserStorageHandler extends SingletonFactory
 {
     /**
      * data cache
      * @var mixed[][]
      */
-    protected $cache = [];
+    private $cache = [];
 
     /**
      * @var (string|null)[][]
      */
-    protected $log = [];
+    private $log = [];
 
     /**
      * redis instance
      * @var Redis
      */
-    protected $redis;
+    private $redis;
 
     /**
      * Checks whether Redis is available.
@@ -262,7 +262,7 @@ class UserStorageHandler extends SingletonFactory
         while (true) {
             try {
                 foreach ($this->log as $userID => $fields) {
-                    if (empty($fields)) {
+                    if ($fields === []) {
                         // Delete log entry as it was handled (by doing nothing).
                         // This can happen if ->resetAll() is called for the only updated
                         // field of a user.
@@ -327,6 +327,8 @@ class UserStorageHandler extends SingletonFactory
                 \usleep(\random_int(0, .1e6)); // 0 to .1 seconds
             }
         }
+
+        $this->cache = [];
     }
 
     /**
@@ -352,10 +354,8 @@ class UserStorageHandler extends SingletonFactory
 
     /**
      * Returns the field name for use in Redis.
-     *
-     * @return  string
      */
-    protected function getRedisFieldName(string $fieldName)
+    private function getRedisFieldName(string $fieldName): string
     {
         $flush = $this->redis->get('ush:_flush');
 
@@ -374,7 +374,7 @@ class UserStorageHandler extends SingletonFactory
      * @param int[] $userIDs
      * @since 5.2
      */
-    protected function validateUserIDs(array $userIDs)
+    private function validateUserIDs(array $userIDs)
     {
         foreach ($userIDs as $userID) {
             if (!$userID) {
