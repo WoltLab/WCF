@@ -3,6 +3,15 @@
 WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities.
 Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
 
+# About CKEditor 5
+
+CKEditor 5 is a WYISWYG editor created by CKSource Holding sp. z o.o, Copyright (c) 2003-2023.
+
+This repository includes a build artifact of CKEditor 5 that is commercially licensed to WoltLab GmbH.
+You may use this instance of CKEditor 5 with any plugin or app built on top of WoltLab Suite Core only.
+
+If you would like to use CKEditor 5 yourself and are not building on top of WoltLab Suite Core then please visit https://ckeditor.com/pricing/ to learn more.
+
 ## License
 
 This library is free software; you can redistribute it and/or
