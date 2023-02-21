@@ -22,18 +22,18 @@ final class UserStorageHandler extends SingletonFactory
      * data cache
      * @var mixed[][]
      */
-    protected $cache = [];
+    private $cache = [];
 
     /**
      * @var (string|null)[][]
      */
-    protected $log = [];
+    private $log = [];
 
     /**
      * redis instance
      * @var Redis
      */
-    protected $redis;
+    private $redis;
 
     /**
      * Checks whether Redis is available.
@@ -355,7 +355,7 @@ final class UserStorageHandler extends SingletonFactory
      *
      * @return  string
      */
-    protected function getRedisFieldName(string $fieldName)
+    private function getRedisFieldName(string $fieldName)
     {
         $flush = $this->redis->get('ush:_flush');
 
@@ -374,7 +374,7 @@ final class UserStorageHandler extends SingletonFactory
      * @param int[] $userIDs
      * @since 5.2
      */
-    protected function validateUserIDs(array $userIDs)
+    private function validateUserIDs(array $userIDs)
     {
         foreach ($userIDs as $userID) {
             if (!$userID) {
