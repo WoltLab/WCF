@@ -180,7 +180,7 @@ HTML;
 
         $startDateTime = $endDateTime = null;
         if ($this->startTime) {
-            $startDateTime = \DateTime::createFromFormat('H:i', $this->startTime);
+            $startDateTime = \DateTimeImmutable::createFromFormat('H:i', $this->startTime);
             if ($startDateTime === false) {
                 $this->errorMessages['time'] = 'wcf.date.startTime.error.invalid';
 
@@ -188,7 +188,7 @@ HTML;
             }
         }
         if ($this->endTime) {
-            $endDateTime = \DateTime::createFromFormat('H:i', $this->endTime);
+            $endDateTime = \DateTimeImmutable::createFromFormat('H:i', $this->endTime);
             if ($endDateTime === false) {
                 $this->errorMessages['time'] = 'wcf.date.endTime.error.invalid';
 
@@ -226,7 +226,7 @@ HTML;
         /** @noinspection PhpUndefinedFieldInspection */
         $startTime = $condition->startTime;
         if ($startTime) {
-            $dateTime = \DateTime::createFromFormat('H:i', $startTime, $timezone);
+            $dateTime = \DateTimeImmutable::createFromFormat('H:i', $startTime, $timezone);
             if ($dateTime->getTimestamp() > TIME_NOW) {
                 return false;
             }
@@ -235,7 +235,7 @@ HTML;
         /** @noinspection PhpUndefinedFieldInspection */
         $endTime = $condition->endTime;
         if ($endTime) {
-            $dateTime = \DateTime::createFromFormat('H:i', $endTime, $timezone);
+            $dateTime = \DateTimeImmutable::createFromFormat('H:i', $endTime, $timezone);
             if ($dateTime->getTimestamp() < TIME_NOW) {
                 return false;
             }

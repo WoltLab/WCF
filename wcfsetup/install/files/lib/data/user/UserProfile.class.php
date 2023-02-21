@@ -836,7 +836,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
         $showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
 
-        $d = new \DateTime();
+        $d = new \DateTimeImmutable();
         $d->setTimezone(WCF::getUser()->getTimeZone());
         $d->setDate($birthdayYear, $month, $day);
         $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace(
