@@ -172,7 +172,8 @@ export async function setupCkeditor(
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 
-  const cke = await window.CKEditor5.create(element, configuration);
+  const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+  const cke = await window.CKEditor5.create(element, configuration, enableDebug);
   const ckeditor = new Ckeditor(cke, features);
 
   if (features.autosave) {

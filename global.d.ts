@@ -20,7 +20,7 @@ type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
 type LoadingIndicatorIconSize = 24 | 48 | 96;
 
 interface CKEditor5 {
-  create(element: HTMLElement, configuration: EditorConfig): Promise<ClassicEditor>;
+  create(element: HTMLElement, configuration: EditorConfig, enableDebug: boolean): Promise<ClassicEditor>;
 }
 
 declare global {
