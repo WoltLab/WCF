@@ -13,10 +13,10 @@ use wcf\system\WCF;
  * Handles the persistent user data storage.
  *
  * @author  Tim Duesterhus, Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserStorageHandler extends SingletonFactory
+final class UserStorageHandler extends SingletonFactory
 {
     /**
      * data cache
