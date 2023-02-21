@@ -352,10 +352,8 @@ final class UserStorageHandler extends SingletonFactory
 
     /**
      * Returns the field name for use in Redis.
-     *
-     * @return  string
      */
-    private function getRedisFieldName(string $fieldName)
+    private function getRedisFieldName(string $fieldName): string
     {
         $flush = $this->redis->get('ush:_flush');
 
