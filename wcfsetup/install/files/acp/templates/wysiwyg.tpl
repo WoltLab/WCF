@@ -3,12 +3,7 @@
 {event name='wysiwyg'}
 
 <script data-relocate="true">
-	require([
-		"WoltLabSuite/Core/Component/Ckeditor",
-		"/wcf/editor/dist/ckeditor5.debug.js",
-	], (
-		{ setupCkeditor },
-	) => {
+	require(["WoltLabSuite/Core/Component/Ckeditor"], ({ setupCkeditor }) => {
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
 		{jsphrase name='wcf.editor.button.group.list'}

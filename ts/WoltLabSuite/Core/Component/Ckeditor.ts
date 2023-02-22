@@ -11,6 +11,8 @@ import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiced
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
 
+import "ckeditor5-bundle";
+
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 class Ckeditor {
