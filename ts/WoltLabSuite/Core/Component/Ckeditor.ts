@@ -3,12 +3,13 @@ import { setup as setupMedia } from "./Ckeditor/Media";
 import { setup as setupMention } from "./Ckeditor/Mention";
 import { setup as setupQuote } from "./Ckeditor/Quote";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
+import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
+import { dispatchToCkeditor } from "./Ckeditor/Event";
+import Devtools from "../Devtools";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
-import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
-import { dispatchToCkeditor } from "./Ckeditor/Event";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -131,6 +132,10 @@ function initializeFeatures(element: HTMLElement, features: Features): void {
     features,
   });
 
+  if (features.autosave && Devtools._internal_.editorAutosave() === false) {
+    features.autosave = "";
+  }
+
   Object.freeze(features);
 }
 
@@ -172,7 +177,11 @@ export async function setupCkeditor(
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 
-  const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+  let enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+  if (enableDebug && Devtools._internal_.editorInspector() === false) {
+    enableDebug = false;
+  }
+
   const cke = await window.CKEditor5.create(element, configuration, enableDebug);
   const ckeditor = new Ckeditor(cke, features);
 

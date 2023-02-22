@@ -1,7 +1,8 @@
-define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event"], function (require, exports, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "../Devtools"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, Devtools_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
+    Devtools_1 = tslib_1.__importDefault(Devtools_1);
     const instances = new WeakMap();
     class Ckeditor {
         #editor;
@@ -90,6 +91,9 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         (0, Event_1.dispatchToCkeditor)(element).setupFeatures({
             features,
         });
+        if (features.autosave && Devtools_1.default._internal_.editorAutosave() === false) {
+            features.autosave = "";
+        }
         Object.freeze(features);
     }
     function initializeConfiguration(element, features, bbcodes) {
@@ -117,7 +121,11 @@ define(["require", "exports", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ck
         (0, Mention_1.setup)(element);
         (0, Quote_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
-        const cke = await window.CKEditor5.create(element, configuration);
+        let enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+        if (enableDebug && Devtools_1.default._internal_.editorInspector() === false) {
+            enableDebug = false;
+        }
+        const cke = await window.CKEditor5.create(element, configuration, enableDebug);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);

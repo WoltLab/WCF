@@ -9,6 +9,7 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     let _settings = {
         editorAutosave: true,
+        editorInspector: false,
         eventLogging: false,
     };
     function _updateConfig() {
@@ -40,6 +41,14 @@ define(["require", "exports"], function (require, exports) {
             window.console.log("%c\tEditor autosave " + (_settings.editorAutosave ? "enabled" : "disabled"), "font-style: italic");
         },
         /**
+         * Enables or disables the inspector for the editor.
+         */
+        toggleEditorInspector(forceEnable) {
+            _settings.editorInspector = forceEnable ? true : !_settings.editorInspector;
+            _updateConfig();
+            window.console.log("%c\tEditor inspector " + (_settings.editorInspector ? "enabled" : "disabled"), "font-style: italic");
+        },
+        /**
          * Enables/disables logging for fired event listener events.
          */
         toggleEventLogging(forceEnable) {
@@ -67,6 +76,9 @@ define(["require", "exports"], function (require, exports) {
                     if (!_settings.editorAutosave) {
                         Devtools.toggleEditorAutosave(true);
                     }
+                    if (_settings.editorInspector) {
+                        Devtools.toggleEditorInspector(true);
+                    }
                     if (_settings.eventLogging) {
                         Devtools.toggleEventLogging(true);
                     }
@@ -76,6 +88,9 @@ define(["require", "exports"], function (require, exports) {
             },
             editorAutosave() {
                 return _settings.editorAutosave;
+            },
+            editorInspector() {
+                return _settings.editorInspector;
             },
             eventLog(identifier, action) {
                 if (_settings.eventLogging) {
