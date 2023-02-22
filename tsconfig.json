@@ -1,6 +1,5 @@
 {
   "include": [
-    "global.d.ts",
     "ts/**/*"
   ],
   "exclude": [
@@ -26,6 +25,11 @@
     "noImplicitThis": true,
     "strictBindCallApply": true,
     "importHelpers": true,
-    "newLine": "lf"
+    "newLine": "lf",
+    "paths": {
+      "*": [
+        "./ts/*"
+      ]
+    }
   }
 }
