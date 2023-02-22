@@ -49,3 +49,4 @@ jobs:
             npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
 
         see ${{ github.repository }}@${{ steps.determine-commit.outputs.sha }}"
+        git push
