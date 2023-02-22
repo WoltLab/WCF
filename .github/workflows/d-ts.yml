@@ -46,7 +46,8 @@ jobs:
         git commit -m "Update ${{ github.repository }} definitions
 
         Generated using:
+
             npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
 
-        see ${{ github.repository }}@${{ steps.determine-commit.outputs.sha }}"
+        from ${{ github.repository }}@${{ steps.determine-commit.outputs.sha }}"
         git push
