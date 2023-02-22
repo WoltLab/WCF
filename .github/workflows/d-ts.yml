@@ -41,8 +41,14 @@ jobs:
         git config --global user.email "woltlab@woltlab.com"
     - name: Push the update
       run: |
+        set -x
         cd d.ts/
         git add .
+
+        if git diff --cached --quiet; then
+          exit 0
+        fi
+
         git commit -m "Update ${{ github.repository }} definitions
 
         Generated using:
