@@ -1,14 +1,14 @@
-import DatePicker from "./ts/WoltLabSuite/Core/Date/Picker";
-import Devtools from "./ts/WoltLabSuite/Core/Devtools";
-import DomUtil from "./ts/WoltLabSuite/Core/Dom/Util";
-import * as ColorUtil from "./ts/WoltLabSuite/Core/ColorUtil";
-import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
-import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
+import DatePicker from "WoltLabSuite/Core/Date/Picker";
+import Devtools from "WoltLabSuite/Core/Devtools";
+import DomUtil from "WoltLabSuite/Core/Dom/Util";
+import * as ColorUtil from "WoltLabSuite/Core/ColorUtil";
+import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
+import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
-import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
-import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog";
-import type WoltlabCoreDialogControlElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
-import type WoltlabCoreGoogleMapsElement from "./ts/WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
+import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
+import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
+import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
+import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
