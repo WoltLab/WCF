@@ -175,7 +175,7 @@ class PollManager extends SingletonFactory
 
         // poll data
         if (isset($postData['pollEndTime'])) {
-            $d = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $postData['pollEndTime']);
+            $d = \DateTimeImmutable::createFromFormat('Y-m-d\TH:i:sP', $postData['pollEndTime']);
             $this->pollData['endTime'] = ($d !== false) ? $d->getTimestamp() : 0;
         }
 

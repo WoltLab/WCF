@@ -69,7 +69,7 @@
 \define('RECAPTCHA_PUBLICKEY', '');
 \define('RECAPTCHA_PRIVATEKEY', '');
 \define('RECAPTCHA_PRIVATEKEY_INVISIBLE', '');
-\define('TIMEZONE', 'Europe/London');
+\define('TIMEZONE', 'UTC');
 \define('GOOGLE_MAPS_API_KEY', '');
 \define('GOOGLE_MAPS_ZOOM', '13');
 \define('GOOGLE_MAPS_DEFAULT_LATITUDE', '52.517');

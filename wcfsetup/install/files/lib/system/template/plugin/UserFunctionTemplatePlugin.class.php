@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * - `type` (optional) supports the following values:
  *      - `default` (default value) generates a link with the formatted username with popover support.
  *      - `avatarXY` generates a link with the user's avatar in size `XY`.
- *      - `plain` generates a link link without username formatting and popover support
+ *      - `plain` generates a link without username formatting and popover support
  * - `append` (optional) is appended to the user link.
  *
  * All other additional parameter values are added as attributes to the `a` element. Parameter names

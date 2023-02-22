@@ -49,7 +49,7 @@ if (($error = \error_get_last()) !== null) {
 
 // fix timezone warning issue
 if (!@\ini_get('date.timezone')) {
-    @\date_default_timezone_set('Europe/London');
+    @\date_default_timezone_set('UTC');
 }
 
 // Force enable the reporting of all errors, no matter what's

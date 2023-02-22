@@ -83,9 +83,9 @@ final class DateUtil
         'Atlantic/South_Georgia', // (UTC-02:00) Mid-Atlantic
         'Atlantic/Azores', // (UTC-01:00) Azores
         'Atlantic/Cape_Verde', // (UTC-01:00) Cape Verde Is.
-        'Africa/Casablanca', // (UTC) Casablanca
-        'Europe/London', // (UTC) Dublin, Lisbon, London
-        'Africa/Monrovia', // (UTC) Monrovia, Reykjavik
+        'Africa/Casablanca', // (UTC+00:00) Casablanca
+        'Europe/London', // (UTC+00:00) Dublin, Lisbon, London
+        'Africa/Monrovia', // (UTC+00:00) Monrovia, Reykjavik
         'Europe/Berlin', // (UTC+01:00) Amsterdam, Berlin, Rome, Stockholm, Vienna
         'Europe/Belgrade', // (UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague
         'Europe/Paris', // (UTC+01:00) Brussels, Copenhagen, Madrid, Paris
@@ -146,6 +146,8 @@ final class DateUtil
         'Pacific/Fiji', // (UTC+12:00) Fiji
         'Pacific/Tongatapu', // (UTC+13:00) Nukualofa
         'Pacific/Apia', // (UTC+13:00) Samoa
+
+        'UTC',
     ];
 
     /**

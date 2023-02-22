@@ -2,7 +2,9 @@
 
 namespace wcf\system\captcha;
 
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\captcha\question\CaptchaQuestion;
+use wcf\data\captcha\question\CaptchaQuestionEditor;
 use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -11,11 +13,11 @@ use wcf\util\StringUtil;
 /**
  * Captcha handler for captcha questions.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Tim Duesterhus, Matthias Schmidt
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class CaptchaQuestionHandler implements ICaptchaHandler
+final class CaptchaQuestionHandler implements ICaptchaHandler
 {
     /**
      * answer to the captcha question
@@ -31,9 +33,8 @@ class CaptchaQuestionHandler implements ICaptchaHandler
 
     /**
      * captcha question to answer
-     * @var CaptchaQuestion
      */
-    protected $question;
+    protected CaptchaQuestionEditor $question;
 
     /**
      * list of available captcha questions
@@ -62,13 +63,21 @@ class CaptchaQuestionHandler implements ICaptchaHandler
      */
     public function getFormElement()
     {
-        if ($this->question === null) {
+        if (!isset($this->question)) {
             $this->readCaptchaQuestion();
+        }
+
+        $isAnswered = WCF::getSession()->getVar('captchaQuestionSolved_' . $this->captchaQuestion) !== null;
+
+        if (!$isAnswered) {
+            $this->question->updateCounters([
+                'views' => 1,
+            ]);
         }
 
         return WCF::getTPL()->fetch('captchaQuestion', 'wcf', [
             'captchaQuestion' => $this->captchaQuestion,
-            'captchaQuestionAnswered' => WCF::getSession()->getVar('captchaQuestionSolved_' . $this->captchaQuestion) !== null,
+            'captchaQuestionAnswered' => $isAnswered,
             'captchaQuestionObject' => $this->question,
         ]);
     }
@@ -105,11 +114,11 @@ class CaptchaQuestionHandler implements ICaptchaHandler
     protected function readCaptchaQuestion()
     {
         $questionID = \array_rand($this->questions);
-        $this->question = $this->questions[$questionID];
+        $this->question = new CaptchaQuestionEditor($this->questions[$questionID]);
 
-        do {
-            $this->captchaQuestion = StringUtil::getRandomID();
-        } while (WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion) !== null);
+        // A random ID needs to be generated, otherwise an attacker will
+        // trivially be able to select a specific question.
+        $this->captchaQuestion = Hex::encode(\random_bytes(16));
 
         WCF::getSession()->register('captchaQuestion_' . $this->captchaQuestion, $questionID);
     }
@@ -125,7 +134,7 @@ class CaptchaQuestionHandler implements ICaptchaHandler
             throw new UserInputException('captchaAnswer');
         }
 
-        $this->question = $this->questions[$questionID];
+        $this->question = new CaptchaQuestionEditor($this->questions[$questionID]);
 
         // check if question has already been answered
         if (WCF::getSession()->getVar('captchaQuestionSolved_' . $this->captchaQuestion) !== null) {
@@ -135,8 +144,16 @@ class CaptchaQuestionHandler implements ICaptchaHandler
         if ($this->captchaAnswer == '') {
             throw new UserInputException('captchaAnswer');
         } elseif (!$this->question->isAnswer($this->captchaAnswer)) {
+            $this->question->updateCounters([
+                'incorrectSubmissions' => 1,
+            ]);
+
             throw new UserInputException('captchaAnswer', 'false');
         }
+
+        $this->question->updateCounters([
+            'correctSubmissions' => 1,
+        ]);
 
         WCF::getSession()->register('captchaQuestionSolved_' . $this->captchaQuestion, true);
     }

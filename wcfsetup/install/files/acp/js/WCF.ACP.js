@@ -352,9 +352,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			this._dialog.wcfDialog('close');
 			this._dialog.remove();
 			
-			new WCF.PeriodicalExecuter(function(pe) {
-				pe.stop();
-				
+			setTimeout(function () {
 				var $uninstallation = new WCF.ACP.Package.Uninstallation();
 				$uninstallation.start(data.packageID);
 			}, 200);

@@ -48,15 +48,6 @@ class DevtoolsMissingLanguageItem extends DatabaseObject
     public function getStackTrace()
     {
         $stackTrace = JSON::decode($this->stackTrace);
-        foreach ($stackTrace as &$stackEntry) {
-            foreach ($stackEntry['args'] as &$stackEntryArg) {
-                if (\gettype($stackEntryArg) === 'string') {
-                    $stackEntryArg = \str_replace(["\n", "\t"], ['\n', '\t'], $stackEntryArg);
-                }
-            }
-            unset($stackEntryArg);
-        }
-        unset($stackEntry);
 
         return WCF::getTPL()->fetch('__devtoolsMissingLanguageItemStackTrace', 'wcf', [
             'stackTrace' => $stackTrace,

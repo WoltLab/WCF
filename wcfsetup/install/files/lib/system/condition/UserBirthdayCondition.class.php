@@ -89,7 +89,7 @@ HTML;
             return false;
         }
 
-        $dateTime = new \DateTime();
+        $dateTime = new \DateTimeImmutable();
         $dateTime->setTimezone(WCF::getUser()->getTimeZone());
 
         $userIDs = UserBirthdayCache::getInstance()->getBirthdays($dateTime->format('n'), $dateTime->format('j'));

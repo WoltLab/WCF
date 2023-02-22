@@ -123,27 +123,17 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
     /**
      * Exports this language.
-     *
-     * @param int[] $packageIDArray
-     * @param bool $exportCustomValues
      */
-    public function export($packageIDArray = [], $exportCustomValues = false)
+    public function export(int $packageID, bool $exportCustomValues = false)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("language_item.languageID = ?", [$this->languageID]);
-
-        // bom
-        echo "\xEF\xBB\xBF";
+        $conditions->add("language_item.packageID = ?", [$packageID]);
 
         // header
         echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd\" languagecode=\"" . $this->languageCode . "\" languagename=\"" . $this->languageName . "\" countrycode=\"" . $this->countryCode . "\">\n";
 
         // get items
-        $items = [];
-        if (!empty($packageIDArray)) {
-            $conditions->add("language_item.packageID IN (?)", [$packageIDArray]);
-        }
-
         $sql = "SELECT      languageItem,
                             " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ",
                             languageCategory
@@ -153,6 +143,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
+        $items = [];
         while ($row = $statement->fetchArray()) {
             $items[$row['languageCategory']][$row['languageItem']] = $row['languageItemValue'];
         }
@@ -181,9 +172,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("page_content.pageID = page.pageID");
         $conditions->add("page_content.languageID = ?", [$this->languageID]);
-        if (!empty($packageIDArray)) {
-            $conditions->add("page.packageID IN (?)", [$packageIDArray]);
-        }
+        $conditions->add("page.packageID = ?", [$packageID]);
         $conditions->add("page.originIsSystem = ?", [1]);
         $sql = "SELECT      page.identifier, page_content.title, page_content.content
                 FROM        wcf" . WCF_N . "_page page,
@@ -216,9 +205,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("box_content.boxID = box.boxID");
         $conditions->add("box_content.languageID = ?", [$this->languageID]);
-        if (!empty($packageIDArray)) {
-            $conditions->add("box.packageID IN (?)", [$packageIDArray]);
-        }
+        $conditions->add("box.packageID = ?", [$packageID]);
         $conditions->add("box.originIsSystem = ?", [1]);
         $sql = "SELECT      box.identifier, box_content.title, box_content.content
                 FROM        wcf" . WCF_N . "_box box,

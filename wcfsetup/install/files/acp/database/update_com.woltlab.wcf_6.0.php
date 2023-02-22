@@ -33,6 +33,15 @@ return [
                 ->notNull()
                 ->defaultValue(0),
         ]),
+    PartialDatabaseTable::create('wcf1_captcha_question')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('views')
+                ->defaultValue(0),
+            NotNullInt10DatabaseTableColumn::create('correctSubmissions')
+                ->defaultValue(0),
+            NotNullInt10DatabaseTableColumn::create('incorrectSubmissions')
+                ->defaultValue(0),
+        ]),
     PartialDatabaseTable::create('wcf1_language_item')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),

@@ -284,6 +284,9 @@
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Frage]]></item>
+		<item name="wcf.acp.captcha.question.views"><![CDATA[Angezeigt]]></item>
+		<item name="wcf.acp.captcha.question.correctSubmissions"><![CDATA[Richtige Antworten]]></item>
+		<item name="wcf.acp.captcha.question.incorrectSubmissions"><![CDATA[Falsche Antworten]]></item>
 	</category>
 	<category name="wcf.acp.contact">
 		<item name="wcf.acp.contact.options"><![CDATA[Eingabefelder]]></item>
@@ -3638,9 +3641,9 @@ Dateianhänge:
 		<item name="wcf.date.timezone.atlantic.south_georgia"><![CDATA[(UTC-02:00) Mittelatlantik]]></item>
 		<item name="wcf.date.timezone.atlantic.azores"><![CDATA[(UTC-01:00) Azoren]]></item>
 		<item name="wcf.date.timezone.atlantic.cape_verde"><![CDATA[(UTC-01:00) Kap Verde]]></item>
-		<item name="wcf.date.timezone.africa.casablanca"><![CDATA[(UTC) Casablanca]]></item>
-		<item name="wcf.date.timezone.europe.london"><![CDATA[(UTC) Dublin, Edinburgh, Lissabon, London]]></item>
-		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC) Monrovia, Reykjavík]]></item>
+		<item name="wcf.date.timezone.africa.casablanca"><![CDATA[(UTC+00:00) Casablanca]]></item>
+		<item name="wcf.date.timezone.europe.london"><![CDATA[(UTC+00:00) Dublin, Edinburgh, Lissabon, London]]></item>
+		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC+00:00) Monrovia, Reykjavík]]></item>
 		<item name="wcf.date.timezone.europe.berlin"><![CDATA[(UTC+01:00) Amsterdam, Berlin, Bern, Rom, Stockholm, Wien]]></item>
 		<item name="wcf.date.timezone.europe.belgrade"><![CDATA[(UTC+01:00) Belgrad, Bratislava, Budapest, Ljubljana, Prag]]></item>
 		<item name="wcf.date.timezone.europe.paris"><![CDATA[(UTC+01:00) Brüssel, Kopenhagen, Madrid, Paris]]></item>
@@ -3701,6 +3704,7 @@ Dateianhänge:
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fidschi]]></item>
 		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nuku'alofa]]></item>
 		<item name="wcf.date.timezone.pacific.apia"><![CDATA[(UTC+13:00) Samoa]]></item>
+		<item name="wcf.date.timezone.utc"><![CDATA[UTC]]></item>
 		<item name="wcf.date.period.start"><![CDATA[von]]></item>
 		<item name="wcf.date.period.end"><![CDATA[bis]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[1]]></item>

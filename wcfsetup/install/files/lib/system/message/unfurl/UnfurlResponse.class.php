@@ -13,6 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use ValueError;
 use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
+use wcf\system\language\LanguageFactory;
 use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
 use wcf\system\message\unfurl\exception\UrlInaccessible;
@@ -89,10 +90,20 @@ final class UnfurlResponse
         }
 
         try {
+            $defaultLanguage = LanguageFactory::getInstance()->getDefaultLanguage();
+
+            $acceptLanguages = [];
+            $acceptLanguages[] = $defaultLanguage->getBcp47();
+            if ($defaultLanguage->getBcp47() != $defaultLanguage->languageCode) {
+                $acceptLanguages[] = \sprintf("%s; q=0.8", $defaultLanguage->languageCode);
+            }
+            $acceptLanguages[] = "*; q=0.1";
+
             $request = new Request('GET', $url, [
                 'accept' => 'text/html',
                 'range' => \sprintf('bytes=%d-%d', 0, self::MAX_SIZE - 1),
                 'accept-encoding' => 'gzip',
+                'accept-language' => \implode(', ', $acceptLanguages),
             ]);
             $response = self::getHttpClient()->send($request);
 

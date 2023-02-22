@@ -346,7 +346,10 @@ CREATE TABLE wcf1_captcha_question (
 	questionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	question VARCHAR(255) NOT NULL,
 	answers MEDIUMTEXT,
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	views INT(10) NOT NULL DEFAULT 0,
+	correctSubmissions INT(10) NOT NULL DEFAULT 0,
+	incorrectSubmissions INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_category;
@@ -1400,8 +1403,8 @@ CREATE TABLE wcf1_tracked_visit (
 	objectID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	visitTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, objectID, userID),
-	KEY (userID, visitTime)
+	UNIQUE KEY userID_objectTypeID_objectID (userID, objectTypeID, objectID),
+	KEY visitTime (visitTime)
 );
 
 DROP TABLE IF EXISTS wcf1_tracked_visit_type;
@@ -1409,8 +1412,8 @@ CREATE TABLE wcf1_tracked_visit_type (
 	objectTypeID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	visitTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, userID),
-	KEY (userID, visitTime)
+	UNIQUE KEY userID_objectTypeID (userID, objectTypeID),
+	KEY visitTime (visitTime)
 );
 
 DROP TABLE IF EXISTS wcf1_trophy;

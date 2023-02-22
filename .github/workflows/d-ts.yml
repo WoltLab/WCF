@@ -1,0 +1,59 @@
+name: d.ts Exporter
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '37 15 * * 4'
+
+jobs:
+  export:
+    name: "Export (${{ matrix.branch }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        branch:
+        - 'master'
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ matrix.branch }}
+    - name: Determine commit
+      id: determine-commit
+      run: |
+        echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+    - name: Set up node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "16"
+        cache: "npm"
+    - run: npm install
+    - uses: actions/checkout@v3
+      with:
+        repository: WoltLab/d.ts
+        ssh-key: ${{ secrets.WOLTLAB_D_TS_DEPLOY_KEY }}
+        path: d.ts
+        ref: ${{ matrix.branch }}
+    - run: npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
+    - name: Prepare git
+      run: |
+        git config --global user.name "WoltLab GmbH"
+        git config --global user.email "woltlab@woltlab.com"
+    - name: Push the update
+      run: |
+        set -x
+        cd d.ts/
+        git add .
+
+        if git diff --cached --quiet; then
+          exit 0
+        fi
+
+        git commit -m "Update ${{ github.repository }} definitions
+
+        Generated using:
+
+            npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
+
+        from ${{ github.repository }}@${{ steps.determine-commit.outputs.sha }}"
+        git push

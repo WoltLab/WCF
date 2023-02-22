@@ -3,8 +3,6 @@
 	<category name="wcf.global">
 		<item name="wcf.global.title"><![CDATA[WoltLab Suite&trade; Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
-		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
-		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% fertiggestellt]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für WoltLab Suite&trade; entschieden haben!]]></item>
