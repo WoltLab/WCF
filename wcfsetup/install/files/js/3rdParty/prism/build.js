@@ -24,6 +24,11 @@ fs.readdirSync("components").forEach(function (component) {
 
 {
 	const contents = `/**
+ * Exposes information about the available Prism languages.
+ *
+ * @author Tim Duesterhus
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
 
