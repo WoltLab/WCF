@@ -19,6 +19,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-inspector": "^4.1.0",
     "@googlemaps/markerclusterer": "^2.0.15",
     "@types/ckeditor__ckeditor5-core": "^33.0.3",
     "@types/ckeditor__ckeditor5-editor-classic": "^27.1.2",

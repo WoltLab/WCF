@@ -177,12 +177,7 @@ export async function setupCkeditor(
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 
-  let enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
-  if (enableDebug && Devtools._internal_.editorInspector() === false) {
-    enableDebug = false;
-  }
-
-  const cke = await window.CKEditor5.create(element, configuration, enableDebug);
+  const cke = await window.CKEditor5.create(element, configuration);
   const ckeditor = new Ckeditor(cke, features);
 
   if (features.autosave) {
@@ -197,6 +192,13 @@ export async function setupCkeditor(
 
   if (ckeditor.getHtml() === "") {
     dispatchToCkeditor(element).discardRecoveredData();
+  }
+
+  const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+  if (enableDebug && Devtools._internal_.editorInspector()) {
+    void import("@ckeditor/ckeditor5-inspector").then((inspector) => {
+      inspector.default.attach(cke);
+    });
   }
 
   return ckeditor;

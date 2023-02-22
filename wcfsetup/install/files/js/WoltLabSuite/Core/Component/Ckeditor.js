@@ -121,11 +121,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         (0, Mention_1.setup)(element);
         (0, Quote_1.setup)(element);
         const configuration = initializeConfiguration(element, features, bbcodes);
-        let enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
-        if (enableDebug && Devtools_1.default._internal_.editorInspector() === false) {
-            enableDebug = false;
-        }
-        const cke = await window.CKEditor5.create(element, configuration, enableDebug);
+        const cke = await window.CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
@@ -136,6 +132,12 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         });
         if (ckeditor.getHtml() === "") {
             (0, Event_1.dispatchToCkeditor)(element).discardRecoveredData();
+        }
+        const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
+        if (enableDebug && Devtools_1.default._internal_.editorInspector()) {
+            void new Promise((resolve_1, reject_1) => { require(["@ckeditor/ckeditor5-inspector"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((inspector) => {
+                inspector.default.attach(cke);
+            });
         }
         return ckeditor;
     }

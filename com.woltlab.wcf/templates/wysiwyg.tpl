@@ -5,7 +5,7 @@
 <script data-relocate="true">
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",
-		"/wcf/editor/dist/bundle.js",
+		"/wcf/editor/dist/ckeditor5.debug.js",
 	], (
 		{ setupCkeditor },
 	) => {
