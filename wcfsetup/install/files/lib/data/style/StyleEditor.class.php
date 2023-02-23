@@ -42,7 +42,7 @@ use wcf\util\XMLWriter;
  * @method  Style   getDecoratedObject()
  * @mixin   Style
  */
-class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
+final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
     const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 
@@ -971,6 +971,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         // files block
         $xml->startElement('files');
         $xml->writeElement('variables', 'variables.xml');
+        if ($this->hasDarkMode) {
+            $xml->writeElement('variables', 'variables_dark.xml');
+        }
         if ($templates) {
             $xml->writeElement('templates', 'templates.tar');
         }
@@ -982,27 +985,47 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         // append style info file to style tar
         $styleTar->addString(self::INFO_FILE, $xml->endDocument());
 
-        // create variable list
         $xml->beginDocument(
             'variables',
             'http://www.woltlab.com',
             'http://www.woltlab.com/XSD/5.4/styleVariables.xsd'
         );
 
-        // get variables
         $sql = "SELECT      variable.variableName, value.variableValue
-                FROM        wcf" . WCF_N . "_style_variable_value value
-                LEFT JOIN   wcf" . WCF_N . "_style_variable variable
+                FROM        wcf1_style_variable_value value
+                LEFT JOIN   wcf1_style_variable variable
                 ON          variable.variableID = value.variableID
-                WHERE       value.styleID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                WHERE       value.styleID = ?
+                        AND value.variableValue IS NOT NULL";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->styleID]);
         while ($row = $statement->fetchArray()) {
             $xml->writeElement('variable', $row['variableValue'], ['name' => $row['variableName']]);
         }
 
-        // append variable list to style tar
         $styleTar->addString('variables.xml', $xml->endDocument());
+
+        if ($this->hasDarkMode) {
+            $xml->beginDocument(
+                'variables',
+                'http://www.woltlab.com',
+                'http://www.woltlab.com/XSD/5.4/styleVariables.xsd'
+            );
+
+            $sql = "SELECT      variable.variableName, value.variableValueDarkMode
+                FROM        wcf1_style_variable_value value
+                LEFT JOIN   wcf1_style_variable variable
+                ON          variable.variableID = value.variableID
+                WHERE       value.styleID = ?
+                        AND value.variableValueDarkMode IS NOT NULL";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$this->styleID]);
+            while ($row = $statement->fetchArray()) {
+                $xml->writeElement('variable', $row['variableValueDarkMode'], ['name' => $row['variableName']]);
+            }
+
+            $styleTar->addString('variables_dark.xml', $xml->endDocument());
+        }
 
         if ($templates && $this->templateGroupID) {
             $templateGroup = new TemplateGroup($this->templateGroupID);
