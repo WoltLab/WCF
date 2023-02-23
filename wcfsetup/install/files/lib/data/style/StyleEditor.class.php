@@ -60,19 +60,13 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     public function update(array $parameters = [])
     {
-        $variables = null;
-        if (isset($parameters['variables'])) {
-            $variables = $parameters['variables'];
-            unset($parameters['variables']);
+        if (isset($parameters['variables']) || isset($parameters['variablesDarkMode'])) {
+            throw new \InvalidArgumentException(
+                "Cannot provide variables when updating a style, use `setVariables()` instead."
+            );
         }
 
-        // update style data
         parent::update($parameters);
-
-        // update variables
-        if ($variables !== null) {
-            $this->setVariables($variables);
-        }
     }
 
     /**
@@ -258,6 +252,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'images' => '',
             'coverPhoto' => '',
             'variables' => '',
+            'variablesDarkMode' => '',
             'date' => '0000-00-00',
             'imagesPath' => '',
             'packageName' => '',
@@ -351,14 +346,19 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             throw new SystemException("required tag 'variables' is missing in '" . self::INFO_FILE . "'");
         }
 
-        // search variables.xml
         $index = $tar->getIndexByFilename($data['variables']);
         if ($index === false) {
             throw new SystemException("unable to find required file '" . $data['variables'] . "' in style archive");
         }
-
-        // open variables.xml
         $data['variables'] = self::readVariablesData($data['variables'], $tar->extractToString($index));
+
+        if ($data['variablesDarkMode']) {
+            $index = $tar->getIndexByFilename($data['variablesDarkMode']);
+            if ($index === false) {
+                throw new SystemException("unable to find required file '" . $data['variablesDarkMode'] . "' in style archive");
+            }
+            $data['variablesDarkMode'] = self::readVariablesData($data['variablesDarkMode'], $tar->extractToString($index));
+        }
 
         return $data;
     }
@@ -436,6 +436,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $styleData = [
             'styleName' => $data['name'],
             'variables' => $data['variables'],
+            'variablesDarkMode' => $data['variablesDarkMode'],
             'styleVersion' => $data['version'],
             'styleDate' => $data['date'],
             'copyright' => $data['copyright'],
@@ -972,7 +973,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $xml->startElement('files');
         $xml->writeElement('variables', 'variables.xml');
         if ($this->hasDarkMode) {
-            $xml->writeElement('variables', 'variables_dark.xml');
+            $xml->writeElement('variablesDarkMode', 'variables_dark.xml');
         }
         if ($templates) {
             $xml->writeElement('templates', 'templates.tar');
@@ -1197,49 +1198,37 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      * Sets the variables of a style.
      *
      * @param string[] $variables
+     * @param string[] $variablesDarkMode
      */
-    public function setVariables(array $variables = [])
+    public function setVariables(array $variables, array $variablesDarkMode): void
     {
-        // delete old variables
-        $sql = "DELETE FROM wcf" . WCF_N . "_style_variable_value
-                WHERE       styleID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$this->styleID]);
+        $sql = "SELECT  variableID, variableName
+                FROM    wcf1_style_variable";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        $styleVariables = $statement->fetchMap('variableID', 'variableName');
 
-        // insert new variables
-        if (!empty($variables)) {
-            $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_style_variable";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute();
-            $styleVariables = [];
-            while ($row = $statement->fetchArray()) {
-                $variableName = $row['variableName'];
+        $variables = \array_filter($variables, static function (string $key) use ($styleVariables) {
+            return \in_array($key, $styleVariables, true);
+        }, \ARRAY_FILTER_USE_KEY);
 
-                if (isset($variables[$variableName])) {
-                    // compare value, save only if differs from default
-                    if ($variables[$variableName] != $row['defaultValue']) {
-                        $styleVariables[$row['variableID']] = $variables[$variableName];
-                    }
-                }
-            }
+        $variablesDarkMode = \array_filter($variablesDarkMode, static function (string $key) use ($styleVariables) {
+            return \in_array($key, $styleVariables, true);
+        }, \ARRAY_FILTER_USE_KEY);
 
-            if (!empty($styleVariables)) {
-                $sql = "INSERT INTO wcf" . WCF_N . "_style_variable_value
-                                    (styleID, variableID, variableValue)
-                        VALUES      (?, ?, ?)";
-                $statement = WCF::getDB()->prepareStatement($sql);
-
-                WCF::getDB()->beginTransaction();
-                foreach ($styleVariables as $variableID => $variableValue) {
-                    $statement->execute([
-                        $this->styleID,
-                        $variableID,
-                        $variableValue,
-                    ]);
-                }
-                WCF::getDB()->commitTransaction();
-            }
+        $sql = "INSERT INTO             wcf1_style_variable_value
+                                        (styleID, variableID, variableValue, variableValueDarkMode)
+                VALUES                  (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE variableValue = VALUES(variableValue),
+                                        variableValueDarkMode = VALUES(variableValueDarkMode)";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($styleVariables as $variableID => $variableName) {
+            $statement->execute([
+                $this->styleID,
+                $variableID,
+                $variables[$variableName] ?? null,
+                $variablesDarkMode[$variableName] ?? null
+            ]);
         }
 
         $this->writeStyleFile();
@@ -1259,10 +1248,15 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     public static function create(array $parameters = [])
     {
-        $variables = null;
+        $variables = [];
         if (isset($parameters['variables'])) {
             $variables = $parameters['variables'];
             unset($parameters['variables']);
+        }
+        $variablesDarkMode = [];
+        if (isset($parameters['variablesDarkMode'])) {
+            $variablesDarkMode = $parameters['variablesDarkMode'];
+            unset($parameters['variablesDarkMode']);
         }
 
         // default values
@@ -1286,6 +1280,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $parameters['isDefault'] = 1;
         }
 
+        if ($variablesDarkMode !== []) {
+            $parameters['hasDarkMode'] = 1;
+        }
+
         /** @var Style $style */
         $style = parent::create($parameters);
         $styleEditor = new self($style);
@@ -1298,10 +1296,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         ]);
         $styleEditor = new self(new Style($style->styleID));
 
-        // save variables
-        if ($variables !== null) {
-            $styleEditor->setVariables($variables);
-        }
+        $styleEditor->setVariables($variables, $variablesDarkMode);
 
         return $style;
     }
