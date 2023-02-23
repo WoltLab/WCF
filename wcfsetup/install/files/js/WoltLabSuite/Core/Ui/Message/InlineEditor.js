@@ -423,7 +423,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Ckeditor",
          */
         _showMessage(data) {
             const activeElement = this._activeElement;
-            const editorId = this._getEditorId();
             const elementData = this._elements.get(activeElement);
             // set new content
             Util_1.default.setInnerHtml(elementData.messageBody.querySelector(".messageText"), data.returnValues.message);

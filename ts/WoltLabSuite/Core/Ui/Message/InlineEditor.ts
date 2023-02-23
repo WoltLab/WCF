@@ -540,7 +540,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    */
   protected _showMessage(data: AjaxResponseMessage): void {
     const activeElement = this._activeElement!;
-    const editorId = this._getEditorId();
     const elementData = this._elements.get(activeElement)!;
 
     // set new content
@@ -555,7 +554,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       const element = document.createElement("div");
       DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 
-      let node;
+      let node: Node;
       while (element.childNodes.length) {
         node = element.childNodes[element.childNodes.length - 1];
         elementData.messageFooter.insertBefore(node, elementData.messageFooter.firstChild);
