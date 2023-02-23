@@ -1255,7 +1255,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
         $variablesDarkMode = [];
         if (isset($parameters['variablesDarkMode'])) {
-            $variablesDarkMode = $parameters['variablesDarkMode'];
+            if (\is_array($parameters['variablesDarkMode'])) {
+                $variablesDarkMode = $parameters['variablesDarkMode'];
+            }
+
             unset($parameters['variablesDarkMode']);
         }
 
