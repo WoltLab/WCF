@@ -1,0 +1,185 @@
+/**
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+/**
+ * Adds support for custom Font Awesome icons (using the `<fa-icon>` tag) for
+ * button groups.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Converts unhandled bbcodes using the `<woltlab-metacode>` element into their
+ * textual representation.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Creates and manages the editing UI for the modified code block.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Creates and manages the editing UI for the modified quote block.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Creates and manages the spoiler widget inside the editor.
+ *
+ * The widget offers a plain text title that is used as the button title and an
+ * editable block that accepts all sorts of other content.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Extends the built-in code block to provide two extra attributes for the file
+ * name and line number.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Helper class for the editing UI of code blocks.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Helper class for the editing UI of quote blocks.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Implements the spoiler widget inside the editor.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Inserts a bbcode at the caret position.
+ *
+ * Fires an event on the source element to allow the insertion to be
+ * intercepted.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Inserts extra buttons for BBCodes into the toolbar. Buttons have support for
+ * Font Awesome icons through the `<fa-icon>` element.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Inserts or removes the spoiler at the selected position or range.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Intercepts files being dropped into the editor and forwards the upload
+ * request to configurable backends.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Modifies the existing blockquote feature to add two extra attributes for the
+ * source and url.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Permits the `.smiley` class for inserted smileys.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Provides an upload adapter for images.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Uploads files dropped onto the editor as an attachment.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Uploads files dropped onto the editor to the media system.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */

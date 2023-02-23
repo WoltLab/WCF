@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog", "../../Ckeditor", "../../Ckeditor/Event"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1, Ckeditor_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentResponseAdd = void 0;
@@ -21,7 +21,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         #textarea;
         #callback;
         #messageCache = new Map();
-        #editor = null;
+        #editor;
         #commentId;
         constructor(container, callback) {
             this.container = container;
@@ -35,6 +35,12 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             submitButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 void this.#submit();
+            });
+            (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
+                features.heading = false;
+                features.quoteBlock = false;
+                features.spoiler = false;
+                features.table = false;
             });
         }
         show(commentId) {
@@ -51,18 +57,18 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         #validate() {
             // remove all existing error elements
             this.container.querySelectorAll(".innerError").forEach((el) => el.remove());
-            // check if editor contains actual content
-            if (this.#getEditor().utils.isEmpty()) {
+            const message = this.#getEditor().getHtml();
+            if (message === "") {
                 this.#throwError(this.#textarea, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
                 api: this,
                 editor: this.#getEditor(),
-                message: this.#getEditor().code.get(),
+                message,
                 valid: true,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
             return data.valid;
         }
         /**
@@ -74,7 +80,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             }
             this.#showLoadingOverlay();
             const parameters = this.#getParameters();
-            EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor", "submit_text", parameters.data);
             let response;
             try {
                 response = (await (0, Ajax_1.dboAction)("addResponse", "wcf\\data\\comment\\CommentAction")
@@ -115,8 +121,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
          * Resets the editor contents and notifies event listeners.
          */
         #reset() {
-            this.#getEditor().code.set("<p>\u200b</p>");
-            EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+            this.#getEditor().reset();
             if (document.activeElement instanceof HTMLElement) {
                 document.activeElement.blur();
             }
@@ -133,13 +138,8 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
          * Returns the current editor instance.
          */
         #getEditor() {
-            if (this.#editor === null) {
-                if (typeof window.jQuery === "function") {
-                    this.#editor = window.jQuery(this.#textarea).data("redactor");
-                }
-                else {
-                    throw new Error("Unable to access editor, jQuery has not been loaded yet.");
-                }
+            if (this.#editor === undefined) {
+                this.#editor = (0, Ckeditor_1.getCkeditor)(this.#textarea);
             }
             return this.#editor;
         }
@@ -147,14 +147,13 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
          * Retrieves the current content from the editor.
          */
         #getContent() {
-            return window.jQuery(this.#textarea).redactor("code.get");
+            return this.#getEditor().getHtml();
         }
         /**
          * Sets the content and places the caret at the end of the editor.
          */
         #setContent(html) {
-            window.jQuery(this.#textarea).redactor("code.set", html);
-            window.jQuery(this.#textarea).redactor("WoltLabCaret.endOfEditor");
+            this.#getEditor().setHtml(html);
             // the error message can appear anywhere in the container, not exclusively after the textarea
             const innerError = this.#textarea.parentElement.querySelector(".innerError");
             if (innerError !== null) {
@@ -168,11 +167,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         #focusEditor() {
             window.setTimeout(() => {
                 UiScroll.element(this.container, () => {
-                    const element = window.jQuery(this.#textarea);
-                    const editor = element.redactor("core.editor")[0];
-                    if (editor !== document.activeElement) {
-                        element.redactor("WoltLabCaret.endOfEditor");
-                    }
+                    this.#getEditor().focus();
                 });
             }, 0);
         }
@@ -182,7 +177,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         #getParameters() {
             return {
                 data: {
-                    message: this.#getEditor().code.get(),
+                    message: this.#getContent(),
                 },
             };
         }

@@ -40,6 +40,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.dialog.button.primary');
         $event->preload('wcf.dialog.button.primary.confirm');
         $event->preload('wcf.dialog.button.primary.delete');
+        $event->preload('wcf.dialog.button.primary.restore');
         $event->preload('wcf.dialog.button.primary.submit');
         $event->preload('wcf.dialog.confirmation.cannotBeUndone');
         $event->preload('wcf.dialog.confirmation.delete');

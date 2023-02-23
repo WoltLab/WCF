@@ -6,14 +6,13 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation", "../../../Environment", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Language"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, Environment, EventHandler, UiScroll, Language_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Language", "../../Ckeditor"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, EventHandler, UiScroll, Language_1, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreCommentResponseElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     UiNotification = tslib_1.__importStar(UiNotification);
-    Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiScroll = tslib_1.__importStar(UiScroll);
     class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
@@ -73,19 +72,13 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             buttonCancel.addEventListener("click", () => {
                 this.#cancelEdit();
             });
-            EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${this.#editorId}`, (data) => {
+            EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${this.#editorId}`, (data) => {
                 data.cancel = true;
                 void this.#saveEdit();
             });
-            const editorElement = document.getElementById(this.#editorId);
-            if (Environment.editor() === "redactor") {
-                window.setTimeout(() => {
-                    UiScroll.element(this);
-                }, 250);
-            }
-            else {
-                editorElement.focus();
-            }
+            window.setTimeout(() => {
+                UiScroll.element(this);
+            }, 250);
         }
         async #saveEdit() {
             const parameters = {
@@ -93,11 +86,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
                     message: "",
                 },
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${this.#editorId}`, parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
             if (!this.#validateEdit(parameters)) {
                 return;
             }
-            EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${this.#editorId}`, parameters);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
             this.#showLoadingIndicator();
             let response;
             try {
@@ -143,10 +136,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         #validateEdit(parameters) {
             this.querySelectorAll(".innerError").forEach((el) => el.remove());
             // check if editor contains actual content
-            const editorElement = document.getElementById(this.#editorId);
-            const redactor = window.jQuery(editorElement).data("redactor");
-            if (redactor.utils.isEmpty()) {
-                Util_1.default.innerError(editorElement, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+            const editor = (0, Ckeditor_1.getCkeditorById)(this.#editorId);
+            if (editor.getHtml() === "") {
+                Util_1.default.innerError(editor.element, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
@@ -154,18 +146,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
                 parameters: parameters,
                 valid: true,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this.#editorId}`, data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this.#editorId}`, data);
             return data.valid;
         }
         #cancelEdit() {
-            this.#destroyEditor();
+            void (0, Ckeditor_1.getCkeditorById)(this.#editorId).destroy();
             this.#editorContainer.remove();
             this.menu.querySelector(".commentResponse__option--edit").hidden = false;
             this.querySelector(".htmlContent").hidden = false;
-        }
-        #destroyEditor() {
-            EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this.#editorId}`);
-            EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this.#editorId}`);
         }
         get #editorContainer() {
             let div = this.querySelector(".commentResponse__editor");

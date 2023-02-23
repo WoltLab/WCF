@@ -54,16 +54,20 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	_editorId: '',
 	
 	/**
-	 * replace img element on load
-	 * @var Object
-	 */
-	_replaceOnLoad: {},
-	
-	/**
 	 * additional options
 	 * @var Object
 	 */
 	_options: {},
+
+	/**
+	 * @var Map<number, (attachmentId: number, url: string) => void>
+	 */
+	_pendingDragAndDrop: undefined,
+
+	/**
+	 * @var HTMLElement
+	 */
+	_sourceElement: undefined,
 	
 	/**
 	 * @see        WCF.Upload.init()
@@ -81,6 +85,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._parentObjectID = parseInt(parentObjectID);
 		this._editorId = editorId;
 		this._options = $.extend(true, this._options, options || {});
+		this._pendingDragAndDrop = new Map();
+		this._sourceElement = document.getElementById(editorId);
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -96,99 +102,66 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		// if an editor is used
 		this._insertAllButton = $('<button type="button" class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</button>').hide();
 		
-		if (this._editorId) {
+		if (this._sourceElement !== null) {
 			this._insertAllButton.appendTo(this._buttonSelector);
 			this._insertAllButton.click($.proxy(this._insertAll, this));
 			
 			if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
 				this._insertAllButton.show();
 			}
-			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
-			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId, (function (data) {
-				if (!data.tmpHashes || !Array.isArray(data.tmpHashes)) {
-					data.tmpHashes = [];
-				}
-				
-				// Remove any existing entries for this tmpHash.
-				data.tmpHashes = data.tmpHashes.filter((item) => item !== tmpHash);
-				
-				var count = this._fileListSelector.children('li:not(.uploadFailed)').length;
-				if (count > 0) {
-					// Add a new entry for this tmpHash if files have been uploaded.
-					data.tmpHashes.push(tmpHash);
-				}
-			}).bind(this));
 
+			require([
+				"WoltLabSuite/Core/Component/Ckeditor",
+				"WoltLabSuite/Core/Component/Ckeditor/Event"
+			], (
+				{ getCkeditor },
+				{ listenToCkeditor },
+			) => {
+				const discardAllAttachments = () => {
+					this._fileListSelector[0]
+							.querySelectorAll('li:not(.uploadFailed) .jsObjectAction[data-object-action="delete"]')
+							.forEach((button) => {
+								// This is both awful and required to bypass the confirmation
+								// dialog when programmatically triggering the delete button.
+								delete button.dataset.confirmMessage;
+
+								button.click();
+							});
+				}
+
+				listenToCkeditor(this._sourceElement)
+					.reset(() => {
+						this._reset();
+					})
+					.uploadAttachment((payload) => {
+						this._editorUpload(payload);
+					})
+					.discardRecoveredData(() => {
+						discardAllAttachments();
+					});
+				
+				const ckeditor = getCkeditor(this._sourceElement);
+				if (ckeditor.getHtml() === "") {
+					// This check is performed during the CKEditor initialization,
+					// but the triggered event occurs too early for jQuery code.
+					discardAllAttachments();
+				}
+			});
+			
 			const form = this._fileListSelector[0].closest("form");
 			if (form) {
-				// Read any cached `tmpHash` values from the autosave feature.
-				const metaData = {};
-				form.dataset.attachmentTmpHashes = "";
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
-				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
-					// Caching the values here preserves them from the removal
-					// caused by the automated cleanup that runs on form submit
-					// and is bound before our event listener.
-					form.dataset.attachmentTmpHashes = metaData.tmpHashes.join(',');
-				}
-
-				form.addEventListener("submit", (event) => {
-					let tmpHash = this._tmpHash
-					if (form.dataset.attachmentTmpHashes) {
-						tmpHash += `,${form.dataset.attachmentTmpHashes}`;
-					}
-					
-
+				form.addEventListener("submit", () => {
 					const input = form.querySelector('input[name="tmpHash"]');
 					if (input) {
-						input.value = tmpHash;
+						input.value = this._tmpHash;
 					}
 				});
 			}
 			
-			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, (function (data) {
-				var images = this._getImageAttachments();
-				var attachmentId = data.attributes[0] || 0;
-				if (images.hasOwnProperty(attachmentId)) {
-					var thumbnailWidth = ~~$('#' + this._editorId).data('redactor').opts.woltlab.attachmentThumbnailWidth;
-					
-					var thumbnail = data.attributes[2];
-					thumbnail = (thumbnail === true || thumbnail === 'true' || (~~thumbnail && ~~thumbnail <= thumbnailWidth));
-					
-					var image = elCreate('img');
-					image.className = 'woltlabAttachment';
-					image.src = images[attachmentId][(thumbnail ? 'thumbnailUrl' : 'url')];
-					elData(image, 'attachment-id', attachmentId);
-					
-					var float = data.attributes[1] || 'none';
-					if (float === 'left') image.classList.add('messageFloatObjectLeft');
-					else if (float === 'right') image.classList.add('messageFloatObjectRight');
-					
-					var metacode = data.metacode;
-					metacode.parentNode.insertBefore(image, metacode);
-					elRemove(metacode);
-					
-					data.cancel = true;
-				}
-			}).bind(this));
+			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, this._sync.bind(this));
 			
-			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, this._sync.bind(this));
-			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'destroy_' + this._editorId, (function () {
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'submit_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId);
-				
-				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
-				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, syncUuid);
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'destroy_' + this._editorId, (function () {
+				WCF.System.Event.removeListener('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, syncUuid);
 			}).bind(this));
 		}
 	},
@@ -199,67 +172,28 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param        object                data
 	 */
 	_editorUpload: function (data) {
-		var replace = null;
-		
-		// show tab
-		this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
-		
-		var callbackUploadId = (function(uploadId) {
-			if (replace === null) {
-				this._autoInsert.push(uploadId);
-			}
-			else {
-				this._replaceOnLoad[uploadId] = replace;
-			}
+		data.promise = new Promise((resolve) => {
+			// show tab
+			this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
 
-			data.uploadID = uploadId;
-		}).bind(this);
-		
-		if (data.file) {
-			this._upload(undefined, data.file, undefined, callbackUploadId);
-		}
-		else {
-			this._upload(undefined, undefined, data.blob, callbackUploadId);
-			replace = data.replace || null;
-		}
-	},
-	
-	/**
-	 * Sets the attachments representing an image.
-	 *
-	 * @return      {Object}
-	 */
-	_getImageAttachments: function () {
-		var images = {};
-		
-		this._fileListSelector.children('li').each(function (index, attachment) {
-			var $attachment = $(attachment);
-			if ($attachment.data('isImage')) {
-				images[~~$attachment.data('objectID')] = {
-					thumbnailUrl: $attachment.find('.jsButtonAttachmentInsertThumbnail').data('url'),
-					url: $attachment.find('.jsButtonAttachmentInsertFull').data('url')
-				};
-			}
+			this._upload(
+				undefined,
+				data.file,
+				undefined,
+				(uploadId) => {
+					this._pendingDragAndDrop.set(uploadId, (attachmentId, url) => {
+						if (attachmentId === 0) {
+							data.abortController.abort();
+						} else {
+							resolve({
+								attachmentId,
+								url
+							});
+						}
+					});
+				}
+			);
 		});
-		
-		return images;
-	},
-	
-	/**
-	 * Adds parameters for the inline editor.
-	 *
-	 * @param        object                data
-	 */
-	_submitInline: function (data) {
-		if (this._tmpHash) {
-			data.tmpHash = this._tmpHash;
-			
-			var metaData = {};
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
-			if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
-				data.tmpHash += ',' + metaData.tmpHashes.join(',');
-			}
-		}
 	},
 	
 	/**
@@ -315,10 +249,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			this._fileListSelector.hide();
 		}
 		
-		if (this._editorId && data.button) {
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this._editorId, {
-				attachmentId: data.button.data('objectID')
-			});
+		if (this._sourceElement && data.button) {
+			this._removeAttachmentFromEditor(data.button.data('objectID'));
 		}
 	},
 	
@@ -511,18 +443,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	},
 	
 	/**
-	 * Returns true if thumbnails are enabled and should be
-	 * used instead of the original images.
-	 *
-	 * @return      {boolean}
-	 * @protected
-	 * @deprecated 5.3
-	 */
-	_useThumbnail: function() {
-		return true;
-	},
-	
-	/**
 	 * @see        WCF.Upload._success()
 	 */
 	_success: function (uploadID, data) {
@@ -541,6 +461,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			// get filename and check result
 			var $filename = $li.data('filename');
 			var $internalFileID = $li.data('internalFileID');
+			let attachmentId = 0;
+			let url = "";
 			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
 				attachmentData = data.returnValues.attachments[$internalFileID];
 				
@@ -564,6 +486,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				// update attachment link
 				var $link = $('<a href=""></a>');
 				$link.text($filename).attr('href', attachmentData.url);
+				url = attachmentData.url;
 				$link[0].target = '_blank';
 				
 				if (attachmentData.isImage != 0) {
@@ -580,6 +503,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);
+				attachmentId = attachmentData.attachmentID;
 				
 				if (this._editorId) {
 					if (attachmentData.tinyURL) {
@@ -599,21 +523,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				});
 				
 				this._registerEditorButtons($li[0]);
-				
-				if (this._replaceOnLoad.hasOwnProperty(uploadID)) {
-					if (!$li.hasClass('uploadFailed')) {
-						var img = this._replaceOnLoad[uploadID];
-						if (img && img.parentNode) {
-							WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'replaceAttachment_' + this._editorId, {
-								attachmentId: attachmentData.attachmentID,
-								img: img,
-								src: (attachmentData.thumbnailURL) ? attachmentData.thumbnailURL : attachmentData.url
-							});
-						}
-					}
-					
-					this._replaceOnLoad[uploadID] = null;
-				}
 			}
 			else {
 				// upload icon
@@ -636,6 +545,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.' + $errorMessage) + '</small>'));
 				$li.addClass('uploadFailed');
+			}
+
+			const callbackDragAndDrop = this._pendingDragAndDrop.get(uploadID);
+			if (callbackDragAndDrop !== undefined) {
+				callbackDragAndDrop(attachmentId, url);
+
+				this._pendingDragAndDrop.delete(uploadID);
 			}
 			
 			if (WCF.inArray(uploadID, this._autoInsert)) {
@@ -680,9 +596,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param        {Event}                event
 	 */
 	_insert: function (event) {
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId, {
-			attachmentId: elData(event.currentTarget, 'object-id'),
-			url: elData(event.currentTarget, 'url')
+		const attachmentId = parseInt(event.currentTarget.dataset.objectId);
+		const url = event.currentTarget.dataset.url || "";
+
+		require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+			dispatchToCkeditor(this._sourceElement).insertAttachment({
+				attachmentId,
+				url,
+			});
 		});
 	},
 	
@@ -792,6 +713,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		this._removeLimitError({});
+
+		this._removeAttachmentFromEditor(objectId);
 	},
 	
 	/**
@@ -839,10 +762,18 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param {Object} data
 	 */
 	_triggerSync: function (type, data) {
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, {
+		WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'sync_' + this._tmpHash, {
 			source: this,
 			type: type,
 			data: data
+		});
+	},
+
+	_removeAttachmentFromEditor(attachmentId) {
+		require(["WoltLabSuite/Core/Component/Ckeditor/Event"], ({ dispatchToCkeditor }) => {
+			dispatchToCkeditor(this._sourceElement).removeAttachment({
+				attachmentId: parseInt(attachmentId),
+			});
 		});
 	}
 });

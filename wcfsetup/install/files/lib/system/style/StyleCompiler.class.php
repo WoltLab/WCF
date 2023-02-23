@@ -651,7 +651,6 @@ final class StyleCompiler extends SingletonFactory
 
         // force code boxes to be always LTR
         $css .= "\n/* RTL fix for code boxes */\n";
-        $css .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
         $css .= ".codeBoxCode { direction: ltr; } \n";
         $css .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
         $css .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";

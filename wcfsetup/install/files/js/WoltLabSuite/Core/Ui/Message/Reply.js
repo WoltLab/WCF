@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll", "../../Component/Ckeditor"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll, Ckeditor_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
     class UiMessageReply {
         _container;
         _content;
-        _editor = null;
+        _ckeditor;
         _guestDialogId = "";
         _loadingOverlay = null;
         _options;
@@ -50,9 +50,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             document.querySelectorAll(".jsQuickReply").forEach((replyButton) => {
                 replyButton.addEventListener("click", (event) => {
                     event.preventDefault();
-                    this._getEditor().WoltLabReply.showEditor(true);
                     UiScroll.element(this._container, () => {
-                        this._getEditor().WoltLabCaret.endOfEditor();
+                        this._getCKEditor().focus();
                     });
                 });
             });
@@ -122,7 +121,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             Object.entries(this._container.dataset).forEach(([key, value]) => {
                 parameters[key.replace(/Id$/, "ID")] = value;
             });
-            parameters.data = { message: this._getEditor().code.get() };
+            parameters.data = {
+                message: this._getCKEditor().getHtml(),
+            };
             parameters.removeQuoteIDs = this._options.quoteManager
                 ? this._options.quoteManager.getQuotesMarkedForRemoval()
                 : [];
@@ -144,7 +145,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data);
             if (!User_1.default.userId && !additionalParameters) {
                 parameters.requireGuestDialog = true;
             }
@@ -159,17 +160,18 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             // remove all existing error elements
             this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
             // check if editor contains actual content
-            if (this._getEditor().utils.isEmpty()) {
+            const message = this._getCKEditor().getHtml();
+            if (message === "") {
                 this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
                 api: this,
-                editor: this._getEditor(),
-                message: this._getEditor().code.get(),
+                editor: this._getCKEditor(),
+                message,
                 valid: true,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
             return data.valid;
         }
         /**
@@ -207,16 +209,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * Resets the editor contents and notifies event listeners.
          */
         _reset() {
-            this._getEditor().code.set("<p>\u200b</p>");
-            EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
-            // Opera on Android does not properly blur the editor after submitting the message,
-            // causing the keyboard to vanish, but the focus remains inside the editor.
-            window.setTimeout(() => {
-                const editor = document.activeElement?.closest(".redactor-layer");
-                if (editor && editor instanceof HTMLElement) {
-                    editor.blur();
-                }
-            }, 50);
+            this._getCKEditor().reset();
         }
         /**
          * Handles errors occurred during server processing.
@@ -227,7 +220,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                 cancel: false,
                 returnValues: data.returnValues,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", "handleError_text", parameters);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "handleError_text", parameters);
             if (!parameters.cancel) {
                 this.throwError(this._textarea, data.returnValues.realErrorMessage);
             }
@@ -235,23 +228,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
         /**
          * Returns the current editor instance.
          */
-        _getEditor() {
-            if (this._editor === null) {
-                if (typeof window.jQuery === "function") {
-                    this._editor = window.jQuery(this._textarea).data("redactor");
-                }
-                else {
-                    throw new Error("Unable to access editor, jQuery has not been loaded yet.");
+        _getCKEditor() {
+            if (this._ckeditor === undefined) {
+                this._ckeditor = (0, Ckeditor_1.getCkeditor)(this._textarea);
+                if (this._ckeditor === undefined) {
+                    throw new Error(`Unable to find the CKEditor instance for '${this._textarea.id}'.`);
                 }
             }
-            return this._editor;
+            return this._ckeditor;
         }
         /**
          * Inserts the rendered message into the post list, unless the post is on the next
          * page in which case a redirect will be performed instead.
          */
         _insertMessage(data) {
-            this._getEditor().WoltLabAutosave.reset();
+            this._getCKEditor().discardDraft();
             // redirect to new page
             if (data.returnValues.url) {
                 if (window.location.href == data.returnValues.url) {

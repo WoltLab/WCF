@@ -8,6 +8,7 @@
 
 let _settings = {
   editorAutosave: true,
+  editorInspector: false,
   eventLogging: false,
 };
 
@@ -49,6 +50,19 @@ const Devtools = {
   },
 
   /**
+   * Enables or disables the inspector for the editor.
+   */
+  toggleEditorInspector(forceEnable: boolean): void {
+    _settings.editorInspector = forceEnable ? true : !_settings.editorInspector;
+    _updateConfig();
+
+    window.console.log(
+      "%c\tEditor inspector " + (_settings.editorInspector ? "enabled" : "disabled"),
+      "font-style: italic",
+    );
+  },
+
+  /**
    * Enables/disables logging for fired event listener events.
    */
   toggleEventLogging(forceEnable: boolean): void {
@@ -80,6 +94,9 @@ const Devtools = {
         if (!_settings.editorAutosave) {
           Devtools.toggleEditorAutosave(true);
         }
+        if (_settings.editorInspector) {
+          Devtools.toggleEditorInspector(true);
+        }
         if (_settings.eventLogging) {
           Devtools.toggleEventLogging(true);
         }
@@ -91,6 +108,10 @@ const Devtools = {
 
     editorAutosave(): boolean {
       return _settings.editorAutosave;
+    },
+
+    editorInspector(): boolean {
+      return _settings.editorInspector;
     },
 
     eventLog(identifier: string, action: string): void {

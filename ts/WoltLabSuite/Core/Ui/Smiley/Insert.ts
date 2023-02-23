@@ -7,7 +7,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as EventHandler from "../../Event/Handler";
+import { getCkeditorById } from "../../Component/Ckeditor";
 
 class UiSmileyInsert {
   private readonly container: HTMLElement;
@@ -83,9 +83,23 @@ class UiSmileyInsert {
   }
 
   insert(img: HTMLImageElement): void {
-    EventHandler.fire("com.woltlab.wcf.redactor2", "insertSmiley_" + this.editorId, {
-      img,
-    });
+    const ckeditor = getCkeditorById(this.editorId);
+    if (ckeditor === undefined) {
+      throw new Error(`Unable to find the CKEditor instance for '${this.editorId}'.`);
+    }
+
+    const insertImage = document.createElement("img");
+    insertImage.classList.add("smiley");
+    insertImage.src = img.src;
+    insertImage.alt = img.alt;
+    insertImage.height = img.height;
+    insertImage.width = img.width;
+
+    if (img.srcset) {
+      insertImage.srcset = img.srcset;
+    }
+
+    ckeditor.insertHtml(insertImage.outerHTML);
   }
 }
 

@@ -5,13 +5,12 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Environment", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Environment, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Component/Ckeditor", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Ckeditor_1, Core, Listener_1, Util_1, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
@@ -306,25 +305,19 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             buttonSave.addEventListener("click", () => this._save());
             const buttonCancel = formSubmit.querySelector('button[data-type="cancel"]');
             buttonCancel.addEventListener("click", () => this._restoreMessage());
-            EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${id}`, (data) => {
+            EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${id}`, (data) => {
                 data.cancel = true;
                 this._save();
             });
             // hide message header and footer
             Util_1.default.hide(elementData.messageHeader);
             Util_1.default.hide(elementData.messageFooter);
-            if (Environment.editor() === "redactor") {
-                window.setTimeout(() => {
-                    if (this._options.quoteManager) {
-                        this._options.quoteManager.setAlternativeEditor(id);
-                    }
-                    UiScroll.element(activeElement);
-                }, 250);
-            }
-            else {
-                const editorElement = document.getElementById(id);
-                editorElement.focus();
-            }
+            window.setTimeout(() => {
+                if (this._options.quoteManager) {
+                    this._options.quoteManager.setAlternativeEditor(id);
+                }
+                UiScroll.element(activeElement);
+            }, 250);
         }
         /**
          * Restores the message view.
@@ -375,7 +368,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${id}`, parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
             let validateResult = this._validate(parameters);
             // Legacy validation methods returned a plain boolean.
             if (!(validateResult instanceof Promise)) {
@@ -387,7 +380,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 }
             }
             validateResult.then(() => {
-                EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${id}`, parameters);
+                EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${id}`, parameters);
                 Ajax.api(this, {
                     actionName: "save",
                     parameters: parameters,
@@ -410,7 +403,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 valid: true,
                 promises: [],
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this._getEditorId()}`, data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this._getEditorId()}`, data);
             if (data.valid) {
                 data.promises.push(Promise.resolve());
             }
@@ -430,7 +423,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          */
         _showMessage(data) {
             const activeElement = this._activeElement;
-            const editorId = this._getEditorId();
             const elementData = this._elements.get(activeElement);
             // set new content
             Util_1.default.setInnerHtml(elementData.messageBody.querySelector(".messageText"), data.returnValues.message);
@@ -462,7 +454,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             }
             this._restoreMessage();
             this._updateHistory(this._getHash(this._getObjectId(activeElement)));
-            EventHandler.fire("com.woltlab.wcf.redactor", `autosaveDestroy_${editorId}`);
+            (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).discardDraft();
             UiNotification.show();
             if (this._options.quoteManager) {
                 this._options.quoteManager.clearAlternativeEditor();
@@ -497,8 +489,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Destroys the editor instance.
          */
         _destroyEditor() {
-            EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this._getEditorId()}`);
-            EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this._getEditorId()}`);
+            void (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).destroy();
         }
         /**
          * Returns the hash added to the url after successfully editing a message.
@@ -527,9 +518,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         _ajaxFailure(data) {
             const elementData = this._elements.get(this._activeElement);
-            const editor = elementData.messageBodyEditor.querySelector(".redactor-layer");
+            const cke = elementData.messageBodyEditor.querySelector(".ck.ck-editor");
             // handle errors occurring on editor load
-            if (editor === null) {
+            if (cke === null) {
                 this._restoreMessage();
                 return true;
             }
@@ -537,7 +528,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             if (!data || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
                 return true;
             }
-            Util_1.default.innerError(editor, data.returnValues.realErrorMessage);
+            Util_1.default.innerError(cke, data.returnValues.realErrorMessage);
             return false;
         }
         _ajaxSuccess(data) {

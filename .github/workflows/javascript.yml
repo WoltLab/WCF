@@ -61,3 +61,6 @@ jobs:
     - name: "Check 'html-parsed-element'"
       run: |
         diff -wu ts/WoltLabSuite/WebComponent/html-parsed-element.js node_modules/html-parsed-element/esm/index.js
+    - name: "Check '@ckeditor/ckeditor5-inspector'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/ckeditor/ckeditor5-inspector/inspector.js node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js

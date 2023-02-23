@@ -18,8 +18,9 @@ import UiDialog from "../Dialog";
 import * as UiNotification from "../Notification";
 import User from "../../User";
 import ControllerCaptcha from "../../Controller/Captcha";
-import { RedactorEditor } from "../Redactor/Editor";
 import * as UiScroll from "../Scroll";
+
+import { CKEditor, getCkeditor } from "../../Component/Ckeditor";
 
 interface MessageReplyOptions {
   ajax: {
@@ -42,7 +43,7 @@ interface AjaxResponse {
 class UiMessageReply {
   protected readonly _container: HTMLElement;
   protected readonly _content: HTMLElement;
-  protected _editor: RedactorEditor | null = null;
+  protected _ckeditor?: CKEditor;
   protected _guestDialogId = "";
   protected _loadingOverlay: HTMLElement | null = null;
   protected readonly _options: MessageReplyOptions;
@@ -79,10 +80,8 @@ class UiMessageReply {
       replyButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        this._getEditor().WoltLabReply.showEditor(true);
-
         UiScroll.element(this._container, () => {
-          this._getEditor().WoltLabCaret.endOfEditor();
+          this._getCKEditor().focus();
         });
       });
     });
@@ -161,7 +160,9 @@ class UiMessageReply {
       parameters[key.replace(/Id$/, "ID")] = value;
     });
 
-    parameters.data = { message: this._getEditor().code.get() };
+    parameters.data = {
+      message: this._getCKEditor().getHtml(),
+    };
     parameters.removeQuoteIDs = this._options.quoteManager
       ? this._options.quoteManager.getQuotesMarkedForRemoval()
       : [];
@@ -187,7 +188,7 @@ class UiMessageReply {
         });
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data as any);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data as any);
 
     if (!User.userId && !additionalParameters) {
       parameters.requireGuestDialog = true;
@@ -212,19 +213,20 @@ class UiMessageReply {
     this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
 
     // check if editor contains actual content
-    if (this._getEditor().utils.isEmpty()) {
+    const message = this._getCKEditor().getHtml();
+    if (message === "") {
       this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
       return false;
     }
 
     const data = {
       api: this,
-      editor: this._getEditor(),
-      message: this._getEditor().code.get(),
+      editor: this._getCKEditor(),
+      message,
       valid: true,
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
 
     return data.valid;
   }
@@ -269,18 +271,7 @@ class UiMessageReply {
    * Resets the editor contents and notifies event listeners.
    */
   protected _reset(): void {
-    this._getEditor().code.set("<p>\u200b</p>");
-
-    EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
-
-    // Opera on Android does not properly blur the editor after submitting the message,
-    // causing the keyboard to vanish, but the focus remains inside the editor.
-    window.setTimeout(() => {
-      const editor = document.activeElement?.closest(".redactor-layer");
-      if (editor && editor instanceof HTMLElement) {
-        editor.blur();
-      }
-    }, 50);
+    this._getCKEditor().reset();
   }
 
   /**
@@ -292,7 +283,7 @@ class UiMessageReply {
       cancel: false,
       returnValues: data.returnValues,
     };
-    EventHandler.fire("com.woltlab.wcf.redactor2", "handleError_text", parameters);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "handleError_text", parameters);
 
     if (!parameters.cancel) {
       this.throwError(this._textarea, data.returnValues.realErrorMessage);
@@ -302,16 +293,15 @@ class UiMessageReply {
   /**
    * Returns the current editor instance.
    */
-  protected _getEditor(): RedactorEditor {
-    if (this._editor === null) {
-      if (typeof window.jQuery === "function") {
-        this._editor = window.jQuery(this._textarea).data("redactor") as RedactorEditor;
-      } else {
-        throw new Error("Unable to access editor, jQuery has not been loaded yet.");
+  protected _getCKEditor(): CKEditor {
+    if (this._ckeditor === undefined) {
+      this._ckeditor = getCkeditor(this._textarea);
+      if (this._ckeditor === undefined) {
+        throw new Error(`Unable to find the CKEditor instance for '${this._textarea.id}'.`);
       }
     }
 
-    return this._editor;
+    return this._ckeditor;
   }
 
   /**
@@ -319,7 +309,7 @@ class UiMessageReply {
    * page in which case a redirect will be performed instead.
    */
   protected _insertMessage(data: AjaxResponse): void {
-    this._getEditor().WoltLabAutosave.reset();
+    this._getCKEditor().discardDraft();
 
     // redirect to new page
     if (data.returnValues.url) {

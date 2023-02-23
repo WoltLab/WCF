@@ -3678,6 +3678,7 @@ Attachments:
 		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
 		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>
+		<item name="wcf.dialog.button.primary.restore"><![CDATA[Restore]]></item>
 		<item name="wcf.dialog.button.primary.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[This process cannot be undone.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[Are you sure you want to delete “{$title}”?]]></item>
@@ -3712,7 +3713,6 @@ Attachments:
 		<item name="wcf.editor.autosave.keep"><![CDATA[Hide notice]]></item>
 		<item name="wcf.editor.autosave.restored"><![CDATA[Draft restored]]></item>
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
-		<item name="wcf.editor.button.article"><![CDATA[CMS Article]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
@@ -3727,8 +3727,6 @@ Attachments:
 		<item name="wcf.editor.button.italic"><![CDATA[Italic]]></item>
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
-		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
-		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Redo]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Font Size]]></item>
@@ -3798,6 +3796,14 @@ Attachments:
 		<item name="wcf.editor.table.insertRowAbove"><![CDATA[Insert row above]]></item>
 		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Insert row below]]></item>
 		<item name="wcf.editor.table.rows"><![CDATA[Rows]]></item>
+
+		<item name="wcf.editor.button.article"><![CDATA[CMS Article]]></item>
+		<item name="wcf.editor.button.group.block"><![CDATA[Insert Block]]></item>
+		<item name="wcf.editor.button.group.format"><![CDATA[Format Text]]></item>
+		<item name="wcf.editor.button.group.list"><![CDATA[Lists]]></item>
+		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
+		<item name="wcf.editor.restoreDraft"><![CDATA[Do you want to restore the saved draft?]]></item>
 	</category>
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>

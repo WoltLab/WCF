@@ -362,80 +362,85 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Saves input values.
 		 */
 		_save: function () {
-			// check if there is an editor and if it is in WYSIWYG mode
-			var scrollToEditor = null;
-			elBySelAll('.redactor-layer', this._tab[0], function(redactorLayer) {
-				var data = {
-					api: {
-						throwError: elInnerError
-					},
-					valid: true
-				};
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'validate_' + elData(redactorLayer, 'element-id'), data);
-				
-				if (!data.valid && scrollToEditor === null) {
-					scrollToEditor = redactorLayer.parentNode;
-				}
-			});
-			
-			if (scrollToEditor) {
-				scrollToEditor.scrollIntoView({ behavior: 'smooth' });
-				return;
-			}
-			
-			this._actionName = 'save';
-			
-			// collect values
-			var $regExp = /values\[([a-zA-Z0-9._-]+)\]/;
-			var $values = {};
-			this._tab.find('input, textarea, select').each(function (index, element) {
-				var $element = $(element);
-				var $value = null;
-				
-				switch ($element.getTagName()) {
-					case 'input':
-						var $type = $element.attr('type');
-						
-						if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
-							return;
-						}
-						break;
-					
-					case 'textarea':
-						if ($element.data('redactor')) {
-							$value = $element.redactor('code.get');
-						}
-						break;
-				}
-				
-				var $name = $element.attr('name');
-				if ($regExp.test($name)) {
-					var $fieldName = RegExp.$1;
-					if ($value === null) $value = $element.val();
-					
-					// check for checkboxes
-					if ($element.attr('type') === 'checkbox' && /\[\]$/.test($name)) {
-						if (!Array.isArray($values[$fieldName])) {
-							$values[$fieldName] = [];
-						}
-						
-						$values[$fieldName].push($value);
+			require(["WoltLabSuite/Core/Component/Ckeditor"], ({ getCkeditor }) => {
+				const textareas = Array.from(this._tab[0].querySelectorAll("textarea"));
+				const scrollToTextarea = textareas.find((textarea) => {
+					const editor = getCkeditor(textarea);
+					if (editor === undefined) {
+						return false;
 					}
-					else {
-						$values[$fieldName] = $value;
+
+					const data = {
+						api: {
+							throwError: elInnerError
+						},
+						valid: true
+					};
+					WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', `validate_${textarea.id}`, data);
+
+					return data.valid === false;
+				});
+				
+				if (scrollToTextarea) {
+					scrollToTextarea.parentElement.scrollIntoView({ behavior: 'smooth' });
+					return;
+				}
+				
+				this._actionName = 'save';
+				
+				// collect values
+				var $regExp = /values\[([a-zA-Z0-9._-]+)\]/;
+				var $values = {};
+				this._tab.find('input, textarea, select').each(function (index, element) {
+					var $element = $(element);
+					var $value = null;
+					
+					switch ($element.getTagName()) {
+						case 'input':
+							var $type = $element.attr('type');
+							
+							if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
+								return;
+							}
+							break;
+						
+						case 'textarea':
+							let editor = getCkeditor(element);
+							if (editor !== undefined) {
+								$value = editor.getHtml();
+							}
+							break;
 					}
-				}
+					
+					var $name = $element.attr('name');
+					if ($regExp.test($name)) {
+						var $fieldName = RegExp.$1;
+						if ($value === null) $value = $element.val();
+						
+						// check for checkboxes
+						if ($element.attr('type') === 'checkbox' && /\[\]$/.test($name)) {
+							if (!Array.isArray($values[$fieldName])) {
+								$values[$fieldName] = [];
+							}
+							
+							$values[$fieldName].push($value);
+						}
+						else {
+							$values[$fieldName] = $value;
+						}
+					}
+				});
+				
+				this._proxy.setOption('data', {
+					actionName: 'save',
+					className: 'wcf\\data\\user\\UserProfileAction',
+					objectIDs: [this._userID],
+					parameters: {
+						values: $values
+					}
+				});
+				this._proxy.sendRequest();
 			});
-			
-			this._proxy.setOption('data', {
-				actionName: 'save',
-				className: 'wcf\\data\\user\\UserProfileAction',
-				objectIDs: [this._userID],
-				parameters: {
-					values: $values
-				}
-			});
-			this._proxy.sendRequest();
 		},
 		
 		/**
@@ -516,12 +521,11 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Destroys all editor instances within current tab.
 		 */
 		_destroyEditor: function () {
-			// destroy all editor instances
-			this._tab.find('textarea').each(function (index, container) {
-				var $container = $(container);
-				if ($container.data('redactor')) {
-					$container.redactor('core.destroy');
-				}
+			require(["WoltLabSuite/Core/Component/Ckeditor"], ({ getCkeditor }) => {
+				this._tab[0].querySelectorAll("textarea").forEach((textarea) => {
+					const editor = getCkeditor(textarea);
+					editor?.destroy();
+				});
 			});
 		}
 	});

@@ -131,52 +131,7 @@
 		box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	}
 
-	// individual variables for the editor toolbar
-	.redactor-toolbar {
-		background-color: var(--wcfEditorButtonBackground);
-
-		> li {
-			> a {
-				color: var(--wcfEditorButtonText);
-
-				&.redactor-button-disabled {
-					color: var(--wcfEditorButtonTextDisabled) !important;
-				}
-
-				&.redactor-act,
-				&.dropact {
-					background-color: var(--wcfEditorButtonBackgroundActive);
-					color: var(--wcfEditorButtonTextActive);
-				}
-
-				@include screen-lg {
-					&:hover {
-						background-color: var(--wcfEditorButtonBackgroundActive);
-						color: var(--wcfEditorButtonTextActive);
-					}
-				}
-			}
-
-			@include screen-sm-up {
-				&.redactor-toolbar-separator::before {
-					border-left: 1px solid var(--wcfEditorButtonText);
-				}
-			}
-		}
-
-		@include screen-xs {
-			&.redactorToolbarOverride > .redactor-toolbar-separator::before {
-				border-left: 1px solid var(--wcfEditorButtonText);
-			}
-
-			.redactorToolbarToggle::before {
-				border-left: 1px solid var(--wcfEditorButtonText);
-			}
-		}
-	}
-
 	// adjust editor and message tab menu background color
-	.redactor-box,
 	.messageTabMenuNavigation > ul,
 	.messageTabMenu > .messageTabMenuContent.active,
 	.messageContent.loading > .messageContentLoadingOverlay {

@@ -7,7 +7,6 @@
  */
 
 let _browser = "other";
-let _editor = "none";
 let _platform = "desktop";
 let _touch = false;
 
@@ -52,7 +51,6 @@ export function setup(): void {
     _platform = "mobile";
   }
 
-  _editor = "redactor";
   _touch =
     "ontouchstart" in window ||
     ("msMaxTouchPoints" in window.navigator && (window.navigator as any).msMaxTouchPoints > 0) ||
@@ -76,13 +74,6 @@ export function setup(): void {
  */
 export function browser(): string {
   return _browser;
-}
-
-/**
- * Returns the available editor's name or an empty string.
- */
-export function editor(): string {
-  return _editor;
 }
 
 /**

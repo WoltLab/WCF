@@ -6,8 +6,10 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util", "../../Component/Ckeditor/Event"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1, Event_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MediaManagerEditor = void 0;
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -17,37 +19,30 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
     Clipboard = tslib_1.__importStar(Clipboard);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerEditor extends Base_1.default {
-        _activeButton;
-        _buttons;
-        _mediaToInsert;
-        _mediaToInsertByClipboard;
+        _mediaToInsert = new Map();
+        _mediaToInsertByClipboard = false;
         _uploadData;
-        _uploadId;
+        _uploadId = null;
         constructor(options) {
             options = Core.extend({
                 callbackInsert: null,
             }, options);
             super(options);
             this._forceClipboard = true;
-            this._activeButton = null;
-            const context = this._options.editor ? this._options.editor.core.toolbar()[0] : undefined;
-            this._buttons = (context || window.document).getElementsByClassName(this._options.buttonClass || "jsMediaEditorButton");
-            Array.from(this._buttons).forEach((button) => {
-                button.addEventListener("click", (ev) => this._click(ev));
+            this._options.ckeditor?.sourceElement.addEventListener("ckeditor5:bbcode", (event) => {
+                const { bbcode } = event.detail;
+                if (bbcode === "media") {
+                    event.preventDefault();
+                    this._click(event);
+                }
             });
-            this._mediaToInsert = new Map();
-            this._mediaToInsertByClipboard = false;
-            this._uploadData = null;
-            this._uploadId = null;
-            if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
-                const editorId = this._options.editor.$editor[0].dataset.elementId;
-                const uuid1 = EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, (data) => this._editorUpload(data));
-                const uuid2 = EventHandler.add("com.woltlab.wcf.redactor2", `pasteFromClipboard_${editorId}`, (data) => this._editorUpload(data));
-                EventHandler.add("com.woltlab.wcf.redactor2", `destroy_${editorId}`, () => {
-                    EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid1);
-                    EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid2);
-                });
-                EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => this._mediaUploaded(data));
+            if (this._options.ckeditor !== undefined) {
+                const ckeditor = this._options.ckeditor;
+                if (!ckeditor.features.attachment) {
+                    (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).uploadMedia((payload) => {
+                        this._editorUpload(payload);
+                    });
+                }
             }
         }
         _addButtonEventListeners() {
@@ -108,23 +103,27 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 },
             });
         }
-        _click(event) {
-            this._activeButton = event.currentTarget;
-            super._click(event);
-        }
         _dialogShow() {
             super._dialogShow();
             // check if data needs to be uploaded
             if (this._uploadData) {
-                const fileUploadData = this._uploadData;
-                if (fileUploadData.file) {
-                    this._upload.uploadFile(fileUploadData.file);
+                if (this._upload !== null) {
+                    const uploadId = this._upload.uploadFile(this._uploadData.file);
+                    this._uploadData.promise = new Promise((resolve) => {
+                        const uuid = EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => {
+                            if (data.uploadId !== uploadId) {
+                                return;
+                            }
+                            EventHandler.remove("com.woltlab.wcf.media.upload", "success", uuid);
+                            resolve({
+                                mediaId: data.media[0].mediaID,
+                                mediaSize: "original",
+                                url: data.media[0].link,
+                            });
+                        });
+                    });
                 }
-                else {
-                    const blobUploadData = this._uploadData;
-                    this._uploadId = this._upload.uploadBlob(blobUploadData.blob);
-                }
-                this._uploadData = null;
+                this._uploadData = undefined;
             }
         }
         /**
@@ -174,7 +173,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 this._options.callbackInsert(this._mediaToInsert, "separate" /* MediaInsertType.Separate */, thumbnailSize);
             }
             else {
-                this._options.editor.buffer.set();
                 this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
             }
             if (this._mediaToInsertByClipboard) {
@@ -191,6 +189,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
          * Inserts a single media item into the editor.
          */
         _insertMediaItem(thumbnailSize, media) {
+            const ckeditor = this._options.ckeditor;
             if (media.isImage) {
                 let available = "";
                 ["small", "medium", "large", "original"].some((size) => {
@@ -210,14 +209,10 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 if (thumbnailSize !== "original") {
                     link = media[thumbnailSize + "ThumbnailLink"];
                 }
-                Core.interactWithRedactor(() => {
-                    this._options.editor.insert.html(`<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`);
-                });
+                ckeditor.insertHtml(`<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`);
             }
             else {
-                Core.interactWithRedactor(() => {
-                    this._options.editor.insert.text(`[wsm='${media.mediaID}'][/wsm]`);
-                });
+                ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);
             }
         }
         /**
@@ -299,5 +294,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
       </a>`;
         }
     }
-    return MediaManagerEditor;
+    exports.MediaManagerEditor = MediaManagerEditor;
+    exports.default = MediaManagerEditor;
 });

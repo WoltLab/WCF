@@ -45,21 +45,3 @@ small kbd {
 		-webkit-box-decoration-break: initial;
 	}
 }
-
-/* This pseudo element will cause a trailing caret to be displayed inside the element, right after
-   the last character in the `<kbd>`. Without it, browsers may render the caret either on top or
-   slightly after the right border. */
-.redactor-layer kbd::after {
-	content: " ";
-	display: inline-block;
-	pointer-events: none;
-}
-
-/* Similar to the `::after` pseudo element above, but also features an absolute positioning. This
-   has no impact on the visual appearance, but avoids the caret being displayed shifted to the bottom. */
-.redactor-layer kbd::before {
-	content: " ";
-	display: inline-block;
-	pointer-events: none;
-	position: absolute;
-}

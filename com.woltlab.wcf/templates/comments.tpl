@@ -46,7 +46,7 @@
 									data-disable-attachments="true"
 									data-support-mention="true"
 							></textarea>
-							{include file='messageFormTabsInline'}
+							{include file='messageFormTabsInline' wysiwygContainerID=$_commentAddWysiwygSelector wysiwygSelector=$_commentAddWysiwygSelector}
 							
 							{* in-template call for full backwards-compatibility *}
 							{$commentList->getCommentManager()->setDisallowedBBCodes()}
@@ -85,7 +85,7 @@
 							  data-disable-attachments="true"
 							  data-support-mention="true"
 					></textarea>
-					{include file='messageFormTabsInline' wysiwygSelector=$_commentResponseWysiwygSelector}
+					{include file='messageFormTabsInline' wysiwygContainerID=$_commentResponseWysiwygSelector wysiwygSelector=$_commentResponseWysiwygSelector}
 					
 					{* in-template call for full backwards-compatibility *}
 					{$commentList->getCommentManager()->setDisallowedBBCodes()}

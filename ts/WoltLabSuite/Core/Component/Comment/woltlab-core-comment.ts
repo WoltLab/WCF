@@ -13,10 +13,9 @@ import UiDropdownSimple from "../../Ui/Dropdown/Simple";
 import * as UiNotification from "../../Ui/Notification";
 import { confirmationFactory } from "../Confirmation";
 import * as UiScroll from "../../Ui/Scroll";
-import * as Environment from "../../Environment";
 import * as EventHandler from "../../Event/Handler";
-import { RedactorEditor } from "../../Ui/Redactor/Editor";
 import { getPhrase } from "../../Language";
+import { getCkeditorById } from "../Ckeditor";
 
 type ResponseBeginEdit = {
   template: string;
@@ -99,19 +98,14 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
       this.#cancelEdit();
     });
 
-    EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${this.#editorId}`, (data) => {
+    EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${this.#editorId}`, (data) => {
       data.cancel = true;
       void this.#saveEdit();
     });
 
-    const editorElement = document.getElementById(this.#editorId) as HTMLElement;
-    if (Environment.editor() === "redactor") {
-      window.setTimeout(() => {
-        UiScroll.element(this);
-      }, 250);
-    } else {
-      editorElement.focus();
-    }
+    window.setTimeout(() => {
+      UiScroll.element(this);
+    }, 250);
   }
 
   async #saveEdit(): Promise<void> {
@@ -121,13 +115,13 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
       },
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${this.#editorId}`, parameters.data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
 
     if (!this.#validateEdit(parameters)) {
       return;
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${this.#editorId}`, parameters);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
 
     this.#showLoadingIndicator();
 
@@ -183,11 +177,9 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
   #validateEdit(parameters: ArbitraryObject): boolean {
     this.querySelectorAll(".innerError").forEach((el) => el.remove());
 
-    // check if editor contains actual content
-    const editorElement = document.getElementById(this.#editorId)!;
-    const redactor: RedactorEditor = window.jQuery(editorElement).data("redactor");
-    if (redactor.utils.isEmpty()) {
-      DomUtil.innerError(editorElement, getPhrase("wcf.global.form.error.empty"));
+    const editor = getCkeditorById(this.#editorId)!;
+    if (editor.getHtml() === "") {
+      DomUtil.innerError(editor.element, getPhrase("wcf.global.form.error.empty"));
       return false;
     }
 
@@ -197,23 +189,18 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
       valid: true,
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this.#editorId}`, data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this.#editorId}`, data);
 
     return data.valid;
   }
 
   #cancelEdit(): void {
-    this.#destroyEditor();
+    void getCkeditorById(this.#editorId)!.destroy();
 
     this.#editorContainer.remove();
 
     this.menu!.querySelector<HTMLElement>(".comment__option--edit")!.hidden = false;
     this.querySelector<HTMLElement>(".htmlContent")!.hidden = false;
-  }
-
-  #destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this.#editorId}`);
-    EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this.#editorId}`);
   }
 
   get #editorContainer(): HTMLElement {

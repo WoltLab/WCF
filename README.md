@@ -3,17 +3,14 @@
 WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities.
 Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
 
-_Formerly known as [WoltLab Community Framework](https://community.woltlab.com/thread/249026-introducing-woltlab-suite-3-0/)_
+# About CKEditor 5
 
-## About Redactor II
+CKEditor 5 is a WYISWYG editor created by CKSource Holding sp. z o.o, Copyright (c) 2003-2023.
 
-Redactor II is a WYSIWYG-editor created by Imperavi LLC., Copyright (c) 2009-2017.
-You can make use of Redactor II in any plugin or app for WoltLab Suite Core free of charge.
-You are not allowed to extract or re-use the editor (in entirety or in potions) for any other use unless you own a license for Redactor II.
+This repository includes a build artifact of CKEditor 5 that is commercially licensed to WoltLab GmbH.
+You may use this instance of CKEditor 5 with any plugin or app built on top of WoltLab Suite Core only.
 
-Please see http://imperavi.com/redactor/license/ for more information.
-
-Redactor II is **NOT** free software!
+If you would like to use CKEditor 5 yourself and are not building on top of WoltLab Suite Core then please visit https://ckeditor.com/pricing/ to learn more.
 
 ## License
 

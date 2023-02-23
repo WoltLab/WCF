@@ -10,13 +10,6 @@
 		}
 	}
 
-	.redactor-layer table {
-		th,
-		td {
-			border-color: var(--wcfEditorTableBorder) !important;
-		}
-	}
-
 	.mainMenu .mainMenuShowPrevious.active {
 		/* The button is otherwise partially overlapped by the menu items. */
 		z-index: 1;

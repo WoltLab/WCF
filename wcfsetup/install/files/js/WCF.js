@@ -118,15 +118,6 @@
 	// dectect Android
 	jQuery.browser.android = (ua.indexOf('android') !== -1);
 	
-	// allow plugins to detect the used editor, value should be the same as the $.browser.<editorName> key
-	jQuery.browser.editor = 'redactor';
-	
-	// CKEditor support (removed in WCF 2.1), do NOT remove this variable for the sake for compatibility
-	jQuery.browser.ckeditor = false;
-	
-	// Redactor support
-	jQuery.browser.redactor = true;
-	
 	// work-around for zoom bug on iOS when using .focus()
 	if (jQuery.browser.iOS) {
 		jQuery.fn.focus = function(data, fn) {

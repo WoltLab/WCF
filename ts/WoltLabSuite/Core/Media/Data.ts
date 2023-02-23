@@ -9,8 +9,8 @@ import MediaUpload from "./Upload";
 import { FileElements, UploadOptions } from "../Upload/Data";
 import MediaEditor from "./Editor";
 import MediaManager from "./Manager/Base";
-import { RedactorEditor } from "../Ui/Redactor/Editor";
 import { I18nValues } from "../Language/Input";
+import type { CKEditor } from "../Component/Ckeditor";
 
 export interface Media {
   altText: I18nValues | string;
@@ -45,7 +45,7 @@ export const enum MediaInsertType {
 export interface MediaManagerEditorOptions extends MediaManagerOptions {
   buttonClass?: string;
   callbackInsert: (media: Map<number, Media>, insertType: MediaInsertType, thumbnailSize?: string) => void;
-  editor?: RedactorEditor;
+  ckeditor?: CKEditor;
 }
 
 export interface MediaManagerSelectOptions extends MediaManagerOptions {

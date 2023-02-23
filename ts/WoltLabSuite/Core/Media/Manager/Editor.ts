@@ -15,20 +15,15 @@ import * as DomTraverse from "../../Dom/Traverse";
 import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
 import * as Clipboard from "../../Controller/Clipboard";
-import { OnDropPayload } from "../../Ui/Redactor/DragAndDrop";
 import DomUtil from "../../Dom/Util";
+import type { UploadMediaEventPayload } from "../../Component/Ckeditor/Media";
+import { listenToCkeditor } from "../../Component/Ckeditor/Event";
 
-interface PasteFromClipboard {
-  blob: Blob;
-}
-
-class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
-  protected _activeButton;
-  protected readonly _buttons: HTMLCollectionOf<HTMLElement>;
-  protected _mediaToInsert: Map<number, Media>;
-  protected _mediaToInsertByClipboard: boolean;
-  protected _uploadData: OnDropPayload | PasteFromClipboard | null;
-  protected _uploadId: number | null;
+export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
+  protected _mediaToInsert = new Map<number, Media>();
+  protected _mediaToInsertByClipboard = false;
+  protected _uploadData?: UploadMediaEventPayload;
+  protected _uploadId: number | null = null;
 
   constructor(options: Partial<MediaManagerEditorOptions>) {
     options = Core.extend(
@@ -41,37 +36,26 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     super(options);
 
     this._forceClipboard = true;
-    this._activeButton = null;
-    const context = this._options.editor ? this._options.editor.core.toolbar()[0] : undefined;
-    this._buttons = (context || window.document).getElementsByClassName(
-      this._options.buttonClass || "jsMediaEditorButton",
-    ) as HTMLCollectionOf<HTMLElement>;
-    Array.from(this._buttons).forEach((button) => {
-      button.addEventListener("click", (ev) => this._click(ev));
-    });
-    this._mediaToInsert = new Map<number, Media>();
-    this._mediaToInsertByClipboard = false;
-    this._uploadData = null;
-    this._uploadId = null;
 
-    if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
-      const editorId = this._options.editor.$editor[0].dataset.elementId as string;
+    this._options.ckeditor?.sourceElement.addEventListener(
+      "ckeditor5:bbcode",
+      (event: CustomEvent<{ bbcode: string }>) => {
+        const { bbcode } = event.detail;
+        if (bbcode === "media") {
+          event.preventDefault();
 
-      const uuid1 = EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, (data: OnDropPayload) =>
-        this._editorUpload(data),
-      );
-      const uuid2 = EventHandler.add(
-        "com.woltlab.wcf.redactor2",
-        `pasteFromClipboard_${editorId}`,
-        (data: OnDropPayload) => this._editorUpload(data),
-      );
+          this._click(event);
+        }
+      },
+    );
 
-      EventHandler.add("com.woltlab.wcf.redactor2", `destroy_${editorId}`, () => {
-        EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid1);
-        EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid2);
-      });
-
-      EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => this._mediaUploaded(data));
+    if (this._options.ckeditor !== undefined) {
+      const ckeditor = this._options.ckeditor;
+      if (!ckeditor.features.attachment) {
+        listenToCkeditor(ckeditor.sourceElement).uploadMedia((payload) => {
+          this._editorUpload(payload);
+        });
+      }
     }
   }
 
@@ -141,33 +125,42 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     });
   }
 
-  protected _click(event: Event): void {
-    this._activeButton = event.currentTarget;
-
-    super._click(event);
-  }
-
   protected _dialogShow(): void {
     super._dialogShow();
 
     // check if data needs to be uploaded
     if (this._uploadData) {
-      const fileUploadData = this._uploadData as OnDropPayload;
-      if (fileUploadData.file) {
-        this._upload.uploadFile(fileUploadData.file);
-      } else {
-        const blobUploadData = this._uploadData as PasteFromClipboard;
-        this._uploadId = this._upload.uploadBlob(blobUploadData.blob);
+      if (this._upload !== null) {
+        const uploadId = this._upload.uploadFile(this._uploadData.file);
+        this._uploadData.promise = new Promise((resolve) => {
+          const uuid = EventHandler.add(
+            "com.woltlab.wcf.media.upload",
+            "success",
+            (data: MediaUploadSuccessEventData) => {
+              if (data.uploadId !== uploadId) {
+                return;
+              }
+
+              EventHandler.remove("com.woltlab.wcf.media.upload", "success", uuid);
+
+              resolve({
+                mediaId: data.media[0].mediaID,
+                mediaSize: "original",
+                url: data.media[0].link,
+              });
+            },
+          );
+        });
       }
 
-      this._uploadData = null;
+      this._uploadData = undefined;
     }
   }
 
   /**
    * Handles pasting and dragging and dropping files into the editor.
    */
-  protected _editorUpload(data: OnDropPayload): void {
+  protected _editorUpload(data: UploadMediaEventPayload): void {
     this._uploadData = data;
 
     UiDialog.open(this);
@@ -218,8 +211,6 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     if (this._options.callbackInsert !== null) {
       this._options.callbackInsert(this._mediaToInsert, MediaInsertType.Separate, thumbnailSize);
     } else {
-      this._options.editor!.buffer.set();
-
       this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
     }
 
@@ -240,6 +231,8 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
    * Inserts a single media item into the editor.
    */
   protected _insertMediaItem(thumbnailSize: string | undefined, media: Media): void {
+    const ckeditor = this._options.ckeditor!;
+
     if (media.isImage) {
       let available = "";
       ["small", "medium", "large", "original"].some((size) => {
@@ -265,17 +258,11 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
         link = media[thumbnailSize + "ThumbnailLink"];
       }
 
-      Core.interactWithRedactor(() => {
-        this._options.editor!.insert.html(
-          `<img src="${link}" class="woltlabSuiteMedia" data-media-id="${
-            media.mediaID
-          }" data-media-size="${thumbnailSize!}">`,
-        );
-      });
+      ckeditor.insertHtml(
+        `<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`,
+      );
     } else {
-      Core.interactWithRedactor(() => {
-        this._options.editor!.insert.text(`[wsm='${media.mediaID}'][/wsm]`);
-      });
+      ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);
     }
   }
 
@@ -371,4 +358,4 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   }
 }
 
-export = MediaManagerEditor;
+export default MediaManagerEditor;

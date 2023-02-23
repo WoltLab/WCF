@@ -8,10 +8,10 @@
 
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
+import { getCkeditorById } from "../../Component/Ckeditor";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
-import * as Environment from "../../Environment";
 import * as EventHandler from "../../Event/Handler";
 import * as Language from "../../Language";
 import { NotificationAction } from "../Dropdown/Data";
@@ -393,7 +393,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const buttonCancel = formSubmit.querySelector('button[data-type="cancel"]') as HTMLButtonElement;
     buttonCancel.addEventListener("click", () => this._restoreMessage());
 
-    EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${id}`, (data: { cancel: boolean }) => {
+    EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${id}`, (data: { cancel: boolean }) => {
       data.cancel = true;
 
       this._save();
@@ -403,18 +403,13 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     DomUtil.hide(elementData.messageHeader);
     DomUtil.hide(elementData.messageFooter);
 
-    if (Environment.editor() === "redactor") {
-      window.setTimeout(() => {
-        if (this._options.quoteManager) {
-          this._options.quoteManager.setAlternativeEditor(id);
-        }
+    window.setTimeout(() => {
+      if (this._options.quoteManager) {
+        this._options.quoteManager.setAlternativeEditor(id);
+      }
 
-        UiScroll.element(activeElement);
-      }, 250);
-    } else {
-      const editorElement = document.getElementById(id) as HTMLElement;
-      editorElement.focus();
-    }
+      UiScroll.element(activeElement);
+    }, 250);
   }
 
   /**
@@ -477,7 +472,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
         });
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${id}`, parameters.data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
 
     let validateResult: unknown = this._validate(parameters);
 
@@ -492,7 +487,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     (validateResult as Promise<void[]>).then(
       () => {
-        EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${id}`, parameters);
+        EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${id}`, parameters);
 
         Ajax.api(this, {
           actionName: "save",
@@ -522,7 +517,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       promises: [],
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this._getEditorId()}`, data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `validate_${this._getEditorId()}`, data);
 
     if (data.valid) {
       data.promises.push(Promise.resolve());
@@ -545,7 +540,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    */
   protected _showMessage(data: AjaxResponseMessage): void {
     const activeElement = this._activeElement!;
-    const editorId = this._getEditorId();
     const elementData = this._elements.get(activeElement)!;
 
     // set new content
@@ -560,7 +554,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       const element = document.createElement("div");
       DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 
-      let node;
+      let node: Node;
       while (element.childNodes.length) {
         node = element.childNodes[element.childNodes.length - 1];
         elementData.messageFooter.insertBefore(node, elementData.messageFooter.firstChild);
@@ -587,7 +581,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     this._updateHistory(this._getHash(this._getObjectId(activeElement)));
 
-    EventHandler.fire("com.woltlab.wcf.redactor", `autosaveDestroy_${editorId}`);
+    getCkeditorById(this._getEditorId())!.discardDraft();
 
     UiNotification.show();
 
@@ -630,8 +624,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Destroys the editor instance.
    */
   protected _destroyEditor(): void {
-    EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this._getEditorId()}`);
-    EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this._getEditorId()}`);
+    void getCkeditorById(this._getEditorId())!.destroy();
   }
 
   /**
@@ -665,10 +658,10 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
   _ajaxFailure(data: ResponseData): boolean {
     const elementData = this._elements.get(this._activeElement!)!;
-    const editor = elementData.messageBodyEditor!.querySelector(".redactor-layer") as HTMLElement;
+    const cke = elementData.messageBodyEditor!.querySelector(".ck.ck-editor") as HTMLElement;
 
     // handle errors occurring on editor load
-    if (editor === null) {
+    if (cke === null) {
       this._restoreMessage();
 
       return true;
@@ -680,7 +673,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       return true;
     }
 
-    DomUtil.innerError(editor, data.returnValues.realErrorMessage);
+    DomUtil.innerError(cke, data.returnValues.realErrorMessage);
 
     return false;
   }
