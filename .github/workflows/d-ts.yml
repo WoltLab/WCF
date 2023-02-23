@@ -34,7 +34,9 @@ jobs:
         ssh-key: ${{ secrets.WOLTLAB_D_TS_DEPLOY_KEY }}
         path: d.ts
         ref: ${{ matrix.branch }}
-    - run: npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
+    - run: |
+        npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
+        cp ./ts/global.d.ts ./d.ts/
     - name: Prepare git
       run: |
         git config --global user.name "WoltLab GmbH"
