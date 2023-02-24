@@ -106,7 +106,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         return [
             'canBeDisabled' => isset($data['elements']['canbedisabled']) ? \intval($data['elements']['canbedisabled']) : 1,
             'canBeEdited' => isset($data['elements']['canbeedited']) ? \intval($data['elements']['canbeedited']) : 1,
-            'className' => $data['elements']['classname'] ?? '',
+            'className' => $data['elements']['classname'],
             'cronjobName' => $data['attributes']['name'],
             'description' => $data['elements']['description'] ?? '',
             'isDisabled' => isset($data['elements']['isdisabled']) ? \intval($data['elements']['isdisabled']) : 0,
