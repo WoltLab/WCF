@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
     function setup(options) {
         options = Core.extend({
             bootstrap: {
+                colorScheme: "system",
                 enableMobileMenu: true,
                 pageMenuMainProvider: new Backend_1.default(),
             },

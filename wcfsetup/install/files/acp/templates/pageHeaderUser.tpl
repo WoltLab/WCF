@@ -31,6 +31,22 @@
 					<li><a class="externalURL" href="https://www.woltlab.com/pluginstore/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
 				</ul>
 			</li>
+
+			<li>
+				<a
+					href="#"
+					role="button"
+					class="page__colorScheme jsButtonStyleColorScheme jsTooltip"
+					title="{lang}wcf.style.setColorScheme{/lang}"
+				>
+					<span class="iconWrapper page__colorScheme--dark">
+						{icon size=32 name='moon' type='solid'}
+					</span>
+					<span class="iconWrapper page__colorScheme--light">
+						{icon size=32 name='sun' type='solid'}
+					</span>
+				</a>
+			</li>
 		{/if}
 		
 		{event name='menuItems'}

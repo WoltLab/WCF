@@ -24,6 +24,7 @@ export function setup(options: AcpBootstrapOptions): void {
   options = Core.extend(
     {
       bootstrap: {
+        colorScheme: "system",
         enableMobileMenu: true,
         pageMenuMainProvider: new AcpUiPageMenuMainBackend(),
       },

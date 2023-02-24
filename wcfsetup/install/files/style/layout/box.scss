@@ -954,6 +954,13 @@
 	}
 }
 
+html[data-color-scheme="dark"] .page__colorScheme--light {
+	display: none !important;
+}
+html:not([data-color-scheme="dark"]) .page__colorScheme--dark {
+	display: none !important;
+}
+
 .boxesTop,
 .boxesBottom,
 .boxesFooter {

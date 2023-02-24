@@ -227,8 +227,14 @@
 				padding: 0 15px;
 				position: relative;
 
+				.iconWrapper {
+					align-items: center;
+					display: flex;
+					height: 50px;
+				}
+
 				/* hide icon label */
-				> span:not(.icon):not(.badge) {
+				> span:not(.icon):not(.badge):not(.iconWrapper) {
 					display: none;
 				}
 

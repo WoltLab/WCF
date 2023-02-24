@@ -24,13 +24,15 @@
 
 	{if $__wcf->getStyleHandler()->getStyle()->hasDarkMode}
 	{
-		const mq = matchMedia("(prefers-color-scheme: dark)");
-		const setColorScheme = () => {
-			document.documentElement.dataset.colorScheme = mq.matches ? "dark" : "light";
-		}
-		
-		mq.addEventListener("change", () => setColorScheme());
-		setColorScheme();
+		let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		try {
+			const value = localStorage.getItem("wsc_colorScheme");
+			if (value === "light" || value === "dark") {
+				colorScheme = value;
+			}
+		} catch {}
+
+		document.documentElement.dataset.colorScheme = colorScheme;
 	}
 	{/if}
 </script>
@@ -80,6 +82,7 @@ window.addEventListener('pageshow', function(event) {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
+			colorScheme: '{@$__wcf->getStyleHandler()->getColorScheme()|encodeJS}',
 			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			executeCronjobs: {if $executeCronjobs}'{link controller="CronjobPerform"}{/link}'{else}undefined{/if},
 			{if ENABLE_SHARE_BUTTONS}

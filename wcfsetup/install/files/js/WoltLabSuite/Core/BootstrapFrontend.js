@@ -43,6 +43,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         // Modify the URL of the background queue URL to always target the current domain to avoid CORS.
         options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
         Bootstrap.setup({
+            colorScheme: options.colorScheme,
             enableMobileMenu: true,
             pageMenuMainProvider: new Frontend_1.default(),
         });

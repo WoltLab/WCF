@@ -2,7 +2,7 @@
 <html
 	dir="{@$__wcf->getLanguage()->getPageDirection()}"
 	lang="{$__wcf->getLanguage()->getBcp47()}"
-	data-color-scheme="light"
+	data-color-scheme="system"
 >
 <head>
 	<meta charset="utf-8">
@@ -51,13 +51,15 @@
 		var COMPILER_TARGET_DEFAULT = true;
 
 		{
-			const mq = matchMedia("(prefers-color-scheme: dark)");
-			const setColorScheme = () => {
-				document.documentElement.dataset.colorScheme = mq.matches ? "dark" : "light";
-			}
-			
-			mq.addEventListener("change", () => setColorScheme());
-			setColorScheme();
+			let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			try {
+				const value = localStorage.getItem("wsc_colorScheme");
+				if (value === "light" || value === "dark") {
+					colorScheme = value;
+				}
+			} catch {}
+
+			document.documentElement.dataset.colorScheme = colorScheme;
 		}
 	</script>
 
