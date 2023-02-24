@@ -81,7 +81,15 @@ class Cronjob extends DatabaseObject
             // The TZ parameter in the constructor is ignored for timestamps.
             ->setTimezone(new \DateTimeZone(TIMEZONE));
 
-        $expression = new CronExpression(\sprintf(
+        return $this->getExpression()->getNextRunDate($dateTime)->getTimestamp();
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getExpression(): CronExpression
+    {
+        return new CronExpression(\sprintf(
             '%s %s %s %s %s',
             $this->startMinute,
             $this->startHour,
@@ -89,8 +97,6 @@ class Cronjob extends DatabaseObject
             $this->startMonth,
             $this->startDow,
         ));
-
-        return $expression->getNextRunDate($dateTime)->getTimestamp();
     }
 
     /**
