@@ -42,11 +42,6 @@ class CronjobListPage extends SortablePage
     public $validSortFields = [
         'cronjobID',
         'nextExec',
-        'startMinute',
-        'startHour',
-        'startDom',
-        'startMonth',
-        'startDow',
         'descriptionI18n',
     ];
 
