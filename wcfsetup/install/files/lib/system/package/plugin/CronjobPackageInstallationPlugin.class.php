@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 
 use Cron\CronExpression;
 use Cron\FieldFactory;
-use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\CronjobList;
 use wcf\system\cronjob\ICronjob;
@@ -108,7 +107,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             'canBeDisabled' => isset($data['elements']['canbedisabled']) ? \intval($data['elements']['canbedisabled']) : 1,
             'canBeEdited' => isset($data['elements']['canbeedited']) ? \intval($data['elements']['canbeedited']) : 1,
             'className' => $data['elements']['classname'] ?? '',
-            'cronjobName' => $data['attributes']['name'] ?? '',
+            'cronjobName' => $data['attributes']['name'],
             'description' => $data['elements']['description'] ?? '',
             'isDisabled' => isset($data['elements']['isdisabled']) ? \intval($data['elements']['isdisabled']) : 0,
             'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
@@ -147,39 +146,8 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     /**
      * @inheritDoc
      */
-    protected function import(array $row, array $data)
-    {
-        // if a cronjob is updated without a name given, keep the old automatically
-        // assigned name
-        if (!empty($row) && !$data['cronjobName']) {
-            unset($data['cronjobName']);
-        }
-
-        /** @var Cronjob $cronjob */
-        $cronjob = parent::import($row, $data);
-
-        // update cronjob name
-        if (!$cronjob->cronjobName) {
-            $cronjobEditor = new CronjobEditor($cronjob);
-            $cronjobEditor->update([
-                'cronjobName' => Cronjob::AUTOMATIC_NAME_PREFIX . $cronjob->cronjobID,
-            ]);
-
-            $cronjob = new Cronjob($cronjob->cronjobID);
-        }
-
-        return $cronjob;
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function findExistingItem(array $data)
     {
-        if (!$data['cronjobName']) {
-            return;
-        }
-
         $sql = "SELECT  *
                 FROM    wcf" . WCF_N . "_" . $this->tableName . "
                 WHERE   packageID = ?
