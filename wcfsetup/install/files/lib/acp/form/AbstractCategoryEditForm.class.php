@@ -115,7 +115,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
                 I18nHandler::getInstance()->setOptions(
                     'description',
                     $this->packageID,
-                    $this->category->description,
+                    $this->category->description ?: '',
                     $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.description.category\d+'
                 );
             }
