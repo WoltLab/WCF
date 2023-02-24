@@ -52,7 +52,7 @@ $sql = "UPDATE  wcf1_cronjob
                 lastExec = ?,
                 nextExec = ?,
                 afterNextExec = ?
-        WHERE   packageiD = ?
+        WHERE   packageID = ?
             AND cronjobName = ?";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute([
