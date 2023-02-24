@@ -103,6 +103,15 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     protected function prepareImport(array $data)
     {
+        if (isset($data['elements']['expression'])) {
+            $expression = new CronExpression($data['elements']['expression']);
+            $data['elements']['startdom'] = $expression->getExpression(CronExpression::DAY);
+            $data['elements']['startdow'] = $expression->getExpression(CronExpression::WEEKDAY);
+            $data['elements']['starthour'] = $expression->getExpression(CronExpression::HOUR);
+            $data['elements']['startminute'] = $expression->getExpression(CronExpression::MINUTE);
+            $data['elements']['startmonth'] = $expression->getExpression(CronExpression::MONTH);
+        }
+
         return [
             'canBeDisabled' => isset($data['elements']['canbedisabled']) ? \intval($data['elements']['canbedisabled']) : 1,
             'canBeEdited' => isset($data['elements']['canbeedited']) ? \intval($data['elements']['canbeedited']) : 1,
