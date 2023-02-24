@@ -1,7 +1,5 @@
-@media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
-    }
+html[data-color-scheme="dark"] {
+    color-scheme: dark;
 
     .badge,
     a.badge {

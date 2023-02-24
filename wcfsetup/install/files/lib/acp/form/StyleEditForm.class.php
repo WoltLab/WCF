@@ -110,7 +110,6 @@ class StyleEditForm extends StyleAddForm
             $this->style->imagePath,
             $variables,
             null,
-            $this->style->hasDarkMode,
         );
 
         if ($result !== null) {
@@ -162,7 +161,7 @@ class StyleEditForm extends StyleAddForm
             $tmp = Style::splitLessVariables($this->variables['individualScss']);
             $this->variables['individualScss'] = $tmp['preset'];
             $this->variables['individualScssCustom'] = $tmp['custom'];
-            
+
             $tmp = Style::splitLessVariables($this->variables['individualScssDarkMode']);
             $this->variables['individualScssDarkMode'] = $tmp['preset'];
             $this->variables['individualScssDarkModeCustom'] = $tmp['custom'];
@@ -387,7 +386,7 @@ class StyleEditForm extends StyleAddForm
             $tmp = Style::splitLessVariables($this->variables['individualScss']);
             $this->variables['individualScss'] = $tmp['preset'];
             $this->variables['individualScssCustom'] = $tmp['custom'];
-            
+
             $tmp = Style::splitLessVariables($this->variables['individualScssDarkMode']);
             $this->variables['individualScssDarkMode'] = $tmp['preset'];
             $this->variables['individualScssDarkModeCustom'] = $tmp['custom'];

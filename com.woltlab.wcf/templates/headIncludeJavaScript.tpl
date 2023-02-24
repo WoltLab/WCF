@@ -21,6 +21,18 @@
 		{* This constant is a compiler option, it does not exist in production. *}
 		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
 	{/if}
+
+	{if $__wcf->getStyleHandler()->getStyle()->hasDarkMode}
+	{
+		const mq = matchMedia("(prefers-color-scheme: dark)");
+		const setColorScheme = () => {
+			document.documentElement.dataset.colorScheme = mq.matches ? "dark" : "light";
+		}
+		
+		mq.addEventListener("change", () => setColorScheme());
+		setColorScheme();
+	}
+	{/if}
 </script>
 
 <script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>

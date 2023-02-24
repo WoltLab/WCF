@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getBcp47()}">
+<html
+	dir="{@$__wcf->getLanguage()->getPageDirection()}"
+	lang="{$__wcf->getLanguage()->getBcp47()}"
+	data-color-scheme="light"
+>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +49,16 @@
 		{* This constant is a compiler option, it does not exist in production. *}
 		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
 		var COMPILER_TARGET_DEFAULT = true;
+
+		{
+			const mq = matchMedia("(prefers-color-scheme: dark)");
+			const setColorScheme = () => {
+				document.documentElement.dataset.colorScheme = mq.matches ? "dark" : "light";
+			}
+			
+			mq.addEventListener("change", () => setColorScheme());
+			setColorScheme();
+		}
 	</script>
 
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>

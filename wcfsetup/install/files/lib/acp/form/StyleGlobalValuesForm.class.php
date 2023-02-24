@@ -96,7 +96,6 @@ class StyleGlobalValuesForm extends AbstractForm
                     $defaultStyle->imagePath,
                     $defaultStyle->getVariables(),
                     $tmpFile,
-                    $defaultStyle->hasDarkMode,
                 );
 
                 if ($errorMessage !== null) {

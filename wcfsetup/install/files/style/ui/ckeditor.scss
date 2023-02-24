@@ -11,11 +11,11 @@
     vertical-align: middle;
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-color-scheme="dark"] {
     /*
     Override some of the color values of the built-in “Lark” theme.
     https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/ui/theme-customization.html
-*/
+    */
     .ck.ck-editor {
         /* Overrides the border radius setting in the theme. */
         --ck-border-radius: 4px;

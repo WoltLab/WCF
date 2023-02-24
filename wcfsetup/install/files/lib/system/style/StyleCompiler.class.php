@@ -115,7 +115,6 @@ final class StyleCompiler extends SingletonFactory
         string $imagePath,
         array $variables,
         ?string $customCustomSCSSFile = null,
-        bool $supportsDarkMode = false,
     ): ?\Exception {
         $individualScss = '';
         if (isset($variables['individualScss'])) {
@@ -128,7 +127,7 @@ final class StyleCompiler extends SingletonFactory
 
             if ($individualScssDarkMode) {
                 $individualScss .= \sprintf(
-                    "\n@media (prefers-color-scheme: dark) {\n%s\n}",
+                    "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
                     $individualScssDarkMode,
                 );
             }
@@ -162,7 +161,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $files = $this->getFiles($supportsDarkMode);
+        $files = $this->getFiles();
 
         if ($customCustomSCSSFile !== null) {
             if (($customSCSSFileKey = \array_search(WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
@@ -210,10 +209,10 @@ final class StyleCompiler extends SingletonFactory
      * @return string[]
      * @since 5.3
      */
-    private function getFiles(bool $supportsDarkMode): array
+    private function getFiles(): array
     {
         if (!$this->files) {
-            $files = $this->getCoreFiles($supportsDarkMode);
+            $files = $this->getCoreFiles();
 
             // read stylesheets in dependency order
             $sql = "SELECT      filename, application
@@ -265,7 +264,7 @@ final class StyleCompiler extends SingletonFactory
 
             if ($individualScssDarkMode) {
                 $individualScss .= \sprintf(
-                    "\n@media (prefers-color-scheme: dark) {\n%s\n}",
+                    "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
                     $individualScssDarkMode,
                 );
             }
@@ -300,7 +299,7 @@ final class StyleCompiler extends SingletonFactory
 
         $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
-        foreach ($this->getFiles(!!$style->hasDarkMode) as $file) {
+        foreach ($this->getFiles() as $file) {
             $scss .= $this->prepareFile($file);
         }
         $scss .= $individualScss;
@@ -404,7 +403,7 @@ final class StyleCompiler extends SingletonFactory
      */
     public function compileACP(): void
     {
-        $files = $this->getCoreFiles(true);
+        $files = $this->getCoreFiles();
 
         // ACP uses a slightly different layout
         $files[] = WCF_DIR . 'acp/style/layout.scss';
@@ -456,7 +455,7 @@ final class StyleCompiler extends SingletonFactory
      *
      * @return string[] list of common stylesheets
      */
-    private function getCoreFiles(bool $supportsDarkMode): array
+    private function getCoreFiles(): array
     {
         $files = [];
         if ($handle = \opendir(WCF_DIR . 'style/')) {
@@ -484,10 +483,6 @@ final class StyleCompiler extends SingletonFactory
             }
 
             \closedir($handle);
-
-            if (!$supportsDarkMode) {
-                $files = \array_filter($files, fn (string $file) => !\str_ends_with($file, 'ui/darkMode.scss'));
-            }
 
             // Directory order is not deterministic in some cases,
             // also the `darkMode.scss` must be at the end.
@@ -558,11 +553,14 @@ final class StyleCompiler extends SingletonFactory
             \ARRAY_FILTER_USE_BOTH
         );
 
-        $content = $this->exportStyleVariables($variables);
+        $content = \sprintf(
+            "html {\n%s\n}",
+            $this->exportStyleVariables($variables)
+        );
 
         if ($darkModeVariables !== []) {
             $content .= \sprintf(
-                "\n@media (prefers-color-scheme: dark) {\n%s}\n",
+                "\nhtml[data-color-scheme=\"dark\"] {\n%s}\n",
                 $this->exportStyleVariables($darkModeVariables),
             );
         }
@@ -776,7 +774,7 @@ final class StyleCompiler extends SingletonFactory
             'wcfFontFamilyGoogle',
         ];
 
-        $css = "html {\n";
+        $css = '';
         foreach ($variables as $key => $value) {
             if (!\preg_match('~^wcf[A-Z]~', $key)) {
                 continue;
@@ -808,7 +806,7 @@ final class StyleCompiler extends SingletonFactory
             }
         }
 
-        return $css . '}';
+        return $css;
     }
 
     /**
