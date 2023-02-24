@@ -35,6 +35,7 @@ CategoryEditor::create([
     'objectTypeID' => ObjectTypeCache::getInstance()
         ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category'),
     'title' => 'Default Category',
+    'description' => '',
     'time' => TIME_NOW,
 ]);
 
