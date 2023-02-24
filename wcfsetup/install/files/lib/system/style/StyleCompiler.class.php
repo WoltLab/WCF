@@ -660,6 +660,7 @@ final class StyleCompiler extends SingletonFactory
         $variables['wcfBorderRadius'] = '4px';
         $variables['wcfBorderRadiusContainer'] = '8px';
         $variables['wcfBoxShadow'] = 'rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0';
+        $variables['wcfBoxShadowCard'] = 'rgb(0 0 0 / 10%) 0 12px 28px 0, rgb(0 0 0 / 5%) 0 2px 4px 0';
 
         return $variables;
     }
