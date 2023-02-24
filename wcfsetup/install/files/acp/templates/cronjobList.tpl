@@ -33,11 +33,7 @@
 			<thead>
 				<tr>
 					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnDate columnStartMinute{if $sortField == 'startMinute'} active {@$sortOrder}{/if}" title="{lang}wcf.acp.cronjob.startMinute{/lang}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=startMinute&sortOrder={if $sortField == 'startMinute' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.startMinuteShort{/lang}</a></th>
-					<th class="columnDate columnStartHour{if $sortField == 'startHour'} active {@$sortOrder}{/if}" title="{lang}wcf.acp.cronjob.startHour{/lang}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=startHour&sortOrder={if $sortField == 'startHour' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.startHourShort{/lang}</a></th>
-					<th class="columnDate columnStartDom{if $sortField == 'startDom'} active {@$sortOrder}{/if}" title="{lang}wcf.acp.cronjob.startDom{/lang}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=startDom&sortOrder={if $sortField == 'startDom' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.startDomShort{/lang}</a></th>
-					<th class="columnDate columnStartMonth{if $sortField == 'startMonth'} active {@$sortOrder}{/if}" title="{lang}wcf.acp.cronjob.startMonth{/lang}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=startMonth&sortOrder={if $sortField == 'startMonth' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.startMonthShort{/lang}</a></th>
-					<th class="columnDate columnStartDow{if $sortField == 'startDow'} active {@$sortOrder}{/if}" title="{lang}wcf.acp.cronjob.startDow{/lang}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=startDow&sortOrder={if $sortField == 'startDow' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.startDowShort{/lang}</a></th>
+					<th class="columnText columnExpression" title="{lang}wcf.acp.cronjob.expression{/lang}"><span>{lang}wcf.acp.cronjob.expression{/lang}</span></th>
 					<th class="columnText columnDescription{if $sortField == 'descriptionI18n'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=descriptionI18n&sortOrder={if $sortField == 'descriptionI18n' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}</a></th>
 					<th class="columnDate columnNextExec{if $sortField == 'nextExec'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=nextExec&sortOrder={if $sortField == 'nextExec' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.nextExec{/lang}</a></th>
 					
@@ -86,11 +82,9 @@
 								{event name='rowButtons'}
 							</td>
 							<td class="columnID">{@$cronjob->cronjobID}</td>
-							<td class="columnDate columnStartMinute">{$cronjob->startMinute|truncate:30}</td>
-							<td class="columnDate columnStartHour">{$cronjob->startHour|truncate:30}</td>
-							<td class="columnDate columnStartDom">{$cronjob->startDom|truncate:30}</td>
-							<td class="columnDate columnStartMonth">{$cronjob->startMonth|truncate:30}</td>
-							<td class="columnDate columnStartDow">{$cronjob->startDow|truncate:30}</td>
+							<td class="columnText columnExpression">
+								<kbd>{$cronjob->getExpression()}</kbd>
+							</td>
 							<td class="columnText columnDescription">
 								{if $cronjob->isEditable()}
 									<a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->getDescription()}</a>
