@@ -31,13 +31,6 @@ class EventListener extends DatabaseObject
     use TDatabaseObjectPermissions;
 
     /**
-     * prefix of automatically created event listener names
-     * @var string
-     * @deprecated  will be removed once listener names are mandatory
-     */
-    const AUTOMATIC_NAME_PREFIX = 'com.woltlab.wcf.eventListener';
-
-    /**
      * Returns the names of all events listened to.
      *
      * @return  string[]

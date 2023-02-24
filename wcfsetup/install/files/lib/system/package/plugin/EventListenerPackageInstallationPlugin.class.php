@@ -114,7 +114,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             'eventName' => $eventName,
             'inherit' => isset($data['elements']['inherit']) ? \intval($data['elements']['inherit']) : 0,
             'listenerClassName' => $data['elements']['listenerclassname'],
-            'listenerName' => $data['attributes']['name'] ?? '',
+            'listenerName' => $data['attributes']['name'],
             'niceValue' => $nice,
             'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
             'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
@@ -124,60 +124,16 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     /**
      * @inheritDoc
      */
-    protected function import(array $row, array $data)
-    {
-        // if an event listener is updated without a name given, keep the
-        // old automatically assigned name
-        if (!empty($row) && !$data['listenerName']) {
-            unset($data['listenerName']);
-        }
-
-        /** @var EventListener $eventListener */
-        $eventListener = parent::import($row, $data);
-
-        // update event listener name
-        if (!$eventListener->listenerName) {
-            $eventListenerEditor = new EventListenerEditor($eventListener);
-            $eventListenerEditor->update([
-                'listenerName' => EventListener::AUTOMATIC_NAME_PREFIX . $eventListener->listenerID,
-            ]);
-
-            $eventListener = new EventListener($eventListener->listenerID);
-        }
-
-        return $eventListener;
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function findExistingItem(array $data)
     {
-        if (!$data['listenerName']) {
-            $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
-                    WHERE   packageID = ?
-                        AND environment = ?
-                        AND eventClassName = ?
-                        AND eventName = ?
-                        AND listenerClassName = ?";
-            $parameters = [
-                $this->installation->getPackageID(),
-                $data['environment'],
-                $data['eventClassName'],
-                $data['eventName'],
-                $data['listenerClassName'],
-            ];
-        } else {
-            $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
-                    WHERE   packageID = ?
-                        AND listenerName = ?";
-            $parameters = [
-                $this->installation->getPackageID(),
-                $data['listenerName'],
-            ];
-        }
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   packageID = ?
+                    AND listenerName = ?";
+        $parameters = [
+            $this->installation->getPackageID(),
+            $data['listenerName'],
+        ];
 
         return [
             'sql' => $sql,
