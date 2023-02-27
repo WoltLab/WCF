@@ -9,6 +9,7 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
+import { escapeAttributeSelector } from "WoltLabSuite/Core/Dom/Util";
 
 class Checkboxes extends Field {
   protected _fields: HTMLInputElement[];
@@ -30,7 +31,7 @@ class Checkboxes extends Field {
   }
 
   protected _readField(): void {
-    this._fields = Array.from(document.querySelectorAll(`input[name="${this._fieldId}[]"]`));
+    this._fields = Array.from(document.querySelectorAll(`input[name="${escapeAttributeSelector(this._fieldId)}[]"]`));
   }
 }
 

@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field"], function (require, exports, tslib_1, Field_1) {
+define(["require", "exports", "tslib", "./Field", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Field_1, Util_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     class Checkboxes extends Field_1.default {
@@ -25,7 +25,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
             };
         }
         _readField() {
-            this._fields = Array.from(document.querySelectorAll(`input[name="${this._fieldId}[]"]`));
+            this._fields = Array.from(document.querySelectorAll(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[]"]`));
         }
     }
     return Checkboxes;

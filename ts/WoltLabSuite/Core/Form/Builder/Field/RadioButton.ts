@@ -9,6 +9,7 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
+import { escapeAttributeSelector } from "WoltLabSuite/Core/Dom/Util";
 
 class RadioButton extends Field {
   protected _fields: HTMLInputElement[];
@@ -16,7 +17,7 @@ class RadioButton extends Field {
   constructor(fieldId: string) {
     super(fieldId);
 
-    this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+    this._fields = Array.from(document.querySelectorAll(`input[name="${escapeAttributeSelector(this._fieldId)}"]`));
   }
 
   protected _getData(): FormBuilderData {

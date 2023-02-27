@@ -7,6 +7,7 @@
  * @since 5.2
  */
 
+import { escapeAttributeSelector } from "WoltLabSuite/Core/Dom/Util";
 import * as DependencyManager from "./Manager";
 
 function isInput(node: Node): node is HTMLInputElement {
@@ -65,13 +66,15 @@ abstract class FormBuilderFormFieldDependency {
     this._field = document.getElementById(fieldId)!;
     if (this._field === null) {
       this._fields = [];
-      document.querySelectorAll("input[type=radio][name=" + fieldId + "]").forEach((field: HTMLInputElement) => {
-        this._fields.push(field);
-      });
+      document
+        .querySelectorAll(`input[type=radio][name="${escapeAttributeSelector(fieldId)}"]`)
+        .forEach((field: HTMLInputElement) => {
+          this._fields.push(field);
+        });
 
       if (!this._fields.length) {
         document
-          .querySelectorAll('input[type=checkbox][name="' + fieldId + '[]"]')
+          .querySelectorAll(`input[type=checkbox][name="${escapeAttributeSelector(fieldId)}[]"]`)
           .forEach((field: HTMLInputElement) => {
             this._fields.push(field);
           });
@@ -84,11 +87,7 @@ abstract class FormBuilderFormFieldDependency {
       this._fields = [this._field];
 
       // Handle special case of boolean form fields that have two form fields.
-      if (
-        isInput(this._field) &&
-        this._field.type === "radio" &&
-        this._field.dataset.noInputId !== ""
-      ) {
+      if (isInput(this._field) && this._field.type === "radio" && this._field.dataset.noInputId !== "") {
         this._noField = document.getElementById(this._field.dataset.noInputId!)! as HTMLInputElement;
         if (this._noField === null) {
           throw new Error("Cannot find 'no' input field for input field '" + fieldId + "'");

@@ -68,6 +68,17 @@ const DomUtil = {
   },
 
   /**
+   * Escapes the input string for use within an attribute selector:
+   *
+   * documenty.querySelector(`[data-foo="${escapeAttributeSelector(`"quoted"`)}"]`);
+   *
+   * @since 6.0
+   */
+  escapeAttributeSelector(selector: string): string {
+    return selector.replace(/(["\\])/g, '\\$1');
+  },
+
+  /**
    * Returns the element's id. If there is no id set, a unique id will be
    * created and assigned.
    */
