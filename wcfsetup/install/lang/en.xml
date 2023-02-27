@@ -3236,11 +3236,12 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.attachment.attachments"><![CDATA[Attachments]]></item>
 		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file size exceeds the maximum file size.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many attachments, remaining: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
-		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[The file exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
+		<item name="wcf.attachment.upload.error.http413"><![CDATA[The file size exceeds the web server’s maximum request size.]]></item>
+		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[The file size exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[The maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br>
 Maximum File Size: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
