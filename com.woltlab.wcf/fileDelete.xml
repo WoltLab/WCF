@@ -114,6 +114,7 @@
 		<file>acp/templates/workerException.tpl</file>
 		<file>acp/templates/workerFinish.tpl</file>
 		<file>acp/templates/workerNext.tpl</file>
+		<file>acp/templates/wysiwygToolbar.tpl</file>
 		<file>acp/update-com.woltlab.wcf_3.2_reactionUpdate.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
@@ -682,6 +683,7 @@
 		<file>icon/write1.svg</file>
 		<file>images/apple-touch-icon.png</file>
 		<file>images/avatars/generateAvatar.php</file>
+		<file>images/avatars/gravatars/.gitignore</file>
 		<file>images/colorPickerBar.png</file>
 		<file>images/colorPickerGradient.png</file>
 		<file>images/favicon.ico</file>
@@ -1225,10 +1227,53 @@
 		<file>js/3rdParty/redactor/redactor.css</file>
 		<file>js/3rdParty/redactor/redactor.js</file>
 		<file>js/3rdParty/redactor/redactor.min.js</file>
+		<file>js/3rdParty/redactor2/README.md</file>
 		<file>js/3rdParty/redactor2/plugins/WoltLabAlignment.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabArticle.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabAttachment.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabAutosave.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabBlock.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabButton.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabCaret.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabClean.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabCode.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabColor.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabDragAndDrop.js</file>
 		<file>js/3rdParty/redactor2/plugins/WoltLabDropdown.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabEvent.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabFont.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabFullscreen.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabHtml.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabImage.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabIndent.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabInlineCode.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabInsert.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabKeydown.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabKeyup.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabLine.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabLink.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabList.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabMedia.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabMention.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabModal.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabObserve.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabPage.js</file>
 		<file>js/3rdParty/redactor2/plugins/WoltLabParagraphize.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabPaste.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabQuote.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabReply.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabSize.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabSmiley.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabSource.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabSpoiler.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabTable.js</file>
+		<file>js/3rdParty/redactor2/plugins/WoltLabUtils.js</file>
+		<file>js/3rdParty/redactor2/plugins/alignment.js</file>
 		<file>js/3rdParty/redactor2/plugins/combined.min.js</file>
+		<file>js/3rdParty/redactor2/plugins/source.js</file>
+		<file>js/3rdParty/redactor2/plugins/table.js</file>
+		<file>js/3rdParty/redactor2/redactor.combined.min.js</file>
+		<file>js/3rdParty/redactor2/redactor.js</file>
 		<file>js/3rdParty/redactor2/redactor.min.js</file>
 		<file>js/3rdParty/slimbox2.js</file>
 		<file>js/3rdParty/slimbox2.min.js</file>
@@ -1405,6 +1450,7 @@
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
+		<file>js/WoltLabSuite/Core/Component/Ckeditor/woltlab-core-ckeditor.js</file>
 		<file>js/WoltLabSuite/Core/Component/Comment/CommentList.js</file>
 		<file>js/WoltLabSuite/Core/Component/Comment/Handler.js</file>
 		<file>js/WoltLabSuite/Core/Component/Confirmation/Delete.js</file>
@@ -1445,6 +1491,7 @@
 		<file>js/WoltLabSuite/Core/Ui/Comment/Edit.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Comment/Response/Add.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Comment/Response/Edit.js</file>
+		<file>js/WoltLabSuite/Core/Ui/DragAndDrop.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
@@ -1459,7 +1506,22 @@
 		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/View/Vote.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Vote.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Article.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Autosave.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Code.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/DragAndDrop.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Editor.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Format.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Html.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Link.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Mention.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Metacode.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Page.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/PseudoHeader.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Quote.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Redactor/RuntimeStyle.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Spoiler.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Redactor/Table.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Menu/DropDown.js</file>
 		<file>js/WoltLabSuite/WebComponent/fa-brand.js</file>
 		<file>js/WoltLabSuite/WebComponent/fa-icon.js</file>
@@ -1682,6 +1744,8 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/AttributeObjectBuilderFactory.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/FilledArguments.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/JsonExtensionNotEnabled.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ClassNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ProxyClassNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ShellVisitorNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/CannotGetParentOfRootShell.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/DuplicatedNodeChild.php</file>
@@ -1697,6 +1761,7 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/AttributeShellVisitor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/ShellVisitor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/TreeMapperContainer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/EnumType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToAccessOutboundToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToReadFinishedStream.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/WrongTokenType.php</file>
@@ -1709,6 +1774,9 @@
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionNarrower.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionNullNarrower.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionScalarNarrower.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Types/ClassType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Types/EnumValueType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Types/NativeEnumType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/Polyfill.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/Singleton.php</file>
 		<file>lib/system/api/doctrine/annotations/LICENSE</file>
@@ -2706,6 +2774,7 @@
 		<file>lib/system/package/PackageDependencyHandler.class.php</file>
 		<file>lib/system/package/PackageUpdateAuthorizationRequiredException.class.php</file>
 		<file>lib/system/package/SplitNodeException.php</file>
+		<file>lib/system/package/event/PackageUpdateListChanged.php</file>
 		<file>lib/system/package/plugin/ACPTemplatesPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/ClipboardItemTypePackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/CronjobsPackageInstallationPlugin.class.php</file>
@@ -2989,6 +3058,7 @@
 		<file>style/ui/poll.less</file>
 		<file>style/ui/popover.less</file>
 		<file>style/ui/redactor.less</file>
+		<file>style/ui/redactor.scss</file>
 		<file>style/ui/sitemap.scss</file>
 		<file>style/ui/spinner.less</file>
 		<file>style/ui/tabMenu.less</file>
