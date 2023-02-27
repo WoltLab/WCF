@@ -9,6 +9,10 @@
 
 import * as DependencyManager from "./Manager";
 
+function isInput(node: Node): node is HTMLInputElement {
+  return node.nodeName === "INPUT";
+}
+
 abstract class FormBuilderFormFieldDependency {
   protected _dependentElement: HTMLElement;
   protected _field: HTMLElement;
@@ -81,8 +85,8 @@ abstract class FormBuilderFormFieldDependency {
 
       // Handle special case of boolean form fields that have two form fields.
       if (
-        this._field.tagName === "INPUT" &&
-        (this._field as HTMLInputElement).type === "radio" &&
+        isInput(this._field) &&
+        this._field.type === "radio" &&
         this._field.dataset.noInputId !== ""
       ) {
         this._noField = document.getElementById(this._field.dataset.noInputId!)! as HTMLInputElement;

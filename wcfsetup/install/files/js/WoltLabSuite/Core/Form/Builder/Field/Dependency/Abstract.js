@@ -9,6 +9,9 @@
 define(["require", "exports", "tslib", "./Manager"], function (require, exports, tslib_1, DependencyManager) {
     "use strict";
     DependencyManager = tslib_1.__importStar(DependencyManager);
+    function isInput(node) {
+        return node.nodeName === "INPUT";
+    }
     class FormBuilderFormFieldDependency {
         _dependentElement;
         _field;
@@ -69,7 +72,7 @@ define(["require", "exports", "tslib", "./Manager"], function (require, exports,
             else {
                 this._fields = [this._field];
                 // Handle special case of boolean form fields that have two form fields.
-                if (this._field.tagName === "INPUT" &&
+                if (isInput(this._field) &&
                     this._field.type === "radio" &&
                     this._field.dataset.noInputId !== "") {
                     this._noField = document.getElementById(this._field.dataset.noInputId);
