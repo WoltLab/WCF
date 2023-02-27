@@ -3312,7 +3312,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die maximale Anzahl an Dateianhängen erreicht.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateianhänge ausgewählt, maximal verbleibend: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
-		<item name="wcf.attachment.upload.error.http413"><![CDATA[Die Dateigröße überschreitet das Limit der Anfragegröße des Webservers.]]></item>
+		<item name="wcf.attachment.upload.error.http413"><![CDATA[Die Dateigröße überschreitet das Limit der Anfragegröße des Webservers (HTTP-Statuscode 413).]]></item>
 		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[Die Dateigröße überschreitet das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximale Anzahl an Dateianhängen: {#$attachmentHandler->getMaxCount()}<br>
 Maximale Dateigröße: {@$attachmentHandler->getMaxSize()|filesize}<br>
