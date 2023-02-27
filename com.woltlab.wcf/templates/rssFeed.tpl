@@ -7,7 +7,7 @@
 >
 	<channel>
 		<title><![CDATA[{if $title}{@$title|escapeCDATA} - {/if}{@PAGE_TITLE|phrase|escapeCDATA}]]></title>
-		<link><![CDATA[{@$baseHref|escapeCDATA}]]></link>
+		<link><![CDATA[{@$__wcf->getPath()|escapeCDATA}]]></link>
 		<description><![CDATA[{@PAGE_DESCRIPTION|phrase|escapeCDATA}]]></description>
 		<language>{@$__wcf->language->getFixedLanguageCode()}</language>
 		<pubDate>{'r'|gmdate:TIME_NOW}</pubDate>
