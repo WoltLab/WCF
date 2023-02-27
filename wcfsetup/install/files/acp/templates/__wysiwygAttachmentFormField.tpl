@@ -47,6 +47,7 @@
 			'wcf.attachment.upload.error.reachedLimit': '{jslang}wcf.attachment.upload.error.reachedLimit{/jslang}',
 			'wcf.attachment.upload.error.reachedRemainingLimit': '{jslang}wcf.attachment.upload.error.reachedRemainingLimit{/jslang}',
 			'wcf.attachment.upload.error.uploadFailed': '{jslang}wcf.attachment.upload.error.uploadFailed{/jslang}',
+			'wcf.attachment.upload.error.http413': '{jslang}wcf.attachment.upload.error.http413{/jslang}',
 			'wcf.attachment.upload.error.uploadPhpLimit': '{jslang}wcf.attachment.upload.error.uploadPhpLimit{/jslang}',
 			'wcf.attachment.insert': '{jslang}wcf.attachment.insert{/jslang}',
 			'wcf.attachment.insertAll': '{jslang}wcf.attachment.insertAll{/jslang}',

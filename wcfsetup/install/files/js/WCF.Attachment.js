@@ -638,7 +638,15 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				// upload icon
 				$listItem.addClass('uploadFailed');
 				icon.setIcon("ban");
-				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
+
+				let message = WCF.Language.get('wcf.attachment.upload.error.uploadFailed');
+				if (data.responseJSON && data.responseJSON.message) {
+					message = data.responseJSON.message;
+				} else if (data.status == 413) {
+					message = WCF.Language.get('wcf.attachment.upload.error.http413');
+				}
+
+				$listItem.find('div > div').append($('<small class="innerError">' + message + '</small>'));
 			}
 		});
 	},
