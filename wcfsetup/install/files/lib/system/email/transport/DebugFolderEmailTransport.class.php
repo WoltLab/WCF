@@ -16,7 +16,7 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-final class DebugFolderEmailTransport implements IEmailTransport
+final class DebugFolderEmailTransport implements IStatusReportingEmailTransport
 {
     protected string $folder;
 
@@ -43,7 +43,7 @@ final class DebugFolderEmailTransport implements IEmailTransport
     /**
      * Writes the given $email into the folder.
      */
-    public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
+    public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): string
     {
         $eml = "Return-Path: <" . $envelopeFrom->getAddress() . ">\r\n";
         $eml .= "Delivered-To: <" . $envelopeTo->getAddress() . ">\r\n";
@@ -74,5 +74,7 @@ final class DebugFolderEmailTransport implements IEmailTransport
         if (\PHP_EOL != "\r\n") {
             @\symlink('../' . $filename, $this->folder . 'new/' . $filename);
         }
+
+        return \sprintf("Written to '%s'.", $filename);
     }
 }
