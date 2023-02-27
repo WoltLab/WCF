@@ -461,9 +461,6 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
     /**
      * Delivers the given email using SMTP.
      *
-     * @param Email $email
-     * @param Mailbox $envelopeFrom
-     * @param Mailbox $envelopeTo
      * @throws  \Exception
      * @throws  PermanentFailure
      */
