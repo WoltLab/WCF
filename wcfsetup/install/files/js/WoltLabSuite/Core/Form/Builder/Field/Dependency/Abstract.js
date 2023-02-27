@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Manager"], function (require, exports, tslib_1, DependencyManager) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "./Manager"], function (require, exports, tslib_1, Util_1, DependencyManager) {
     "use strict";
     DependencyManager = tslib_1.__importStar(DependencyManager);
     function isInput(node) {
@@ -55,12 +55,14 @@ define(["require", "exports", "tslib", "./Manager"], function (require, exports,
             this._field = document.getElementById(fieldId);
             if (this._field === null) {
                 this._fields = [];
-                document.querySelectorAll("input[type=radio][name=" + fieldId + "]").forEach((field) => {
+                document
+                    .querySelectorAll(`input[type=radio][name="${(0, Util_1.escapeAttributeSelector)(fieldId)}"]`)
+                    .forEach((field) => {
                     this._fields.push(field);
                 });
                 if (!this._fields.length) {
                     document
-                        .querySelectorAll('input[type=checkbox][name="' + fieldId + '[]"]')
+                        .querySelectorAll(`input[type=checkbox][name="${(0, Util_1.escapeAttributeSelector)(fieldId)}[]"]`)
                         .forEach((field) => {
                         this._fields.push(field);
                     });
@@ -72,9 +74,7 @@ define(["require", "exports", "tslib", "./Manager"], function (require, exports,
             else {
                 this._fields = [this._field];
                 // Handle special case of boolean form fields that have two form fields.
-                if (isInput(this._field) &&
-                    this._field.type === "radio" &&
-                    this._field.dataset.noInputId !== "") {
+                if (isInput(this._field) && this._field.type === "radio" && this._field.dataset.noInputId !== "") {
                     this._noField = document.getElementById(this._field.dataset.noInputId);
                     if (this._noField === null) {
                         throw new Error("Cannot find 'no' input field for input field '" + fieldId + "'");
