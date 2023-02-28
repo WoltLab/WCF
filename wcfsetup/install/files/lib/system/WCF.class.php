@@ -813,11 +813,11 @@ class WCF
      */
     final public static function autoload(string $className): void
     {
-        $namespaces = \explode('\\', $className);
-        if (isset($namespaces[1])) {
-            $applicationPrefix = \array_shift($namespaces);
+        $className = \strtr($className, '\\', '/');
+        if (($slashPos = \strpos($className, '/')) !== null) {
+            $applicationPrefix = \substr($className, 0, $slashPos);
             if (isset(self::$autoloadDirectories[$applicationPrefix])) {
-                $classPath = self::$autoloadDirectories[$applicationPrefix] . \implode('/', $namespaces) . '.class.php';
+                $classPath = self::$autoloadDirectories[$applicationPrefix] . \substr($className, $slashPos + 1) . '.class.php';
 
                 // PHP will implicitly check if the file exists when including it, which means that we can save a
                 // redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
