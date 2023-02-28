@@ -816,9 +816,6 @@ class WCF
         $namespaces = \explode('\\', $className);
         if (isset($namespaces[1])) {
             $applicationPrefix = \array_shift($namespaces);
-            if ($applicationPrefix === '') {
-                $applicationPrefix = \array_shift($namespaces);
-            }
             if (isset(self::$autoloadDirectories[$applicationPrefix])) {
                 $classPath = self::$autoloadDirectories[$applicationPrefix] . \implode('/', $namespaces) . '.class.php';
 
