@@ -1,5 +1,5 @@
 /**
- * @license alameda 1.2.0 Copyright jQuery Foundation and other contributors.
+ * @license alameda 1.4.0 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/alameda/blob/master/LICENSE
  */
 // Going sloppy because loader plugin execs may depend on non-strict execution.
@@ -534,7 +534,7 @@ var requirejs, require, define;
         d.resolve = resolve;
         d.reject = function(err) {
           if (!name) {
-          requireDeferreds.splice(requireDeferreds.indexOf(d), 1);
+            requireDeferreds.splice(requireDeferreds.indexOf(d), 1);
           }
           reject(err);
         };
@@ -601,14 +601,15 @@ var requirejs, require, define;
       }
 
       load.error = function (err) {
-        getDefer(id).reject(err);
+        reject(getDefer(id), err);
       };
 
       load.fromText = function (text, textAlt) {
         /*jslint evil: true */
         var d = getDefer(id),
           map = makeMap(makeMap(id).n),
-           plainId = map.id;
+          plainId = map.id,
+          execError;
 
         fromTextCalled = true;
 
@@ -634,8 +635,10 @@ var requirejs, require, define;
         try {
           req.exec(text);
         } catch (e) {
-          reject(d, new Error('fromText eval for ' + plainId +
-                  ' failed: ' + e));
+          execError = new Error('fromText eval for ' + plainId +
+                                ' failed: ' + e);
+          execError.requireType = 'fromtexteval';
+          reject(d, execError);
         }
 
         // Execute any waiting define created by the plainId
@@ -705,11 +708,16 @@ var requirejs, require, define;
             } else {
               err = new Error('Load failed: ' + id + ': ' + script.src);
               err.requireModules = [id];
-              getDefer(id).reject(err);
+              err.requireType = 'scripterror';
+              reject(getDefer(id), err);
             }
           }, false);
 
           script.src = url;
+
+          if (config.onNodeCreated) {
+            config.onNodeCreated(script, config, id, url);
+          }
 
           // If the script is cached, IE10 executes the script body and the
           // onload handler synchronously here.  That's a spec violation,
@@ -870,10 +878,10 @@ var requirejs, require, define;
           return (defined[name] = {});
         }
       },
-      module: function (name) {
+      module: function (name, url) {
         return {
           id: name,
-          uri: '',
+          uri: url || '',
           exports: handlers.exports(name),
           config: function () {
             return getOwn(config.config, name) || {};
@@ -948,7 +956,10 @@ var requirejs, require, define;
         }
         err = new Error('Timeout for modules: ' + notFinished);
         err.requireModules = notFinished;
-        req.onError(err);
+        err.requireType = 'timeout';
+        notFinished.forEach(function (id) {
+          reject(getDefer(id), err);
+        });
       } else if (loadCount || requireDeferreds.length) {
         // Something is still waiting to load. Wait for it, but only
         // if a later check is not already scheduled. Using setTimeout
@@ -1061,7 +1072,7 @@ var requirejs, require, define;
             d.usingExports = true;
           } else if (depName === "module") {
             // CommonJS module spec 1.1
-            d.values[i] = d.cjsModule = handlers.module(name);
+            d.values[i] = d.cjsModule = handlers.module(name, d.map.url);
           } else if (depName === undefined) {
             d.values[i] = undefined;
           } else {
