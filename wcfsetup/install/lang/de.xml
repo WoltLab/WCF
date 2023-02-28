@@ -4519,7 +4519,7 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Helligkeit]]></item>
 		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Farbe ändern]]></item>
 		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Hintergrundfarbe ändern]]></item>
-		<item name="wcf.style.setColorScheme"><![CDATA[Farbscheme festlegen]]></item>
+		<item name="wcf.style.setColorScheme"><![CDATA[Farbschema festlegen]]></item>
 		<item name="wcf.style.setColorScheme.dark"><![CDATA[Dunkles Farbschema]]></item>
 		<item name="wcf.style.setColorScheme.light"><![CDATA[Helles Farbschema]]></item>
 		<item name="wcf.style.setColorScheme.system"><![CDATA[Automatisch erkennen]]></item>
