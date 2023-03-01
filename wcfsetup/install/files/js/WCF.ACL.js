@@ -399,18 +399,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					$('#deny' + $optionID).prop('checked', false);
 				}
 			}
-			
-			var $allChecked = true;
-			this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function (index, item) {
-				var $item = $(item);
-				
-				if ($item.data('type') === $type && $item.attr('id') !== $type + 'All_' + this._container.attr('id')) {
-					if (!$item.is(':checked')) {
-						$allChecked = false;
-						return false;
-					}
-				}
-			}, this));
 		},
 		
 		/**
