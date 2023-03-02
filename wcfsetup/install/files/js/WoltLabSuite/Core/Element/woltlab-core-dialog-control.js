@@ -115,9 +115,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.append(this.#extraButton);
             }
         }
-        addEventListener(type, listener, options) {
-            super.addEventListener(type, listener, options);
-        }
     }
     exports.WoltlabCoreDialogControlElement = WoltlabCoreDialogControlElement;
     window.customElements.define("woltlab-core-dialog-control", WoltlabCoreDialogControlElement);

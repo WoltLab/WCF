@@ -233,9 +233,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.dispatchEvent(event);
             return event.defaultPrevented === false;
         }
-        addEventListener(type, listener, options) {
-            super.addEventListener(type, listener, options);
-        }
     }
     exports.WoltlabCoreDialogElement = WoltlabCoreDialogElement;
     window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
