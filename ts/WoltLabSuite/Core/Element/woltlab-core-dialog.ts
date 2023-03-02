@@ -303,19 +303,16 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     return event.defaultPrevented === false;
   }
+}
 
-  public addEventListener<T extends keyof WoltlabCoreDialogEventMap>(
-    type: T,
-    listener: (this: WoltlabCoreDialogElement, ev: WoltlabCoreDialogEventMap[T]) => any,
-    options?: boolean | AddEventListenerOptions,
-  ): void;
-  public addEventListener(
-    type: string,
-    listener: (this: WoltlabCoreDialogElement, ev: Event) => any,
-    options?: boolean | AddEventListenerOptions,
-  ): void {
-    super.addEventListener(type, listener, options);
-  }
+export interface WoltlabCoreDialogElement extends HTMLElement {
+  addEventListener: {
+    <T extends keyof WoltlabCoreDialogEventMap>(
+      type: T,
+      listener: (this: WoltlabCoreDialogElement, ev: WoltlabCoreDialogEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+  } & HTMLElement["addEventListener"];
 }
 
 window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);

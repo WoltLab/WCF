@@ -144,19 +144,16 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.append(this.#extraButton);
     }
   }
+}
 
-  public addEventListener<T extends keyof WoltlabCoreDialogControlEventMap>(
-    type: T,
-    listener: (this: WoltlabCoreDialogControlElement, ev: WoltlabCoreDialogControlEventMap[T]) => any,
-    options?: boolean | AddEventListenerOptions,
-  ): void;
-  public addEventListener(
-    type: string,
-    listener: (this: WoltlabCoreDialogControlElement, ev: Event) => any,
-    options?: boolean | AddEventListenerOptions,
-  ): void {
-    super.addEventListener(type, listener, options);
-  }
+export interface WoltlabCoreDialogControlElement extends HTMLElement {
+  addEventListener: {
+    <T extends keyof WoltlabCoreDialogControlEventMap>(
+      type: T,
+      listener: (this: WoltlabCoreDialogControlElement, ev: WoltlabCoreDialogControlEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+  } & HTMLElement["addEventListener"];
 }
 
 window.customElements.define("woltlab-core-dialog-control", WoltlabCoreDialogControlElement);

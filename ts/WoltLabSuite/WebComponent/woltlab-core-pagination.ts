@@ -297,19 +297,16 @@
       this.setAttribute("url", url);
       this.#render();
     }
+  }
 
-    public addEventListener<T extends keyof WoltlabCorePaginationEventMap>(
-      type: T,
-      listener: (this: WoltlabCorePaginationElement, ev: WoltlabCorePaginationEventMap[T]) => any,
-      options?: boolean | AddEventListenerOptions,
-    ): void;
-    public addEventListener(
-      type: string,
-      listener: (this: WoltlabCorePaginationElement, ev: Event) => any,
-      options?: boolean | AddEventListenerOptions,
-    ): void {
-      super.addEventListener(type, listener, options);
-    }
+  interface WoltlabCorePaginationElement extends HTMLElement {
+    addEventListener: {
+      <T extends keyof WoltlabCorePaginationEventMap>(
+        type: T,
+        listener: (this: WoltlabCorePaginationElement, ev: WoltlabCorePaginationEventMap[T]) => any,
+        options?: boolean | AddEventListenerOptions,
+      ): void;
+    } & HTMLElement["addEventListener"];
   }
 
   window.customElements.define("woltlab-core-pagination", WoltlabCorePaginationElement);

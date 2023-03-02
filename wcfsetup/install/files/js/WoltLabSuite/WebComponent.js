@@ -1675,9 +1675,6 @@
         this.setAttribute("url", url);
         this.#render();
       }
-      addEventListener(type, listener, options) {
-        super.addEventListener(type, listener, options);
-      }
     }
     window.customElements.define("woltlab-core-pagination", WoltlabCorePaginationElement);
   }
