@@ -2,7 +2,6 @@
 
 namespace wcf\data\language;
 
-use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
 use wcf\util\XML;
@@ -19,13 +18,22 @@ final class SetupLanguage extends Language
     /**
      * @inheritDoc
      */
-    public function __construct($languageID, array $row, ?Language $language = null)
+    public function __construct(string $languageCode)
     {
-        if ($row === null) {
-            throw new SystemException('SetupLanguage only accepts an existing dataset.');
-        }
+        parent::__construct(null, ['languageCode' => $languageCode], null);
 
-        parent::__construct(null, $row, null);
+        if (!\file_exists($this->getXmlFilename())) {
+            throw new \InvalidArgumentException(\sprintf(
+                "Invalid languageCode '%s' given. The XML file '%s' does not exist.",
+                $languageCode,
+                $this->getXmlFilename()
+            ));
+        }
+    }
+
+    private function getXmlFilename(): string
+    {
+        return TMP_DIR . 'setup/lang/setup_' . $this->languageCode . '.xml';
     }
 
     /**
@@ -44,7 +52,7 @@ final class SetupLanguage extends Language
         $compiler = new TemplateScriptingCompiler(WCF::getTPL());
 
         $xml = new XML();
-        $xml->load(TMP_DIR . 'setup/lang/setup_' . $this->languageCode . '.xml');
+        $xml->load($this->getXmlFilename());
 
         $items = $xml->xpath()->query('/ns:language/ns:category/ns:item');
         foreach ($items as $item) {

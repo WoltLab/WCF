@@ -131,7 +131,7 @@ final class WCFSetup extends WCF
      */
     protected function initLanguage(): void
     {
-        self::$languageObj = new SetupLanguage(null, ['languageCode' => self::$selectedLanguageCode]);
+        self::$languageObj = new SetupLanguage(self::$selectedLanguageCode);
     }
 
     /**
