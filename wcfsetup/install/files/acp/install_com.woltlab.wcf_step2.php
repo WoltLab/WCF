@@ -2,6 +2,7 @@
 
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\reaction\type\ReactionTypeEditor;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\image\adapter\ImagickImageAdapter;
@@ -28,6 +29,22 @@ $action = new UserProfileAction([$editor], 'updateUserRank');
 $action->executeAction();
 $action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();
+
+// install default reactions
+foreach ([
+    [1, 1, 'like.svg'],
+    [2, 2, 'thanks.svg'],
+    [3, 3, 'haha.svg'],
+    [4, 4, 'confused.svg'],
+    [5, 5, 'sad.svg'],
+] as [$reactionTypeID, $showOrder, $iconFile]) {
+    ReactionTypeEditor::create([
+        'reactionTypeID' => $reactionTypeID,
+        'title' => "wcf.reactionType.title{$reactionTypeID}",
+        'showOrder' => $showOrder,
+        'iconFile' => $iconFile,
+    ]);
+}
 
 // add default article category
 CategoryEditor::create([
