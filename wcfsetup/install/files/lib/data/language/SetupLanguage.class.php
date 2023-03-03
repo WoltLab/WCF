@@ -14,7 +14,7 @@ use wcf\util\XML;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class SetupLanguage extends Language
+final class SetupLanguage extends Language
 {
     /**
      * @inheritDoc
