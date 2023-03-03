@@ -2,6 +2,8 @@
 
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\data\user\rank\UserRankEditor;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\image\adapter\ImagickImageAdapter;
@@ -22,12 +24,47 @@ $statement->execute([
     1,
 ]);
 
+// install default user ranks
+foreach ([
+    [4, 0, 'wcf.user.rank.administrator', 'blue'],
+    [5, 0, 'wcf.user.rank.moderator', 'blue'],
+    [3, 0, 'wcf.user.rank.user0', ''],
+    [3, 300, 'wcf.user.rank.user1', ''],
+    [3, 900, 'wcf.user.rank.user2', ''],
+    [3, 3000, 'wcf.user.rank.user3', ''],
+    [3, 9000, 'wcf.user.rank.user4', ''],
+    [3, 15000, 'wcf.user.rank.user5', ''],
+] as [$groupID, $requiredPoints, $rankTitle, $cssClassName]) {
+    UserRankEditor::create([
+        'groupID' => $groupID,
+        'requiredPoints' => $requiredPoints,
+        'rankTitle' => $rankTitle,
+        'cssClassName' => $cssClassName,
+    ]);
+}
+
 // update administrator user rank and user online marking
 $editor = new UserEditor(WCF::getUser());
 $action = new UserProfileAction([$editor], 'updateUserRank');
 $action->executeAction();
 $action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();
+
+// install default reactions
+foreach ([
+    [1, 1, 'like.svg'],
+    [2, 2, 'thanks.svg'],
+    [3, 3, 'haha.svg'],
+    [4, 4, 'confused.svg'],
+    [5, 5, 'sad.svg'],
+] as [$reactionTypeID, $showOrder, $iconFile]) {
+    ReactionTypeEditor::create([
+        'reactionTypeID' => $reactionTypeID,
+        'title' => "wcf.reactionType.title{$reactionTypeID}",
+        'showOrder' => $showOrder,
+        'iconFile' => $iconFile,
+    ]);
+}
 
 // add default article category
 CategoryEditor::create([
