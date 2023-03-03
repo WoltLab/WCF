@@ -714,14 +714,12 @@ final class WCFSetup extends WCF
         // log sql queries
         \preg_match_all("~CREATE\\s+TABLE\\s+(\\w+)~i", $sql, $matches);
 
-        if (!empty($matches[1])) {
-            $sql = "INSERT INTO wcf1_package_installation_sql_log
-                                (packageID, sqlTable)
-                    VALUES      (?, ?)";
-            $statement = self::getDB()->prepareStatement($sql);
-            foreach ($matches[1] as $tableName) {
-                $statement->execute([1, $tableName]);
-            }
+        $sql = "INSERT INTO wcf1_package_installation_sql_log
+                            (packageID, sqlTable)
+                VALUES      (?, ?)";
+        $statement = self::getDB()->prepareStatement($sql);
+        foreach ($matches[1] as $tableName) {
+            $statement->execute([1, $tableName]);
         }
 
         if ($offset < (\count($sqlData) - 1)) {
