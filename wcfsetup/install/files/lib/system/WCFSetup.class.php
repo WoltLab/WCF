@@ -464,15 +464,12 @@ final class WCFSetup extends WCF
                     $memoryLimit = $matches[1] * 1024;
 
                     return $memoryLimit >= 128;
-                    break;
 
                 case 'M':
                     return $matches[1] >= 128;
-                    break;
 
                 case 'G':
                     return $matches[1] >= 1;
-                    break;
             }
         }
 
