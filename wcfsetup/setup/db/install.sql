@@ -2294,9 +2294,9 @@ ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 -- default user groups
 INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (1, 'wcf.acp.group.group1', '', 1); -- Everyone
 INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (2, 'wcf.acp.group.group2', '', 2); -- Guests
-INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (3, 'wcf.acp.group.group3', '', 3); -- Registered Users
-INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (4, 'wcf.acp.group.group4', '', 9); -- Administrators
-INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (5, 'wcf.acp.group.group5', '', 4); -- Moderators
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType, priority) VALUES (3, 'wcf.acp.group.group3', '', 3, 10); -- Registered Users
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType, priority) VALUES (4, 'wcf.acp.group.group4', '', 9, 1000); -- Administrators
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType, priority) VALUES (5, 'wcf.acp.group.group5', '', 4, 100); -- Moderators
 
 -- default user group options
 INSERT INTO wcf1_user_group_option (packageID, optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
@@ -2474,11 +2474,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMen
 
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
-
--- default priorities
-UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
-UPDATE wcf1_user_group SET priority = 1000 WHERE groupID = 4;
-UPDATE wcf1_user_group SET priority = 100 WHERE groupID = 5;
 
 -- default 'showOnTeamPage' setting
 UPDATE wcf1_user_group SET showOnTeamPage = 1 WHERE groupID IN (4, 5);
