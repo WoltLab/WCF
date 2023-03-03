@@ -30,7 +30,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
         cache: "npm"
     - run: npm install
     - name: Run prettier
@@ -50,7 +50,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
         cache: "npm"
     - run: npm install
     - name: Run prettier

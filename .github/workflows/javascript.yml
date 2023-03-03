@@ -20,7 +20,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
     - uses: actions/checkout@v3
     - run: echo "::add-matcher::.github/javascript-syntax.json"
     - name: Remove files to be ignored
@@ -41,7 +41,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
     - run: npm install
     - name: "Check 'focus-trap'"
       run: |

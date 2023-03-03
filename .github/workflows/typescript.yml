@@ -19,7 +19,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
         cache: "npm"
     - run: npm install
     - run: npx tsc --noEmit
@@ -35,7 +35,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
         cache: "npm"
     - run: npm install
     - run: npx eslint .
@@ -50,7 +50,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "18"
         cache: "npm"
     - run: npm install
     - run: rm -r wcfsetup/install/files/js/WoltLabSuite/
