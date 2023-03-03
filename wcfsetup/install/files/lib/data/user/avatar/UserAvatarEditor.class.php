@@ -108,7 +108,6 @@ class UserAvatarEditor extends DatabaseObjectEditor
             // This is also unreachable, because WebP files are rejected unconditionally
             // in AvatarUploadFileValidationStrategy.
             throw new NotImplementedException();
-
             $filenameJpeg = \preg_replace('~\.webp$~', '.jpeg', $filenameWebP);
 
             $imageAdapter->saveImageAs($image, $filenameJpeg, "jpeg", 80);

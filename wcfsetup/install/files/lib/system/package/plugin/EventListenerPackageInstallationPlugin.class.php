@@ -2,7 +2,6 @@
 
 namespace wcf\system\package\plugin;
 
-use wcf\data\event\listener\EventListener;
 use wcf\data\event\listener\EventListenerEditor;
 use wcf\data\event\listener\EventListenerList;
 use wcf\system\cache\builder\EventListenerCacheBuilder;

@@ -54,7 +54,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         }
     }
 
-    protected abstract function getNodeTree(): CategoryNodeTree;
+    abstract protected function getNodeTree(): CategoryNodeTree;
 
     protected function getActiveCategory(): ?AbstractDecoratedCategory
     {

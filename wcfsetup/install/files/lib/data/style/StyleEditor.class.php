@@ -580,7 +580,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                             if (isset($knownTemplates[Package::getAbbreviation($package) . '-' . $templateName])) {
                                 $knownTemplates[Package::getAbbreviation($package) . '-' . $templateName]->update([
-                                    'lastModificationTime' => TIME_NOW
+                                    'lastModificationTime' => TIME_NOW,
                                 ]);
                             } else {
                                 TemplateEditor::create([

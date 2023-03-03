@@ -44,11 +44,11 @@ final class Helper
             // Anything is acceptable, use the server-preferred type.
             return $availableTypes[0];
         }
-        
+
         $negotiator = new Negotiator();
 
         $best = $negotiator->getBest($request->getHeaderLine('accept'), $availableTypes);
-        
+
         if ($best === null) {
             // Nothing is acceptable, use the server-preferred type.
             return $availableTypes[0];

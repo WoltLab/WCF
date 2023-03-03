@@ -89,12 +89,12 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
     {
         if (isset($_POST['captchaQuestion'])) {
             $this->captchaQuestion = StringUtil::trim($_POST['captchaQuestion']);
-        } else if (isset($_POST['parameters']['captchaQuestion'])) {
+        } elseif (isset($_POST['parameters']['captchaQuestion'])) {
             $this->captchaQuestion = StringUtil::trim($_POST['parameters']['captchaQuestion']);
         }
         if (isset($_POST['captchaAnswer'])) {
             $this->captchaAnswer = StringUtil::trim($_POST['captchaAnswer']);
-        } else if (isset($_POST['parameters']['captchaAnswer'])) {
+        } elseif (isset($_POST['parameters']['captchaAnswer'])) {
             $this->captchaAnswer = StringUtil::trim($_POST['parameters']['captchaAnswer']);
         }
     }

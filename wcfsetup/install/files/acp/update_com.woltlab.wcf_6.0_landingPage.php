@@ -33,7 +33,7 @@ if (\in_array('islandingpage', $columns)) {
             WHERE   packageID = ?";
     $statement = WCF::getDB()->prepare($sql);
     $statement->execute([
-        $landingPageID ?: NULL,
-        1
+        $landingPageID ?: null,
+        1,
     ]);
 }

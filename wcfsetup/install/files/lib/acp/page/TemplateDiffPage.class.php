@@ -2,7 +2,6 @@
 
 namespace wcf\acp\page;
 
-use SebastianBergmann\Diff\Differ;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateList;

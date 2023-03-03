@@ -68,7 +68,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
 
             return $item;
         }, \wcf\functions\exception\sanitizeStacktrace(new \Exception(), true));
-      
+
         $stackTrace = JSON::encode($stackTraceData);
 
         $sql = "INSERT INTO             wcf1_devtools_missing_language_item

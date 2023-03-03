@@ -125,7 +125,7 @@ final class RescueModeForm extends AbstractForm
             'global',
             new \DateInterval('P1D')
         )['count'] >= self::ALLOWED_ATTEMPTS_PER_1D_GLOBAL;
-        
+
         if ($floodExceeded) {
             throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.page.error.flood'));
         }

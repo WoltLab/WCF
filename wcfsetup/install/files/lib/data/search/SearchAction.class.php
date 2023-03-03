@@ -5,7 +5,6 @@ namespace wcf\data\search;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchHandler;

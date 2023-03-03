@@ -2,7 +2,6 @@
 
 namespace wcf\acp\page;
 
-use SebastianBergmann\Diff\Differ;
 use wcf\data\IVersionTrackerObject;
 use wcf\data\language\Language;
 use wcf\page\AbstractPage;

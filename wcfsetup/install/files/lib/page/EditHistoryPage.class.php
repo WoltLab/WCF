@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use SebastianBergmann\Diff\Differ;
 use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;

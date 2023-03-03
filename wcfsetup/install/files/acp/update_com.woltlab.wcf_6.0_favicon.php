@@ -27,7 +27,7 @@ foreach ($styleList as $style) {
     $style->loadVariables();
     $variables = $style->getVariables();
     $styleEditor = new StyleEditor($style);
-    
+
     foreach (['png', 'jpg', 'gif'] as $extension) {
         $templatePath = $style->getAssetPath() . "favicon-template." . $extension;
         if (\file_exists($templatePath)) {
