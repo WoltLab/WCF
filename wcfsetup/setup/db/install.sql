@@ -2475,17 +2475,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMen
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
 
--- default ranks
-INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VALUES
-	(4, 0, 'wcf.user.rank.administrator', 'blue'),
-	(5, 0, 'wcf.user.rank.moderator', 'blue'),
-	(3, 0, 'wcf.user.rank.user0', ''),
-	(3, 300, 'wcf.user.rank.user1', ''),
-	(3, 900, 'wcf.user.rank.user2', ''),
-	(3, 3000, 'wcf.user.rank.user3', ''),
-	(3, 9000, 'wcf.user.rank.user4', ''),
-	(3, 15000, 'wcf.user.rank.user5', '');
-
 -- default options: subject and message
 INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (1, 'wcf.contact.option1', 'wcf.contact.optionDescription1', 'text', 1, 1, 1);
 INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (2, 'wcf.contact.option2', '', 'textarea', 1, 1, 1);
