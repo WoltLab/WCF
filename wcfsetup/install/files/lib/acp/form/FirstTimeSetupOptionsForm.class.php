@@ -24,11 +24,6 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'wcf.acp.menu.link.configuration';
-
-    /**
-     * @inheritDoc
-     */
     public $neededPermissions = ['admin.configuration.canEditOption'];
 
     /**
