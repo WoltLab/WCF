@@ -4,6 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\option\OptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -48,6 +49,18 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         'module_contact_form',
         'package_server_auth_code',
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        if (\FIRST_TIME_SETUP_STATE == -1) {
+            throw new PermissionDeniedException();
+        }
+    }
 
     /**
      * @inheritDoc
