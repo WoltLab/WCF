@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
 use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
@@ -81,6 +82,7 @@ class FirstTimeSetupForm extends AbstractOptionListForm
         parent::save();
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
+        $saveOptions[Option::getOptionByName('offline')->optionID] = 0;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();
