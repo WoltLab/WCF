@@ -48,8 +48,6 @@ class FirstTimeSetupForm extends AbstractOptionListForm
         'module_contact_form',
         'log_ip_address',
         'package_server_auth_code',
-        'recaptcha_publickey',
-        'recaptcha_privatekey',
     ];
 
     /**
