@@ -42,7 +42,6 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         'mail_from_address',
         'mail_admin_address',
         'module_contact_form',
-        'package_server_auth_code',
     ];
 
     /**
@@ -87,7 +86,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         parent::save();
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 1;
+        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 2;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();

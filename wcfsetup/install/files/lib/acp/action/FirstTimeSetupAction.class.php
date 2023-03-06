@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\acp\form\FirstTimeSetupLicenseForm;
 use wcf\acp\form\FirstTimeSetupOptionsForm;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -26,7 +27,8 @@ final class FirstTimeSetupAction implements RequestHandlerInterface
         ]);
 
         $controller = match (\FIRST_TIME_SETUP_STATE) {
-            0 => FirstTimeSetupOptionsForm::class,
+            0 => FirstTimeSetupLicenseForm::class,
+            1 => FirstTimeSetupOptionsForm::class,
             default => FirstTimeSetupCompletedPage::class
         };
 

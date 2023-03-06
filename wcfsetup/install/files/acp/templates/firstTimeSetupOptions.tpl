@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.acp.option.firstTimeSetup'}
+{include file='header' pageTitle='wcf.acp.firstTimeSetup.options'}
 
 {event name='javascriptInclude'}
 
@@ -12,8 +12,8 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.option.firstTimeSetup{/lang}</h1>
-		<p class="contentHeaderDescription">{lang}wcf.acp.option.firstTimeSetup.description{/lang}</p>
+		<h1 class="contentTitle">{lang}wcf.acp.firstTimeSetup.options{/lang}</h1>
+		<p class="contentHeaderDescription">{lang}wcf.acp.firstTimeSetup.options.description{/lang}</p>
 	</div>
 </header>
 

@@ -685,6 +685,19 @@ Das Fehlerprotokoll ist sehr groß. Bitte prüfen Sie das Protokoll händisch: {
 ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details zu einzelnen Fehlermeldungen in der Administrationsoberfläche unter „Verwaltung » Protokoll » Fehler“ einsehen.
 Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isEmail=true isACP=true}{/link}]]></item>
 	</category>
+	<category name="wcf.acp.firstTimeSetup">
+		<item name="wcf.acp.firstTimeSetup.license"><![CDATA[Erstmalige Einrichtung: Lizenz]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials"><![CDATA[Lizenzdaten]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedConnect"><![CDATA[Es konnte keine ausgehende Verbindung zur Überprüfung der Lizenzdaten aufgebaut werden.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[Die Gültigkeit der Lizenzdaten konnte nicht bestätigt werden.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Jetzt nicht?]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Ohne Eingabe der Lizenzdaten fortfahren]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps erforderlich.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Die Eingabe der Lizenzdaten wird empfohlen. Falls noch keine Internetverbindung zu unseren Paket-Servern zur Verfügung steht oder Sie noch keine Lizenzdaten besitzen, können Sie die Eingabe überspringen. Lizenzdaten können jederzeit hinterlegt werden, um die gekauften WoltLab Suite™-Apps zu installieren.]]></item>
+		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[Erstmalige Einrichtung: Einstellungen]]></item>
+		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Konfiguriere{else}Konfigurieren Sie{/if} die wichtigsten Einstellungen, diese können auch später über die Optionen verändert werden.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[Erstmalige Einrichtung abgeschlossen]]></item>
+	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
@@ -1676,8 +1689,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontaktformular aktivieren]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Dateianhänge automatisch entfernen]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
-		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[Erstmalige Einrichtung]]></item>
-		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Konfiguriere{else}Konfigurieren Sie{/if} die wichtigsten Einstellungen, diese können auch später über die Optionen verändert werden.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Datenschutzkonforme Überprüfung auf Basis einer lokalen Kopie der StopForumSpam.com-Datenbestände.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Eigene Sperrlisten]]></item>
