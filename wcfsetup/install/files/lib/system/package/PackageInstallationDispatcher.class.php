@@ -343,6 +343,10 @@ class PackageInstallationDispatcher
             1,
             'log_missing_language_items',
         ]);
+        $statement->execute([
+            0,
+            'offline',
+        ]);
 
         foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
             $statement->execute([
