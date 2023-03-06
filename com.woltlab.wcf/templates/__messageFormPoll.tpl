@@ -8,7 +8,7 @@
 
 			new UiPollEditor(
 				'pollOptionContainer',
-				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				"",
 				{
 					maxOptions: {@POLL_MAX_OPTIONS}

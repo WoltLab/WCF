@@ -10,7 +10,7 @@
 			
 			new WCF.Poll.Management(
 				'pollOptionContainer_{$wysiwygSelector}',
-				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				{@POLL_MAX_OPTIONS},
 				'{$wysiwygSelector}'
 			);
