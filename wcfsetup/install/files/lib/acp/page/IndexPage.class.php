@@ -2,7 +2,7 @@
 
 namespace wcf\acp\page;
 
-use wcf\acp\form\FirstTimeSetupForm;
+use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\user\User;
@@ -219,9 +219,9 @@ class IndexPage extends AbstractPage
             exit;
         }
 
-        if (\FIRST_TIME_SETUP_STATE != 1) {
+        if (\FIRST_TIME_SETUP_STATE != -1) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-                FirstTimeSetupForm::class,
+                FirstTimeSetupAction::class,
             ));
 
             exit;

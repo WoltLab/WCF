@@ -35,7 +35,7 @@
 
 {include file='formError'}
 
-<form method="post" action="{link controller='FirstTimeSetup'}{/link}" enctype="multipart/form-data">
+<form method="post" action="{link controller='FirstTimeSetupOptions'}{/link}" enctype="multipart/form-data">
 	{include file='optionFieldList' langPrefix='wcf.acp.option.'}
 	
 	<div class="formSubmit">

@@ -348,7 +348,7 @@ class PackageInstallationDispatcher
             'offline',
         ]);
         $statement->execute([
-            1,
+            -1,
             'first_time_setup_state',
         ]);
 

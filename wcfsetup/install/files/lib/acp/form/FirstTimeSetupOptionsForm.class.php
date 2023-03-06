@@ -5,18 +5,20 @@ namespace wcf\acp\form;
 use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
 use wcf\system\option\OptionHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows the option edit form.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property OptionHandler $optionHandler
  */
-class FirstTimeSetupForm extends AbstractOptionListForm
+final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
 {
     /**
      * @inheritDoc
@@ -77,13 +79,17 @@ class FirstTimeSetupForm extends AbstractOptionListForm
         parent::save();
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-        $saveOptions[Option::getOptionByName('offline')->optionID] = 0;
         $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 1;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();
 
-        WCF::getTPL()->assign('success', true);
+        \http_response_code(303);
+        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
+            FirstTimeSetupAction::class,
+        ));
+
+        exit;
     }
 
     /**
