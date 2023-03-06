@@ -83,6 +83,7 @@ class FirstTimeSetupForm extends AbstractOptionListForm
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
         $saveOptions[Option::getOptionByName('offline')->optionID] = 0;
+        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 1;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();

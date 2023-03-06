@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use wcf\acp\form\FirstTimeSetupForm;
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\user\User;
@@ -13,6 +14,7 @@ use wcf\system\Environment;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows the welcome page in admin control panel.
@@ -213,6 +215,14 @@ class IndexPage extends AbstractPage
 
             WCF::getTPL()->assign(['queueID' => $queue->queueID]);
             WCF::getTPL()->display('packageInstallationSetup');
+
+            exit;
+        }
+
+        if (\FIRST_TIME_SETUP_STATE != 1) {
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
+                FirstTimeSetupForm::class,
+            ));
 
             exit;
         }

@@ -347,6 +347,10 @@ class PackageInstallationDispatcher
             0,
             'offline',
         ]);
+        $statement->execute([
+            1,
+            'first_time_setup_state',
+        ]);
 
         foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
             $statement->execute([
