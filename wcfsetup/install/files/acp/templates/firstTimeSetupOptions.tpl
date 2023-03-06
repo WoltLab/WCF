@@ -15,18 +15,6 @@
 		<h1 class="contentTitle">{lang}wcf.acp.option.firstTimeSetup{/lang}</h1>
 		<p class="contentHeaderDescription">{lang}wcf.acp.option.firstTimeSetup.description{/lang}</p>
 	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}
-					<li><a href="{link}{/link}" class="button">{icon name='house'} <span>{lang}wcf.global.acp{/lang}</span></a></li>
-					
-					{event name='contentHeaderNavigation'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
 </header>
 
 {if $success|isset}
