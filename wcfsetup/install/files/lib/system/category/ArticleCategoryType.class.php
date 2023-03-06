@@ -33,7 +33,10 @@ class ArticleCategoryType extends AbstractCategoryType
     /**
      * @inheritDoc
      */
-    protected $objectTypes = ['com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category'];
+    protected $objectTypes = [
+        'com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category',
+        'com.woltlab.wcf.user.objectWatch' => 'com.woltlab.wcf.article.category',
+    ];
 
     /**
      * @inheritDoc

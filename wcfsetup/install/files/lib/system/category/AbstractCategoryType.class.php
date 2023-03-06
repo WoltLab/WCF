@@ -5,6 +5,7 @@ namespace wcf\system\category;
 use wcf\data\category\CategoryEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
+use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\WCF;
 
 /**
@@ -76,6 +77,11 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
                     " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(\array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
+        }
+
+        if ($this->getObjectTypeName('com.woltlab.wcf.user.objectWatch')) {
+            UserObjectWatchHandler::getInstance()
+                ->deleteObjects($this->getObjectTypeName('com.woltlab.wcf.user.objectWatch'), [$categoryEditor->categoryID]);
         }
     }
 
