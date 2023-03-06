@@ -530,7 +530,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
      */
     public function getDescription()
     {
-        return WCF::getLanguage()->get($this->groupDescription);
+        return WCF::getLanguage()->get($this->groupDescription ?: '');
     }
 
     /**
