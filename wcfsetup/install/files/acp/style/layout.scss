@@ -115,10 +115,45 @@ html {
 			margin-right: 20px;
 			order: 4;
 		}
+
+		.userPanel > ul {
+			align-content: center;
+			column-gap: 1px;
+			height: 50px;
+		}
+
+		.userPanel > ul > li:first-child > a {
+			border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
+		}
+
+		.userPanel > ul > li:last-child > a {
+			border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
+		}
+
+		.userPanel > ul > li > a {
+			height: 36px;
+			padding: 0 10px;
+		}
+
+		.userPanel .boxFlag {
+			font-size: 12px;
+		}
 	}
 
 	@include screen-md-down {
 		max-width: 100vw;
+	}
+}
+
+@include screen-lg {
+	html[data-color-scheme="light"] {
+		--wcfHeaderMenuLinkBackground: rgb(0 0 0 / 23%);
+		--wcfHeaderMenuLinkBackgroundActive: rgb(0 0 0 / 34%);
+	}
+
+	html[data-color-scheme="dark"] {
+		--wcfHeaderMenuLinkBackground: rgb(0 0 0 / 34%);
+		--wcfHeaderMenuLinkBackgroundActive: rgb(0 0 0 / 56%);
 	}
 }
 
