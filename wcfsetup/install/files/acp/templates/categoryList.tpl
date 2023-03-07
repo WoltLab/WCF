@@ -118,7 +118,7 @@
 								{/if}
 								
 								{if $objectType->getProcessor()->canDeleteCategory()}
-									{objectAction action="delete" objectTitle=$category->getTitle()}
+									<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"></span>
 								{/if}
 								
 								{event name='itemButtons'}

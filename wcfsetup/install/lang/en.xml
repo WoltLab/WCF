@@ -3225,6 +3225,7 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.convertToI18n.description"><![CDATA[This will cause the current values to be copied over to all other languages, and causes the edit history of this article to be discarded.<br><br>Please submit any unsaved changes before executing this action.]]></item>
 		<item name="wcf.article.convertFromI18n.question"><![CDATA[Are you sure you want to disable internationalization for this article?]]></item>
 		<item name="wcf.article.convertFromI18n.description"><![CDATA[All values except the ones of the selected language will be discarded, this will also delete the edit history of this article.<br><br>Please submit any unsaved changes before executing this action.]]></item>
+		<item name="wcf.article.category.delete.sure"><![CDATA[Do you really want to delete this category? All child categories of this category will be moved to this category’s parent category. Articles in this category will be deleted.]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>

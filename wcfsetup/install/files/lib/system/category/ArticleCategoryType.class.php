@@ -2,6 +2,9 @@
 
 namespace wcf\system\category;
 
+use wcf\data\article\ArticleAction;
+use wcf\data\article\ArticleList;
+use wcf\data\category\CategoryEditor;
 use wcf\system\WCF;
 
 /**
@@ -32,7 +35,28 @@ class ArticleCategoryType extends AbstractCategoryType
     /**
      * @inheritDoc
      */
-    protected $objectTypes = ['com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category'];
+    protected $objectTypes = [
+        'com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category',
+        'com.woltlab.wcf.user.objectWatch' => 'com.woltlab.wcf.article.category',
+    ];
+
+    /**
+     * @inheritDoc
+     */
+    public function afterDeletion(CategoryEditor $categoryEditor)
+    {
+        // delete articles with no categories
+        $eventList = new ArticleList();
+        $eventList->getConditionBuilder()->add("article.categoryID IS NULL");
+        $eventList->readObjects();
+
+        if (\count($eventList)) {
+            $eventAction = new ArticleAction($eventList->getObjects(), 'delete');
+            $eventAction->executeAction();
+        }
+
+        parent::afterDeletion($categoryEditor);
+    }
 
     /**
      * @inheritDoc
