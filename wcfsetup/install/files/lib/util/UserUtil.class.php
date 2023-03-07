@@ -16,11 +16,8 @@ final class UserUtil
 {
     /**
      * Returns true if the given name is a valid username.
-     *
-     * @param string $name
-     * @return  bool
      */
-    public static function isValidUsername($name)
+    public static function isValidUsername(string $name): bool
     {
         // minimum length is 3 characters, maximum length is 100 characters
         if (\mb_strlen($name) < 3 || \mb_strlen($name) > 100) {
@@ -55,7 +52,7 @@ final class UserUtil
     /**
      * @deprecated 5.5 Check whether `User::getUserByUsername()->userID` is falsy.
      */
-    public static function isAvailableUsername($name)
+    public static function isAvailableUsername($name): bool
     {
         $sql = "SELECT  COUNT(username)
                 FROM    wcf" . WCF_N . "_user
@@ -70,9 +67,8 @@ final class UserUtil
      * Returns true if the given e-mail is a valid address.
      *
      * @see Mailbox::filterAddress()
-     * @param string $email
      */
-    public static function isValidEmail($email): bool
+    public static function isValidEmail(string $email): bool
     {
         if (\mb_strlen($email) > 191) {
             return false;
@@ -90,7 +86,7 @@ final class UserUtil
     /**
      * @deprecated 5.5 Check whether `User::getUserByEmail()->userID` is falsy.
      */
-    public static function isAvailableEmail($email)
+    public static function isAvailableEmail($email): bool
     {
         $sql = "SELECT  COUNT(email)
                 FROM    wcf" . WCF_N . "_user
@@ -103,10 +99,8 @@ final class UserUtil
 
     /**
      * Returns the user agent of the client.
-     *
-     * @return  string
      */
-    public static function getUserAgent()
+    public static function getUserAgent(): string
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -123,20 +117,16 @@ final class UserUtil
     /**
      * Returns true if the active user uses a mobile browser.
      * @see http://detectmobilebrowser.com
-     *
-     * @return  bool
      */
-    public static function usesMobileBrowser()
+    public static function usesMobileBrowser(): bool
     {
         return (new UserAgent(self::getUserAgent()))->isMobileBrowser();
     }
 
     /**
      * Returns the ipv6 address of the client.
-     *
-     * @return  string
      */
-    public static function getIpAddress()
+    public static function getIpAddress(): string
     {
         $REMOTE_ADDR = '::';
         if (!empty($_SERVER['REMOTE_ADDR'])) {
@@ -150,11 +140,8 @@ final class UserUtil
 
     /**
      * Converts given ipv4 to ipv6.
-     *
-     * @param string $ip
-     * @return  string
      */
-    public static function convertIPv4To6($ip)
+    public static function convertIPv4To6(string $ip): string
     {
         // drop Window's scope id (confused PHP)
         $ip = \preg_replace('~%[^%]+$~', '', $ip);
@@ -178,11 +165,8 @@ final class UserUtil
 
     /**
      * Converts IPv6 embedded IPv4 address into IPv4 or returns input if true IPv6.
-     *
-     * @param string $ip
-     * @return  string
      */
-    public static function convertIPv6To4($ip)
+    public static function convertIPv6To4(string $ip): string
     {
         // validate if given IP is a proper IPv6 address
         if (\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6) === false) {
@@ -224,10 +208,8 @@ final class UserUtil
 
     /**
      * Returns the request uri of the active request.
-     *
-     * @return  string
      */
-    public static function getRequestURI()
+    public static function getRequestURI(): string
     {
         $REQUEST_URI = '';
 
