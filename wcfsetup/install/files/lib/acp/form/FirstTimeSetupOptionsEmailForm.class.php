@@ -11,7 +11,7 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**
- * Shows general options during first time setup.
+ * Shows email options during first time setup.
  *
  * @author      Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2023 WoltLab GmbH
@@ -19,7 +19,7 @@ use wcf\util\HeaderUtil;
  *
  * @property OptionHandler $optionHandler
  */
-final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
+final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
 {
     /**
      * @inheritDoc
@@ -36,8 +36,10 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
      * @var string[]
      */
     public $optionNames = [
-        'page_title',
-        'timezone',
+        'mail_from_name',
+        'mail_from_address',
+        'mail_admin_address',
+        'module_contact_form',
     ];
 
     /**
@@ -82,7 +84,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         parent::save();
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 2;
+        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 3;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();

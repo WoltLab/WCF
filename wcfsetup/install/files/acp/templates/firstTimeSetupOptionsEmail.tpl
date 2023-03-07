@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.acp.firstTimeSetup.options'}
+{include file='header' pageTitle='wcf.acp.firstTimeSetup.optionsEmail'}
 
 {event name='javascriptInclude'}
 
@@ -12,7 +12,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.firstTimeSetup.options{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.firstTimeSetup.optionsEmail{/lang}</h1>
 	</div>
 </header>
 
@@ -22,7 +22,7 @@
 
 {include file='formError'}
 
-<form method="post" action="{link controller='FirstTimeSetupOptions'}{/link}" enctype="multipart/form-data">
+<form method="post" action="{link controller='FirstTimeSetupOptionsEmail'}{/link}" enctype="multipart/form-data">
 	{include file='optionFieldList' langPrefix='wcf.acp.option.'}
 	
 	<div class="formSubmit">

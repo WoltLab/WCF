@@ -694,8 +694,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Ohne Eingabe der Lizenzdaten fortfahren]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps erforderlich.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Die Eingabe der Lizenzdaten wird empfohlen. Falls noch keine Internetverbindung zu unseren Paket-Servern zur Verfügung steht oder Sie noch keine Lizenzdaten besitzen, können Sie die Eingabe überspringen. Lizenzdaten können jederzeit hinterlegt werden, um die gekauften WoltLab Suite™-Apps zu installieren.]]></item>
-		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[Erstmalige Einrichtung: Einstellungen]]></item>
-		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Konfiguriere{else}Konfigurieren Sie{/if} die wichtigsten Einstellungen, diese können auch später über die Optionen verändert werden.]]></item>
+		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[Erstmalige Einrichtung: Allgemeine Einstellungen]]></item>
+		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[Erstmalige Einrichtung: E-Mail-Einstellungen]]></item>
 		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[Erstmalige Einrichtung abgeschlossen]]></item>
 	</category>
 	<category name="wcf.acp.group">

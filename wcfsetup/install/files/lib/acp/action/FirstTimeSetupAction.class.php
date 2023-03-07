@@ -29,6 +29,7 @@ final class FirstTimeSetupAction implements RequestHandlerInterface
         $controller = match (\FIRST_TIME_SETUP_STATE) {
             0 => FirstTimeSetupLicenseForm::class,
             1 => FirstTimeSetupOptionsForm::class,
+            2 => FirstTimeSetupOptionsEmailForm::class,
             default => FirstTimeSetupCompletedPage::class
         };
 

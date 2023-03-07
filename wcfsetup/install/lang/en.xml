@@ -672,8 +672,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Continue without entering license information]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
-		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: Settings]]></item>
-		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Configure the most important settings now, you can change them later at any time.]]></item>
+		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: General Settings]]></item>
+		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[First Time Setup: Email Settings]]></item>
 		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[First Time Setup Completed]]></item>
 	</category>
 	<category name="wcf.acp.group">
