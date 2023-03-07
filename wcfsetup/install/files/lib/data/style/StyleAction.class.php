@@ -747,10 +747,8 @@ BROWSERCONFIG;
 
     /**
      * Marks a style as tainted.
-     *
-     * @since   3.0
      */
-    public function markAsTainted()
+    public function markAsTainted(): void
     {
         // merge definitions
         $variables = $this->styleEditor->getVariables();
@@ -764,7 +762,19 @@ BROWSERCONFIG;
             '',
             $variables['overrideScss']
         );
-        $this->styleEditor->setVariables($variables);
+
+        $variablesDarkMode = [];
+        $variables = \array_filter($variables, static function ($value, $key) use ($variablesDarkMode) {
+            if (!\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
+                return true;
+            }
+
+            $variablesDarkMode[\str_replace(Style::DARK_MODE_PREFIX, '', $key)] = $value;
+
+            return false;
+        }, \ARRAY_FILTER_USE_BOTH);
+
+        $this->styleEditor->setVariables($variables, $variablesDarkMode);
 
         $this->styleEditor->update([
             'isTainted' => 1,
