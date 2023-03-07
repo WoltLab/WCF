@@ -15,6 +15,7 @@ const terserConfig = {
         if_return: true,
         join_vars: true,
         ecma: 2020,
+        passes: 2,
         /* this is basically the `--define` argument */
         global_defs: {
             COMPILER_TARGET_DEFAULT: false
