@@ -673,7 +673,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
 		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: General Settings]]></item>
+		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalize your community by entering a custom name and an optional description. We attempted to detect the correct time zone during installation. The current time is {TIME_NOW|plainTime}. Please select the correct time zone if the time is incorrect.]]></item>
 		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[First Time Setup: Email Settings]]></item>
+		<item name="wcf.acp.firstTimeSetup.optionsEmail.description"><![CDATA[Configure the email addresses used by your community. Emails will be sent directly by PHP by default. After completing the first time setup you will be able to configure an SMTP server within the options.]]></item>
 		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[First Time Setup Completed]]></item>
 	</category>
 	<category name="wcf.acp.group">

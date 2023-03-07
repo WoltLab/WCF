@@ -20,6 +20,8 @@
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
+<div class="info">{lang}wcf.acp.firstTimeSetup.optionsEmail.description{/lang}</div>
+
 {include file='formError'}
 
 <form method="post" action="{link controller='FirstTimeSetupOptionsEmail'}{/link}" enctype="multipart/form-data">
