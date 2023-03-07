@@ -91,6 +91,10 @@
 	require._isSupportedBuildUrl = function (url) {
 		var result = _isSupportedBuildUrl(url);
 		if (!result) return result;
+
+		if (/js\/3rdParty\/ckeditor\/ckeditor5\.bundle\.js$/.test(url)) {
+			return false;
+		}
 		
 		if (Object.keys(config.rawText).map(function (item) { return (process.cwd() + '/' + item + '.js').replace(/\\/g, '/'); }).indexOf(url.replace(/\\/g, '/')) !== -1) return result;
 
