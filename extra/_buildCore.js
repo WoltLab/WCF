@@ -45,7 +45,6 @@ async function compile(destination, files, overrides) {
 	//
 	// step 2) build rjs
 	//
-	process.chdir("../../");
 
 	{
 		const configFile = "require.build.js";
