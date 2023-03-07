@@ -37,6 +37,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
      */
     public $optionNames = [
         'page_title',
+        'page_description',
         'timezone',
     ];
 
