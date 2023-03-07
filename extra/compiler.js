@@ -14,6 +14,7 @@ const terserConfig = {
         hoist_vars: true,
         if_return: true,
         join_vars: true,
+        ecma: 2020,
         /* this is basically the `--define` argument */
         global_defs: {
             COMPILER_TARGET_DEFAULT: false
