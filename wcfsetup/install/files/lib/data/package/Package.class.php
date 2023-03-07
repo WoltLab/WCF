@@ -394,13 +394,11 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Compares two version number strings.
      *
-     * @param string $version1
-     * @param string $version2
      * @param string $operator
      * @return  bool        result
      * @see http://www.php.net/manual/en/function.version-compare.php
      */
-    public static function compareVersion($version1, $version2, $operator = null)
+    public static function compareVersion(string $version1, string $version2, $operator = null)
     {
         $version1 = self::formatVersionForCompare($version1);
         $version2 = self::formatVersionForCompare($version2);
@@ -414,11 +412,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Formats a package version string for comparing.
      *
-     * @param string $version
-     * @return  string      formatted version
      * @see     http://www.php.net/manual/en/function.version-compare.php
      */
-    private static function formatVersionForCompare($version)
+    private static function formatVersionForCompare(string $version): string
     {
         // remove spaces
         $version = \str_replace(' ', '', $version);
