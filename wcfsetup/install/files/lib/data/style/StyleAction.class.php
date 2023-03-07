@@ -564,9 +564,9 @@ BROWSERCONFIG;
             'authorName' => $this->styleEditor->authorName,
             'authorURL' => $this->styleEditor->authorURL,
             'imagePath' => $this->styleEditor->imagePath,
-
             'coverPhotoExtension' => $this->styleEditor->coverPhotoExtension,
             'hasFavicon' => $this->styleEditor->hasFavicon,
+            'hasDarkMode' => $this->styleEditor->hasDarkMode,
         ]);
         $styleEditor = new StyleEditor($newStyle);
 
@@ -598,12 +598,14 @@ BROWSERCONFIG;
         }
 
         // copy style variables
-        $sql = "INSERT INTO wcf" . WCF_N . "_style_variable_value
-                            (styleID, variableID, variableValue)
-                SELECT      " . $newStyle->styleID . " AS styleID, value.variableID, value.variableValue
-                FROM        wcf" . WCF_N . "_style_variable_value value
-                WHERE       value.styleID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "INSERT INTO             wcf1_style_variable_value
+                                        (styleID, variableID, variableValue, variableValueDarkMode)
+                SELECT                  {$newStyle->styleID}, variableID, variableValue, variableValueDarkMode
+                FROM                    wcf1_style_variable_value
+                WHERE                   styleID = ?
+                ON DUPLICATE KEY UPDATE variableValue = VALUES(variableValue),
+                                        variableValueDarkMode = VALUES(variableValueDarkMode)";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->styleEditor->styleID]);
 
         // copy preview image
