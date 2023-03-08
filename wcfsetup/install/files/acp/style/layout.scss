@@ -1,6 +1,22 @@
 html {
 	--wcfAcpMenuWidth: 110px;
-	--wcfAcpSubMenuWidth: 290px;
+	--wcfAcpSubMenuWidth: 300px;
+}
+
+html[data-color-scheme="light"] {
+	--wcfFooterCopyrightLink: #737373;
+	--wcfFooterCopyrightLinkActive: #737373;
+	--wcfFooterCopyrightText: #737373;
+
+	--wcfAcpPageMenu: #1a3042;
+}
+
+html[data-color-scheme="dark"] {
+	--wcfFooterCopyrightLink: #858585;
+	--wcfFooterCopyrightLinkActive: #858585;
+	--wcfFooterCopyrightText: #858585;
+
+	--wcfAcpPageMenu: #11202c;
 }
 
 .layoutBoundary {
@@ -21,7 +37,7 @@ html {
 		}
 
 		.pageHeaderLogo {
-			background-color: #1a3042;
+			background-color: var(--wcfAcpPageMenu);
 			flex: 0 0 var(--wcfAcpMenuWidth);
 			height: 50px;
 			margin: 0;
@@ -154,6 +170,17 @@ html {
 	html[data-color-scheme="dark"] {
 		--wcfHeaderMenuLinkBackground: rgb(0 0 0 / 34%);
 		--wcfHeaderMenuLinkBackgroundActive: rgb(0 0 0 / 56%);
+
+		--wcfHeaderMenuDropdownBackground: #242e3d;
+		--wcfHeaderMenuBackground: #2b384a;
+
+		.pageContainer:not(.acpPageSubMenuActive) .pageHeaderLogo,
+		.pageContainer:not(.acpPageSubMenuActive) .acpPageMenu {
+			/* Avoid layout jumps by adding the border. */
+			--wcfAcpMenuWidth: 111px;
+
+			border-right: 1px solid var(--wcfHeaderMenuBackground);
+		}
 	}
 }
 
@@ -199,14 +226,8 @@ html {
 		color: inherit;
 	}
 
-	.acpPageMenuList {
-		display: flex;
-		flex-direction: column;
-		row-gap: 5px;
-	}
-
 	.acpPageMenu {
-		background-color: #1a3042;
+		background-color: var(--wcfAcpPageMenu);
 		bottom: 0;
 		left: 0;
 		overflow: hidden;
@@ -216,12 +237,15 @@ html {
 
 		.acpPageMenuLink {
 			align-items: center;
-			color: var(--wcfHeaderMenuLink);
+			color: rgb(255 255 255 / 67%);
 			display: flex;
 			flex-direction: column;
 			padding: 15px 5px;
 
-			&:hover,
+			&:not(.active):hover {
+				color: var(--wcfHeaderMenuLinkActive);
+			}
+
 			&.active {
 				background-color: var(--wcfHeaderMenuDropdownBackground);
 				color: var(--wcfHeaderMenuLinkActive);
@@ -255,7 +279,7 @@ html {
 
 		> .acpPageSubMenuCategory {
 			margin-top: 20px;
-			padding-left: 10px;
+			padding: 0 20px;
 
 			> span {
 				border-bottom: 1px solid rgba(255 255 255 / 0.23);
@@ -263,7 +287,7 @@ html {
 				display: block;
 				font-size: 12px;
 				height: 25px;
-				margin: 0 20px 5px 20px;
+				margin: 0 10px 5px 10px;
 				padding-bottom: 5px;
 			}
 
@@ -277,24 +301,19 @@ html {
 			color: var(--wcfHeaderMenuDropdownLink);
 			display: block;
 			overflow: hidden;
-			padding: 5px 20px;
+			padding: 5px 10px;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 
-		.acpPageSubMenuLink {
-			margin-left: 10px;
-			padding-left: 10px;
-		}
-
-		.acpPageSubMenuLink:hover,
-		.acpPageSubMenuLink:hover ~ .acpPageSubMenuIcon:not(.active),
-		.acpPageSubMenuIcon:hover {
-			background-color: var(--wcfContentBackground);
-			color: var(--wcfContentText);
+		.acpPageSubMenuItemList {
+			display: flex;
+			flex-direction: column;
+			row-gap: 1px;
 		}
 
 		.acpPageSubMenuLinkWrapper {
+			column-gap: 1px;
 			display: flex;
 
 			> .acpPageSubMenuLink {
@@ -307,34 +326,14 @@ html {
 		}
 
 		.acpPageSubMenuItemList > .active > a,
+		.acpPageSubMenuLink:hover,
 		.acpPageSubMenuLink.active,
-		.acpPageSubMenuLink.active ~ .acpPageSubMenuIcon,
+		.acpPageSubMenuIcon:hover,
 		.acpPageSubMenuIcon.active {
 			background-color: var(--wcfContentBackground);
+			border-radius: var(--wcfBorderRadius);
 			color: var(--wcfContentText);
 		}
-	}
-
-	.acpPageSubMenuItemList > li:hover .acpPageSubMenuLink,
-	.acpPageSubMenuItemList > li.active .acpPageSubMenuLink,
-	.acpPageSubMenuLink:hover,
-	.acpPageSubMenuLink.active {
-		border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
-	}
-
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:hover,
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon.active {
-		border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
-	}
-
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child):hover,
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child).active {
-		border-radius: var(--wcfBorderRadius);
-	}
-
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child):hover ~ .acpPageSubMenuIcon,
-	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child).active ~ .acpPageSubMenuIcon {
-		border-radius: 0;
 	}
 
 	.pageContainer:not(.acpPageHiddenMenu) {
@@ -444,16 +443,11 @@ html {
 
 .pageFooterCopyright {
 	background-color: transparent;
+	font-size: 12px;
 	padding-bottom: 10px;
 
-	a {
-		color: #696969;
-		font-size: 12px;
-
-		&:hover {
-			color: #696969;
-			text-decoration: underline;
-		}
+	a:hover {
+		text-decoration: underline;
 	}
 }
 
