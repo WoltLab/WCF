@@ -60,7 +60,7 @@ final class User implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->data[$offset] ?? null;
     }
@@ -68,7 +68,7 @@ final class User implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === '__id') {
             throw new \BadMethodCallException('You may not modify the id.');
@@ -83,7 +83,7 @@ final class User implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if ($offset === '__id') {
             throw new \BadMethodCallException('You may not modify the id.');
@@ -98,7 +98,7 @@ final class User implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
