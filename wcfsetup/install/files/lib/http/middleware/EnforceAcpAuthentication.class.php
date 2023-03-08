@@ -53,7 +53,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         }
 
         $controller = RequestHandler::getInstance()->getActiveRequest()->getClassName();
-        if (\in_array($controller, self::ALLOWED_CONTROLLERS)) {
+        if (\in_array($controller, self::ALLOWED_CONTROLLERS, true)) {
             return $handler->handle($request);
         }
 
