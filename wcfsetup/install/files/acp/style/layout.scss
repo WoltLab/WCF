@@ -1,6 +1,6 @@
 html {
-	--wcfAcpMenuWidth: 150px;
-	--wcfAcpSubMenuWidth: 300px;
+	--wcfAcpMenuWidth: 110px;
+	--wcfAcpSubMenuWidth: 290px;
 }
 
 .layoutBoundary {
@@ -21,7 +21,7 @@ html {
 		}
 
 		.pageHeaderLogo {
-			background-color: var(--wcfHeaderBackground);
+			background-color: #1a3042;
 			flex: 0 0 var(--wcfAcpMenuWidth);
 			height: 50px;
 			margin: 0;
@@ -60,23 +60,21 @@ html {
 		}
 
 		.pageHeaderSearch {
-			display: block;
+			align-items: center;
+			display: flex;
 			flex: 0 0 auto;
 			margin-bottom: 0;
 			order: 3;
 			position: static;
 
-			// force to take up the full available height
-			/*position: relative;
-			top: -10px;*/
-
 			.pageHeaderSearchType > .button {
 				background-color: rgba(0, 0, 0, 0.2);
 				color: var(--wcfHeaderSearchBoxPlaceholderActive);
 				align-items: center;
-				border-radius: 0;
+				border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
 				display: flex;
-				height: 50px;
+				font-size: 12px;
+				height: 36px;
 				padding: 6px 10px;
 
 				&:hover {
@@ -86,13 +84,15 @@ html {
 
 			.pageHeaderSearchInputContainer {
 				background-color: var(--wcfHeaderMenuLinkBackground);
-				border-radius: 0;
+				border-radius: var(--wcfBorderRadius);
 				box-shadow: none;
+				margin-left: 20px;
 				padding: 0;
 			}
 
 			.pageHeaderSearchInput {
-				height: 50px;
+				font-size: 12px;
+				height: 36px;
 				width: 300px !important;
 
 				background-color: transparent;
@@ -199,8 +199,14 @@ html {
 		color: inherit;
 	}
 
+	.acpPageMenuList {
+		display: flex;
+		flex-direction: column;
+		row-gap: 5px;
+	}
+
 	.acpPageMenu {
-		background-color: var(--wcfHeaderMenuBackground);
+		background-color: #1a3042;
 		bottom: 0;
 		left: 0;
 		overflow: hidden;
@@ -210,21 +216,21 @@ html {
 
 		.acpPageMenuLink {
 			align-items: center;
-			background-color: var(--wcfHeaderMenuLinkBackground);
 			color: var(--wcfHeaderMenuLink);
 			display: flex;
 			flex-direction: column;
-			padding: 20px 10px;
+			padding: 15px 5px;
 
 			&:hover,
 			&.active {
-				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+				background-color: var(--wcfHeaderMenuDropdownBackground);
 				color: var(--wcfHeaderMenuLinkActive);
 			}
 		}
 
 		.acpPageMenuItemLabel {
 			display: block;
+			font-size: 12px;
 			margin-top: 5px;
 		}
 	}
@@ -235,7 +241,8 @@ html {
 		left: var(--wcfAcpMenuWidth);
 		overflow: hidden;
 		position: fixed;
-		top: 50px;
+		top: 0;
+		z-index: 100;
 	}
 
 	.acpPageSubMenuCategoryList {
@@ -248,13 +255,14 @@ html {
 
 		> .acpPageSubMenuCategory {
 			margin-top: 20px;
-			padding-left: 20px;
+			padding-left: 10px;
 
 			> span {
 				border-bottom: 1px solid rgba(255 255 255 / 0.23);
 				color: rgba(255 255 255 / 0.56);
 				display: block;
 				font-size: 12px;
+				height: 25px;
 				margin: 0 20px 5px 20px;
 				padding-bottom: 5px;
 			}
@@ -274,11 +282,16 @@ html {
 			white-space: nowrap;
 		}
 
+		.acpPageSubMenuLink {
+			margin-left: 10px;
+			padding-left: 10px;
+		}
+
 		.acpPageSubMenuLink:hover,
 		.acpPageSubMenuLink:hover ~ .acpPageSubMenuIcon:not(.active),
 		.acpPageSubMenuIcon:hover {
-			background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
-			color: var(--wcfHeaderMenuDropdownLinkActive);
+			background-color: var(--wcfContentBackground);
+			color: var(--wcfContentText);
 		}
 
 		.acpPageSubMenuLinkWrapper {
@@ -297,9 +310,31 @@ html {
 		.acpPageSubMenuLink.active,
 		.acpPageSubMenuLink.active ~ .acpPageSubMenuIcon,
 		.acpPageSubMenuIcon.active {
-			background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
-			color: var(--wcfHeaderMenuDropdownLinkActive);
+			background-color: var(--wcfContentBackground);
+			color: var(--wcfContentText);
 		}
+	}
+
+	.acpPageSubMenuItemList > li:hover .acpPageSubMenuLink,
+	.acpPageSubMenuItemList > li.active .acpPageSubMenuLink,
+	.acpPageSubMenuLink:hover,
+	.acpPageSubMenuLink.active {
+		border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
+	}
+
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:hover,
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon.active {
+		border-radius: var(--wcfBorderRadius) 0 0 var(--wcfBorderRadius);
+	}
+
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child):hover,
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child).active {
+		border-radius: var(--wcfBorderRadius);
+	}
+
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child):hover ~ .acpPageSubMenuIcon,
+	.acpPageSubMenuLink:not(:hover):not(.active) ~ .acpPageSubMenuIcon:not(:last-child).active ~ .acpPageSubMenuIcon {
+		border-radius: 0;
 	}
 
 	.pageContainer:not(.acpPageHiddenMenu) {
@@ -316,6 +351,10 @@ html {
 		.acpPageContentContainer,
 		.pageFooter {
 			padding-left: calc(var(--wcfAcpMenuWidth) + var(--wcfAcpSubMenuWidth));
+		}
+
+		.pageHeaderSearch {
+			margin-left: var(--wcfAcpSubMenuWidth);
 		}
 	}
 }
@@ -404,8 +443,18 @@ html {
 }
 
 .pageFooterCopyright {
-	background-color: var(--wcfFooterCopyrightBackground);
-	color: var(--wcfFooterCopyrightText);
+	background-color: transparent;
+	padding-bottom: 10px;
+
+	a {
+		color: #696969;
+		font-size: 12px;
+
+		&:hover {
+			color: #696969;
+			text-decoration: underline;
+		}
+	}
 }
 
 .codemirrorToolbar {
