@@ -20,7 +20,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup } from "../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Ui/Dialog/Data";
 
 let _mediaManager: MediaManager;
-const _didInit = false;
+let _didInit = false;
 
 class MediaClipboard implements AjaxCallbackObject, DialogCallbackObject {
   public _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
@@ -139,6 +139,8 @@ export function init(pageClassName: string, hasMarkedItems: boolean, mediaManage
     });
 
     EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+
+    _didInit = true;
   }
 
   _mediaManager = mediaManager;

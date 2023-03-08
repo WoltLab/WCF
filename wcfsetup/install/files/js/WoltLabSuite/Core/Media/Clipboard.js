@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
     Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     let _mediaManager;
-    const _didInit = false;
+    let _didInit = false;
     class MediaClipboard {
         _ajaxSetup() {
             return {
@@ -104,6 +104,7 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
                 pageClassName: pageClassName,
             });
             EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+            _didInit = true;
         }
         _mediaManager = mediaManager;
     }
