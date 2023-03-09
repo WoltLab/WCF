@@ -4,6 +4,7 @@ namespace wcf\system\style\command;
 
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
+use wcf\system\cache\builder\StyleCacheBuilder;
 
 /**
  * Adds the dark color scheme to a style.
@@ -29,5 +30,7 @@ final class AddDarkMode
         $styleEditor->update([
             'hasDarkMode' => 1,
         ]);
+
+        StyleCacheBuilder::getInstance()->reset();
     }
 }

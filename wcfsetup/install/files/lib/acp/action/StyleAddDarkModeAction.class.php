@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\style\Style;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\style\command\AddDarkMode;
@@ -27,30 +28,18 @@ use wcf\system\WCF;
  */
 final class StyleAddDarkModeAction implements RequestHandlerInterface
 {
-    private const PARAMETERS = <<<'EOT'
-        array {
-            id: positive-int
-        }
-        EOT;
-
-    private readonly TreeMapper $mapper;
-
-    public function __construct()
-    {
-        $this->mapper = (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->enableFlexibleCasting()
-            ->mapper();
-    }
-
     /**
      * @inheritDoc
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $parameters = $this->mapper->map(
-            self::PARAMETERS,
-            Source::array($request->getQueryParams())
+        $parameters = Helper::mapQueryParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                array {
+                    id: positive-int
+                }
+                EOT,
         );
 
         $style = new Style($parameters['id']);
