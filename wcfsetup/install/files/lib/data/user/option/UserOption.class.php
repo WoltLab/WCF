@@ -139,6 +139,10 @@ class UserOption extends Option implements ITitledObject
      */
     public function isVisible()
     {
+        if ($this->isDisabled) {
+            return false;
+        }
+
         // proceed if option is visible for all
         if ($this->visible & self::VISIBILITY_GUEST) {
             return true;
@@ -174,6 +178,10 @@ class UserOption extends Option implements ITitledObject
      */
     public function isEditable($inRegistration = false)
     {
+        if ($this->isDisabled) {
+            return false;
+        }
+
         // check admin permissions
         if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
             if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
