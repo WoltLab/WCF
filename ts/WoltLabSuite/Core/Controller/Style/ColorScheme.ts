@@ -34,7 +34,7 @@ function setScheme(scheme: ColorScheme): void {
 
 function applySystemScheme(): void {
   if (currentScheme === "system") {
-    document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "false";
+    document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "light";
   }
 }
 

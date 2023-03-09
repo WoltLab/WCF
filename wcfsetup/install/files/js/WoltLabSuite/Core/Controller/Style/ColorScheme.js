@@ -29,7 +29,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
     }
     function applySystemScheme() {
         if (currentScheme === "system") {
-            document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "false";
+            document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "light";
         }
     }
     function initializeButton(button) {
