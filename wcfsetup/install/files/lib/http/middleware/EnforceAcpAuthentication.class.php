@@ -174,7 +174,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 'userID' => WCF::getUser()->userID,
                 'ipAddress' => UserUtil::getIpAddress(),
                 'hostname' => @\gethostbyaddr(UserUtil::getIpAddress()),
-                'userAgent' => UserUtil::getUserAgent(),
+                'userAgent' => \mb_substr(Helper::getUserAgent($request) ?? '', 0, 191),
                 'time' => TIME_NOW,
                 'lastActivityTime' => TIME_NOW,
             ]);
