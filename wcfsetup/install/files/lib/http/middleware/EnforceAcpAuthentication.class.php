@@ -12,6 +12,10 @@ use wcf\acp\action\FullLogoutAction;
 use wcf\acp\form\LoginForm;
 use wcf\acp\form\MultifactorAuthenticationForm;
 use wcf\acp\form\ReauthenticationForm;
+use wcf\action\AJAXInvokeAction;
+use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
+use wcf\data\acp\session\log\ACPSessionLog;
+use wcf\data\acp\session\log\ACPSessionLogEditor;
 use wcf\http\Helper;
 use wcf\system\exception\AJAXException;
 use wcf\system\request\LinkHandler;
@@ -19,6 +23,7 @@ use wcf\system\request\RequestHandler;
 use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\UserUtil;
 
 /**
  * Checks all ACP requests for proper authentication.
@@ -73,6 +78,10 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
 
         // force debug mode if in ACP and authenticated
         WCFACP::overrideDebugMode();
+
+        if (!\defined("{$controller}::DO_NOT_LOG")) {
+            $this->logRequest($request);
+        }
 
         return $handler->handle($request);
     }
@@ -136,5 +145,71 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 ]
             )
         );
+    }
+
+    private function logRequest(ServerRequestInterface $request): void
+    {
+        // try to find existing session log
+        $sql = "SELECT  sessionLogID
+                FROM    wcf1_acp_session_log
+                WHERE   sessionID = ?
+                    AND lastActivityTime > ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            WCF::getSession()->sessionID,
+            (TIME_NOW - 15 * 60),
+        ]);
+        $row = $statement->fetchArray();
+        if (!empty($row['sessionLogID'])) {
+            $sessionLogID = $row['sessionLogID'];
+
+            $sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]));
+            $sessionLogEditor->update([
+                'lastActivityTime' => TIME_NOW,
+            ]);
+        } else {
+            // create new session log
+            $sessionLog = ACPSessionLogEditor::create([
+                'sessionID' => WCF::getSession()->sessionID,
+                'userID' => WCF::getUser()->userID,
+                'ipAddress' => UserUtil::getIpAddress(),
+                'hostname' => @\gethostbyaddr(UserUtil::getIpAddress()),
+                'userAgent' => \mb_substr(Helper::getUserAgent($request) ?? '', 0, 191),
+                'time' => TIME_NOW,
+                'lastActivityTime' => TIME_NOW,
+            ]);
+            $sessionLogID = $sessionLog->sessionLogID;
+        }
+
+        // Fetch request URI + request ID (if available).
+        $requestURI = Helper::getPathAndQuery($request->getUri());
+        if ($requestId = \wcf\getRequestId()) {
+            $requestIdSuffix = ' (' . $requestId . ')';
+            // Ensure that the request ID fits by truncating the URI.
+            $requestURI = \substr($requestURI, 0, 255 - \strlen($requestIdSuffix)) . $requestIdSuffix;
+        }
+
+        // Get controller name + the AJAX action.
+        $className = RequestHandler::getInstance()->getActiveRequest()->getClassName();
+        if (\is_subclass_of($className, AJAXInvokeAction::class)) {
+            $body = $request->getParsedBody();
+            if (isset($body['className']) && isset($body['actionName'])) {
+                $className .= \sprintf(
+                    " (%s:%s)",
+                    $body['className'],
+                    $body['actionName']
+                );
+            }
+        }
+
+        // save access
+        ACPSessionAccessLogEditor::create([
+            'sessionLogID' => $sessionLogID,
+            'ipAddress' => UserUtil::getIpAddress(),
+            'time' => TIME_NOW,
+            'requestURI' => \substr($requestURI, 0, 255),
+            'requestMethod' => \substr($request->getMethod(), 0, 255),
+            'className' => \substr($className, 0, 255),
+        ]);
     }
 }

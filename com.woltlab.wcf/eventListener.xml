@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/eventListener.xsd">
 	<import>
+		<eventlistener name="articleLinkhtmlInputNodeProcessor">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>convertPlainLinks</eventname>
+			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
+		</eventlistener>
+		<eventlistener name="articleLinkhtmlInputNodeProcessorAdmin">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>convertPlainLinks</eventname>
+			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener name="userLinkhtmlInputNodeProcessor">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>afterProcess</eventname>
+			<listenerclassname>wcf\system\event\listener\UserLinkHtmlInputNodeProcessorListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
+	</import>
+	<delete>
 		<eventlistener name="sessionPageAccessLog">
 			<eventclassname>wcf\page\AbstractPage</eventclassname>
 			<eventname>readParameters</eventname>
@@ -22,25 +41,6 @@
 			<environment>admin</environment>
 			<inherit>1</inherit>
 		</eventlistener>
-		<eventlistener name="articleLinkhtmlInputNodeProcessor">
-			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
-			<eventname>convertPlainLinks</eventname>
-			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
-		</eventlistener>
-		<eventlistener name="articleLinkhtmlInputNodeProcessorAdmin">
-			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
-			<eventname>convertPlainLinks</eventname>
-			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
-			<environment>admin</environment>
-		</eventlistener>
-		<eventlistener name="userLinkhtmlInputNodeProcessor">
-			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
-			<eventname>afterProcess</eventname>
-			<listenerclassname>wcf\system\event\listener\UserLinkHtmlInputNodeProcessorListener</listenerclassname>
-			<environment>all</environment>
-		</eventlistener>
-	</import>
-	<delete>
 		<eventlistener name="userLoginCancelLostPassword">
 			<eventclassname>wcf\system\user\authentication\event\UserLoggedIn</eventclassname>
 			<listenerclassname>wcf\system\event\listener\UserLoginCancelLostPasswordListener</listenerclassname>
