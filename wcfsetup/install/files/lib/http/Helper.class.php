@@ -8,6 +8,7 @@ use CuyZ\Valinor\MapperBuilder;
 use Negotiation\Accept;
 use Negotiation\Negotiator;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 use wcf\util\StringUtil;
 
 /**
@@ -47,6 +48,20 @@ final class Helper
         }
 
         return $userAgent;
+    }
+
+    /**
+     * Returns the URI's path and optional query, separated by a `?`.
+     */
+    public static function getPathAndQuery(UriInterface $uri): string
+    {
+        $result = $uri->getPath();
+
+        if ($uri->getQuery() !== '') {
+            $result .= '?' . $uri->getQuery();
+        }
+
+        return $result;
     }
 
     /**
