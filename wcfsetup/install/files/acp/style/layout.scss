@@ -9,6 +9,9 @@ html[data-color-scheme="light"] {
 	--wcfFooterCopyrightText: #737373;
 
 	--wcfAcpPageMenu: #1a3042;
+	--wcfAcpSubMenuCategory: rgb(209 213 223);
+	--wcfAcpSubMenuLink: var(--wcfHeaderMenuDropdownLink);
+	--wcfAcpSubMenuLinkActive: var(--wcfContentText);
 }
 
 html[data-color-scheme="dark"] {
@@ -17,6 +20,10 @@ html[data-color-scheme="dark"] {
 	--wcfFooterCopyrightText: #858585;
 
 	--wcfAcpPageMenu: #11202c;
+	--wcfAcpSubMenuCategory: rgb(5 166 148);
+	--wcfAcpSubMenuLink: rgb(255 255 255 / 67%);
+	--wcfAcpSubMenuLinkActive: rgb(255 255 255 / 89%);
+	--wcfHeaderMenuLinkActive: rgb(255 255 255 / 89%);
 }
 
 .layoutBoundary {
@@ -282,13 +289,19 @@ html[data-color-scheme="dark"] {
 			padding: 0 20px;
 
 			> span {
-				border-bottom: 1px solid rgba(255 255 255 / 0.23);
-				color: rgba(255 255 255 / 0.56);
-				display: block;
+				align-items: center;
+				color: var(--wcfAcpSubMenuCategory);
+				column-gap: 10px;
+				display: flex;
 				font-size: 12px;
-				height: 25px;
-				margin: 0 10px 5px 10px;
-				padding-bottom: 5px;
+
+				&::after {
+					content: "";
+					border-top: 1px solid currentColor;
+					display: block;
+					width: 100%;
+					opacity: 0.34;
+				}
 			}
 
 			&:last-child {
@@ -298,7 +311,7 @@ html[data-color-scheme="dark"] {
 
 		.acpPageSubMenuLink,
 		.acpPageSubMenuIcon {
-			color: var(--wcfHeaderMenuDropdownLink);
+			color: var(--wcfAcpSubMenuLink);
 			display: block;
 			overflow: hidden;
 			padding: 5px 10px;
@@ -332,7 +345,7 @@ html[data-color-scheme="dark"] {
 		.acpPageSubMenuIcon.active {
 			background-color: var(--wcfContentBackground);
 			border-radius: var(--wcfBorderRadius);
-			color: var(--wcfContentText);
+			color: var(--wcfAcpSubMenuLinkActive);
 		}
 	}
 
