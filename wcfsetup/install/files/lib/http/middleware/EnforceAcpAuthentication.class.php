@@ -192,8 +192,13 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         // Get controller name + the AJAX action.
         $className = RequestHandler::getInstance()->getActiveRequest()->getClassName();
         if (\is_subclass_of($className, AJAXInvokeAction::class)) {
-            if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
-                $className .= ' (' . $_REQUEST['className'] . ':' . $_REQUEST['actionName'] . ')';
+            $body = $request->getParsedBody();
+            if (isset($body['className']) && isset($body['actionName'])) {
+                $className .= \sprintf(
+                    " (%s:%s)",
+                    $body['className'],
+                    $body['actionName']
+                );
             }
         }
 
@@ -203,7 +208,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             'ipAddress' => UserUtil::getIpAddress(),
             'time' => TIME_NOW,
             'requestURI' => \substr($requestURI, 0, 255),
-            'requestMethod' => \substr($_SERVER['REQUEST_METHOD'] ?? '', 0, 255),
+            'requestMethod' => \substr($request->getMethod(), 0, 255),
             'className' => \substr($className, 0, 255),
         ]);
     }
