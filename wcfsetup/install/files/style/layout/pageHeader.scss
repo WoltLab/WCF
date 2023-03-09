@@ -69,7 +69,7 @@
 			}
 
 			> a {
-				background: var(--wcfHeaderMenuLinkBackground);
+				background-color: var(--wcfHeaderMenuLinkBackground);
 				align-items: center;
 				color: var(--wcfHeaderMenuLink);
 				display: flex;
@@ -91,7 +91,7 @@
 
 			&.active > a,
 			&:hover > a {
-				background: var(--wcfHeaderMenuLinkBackgroundActive);
+				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 				color: var(--wcfHeaderMenuLinkActive);
 			}
 		}
@@ -105,7 +105,9 @@
 
 		.boxMenuDepth1 {
 			background-color: var(--wcfHeaderMenuDropdownBackground);
-			border-radius: 0 0 3px 3px;
+			border: 1px solid var(--wcfHeaderMenuDropdownBorder);
+			border-radius: var(--wcfBorderRadius);
+			box-shadow: var(--wcfBoxShadow);
 			padding: 5px 0;
 			position: absolute;
 			visibility: hidden;
@@ -217,7 +219,7 @@
 
 			> a {
 				align-items: center;
-				background: var(--wcfHeaderMenuLinkBackground);
+				background-color: var(--wcfHeaderMenuLinkBackground);
 				color: var(--wcfHeaderMenuLink);
 				display: flex;
 				flex: 0 0 auto;
@@ -225,8 +227,14 @@
 				padding: 0 15px;
 				position: relative;
 
+				.iconWrapper {
+					align-items: center;
+					display: flex;
+					height: 50px;
+				}
+
 				/* hide icon label */
-				> span:not(.icon):not(.badge) {
+				> span:not(.icon):not(.badge):not(.iconWrapper) {
 					display: none;
 				}
 
@@ -248,7 +256,7 @@
 			&.dropdownOpen > a,
 			&.open > a,
 			&:hover > a {
-				background: var(--wcfHeaderMenuLinkBackgroundActive);
+				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 				color: var(--wcfHeaderMenuLinkActive);
 
 				.icon {
@@ -351,7 +359,7 @@
 
 		> .button:hover,
 		&.dropdownOpen > .button {
-			background: var(--wcfHeaderMenuLinkBackgroundActive);
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 			color: var(--wcfHeaderMenuLinkActive);
 		}
 	}
@@ -555,7 +563,7 @@
 
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
-			box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
+			box-shadow: var(--wcfBoxShadow);
 			display: flex;
 			flex-wrap: wrap;
 

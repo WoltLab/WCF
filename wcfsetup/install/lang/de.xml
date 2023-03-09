@@ -2843,10 +2843,14 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	</category>
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.style.addDarkMode"><![CDATA[Dunkles Farbschema hinzufügen]]></item>
+		<item name="wcf.acp.style.addDarkMode.question"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} für diesen Stil ein dunkles Farbschema hinzufügen?]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Erweiterte Einstellungen]]></item>
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Eigene Deklarationen]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.advanced.individualScss.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zusätzlich den Zugriff auf SCSS und alle von WoltLab Suite Core zur Verfügung gestellten Mixins.]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode"><![CDATA[Individuelles CSS und SCSS (Ergänzend für dunkles Farbschema)]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode.description"><![CDATA[Der eingegebene CSS-Code wird zusätzlich zu „Individuelles CSS und SCSS“ eingefügt und wirkt sich nur im dunklen Farbschema aus.]]></item>
 		<item name="wcf.acp.style.advanced.original"><![CDATA[Vorgegebene Deklarationen]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss"><![CDATA[Überschreiben von SCSS-Variablen]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} innerhalb dieser Eingabe beliebige SCSS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar sind. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: „$variableName: variableValue;“]]></item>
@@ -2893,6 +2897,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}Die hochgeladenen Bilder werden unter demselben Dateinamen im <kbd>custom/</kbd>-Ordner innerhalb des Stil-Ordners gespeichert. Im CSS muss der Ordner mit der Variable <kbd>#{$style_image_path}custom/</kbd> verlinkt werden.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
+		<item name="wcf.acp.style.editDarkMode"><![CDATA[Dunkles Farbschema bearbeiten]]></item>
+		<item name="wcf.acp.style.editLightMode"><![CDATA[Helles Farbschema bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
@@ -4516,6 +4522,10 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Helligkeit]]></item>
 		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Farbe ändern]]></item>
 		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Hintergrundfarbe ändern]]></item>
+		<item name="wcf.style.setColorScheme"><![CDATA[Farbschema festlegen]]></item>
+		<item name="wcf.style.setColorScheme.dark"><![CDATA[Dunkles Farbschema]]></item>
+		<item name="wcf.style.setColorScheme.light"><![CDATA[Helles Farbschema]]></item>
+		<item name="wcf.style.setColorScheme.system"><![CDATA[Automatisch erkennen]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}„{$tag->name}“{/implode}]]></item>

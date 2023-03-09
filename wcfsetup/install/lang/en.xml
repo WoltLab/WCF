@@ -2775,10 +2775,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Add Style]]></item>
+		<item name="wcf.acp.style.addDarkMode.question"><![CDATA[Do you want to add a dark color scheme to this style?]]></item>
+		<item name="wcf.acp.style.addDarkMode"><![CDATA[Add Dark Color Scheme]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Advanced Settings]]></item>
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Own Declarations]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.advanced.individualScss.description"><![CDATA[The content will be appended to the style sheet and can contain pure <abbr title="Cascading Style Sheets">CSS</abbr>. Furthermore, you can use SCSS including all Mixins provided by WoltLab Suite Core.]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode"><![CDATA[Individual CSS and SCSS (Dark Color Scheme Only)]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode.description"><![CDATA[The entered CSS code will be inserted in addition to Individual CSS and SCSS” and will only affect the dark color scheme.]]></item>
 		<item name="wcf.acp.style.advanced.original"><![CDATA[Preset Declarations]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss"><![CDATA[SCSS Variables Override]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.description"><![CDATA[Allows you to override SCSS variables not available through the style editor itself. Syntax: “$variableName: variableValue;”, referred variables must be declared prior any attempt to read their value.]]></item>
@@ -2825,6 +2829,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}The uploaded images will be stored with the same file name within the <kbd>custom/</kbd> folder in the style’s image folder. You can retrieve the folder’s path within the CSS by using <kbd>#{$style_image_path}custom/</kbd>.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Edit Style]]></item>
+		<item name="wcf.acp.style.editDarkMode"><![CDATA[Edit Dark Color Scheme]]></item>
+		<item name="wcf.acp.style.editLightMode"><![CDATA[Edit Light Color Scheme]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Export as package]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Export images ({$style->imagePath})]]></item>
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Export templates]]></item>
@@ -4518,6 +4524,10 @@ Attachments:
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Lightness]]></item>
 		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Change Color]]></item>
 		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Change Background Color]]></item>
+		<item name="wcf.style.setColorScheme"><![CDATA[Set Color Scheme]]></item>
+		<item name="wcf.style.setColorScheme.dark"><![CDATA[Dark Theme]]></item>
+		<item name="wcf.style.setColorScheme.light"><![CDATA[Light Theme]]></item>
+		<item name="wcf.style.setColorScheme.system"><![CDATA[System Preference]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}“{$tag->name}”{/implode}]]></item>

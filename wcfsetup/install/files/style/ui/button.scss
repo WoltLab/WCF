@@ -19,7 +19,7 @@ input[type="submit"],
 a.button {
 	// a.button is required to override link formatting, such as drop-down buttons
 	background-color: var(--wcfButtonBackground);
-	border-radius: 4px;
+	border-radius: var(--wcfBorderRadius);
 	border-width: 0;
 	color: var(--wcfButtonText);
 	cursor: pointer;

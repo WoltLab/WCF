@@ -91,12 +91,15 @@
 /* sidebar */
 .messageSidebar {
 	background-color: var(--wcfSidebarBackground);
+	border: 1px solid var(--wcfSidebarBorder);
+	border-width: 1px 0;
 	color: var(--wcfSidebarText);
 	position: relative;
 
 	@include screen-md-up {
 		align-self: flex-start;
-		border-radius: 3px;
+		border-radius: var(--wcfBorderRadius);
+		border-width: 1px;
 		text-align: center;
 
 		.username {

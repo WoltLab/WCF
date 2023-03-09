@@ -21,6 +21,20 @@
 		{* This constant is a compiler option, it does not exist in production. *}
 		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
 	{/if}
+
+	{if $__wcf->getStyleHandler()->getStyle()->hasDarkMode}
+	{
+		let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		try {
+			const value = localStorage.getItem("wsc_colorScheme");
+			if (value === "light" || value === "dark") {
+				colorScheme = value;
+			}
+		} catch {}
+
+		document.documentElement.dataset.colorScheme = colorScheme;
+	}
+	{/if}
 </script>
 
 <script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>
@@ -68,6 +82,7 @@ window.addEventListener('pageshow', function(event) {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
+			colorScheme: '{@$__wcf->getStyleHandler()->getColorScheme()|encodeJS}',
 			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			executeCronjobs: {if $executeCronjobs}'{link controller="CronjobPerform"}{/link}'{else}undefined{/if},
 			{if ENABLE_SHARE_BUTTONS}

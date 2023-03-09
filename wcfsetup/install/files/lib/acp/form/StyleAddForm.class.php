@@ -747,9 +747,9 @@ class StyleAddForm extends AbstractForm
                 'textActive',
             ],
             'wcfHeaderMenu' => ['background', 'linkBackground', 'linkBackgroundActive', 'link', 'linkActive'],
-            'wcfHeaderMenuDropdown' => ['background', 'link', 'backgroundActive', 'linkActive'],
+            'wcfHeaderMenuDropdown' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
             'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
-            'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],
+            'wcfSidebar' => ['background', 'border', 'text', 'link', 'linkActive'],
             'wcfSidebarDimmed' => ['text', 'link', 'linkActive'],
             'wcfSidebarHeadline' => ['text', 'link', 'linkActive'],
             'wcfContent' => ['background', 'border', 'borderInner', 'text', 'link', 'linkActive'],
@@ -803,6 +803,7 @@ class StyleAddForm extends AbstractForm
         // set specialized variables
         $this->specialVariables = [
             'individualScss',
+            'individualScssDarkMode',
             'overrideScss',
             'pageLogoWidth',
             'pageLogoHeight',

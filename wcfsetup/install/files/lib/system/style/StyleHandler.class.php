@@ -245,9 +245,17 @@ class StyleHandler extends SingletonFactory
      *
      * @return      bool         true if style changer should be displayed
      */
-    public function showStyleChanger()
+    public function showStyleChanger(): bool
     {
-        return $this->countStyles() && SHOW_STYLE_CHANGER;
+        return \SHOW_STYLE_CHANGER && $this->countStyles() > 1;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function showColorSchemeSelector(): bool
+    {
+        return !!$this->getStyle()->hasDarkMode;
     }
 
     /**
@@ -281,5 +289,21 @@ class StyleHandler extends SingletonFactory
         }
 
         return null;
+    }
+
+    /**
+     * The color scheme is 'light' for styles without a dark mode. For styles
+     * with a dark mode, the special value 'system' is used to indicate that
+     * the client is able to negotiate a color scheme.
+     *
+     * @since 6.0
+     */
+    public function getColorScheme(): string
+    {
+        if ($this->getStyle()->hasDarkMode) {
+            return 'system';
+        }
+
+        return 'light';
     }
 }

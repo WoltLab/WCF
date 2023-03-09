@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getBcp47()}">
+<html
+	dir="{@$__wcf->getLanguage()->getPageDirection()}"
+	lang="{$__wcf->getLanguage()->getBcp47()}"
+	data-color-scheme="system"
+>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +49,18 @@
 		{* This constant is a compiler option, it does not exist in production. *}
 		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
 		var COMPILER_TARGET_DEFAULT = true;
+
+		{
+			let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			try {
+				const value = localStorage.getItem("wsc_colorScheme");
+				if (value === "light" || value === "dark") {
+					colorScheme = value;
+				}
+			} catch {}
+
+			document.documentElement.dataset.colorScheme = colorScheme;
+		}
 	</script>
 
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>

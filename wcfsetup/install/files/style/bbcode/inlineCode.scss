@@ -10,13 +10,13 @@ kbd {
 
 	background-color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(196, 196, 196, 1) !important;
-	border-radius: 2px;
+	border-radius: var(--wcfBorderRadius);
 	-webkit-box-decoration-break: clone;
 	box-decoration-break: clone;
 	color: rgba(68, 68, 68, 1) !important;
 	display: inline;
 	font-family: var(--wcfFontFamilyMonospace);
-	font-size: 14px;
+	font-size: 13px;
 	font-style: normal;
 	font-weight: normal;
 	margin: 0 2px;

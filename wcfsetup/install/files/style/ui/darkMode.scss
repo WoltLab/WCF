@@ -1,0 +1,146 @@
+html[data-color-scheme="dark"] {
+    color-scheme: dark;
+
+    .badge,
+    a.badge {
+        --background-color: #2f394c;
+        --color: #d1d2d3;
+
+        &.badgeUpdate {
+            --background-color: #027abb;
+        }
+
+        &.green {
+            --background-color: #1b5e20;
+            --color: #cfdbcf;
+        }
+
+        &.red {
+            --background-color: #c1183d;
+            --color: #f9e7ea;
+        }
+
+        &.black {
+            --background-color: #333;
+            --color: #ccc;
+        }
+
+        &.brown {
+            --background-color: #795548;
+            --color: #e1dad7;
+        }
+
+        &.orange {
+            --background-color: #f57c00;
+            --color: #361b06;
+        }
+
+        &.yellow {
+            --background-color: #ffeb3b;
+            --color: #38340f;
+        }
+
+        &.blue {
+            --background-color: #204f7e;
+            --color: #cfd8e3;
+        }
+
+        &.purple {
+            --background-color: #673ab7;
+            --color: #ded4f0;
+        }
+
+        &.pink {
+            --background-color: #e10fb0;
+            --color: #1a0414;
+        }
+    }
+
+    a.badge:hover {
+        --color: var(--wcfContentBackground);
+        text-decoration: none;
+
+        &.black {
+            --background-color: #000;
+            --color: #ccc;
+        }
+
+        &.brown {
+            --background-color: #3e2723;
+            --color: #e1dad7;
+        }
+
+        &.red {
+            --background-color: #900;
+            --color: #f9e7ea;
+        }
+
+        &.orange {
+            --background-color: #ef6c00;
+            --color: #361b06;
+        }
+
+        &.yellow {
+            --background-color: #cc0;
+            --color: #38340f;
+        }
+
+        &.green {
+            --background-color: #164b19;
+            --color: #cfdbcf;
+        }
+
+        &.blue {
+            --background-color: #1b4269;
+            --color: #cfd8e3;
+        }
+
+        &.purple {
+            --background-color: #4527a0;
+            --color: #ded4f0;
+        }
+
+        &.pink {
+            --background-color: #c09;
+            --color: #1a0414;
+        }
+    }
+
+    .contentItem {
+        border: 1px solid var(--wcfContentBorderInner);
+    }
+
+    .datePicker {
+        border: 1px solid var(--wcfContentBorderInner);
+    }
+
+    .dialog,
+    .dialogContainer {
+        border: 1px solid var(--wcfContentBorderInner);
+    }
+
+    .dropdownMenu {
+        border: 1px solid var(--wcfDropdownBorderInner);
+    }
+
+    .inlineCode,
+    kbd {
+        background-color: #3b3b3b !important;
+        border-color: #858585 !important;
+        color: #dfe2e5 !important;
+    }
+
+    .popover {
+        border: 1px solid var(--wcfContentContainerBorder);
+    }
+
+    .spinner {
+        background-color: #3b3b3b !important;
+        border-color: #858585 !important;
+        color: #dfe2e5 !important;
+    }
+
+    .userMenu {
+        border: 1px solid var(--wcfUserMenuBorder);
+    }
+}

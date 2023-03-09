@@ -35,7 +35,7 @@
 }
 
 .boxContentSeparator {
-	background: var(--wcfContentBorderInner);
+	background-color: var(--wcfContentBorderInner);
 	border: 0;
 	height: 1px;
 	margin: 30px auto;
@@ -393,6 +393,9 @@
 	}
 
 	.box {
+		border: 1px solid var(--wcfSidebarBorder);
+		border-radius: var(--wcfBorderRadius);
+
 		&:not(.boxBorderless) {
 			background-color: var(--wcfSidebarBackground);
 
@@ -949,6 +952,13 @@
 			padding-left: 20px;
 		}
 	}
+}
+
+html[data-color-scheme="dark"] .page__colorScheme--light {
+	display: none !important;
+}
+html:not([data-color-scheme="dark"]) .page__colorScheme--dark {
+	display: none !important;
 }
 
 .boxesTop,

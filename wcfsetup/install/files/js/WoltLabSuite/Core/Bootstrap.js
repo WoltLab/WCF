@@ -60,6 +60,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
      */
     function setup(options) {
         options = Core.extend({
+            colorScheme: "light",
             enableMobileMenu: true,
             pageMenuMainProvider: undefined,
         }, options);
@@ -111,17 +112,20 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         document.querySelectorAll(".pagination").forEach((el) => UiPageJumpTo.init(el));
         initA11y();
         Listener_1.default.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
+        if (options.colorScheme === "system") {
+            void new Promise((resolve_1, reject_1) => { require(["./Controller/Style/ColorScheme"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        }
         (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
-            void new Promise((resolve_1, reject_1) => { require(["./Ui/Moderation/Report"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_2, reject_2) => { require(["./Ui/Moderation/Report"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-pagination", () => {
-            void new Promise((resolve_2, reject_2) => { require(["./Ui/Pagination/JumpToPage"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_3, reject_3) => { require(["./Ui/Pagination/JumpToPage"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-google-maps", () => {
-            void new Promise((resolve_3, reject_3) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_3, reject_3); }).then(tslib_1.__importStar);
+            void new Promise((resolve_4, reject_4) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_4, reject_4); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
-            void new Promise((resolve_4, reject_4) => { require(["./Component/GoogleMaps/Geocoding"], resolve_4, reject_4); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_5, reject_5) => { require(["./Component/GoogleMaps/Geocoding"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
     exports.setup = setup;

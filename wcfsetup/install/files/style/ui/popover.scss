@@ -28,9 +28,9 @@
 .popover {
 	animation: wcfPopoverOut 0.3s;
 	animation-fill-mode: forwards;
-	background-color: var(--wcfContentBackground);
-	border-radius: 2px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	background-color: var(--wcfContentContainerBackground);
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadow);
 	position: absolute;
 	top: 0;
 	vertical-align: middle;
@@ -59,8 +59,8 @@
 
 /* actual popover content */
 .popoverContent {
-	background-color: var(--wcfContentBackground);
-	border-radius: 3px;
+	background-color: var(--wcfContentContainerBackground);
+	border-radius: var(--wcfBorderRadius);
 	color: var(--wcfContentText);
 	padding: 15px;
 

@@ -45,6 +45,32 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				{if $style->hasDarkMode}
+					<li>
+						{if $isDarkMode}
+							<a href="{link controller='StyleEdit' id=$style->styleID}{/link}" class="button">
+								{icon name='palette'}
+								<span>{lang}wcf.acp.style.editLightMode{/lang}</span>
+							</a>
+						{else}
+							<a href="{link controller='StyleEdit' id=$style->styleID isDarkMode=1}{/link}" class="button">
+								{icon name='palette'}
+								<span>{lang}wcf.acp.style.editDarkMode{/lang}</span>
+							</a>
+						{/if}
+					</li>
+				{elseif $isTainted}
+					<li>
+						<button
+							class="button jsButtonAddDarkMode"
+							data-endpoint="{link controller='StyleAddDarkMode' object=$style}{/link}"
+							data-question="{lang}wcf.acp.style.addDarkMode.question{/lang}"
+						>
+							{icon name='palette'}
+							<span>{lang}wcf.acp.style.addDarkMode{/lang}</span>
+						</button>
+					</li>
+				{/if}
 				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
 				<li><a class="jsCopyStyle button">{icon name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
@@ -68,7 +94,7 @@
 </script>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID isDarkMode=$isDarkMode}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
@@ -584,7 +610,7 @@
 						
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
-								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
+								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
 								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
 							</div>
 						</div>
@@ -914,6 +940,7 @@
 				'wcfHeaderMenuLink': '#spHeaderPanel ol.inlineList > li > a { color: VALUE; }',
 				'wcfHeaderMenuLinkActive': '#spHeaderPanel ol.inlineList > li.active > a, #spHeaderPanel ol.inlineList > li > a:hover { color: VALUE; }',
 				'wcfHeaderMenuDropdownBackground': '#spSubMenu { background-color: VALUE; }',
+				'wcfHeaderMenuDropdownBorder': '#spSubMenu { --wcfHeaderMenuDropdownBorder: VALUE; }',
 				'wcfHeaderMenuDropdownLink': '#spSubMenu li > a { color: VALUE; }',
 				'wcfHeaderMenuDropdownBackgroundActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { background-color: VALUE; }',
 				'wcfHeaderMenuDropdownLinkActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { color: VALUE; }',
@@ -974,13 +1001,13 @@
 				'wcfDropdownLink': '#spDropdown li a { color: VALUE; }',
 				'wcfDropdownBackgroundActive': '#spDropdown li.active > a, #spDropdown li a:hover { background-color: VALUE; }',
 				'wcfDropdownLinkActive': '#spDropdown li.active > a, #spDropdown li a:hover { color: VALUE; }',
-				'wcfUserMenuBackground': '#spUserMenu { --background-color: VALUE; }',
-				'wcfUserMenuBackgroundActive': '#spUserMenu { --background-color-active: VALUE; }',
-				'wcfUserMenuBorder': '#spUserMenu { --border-color: VALUE; }',
-				'wcfUserMenuIndicator': '#spUserMenu { --color-indicator: VALUE; }',
-				'wcfUserMenuText': '#spUserMenu { --color: VALUE; }',
-				'wcfUserMenuTextActive': '#spUserMenu { --color-active: VALUE; }',
-				'wcfUserMenuTextDimmed': '#spUserMenu { --color-dimmed: VALUE; }',
+				'wcfUserMenuBackground': '#spUserMenu { --wcfUserMenuBackground: VALUE; }',
+				'wcfUserMenuBackgroundActive': '#spUserMenu { --wcfUserMenuBackgroundActive: VALUE; }',
+				'wcfUserMenuBorder': '#spUserMenu { --wcfUserMenuBorder: VALUE; }',
+				'wcfUserMenuIndicator': '#spUserMenu { --wcfUserMenuIndicator: VALUE; }',
+				'wcfUserMenuText': '#spUserMenu { --wcfUserMenuText: VALUE; }',
+				'wcfUserMenuTextActive': '#spUserMenu { --wcfUserMenuTextActive: VALUE; }',
+				'wcfUserMenuTextDimmed': '#spUserMenu { --wcfUserMenuTextDimmed: VALUE; }',
 				'wcfFooterBoxBackground': '#spFooterBox { background-color: VALUE; }',
 				'wcfFooterBoxText': '#spFooterBox { color: VALUE; }',
 				'wcfFooterBoxLink': '#spFooterBox a { color: VALUE; }',
@@ -1000,6 +1027,7 @@
 				'wcfFooterCopyrightLink': '#spFooterCopyright a { color: VALUE; }',
 				'wcfFooterCopyrightLinkActive': '#spFooterCopyright a:hover { color: VALUE; }',
 				'wcfSidebarBackground': '#spContentSidebar .spContentSidebarBox { background-color: VALUE; }',
+				'wcfSidebarBorder': '#spContentSidebar .spContentSidebarBox { --border-color: VALUE; }',
 				'wcfSidebarText': '#spContentSidebar .spContentSidebarBox { color: VALUE; }',
 				'wcfSidebarLink': '#spContentSidebar .spContentSidebarBox a { color: VALUE; }',
 				'wcfSidebarLinkActive': '#spContentSidebar .spContentSidebarBox a:hover { color: VALUE; }',
@@ -1063,6 +1091,28 @@
 							{/if}
 						</dl>
 					</section>
+
+					{if $action === 'edit' && $style->hasDarkMode}
+						<section class="section"{if $errorField == 'individualScssDarkMode'} formError{/if}>
+							<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}</h2>
+							
+							<dl class="wide">
+								<dt></dt>
+								<dd>
+									<div dir="ltr">
+										<textarea id="individualScssDarkModeCustom" rows="20" cols="40" name="individualScssDarkModeCustom">{$variables[individualScssDarkModeCustom]}</textarea>
+										<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssDarkModeCustom]" value="{if $scrollOffsets[individualScssDarkModeCustom]|isset}{$scrollOffsets[individualScssDarkMode]}{else}0{/if}" type="hidden">
+									</div>
+									<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
+								</dd>
+								{if $errorField == 'individualScssDarkMode'}
+									<small class="innerError">
+										{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
+									</small>
+								{/if}
+							</dl>
+						</section>
+					{/if}
 					
 					<section class="section{if $errorField == 'overrideScssCustom'} formError{/if}">
 						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}</h2>
@@ -1084,7 +1134,7 @@
 							</dd>
 						</dl>
 					</section>
-					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #overrideScssCustom'}
+					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #individualScssDarkModeCustom, #overrideScssCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
 				</div>
@@ -1113,6 +1163,28 @@
 				</dl>
 			</section>
 			
+			{if $action === 'edit' && $style->hasDarkMode}
+				<section class="section{if $errorField == 'individualScssDarkMode' && $isTainted} formError{/if}">
+					<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
+					
+					<dl class="wide">
+						<dt></dt>
+						<dd>
+							<div dir="ltr">
+								<textarea id="individualScssDarkMode" rows="20" cols="40" name="individualScssDarkMode">{$variables[individualScssDarkMode]}</textarea>
+								<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssDarkMode]" value="{if $scrollOffsets[individualScssDarkMode]|isset}{$scrollOffsets[individualScssDarkMode]}{else}0{/if}" type="hidden">
+							</div>
+							<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
+						</dd>
+						{if $errorField == 'individualScssDarkMode' && $isTainted}
+							<small class="innerError">
+								{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
+							</small>
+						{/if}
+					</dl>
+				</section>
+			{/if}
+			
 			<section class="section{if $errorField == 'overrideScss'} formError{/if}">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
@@ -1133,7 +1205,7 @@
 					</dd>
 				</dl>
 			</section>
-			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #overrideScss' editable=$isTainted}
+			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			

@@ -114,12 +114,23 @@ final class StyleCompiler extends SingletonFactory
         string $styleName,
         string $imagePath,
         array $variables,
-        ?string $customCustomSCSSFile = null
+        ?string $customCustomSCSSFile = null,
     ): ?\Exception {
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
             unset($variables['individualScss']);
+        }
+        if (isset($variables['individualScssDarkMode'])) {
+            $individualScssDarkMode = $variables['individualScssDarkMode'];
+            unset($variables['individualScss']);
+
+            if ($individualScssDarkMode) {
+                $individualScss .= \sprintf(
+                    "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
+                    $individualScssDarkMode,
+                );
+            }
         }
 
         // add style image path
@@ -241,10 +252,22 @@ final class StyleCompiler extends SingletonFactory
     {
         // get style variables
         $variables = $style->getVariables();
+
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
             unset($variables['individualScss']);
+        }
+        if (isset($variables['individualScssDarkMode'])) {
+            $individualScssDarkMode = $variables['individualScssDarkMode'];
+            unset($variables['individualScss']);
+
+            if ($individualScssDarkMode) {
+                $individualScss .= \sprintf(
+                    "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
+                    $individualScssDarkMode,
+                );
+            }
         }
 
         // add style image path
@@ -393,7 +416,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // read default values
-        $sql = "SELECT      variableName, defaultValue
+        $sql = "SELECT      variableName, defaultValue, defaultValueDarkMode
                 FROM        wcf" . WCF_N . "_style_variable
                 ORDER BY    variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
@@ -401,6 +424,7 @@ final class StyleCompiler extends SingletonFactory
         $variables = [];
         while ($row = $statement->fetchArray()) {
             $variables[$row['variableName']] = $row['defaultValue'];
+            $variables[Style::DARK_MODE_PREFIX . $row['variableName']] = $row['defaultValueDarkMode'] ?? '';
         }
 
         $variables['style_image_path'] = "'../images/'";
@@ -460,8 +484,19 @@ final class StyleCompiler extends SingletonFactory
 
             \closedir($handle);
 
-            // directory order is not deterministic in some cases
-            \sort($files);
+            // Directory order is not deterministic in some cases,
+            // also the `darkMode.scss` must be at the end.
+            \usort($files, function (string $a, string $b) {
+                if (\str_ends_with($a, 'ui/darkMode.scss')) {
+                    return 1;
+                }
+
+                if (\str_ends_with($b, 'ui/darkMode.scss')) {
+                    return -1;
+                }
+
+                return $a <=> $b;
+            });
         }
 
         return $files;
@@ -499,7 +534,36 @@ final class StyleCompiler extends SingletonFactory
      */
     private function bootstrap(array $variables): string
     {
-        $content = $this->exportStyleVariables($variables);
+        $darkModeVariables = [];
+
+        $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
+        $variables = \array_filter(
+            $variables,
+            function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
+                if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
+                    if (\str_starts_with($value, 'rgba(')) {
+                        $darkModeVariables[\substr($key, $prefixLength)] = $value;
+                    }
+
+                    return false;
+                }
+
+                return true;
+            },
+            \ARRAY_FILTER_USE_BOTH
+        );
+
+        $content = \sprintf(
+            "html {\n%s\n}",
+            $this->exportStyleVariables($variables)
+        );
+
+        if ($darkModeVariables !== []) {
+            $content .= \sprintf(
+                "\nhtml[data-color-scheme=\"dark\"] {\n%s}\n",
+                $this->exportStyleVariables($darkModeVariables),
+            );
+        }
 
         // add reset like a boss
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
@@ -591,6 +655,12 @@ final class StyleCompiler extends SingletonFactory
         }
 
         $variables['apiVersion'] = \str_replace('.', '', Style::API_VERSION);
+
+        // Add some global defaults.
+        $variables['wcfBorderRadius'] = '4px';
+        $variables['wcfBorderRadiusContainer'] = '8px';
+        $variables['wcfBoxShadow'] = 'rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0';
+        $variables['wcfBoxShadowCard'] = 'rgb(0 0 0 / 10%) 0 12px 28px 0, rgb(0 0 0 / 5%) 0 2px 4px 0';
 
         return $variables;
     }
@@ -705,7 +775,7 @@ final class StyleCompiler extends SingletonFactory
             'wcfFontFamilyGoogle',
         ];
 
-        $css = "html {\n";
+        $css = '';
         foreach ($variables as $key => $value) {
             if (!\preg_match('~^wcf[A-Z]~', $key)) {
                 continue;
@@ -737,7 +807,7 @@ final class StyleCompiler extends SingletonFactory
             }
         }
 
-        return $css . '}';
+        return $css;
     }
 
     /**

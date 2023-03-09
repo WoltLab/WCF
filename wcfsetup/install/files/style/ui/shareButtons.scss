@@ -1,12 +1,3 @@
-$shareFacebookBackground: rgba(59, 89, 153, 1);
-$shareTwitterBackground: #55acee;
-$shareGoogleBackground: rgba(220, 78, 65, 1);
-$shareRedditBackground: rgba(255, 69, 0, 1);
-$shareWhatsAppBackground: #25d366;
-$shareLinkedInBackground: rgba(0, 122, 182, 1);
-$sharePinterestBackground: rgba(189, 33, 37, 1);
-$shareXingBackground: rgba(0, 101, 103, 1);
-
 .messageShareButtons {
 	.inlineList {
 		margin-right: -5px;
@@ -18,94 +9,65 @@ $shareXingBackground: rgba(0, 101, 103, 1);
 	}
 
 	.button {
-		display: flex;
 		align-items: center;
+		display: flex;
+
+		span {
+			margin-left: 3px;
+		}
 
 		@include screen-sm-down {
-			> span:not(.icon) {
+			span {
 				display: none;
 			}
 		}
 	}
 
-	@include screen-md-up {
-		.icon {
-			margin-right: 3px;
-		}
-	}
-
 	.messageShareProvider {
+		--background-color-facebook-rgb: 59 89 153;
+		--background-color-twitter-rgb: 85 172 238;
+		--background-color-reddit-rgb: 255 69 0;
+		--background-color-whatsapp-rgb: 37 211 102;
+		--background-color-linkedin-rgb: 0 122 182;
+		--background-color-pinterest-rgb: 189 33 37;
+		--background-color-xing-rgb: 0 101 103;
+		--color: #fff;
+
+		background-color: rgb(var(--background-color-rgb, --wcfButtonBackground-rgb));
+		color: var(--color);
+
 		&[data-identifier="Facebook"] {
-			background-color: $shareFacebookBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-facebook-rgb);
 		}
 
 		&[data-identifier="Twitter"] {
-			background-color: $shareTwitterBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-twitter-rgb);
 		}
 
 		&[data-identifier="Reddit"] {
-			background-color: $shareRedditBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-reddit-rgb);
 		}
 
 		&[data-identifier="WhatsApp"] {
-			background-color: $shareWhatsAppBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-whatsapp-rgb);
 		}
 
 		&[data-identifier="LinkedIn"] {
-			background-color: $shareLinkedInBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-linkedin-rgb);
 		}
 
 		&[data-identifier="Pinterest"] {
-			background-color: $sharePinterestBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-pinterest-rgb);
 		}
 
 		&[data-identifier="XING"] {
-			background-color: $shareXingBackground;
-			color: rgba(255, 255, 255, 1);
+			--background-color-rgb: var(--background-color-xing-rgb);
 		}
 	}
 }
 
 /* hover states are only applied to non-touch devices to avoid "leftover" hover states after taps */
-html:not(.touch) .messageShareButtons .messageShareProvider {
-	&[data-identifier="Facebook"]:hover {
-		background-color: darken($shareFacebookBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="Twitter"]:hover {
-		background-color: darken($shareTwitterBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="Reddit"]:hover {
-		background-color: darken($shareRedditBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="WhatsApp"]:hover {
-		background-color: darken($shareWhatsAppBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="LinkedIn"]:hover {
-		background-color: darken($shareLinkedInBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="Pinterest"]:hover {
-		background-color: darken($sharePinterestBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
-
-	&[data-identifier="XING"]:hover {
-		background-color: darken($shareXingBackground, 10%);
-		color: rgba(255, 255, 255, 1);
-	}
+html:not(.touch) .messageShareButtons .messageShareProvider:hover {
+	background-color: rgba(var(--background-color-rgb) / 0.87);
+	color: var(--color);
 }
