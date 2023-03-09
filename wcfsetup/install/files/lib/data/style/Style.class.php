@@ -205,8 +205,9 @@ class Style extends DatabaseObject
             if ($this->hasDarkMode) {
                 $this->variables[self::DARK_MODE_PREFIX . $variableName] = $row['variableValueDarkMode'] ?? $row['defaultValueDarkMode'];
 
-                // TODO: Workaround during development to prevent
-                //       the SCSS compiler from tripping over `null`.
+                // Some variables are identical for both modes and therefore are represented as
+                // NULL values. We cannot skip these values for technical reasons, but the SCSS
+                // compiler does not like NULL either.
                 if ($this->variables[self::DARK_MODE_PREFIX . $variableName] === null) {
                     $this->variables[self::DARK_MODE_PREFIX . $variableName] = '';
                 }
