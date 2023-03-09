@@ -74,6 +74,26 @@ html[data-color-scheme="dark"] {
 				right: 0;
 				top: 0;
 			}
+
+			&.pageHeaderLogo--debug {
+				img {
+					opacity: 0.34;
+				}
+
+				> a::before {
+					color: #ffa500;
+					content: "DEBUG MODE";
+					font-weight: 600;
+					font-size: 12px;
+					position: absolute;
+					text-shadow: 1px 1px 5px #000;
+					z-index: 1;
+				}
+
+				&.pageHeaderLogo--dev > a::before {
+					content: "DEV MODE";
+				}
+			}
 		}
 
 		.mainMenu {
