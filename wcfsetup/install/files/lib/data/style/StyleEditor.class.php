@@ -1014,11 +1014,11 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             );
 
             $sql = "SELECT      variable.variableName, value.variableValueDarkMode
-                FROM        wcf1_style_variable_value value
-                LEFT JOIN   wcf1_style_variable variable
-                ON          variable.variableID = value.variableID
-                WHERE       value.styleID = ?
-                        AND value.variableValueDarkMode IS NOT NULL";
+                    FROM        wcf1_style_variable_value value
+                    LEFT JOIN   wcf1_style_variable variable
+                    ON          variable.variableID = value.variableID
+                    WHERE       value.styleID = ?
+                            AND value.variableValueDarkMode IS NOT NULL";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->styleID]);
             while ($row = $statement->fetchArray()) {
