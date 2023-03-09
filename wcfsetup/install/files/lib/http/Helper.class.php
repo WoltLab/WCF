@@ -8,6 +8,7 @@ use CuyZ\Valinor\MapperBuilder;
 use Negotiation\Accept;
 use Negotiation\Negotiator;
 use Psr\Http\Message\RequestInterface;
+use wcf\util\StringUtil;
 
 /**
  * Provides various helper methods for PSR-7/PSR-15 request processing.
@@ -26,6 +27,26 @@ final class Helper
     public static function isAjaxRequest(RequestInterface $request): bool
     {
         return $request->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
+    }
+
+    /**
+     * Returns the user-agent in the request. If the header value is not
+     * valid UTF-8, the bytes will be interpreted as ISO-8859-1 and converted
+     * to UTF-8.
+     */
+    public static function getUserAgent(RequestInterface $request): ?string
+    {
+        if (!$request->hasHeader('user-agent')) {
+            return null;
+        }
+
+        $userAgent = $request->getHeaderLine('user-agent');
+
+        if (!StringUtil::isUTF8($userAgent)) {
+            $userAgent = \mb_convert_encoding($userAgent, 'UTF-8', 'ISO-8859-1');
+        }
+
+        return $userAgent;
     }
 
     /**
