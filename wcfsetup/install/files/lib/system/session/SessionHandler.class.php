@@ -254,11 +254,9 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the session ID stored in the session cookie or `null`.
      */
-    private function getSessionIdFromCookie(): ?string
+    private function getSessionIdFromCookie(?array $cookieData): ?string
     {
-        $cookieData = $this->getParsedCookieData();
-
-        if ($cookieData) {
+        if ($cookieData !== null) {
             return $cookieData['sessionId'];
         }
 
@@ -302,7 +300,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function hasValidCookie(): bool
     {
-        return $this->getSessionIdFromCookie() === $this->sessionID;
+        return $this->getSessionIdFromCookie($this->getParsedCookieData()) === $this->sessionID;
     }
 
     /**
@@ -325,7 +323,8 @@ final class SessionHandler extends SingletonFactory
      */
     public function loadFromCookie()
     {
-        $sessionID = $this->getSessionIdFromCookie();
+        $cookieData = $this->getParsedCookieData();
+        $sessionID = $this->getSessionIdFromCookie($cookieData);
 
         $hasSession = false;
         if ($sessionID) {
@@ -333,7 +332,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         if ($hasSession) {
-            $this->maybeRefreshCookie();
+            $this->maybeRefreshCookie($cookieData);
         } else {
             $this->create();
         }
@@ -342,14 +341,12 @@ final class SessionHandler extends SingletonFactory
     /**
      * Refreshes the session cookie, extending the expiry.
      */
-    private function maybeRefreshCookie(): void
+    private function maybeRefreshCookie(array $cookieData): void
     {
         // Guests use short-lived sessions with an actual session cookie.
         if (!$this->user->userID) {
             return;
         }
-
-        $cookieData = $this->getParsedCookieData();
 
         // No refresh is needed if the timestep matches up.
         if (isset($cookieData['timestep']) && $cookieData['timestep'] === $this->getCookieTimestep()) {
