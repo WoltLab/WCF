@@ -314,6 +314,7 @@ html[data-color-scheme="dark"] {
 				column-gap: 10px;
 				display: flex;
 				font-size: 12px;
+				white-space: nowrap;
 
 				&::after {
 					content: "";
