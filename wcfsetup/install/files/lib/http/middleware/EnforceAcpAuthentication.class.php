@@ -182,7 +182,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         }
 
         // Fetch request URI + request ID (if available).
-        $requestURI = UserUtil::getRequestURI();
+        $requestURI = Helper::getPathAndQuery($request->getUri());
         if ($requestId = \wcf\getRequestId()) {
             $requestIdSuffix = ' (' . $requestId . ')';
             // Ensure that the request ID fits by truncating the URI.
