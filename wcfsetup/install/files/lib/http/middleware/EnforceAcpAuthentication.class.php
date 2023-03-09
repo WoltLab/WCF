@@ -151,10 +151,10 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
     {
         // try to find existing session log
         $sql = "SELECT  sessionLogID
-                FROM    wcf" . WCF_N . "_acp_session_log
+                FROM    wcf1_acp_session_log
                 WHERE   sessionID = ?
-                AND     lastActivityTime > ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                    AND lastActivityTime > ?";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             WCF::getSession()->sessionID,
             (TIME_NOW - 15 * 60),
