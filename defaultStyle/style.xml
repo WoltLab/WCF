@@ -3,12 +3,13 @@
 	<general>
 		<stylename><![CDATA[WoltLab Suite Core 6.0]]></stylename>
 		<packageName><![CDATA[com.woltlab.wcf]]></packageName>
-		<date><![CDATA[2022-11-30]]></date>
+		<date><![CDATA[2023-03-10]]></date>
 		<version><![CDATA[6.0.0]]></version>
 		<image><![CDATA[stylePreview.png]]></image>
 		<image2x><![CDATA[stylePreview@2x.png]]></image2x>
 		<copyright><![CDATA[WoltLab GmbH]]></copyright>
 		<license><![CDATA[GNU Lesser General Public License]]></license>
+		<hasDarkMode><![CDATA[1]]></hasDarkMode>
 	</general>
 	<author>
 		<authorname><![CDATA[Alexander Ebert, Marcel Werk]]></authorname>

@@ -28,6 +28,7 @@
 			<xs:element name="default" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="description" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="coverPhoto" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="hasDarkMode" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 		</xs:choice>
 	</xs:complexType>
 	
@@ -43,6 +44,7 @@
 	<xs:complexType name="files">
 		<xs:choice maxOccurs="unbounded">
 			<xs:element name="variables" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="variablesDarkMode" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="images" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>

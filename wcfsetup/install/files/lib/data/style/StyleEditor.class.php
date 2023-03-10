@@ -256,6 +256,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'date' => '0000-00-00',
             'imagesPath' => '',
             'packageName' => '',
+            'hasDarkMode' => false,
         ];
 
         $categories = $xpath->query('/ns:style/*');
@@ -301,7 +302,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 break;
 
                             case 'default':
-                                $data['default'] = true;
+                            case 'hasDarkMode':
+                                $data[$element->tagName] = true;
                                 break;
 
                             case 'description':
@@ -444,6 +446,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'authorName' => $data['authorName'],
             'authorURL' => $data['authorURL'],
             'packageName' => $data['packageName'],
+            'hasDarkMode' => $data['hasDarkMode'],
         ];
 
         // check if there is an untainted style with the same package name
@@ -958,6 +961,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
         if ($this->license) {
             $xml->writeElement('license', $this->license);
+        }
+        if ($this->hasDarkMode) {
+            $xml->writeElement('hasDarkMode', 1);
         }
         $xml->endElement();
 
