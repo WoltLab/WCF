@@ -7,7 +7,7 @@
 {event name='userNotice'}
 
 {capture assign='statusOk'}{icon name='check'}{/capture}
-{capture assign='statusSufficient'}{icon name='triangle-exclamation'}{/capture}
+{capture assign='statusSufficient'}{icon name='circle-exclamation'}{/capture}
 {capture assign='statusInsufficient'}{icon name='triangle-exclamation'}{/capture}
 
 <section class="section">
