@@ -268,6 +268,7 @@ html[data-color-scheme="dark"] {
 			display: flex;
 			flex-direction: column;
 			padding: 15px 5px;
+			width: 100%;
 
 			&:not(.active):hover {
 				color: var(--wcfHeaderMenuLinkActive);

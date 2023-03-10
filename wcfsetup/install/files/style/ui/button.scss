@@ -1,5 +1,8 @@
 button {
 	all: unset;
+
+	box-sizing: inherit;
+	min-width: 0;
 	-webkit-user-select: none;
 	user-select: none;
 

@@ -5,10 +5,10 @@
 		<ol class="acpPageMenuList">
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 				<li>
-					<a href="#" class="acpPageMenuLink{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
+					<button type="button" class="acpPageMenuLink{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
 						{@$_sectionMenuItem->getIcon()->toHtml(32)}
 						<span class="acpPageMenuItemLabel">{@$_sectionMenuItem}</span>
-					</a>
+					</button>
 				</li>
 			{/foreach}
 		</ol>
