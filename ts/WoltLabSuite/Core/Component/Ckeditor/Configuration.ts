@@ -240,6 +240,7 @@ export type Features = {
   quoteBlock: boolean;
   spoiler: boolean;
   strikethrough: boolean;
+  submitOnEnter: boolean;
   subscript: boolean;
   superscript: boolean;
   table: boolean;

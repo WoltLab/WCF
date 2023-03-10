@@ -29,6 +29,7 @@
 			mention: element.dataset.supportMention === "true",
 			quoteBlock: true,
 			strikethrough: true,
+			submitOnEnter: false,
 			subscript: true,
 			superscript: true,
 			spoiler: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('spoiler')}true{else}false{/if},

@@ -48,6 +48,11 @@ define(["require", "exports"], function (require, exports) {
                 detail: payload,
             }));
         }
+        submitOnEnter(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:submit-on-enter" /* EventNames.SubmitOnEnter */, {
+                detail: payload,
+            }));
+        }
         uploadAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:upload-attachment" /* EventNames.UploadAttachment */, {
                 detail: payload,
@@ -116,6 +121,12 @@ define(["require", "exports"], function (require, exports) {
             this.#element.addEventListener("ckeditor5:setup-features" /* EventNames.SetupFeatures */, (event) => {
                 callback(event.detail);
             }, { once: true });
+            return this;
+        }
+        submitOnEnter(callback) {
+            this.#element.addEventListener("ckeditor5:submit-on-enter" /* EventNames.SubmitOnEnter */, (event) => {
+                callback(event.detail);
+            });
             return this;
         }
         uploadAttachment(callback) {

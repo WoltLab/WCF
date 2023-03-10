@@ -5,6 +5,7 @@ import { setup as setupQuote } from "./Ckeditor/Quote";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
+import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import Devtools from "../Devtools";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -191,6 +192,10 @@ export async function setupCkeditor(
   dispatchToCkeditor(element).ready({
     ckeditor,
   });
+
+  if (features.submitOnEnter) {
+    setupSubmitOnEnter(cke, ckeditor);
+  }
 
   if (ckeditor.getHtml() === "") {
     dispatchToCkeditor(element).discardRecoveredData();

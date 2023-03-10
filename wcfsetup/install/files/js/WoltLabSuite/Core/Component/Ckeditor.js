@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "../Devtools", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, Devtools_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "../Devtools", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Devtools_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -130,6 +130,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         (0, Event_1.dispatchToCkeditor)(element).ready({
             ckeditor,
         });
+        if (features.submitOnEnter) {
+            (0, SubmitOnEnter_1.setup)(cke, ckeditor);
+        }
         if (ckeditor.getHtml() === "") {
             (0, Event_1.dispatchToCkeditor)(element).discardRecoveredData();
         }

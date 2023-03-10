@@ -15,6 +15,7 @@ const enum EventNames {
   Reset = "ckeditor5:reset",
   SetupConfiguration = "ckeditor5:setup-configuration",
   SetupFeatures = "ckeditor5:setup-features",
+  SubmitOnEnter = "ckeditor5:submit-on-enter",
   UploadAttachment = "ckeditor5:upload-attachment",
   UploadMedia = "ckeditor5:upload-media",
 }
@@ -31,6 +32,10 @@ type SetupFeaturesEventPayload = {
 type SetupConfigurationEventPayload = {
   configuration: EditorConfig;
   features: Features;
+};
+type SubmitOnEnterPayload = {
+  ckeditor: CKEditor;
+  html: string;
 };
 
 class EventDispatcher {
@@ -99,6 +104,14 @@ class EventDispatcher {
   setupFeatures(payload: SetupFeaturesEventPayload): void {
     this.#element.dispatchEvent(
       new CustomEvent<SetupFeaturesEventPayload>(EventNames.SetupFeatures, {
+        detail: payload,
+      }),
+    );
+  }
+
+  submitOnEnter(payload: SubmitOnEnterPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<SubmitOnEnterPayload>(EventNames.SubmitOnEnter, {
         detail: payload,
       }),
     );
@@ -212,6 +225,14 @@ class EventListener {
       },
       { once: true },
     );
+
+    return this;
+  }
+
+  submitOnEnter(callback: (payload: SubmitOnEnterPayload) => void): this {
+    this.#element.addEventListener(EventNames.SubmitOnEnter, (event: CustomEvent<SubmitOnEnterPayload>) => {
+      callback(event.detail);
+    });
 
     return this;
   }
