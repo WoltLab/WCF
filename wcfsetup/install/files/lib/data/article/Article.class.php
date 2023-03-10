@@ -147,7 +147,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
 
         if ($this->publicationStatus != self::PUBLISHED) {
             if (WCF::getSession()->getPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
-                return false;
+                return true;
             }
         }
 
