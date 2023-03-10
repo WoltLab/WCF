@@ -172,6 +172,10 @@ a.button {
 	}
 }
 
+.buttonList.iconList a {
+	color: var(--wcfButtonText);
+}
+
 .buttonGroupNavigation > ul {
 	@include inlineList;
 }
