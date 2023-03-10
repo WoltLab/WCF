@@ -47,7 +47,7 @@
 								{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}
 									<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 										<div class="userMenuItemImage">
-											{icon size=32 name='pencil'}
+											{icon size=16 name='pencil'}
 										</div>
 										<div class="userMenuItemContent">
 											<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
@@ -57,7 +57,7 @@
 								{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 									<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 										<div class="userMenuItemImage">
-											{icon size=32 name='wrench'}
+											{icon size=16 name='wrench'}
 										</div>
 										<div class="userMenuItemContent">
 											<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
@@ -72,7 +72,7 @@
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine" data-category="{$menuItem[category]->menuItem}">
 							<div class="userMenuItemImage">
-								{@$menuItem[category]->getIcon()->toHtml(32)}
+								{@$menuItem[category]->getIcon()->toHtml(16)}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{$menuItem[link]}" class="userMenuItemLink">
