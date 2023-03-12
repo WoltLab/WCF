@@ -95,89 +95,85 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
         /**
          * Initializes this tab menu.
          */
-        init(oldTabs) {
+        init() {
             // bind listeners
             this.tabs.forEach((tab) => {
-                if (!oldTabs || oldTabs.get(tab.dataset.name || "") !== tab) {
-                    const firstChild = tab.children[0];
-                    firstChild.addEventListener("click", (ev) => this._onClick(ev));
-                    // iOS 13 changed the behavior for click events after scrolling the menu. It prevents
-                    // the synthetic mouse events like "click" from triggering for a short duration after
-                    // a scrolling has occurred. If the user scrolls to the end of the list and immediately
-                    // attempts to click the tab, nothing will happen. However, if the user waits for some
-                    // time, the tap will trigger a "click" event again.
-                    //
-                    // A "click" event is basically the result of a touch without any (significant) finger
-                    // movement indicated by a "touchmove" event. This changes allows the user to scroll
-                    // both the menu and the page normally, but still benefit from snappy reactions when
-                    // tapping a menu item.
-                    if (Environment.platform() === "ios") {
-                        let isClick = false;
-                        firstChild.addEventListener("touchstart", () => {
-                            isClick = true;
-                        });
-                        firstChild.addEventListener("touchmove", () => {
+                const firstChild = tab.children[0];
+                firstChild.addEventListener("click", (ev) => this._onClick(ev));
+                // iOS 13 changed the behavior for click events after scrolling the menu. It prevents
+                // the synthetic mouse events like "click" from triggering for a short duration after
+                // a scrolling has occurred. If the user scrolls to the end of the list and immediately
+                // attempts to click the tab, nothing will happen. However, if the user waits for some
+                // time, the tap will trigger a "click" event again.
+                //
+                // A "click" event is basically the result of a touch without any (significant) finger
+                // movement indicated by a "touchmove" event. This changes allows the user to scroll
+                // both the menu and the page normally, but still benefit from snappy reactions when
+                // tapping a menu item.
+                if (Environment.platform() === "ios") {
+                    let isClick = false;
+                    firstChild.addEventListener("touchstart", () => {
+                        isClick = true;
+                    });
+                    firstChild.addEventListener("touchmove", () => {
+                        isClick = false;
+                    });
+                    firstChild.addEventListener("touchend", (event) => {
+                        if (isClick) {
                             isClick = false;
-                        });
-                        firstChild.addEventListener("touchend", (event) => {
-                            if (isClick) {
-                                isClick = false;
-                                // This will block the regular click event from firing.
-                                event.preventDefault();
-                                // Invoke the click callback manually.
-                                this._onClick(event);
-                            }
-                        });
-                    }
+                            // This will block the regular click event from firing.
+                            event.preventDefault();
+                            // Invoke the click callback manually.
+                            this._onClick(event);
+                        }
+                    });
                 }
             });
             let returnValue = null;
-            if (!oldTabs) {
-                const hash = TabMenuSimple.getIdentifierFromHash();
-                let selectTab = undefined;
-                if (hash !== "") {
-                    selectTab = this.tabs.get(hash);
-                    // check for parent tab menu
-                    if (selectTab) {
-                        const parent = this.container.parentElement;
-                        if (parent?.classList.contains("tabMenuContainer")) {
-                            returnValue = this.container;
-                        }
-                    }
-                }
-                if (!selectTab) {
-                    let preselect = this.container.dataset.preselect || this.container.dataset.active;
-                    if (preselect === "true" || !preselect) {
-                        preselect = true;
-                    }
-                    if (preselect === true) {
-                        this.tabs.forEach(function (tab) {
-                            if (!selectTab &&
-                                !Util_1.default.isHidden(tab) &&
-                                (!tab.previousElementSibling || Util_1.default.isHidden(tab.previousElementSibling))) {
-                                selectTab = tab;
-                            }
-                        });
-                    }
-                    else if (typeof preselect === "string" && preselect !== "false") {
-                        selectTab = this.tabs.get(preselect);
-                    }
-                }
+            const hash = TabMenuSimple.getIdentifierFromHash();
+            let selectTab = undefined;
+            if (hash !== "") {
+                selectTab = this.tabs.get(hash);
+                // check for parent tab menu
                 if (selectTab) {
-                    this.containers.forEach((container) => {
-                        container.classList.add("hidden");
+                    const parent = this.container.parentElement;
+                    if (parent?.classList.contains("tabMenuContainer")) {
+                        returnValue = this.container;
+                    }
+                }
+            }
+            if (!selectTab) {
+                let preselect = this.container.dataset.preselect || this.container.dataset.active;
+                if (preselect === "true" || !preselect) {
+                    preselect = true;
+                }
+                if (preselect === true) {
+                    this.tabs.forEach(function (tab) {
+                        if (!selectTab &&
+                            !Util_1.default.isHidden(tab) &&
+                            (!tab.previousElementSibling || Util_1.default.isHidden(tab.previousElementSibling))) {
+                            selectTab = tab;
+                        }
                     });
-                    this.select(null, selectTab, true);
                 }
-                const store = this.container.dataset.store;
-                if (store) {
-                    const input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = store;
-                    input.value = this.getActiveTab().dataset.name || "";
-                    this.container.appendChild(input);
-                    this.store = input;
+                else if (typeof preselect === "string" && preselect !== "false") {
+                    selectTab = this.tabs.get(preselect);
                 }
+            }
+            if (selectTab) {
+                this.containers.forEach((container) => {
+                    container.classList.add("hidden");
+                });
+                this.select(null, selectTab, true);
+            }
+            const store = this.container.dataset.store;
+            if (store) {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = store;
+                input.value = this.getActiveTab().dataset.name || "";
+                this.container.appendChild(input);
+                this.store = input;
             }
             return returnValue;
         }
@@ -292,17 +288,6 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                 this.select(null, selectTab, false);
             }
             return selectTab !== null;
-        }
-        /**
-         * Rebuilds all tabs, must be invoked after adding or removing of tabs.
-         *
-         * Warning: Do not remove tabs if you plan to add these later again or at least clone the nodes
-         *          to prevent issues with already bound event listeners. Consider hiding them via CSS.
-         */
-        rebuild() {
-            const oldTabs = new Map(this.tabs);
-            this.validate();
-            this.init(oldTabs);
         }
         /**
          * Returns true if this tab menu has a tab with provided name.
