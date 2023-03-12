@@ -173,10 +173,16 @@ export async function setupCkeditor(
 
   initializeFeatures(element, features);
 
-  setupAttachment(element);
-  setupMedia(element);
+  if (features.attachment) {
+    setupAttachment(element);
+  }
+  if (features.media) {
+    setupMedia(element);
+  }
   setupMention(element);
-  setupQuote(element);
+  if (features.quoteBlock) {
+    setupQuote(element);
+  }
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 

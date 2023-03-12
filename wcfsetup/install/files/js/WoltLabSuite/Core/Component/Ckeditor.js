@@ -116,10 +116,16 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         initializeFeatures(element, features);
-        (0, Attachment_1.setup)(element);
-        (0, Media_1.setup)(element);
+        if (features.attachment) {
+            (0, Attachment_1.setup)(element);
+        }
+        if (features.media) {
+            (0, Media_1.setup)(element);
+        }
         (0, Mention_1.setup)(element);
-        (0, Quote_1.setup)(element);
+        if (features.quoteBlock) {
+            (0, Quote_1.setup)(element);
+        }
         const configuration = initializeConfiguration(element, features, bbcodes);
         const cke = await window.CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);

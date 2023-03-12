@@ -105,6 +105,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 if (this.#features.link) {
                     this.#removePlugins.push("LinkImage");
                 }
+                // Disable built-in plugins that rely on the image plugin.
+                this.#removePlugins.push("WoltlabAttachment");
+                this.#removePlugins.push("WoltlabSmiley");
             }
         }
         #setupBlocks() {
