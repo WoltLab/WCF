@@ -206,12 +206,14 @@
 }
 
 /* dialogs */
-.dialogContent {
+.dialogContent,
+.dialog__content {
 	.error,
 	.info,
 	.success,
 	.warning {
 		&:first-child {
+			margin-bottom: 20px;
 			margin-top: 0;
 		}
 	}
