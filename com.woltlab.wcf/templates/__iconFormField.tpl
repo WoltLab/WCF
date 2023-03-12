@@ -19,7 +19,7 @@
 			const input = document.getElementById('{@$field->getPrefixedId()|encodeJS}');
 			
 			const callback = (iconName, forceSolid) => {
-				input.value = iconName;
+				input.value = `${ iconName };${ forceSolid }`;
 
 				let icon = iconContainer.querySelector("fa-icon");
 				if (icon) {

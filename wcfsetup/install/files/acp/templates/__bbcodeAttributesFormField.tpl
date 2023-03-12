@@ -104,7 +104,7 @@
 			<button type="button" class="jsTooltip" id="{$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}">
 				{icon name='plus'}
 			</button>
-			${parentTitle.innerHTML}
+			${ parentTitle.innerHTML }
 		`;
 		
 		DomChangeListener.trigger();

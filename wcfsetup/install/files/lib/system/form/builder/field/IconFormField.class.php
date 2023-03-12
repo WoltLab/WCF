@@ -17,7 +17,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
 {
     use TImmutableFormField;
 
-    private FontAwesomeIcon $icon;
+    private ?FontAwesomeIcon $icon;
 
     /**
      * @inheritDoc
@@ -113,7 +113,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     {
         if (!isset($this->icon)) {
             $this->icon = null;
-            if (FontAwesomeIcon::isValidString($this->value)) {
+            if ($this->value && FontAwesomeIcon::isValidString($this->value)) {
                 $this->icon = FontAwesomeIcon::fromString($this->value);
             }
         }
