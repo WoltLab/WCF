@@ -58,13 +58,13 @@
 			<div class="section">
 				<div id="news-twitter-timeline">
 					{if $__wcf->language->languageCode == 'de'}
-						<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="noheader nofooter transparent" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
+						<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="noheader nofooter" data-dnt="1" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
 						
 						<div style="margin-top: 20px">
 							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Folge @woltlab_de</a>
 						</div>
 					{else}
-						<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="noheader nofooter transparent" data-widget-id="335166618281865217">Tweets by @woltlab</a>
+						<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="noheader nofooter" data-dnt="1" data-widget-id="335166618281865217">Tweets by @woltlab</a>
 						
 						<div style="margin-top: 20px">
 							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Follow @woltlab</a>
@@ -72,6 +72,9 @@
 					{/if}
 					
 					{literal}
+						<script data-eager="true">
+							document.querySelector("#news .twitter-timeline").dataset.theme = document.documentElement.dataset.colorScheme;
+						</script>
 						<script data-relocate="true">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					{/literal}
 				</div>
