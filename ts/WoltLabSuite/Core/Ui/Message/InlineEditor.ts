@@ -440,16 +440,17 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Saves the editor message.
    */
   protected _save(): void {
+    const id = this._getEditorId();
+
+    const ckeditor = getCkeditorById(id)!;
     const parameters = {
       containerID: this._options.containerId,
       data: {
-        message: "",
+        message: ckeditor.getHtml(),
       },
       objectID: this._getObjectId(this._activeElement!),
       removeQuoteIDs: this._options.quoteManager ? this._options.quoteManager.getQuotesMarkedForRemoval() : [],
     };
-
-    const id = this._getEditorId();
 
     // add any available settings
     const settingsContainer = document.getElementById(`settings_${id}`);
@@ -471,8 +472,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
           parameters[name] = element.value.trim();
         });
     }
-
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
 
     let validateResult: unknown = this._validate(parameters);
 

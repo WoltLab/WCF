@@ -108,13 +108,12 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   }
 
   async #saveEdit(): Promise<void> {
+    const ckeditor = getCkeditorById(this.#editorId)!;
     const parameters = {
       data: {
-        message: "",
+        message: ckeditor.getHtml(),
       },
     };
-
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
 
     if (!this.#validateEdit(parameters)) {
       return;

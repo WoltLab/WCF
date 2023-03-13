@@ -81,12 +81,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             }, 250);
         }
         async #saveEdit() {
+            const ckeditor = (0, Ckeditor_1.getCkeditorById)(this.#editorId);
             const parameters = {
                 data: {
-                    message: "",
+                    message: ckeditor.getHtml(),
                 },
             };
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${this.#editorId}`, parameters.data);
             if (!this.#validateEdit(parameters)) {
                 return;
             }

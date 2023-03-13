@@ -341,15 +341,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Ckeditor",
          * Saves the editor message.
          */
         _save() {
+            const id = this._getEditorId();
+            const ckeditor = (0, Ckeditor_1.getCkeditorById)(id);
             const parameters = {
                 containerID: this._options.containerId,
                 data: {
-                    message: "",
+                    message: ckeditor.getHtml(),
                 },
                 objectID: this._getObjectId(this._activeElement),
                 removeQuoteIDs: this._options.quoteManager ? this._options.quoteManager.getQuotesMarkedForRemoval() : [],
             };
-            const id = this._getEditorId();
             // add any available settings
             const settingsContainer = document.getElementById(`settings_${id}`);
             if (settingsContainer) {
@@ -368,7 +369,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Ckeditor",
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", `getText_${id}`, parameters.data);
             let validateResult = this._validate(parameters);
             // Legacy validation methods returned a plain boolean.
             if (!(validateResult instanceof Promise)) {
