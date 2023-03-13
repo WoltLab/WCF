@@ -137,6 +137,15 @@
 
         const shadow = this.attachShadow({ mode: "open" });
         shadow.append(this.#timeElement);
+
+        const style = document.createElement("style");
+        style.textContent = `
+          @media print {
+            time::after {
+              content: " (" attr(title) ")";
+            }
+          }`;
+        shadow.append(style);
       }
 
       if (updateTitle) {
