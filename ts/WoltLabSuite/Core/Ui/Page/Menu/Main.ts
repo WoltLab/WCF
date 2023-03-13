@@ -277,6 +277,9 @@ export class PageMenuMain implements PageMenuProvider {
       if (menuItem.identifier) {
         link.dataset.identifier = menuItem.identifier;
       }
+      if (menuItem.openInNewWindow) {
+        link.target = "_blank";
+      }
 
       if (menuItem.counter > 0) {
         const counter = document.createElement("span");

@@ -35,8 +35,13 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
   // `link.href` represents the computed link, not the raw value.
   const href = anchor.getAttribute("href");
   let link: string | undefined = undefined;
+  let openInNewWindow: boolean | undefined = undefined;
   if (href && href !== "#") {
     link = anchor.href;
+
+    if (anchor.target === "_blank") {
+      openInNewWindow = true;
+    }
   }
 
   const active = menuItem.classList.contains("active");
@@ -50,6 +55,7 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
     depth,
     identifier,
     link,
+    openInNewWindow,
     title,
   };
 }
