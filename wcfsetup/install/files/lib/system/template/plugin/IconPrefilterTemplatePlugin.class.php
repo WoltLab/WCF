@@ -4,7 +4,10 @@ namespace wcf\system\template\plugin;
 
 use wcf\system\style\exception\IconValidationFailed;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\style\FontAwesomeIconBrand;
+use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\template\TemplateScriptingCompiler;
+use wcf\util\JSON;
 
 /**
  * See IconFunctionTemplatePlugin.
@@ -27,19 +30,37 @@ final class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         $sizes = \implode('|', FontAwesomeIcon::SIZES);
 
         return \preg_replace_callback(
-            "~{$ldq}icon(?: size=(?<size>{$sizes}))? name='(?<name>[a-z0-9-]+)'(?: type='(?<type>solid)')?{$rdq}~",
-            static function ($match) {
+            "~{$ldq}icon(?: size=(?<size>{$sizes}))? name='(?<name>[a-z0-9-]+)'(?: type='(?<type>solid|brand)')?(?: encodeJson=(?<encodeJson>true))?{$rdq}~",
+            function ($match) {
                 $size = ($match['size'] ?? null) ?: 16;
                 $name = $match['name'];
-                $solid = isset($match['type']) && $match['type'] === 'solid';
+                $type = ($match['type'] ?? '');
+                $encodeJson = ($match['encodeJson'] ?? 'false') === 'true';
 
                 try {
-                    return FontAwesomeIcon::fromValues($name, $solid)->toHtml($size);
+                    $html = $this->getIcon($type, $name)->toHtml($size);
+
+                    if ($encodeJson) {
+                        return JSON::encode($encodeJson);
+                    }
+
+                    return $html;
                 } catch (IconValidationFailed) {
                     return $match[0];
                 }
             },
             $sourceContent
         );
+    }
+
+    private function getIcon(string $type, string $name): IFontAwesomeIcon
+    {
+        if ($type === 'brand') {
+            return FontAwesomeIconBrand::fromName($name);
+        }
+
+        $forceSolid = $type === 'solid';
+
+        return FontAwesomeIcon::fromValues($name, $forceSolid);
     }
 }
