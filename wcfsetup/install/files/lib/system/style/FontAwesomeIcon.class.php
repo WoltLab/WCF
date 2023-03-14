@@ -14,9 +14,9 @@ use wcf\system\style\exception\UnknownIcon;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-final class FontAwesomeIcon implements \Stringable
+final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
 {
-    public const SIZES = [16, 24, 32, 48, 64, 96, 128, 144];
+    public const SIZES = IFontAwesomeIcon::SIZES;
 
     /**
      * Uses the icon name as the key and a boolean value that
