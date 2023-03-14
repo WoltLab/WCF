@@ -3,6 +3,8 @@
 namespace wcf\system\template\plugin;
 
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\style\FontAwesomeIconBrand;
+use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\template\TemplateEngine;
 use wcf\util\JSON;
 
@@ -47,32 +49,24 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("An unsupported type '{$type}' was specified.");
         }
 
-        $icon = $this->getIcon($type, $name, $size);
+        $icon = $this->getIcon($type, $name);
+        $html = $icon->toHtml($size);
+
         if ($encodeJson) {
-            return JSON::encode($icon);
+            return JSON::encode($html);
         }
 
-        return $icon;
+        return $html;
     }
 
-    private function getIcon(string $type, string $name, int $size): string
+    private function getIcon(string $type, string $name): IFontAwesomeIcon
     {
         if ($type === 'brand') {
-            $svgFile = \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
-            if (!\file_exists($svgFile)) {
-                throw new \InvalidArgumentException("Unable to locate the icon for brand '{$name}'.");
-            }
-
-            $content = \file_get_contents($svgFile);
-            $content = \preg_replace('~^<svg~', '<svg slot="svg"', $content);
-
-            return <<<HTML
-            <fa-brand size="{$size}">{$content}</fa-brand>
-            HTML;
+            return FontAwesomeIconBrand::fromName($name);
         }
 
         $forceSolid = $type === 'solid';
 
-        return FontAwesomeIcon::fromValues($name, $forceSolid)->toHtml($size);
+        return FontAwesomeIcon::fromValues($name, $forceSolid);
     }
 }
