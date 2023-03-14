@@ -24,9 +24,7 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
     }
 
     /**
-     * Renders the HTML representation of an icon.
-     *
-     * @throws InvalidIconSize
+     * @inheritDoc
      */
     public function toHtml(int $size = 16): string
     {
