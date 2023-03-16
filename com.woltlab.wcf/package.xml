@@ -116,7 +116,4 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="fileDelete" />
 		<instruction type="templateDelete" />
 	</instructions>
-	<instructions type="update" fromversion="5.5.9 dev 2">
-		<instruction type="file">files_update.tar</instruction>
-	</instructions>
 </package>

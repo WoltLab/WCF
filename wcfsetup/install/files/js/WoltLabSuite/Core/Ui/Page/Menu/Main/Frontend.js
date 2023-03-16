@@ -31,8 +31,12 @@ define(["require", "exports"], function (require, exports) {
         // `link.href` represents the computed link, not the raw value.
         const href = anchor.getAttribute("href");
         let link = undefined;
+        let openInNewWindow = undefined;
         if (href && href !== "#") {
             link = anchor.href;
+            if (anchor.target === "_blank") {
+                openInNewWindow = true;
+            }
         }
         const active = menuItem.classList.contains("active");
         const identifier = anchor.parentElement.dataset.identifier;
@@ -43,6 +47,7 @@ define(["require", "exports"], function (require, exports) {
             depth,
             identifier,
             link,
+            openInNewWindow,
             title,
         };
     }

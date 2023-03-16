@@ -17,6 +17,7 @@ export type MenuItem = {
   depth: MenuItemDepth;
   identifier: string | null;
   link?: string;
+  openInNewWindow?: boolean;
   title: string;
 };
 
