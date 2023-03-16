@@ -446,7 +446,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'authorName' => $data['authorName'],
             'authorURL' => $data['authorURL'],
             'packageName' => $data['packageName'],
-            'hasDarkMode' => $data['hasDarkMode'],
+            'hasDarkMode' => $data['hasDarkMode'] ? 1 : 0,
         ];
 
         // check if there is an untainted style with the same package name
