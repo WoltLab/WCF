@@ -1233,7 +1233,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $this->styleID,
                 $variableID,
                 $variables[$variableName] ?? null,
-                $variablesDarkMode[$variableName] ?? null
+                $variablesDarkMode[$variableName] ?? null,
             ]);
         }
 

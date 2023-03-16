@@ -486,7 +486,7 @@ final class StyleCompiler extends SingletonFactory
 
             // Directory order is not deterministic in some cases,
             // also the `darkMode.scss` must be at the end.
-            \usort($files, function (string $a, string $b) {
+            \usort($files, static function (string $a, string $b) {
                 if (\str_ends_with($a, 'ui/darkMode.scss')) {
                     return 1;
                 }
@@ -539,7 +539,7 @@ final class StyleCompiler extends SingletonFactory
         $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
         $variables = \array_filter(
             $variables,
-            function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
+            static function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
                 if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
                     if (\str_starts_with($value, 'rgba(')) {
                         $darkModeVariables[\substr($key, $prefixLength)] = $value;
