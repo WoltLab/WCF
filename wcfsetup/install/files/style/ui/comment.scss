@@ -59,11 +59,11 @@
 }
 
 .comment__status {
-    align-self: start;
-    column-gap: 5px;
+	align-self: start;
+	column-gap: 5px;
 	display: flex;
 	grid-area: status;
-    padding-top: 2px
+	padding-top: 2px;
 }
 
 .comment__menu {
@@ -205,10 +205,10 @@
 
 .commentResponse__status {
 	align-self: start;
-    column-gap: 5px;
+	column-gap: 5px;
 	display: flex;
 	grid-area: status;
-    padding-top: 2px
+	padding-top: 2px;
 }
 
 .commentResponse__menu {
