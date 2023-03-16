@@ -128,6 +128,10 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
      */
     public function canEdit()
     {
+        if (!$this->canRead()) {
+            return false;
+        }
+
         if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
             return true;
         }
