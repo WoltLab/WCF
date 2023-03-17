@@ -86,10 +86,12 @@ class StyleEditForm extends StyleAddForm
                 $variables['individualScss'],
                 $variables['individualScssCustom']
             );
-            $variables['individualScssDarkMode'] = Style::joinLessVariables(
-                $variables['individualScssDarkMode'],
-                $variables['individualScssDarkModeCustom']
-            );
+            if ($this->style->hasDarkMode) {
+                $variables['individualScssDarkMode'] = Style::joinLessVariables(
+                    $variables['individualScssDarkMode'],
+                    $variables['individualScssDarkModeCustom']
+                );
+            }
             $variables['overrideScss'] = Style::joinLessVariables(
                 $variables['overrideScss'],
                 $variables['overrideScssCustom']
@@ -310,10 +312,12 @@ class StyleEditForm extends StyleAddForm
                 $this->variables['individualScss'],
                 $this->variables['individualScssCustom']
             );
-            $this->variables['individualScssDarkMode'] = Style::joinLessVariables(
-                $this->variables['individualScssDarkMode'],
-                $this->variables['individualScssDarkModeCustom']
-            );
+            if ($this->style->hasDarkMode) {
+                $this->variables['individualScssDarkMode'] = Style::joinLessVariables(
+                    $this->variables['individualScssDarkMode'],
+                    $this->variables['individualScssDarkModeCustom']
+                );
+            }
             $this->variables['overrideScss'] = Style::joinLessVariables(
                 $this->variables['overrideScss'],
                 $this->variables['overrideScssCustom']
@@ -326,7 +330,9 @@ class StyleEditForm extends StyleAddForm
 
         // Remove control characters that break the SCSS parser, see https://stackoverflow.com/a/23066553
         $this->variables['individualScss'] = \preg_replace('/[^\PC\s]/u', '', $this->variables['individualScss']);
-        $this->variables['individualScssDarkMode'] = \preg_replace('/[^\PC\s]/u', '', $this->variables['individualScssDarkMode']);
+        if ($this->style->hasDarkMode) {
+            $this->variables['individualScssDarkMode'] = \preg_replace('/[^\PC\s]/u', '', $this->variables['individualScssDarkMode']);
+        }
 
         $this->objectAction = new StyleAction([$this->style], 'update', [
             'data' => \array_merge($this->additionalFields, [
@@ -387,9 +393,11 @@ class StyleEditForm extends StyleAddForm
             $this->variables['individualScss'] = $tmp['preset'];
             $this->variables['individualScssCustom'] = $tmp['custom'];
 
-            $tmp = Style::splitLessVariables($this->variables['individualScssDarkMode']);
-            $this->variables['individualScssDarkMode'] = $tmp['preset'];
-            $this->variables['individualScssDarkModeCustom'] = $tmp['custom'];
+            if ($this->style->hasDarkMode) {
+                $tmp = Style::splitLessVariables($this->variables['individualScssDarkMode']);
+                $this->variables['individualScssDarkMode'] = $tmp['preset'];
+                $this->variables['individualScssDarkModeCustom'] = $tmp['custom'];
+            }
 
             $tmp = Style::splitLessVariables($this->variables['overrideScss']);
             $this->variables['overrideScss'] = $tmp['preset'];
