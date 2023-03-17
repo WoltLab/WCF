@@ -5,22 +5,19 @@
 			<title>smile</title>
 			<path>images/smilies/emojione/263a.png</path>
 			<path2x>images/smilies/emojione/263a@2x.png</path2x>
-			<aliases><![CDATA[:-)
-(:]]></aliases>
+			<aliases><![CDATA[:-)]]></aliases>
 		</smiley>
 		<smiley name=":(">
 			<title>sad</title>
 			<path>images/smilies/emojione/2639.png</path>
 			<path2x>images/smilies/emojione/2639@2x.png</path2x>
-			<aliases><![CDATA[:-(
-):]]></aliases>
+			<aliases><![CDATA[:-(]]></aliases>
 		</smiley>
 		<smiley name=";)">
 			<title>wink</title>
 			<path>images/smilies/emojione/1f609.png</path>
 			<path2x>images/smilies/emojione/1f609@2x.png</path2x>
-			<aliases><![CDATA[;-)
-(;]]></aliases>
+			<aliases><![CDATA[;-)]]></aliases>
 		</smiley>
 		<smiley name=":P">
 			<title>tongue</title>
