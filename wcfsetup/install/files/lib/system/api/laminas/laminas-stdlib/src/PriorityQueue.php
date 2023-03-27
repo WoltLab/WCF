@@ -353,7 +353,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
             $queue = new $this->queueClass();
             /** @psalm-var \SplPriorityQueue<TPriority, TValue> $queue */
             $this->queue = $queue;
-            /** @psalm-suppress DocblockTypeContradiction, MixedArgument */
+            /** @psalm-suppress DocblockTypeContradiction */
             if (! $this->queue instanceof \SplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',

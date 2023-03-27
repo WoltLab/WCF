@@ -18,7 +18,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.0.99"
+            "php": "8.1.99"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
@@ -27,14 +27,14 @@
     "extra": {
     },
     "require": {
-        "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+        "php": "~8.1.0 || ~8.2.0"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "^2.4.0",
-        "phpbench/phpbench": "^1.2.7",
-        "phpunit/phpunit": "^9.5.26",
-        "psalm/plugin-phpunit": "^0.18.0",
-        "vimeo/psalm": "^5.0.0"
+        "laminas/laminas-coding-standard": "^2.5",
+        "phpbench/phpbench": "^1.2.9",
+        "phpunit/phpunit": "^10.0.16",
+        "psalm/plugin-phpunit": "^0.18.4",
+        "vimeo/psalm": "^5.8"
     },
     "autoload": {
         "psr-4": {

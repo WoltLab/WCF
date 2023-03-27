@@ -213,7 +213,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the current element in the queue
      *
-     * @return TValue|int|array{data: TValue|false, priority: int}|false
+     * @return TValue|int|array{data: TValue|false, priority: int|null}|false
      */
     #[ReturnTypeWillChange]
     public function current()
