@@ -14,7 +14,7 @@
 {/capture}
 
 {capture assign='contentHeaderNavigation'}
-	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
+	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canManageOwnArticles') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		{if $availableLanguages|count > 1}
 			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
@@ -139,7 +139,7 @@
 	});
 </script>
 
-{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
+{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canManageOwnArticles') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 	{include file='articleAddDialog'}
 {/if}
 
