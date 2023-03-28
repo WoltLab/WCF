@@ -141,7 +141,11 @@
 					<tr class="jsArticleRow jsClipboardObject" data-object-id="{@$article->articleID}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$article->articleID}"></td>
 						<td class="columnIcon">
-							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							{if $article->canEdit()}
+								<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							{else}
+								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+							{/if}
 							{if $article->canDelete()}
 								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span></a>
 								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span></a>
