@@ -411,12 +411,12 @@
 		<acpmenuitem name="wcf.acp.menu.link.article.list">
 			<controller>wcf\acp\page\ArticleListPage</controller>
 			<parent>wcf.acp.menu.link.article</parent>
-			<permissions>admin.content.article.canManageArticle,admin.content.article.canContributeArticle</permissions>
+			<permissions>admin.content.article.canManageArticle,admin.content.article.canManageOwnArticles,admin.content.article.canContributeArticle</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.article.add">
 			<controller>wcf\acp\form\ArticleAddForm</controller>
 			<parent>wcf.acp.menu.link.article.list</parent>
-			<permissions>admin.content.article.canManageArticle,admin.content.article.canContributeArticle</permissions>
+			<permissions>admin.content.article.canManageArticle,admin.content.article.canManageOwnArticles,admin.content.article.canContributeArticle</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.article.category.list">

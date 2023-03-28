@@ -51,6 +51,7 @@ class ArticleAddForm extends AbstractForm
      */
     public $neededPermissions = [
         'admin.content.article.canManageArticle',
+        'admin.content.article.canManageOwnArticles',
         'admin.content.article.canContributeArticle',
     ];
 

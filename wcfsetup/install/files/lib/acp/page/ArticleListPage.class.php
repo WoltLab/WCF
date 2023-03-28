@@ -46,6 +46,7 @@ class ArticleListPage extends SortablePage
      */
     public $neededPermissions = [
         'admin.content.article.canManageArticle',
+        'admin.content.article.canManageOwnArticles',
         'admin.content.article.canContributeArticle',
     ];
 
