@@ -59,7 +59,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             this.container.querySelectorAll(".innerError").forEach((el) => el.remove());
             const message = this.#getEditor().getHtml();
             if (message === "") {
-                this.#throwError(this.#textarea, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+                this.#throwError(this.#getEditor().element, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
@@ -93,7 +93,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
                 if (error instanceof Error_1.StatusNotOk) {
                     const json = await error.response.clone().json();
                     if (json.code === 412 && json.returnValues) {
-                        this.#throwError(this.#textarea, json.returnValues.errorType);
+                        this.#throwError(this.#getEditor().element, json.returnValues.errorType);
                     }
                 }
                 else {

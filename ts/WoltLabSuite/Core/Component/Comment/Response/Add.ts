@@ -80,7 +80,7 @@ export class CommentResponseAdd {
 
     const message = this.#getEditor().getHtml();
     if (message === "") {
-      this.#throwError(this.#textarea, getPhrase("wcf.global.form.error.empty"));
+      this.#throwError(this.#getEditor().element, getPhrase("wcf.global.form.error.empty"));
       return false;
     }
 
@@ -122,7 +122,7 @@ export class CommentResponseAdd {
       if (error instanceof StatusNotOk) {
         const json = await error.response.clone().json();
         if (json.code === 412 && json.returnValues) {
-          this.#throwError(this.#textarea, json.returnValues.errorType);
+          this.#throwError(this.#getEditor().element, json.returnValues.errorType);
         }
       } else {
         throw error;

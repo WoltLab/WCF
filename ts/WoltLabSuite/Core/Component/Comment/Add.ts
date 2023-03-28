@@ -98,7 +98,7 @@ export class CommentAdd {
 
     const message = this.#getEditor().getHtml();
     if (message === "") {
-      this.#throwError(this.#textarea, getPhrase("wcf.global.form.error.empty"));
+      this.#throwError(this.#getEditor().element, getPhrase("wcf.global.form.error.empty"));
       return false;
     }
 
@@ -137,7 +137,7 @@ export class CommentAdd {
         .dispatch()) as ResponseAddComment;
     } catch (error) {
       await handleValidationErrors(error, (returnValues) => {
-        this.#throwError(this.#textarea, returnValues.errorType);
+        this.#throwError(this.#getEditor().element, returnValues.errorType);
 
         this.#hideLoadingOverlay();
 

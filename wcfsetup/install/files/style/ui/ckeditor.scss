@@ -171,3 +171,13 @@ html[data-color-scheme="dark"] {
 	flex-direction: row-reverse;
 	margin-top: 20px;
 }
+
+/* Styling of inline errors for the editor. */
+.ck.ck-editor + .innerError {
+	margin-top: 0;
+	width: 100%;
+
+	&::before {
+		display: none;
+	}
+}

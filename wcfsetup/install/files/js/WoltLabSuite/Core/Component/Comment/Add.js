@@ -77,7 +77,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
             this.#container.querySelectorAll(".innerError").forEach((el) => el.remove());
             const message = this.#getEditor().getHtml();
             if (message === "") {
-                this.#throwError(this.#textarea, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+                this.#throwError(this.#getEditor().element, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
             }
             catch (error) {
                 await (0, Ajax_1.handleValidationErrors)(error, (returnValues) => {
-                    this.#throwError(this.#textarea, returnValues.errorType);
+                    this.#throwError(this.#getEditor().element, returnValues.errorType);
                     this.#hideLoadingOverlay();
                     return true;
                 });
