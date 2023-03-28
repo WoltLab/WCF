@@ -581,7 +581,10 @@ class ArticleAddForm extends AbstractForm
         $dateTime->setTimezone(WCF::getUser()->getTimeZone());
         $this->time = $dateTime->format('c');
 
-        if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (
+            !WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+            && !WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
+        ) {
             $this->publicationStatus = Article::UNPUBLISHED;
         }
     }
