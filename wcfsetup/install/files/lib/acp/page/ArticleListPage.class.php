@@ -2,9 +2,8 @@
 
 namespace wcf\acp\page;
 
-use wcf\data\article\Article;
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\ArticleList;
-use wcf\data\article\ViewableArticleList;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
@@ -34,7 +33,7 @@ class ArticleListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $objectListClassName = ViewableArticleList::class;
+    public $objectListClassName = AccessibleArticleList::class;
 
     /**
      * @inheritDoc
@@ -178,15 +177,6 @@ class ArticleListPage extends SortablePage
                 )',
                 ['%' . $this->content . '%']
             );
-        }
-        if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-            // only show own articles
-            $this->objectList->getConditionBuilder()->add('article.userID = ?', [WCF::getUser()->userID]);
-
-            if (!WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
-                // only show unpublished articles
-                $this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::UNPUBLISHED]);
-            }
         }
 
         $this->objectList->sqlSelects = "(
