@@ -112,12 +112,21 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
             $user = new UserProfile(WCF::getUser());
         }
 
-        if ($this->isDeleted && !$user->getPermission('admin.content.article.canManageArticle')) {
-            return false;
+        if ($this->isDeleted) {
+            if (
+                !$user->getPermission('admin.content.article.canManageArticle')
+                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == $user->userID)
+            ) {
+                return false;
+            }
         }
 
         if ($this->publicationStatus != self::PUBLISHED) {
-            if (!$user->getPermission('admin.content.article.canManageArticle') && (!$user->getPermission('admin.content.article.canContributeArticle') || $this->userID != $user->userID)) {
+            if (
+                !$user->getPermission('admin.content.article.canManageArticle')
+                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == $user->userID)
+                && !($user->getPermission('admin.content.article.canContributeArticle') && $this->userID == $user->userID)
+            ) {
                 return false;
             }
         }
