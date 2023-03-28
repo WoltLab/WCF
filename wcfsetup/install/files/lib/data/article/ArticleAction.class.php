@@ -632,7 +632,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$this->readInteger('categoryID');
-		if (ArticleCategory::getCategory($this->parameters['categoryID']) === null) {
+		$category = ArticleCategory::getCategory($this->parameters['categoryID']);
+		if ($category === null) {
+			throw new UserInputException('categoryID');
+		}
+		if (!$category->isAccessible()) {
 			throw new UserInputException('categoryID');
 		}
 	}
