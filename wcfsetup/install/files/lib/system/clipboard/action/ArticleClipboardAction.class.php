@@ -142,7 +142,16 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return array_keys($this->objects);
+		$objectIDs = [];
+		
+		/** @var Article $article */
+		foreach ($this->objects as $article) {
+			if ($article->canEdit()) {
+				$objectIDs[] = $article->articleID;
+			}
+		}
+		
+		return $objectIDs;
 	}
 	
 	/**
