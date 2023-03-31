@@ -122,6 +122,10 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
         $languageID = null,
         $metaData = ''
     ) {
+        // Inserts a whitespace after certain tags to prevent words from adjacent
+        // lines to be effectively be glued together when the tags are removed.
+        $message = \preg_replace('~(<br>|</(?:h[1-6]|kbd|li|p|pre|td|woltlab-metacode)>)~', '\\1 ', $message);
+
         // strip html; remove whitespace from beginning and end of the message
         $message = StringUtil::trim(StringUtil::stripHTML($message));
 
