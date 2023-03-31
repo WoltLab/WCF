@@ -1237,7 +1237,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             ]);
         }
 
-        $this->writeStyleFile();
+        StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
     }
 
     /**
