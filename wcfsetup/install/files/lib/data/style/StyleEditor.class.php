@@ -1231,7 +1231,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             }
         }
 
-        $this->writeStyleFile();
+        StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
     }
 
     /**
