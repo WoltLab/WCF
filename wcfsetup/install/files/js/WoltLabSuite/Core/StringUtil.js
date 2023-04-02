@@ -27,7 +27,7 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
      * Escapes special HTML-characters within a string
      */
     function escapeHTML(string) {
-        return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
     exports.escapeHTML = escapeHTML;
     /**
@@ -74,6 +74,7 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
         return String(string)
             .replace(/&amp;/g, "&")
             .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">");
     }
