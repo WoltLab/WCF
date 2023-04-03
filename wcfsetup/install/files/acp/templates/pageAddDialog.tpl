@@ -31,7 +31,7 @@
 		
 		const pageAddDialog = new AcpUiPageAdd(
 			'{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}',
-			{if $availableLanguages|count > 0}true{else}false{/if}
+			{if $availableLanguages|count > 1}true{else}false{/if}
 		);
 		
 		{if $showPageAddDialog}
