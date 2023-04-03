@@ -1,3 +1,12 @@
+/**
+ * Helper class to construct the CKEditor configuration.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import { getPhrase } from "../../Language";
 
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";

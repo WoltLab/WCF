@@ -1,3 +1,12 @@
+/**
+ * Periodically stores the editor contents to the local storage. Opening the
+ * same view again offers to restore the stored contents.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 define(["require", "exports", "../../Core", "../../Language", "../../StringUtil", "./Event"], function (require, exports, Core_1, Language_1, StringUtil_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -141,8 +150,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
                 saveDraft(autosave, editor.data.get());
                 return Promise.resolve();
             },
-            // TODO: This should be longer, because exporting the data is potentially expensive.
-            waitingTime: 2000,
+            waitingTime: 15000,
         };
     }
     exports.initializeAutosave = initializeAutosave;

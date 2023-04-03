@@ -1,3 +1,11 @@
+/**
+ * Provides mention support for users and groups.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"], function (require, exports, Backend_1, Util_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
