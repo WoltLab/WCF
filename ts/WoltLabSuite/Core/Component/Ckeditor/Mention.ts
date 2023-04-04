@@ -58,7 +58,7 @@ function getMentionConfiguration(): MentionConfig {
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
           // TODO: This is ugly.
           return createFragmentFromHtml(`
-            <span>${item.icon} ${item.text}</span>
+            <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
           `).firstElementChild as HTMLElement;
         },
         marker: "@",

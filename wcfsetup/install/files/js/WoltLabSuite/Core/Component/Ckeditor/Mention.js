@@ -38,7 +38,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
                     itemRenderer: (item) => {
                         // TODO: This is ugly.
                         return (0, Util_1.createFragmentFromHtml)(`
-            <span>${item.icon} ${item.text}</span>
+            <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
           `).firstElementChild;
                     },
                     marker: "@",
