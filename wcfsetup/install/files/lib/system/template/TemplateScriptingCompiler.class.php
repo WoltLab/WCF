@@ -76,6 +76,7 @@ class TemplateScriptingCompiler
         'is_null',
         'is_numeric',
         'is_object',
+        'is_string',
         'iterator_count',
         'intval',
         'is_subclass_of',
