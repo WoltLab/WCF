@@ -1,5 +1,7 @@
 {hascontent}
 	{content}
+		{event name='beforeUserOptions'}
+
 		{foreach from=$options item=category}
 			{foreach from=$category[categories] item=optionCategory}
 				<section class="section">
@@ -14,6 +16,8 @@
 				</section>
 			{/foreach}
 		{/foreach}
+
+		{event name='afterUserOptions'}
 	{/content}
 {hascontentelse}
 	<div class="section">
