@@ -19,7 +19,7 @@ export function addThousandsSeparator(number: number): string {
  * Escapes special HTML-characters within a string
  */
 export function escapeHTML(string: string): string {
-  return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /**
@@ -65,6 +65,7 @@ export function unescapeHTML(string: string): string {
   return String(string)
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">");
 }
