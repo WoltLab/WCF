@@ -1,3 +1,13 @@
+/**
+ * Periodically stores the editor contents to the local storage. Opening the
+ * same view again offers to restore the stored contents.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import { getStoragePrefix } from "../../Core";
 import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
@@ -176,7 +186,6 @@ export function initializeAutosave(autosave: string, configuration: EditorConfig
 
       return Promise.resolve();
     },
-    // TODO: This should be longer, because exporting the data is potentially expensive.
-    waitingTime: 2_000,
+    waitingTime: 15_000,
   };
 }

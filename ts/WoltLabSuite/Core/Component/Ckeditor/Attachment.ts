@@ -1,3 +1,12 @@
+/**
+ * Forwards upload requests from the editor to the attachment system.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
 import type { CKEditor } from "../Ckeditor";

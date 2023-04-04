@@ -1,3 +1,16 @@
+/**
+ * The userland API for interactions with a CKEditor instance.
+ *
+ * The purpose of this implementation is to provide a stable and strongly typed
+ * API that can be reused in components. Access to the raw API of CKEditor is
+ * not exposed, if you feel that you need additional helper methods then please
+ * submit an issue.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "../Devtools", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Devtools_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

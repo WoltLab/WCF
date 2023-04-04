@@ -1,3 +1,17 @@
+/**
+ * The userland API for interactions with a CKEditor instance.
+ *
+ * The purpose of this implementation is to provide a stable and strongly typed
+ * API that can be reused in components. Access to the raw API of CKEditor is
+ * not exposed, if you feel that you need additional helper methods then please
+ * submit an issue.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import { setup as setupAttachment } from "./Ckeditor/Attachment";
 import { setup as setupMedia } from "./Ckeditor/Media";
 import { setup as setupMention } from "./Ckeditor/Mention";
