@@ -101,9 +101,23 @@ final class StringUtil
         // specification.
         // Do not merge the expressions, they are separated for
         // performance reasons.
-        $text = \preg_replace('/^[\p{Zs}\s\x{202E}\x{200B}]+/u', '', $text);
+        $trimmed = \preg_replace('/^[\p{Zs}\s\x{202E}\x{200B}]+/u', '', $text);
 
-        return \preg_replace('/[\p{Zs}\s\x{202E}\x{200B}]+$/u', '', $text);
+        // Check if preg_replace() failed, indicating that the
+        // input is not valid UTF-8. In this case the original
+        // value is returned, because we cannot meaningfully
+        // trim inputs that are not UTF-8.
+        if ($trimmed === null) {
+            return $text;
+        }
+
+        $trimmed = \preg_replace('/[\p{Zs}\s\x{202E}\x{200B}]+$/u', '', $trimmed);
+
+        if ($trimmed === null) {
+            return $text;
+        }
+
+        return $trimmed;
     }
 
     /**
