@@ -123,7 +123,7 @@ final class StyleCompiler extends SingletonFactory
         }
         if (isset($variables['individualScssDarkMode'])) {
             $individualScssDarkMode = $variables['individualScssDarkMode'];
-            unset($variables['individualScss']);
+            unset($variables['individualScssDarkMode']);
 
             if ($individualScssDarkMode) {
                 $individualScss .= \sprintf(
@@ -260,7 +260,7 @@ final class StyleCompiler extends SingletonFactory
         }
         if (isset($variables['individualScssDarkMode'])) {
             $individualScssDarkMode = $variables['individualScssDarkMode'];
-            unset($variables['individualScss']);
+            unset($variables['individualScssDarkMode']);
 
             if ($individualScssDarkMode) {
                 $individualScss .= \sprintf(
