@@ -39,7 +39,7 @@ final class FileUtil
      */
     public static function getTempFolder(): string
     {
-        $path = WCF_DIR . 'tmp/';
+        $path = self::unifyDirSeparator(WCF_DIR . 'tmp/');
 
         if (\is_file($path)) {
             // wat
