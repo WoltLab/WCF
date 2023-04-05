@@ -167,6 +167,11 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         #insertDivider() {
             this.#toolbar.push(this.#divider);
         }
+        #setupMention() {
+            if (!this.#features.mention) {
+                this.#removePlugins.push("Mention", "WoltlabMention");
+            }
+        }
         #getToolbar() {
             let allowDivider = false;
             const toolbar = this.#toolbar.filter((item) => {
@@ -197,6 +202,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             this.#setupImage();
             this.#setupBlocks();
             this.#insertDivider();
+            this.#setupMention();
         }
         toConfig() {
             // TODO: The typings are both incompleted and outdated.

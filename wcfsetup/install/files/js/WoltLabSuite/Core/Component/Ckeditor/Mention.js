@@ -24,6 +24,8 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
                 id: `@${item.username}`,
                 text: item.username,
                 icon: item.avatarTag,
+                objectId: item.userID,
+                type: item.type,
             };
         });
     }
@@ -36,7 +38,6 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
                         return getPossibleMentions(query);
                     },
                     itemRenderer: (item) => {
-                        // TODO: This is ugly.
                         return (0, Util_1.createFragmentFromHtml)(`
             <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
           `).firstElementChild;

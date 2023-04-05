@@ -183,6 +183,12 @@ class ConfigurationBuilder {
     this.#toolbar.push(this.#divider);
   }
 
+  #setupMention(): void {
+    if (!this.#features.mention) {
+      this.#removePlugins.push("Mention", "WoltlabMention");
+    }
+  }
+
   #getToolbar(): ToolbarConfig {
     let allowDivider = false;
     const toolbar = this.#toolbar.filter((item) => {
@@ -225,6 +231,8 @@ class ConfigurationBuilder {
     this.#setupBlocks();
 
     this.#insertDivider();
+
+    this.#setupMention();
   }
 
   toConfig(): EditorConfig {
