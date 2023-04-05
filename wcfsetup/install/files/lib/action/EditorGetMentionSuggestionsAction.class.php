@@ -42,6 +42,7 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
                     'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
                     'username' => $userProfile->getUsername(),
                     'userID' => $userProfile->getObjectID(),
+                    'type' => 'user',
                 ],
                 $users
             ),

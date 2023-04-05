@@ -17,7 +17,7 @@ type SearchResultItem = {
   avatarTag: string;
   username: string;
   userID: number;
-  //  type: "group" | "user";
+  type: "user";
 };
 type ResultGetSearchResultList = SearchResultItem[];
 
@@ -43,6 +43,8 @@ async function getPossibleMentions(query: string): Promise<UserMention[]> {
       id: `@${item.username}`,
       text: item.username,
       icon: item.avatarTag,
+      objectId: item.userID,
+      type: item.type,
     };
   });
 }
@@ -56,7 +58,6 @@ function getMentionConfiguration(): MentionConfig {
           return getPossibleMentions(query) as any;
         },
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
-          // TODO: This is ugly.
           return createFragmentFromHtml(`
             <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
           `).firstElementChild as HTMLElement;
