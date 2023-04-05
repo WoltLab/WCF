@@ -181,3 +181,11 @@ html[data-color-scheme="dark"] {
 		display: none;
 	}
 }
+
+.ck.ck-list__item .ck-button.ckeditor5__mention {
+	display: block;
+}
+.ck.ck-list__item .ck-button.ckeditor5__mention .userAvatarImage {
+	height: 16px;
+	width: 16px;
+}

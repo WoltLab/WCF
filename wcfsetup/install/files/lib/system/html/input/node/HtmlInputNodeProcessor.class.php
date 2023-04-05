@@ -447,6 +447,18 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         foreach ($this->getDocument()->getElementsByTagName('p') as $paragraph) {
             DOMUtil::normalize($paragraph);
 
+            // CKEditor 5 exports empty paragraphs as `<p>&nbsp;</p>`.
+            if ($paragraph->childNodes->length === 1) {
+                $node = $paragraph->childNodes->item(0);
+                if ($node->nodeType === \XML_TEXT_NODE && $node->textContent === "\u{00a0}") {
+                    $br = $node->ownerDocument->createElement("br");
+                    $node->parentNode->appendChild($br);
+                    $node->parentNode->removeChild($node);
+
+                    continue;
+                }
+            }
+
             if ($paragraph->firstChild && $paragraph->firstChild->nodeType === \XML_TEXT_NODE) {
                 $oldNode = $paragraph->firstChild;
                 $newNode = $paragraph->ownerDocument->createTextNode(
@@ -746,6 +758,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             // Check if the line appears to only contain the link text.
             $parent = $link;
             while ($parent->parentNode->nodeName !== 'body') {
+                /** @var \DOMElement $parent */
                 $parent = $parent->parentNode;
             }
 
