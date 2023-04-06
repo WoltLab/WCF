@@ -4303,7 +4303,6 @@ Attachments:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
-		<item name="wcf.moderation.report.success"><![CDATA[The content has been reported.]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[Change “Justified” status]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[Do you really want to change the “Justified” status of this report?]]></item>
