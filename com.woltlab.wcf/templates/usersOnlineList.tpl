@@ -136,7 +136,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage icon48"></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage" height="48" width="48"></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -156,7 +156,7 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon48"></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" height="48" width="48"></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
