@@ -119,7 +119,7 @@ class ConfigurationBuilder {
     if (this.#features.image) {
       this.#toolbar.push("insertImage");
     } else {
-      this.#removePlugins.push("Image", "ImageInsertUI", "ImageToolbar", "ImageStyle", "ImageUpload", "ImageUploadUI");
+      this.#removePlugins.push("ImageInsertUI", "ImageToolbar", "ImageStyle", "ImageUpload", "ImageUploadUI");
 
       if (this.#features.link) {
         this.#removePlugins.push("LinkImage");
