@@ -162,7 +162,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             // check if editor contains actual content
             const message = this._getCKEditor().getHtml();
             if (message === "") {
-                this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
+                this.throwError(this._getCKEditor().element, Language.get("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
@@ -222,7 +222,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             };
             EventHandler.fire("com.woltlab.wcf.ckeditor5", "handleError_text", parameters);
             if (!parameters.cancel) {
-                this.throwError(this._textarea, data.returnValues.realErrorMessage);
+                this.throwError(this._getCKEditor().element, data.returnValues.realErrorMessage);
             }
         }
         /**
