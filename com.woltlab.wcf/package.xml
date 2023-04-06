@@ -102,10 +102,12 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="acpMenu" />
 		<instruction type="bbcode" />
 		<instruction type="coreObject" />
+		<instruction type="cronjob" />
 		<instruction type="eventListener" />
 		<instruction type="language" />
 		<instruction type="mediaProvider" />
 		<instruction type="objectType" />
+		<instruction type="smiley" />
 		<instruction type="userGroupOption" />
 		<instruction type="userMenu" />
 		<instruction type="userOption" />
@@ -115,6 +117,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeDownloadedGravatars.php</instruction>
 
 		<!-- Clean Up. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeLegacyAppConfig.php</instruction>
 		<instruction type="fileDelete" />
 		<instruction type="templateDelete" />
 	</instructions>
