@@ -366,6 +366,7 @@
 
 	.pageHeaderSearchInput {
 		background-color: var(--wcfHeaderSearchBoxBackground);
+		border-radius: 0;
 		border-width: 0;
 		color: var(--wcfHeaderSearchBoxText);
 		padding-bottom: 8px;
