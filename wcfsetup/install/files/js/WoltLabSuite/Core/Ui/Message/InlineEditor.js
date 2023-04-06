@@ -479,7 +479,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
         _restoreEditor() {
             const elementData = this._elements.get(this._activeElement);
             const messageBodyEditor = elementData.messageBodyEditor;
-            messageBodyEditor.querySelector("fa-icon").remove();
+            messageBodyEditor.querySelector('fa-icon[name="spinner"]').remove();
             const editorContainer = messageBodyEditor.querySelector(".editorContainer");
             if (editorContainer !== null) {
                 Util_1.default.show(editorContainer);
