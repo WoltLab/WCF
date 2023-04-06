@@ -159,8 +159,8 @@ $styleVariables = [
 $sql = "INSERT INTO             wcf1_style_variable
                                 (variableName, defaultValue, defaultValueDarkMode)
         VALUES                  (?, ?, ?)
-        ON DUPLICATE KEY UPDATE defaultValue = ?,
-                                defaultValueDarkMode = ?";
+        ON DUPLICATE KEY UPDATE defaultValue = VALUES(defaultValue),
+                                defaultValueDarkMode = VALUES(defaultValueDarkMode)";
 $statement = WCF::getDB()->prepare($sql);
 
 foreach ($styleVariables as $data) {
