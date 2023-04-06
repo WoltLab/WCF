@@ -153,6 +153,7 @@ $styleVariables = [
     ['wcfUserMenuIndicator', 'rgba(49, 138, 220, 1)', 'rgba(49, 138, 220, 1)'],
     ['wcfUserMenuBorder', 'rgba(221, 221, 221, 1)', 'rgba(54, 55, 59, 1)'],
     ['wcfSidebarBorder', 'rgba(236, 241, 247, 0)', 'rgba(57, 65, 77, 1)'],
+    ['individualScssDarkMode', '', ''],
     ['wcfHeaderMenuDropdownBorder', 'rgba(36, 66, 95, 1)', 'rgba(36, 66, 95, 1)'],
 ];
 
