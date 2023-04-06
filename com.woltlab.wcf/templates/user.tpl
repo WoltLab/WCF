@@ -72,13 +72,6 @@
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
-			{if $__wcf->session->getPermission('user.profile.canReportContent')}
-				WCF.Language.addObject({
-					'wcf.moderation.report.reportContent': '{jslang}wcf.user.profile.report{/jslang}',
-					'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
-				});
-			{/if}
-			
 			{event name='javascriptInit'}
 		});
 

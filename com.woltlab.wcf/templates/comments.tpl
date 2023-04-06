@@ -4,8 +4,6 @@
 			'wcf.comment.guestDialog.title': '{jslang}wcf.comment.guestDialog.title{/jslang}',
 			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',
 			'wcf.comment.response.more': '{jslang}wcf.comment.response.more{/jslang}',
-			'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
-			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
 
 		setup('{@$commentContainerID|encodeJS}');

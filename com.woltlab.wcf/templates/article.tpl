@@ -334,15 +334,4 @@
 	</script>
 {/if}
 
-{if $__wcf->session->getPermission('user.profile.canReportContent')}
-	<script data-relocate="true">
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
-				'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
-			});
-		});
-	</script>
-{/if}
-
 {include file='footer'}
