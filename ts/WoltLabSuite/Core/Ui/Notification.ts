@@ -6,7 +6,8 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../Language";
+import { getPageOverlayContainer } from "../Helper/PageOverlay";
+import { getPhrase } from "../Language";
 
 type Callback = () => void;
 
@@ -30,7 +31,7 @@ function init() {
   _message.addEventListener("click", hide);
   _notificationElement.appendChild(_message);
 
-  document.body.appendChild(_notificationElement);
+  getPageOverlayContainer().appendChild(_notificationElement);
 }
 
 /**
@@ -61,7 +62,7 @@ export function show(message?: string, callback?: Callback | null, cssClassName?
 
   _callback = typeof callback === "function" ? callback : null;
   _message.className = cssClassName || "success";
-  _message.textContent = Language.get(message || "wcf.global.success");
+  _message.textContent = getPhrase(message || "wcf.global.success");
 
   _notificationElement.classList.add("active");
   _timeout = setTimeout(hide, 2000);
