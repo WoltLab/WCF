@@ -207,11 +207,7 @@ class DynamicRequestRoute implements IRequestRoute
 
                     // handle controller names
                     if ($value === 'controller') {
-                        $components[$value] = ControllerMap::getInstance()->lookup(
-                            $application,
-                            $components[$value],
-                            !$this->isACP()
-                        );
+                        $components[$value] = $this->getControllerName($application, $components[$value]);
                     }
 
                     $link .= $components[$value];
@@ -296,5 +292,17 @@ class DynamicRequestRoute implements IRequestRoute
         }
 
         return false;
+    }
+
+    /**
+     * Returns the transformed controller name.
+     *
+     * @param string $application
+     * @param string $controller
+     * @return  string
+     */
+    protected function getControllerName($application, $controller)
+    {
+        return ControllerMap::getInstance()->lookup($application, $controller, !$this->isACP());
     }
 }

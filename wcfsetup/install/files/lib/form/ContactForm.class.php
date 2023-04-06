@@ -221,7 +221,7 @@ class ContactForm extends AbstractCaptchaForm
         $this->saved();
 
         HeaderUtil::delayedRedirect(
-            LinkHandler::getInstance()->getLink(''),
+            LinkHandler::getInstance()->getLink(),
             WCF::getLanguage()->getDynamicVariable('wcf.contact.success')
         );
 
