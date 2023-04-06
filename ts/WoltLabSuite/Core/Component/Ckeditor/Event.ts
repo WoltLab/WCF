@@ -16,6 +16,7 @@ import type { UploadMediaEventPayload } from "./Media";
 import type { InsertQuoteEventPayload } from "./Quote";
 
 const enum EventNames {
+  CollectMetaData = "ckeditor5:collect-meta-data",
   Destroy = "ckeditor5:destroy",
   DiscardRecoveredData = "ckeditor5:discard-recovered-data",
   InsertAttachment = "ckeditor5:insert-attachment",
@@ -29,7 +30,9 @@ const enum EventNames {
   UploadAttachment = "ckeditor5:upload-attachment",
   UploadMedia = "ckeditor5:upload-media",
 }
-
+type CollectMetaDataEventPayload = {
+  metaData: Record<string, unknown>;
+};
 type ReadyEventPayload = {
   ckeditor: CKEditor;
 };
@@ -53,6 +56,14 @@ class EventDispatcher {
 
   constructor(element: HTMLElement) {
     this.#element = element;
+  }
+
+  collectMetaData(payload: CollectMetaDataEventPayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<CollectMetaDataEventPayload>(EventNames.CollectMetaData, {
+        detail: payload,
+      }),
+    );
   }
 
   destroy(): void {
@@ -149,6 +160,14 @@ class EventListener {
 
   constructor(element: HTMLElement) {
     this.#element = element;
+  }
+
+  collectMetaData(callback: (payload: CollectMetaDataEventPayload) => void): this {
+    this.#element.addEventListener(EventNames.CollectMetaData, (event: CustomEvent<CollectMetaDataEventPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
   }
 
   destroy(callback: () => void): this {

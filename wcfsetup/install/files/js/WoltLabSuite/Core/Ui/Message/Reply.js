@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll", "../../Component/Ckeditor"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll, Ckeditor_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll", "../../Component/Ckeditor", "WoltLabSuite/Core/Component/Ckeditor/Event"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll, Ckeditor_1, Event_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
@@ -145,7 +145,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data);
+            (0, Event_1.dispatchToCkeditor)(this._textarea).collectMetaData({ metaData: parameters.data });
             if (!User_1.default.userId && !additionalParameters) {
                 parameters.requireGuestDialog = true;
             }

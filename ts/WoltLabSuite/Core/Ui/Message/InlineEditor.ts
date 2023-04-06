@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
 import { getCkeditorById } from "../../Component/Ckeditor";
@@ -486,7 +487,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     (validateResult as Promise<void[]>).then(
       () => {
-        EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${id}`, parameters);
+        dispatchToCkeditor(ckeditor.sourceElement).collectMetaData({ metaData: parameters });
 
         Ajax.api(this, {
           actionName: "save",

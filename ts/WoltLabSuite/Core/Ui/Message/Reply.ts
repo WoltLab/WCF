@@ -21,6 +21,7 @@ import ControllerCaptcha from "../../Controller/Captcha";
 import * as UiScroll from "../Scroll";
 
 import { CKEditor, getCkeditor } from "../../Component/Ckeditor";
+import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 
 interface MessageReplyOptions {
   ajax: {
@@ -188,7 +189,7 @@ class UiMessageReply {
         });
     }
 
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data as any);
+    dispatchToCkeditor(this._textarea).collectMetaData({ metaData: parameters.data as Record<string, unknown> });
 
     if (!User.userId && !additionalParameters) {
       parameters.requireGuestDialog = true;
