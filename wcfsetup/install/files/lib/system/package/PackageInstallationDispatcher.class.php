@@ -479,7 +479,7 @@ class PackageInstallationDispatcher
             }
 
             $this->archive = new PackageArchive($this->queue->archive);
-            if (!\str_starts_with(\realpath($this->archive->getArchive()), \TMP_DIR)) {
+            if (!\str_starts_with(FileUtil::unifyDirSeparator(\realpath($this->archive->getArchive())), \TMP_DIR)) {
                 throw new \Exception('Refusing to handle an archive outside of the temporary directory.');
             }
             $this->archive->openArchive();
