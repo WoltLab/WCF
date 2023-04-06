@@ -115,17 +115,13 @@
 
 	&.previousArticleButton {
 		grid-area: previous;
-		grid-template-areas:
-			"icon entity"
-			"icon title";
+		grid-template-areas: "icon content";
 		grid-template-columns: 60px auto;
 	}
 
 	&.nextArticleButton {
 		grid-area: next;
-		grid-template-areas:
-			"entity icon"
-			"title icon";
+		grid-template-areas: "content icon";
 		text-align: right;
 	}
 
