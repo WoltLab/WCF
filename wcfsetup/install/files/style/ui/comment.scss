@@ -109,6 +109,7 @@
 	.commentAdd__placeholder {
 		align-items: center;
 		background-color: var(--wcfSidebarBackground);
+		border-radius: var(--wcfBorderRadius);
 		column-gap: 10px;
 		color: var(--wcfSidebarText);
 		display: flex;
@@ -121,6 +122,10 @@
 		position: absolute;
 		top: -100%;
 	}
+}
+
+html[data-color-scheme="dark"] .commentAdd__content--collapsed .commentAdd__placeholder {
+	border: 1px solid var(--wcfSidebarBorder);
 }
 
 .commentAdd__content--loading {
