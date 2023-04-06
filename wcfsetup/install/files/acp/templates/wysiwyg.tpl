@@ -14,9 +14,14 @@
 			throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.")
 		}
 
+		let enableAttachments = element.dataset.disableAttachments !== "true";
+		{if !$attachmentHandler|empty && !$attachmentHandler->canUpload()}
+		enableAttachments = false;
+		{/if}
+
 		const features = {
 			alignment: true,
-			attachment: element.dataset.disableAttachments !== "true",
+			attachment: enableAttachments,
 			autosave: element.dataset.autosave || "",
 			code: true,
 			codeBlock: true,

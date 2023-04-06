@@ -107,6 +107,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         #setupImage() {
             if (this.#features.image) {
                 this.#toolbar.push("insertImage");
+                if (!this.#features.attachment) {
+                    this.#removePlugins.push("ImageUpload", "ImageUploadUI", "WoltlabAttachment");
+                }
             }
             else {
                 this.#removePlugins.push("ImageInsertUI", "ImageToolbar", "ImageStyle", "ImageUpload", "ImageUploadUI");
