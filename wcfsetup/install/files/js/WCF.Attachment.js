@@ -138,6 +138,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					})
 					.discardRecoveredData(() => {
 						discardAllAttachments();
+					})
+					.collectMetaData((payload) => {
+						if (this._tmpHash) {
+							payload.metaData.tmpHash = this._tmpHash;
+						}
 					});
 				
 				const ckeditor = getCkeditor(this._sourceElement);

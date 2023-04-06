@@ -16,6 +16,11 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        collectMetaData(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:collect-meta-data" /* EventNames.CollectMetaData */, {
+                detail: payload,
+            }));
+        }
         destroy() {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:destroy" /* EventNames.Destroy */));
         }
@@ -77,6 +82,12 @@ define(["require", "exports"], function (require, exports) {
         #element;
         constructor(element) {
             this.#element = element;
+        }
+        collectMetaData(callback) {
+            this.#element.addEventListener("ckeditor5:collect-meta-data" /* EventNames.CollectMetaData */, (event) => {
+                callback(event.detail);
+            });
+            return this;
         }
         destroy(callback) {
             this.#element.addEventListener("ckeditor5:destroy" /* EventNames.Destroy */, () => {
