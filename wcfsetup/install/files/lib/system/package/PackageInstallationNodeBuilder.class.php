@@ -626,8 +626,6 @@ class PackageInstallationNodeBuilder
                 'action' => $packageID ? 'update' : 'install',
             ]);
 
-            self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
-
             // spawn nodes
             $installation = new PackageInstallationDispatcher($queue);
             $installation->nodeBuilder->setParentNode($this->node);
