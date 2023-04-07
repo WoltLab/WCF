@@ -61,6 +61,15 @@
  */
 
 /**
+ * Exports inline code as `<kbd>` instead of `<code>`.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
  * Extends the built-in code block to provide two extra attributes for the file
  * name and line number.
  *
@@ -159,6 +168,15 @@
 
 /**
  * Provides an upload adapter for images.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license LGPL-2.1-or-later
+ * @since 6.0
+ */
+
+/**
+ * Replaces the HTML of the builtin mention features.
  *
  * @author Alexander Ebert
  * @copyright 2001-2023 WoltLab GmbH
