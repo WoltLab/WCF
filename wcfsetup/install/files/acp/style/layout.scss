@@ -181,10 +181,18 @@ html[data-color-scheme="dark"] {
 		.userPanel .boxFlag {
 			font-size: 12px;
 		}
+
+		.pageHeaderPanel fa-icon[size="32"] {
+			display: none;
+		}
 	}
 
 	@include screen-md-down {
 		max-width: 100vw;
+
+		.pageHeaderPanel fa-icon[size="16"] {
+			display: none;
+		}
 	}
 }
 
