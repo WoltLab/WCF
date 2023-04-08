@@ -688,9 +688,10 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 	<category name="wcf.acp.firstTimeSetup">
 		<item name="wcf.acp.firstTimeSetup.license"><![CDATA[Erstmalige Einrichtung: Lizenz]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials"><![CDATA[Lizenzdaten]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.customerArea"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du findest{else}Sie finden{/if} die Lizenz- und Seriennummer im <a href="https://www.woltlab.com/license-list/" class="externalURL">Kundenbereich auf woltlab.com</a>.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedConnect"><![CDATA[Es konnte keine ausgehende Verbindung zur Überprüfung der Lizenzdaten aufgebaut werden.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[Die Gültigkeit der Lizenzdaten konnte nicht bestätigt werden.]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Jetzt nicht?]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Schritt überspringen (Nicht empfohlen)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Ohne Eingabe der Lizenzdaten fortfahren]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps erforderlich.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Die Eingabe der Lizenzdaten wird empfohlen. Falls noch keine Internetverbindung zu unseren Paket-Servern zur Verfügung steht oder Sie noch keine Lizenzdaten besitzen, können Sie die Eingabe überspringen. Lizenzdaten können jederzeit hinterlegt werden, um die gekauften WoltLab Suite™-Apps zu installieren.]]></item>

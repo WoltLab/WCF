@@ -62,21 +62,23 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
         parent::createForm();
 
         $this->form->appendChildren([
-            LanguageItemFormNode::create('explanation')
-                ->languageItem('wcf.acp.firstTimeSetup.license.explanation'),
             $credentialsContainer = FormContainer::create('credentials')
                 ->label('wcf.acp.firstTimeSetup.license.credentials')
+                ->description('wcf.acp.firstTimeSetup.license.explanation')
                 ->appendChildren([
                     TextFormField::create('licenseNo')
                         ->label('wcf.acp.package.update.licenseNo')
+                        ->description('wcf.acp.firstTimeSetup.license.credentials.customerArea')
                         ->required()
-                        ->maximumLength(255)
+                        ->maximumLength(12)
+                        ->addFieldClass('short')
                         ->placeholder('123456'),
                     TextFormField::create('serialNo')
                         ->label('wcf.acp.package.update.serialNo')
                         ->required()
-                        ->maximumLength(255)
-                        ->placeholder('AB12-34CD-E56F-12AB-7890')
+                        ->maximumLength(40)
+                        ->addFieldClass('medium')
+                        ->placeholder('XXXX-XXXX-XXXX-XXXX-XXXX')
                         ->addValidator(new FormFieldValidator('serialNo', function (TextFormField $serialNo) {
                             $licenseNo = $serialNo->getDocument()->getNodeById('licenseNo');
                             \assert($licenseNo instanceof TextFormField);
@@ -104,11 +106,6 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description'),
                 ]),
         ]);
-
-        $credentialsContainer->addDependency(
-            EmptyFormFieldDependency::create('noCredentialsConfirm')
-                ->fieldId('noCredentialsConfirm')
-        );
     }
 
     private function getLicenseData(string $licenseNo, string $serialNo): array

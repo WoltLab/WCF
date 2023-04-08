@@ -666,9 +666,10 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	<category name="wcf.acp.firstTimeSetup">
 		<item name="wcf.acp.firstTimeSetup.license"><![CDATA[First Time Setup: License]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials"><![CDATA[License Data]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.customerArea"><![CDATA[You can find the license and serial no in the <a href="https://www.woltlab.com/license-list/" class="externalURL">customer’s area on woltlab.com</a>.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedConnect"><![CDATA[Failed to establish a connection to confirm the license data.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[The license data could not be confirmed as valid.]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Not now?]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Skip Step (Not Recommended)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Continue without entering license information]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
