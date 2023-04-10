@@ -99,8 +99,8 @@
 </footer>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
-		UiArticleMarkAllAsRead.init();
+	require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], ({ setup }) => {
+		setup();
 	});
 </script>
 
