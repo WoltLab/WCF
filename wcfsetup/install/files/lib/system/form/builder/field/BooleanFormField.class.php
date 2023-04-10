@@ -49,7 +49,7 @@ class BooleanFormField extends AbstractFormField implements
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
+            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId())) === 1;
         }
 
         return $this;
