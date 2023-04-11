@@ -13,7 +13,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
     class Checked extends Field_1.default {
         _getData() {
             return {
-                [this._fieldId]: this._field.checked ? 1 : 0,
+                [this._fieldId]: this._field.checked ? "1" : "0",
             };
         }
     }
