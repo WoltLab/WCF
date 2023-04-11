@@ -41,7 +41,7 @@ final class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
                     $html = $this->getIcon($type, $name)->toHtml($size);
 
                     if ($encodeJson) {
-                        return JSON::encode($encodeJson);
+                        return JSON::encode($html);
                     }
 
                     return $html;
