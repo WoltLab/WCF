@@ -41,7 +41,11 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['value'])) {
-            throw new SystemException("Missing attribute 'value'");
+            if (!\array_key_exists('value', $tagArgs)) {
+                throw new SystemException("Missing attribute 'value'");
+            } else {
+                throw new SystemException("Attribute 'value' must not be null");
+            }
         }
         if (!isset($tagArgs['other'])) {
             throw new SystemException("Missing attribute 'other'");
