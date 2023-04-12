@@ -6,6 +6,7 @@ use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\JSON;
 
@@ -190,5 +191,109 @@ class BBCodeHandler extends SingletonFactory
         $hosts[] = ApplicationHandler::getInstance()->getDomainName();
 
         return \array_unique($hosts);
+    }
+
+    /**
+     * Exports a require.js requirement for the localization of the editor based
+     * on the current locale. Returns an empty string when there is no available
+     * localization or the locale equals the bundled value 'en'.
+     *
+     * @since 6.0
+     */
+    public function getEditorLocalization(): string
+    {
+        $availableTranslations = [
+            'af',
+            'ar',
+            'ast',
+            'az',
+            'bg',
+            'bn',
+            'bs',
+            'ca',
+            'cs',
+            'da',
+            'de-ch',
+            'de',
+            'el',
+            'en-au',
+            'en-gb',
+            'eo',
+            'es-co',
+            'es',
+            'et',
+            'eu',
+            'fa',
+            'fi',
+            'fr',
+            'gl',
+            'gu',
+            'he',
+            'hi',
+            'hr',
+            'hu',
+            'id',
+            'it',
+            'ja',
+            'jv',
+            'kk',
+            'km',
+            'kn',
+            'ko',
+            'ku',
+            'lt',
+            'lv',
+            'ms',
+            'nb',
+            'ne',
+            'nl',
+            'no',
+            'oc',
+            'pl',
+            'pt-br',
+            'pt',
+            'ro',
+            'ru',
+            'si',
+            'sk',
+            'sl',
+            'sq',
+            'sr-latn',
+            'sr',
+            'sv',
+            'th',
+            'tk',
+            'tr',
+            'tt',
+            'ug',
+            'uk',
+            'ur',
+            'uz',
+            'vi',
+            'zh-cn',
+            'zh',
+        ];
+
+        $locale = \strtolower(WCF::getLanguage()->getBcp47());
+        if (\in_array($locale, $availableTranslations, true)) {
+            return \sprintf(
+                '"ckeditor5-translation/%s",',
+                $locale
+            );
+        }
+
+        // Some languages offer both specialized variants for certain locales
+        // but also provide a "generic" variant. For example, "en-gb" and "en".
+        [$languageCode] = \explode('-', $locale, 2);
+        if (\in_array($languageCode, $availableTranslations, true)) {
+            return \sprintf(
+                '"ckeditor5-translation/%s",',
+                $languageCode
+            );
+        }
+
+        // The default locale "en" is part of the generated bundle, we must not
+        // yield any module if this locale is (implicitly) requested.
+        return "";
     }
 }
