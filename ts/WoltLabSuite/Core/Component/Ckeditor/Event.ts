@@ -9,7 +9,7 @@
  */
 
 import type { CKEditor } from "../Ckeditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { EditorConfig } from "./Types";
 import type { Features } from "./Configuration";
 import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
 import type { UploadMediaEventPayload } from "./Media";

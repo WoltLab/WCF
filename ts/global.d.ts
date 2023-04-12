@@ -9,8 +9,7 @@ import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
-import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { ClassicEditor, EditorConfig } from "WoltLabSuite/Core/Component/Ckeditor/Types";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;

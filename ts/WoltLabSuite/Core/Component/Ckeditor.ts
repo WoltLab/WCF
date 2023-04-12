@@ -22,9 +22,7 @@ import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import Devtools from "../Devtools";
 
-import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
-import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
+import { ClassicEditor, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
 
 import "ckeditor5-bundle";
 
@@ -39,10 +37,10 @@ class Ckeditor {
     this.#features = features;
   }
 
-  destroy(): Promise<void> {
+  async destroy(): Promise<void> {
     dispatchToCkeditor(this.sourceElement).destroy();
 
-    return this.#editor.destroy();
+    await this.#editor.destroy();
   }
 
   discardDraft(): void {
