@@ -12,8 +12,7 @@ import { getStoragePrefix } from "../../Core";
 import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 
-import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { ClassicEditor, EditorConfig } from "./Types";
 import { dispatchToCkeditor } from "./Event";
 
 type Payload = {

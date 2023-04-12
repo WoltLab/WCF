@@ -10,8 +10,8 @@
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 
-import type { MentionConfig } from "@ckeditor/ckeditor5-mention/src/mention";
 import { listenToCkeditor } from "./Event";
+import { EditorConfig } from "./Types";
 
 type SearchResultItem = {
   avatarTag: string;
@@ -49,7 +49,7 @@ async function getPossibleMentions(query: string): Promise<UserMention[]> {
   });
 }
 
-function getMentionConfiguration(): MentionConfig {
+function getMentionConfiguration(): EditorConfig["mention"] {
   return {
     feeds: [
       {

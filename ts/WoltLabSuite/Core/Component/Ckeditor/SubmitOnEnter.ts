@@ -12,7 +12,7 @@
 import { dispatchToCkeditor } from "./Event";
 
 import type { CKEditor } from "../Ckeditor";
-import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import type { ClassicEditor } from "./Types";
 
 export function setup(editor: ClassicEditor, ckeditor: CKEditor): void {
   editor.editing.view.document.on(
