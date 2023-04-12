@@ -11,9 +11,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\error\HtmlErrorRenderer;
 use wcf\http\Helper;
 use wcf\system\valinor\formatter\PrependPath;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Catches Valinor's MappingErrors and returns a HTTP 400 Bad Request.
@@ -56,20 +58,10 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                     \JSON_PRETTY_PRINT
                 ),
                 'text/html' => new HtmlResponse(
-                    // TODO: Create a more generically reusable template for this type of error message.
-                    WCF::getTPL()->fetchStream(
-                        'userException',
-                        'wcf',
-                        [
-                            'name' => $e::class,
-                            'file' => $e->getFile(),
-                            'line' => $e->getLine(),
-                            'message' => $message,
-                            'stacktrace' => $e->getTraceAsString(),
-                            'templateName' => 'userException',
-                            'templateNameApplication' => 'wcf',
-                            'exceptionClassName' => $e::class,
-                        ]
+                    (new HtmlErrorRenderer())->render(
+                        WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
+                        $message,
+                        $e
                     ),
                     400
                 ),
