@@ -274,7 +274,7 @@ class BBCodeHandler extends SingletonFactory
             'zh',
         ];
 
-        $locale = WCF::getLanguage()->getBcp47();
+        $locale = \strtolower(WCF::getLanguage()->getBcp47());
         if (\in_array($locale, $availableTranslations, true)) {
             return \sprintf(
                 '"ckeditor5-translation/%s",',
@@ -282,19 +282,18 @@ class BBCodeHandler extends SingletonFactory
             );
         }
 
-        $index = \strpos($locale, '-');
-        if ($index !== false) {
-            $locale = \substr($locale, 0, $index);
-
-            if (\in_array($locale, $availableTranslations, true)) {
-                return \sprintf(
-                    '"ckeditor5-translation/%s",',
-                    $locale
-                );
-            }
+        // Some languages offer both specialized variants for certain locales
+        // but also provide a "generic" variant. For example, "en-gb" and "en".
+        [$languageCode] = \explode('-', $locale, 2);
+        if (\in_array($languageCode, $availableTranslations, true)) {
+            return \sprintf(
+                '"ckeditor5-translation/%s",',
+                $languageCode
+            );
         }
 
-
+        // The default locale "en" is part of the generated bundle, we must not
+        // yield any module if this locale is (implicitly) requested.
         return "";
     }
 }
