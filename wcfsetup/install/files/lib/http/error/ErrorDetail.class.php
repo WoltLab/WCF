@@ -46,8 +46,9 @@ final class ErrorDetail
      */
     public static function fromMessage(string $message): self
     {
-        return new self(
+        return self::fromMessageWithThrowable(
             $message,
+            new \Exception('Dummy Exception for context')
         );
     }
 
