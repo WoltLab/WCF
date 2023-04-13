@@ -23,6 +23,7 @@ use wcf\system\request\RequestHandler;
 use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -117,15 +118,15 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
                 AJAXException::INSUFFICIENT_PERMISSIONS
             );
-        } else {
-            return new HtmlResponse(
-                WCF::getTPL()->fetchStream(
-                    'acpNotAuthorized',
-                    'wcf',
-                ),
-                403
-            );
         }
+
+        return new HtmlResponse(
+            HeaderUtil::parseOutputStream(WCF::getTPL()->fetchStream(
+                'acpNotAuthorized',
+                'wcf',
+            )),
+            403
+        );
     }
 
     private function handleReauthentication(ServerRequestInterface $request): ResponseInterface

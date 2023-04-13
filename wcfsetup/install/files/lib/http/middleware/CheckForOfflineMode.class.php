@@ -57,14 +57,14 @@ final class CheckForOfflineMode implements MiddlewareInterface
             NoticeHandler::disableNotices();
 
             return new HtmlResponse(
-                WCF::getTPL()->fetchStream(
+                HeaderUtil::parseOutputStream(WCF::getTPL()->fetchStream(
                     'offline',
                     'wcf',
                     [
                         'templateName' => 'offline',
                         'templateNameApplication' => 'wcf',
                     ]
-                ),
+                )),
                 503
             );
         }
