@@ -22,7 +22,6 @@ use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\middleware\EnforceNoCacheForTemporaryRedirects;
-use wcf\http\middleware\FixAcceptHeader;
 use wcf\http\middleware\HandleExceptions;
 use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\HandleValinorMappingErrors;
@@ -118,7 +117,6 @@ final class RequestHandler extends SingletonFactory
 
                 $pipeline = new Pipeline([
                     new HandleStartupErrors(),
-                    new FixAcceptHeader(),
                     new PreventMimeSniffing(),
                     new AddAcpSecurityHeaders(),
                     new EnforceCacheControlPrivate(),
