@@ -9,6 +9,7 @@ use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
@@ -33,7 +34,9 @@ use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -135,7 +138,14 @@ final class RequestHandler extends SingletonFactory
                     new HandleValinorMappingErrors(),
                 ]);
 
-                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                try {
+                    $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
+                    throw new \LogicException(\sprintf(
+                        "'%s' escaped from the middleware stack.",
+                        $e::class
+                    ), 0, $e);
+                }
 
                 if ($response instanceof LegacyPlaceholderResponse) {
                     return;
