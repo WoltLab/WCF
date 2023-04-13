@@ -7,7 +7,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog", "../StringUtil"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1, StringUtil_1) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
@@ -276,7 +276,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 if (data.file && data.line) {
                     details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
                 }
-                if (data.stacktrace) {
+                if (data.exception) {
+                    details += `<br>Exception: <div style="white-space: pre;">${(0, StringUtil_1.escapeHTML)(data.exception)}</div>`;
+                }
+                else if (data.stacktrace) {
                     details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
                 }
                 else if (data.exceptionID) {

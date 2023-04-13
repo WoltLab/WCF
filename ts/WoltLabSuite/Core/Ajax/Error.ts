@@ -10,6 +10,7 @@
 import { dialogFactory } from "../Component/Dialog";
 import * as Core from "../Core";
 import * as Language from "../Language";
+import { escapeHTML } from "../StringUtil";
 
 type ErrorResponsePrevious = {
   message: string;
@@ -18,6 +19,7 @@ type ErrorResponsePrevious = {
 
 type ErrorResponse = {
   exceptionID?: string;
+  exception?: string | null;
   file?: string;
   line?: number;
   message: string;
@@ -71,7 +73,9 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
           details += `<br><p>File:</p><p>${json.file} in line ${json.line}</p>`;
         }
 
-        if (json.stacktrace) {
+        if (json.exception) {
+          details += `<br>Exception: <div style="white-space: pre;">${escapeHTML(json.exception)}</div>`;
+        } else if (json.stacktrace) {
           details += `<br><p>Stacktrace:</p><p>${json.stacktrace}</p>`;
         } else if (json.exceptionID) {
           details += `<br><p>Exception ID: <code>${json.exceptionID}</code></p>`;

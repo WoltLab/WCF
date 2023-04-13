@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.5
  */
-define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language"], function (require, exports, tslib_1, Dialog_1, Core, Language) {
+define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language", "../StringUtil"], function (require, exports, tslib_1, Dialog_1, Core, Language, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerGlobalRejectionHandler = exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
@@ -55,7 +55,10 @@ define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Lan
                     if (json.file && json.line) {
                         details += `<br><p>File:</p><p>${json.file} in line ${json.line}</p>`;
                     }
-                    if (json.stacktrace) {
+                    if (json.exception) {
+                        details += `<br>Exception: <div style="white-space: pre;">${(0, StringUtil_1.escapeHTML)(json.exception)}</div>`;
+                    }
+                    else if (json.stacktrace) {
                         details += `<br><p>Stacktrace:</p><p>${json.stacktrace}</p>`;
                     }
                     else if (json.exceptionID) {

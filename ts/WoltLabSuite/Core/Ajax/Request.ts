@@ -14,6 +14,7 @@ import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Language from "../Language";
 import { dialogFactory } from "../Component/Dialog";
+import { escapeHTML } from "../StringUtil";
 
 let _didInit = false;
 let _ignoreAllErrors = false;
@@ -323,7 +324,9 @@ class AjaxRequest {
         details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
       }
 
-      if (data.stacktrace) {
+      if (data.exception) {
+        details += `<br>Exception: <div style="white-space: pre;">${escapeHTML(data.exception)}</div>`;
+      } else if (data.stacktrace) {
         details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
       } else if (data.exceptionID) {
         details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
