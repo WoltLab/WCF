@@ -208,6 +208,7 @@
 					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
 						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
 					{/if}
+					{event name='articleLikeButtons'}
 				</ul>
 			</div>
 		</div>
