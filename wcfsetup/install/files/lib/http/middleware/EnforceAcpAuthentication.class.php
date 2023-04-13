@@ -16,8 +16,9 @@ use wcf\action\AJAXInvokeAction;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogEditor;
+use wcf\http\error\ErrorDetail;
+use wcf\http\error\PermissionDeniedHandler;
 use wcf\http\Helper;
-use wcf\system\exception\AJAXException;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
@@ -90,11 +91,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
     private function handleGuest(ServerRequestInterface $request): ResponseInterface
     {
         if (Helper::isAjaxRequest($request)) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'),
-                AJAXException::SESSION_EXPIRED,
-                ''
-            );
+            return (new PermissionDeniedHandler())->handle($request);
         }
 
         return new RedirectResponse(
@@ -114,10 +111,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         ]);
 
         if (Helper::isAjaxRequest($request)) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                AJAXException::INSUFFICIENT_PERMISSIONS
-            );
+            return (new PermissionDeniedHandler())->handle($request);
         }
 
         return new HtmlResponse(
@@ -132,9 +126,9 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
     private function handleReauthentication(ServerRequestInterface $request): ResponseInterface
     {
         if (Helper::isAjaxRequest($request)) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.user.reauthentication.explanation'),
-                AJAXException::SESSION_EXPIRED
+            return (new PermissionDeniedHandler())->handle(
+                ErrorDetail::fromMessage(WCF::getLanguage()->getDynamicVariable('wcf.user.reauthentication.explanation'))
+                    ->attachToRequest($request)
             );
         }
 

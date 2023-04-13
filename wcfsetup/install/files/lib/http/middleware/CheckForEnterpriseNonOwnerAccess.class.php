@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\error\NotFoundHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
@@ -34,7 +34,7 @@ final class CheckForEnterpriseNonOwnerAccess implements MiddlewareInterface
             && \constant($requestHandler->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
             && !WCF::getUser()->hasOwnerAccess()
         ) {
-            throw new IllegalLinkException();
+            return (new NotFoundHandler())->handle($request);
         }
 
         return $handler->handle($request);

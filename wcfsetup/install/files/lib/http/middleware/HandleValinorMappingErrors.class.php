@@ -15,7 +15,6 @@ use wcf\http\error\HtmlErrorRenderer;
 use wcf\http\Helper;
 use wcf\system\valinor\formatter\PrependPath;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Catches Valinor's MappingErrors and returns a HTTP 400 Bad Request.

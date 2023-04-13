@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\User;
+use wcf\http\error\ErrorDetail;
+use wcf\http\error\PermissionDeniedHandler;
 use wcf\http\Helper;
-use wcf\system\exception\AJAXException;
-use wcf\system\exception\NamedUserException;
 use wcf\system\WCF;
 
 /**
@@ -30,18 +30,16 @@ final class CheckUserBan implements MiddlewareInterface
         $user = WCF::getUser();
 
         if ($this->isBanned($user)) {
-            if (Helper::isAjaxRequest($request)) {
-                throw new AJAXException(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'),
-                    AJAXException::INSUFFICIENT_PERMISSIONS
-                );
-            } else {
+            if (!Helper::isAjaxRequest($request)) {
                 // Delete sessions only for non-AJAX requests to ensure
                 // that the user was able to see the message properly
                 WCF::getSession()->deleteUserSessionsExcept($user);
-
-                throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
             }
+
+            return (new PermissionDeniedHandler())->handle(
+                ErrorDetail::fromMessage(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'))
+                    ->attachToRequest($request)
+            );
         }
 
         return $handler->handle($request);
