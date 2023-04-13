@@ -80,14 +80,6 @@ final class RequestHandler extends SingletonFactory
         try {
             $this->isACPRequest = $isACPRequest;
 
-            if (!RouteHandler::getInstance()->matches()) {
-                if (ENABLE_DEBUG_MODE) {
-                    throw new SystemException("Cannot handle request, no valid route provided.");
-                } else {
-                    throw new IllegalLinkException();
-                }
-            }
-
             try {
                 $psrRequest = ServerRequestFactory::fromGlobals(
                     null, // $_SERVER
@@ -109,6 +101,14 @@ final class RequestHandler extends SingletonFactory
 
                 // Intentionally not localized, because this must never happen for well-formed requests.
                 throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
+            }
+
+            if (!RouteHandler::getInstance()->matches()) {
+                if (ENABLE_DEBUG_MODE) {
+                    throw new SystemException("Cannot handle request, no valid route provided.");
+                } else {
+                    throw new IllegalLinkException();
+                }
             }
 
             $builtRequest = $this->buildRequest($psrRequest, $application);
