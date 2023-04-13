@@ -46,6 +46,7 @@ final class PermissionDeniedHandler implements RequestHandlerInterface
             'application/json' => new JsonResponse(
                 [
                     'message' => $message,
+                    'exception' => \ENABLE_DEBUG_MODE ? $errorDetail?->getThrowable()?->__toString() : null,
                 ],
                 self::STATUS_CODE,
                 [],

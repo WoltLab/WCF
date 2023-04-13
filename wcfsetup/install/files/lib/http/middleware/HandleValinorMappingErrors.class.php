@@ -47,6 +47,7 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                 'application/json' => new JsonResponse(
                     [
                         'message' => $message,
+                        'exception' => \ENABLE_DEBUG_MODE ? $e->__toString() : null,
                         'errors' => \array_map(
                             static fn (NodeMessage $m) => $m->toString(),
                             \iterator_to_array($errors, false)
