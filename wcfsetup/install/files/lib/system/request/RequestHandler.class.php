@@ -103,15 +103,15 @@ final class RequestHandler extends SingletonFactory
                 throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
             }
 
-            if (!RouteHandler::getInstance()->matches()) {
+            if (RouteHandler::getInstance()->matches()) {
+                $builtRequest = $this->buildRequest($psrRequest, $application);
+            } else {
                 if (ENABLE_DEBUG_MODE) {
                     throw new SystemException("Cannot handle request, no valid route provided.");
-                } else {
-                    throw new IllegalLinkException();
                 }
-            }
 
-            $builtRequest = $this->buildRequest($psrRequest, $application);
+                $builtRequest = (new NotFoundHandler())->handle($psrRequest);
+            }
 
             if ($builtRequest instanceof Request) {
                 $this->activeRequest = $builtRequest;
