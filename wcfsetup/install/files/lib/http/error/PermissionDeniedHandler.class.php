@@ -38,8 +38,8 @@ final class PermissionDeniedHandler implements RequestHandlerInterface
         SessionHandler::getInstance()->disableTracking();
 
         $preferredType = Helper::getPreferredContentType($request, [
-            'text/html',
             'application/json',
+            'text/html',
         ]);
 
         return match ($preferredType) {

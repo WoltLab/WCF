@@ -31,8 +31,8 @@ final class OfflineHandler implements RequestHandlerInterface
         NoticeHandler::disableNotices();
 
         $preferredType = Helper::getPreferredContentType($request, [
-            'text/html',
             'application/json',
+            'text/html',
         ]);
 
         return HeaderUtil::withNoCacheHeaders(match ($preferredType) {

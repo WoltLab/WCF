@@ -39,8 +39,8 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                 ->formatWith(new PrependPath());
 
             $preferredType = Helper::getPreferredContentType($request, [
-                'text/html',
                 'application/json',
+                'text/html',
             ]);
 
             return match ($preferredType) {
