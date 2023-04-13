@@ -71,6 +71,7 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                     "X-Requested-With": "XMLHttpRequest",
                     "X-XSRF-TOKEN": Core.getXsrfToken(),
+                    "Accept": "application/json",
                 },
                 body: Core.serialize(body),
                 mode: "same-origin",
