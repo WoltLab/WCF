@@ -24,6 +24,8 @@ use wcf\system\WCF;
  */
 final class PermissionDeniedHandler implements RequestHandlerInterface
 {
+    private const STATUS_CODE = 403;
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $errorDetail = ErrorDetail::fromRequest($request);
@@ -45,7 +47,7 @@ final class PermissionDeniedHandler implements RequestHandlerInterface
                 [
                     'message' => $message,
                 ],
-                403,
+                self::STATUS_CODE,
                 [],
                 \JSON_PRETTY_PRINT
             ),
@@ -56,7 +58,7 @@ final class PermissionDeniedHandler implements RequestHandlerInterface
                     $errorDetail?->getThrowable(),
                     !WCF::getUser()->userID,
                 ),
-                403
+                self::STATUS_CODE
             ),
         };
     }

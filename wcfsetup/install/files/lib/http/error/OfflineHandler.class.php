@@ -23,6 +23,8 @@ use wcf\util\HeaderUtil;
  */
 final class OfflineHandler implements RequestHandlerInterface
 {
+    private const STATUS_CODE = 503;
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         BoxHandler::disablePageLayout();
@@ -38,7 +40,7 @@ final class OfflineHandler implements RequestHandlerInterface
                 [
                     'message' => WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
                 ],
-                503,
+                self::STATUS_CODE,
                 [],
                 \JSON_PRETTY_PRINT
             ),
@@ -51,7 +53,7 @@ final class OfflineHandler implements RequestHandlerInterface
                         'templateNameApplication' => 'wcf',
                     ]
                 )),
-                503
+                self::STATUS_CODE
             ),
         });
     }

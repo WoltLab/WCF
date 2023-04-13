@@ -9,7 +9,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\error\ErrorDetail;
 use wcf\http\error\NotFoundHandler;
 use wcf\http\error\PermissionDeniedHandler;
+use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -30,11 +32,13 @@ final class HandleExceptions implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
-        } catch (PermissionDeniedException|IllegalLinkException $e) {
+        } catch (PermissionDeniedException | IllegalLinkException | InvalidSecurityTokenException $e) {
             if ($e instanceof PermissionDeniedException) {
                 $handler = new PermissionDeniedHandler();
             } elseif ($e instanceof IllegalLinkException) {
                 $handler = new NotFoundHandler();
+            } elseif ($e instanceof InvalidSecurityTokenException) {
+                $handler = new XsrfValidationFailedHandler();
             } else {
                 throw new \LogicException('Unreachable');
             }

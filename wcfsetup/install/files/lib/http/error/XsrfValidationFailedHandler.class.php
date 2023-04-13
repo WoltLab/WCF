@@ -14,21 +14,21 @@ use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
- * Returns a "Not Found" response.
+ * Returns a "XSRF validation failed" response.
  *
  * @author Tim Duesterhus
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-final class NotFoundHandler implements RequestHandlerInterface
+final class XsrfValidationFailedHandler implements RequestHandlerInterface
 {
-    private const STATUS_CODE = 404;
+    private const STATUS_CODE = 400;
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $errorDetail = ErrorDetail::fromRequest($request);
-        $message = $errorDetail?->getMessage() ?? WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink');
+        $message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired');
 
         if (!RequestHandler::getInstance()->isACPRequest()) {
             BoxHandler::disablePageLayout();
@@ -51,7 +51,7 @@ final class NotFoundHandler implements RequestHandlerInterface
             ),
             'text/html' => new HtmlResponse(
                 (new HtmlErrorRenderer())->render(
-                    WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink.title'),
+                    WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                     $message,
                     $errorDetail?->getThrowable()
                 ),
