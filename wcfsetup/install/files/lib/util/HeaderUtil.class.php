@@ -2,7 +2,9 @@
 
 namespace wcf\util;
 
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
@@ -183,6 +185,22 @@ final class HeaderUtil
         EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
 
         return self::$output;
+    }
+
+    /**
+     * Applies parseOutput to the stream contents and returns a new stream.
+     *
+     * Note: The full stream contents will be loaded into memory as a string.
+     *
+     * @see HeaderUtil::parseOutput()
+     */
+    public static function parseOutputStream(StreamInterface $input): StreamInterface
+    {
+        $output = new Stream(\fopen('php://temp', 'r+'));
+        $output->write(self::parseOutput((string)$input));
+        $output->rewind();
+
+        return $output;
     }
 
     /**
