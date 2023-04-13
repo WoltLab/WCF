@@ -9,6 +9,7 @@ use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use wcf\http\error\NotFoundHandler;
 use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
@@ -165,7 +166,6 @@ final class RequestHandler extends SingletonFactory
     /**
      * Builds a new request.
      *
-     * @throws  IllegalLinkException
      * @throws  NamedUserException
      * @throws  SystemException
      */
@@ -281,7 +281,7 @@ final class RequestHandler extends SingletonFactory
                 throw $e;
             }
 
-            throw new IllegalLinkException();
+            return (new NotFoundHandler())->handle($psrRequest);
         }
     }
 
