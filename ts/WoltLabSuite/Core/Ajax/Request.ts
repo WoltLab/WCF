@@ -126,6 +126,9 @@ class AjaxRequest {
     if (this._options.withCredentials || this._options.includeRequestedWith) {
       this._xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     }
+    if (this._options.responseType) {
+      this._xhr.setRequestHeader("Accept", this._options.responseType);
+    }
     if (this._options.withCredentials) {
       this._xhr.withCredentials = true;
     }
