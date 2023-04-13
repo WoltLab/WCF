@@ -33,35 +33,11 @@ trait TAJAXException
     protected function throwException($e)
     {
         if ($e instanceof InvalidSecurityTokenException) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'),
-                AJAXException::SESSION_EXPIRED,
-                $e->getTraceAsString(),
-                [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ]
-            );
+            throw $e;
         } elseif ($e instanceof PermissionDeniedException) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                AJAXException::INSUFFICIENT_PERMISSIONS,
-                $e->getTraceAsString(),
-                [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ]
-            );
+            throw $e;
         } elseif ($e instanceof IllegalLinkException) {
-            throw new AJAXException(
-                WCF::getLanguage()->get('wcf.ajax.error.illegalLink'),
-                AJAXException::ILLEGAL_LINK,
-                $e->getTraceAsString(),
-                [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ]
-            );
+            throw $e;
         } elseif ($e instanceof UserInputException) {
             // repackage as ValidationActionException
             $exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
