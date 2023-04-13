@@ -21,7 +21,7 @@ type ErrorResponse = {
   file?: string;
   line?: number;
   message: string;
-  previous: ErrorResponsePrevious[];
+  previous?: ErrorResponsePrevious[];
   returnValues?: {
     description?: string;
   };
@@ -79,10 +79,12 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
 
         message = json.message;
 
-        json.previous.forEach((previous) => {
-          details += `<hr><p>${previous.message}</p>`;
-          details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-        });
+        if (json.previous) {
+          json.previous.forEach((previous) => {
+            details += `<hr><p>${previous.message}</p>`;
+            details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+          });
+        }
       } else if (json === undefined) {
         // The content is possibly HTML, use an iframe for rendering.
         const iframe = document.createElement("iframe");

@@ -331,10 +331,12 @@ class AjaxRequest {
 
       message = data.message;
 
-      data.previous.forEach((previous) => {
-        details += `<hr><p>${previous.message}</p>`;
-        details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-      });
+      if (data.previous) {
+        data.previous.forEach((previous) => {
+          details += `<hr><p>${previous.message}</p>`;
+          details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+        });
+      }
     } else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
       // The content is possibly HTML, use an iframe for rendering.
       const iframe = document.createElement("iframe");

@@ -62,10 +62,12 @@ define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Lan
                         details += `<br><p>Exception ID: <code>${json.exceptionID}</code></p>`;
                     }
                     message = json.message;
-                    json.previous.forEach((previous) => {
-                        details += `<hr><p>${previous.message}</p>`;
-                        details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-                    });
+                    if (json.previous) {
+                        json.previous.forEach((previous) => {
+                            details += `<hr><p>${previous.message}</p>`;
+                            details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+                        });
+                    }
                 }
                 else if (json === undefined) {
                     // The content is possibly HTML, use an iframe for rendering.

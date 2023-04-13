@@ -92,7 +92,7 @@ interface PreviousException {
 
 export interface AjaxResponseException extends ResponseData {
   exceptionID?: string;
-  previous: PreviousException[];
+  previous?: PreviousException[];
   file?: string;
   line?: number;
   message: string;
