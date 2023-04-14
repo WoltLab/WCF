@@ -1281,6 +1281,7 @@
 		<file>js/WCF.Attachment.min.js</file>
 		<file>js/WCF.ColorPicker.min.js</file>
 		<file>js/WCF.Combined.js</file>
+		<file>js/WCF.Comment.js</file>
 		<file>js/WCF.Comment.min.js</file>
 		<file>js/WCF.Core.min.js</file>
 		<file>js/WCF.ImageViewer.min.js</file>
@@ -1668,6 +1669,7 @@
 		<file>lib/form/MailForm.class.php</file>
 		<file>lib/form/MultifactorAuthenticationAbortForm.class.php</file>
 		<file>lib/form/RecaptchaForm.class.php</file>
+		<file>lib/http/middleware/FixAcceptHeader.class.php</file>
 		<file>lib/page/CookiePolicyPage.class.php</file>
 		<file>lib/page/DashboardPage.class.php</file>
 		<file>lib/page/LessStylesheetsPage.class.php</file>
@@ -2269,6 +2271,8 @@
 		<file>lib/system/api/psr/cache/src/CacheItemInterface.php</file>
 		<file>lib/system/api/psr/cache/src/CacheItemPoolInterface.php</file>
 		<file>lib/system/api/psr/cache/src/InvalidArgumentException.php</file>
+		<file>lib/system/api/psr/http-factory/.gitignore</file>
+		<file>lib/system/api/psr/http-factory/.pullapprove.yml</file>
 		<file>lib/system/api/rest/response/IRESTfulResponse.class.php</file>
 		<file>lib/system/api/sabberworm/php-css-parser/.gitignore</file>
 		<file>lib/system/api/sabberworm/php-css-parser/.travis.yml</file>
@@ -2655,6 +2659,7 @@
 		<file>lib/system/event/TCancelableEvent.class.php</file>
 		<file>lib/system/event/listener/IEventListener.class.php</file>
 		<file>lib/system/event/listener/PreParserAtUserListener.class.php</file>
+		<file>lib/system/event/listener/SessionAccessLogListener.class.php</file>
 		<file>lib/system/event/listener/UserLoggedInEmailNotificationListener.class.php</file>
 		<file>lib/system/event/listener/UserMultifactorSucceededEmailNotificationListener.class.php</file>
 		<file>lib/system/exception/ILoggingAwareException.class.php</file>
@@ -2691,7 +2696,9 @@
 		<file>lib/system/html/input/node/HtmlInputNodeWoltlabMention.class.php</file>
 		<file>lib/system/html/input/node/IHtmlInputNodeProcessor.class.php</file>
 		<file>lib/system/html/node/HtmlNodeProcessor.class.php</file>
+		<file>lib/system/html/output/AmpHtmlOutputProcessor.class.php</file>
 		<file>lib/system/html/output/HtmlOutputNodeProcessor.class.php</file>
+		<file>lib/system/html/output/node/AmpHtmlOutputNodeProcessor.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeBlockquote.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabColor.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabFont.class.php</file>
