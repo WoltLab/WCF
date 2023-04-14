@@ -678,6 +678,15 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[First Time Setup: Email Settings]]></item>
 		<item name="wcf.acp.firstTimeSetup.optionsEmail.description"><![CDATA[Configure the email addresses used by your community. Emails will be sent directly by PHP by default. After completing the first time setup you will be able to configure an SMTP server within the options.]]></item>
 		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[First Time Setup Completed]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.nextSteps"><![CDATA[Next Steps]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.description"><![CDATA[Extend your community with official apps and plugins from WoltLab. With a few clicks you can enhance your community with a forum, calendar, gallery, blog or file management.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.title"><![CDATA[Install WoltLab Apps and Plugins]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.description"><![CDATA[In the manual you will find helpful instructions and descriptions of the available features of WoltLab Suite.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.title"><![CDATA[Manual for WoltLab Suite]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.description"><![CDATA[In the official Plugin-Store you can find many useful plugins to tailor your site to your needs. All offered plugins are pre-tested by WoltLab for security and stability.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.title"><![CDATA[Plugins and Styles in the Plugin-Store]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.description"><![CDATA[Do you have questions about particular features or are you having problems setting up your installation? You can receive help from our customer support via the ticket system in the customer area.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.title"><![CDATA[Ticket Support for Questions and Problems]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>

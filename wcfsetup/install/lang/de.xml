@@ -700,6 +700,15 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[Erstmalige Einrichtung: E-Mail-Einstellungen]]></item>
 		<item name="wcf.acp.firstTimeSetup.optionsEmail.description"><![CDATA[Konfigurieren Sie jetzt die von Ihrer Community genutzten E-Mail-Adressen. Der Versand erfolgt standardmäßig direkt durch PHP, nach Abschluss der Ersteinrichtung haben Sie die Möglichkeit in den Optionen einen SMTP-Server zu hinterlegen.]]></item>
 		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[Erstmalige Einrichtung abgeschlossen]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.nextSteps"><![CDATA[Die nächsten Schritte]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.description"><![CDATA[Erweitern Sie Ihre Community um offizielle Apps und Erweiterungen von WoltLab. Mit wenigen Klicks können Sie Ihre Community um ein Forum, Kalender, Galerie, Blog oder Dateiverwaltung erweitern.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.title"><![CDATA[WoltLab Apps und Erweiterungen installieren]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.description"><![CDATA[Im Handbuch finden Sie hilfreiche Anleitungen und Beschreibungen der verschiedenen Funktionen von WoltLab Suite.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.title"><![CDATA[Handbuch für WoltLab Suite]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.description"><![CDATA[Im offiziellen Plugin-Store finden Sie viele nützliche Erweiterungen, um Ihre Seite auf Ihre Bedürfnisse zuzuschneiden. Alle angebotenen Erweiterungen werden vorab von WoltLab auf Sicherheit und Stabilität geprüft.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.title"><![CDATA[Erweiterungen und Stile im Plugin-Store]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.description"><![CDATA[Sie haben Fragen zu einzelnen Funktionen oder haben Probleme bei der Einrichtung Ihrer Installation? Über das Ticket-System im Kundenbereich erhalten Sie Hilfestellung durch unsere Kundenbetreuung.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.title"><![CDATA[Ticket-Support für Fragen und Probleme]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
