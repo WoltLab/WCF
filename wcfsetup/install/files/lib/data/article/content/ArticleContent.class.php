@@ -6,7 +6,6 @@ use wcf\data\article\Article;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
-use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
@@ -119,20 +118,6 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
             false,
             $this->languageID
         );
-
-        return $processor->getHtml();
-    }
-
-    /**
-     * Returns the article's formatted content ready for use with Google AMP pages.
-     *
-     * @return      string
-     */
-    public function getAmpFormattedContent()
-    {
-        $processor = new AmpHtmlOutputProcessor();
-        $processor->enableUgc = false;
-        $processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
 
         return $processor->getHtml();
     }

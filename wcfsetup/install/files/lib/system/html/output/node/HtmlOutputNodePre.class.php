@@ -61,7 +61,6 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
                         'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
                         'skipInnerContent' => true,
                         'prefix' => $prefix,
-                        'isAmp' => ($htmlNodeProcessor instanceof AmpHtmlOutputNodeProcessor),
                     ]);
 
                     $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
@@ -240,8 +239,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
 
         if (
             \str_contains($content, '{/if}')
-            && (
-                \str_contains($content, '<div')
+            && (\str_contains($content, '<div')
                 || \str_contains($content, '<span')
             )
         ) {
