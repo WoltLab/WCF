@@ -30,7 +30,7 @@
 			</div>
 			<div class="firstTimeSetup__nextStep__content">
 				<h3 class="firstTimeSetup__nextStep__title">
-					<a href="{link controller='PackageStartInstall'}{/link}" class="externalURL">
+					<a href="{link controller='PackageStartInstall'}{/link}">
 						{lang}wcf.acp.firstTimeSetup.completed.apps.title{/lang}
 					</a>
 				</h3>
