@@ -8,7 +8,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\attribute\DisableXsrfCheck;
 use wcf\http\error\XsrfValidationFailedHandler;
-use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;

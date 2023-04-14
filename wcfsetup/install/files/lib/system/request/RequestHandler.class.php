@@ -10,7 +10,6 @@ use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\error\NotFoundHandler;
-use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;

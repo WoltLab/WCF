@@ -237,7 +237,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
 
         if (
             \str_contains($content, '{/if}')
-            && (\str_contains($content, '<div')
+            && (
+                \str_contains($content, '<div')
                 || \str_contains($content, '<span')
             )
         ) {

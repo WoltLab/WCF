@@ -3,10 +3,10 @@
 use wcf\system\WCF;
 
 $styleVariables = [
-    ['messageSidebarOrientation', 'left', NULL],
-    ['pageLogoWidth', '281', NULL],
-    ['pageLogoHeight', '40', NULL],
-    ['useFluidLayout', '1', NULL],
+    ['messageSidebarOrientation', 'left', null],
+    ['pageLogoWidth', '281', null],
+    ['pageLogoHeight', '40', null],
+    ['useFluidLayout', '1', null],
     ['wcfButtonBackground', 'rgba(207, 216, 220, 1)', 'rgba(47, 57, 76, 1)'],
     ['wcfButtonBackgroundActive', 'rgba(120, 144, 156, 1)', 'rgba(37, 45, 60, 1)'],
     ['wcfButtonDisabledBackground', 'rgba(223, 223, 223, 1)', 'rgba(38, 39, 42, 1)'],
@@ -44,13 +44,13 @@ $styleVariables = [
     ['wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)', 'rgba(230, 231, 234, 1)'],
     ['wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)', 'rgba(118, 125, 137, 1)'],
     ['wcfEditorTableBorder', 'rgba(221, 221, 221, 1)', 'rgba(221, 221, 221, 1)'],
-    ['wcfFontFamilyFallback', 'system', NULL],
-    ['wcfFontLineHeight', '1.48', NULL],
-    ['wcfFontSizeDefault', '15px', NULL],
-    ['wcfFontSizeHeadline', '18px', NULL],
-    ['wcfFontSizeSection', '23px', NULL],
-    ['wcfFontSizeSmall', '12px', NULL],
-    ['wcfFontSizeTitle', '28px', NULL],
+    ['wcfFontFamilyFallback', 'system', null],
+    ['wcfFontLineHeight', '1.48', null],
+    ['wcfFontSizeDefault', '15px', null],
+    ['wcfFontSizeHeadline', '18px', null],
+    ['wcfFontSizeSection', '23px', null],
+    ['wcfFontSizeSmall', '12px', null],
+    ['wcfFontSizeTitle', '28px', null],
     ['wcfFooterBackground', 'rgba(58, 109, 156, 1)', 'rgba(30, 39, 52, 1)'],
     ['wcfFooterBoxBackground', 'rgba(236, 239, 241, 1)', 'rgba(26, 34, 45, 1)'],
     ['wcfFooterBoxHeadlineLink', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
@@ -100,9 +100,9 @@ $styleVariables = [
     ['wcfInputTextActive', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfInputPlaceholder', 'rgba(169, 169, 169, 1)', 'rgba(122, 123, 125, 1)'],
     ['wcfInputPlaceholderActive', 'rgba(204, 204, 204, 1)', 'rgba(122, 123, 125, 1)'],
-    ['wcfLayoutFixedWidth', '1200px', NULL],
-    ['wcfLayoutMaxWidth', '1400px', NULL],
-    ['wcfLayoutMinWidth', '1000px', NULL],
+    ['wcfLayoutFixedWidth', '1200px', null],
+    ['wcfLayoutMaxWidth', '1400px', null],
+    ['wcfLayoutMinWidth', '1000px', null],
     ['wcfNavigationBackground', 'rgba(236, 239, 241, 1)', 'rgba(26, 34, 45, 1)'],
     ['wcfNavigationLink', 'rgba(58, 58, 61, 1)', 'rgba(179, 182, 185, 1)'],
     ['wcfNavigationLinkActive', 'rgba(58, 58, 61, 1)', 'rgba(205, 207, 208, 1)'],
@@ -165,7 +165,7 @@ $sql = "INSERT INTO             wcf1_style_variable
 $statement = WCF::getDB()->prepare($sql);
 
 foreach ($styleVariables as $data) {
-    list($variableName, $defaultValue, $defaultValueDarkMode) = $data;
+    [$variableName, $defaultValue, $defaultValueDarkMode] = $data;
 
     $statement->execute([
         $variableName,
