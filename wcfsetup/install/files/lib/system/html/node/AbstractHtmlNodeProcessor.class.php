@@ -330,7 +330,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         }
 
         foreach ($tags as $tagName) {
-            if (\in_array($tagName, $skipTags)) {
+            if (
+                \in_array($tagName, $skipTags)
+                || \str_starts_with($tagName, 'wcfNode-')
+            ) {
                 continue;
             }
 
