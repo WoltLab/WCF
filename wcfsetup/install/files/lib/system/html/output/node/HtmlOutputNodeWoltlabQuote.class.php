@@ -49,14 +49,14 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
                         $link = WCF::getPath() . $link;
                     }
 
-                    $nodeIdentifier = StringUtil::getRandomID();
+                    [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
                     $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
                         'author' => $element->getAttribute('data-author'),
                         'collapse' => $collapse,
                         'url' => $link,
                     ]);
 
-                    $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+                    $htmlNodeProcessor->renameTag($element, $tagName);
                     break;
 
                 case 'text/simplified-html':
