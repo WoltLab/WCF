@@ -30,14 +30,14 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             if ($this->outputType === 'text/html') {
-                $nodeIdentifier = StringUtil::getRandomID();
+                [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
                 $htmlNodeProcessor->addNodeData(
                     $this,
                     $nodeIdentifier,
                     ['label' => $element->getAttribute('data-label')]
                 );
 
-                $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+                $htmlNodeProcessor->renameTag($element, $tagName);
             } elseif ($this->outputType === 'text/simplified-html' || $this->outputType === 'text/plain') {
                 $htmlNodeProcessor->replaceElementWithText(
                     $element,

@@ -61,13 +61,13 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
                     $enableUgc = $processor->enableUgc;
                 }
 
-                $nodeIdentifier = StringUtil::getRandomID();
+                [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
                 $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
                     'urlId' => $attribute,
                     'enableUgc' => $enableUgc,
                 ]);
 
-                $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+                $htmlNodeProcessor->renameTag($element, $tagName);
             }
         }
     }

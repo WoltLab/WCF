@@ -38,22 +38,22 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             if ($element->getAttribute('class') === 'woltlabHtml') {
-                $nodeIdentifier = StringUtil::getRandomID();
+                [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
                 $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['rawHTML' => $element->textContent]);
 
-                $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+                $htmlNodeProcessor->renameTag($element, $tagName);
                 continue;
             }
 
             switch ($this->outputType) {
                 case 'text/html':
-                    $nodeIdentifier = StringUtil::getRandomID();
                     $context = $htmlNodeProcessor->getHtmlProcessor()->getContext();
                     $prefix = '';
                     // Create a unique prefix if possible
                     if (isset($context['objectType']) && isset($context['objectID'])) {
                         $prefix = \str_replace('.', '_', $context['objectType']) . '_' . $context['objectID'] . '_';
                     }
+                    [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
                     $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
                         'content' => $element->textContent,
                         'file' => $element->getAttribute('data-file'),
@@ -64,7 +64,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
                         'isAmp' => ($htmlNodeProcessor instanceof AmpHtmlOutputNodeProcessor),
                     ]);
 
-                    $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+                    $htmlNodeProcessor->renameTag($element, $tagName);
                     break;
 
                 case 'text/simplified-html':

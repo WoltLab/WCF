@@ -350,4 +350,27 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
             }
         }
     }
+
+    /**
+     * Returns a randomly generated tagName+identifier pair for <wcfNode-*> tags.
+     *
+     * @return array{0: string, 1: string}
+     */
+    public function getWcfNodeIdentifer(): array
+    {
+        static $engine = null;
+
+        if ($engine === null) {
+            if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
+                $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar());
+                $engine = static fn () => \bin2hex($randomizer->getBytes(16));
+            } else {
+                $engine = static fn () => \bin2hex(\random_bytes(16));
+            }
+        }
+
+        $identifier = $engine();
+
+        return [$identifier, "wcfNode-{$identifier}"];
+    }
 }
