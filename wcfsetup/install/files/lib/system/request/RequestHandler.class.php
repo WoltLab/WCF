@@ -79,6 +79,10 @@ final class RequestHandler extends SingletonFactory
         try {
             $this->isACPRequest = $isACPRequest;
 
+            // This must be called before the PSR request is created, because it registers the
+            // route paramters in $_GET.
+            $routeMatches = RouteHandler::getInstance()->matches();
+
             try {
                 $psrRequest = ServerRequestFactory::fromGlobals(
                     null, // $_SERVER
@@ -102,7 +106,7 @@ final class RequestHandler extends SingletonFactory
                 throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
             }
 
-            if (RouteHandler::getInstance()->matches()) {
+            if ($routeMatches) {
                 $builtRequest = $this->buildRequest($psrRequest, $application);
             } else {
                 if (ENABLE_DEBUG_MODE) {
