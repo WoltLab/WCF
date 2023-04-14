@@ -26,55 +26,55 @@ final class RouteHandler extends SingletonFactory
      * current host and protocol
      * @var string
      */
-    protected static $host = '';
+    private static $host = '';
 
     /**
      * current absolute path
      * @var string
      */
-    protected static $path = '';
+    private static $path = '';
 
     /**
      * current path info component
      * @var string
      */
-    protected static $pathInfo;
+    private static $pathInfo;
 
     /**
      * HTTP protocol, either 'http://' or 'https://'
      * @var string
      */
-    protected static $protocol = '';
+    private static $protocol = '';
 
     /**
      * HTTP encryption
      * @var bool
      */
-    protected static $secure;
+    private static $secure;
 
     /**
      * true if the default controller is used (support for custom landing page)
      * @var bool
      */
-    protected $isDefaultController = false;
+    private $isDefaultController = false;
 
     /**
      * true if the controller was renamed and has already been transformed
      * @var bool
      */
-    protected $isRenamedController = false;
+    private $isRenamedController = false;
 
     /**
      * list of available routes
      * @var IRequestRoute[]
      */
-    protected $routes = [];
+    private $routes = [];
 
     /**
      * parsed route data
      * @var array
      */
-    protected $routeData;
+    private $routeData;
 
     /**
      * Sets default routes.
@@ -193,7 +193,7 @@ final class RouteHandler extends SingletonFactory
     /**
      * Registers route data within $_GET and $_REQUEST.
      */
-    protected function registerRouteData()
+    private function registerRouteData()
     {
         foreach ($this->routeData as $key => $value) {
             $_GET[$key] = $value;
