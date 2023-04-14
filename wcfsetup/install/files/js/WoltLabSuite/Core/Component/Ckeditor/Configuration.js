@@ -208,8 +208,10 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             this.#setupMention();
         }
         toConfig() {
+            const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
             // TODO: The typings are both incompleted and outdated.
             return {
+                language,
                 removePlugins: this.#removePlugins,
                 toolbar: this.#getToolbar(),
                 woltlabToolbarGroup: this.#toolbarGroups,

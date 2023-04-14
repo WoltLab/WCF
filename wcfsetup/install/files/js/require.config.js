@@ -14,7 +14,8 @@ requirejs.config({
 		zxcvbn: '3rdParty/zxcvbn',
 		'@googlemaps/markerclusterer': '3rdParty/googlemaps/markerclusterer/index.umd',
 		'@ckeditor/ckeditor5-inspector': '3rdParty/ckeditor/ckeditor5-inspector/inspector',
-		'ckeditor5-bundle': '3rdParty/ckeditor/ckeditor5.bundle'
+		'ckeditor5-bundle': '3rdParty/ckeditor/ckeditor5.bundle',
+		'ckeditor5-translation': '3rdParty/ckeditor/translations',
 	},
 	packages: [{
 		name: "codemirror",

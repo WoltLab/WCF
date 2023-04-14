@@ -9,7 +9,7 @@
 
 import { getPhrase } from "../../Language";
 
-import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type { EditorConfig } from "./Types";
 
 // The typings for CKEditor’s toolbar are outdated.
 type ToolbarItem = string | { label: string; icon?: string; items: string[] };
@@ -240,8 +240,11 @@ class ConfigurationBuilder {
   }
 
   toConfig(): EditorConfig {
+    const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
+
     // TODO: The typings are both incompleted and outdated.
     return {
+      language,
       removePlugins: this.#removePlugins,
       toolbar: this.#getToolbar(),
       woltlabToolbarGroup: this.#toolbarGroups,

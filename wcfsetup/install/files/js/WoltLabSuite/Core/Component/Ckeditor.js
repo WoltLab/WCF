@@ -24,9 +24,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             this.#editor = editor;
             this.#features = features;
         }
-        destroy() {
+        async destroy() {
             (0, Event_1.dispatchToCkeditor)(this.sourceElement).destroy();
-            return this.#editor.destroy();
+            await this.#editor.destroy();
         }
         discardDraft() {
             if (this.#features.autosave) {

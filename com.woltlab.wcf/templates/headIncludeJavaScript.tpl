@@ -101,10 +101,6 @@ window.addEventListener('pageshow', function(event) {
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 	});
-	
-	// prevent jQuery and other libraries from utilizing define()
-	__require_define_amd = define.amd;
-	define.amd = undefined;
 </script>
 
 {include file='__devtoolsLanguageChooser'}
@@ -115,17 +111,23 @@ window.addEventListener('pageshow', function(event) {
 </script>
 {/if}
 
+<script data-relocate="true">
+	// prevent jQuery and other libraries from utilizing define()
+	__require_define_amd = define.amd;
+	define.amd = undefined;
+</script>
 {js application='wcf' lib='jquery' hasTiny=true}
 {js application='wcf' lib='jquery-ui' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Assets' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF' bundle='WCF.Combined' hasTiny=true}
-
 <script data-relocate="true">
 	define.amd = __require_define_amd;
 	$.holdReady(true);
-	
+</script>
+
+<script data-relocate="true">
 	WCF.User.init(
 		{@$__wcf->user->userID},
 		{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}

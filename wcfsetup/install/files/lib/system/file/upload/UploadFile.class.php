@@ -276,13 +276,11 @@ class UploadFile
 
     /**
      * Returns icon name for this attachment.
-     *
-     * @return      string
      */
-    public function getIconName()
+    public function getIconName(): string
     {
         if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
-            return 'file-' . $iconName . '-o';
+            return \sprintf('file-%s', $iconName);
         }
 
         return 'paperclip';
