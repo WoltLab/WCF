@@ -13,9 +13,10 @@ use wcf\util\HeaderUtil;
 /**
  * Shows general options during first time setup.
  *
- * @author      Tim Duesterhus, Alexander Ebert
- * @copyright   2001-2023 WoltLab GmbH
- * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author Tim Duesterhus, Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  *
  * @property OptionHandler $optionHandler
  */

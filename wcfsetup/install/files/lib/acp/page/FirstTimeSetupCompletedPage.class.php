@@ -9,9 +9,10 @@ use wcf\page\AbstractPage;
 /**
  * Shows a success page for the completed first time setup.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2023 WoltLab GmbH
+ * @author Tim Duesterhus
+ * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  */
 final class FirstTimeSetupCompletedPage extends AbstractPage
 {
@@ -20,6 +21,9 @@ final class FirstTimeSetupCompletedPage extends AbstractPage
      */
     public $neededPermissions = ['admin.general.canUseAcp'];
 
+    /**
+     * @inheritDoc
+     */
     public function readData()
     {
         parent::readData();

@@ -28,9 +28,10 @@ use wcf\util\HeaderUtil;
 /**
  * Sets up license data during first time setup.
  *
- * @author      Tim Duesterhus
- * @copyright   2001-2023 WoltLab GmbH
- * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author Tim Duesterhus
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  */
 final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
 {
