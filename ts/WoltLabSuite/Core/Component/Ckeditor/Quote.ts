@@ -23,7 +23,7 @@ function insertQuote(editor: CKEditor, payload: InsertQuoteEventPayload) {
   link = escapeHTML(link);
 
   editor.insertHtml(
-    `<woltlab-ckeditor-blockquote author="${author}" link="${link}">${content}</woltlab-ckeditor-blockquote>`,
+    `<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>`,
   );
 }
 
