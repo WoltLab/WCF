@@ -137,14 +137,7 @@ final class RequestHandler extends SingletonFactory
                     new HandleValinorMappingErrors(),
                 ]);
 
-                try {
-                    $response = $pipeline->process($psrRequest, $this->getActiveRequest());
-                } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
-                    throw new \LogicException(\sprintf(
-                        "'%s' escaped from the middleware stack.",
-                        $e::class
-                    ), 0, $e);
-                }
+                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
 
                 if ($response instanceof LegacyPlaceholderResponse) {
                     return;
@@ -156,6 +149,11 @@ final class RequestHandler extends SingletonFactory
 
             $emitter = new SapiEmitter();
             $emitter->emit($response);
+        } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
+            throw new \LogicException(\sprintf(
+                "'%s' escaped from the middleware stack.",
+                $e::class
+            ), 0, $e);
         } catch (NamedUserException $e) {
             $e->show();
 
