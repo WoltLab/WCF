@@ -7,7 +7,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Processes code listings.
@@ -149,7 +148,6 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
             'filename' => $file,
             'title' => $title,
             'lines' => \count($splitContent),
-            'isAmp' => $data['isAmp'],
         ]);
 
         return WCF::getTPL()->fetch('codeMetaCode');
