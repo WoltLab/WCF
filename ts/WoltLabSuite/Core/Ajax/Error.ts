@@ -10,6 +10,7 @@
 import { dialogFactory } from "../Component/Dialog";
 import * as Core from "../Core";
 import * as Language from "../Language";
+import { escapeHTML } from "../StringUtil";
 
 type ErrorResponsePrevious = {
   message: string;
@@ -18,10 +19,11 @@ type ErrorResponsePrevious = {
 
 type ErrorResponse = {
   exceptionID?: string;
+  exception?: string | null;
   file?: string;
   line?: number;
   message: string;
-  previous: ErrorResponsePrevious[];
+  previous?: ErrorResponsePrevious[];
   returnValues?: {
     description?: string;
   };
@@ -71,7 +73,9 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
           details += `<br><p>File:</p><p>${json.file} in line ${json.line}</p>`;
         }
 
-        if (json.stacktrace) {
+        if (json.exception) {
+          details += `<br>Exception: <div style="white-space: pre;">${escapeHTML(json.exception)}</div>`;
+        } else if (json.stacktrace) {
           details += `<br><p>Stacktrace:</p><p>${json.stacktrace}</p>`;
         } else if (json.exceptionID) {
           details += `<br><p>Exception ID: <code>${json.exceptionID}</code></p>`;
@@ -79,10 +83,12 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
 
         message = json.message;
 
-        json.previous.forEach((previous) => {
-          details += `<hr><p>${previous.message}</p>`;
-          details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-        });
+        if (json.previous) {
+          json.previous.forEach((previous) => {
+            details += `<hr><p>${previous.message}</p>`;
+            details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+          });
+        }
       } else if (json === undefined) {
         // The content is possibly HTML, use an iframe for rendering.
         const iframe = document.createElement("iframe");

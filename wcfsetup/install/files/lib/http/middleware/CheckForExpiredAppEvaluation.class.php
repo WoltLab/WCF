@@ -2,12 +2,13 @@
 
 namespace wcf\http\middleware;
 
+use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\error\HtmlErrorRenderer;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\NamedUserException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
@@ -42,14 +43,20 @@ final class CheckForExpiredAppEvaluation implements MiddlewareInterface
                     $isWoltLab = true;
                 }
 
-                throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                    'wcf.acp.package.evaluation.expired',
-                    [
-                        'packageName' => $package->getName(),
-                        'pluginStoreFileID' => $pluginStoreFileID,
-                        'isWoltLab' => $isWoltLab,
-                    ]
-                ));
+                return new HtmlResponse(
+                    (new HtmlErrorRenderer())->renderHtmlMessage(
+                        WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
+                        WCF::getLanguage()->getDynamicVariable(
+                            'wcf.acp.package.evaluation.expired',
+                            [
+                                'packageName' => $package->getName(),
+                                'pluginStoreFileID' => $pluginStoreFileID,
+                                'isWoltLab' => $isWoltLab,
+                            ]
+                        ),
+                    ),
+                    503
+                );
             }
         }
 

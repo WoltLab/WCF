@@ -7,7 +7,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog", "../StringUtil"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1, StringUtil_1) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
@@ -102,6 +102,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             }
             if (this._options.withCredentials || this._options.includeRequestedWith) {
                 this._xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+            if (this._options.responseType) {
+                this._xhr.setRequestHeader("Accept", this._options.responseType);
             }
             if (this._options.withCredentials) {
                 this._xhr.withCredentials = true;
@@ -273,17 +276,22 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 if (data.file && data.line) {
                     details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
                 }
-                if (data.stacktrace) {
+                if (data.exception) {
+                    details += `<br>Exception: <div style="white-space: pre;">${(0, StringUtil_1.escapeHTML)(data.exception)}</div>`;
+                }
+                else if (data.stacktrace) {
                     details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
                 }
                 else if (data.exceptionID) {
                     details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
                 }
                 message = data.message;
-                data.previous.forEach((previous) => {
-                    details += `<hr><p>${previous.message}</p>`;
-                    details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-                });
+                if (data.previous) {
+                    data.previous.forEach((previous) => {
+                        details += `<hr><p>${previous.message}</p>`;
+                        details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+                    });
+                }
             }
             else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
                 // The content is possibly HTML, use an iframe for rendering.

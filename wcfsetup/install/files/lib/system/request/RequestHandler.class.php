@@ -9,6 +9,8 @@ use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use wcf\http\error\NotFoundHandler;
+use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
@@ -21,6 +23,7 @@ use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\middleware\EnforceNoCacheForTemporaryRedirects;
+use wcf\http\middleware\HandleExceptions;
 use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\HandleValinorMappingErrors;
 use wcf\http\middleware\JsonBody;
@@ -31,7 +34,9 @@ use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -75,14 +80,6 @@ final class RequestHandler extends SingletonFactory
         try {
             $this->isACPRequest = $isACPRequest;
 
-            if (!RouteHandler::getInstance()->matches()) {
-                if (ENABLE_DEBUG_MODE) {
-                    throw new SystemException("Cannot handle request, no valid route provided.");
-                } else {
-                    throw new IllegalLinkException();
-                }
-            }
-
             try {
                 $psrRequest = ServerRequestFactory::fromGlobals(
                     null, // $_SERVER
@@ -106,7 +103,15 @@ final class RequestHandler extends SingletonFactory
                 throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
             }
 
-            $builtRequest = $this->buildRequest($psrRequest, $application);
+            if (RouteHandler::getInstance()->matches()) {
+                $builtRequest = $this->buildRequest($psrRequest, $application);
+            } else {
+                if (ENABLE_DEBUG_MODE) {
+                    throw new SystemException("Cannot handle request, no valid route provided.");
+                }
+
+                $builtRequest = (new NotFoundHandler())->handle($psrRequest);
+            }
 
             if ($builtRequest instanceof Request) {
                 $this->activeRequest = $builtRequest;
@@ -128,10 +133,18 @@ final class RequestHandler extends SingletonFactory
                     new CheckForOfflineMode(),
                     new JsonBody(),
                     new TriggerBackgroundQueue(),
+                    new HandleExceptions(),
                     new HandleValinorMappingErrors(),
                 ]);
 
-                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                try {
+                    $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
+                    throw new \LogicException(\sprintf(
+                        "'%s' escaped from the middleware stack.",
+                        $e::class
+                    ), 0, $e);
+                }
 
                 if ($response instanceof LegacyPlaceholderResponse) {
                     return;
@@ -153,7 +166,6 @@ final class RequestHandler extends SingletonFactory
     /**
      * Builds a new request.
      *
-     * @throws  IllegalLinkException
      * @throws  NamedUserException
      * @throws  SystemException
      */
@@ -269,7 +281,7 @@ final class RequestHandler extends SingletonFactory
                 throw $e;
             }
 
-            throw new IllegalLinkException();
+            return (new NotFoundHandler())->handle($psrRequest);
         }
     }
 

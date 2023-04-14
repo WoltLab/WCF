@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\attribute\DisableXsrfCheck;
+use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
@@ -55,8 +56,12 @@ final class Xsrf implements MiddlewareInterface
         if (
             !$this->isSafeHttpMethod($request->getMethod())
             && $this->requestHandler->getActiveRequest()
+            && !$hasValidXsrfToken
         ) {
-            $this->assertHasValidXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken);
+            $activeRequest = $this->requestHandler->getActiveRequest();
+            if ($this->controllerRequiresXsrfCheck($activeRequest)) {
+                return (new XsrfValidationFailedHandler())->handle($request);
+            }
         }
 
         return $handler->handle($request);
@@ -69,26 +74,19 @@ final class Xsrf implements MiddlewareInterface
         return $verb === 'GET' || $verb === 'HEAD';
     }
 
-    private function assertHasValidXsrfToken(Request $request, bool $hasValidXsrfToken): void
+    private function controllerRequiresXsrfCheck(Request $request): bool
     {
-        if ($hasValidXsrfToken) {
-            // No need to do anything for a valid token.
-            return;
-        }
-
         if (!\is_subclass_of($request->getClassName(), RequestHandlerInterface::class)) {
             // Skip the XSRF check for legacy controllers.
-            return;
+            return false;
         }
 
         $reflectionClass = new \ReflectionClass($request->getClassName());
         if ($reflectionClass->getAttributes(DisableXsrfCheck::class) !== []) {
             // Controller has opted out of the XSRF check.
-            return;
+            return false;
         }
 
-        // The controller requires a valid XSRF Token and no valid
-        // token was provided, abort the processing.
-        throw new InvalidSecurityTokenException();
+        return true;
     }
 }

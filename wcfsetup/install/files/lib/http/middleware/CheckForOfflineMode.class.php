@@ -2,18 +2,13 @@
 
 namespace wcf\http\middleware;
 
-use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\http\Helper;
-use wcf\system\box\BoxHandler;
-use wcf\system\exception\AJAXException;
-use wcf\system\notice\NoticeHandler;
+use wcf\http\error\OfflineHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Checks whether the offline mode is enabled and the request must be intercepted.
@@ -42,32 +37,7 @@ final class CheckForOfflineMode implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        return HeaderUtil::withNoCacheHeaders($this->getOfflineResponse($request));
-    }
-
-    private function getOfflineResponse(ServerRequestInterface $request): ResponseInterface
-    {
-        if (Helper::isAjaxRequest($request)) {
-            throw new AJAXException(
-                WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                AJAXException::INSUFFICIENT_PERMISSIONS
-            );
-        } else {
-            BoxHandler::disablePageLayout();
-            NoticeHandler::disableNotices();
-
-            return new HtmlResponse(
-                WCF::getTPL()->fetchStream(
-                    'offline',
-                    'wcf',
-                    [
-                        'templateName' => 'offline',
-                        'templateNameApplication' => 'wcf',
-                    ]
-                ),
-                503
-            );
-        }
+        return (new OfflineHandler())->handle($request);
     }
 
     private function offlineModeEnabled(): bool

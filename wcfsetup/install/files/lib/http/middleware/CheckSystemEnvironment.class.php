@@ -2,11 +2,12 @@
 
 namespace wcf\http\middleware;
 
+use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\system\exception\NamedUserException;
+use wcf\http\error\HtmlErrorRenderer;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
@@ -27,9 +28,13 @@ final class CheckSystemEnvironment implements MiddlewareInterface
     {
         if (!RequestHandler::getInstance()->isACPRequest()) {
             if (!(80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80299)) {
-                \header('HTTP/1.1 500 Internal Server Error');
-
-                throw new NamedUserException(WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'));
+                return new HtmlResponse(
+                    (new HtmlErrorRenderer())->render(
+                        WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
+                        WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'),
+                    ),
+                    500
+                );
             }
         }
 
