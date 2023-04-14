@@ -50,7 +50,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 
-	<instruction type="update" fromversion="5.5.10">
+	<instructions type="update" fromversion="5.5.10">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
