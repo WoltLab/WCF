@@ -21,7 +21,6 @@ use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\form\builder\LanguageItemFormNode;
 use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
 use wcf\util\HeaderUtil;
@@ -106,6 +105,11 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description'),
                 ]),
         ]);
+
+        $credentialsContainer->addDependency(
+            EmptyFormFieldDependency::create('noCredentialsConfirm')
+                ->fieldId('noCredentialsConfirm')
+        );
     }
 
     private function getLicenseData(string $licenseNo, string $serialNo): array
