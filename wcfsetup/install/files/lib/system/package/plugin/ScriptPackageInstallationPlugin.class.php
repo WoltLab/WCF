@@ -2,9 +2,9 @@
 
 namespace wcf\system\package\plugin;
 
+use wcf\data\application\Application;
+use wcf\data\package\Package;
 use wcf\system\cache\CacheHandler;
-use wcf\system\exception\SystemException;
-use wcf\util\FileUtil;
 
 /**
  * Executes individual PHP scripts during installation.
@@ -23,21 +23,13 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         parent::install();
 
         $abbreviation = 'wcf';
-        $path = '';
         if (isset($this->instruction['attributes']['application'])) {
             $abbreviation = $this->instruction['attributes']['application'];
         } elseif ($this->installation->getPackage()->isApplication) {
-            $path = FileUtil::getRealPath(WCF_DIR . $this->installation->getPackage()->packageDir);
+            $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
         }
 
-        if (empty($path)) {
-            $dirConstant = \strtoupper($abbreviation) . '_DIR';
-            if (!\defined($dirConstant)) {
-                throw new SystemException("Cannot execute script-PIP, abbreviation '" . $abbreviation . "' is unknown");
-            }
-
-            $path = \constant($dirConstant);
-        }
+        $packageDir = Application::getDirectory($abbreviation);
 
         $flushCache = true;
         if (
@@ -52,7 +44,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             CacheHandler::getInstance()->flushAll();
         }
 
-        return $this->run($path . $this->instruction['value']);
+        return $this->run($packageDir . $this->instruction['value']);
     }
 
     /**

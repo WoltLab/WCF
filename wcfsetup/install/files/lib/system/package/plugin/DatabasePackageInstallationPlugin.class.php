@@ -2,10 +2,11 @@
 
 namespace wcf\system\package\plugin;
 
+use wcf\data\application\Application;
+use wcf\data\package\Package;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Executes individual database scripts during installation.
@@ -26,25 +27,15 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         parent::install();
 
         $abbreviation = 'wcf';
-        $path = '';
         if (isset($this->instruction['attributes']['application'])) {
             $abbreviation = $this->instruction['attributes']['application'];
         } elseif ($this->installation->getPackage()->isApplication) {
-            $path = FileUtil::getRealPath(WCF_DIR . $this->installation->getPackage()->packageDir);
+            $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
         }
 
-        if (empty($path)) {
-            $dirConstant = \strtoupper($abbreviation) . '_DIR';
-            if (!\defined($dirConstant)) {
-                throw new \InvalidArgumentException("Cannot execute database PIP, abbreviation '{$abbreviation}' is unknown.");
-            }
+        $packageDir = Application::getDirectory($abbreviation);
 
-            $path = \constant($dirConstant);
-        }
-
-        $scriptPath = $path . $this->instruction['value'];
-
-        $this->updateDatabase($scriptPath);
+        $this->updateDatabase($packageDir . $this->instruction['value']);
     }
 
     /**
