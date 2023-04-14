@@ -94,6 +94,7 @@ fa-icon {
   }
 }
 
+[disabled] :is(fa-brand, fa-icon),
 .disabled :is(fa-brand, fa-icon) {
   opacity: 0.45;
 }
