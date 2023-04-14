@@ -211,6 +211,14 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
             // TODO: The typings are both incompleted and outdated.
             return {
+                alignment: {
+                    options: [
+                        { name: "center", className: "text-center" },
+                        { name: "left", className: "text-left" },
+                        { name: "justify", className: "text-justify" },
+                        { name: "right", className: "text-right" },
+                    ],
+                },
                 language,
                 removePlugins: this.#removePlugins,
                 toolbar: this.#getToolbar(),

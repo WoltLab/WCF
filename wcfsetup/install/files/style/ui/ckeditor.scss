@@ -189,3 +189,22 @@ html[data-color-scheme="dark"] {
 	height: 16px;
 	width: 16px;
 }
+
+/* Text Alignment */
+.text-center {
+	text-align: center !important;
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.text-justify {
+	text-align: justify !important;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+}
+
+.text-right {
+	text-align: right !important;
+}
