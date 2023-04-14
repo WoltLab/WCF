@@ -2,7 +2,6 @@
 
 namespace wcf\system\html\output\node;
 
-use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -61,8 +60,6 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
             'spoilerID' => \substr(StringUtil::getRandomID(), 0, 8),
         ]);
 
-        return WCF::getTPL()->fetch(
-            (HtmlBBCodeParser::getInstance()->getIsGoogleAmp() ? 'spoilerAmpMetaCode' : 'spoilerMetaCode')
-        );
+        return WCF::getTPL()->fetch('spoilerMetaCode');
     }
 }

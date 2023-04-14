@@ -89,9 +89,6 @@
 			{/if}
 		{/foreach}
 	{/if}
-	{if MODULE_AMP}
-		<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
-	{/if}
 {/capture}
 
 {capture assign='contentInteractionButtons'}

@@ -52,12 +52,6 @@ class HtmlBBCodeParser extends BBCodeParser
     public static $codeTagNames = ['kbd', 'pre'];
 
     /**
-     * Google AMP support
-     * @var bool
-     */
-    protected $isGoogleAmp = false;
-
-    /**
      * list of open tags with name and uuid
      * @var array
      */
@@ -104,28 +98,6 @@ class HtmlBBCodeParser extends BBCodeParser
         }
 
         return $this->parsedText;
-    }
-
-    /**
-     * Enables or disables Google AMP support.
-     *
-     * @param bool $isGoogleAmp
-     * @since       3.1
-     */
-    public function setIsGoogleAmp($isGoogleAmp)
-    {
-        $this->isGoogleAmp = $isGoogleAmp;
-    }
-
-    /**
-     * Returns true if Google AMP support is enabled.
-     *
-     * @return      bool
-     * @since       3.1
-     */
-    public function getIsGoogleAmp()
-    {
-        return $this->isGoogleAmp;
     }
 
     /**

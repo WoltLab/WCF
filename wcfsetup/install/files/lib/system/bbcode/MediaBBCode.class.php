@@ -25,11 +25,7 @@ final class MediaBBCode extends AbstractBBCode
         if ($parser->getOutputType() == 'text/html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
-                    if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
-                        return StringUtil::getAnchorTag($content, '', true, true);
-                    } else {
-                        return $provider->getOutput($content);
-                    }
+                    return $provider->getOutput($content);
                 }
             }
         } elseif ($parser->getOutputType() == 'text/simplified-html') {
