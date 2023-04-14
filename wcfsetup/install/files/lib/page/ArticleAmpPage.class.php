@@ -2,38 +2,21 @@
 
 namespace wcf\page;
 
-use wcf\data\article\CategoryArticleList;
-use wcf\data\article\ViewableArticle;
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
- * Shows the amp version of an article.
+ * Former page for the AMP version of articles. AMP support was removed with version 6.0.
+ * For backward compatibility of links, this page redirects to the normal article page.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
- * @deprecated 5.5 Support for AMP will be removed in 6.0
+ * @deprecated 5.5 Support for AMP was removed in 6.0
  */
 class ArticleAmpPage extends AbstractArticlePage
 {
-    /**
-     * @inheritDoc
-     */
-    public $templateName = 'ampArticle';
-
-    /**
-     * @inheritDoc
-     */
-    public $neededModules = ['MODULE_ARTICLE', 'MODULE_AMP'];
-
-    /**
-     * list of additional articles
-     * @var ViewableArticle[]
-     */
-    public $additionalArticles;
-
     /**
      * @inheritDoc
      */
@@ -41,40 +24,9 @@ class ArticleAmpPage extends AbstractArticlePage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleAmp', ['object' => $this->articleContent]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        parent::readData();
-
-        // get next/previous articles
-        $nextArticleList = new CategoryArticleList($this->article->categoryID);
-        $nextArticleList->getConditionBuilder()->add('article.time > ?', [$this->article->time]);
-        $nextArticleList->sqlOrderBy = 'article.time';
-        $nextArticleList->sqlLimit = 3;
-        $nextArticleList->readObjects();
-        $previousArticleList = new CategoryArticleList($this->article->categoryID);
-        $previousArticleList->getConditionBuilder()->add('article.time < ?', [$this->article->time]);
-        $previousArticleList->sqlOrderBy = 'article.time DESC';
-        $previousArticleList->sqlLimit = 3;
-        $previousArticleList->readObjects();
-        $this->additionalArticles = \array_merge($nextArticleList->getObjects(), $previousArticleList->getObjects());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'regularCanonicalURL' => $this->articleContent->getLink(),
-            'additionalArticles' => $this->additionalArticles,
-        ]);
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(ArticlePage::class, ['object' => $this->articleContent]),
+            301
+        );
     }
 }
