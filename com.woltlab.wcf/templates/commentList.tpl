@@ -44,10 +44,10 @@
 						{event name='commentStatus'}
 					</div>
 					<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
-		                <button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+						<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
-		                <ul class="dropdownMenu">
-		                    {if $comment->isDisabled && $commentCanModerate}
+						<ul class="dropdownMenu">
+							{if $comment->isDisabled && $commentCanModerate}
 								<li>
 									<a href="#" class="comment__option comment__option--enable">
 										{lang}wcf.comment.approve{/lang}
@@ -82,8 +82,8 @@
 							{/if}
 
 							{event name='commentMenuOptions'}
-		                </ul>
-		            </div>
+						</ul>
+					</div>
 
 					{event name='commentHeader'}
 				</div>
