@@ -37,6 +37,8 @@
 						{if $commentManager->isContentAuthor($response)}
 							<span class="badge label">{lang}wcf.comment.objectAuthor{/lang}</span>
 						{/if}
+
+						{event name='commentResponseStatus'}
 					</div>
 
 					<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
