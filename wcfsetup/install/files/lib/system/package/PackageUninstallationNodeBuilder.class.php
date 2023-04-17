@@ -37,7 +37,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             EOT
         );
 
-        $this->buildStartMarkerNode();
+        $this->buildStartMarkerNode($package->packageVersion);
 
         $this->buildUninstallationPluginNodes();
 
