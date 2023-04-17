@@ -74,9 +74,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.4.1',
-            'version' => '2.4.1.0',
-            'reference' => '36ef09b73e884135d2059cc498c938e90821bb57',
+            'pretty_version' => 'dev-woltlab-2.4',
+            'version' => 'dev-woltlab-2.4',
+            'reference' => 'f74e310c766cf2bcab685a14353aacf2185e9384',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),

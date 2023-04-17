@@ -165,7 +165,7 @@ final class HeaderSecurity
                 (is_object($name) ? get_class($name) : gettype($name))
             ));
         }
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $name)) {
+        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" is not valid header name',
                 $name

@@ -14,7 +14,7 @@
         "ezyang/htmlpurifier": "4.16.*",
         "guzzlehttp/guzzle": "^7.4.2",
         "guzzlehttp/psr7": "^2.2.1",
-        "laminas/laminas-diactoros": "^2.4.1",
+        "laminas/laminas-diactoros": "dev-woltlab-2.4",
         "laminas/laminas-httphandlerrunner": "^1.2.0",
         "laminas/laminas-progressbar": "dev-woltlab-2.7 as 2.7.0",
         "paragonie/constant_time_encoding": "^2.5.0",
@@ -30,6 +30,11 @@
         {
             "type": "vcs",
             "url": "https://github.com/WoltLab/laminas-progressbar",
+            "no-api": true
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/WoltLab/laminas-diactoros",
             "no-api": true
         }
     ]
