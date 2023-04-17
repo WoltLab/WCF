@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a967c993f3ede8f6332f2cf4a78a0d7",
+    "content-hash": "76e6d606e0d09230e275f353f89bc225",
     "packages": [
         {
             "name": "cuyz/valinor",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "eebd3141d89b1a5a7b6bd5388159bf736c89c8c6"
+                "reference": "229098184cf5877ec01305461cdcb8a73379bf5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/eebd3141d89b1a5a7b6bd5388159bf736c89c8c6",
-                "reference": "eebd3141d89b1a5a7b6bd5388159bf736c89c8c6",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/229098184cf5877ec01305461cdcb8a73379bf5b",
+                "reference": "229098184cf5877ec01305461cdcb8a73379bf5b",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CuyZ/Valinor/issues",
-                "source": "https://github.com/CuyZ/Valinor/tree/1.3.1"
+                "source": "https://github.com/CuyZ/Valinor/tree/1.4.0"
             },
             "funding": [
                 {
@@ -77,7 +77,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-13T05:55:55+00:00"
+            "time": "2023-04-17T11:25:01+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
