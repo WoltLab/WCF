@@ -310,12 +310,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/guzzle-psr7",
-                "reference": "3dffed9d5f5a762bcc843155a2f85c36614a299e"
+                "reference": "ea8fce9b54724a3527a5cc630574d0ddaafd5acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle-psr7/zipball/3dffed9d5f5a762bcc843155a2f85c36614a299e",
-                "reference": "3dffed9d5f5a762bcc843155a2f85c36614a299e",
+                "url": "https://api.github.com/repos/WoltLab/guzzle-psr7/zipball/ea8fce9b54724a3527a5cc630574d0ddaafd5acd",
+                "reference": "ea8fce9b54724a3527a5cc630574d0ddaafd5acd",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +333,7 @@
             "suggest": {
                 "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2022-06-20T21:43:03+00:00",
+            "time": "2023-04-17T15:33:27+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {

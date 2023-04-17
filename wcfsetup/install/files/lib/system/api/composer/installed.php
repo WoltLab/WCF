@@ -67,7 +67,7 @@
         'guzzlehttp/psr7' => array(
             'pretty_version' => 'dev-woltlab-1.6.1',
             'version' => 'dev-woltlab-1.6.1',
-            'reference' => '3dffed9d5f5a762bcc843155a2f85c36614a299e',
+            'reference' => 'ea8fce9b54724a3527a5cc630574d0ddaafd5acd',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(
