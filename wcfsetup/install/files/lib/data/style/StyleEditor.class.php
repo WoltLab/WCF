@@ -60,13 +60,28 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     public function update(array $parameters = [])
     {
-        if (isset($parameters['variables']) || isset($parameters['variablesDarkMode'])) {
+        if (isset($parameters['variablesDarkMode'])) {
             throw new \InvalidArgumentException(
                 "Cannot provide variables when updating a style, use `setVariables()` instead."
             );
         }
 
+        $variables = $parameters['variables'];
+        unset($parameters['variables']);
+
         parent::update($parameters);
+
+        $variables = $variablesDarkMode = [];
+        $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
+        foreach ($variables as $variableName => $variableValue) {
+            if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
+                $variablesDarkMode[\substr($variableName, $prefixLength)] = $variableValue;
+            } else {
+                $variables[$variableName] = $variableValue;
+            }
+        }
+
+        $this->setVariables($variables, $variablesDarkMode);
     }
 
     /**
@@ -636,6 +651,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             if (!isset($styleData['variables']['individualScss'])) {
                 $styleData['variables']['individualScss'] = '';
             }
+            if (!isset($styleData['variables']['individualScssDarkMode'])) {
+                $styleData['variables']['individualScssDarkMode'] = '';
+            }
             if (!isset($styleData['variables']['overrideScss'])) {
                 $styleData['variables']['overrideScss'] = '';
             }
@@ -645,24 +663,21 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $styleData['variables']['individualScss'],
                 $individualScss['custom']
             );
-            unset($styleData['variables']['individualScss']);
+
+            $individualScssDarkMode = Style::splitLessVariables($variables['individualScssDarkMode']);
+            $variables['individualScssDarkMode'] = Style::joinLessVariables(
+                $styleData['variables']['individualScssDarkMode'],
+                $individualScssDarkMode['custom']
+            );
 
             $overrideScss = Style::splitLessVariables($variables['overrideScss']);
             $variables['overrideScss'] = Style::joinLessVariables(
                 $styleData['variables']['overrideScss'],
                 $overrideScss['custom']
             );
-            unset($styleData['variables']['overrideScss']);
-
-            // import variables that have not been explicitly defined before
-            $implicitVariables = $style->getImplicitVariables();
-            foreach ($styleData['variables'] as $variableName => $variableValue) {
-                if (\in_array($variableName, $implicitVariables)) {
-                    $variables[$variableName] = $variableValue;
-                }
-            }
 
             $styleData['variables'] = $variables;
+            unset($styleData['variablesDarkMode']);
 
             $style->update($styleData);
         }
