@@ -118,6 +118,8 @@ class StyleEditForm extends StyleAddForm
                     $variables['individualScssDarkMode'],
                     $variables['individualScssDarkModeCustom']
                 );
+
+                unset($variables['individualScssDarkModeCustom']);
             }
             $variables['overrideScss'] = Style::joinLessVariables(
                 $variables['overrideScss'],
