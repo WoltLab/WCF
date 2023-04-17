@@ -476,4 +476,19 @@ class Style extends DatabaseObject
 
         return $preset . "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n" . $custom;
     }
+
+    /**
+     * @since 6.0
+     * @return string[]
+     */
+    public static function getVariablesWithDarkModeSupport(): array
+    {
+        $sql = "SELECT  variableName
+                FROM    wcf1_style_variable
+                WHERE   defaultValueDarkMode IS NOT NULL";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
 }
