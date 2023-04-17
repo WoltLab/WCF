@@ -481,8 +481,10 @@
 	}
 
 	.pageHeaderUserMobile {
+		align-items: center;
 		display: flex;
 		grid-area: user;
+		height: 40px;
 		justify-content: center;
 		width: 40px;
 
@@ -512,11 +514,11 @@
 		}
 	}
 
-	.pageHeaderMenuMobile[aria-expanded="false"],
-	.pageHeaderUserMobile[aria-expanded="false"] {
+	.mainMenu.pageMenuMobileButtonHasContent ~ .pageHeaderMenuMobile[aria-expanded="false"],
+	.userPanel.pageMenuMobileButtonHasContent ~ .pageHeaderUserMobile[aria-expanded="false"] {
 		position: relative;
 
-		&.pageMenuMobileButtonHasContent::after {
+		&::after {
 			background-color: rgb(244, 67, 54);
 			border: 2px solid var(--wcfHeaderBackground);
 			border-radius: 50%;
