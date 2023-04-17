@@ -191,38 +191,66 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
         }
 
-        $defaultValue = $isDarkMode ? 'defaultValueDarkMode' : 'defaultValue';
+        $supportsDarkMode = Style::getVariablesWithDarkModeSupport();
 
-        $sql = "SELECT  variableID, variableName, {$defaultValue}
+        $sql = "SELECT  variableID, variableName, defaultValue, defaultValueDarkMode
                 FROM    wcf1_style_variable";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
-        $variables = [];
+        $variables = $variablesDarkMode = [];
         while ($row = $statement->fetchArray()) {
             $variableName = $row['variableName'];
+            $defaultValue = $row['defaultValue'];
+            $defaultValueDarkMode = $row['defaultValueDarkMode'];
 
-            // ignore variables with identical value
-            if (isset($this->parameters['variables'][$variableName])) {
-                if ($this->parameters['variables'][$variableName] == $row[$defaultValue]) {
-                    continue;
-                } else {
-                    $variables[$row['variableID']] = $this->parameters['variables'][$variableName];
-                }
+            if (!isset($this->parameters['variables'][$variableName])) {
+                continue;
+            }
+
+            $compareAgainst = $defaultValue;
+            $isDarkModeVariable = false;
+            if ($isDarkMode && \in_array($variableName, $supportsDarkMode, true)) {
+                $compareAgainst = $defaultValueDarkMode;
+                $isDarkModeVariable = true;
+            }
+
+            $value = null;
+            if ($this->parameters['variables'][$variableName] != $compareAgainst) {
+                $value = $this->parameters['variables'][$variableName];
+            }
+
+            if ($isDarkModeVariable) {
+                $variablesDarkMode[$row['variableID']] = $value;
+            } else {
+                $variables[$row['variableID']] = $value;
             }
         }
 
-        // Set values that differ from the default values
-        if ($variables !== []) {
-            $variableValue = $isDarkMode ? 'variableValueDarkMode' : 'variableValue';
+        $sql = "INSERT INTO             wcf1_style_variable_value
+                                        (styleID, variableID, variableValue)
+                VALUES                  (?, ?, ?)
+                ON DUPLICATE KEY UPDATE variableValue = VALUES(variableValue)";
+        $statement = WCF::getDB()->prepare($sql);
 
+        WCF::getDB()->beginTransaction();
+        foreach ($variables as $variableID => $variableValue) {
+            $statement->execute([
+                $style->styleID,
+                $variableID,
+                $variableValue,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+
+        if ($variablesDarkMode !== []) {
             $sql = "INSERT INTO             wcf1_style_variable_value
-                                            (styleID, variableID, {$variableValue})
+                                            (styleID, variableID, variableValueDarkMode)
                     VALUES                  (?, ?, ?)
-                    ON DUPLICATE KEY UPDATE {$variableValue} = VALUES({$variableValue})";
+                    ON DUPLICATE KEY UPDATE variableValueDarkMode = VALUES(variableValueDarkMode)";
             $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
-            foreach ($variables as $variableID => $variableValue) {
+            foreach ($variablesDarkMode as $variableID => $variableValue) {
                 $statement->execute([
                     $style->styleID,
                     $variableID,
