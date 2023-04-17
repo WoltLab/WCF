@@ -427,7 +427,7 @@ class PackageInstallationDispatcher
         );
     }
 
-    protected function handleStartMarker()
+    protected function handleStartMarker(array $nodeData)
     {
         (new AuditLogger())->log(
             <<<EOT
@@ -436,6 +436,27 @@ class PackageInstallationDispatcher
             Queue#: {$this->queue->queueID}
             EOT
         );
+
+        if ($nodeData['currentPackageVersion'] !== null) {
+            $expectedPackageVersion = $nodeData['currentPackageVersion'];
+
+            $sql = "SELECT  packageVersion
+                    FROM    wcf1_package
+                    WHERE   packageID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$this->queue->packageID]);
+
+            $actualPackageVersion = $statement->fetchSingleColumn();
+
+            if ($expectedPackageVersion !== $actualPackageVersion) {
+                throw new \Exception(\sprintf(
+                    "Expected '%s' to be installed in version '%s', but it is installed in version '%s'.",
+                    $this->queue->package,
+                    $expectedPackageVersion,
+                    $actualPackageVersion
+                ));
+            }
+        }
 
         return new PackageInstallationStep();
     }
