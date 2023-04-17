@@ -26,55 +26,53 @@ final class RouteHandler extends SingletonFactory
      * current host and protocol
      * @var string
      */
-    protected static $host = '';
+    private static $host = '';
 
     /**
      * current absolute path
      * @var string
      */
-    protected static $path = '';
+    private static $path = '';
 
     /**
      * current path info component
      * @var string
      */
-    protected static $pathInfo;
+    private static $pathInfo;
 
     /**
      * HTTP protocol, either 'http://' or 'https://'
      * @var string
      */
-    protected static $protocol = '';
+    private static $protocol = '';
 
     /**
      * HTTP encryption
      * @var bool
      */
-    protected static $secure;
+    private static $secure;
 
     /**
      * true if the default controller is used (support for custom landing page)
-     * @var bool
      */
-    protected $isDefaultController = false;
+    private bool $isDefaultController = false;
 
     /**
      * true if the controller was renamed and has already been transformed
-     * @var bool
      */
-    protected $isRenamedController = false;
+    private bool $isRenamedController = false;
 
     /**
      * list of available routes
      * @var IRequestRoute[]
      */
-    protected $routes = [];
+    private array $routes = [];
 
     /**
      * parsed route data
      * @var array
      */
-    protected $routeData;
+    private $routeData;
 
     /**
      * Sets default routes.
@@ -119,10 +117,8 @@ final class RouteHandler extends SingletonFactory
      * Returns true if a route matches. Please bear in mind, that the
      * first route that is able to consume all path components is used,
      * even if other routes may fit better. Route order is crucial!
-     *
-     * @return  bool
      */
-    public function matches()
+    public function matches(): bool
     {
         foreach ($this->routes as $route) {
             if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
@@ -162,20 +158,16 @@ final class RouteHandler extends SingletonFactory
 
     /**
      * Returns true if route uses default controller.
-     *
-     * @return  bool
      */
-    public function isDefaultController()
+    public function isDefaultController(): bool
     {
         return $this->isDefaultController;
     }
 
     /**
      * Returns true if the controller was renamed and has already been transformed.
-     *
-     * @return      bool
      */
-    public function isRenamedController()
+    public function isRenamedController(): bool
     {
         return $this->isRenamedController;
     }
@@ -193,7 +185,7 @@ final class RouteHandler extends SingletonFactory
     /**
      * Registers route data within $_GET and $_REQUEST.
      */
-    protected function registerRouteData()
+    private function registerRouteData(): void
     {
         foreach ($this->routeData as $key => $value) {
             $_GET[$key] = $value;
@@ -246,17 +238,15 @@ final class RouteHandler extends SingletonFactory
      * @return  bool    true if `$customUrl` passes the sanity check
      * @since   3.0
      */
-    public static function isValidCustomUrl($customUrl)
+    public static function isValidCustomUrl($customUrl): bool
     {
         return \preg_match('~^[a-z0-9\-_/]+$~', $customUrl) === 1;
     }
 
     /**
      * Returns true if this is a secure connection.
-     *
-     * @return  bool
      */
-    public static function secureConnection()
+    public static function secureConnection(): bool
     {
         if (self::$secure === null) {
             self::$secure = false;
@@ -275,10 +265,8 @@ final class RouteHandler extends SingletonFactory
 
     /**
      * Returns HTTP protocol, either 'http://' or 'https://'.
-     *
-     * @return  string
      */
-    public static function getProtocol()
+    public static function getProtocol(): string
     {
         if (empty(self::$protocol)) {
             self::$protocol = 'http' . (self::secureConnection() ? 's' : '') . '://';
@@ -289,10 +277,8 @@ final class RouteHandler extends SingletonFactory
 
     /**
      * Returns protocol and domain name.
-     *
-     * @return  string
      */
-    public static function getHost()
+    public static function getHost(): string
     {
         if (empty(self::$host)) {
             self::$host = self::getProtocol() . $_SERVER['HTTP_HOST'];
@@ -303,11 +289,8 @@ final class RouteHandler extends SingletonFactory
 
     /**
      * Returns absolute domain path.
-     *
-     * @param array $removeComponents
-     * @return  string
      */
-    public static function getPath(array $removeComponents = [])
+    public static function getPath(array $removeComponents = []): string
     {
         if (empty(self::$path)) {
             // dirname return a single backslash on Windows if there are no parent directories
@@ -335,10 +318,8 @@ final class RouteHandler extends SingletonFactory
 
     /**
      * Returns current path info component.
-     *
-     * @return  string
      */
-    public static function getPathInfo()
+    public static function getPathInfo(): string
     {
         if (self::$pathInfo === null) {
             self::$pathInfo = '';

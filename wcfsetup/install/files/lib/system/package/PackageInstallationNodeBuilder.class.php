@@ -90,6 +90,8 @@ class PackageInstallationNodeBuilder
         $package = $this->installation->getPackage();
         switch ($this->installation->getAction()) {
             case 'install':
+                $currentPackageVersion = null;
+
                 $auditLogger->log(
                     <<<EOT
                     Building installation nodes
@@ -134,7 +136,7 @@ class PackageInstallationNodeBuilder
         // required packages
         $this->buildRequirementNodes();
 
-        $this->buildStartMarkerNode();
+        $this->buildStartMarkerNode($currentPackageVersion);
 
         // install package itself
         if ($this->installation->getAction() == 'install') {
@@ -416,7 +418,7 @@ class PackageInstallationNodeBuilder
         ]);
     }
 
-    protected function buildStartMarkerNode()
+    protected function buildStartMarkerNode(?string $currentPackageVersion)
     {
         if (!empty($this->node)) {
             $this->parentNode = $this->node;
@@ -435,7 +437,9 @@ class PackageInstallationNodeBuilder
             $this->node,
             $this->parentNode,
             'start',
-            \serialize([]),
+            \serialize([
+                'currentPackageVersion' => $currentPackageVersion,
+            ]),
         ]);
     }
 

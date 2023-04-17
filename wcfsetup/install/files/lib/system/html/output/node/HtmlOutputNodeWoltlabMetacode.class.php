@@ -4,7 +4,6 @@ namespace wcf\system\html\output\node;
 
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
-use wcf\util\StringUtil;
 
 /**
  * Processes bbcodes represented by `<woltlab-metacode>`.

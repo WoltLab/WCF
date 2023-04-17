@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'cuyz/valinor' => array(
-            'pretty_version' => '1.3.1',
-            'version' => '1.3.1.0',
-            'reference' => 'eebd3141d89b1a5a7b6bd5388159bf736c89c8c6',
+            'pretty_version' => '1.4.0',
+            'version' => '1.4.0.0',
+            'reference' => '229098184cf5877ec01305461cdcb8a73379bf5b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../cuyz/valinor',
             'aliases' => array(),

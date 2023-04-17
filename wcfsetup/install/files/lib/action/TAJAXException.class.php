@@ -10,7 +10,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
-use wcf\system\WCF;
 
 /**
  * Default implementation for the AJAXException throw method.

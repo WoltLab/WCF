@@ -10,7 +10,6 @@ use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\error\NotFoundHandler;
-use wcf\http\error\XsrfValidationFailedHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
@@ -80,6 +79,10 @@ final class RequestHandler extends SingletonFactory
         try {
             $this->isACPRequest = $isACPRequest;
 
+            // This must be called before the PSR request is created, because it registers the
+            // route paramters in $_GET.
+            $routeMatches = RouteHandler::getInstance()->matches();
+
             try {
                 $psrRequest = ServerRequestFactory::fromGlobals(
                     null, // $_SERVER
@@ -103,7 +106,7 @@ final class RequestHandler extends SingletonFactory
                 throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
             }
 
-            if (RouteHandler::getInstance()->matches()) {
+            if ($routeMatches) {
                 $builtRequest = $this->buildRequest($psrRequest, $application);
             } else {
                 if (ENABLE_DEBUG_MODE) {
@@ -137,14 +140,7 @@ final class RequestHandler extends SingletonFactory
                     new HandleValinorMappingErrors(),
                 ]);
 
-                try {
-                    $response = $pipeline->process($psrRequest, $this->getActiveRequest());
-                } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
-                    throw new \LogicException(\sprintf(
-                        "'%s' escaped from the middleware stack.",
-                        $e::class
-                    ), 0, $e);
-                }
+                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
 
                 if ($response instanceof LegacyPlaceholderResponse) {
                     return;
@@ -156,6 +152,11 @@ final class RequestHandler extends SingletonFactory
 
             $emitter = new SapiEmitter();
             $emitter->emit($response);
+        } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
+            throw new \LogicException(\sprintf(
+                "'%s' escaped from the middleware stack.",
+                $e::class
+            ), 0, $e);
         } catch (NamedUserException $e) {
             $e->show();
 

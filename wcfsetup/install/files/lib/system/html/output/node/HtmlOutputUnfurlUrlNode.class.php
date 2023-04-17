@@ -7,7 +7,6 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\util\StringUtil;
 
 /**
  * Node class to replace unfurled urls in the output.
