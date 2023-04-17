@@ -663,6 +663,31 @@ This protocol file is very large. Please check the protocol manually: {'WCF_DIR'
 ATTENTION: The messages listed above are greatly shortened. You can view details of individual error messages in the admin panel under “Management » Logs » Errors”.
 You can access the error log at: {link controller='ExceptionLogView' isEmail=true isACP=true}{/link}]]></item>
 	</category>
+	<category name="wcf.acp.firstTimeSetup">
+		<item name="wcf.acp.firstTimeSetup.license"><![CDATA[First Time Setup: License]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials"><![CDATA[License Data]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.customerArea"><![CDATA[You can find the license and serial no in the <a href="https://www.woltlab.com/license-list/" class="externalURL">customer’s area on woltlab.com</a>.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedConnect"><![CDATA[Failed to establish a connection to confirm the license data.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[The license data could not be confirmed as valid.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Skip Step (Not Recommended)]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Continue without entering license information]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
+		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: General Settings]]></item>
+		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalize your community by entering a custom name and an optional description. We attempted to detect the correct time zone during installation. The current time is {TIME_NOW|plainTime}. Please select the correct time zone if the time is incorrect.]]></item>
+		<item name="wcf.acp.firstTimeSetup.optionsEmail"><![CDATA[First Time Setup: Email Settings]]></item>
+		<item name="wcf.acp.firstTimeSetup.optionsEmail.description"><![CDATA[Configure the email addresses used by your community. Emails will be sent directly by PHP by default. After completing the first time setup you will be able to configure an SMTP server within the options.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed"><![CDATA[First Time Setup Completed]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.nextSteps"><![CDATA[Next Steps]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.description"><![CDATA[Extend your community with official apps and plugins from WoltLab. With a few clicks you can enhance your community with a forum, calendar, gallery, blog or file management.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.apps.title"><![CDATA[Install WoltLab Apps and Plugins]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.description"><![CDATA[In the manual you will find helpful instructions and descriptions of the available features of WoltLab Suite.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.manual.title"><![CDATA[Manual for WoltLab Suite]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.description"><![CDATA[In the official Plugin-Store you can find many useful plugins to tailor your site to your needs. All offered plugins are pre-tested by WoltLab for security and stability.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.pluginstore.title"><![CDATA[Plugins and Styles in the Plugin-Store]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.description"><![CDATA[Do you have questions about particular features or are you having problems setting up your installation? You can receive help from our customer support via the ticket system in the customer area.]]></item>
+		<item name="wcf.acp.firstTimeSetup.completed.support.title"><![CDATA[Ticket Support for Questions and Problems]]></item>
+	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
@@ -1662,8 +1687,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Enable attachments for contact messages]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Prune old attachments]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
-		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[First Time Setup]]></item>
-		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[Configure the most important settings now, you can change them later at any time.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>

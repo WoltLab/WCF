@@ -2,26 +2,26 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\option\OptionHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
- * Shows the option edit form.
+ * Shows general options during first time setup.
  *
- * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author Tim Duesterhus, Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  *
  * @property OptionHandler $optionHandler
  */
-class FirstTimeSetupForm extends AbstractOptionListForm
+final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
 {
-    /**
-     * @inheritDoc
-     */
-    public $activeMenuItem = 'wcf.acp.menu.link.configuration';
-
     /**
      * @inheritDoc
      */
@@ -38,18 +38,21 @@ class FirstTimeSetupForm extends AbstractOptionListForm
      */
     public $optionNames = [
         'page_title',
+        'page_description',
         'timezone',
-        'mail_from_name',
-        'mail_from_address',
-        'mail_admin_address',
-        'image_allow_external_source',
-        'message_enable_user_consent',
-        'module_contact_form',
-        'log_ip_address',
-        'package_server_auth_code',
-        'recaptcha_publickey',
-        'recaptcha_privatekey',
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        if (\FIRST_TIME_SETUP_STATE == -1) {
+            throw new PermissionDeniedException();
+        }
+    }
 
     /**
      * @inheritDoc
@@ -81,11 +84,17 @@ class FirstTimeSetupForm extends AbstractOptionListForm
         parent::save();
 
         $saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
+        $saveOptions[Option::getOptionByName('first_time_setup_state')->optionID] = 2;
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();
 
-        WCF::getTPL()->assign('success', true);
+        \http_response_code(303);
+        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
+            FirstTimeSetupAction::class,
+        ));
+
+        exit;
     }
 
     /**

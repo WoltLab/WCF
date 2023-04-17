@@ -782,3 +782,57 @@ html[data-color-scheme="dark"] {
 		right: 0 !important;
 	}
 }
+
+/* First Time Setup */
+
+.firstTimeSetup__section {
+	margin: 60px auto !important;
+	max-width: 600px;
+}
+
+.firstTimeSetup__title {
+	text-align: center;
+}
+
+.firstTimeSetup__nextSteps {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.firstTimeSetup__nextStep {
+	column-gap: 20px;
+	display: grid;
+	grid-template-columns: 64px auto;
+}
+
+.firstTimeSetup__nextStep__icon {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.firstTimeSetup__nextStep__title {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+@include screen-xs {
+	.firstTimeSetup__section {
+		margin: 20px auto !important;
+	}
+
+	.firstTimeSetup__nextStep {
+		display: contents;
+	}
+
+	.firstTimeSetup__nextStep__icon {
+		display: none;
+	}
+
+	.firstTimeSetup__nextStep__content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 5px;
+	}
+}
