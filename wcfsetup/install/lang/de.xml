@@ -2856,7 +2856,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
-		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[Dieser SCSS-Code{if $errorType[hasDarkMode]} (oder der Code für das dunkle Farbschema){/if} enthält einen Fehler: {$errorType[message]}.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>

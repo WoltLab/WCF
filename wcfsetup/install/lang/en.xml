@@ -2788,7 +2788,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[The input for “{$error[text]}” invalid.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[The variable “{$error[text]}” is already defined by the style editor.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[The variable “{$error[text]}” is not recognized.]]></item>
-		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[This SCSS code{if $errorType[hasDarkMode]} (or the code for the dark color scheme){/if} contains an error: {$errorType[message]}.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Author]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Start Export]]></item>

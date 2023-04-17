@@ -145,6 +145,7 @@ class StyleEditForm extends StyleAddForm
 
             throw new UserInputException('individualScss', [
                 'message' => $result->getMessage(),
+                'hasDarkMode' => $this->style->hasDarkMode,
             ]);
         }
     }

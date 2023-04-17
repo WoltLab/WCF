@@ -522,6 +522,7 @@ class StyleAddForm extends AbstractForm
 
             throw new UserInputException('individualScss', [
                 'message' => $result->getMessage(),
+                'hasDarkMode' => false,
             ]);
         }
     }
