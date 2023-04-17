@@ -80,7 +80,29 @@ class StyleEditForm extends StyleAddForm
      */
     public function validateIndividualScss()
     {
-        $variables = $this->variables;
+        // If the style has a dark mode then `$variables` contains either the
+        // values for the “light” theme or the dark variant. It is necessary to
+        // inject the complementary values, otherwise the compiled style is
+        // incomplete and causes issue when the file is being promoted to be
+        // the actual stylesheet when saving.
+        if ($this->style->hasDarkMode) {
+            $variables = $this->style->getVariables();
+            if ($this->isDarkMode) {
+                foreach ($this->variables as $key => $value) {
+                    $variableName = Style::DARK_MODE_PREFIX . $key;
+                    if (isset($variables[$variableName])) {
+                        $variables[$variableName] = $value;
+                    }
+                }
+            } else {
+                foreach ($this->variables as $key => $value) {
+                    $variables[$key] = $value;
+                }
+            }
+        } else {
+            $variables = $this->variables;
+        }
+
         if (!$this->style->isTainted) {
             $variables['individualScss'] = Style::joinLessVariables(
                 $variables['individualScss'],
