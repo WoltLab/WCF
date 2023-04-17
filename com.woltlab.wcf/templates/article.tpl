@@ -59,7 +59,6 @@
 				{event name='contentHeaderMetaData'}
 			</ul>
 			
-			<meta itemprop="mainEntityOfPage" content="{$canonicalURL}">
 			<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
 				<meta itemprop="name" content="{PAGE_TITLE|phrase}">
 				<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
