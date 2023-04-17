@@ -87,17 +87,14 @@ class StyleEditForm extends StyleAddForm
         // the actual stylesheet when saving.
         if ($this->style->hasDarkMode) {
             $variables = $this->style->getVariables();
+            $supportsDarkMode = $this->getVariablesWithDarkModeSupport();
             if ($this->isDarkMode) {
                 foreach ($this->variables as $key => $value) {
-                    $variableName = Style::DARK_MODE_PREFIX . $key;
-                    if (isset($variables[$variableName])) {
-                        $variables[$variableName] = $value;
-                    } else {
-                        // Some values are shared between both color schemes
-                        // such as font sizes. These values are always present
-                        // regardless of the active color schemes.
-                        $variables[$key] = $value;
+                    if (\in_array($key, $supportsDarkMode, true)) {
+                        $key = Style::DARK_MODE_PREFIX . $key;
                     }
+
+                    $variables[$key] = $value;
                 }
             } else {
                 foreach ($this->variables as $key => $value) {
@@ -150,6 +147,21 @@ class StyleEditForm extends StyleAddForm
                 'message' => $result->getMessage(),
             ]);
         }
+    }
+
+    /**
+     * @since 6.0
+     * @return string[]
+     */
+    private function getVariablesWithDarkModeSupport(): array
+    {
+        $sql = "SELECT  variableName
+                FROM    wcf1_style_variable
+                WHERE   defaultValueDarkMode IS NOT NULL";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**
