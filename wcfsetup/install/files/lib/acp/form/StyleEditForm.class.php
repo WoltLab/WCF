@@ -92,6 +92,11 @@ class StyleEditForm extends StyleAddForm
                     $variableName = Style::DARK_MODE_PREFIX . $key;
                     if (isset($variables[$variableName])) {
                         $variables[$variableName] = $value;
+                    } else {
+                        // Some values are shared between both color schemes
+                        // such as font sizes. These values are always present
+                        // regardless of the active color schemes.
+                        $variables[$key] = $value;
                     }
                 }
             } else {
