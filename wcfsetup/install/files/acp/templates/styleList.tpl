@@ -49,7 +49,7 @@
 					<div class="details">
 						<div class="containerHeadline">
 							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>
-							{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
+							{if $style->styleDescription}<small>{lang __optional=true}{@$style->styleDescription}{/lang}</small>{/if}
 						</div>
 						<dl class="plain inlineDataList">
 							<dt>{lang}wcf.acp.style.users{/lang}</dt>
