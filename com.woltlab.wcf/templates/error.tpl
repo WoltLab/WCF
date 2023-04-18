@@ -20,7 +20,7 @@
 <div class="section">
 	<div class="box64 userException">
 		{icon size=64 name='circle-exclamation'}
-		<p>
+		<p class="userExceptionMessage">
 			{@$message}
 		</p>
 	</div>
