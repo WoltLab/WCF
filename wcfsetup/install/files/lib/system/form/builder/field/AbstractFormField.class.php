@@ -218,6 +218,10 @@ abstract class AbstractFormField implements IFormField
      */
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
+        if ($this instanceof IImmutableFormField && $this->isImmutable()) {
+            $loadValues = true;
+        }
+
         if ($loadValues && isset($data[$this->getObjectProperty()])) {
             $this->value($data[$this->getObjectProperty()]);
         }
