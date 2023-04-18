@@ -71,17 +71,19 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         parent::update($parameters);
 
-        $variables = $variablesDarkMode = [];
-        $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
-        foreach ($inputVariables as $variableName => $variableValue) {
-            if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
-                $variablesDarkMode[\substr($variableName, $prefixLength)] = $variableValue;
-            } else {
-                $variables[$variableName] = $variableValue;
+        if ($inputVariables !== null) {
+            $variables = $variablesDarkMode = [];
+            $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
+            foreach ($inputVariables as $variableName => $variableValue) {
+                if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
+                    $variablesDarkMode[\substr($variableName, $prefixLength)] = $variableValue;
+                } else {
+                    $variables[$variableName] = $variableValue;
+                }
             }
-        }
 
-        $this->setVariables($variables, $variablesDarkMode);
+            $this->setVariables($variables, $variablesDarkMode);
+        }
     }
 
     /**
