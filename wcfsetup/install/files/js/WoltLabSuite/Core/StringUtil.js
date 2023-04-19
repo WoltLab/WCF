@@ -65,11 +65,11 @@ define(["require", "exports"], function (require, exports) {
      */
     function unescapeHTML(string) {
         return String(string)
-            .replace(/&amp;/g, "&")
             .replace(/&quot;/g, '"')
             .replace(/&#039;/g, "'")
             .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">");
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&");
     }
     exports.unescapeHTML = unescapeHTML;
     /**

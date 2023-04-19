@@ -63,11 +63,11 @@ export function ucfirst(string: string): string {
  */
 export function unescapeHTML(string: string): string {
   return String(string)
-    .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
     .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">");
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
 
 /**
