@@ -1479,7 +1479,12 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.option.register_allowed_emails.description"><![CDATA[E-Mail-Adressen, die ausschließlich bei der Registrierung verwendet werden dürfen.]]></item>
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimale Benutzernamenlänge]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximale Benutzernamenlänge]]></item>
-		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Benutzernamen auf ASCII-Zeichen beschränken]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Zeichenbeschränkung in Benutzernamen]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.description"><![CDATA[Die Zeichenbeschränkung in Benutzernamen schränkt die zulässigen Zeichen in Benutzernamen ein, die vom Benutzer selbst gewählt werden. Die Prüfung greift nicht bei Änderungen durch einen Administrator. Das Komma ist in Benutzernamen aus technischen Gründen generell unzulässig.
+Die Beschränkung auf ASCII-Zeichen erlaubt in Benutzernamen lediglich lateinische Buchstaben, Ziffern und einfache Sonderzeichen. Umlaute, erweiterte Sonderzeichen und Emoji sind nicht zulässig. Die Beschränkung irreführender Kombinationen von Schriftsystemen verbietet Benutzernamen, die aus Zeichen mehrerer und optisch ähnlicher Schriftsysteme bestehen. Beispielsweise ist es nicht zulässig, Zeichen aus dem lateinischen Alphabet mit Zeichen aus dem kyrillischen Alphabet in einem Benutzernamen zu kombinieren.]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.disabled"><![CDATA[Keine Beschränkung]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.ascii"><![CDATA[Beschränkung auf ASCII-Zeichen]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.suspicious"><![CDATA[Irreführende Kombinationen von Schriftsystemen beschränken]]></item>
 		<item name="wcf.acp.option.register_min_user_age"><![CDATA[Mindestalter]]></item>
 		<item name="wcf.acp.option.register_min_user_age.description"><![CDATA[Eine Angabe hier führt dazu, dass das Geburtsdatum während der Registrierung abgefragt und zum Pflichtfeld wird.]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Registrierung deaktivieren]]></item>

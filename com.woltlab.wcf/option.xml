@@ -1093,8 +1093,11 @@ XING</selectoptions>
 			</option>
 			<option name="register_username_force_ascii">
 				<categoryname>user.register</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>2</defaultvalue>
+				<selectoptions>0:wcf.acp.option.register_username_force_ascii.disabled
+1:wcf.acp.option.register_username_force_ascii.ascii
+2:wcf.acp.option.register_username_force_ascii.suspicious</selectoptions>
 			</option>
 			<option name="register_min_user_age">
 				<categoryname>user.register</categoryname>
