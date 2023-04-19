@@ -25,7 +25,7 @@ final class UserUtil
         }
 
         // check illegal characters
-        if (!\preg_match('!^[^,\n]+$!', $name)) {
+        if (!\preg_match('/^[^\x00-\x19,]+$/', $name)) {
             return false;
         }
         // check long words
