@@ -5,12 +5,11 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers", "../../../Component/Dialog"], function (require, exports, tslib_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, DomTraverse, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
     StringUtil = tslib_1.__importStar(StringUtil);
@@ -27,13 +26,13 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
         const target = event.currentTarget;
         const input = DomTraverse.prevBySel(target, 'input[type="text"]');
         await Clipboard.copyTextToClipboard(input.value);
-        UiNotification.show(Language.get("wcf.message.share.copy.success"));
+        UiNotification.show((0, Language_1.getPhrase)("wcf.message.share.copy.success"));
     }
     /**
      * Returns all of the dialog elements shown in the dialog.
      */
     function getDialogElements(shareButton) {
-        const permalink = shareButton.href;
+        const permalink = getLink(shareButton);
         let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
         getBBCodes(shareButton).forEach(([label, value]) => {
             dialogOptions += getDialogElement(label, value);
@@ -51,15 +50,16 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
             cancelable: true,
             detail: payload,
         });
+        const link = getLink(shareButton);
         shareButton.dispatchEvent(event);
         if (event.defaultPrevented) {
             return payload.permalinkHtml;
         }
-        if (shareButton.href && shareButton.dataset.linkTitle) {
+        if (link && shareButton.dataset.linkTitle) {
             return [
                 [
                     "wcf.message.share.permalink.html",
-                    `<a href="${StringUtil.escapeHTML(shareButton.href)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
+                    `<a href="${StringUtil.escapeHTML(link)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
                 ],
             ];
         }
@@ -73,6 +73,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
             cancelable: true,
             detail: payload,
         });
+        const link = getLink(shareButton);
         shareButton.dispatchEvent(event);
         if (event.defaultPrevented) {
             return payload.bbcodes;
@@ -80,10 +81,8 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
         if (shareButton.dataset.bbcode) {
             return [["wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode]];
         }
-        else if (shareButton.href && shareButton.dataset.linkTitle) {
-            return [
-                ["wcf.message.share.permalink.bbcode", `[url='${shareButton.href}']${shareButton.dataset.linkTitle}[/url]`],
-            ];
+        else if (link && shareButton.dataset.linkTitle) {
+            return [["wcf.message.share.permalink.bbcode", `[url='${link}']${shareButton.dataset.linkTitle}[/url]`]];
         }
         return [];
     }
@@ -93,11 +92,11 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
     function getDialogElement(label, value) {
         return `
     <dl>
-      <dt>${Language.get(label)}</dt>
+      <dt>${(0, Language_1.getPhrase)(label)}</dt>
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}">
+          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${(0, Language_1.getPhrase)("wcf.message.share.copy")}">
             <fa-icon name="copy"></fa-icon>
           </button>
         </div>
@@ -144,13 +143,14 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
     function openDialog(event) {
         event.preventDefault();
         const target = event.currentTarget;
+        const link = getLink(target);
         if (dialog === undefined) {
             const providerButtons = getProviderButtons();
             let providerElement = "";
             if (providerButtons) {
                 providerElement = `
-        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(target.href)}">
-          <dt>${Language.get("wcf.message.share.socialMedia")}</dt>
+        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(link)}">
+          <dt>${(0, Language_1.getPhrase)("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
       `;
@@ -161,8 +161,8 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
         <dl>
           <dt></dt>
           <dd>
-              <button type="button" class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
-                ${Language.get("wcf.message.share.nativeShare")}
+              <button type="button" class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(link)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
+                ${(0, Language_1.getPhrase)("wcf.message.share.nativeShare")}
               </button>
           </dd>
         </dl>
@@ -186,15 +186,21 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
                 UiMessageShare.init();
             }
         }
-        dialog.show(Language.get("wcf.message.share"));
+        dialog.show((0, Language_1.getPhrase)("wcf.message.share"));
     }
     function registerButtons() {
-        document.querySelectorAll("a.shareButton, a.wsShareButton").forEach((shareButton) => {
+        document.querySelectorAll(".shareButton, .wsShareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
                 shareButtons.add(shareButton);
             }
         });
+    }
+    function getLink(button) {
+        if (button instanceof HTMLAnchorElement) {
+            return button.href;
+        }
+        return button.dataset.link;
     }
     function setup() {
         registerButtons();

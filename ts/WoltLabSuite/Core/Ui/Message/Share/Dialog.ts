@@ -7,7 +7,6 @@
  */
 
 import * as DomTraverse from "../../../Dom/Traverse";
-import * as Language from "../../../Language";
 import * as Clipboard from "../../../Clipboard";
 import * as UiNotification from "../../Notification";
 import * as StringUtil from "../../../StringUtil";
@@ -16,6 +15,7 @@ import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
 import { dialogFactory } from "../../../Component/Dialog";
 import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 type Label = string;
 type Value = string;
@@ -38,14 +38,14 @@ async function copy(event: Event): Promise<void> {
 
   await Clipboard.copyTextToClipboard(input.value);
 
-  UiNotification.show(Language.get("wcf.message.share.copy.success"));
+  UiNotification.show(getPhrase("wcf.message.share.copy.success"));
 }
 
 /**
  * Returns all of the dialog elements shown in the dialog.
  */
-function getDialogElements(shareButton: HTMLAnchorElement): string {
-  const permalink = shareButton.href;
+function getDialogElements(shareButton: HTMLElement): string {
+  const permalink = getLink(shareButton);
 
   let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
 
@@ -60,7 +60,7 @@ function getDialogElements(shareButton: HTMLAnchorElement): string {
   return dialogOptions;
 }
 
-function getPermalinkHtml(shareButton: HTMLAnchorElement): DialogElement[] {
+function getPermalinkHtml(shareButton: HTMLElement): DialogElement[] {
   const payload = {
     permalinkHtml: [],
   };
@@ -68,19 +68,18 @@ function getPermalinkHtml(shareButton: HTMLAnchorElement): DialogElement[] {
     cancelable: true,
     detail: payload,
   });
+  const link = getLink(shareButton);
 
   shareButton.dispatchEvent(event);
   if (event.defaultPrevented) {
     return payload.permalinkHtml;
   }
 
-  if (shareButton.href && shareButton.dataset.linkTitle) {
+  if (link && shareButton.dataset.linkTitle) {
     return [
       [
         "wcf.message.share.permalink.html",
-        `<a href="${StringUtil.escapeHTML(shareButton.href)}">${StringUtil.escapeHTML(
-          shareButton.dataset.linkTitle,
-        )}</a>`,
+        `<a href="${StringUtil.escapeHTML(link)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
       ],
     ];
   }
@@ -88,7 +87,7 @@ function getPermalinkHtml(shareButton: HTMLAnchorElement): DialogElement[] {
   return [];
 }
 
-function getBBCodes(shareButton: HTMLAnchorElement): DialogElement[] {
+function getBBCodes(shareButton: HTMLElement): DialogElement[] {
   const payload = {
     bbcodes: [],
   };
@@ -96,6 +95,7 @@ function getBBCodes(shareButton: HTMLAnchorElement): DialogElement[] {
     cancelable: true,
     detail: payload,
   });
+  const link = getLink(shareButton);
 
   shareButton.dispatchEvent(event);
   if (event.defaultPrevented) {
@@ -104,10 +104,8 @@ function getBBCodes(shareButton: HTMLAnchorElement): DialogElement[] {
 
   if (shareButton.dataset.bbcode) {
     return [["wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode]];
-  } else if (shareButton.href && shareButton.dataset.linkTitle) {
-    return [
-      ["wcf.message.share.permalink.bbcode", `[url='${shareButton.href}']${shareButton.dataset.linkTitle}[/url]`],
-    ];
+  } else if (link && shareButton.dataset.linkTitle) {
+    return [["wcf.message.share.permalink.bbcode", `[url='${link}']${shareButton.dataset.linkTitle}[/url]`]];
   }
 
   return [];
@@ -119,11 +117,11 @@ function getBBCodes(shareButton: HTMLAnchorElement): DialogElement[] {
 function getDialogElement(label: string, value: string): string {
   return `
     <dl>
-      <dt>${Language.get(label)}</dt>
+      <dt>${getPhrase(label)}</dt>
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get(
+          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${getPhrase(
             "wcf.message.share.copy",
           )}">
             <fa-icon name="copy"></fa-icon>
@@ -181,14 +179,15 @@ async function nativeShare(event: Event): Promise<void> {
 function openDialog(event: MouseEvent): void {
   event.preventDefault();
 
-  const target = event.currentTarget as HTMLAnchorElement;
+  const target = event.currentTarget as HTMLElement;
+  const link = getLink(target);
   if (dialog === undefined) {
     const providerButtons = getProviderButtons();
     let providerElement = "";
     if (providerButtons) {
       providerElement = `
-        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(target.href)}">
-          <dt>${Language.get("wcf.message.share.socialMedia")}</dt>
+        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(link)}">
+          <dt>${getPhrase("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
       `;
@@ -201,9 +200,9 @@ function openDialog(event: MouseEvent): void {
           <dt></dt>
           <dd>
               <button type="button" class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
-                target.href,
+                link,
               )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
-                ${Language.get("wcf.message.share.nativeShare")}
+                ${getPhrase("wcf.message.share.nativeShare")}
               </button>
           </dd>
         </dl>
@@ -232,17 +231,25 @@ function openDialog(event: MouseEvent): void {
     }
   }
 
-  dialog.show(Language.get("wcf.message.share"));
+  dialog.show(getPhrase("wcf.message.share"));
 }
 
 function registerButtons(): void {
-  document.querySelectorAll("a.shareButton, a.wsShareButton").forEach((shareButton: HTMLElement) => {
+  document.querySelectorAll(".shareButton, .wsShareButton").forEach((shareButton: HTMLElement) => {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 
       shareButtons.add(shareButton);
     }
   });
+}
+
+function getLink(button: HTMLElement): string {
+  if (button instanceof HTMLAnchorElement) {
+    return button.href;
+  }
+
+  return button.dataset.link!;
 }
 
 export function setup(): void {
