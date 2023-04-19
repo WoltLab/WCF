@@ -113,6 +113,12 @@
 	{/if}
 {/capture}
 
+{capture assign='contentInteractionShareButton'}
+	<button type="button" class="button small wsShareButton jsTooltip" title="{lang}wcf.message.share{/lang}" data-link="{$articleContent->getLink()}" data-link-title="{$articleContent->getTitle()}" data-bbcode="[article]{$article->getObjectID()}[/article]">
+		{icon name='share-nodes'}
+	</button>
+{/capture}
+
 {include file='header'}
 
 {if !$article->isPublished()}
@@ -182,11 +188,6 @@
 			
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
-					<li>
-						<a href="{$articleContent->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
-							{icon name='share-nodes'} <span>{lang}wcf.message.share{/lang}</span>
-						</a>
-					</li>
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
 						<li>
 							<button
