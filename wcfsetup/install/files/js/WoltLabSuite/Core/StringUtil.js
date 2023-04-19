@@ -98,7 +98,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		 * @return	{String}
 		 */
 		unescapeHTML: function(string) {
-			return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+			return String(string).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 		},
 		
 		/**
