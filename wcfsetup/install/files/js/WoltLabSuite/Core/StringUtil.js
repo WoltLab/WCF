@@ -72,10 +72,10 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
      */
     function unescapeHTML(string) {
         return String(string)
-            .replace(/&amp;/g, "&")
             .replace(/&quot;/g, '"')
             .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">");
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&");
     }
     exports.unescapeHTML = unescapeHTML;
     /**
