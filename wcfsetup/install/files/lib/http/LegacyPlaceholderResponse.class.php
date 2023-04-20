@@ -35,7 +35,7 @@ final class LegacyPlaceholderResponse implements ResponseInterface
         $this->throwException();
     }
 
-    public function withStatus($code, $reasonPhrase = '')
+    public function withStatus(int $code, string $reasonPhrase = '')
     {
         $this->throwException();
     }
@@ -50,7 +50,7 @@ final class LegacyPlaceholderResponse implements ResponseInterface
         $this->throwException();
     }
 
-    public function withProtocolVersion($version)
+    public function withProtocolVersion(string $version)
     {
         $this->throwException();
     }
@@ -60,32 +60,32 @@ final class LegacyPlaceholderResponse implements ResponseInterface
         $this->throwException();
     }
 
-    public function hasHeader($name)
+    public function hasHeader(string $name)
     {
         $this->throwException();
     }
 
-    public function getHeader($name)
+    public function getHeader(string $name)
     {
         $this->throwException();
     }
 
-    public function getHeaderLine($name)
+    public function getHeaderLine(string $name)
     {
         $this->throwException();
     }
 
-    public function withHeader($name, $value)
+    public function withHeader(string $name, $value)
     {
         $this->throwException();
     }
 
-    public function withAddedHeader($name, $value)
+    public function withAddedHeader(string $name, $value)
     {
         $this->throwException();
     }
 
-    public function withoutHeader($name)
+    public function withoutHeader(string $name)
     {
         $this->throwException();
     }
