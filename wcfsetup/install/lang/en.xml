@@ -1460,7 +1460,12 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.register_allowed_emails.description"><![CDATA[You can specify which email addresses are allowed for registration.]]></item>
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximum Username Length]]></item>
-		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Require ASCII characters for usernames]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Restricted Characters in Usernames]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.description"><![CDATA[Restricting characters in usernames restricts the use of specific characters or character sequences within usernames that are selected by the user themselves. Usernames that are changed by the administrator are not restricted. The comma is always considered an invalid character for technical reasons.
+Restricting usernames to ASCII characters restricts usernames to latin letters, digits, and simple special characters. Extended special characters, diacritics and umlauts, as well as emoji are not allowed. Restricting suspicious mixing of writing systems disallows usernames that combine characters from different, but visually similar, writing systems. As an example it will not be allowed to combine letters from the latin script with letters from the cyrillic script.]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.disabled"><![CDATA[No restriction]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.ascii"><![CDATA[Restrict to ASCII characters]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii.suspicious"><![CDATA[Restrict suspicious mixing of writing systems]]></item>
 		<item name="wcf.acp.option.register_min_user_age"><![CDATA[Minimum Age]]></item>
 		<item name="wcf.acp.option.register_min_user_age.description"><![CDATA[Specifying a value requires the user to provide a birthday during registration.]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Disable registration]]></item>

@@ -24,10 +24,14 @@ final class UserUtil
             return false;
         }
 
-        // check illegal characters
-        if (!\preg_match('!^[^,\n]+$!', $name)) {
+        // Check for invalid bytes:
+        // (a) ASCII control characters (0x00 - 0x19) are unacceptable.
+        // (b) The comma is unacceptable (used as a separator in lists).
+        // (c) Invalid UTF-8 sequences are unacceptable.
+        if (!\preg_match('/^[^\x00-\x19,]+$/u', $name)) {
             return false;
         }
+
         // check long words
         $words = \preg_split('!\s+!', $name, -1, \PREG_SPLIT_NO_EMPTY);
         foreach ($words as $word) {
