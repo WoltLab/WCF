@@ -13,6 +13,40 @@
 
 .ck.ck-editor {
 	--ck-border-radius: var(--wcfBorderRadius);
+	--ck-color-base-border: var(--wcfContentBorderInner);
+	--ck-color-text: var(--wcfContentText);
+	--ck-color-toolbar-border: var(--wcfContentBorderInner);
+}
+
+.ck.ck-content {
+	/* The content area must not contain a border radius at all, because it is
+	   difficult to detect if there is an adjacent message tab menu. */
+	border-radius: 0 !important;
+}
+
+.ck.ck-toolbar__items {
+	--ck-color-button-default-hover-background: var(--wcfEditorButtonBackground);
+	--ck-color-button-default-active-background: var(--wcfEditorButtonBackground);
+
+	--ck-color-button-on-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-hover-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-active-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-disabled-background: transparent;
+	--ck-color-button-on-color: var(--wcfEditorButtonTextActive);
+
+	--ck-color-split-button-hover-background: var(--wcfEditorButtonBackground);
+	--ck-color-split-button-hover-border: var(--wcfEditorButtonText);
+
+	fa-icon {
+		color: inherit;
+	}
+
+	.ck-button:not(.ck-disabled):hover,
+	.ck-splitbutton:hover .ck-button:not(.ck-disabled):not(:hover),
+	.ck-splitbutton_open .ck-button:not(.ck-disabled):not(:hover) {
+		/* The editor does not support a separate text color on hover. */
+		color: var(--wcfEditorButtonText);
+	}
 }
 
 html[data-color-scheme="dark"] {
