@@ -1094,7 +1094,7 @@
 
 					{if $action === 'edit' && $style->hasDarkMode}
 						<section class="section"{if $errorField == 'individualScssDarkMode'} formError{/if}>
-							<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}</h2>
+							<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}</h2>
 							
 							<dl class="wide">
 								<dt></dt>
