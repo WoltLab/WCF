@@ -11,18 +11,16 @@
 	vertical-align: middle;
 }
 
+.ck.ck-editor {
+	--ck-border-radius: var(--wcfBorderRadius);
+}
+
 html[data-color-scheme="dark"] {
 	/*
     Override some of the color values of the built-in “Lark” theme.
     https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/ui/theme-customization.html
     */
 	.ck.ck-editor {
-		/* Overrides the border radius setting in the theme. */
-		--ck-border-radius: 4px;
-
-		/* Overrides the default font size in the theme. */
-		--ck-font-size-base: 14px;
-
 		/* Helper variables to avoid duplication in the colors. */
 		--ck-custom-background: hsl(270, 1%, 29%);
 		--ck-custom-foreground: hsl(255, 3%, 18%);
@@ -126,9 +124,7 @@ html[data-color-scheme="dark"] {
 	/* WoltLab overrides */
 	.ck.ck-editor {
 		--ck-color-base-background: var(--wcfContentContainerBackground);
-		--ck-border-radius: var(--wcfBorderRadius);
 		--ck-custom-border: #808080;
-		--ck-font-size-base: var(--wcfFontSizeDefault);
 	}
 	.ck.ck-editor .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
 		border-color: var(--ck-custom-border);
