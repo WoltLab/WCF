@@ -3,6 +3,8 @@
 namespace wcf\util;
 
 use Spoofchecker;
+use wcf\system\event\EventHandler;
+use wcf\system\user\event\UsernameValidating;
 
 /**
  * Contains user registration related functions.
@@ -36,6 +38,12 @@ final class UserRegistrationUtil
         }
 
         if (!self::checkForbiddenUsernames($name)) {
+            return false;
+        }
+
+        $event = new UsernameValidating($name);
+        EventHandler::getInstance()->fire($event);
+        if ($event->defaultPrevented()) {
             return false;
         }
 
