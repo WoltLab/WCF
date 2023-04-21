@@ -3,6 +3,8 @@
 namespace wcf\util;
 
 use Spoofchecker;
+use wcf\system\event\EventHandler;
+use wcf\system\user\event\UsernameValidating;
 
 /**
  * Contains user registration related functions.
@@ -39,48 +41,10 @@ final class UserRegistrationUtil
             return false;
         }
 
-        switch (REGISTER_USERNAME_FORCE_ASCII) {
-            case 0:
-                break;
-            case 1:
-                if (!\preg_match('/^[\x20-\x7E]+$/', $name)) {
-                    return false;
-                }
-                break;
-            case 2:
-                $spoofchecker = new \Spoofchecker();
-                $checks = Spoofchecker::INVISIBLE;
-                if (\defined(Spoofchecker::class . '::HIDDEN_OVERLAY')) {
-                    // The constant will exist with PHP 8.3.
-                    $checks |= Spoofchecker::HIDDEN_OVERLAY;
-                } else {
-                    // HIDDEN_OVERLAY == 256
-                    $checks |= 256;
-                }
-
-                // ->setRestrictionLevel() requires ICU 58.
-                if (\method_exists($spoofchecker, 'setRestrictionLevel')) {
-                    // This method needs to be called first. ->setRestrictionLevel() will
-                    // implicitly enable the check for the restriction level for which no
-                    // constant exists. When calling ->setChecks() after ->setRestrictionLevel()
-                    // the check will be implicitly disabled again.
-                    $spoofchecker->setChecks($checks);
-
-                    // https://unicode.org/reports/tr39/#Restriction_Level_Detection
-                    $spoofchecker->setRestrictionLevel(Spoofchecker::HIGHLY_RESTRICTIVE);
-                } else {
-                    $spoofchecker->setChecks($checks | Spoofchecker::SINGLE_SCRIPT);
-                }
-
-                \assert(
-                    $spoofchecker->isSuspicious("GREEK CAPITAL LETTER SIGMA: \u{03A3}"),
-                    "The restriction level check was not correctly enabled."
-                );
-
-                if ($spoofchecker->isSuspicious($name)) {
-                    return false;
-                }
-                break;
+        $event = new UsernameValidating($name);
+        EventHandler::getInstance()->fire($event);
+        if ($event->defaultPrevented()) {
+            return false;
         }
 
         return true;
