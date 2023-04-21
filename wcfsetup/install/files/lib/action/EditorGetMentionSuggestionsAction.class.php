@@ -16,7 +16,6 @@ use wcf\http\Helper;
  * @author  Tim Duesterhus
  * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
  * @since   6.0
  */
 final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
