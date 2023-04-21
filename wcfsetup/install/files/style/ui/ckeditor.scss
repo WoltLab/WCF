@@ -47,6 +47,10 @@
 	border-radius: 0 !important;
 }
 
+.ck.ck-button.ck-button:not(.ck-disabled) {
+	cursor: pointer;
+}
+
 .ck.ck-toolbar__items {
 	--ck-color-button-default-hover-background: var(--wcfEditorButtonBackground);
 	--ck-color-button-default-active-background: var(--wcfEditorButtonBackground);
@@ -87,7 +91,6 @@
 
 .ck.ck-list .ck-list__item .ck-button:not(.ck-disabled):hover {
 	color: var(--wcfDropdownLink);
-	cursor: pointer;
 }
 
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable),
@@ -133,7 +136,6 @@
 .ck.ck-body {
 	.ck-button:not(.ck-disabled) {
 		color: var(--ck-color-text);
-		cursor: pointer;
 	}
 
 	.ck-button.ck-disabled {
