@@ -46,14 +46,23 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
-        if ($element->tagName == 'description') {
-            if (!isset($elements['description'])) {
-                $elements['description'] = [];
-            }
+        switch ($element->tagName) {
+            case 'description':
+                if (!isset($elements['description'])) {
+                    $elements['description'] = [];
+                }
 
-            $elements['description'][$element->getAttribute('language')] = $element->nodeValue;
-        } else {
-            parent::getElement($xpath, $elements, $element);
+                $elements['description'][$element->getAttribute('language')] = $element->nodeValue;
+                break;
+            case 'expression':
+                $elements['expression'] = [
+                    'type' => $element->getAttribute('type') ?? '',
+                    'value' => $element->nodeValue,
+                ];
+                break;
+            default:
+                parent::getElement($xpath, $elements, $element);
+                break;
         }
     }
 
@@ -98,13 +107,47 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         }
     }
 
+    private function getRandomExpression(string $name, string $expression): CronExpression
+    {
+        if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
+            // Generate stable, but differing values for each (instance, cronjob) pair.
+            $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(
+                \hash('sha256', \sprintf(
+                    '%s:%s:%d:%s',
+                    \WCF_UUID,
+                    self::class,
+                    $this->installation->getPackageID(),
+                    $name
+                ), true)
+            ));
+            $engine = static fn (int $min, int $max) => $randomizer->getInt($min, $max);
+        } else {
+            // A seedable engine is not available, use completely random values.
+            $engine = \random_int(...);
+        }
+
+        return new CronExpression(match ($expression) {
+            '@hourly' => \sprintf('%d * * * *', $engine(0, 59)), 
+            '@daily' => \sprintf('%d %d * * *', $engine(0, 59), $engine(0, 23)),
+            '@weekly' => \sprintf('%d %d * * %d', $engine(0, 59), $engine(0, 23), $engine(0, 6)),
+            '@monthly' => \sprintf('%d %d %d * *', $engine(0, 59), $engine(0, 23), $engine(1, 28)),
+        });
+    }
+
     /**
      * @inheritDoc
      */
     protected function prepareImport(array $data)
     {
         if (isset($data['elements']['expression'])) {
-            $expression = new CronExpression($data['elements']['expression']);
+            $expression = match ($data['elements']['expression']['type']) {
+                '' => new CronExpression($data['elements']['expression']['value']),
+                'random' => $this->getRandomExpression(
+                    $data['attributes']['name'],
+                    $data['elements']['expression']['value']
+                ),
+            };
+
             $data['elements']['startdom'] = $expression->getExpression(CronExpression::DAY);
             $data['elements']['startdow'] = $expression->getExpression(CronExpression::WEEKDAY);
             $data['elements']['starthour'] = $expression->getExpression(CronExpression::HOUR);
