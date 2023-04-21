@@ -321,7 +321,7 @@ class PackageArchive
                 throw new PackageValidationException(
                     PackageValidationException::INVALID_REQUIRED_PACKAGE_VERSION_NUMBER,
                     [
-                        'version' => $data['version'] ?? '',
+                        'version' => $data['minversion'] ?? '',
                         'packageName' => $element->nodeValue,
                     ]
                 );
