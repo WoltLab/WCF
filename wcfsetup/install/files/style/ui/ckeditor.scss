@@ -179,6 +179,7 @@ html[data-color-scheme="dark"] {
 
 .ckeditor5__restoreDraft__dialog {
 	background-color: var(--wcfContentBackground);
+	border: 1px solid transparent;
 	border-radius: 8px;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	color: var(--wcfContentText);
@@ -197,6 +198,12 @@ html[data-color-scheme="dark"] {
 	display: flex;
 	flex-direction: row-reverse;
 	margin-top: 20px;
+}
+
+html[data-color-scheme="dark"] {
+	.ckeditor5__restoreDraft__dialog {
+		border-color: var(--wcfContentBorderInner);
+	}
 }
 
 /* Styling of inline errors for the editor. */
