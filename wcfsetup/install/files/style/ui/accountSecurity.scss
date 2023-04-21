@@ -30,12 +30,14 @@
 }
 
 .multifactorBackupCode {
-	font-family: monospace;
+	font-family: var(--wcfFontFamilyMonospace) !important;
+
 	&.used {
 		text-decoration: line-through;
 	}
 	.chunk {
 		margin-left: 5px;
+
 		&:first-child {
 			margin-left: 0;
 			font-weight: 600;
@@ -45,15 +47,24 @@
 
 // Just .multifactorTotpCode is not specific enough.
 input.multifactorTotpCode,
-input.multifactorEmailCode {
-	font-family: monospace;
-	font-weight: 600;
-	font-size: 28px;
-}
+input.multifactorEmailCode,
 input.multifactorBackupCode {
-	font-family: monospace;
+	font-family: var(--wcfFontFamilyMonospace) !important;
 	font-weight: 600;
-	font-size: 18px;
+	box-sizing: content-box;
+
+	&[size="6"] {
+		width: 6ch;
+		font-size: 28px;
+	}
+	&[size="8"] {
+		width: 8ch;
+		font-size: 28px;
+	}
+	&[size="23"] {
+		width: 23ch;
+		font-size: 18px;
+	}
 }
 
 .multifactorTotpNewDevice {
