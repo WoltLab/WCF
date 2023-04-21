@@ -59,7 +59,7 @@
 			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
 			<description>Deletes canceled user accounts</description>
 			<description language="de">Löscht gekündigte Benutzer-Accounts</description>
-			<expression>0 0 * * *</expression>
+			<expression>0 */4 * * *</expression>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.dailyMailNotification">
