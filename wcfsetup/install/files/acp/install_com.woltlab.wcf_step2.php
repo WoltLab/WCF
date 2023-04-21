@@ -75,51 +75,6 @@ CategoryEditor::create([
     'time' => TIME_NOW,
 ]);
 
-// Randomize the times of the package list update and robot list update cronjobs.
-$startMinute = \random_int(0, 59);
-$startHour = \random_int(0, 23);
-
-$sql = "UPDATE  wcf1_cronjob
-        SET     startMinute = ?,
-                startHour = ?,
-                startDom = ?,
-                startMonth = ?,
-                startDow = ?,
-                lastExec = ?,
-                nextExec = ?,
-                afterNextExec = ?
-        WHERE   packageID = ?
-            AND cronjobName = ?";
-$statement = WCF::getDB()->prepare($sql);
-$statement->execute([
-    $startMinute,
-    $startHour,
-    '*',
-    '*',
-    '*',
-
-    0,
-    \TIME_NOW,
-    0,
-
-    $this->installation->getPackageID(),
-    'com.woltlab.wcf.refreshPackageUpdates',
-]);
-$statement->execute([
-    $startMinute,
-    (($startHour + 12) % 24),
-    \random_int(1, 15),
-    '*',
-    '*',
-
-    0,
-    \TIME_NOW,
-    0,
-
-    $this->installation->getPackageID(),
-    'com.woltlab.wcf.refreshSearchRobots',
-]);
-
 // Configure dynamic option values
 $sql = "UPDATE  wcf1_option
         SET     optionValue = ?
