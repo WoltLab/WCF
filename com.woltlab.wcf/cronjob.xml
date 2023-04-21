@@ -5,14 +5,14 @@
 			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
 			<description>Updates package information</description>
 			<description language="de">Aktualisiert Paket-Informationen</description>
-			<expression>0 2 * * *</expression>
+			<expression type="random">@daily</expression>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
 			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
 			<description>Refreshes list of search robots</description>
 			<description language="de">Aktualisiert die Liste der Suchroboter</description>
-			<expression>0 3 1 * *</expression>
+			<expression type="random">@monthly</expression>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.dailyCleanUp">
 			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
