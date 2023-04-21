@@ -23,7 +23,7 @@
 		<instruction type="template" run="standalone" />
 
 		<instruction type="eventListener" />
-		<instruction type="script">acp/install_com.woltlab.wcf_step1.php</instruction>
+		<instruction type="script" run="standalone">acp/install_com.woltlab.wcf_step1.php</instruction>
 		<instruction type="cronjob" />
 		<instruction type="coreObject" />
 		<instruction type="clipboardAction" />

@@ -121,15 +121,10 @@ $statement->execute([
 ]);
 
 // Configure dynamic option values
-
 $sql = "UPDATE  wcf1_option
         SET     optionValue = ?
         WHERE   optionName = ?";
 $statement = WCF::getDB()->prepare($sql);
-$statement->execute([
-    StringUtil::getUUID(),
-    'wcf_uuid',
-]);
 
 if (
     ImagickImageAdapter::isSupported()
