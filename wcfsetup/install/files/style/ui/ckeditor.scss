@@ -167,6 +167,10 @@
 	--ck-color-labeled-field-label-background: var(--ck-color-base-background);
 }
 
+.ck-insert-table-dropdown__grid .ck-button {
+	border-radius: 0 !important;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
