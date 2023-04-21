@@ -635,11 +635,11 @@ final class StyleCompiler extends SingletonFactory
         }
 
         if (!empty($variables['wcfFontFamilyGoogle'])) {
-            // The SCSS parser attempts to evaluate the variables, causing issues with font names that
-            // include logical operators such as "And" or "Or".
-            $variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
-
-            $variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
+            $variables['wcfFontFamily'] = \sprintf(
+                '"%s", %s',
+                $variables['wcfFontFamilyGoogle'],
+                $variables['wcfFontFamily']
+            );
         }
 
         // add options as SCSS variables
