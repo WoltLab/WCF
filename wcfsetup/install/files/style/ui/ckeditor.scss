@@ -76,6 +76,12 @@
 	}
 }
 
+.ck.ck-toolbar__items,
+.ck.ck-toolbar__grouped-dropdown {
+	/* Enables the automatic grouping of excessive items. */
+	flex-shrink: 0;
+}
+
 .ck.ck-reset.ck-dropdown__panel,
 .ck.ck-balloon-panel {
 	border-color: transparent;
