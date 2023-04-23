@@ -82,6 +82,11 @@
 	flex-shrink: 0;
 }
 
+.ck.ck-toolbar__grouped-dropdown .ck.ck-toolbar__items {
+	/* Allow shrinking when the toolbar is being nested. */
+	flex-shrink: 1;
+}
+
 .ck.ck-reset.ck-dropdown__panel,
 .ck.ck-balloon-panel {
 	border-color: transparent;
