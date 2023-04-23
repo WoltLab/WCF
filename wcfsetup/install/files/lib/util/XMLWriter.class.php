@@ -31,6 +31,8 @@ class XMLWriter
      */
     protected $xml;
 
+    protected $encoding = 'UTF-8';
+
     /**
      * Creates a new XML document.
      *
@@ -53,7 +55,7 @@ class XMLWriter
             $this->xml->setIndentString("\t");
         }
 
-        $this->xml->startDocument('1.0', 'UTF-8');
+        $this->xml->startDocument('1.0', $this->encoding);
         $this->startElement($rootElement);
         $attributes = \array_merge(
             [
@@ -186,5 +188,22 @@ class XMLWriter
         foreach ($attributes as $attribute => $value) {
             $this->xml->writeAttribute($attribute, $value);
         }
+    }
+
+    /**
+     * Set's the encoding for the XML document.
+     *
+     * @param    string    $encoding
+     * @return void
+     * @throws SystemException
+     * @since 6.0
+     */
+    public function setEncoding(string $encoding): void
+    {
+        if ($this->activeDocument) {
+            throw new SystemException('Could not set encoding after document has started.');
+        }
+
+        $this->encoding = $encoding;
     }
 }
