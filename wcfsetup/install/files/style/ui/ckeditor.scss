@@ -51,7 +51,8 @@
 	cursor: pointer;
 }
 
-.ck.ck-toolbar__items {
+.ck.ck-toolbar__items,
+.ck.ck-toolbar__grouped-dropdown {
 	--ck-color-button-default-hover-background: var(--wcfEditorButtonBackground);
 	--ck-color-button-default-active-background: var(--wcfEditorButtonBackground);
 
