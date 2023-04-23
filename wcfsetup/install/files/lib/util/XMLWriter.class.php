@@ -33,6 +33,8 @@ class XMLWriter
 
     protected $encoding = 'UTF-8';
 
+    protected $stylesheetUri = null;
+
     /**
      * Creates a new XML document.
      *
@@ -56,6 +58,13 @@ class XMLWriter
         }
 
         $this->xml->startDocument('1.0', $this->encoding);
+        if ($this->stylesheetUri) {
+            $stylesheet = <<<PLAIN
+type="text/xsl" href="$this->stylesheetUri"
+PLAIN;
+
+            $this->xml->writePi('xml-stylesheet', $stylesheet);
+        }
         $this->startElement($rootElement);
         $attributes = \array_merge(
             [
@@ -205,5 +214,21 @@ class XMLWriter
         }
 
         $this->encoding = $encoding;
+    }
+
+    /**
+     * Sets or unsets a XSLT-Stylesheet for the XML document.
+     *
+     * @param    string|null    $stylesheetUri
+     * @return void
+     * @throws SystemException
+     */
+    public function setStylesheet(?string $stylesheetUri): void
+    {
+        if ($this->activeDocument) {
+            throw new SystemException('Could not set a stylesheet after document has started.');
+        }
+
+        $this->stylesheetUri = $stylesheetUri;
     }
 }
