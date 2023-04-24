@@ -13,6 +13,7 @@
 		<template>dashboardList</template>
 		<template>dashboardOption</template>
 		<template>devtoolsFormBuilderTest</template>
+		<template>firstTimeSetup</template>
 		<template>languageServerAdd</template>
 		<template>languageServerList</template>
 		<template>mainMenu</template>

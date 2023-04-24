@@ -1545,6 +1545,7 @@
 		<file>lib/acp/form/DashboardOptionForm.class.php</file>
 		<file>lib/acp/form/DevtoolsFormBuilderTestForm.class.php</file>
 		<file>lib/acp/form/DevtoolsProjectSyncForm.class.php</file>
+		<file>lib/acp/form/FirstTimeSetupForm.class.php</file>
 		<file>lib/acp/form/LanguageServerAddForm.class.php</file>
 		<file>lib/acp/form/LanguageServerEditForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordForm.class.php</file>
