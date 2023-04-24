@@ -211,7 +211,7 @@ final class ExifUtil
 
         // unit is second (unsigned rational)
         if (isset($rawExifData['ExposureTime']) && \is_string($rawExifData['ExposureTime'])) {
-            $exifData['ExposureTime'] = $rawExifData['ExposureTime'];
+            $exifData['ExposureTime'] = self::simplifyRational($rawExifData['ExposureTime']);
         }
         // actual F-number(F-stop) of lens when the image was taken (unsigned rational)
         if (isset($rawExifData['FNumber']) && \is_string($rawExifData['FNumber'])) {
@@ -254,11 +254,8 @@ final class ExifUtil
 
     /**
      * Converts the format of exif geo tagging coordinates.
-     *
-     * @param string $coordinate
-     * @return  double
      */
-    private static function convertCoordinateToDecimal($coordinate)
+    private static function convertCoordinateToDecimal(string $coordinate): float
     {
         $result = 0.0;
         $coordinateData = \explode('/', $coordinate);
@@ -275,11 +272,8 @@ final class ExifUtil
 
     /**
      * Converts a exif rational value to a float.
-     *
-     * @param string $rational
-     * @return  float
      */
-    private static function convertExifRational($rational)
+    private static function convertExifRational(string $rational): float
     {
         $data = \explode('/', $rational);
         if (\count($data) == 1) {
@@ -293,5 +287,33 @@ final class ExifUtil
         }
 
         return \floatval($data[0]) / $data[1];
+    }
+
+    private static function simplifyRational(string $rational): string
+    {
+        $data = \explode('/', $rational);
+        if (\count($data) == 1) {
+            return $data;
+        }
+
+        $numerator = $data[0];
+        $denonimator = $data[1];
+        $gcd = self::gcd($numerator, $denonimator);
+
+        return \sprintf('%d/%d', $numerator / $gcd, $denonimator / $gcd);
+    }
+
+    /**
+     * Implements the Euclidian Algorithm to calculate the GCD.
+     */
+    private static function gcd(int $a, int $b)
+    {
+        while ($b != 0) {
+            $t = $b;
+            $b = $a % $b;
+            $a = $t;
+        }
+
+        return $a;
     }
 }
