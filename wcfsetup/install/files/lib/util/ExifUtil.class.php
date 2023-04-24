@@ -300,7 +300,7 @@ final class ExifUtil
         $denonimator = $data[1];
         $gcd = self::gcd($numerator, $denonimator);
 
-        return \sprintf('%d/%d', $numerator / $gcd, $denonimator / $gcd);
+        return \sprintf('%d/%d', \intdiv($numerator, $gcd), \intdiv($denonimator, $gcd));
     }
 
     /**
