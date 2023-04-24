@@ -492,7 +492,8 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                     $data['menuID'] = $menuItemList->current()->menuID;
                     $data['parentItemID'] = $menuItemList->current()->itemID;
 
-                    unset($data['menu'], $data['parent']);
+                    unset($data['menu']);
+                    unset($data['parent']);
                 } else {
                     $data['menu'] = (new Menu($menuItemList->current()->menuID))->identifier;
                 }
@@ -500,10 +501,12 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         } elseif ($saveData) {
             if (isset($data['menu'])) {
                 $data['menuID'] = $this->getMenuID($data['menu']);
-                unset($data['menu']);
             }
 
             $data['parentItemID'] = null;
+
+            unset($data['menu']);
+            unset($data['parent']);
         }
 
         if ($saveData && $this->editedEntry === null) {
