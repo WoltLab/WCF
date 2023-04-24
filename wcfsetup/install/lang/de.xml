@@ -5308,7 +5308,6 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Tägliche E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[E-Mail-Benachrichtigungen werden nicht unterstützt.]]></item>
 		<!-- Email Wrapper -->
-		<item name="wcf.user.notification.mail.subject"><![CDATA[Neue Benachrichtigung: {@$title}]]></item>
 		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.notification.mail.plaintext.outro"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
 
