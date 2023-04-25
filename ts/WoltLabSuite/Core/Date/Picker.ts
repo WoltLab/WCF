@@ -470,7 +470,6 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     // show the last row
     DomUtil.show(_dateCells[35].parentNode as HTMLElement);
 
-    let selectable: boolean;
     const comparableMinDate = new Date(_minDate.getFullYear(), _minDate.getMonth(), _minDate.getDate());
     for (let i = 0; i < 42; i++) {
       if (i === 35 && date.getMonth() !== month) {
@@ -483,17 +482,27 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       const cell = _dateCells[i];
 
       cell.textContent = date.getDate().toString();
-      selectable = date.getMonth() === month;
-      if (selectable) {
-        if (date < comparableMinDate) {
-          selectable = false;
-        } else if (date > _maxDate) {
-          selectable = false;
-        }
+      const sameMonth = date.getMonth() === month;
+      if (sameMonth) {
+        cell.classList.remove("otherMonth");
+      } else {
+        cell.classList.add("otherMonth");
       }
 
-      cell.classList[selectable ? "remove" : "add"]("otherMonth");
+      let selectable = true;
+      if (date < comparableMinDate) {
+        selectable = false;
+      } else if (date > _maxDate) {
+        selectable = false;
+      }
+
       if (selectable) {
+        cell.classList.remove("disabled");
+      } else {
+        cell.classList.add("disabled");
+      }
+
+      if (sameMonth && selectable) {
         cell.href = "#";
         cell.setAttribute("role", "button");
         cell.tabIndex = 0;
@@ -547,7 +556,16 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     for (let i = 0; i < 35; i++) {
       const cell = _dateCells[i];
 
-      cell.classList[!cell.classList.contains("otherMonth") && +cell.textContent! === day ? "add" : "remove"]("active");
+      let active = +cell.textContent! === day;
+      if (cell.classList.contains("otherMonth") || cell.classList.contains("disabled")) {
+        active = false;
+      }
+
+      if (active) {
+        cell.classList.add("active");
+      } else {
+        cell.classList.remove("active");
+      }
     }
 
     _dateGrid.dataset.day = day.toString();
@@ -605,7 +623,7 @@ function click(event: MouseEvent): void {
   event.preventDefault();
 
   const target = event.currentTarget as HTMLAnchorElement;
-  if (target.classList.contains("otherMonth")) {
+  if (target.classList.contains("otherMonth") || target.classList.contains("disabled")) {
     return;
   }
 
