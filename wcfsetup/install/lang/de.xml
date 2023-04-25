@@ -1601,11 +1601,11 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Zeitraum der Überwachung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Zeitraum aus dem fehlgeschlagene Anmeldeversuche für unten genannte Maßnahmen berücksichtigt werden.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha bei Anmeldung (IP)]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen von einer IP-Adresse überschritten, muss der Benutzer ein Captcha ausfüllen.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen von einer IP-Adresse überschritten, muss für jeden weiteren Versuch ein Captcha ausgefüllt werden.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[Blockierung der Anmeldung]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen von einer IP-Adresse überschritten, wird die Anmeldung für diesen Benutzer vorübergehend vollständig blockiert.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen von einer IP-Adresse überschritten, wird die Anmeldung für diese IP-Adresse vorübergehend vollständig blockiert.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[Captcha bei Anmeldung (Benutzer)]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen auf ein Benutzerkonto überschritten, muss der Benutzer ein Captcha ausfüllen.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen für ein spezifisches Benutzerkonto überschritten, muss für jeden weiteren Versuch ein Captcha ausgefüllt werden.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Löschung von alten Protokolleinträgen]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Legt fest nach welchem Zeitraum protokollierte Anmeldeversuche gelöscht werden.]]></item>
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Geheimer Schlüssel]]></item>
