@@ -23,7 +23,7 @@ use wcf\system\WCF;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificationEvent implements
+class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
@@ -36,15 +36,16 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
     protected $languageItemPrefix = '';
 
     /**
+     * language item for the type name
+     * @var string
+     */
+    protected $typeName = '';
+
+    /**
      * moderation queue object the notifications (indirectly) belong to
      * @var ViewableModerationQueue
      */
     protected $moderationQueue;
-
-    /**
-     * @inheritDoc
-     */
-    protected $stackable = true;
 
     /**
      * @inheritDoc
@@ -124,17 +125,8 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
     /**
      * @inheritDoc
      */
-    public function getTitle(): string
+    protected function prepare()
     {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable($this->languageItemPrefix . '.comment.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
-        }
-
-        return $this->getLanguage()->get($this->languageItemPrefix . '.comment.title');
     }
 
     /**
@@ -159,6 +151,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
                 ->getObjectType($this->moderationQueue->objectTypeID)
                 ->getProcessor();
             $this->languageItemPrefix = $moderationHandler->getCommentNotificationLanguageItemPrefix();
+            $this->typeName = $this->getLanguage()->get($moderationHandler->getCommentNotificationTypeNameLanguageItem());
         }
     }
 
@@ -181,5 +174,21 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
             'objectID' => self::getTestUserModerationQueueEntry($author, $recipient)->queueID,
             'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue'),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getTypeName(): string
+    {
+        return $this->typeName;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return $this->moderationQueue->getTitle();
     }
 }

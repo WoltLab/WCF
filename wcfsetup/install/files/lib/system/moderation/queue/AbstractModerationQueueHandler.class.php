@@ -140,4 +140,18 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 
         return 'wcf.moderation.notification';
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCommentNotificationTypeNameLanguageItem(): string
+    {
+        if ($this instanceof IModerationQueueActivationHandler) {
+            return 'wcf.moderation.activation';
+        } elseif ($this instanceof IModerationQueueReportHandler) {
+            return 'wcf.moderation.report';
+        }
+
+        return 'wcf.moderation.moderation';
+    }
 }

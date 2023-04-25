@@ -16,7 +16,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class UserProfileCommentUserNotificationEvent extends AbstractCommentUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
@@ -24,30 +24,9 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.comment.title');
     }
 
     /**
@@ -108,9 +87,18 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->notification->userID);
+        return $this->getLanguage()->get('wcf.user.profile.menu.wall');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return UserProfileRuntimeCache::getInstance()
+            ->getObject($this->getUserNotificationObject()->objectID)->username;
     }
 
     /**

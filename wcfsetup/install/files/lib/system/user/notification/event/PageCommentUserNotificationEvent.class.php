@@ -18,7 +18,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class PageCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class PageCommentUserNotificationEvent extends AbstractCommentUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
@@ -27,30 +27,9 @@ class PageCommentUserNotificationEvent extends AbstractSharedUserNotificationEve
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.pageComment.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
-        }
-
-        return $this->getLanguage()->getDynamicVariable('wcf.user.notification.pageComment.title');
     }
 
     /**
@@ -111,9 +90,17 @@ class PageCommentUserNotificationEvent extends AbstractSharedUserNotificationEve
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
+        return $this->getLanguage()->get('wcf.search.object.com.woltlab.wcf.page');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return PageCache::getInstance()->getPage($this->getUserNotificationObject()->objectID)->getTitle();
     }
 
     /**

@@ -4290,8 +4290,6 @@ Dateianhänge:
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
-		<item name="wcf.moderation.notification.comment.title"><![CDATA[Neuer Kommentar (Moderation)]]></item>
-		<item name="wcf.moderation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Moderation)]]></item>
 		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum Moderationseintrag {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] verfasst{if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}:{else}.{/if}]]></item>
@@ -4338,8 +4336,6 @@ Dateianhänge:
 		<item name="wcf.moderation.activation.content"><![CDATA[Freizuschaltender Inhalt]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Inhalt freischalten]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if !$moderationQueueCount|isset || $moderationQueueCount == 1}diesen Inhalt{else}diese Inhalte{/if} wirklich freischalten?]]></item>
-		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[Neuer Kommentar (Freischaltung)]]></item>
-		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.activation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum freizuschaltenden Inhalt {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
@@ -4357,8 +4353,6 @@ Dateianhänge:
 		<item name="wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[Dieser Inhalt wurde bereits gemeldet.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Informationen]]></item>
-		<item name="wcf.moderation.report.notification.comment.title"><![CDATA[Neuer Kommentar (Meldung)]]></item>
-		<item name="wcf.moderation.report.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Meldung)]]></item>
 		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.report.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu der Meldung {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
@@ -5358,8 +5352,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} folgen {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}:</p>]]></item>
-		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand [URL:{@$owner->getLink()}#wall/comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
@@ -5403,8 +5395,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel]]></item>
-		<item name="wcf.user.notification.pageComment.title"><![CDATA[Neuer Kommentar (Seite)]]></item>
-		<item name="wcf.user.notification.pageComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.pageComment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} auf der Seite „{@$page->getTitle()}“ [URL:{@$page->getLink()}#comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
@@ -5424,8 +5414,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
-		<item name="wcf.user.notification.articleComment.title"><![CDATA[Neuer Kommentar (Artikel)]]></item>
-		<item name="wcf.user.notification.articleComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Artikel)]]></item>
+		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar ({$typeName})]]></item>
+		<item name="wcf.user.notification.comment.mail.title"><![CDATA[Neuer Kommentar zu "{@$objectTitle}" ({@$typeName})]]></item>
+		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare ({$typeName})]]></item>
 		<item name="wcf.user.notification.articleComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zu dem Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.articleComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zu dem Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.articleComment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu dem Artikel „{@$article->getTitle()}“ [URL:{@$article->getLink()}#comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
