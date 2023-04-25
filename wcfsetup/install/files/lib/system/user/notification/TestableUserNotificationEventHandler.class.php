@@ -106,9 +106,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     public function getEmailBody(ITestableUserNotificationEvent $event, $notificationType)
     {
         $email = new Email();
-        $email->setSubject($event->getLanguage()->getDynamicVariable('wcf.user.notification.mail.subject', [
-            'title' => $event->getEmailTitle(),
-        ]));
+        $email->setSubject($event->getEmailTitle());
         $mailbox = new UserMailbox($this->getRecipient($event->getLanguage())->getDecoratedObject());
         $email->addRecipient($mailbox);
 

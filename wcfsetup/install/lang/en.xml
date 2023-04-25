@@ -5307,7 +5307,6 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[Email Notifications are not supported.]]></item>
 		<!-- Email Wrapper -->
-		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
 		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.notification.mail.plaintext.outro"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 
