@@ -21,7 +21,7 @@
 			title: '{lang}wcf.user.reauthentication{/lang}',
 			onShow() {
 				setTimeout(() => {
-					document.getElementById("password").focus();
+					document.getElementById("password")?.focus();
 				}, 2);
 			}
 		});
