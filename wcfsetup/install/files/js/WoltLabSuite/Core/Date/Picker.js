@@ -393,7 +393,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             }
             // show the last row
             Util_1.default.show(_dateCells[35].parentNode);
-            let selectable;
             const comparableMinDate = new Date(_minDate.getFullYear(), _minDate.getMonth(), _minDate.getDate());
             for (let i = 0; i < 42; i++) {
                 if (i === 35 && date.getMonth() !== month) {
@@ -403,17 +402,27 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 }
                 const cell = _dateCells[i];
                 cell.textContent = date.getDate().toString();
-                selectable = date.getMonth() === month;
-                if (selectable) {
-                    if (date < comparableMinDate) {
-                        selectable = false;
-                    }
-                    else if (date > _maxDate) {
-                        selectable = false;
-                    }
+                const sameMonth = date.getMonth() === month;
+                if (sameMonth) {
+                    cell.classList.remove("otherMonth");
                 }
-                cell.classList[selectable ? "remove" : "add"]("otherMonth");
+                else {
+                    cell.classList.add("otherMonth");
+                }
+                let selectable = true;
+                if (date < comparableMinDate) {
+                    selectable = false;
+                }
+                else if (date > _maxDate) {
+                    selectable = false;
+                }
                 if (selectable) {
+                    cell.classList.remove("disabled");
+                }
+                else {
+                    cell.classList.add("disabled");
+                }
+                if (sameMonth && selectable) {
                     cell.href = "#";
                     cell.setAttribute("role", "button");
                     cell.tabIndex = 0;
@@ -454,7 +463,16 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         if (day) {
             for (let i = 0; i < 35; i++) {
                 const cell = _dateCells[i];
-                cell.classList[!cell.classList.contains("otherMonth") && +cell.textContent === day ? "add" : "remove"]("active");
+                let active = +cell.textContent === day;
+                if (cell.classList.contains("otherMonth") || cell.classList.contains("disabled")) {
+                    active = false;
+                }
+                if (active) {
+                    cell.classList.add("active");
+                }
+                else {
+                    cell.classList.remove("active");
+                }
             }
             _dateGrid.dataset.day = day.toString();
         }
@@ -497,7 +515,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
     function click(event) {
         event.preventDefault();
         const target = event.currentTarget;
-        if (target.classList.contains("otherMonth")) {
+        if (target.classList.contains("otherMonth") || target.classList.contains("disabled")) {
             return;
         }
         _input.dataset.empty = "false";
