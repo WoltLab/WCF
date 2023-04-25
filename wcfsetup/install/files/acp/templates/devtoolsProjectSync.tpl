@@ -131,6 +131,10 @@
 			border-top: 4px solid #e0e0e0;
 		}
 		
+		#syncPipMatches.jsShowOnlyMatches tr[data-is-important="true"] ~ tr[data-is-important="false"].jsHasPipTargets:not(:is(tr[data-is-important="false"].jsHasPipTargets ~ tr)) td {
+			border-top: 4px solid #e0e0e0;
+		}
+		
 		.syncStatusContainer {
 			overflow: hidden;
 		}
