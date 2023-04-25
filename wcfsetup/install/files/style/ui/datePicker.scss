@@ -90,8 +90,7 @@
 			}
 
 			&.active,
-			&:not(.otherMonth):hover,
-			&:not(.disabled):hover {
+			&:not(.otherMonth, .disabled):hover {
 				background-color: var(--wcfDropdownBackgroundActive);
 				color: var(--wcfDropdownLinkActive);
 			}
