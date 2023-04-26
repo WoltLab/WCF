@@ -6,7 +6,6 @@ use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
 use wcf\data\user\UserList;
-use wcf\form\SearchForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
@@ -175,8 +174,6 @@ final class SearchHandler
 
     private function buildTypeBasedConditionBuilders(): void
     {
-        $form = $this->getSearchFormEmulation();
-
         foreach ($this->objectTypeNames as $key => $objectTypeName) {
             $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
 
@@ -185,58 +182,26 @@ final class SearchHandler
                     throw new PermissionDeniedException();
                 }
 
-                if ($objectType instanceof ISearchProvider) {
-                    $parameters = \count($this->objectTypeNames) === 1 ? $this->parameters : [];
-                    if (($conditionBuilder = $objectType->getConditionBuilder($parameters)) !== null) {
-                        $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
-                    }
+                $parameters = \count($this->objectTypeNames) === 1 ? $this->parameters : [];
+                if (($conditionBuilder = $objectType->getConditionBuilder($parameters)) !== null) {
+                    $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
+                }
 
-                    if (
-                        \count($this->objectTypeNames) === 1
-                        && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField']))
-                    ) {
-                        $this->parameters['sortField'] = $newSortField;
-                    }
+                if (
+                    \count($this->objectTypeNames) === 1
+                    && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField']))
+                ) {
+                    $this->parameters['sortField'] = $newSortField;
+                }
 
-                    if ($objectType instanceof IContextAwareSearchProvider) {
-                        $this->typeBasedContextFilter[$objectTypeName] = $objectType->getContextFilter($parameters);
-                    }
-                } else {
-                    if (($conditionBuilder = $objectType->getConditions($form)) !== null) {
-                        $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
-                    }
+                if ($objectType instanceof IContextAwareSearchProvider) {
+                    $this->typeBasedContextFilter[$objectTypeName] = $objectType->getContextFilter($parameters);
                 }
             } catch (PermissionDeniedException $e) {
                 unset($this->objectTypeNames[$key]);
                 continue;
             }
         }
-    }
-
-    /**
-     * Will be removed with 6.0 once all search providers have switched to ISearchProvider.
-     * @deprecated 5.5
-     */
-    private function getSearchFormEmulation(): SearchForm
-    {
-        foreach ($this->parameters as $key => $value) {
-            $_POST[$key] = $value;
-        }
-
-        $form = new SearchForm();
-        $form->readFormParameters();
-        $form->userIDs = $this->getUserIDs();
-        if (\count($form->selectedObjectTypes) === 1) {
-            $this->objectTypeNames = $form->selectedObjectTypes;
-        }
-        if ($form->sortField) {
-            $this->parameters['sortField'] = $form->sortField;
-        }
-        if ($form->sortOrder) {
-            $this->parameters['sortOrder'] = $form->sortOrder;
-        }
-
-        return $form;
     }
 
     private function getUserIDs(): array

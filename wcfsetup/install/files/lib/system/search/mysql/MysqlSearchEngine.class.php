@@ -7,7 +7,6 @@ use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\search\AbstractSearchEngine;
 use wcf\system\search\exception\SearchFailed;
-use wcf\system\search\ISearchProvider;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -63,12 +62,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 $sql .= "\nUNION ALL\n";
             }
             $additionalConditionsConditionBuilder = ($additionalConditions[$objectTypeName] ?? null);
-
-            if ($objectType instanceof ISearchProvider) {
-                $query = $objectType->getFetchObjectsQuery($additionalConditionsConditionBuilder);
-            } else {
-                $query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
-            }
+            $query = $objectType->getFetchObjectsQuery($additionalConditionsConditionBuilder);
             if (empty($query)) {
                 $query = "
                     SELECT      " . $objectType->getIDFieldName() . " AS objectID,
@@ -203,8 +197,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 // - the word is quoted.
                 if (
                     !$this->isStopWord($word)
-                    && (
-                        $word[0] === '"'
+                    && ($word[0] === '"'
                         || \strlen($word) >= $this->getMinTokenSize()
                     )
                 ) {

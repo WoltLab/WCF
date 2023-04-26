@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use wcf\system\search\ISearchProvider;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
 
@@ -41,11 +40,7 @@ final class SearchPage extends AbstractPage
         parent::assignVariables();
 
         foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectType) {
-            if ($objectType instanceof ISearchProvider) {
-                $objectType->assignVariables();
-            } else {
-                $objectType->show();
-            }
+            $objectType->assignVariables();
         }
 
         WCF::getTPL()->assign([
