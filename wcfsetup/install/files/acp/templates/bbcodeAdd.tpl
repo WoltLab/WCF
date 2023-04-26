@@ -193,7 +193,7 @@
 				<dt><label for="wysiwygIcon">{lang}wcf.acp.bbcode.wysiwygIcon{/lang}</label></dt>
 				<dd>
 					<div class="inputAddon">
-						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium" readonly>
+						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium">
 						<button type="button" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon name='magnifying-glass'}</button>
 					</div>
 					{if $errorField == 'wysiwygIcon'}
@@ -290,7 +290,6 @@
 		}
 
 		button.addEventListener("click", () => openFontAwesomePicker());
-		input.addEventListener("click", () => openFontAwesomePicker());
 	});
 </script>
 
