@@ -97,6 +97,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.language.code.description')
                         ->maximumLength(20)
                         ->required()
+                        ->immutable($this->form->getFormMode() === IFormDocument::FORM_MODE_UPDATE)
                         ->addValidator(new FormFieldValidator('unique', function (TextFormField $formField) {
                             if ($formField->getValidationErrors() !== []) {
                                 return;
