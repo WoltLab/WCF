@@ -9,7 +9,7 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\JSON;
 
 /**
- * Template compiler plugin that embeds icons into the page. The
+ * Template function plugin that embeds icons into the page. The
  * supported sizes are 16, 24, 32, 48, 64, 96, 128 and 144.
  *
  * Usage:
