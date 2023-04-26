@@ -52,6 +52,11 @@ class TextFormField extends AbstractFormField implements
     protected $templateName = '__textFormField';
 
     /**
+     * @since 6.0
+     */
+    protected string $inputType = 'text';
+
+    /**
      * Creates a new instance of `TextFormField`.
      */
     public function __construct()
@@ -114,5 +119,35 @@ class TextFormField extends AbstractFormField implements
     {
         $this->validateMinimumLength($text, $language);
         $this->validateMaximumLength($text, $language);
+    }
+
+    /**
+     * Sets the `type` attribute of the input field.
+     *
+     * @throws      \InvalidArgumentException       if an invalid `type` attribute was given
+     * @since 6.0
+     */
+    public function inputType(string $inputType): self
+    {
+        if ($inputType !== 'text' && $inputType !== 'url' && $inputType !== 'tel') {
+            throw new \InvalidArgumentException("Invalid input type attribute '{$inputType}' for field '{$this->getId()}'.");
+        }
+
+        $this->inputType = $inputType;
+
+        if ($inputType !== 'text') {
+            $this->inputMode($inputType);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the `type` attribute of the input field.
+     * @since 6.0
+     */
+    public function getInputType(): string
+    {
+        return $this->inputType;
     }
 }
