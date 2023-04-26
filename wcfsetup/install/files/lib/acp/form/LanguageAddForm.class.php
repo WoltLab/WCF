@@ -157,7 +157,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                         ->label('wcf.acp.language.add.source')
                         ->description('wcf.acp.language.add.source.description')
                         ->options(LanguageFactory::getInstance()->getLanguages())
-                        ->available($this->formAction === IFormDocument::FORM_MODE_CREATE)
+                        ->available($this->form->getFormMode() === IFormDocument::FORM_MODE_CREATE)
                         ->required(),
                 ]),
         ]);
@@ -182,7 +182,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
         $this->form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'sourceLanguage',
             function (IFormDocument $document, array $parameters) {
-                if ($this->formAction !== IFormDocument::FORM_MODE_CREATE) {
+                if ($document->getFormMode() !== IFormDocument::FORM_MODE_CREATE) {
                     return $parameters;
                 }
 
