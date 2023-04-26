@@ -1331,12 +1331,20 @@
           } else if (difference < 3600 /* OneHour */) {
             const minutes = Math.trunc(difference / 60 /* OneMinute */);
             value = DateFormatter.Minutes.format(minutes * -1, "minute");
-          } else if (date.getTime() > todayDayStart) {
-            value = this.#formatTodayOrYesterday(date, 0 /* Today */);
-          } else if (date.getTime() > yesterdayDayStart) {
-            value = this.#formatTodayOrYesterday(date, -1 /* Yesterday */);
           } else if (difference < 604800 /* OneWeek */) {
-            value = DateFormatter.DayOfWeekAndTime.format(date);
+            const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
+            const weekdayFirst = dateParts[0].type === "weekday";
+            if (weekdayFirst) {
+              if (date.getTime() > todayDayStart) {
+                value = this.#formatTodayOrYesterday(dateParts, 0 /* Today */);
+              } else if (date.getTime() > yesterdayDayStart) {
+                value = this.#formatTodayOrYesterday(dateParts, -1 /* Yesterday */);
+              } else {
+                value = dateParts.map((part) => part.value).join("");
+              }
+            } else {
+              value = DateFormatter.DateAndTime.format(date);
+            }
           } else {
             value = DateFormatter.Date.format(date);
           }
@@ -1349,19 +1357,19 @@
        * the “date” portion as a relative value such as “today” or
        * “tomorrow” _along_ with the time.
        *
-       * This workaround will generate the date using the day of week
+       * This workaround will take the date using the day of week
        * and the time, but replace the day of week with the relative
        * value.
        */
-      #formatTodayOrYesterday(date, dayOffset) {
-        let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
-        const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
-        if (dateParts[0].type === "weekday") {
-          const datePartsWithoutDayOfWeek = dateParts.slice(1).map((part) => part.value);
-          datePartsWithoutDayOfWeek.unshift(value);
-          value = datePartsWithoutDayOfWeek.join("");
-        }
-        return value;
+      #formatTodayOrYesterday(dateParts, dayOffset) {
+        const datePartsWithReplacedWeekday = dateParts.map((part) => {
+          if (part.type === "weekday") {
+            return DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+          } else {
+            return part.value;
+          }
+        });
+        return datePartsWithReplacedWeekday.join("");
       }
     }
     window.customElements.define("woltlab-core-date-time", WoltlabCoreDateTimeElement);
