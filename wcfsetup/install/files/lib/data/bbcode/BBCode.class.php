@@ -157,4 +157,26 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
 
         return true;
     }
+
+    /**
+     * Returns the FontAwesome icon string or the URL to the image.
+     *
+     * @since 6.0
+     */
+    public function getIcon(): string
+    {
+        if ($this->wysiwygIcon === '') {
+            return '';
+        }
+
+        if (\str_contains($this->wysiwygIcon, ';')) {
+            return $this->wysiwygIcon;
+        }
+
+        return \sprintf(
+            '%sicon/%s',
+            WCF::getPath(),
+            $this->wysiwygIcon
+        );
+    }
 }
