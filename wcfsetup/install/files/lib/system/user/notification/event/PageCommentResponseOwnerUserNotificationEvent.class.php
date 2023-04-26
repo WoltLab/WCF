@@ -19,7 +19,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class PageCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class PageCommentResponseOwnerUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
@@ -28,33 +28,9 @@ class PageCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNo
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable(
-                'wcf.user.notification.pageComment.responseOwner.title.stacked',
-                [
-                    'count' => $count,
-                    'timesTriggered' => $this->notification->timesTriggered,
-                ]
-            );
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.pageComment.responseOwner.title');
     }
 
     /**
@@ -123,9 +99,17 @@ class PageCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNo
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->notification->objectID);
+        return $this->getLanguage()->get('wcf.search.object.com.woltlab.wcf.page');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return PageCache::getInstance()->getPage($this->additionalData['objectID'])->getTitle();
     }
 
     /**

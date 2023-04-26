@@ -20,7 +20,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class PageCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class PageCommentResponseUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
@@ -29,33 +29,9 @@ class PageCommentResponseUserNotificationEvent extends AbstractSharedUserNotific
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable(
-                'wcf.user.notification.pageComment.response.title.stacked',
-                [
-                    'count' => $count,
-                    'timesTriggered' => $this->notification->timesTriggered,
-                ]
-            );
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.pageComment.response.title');
     }
 
     /**
@@ -143,9 +119,17 @@ class PageCommentResponseUserNotificationEvent extends AbstractSharedUserNotific
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->notification->objectID);
+        return $this->getLanguage()->get('wcf.search.object.com.woltlab.wcf.page');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return PageCache::getInstance()->getPage($this->additionalData['objectID'])->getTitle();
     }
 
     /**

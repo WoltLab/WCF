@@ -19,7 +19,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
@@ -28,33 +28,9 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable(
-                'wcf.user.notification.articleComment.responseOwner.title.stacked',
-                [
-                    'count' => $count,
-                    'timesTriggered' => $this->notification->timesTriggered,
-                ]
-            );
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.articleComment.responseOwner.title');
     }
 
     /**
@@ -146,8 +122,17 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->notification->objectID);
+        return $this->getLanguage()->get('wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return ViewableArticleContentRuntimeCache::getInstance()
+            ->getObject($this->additionalData['objectID'])->getTitle();
     }
 }
