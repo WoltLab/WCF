@@ -162,12 +162,24 @@
         } else if (difference < TimePeriod.OneHour) {
           const minutes = Math.trunc(difference / TimePeriod.OneMinute);
           value = DateFormatter.Minutes.format(minutes * -1, "minute");
-        } else if (date.getTime() > todayDayStart) {
-          value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Today);
-        } else if (date.getTime() > yesterdayDayStart) {
-          value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Yesterday);
         } else if (difference < TimePeriod.OneWeek) {
-          value = DateFormatter.DayOfWeekAndTime.format(date);
+          const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
+          const weekdayFirst = dateParts[0].type === "weekday";
+
+          if (weekdayFirst) {
+            // If the weekday comes first, we can be reasonably sure that
+            // "Today" and "Yesterday" can be inserted correctly.
+            if (date.getTime() > todayDayStart) {
+              value = this.#formatTodayOrYesterday(dateParts, TodayOrYesterday.Today);
+            } else if (date.getTime() > yesterdayDayStart) {
+              value = this.#formatTodayOrYesterday(dateParts, TodayOrYesterday.Yesterday);
+            } else {
+              value = dateParts.map((part) => part.value).join("");
+            }
+          } else {
+            // If the weekday does not come first, use absolute dates + times.
+            value = DateFormatter.DateAndTime.format(date);
+          }
         } else {
           value = DateFormatter.Date.format(date);
         }
@@ -183,22 +195,21 @@
      * the “date” portion as a relative value such as “today” or
      * “tomorrow” _along_ with the time.
      *
-     * This workaround will generate the date using the day of week
+     * This workaround will take the date using the day of week
      * and the time, but replace the day of week with the relative
      * value.
      */
-    #formatTodayOrYesterday(date: Date, dayOffset: TodayOrYesterday): string {
-      // This will generate the localized value of “today” or “tomorrow”.
-      let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+    #formatTodayOrYesterday(dateParts: Intl.DateTimeFormatPart[], dayOffset: TodayOrYesterday): string {
+      const datePartsWithReplacedWeekday: string[] = dateParts.map((part) => {
+        if (part.type === "weekday") {
+          // This will return the localized value of “today” or “tomorrow”.
+          return DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+        } else {
+          return part.value;
+        }
+      });
 
-      const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
-      if (dateParts[0].type === "weekday") {
-        const datePartsWithoutDayOfWeek: string[] = dateParts.slice(1).map((part) => part.value);
-        datePartsWithoutDayOfWeek.unshift(value);
-        value = datePartsWithoutDayOfWeek.join("");
-      }
-
-      return value;
+      return datePartsWithReplacedWeekday.join("");
     }
   }
 
