@@ -50,7 +50,7 @@
 		const bbcodes = [
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
-					icon: '{@$__bbcode->wysiwygIcon|encodeJS}',
+					icon: '{@$__bbcode->getIcon()|encodeJS}',
 					name: '{@$__bbcode->bbcodeTag|encodeJS}',
 					label: '{@$__bbcode->getButtonLabel()|encodeJS}',
 				},
