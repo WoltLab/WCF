@@ -59,6 +59,7 @@ class EmailFormField extends AbstractFormField implements
     {
         $this->label('wcf.form.field.email');
         $this->addFieldClass('long');
+        $this->inputMode('email');
     }
 
     /**
