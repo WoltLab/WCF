@@ -18,15 +18,10 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
-
-    /**
-     * @inheritDoc
-     */
-    protected $stackable = true;
 
     /**
      * @inheritDoc
@@ -38,25 +33,6 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
             $this->additionalData['userID'],
             $this->additionalData['objectID'],
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable(
-                'wcf.user.notification.commentResponseOwner.title.stacked',
-                [
-                    'count' => $count,
-                    'timesTriggered' => $this->notification->timesTriggered,
-                ]
-            );
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.commentResponseOwner.title');
     }
 
     /**
@@ -141,9 +117,17 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
+        return $this->getLanguage()->get('wcf.user.profile.menu.wall');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->username;
     }
 
     /**

@@ -18,15 +18,10 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class UserProfileCommentResponseUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
-
-    /**
-     * @inheritDoc
-     */
-    protected $stackable = true;
 
     /**
      * @inheritDoc
@@ -35,22 +30,6 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
-        }
-
-        return $this->getLanguage()->get('wcf.user.notification.commentResponse.title');
     }
 
     /**
@@ -120,9 +99,17 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
+        return $this->getLanguage()->get('wcf.user.profile.menu.wall');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->username;
     }
 
     /**

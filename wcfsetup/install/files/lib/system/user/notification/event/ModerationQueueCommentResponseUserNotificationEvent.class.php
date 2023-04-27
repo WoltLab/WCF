@@ -23,7 +23,7 @@ use wcf\system\WCF;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
@@ -48,9 +48,9 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
     protected $moderationQueueLoaded = false;
 
     /**
-     * @inheritDoc
+     * language item for the type name
      */
-    protected $stackable = true;
+    protected string $typeName;
 
     /**
      * @inheritDoc
@@ -189,25 +189,6 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
     /**
      * @inheritDoc
      */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable(
-                $this->getLanguageItemPrefix() . '.commentResponse.title.stacked',
-                [
-                    'count' => $count,
-                    'timesTriggered' => $this->notification->timesTriggered,
-                ]
-            );
-        }
-
-        return $this->getLanguage()->get($this->getLanguageItemPrefix() . '.commentResponse.title');
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
@@ -233,5 +214,28 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
             'objectID' => self::getTestUserModerationQueueEntry($author, $recipient)->queueID,
             'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue'),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getTypeName(): string
+    {
+        if (!isset($this->typeName)) {
+            $moderationHandler = ObjectTypeCache::getInstance()
+                ->getObjectType($this->getModerationQueue()->objectTypeID)
+                ->getProcessor();
+            $this->typeName = $this->getLanguage()->get($moderationHandler->getCommentNotificationTypeNameLanguageItem());
+        }
+
+        return $this->typeName;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return $this->moderationQueue->getTitle();
     }
 }

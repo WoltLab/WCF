@@ -94,4 +94,13 @@ interface IModerationQueueHandler
      * @since   3.0
      */
     public function getCommentNotificationLanguageItemPrefix();
+
+    /**
+     * Returns the language item for the type name for notifications for comments
+     * and comment responses on moderation queues of this type.
+     *
+     * @return  string
+     * @since   6.0
+     */
+    public function getCommentNotificationTypeNameLanguageItem(): string;
 }

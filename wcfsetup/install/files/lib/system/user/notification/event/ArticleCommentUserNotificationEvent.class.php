@@ -15,7 +15,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+class ArticleCommentUserNotificationEvent extends AbstractCommentUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
@@ -24,30 +24,9 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     protected function prepare()
     {
         ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTitle(): string
-    {
-        $count = \count($this->getAuthors());
-        if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
-        }
-
-        return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.title');
     }
 
     /**
@@ -111,8 +90,17 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
     /**
      * @inheritDoc
      */
-    public function getEventHash()
+    protected function getTypeName(): string
     {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
+        return $this->getLanguage()->get('wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getObjectTitle(): string
+    {
+        return ViewableArticleContentRuntimeCache::getInstance()
+            ->getObject($this->getUserNotificationObject()->objectID)->getTitle();
     }
 }
