@@ -3,7 +3,9 @@
 		{foreach from=$objects item=message}
 			<li class="gridListItem gridListItemMessage">
 				<div class="gridListItemImage">
-					{if $message->getUserProfile()}
+					{if $customIcons[$message->getObjectTypeName()]|isset}
+						{icon size=48 name=$customIcons[$message->getObjectTypeName()]}
+					{elseif $message->getUserProfile()}
 						{user object=$message->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 					{else}
 						{icon size=48 name='file'}

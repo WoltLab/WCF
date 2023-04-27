@@ -139,6 +139,21 @@ final class SearchResultHandler
     }
 
     /**
+     * @return array<string, string|null>
+     */
+    public function getCustomIcons(): array
+    {
+        $customIcons = [];
+        foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $name => $type) {
+            if ($type instanceof ISearchProvider) {
+                $customIcons[$name] = $type->getCustomIconName();
+            }
+        }
+
+        return $customIcons;
+    }
+
+    /**
      * Will be removed with 6.0 once all search providers have switched to ISearchProvider.
      * @deprecated 5.5
      */

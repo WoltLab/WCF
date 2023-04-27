@@ -121,6 +121,14 @@ abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implem
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getCustomIconName(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @deprecated 5.5
      */
     public function getOuterSQLQuery(
