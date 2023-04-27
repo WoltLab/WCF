@@ -4,7 +4,6 @@ namespace wcf\system\search;
 
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
-use wcf\page\SearchResultPage;
 use wcf\system\exception\ImplementationException;
 
 /**
@@ -125,31 +124,17 @@ final class SearchResultHandler
     {
         if (\count($this->searchData['objectTypeNames']) === 1) {
             $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
-            if ($objectType instanceof ISearchProvider) {
-                if (($templateName = $objectType->getResultListTemplateName())) {
-                    return [
-                        'templateName' => $templateName,
-                        'application' => $objectType->getApplication(),
-                    ];
-                }
+            if (($templateName = $objectType->getResultListTemplateName())) {
+                return [
+                    'templateName' => $templateName,
+                    'application' => $objectType->getApplication(),
+                ];
             }
         }
 
-        return $this->getLegacyTemplateName();
-    }
-
-    /**
-     * Will be removed with 6.0 once all search providers have switched to ISearchProvider.
-     * @deprecated 5.5
-     */
-    private function getLegacyTemplateName(): array
-    {
-        $page = new SearchResultPage();
-        $page->assignVariables();
-
         return [
-            'templateName' => $page->resultListTemplateName,
-            'application' => $page->resultListApplication,
+            'templateName' => 'searchResultList',
+            'application' => 'wcf',
         ];
     }
 }

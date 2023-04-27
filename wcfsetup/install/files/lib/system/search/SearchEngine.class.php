@@ -25,7 +25,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
 
     /**
      * list of available object types
-     * @var ISearchableObjectType[]|ISearchProvider[]
+     * @var ISearchProvider[]
      */
     protected $availableObjectTypes = [];
 
@@ -53,7 +53,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     /**
      * Returns a list of available object types.
      *
-     * @return  ISearchableObjectType[]|ISearchProvider[]
+     * @return  ISearchProvider[]
      */
     public function getAvailableObjectTypes()
     {
@@ -64,7 +64,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
      * Returns the object type with the given name.
      *
      * @param string $objectTypeName
-     * @return  ISearchableObjectType|ISearchProvider|null
+     * @return  ISearchProvider|null
      */
     public function getObjectType($objectTypeName)
     {
