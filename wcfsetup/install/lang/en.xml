@@ -1552,11 +1552,9 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Rerun Test]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the manual for instructions: <a href="https://manual.woltlab.com/en/url-rewrites/" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples:
-<ul class="nativeList">
-<li>the link “https://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “https://example.com/thread/1-hello-i-am-john-doe/”</li>
-<li>the link “https://example.com/index.php?members-list/” will turn into “https://example.com/members-list/”</li>
-</ul>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Enabling this option will rewrite URLs into a better readable representation, “https://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “https://example.com/thread/1-hello-i-am-john-doe/”.
+<strong>Attention</strong>: This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you!<br>
+Please read the manual for instructions: <a href="https://manual.woltlab.com/en/url-rewrites/" class="externalURL">Setting up user friendly URLs</a>.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[The test has failed.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[The webserver cannot handle rewrites or it has not been configured correctly.<br>
 <br>
