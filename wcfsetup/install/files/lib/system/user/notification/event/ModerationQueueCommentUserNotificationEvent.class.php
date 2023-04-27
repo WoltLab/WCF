@@ -37,9 +37,8 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
 
     /**
      * language item for the type name
-     * @var string
      */
-    protected $typeName = '';
+    protected string $typeName;
 
     /**
      * moderation queue object the notifications (indirectly) belong to

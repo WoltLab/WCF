@@ -49,9 +49,8 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
 
     /**
      * language item for the type name
-     * @var string|null
      */
-    protected $typeName;
+    protected string $typeName;
 
     /**
      * @inheritDoc
@@ -222,7 +221,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
      */
     protected function getTypeName(): string
     {
-        if ($this->typeName === null) {
+        if (!isset($this->typeName)) {
             $moderationHandler = ObjectTypeCache::getInstance()
                 ->getObjectType($this->getModerationQueue()->objectTypeID)
                 ->getProcessor();
