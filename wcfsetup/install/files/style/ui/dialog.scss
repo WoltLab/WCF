@@ -231,7 +231,7 @@
 #systemNotification {
 	left: 0;
 	opacity: 0;
-	pointer-events: none;
+	pointer-events: none !important;
 	position: fixed;
 	top: 0;
 	transform: translateY(-100%);
