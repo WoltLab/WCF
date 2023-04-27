@@ -25,6 +25,14 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
     /**
      * @inheritDoc
      */
+    protected function prepare()
+    {
+        CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());

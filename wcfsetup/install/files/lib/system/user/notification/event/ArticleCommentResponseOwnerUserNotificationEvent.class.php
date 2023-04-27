@@ -7,7 +7,6 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\email\Email;
-use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for article comment responses.
@@ -16,22 +15,12 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
- *
- * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
 class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentResponseUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableArticleCommentUserNotificationEvent;
-
-    /**
-     * @inheritDoc
-     */
-    protected function prepare()
-    {
-        CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
-    }
 
     /**
      * @inheritDoc
