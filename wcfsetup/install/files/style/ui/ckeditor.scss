@@ -281,3 +281,10 @@ html[data-color-scheme="dark"] {
 .text-right {
 	text-align: right !important;
 }
+
+@include screen-xs {
+	html.iOS  .ck.ck-content {
+		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
+		font-size: 16px;
+	}
+}
