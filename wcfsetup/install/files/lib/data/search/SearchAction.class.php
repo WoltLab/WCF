@@ -120,6 +120,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
             'query' => $resultHandler->getQuery(),
+            'customIcons' => $resultHandler->getCustomIcons(),
         ]);
 
         return [
@@ -166,6 +167,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
             'query' => $resultHandler->getQuery(),
+            'customIcons' => $resultHandler->getCustomIcons(),
         ]);
 
         return [

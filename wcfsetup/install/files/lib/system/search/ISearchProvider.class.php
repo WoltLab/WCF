@@ -102,4 +102,11 @@ interface ISearchProvider
      * placeholder {WCF_SEARCH_INNER_JOIN} within an empty INNER JOIN() statement.
      */
     public function getFetchObjectsQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string;
+
+    /**
+     * Provides the ability to show a custom icon in the list of search results.
+     * Returns either a FontAwesome icon name or an empty string. The latter will trigger the default behavior.
+     * @since 6.0
+     */
+    public function getCustomIconName(): string;
 }
