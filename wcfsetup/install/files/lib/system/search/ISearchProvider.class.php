@@ -105,8 +105,8 @@ interface ISearchProvider
 
     /**
      * Provides the ability to show a custom icon in the list of search results.
-     * Returns either a FontAwesome icon name or an empty string. The latter will trigger the default behavior.
+     * Returns either a FontAwesome icon name or null. The latter will trigger the default behavior.
      * @since 6.0
      */
-    public function getCustomIconName(): string;
+    public function getCustomIconName(): ?string;
 }

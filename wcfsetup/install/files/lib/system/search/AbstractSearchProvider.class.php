@@ -123,9 +123,9 @@ abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implem
     /**
      * @inheritDoc
      */
-    public function getCustomIconName(): string
+    public function getCustomIconName(): ?string
     {
-        return '';
+        return null;
     }
 
     /**

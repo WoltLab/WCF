@@ -146,9 +146,7 @@ final class SearchResultHandler
         $customIcons = [];
         foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $name => $type) {
             if ($type instanceof ISearchProvider) {
-                if ($type->getCustomIconName()) {
-                    $customIcons[$name] = $type->getCustomIconName();
-                }
+                $customIcons[$name] = $type->getCustomIconName();
             }
         }
 
