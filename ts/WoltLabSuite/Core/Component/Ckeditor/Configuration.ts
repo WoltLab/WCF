@@ -242,6 +242,9 @@ class ConfigurationBuilder {
   toConfig(): EditorConfig {
     const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
 
+    const key = language ? language : "en";
+    window.CKEDITOR_TRANSLATIONS[key].dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
+
     // TODO: The typings are both incompleted and outdated.
     return {
       alignment: {

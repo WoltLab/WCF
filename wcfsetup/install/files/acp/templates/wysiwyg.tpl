@@ -12,6 +12,7 @@
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
 		{jsphrase name='wcf.editor.button.group.list'}
+		{jsphrase name='wcf.editor.button.spoiler'}
 		{jsphrase name='wcf.editor.restoreDraft'}
 
 		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
