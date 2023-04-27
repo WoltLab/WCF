@@ -2,6 +2,9 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\system\cache\runtime\CommentRuntimeCache;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
+
 /**
  * Provides a default implementation for user notifications about comment responses.
  *
@@ -9,6 +12,8 @@ namespace wcf\system\user\notification\event;
  * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ *
+ * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
 abstract class AbstractCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent
 {
@@ -57,7 +62,7 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
      */
     public function getEventHash()
     {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
+        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
     }
 
     /**
