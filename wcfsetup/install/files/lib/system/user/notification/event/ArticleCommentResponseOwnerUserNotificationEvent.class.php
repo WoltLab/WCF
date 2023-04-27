@@ -25,6 +25,16 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
     /**
      * @inheritDoc
      */
+    protected function prepare()
+    {
+        parent::prepare();
+
+        ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getMessage()
     {
         $authors = $this->getAuthors();

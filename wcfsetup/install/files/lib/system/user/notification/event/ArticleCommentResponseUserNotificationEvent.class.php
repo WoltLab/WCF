@@ -2,10 +2,8 @@
 
 namespace wcf\system\user\notification\event;
 
-use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\email\Email;
-use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for article comment responses.
@@ -20,6 +18,16 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractCommentRespons
 {
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableArticleCommentUserNotificationEvent;
+
+    /**
+     * @inheritDoc
+     */
+    protected function prepare()
+    {
+        parent::prepare();
+
+        ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
+    }
 
     /**
      * @inheritDoc
