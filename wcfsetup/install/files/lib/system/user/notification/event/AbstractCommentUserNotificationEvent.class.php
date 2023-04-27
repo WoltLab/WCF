@@ -53,14 +53,6 @@ abstract class AbstractCommentUserNotificationEvent extends AbstractSharedUserNo
     }
 
     /**
-     * @inheritDoc
-     */
-    public function getEventHash()
-    {
-        return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
-    }
-
-    /**
      * Returns the name of the type to which the comment belong.
      */
     protected abstract function getTypeName(): string;
