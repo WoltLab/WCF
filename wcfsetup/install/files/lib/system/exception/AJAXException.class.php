@@ -144,8 +144,6 @@ class AJAXException extends LoggedException
                 break;
 
             case self::BAD_PARAMETERS:
-                // see https://github.com/WoltLab/WCF/issues/2378
-                //$statusHeader = 'HTTP/1.1 431 Bad Parameters';
                 $statusHeader = 'HTTP/1.1 400 Bad Request';
 
                 $responseData['exceptionID'] = $exceptionID;
