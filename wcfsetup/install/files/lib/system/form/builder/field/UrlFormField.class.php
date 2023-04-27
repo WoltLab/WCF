@@ -16,6 +16,13 @@ use wcf\util\Url;
  */
 class UrlFormField extends TextFormField
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->inputMode('url');
+    }
+
     /**
      * @inheritDoc
      * @since       5.4
@@ -55,5 +62,13 @@ class UrlFormField extends TextFormField
                 parent::validateText($text, $language);
             }
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getInputType(): string
+    {
+        return 'url';
     }
 }

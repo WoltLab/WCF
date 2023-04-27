@@ -4,7 +4,6 @@ namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 
 /**
  * Template modifier plugin which renders a \DateTimeInterface or
@@ -17,7 +16,7 @@ use wcf\util\DateUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated 6.0 use `{time type='plain'}` instead
+ * @deprecated 6.0 use `{time type='plainTime'}` instead
  */
 class PlainTimeModifierTemplatePlugin implements IModifierTemplatePlugin
 {
@@ -33,14 +32,11 @@ class PlainTimeModifierTemplatePlugin implements IModifierTemplatePlugin
             $dateTime = new \DateTimeImmutable('@' . $timestamp);
         }
 
-        return \str_replace(
-            '%time%',
-            DateUtil::format($dateTime, DateUtil::TIME_FORMAT),
-            \str_replace(
-                '%date%',
-                DateUtil::format($dateTime, DateUtil::DATE_FORMAT),
-                WCF::getLanguage()->get('wcf.date.dateTimeFormat')
-            )
-        );
+        return \IntlDateFormatter::create(
+            WCF::getLanguage()->getLocale(),
+            \IntlDateFormatter::LONG,
+            \IntlDateFormatter::SHORT,
+            WCF::getUser()->getTimeZone()
+        )->format($dateTime);
     }
 }

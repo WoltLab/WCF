@@ -3,6 +3,7 @@
 namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
@@ -16,7 +17,7 @@ use wcf\util\DateUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated 6.0 use `{time type='date'}` instead
+ * @deprecated 6.0 use `{time type='plainDate'}` or `{time type='custom'}` instead
  */
 class DateModifierTemplatePlugin implements IModifierTemplatePlugin
 {
@@ -32,9 +33,18 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
             $dateTime = new \DateTimeImmutable('@' . $timestamp);
         }
 
-        return DateUtil::format(
-            $dateTime,
-            (!empty($tagArgs[1]) ? $tagArgs[1] : DateUtil::DATE_FORMAT)
-        );
+        if (!empty($tagArgs[1])) {
+            return DateUtil::format(
+                $dateTime,
+                $tagArgs[1]
+            );
+        } else {
+            return \IntlDateFormatter::create(
+                WCF::getLanguage()->getLocale(),
+                \IntlDateFormatter::LONG,
+                \IntlDateFormatter::NONE,
+                WCF::getUser()->getTimeZone()
+            )->format($dateTime);
+        }
     }
 }

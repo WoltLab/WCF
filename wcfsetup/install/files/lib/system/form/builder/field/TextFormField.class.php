@@ -115,4 +115,13 @@ class TextFormField extends AbstractFormField implements
         $this->validateMinimumLength($text, $language);
         $this->validateMaximumLength($text, $language);
     }
+
+    /**
+     * Returns the value for the `type` attribute of the input field.
+     * @since 6.0
+     */
+    public function getInputType(): string
+    {
+        return 'text';
+    }
 }
