@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @author Alexander Ebert, Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.0 use `{time}` instead
  */
 class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
 {
