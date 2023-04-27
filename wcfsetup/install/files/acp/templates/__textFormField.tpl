@@ -1,4 +1,4 @@
-<input type="text" {*
+<input type="{$field->getInputType()}" {*
 	*}id="{$field->getPrefixedId()}" {*
 	*}name="{$field->getPrefixedId()}" {*
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}"{*
