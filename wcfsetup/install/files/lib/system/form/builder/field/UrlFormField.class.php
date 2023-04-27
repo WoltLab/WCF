@@ -56,4 +56,12 @@ class UrlFormField extends TextFormField
             }
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getInputType(): string
+    {
+        return 'url';
+    }
 }
