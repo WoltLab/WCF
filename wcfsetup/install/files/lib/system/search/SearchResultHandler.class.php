@@ -139,7 +139,7 @@ final class SearchResultHandler
     }
 
     /**
-     * @return string[]
+     * @return array<string, string|null>
      */
     public function getCustomIcons(): array
     {
