@@ -168,10 +168,15 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         return instances.get(element);
     }
     exports.getCkeditor = getCkeditor;
-    function getCkeditorById(id) {
+    function getCkeditorById(id, throwIfNotExists = true) {
         const element = document.getElementById(id);
         if (element === null) {
-            throw new Error(`Unable to find an element with the id '${id}'.`);
+            if (throwIfNotExists) {
+                throw new Error(`Unable to find an element with the id '${id}'.`);
+            }
+            else {
+                return undefined;
+            }
         }
         return getCkeditor(element);
     }

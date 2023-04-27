@@ -489,7 +489,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
          * Destroys the editor instance.
          */
         _destroyEditor() {
-            void (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).destroy();
+            void (0, Ckeditor_1.getCkeditorById)(this._getEditorId(), false)?.destroy();
         }
         /**
          * Returns the hash added to the url after successfully editing a message.

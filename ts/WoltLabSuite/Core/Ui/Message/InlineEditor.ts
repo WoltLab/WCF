@@ -624,7 +624,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Destroys the editor instance.
    */
   protected _destroyEditor(): void {
-    void getCkeditorById(this._getEditorId())!.destroy();
+    void getCkeditorById(this._getEditorId(), false)?.destroy();
   }
 
   /**

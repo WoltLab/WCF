@@ -233,10 +233,14 @@ export function getCkeditor(element: HTMLElement): CKEditor | undefined {
   return instances.get(element);
 }
 
-export function getCkeditorById(id: string): Ckeditor | undefined {
+export function getCkeditorById(id: string, throwIfNotExists = true): Ckeditor | undefined {
   const element = document.getElementById(id);
   if (element === null) {
-    throw new Error(`Unable to find an element with the id '${id}'.`);
+    if (throwIfNotExists) {
+      throw new Error(`Unable to find an element with the id '${id}'.`);
+    } else {
+      return undefined;
+    }
   }
 
   return getCkeditor(element);
