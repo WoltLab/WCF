@@ -45,6 +45,10 @@ class SingleSelectionFormField extends AbstractFormField implements
      */
     public function getSaveValue()
     {
+        if ($this->hasNoSelectionOption() && $this->getValue() === '') {
+            return;
+        }
+
         if (
             empty($this->getValue())
             && isset($this->getOptions()[$this->getValue()])
@@ -92,11 +96,17 @@ class SingleSelectionFormField extends AbstractFormField implements
      */
     public function validate()
     {
-        if (!isset($this->getOptions()[$this->getValue()])) {
-            $this->addValidationError(new FormFieldValidationError(
-                'invalidValue',
-                'wcf.global.form.error.noValidSelection'
-            ));
+        if ($this->isRequired() && $this->getValue() === '') {
+            $this->addValidationError(new FormFieldValidationError('empty'));
+        }
+
+        if (!$this->hasNoSelectionOption() || $this->getValue() !== '') {
+            if (!isset($this->getOptions()[$this->getValue()])) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'invalidValue',
+                    'wcf.global.form.error.noValidSelection'
+                ));
+            }
         }
 
         parent::validate();

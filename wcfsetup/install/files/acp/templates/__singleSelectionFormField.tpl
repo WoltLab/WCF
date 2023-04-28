@@ -36,7 +36,7 @@
 		*}{if $field->isRequired()} required{/if}{*
 	*}>
 		{if $field->hasNoSelectionOption()}
-			<option name="">{lang}wcf.global.noSelection{/lang}</option>
+			<option value="">{lang}wcf.global.noSelection{/lang}</option>
 		{/if}
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<option {*
