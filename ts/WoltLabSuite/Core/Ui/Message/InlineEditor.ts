@@ -577,11 +577,11 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       }
     }
 
+    getCkeditorById(this._getEditorId())!.discardDraft();
+
     this._restoreMessage();
 
     this._updateHistory(this._getHash(this._getObjectId(activeElement)));
-
-    getCkeditorById(this._getEditorId())!.discardDraft();
 
     UiNotification.show();
 
