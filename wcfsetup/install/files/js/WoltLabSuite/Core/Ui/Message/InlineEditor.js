@@ -452,9 +452,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                     elementData.messageBody.insertAdjacentElement("afterbegin", pollContainer);
                 }
             }
+            (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).discardDraft();
             this._restoreMessage();
             this._updateHistory(this._getHash(this._getObjectId(activeElement)));
-            (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).discardDraft();
             UiNotification.show();
             if (this._options.quoteManager) {
                 this._options.quoteManager.clearAlternativeEditor();
