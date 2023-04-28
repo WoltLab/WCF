@@ -70,7 +70,7 @@
 			}
 
 			> .pollOptionRelativeValue {
-				color: rgb(125, 130, 135);
+				color: var(--wcfContentDimmedText);
 				flex: 0 0 50px;
 				text-align: right;
 			}
@@ -81,11 +81,15 @@
 			background-color: var(--wcfContentBorderInner);
 			height: 5px;
 			margin-top: 5px;
-
-			> .pollMeterValue {
-				background-color: var(--wcfContentBorder);
-				height: 100%;
-			}
 		}
 	}
+}
+
+.pollMeterValue {
+	background-color: var(--wcfContentBorder);
+	height: 100%;
+}
+
+html[data-color-scheme="dark"] .pollMeterValue {
+	background-color: rgb(255 255 255 / 34%);
 }
