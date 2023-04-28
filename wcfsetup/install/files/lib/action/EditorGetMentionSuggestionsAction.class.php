@@ -10,6 +10,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\http\Helper;
+use wcf\system\WCF;
 
 /**
  * Suggests users that may be mentioned.
@@ -91,9 +92,11 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
             return \str_starts_with(\mb_strtolower($userGroup->getName()), $query);
         });
 
-        \usort($userGroups, static function (UserGroup $a, UserGroup $b) {
-            return \mb_strtolower($a->getName()) <=> \mb_strtolower($b->getName());
-        });
+        $c = new \Collator(WCF::getLanguage()->getLocale());
+        \usort(
+            $userGroups,
+            static fn (UserGroup $a, UserGroup $b) => $c->compare($a->getName(), $b->getName())
+        );
 
         return $userGroups;
     }
