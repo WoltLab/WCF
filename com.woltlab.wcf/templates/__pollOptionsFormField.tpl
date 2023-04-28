@@ -5,15 +5,13 @@
 		'Dom/Traverse',
 		'Dom/Util',
 		'EventHandler',
-		'Language',
 		'WoltLabSuite/Core/Form/Builder/Manager',
 		'WoltLabSuite/Core/Ui/Poll/Editor'
-	], function(DomTraverse, DomUtil, EventHandler, Language, FormBuilderManager, UiPollEditor) {
-		Language.addObject({
-			'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
-			'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}',
-			'wcf.poll.maxVotes.error.invalid': '{jslang}wcf.poll.maxVotes.error.invalid{/jslang}'
-		});
+	], (DomTraverse, DomUtil, EventHandler, FormBuilderManager, UiPollEditor) => {
+		{jsphrase name='wcf.poll.button.addOption'}
+		{jsphrase name='wcf.poll.button.removeOption'}
+		{jsphrase name='wcf.poll.endTime.error.invalid'}
+		{jsphrase name='wcf.poll.maxVotes.error.invalid'}
 		
 		var pollEditor = new UiPollEditor(
 			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()|encodeJS}Container'), 'DD')),
@@ -21,7 +19,7 @@
 			'{@$field->getPrefixedWysiwygId()}',
 			{
 				isAjax: {if $field->getDocument()->isAjax()}true{else}false{/if},
-				maxOptions: {@POLL_MAX_OPTIONS}
+				maxOptions: {POLL_MAX_OPTIONS}
 			}
 		);
 		

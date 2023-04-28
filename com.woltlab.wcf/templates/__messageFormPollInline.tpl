@@ -1,18 +1,19 @@
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
-				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}',
-				'wcf.poll.endTime.error.invalid': '{jslang}wcf.poll.endTime.error.invalid{/jslang}',
-				'wcf.poll.maxVotes.error.invalid': '{jslang}wcf.poll.maxVotes.error.invalid{/jslang}'
-			});
+		require(["WoltLabSuite/Core/Ui/Poll/Editor"], (UiPollEditor) => {
+			{jsphrase name='wcf.poll.button.addOption'}
+			{jsphrase name='wcf.poll.button.removeOption'}
+			{jsphrase name='wcf.poll.endTime.error.invalid'}
+			{jsphrase name='wcf.poll.maxVotes.error.invalid'}
 			
-			new WCF.Poll.Management(
-				'pollOptionContainer_{$wysiwygSelector}',
+			new UiPollEditor(
+				"pollOptionContainer_{$wysiwygSelector}",
 				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
-				{@POLL_MAX_OPTIONS},
-				'{$wysiwygSelector}'
+				"{$wysiwygSelector}",
+				{
+					isAjax: true,
+					maxOptions: {POLL_MAX_OPTIONS}
+				}
 			);
 		});
 	</script>
@@ -20,10 +21,10 @@
 	<div class="jsOnly messageTabMenuContent">
 		<dl>
 			<dt>
-				<label for="pollQuestion_{$wysiwygSelector}">{lang}wcf.poll.question{/lang}</label>
+				<label for="{$wysiwygSelector}Poll_question">{lang}wcf.poll.question{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" name="pollQuestion" id="pollQuestion_{$wysiwygSelector}" value="{$pollQuestion}" class="long" maxlength="255">
+				<input type="text" name="pollQuestion" id="{$wysiwygSelector}Poll_question" value="{$pollQuestion}" class="long" maxlength="255">
 			</dd>
 			<dt>
 				<label>{lang}wcf.poll.options{/lang}</label>
@@ -35,36 +36,36 @@
 		</dl>
 		<dl>
 			<dt>
-				<label for="pollEndTime_{$wysiwygSelector}">{lang}wcf.poll.endTime{/lang}</label>
+				<label for="{$wysiwygSelector}Poll_endTime">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" tabindex="-1" name="pollEndTime" id="pollEndTime_{$wysiwygSelector}" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
+				<input type="datetime" tabindex="-1" name="pollEndTime" id="{$wysiwygSelector}Poll_endTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 			</dd>
 		</dl>
 		<dl>
 			<dt>
-				<label for="pollMaxVotes_{$wysiwygSelector}">{lang}wcf.poll.maxVotes{/lang}</label>
+				<label for="{$wysiwygSelector}Poll_maxVotes">{lang}wcf.poll.maxVotes{/lang}</label>
 			</dt>
 			<dd>
-				<input type="number" name="pollMaxVotes" id="pollMaxVotes_{$wysiwygSelector}" value="{$pollMaxVotes}" min="1" class="tiny">
+				<input type="number" name="pollMaxVotes" id="{$wysiwygSelector}Poll_maxVotes" value="{$pollMaxVotes}" min="1" class="tiny">
 			</dd>
 		</dl>
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
+				<label><input type="checkbox" name="pollIsChangeable" id="{$wysiwygSelector}Poll_isChangeable" value="1"{if $pollIsChangeable} checked{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
 			</dd>
 			{if !$pollID && $__wcf->getPollManager()->canStartPublicPoll()}
 				<dd>
-					<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked{/if}> {lang}wcf.poll.isPublic{/lang}</label>
+					<label><input type="checkbox" name="pollIsPublic" id="{$wysiwygSelector}Poll_isPublic" value="1"{if $pollIsPublic} checked{/if}> {lang}wcf.poll.isPublic{/lang}</label>
 				</dd>
 			{/if}
 			<dd>
-				<label><input type="checkbox" name="pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
+				<label><input type="checkbox" name="pollResultsRequireVote" id="{$wysiwygSelector}Poll_resultsRequireVote" value="1"{if $pollResultsRequireVote} checked{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
 				<small>{lang}wcf.poll.resultsRequireVote.description{/lang}</small>
 			</dd>
 			<dd>
-				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
+				<label><input type="checkbox" name="pollSortByVotes" id="{$wysiwygSelector}Poll_sortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
 			</dd>
 		</dl>
 		
