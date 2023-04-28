@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker) {
+define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker, Event_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
@@ -72,6 +72,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 const element = document.getElementById(this.wysiwygId);
                 element.addEventListener("reset", () => {
                     this.reset();
+                });
+                (0, Event_1.listenToCkeditor)(element).collectMetaData((payload) => {
+                    payload.metaData.poll = this.#getPollData();
                 });
                 ["handleError", "submit", "validate"].forEach((event) => {
                     EventHandler.add("com.woltlab.wcf.ckeditor5", event + "_" + this.wysiwygId, (...args) => this[event](...args));
@@ -245,6 +248,28 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                     form.appendChild(input);
                 });
             }
+        }
+        #getPollData() {
+            const data = {
+                pollEndTime: DatePicker.getValue(this.endTimeField),
+                pollMaxVotes: parseInt(this.maxVotesField.value) || 0,
+                pollQuestion: this.questionField.value,
+                pollOptions: [],
+            };
+            if (this.isChangeableYesField.checked) {
+                data.pollIsChangeable = true;
+            }
+            if (this.resultsRequireVoteYesField.checked) {
+                data.pollResultsRequireVote = true;
+            }
+            if (this.sortByVotesYesField.checked) {
+                data.pollSortByVotes = true;
+            }
+            if (this.isPublicYesField?.checked) {
+                data.pollIsPublic = true;
+            }
+            data.pollOptions = this.getOptions();
+            return data;
         }
         /**
          * Validates the poll data.

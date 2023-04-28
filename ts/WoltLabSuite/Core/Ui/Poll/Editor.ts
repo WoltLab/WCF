@@ -13,6 +13,7 @@ import UiSortableList from "../Sortable/List";
 import * as EventHandler from "../../Event/Handler";
 import * as DatePicker from "../../Date/Picker";
 import { DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { listenToCkeditor } from "../../Component/Ckeditor/Event";
 
 interface UiPollEditorOptions {
   isAjax: boolean;
@@ -41,6 +42,17 @@ interface ValidationData {
   api: ValidationApi;
   valid: boolean;
 }
+
+type PollData = {
+  pollEndTime: string;
+  pollIsChangeable?: boolean;
+  pollIsPublic?: boolean;
+  pollMaxVotes: number;
+  pollOptions: string[];
+  pollQuestion: string;
+  pollResultsRequireVote?: true;
+  pollSortByVotes?: boolean;
+};
 
 class UiPollEditor {
   private readonly container: HTMLElement;
@@ -118,6 +130,10 @@ class UiPollEditor {
       const element = document.getElementById(this.wysiwygId)!;
       element.addEventListener("reset", () => {
         this.reset();
+      });
+
+      listenToCkeditor(element).collectMetaData((payload) => {
+        payload.metaData.poll = this.#getPollData();
       });
 
       ["handleError", "submit", "validate"].forEach((event) => {
@@ -320,6 +336,35 @@ class UiPollEditor {
         form.appendChild(input);
       });
     }
+  }
+
+  #getPollData(): PollData {
+    const data: PollData = {
+      pollEndTime: DatePicker.getValue(this.endTimeField),
+      pollMaxVotes: parseInt(this.maxVotesField.value) || 0,
+      pollQuestion: this.questionField.value,
+      pollOptions: [],
+    };
+
+    if (this.isChangeableYesField.checked) {
+      data.pollIsChangeable = true;
+    }
+
+    if (this.resultsRequireVoteYesField.checked) {
+      data.pollResultsRequireVote = true;
+    }
+
+    if (this.sortByVotesYesField.checked) {
+      data.pollSortByVotes = true;
+    }
+
+    if (this.isPublicYesField?.checked) {
+      data.pollIsPublic = true;
+    }
+
+    data.pollOptions = this.getOptions();
+
+    return data;
   }
 
   /**
