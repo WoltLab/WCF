@@ -36,6 +36,11 @@ class SingleSelectionFormField extends AbstractFormField implements
     protected $templateName = '__singleSelectionFormField';
 
     /**
+     * @since 6.0
+     */
+    protected bool $noSelectionOption = false;
+
+    /**
      * @inheritDoc
      */
     public function getSaveValue()
@@ -113,5 +118,27 @@ class SingleSelectionFormField extends AbstractFormField implements
         }
 
         return parent::value($value);
+    }
+
+    /**
+     * Sets whether this field should offer a 'no selection' option.
+     *
+     * @since 6.0
+     */
+    public function noSelectionOption(bool $noSelectionOption = true): self
+    {
+        $this->noSelectionOption = $noSelectionOption;
+
+        return $this;
+    }
+
+    /**
+     * Returns `true` if this field has a 'no selection' option.
+     *
+     * @since 6.0
+     */
+    public function hasNoSelectionOption(): bool
+    {
+        return $this->noSelectionOption;
     }
 }

@@ -35,6 +35,9 @@
 		*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 		*}{if $field->isRequired()} required{/if}{*
 	*}>
+		{if $field->hasNoSelectionOption()}
+			<option name="">{lang}wcf.global.noSelection{/lang}</option>
+		{/if}
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<option {*
 				*}name="{$field->getPrefixedId()}" {*
