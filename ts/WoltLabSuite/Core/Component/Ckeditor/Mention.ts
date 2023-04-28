@@ -13,21 +13,27 @@ import { createFragmentFromHtml } from "../../Dom/Util";
 import { listenToCkeditor } from "./Event";
 import { EditorConfig } from "./Types";
 
-type SearchResultItem = {
-  avatarTag: string;
-  username: string;
-  userID: number;
-  type: "user";
-};
+type SearchResultItem =
+  | {
+      avatarTag: string;
+      username: string;
+      userID: number;
+      type: "user";
+    }
+  | {
+      name: string;
+      groupID: string;
+      type: "group";
+    };
 type ResultGetSearchResultList = SearchResultItem[];
 
-type UserMention = {
+type Mention = {
   id: string;
   text: string;
   icon: string;
 };
 
-async function getPossibleMentions(query: string): Promise<UserMention[]> {
+async function getPossibleMentions(query: string): Promise<Mention[]> {
   // TODO: Provide the URL as a parameter.
   const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
   url.searchParams.set("query", query);
@@ -39,13 +45,23 @@ async function getPossibleMentions(query: string): Promise<UserMention[]> {
     .fetchAsJson()) as ResultGetSearchResultList;
 
   return result.map((item) => {
-    return {
-      id: `@${item.username}`,
-      text: item.username,
-      icon: item.avatarTag,
-      objectId: item.userID,
-      type: item.type,
-    };
+    if (item.type === "user") {
+      return {
+        id: `@${item.username}`,
+        text: item.username,
+        icon: item.avatarTag,
+        objectId: item.userID,
+        type: item.type,
+      };
+    } else {
+      return {
+        id: `@${item.name}`,
+        text: item.name,
+        icon: '<fa-icon name="users"></fa-icon>',
+        objectId: item.groupID,
+        type: item.type,
+      };
+    }
   });
 }
 

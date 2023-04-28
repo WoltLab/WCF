@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\http\Helper;
@@ -31,20 +32,28 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
                     EOT,
         );
 
-        $users = $this->getUsers($parameters);
+        $query = \mb_strtolower($parameters['query']);
+        $matches = [];
 
-        // TODO: Groups
+        foreach ($this->getGroups($query) as $userGroup) {
+            $matches[] = [
+                'name' => $userGroup->getName(),
+                'groupID' => $userGroup->groupID,
+                'type' => 'group',
+            ];
+        }
+
+        foreach ($this->getUsers($query) as $userProfile) {
+            $matches[] = [
+                'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
+                'username' => $userProfile->getUsername(),
+                'userID' => $userProfile->getObjectID(),
+                'type' => 'user',
+            ];
+        }
 
         return new JsonResponse(
-            \array_map(
-                static fn (UserProfile $userProfile) => [
-                    'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
-                    'username' => $userProfile->getUsername(),
-                    'userID' => $userProfile->getObjectID(),
-                    'type' => 'user',
-                ],
-                $users
-            ),
+            $matches,
             200,
             [
                 'cache-control' => [
@@ -57,14 +66,35 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
     /**
      * @return list<UserProfile>
      */
-    private function getUsers(array $parameters): array
+    private function getUsers(string $query): array
     {
         $userProfileList = new UserProfileList();
-        $userProfileList->getConditionBuilder()->add("username LIKE ?", [$parameters['query'] . '%']);
+        $userProfileList->getConditionBuilder()->add("username LIKE ?", [$query . '%']);
 
         $userProfileList->sqlLimit = 10;
         $userProfileList->readObjects();
 
         return \array_values($userProfileList->getObjects());
+    }
+
+    /**
+     * @return list<UserGroup>
+     */
+    private function getGroups(string $query): array
+    {
+        $userGroups = UserGroup::getMentionableGroups();
+        if ($userGroups === []) {
+            return [];
+        }
+
+        $userGroups = \array_filter($userGroups, static function (UserGroup $userGroup) use ($query) {
+            return \str_starts_with(\mb_strtolower($userGroup->getName()), $query);
+        });
+
+        \usort($userGroups, static function (UserGroup $a, UserGroup $b) {
+            return \mb_strtolower($a->getName()) <=> \mb_strtolower($b->getName());
+        });
+
+        return $userGroups;
     }
 }

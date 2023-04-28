@@ -20,13 +20,24 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
             .disableLoadingIndicator()
             .fetchAsJson());
         return result.map((item) => {
-            return {
-                id: `@${item.username}`,
-                text: item.username,
-                icon: item.avatarTag,
-                objectId: item.userID,
-                type: item.type,
-            };
+            if (item.type === "user") {
+                return {
+                    id: `@${item.username}`,
+                    text: item.username,
+                    icon: item.avatarTag,
+                    objectId: item.userID,
+                    type: item.type,
+                };
+            }
+            else {
+                return {
+                    id: `@${item.name}`,
+                    text: item.name,
+                    icon: '<fa-icon name="users"></fa-icon>',
+                    objectId: item.groupID,
+                    type: item.type,
+                };
+            }
         });
     }
     function getMentionConfiguration() {
