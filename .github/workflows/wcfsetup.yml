@@ -18,7 +18,7 @@ jobs:
           tar cf com.woltlab.wcf/templates.tar -C com.woltlab.wcf/templates/ --transform 's~^\./~~' .
           tar cf wcfsetup/install/packages/com.woltlab.wcf.tar -C com.woltlab.wcf --transform 's~^\./~~' --exclude='./templates/*' .
           tar czf wcfsetup/WCFSetup.tar.gz -C wcfsetup install/ setup/
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: setup
           path: |
