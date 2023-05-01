@@ -154,7 +154,7 @@ class LanguageImportForm extends AbstractForm
         LanguageFactory::getInstance()->clearCache();
         LanguageFactory::getInstance()->deleteLanguageCache();
 
-        EventHandler::getInstance()->fire(new LanguageImported($this->language));
+        EventHandler::getInstance()->fire(new LanguageImported(new Language($this->language->languageID)));
 
         $this->saved();
 
