@@ -4561,14 +4561,14 @@ Attachments:
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[The following tags do not exist: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email]]></item>
+		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email Address]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Confirm Password]]></item>
 		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[The entered email addresses do not match.]]></item>
 		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[The entered passwords do not match.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
-		<item name="wcf.user.email"><![CDATA[Email]]></item>
-		<item name="wcf.user.email.error.notUnique"><![CDATA[The email is already in use.]]></item>
-		<item name="wcf.user.email.error.invalid"><![CDATA[The email is invalid.]]></item>
+		<item name="wcf.user.email"><![CDATA[Email Address]]></item>
+		<item name="wcf.user.email.error.notUnique"><![CDATA[The email address is already in use.]]></item>
+		<item name="wcf.user.email.error.invalid"><![CDATA[The email address is invalid.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.ipAddress.searchEngine"><![CDATA[Search for {if !$ipAddress|empty}{$ipAddress}{else}this IP address{/if} {if !$host|empty}on {$host}{/if}]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
