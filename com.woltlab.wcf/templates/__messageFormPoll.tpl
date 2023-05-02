@@ -1,17 +1,17 @@
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
-		require(['Language', 'WoltLabSuite/Core/Ui/Poll/Editor', 'EventHandler'], function (Language, UiPollEditor, EventHandler) {
-			Language.addObject({
-				'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
-				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}',
-			});
-
+		require(["WoltLabSuite/Core/Ui/Poll/Editor"], (UiPollEditor) => {
+			{jsphrase name='wcf.poll.button.addOption'}
+			{jsphrase name='wcf.poll.button.removeOption'}
+			{jsphrase name='wcf.poll.endTime.error.invalid'}
+			{jsphrase name='wcf.poll.maxVotes.error.invalid'}
+			
 			new UiPollEditor(
-				'pollOptionContainer',
+				"pollOptionContainer",
 				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				"",
 				{
-					maxOptions: {@POLL_MAX_OPTIONS}
+					maxOptions: {POLL_MAX_OPTIONS}
 				}
 			);
 		});
