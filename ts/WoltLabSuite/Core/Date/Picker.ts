@@ -14,11 +14,13 @@ import * as Language from "../Language";
 import * as UiAlignment from "../Ui/Alignment";
 import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
+import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
 let _focusTrap: FocusTrap;
+let _updatePosition: (() => void) | undefined = undefined;
 
 const _data = new Map<HTMLInputElement, DatePickerData>();
 let _input: HTMLInputElement | null = null;
@@ -186,7 +188,7 @@ function createPicker() {
 
   _dateTime.appendChild(_dateMinute);
 
-  document.body.appendChild(_datePicker);
+  getPageOverlayContainer().appendChild(_datePicker);
 
   _focusTrap = createFocusTrap(_datePicker, {
     allowOutsideClick: true,
@@ -323,7 +325,11 @@ function open(event: MouseEvent): void {
 
   renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 
-  UiAlignment.set(_datePicker!, _input);
+  _updatePosition = () => {
+    UiAlignment.set(_datePicker!, _input!);
+  };
+  _updatePosition();
+  window.addEventListener("scroll", _updatePosition, { passive: true });
 
   _input.nextElementSibling!.setAttribute("aria-expanded", "true");
 
@@ -346,6 +352,11 @@ function close() {
   }
 
   EventHandler.fire("WoltLabSuite/Core/Date/Picker", "close", { element: _input });
+
+  if (typeof _updatePosition !== "undefined") {
+    window.removeEventListener("scroll", _updatePosition);
+    _updatePosition = undefined;
+  }
 
   const sibling = _input!.nextElementSibling as HTMLElement;
   sibling.setAttribute("aria-expanded", "false");

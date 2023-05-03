@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, focus_trap_1) {
+define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "../Helper/PageOverlay", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, PageOverlay_1, focus_trap_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     DateUtil = tslib_1.__importStar(DateUtil);
@@ -18,6 +18,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
     let _didInit = false;
     let _firstDayOfWeek = 0;
     let _focusTrap;
+    let _updatePosition = undefined;
     const _data = new Map();
     let _input = null;
     let _maxDate;
@@ -155,7 +156,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         }
         _dateMinute.innerHTML = tmp;
         _dateTime.appendChild(_dateMinute);
-        document.body.appendChild(_datePicker);
+        (0, PageOverlay_1.getPageOverlayContainer)().appendChild(_datePicker);
         _focusTrap = (0, focus_trap_1.createFocusTrap)(_datePicker, {
             allowOutsideClick: true,
             escapeDeactivates() {
@@ -272,7 +273,11 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         }
         _datePicker.classList[data.isTimeOnly ? "add" : "remove"]("datePickerTimeOnly");
         renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
-        UiAlignment.set(_datePicker, _input);
+        _updatePosition = () => {
+            UiAlignment.set(_datePicker, _input);
+        };
+        _updatePosition();
+        window.addEventListener("scroll", _updatePosition, { passive: true });
         _input.nextElementSibling.setAttribute("aria-expanded", "true");
         _focusTrap.activate();
     }
@@ -289,6 +294,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             data.onClose();
         }
         EventHandler.fire("WoltLabSuite/Core/Date/Picker", "close", { element: _input });
+        if (typeof _updatePosition !== "undefined") {
+            window.removeEventListener("scroll", _updatePosition);
+            _updatePosition = undefined;
+        }
         const sibling = _input.nextElementSibling;
         sibling.setAttribute("aria-expanded", "false");
         _input = null;
