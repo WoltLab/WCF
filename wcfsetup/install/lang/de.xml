@@ -4592,6 +4592,7 @@ Dateianhänge:
 		<item name="wcf.user.username.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
+		<item name="wcf.user.group.groupName"><![CDATA[Gruppenname]]></item>
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
 		<item name="wcf.user.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
