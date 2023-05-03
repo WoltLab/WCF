@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Language"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Language", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language, Environment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.set = void 0;
@@ -13,6 +13,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
+    Environment = tslib_1.__importStar(Environment);
     /**
      * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
      */
@@ -198,6 +199,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                 }
             }
         }
+        let isForcedVerticalPosition = false;
         const left = horizontal.left;
         const right = horizontal.right;
         let vertical = tryAlignmentVertical(options.vertical, elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
@@ -207,7 +209,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
             if (verticalFlipped.result) {
                 vertical = verticalFlipped;
             }
-            else {
+            else if (Environment.platform() !== "desktop") {
                 // The element fits neither to the top nor the bottom. This is
                 // especially an issue on mobile devices where the element might
                 // exceed the window boundary if we are stubborn about the alignment.
@@ -233,6 +235,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                         top: preferTop ? "auto" : 0,
                     };
                 }
+                isForcedVerticalPosition = true;
             }
         }
         let bottom = vertical.bottom;
@@ -267,11 +270,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
         // Check if the element itself has a position of `fixed`.
         if (window.getComputedStyle(element).position === "fixed" ||
             (element.offsetParent && window.getComputedStyle(element.offsetParent).position === "fixed")) {
-            // Ignore offsets caused by page scrolling.
-            if (bottom !== "auto")
-                bottom = bottom + window.scrollY;
-            if (top !== "auto")
-                top = top - window.scrollY;
+            if (!isForcedVerticalPosition) {
+                // Ignore offsets caused by page scrolling.
+                if (bottom !== "auto")
+                    bottom = bottom + window.scrollY;
+                if (top !== "auto")
+                    top = top - window.scrollY;
+            }
         }
         Util_1.default.setStyles(element, {
             bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",

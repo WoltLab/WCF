@@ -10,6 +10,7 @@ import * as Core from "../Core";
 import * as DomTraverse from "../Dom/Traverse";
 import DomUtil from "../Dom/Util";
 import * as Language from "../Language";
+import * as Environment from "../Environment";
 
 type HorizontalAlignment = "center" | "left" | "right";
 type VerticalAlignment = "bottom" | "top";
@@ -264,6 +265,8 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     }
   }
 
+  let isForcedVerticalPosition = false;
+
   const left = horizontal!.left;
   const right = horizontal!.right;
   let vertical = tryAlignmentVertical(
@@ -286,7 +289,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
     if (verticalFlipped.result) {
       vertical = verticalFlipped;
-    } else {
+    } else if (Environment.platform() !== "desktop") {
       // The element fits neither to the top nor the bottom. This is
       // especially an issue on mobile devices where the element might
       // exceed the window boundary if we are stubborn about the alignment.
@@ -312,6 +315,8 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
           top: preferTop ? "auto" : 0,
         };
       }
+
+      isForcedVerticalPosition = true;
     }
   }
 
@@ -349,9 +354,11 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     window.getComputedStyle(element).position === "fixed" ||
     (element.offsetParent && window.getComputedStyle(element.offsetParent).position === "fixed")
   ) {
-    // Ignore offsets caused by page scrolling.
-    if (bottom !== "auto") bottom = bottom + window.scrollY;
-    if (top !== "auto") top = top - window.scrollY;
+    if (!isForcedVerticalPosition) {
+      // Ignore offsets caused by page scrolling.
+      if (bottom !== "auto") bottom = bottom + window.scrollY;
+      if (top !== "auto") top = top - window.scrollY;
+    }
   }
 
   DomUtil.setStyles(element, {
