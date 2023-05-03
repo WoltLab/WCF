@@ -821,31 +821,41 @@ class WCF
 
                 // PHP will implicitly check if the file exists when including it, which means that we can save a
                 // redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
-
-                // TODO: Changed for #4684. Revert for release.
-                if (\file_exists($classPath)) {
-                    include_once($classPath);
-                }
+                @include_once($classPath);
             }
         }
     }
 
     /**
-     * Checks the class name casing after autoloading.
+     * Checks the class name casing after autoloading and does not suppress
+     * errors during loading.
      */
     final public static function autoloadDebug(string $className): void
     {
-        self::autoload($className);
+        $originalClassName = $className;
 
-        if (\class_exists($className)) {
-            $reflection = new \ReflectionClass($className);
+        // This is copy and pasted from self::autoload(). The $classPath calculation
+        // logic cannot be moved into a shared function, because it
+        // measurably reduced autoloader performance.
+        $className = \strtr($className, '\\', '/');
+        if (($slashPos = \strpos($className, '/')) !== null) {
+            $applicationPrefix = \substr($className, 0, $slashPos);
+            if (isset(self::$autoloadDirectories[$applicationPrefix])) {
+                $classPath = self::$autoloadDirectories[$applicationPrefix] . \substr($className, $slashPos + 1) . '.class.php';
 
-            if ($className !== $reflection->getName()) {
-                throw new \Exception(\sprintf(
-                    "Loaded class '%s' with mismatching case '%s'. This will cause issues on case-sensitive file systems.",
-                    $reflection->getName(),
-                    $className,
-                ));
+                if (\file_exists($classPath)) {
+                    require_once($classPath);
+
+                    $reflection = new \ReflectionClass($originalClassName);
+
+                    if ($originalClassName !== $reflection->getName()) {
+                        throw new \Exception(\sprintf(
+                            "Loaded class '%s' with mismatching case '%s'. This will cause issues on case-sensitive file systems.",
+                            $reflection->getName(),
+                            $originalClassName,
+                        ));
+                    }
+                }
             }
         }
     }
