@@ -56,6 +56,24 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("Superscript");
             }
+            if (this.#features.fontColor) {
+                items.push("fontColor");
+            }
+            else {
+                this.#removePlugins.push("FontColor");
+            }
+            if (this.#features.fontFamily) {
+                items.push("fontFamily");
+            }
+            else {
+                this.#removePlugins.push("FontFamily");
+            }
+            if (this.#features.fontSize) {
+                items.push("fontSize");
+            }
+            else {
+                this.#removePlugins.push("FontSize");
+            }
             if (this.#features.code) {
                 items.push("code");
             }
@@ -223,6 +241,23 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 },
                 language,
                 removePlugins: this.#removePlugins,
+                fontFamily: {
+                    options: [
+                        "default",
+                        "Arial, Helvetica, sans-serif",
+                        "Comic Sans MS, Marker Felt, cursive",
+                        "Consolas, Courier New, Courier, monospace",
+                        "Georgia, serif",
+                        "Lucida Sans Unicode, Lucida Grande, sans-serif",
+                        "Tahoma, Geneva, sans-serif",
+                        "Times New Roman, Times, serif",
+                        'Trebuchet MS", Helvetica, sans-serif',
+                        "Verdana, Geneva, sans-serif",
+                    ],
+                },
+                fontSize: {
+                    options: [8, 10, 12, "default", 18, 24, 36],
+                },
                 toolbar: this.#getToolbar(),
                 woltlabToolbarGroup: this.#toolbarGroups,
             };
