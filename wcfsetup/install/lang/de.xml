@@ -3758,6 +3758,7 @@ Dateianhänge:
 		<item name="wcf.date.datePicker.year"><![CDATA[Jahr]]></item>
 		<item name="wcf.date.datePicker.hour"><![CDATA[Stunde]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
+		<item name="wcf.date.pointInTime"><![CDATA[Zeitpunkt]]></item>
 	</category>
 	<category name="wcf.dialog">
 		<item name="wcf.dialog.button.cancel"><![CDATA[Abbrechen]]></item>
