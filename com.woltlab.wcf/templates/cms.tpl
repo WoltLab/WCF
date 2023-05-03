@@ -12,10 +12,6 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	{if $page->showShareButtons()}
-		<a href="{$content->getLink()}" class="contentInteractionButton button small wsShareButton jsOnly" data-link-title="{$content->getTitle()}">{icon name='share'} <span>{lang}wcf.message.share{/lang}</span></a>
-	{/if}
-
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
 		<div class="contentInteractionButton dropdown jsOnly">
 			<button type="button" class="button small dropdownToggle boxFlag box24">
@@ -37,6 +33,14 @@
 
 	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="contentInteractionButton button small">{icon name='pencil'} <span>{lang}wcf.acp.page.edit{/lang}</span></a>{/if}
 {/capture}
+
+{if $page->showShareButtons()}
+	{capture assign='contentInteractionShareButton'}
+		<button type="button" class="button small wsShareButton jsTooltip" title="{lang}wcf.message.share{/lang}" data-link="{$content->getLink()}" data-link-title="{$content->getTitle()}">
+			{icon name='share-nodes'}
+		</button>
+	{/capture}
+{/if}
 
 {include file='header'}
 
