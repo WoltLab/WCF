@@ -38,7 +38,7 @@
 }
 
 @mixin wcfFontSection {
-	font-weight: 300;
+	font-weight: 600;
 	line-height: 1.28;
 
 	@include screen-md-up {
@@ -51,7 +51,7 @@
 }
 
 @mixin wcfFontTitle {
-	font-weight: 300;
+	font-weight: 600;
 	line-height: 1.05;
 
 	@include screen-md-up {
