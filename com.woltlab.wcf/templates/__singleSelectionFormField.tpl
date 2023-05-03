@@ -36,7 +36,6 @@
 	*}>
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<option {*
-				*}name="{$field->getPrefixedId()}" {*
 				*}value="{$__fieldNestedOption[value]}"{*
 				*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} selected{/if}{*
 				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
