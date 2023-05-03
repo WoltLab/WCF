@@ -3705,6 +3705,7 @@ Attachments:
 		<item name="wcf.date.datePicker.year"><![CDATA[Year]]></item>
 		<item name="wcf.date.datePicker.hour"><![CDATA[Hour]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
+		<item name="wcf.date.pointInTime"><![CDATA[Time]]></item>
 	</category>
 	<category name="wcf.dialog">
 		<item name="wcf.dialog.button.cancel"><![CDATA[Cancel]]></item>
@@ -4597,6 +4598,7 @@ Attachments:
 		<item name="wcf.user.username.error.invalid"><![CDATA[The username is invalid.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[User Group]]></item>
+		<item name="wcf.user.group.groupName"><![CDATA[Group Name]]></item>
 		<item name="wcf.user.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
 		<item name="wcf.user.option.error.tooHigh"><![CDATA[The set value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
