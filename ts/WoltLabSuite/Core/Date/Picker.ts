@@ -329,7 +329,7 @@ function open(event: MouseEvent): void {
     UiAlignment.set(_datePicker!, _input!);
   };
   _updatePosition();
-  window.addEventListener("scroll", _updatePosition, { passive: true });
+  window.addEventListener("scroll", _updatePosition, { passive: false });
 
   _input.nextElementSibling!.setAttribute("aria-expanded", "true");
 

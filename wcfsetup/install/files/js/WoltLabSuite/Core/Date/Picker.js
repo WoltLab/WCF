@@ -277,7 +277,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             UiAlignment.set(_datePicker, _input);
         };
         _updatePosition();
-        window.addEventListener("scroll", _updatePosition, { passive: true });
+        window.addEventListener("scroll", _updatePosition, { passive: false });
         _input.nextElementSibling.setAttribute("aria-expanded", "true");
         _focusTrap.activate();
     }
