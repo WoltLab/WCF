@@ -124,6 +124,24 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return configuration;
     }
+    function stripLegacySpacerParagraphs(element) {
+        if (!(element instanceof HTMLTextAreaElement)) {
+            return;
+        }
+        const div = document.createElement("div");
+        div.innerHTML = element.value;
+        div.querySelectorAll("p").forEach((paragraph) => {
+            if (paragraph.childElementCount === 1) {
+                const child = paragraph.children[0];
+                if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
+                    if (paragraph.textContent.trim() === "") {
+                        paragraph.remove();
+                    }
+                }
+            }
+        });
+        element.value = div.innerHTML;
+    }
     async function setupCkeditor(element, features, bbcodes) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -140,6 +158,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             (0, Quote_1.setup)(element);
         }
         const configuration = initializeConfiguration(element, features, bbcodes);
+        stripLegacySpacerParagraphs(element);
         const cke = await window.CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
