@@ -55,11 +55,13 @@ final class SelectFormField extends AbstractFormField implements
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
-        } else if (!isset($this->getOptions()[$this->getValue()])) {
-            $this->addValidationError(new FormFieldValidationError(
-                'invalidValue',
-                'wcf.global.form.error.noValidSelection'
-            ));
+        } else {
+            if (!isset($this->getOptions()[$this->getValue()])) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'invalidValue',
+                    'wcf.global.form.error.noValidSelection'
+                ));
+            }
         }
 
         parent::validate();
