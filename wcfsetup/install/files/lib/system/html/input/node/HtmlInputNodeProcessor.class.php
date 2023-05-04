@@ -452,6 +452,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 $node = $paragraph->childNodes->item(0);
                 if ($node->nodeType === \XML_TEXT_NODE && $node->textContent === "\u{00a0}") {
                     $br = $node->ownerDocument->createElement("br");
+                    $br->setAttribute("data-cke-filler", "true");
                     $node->parentNode->appendChild($br);
                     $node->parentNode->removeChild($node);
 
