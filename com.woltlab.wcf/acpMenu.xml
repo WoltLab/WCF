@@ -715,7 +715,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
 			<controller>wcf\acp\page\CacheListPage</controller>
 			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.configuration.canManageApplication</permissions>
+			<permissions>admin.management.canRebuildData</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData">
 			<controller>wcf\acp\page\RebuildDataPage</controller>
