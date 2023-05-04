@@ -20,6 +20,7 @@ import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/A
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
+import { normalizeLegacyMessage } from "./Ckeditor/Cleanup";
 import Devtools from "../Devtools";
 
 import { ClassicEditor, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
@@ -174,28 +175,6 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
   return configuration;
 }
 
-function stripLegacySpacerParagraphs(element: HTMLElement): void {
-  if (!(element instanceof HTMLTextAreaElement)) {
-    return;
-  }
-
-  const div = document.createElement("div");
-  div.innerHTML = element.value;
-
-  div.querySelectorAll("p").forEach((paragraph) => {
-    if (paragraph.childElementCount === 1) {
-      const child = paragraph.children[0] as HTMLElement;
-      if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
-        if (paragraph.textContent!.trim() === "") {
-          paragraph.remove();
-        }
-      }
-    }
-  });
-
-  element.value = div.innerHTML;
-}
-
 export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
@@ -220,7 +199,7 @@ export async function setupCkeditor(
 
   const configuration = initializeConfiguration(element, features, bbcodes);
 
-  stripLegacySpacerParagraphs(element);
+  normalizeLegacyMessage(element);
 
   const cke = await window.CKEditor5.create(element, configuration);
   const ckeditor = new Ckeditor(cke, features);

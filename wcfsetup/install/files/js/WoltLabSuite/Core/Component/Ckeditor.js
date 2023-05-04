@@ -11,7 +11,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "../Devtools", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Devtools_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Cleanup", "../Devtools", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Cleanup_1, Devtools_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -124,24 +124,6 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return configuration;
     }
-    function stripLegacySpacerParagraphs(element) {
-        if (!(element instanceof HTMLTextAreaElement)) {
-            return;
-        }
-        const div = document.createElement("div");
-        div.innerHTML = element.value;
-        div.querySelectorAll("p").forEach((paragraph) => {
-            if (paragraph.childElementCount === 1) {
-                const child = paragraph.children[0];
-                if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
-                    if (paragraph.textContent.trim() === "") {
-                        paragraph.remove();
-                    }
-                }
-            }
-        });
-        element.value = div.innerHTML;
-    }
     async function setupCkeditor(element, features, bbcodes) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -158,7 +140,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             (0, Quote_1.setup)(element);
         }
         const configuration = initializeConfiguration(element, features, bbcodes);
-        stripLegacySpacerParagraphs(element);
+        (0, Cleanup_1.normalizeLegacyMessage)(element);
         const cke = await window.CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
