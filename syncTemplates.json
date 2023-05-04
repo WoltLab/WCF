@@ -39,6 +39,7 @@
     "__ratingFormField",
     "__rowFormContainer",
     "__rowFormFieldContainer",
+    "__selectFormField",
     "__singleMediaSelectionFormField",
     "__singleSelectionFormField",
     "__sourceCodeFormField",
