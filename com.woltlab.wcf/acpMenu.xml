@@ -20,7 +20,6 @@
 		<!-- package -->
 		<acpmenuitem name="wcf.acp.menu.link.package">
 			<parent>wcf.acp.menu.link.configuration</parent>
-			<permissions>admin.configuration.package.canInstallPackage,admin.configuration.package.canUpdatePackage,admin.configuration.package.canUninstallPackage,admin.configuration.package.canEditServer</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.application.management">
