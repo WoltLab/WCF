@@ -1,3 +1,74 @@
+/**
+ * Cleans up the markup of legacy messages.
+ *
+ * Messages created in the previous editor used empty paragraphs to create empty
+ * lines. In addition, Firefox kept trailing <br> in lines with content, which
+ * causes issues with CKEditor.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
+import DomUtil from "../../Dom/Util";
+
+function unwrapBr(div: HTMLElement): void {
+  div.querySelectorAll("br").forEach((br) => {
+    if (br.previousSibling || br.nextSibling) {
+      return;
+    }
+
+    let parent: HTMLElement | null = br;
+    while ((parent = parent.parentElement) !== null) {
+      switch (parent.tagName) {
+        case "B":
+        case "EM":
+        case "I":
+        case "STRONG":
+        case "SUB":
+        case "SUP":
+        case "SPAN":
+        case "U":
+          if (br.previousSibling || br.nextSibling) {
+            return;
+          }
+
+          parent.insertAdjacentElement("afterend", br);
+          parent.remove();
+          parent = br;
+          break;
+
+        default:
+          return;
+      }
+    }
+  });
+}
+
+function removeTrailingBr(div: HTMLElement): void {
+  div.querySelectorAll("br").forEach((br) => {
+    if (br.dataset.ckeFiller === "true") {
+      return;
+    }
+
+    const paragraph = br.closest("p");
+    if (paragraph === null) {
+      return;
+    }
+
+    if (!DomUtil.isAtNodeEnd(br, paragraph)) {
+      return;
+    }
+
+    if (paragraph.innerHTML === "<br>") {
+      paragraph.remove();
+    } else {
+      br.remove();
+    }
+  });
+}
+
 function stripLegacySpacerParagraphs(div: HTMLElement): void {
   div.querySelectorAll("p").forEach((paragraph) => {
     if (paragraph.childElementCount === 1) {
@@ -19,6 +90,8 @@ export function normalizeLegacyMessage(element: HTMLElement): void {
   const div = document.createElement("div");
   div.innerHTML = element.value;
 
+  unwrapBr(div);
+  removeTrailingBr(div);
   stripLegacySpacerParagraphs(div);
 
   element.value = div.innerHTML;
