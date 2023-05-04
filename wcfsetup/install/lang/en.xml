@@ -5366,7 +5366,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on <a href="{$owner->getLink()}#wall/comment{@$commentID}">your wall</a>:</p>]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Reaction to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users reacted to your comment (Wall)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s</a>{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
