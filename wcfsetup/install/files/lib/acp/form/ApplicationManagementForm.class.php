@@ -81,12 +81,15 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['cookieDomain'])) {
-            $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
+        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+            if (isset($_POST['cookieDomain'])) {
+                $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
+            }
+            if (isset($_POST['domainName'])) {
+                $this->domainName = StringUtil::trim($_POST['domainName']);
+            }
         }
-        if (isset($_POST['domainName'])) {
-            $this->domainName = StringUtil::trim($_POST['domainName']);
-        }
+
         if (isset($_POST['landingPageID']) && \is_array($_POST['landingPageID'])) {
             $this->landingPageID = ArrayUtil::toIntegerArray($_POST['landingPageID']);
         }
@@ -96,29 +99,31 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::validate();
 
-        if (empty($this->domainName)) {
-            throw new UserInputException('domainName');
-        }
+        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+            if (empty($this->domainName)) {
+                throw new UserInputException('domainName');
+            }
 
-        $regex = new Regex('^https?\://');
-        $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
-        $this->cookieDomain = FileUtil::removeTrailingSlash($regex->replace($this->cookieDomain, ''));
+            $regex = new Regex('^https?\://');
+            $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
+            $this->cookieDomain = FileUtil::removeTrailingSlash($regex->replace($this->cookieDomain, ''));
 
-        // domain may not contain path components
-        $regex = new Regex('[/#\?&]');
-        if ($regex->match($this->domainName)) {
-            throw new UserInputException('domainName', 'containsPath');
-        } elseif ($regex->match($this->cookieDomain)) {
-            throw new UserInputException('cookieDomain', 'containsPath');
-        }
+            // domain may not contain path components
+            $regex = new Regex('[/#\?&]');
+            if ($regex->match($this->domainName)) {
+                throw new UserInputException('domainName', 'containsPath');
+            } elseif ($regex->match($this->cookieDomain)) {
+                throw new UserInputException('cookieDomain', 'containsPath');
+            }
 
-        // strip port from cookie domain
-        $regex = new Regex(':[0-9]+$');
-        $this->cookieDomain = $regex->replace($this->cookieDomain, '');
+            // strip port from cookie domain
+            $regex = new Regex(':[0-9]+$');
+            $this->cookieDomain = $regex->replace($this->cookieDomain, '');
 
-        // check if cookie domain shares the same domain (may exclude subdomains)
-        if (!\str_ends_with($regex->replace($this->domainName, ''), $this->cookieDomain)) {
-            throw new UserInputException('cookieDomain', 'invalid');
+            // check if cookie domain shares the same domain (may exclude subdomains)
+            if (!\str_ends_with($regex->replace($this->domainName, ''), $this->cookieDomain)) {
+                throw new UserInputException('cookieDomain', 'invalid');
+            }
         }
 
         foreach ($this->landingPageID as $landingPageID) {
@@ -154,14 +159,16 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::save();
 
-        $sql = "UPDATE  wcf" . WCF_N . "_application
-                SET     domainName = ?,
-                        cookieDomain = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            $this->domainName,
-            $this->cookieDomain,
-        ]);
+        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+            $sql = "UPDATE  wcf" . WCF_N . "_application
+                    SET     domainName = ?,
+                            cookieDomain = ?";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([
+                $this->domainName,
+                $this->cookieDomain,
+            ]);
+        }
 
         $sql = "UPDATE  wcf" . WCF_N . "_application
                 SET     landingPageID = ?

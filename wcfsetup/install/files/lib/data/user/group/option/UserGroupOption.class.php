@@ -27,7 +27,6 @@ class UserGroupOption extends Option
      */
     const ENTERPRISE_BLACKLIST = [
         // Configuration
-        'admin.configuration.canManageApplication',
         'admin.configuration.package.canUpdatePackage',
         'admin.configuration.package.canEditServer',
 
