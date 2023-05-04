@@ -29,7 +29,15 @@ final class HtmlOutputNodeP extends AbstractHtmlOutputNode
         foreach ($elements as $element) {
             if ($element->childElementCount === 1 && $element->firstElementChild) {
                 $child = $element->firstElementChild;
-                if ($child->tagName === 'br' && $child->getAttribute('data-cke-filler') !== 'true') {
+                if ($child->tagName === 'br') {
+                    if ($child->getAttribute('data-cke-filler') === 'true') {
+                        // This is an internal marker used to identify paragraphs
+                        // that are intentionally left blank.
+                        $child->removeAttribute('data-cke-filler');
+
+                        continue;
+                    }
+
                     // This is most likely a legacy paragraph that was inserted
                     // in earlier versions and is not longer required. We need
                     // to verify that there is no other text inside the node
