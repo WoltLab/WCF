@@ -33,25 +33,13 @@ final class SelectFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function getSaveValue()
-    {
-        if ($this->getValue() === '') {
-            return;
-        }
-
-        return parent::getSaveValue();
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
 
             if (\is_string($value)) {
-                $this->value = $value;
+                $this->value = $value !== '' ? $value : null;
             }
         }
 
@@ -63,7 +51,7 @@ final class SelectFormField extends AbstractFormField implements
      */
     public function validate()
     {
-        if ($this->getValue() === '') {
+        if ($this->getValue() === null) {
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
@@ -82,14 +70,10 @@ final class SelectFormField extends AbstractFormField implements
      */
     public function value($value)
     {
-        // ignore `null` as value which can be passed either for nullable
-        // fields or as value if no options are available
-        if ($value === null) {
-            return $this;
-        }
-
-        if (!isset($this->getOptions()[$value])) {
-            throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
+        if ($value !== null) {
+            if (!isset($this->getOptions()[$value])) {
+                throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
+            }
         }
 
         return parent::value($value);
