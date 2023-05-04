@@ -27,7 +27,7 @@ class CacheListPage extends AbstractPage
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.configuration.canManageApplication'];
+    public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
      * indicates if cache was cleared

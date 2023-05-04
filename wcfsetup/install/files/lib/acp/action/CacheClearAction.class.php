@@ -21,7 +21,7 @@ final class CacheClearAction extends AbstractSecureAction
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.management.canViewLog'];
+    public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
      * @inheritDoc
