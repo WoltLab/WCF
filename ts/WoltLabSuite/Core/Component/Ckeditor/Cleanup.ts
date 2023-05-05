@@ -52,17 +52,17 @@ function removeTrailingBr(div: HTMLElement): void {
       return;
     }
 
-    const paragraph = br.closest("p");
-    if (paragraph === null) {
+    const paragraphOrTableCell = br.closest("p, td");
+    if (paragraphOrTableCell === null) {
       return;
     }
 
-    if (!DomUtil.isAtNodeEnd(br, paragraph)) {
+    if (!DomUtil.isAtNodeEnd(br, paragraphOrTableCell)) {
       return;
     }
 
-    if (paragraph.innerHTML === "<br>") {
-      paragraph.remove();
+    if (paragraphOrTableCell.tagName === "P" && paragraphOrTableCell.innerHTML === "<br>") {
+      paragraphOrTableCell.remove();
     } else {
       br.remove();
     }

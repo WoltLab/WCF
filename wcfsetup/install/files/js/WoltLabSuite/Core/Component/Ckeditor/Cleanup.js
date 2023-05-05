@@ -49,15 +49,15 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
             if (br.dataset.ckeFiller === "true") {
                 return;
             }
-            const paragraph = br.closest("p");
-            if (paragraph === null) {
+            const paragraphOrTableCell = br.closest("p, td");
+            if (paragraphOrTableCell === null) {
                 return;
             }
-            if (!Util_1.default.isAtNodeEnd(br, paragraph)) {
+            if (!Util_1.default.isAtNodeEnd(br, paragraphOrTableCell)) {
                 return;
             }
-            if (paragraph.innerHTML === "<br>") {
-                paragraph.remove();
+            if (paragraphOrTableCell.tagName === "P" && paragraphOrTableCell.innerHTML === "<br>") {
+                paragraphOrTableCell.remove();
             }
             else {
                 br.remove();
