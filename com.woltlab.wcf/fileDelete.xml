@@ -63,6 +63,7 @@
 		<file>acp/templates/desktopNotificationApplicationSelectOptionType.tpl</file>
 		<file>acp/templates/detailedPackageList.tpl</file>
 		<file>acp/templates/devtoolsFormBuilderTest.tpl</file>
+		<file>acp/templates/firstTimeSetup.tpl</file>
 		<file>acp/templates/languageServerAdd.tpl</file>
 		<file>acp/templates/languageServerList.tpl</file>
 		<file>acp/templates/mainMenu.tpl</file>
@@ -226,6 +227,7 @@
 		<file>acp/update_com.woltlab.wcf_5.6_checkForMultiDomainSetup.php</file>
 		<file>acp/update_com.woltlab.wcf_5.6_checkSystemRequirements.php</file>
 		<file>acp/update_com.woltlab.wcf_5.6_checkUpdateServers.php</file>
+		<file>acp/update_com.woltlab.wcf_6.0_randomize_cronjobs.php</file>
 		<file>acp/update_com.woltlab.wcf_beta1_to_beta2.php</file>
 		<file>acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</file>
 		<file>acp/update_com.woltlab.wcf_preventMailAbuse.php</file>
@@ -1291,6 +1293,7 @@
 		<file>js/WCF.Location.min.js</file>
 		<file>js/WCF.Message.min.js</file>
 		<file>js/WCF.Moderation.min.js</file>
+		<file>js/WCF.Poll.js</file>
 		<file>js/WCF.Poll.min.js</file>
 		<file>js/WCF.Search.Message.js</file>
 		<file>js/WCF.Search.Message.min.js</file>
@@ -1545,6 +1548,7 @@
 		<file>lib/acp/form/DashboardOptionForm.class.php</file>
 		<file>lib/acp/form/DevtoolsFormBuilderTestForm.class.php</file>
 		<file>lib/acp/form/DevtoolsProjectSyncForm.class.php</file>
+		<file>lib/acp/form/FirstTimeSetupForm.class.php</file>
 		<file>lib/acp/form/LanguageServerAddForm.class.php</file>
 		<file>lib/acp/form/LanguageServerEditForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordForm.class.php</file>
@@ -1746,6 +1750,7 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/AttributeObjectBuilderFactory.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/FilledArguments.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/JsonExtensionNotEnabled.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/SourceException.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ClassNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ProxyClassNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ShellVisitorNodeBuilder.php</file>
@@ -2016,6 +2021,16 @@
 		<file>lib/system/api/laminas/laminas-diactoros/psalm-baseline.xml</file>
 		<file>lib/system/api/laminas/laminas-diactoros/psalm.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-diactoros/renovate.json</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/PhpInputStream.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/create_uploaded_file.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/CHANGELOG.md</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/composer.lock</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
