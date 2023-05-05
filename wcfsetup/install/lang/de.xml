@@ -2717,8 +2717,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.acp.sitemap.priority"><![CDATA[Priorität]]></item>
-		<item name="wcf.acp.sitemap.priority.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Priorität der Einträge in dieser Sitemap an. Gültige Werte liegen zwischen 0,0 und 1,0.]]></item>
-		<item name="wcf.acp.sitemap.priority.error.invalid"><![CDATA[Der Wert muss zwischen 0,0 und 1,0 liegen.]]></item>
 		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Immer]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Stündlich]]></item>

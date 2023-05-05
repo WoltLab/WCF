@@ -23,19 +23,6 @@
 
 <form method="post" action="{link controller='SitemapEdit'}objectType={$objectType->objectType}{/link}">
 	<div class="section">
-		<dl{if $errorField == 'priority'} class="formError"{/if}>
-			<dt><label for="priority">{lang}wcf.acp.sitemap.priority{/lang}</label></dt>
-			<dd>
-				<input type="number" id="priority" name="priority" step="0.1" min="0" max="1" value="{$priority}" class="short"/>
-				{if $errorField == 'priority'}
-					<small class="innerError">
-						{lang}wcf.acp.sitemap.priority.error.{$errorType}{/lang}
-					</small>
-				{/if}
-				<small>{lang}wcf.acp.sitemap.priority.description{/lang}</small>
-			</dd>
-		</dl>
-		
 		<dl{if $errorField == 'changeFreq'} class="formError"{/if}>
 			<dt><label for="changeFreq">{lang}wcf.acp.sitemap.changeFreq{/lang}</label></dt>
 			<dd>
