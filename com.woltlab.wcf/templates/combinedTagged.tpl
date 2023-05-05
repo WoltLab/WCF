@@ -1,14 +1,9 @@
-{capture assign='pageTitle'}{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
+{capture assign='pageTitle'}{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang}</h1>
-			<ul class="tagList" style="margin-top: 10px">
-				{foreach from=$combinedTags item=tag}
-					<li><a href="{link controller='Tagged' object=$tag}objectType={@$objectType}{/link}" class="tag jsTooltip" title="{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}">{$tag->name}</a></li>
-				{/foreach}
-			</ul>
+			<h1 class="contentTitle">{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}</h1>
 		</div>
 	</header>
 {/capture}
