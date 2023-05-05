@@ -15,14 +15,14 @@ use Psr\Http\Message\StreamInterface;
  * Logic in the request pipeline that acts on a ResponseInterface must check for a LegacyPlaceholderResponse
  * and handle it separately.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2022 WoltLab GmbH
+ * @author Tim Duesterhus
+ * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   6.0
+ * @since 6.0
  */
 final class LegacyPlaceholderResponse implements ResponseInterface
 {
-    private function throwException()
+    private function throwException(): never
     {
         throw new \BadMethodCallException(\sprintf(
             "Operating on a '%s' placeholder return value of legacy controller is not allowed, as the controller's response information is not available.",
@@ -30,72 +30,72 @@ final class LegacyPlaceholderResponse implements ResponseInterface
         ));
     }
 
-    public function getStatusCode()
+    public function getStatusCode(): never
     {
         $this->throwException();
     }
 
-    public function withStatus(int $code, string $reasonPhrase = '')
+    public function withStatus(int $code, string $reasonPhrase = ''): never
     {
         $this->throwException();
     }
 
-    public function getReasonPhrase()
+    public function getReasonPhrase(): never
     {
         $this->throwException();
     }
 
-    public function getProtocolVersion()
+    public function getProtocolVersion(): never
     {
         $this->throwException();
     }
 
-    public function withProtocolVersion(string $version)
+    public function withProtocolVersion(string $version): never
     {
         $this->throwException();
     }
 
-    public function getHeaders()
+    public function getHeaders(): never
     {
         $this->throwException();
     }
 
-    public function hasHeader(string $name)
+    public function hasHeader(string $name): never
     {
         $this->throwException();
     }
 
-    public function getHeader(string $name)
+    public function getHeader(string $name): never
     {
         $this->throwException();
     }
 
-    public function getHeaderLine(string $name)
+    public function getHeaderLine(string $name): never
     {
         $this->throwException();
     }
 
-    public function withHeader(string $name, $value)
+    public function withHeader(string $name, $value): never
     {
         $this->throwException();
     }
 
-    public function withAddedHeader(string $name, $value)
+    public function withAddedHeader(string $name, $value): never
     {
         $this->throwException();
     }
 
-    public function withoutHeader(string $name)
+    public function withoutHeader(string $name): never
     {
         $this->throwException();
     }
 
-    public function getBody()
+    public function getBody(): never
     {
         $this->throwException();
     }
 
-    public function withBody(StreamInterface $body)
+    public function withBody(StreamInterface $body): never
     {
         $this->throwException();
     }
