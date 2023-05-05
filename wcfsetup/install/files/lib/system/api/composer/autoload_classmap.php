@@ -682,7 +682,6 @@ return array(
     'Laminas\\Diactoros\\HeaderSecurity' => $vendorDir . '/laminas/laminas-diactoros/src/HeaderSecurity.php',
     'Laminas\\Diactoros\\MessageTrait' => $vendorDir . '/laminas/laminas-diactoros/src/MessageTrait.php',
     'Laminas\\Diactoros\\Module' => $vendorDir . '/laminas/laminas-diactoros/src/Module.php',
-    'Laminas\\Diactoros\\PhpInputStream' => $vendorDir . '/laminas/laminas-diactoros/src/PhpInputStream.php',
     'Laminas\\Diactoros\\RelativeStream' => $vendorDir . '/laminas/laminas-diactoros/src/RelativeStream.php',
     'Laminas\\Diactoros\\Request' => $vendorDir . '/laminas/laminas-diactoros/src/Request.php',
     'Laminas\\Diactoros\\RequestFactory' => $vendorDir . '/laminas/laminas-diactoros/src/RequestFactory.php',

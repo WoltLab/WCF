@@ -83,9 +83,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.25.2',
-            'version' => '2.25.2.0',
-            'reference' => '9f3f4bf5b99c9538b6f1dbcc20f6fec357914f9e',
+            'pretty_version' => '3.0.0',
+            'version' => '3.0.0.0',
+            'reference' => '2515f4134258b1b418c23cb86606b8a09dd01aea',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),
@@ -188,12 +188,13 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '^1.1 || ^2.0',
             ),
         ),
         'psr/http-message' => array(
-            'pretty_version' => '1.1',
-            'version' => '1.1.0.0',
-            'reference' => 'cb6ce4845ce34a8ad9e68117c10ee90a29919eba',
+            'pretty_version' => '2.0',
+            'version' => '2.0.0.0',
+            'reference' => '402d35bcb92c70c026d1a6a9883f06b2ead23d71',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/http-message',
             'aliases' => array(),
@@ -203,6 +204,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '^1.1 || ^2.0',
             ),
         ),
         'psr/http-server-handler' => array(
