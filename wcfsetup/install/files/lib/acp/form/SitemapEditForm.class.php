@@ -49,12 +49,6 @@ class SitemapEditForm extends AbstractForm
     public $objectType;
 
     /**
-     * The priority for this sitemap object.
-     * @var float
-     */
-    public $priority = 0.5;
-
-    /**
      * The changeFreq for this sitemap object.
      * @var string
      */
@@ -122,14 +116,10 @@ class SitemapEditForm extends AbstractForm
             $sitemapData = @\unserialize($sitemapData);
 
             if (\is_array($sitemapData)) {
-                $this->priority = $sitemapData['priority'];
                 $this->changeFreq = $sitemapData['changeFreq'];
                 $this->rebuildTime = $sitemapData['rebuildTime'];
                 $this->isDisabled = $sitemapData['isDisabled'];
             } else {
-                if ($this->objectType->priority !== null) {
-                    $this->priority = $this->objectType->priority;
-                }
                 if ($this->objectType->changeFreq !== null) {
                     $this->changeFreq = $this->objectType->changeFreq;
                 }
@@ -150,9 +140,6 @@ class SitemapEditForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['priority'])) {
-            $this->priority = \round(\floatval($_POST['priority']), 1);
-        }
         if (isset($_POST['changeFreq'])) {
             $this->changeFreq = $_POST['changeFreq'];
         }
@@ -168,10 +155,6 @@ class SitemapEditForm extends AbstractForm
     public function validate()
     {
         parent::validate();
-
-        if ($this->priority > 1 || $this->priority < 0) {
-            throw new UserInputException('priority', 'invalid');
-        }
 
         if (!\in_array($this->changeFreq, $this->validChangeFreq)) {
             throw new UserInputException('changeFreq');
@@ -189,7 +172,6 @@ class SitemapEditForm extends AbstractForm
             'com.woltlab.wcf',
             SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName,
             \serialize([
-                'priority' => $this->priority,
                 'changeFreq' => $this->changeFreq,
                 'rebuildTime' => $this->rebuildTime,
                 'isDisabled' => $this->isDisabled,
@@ -211,7 +193,6 @@ class SitemapEditForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'objectType' => $this->objectType,
-            'priority' => $this->priority,
             'changeFreq' => $this->changeFreq,
             'rebuildTime' => $this->rebuildTime,
             'validChangeFreq' => $this->validChangeFreq,

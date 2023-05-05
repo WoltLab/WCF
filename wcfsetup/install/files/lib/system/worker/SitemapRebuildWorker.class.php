@@ -524,7 +524,6 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             $sitemapData = @\unserialize($sitemapData);
 
             if (\is_array($sitemapData)) {
-                $object->priority = $sitemapData['priority'];
                 $object->changeFreq = $sitemapData['changeFreq'];
                 $object->rebuildTime = $sitemapData['rebuildTime'];
                 $object->isDisabled = $sitemapData['isDisabled'];
