@@ -288,7 +288,13 @@ export class UiItemListLineBreakSeparatedText {
     if (items.length > 1) {
       event.preventDefault();
 
-      items.forEach((item) => this.insertItem(item));
+      items.forEach((item) => {
+        item = item.trim();
+
+        if (item !== "" && !this.items.has(item)) {
+          this.insertItem(item);
+        }
+      });
 
       this.resetInput();
     }
