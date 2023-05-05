@@ -5,6 +5,7 @@ namespace wcf\acp\page;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractPage;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
 use wcf\system\worker\SitemapRebuildWorker;
 
@@ -34,6 +35,11 @@ class SitemapListPage extends AbstractPage
     public $sitemapObjectTypes = [];
 
     /**
+     * @var mixed[]
+     */
+    private $sitemapData = [];
+
+    /**
      * @inheritDoc
      */
     public function readData()
@@ -43,7 +49,26 @@ class SitemapListPage extends AbstractPage
         $this->sitemapObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
 
         foreach ($this->sitemapObjectTypes as $sitemapObjectType) {
-            SitemapRebuildWorker::prepareSitemapObject($sitemapObjectType);
+            $this->sitemapData[$sitemapObjectType->objectType] = [
+                'changeFreq' => $sitemapObjectType->changeFreq,
+                'rebuildTime' => $sitemapObjectType->rebuildTime,
+                'isDisabled' => 0,
+            ];
+
+            $sitemapData = RegistryHandler::getInstance()->get(
+                'com.woltlab.wcf',
+                SitemapRebuildWorker::REGISTRY_PREFIX . $sitemapObjectType->objectType
+            );
+
+            if ($sitemapData !== null) {
+                $sitemapData = @\unserialize($sitemapData);
+
+                if (\is_array($sitemapData)) {
+                    $this->sitemapData[$sitemapObjectType->objectType]['changeFreq'] = $sitemapData['changeFreq'];
+                    $this->sitemapData[$sitemapObjectType->objectType]['rebuildTime'] = $sitemapData['rebuildTime'];
+                    $this->sitemapData[$sitemapObjectType->objectType]['isDisabled'] = $sitemapData['isDisabled'];
+                }
+            }
         }
     }
 
@@ -56,6 +81,7 @@ class SitemapListPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'sitemapObjectTypes' => $this->sitemapObjectTypes,
+            'sitemapData' => $this->sitemapData,
         ]);
     }
 }
