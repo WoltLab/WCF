@@ -69,6 +69,11 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     private $actualUser;
 
     /**
+     * @var mixed[]
+     */
+    private $sitemapData = [];
+
+    /**
      * @inheritDoc
      */
     public function initObjectList()
@@ -94,12 +99,12 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 // read sitemaps
                 $sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
                 foreach ($sitemapObjects as $sitemapObject) {
-                    self::prepareSitemapObject($sitemapObject);
+                    $this->prepareSitemapObject($sitemapObject);
                     $processor = $sitemapObject->getProcessor();
 
                     if (
                         $processor->isAvailableType()
-                        && ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled)
+                        && !$this->sitemapData[$sitemapObject->objectType]['isDisabled']
                     ) {
                         $this->sitemapObjects[] = $sitemapObject;
 
@@ -197,13 +202,14 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                     $object->{$sitemapObject->getLastModifiedColumn()}
                 );
 
+                $objectType = $this->sitemapObjects[$this->workerData['sitemap']];
                 if ($sitemapObject->canView($object)) {
                     $this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
                         // strip session links
                         'link' => MessageUtil::stripCrap($link),
                         'lastModifiedTime' => $lastModifiedTime,
-                        'priority' => $this->sitemapObjects[$this->workerData['sitemap']]->priority,
-                        'changeFreq' => $this->sitemapObjects[$this->workerData['sitemap']]->changeFreq,
+                        'priority' => $objectType->priority,
+                        'changeFreq' => $this->sitemapData[$objectType->objectType]['changeFreq'],
                     ]));
 
                     $this->workerData['dataCount']++;
@@ -262,7 +268,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         while (
             $object
             && \file_exists(self::getSitemapPath() . $object->objectType . '.xml')
-            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)
+            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - ($this->sitemapData[$object->objectType]['rebuildTime'] ?: 60 * 60 * 24 * 7)
         ) {
             $filenames = \array_merge(
                 \glob(self::getSitemapPath() . $object->objectType . '_*'),
@@ -507,14 +513,19 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     }
 
     /**
-     * Reads the columns changed by the user for this sitemap object from the registry and
-     * modifies the object accordingly.
+     * Reads the columns changed by the user for this sitemap object from the registry.
      *
      * @param ObjectType $object
      * @since       5.3
      */
-    public static function prepareSitemapObject(ObjectType $object)
+    private function prepareSitemapObject(ObjectType $object): void
     {
+        $this->sitemapData[$object->objectType] = [
+            'changeFreq' => $object->changeFreq,
+            'rebuildTime' => $object->rebuildTime,
+            'isDisabled' => 0,
+        ];
+
         $sitemapData = RegistryHandler::getInstance()->get(
             'com.woltlab.wcf',
             self::REGISTRY_PREFIX . $object->objectType
@@ -524,9 +535,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             $sitemapData = @\unserialize($sitemapData);
 
             if (\is_array($sitemapData)) {
-                $object->changeFreq = $sitemapData['changeFreq'];
-                $object->rebuildTime = $sitemapData['rebuildTime'];
-                $object->isDisabled = $sitemapData['isDisabled'];
+                $this->sitemapData[$object->objectType]['changeFreq'] = $sitemapData['changeFreq'];
+                $this->sitemapData[$object->objectType]['rebuildTime'] = $sitemapData['rebuildTime'];
+                $this->sitemapData[$object->objectType]['isDisabled'] = $sitemapData['isDisabled'];
             }
         }
     }

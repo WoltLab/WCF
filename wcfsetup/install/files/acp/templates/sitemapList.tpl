@@ -36,17 +36,17 @@
 				{foreach from=$sitemapObjectTypes item=object}
 					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{@$object->getObjectID()}">
 						<td class="columnIcon">
-							{assign var='sitemapIsDisabled' value=false}
-							{if $object->isDisabled}
-								{assign var='sitemapIsDisabled' value=true}
+							{if $sitemapData[$object->objectType]['isDisabled']}
+								{objectAction action="toggle" isDisabled=true}
+							{else}
+								{objectAction action="toggle" isDisabled=false}
 							{/if}
-							{objectAction action="toggle" isDisabled=$sitemapIsDisabled}
 							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 						</td>
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
 						<td class="columnInteger columnPriority">{$object->priority}</td>
-						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$object->changeFreq}{/lang}</td>
-						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$object->rebuildTime full=true format='plain'}</td>
+						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$sitemapData[$object->objectType]['changeFreq']}{/lang}</td>
+						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$sitemapData[$object->objectType]['rebuildTime'] full=true format='plain'}</td>
 						
 						{event name='columns'}
 					</tr>
