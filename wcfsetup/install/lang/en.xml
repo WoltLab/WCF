@@ -3555,14 +3555,14 @@ Attachments:
 		<item name="wcf.date.interval.full.future.inSentence"><![CDATA[in {if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}a week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}a day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}an hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}a minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.future.inSentence"><![CDATA[in {if $hours > 1}{#$hours} hours{else}an hour{/if}]]></item>
 		<item name="wcf.date.interval.minutes.future.inSentence"><![CDATA[in {if $minutes > 1}{#$minutes} minutes{else}a minute{/if}]]></item>
-		<item name="wcf.date.interval.months.future.inSentence"><![CDATA[in {if $months > 1}{#$months} months{else}a Month{/if}]]></item>
+		<item name="wcf.date.interval.months.future.inSentence"><![CDATA[in {if $months > 1}{#$months} months{else}a month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.future.inSentence"><![CDATA[in {if $weeks > 1}{#$weeks} weeks{else}a week{/if}]]></item>
 		<item name="wcf.date.interval.years.future.inSentence"><![CDATA[in {if $years > 1}{#$years} years{else}a year{/if}]]></item>
 		<item name="wcf.date.interval.days.plain"><![CDATA[{if $days > 1}{#$days} days{else}one day{/if}]]></item>
 		<item name="wcf.date.interval.full.plain"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}one year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}one month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}one week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}one day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}one hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}one minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.plain"><![CDATA[{if $hours > 1}{#$hours} hours{else}one hour{/if}]]></item>
 		<item name="wcf.date.interval.minutes.plain"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}one minute{/if}]]></item>
-		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} months{else}one Month{/if}]]></item>
+		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} months{else}one month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.plain"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}one week{/if}]]></item>
 		<item name="wcf.date.interval.years.plain"><![CDATA[{if $years > 1}{#$years} years{else}one year{/if}]]></item>
 		<!-- variables for time periods -->
