@@ -51,6 +51,10 @@
 	{pages print=true assign=pagesLinks controller='CombinedTagged' link="$linkParameters&objectType=$objectType&pageNo=%d"}
 {/capture}
 
+{capture assign='contentInteractionButtons'}
+	<a href="{link controller='TagSearch'}{/link}" class="contentInteractionButton button small">{icon name='magnifying-glass'} <span>{lang}wcf.search.type.tags{/lang}</span></a>
+{/capture}
+
 {include file='header'}
 
 {if $items}
