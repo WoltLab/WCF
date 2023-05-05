@@ -44,6 +44,7 @@ final class HtmlOutputNodeBr extends AbstractHtmlOutputNode
         while (($parent = $parent->parentNode) !== null) {
             switch ($parent->nodeName) {
                 case "b":
+                case "del":
                 case "em":
                 case "i":
                 case "strong":

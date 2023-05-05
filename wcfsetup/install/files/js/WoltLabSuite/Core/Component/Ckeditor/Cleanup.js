@@ -24,6 +24,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
             while ((parent = parent.parentElement) !== null) {
                 switch (parent.tagName) {
                     case "B":
+                    case "DEL":
                     case "EM":
                     case "I":
                     case "STRONG":

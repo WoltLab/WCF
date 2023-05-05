@@ -23,6 +23,7 @@ function unwrapBr(div: HTMLElement): void {
     while ((parent = parent.parentElement) !== null) {
       switch (parent.tagName) {
         case "B":
+        case "DEL":
         case "EM":
         case "I":
         case "STRONG":
