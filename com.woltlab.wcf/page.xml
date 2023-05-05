@@ -483,6 +483,20 @@
 				<title>Inhalte mit bestimmtem Tag</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.CombinedTagged">
+			<pageType>system</pageType>
+			<controller>wcf\page\CombinedTaggedPage</controller>
+			<name language="de">Inhalte mit bestimmten Tags</name>
+			<name language="en">Content With Particular Tags</name>
+			<permissions>user.tag.canViewTag</permissions>
+			<requireObjectID>1</requireObjectID>
+			<content language="en">
+				<title>Content With Particular Tags</title>
+			</content>
+			<content language="de">
+				<title>Inhalte mit bestimmten Tags</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.User">
 			<pageType>system</pageType>
 			<controller>wcf\page\UserPage</controller>
