@@ -1967,15 +1967,13 @@ WCF.String = {
 	 * @return	string
 	 */
 	formatNumeric: function(number, decimalPlaces) {
-		number = String(WCF.Number.round(number, decimalPlaces || 2));
-		var numberParts = number.split('.');
-		
-		number = this.addThousandsSeparator(numberParts[0]);
-		if (numberParts.length > 1) number += WCF.Language.get('wcf.global.decimalPoint') + numberParts[1];
-		
-		number = number.replace('-', '\u2212');
-		
-		return number;
+		var maximumFractionDigits = decimalPlaces || 2;
+
+		return Number(number)
+			.toLocaleString(document.documentElement.lang, {
+				maximumFractionDigits,
+			})
+			.replace("-", "\u2212");
 	},
 	
 	/**
