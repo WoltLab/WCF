@@ -1930,9 +1930,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.search.input"><![CDATA[Search term]]></item>
 		<item name="wcf.acp.package.search.input.description"><![CDATA[Partial matches are performed against the package name, its description and its internal identifier.]]></item>
 		<item name="wcf.acp.package.search.status.idle"><![CDATA[Enter three or more characters to start searching.]]></item>
-		<item name="wcf.acp.package.search.status.loading"><![CDATA[Searching…]]></item>
+		<item name="wcf.acp.package.search.status.loading"><![CDATA[Searching …]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[There were no matches.]]></item>
-		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists…]]></item>
+		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists …]]></item>
 		<item name="wcf.acp.package.search.result.official"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official WoltLab® packages]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in package sources maintained by third parties]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official package sources]]></item>
@@ -3199,7 +3199,7 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[You can upload a cover photo on their user profile page.]]></item>
-		<item name="wcf.acp.user.security.multifactor"><![CDATA[Multi-factor authentication]]></item>
+		<item name="wcf.acp.user.security.multifactor"><![CDATA[Multi-factor Authentication]]></item>
 		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Active]]></item>
 		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[This user account is protected by a second factor.]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Completely Disable Multi-factor Authentication]]></item>
@@ -3532,14 +3532,14 @@ Attachments:
 		<item name="wcf.date.interval.full.future.inSentence"><![CDATA[in {if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}a week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}a day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}an hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}a minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.future.inSentence"><![CDATA[in {if $hours > 1}{#$hours} hours{else}an hour{/if}]]></item>
 		<item name="wcf.date.interval.minutes.future.inSentence"><![CDATA[in {if $minutes > 1}{#$minutes} minutes{else}a minute{/if}]]></item>
-		<item name="wcf.date.interval.months.future.inSentence"><![CDATA[in {if $months > 1}{#$months} months{else}a Month{/if}]]></item>
+		<item name="wcf.date.interval.months.future.inSentence"><![CDATA[in {if $months > 1}{#$months} months{else}a month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.future.inSentence"><![CDATA[in {if $weeks > 1}{#$weeks} weeks{else}a week{/if}]]></item>
 		<item name="wcf.date.interval.years.future.inSentence"><![CDATA[in {if $years > 1}{#$years} years{else}a year{/if}]]></item>
 		<item name="wcf.date.interval.days.plain"><![CDATA[{if $days > 1}{#$days} days{else}one day{/if}]]></item>
 		<item name="wcf.date.interval.full.plain"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}one year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}one month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}one week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}one day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}one hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}one minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.plain"><![CDATA[{if $hours > 1}{#$hours} hours{else}one hour{/if}]]></item>
 		<item name="wcf.date.interval.minutes.plain"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}one minute{/if}]]></item>
-		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} months{else}one Month{/if}]]></item>
+		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} months{else}one month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.plain"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}one week{/if}]]></item>
 		<item name="wcf.date.interval.years.plain"><![CDATA[{if $years > 1}{#$years} years{else}one year{/if}]]></item>
 		<!-- variables for time periods -->
@@ -5360,7 +5360,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on <a href="{$owner->getLink()}#wall/comment{@$commentID}">your wall</a>:</p>]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Reaction to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users reacted to your comment (Wall)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s</a>{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to your comment on {if $owner->userID == $__wcf->getUser()->userID}your{else}<strong>{$owner}</strong>’s{/if} wall.]]></item>
 		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to your comment on {if $owner->userID == $__wcf->getUser()->userID}your{else}<strong>{$owner}</strong>’s{/if} wall.]]></item>
