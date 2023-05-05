@@ -941,7 +941,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software entwickelt von]]></item>
 		<item name="wcf.acp.index.credits.developer"><![CDATA[Programmierung]]></item>
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Projektleitung]]></item>
-		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
+		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.tmpBroken"><![CDATA[Für den ordnungsgemäßen Betrieb muss das Verzeichnis „{WCF_DIR|concat:'tmp/'}“ existieren und beschreibbar sein. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} auch die Zugriffsrechte auf den Ordner „{'WCF_DIR'|constant}“.]]></item>
