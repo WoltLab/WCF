@@ -97,6 +97,8 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
             $this->invokeHtmlNode(new HtmlOutputUnfurlUrlNode());
         }
 
+        (new HtmlOutputNodeNormalizer($this->getXPath()))->normalize();
+
         // dynamic node handlers
         $this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
 
