@@ -13,74 +13,116 @@
 
 import DomUtil from "../../Dom/Util";
 
-function unwrapBr(div: HTMLElement): void {
+function normalizeBr(div: HTMLElement): void {
   div.querySelectorAll("br").forEach((br) => {
-    if (br.previousSibling || br.nextSibling) {
-      return;
-    }
-
-    let parent: HTMLElement | null = br;
-    while ((parent = parent.parentElement) !== null) {
-      switch (parent.tagName) {
-        case "B":
-        case "DEL":
-        case "EM":
-        case "I":
-        case "STRONG":
-        case "SUB":
-        case "SUP":
-        case "SPAN":
-        case "U":
-          if (br.previousSibling || br.nextSibling) {
-            return;
-          }
-
-          parent.insertAdjacentElement("afterend", br);
-          parent.remove();
-          parent = br;
-          break;
-
-        default:
-          return;
-      }
-    }
+    unwrapBr(br);
+    removeTrailingBr(br);
   });
 }
 
-function removeTrailingBr(div: HTMLElement): void {
-  div.querySelectorAll("br").forEach((br) => {
-    if (br.dataset.ckeFiller === "true") {
-      return;
-    }
+function unwrapBr(br: HTMLElement): void {
+  if (br.previousSibling || br.nextSibling) {
+    return;
+  }
 
-    const paragraphOrTableCell = br.closest("p, td");
-    if (paragraphOrTableCell === null) {
-      return;
-    }
+  const parent = br.parentElement!;
+  switch (parent.tagName) {
+    case "B":
+    case "DEL":
+    case "EM":
+    case "I":
+    case "STRONG":
+    case "SUB":
+    case "SUP":
+    case "SPAN":
+    case "U":
+      parent.insertAdjacentElement("afterend", br);
+      parent.remove();
 
-    if (!DomUtil.isAtNodeEnd(br, paragraphOrTableCell)) {
-      return;
-    }
-
-    if (paragraphOrTableCell.tagName === "P" && paragraphOrTableCell.innerHTML === "<br>") {
-      paragraphOrTableCell.remove();
-    } else {
-      br.remove();
-    }
-  });
+      unwrapBr(br);
+      break;
+  }
 }
 
-function stripLegacySpacerParagraphs(div: HTMLElement): void {
+function removeTrailingBr(br: HTMLElement): void {
+  if (br.dataset.ckeFiller === "true") {
+    return;
+  }
+
+  const paragraphOrTableCell = br.closest("p, td");
+  if (paragraphOrTableCell === null) {
+    return;
+  }
+
+  if (!DomUtil.isAtNodeEnd(br, paragraphOrTableCell)) {
+    return;
+  }
+
+  if (paragraphOrTableCell.tagName === "TD" || paragraphOrTableCell.childNodes.length > 1) {
+    br.remove();
+  }
+}
+
+function getPossibleSpacerParagraphs(div: HTMLElement): HTMLParagraphElement[] {
+  const paragraphs: HTMLParagraphElement[] = [];
+
   div.querySelectorAll("p").forEach((paragraph) => {
     if (paragraph.childElementCount === 1) {
       const child = paragraph.children[0] as HTMLElement;
       if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
-        if (paragraph.textContent!.trim() === "") {
-          paragraph.remove();
-        }
+        paragraphs.push(paragraph);
       }
     }
   });
+
+  return paragraphs;
+}
+
+function reduceSpacerParagraphs(paragraphs: HTMLParagraphElement[]): void {
+  if (paragraphs.length === 0) {
+    return;
+  }
+
+  for (let i = 0, length = paragraphs.length; i < length; i++) {
+    const candidate = paragraphs[i];
+    let offset = 0;
+
+    // Searches for adjacent paragraphs.
+    while (i + offset + 1 < length) {
+      const nextCandidate = paragraphs[i + offset + 1];
+      if (candidate.nextElementSibling !== nextCandidate) {
+        break;
+      }
+
+      offset++;
+    }
+
+    if (offset === 0) {
+      // An offset of 0 means that this is a single paragraph and we
+      // can safely remove it.
+      candidate.remove();
+    } else {
+      let numberOfParagraphsToRemove: number;
+
+      // We need to reduce the number of paragraphs by half, unless it
+      // is an uneven number in which case we need to remove one
+      // additional paragraph.
+      if (offset % 2 === 1) {
+        // 2 -> 1, 4 -> 2
+        numberOfParagraphsToRemove = Math.ceil(offset / 2);
+      } else {
+        // 3 -> 1, 5 -> 2
+        numberOfParagraphsToRemove = Math.ceil(offset / 2) + 1;
+      }
+
+      const removeParagraphs = paragraphs.slice(i, i + numberOfParagraphsToRemove);
+      removeParagraphs.forEach((paragraph) => {
+        paragraph.remove();
+      });
+
+      i += offset;
+    }
+  }
 }
 
 export function normalizeLegacyMessage(element: HTMLElement): void {
@@ -91,9 +133,9 @@ export function normalizeLegacyMessage(element: HTMLElement): void {
   const div = document.createElement("div");
   div.innerHTML = element.value;
 
-  unwrapBr(div);
-  removeTrailingBr(div);
-  stripLegacySpacerParagraphs(div);
+  normalizeBr(div);
+  const paragraphs = getPossibleSpacerParagraphs(div);
+  reduceSpacerParagraphs(paragraphs);
 
   element.value = div.innerHTML;
 }
