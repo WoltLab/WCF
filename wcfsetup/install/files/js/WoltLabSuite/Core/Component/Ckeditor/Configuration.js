@@ -171,12 +171,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("HtmlEmbed");
             }
-            if (this.#features.media) {
-                items.push("woltlabBbcode_media");
-            }
-            else {
-                this.#removePlugins.push("WoltlabMedia");
-            }
             if (items.length > 0) {
                 this.#toolbar.push({
                     label: (0, Language_1.getPhrase)("wcf.editor.button.group.block"),
@@ -187,6 +181,11 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         }
         #insertDivider() {
             this.#toolbar.push(this.#divider);
+        }
+        #setupMedia() {
+            if (!this.#features.media) {
+                this.#removePlugins.push("WoltlabMedia");
+            }
         }
         #setupMention() {
             if (!this.#features.mention) {
@@ -223,6 +222,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             this.#setupImage();
             this.#setupBlocks();
             this.#insertDivider();
+            this.#setupMedia();
             this.#setupMention();
         }
         toConfig() {

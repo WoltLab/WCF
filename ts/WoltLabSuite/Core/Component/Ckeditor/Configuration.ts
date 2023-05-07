@@ -186,12 +186,6 @@ class ConfigurationBuilder {
       this.#removePlugins.push("HtmlEmbed");
     }
 
-    if (this.#features.media) {
-      items.push("woltlabBbcode_media");
-    } else {
-      this.#removePlugins.push("WoltlabMedia");
-    }
-
     if (items.length > 0) {
       this.#toolbar.push({
         label: getPhrase("wcf.editor.button.group.block"),
@@ -203,6 +197,12 @@ class ConfigurationBuilder {
 
   #insertDivider(): void {
     this.#toolbar.push(this.#divider);
+  }
+
+  #setupMedia(): void {
+    if (!this.#features.media) {
+      this.#removePlugins.push("WoltlabMedia");
+    }
   }
 
   #setupMention(): void {
@@ -254,6 +254,7 @@ class ConfigurationBuilder {
 
     this.#insertDivider();
 
+    this.#setupMedia();
     this.#setupMention();
   }
 
