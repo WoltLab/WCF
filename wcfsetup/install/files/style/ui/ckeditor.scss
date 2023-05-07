@@ -83,6 +83,7 @@
 	flex-shrink: 0;
 }
 
+.ck.ck-toolbar-dropdown .ck.ck-toolbar__items,
 .ck.ck-toolbar__grouped-dropdown .ck.ck-toolbar__items {
 	/* Allow shrinking when the toolbar is being nested. */
 	flex-shrink: 1;
@@ -283,7 +284,7 @@ html[data-color-scheme="dark"] {
 }
 
 @include screen-xs {
-	html.iOS  .ck.ck-content {
+	html.iOS .ck.ck-content {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
 		font-size: 16px;
 	}
