@@ -20,6 +20,8 @@ final class HtmlOutputNodeNormalizer
 
         $candidates = $this->getPossibleSpacerParagraphs($xpath);
         $this->reduceSpacerParagraphs($candidates);
+
+        $this->stripMarkerOnBr($xpath);
     }
 
     /**
@@ -147,6 +149,13 @@ final class HtmlOutputNodeNormalizer
 
         if ($paragraphOrTableCell->nodeName === "td" || $paragraphOrTableCell->childNodes->length > 1) {
             $br->remove();
+        }
+    }
+
+    private function stripMarkerOnBr(\DOMXPath $xpath): void
+    {
+        foreach ($xpath->query(".//br[@data-cke-filler='true']") as $br) {
+            $br->removeAttribute("data-cke-filler");
         }
     }
 }
