@@ -132,16 +132,20 @@ final class HtmlOutputNodeNormalizer
 
     private function removeTrailingBr(\DOMElement $br): void
     {
-        $paragraph = DOMUtil::closest($br, "p");
-        if ($paragraph === null) {
+        $paragraphOrTableCell = DOMUtil::closest($br, "p");
+        if ($paragraphOrTableCell === null) {
+            $paragraphOrTableCell = DOMUtil::closest($br, "td");
+
+            if ($paragraphOrTableCell === null) {
+                return;
+            }
+        }
+
+        if (!DOMUtil::isLastNode($br, $paragraphOrTableCell)) {
             return;
         }
 
-        if (!DOMUtil::isLastNode($br, $paragraph)) {
-            return;
-        }
-
-        if ($paragraph->childNodes->length > 1) {
+        if ($paragraphOrTableCell->nodeName === "td" || $paragraphOrTableCell->childNodes->length > 1) {
             $br->remove();
         }
     }
