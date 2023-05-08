@@ -20,6 +20,7 @@ import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/A
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
+import { normalizeLegacyMessage } from "./Ckeditor/Cleanup";
 import Devtools from "../Devtools";
 
 import { ClassicEditor, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
@@ -197,6 +198,8 @@ export async function setupCkeditor(
   }
 
   const configuration = initializeConfiguration(element, features, bbcodes);
+
+  normalizeLegacyMessage(element);
 
   const cke = await window.CKEditor5.create(element, configuration);
   const ckeditor = new Ckeditor(cke, features);

@@ -82,6 +82,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
     {
         $definition = $config->getHTMLDefinition(true);
 
+        // <br>
+        $definition->addAttribute('br', 'data-cke-filler', new \HTMLPurifier_AttrDef_Enum(['true']));
+
         // code
         $definition->addAttribute('pre', 'data-file', 'Text');
         $definition->addAttribute('pre', 'data-line', 'Number');

@@ -233,6 +233,22 @@ final class DOMUtil
     }
 
     /**
+     * Finds the closest parent matching the tag name.
+     *
+     * @since 6.0
+     */
+    public static function closest(\DOMNode $node, string $tagName): \DOMNode|null
+    {
+        while ($node = $node->parentNode) {
+            if ($node->nodeName === $tagName) {
+                return $node;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Inserts given DOM node after the reference node.
      */
     public static function insertAfter(\DOMNode $node, \DOMNode $refNode): void

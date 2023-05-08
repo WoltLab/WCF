@@ -97,6 +97,8 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
             $this->invokeHtmlNode(new HtmlOutputUnfurlUrlNode());
         }
 
+        (new HtmlOutputNodeNormalizer())->normalize($this->getXPath());
+
         // dynamic node handlers
         $this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
 
@@ -120,18 +122,10 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
 
                 if (!$isLastNode) {
-                    // check if paragraph only contains <br>
-                    if (StringUtil::trim($paragraph->textContent) === '') {
-                        // get last element
-                        $element = $paragraph->firstChild;
-                        while ($element && $element->nodeType !== \XML_ELEMENT_NODE) {
-                            $element = $element->nextSibling;
-                        }
-
-                        if ($paragraph->childNodes->length === 0 || ($element && $element->nodeName === 'br')) {
-                            DOMUtil::removeNode($paragraph, true);
-                            continue;
-                        }
+                    // Add an extra `<br>` unless the paragraph already contains a `<br>`.
+                    if ($paragraph->childNodes->length !== 1 || $paragraph->childNodes->item(0)->nodeName !== 'br') {
+                        $br = $this->getDocument()->createElement('br');
+                        $paragraph->appendChild($br);
                     }
 
                     $br = $this->getDocument()->createElement('br');
