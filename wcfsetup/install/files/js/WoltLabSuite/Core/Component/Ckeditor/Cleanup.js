@@ -22,24 +22,27 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
         });
     }
     function unwrapBr(br) {
-        if (br.previousSibling || br.nextSibling) {
-            return;
-        }
-        const parent = br.parentElement;
-        switch (parent.tagName) {
-            case "B":
-            case "DEL":
-            case "EM":
-            case "I":
-            case "STRONG":
-            case "SUB":
-            case "SUP":
-            case "SPAN":
-            case "U":
-                parent.insertAdjacentElement("afterend", br);
-                parent.remove();
-                unwrapBr(br);
-                break;
+        for (;;) {
+            if (br.previousSibling || br.nextSibling) {
+                return;
+            }
+            const parent = br.parentElement;
+            switch (parent.tagName) {
+                case "B":
+                case "DEL":
+                case "EM":
+                case "I":
+                case "STRONG":
+                case "SUB":
+                case "SUP":
+                case "SPAN":
+                case "U":
+                    parent.insertAdjacentElement("afterend", br);
+                    parent.remove();
+                    break;
+                default:
+                    return;
+            }
         }
     }
     function removeTrailingBr(br) {

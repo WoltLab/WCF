@@ -21,26 +21,29 @@ function normalizeBr(div: HTMLElement): void {
 }
 
 function unwrapBr(br: HTMLElement): void {
-  if (br.previousSibling || br.nextSibling) {
-    return;
-  }
+  for (;;) {
+    if (br.previousSibling || br.nextSibling) {
+      return;
+    }
 
-  const parent = br.parentElement!;
-  switch (parent.tagName) {
-    case "B":
-    case "DEL":
-    case "EM":
-    case "I":
-    case "STRONG":
-    case "SUB":
-    case "SUP":
-    case "SPAN":
-    case "U":
-      parent.insertAdjacentElement("afterend", br);
-      parent.remove();
+    const parent = br.parentElement!;
+    switch (parent.tagName) {
+      case "B":
+      case "DEL":
+      case "EM":
+      case "I":
+      case "STRONG":
+      case "SUB":
+      case "SUP":
+      case "SPAN":
+      case "U":
+        parent.insertAdjacentElement("afterend", br);
+        parent.remove();
+        break;
 
-      unwrapBr(br);
-      break;
+      default:
+        return;
+    }
   }
 }
 

@@ -104,26 +104,29 @@ final class HtmlOutputNodeNormalizer
 
     private function unwrapBr(\DOMElement $br): void
     {
-        if ($br->previousSibling || $br->nextSibling) {
-            return;
-        }
+        for (;;) {
+            if ($br->previousSibling || $br->nextSibling) {
+                return;
+            }
 
-        $parent = $br->parentNode;
-        switch ($parent->nodeName) {
-            case "b":
-            case "del":
-            case "em":
-            case "i":
-            case "strong":
-            case "sub":
-            case "sup":
-            case "span":
-            case "u":
-                $parent->parentNode->insertBefore($br, $parent);
-                $parent->parentNode->removeChild($parent);
+            $parent = $br->parentNode;
+            switch ($parent->nodeName) {
+                case "b":
+                case "del":
+                case "em":
+                case "i":
+                case "strong":
+                case "sub":
+                case "sup":
+                case "span":
+                case "u":
+                    $parent->parentNode->insertBefore($br, $parent);
+                    $parent->parentNode->removeChild($parent);
+                    break;
 
-                $this->unwrapBr($br);
-                break;
+                default:
+                    return;
+            }
         }
     }
 
