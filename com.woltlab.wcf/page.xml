@@ -473,11 +473,11 @@
 			<pageType>system</pageType>
 			<controller>wcf\page\TaggedPage</controller>
 			<name language="de">Inhalte mit bestimmtem Tag</name>
-			<name language="en">Content With Particular Tag</name>
+			<name language="en">Content with Particular Tag</name>
 			<permissions>user.tag.canViewTag</permissions>
 			<requireObjectID>1</requireObjectID>
 			<content language="en">
-				<title>Content With Particular Tag</title>
+				<title>Content with Particular Tag</title>
 			</content>
 			<content language="de">
 				<title>Inhalte mit bestimmtem Tag</title>
