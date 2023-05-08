@@ -2605,9 +2605,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_PageRebuildDataWorker.description"><![CDATA[Rebuilds the page search index.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_SitemapRebuildWorker"><![CDATA[Rebuild Sitemap]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_SitemapRebuildWorker.description"><![CDATA[Rebuilds the sitemap.]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointUpdateEventsWorker"><![CDATA[Rebuilds Points per Activity]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointUpdateEventsWorker"><![CDATA[Rebuild Points per Activity]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointUpdateEventsWorker.description"><![CDATA[Recalculates points per activity.]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker"><![CDATA[Rebuilds Point Activities]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker"><![CDATA[Rebuild Point Activities]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker.description"><![CDATA[Recalculates the number of activities for which users get points and rebuilds user ranks.]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[It is strongly recommended to enable the maintenance mode while performing a data rebuild.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
@@ -2727,8 +2727,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.mysql.mysqlnd.description"><![CDATA[To properly transmit the correct data type, the MySQL Native Driver must be used for communication with the MySQL server. The MySQL Native Driver is the default driver used by PHP.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB available]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB when using MariaDB) is a transaction storage engine for MySQL and is required for the operation of the software. This is a built-in feature of MySQL.]]></item>
-		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool Size]]></item>
-		<item name="wcf.acp.systemCheck.mysql.bufferPool.description"><![CDATA[The bufferpool is the place where the stored data is kept in memory. It is shared by every customer using the same database server. The bufferpool must have a size of at least 128 MiB to allow for processing of complex queries. To prevent disk accesses from slowing down the page the bufferpool should generally be configured much larger. The ideal size varies based on the hardware configuration.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Buffer Pool Size]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool.description"><![CDATA[The buffer pool is the place where the stored data is kept in memory. It is shared by every customer using the same database server. The buffer pool must have a size of at least 128 MiB to allow for processing of complex queries. To prevent disk accesses from slowing down the page the buffer pool should generally be configured much larger. The ideal size varies based on the hardware configuration.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Writable Directories]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Some directories are being written to during the normal operation. The user that runs the PHP process must have write access.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Supported formats of the GD library]]></item>
