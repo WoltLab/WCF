@@ -487,11 +487,11 @@
 			<pageType>system</pageType>
 			<controller>wcf\page\CombinedTaggedPage</controller>
 			<name language="de">Inhalte mit bestimmten Tags</name>
-			<name language="en">Content With Particular Tags</name>
+			<name language="en">Content with Particular Tags</name>
 			<permissions>user.tag.canViewTag</permissions>
 			<requireObjectID>1</requireObjectID>
 			<content language="en">
-				<title>Content With Particular Tags</title>
+				<title>Content with Particular Tags</title>
 			</content>
 			<content language="de">
 				<title>Inhalte mit bestimmten Tags</title>
