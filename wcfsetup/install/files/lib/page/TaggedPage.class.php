@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
@@ -60,6 +61,12 @@ class TaggedPage extends MultipleLinkPage
     public $tagCloud;
 
     /**
+     * @var int[]
+     * @since 6.0
+     */
+    public $itemsPerType = [];
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -87,6 +94,8 @@ class TaggedPage extends MultipleLinkPage
             throw new IllegalLinkException();
         }
 
+        $this->readItemsPerType();
+
         // get object type
         if (isset($_REQUEST['objectType'])) {
             $objectType = StringUtil::trim($_REQUEST['objectType']);
@@ -95,8 +104,16 @@ class TaggedPage extends MultipleLinkPage
             }
             $this->objectType = $this->availableObjectTypes[$objectType];
         } else {
-            // use first object type
-            $this->objectType = \reset($this->availableObjectTypes);
+            foreach ($this->availableObjectTypes as $key => $objectType) {
+                if ($this->itemsPerType[$key]) {
+                    $this->objectType = $objectType;
+                    break;
+                }
+            }
+
+            if (!$this->objectType) {
+                $this->objectType = \reset($this->availableObjectTypes);
+            }
         }
     }
 
@@ -132,10 +149,20 @@ class TaggedPage extends MultipleLinkPage
             'objectType' => $this->objectType->objectType,
             'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
             'resultListApplication' => $this->objectType->getProcessor()->getApplication(),
+            'itemsPerType' => $this->itemsPerType,
         ]);
 
         if (\count($this->objectList) === 0) {
             @\header('HTTP/1.1 404 Not Found');
+        }
+    }
+
+    private function readItemsPerType(): void
+    {
+        foreach ($this->availableObjectTypes as $key => $objectType) {
+            $objectList = $objectType->getProcessor()->getObjectList($this->tag);
+            \assert($objectList instanceof DatabaseObjectList);
+            $this->itemsPerType[$key] = $objectList->countObjects();
         }
     }
 }
