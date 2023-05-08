@@ -105,18 +105,11 @@ function reduceSpacerParagraphs(paragraphs: HTMLParagraphElement[]): void {
       // can safely remove it.
       candidate.remove();
     } else {
-      let numberOfParagraphsToRemove: number;
-
       // We need to reduce the number of paragraphs by half, unless it
       // is an uneven number in which case we need to remove one
       // additional paragraph.
-      if (offset % 2 === 1) {
-        // 2 -> 1, 4 -> 2
-        numberOfParagraphsToRemove = Math.ceil(offset / 2);
-      } else {
-        // 3 -> 1, 5 -> 2
-        numberOfParagraphsToRemove = Math.ceil(offset / 2) + 1;
-      }
+      const totalNumberOfParagraphs = offset + 1;
+      const numberOfParagraphsToRemove = Math.ceil(totalNumberOfParagraphs / 2);
 
       const removeParagraphs = paragraphs.slice(i, i + numberOfParagraphsToRemove);
       removeParagraphs.forEach((paragraph) => {
