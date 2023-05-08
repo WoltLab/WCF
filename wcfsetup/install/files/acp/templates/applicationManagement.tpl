@@ -98,8 +98,9 @@
 								<small>{$application->getPageURL()}</small>
 							</td>
 							<td class="columnText columnLandingPageID">
-								<select name="landingPageID[{$application->packageID}]">
-									<option value="0">{lang}wcf.acp.application.landingPage.default{/lang}</option>
+								<select name="landingPageID[{$application->packageID}]" required>
+									<option value="">{lang}wcf.global.noSelection{/lang}</option>
+									<option value="0"{if $application->getAbbreviation() === 'wcf'} disabled{elseif $application->landingPageID === null} selected{/if}>{lang}wcf.acp.application.landingPage.default{/lang}</option>
 									
 									{foreach from=$pageNodeList item=pageNode}
 										{if !$pageNode->isDisabled && !$pageNode->requireObjectID && !$pageNode->excludeFromLandingPage}
