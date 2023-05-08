@@ -17,7 +17,7 @@
         "guzzlehttp/guzzle": "^7.5.1",
         "guzzlehttp/psr7": "^2.5.0",
         "laminas/laminas-diactoros": "^3.0.0",
-        "laminas/laminas-httphandlerrunner": "^2.6",
+        "laminas/laminas-httphandlerrunner": "^2.6.1",
         "laminas/laminas-progressbar": "^2.11",
         "paragonie/constant_time_encoding": "^2.6.3",
         "pelago/emogrifier": "^7.0.0",
