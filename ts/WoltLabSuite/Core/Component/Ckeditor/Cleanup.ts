@@ -70,9 +70,11 @@ function getPossibleSpacerParagraphs(div: HTMLElement): HTMLParagraphElement[] {
   const paragraphs: HTMLParagraphElement[] = [];
 
   div.querySelectorAll("p").forEach((paragraph) => {
-    if (paragraph.childElementCount === 1) {
-      const child = paragraph.children[0] as HTMLElement;
-      if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
+    paragraph.normalize();
+
+    if (paragraph.childNodes.length === 1) {
+      const child = paragraph.childNodes[0];
+      if (child instanceof HTMLBRElement && child.dataset.ckeFiller !== "true") {
         paragraphs.push(paragraph);
       }
     }

@@ -63,9 +63,10 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
     function getPossibleSpacerParagraphs(div) {
         const paragraphs = [];
         div.querySelectorAll("p").forEach((paragraph) => {
-            if (paragraph.childElementCount === 1) {
-                const child = paragraph.children[0];
-                if (child.tagName === "BR" && child.dataset.ckeFiller !== "true") {
+            paragraph.normalize();
+            if (paragraph.childNodes.length === 1) {
+                const child = paragraph.childNodes[0];
+                if (child instanceof HTMLBRElement && child.dataset.ckeFiller !== "true") {
                     paragraphs.push(paragraph);
                 }
             }
