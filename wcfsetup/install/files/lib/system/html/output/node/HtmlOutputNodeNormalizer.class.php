@@ -14,26 +14,22 @@ use wcf\util\DOMUtil;
  */
 final class HtmlOutputNodeNormalizer
 {
-    public function __construct(private readonly \DOMXPath $xpath)
+    public function normalize(\DOMXPath $xpath): void
     {
-    }
+        $this->normalizeBr($xpath);
 
-    public function normalize(): void
-    {
-        $this->normalizeBr();
-
-        $candidates = $this->getPossibleSpacerParagraphs();
+        $candidates = $this->getPossibleSpacerParagraphs($xpath);
         $this->reduceSpacerParagraphs($candidates);
     }
 
     /**
      * @return list<\DOMElement>
      */
-    private function getPossibleSpacerParagraphs(): array
+    private function getPossibleSpacerParagraphs(\DOMXpath $xpath): array
     {
         $paragraphs = [];
 
-        foreach ($this->xpath->query('//p') as $p) {
+        foreach ($xpath->query('//p') as $p) {
             \assert($p instanceof \DOMElement);
 
             if ($p->childNodes->length === 1) {
@@ -96,9 +92,9 @@ final class HtmlOutputNodeNormalizer
         }
     }
 
-    private function normalizeBr(): void
+    private function normalizeBr(\DOMXpath $xpath): void
     {
-        foreach ($this->xpath->query('//br') as $br) {
+        foreach ($xpath->query('//br') as $br) {
             \assert($br instanceof \DOMElement);
 
             $this->unwrapBr($br);
