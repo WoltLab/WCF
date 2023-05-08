@@ -48,9 +48,7 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
                         $uploadFile->setValidationErrorType('invalidExtension');
 
                         return false;
-                    case \IMAGETYPE_PNG:
-                    case \IMAGETYPE_GIF:
-                    case \IMAGETYPE_JPEG:
+                    default:
                         // Validate the mime type against the list of allowed extensions.
                         //
                         // We usually don't care about the extension, restricting allowed file extensions
@@ -66,8 +64,6 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 
                             return false;
                         }
-
-                        break;
                 }
             }
         } catch (SystemException $e) {
