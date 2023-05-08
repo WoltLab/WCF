@@ -83,13 +83,8 @@ final class HtmlOutputNodeNormalizer
                 // We need to reduce the number of paragraphs by half, unless it
                 // is an uneven number in which case we need to remove one
                 // additional paragraph.
-                if ($offset % 2 === 1) {
-                    // 2 -> 1, 4 -> 2
-                    $numberOfParagraphsToRemove = \ceil($offset / 2);
-                } else {
-                    // 3 -> 1, 5 -> 2
-                    $numberOfParagraphsToRemove = \ceil($offset / 2) + 1;
-                }
+                $totalNumberOfParagraphs = $offset + 1;
+                $numberOfParagraphsToRemove = \ceil($totalNumberOfParagraphs / 2);
 
                 $removeParagraphs = \array_slice($paragraphs, $i, $numberOfParagraphsToRemove);
                 foreach ($removeParagraphs as $paragraph) {
