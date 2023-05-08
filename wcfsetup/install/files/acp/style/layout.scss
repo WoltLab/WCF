@@ -190,7 +190,7 @@ html[data-color-scheme="dark"] {
 	@include screen-md-down {
 		max-width: 100vw;
 
-		.pageHeaderPanel fa-icon[size="16"] {
+		.pageHeaderPanel fa-icon[size="16"]:not([name="magnifying-glass"]) {
 			display: none;
 		}
 	}
@@ -574,6 +574,14 @@ html[data-color-scheme="dark"] {
 }
 
 @include screen-sm-md {
+	.searchBarOpen .pageHeaderSearch {
+		text-align: right;
+	}
+
+	.pageHeaderSearch .pageHeaderSearchInputContainer {
+		display: inline-flex;
+	}
+
 	.pageHeaderSearch .pageHeaderSearchInputContainer .pageHeaderSearchType {
 		flex: 0 auto;
 	}
