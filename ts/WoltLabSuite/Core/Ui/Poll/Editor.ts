@@ -132,9 +132,11 @@ class UiPollEditor {
         this.reset();
       });
 
-      listenToCkeditor(element).collectMetaData((payload) => {
-        payload.metaData.poll = this.#getPollData();
-      });
+      listenToCkeditor(element)
+        .collectMetaData((payload) => {
+          payload.metaData.poll = this.#getPollData();
+        })
+        .reset(() => this.reset());
 
       ["handleError", "submit", "validate"].forEach((event) => {
         EventHandler.add("com.woltlab.wcf.ckeditor5", event + "_" + this.wysiwygId, (...args: unknown[]) =>

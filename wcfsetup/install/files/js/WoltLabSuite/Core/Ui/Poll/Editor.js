@@ -73,9 +73,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 element.addEventListener("reset", () => {
                     this.reset();
                 });
-                (0, Event_1.listenToCkeditor)(element).collectMetaData((payload) => {
+                (0, Event_1.listenToCkeditor)(element)
+                    .collectMetaData((payload) => {
                     payload.metaData.poll = this.#getPollData();
-                });
+                })
+                    .reset(() => this.reset());
                 ["handleError", "submit", "validate"].forEach((event) => {
                     EventHandler.add("com.woltlab.wcf.ckeditor5", event + "_" + this.wysiwygId, (...args) => this[event](...args));
                 });
