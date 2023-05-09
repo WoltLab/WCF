@@ -1,10 +1,9 @@
 .messageShareButtons {
 	.inlineList {
-		margin-right: -5px;
-		margin-bottom: -5px;
+		gap: 5px;
 
-		> li {
-			margin-bottom: 5px;
+		> li:not(:last-child) {
+			margin-right: 0;
 		}
 	}
 
