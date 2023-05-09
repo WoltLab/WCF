@@ -113,7 +113,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
         configuration.woltlabBbcode = bbcodes;
         if (features.autosave !== "") {
-            (0, Autosave_1.initializeAutosave)(features.autosave, configuration);
+            (0, Autosave_1.initializeAutosave)(element, configuration, features.autosave);
         }
         (0, Event_1.dispatchToCkeditor)(element).setupConfiguration({
             configuration,

@@ -143,15 +143,16 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             }
         });
     }
-    function initializeAutosave(autosave, configuration) {
+    function initializeAutosave(element, configuration, identifier) {
         removeExpiredDrafts();
         configuration.autosave = {
             save(editor) {
-                saveDraft(autosave, editor.data.get());
+                saveDraft(identifier, editor.data.get());
                 return Promise.resolve();
             },
             waitingTime: 15000,
         };
+        (0, Event_1.listenToCkeditor)(element).reset(() => deleteDraft(identifier));
     }
     exports.initializeAutosave = initializeAutosave;
 });

@@ -160,7 +160,7 @@ function initializeConfiguration(element: HTMLElement, features: Features, bbcod
   (configuration as any).woltlabBbcode = bbcodes;
 
   if (features.autosave !== "") {
-    initializeAutosave(features.autosave, configuration);
+    initializeAutosave(element, configuration, features.autosave);
   }
 
   dispatchToCkeditor(element).setupConfiguration({

@@ -13,7 +13,7 @@ import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 
 import type { ClassicEditor, EditorConfig } from "./Types";
-import { dispatchToCkeditor } from "./Event";
+import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
 type Payload = {
   html: string;
@@ -176,15 +176,17 @@ function removeExpiredDrafts(): void {
     });
 }
 
-export function initializeAutosave(autosave: string, configuration: EditorConfig): void {
+export function initializeAutosave(element: HTMLElement, configuration: EditorConfig, identifier: string): void {
   removeExpiredDrafts();
 
   configuration.autosave = {
     save(editor) {
-      saveDraft(autosave, editor.data.get());
+      saveDraft(identifier, editor.data.get());
 
       return Promise.resolve();
     },
     waitingTime: 15_000,
   };
+
+  listenToCkeditor(element).reset(() => deleteDraft(identifier));
 }
