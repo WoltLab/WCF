@@ -56,7 +56,7 @@
 			
 			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}">
 			
-			<button type="button" class="pageHeaderSearchInputButton button" type="submit" title="{lang}wcf.global.search{/lang}">
+			<button type="submit" class="pageHeaderSearchInputButton button" title="{lang}wcf.global.search{/lang}">
 				{icon name='magnifying-glass'}
 			</button>
 			
