@@ -89,7 +89,7 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Ckeditor';
 
     /**
      * @inheritDoc
