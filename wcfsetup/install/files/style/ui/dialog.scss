@@ -410,6 +410,11 @@
 		padding-bottom: 0;
 	}
 
+	> .section:first-child,
+	> form > .section:first-child {
+		margin-top: 0;
+	}
+
 	.section:not(:first-child) {
 		border-top: 1px solid var(--wcfContentBorderInner);
 		margin-top: 20px;
