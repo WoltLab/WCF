@@ -217,13 +217,17 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             DatePicker.clear(this.endTimeField);
             this.maxVotesField.value = "1";
             this.isChangeableYesField.checked = false;
-            this.isChangeableNoField.checked = true;
+            if (this.isChangeableNoField)
+                this.isChangeableNoField.checked = true;
             this.isPublicYesField.checked = false;
-            this.isPublicNoField.checked = true;
+            if (this.isPublicNoField)
+                this.isPublicNoField.checked = true;
             this.resultsRequireVoteYesField.checked = false;
-            this.resultsRequireVoteNoField.checked = true;
+            if (this.resultsRequireVoteNoField)
+                this.resultsRequireVoteNoField.checked = true;
             this.sortByVotesYesField.checked = false;
-            this.sortByVotesNoField.checked = true;
+            if (this.sortByVotesNoField)
+                this.sortByVotesNoField.checked = true;
             EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
                 pollEditor: this,
             });

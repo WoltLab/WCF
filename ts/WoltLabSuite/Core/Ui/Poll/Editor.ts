@@ -57,18 +57,18 @@ type PollData = {
 class UiPollEditor {
   private readonly container: HTMLElement;
   private readonly endTimeField: HTMLInputElement;
-  private readonly isChangeableNoField: HTMLInputElement;
+  private readonly isChangeableNoField: HTMLInputElement | null;
   private readonly isChangeableYesField: HTMLInputElement;
-  private readonly isPublicNoField: HTMLInputElement;
+  private readonly isPublicNoField: HTMLInputElement | null;
   private readonly isPublicYesField: HTMLInputElement;
   private readonly maxVotesField: HTMLInputElement;
   private optionCount: number;
   private readonly options: UiPollEditorOptions;
   private readonly optionList: HTMLOListElement;
   private readonly questionField: HTMLInputElement;
-  private readonly resultsRequireVoteNoField: HTMLInputElement;
+  private readonly resultsRequireVoteNoField: HTMLInputElement | null;
   private readonly resultsRequireVoteYesField: HTMLInputElement;
-  private readonly sortByVotesNoField: HTMLInputElement;
+  private readonly sortByVotesNoField: HTMLInputElement | null;
   private readonly sortByVotesYesField: HTMLInputElement;
   private readonly wysiwygId: string;
 
@@ -303,13 +303,13 @@ class UiPollEditor {
 
     this.maxVotesField.value = "1";
     this.isChangeableYesField.checked = false;
-    this.isChangeableNoField.checked = true;
+    if (this.isChangeableNoField) this.isChangeableNoField.checked = true;
     this.isPublicYesField.checked = false;
-    this.isPublicNoField.checked = true;
+    if (this.isPublicNoField) this.isPublicNoField.checked = true;
     this.resultsRequireVoteYesField.checked = false;
-    this.resultsRequireVoteNoField.checked = true;
+    if (this.resultsRequireVoteNoField) this.resultsRequireVoteNoField.checked = true;
     this.sortByVotesYesField.checked = false;
-    this.sortByVotesNoField.checked = true;
+    if (this.sortByVotesNoField) this.sortByVotesNoField.checked = true;
 
     EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
       pollEditor: this,
