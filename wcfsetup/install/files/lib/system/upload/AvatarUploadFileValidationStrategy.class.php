@@ -27,6 +27,12 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
         // check image size
         try {
             $imageData = \getimagesize($uploadFile->getLocation());
+            if ($imageData === false) {
+                $uploadFile->setValidationErrorType('badImage');
+
+                return false;
+            }
+
             if ($imageData[0] < UserAvatar::AVATAR_SIZE || $imageData[1] < UserAvatar::AVATAR_SIZE) {
                 $uploadFile->setValidationErrorType('tooSmall');
 
@@ -42,9 +48,7 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
                         $uploadFile->setValidationErrorType('invalidExtension');
 
                         return false;
-                    case \IMAGETYPE_PNG:
-                    case \IMAGETYPE_GIF:
-                    case \IMAGETYPE_JPEG:
+                    default:
                         // Validate the mime type against the list of allowed extensions.
                         //
                         // We usually don't care about the extension, restricting allowed file extensions
@@ -60,8 +64,6 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 
                             return false;
                         }
-
-                        break;
                 }
             }
         } catch (SystemException $e) {
