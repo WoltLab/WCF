@@ -76,6 +76,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
+                        'float' => 'none',
                         'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
                     ]);
                 }
