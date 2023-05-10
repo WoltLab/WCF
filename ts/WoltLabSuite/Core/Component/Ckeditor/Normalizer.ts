@@ -123,6 +123,27 @@ function reduceSpacerParagraphs(paragraphs: HTMLParagraphElement[]): void {
   }
 }
 
+function convertFloatingImages(div: HTMLElement): void {
+  div.querySelectorAll("img").forEach((img) => {
+    if (img.classList.contains("messageFloatObjectRight")) {
+      const paragraph = img.closest("p");
+      if (paragraph === null) {
+        return;
+      }
+
+      const figure = document.createElement("figure");
+      figure.classList.add("image", "image-style-side");
+      figure.append(img);
+
+      paragraph.insertAdjacentElement("beforebegin", figure);
+
+      if (paragraph.innerHTML === "") {
+        paragraph.remove();
+      }
+    }
+  });
+}
+
 export function normalizeLegacyMessage(element: HTMLElement): void {
   if (!(element instanceof HTMLTextAreaElement)) {
     throw new TypeError("Expected the element to be a <textarea>.");
@@ -134,6 +155,7 @@ export function normalizeLegacyMessage(element: HTMLElement): void {
   normalizeBr(div);
   const paragraphs = getPossibleSpacerParagraphs(div);
   reduceSpacerParagraphs(paragraphs);
+  convertFloatingImages(div);
 
   element.value = div.innerHTML;
 }
