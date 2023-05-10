@@ -15,7 +15,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@types/google.maps": "^3.51.1",
+    "@types/google.maps": "^3.53.1",
     "@types/perfect-scrollbar": "^0.7.0",
     "@types/facebook-js-sdk": "^3.3.6",
     "@types/jquery": "^3.5.14",
