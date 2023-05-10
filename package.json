@@ -31,7 +31,7 @@
     "html-parsed-element": "^0.4.1",
     "qr-creator": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "tabbable": "^6.1.1",
+    "tabbable": "^6.1.2",
     "tslib": "^2.5.0"
   }
 }
