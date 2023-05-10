@@ -504,6 +504,10 @@ final class SessionHandler extends SingletonFactory
                 // SameSite=lax is not supported in a multi domain set-up, because
                 // it breaks cross-application requests.
                 $sameSite = '; SameSite=lax';
+
+                // Workaround for WebKit Bug #255524.
+                // https://bugs.webkit.org/show_bug.cgi?id=255524
+                $sameSite = '';
             }
 
             if (!HTTP_SEND_X_FRAME_OPTIONS) {
