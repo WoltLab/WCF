@@ -283,6 +283,17 @@ html[data-color-scheme="dark"] {
 	text-align: right !important;
 }
 
+/* image float */
+.messageFloatObjectLeft {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.messageFloatObjectRight {
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
 @include screen-xs {
 	html.iOS .ck.ck-content {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
