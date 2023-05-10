@@ -176,6 +176,19 @@ ol.nativeList {
 			margin-bottom: 0 !important;
 		}
 	}
+
+	figure.image {
+		clear: both;
+		display: table;
+		margin: 1em auto;
+		min-width: 50px;
+		text-align: center;
+
+		&.image-style-side {
+			float: right;
+			margin: 0 0 20px 20px;
+		}
+	}
 }
 
 .containerContent,

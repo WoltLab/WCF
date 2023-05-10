@@ -126,6 +126,11 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
         $definition->addAttribute('img', 'data-attachment-id', 'Number');
         $definition->addAttribute('img', 'srcset', 'Text');
 
+        // <figure> element for images
+        $definition->addElement('figure', 'Block', 'Flow', '', [
+            'class' => 'Text',
+        ]);
+
         $parameters = [
             'config' => $config,
             'definition' => $definition,
