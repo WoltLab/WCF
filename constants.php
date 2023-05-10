@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines constants for autocompletion in IDEs. This file is not meant to be actively used anywhere!
  *
@@ -193,6 +194,7 @@
 \define('PAGE_LOGO_LINK_TO_APP_DEFAULT', 1);
 \define('IMAGE_ALLOW_EXTERNAL_SOURCE', 0);
 \define('MESSAGE_ENABLE_TOC', 1);
+\define('MESSAGE_PUBLIC_HIGHLIGHTERS', '');
 \define('MESSAGE_SIDEBAR_ENABLE_ARTICLES', 1);
 \define('IMAGE_PROXY_ENABLE_PRUNE', 1);
 \define('SEARCH_ENABLE_PAGES', 1);

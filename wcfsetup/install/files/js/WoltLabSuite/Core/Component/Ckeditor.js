@@ -109,8 +109,11 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         Object.freeze(features);
     }
-    function initializeConfiguration(element, features, bbcodes) {
+    function initializeConfiguration(element, features, bbcodes, codeBlockLanguages) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
+        configuration.codeBlock = {
+            languages: codeBlockLanguages,
+        };
         configuration.woltlabBbcode = bbcodes;
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(element, configuration, features.autosave);
@@ -124,7 +127,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return configuration;
     }
-    async function setupCkeditor(element, features, bbcodes) {
+    async function setupCkeditor(element, features, bbcodes, codeBlockLanguages) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
@@ -139,7 +142,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (features.quoteBlock) {
             (0, Quote_1.setup)(element);
         }
-        const configuration = initializeConfiguration(element, features, bbcodes);
+        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages);
         (0, Normalizer_1.normalizeLegacyMessage)(element);
         const cke = await window.CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);

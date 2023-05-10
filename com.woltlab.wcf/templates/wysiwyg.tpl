@@ -5,9 +5,11 @@
 <script data-relocate="true">
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",
+		"WoltLabSuite/Core/prism-meta"
 		{@$__wcf->getBBCodeHandler()->getEditorLocalization()}
 	], (
-		{ setupCkeditor }
+		{ setupCkeditor },
+		PrismMeta
 	) => {
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
@@ -68,6 +70,16 @@
 			});
 		}
 
-		void setupCkeditor(element, features, bbcodes);
+		const codeBlockLanguages = [
+			{ language: "", label: '{jslang}wcf.editor.code.highlighter.detect{/jslang}' },
+			{ language: "plain", label: '{jslang}wcf.editor.code.highlighter.plain{/jslang}' },
+			{foreach from=$__wcf->getBBCodeHandler()->getCodeBlockLanguages() item=__codeBlockLanguage}
+				{ language: '{@$__codeBlockLanguage|encodeJS}', label: PrismMeta.default['{@$__codeBlockLanguage|encodeJS}'].title },
+			{/foreach}
+		];
+
+		console.log(codeBlockLanguages);
+
+		void setupCkeditor(element, features, bbcodes, codeBlockLanguages);
 	});
 </script>

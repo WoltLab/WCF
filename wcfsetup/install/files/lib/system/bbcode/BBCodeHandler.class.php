@@ -9,6 +9,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
@@ -165,6 +166,18 @@ class BBCodeHandler extends SingletonFactory
     public function getHighlighters()
     {
         return \array_keys($this->getHighlighterMeta());
+    }
+
+    /**
+     * Returns the list of languages that are available for selection in the
+     * UI of CKEditor’s code block.
+     *
+     * @return list<string>
+     * @since 6.0
+     */
+    public function getCodeBlockLanguages(): array
+    {
+        return \explode("\n", StringUtil::unifyNewlines(\MESSAGE_PUBLIC_HIGHLIGHTERS));
     }
 
     /**

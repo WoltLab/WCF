@@ -23,7 +23,7 @@ import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import { normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import Devtools from "../Devtools";
 
-import { ClassicEditor, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
+import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
 
 import "ckeditor5-bundle";
 
@@ -155,8 +155,17 @@ function initializeFeatures(element: HTMLElement, features: Features): void {
   Object.freeze(features);
 }
 
-function initializeConfiguration(element: HTMLElement, features: Features, bbcodes: WoltlabBbcodeItem[]): EditorConfig {
+function initializeConfiguration(
+  element: HTMLElement,
+  features: Features,
+  bbcodes: WoltlabBbcodeItem[],
+  codeBlockLanguages: CodeBlockConfig["languages"],
+): EditorConfig {
   const configuration = createConfigurationFor(features);
+  configuration.codeBlock = {
+    languages: codeBlockLanguages,
+  };
+
   (configuration as any).woltlabBbcode = bbcodes;
 
   if (features.autosave !== "") {
@@ -179,6 +188,7 @@ export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
+  codeBlockLanguages: CodeBlockConfig["languages"],
 ): Promise<CKEditor> {
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -197,7 +207,7 @@ export async function setupCkeditor(
     setupQuote(element);
   }
 
-  const configuration = initializeConfiguration(element, features, bbcodes);
+  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages);
 
   normalizeLegacyMessage(element);
 

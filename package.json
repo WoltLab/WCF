@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-autosave": "^37.1.0",
+    "@ckeditor/ckeditor5-code-block": "^37.1.0",
     "@ckeditor/ckeditor5-core": "^37.1.0",
     "@ckeditor/ckeditor5-editor-classic": "^37.1.0",
     "@ckeditor/ckeditor5-inspector": "^4.1.0",
