@@ -79,6 +79,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 
 		<!-- Make all the new options available as early as possible. -->
 		<instruction type="option" run="standalone" />
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_skipFirstTimeSetup.php</instruction>
 
 		<!-- Run before the database migrations, because the data is gone otherwise. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_landingPage.php</instruction>
