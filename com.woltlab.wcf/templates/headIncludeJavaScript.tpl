@@ -141,7 +141,6 @@ window.addEventListener('pageshow', function(event) {
 {js application='wcf' file='WCF.Label' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Location' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Message' bundle='WCF.Combined' hasTiny=true}
-{js application='wcf' file='WCF.Poll' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.User' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Moderation' bundle='WCF.Combined' hasTiny=true}
 
