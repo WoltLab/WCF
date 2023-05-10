@@ -20,7 +20,7 @@ import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/A
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
-import { normalizeLegacyMessage } from "./Ckeditor/Cleanup";
+import { normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import Devtools from "../Devtools";
 
 import { ClassicEditor, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
