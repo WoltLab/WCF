@@ -110,19 +110,25 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
     function convertFloatingImages(div) {
         div.querySelectorAll("img").forEach((img) => {
             if (img.classList.contains("messageFloatObjectRight")) {
-                const paragraph = img.closest("p");
-                if (paragraph === null) {
-                    return;
-                }
-                const figure = document.createElement("figure");
-                figure.classList.add("image", "image-style-side");
-                figure.append(img);
-                paragraph.insertAdjacentElement("beforebegin", figure);
-                if (paragraph.innerHTML === "") {
-                    paragraph.remove();
-                }
+                imageToFigure(img, "image-style-side");
+            }
+            else if (img.classList.contains("messageFloatObjectLeft")) {
+                imageToFigure(img, "image-style-side-left");
             }
         });
+    }
+    function imageToFigure(img, alignmentClass) {
+        const paragraph = img.closest("p");
+        if (paragraph === null) {
+            return;
+        }
+        const figure = document.createElement("figure");
+        figure.classList.add("image", alignmentClass);
+        figure.append(img);
+        paragraph.insertAdjacentElement("beforebegin", figure);
+        if (paragraph.innerHTML === "") {
+            paragraph.remove();
+        }
     }
     function normalizeLegacyMessage(element) {
         if (!(element instanceof HTMLTextAreaElement)) {

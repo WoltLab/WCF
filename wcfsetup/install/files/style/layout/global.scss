@@ -184,6 +184,11 @@ ol.nativeList {
 		min-width: 50px;
 		text-align: center;
 
+		&.image-style-side-left {
+			float: left;
+			margin: 0 20px 20px 0;
+		}
+
 		&.image-style-side {
 			float: right;
 			margin: 0 0 20px 20px;

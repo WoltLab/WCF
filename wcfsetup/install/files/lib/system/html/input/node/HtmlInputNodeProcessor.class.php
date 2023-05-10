@@ -27,7 +27,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      * @var array<array>
      */
     public static $allowedClassNames = [
-        'figure' => ['image', 'image-style-side'],
+        'figure' => ['image', 'image-style-side', 'image-style-side-left'],
         'h2' => ['text-center', 'text-justify', 'text-right'],
         'h3' => ['text-center', 'text-justify', 'text-right'],
         'h4' => ['text-center', 'text-justify', 'text-right'],

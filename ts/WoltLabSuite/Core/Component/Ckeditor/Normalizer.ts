@@ -126,22 +126,28 @@ function reduceSpacerParagraphs(paragraphs: HTMLParagraphElement[]): void {
 function convertFloatingImages(div: HTMLElement): void {
   div.querySelectorAll("img").forEach((img) => {
     if (img.classList.contains("messageFloatObjectRight")) {
-      const paragraph = img.closest("p");
-      if (paragraph === null) {
-        return;
-      }
-
-      const figure = document.createElement("figure");
-      figure.classList.add("image", "image-style-side");
-      figure.append(img);
-
-      paragraph.insertAdjacentElement("beforebegin", figure);
-
-      if (paragraph.innerHTML === "") {
-        paragraph.remove();
-      }
+      imageToFigure(img, "image-style-side");
+    } else if (img.classList.contains("messageFloatObjectLeft")) {
+      imageToFigure(img, "image-style-side-left");
     }
   });
+}
+
+function imageToFigure(img: HTMLImageElement, alignmentClass: string): void {
+  const paragraph = img.closest("p");
+  if (paragraph === null) {
+    return;
+  }
+
+  const figure = document.createElement("figure");
+  figure.classList.add("image", alignmentClass);
+  figure.append(img);
+
+  paragraph.insertAdjacentElement("beforebegin", figure);
+
+  if (paragraph.innerHTML === "") {
+    paragraph.remove();
+  }
 }
 
 export function normalizeLegacyMessage(element: HTMLElement): void {
