@@ -78,8 +78,6 @@
 			{/foreach}
 		];
 
-		console.log(codeBlockLanguages);
-
 		void setupCkeditor(element, features, bbcodes, codeBlockLanguages);
 	});
 </script>
