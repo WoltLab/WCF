@@ -3,10 +3,8 @@
 namespace wcf\data\user\avatar;
 
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\exception\NotImplementedException;
-use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 
 /**
  * Provides functions to edit avatars.
@@ -90,55 +88,21 @@ class UserAvatarEditor extends DatabaseObjectEditor
             return false;
         }
 
-        $filename = $this->getLocation();
-        $filenameWebP = $this->getLocation(null, true);
+        $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $this->getLocation());
+        $result = ImageUtil::createWebpVariant($this->getLocation(), $outputFilenameWithoutExtension);
+        if ($result !== null) {
+            $data = ['hasWebP' => 1];
 
-        $imageAdapter = ImageHandler::getInstance()->getAdapter();
-        $imageAdapter->loadFile($filename);
-        $image = $imageAdapter->getImage();
-
-        $data = ["hasWebP" => 1];
-
-        // If the uploaded avatar is already a WebP image, then create a JPEG
-        // as a fallback image and flip the image data to match the JPEG.
-        if ($this->avatarExtension === "webp") {
-            // This entire code path is completely broken, because writing into the
-            // ->data array of the UserAvatarEditor does not actually do anything
-            // for ->getLocation(), which is a method on the base UserAvatar.
-            // This is also unreachable, because WebP files are rejected unconditionally
-            // in AvatarUploadFileValidationStrategy.
-            throw new NotImplementedException();
-            $filenameJpeg = \preg_replace('~\.webp$~', '.jpeg', $filenameWebP);
-
-            $imageAdapter->saveImageAs($image, $filenameJpeg, "jpeg", 80);
-
-            // The new file has a different SHA1 hash, which means that apart from
-            // updating the `fileHash` we also need to move it to a different physical
-            // location.
-            $newFileHash = \sha1_file($filenameJpeg);
-
-            $tmpAvatar = clone $this;
-            $tmpAvatar->data["avatarExtension"] = "jpeg";
-            $tmpAvatar->data["fileHash"] = $newFileHash;
-            $newLocation = $tmpAvatar->getLocation(null, false);
-
-            $dir = \dirname($newLocation);
-            if (!\file_exists($dir)) {
-                FileUtil::makePath($dir);
+            // A fallback jpeg image was just created.
+            if ($result === false) {
+                $data['avatarExtension'] = 'jpg';
             }
 
-            \rename($filenameJpeg, $newLocation);
+            $this->update($data);
 
-            $data = [
-                "avatarExtension" => "jpeg",
-                "fileHash" => $newFileHash,
-            ];
-        } else {
-            $imageAdapter->saveImageAs($image, $this->getLocation(null, true), "webp", 80);
+            return true;
         }
 
-        $this->update($data);
-
-        return true;
+        return false;
     }
 }

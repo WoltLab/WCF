@@ -37,32 +37,20 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 
                 return false;
             } else {
-                switch ($imageData[2]) {
-                    case \IMAGETYPE_WEBP:
-                        // Reject WebP images regardless of any file extension restriction, they are
-                        // neither supported in Safari nor in Internet Explorer 11. We can safely lift
-                        // this restriction once Apple implements the support or if any sort of fall-
-                        // back mechanism is implemented: https://github.com/WoltLab/WCF/issues/2838
+                // Validate the mime type against the list of allowed extensions.
+                //
+                // We usually don't care about the extension, restricting allowed file extensions
+                // primarily exists to prevent users from uploaded clickable '.exe'. The software
+                // itself only ever uses the mime type.
+                //
+                // In the case of avatars, though, the administrator might want to disallow uploading
+                // GIF files to prevent the most common case of animated avatar, thus we specifically
+                // validate the mime type against the extension.
+                $extension = \image_type_to_extension($imageData[2], false);
+                if (!\in_array($extension, $this->fileExtensions)) {
+                    $uploadFile->setValidationErrorType('invalidExtension');
 
-                        $uploadFile->setValidationErrorType('invalidExtension');
-
-                        return false;
-                    default:
-                        // Validate the mime type against the list of allowed extensions.
-                        //
-                        // We usually don't care about the extension, restricting allowed file extensions
-                        // primarily exists to prevent users from uploaded clickable '.exe'. The software
-                        // itself only ever uses the mime type.
-                        //
-                        // In the case of avatars, though, the administrator might want to disallow uploading
-                        // GIF files to prevent the most common case of animated avatar, thus we specifically
-                        // validate the mime type against the extension.
-                        $extension = \image_type_to_extension($imageData[2], false);
-                        if (!\in_array($extension, $this->fileExtensions)) {
-                            $uploadFile->setValidationErrorType('invalidExtension');
-
-                            return false;
-                        }
+                    return false;
                 }
             }
         } catch (SystemException $e) {
