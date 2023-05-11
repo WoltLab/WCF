@@ -5,7 +5,7 @@
 <script data-relocate="true">
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",
-		"WoltLabSuite/Core/prism-meta"
+		"WoltLabSuite/Core/prism-meta",
 		{@$__wcf->getBBCodeHandler()->getEditorLocalization()}
 	], (
 		{ setupCkeditor },
