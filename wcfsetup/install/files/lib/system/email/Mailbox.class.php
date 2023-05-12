@@ -140,7 +140,11 @@ class Mailbox
      */
     public function __toString()
     {
-        if ($this->name === null || $this->name === $this->address) {
+        if (
+            $this->name === null
+            || $this->name === ''
+            || $this->name === $this->address
+        ) {
             return $this->address;
         }
 
