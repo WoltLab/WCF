@@ -6,6 +6,7 @@ use TrueBV\Exception\OutOfBoundsException;
 use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
+use wcf\util\StringUtil;
 
 /**
  * Represents a RFC 5322 mailbox.
@@ -47,7 +48,7 @@ class Mailbox
     public function __construct($address, $name = null, ?Language $language = null)
     {
         $this->address = self::filterAddress($address);
-        $this->name = $name;
+        $this->name = $name !== null ? StringUtil::trim($name) : null;
         if ($language === null) {
             $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         } else {
