@@ -19,31 +19,28 @@ class Mailbox
 {
     /**
      * The email address of this mailbox.
-     * @var string
      */
-    protected $address;
+    protected string $address;
 
     /**
      * The human readable name of this mailbox.
-     * @var string
      */
-    protected $name;
+    protected ?string $name;
 
     /**
      * The preferred language of this mailbox.
-     * @var int
      */
-    protected $languageID;
+    protected int $languageID;
 
     /**
      * Creates a new Mailbox.
      *
-     * @param string $address email address of this mailbox
-     * @param string $name human readable name of this mailbox (or null)
-     * @param Language $language Language to use for localization (or null for the default language)
-     * @throws  \DomainException
+     * @param $address email address of this mailbox
+     * @param $name human readable name of this mailbox (or null)
+     * @param $language Language to use for localization (or null for the default language)
+     * @throws \DomainException
      */
-    public function __construct($address, $name = null, ?Language $language = null)
+    public function __construct(string $address, ?string $name = null, ?Language $language = null)
     {
         $this->address = self::filterAddress($address);
         $this->name = $name;
@@ -106,20 +103,16 @@ class Mailbox
 
     /**
      * Returns the human readable name of this mailbox.
-     *
-     * @return  string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
      * Returns the email address of this mailbox.
-     *
-     * @return  string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -127,10 +120,8 @@ class Mailbox
     /**
      * Returns the language the recipient of this mailbox wants.
      * This is used for localization of the email template.
-     *
-     * @return  Language
      */
-    public function getLanguage()
+    public function getLanguage(): Language
     {
         return LanguageFactory::getInstance()->getLanguage($this->languageID);
     }
