@@ -17,6 +17,8 @@
 		{jsphrase name='wcf.editor.button.spoiler'}
 		{jsphrase name='wcf.editor.restoreDraft'}
 
+		{include file='mediaJavaScript'}
+
 		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
 		if (element === null) {
 			throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.")
