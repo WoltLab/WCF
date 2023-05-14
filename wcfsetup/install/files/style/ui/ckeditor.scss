@@ -184,6 +184,10 @@
 	border-radius: 0 !important;
 }
 
+.ck.ck-sticky-panel__content {
+	--ck-z-modal: 1;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {

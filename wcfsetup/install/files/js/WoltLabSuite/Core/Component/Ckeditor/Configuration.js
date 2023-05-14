@@ -259,6 +259,11 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                     options: [8, 10, 12, "default", 18, 24, 36],
                 },
                 toolbar: this.#getToolbar(),
+                ui: {
+                    viewportOffset: {
+                        top: 50,
+                    },
+                },
                 woltlabToolbarGroup: this.#toolbarGroups,
             };
         }
