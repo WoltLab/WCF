@@ -296,10 +296,10 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
     if (pageCount > 1) {
       const newPagination = document.createElement("div");
       newPagination.className = "paginationBottom jsPagination";
-      DomUtil.replaceElement(
-        UiDialog.getDialog(this)!.content.querySelector(".jsPagination") as HTMLElement,
-        newPagination,
-      );
+
+      const oldPagination = UiDialog.getDialog(this)!.content.querySelector(".jsPagination") as HTMLElement;
+      oldPagination.insertAdjacentElement("beforebegin", newPagination);
+      oldPagination.remove();
 
       this._pagination = new UiPagination(newPagination, {
         activePage: pageNo,

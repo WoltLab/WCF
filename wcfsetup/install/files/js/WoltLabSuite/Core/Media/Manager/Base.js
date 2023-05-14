@@ -236,7 +236,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
             if (pageCount > 1) {
                 const newPagination = document.createElement("div");
                 newPagination.className = "paginationBottom jsPagination";
-                DomUtil.replaceElement(UiDialog.getDialog(this).content.querySelector(".jsPagination"), newPagination);
+                const oldPagination = UiDialog.getDialog(this).content.querySelector(".jsPagination");
+                oldPagination.insertAdjacentElement("beforebegin", newPagination);
+                oldPagination.remove();
                 this._pagination = new Pagination_1.default(newPagination, {
                     activePage: pageNo,
                     callbackSwitch: (pageNo) => this._search.search(pageNo),
