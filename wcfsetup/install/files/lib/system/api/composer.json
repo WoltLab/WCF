@@ -14,7 +14,7 @@
         "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "^4.16",
-        "guzzlehttp/guzzle": "^7.5.1",
+        "guzzlehttp/guzzle": "^7.6.0",
         "guzzlehttp/psr7": "^2.5.0",
         "laminas/laminas-diactoros": "^3.0.0",
         "laminas/laminas-httphandlerrunner": "^2.6.1",
