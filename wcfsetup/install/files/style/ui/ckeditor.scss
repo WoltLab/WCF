@@ -204,6 +204,12 @@ html[data-color-scheme="dark"] {
 	.ck.ck-balloon-panel {
 		border-color: var(--wcfDropdownBorderInner);
 	}
+
+	.ck.ck-content pre {
+		background-color: var(--wcfContentBackground);
+		border-color: var(--wcfContentBorderInner);
+		color: var(--wcfContentText);
+	}
 }
 
 /* Dialog overlay to restore a draft */
@@ -296,6 +302,22 @@ html[data-color-scheme="dark"] {
 .messageFloatObjectRight {
 	float: right;
 	margin: 0 0 20px 20px;
+}
+
+/* Fake visuals for the WYSIWYG editor while it is still loading. */
+.wysiwygTextarea {
+	background-color: var(--wcfContentContainerBackground) !important;
+	border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0 !important;
+	border-color: var(--wcfContentBorderInner) !important;
+	cursor: not-allowed !important;
+	height: 240px !important;
+	resize: none !important;
+}
+
+/* Add spacer for any notices displayed above the editor. */
+.wysiwygTextarea:not(:first-child),
+.wysiwygTextarea:not(:first-child) + .ck.ck-editor {
+	margin-top: 20px;
 }
 
 @include screen-xs {

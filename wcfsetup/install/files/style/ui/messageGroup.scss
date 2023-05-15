@@ -351,6 +351,12 @@
 	}
 }
 
+@include screen-md-up {
+	.contentHeader.messageGroupContentHeader .contentHeaderIcon {
+		position: relative;
+	}
+}
+
 @include screen-md-down {
 	.mobileLinkShadowContainer {
 		position: relative;
