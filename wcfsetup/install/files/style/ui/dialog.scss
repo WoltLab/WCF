@@ -8,7 +8,7 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	transition: opacity 0.12s linear, visibility 0s linear 0.3s;
+	transition: opacity 0.12s linear, visibility 0s linear 0.24s;
 	visibility: hidden;
 	will-change: opacity;
 	z-index: 399;
@@ -23,22 +23,21 @@
 @keyframes wcfDialog {
 	0% {
 		visibility: visible;
-		top: 8%;
+		transform: translateX(var(--translate-x, 0)) translateY(calc(-50% - 20px));
+		//top: 8%;
 	}
 	100% {
 		visibility: visible;
-		top: 10%;
+		//top: 10%;
 	}
 }
 
 @keyframes wcfDialogOut {
 	0% {
-		visibility: visible;
-		top: 10%;
+		visibility: hidden;
 	}
 	100% {
 		visibility: hidden;
-		top: 12%;
 	}
 }
 
@@ -57,13 +56,14 @@
 
 	@include screen-sm-up {
 		align-self: flex-start;
-		animation: wcfDialogOut 0.3s;
+		animation: wcfDialogOut 0.24s;
 		animation-fill-mode: forwards;
 		justify-self: center;
 		max-height: 80%;
 		max-width: 80%;
 		min-width: 500px;
 		position: absolute;
+		top: 50%;
 
 		// This is required to prevent dialogs from becoming
 		// unncessarily wide by forcing text to wrap. We cannot
@@ -71,10 +71,10 @@
 		// this causes a blurry text rendering in Chromium.
 		// The offset is calculated using a `ResizeObserver`.
 		left: 50%;
-		transform: translateX(var(--translate-x, 0));
+		transform: translateX(var(--translate-x, 0)) translateY(-50%);
 
 		&[aria-hidden="false"] {
-			animation: wcfDialog 0.3s;
+			animation: wcfDialog 0.24s;
 			animation-fill-mode: forwards;
 		}
 	}
