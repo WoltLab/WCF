@@ -54,8 +54,10 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spInputDisabled { -webkit-text-fill-color: unset; }
 
 /* ### button ### */
+#spButton { display: flex; flex-wrap: wrap; gap: 5px; }
+#spButton .inlineList, #spButtonPrimary .inlineList { row-gap: 5px; }
 #spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
-#spButtonPrimary { margin-top: 10px; }
+#spButtonPrimary { margin-top: 20px; }
 
 /* ### editor ### */
 #spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; min-height: 100px; padding: 10px; }
