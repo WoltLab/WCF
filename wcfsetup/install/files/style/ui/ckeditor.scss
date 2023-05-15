@@ -204,6 +204,12 @@ html[data-color-scheme="dark"] {
 	.ck.ck-balloon-panel {
 		border-color: var(--wcfDropdownBorderInner);
 	}
+
+	.ck.ck-content pre {
+		background-color: var(--wcfContentBackground);
+		border-color: var(--wcfContentBorderInner);
+		color: var(--wcfContentText);
+	}
 }
 
 /* Dialog overlay to restore a draft */
