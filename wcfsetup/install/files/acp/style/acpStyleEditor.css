@@ -61,6 +61,12 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; min-height: 100px; padding: 10px; }
 #spEditorTable { border-collapse: collapse; border-spacing: 0; margin: 10px 0; min-width: 60%; }
 #spEditorTable td { border: 1px solid rgb(221, 221, 221); padding: 10px; }
+.spEditorToolbar { border: 1px solid rgb(224, 224, 224); border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0; column-gap: 3px; display: flex; padding: 3px; }
+.spEditorToolbarButton { align-items: center; border-radius: var(--wcfBorderRadius); display: flex; height: 30px; justify-content: center; width: 30px; }
+.spEditorToolbarButton.spEditorToolbarButton--active { background-color: #24425F; color: #fff; }
+.spEditorToolbarButton:hover:not(.spEditorToolbarButton--active, [disabled]) { background-color: #3A6D9C; color: #fff; }
+.spEditorToolbarButton[disabled] { color: #A5A5A5; }
+.spEditorToolbarDivider { background-color: rgb(224, 224, 224); display: block; width: 1px; }
 
 /* ### dropdown ### */
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }

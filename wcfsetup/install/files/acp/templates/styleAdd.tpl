@@ -714,17 +714,15 @@
 									
 									<div id="spEditor">
 										<div id="spEditorToolbar" data-region="wcfEditorButton">
-											<ul class="redactor-toolbar">
-												<li><a class="redactor-button-disabled">{icon name='file-code'}</a></li>
-												<li><a>{icon name='rotate-left'}</a></li>
-												<li><a>{icon name='arrow-rotate-right'}</a></li>
-												<li><a>{icon name='up-right-and-down-left-from-center'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon name='heading'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon name='bold'}</a></li>
-												<li><a class="dropact">{icon name='italic'}</a></li>
-												<li><a>{icon name='underline'}</a></li>
-												<li><a>{icon name='strikethrough'}</a></li>
-											</ul>
+											<div class="spEditorToolbar">
+												<button class="spEditorToolbarButton" type="button">{icon name='bold'}</button>
+												<button class="spEditorToolbarButton spEditorToolbarButton--active" type="button">{icon name='italic'}</button>
+												<span class="spEditorToolbarDivider"></span>
+												<button class="spEditorToolbarButton" type="button">{icon name='list-ul'}</button>
+												<button class="spEditorToolbarButton" type="button">{icon name='list-ol'}</button>
+												<span class="spEditorToolbarDivider"></span>
+												<button class="spEditorToolbarButton" type="button" disabled>{icon name='table'}</button>
+											</div>
 										</div>
 										<div id="spEditorContent">
 											<table id="spEditorTable" data-region="wcfEditorTable">
@@ -989,11 +987,11 @@
 				'wcfButtonPrimaryTextActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { color: VALUE; }',
 				'wcfButtonDisabledBackground': '#spButton .button.disabled, #spButtonPrimary .button.disabled { background-color: VALUE; }',
 				'wcfButtonDisabledText': '#spButton .button.disabled, #spButtonPrimary .button.disabled { color: VALUE; }',
-				'wcfEditorButtonBackground': '#spEditor .redactor-toolbar, #spEditor .redactor-toolbar a { background-color: VALUE; }',
-				'wcfEditorButtonBackgroundActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { background-color: VALUE; }',
-				'wcfEditorButtonText': '#spEditor .redactor-toolbar a { color: VALUE; }',
-				'wcfEditorButtonTextActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { color: VALUE; }',
-				'wcfEditorButtonTextDisabled': '#spEditor .redactor-toolbar a.redactor-button-disabled { color: VALUE; }',
+				'wcfEditorButtonBackground': '#spEditor .spEditorToolbarButton:hover:not(.spEditorToolbarButton--active, [disabled]) { background-color: VALUE; }',
+				'wcfEditorButtonBackgroundActive': '#spEditor .spEditorToolbarButton.spEditorToolbarButton--active { background-color: VALUE; }',
+				'wcfEditorButtonText': '#spEditor .spEditorToolbarButton:not([disabled]) { color: VALUE; }',
+				'wcfEditorButtonTextActive': '#spEditor .spEditorToolbarButton.spEditorToolbarButton--active, .spEditorToolbarButton:hover:not(.spEditorToolbarButton--active, [disabled]) { color: VALUE; }',
+				'wcfEditorButtonTextDisabled': '#spEditor .spEditorToolbarButton[disabled] { color: VALUE; }',
 				'wcfEditorTableBorder': '#spEditorTable td { border-color: VALUE; }',
 				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
