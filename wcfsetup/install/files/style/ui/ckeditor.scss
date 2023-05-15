@@ -304,6 +304,16 @@ html[data-color-scheme="dark"] {
 	margin: 0 0 20px 20px;
 }
 
+/* Fake visuals for the WYSIWYG editor while it is still loading. */
+.wysiwygTextarea {
+	background-color: var(--wcfContentContainerBackground) !important;
+	border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0 !important;
+	border-color: var(--wcfContentBorderInner) !important;
+	cursor: not-allowed !important;
+	height: 240px !important;
+	resize: none !important;
+}
+
 @include screen-xs {
 	html.iOS .ck.ck-content {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
