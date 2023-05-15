@@ -314,6 +314,12 @@ html[data-color-scheme="dark"] {
 	resize: none !important;
 }
 
+/* Add spacer for any notices displayed above the editor. */
+.wysiwygTextarea:not(:first-child),
+.wysiwygTextarea:not(:first-child) + .ck.ck-editor {
+	margin-top: 20px;
+}
+
 @include screen-xs {
 	html.iOS .ck.ck-content {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
