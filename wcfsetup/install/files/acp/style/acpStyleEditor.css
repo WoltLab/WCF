@@ -97,12 +97,8 @@ html[dir="rtl"] #spContentSidebar { margin-right: 20px; }
 #spContentSidebar .spContentSidebarHeadline { font-size: 1.2rem; font-weight: 300; margin-bottom: 10px; }
 
 /* ### status messages ### */
-#spStatus { display: flex; flex-wrap: wrap; justify-content: space-between; }
-#spStatus > li { flex: 0 0 auto; width: calc(50% - 10px); /* work-around for IE which does not support calc() for flex-basis */ }
-#spStatus > li:first-child { margin-bottom: 10px; }
-#spStatus > li > div { padding: 5px 10px; }
-html[dir="ltr"] #spStatus > li > div { border-left: 5px solid #000; }
-html[dir="rtl"] #spStatus > li > div { border-right: 5px solid #000; }
+#spStatus { display: flex; flex-direction: column; row-gap: 10px; }
+#spStatus > li > div { border: 1px solid #000; border-radius: var(--wcfBorderRadius); padding: 5px 10px; }
 
 /* ### wrapper sidebar ### */
 .spSidebarBox { background-color: var(--wcfSidebarBackground); border: 1px solid var(--wcfSidebarBorder); border-radius: var(--wcfBorderRadius); margin-bottom: 10px; padding: 10px; }
