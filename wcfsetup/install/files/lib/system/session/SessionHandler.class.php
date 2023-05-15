@@ -432,6 +432,10 @@ final class SessionHandler extends SingletonFactory
 
             $sameSite = '; SameSite=lax';
 
+            // Workaround for WebKit Bug #255524.
+            // https://bugs.webkit.org/show_bug.cgi?id=255524
+            $sameSite = '';
+
             \header(
                 'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
                 false

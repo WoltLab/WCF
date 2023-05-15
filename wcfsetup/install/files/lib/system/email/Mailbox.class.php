@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Utils;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
+use wcf\util\StringUtil;
 
 /**
  * Represents a RFC 5322 mailbox.
@@ -43,7 +44,7 @@ class Mailbox
     public function __construct(string $address, ?string $name = null, ?Language $language = null)
     {
         $this->address = self::filterAddress($address);
-        $this->name = $name;
+        $this->name = $name !== null ? StringUtil::trim($name) : null;
         if ($language === null) {
             $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         } else {
@@ -131,7 +132,11 @@ class Mailbox
      */
     public function __toString(): string
     {
-        if ($this->name === null || $this->name === $this->address) {
+        if (
+            $this->name === null
+            || $this->name === ''
+            || $this->name === $this->address
+        ) {
             return $this->address;
         }
 
