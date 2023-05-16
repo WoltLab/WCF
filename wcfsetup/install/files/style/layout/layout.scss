@@ -173,6 +173,34 @@ html.iOS select {
 	}
 }
 
+.sideBySide.templateDiff {
+	--templateDiff-added-background: #90ee90;
+	--templateDiff-added-color: inherit;
+	--templateDiff-removed-background: #ffb6c1;
+	--templateDiff-removed-color: inherit;
+
+	li {
+		margin: 0;
+	}
+
+	.templateDiff--added {
+		background-color: var(--templateDiff-added-background);
+		color: var(--templateDiff-added-color);
+	}
+
+	.templateDiff--removed {
+		background-color: var(--templateDiff-removed-background);
+		color: var(--templateDiff-removed-color);
+	}
+}
+
+html[data-color-scheme="dark"] .sideBySide.templateDiff {
+	--templateDiff-added-background: #172810;
+	--templateDiff-added-color: #4f9c51;
+	--templateDiff-removed-background: #281010;
+	--templateDiff-removed-color: #d95654;
+}
+
 .inlineItems {
 	display: flex;
 	flex-wrap: wrap;
