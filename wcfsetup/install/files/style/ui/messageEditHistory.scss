@@ -1,10 +1,15 @@
 /* edit history */
 .editHistoryDiff {
+	--diffAdded-background: #dff0d8;
+	--diffAdded-color: #3c763d;
+	--diffRemoved-background: #f2dede;
+	--diffRemoved-color: #a94442;
+
 	@include screen-md-down {
 		overflow: auto;
 	}
 
-	> .table {
+	.table {
 		@include screen-lg {
 			table-layout: fixed;
 		}
@@ -33,13 +38,13 @@
 			}
 
 			&.diffAdded {
-				background-color: rgb(223, 240, 216);
-				color: rgb(60, 118, 61);
+				background-color: var(--diffAdded-background);
+				color: var(--diffAdded-color);
 			}
 
 			&.diffRemoved {
-				background-color: rgb(242, 222, 222);
-				color: rgb(169, 68, 66);
+				background-color: var(--diffRemoved-background);
+				color: var(--diffRemoved-color);
 			}
 
 			&.diffSection {
@@ -52,38 +57,36 @@
 
 				@include wcfFontHeadline;
 			}
-		}
 
-		tr:not(:first-child) > .diffSection {
-			border-top: 20px solid transparent;
-		}
+			tr:not(:first-child) .diffSection {
+				border-top: 20px solid transparent;
+			}
 
-		& + form {
-			/* Out of the way, Lydia! */
-			margin-top: 40px;
+			& + form {
+				/* Out of the way, Lydia! */
+				margin-top: 40px;
+			}
 		}
 	}
 
-	> .sideBySide:first-child {
+	.sideBySide:first-child {
 		margin-bottom: 20px;
 		text-align: center;
 	}
 
 	.sideBySide {
-		display: flex;
+		column-gap: 20px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+}
 
-		> div {
-			flex: 0 0 50%;
-			max-width: 50%;
-
-			&:first-child {
-				padding-right: 10px;
-			}
-
-			&:last-child {
-				padding-left: 10px;
-			}
-		}
+html[data-color-scheme="dark"] {
+	.editHistoryDiff {
+		--diffAdded-background: #172810;
+		--diffAdded-color: #4f9c51;
+		--diffRemoved-background: #281010;
+		--diffRemoved-color: #d95654;
 	}
 }
 
