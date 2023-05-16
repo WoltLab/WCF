@@ -136,9 +136,9 @@ export class UiSearchExtended {
       this.activePage = pageNo!;
       this.showSearchResults(template!);
     } else if (Object.keys(this.getFormData()).length > 4) {
-      // If no results are found and advanced filters are active,
-      // make sure that the corresponding area is shown,
-      this.filtersContainer.setAttribute("open", "");
+      // Show the advanced filters when there are no results
+      // but advanced filters are applied.
+      this.filtersContainer.open = true;
     }
   }
 
