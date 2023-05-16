@@ -90,6 +90,13 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
             }
 
             $attributes = $htmlNodeProcessor->parseAttributes($element->getAttribute('data-attributes'));
+            if ($attributes === []) {
+                // Drop the empty 'data-attributes' attribute. This saves some storage
+                // for common parameterless BBCodes and makes the edit history more useful.
+                // This change is safe, because a missing attribute will implicitly be
+                // considered to contain the empty string by ->getAttribute().
+                $element->removeAttribute('data-attributes');
+            }
 
             // check for converters
             $converter = $converters[$name] ?? null;
