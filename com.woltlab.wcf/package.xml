@@ -5,7 +5,7 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.5.12 dev 2</version>
+		<version>5.5.12</version>
 		<date>2023-05-12</date>
 	</packageinformation>
 
@@ -51,11 +51,16 @@
 	</instructions>
 
 	<instructions type="update" fromversion="5.5.11">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language"/>
 		<instruction type="page"/>
 	</instructions>
-	<instructions type="update" fromversion="5.5.12 dev 1">
+	<instructions type="update" fromversion="5.5.12 dev 2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="language"/>
 	</instructions>
 </package>
