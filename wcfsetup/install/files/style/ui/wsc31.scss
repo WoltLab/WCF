@@ -81,7 +81,7 @@
 				padding-top: 0;
 
 				// 30px added to account for `padding-top: 0` above
-				&.anchorFixedHeader:target {
+				&.anchorFixedHeader:target:not(.disableAnchorFixedHeader) {
 					margin-top: -79px;
 
 					&::after {
