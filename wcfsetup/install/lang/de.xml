@@ -5467,7 +5467,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert:</p>]]></item>
 		<item name="wcf.user.notification.status.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
-		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[Aktivieren Sie die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
+		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Präferenz festlegen]]></item>
 	</category>
 	<category name="wcf.user.profile">
