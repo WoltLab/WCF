@@ -179,8 +179,8 @@ class EditHistoryPage extends AbstractPage
 
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
-            $a = \explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->old->getMessage())));
-            $b = \explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->new->getMessage())));
+            $a = \explode("\n", $this->prepareMessage($this->old->getMessage()));
+            $b = \explode("\n", $this->prepareMessage($this->new->getMessage()));
             $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
 
             // create word diff for small changes (only one consecutive paragraph modified)
@@ -225,6 +225,24 @@ class EditHistoryPage extends AbstractPage
             }
             $this->newID = 'current';
         }
+    }
+
+    private function prepareMessage(string $message): string
+    {
+        $message = $this->formatHtml($message);
+        $message = StringUtil::trim($message);
+        $message = StringUtil::unifyNewlines($message);
+
+        return \preg_replace('/\n{2,}/', "\n", $message);
+    }
+
+    private function formatHtml(string $html): string
+    {
+        $bothTags = ['ol', 'pre', 'table', 'tr', 'ul', 'woltlab-quote', 'woltlab-spoiler'];
+        $openingTag = \implode('|', ['br', ...$bothTags]);
+        $closingTag = \implode('|', ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'td', 'th', ...$bothTags]);
+
+        return \preg_replace("/(<(?:{$openingTag})>|<\\/(?:{$closingTag})>)/", "\\0\n", $html);
     }
 
     /**
