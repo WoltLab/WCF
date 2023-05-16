@@ -42,6 +42,7 @@ export class UiSearchExtended {
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
   private readonly delimiter: HTMLDivElement;
+  private readonly filtersContainer: HTMLElement;
   private searchID: number | undefined = undefined;
   private pages = 0;
   private activePage = 1;
@@ -53,6 +54,7 @@ export class UiSearchExtended {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
+    this.filtersContainer = document.querySelector(".searchFiltersContainer") as HTMLElement;
     this.delimiter = document.createElement("div");
 
     this.form.insertAdjacentElement("afterend", this.delimiter);
@@ -133,6 +135,10 @@ export class UiSearchExtended {
       this.pages = pages!;
       this.activePage = pageNo!;
       this.showSearchResults(template!);
+    } else if (Object.keys(this.getFormData()).length > 4) {
+      // If no results are found and advanced filters are active,
+      // make sure that the corresponding area is shown,
+      this.filtersContainer.setAttribute("open", "");
     }
   }
 
