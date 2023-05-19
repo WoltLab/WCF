@@ -176,7 +176,10 @@ class AttachmentPage extends AbstractPage
         // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
         // MIME-Types. One possibility might be a package extending $inlineMimeTypes
         // in an unsafe fashion.
-        $this->fileReader->addHeader('content-security-policy', "default-src 'none';");
+        //
+        // Allow style-src 'unsafe-inline', because otherwise the integrated PDF viewer
+        // of Safari will fail to apply its own trusted stylesheet.
+        $this->fileReader->addHeader('content-security-policy', "default-src 'none'; style-src 'unsafe-inline';");
         $this->fileReader->addHeader('x-content-type-options', 'nosniff');
 
         if ($this->eTag !== null) {
