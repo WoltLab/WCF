@@ -40,12 +40,10 @@
 	color: inherit;
 
 	&::before {
-		bottom: 0;
 		content: "";
-		left: 0;
+		inset: 0;
 		position: absolute;
-		right: 0;
-		top: 0;
+		z-index: 1;
 	}
 
 	&:hover,
