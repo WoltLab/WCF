@@ -114,7 +114,7 @@
 {/capture}
 
 {capture assign='contentInteractionShareButton'}
-	<button type="button" class="button small wsShareButton jsTooltip" title="{lang}wcf.message.share{/lang}" data-link="{$articleContent->getLink()}" data-link-title="{$articleContent->getTitle()}" data-bbcode="[article]{$article->getObjectID()}[/article]">
+	<button type="button" class="button small wsShareButton jsTooltip" title="{lang}wcf.message.share{/lang}" data-link="{$articleContent->getLink()}" data-link-title="{$articleContent->getTitle()}" data-bbcode="[wsa]{$article->getObjectID()}[/wsa]">
 		{icon name='share-nodes'}
 	</button>
 {/capture}
