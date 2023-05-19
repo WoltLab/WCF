@@ -37,7 +37,7 @@
 		<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
 		<dd>
 			{assign var='__source' value="\\"|explode:$cacheData.source}
-			{lang}wcf.acp.cache.source.type.{$__source|array_pop}{/lang}
+			{lang}wcf.acp.cache.source.type.{$__source|end}{/lang}
 			<small>{$cacheData.source}</small>
 		</dd>
 	</dl>
