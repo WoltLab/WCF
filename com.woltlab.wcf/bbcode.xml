@@ -227,8 +227,6 @@
 				<attribute name="0">
 					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 					<required>1</required>
-				</attribute>
-				<attribute name="1">
 					<usetext>1</usetext>
 				</attribute>
 			</attributes>
