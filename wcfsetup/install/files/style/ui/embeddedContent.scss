@@ -87,7 +87,7 @@
 
 .embeddedContentDescription {
 	color: var(--wcfContentDimmedText);
-	max-height: calc(5 * #{var(--wcfFontLineHeight)}em);
+	max-height: calc(5em * #{var(--wcfFontLineHeight)});
 	overflow: hidden;
 	position: relative;
 
@@ -99,10 +99,10 @@
 		);
 		content: "";
 		left: 0;
-		height: #{var(--wcfFontLineHeight)}em;
+		height: calc(1em * #{var(--wcfFontLineHeight)});
 		position: absolute;
 		right: 0;
-		top: calc(4 * #{var(--wcfFontLineHeight)}em);
+		top: calc(4em * #{var(--wcfFontLineHeight)});
 	}
 }
 
