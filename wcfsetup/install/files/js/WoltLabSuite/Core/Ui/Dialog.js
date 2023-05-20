@@ -331,23 +331,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             // elements to be squished together. The actual value for
             // `transform` must not use percent values, because this
             // causes blurry text rendering in Chromium.
-            const resizeObserver = new ResizeObserver((entries) => {
+            const resizeObserver = new ResizeObserver(() => {
                 if (dialog.getAttribute("aria-hidden") === "false") {
-                    for (const entry of entries) {
-                        let width;
-                        if (entry.contentBoxSize) {
-                            const contentBoxSize = Array.isArray(entry.contentBoxSize)
-                                ? entry.contentBoxSize[0]
-                                : entry.contentBoxSize;
-                            width = contentBoxSize.inlineSize;
-                        }
-                        else {
-                            // Safari < 15.4 supports only the older spec.
-                            width = entry.contentRect.width;
-                        }
-                        const offset = Math.floor(width / 2);
-                        dialog.style.setProperty("--translate-x", `-${offset}px`);
-                    }
+                    const offset = Math.floor(dialog.getBoundingClientRect().width / 2);
+                    dialog.style.setProperty("--translate-x", `-${offset}px`);
                 }
             });
             resizeObserver.observe(dialog);
@@ -528,6 +515,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             unavailableHeight += Util_1.default.outerHeight(data.header);
             const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
             contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
+            const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
+            data.dialog.style.setProperty("--translate-x", `-${offset}px`);
             const callbackObject = _dialogToObject.get(id);
             //noinspection JSUnresolvedVariable
             if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === "function") {
