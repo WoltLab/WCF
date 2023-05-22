@@ -25,6 +25,6 @@
     "focus-trap": "^6.9.4",
     "qr-creator": "^1.0.0",
     "tabbable": "^5.3.3",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.2"
   }
 }
