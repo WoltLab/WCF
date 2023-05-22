@@ -1,10 +1,14 @@
 .embeddedContent {
 	background-color: var(--wcfContentBackground);
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	border-radius: 3px;
+	box-shadow: var(--wcfBoxShadowCard);
+	border-radius: var(--wcfBorderRadius);
 	margin: 10px 0;
 	max-width: 400px;
 	overflow: hidden;
+}
+
+html[data-color-scheme="dark"] .embeddedContent {
+	border: 1px solid var(--wcfContentBorderInner);
 }
 
 /* @deprecated 5.4 Use `<img class="embeddedContentImageElement">` instead */
@@ -36,12 +40,26 @@
 	position: relative;
 }
 
+.embeddedContentTitleLink {
+	color: inherit;
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+		z-index: 1;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+/* @deprecated 6.0 Use `.embeddedContentTitleLink` instead */
 .embeddedContentLinkShadow {
-	bottom: 0;
-	left: 0;
+	inset: 0;
 	position: absolute;
-	right: 0;
-	top: 0;
 }
 
 .embeddedContentCategory {
@@ -50,10 +68,11 @@
 	@include wcfFontSmall;
 }
 
-.embeddedContentTitle {
+.embeddedContentTitle,
+.messageBody > .messageText .embeddedContentTitle {
 	color: var(--wcfContentHeadlineText);
 	display: -webkit-box;
-	margin-bottom: 5px;
+	margin: 0;
 	overflow: hidden;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -70,7 +89,8 @@
 
 .embeddedContentDescription {
 	color: var(--wcfContentDimmedText);
-	max-height: calc(5 * #{var(--wcfFontLineHeight)}em);
+	margin-top: 5px;
+	max-height: calc(5em * #{var(--wcfFontLineHeight)});
 	overflow: hidden;
 	position: relative;
 
@@ -82,10 +102,10 @@
 		);
 		content: "";
 		left: 0;
-		height: #{var(--wcfFontLineHeight)}em;
+		height: calc(1em * #{var(--wcfFontLineHeight)});
 		position: absolute;
 		right: 0;
-		top: calc(4 * #{var(--wcfFontLineHeight)}em);
+		top: calc(4em * #{var(--wcfFontLineHeight)});
 	}
 }
 

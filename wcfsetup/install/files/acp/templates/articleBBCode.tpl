@@ -8,23 +8,25 @@
 			loading="lazy"
 			alt="">
 
-        <div class="embeddedContentCategory">{lang}wcf.article.bbcode.type{/lang}</div>
+		<div class="embeddedContentCategory">{lang}wcf.article.bbcode.type{/lang}</div>
 		
-		<div class="embeddedContentTitle" id="{$titleHash}_articleTitle{@$article->articleID}">{$article->getTitle()}</div>
+		<h3 class="embeddedContentTitle" id="{$titleHash}_articleTitle{@$article->articleID}">
+			<a href="{@$article->getLink()}" class="embeddedContentTitleLink">{$article->getTitle()}</a>
+		</h3>
 		
 		<div class="embeddedContentDescription">
 			{@$article->getFormattedTeaser()}
 		</div>
-
-		<a href="{@$article->getLink()}" class="embeddedContentLinkShadow"></a>
 	</div>
 	
 	<div class="embeddedContentMeta">
-		{user object=$article->getUserProfile() type='avatar32' class='embeddedContentMetaImage' ariaHidden='true' tabindex='-1'}
+		<div class="embeddedContentMetaImage">
+			{@$article->getUserProfile()->getAvatar()->getImageTag(32)}
+		</div>
 		
 		<div class="embeddedContentMetaContent">
 			<div class="embeddedContentMetaAuthor">
-				{user object=$article->getUserProfile() class='username'}
+				{@$article->getUserProfile()->getFormattedUsername()}
 			</div>
 			
 			<div class="embeddedContentMetaTime">
