@@ -10,9 +10,9 @@
 
 		<div class="embeddedContentCategory">{lang}wcf.article.bbcode.type{/lang}</div>
 		
-		<div class="embeddedContentTitle" id="{$titleHash}_articleTitle{@$article->articleID}">
+		<h3 class="embeddedContentTitle" id="{$titleHash}_articleTitle{@$article->articleID}">
 			<a href="{@$article->getLink()}" class="embeddedContentTitleLink">{$article->getTitle()}</a>
-		</div>
+		</h3>
 		
 		<div class="embeddedContentDescription">
 			{@$article->getFormattedTeaser()}
