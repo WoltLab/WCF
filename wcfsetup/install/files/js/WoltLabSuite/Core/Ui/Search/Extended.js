@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         queryInput;
         typeInput;
         delimiter;
+        filtersContainer;
         searchID = undefined;
         pages = 0;
         activePage = 1;
@@ -30,6 +31,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
+            this.filtersContainer = document.querySelector(".searchFiltersContainer");
             this.delimiter = document.createElement("div");
             this.form.insertAdjacentElement("afterend", this.delimiter);
             this.initEventListener();
@@ -97,6 +99,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 this.pages = pages;
                 this.activePage = pageNo;
                 this.showSearchResults(template);
+            }
+            else if (Object.keys(this.getFormData()).length > 4) {
+                // Show the advanced filters when there are no results
+                // but advanced filters are applied.
+                this.filtersContainer.open = true;
             }
         }
         updateQueryString(searchAction) {
