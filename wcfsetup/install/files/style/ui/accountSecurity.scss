@@ -45,6 +45,29 @@
 	}
 }
 
+@media not print {
+	.multifactorBackupCodesPrintMetadata {
+		display: none !important;
+	}
+}
+
+@media print {
+	.multifactorBackupCodesPrintButton {
+		display: none !important;
+	}
+
+	.multifactorBackupCodesPrintContainer {
+		padding: 1cm !important;
+		position: absolute !important;
+		background: white !important;
+		inset: 0 !important;
+
+		.multifactorBackupCodesPrintMetadata {
+			max-width: 9cm !important;
+		}
+	}
+}
+
 // Just .multifactorTotpCode is not specific enough.
 input.multifactorTotpCode,
 input.multifactorEmailCode,
