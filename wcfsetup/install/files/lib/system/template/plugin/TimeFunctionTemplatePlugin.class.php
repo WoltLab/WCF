@@ -16,6 +16,7 @@ use wcf\system\WCF;
  *  {time time=$timestamp}
  *  {time time=$timestamp type='plainTime'}
  *  {time time=$timestamp type='plainDate'}
+ *  {time time=$timestamp type='machine'}
  *  {time time=$timestamp type='custom' format='Y-m-d'}
  *
  * @author Tim Duesterhus, Marcel Werk
@@ -82,6 +83,8 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
                     ],
                     $locale
                 );
+            case 'machine':
+                return $dateTime->format(\DateTimeInterface::ATOM);
             case 'custom':
                 return $dateTime->format($tagArgs['format']);
             default:
