@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * output types.
  *
  * Usage:
+ *  {time}
  *  {time time=$timestamp}
  *  {time time=$timestamp type='plainTime'}
  *  {time time=$timestamp type='plainDate'}
@@ -28,7 +29,7 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
     public function execute($tagArgs, TemplateEngine $tplObj): string
     {
-        $time = $tagArgs['time'];
+        $time = $tagArgs['time'] ?? TIME_NOW;
         $type = $tagArgs['type'] ?? 'interactive';
 
         if ($time instanceof \DateTimeImmutable) {
