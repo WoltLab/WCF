@@ -108,6 +108,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="language" />
 		<instruction type="mediaProvider" />
 		<instruction type="objectType" />
+		<instruction type="page" />
 		<instruction type="smiley" />
 		<instruction type="userGroupOption" />
 		<instruction type="userMenu" />
