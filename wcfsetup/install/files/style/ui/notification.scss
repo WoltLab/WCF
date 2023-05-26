@@ -94,9 +94,8 @@
 	align-items: center;
 	display: flex;
 
-	&.disabled {
-		filter: grayscale(1);
-		opacity: 0.75;
+	&.disabled fa-icon {
+		color: var(--wcfContentDimmedText) !important;
 	}
 
 	fa-icon[name="xmark"] {
