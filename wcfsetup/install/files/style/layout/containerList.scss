@@ -128,14 +128,14 @@
 
 				> ul {
 					background-color: var(--wcfContentBackground);
-					border: 1px solid rgba(0, 0, 0, 0.15);
-					border-radius: 6px;
+					border-radius: var(--wcfBorderRadius);
+					box-shadow: var(--wcfBoxShadowCard);
 
 					> li {
 						margin-right: 0;
 
 						&:not(:last-child) {
-							border-right: 1px solid rgba(0, 0, 0, 0.15);
+							border-right: 1px solid var(--wcfContentContainerBorder);
 						}
 
 						> a,
@@ -233,6 +233,12 @@
 				border-bottom: none;
 			}
 		}
+	}
+}
+
+@include screen-lg {
+	html[data-color-scheme="dark"] .containerList > li .buttonGroupNavigation > ul {
+		border: 1px solid var(--wcfContentContainerBorder);
 	}
 }
 
