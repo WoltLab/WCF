@@ -6,6 +6,19 @@
 	}
 }
 
+.sidebarItemListEntry {
+	column-gap: 8px;
+	display: grid;
+	grid-template-columns: 24px auto;
+	position: relative;
+}
+
+.sidebarItemListEntryLink::before {
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+
 .sidebarItem.new h3 {
 	font-weight: 600;
 }
