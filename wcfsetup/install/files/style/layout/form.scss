@@ -235,6 +235,10 @@ input {
 	color: rgba(204, 0, 1, 1) !important;
 }
 
+html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
+	color: #ff4444 !important;
+}
+
 /* password strength estimator */
 .inputAddonPasswordStrength {
 	align-items: flex-start;
