@@ -9,6 +9,7 @@
  */
 
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
+use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
@@ -100,8 +101,7 @@ return [
         ->columns([
             EnumDatabaseTableColumn::create('apiVersion')
                 ->drop(),
-            TinyintDatabaseTableColumn::create('hasDarkMode')
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('hasDarkMode'),
         ]),
     PartialDatabaseTable::create('wcf1_style_variable')
         ->columns([
