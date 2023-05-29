@@ -426,6 +426,7 @@ class ControllerPopover implements AjaxCallbackObject {
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
+      ignoreError: true,
       silent: true,
     };
   }

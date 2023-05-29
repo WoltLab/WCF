@@ -316,6 +316,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
         }
         _ajaxSetup() {
             return {
+                ignoreError: true,
                 silent: true,
             };
         }
