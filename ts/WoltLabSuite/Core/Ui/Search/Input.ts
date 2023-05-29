@@ -363,6 +363,7 @@ class UiSearchInput {
     return {
       data: this.ajaxPayload,
       silent: this.suppressErrors,
+      ignoreError: this.suppressErrors,
     };
   }
 }

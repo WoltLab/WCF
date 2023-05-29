@@ -310,6 +310,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             return {
                 data: this.ajaxPayload,
                 silent: this.suppressErrors,
+                ignoreError: this.suppressErrors,
             };
         }
     }
