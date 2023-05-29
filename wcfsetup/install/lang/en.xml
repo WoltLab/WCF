@@ -179,7 +179,7 @@
 	<li><kbd>(?&lt;ID&gt;[0-9a-zA-Z]+)</kbd> detects an alphanumeric ID.</li>
 </ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.invalid"><![CDATA[The regular expression failed to validate.]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Provider]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="https://fontawesome.com/v4/icons/">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
@@ -1102,7 +1102,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[Add BBCode]]></item>
 		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
-		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Media Provider]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smilies]]></item>
@@ -5511,7 +5511,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>
-		<item name="wcf.user.option.canViewTrophies"><![CDATA[Can View Trophies]]></item>
+		<item name="wcf.user.option.canViewTrophies"><![CDATA[Can View My Trophies]]></item>
 		<item name="wcf.user.option.category.profile"><![CDATA[Personal Data]]></item>
 		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[About Me]]></item>
 		<item name="wcf.user.option.category.profile.contact"><![CDATA[Contact Options]]></item>
