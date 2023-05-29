@@ -30,6 +30,7 @@ class UiSearchInput {
   private readonly noResultPlaceholder: string;
   private readonly preventSubmit: boolean;
   private request?: AjaxRequest = undefined;
+  private readonly suppressErrors: boolean;
   private timerDelay?: number = undefined;
 
   /**
@@ -61,6 +62,7 @@ class UiSearchInput {
         minLength: 3,
         noResultPlaceholder: "",
         preventSubmit: false,
+        suppressErrors: false,
       },
       options,
     ) as SearchInputOptions;
@@ -76,6 +78,7 @@ class UiSearchInput {
     this.minLength = options.minLength!;
     this.noResultPlaceholder = options.noResultPlaceholder!;
     this.preventSubmit = options.preventSubmit!;
+    this.suppressErrors = options.suppressErrors || false;
 
     // Disable auto-complete because it collides with the suggestion dropdown.
     this.element.autocomplete = "off";
@@ -359,6 +362,7 @@ class UiSearchInput {
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: this.ajaxPayload,
+      silent: this.suppressErrors,
     };
   }
 }

@@ -82,6 +82,7 @@ export function init(objectType: string): void {
 
       return true;
     },
+    suppressErrors: true,
   });
 
   const searchType = document.querySelector(".pageHeaderSearchType") as HTMLElement;

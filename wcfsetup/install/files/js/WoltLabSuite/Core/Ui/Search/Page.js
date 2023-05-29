@@ -66,6 +66,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../Dropd
                 }, 1);
                 return true;
             },
+            suppressErrors: true,
         });
         const searchType = document.querySelector(".pageHeaderSearchType");
         const dropdownMenu = Simple_1.default.getDropdownMenu(Util_1.default.identify(searchType));

@@ -27,6 +27,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         noResultPlaceholder;
         preventSubmit;
         request = undefined;
+        suppressErrors;
         timerDelay = undefined;
         /**
          * Initializes the search input field.
@@ -56,6 +57,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 minLength: 3,
                 noResultPlaceholder: "",
                 preventSubmit: false,
+                suppressErrors: false,
             }, options);
             this.ajaxPayload = options.ajax;
             this.autoFocus = options.autoFocus;
@@ -68,6 +70,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.minLength = options.minLength;
             this.noResultPlaceholder = options.noResultPlaceholder;
             this.preventSubmit = options.preventSubmit;
+            this.suppressErrors = options.suppressErrors || false;
             // Disable auto-complete because it collides with the suggestion dropdown.
             this.element.autocomplete = "off";
             this.element.addEventListener("keydown", (ev) => this.keydown(ev));
@@ -306,6 +309,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSetup() {
             return {
                 data: this.ajaxPayload,
+                silent: this.suppressErrors,
             };
         }
     }
