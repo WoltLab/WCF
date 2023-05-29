@@ -149,7 +149,7 @@
 			<h2 class="sectionTitle">{lang}wcf.user.language{/lang}</h2>
 			
 			<dl>
-				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
+				<dt><label for="languageID">{lang}wcf.user.language.description{/lang}</label></dt>
 				<dd id="languageIDContainer">
 					<script data-relocate="true">
 						$(function() {
@@ -164,10 +164,6 @@
 							
 							require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 								LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
-								
-								var small = elCreate('small');
-								small.innerHTML = '{jslang}wcf.user.language.description{/jslang}';
-								elById('languageIDContainer').appendChild(small);
 							});
 						});
 					</script>

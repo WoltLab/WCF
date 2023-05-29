@@ -1046,7 +1046,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Eigene Version verwenden]]></item>
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Deaktivierte veränderte Inhalte finden]]></item>
-		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
+		<item name="wcf.acp.language.name"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Falls die hochgeladene Sprachdatei eine komplett neue Sprache enthält, wird die ausgewählte Sprache als Vorlage benutzt. Fehlende Texte werden aus der Vorlage in die neue Sprache übernommen.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand{if $item->languageCustomItemDisableTime} vom {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
@@ -5844,7 +5844,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.language.item.noItems"/>
 	<item name="wcf.acp.language.list.count"/>
 	<item name="wcf.acp.language.multilingualism.success"/>
-	<item name="wcf.acp.language.name"/>
 	<item name="wcf.acp.login"/>
 	<item name="wcf.acp.login.data"/>
 	<item name="wcf.acp.masterPassword"/>

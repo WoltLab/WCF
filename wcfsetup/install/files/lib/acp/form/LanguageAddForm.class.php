@@ -88,8 +88,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
             FormContainer::create('data')
                 ->appendChildren([
                     TextFormField::create('languageName')
-                        ->label('wcf.global.name')
-                        ->description('wcf.acp.language.name.description')
+                        ->label('wcf.acp.language.name')
                         ->maximumLength(255)
                         ->required(),
                     TextFormField::create('languageCode')
