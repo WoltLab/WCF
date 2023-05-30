@@ -23,10 +23,10 @@ const _resetLastPosition = Core.debounce(() => {
   _lastPosition = -1;
 }, 50);
 
-function buildToTopButton(): HTMLAnchorElement {
-  const button = document.createElement("a");
-  button.className = "button buttonPrimary pageActionButtonToTop initiallyHidden jsTooltip";
-  button.href = "";
+function buildToTopButton(): HTMLButtonElement {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("button", "buttonPrimary", "pageActionButtonToTop", "initiallyHidden", "jsTooltip");
   button.title = Language.get("wcf.global.scrollUp");
   button.setAttribute("aria-hidden", "true");
   button.innerHTML = '<fa-icon size="32" name="angle-up" solid></fa-icon>';

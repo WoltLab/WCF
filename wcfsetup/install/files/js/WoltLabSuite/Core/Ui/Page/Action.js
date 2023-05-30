@@ -23,9 +23,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
         _lastPosition = -1;
     }, 50);
     function buildToTopButton() {
-        const button = document.createElement("a");
-        button.className = "button buttonPrimary pageActionButtonToTop initiallyHidden jsTooltip";
-        button.href = "";
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("button", "buttonPrimary", "pageActionButtonToTop", "initiallyHidden", "jsTooltip");
         button.title = Language.get("wcf.global.scrollUp");
         button.setAttribute("aria-hidden", "true");
         button.innerHTML = '<fa-icon size="32" name="angle-up" solid></fa-icon>';
