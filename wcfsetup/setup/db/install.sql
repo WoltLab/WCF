@@ -2432,7 +2432,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMod
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarBackground', 'rgba(236, 241, 247, 1)', 'rgba(30, 39, 52, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarDimmedLink', 'rgba(58, 58, 61, 1)', 'rgba(29, 155, 209, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarDimmedLinkActive', 'rgba(58, 58, 61, 1)', 'rgba(64, 179, 228, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarDimmedText', 'rgba(127, 140, 141, 1)', 'rgba(138, 140, 143, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarDimmedText', 'rgba(127, 140, 141, 1)', 'rgba(139, 141, 145, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarHeadlineLink', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarHeadlineLinkActive', 'rgba(58, 58, 61, 1)', 'rgba(158, 158, 158, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfSidebarHeadlineText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)');
