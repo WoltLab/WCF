@@ -28,6 +28,10 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
     public function execute($tagArgs, TemplateEngine $tplObj): string
     {
+        if (!isset($tagArgs['time'])) {
+            throw new \InvalidArgumentException("Missing parameter 'time'.");
+        }
+
         $time = $tagArgs['time'];
         $type = $tagArgs['type'] ?? 'interactive';
 
