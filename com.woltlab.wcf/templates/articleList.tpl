@@ -64,7 +64,7 @@
 {capture assign='contentInteractionButtons'}
 	<div class="contentInteractionButton dropdown jsOnly">
 		<button type="button" class="button small dropdownToggle">
-			{if $sortOrder|strtolower === 'asc'}
+			{if $sortOrder === 'ASC'}
 				{icon name='arrow-down-short-wide'}
 			{else}
 				{icon name='arrow-down-wide-short'}
