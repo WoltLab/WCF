@@ -10,7 +10,7 @@
 						{foreach from=$aclValues[$objectTypeID][options] key='__optionID' item='__optionData'}
 							{assign var='__optionCategoryName' value=$__optionData[categoryName]}
 							
-							{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|strpos:$__categoryNameStart === 0) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
+							{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|str_starts_with:$__categoryNameStart) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
 								{@$__optionID}: {
 									categoryName: '{@$__optionData[categoryName]|encodeJS}',
 									label: '{@$__optionData[label]|encodeJS}',
@@ -34,7 +34,7 @@
 												{foreach from=$__optionData key='__optionID' item='__optionValue'}
 													{assign var='__optionCategoryName' value=$aclValues[$objectTypeID][options][$__optionID][categoryName]}
 													
-													{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|strpos:$__categoryNameStart === 0) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
+													{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|str_starts_with:$__categoryNameStart) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
 														{@$__optionID}: {@$__optionValue},
 													{/if}
 												{/foreach}
@@ -56,7 +56,7 @@
 												{foreach from=$__optionData key='__optionID' item='__optionValue'}
 													{assign var='__optionCategoryName' value=$aclValues[$objectTypeID][options][$__optionID][categoryName]}
 													
-													{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|strpos:$__categoryNameStart === 0) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
+													{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|str_starts_with:$__categoryNameStart) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
 														{@$__optionID}: {@$__optionValue},
 													{/if}
 												{/foreach}
