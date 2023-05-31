@@ -155,7 +155,7 @@
 	<div class="formSubmit">
 		<input type="hidden" name="objectID" value="{$objectID}">
 		<input type="hidden" name="objectType" value="{$objectType}">
-		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
+		<button type="submit" class="button buttonPrimary">{lang}wcf.edit.button.compare{/lang}</button>
 	</div>
 </form>
 
