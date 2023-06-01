@@ -309,6 +309,7 @@ html[data-color-scheme="dark"] {
 	background-color: var(--wcfContentContainerBackground) !important;
 	border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0 !important;
 	border-color: var(--wcfContentBorderInner) !important;
+	color: transparent !important;
 	cursor: not-allowed !important;
 	height: 240px !important;
 	resize: none !important;
