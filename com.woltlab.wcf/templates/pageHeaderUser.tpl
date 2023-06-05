@@ -170,7 +170,7 @@
 					href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
 					rel="nofollow"
 				>{lang}wcf.user.loginOrRegister{/lang}</a>
-			</a>
+			</li>
 		{/if}
 		
 		{if !$__hideUserMenu|isset}
