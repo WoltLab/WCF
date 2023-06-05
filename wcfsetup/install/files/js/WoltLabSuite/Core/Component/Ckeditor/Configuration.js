@@ -95,7 +95,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             if (this.#features.list) {
                 this.#toolbar.push({
                     label: "woltlabToolbarGroup_list",
-                    items: ["bulletedList", "numberedList"],
+                    items: ["bulletedList", "numberedList", "outdent", "indent"],
                 });
                 this.#toolbarGroups["list"] = {
                     icon: "list;false",
