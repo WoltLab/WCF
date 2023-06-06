@@ -792,7 +792,7 @@ BROWSERCONFIG;
         );
 
         $variablesDarkMode = [];
-        $variables = \array_filter($variables, static function ($value, $key) use ($variablesDarkMode) {
+        $variables = \array_filter($variables, static function ($value, $key) use (&$variablesDarkMode) {
             if (!\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
                 return true;
             }

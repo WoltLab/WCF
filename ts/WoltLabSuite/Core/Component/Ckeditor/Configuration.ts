@@ -34,6 +34,10 @@ class ConfigurationBuilder {
     }
   }
 
+  #setupRemoveFormatting(): void {
+    this.#toolbar.push("removeFormat");
+  }
+
   #setupBasicFormat(): void {
     this.#toolbar.push("bold", "italic");
   }
@@ -105,7 +109,7 @@ class ConfigurationBuilder {
     if (this.#features.list) {
       this.#toolbar.push({
         label: "woltlabToolbarGroup_list",
-        items: ["bulletedList", "numberedList"],
+        items: ["bulletedList", "numberedList", "outdent", "indent"],
       });
 
       this.#toolbarGroups["list"] = {
@@ -238,6 +242,10 @@ class ConfigurationBuilder {
     }
 
     this.#setupHeading();
+
+    this.#insertDivider();
+
+    this.#setupRemoveFormatting();
 
     this.#insertDivider();
 

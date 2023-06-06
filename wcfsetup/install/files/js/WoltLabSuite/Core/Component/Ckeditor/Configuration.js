@@ -27,6 +27,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 this.#removePlugins.push("Heading");
             }
         }
+        #setupRemoveFormatting() {
+            this.#toolbar.push("removeFormat");
+        }
         #setupBasicFormat() {
             this.#toolbar.push("bold", "italic");
         }
@@ -95,7 +98,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             if (this.#features.list) {
                 this.#toolbar.push({
                     label: "woltlabToolbarGroup_list",
-                    items: ["bulletedList", "numberedList"],
+                    items: ["bulletedList", "numberedList", "outdent", "indent"],
                 });
                 this.#toolbarGroups["list"] = {
                     icon: "list;false",
@@ -212,6 +215,8 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 throw new Error("Cannot build the configuration twice.");
             }
             this.#setupHeading();
+            this.#insertDivider();
+            this.#setupRemoveFormatting();
             this.#insertDivider();
             this.#setupBasicFormat();
             this.#setupTextFormat();
