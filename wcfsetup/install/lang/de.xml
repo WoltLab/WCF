@@ -3228,7 +3228,7 @@ weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:<
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
 aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die <a href="{link controller='LostPassword' isHtmlEmail=true}{/link}">Kennwort vergessen-Funktion</a> {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.</p>]]></item>
-		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Passwörter zusenden]]></item>
+		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Kennwörter zusenden]]></item>
 		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Umgebung]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[Benutzer]]></item>
@@ -3239,7 +3239,7 @@ aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{
 		<item name="wcf.acp.user.authentication.failure.password"><![CDATA[Ungültiges Kennwort]]></item>
 		<item name="wcf.acp.user.authentication.failure.username"><![CDATA[Unbekannter Benutzername]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError"><![CDATA[Fehler]]></item>
-		<item name="wcf.acp.user.authentication.failure.validationError.invalidPassword"><![CDATA[Falsches Passwort]]></item>
+		<item name="wcf.acp.user.authentication.failure.validationError.invalidPassword"><![CDATA[Falsches Kennwort]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError.invalidUsername"><![CDATA[Unbekannter Benutzer]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|phrase} wurde freigeschaltet]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
