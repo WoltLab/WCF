@@ -571,7 +571,7 @@
 						</dl>
 
 						<dl id="disableSignatureExpiresSetting">
-							<dt><label for="disableSignatureExpiresExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
+							<dt><label for="disableSignatureExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
 							<dd>
 								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
 								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
@@ -690,7 +690,7 @@
 						</dl>
 
 						<dl id="disableAvatarExpiresSetting">
-							<dt><label for="disableAvatarExpiresExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
+							<dt><label for="disableAvatarExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
 							<dd>
 								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium">
 								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
