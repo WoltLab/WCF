@@ -1091,7 +1091,7 @@
 					</section>
 
 					{if $action === 'edit' && $style->hasDarkMode}
-						<section class="section"{if $errorField == 'individualScssDarkMode'} formError{/if}>
+						<section class="section">
 							<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}</h2>
 							
 							<dl class="wide">
@@ -1103,11 +1103,6 @@
 									</div>
 									<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
 								</dd>
-								{if $errorField == 'individualScssDarkMode'}
-									<small class="innerError">
-										{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
-									</small>
-								{/if}
 							</dl>
 						</section>
 					{/if}
@@ -1162,7 +1157,7 @@
 			</section>
 			
 			{if $action === 'edit' && $style->hasDarkMode}
-				<section class="section{if $errorField == 'individualScssDarkMode' && $isTainted} formError{/if}">
+				<section class="section>
 					<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 					
 					<dl class="wide">
@@ -1174,11 +1169,6 @@
 							</div>
 							<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
 						</dd>
-						{if $errorField == 'individualScssDarkMode' && $isTainted}
-							<small class="innerError">
-								{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
-							</small>
-						{/if}
 					</dl>
 				</section>
 			{/if}
