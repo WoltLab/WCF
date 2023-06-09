@@ -549,7 +549,10 @@ html[dir="rtl"] #spContentSidebar {
 	flex-direction: column;
 	row-gap: 10px;
 }
-#spStatus > li > div {
+#spStatusInfo,
+#spStatusSuccess,
+#spStatusWarning,
+#spStatusError {
 	border: 1px solid #000;
 	border-radius: var(--wcfBorderRadius);
 	padding: 5px 10px;
