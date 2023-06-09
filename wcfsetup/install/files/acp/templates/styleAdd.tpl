@@ -1157,7 +1157,7 @@
 			</section>
 			
 			{if $action === 'edit' && $style->hasDarkMode}
-				<section class="section>
+				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 					
 					<dl class="wide">
