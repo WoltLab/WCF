@@ -905,10 +905,10 @@
 													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
 												</div>
 												<div>
-													<span class="spVariable" style="user-select:all">{*
-														*}<span class="spVariableInvisible" style="font-size:0">var(--</span>{*
+													<span class="spVariable">{*
+														*}<span class="spVariableInvisible">var(--</span>{*
 														*}{$spColor}{*
-														*}<span class="spVariableInvisible" style="font-size:0">)</span>{*
+														*}<span class="spVariableInvisible">)</span>{*
 													*}</span>
 													<span class="spDescription">{$spType}</span>
 												</div>
