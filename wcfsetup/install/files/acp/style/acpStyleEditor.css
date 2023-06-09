@@ -115,7 +115,9 @@ html[dir="rtl"]:not(.touch) .spColor:hover .spColorBox { margin-left: 6px !impor
 html:not(.touch) .spColorBox { cursor: pointer; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
-.spVariable { font-family: Consolas, Courier, monospace; }
+.spVariable { font-family: Consolas, Courier, monospace; user-select: all; }
+.spVariableInvisible { font-size: 0; }
+.spDescription { color: var(--wcfContentDimmedText); }
 #spSidebar .button { display: block; }
 @media (min-width: 769px) {
 	#spVariablesWrapper { position: -webkit-sticky; position: sticky; top: 60px; }

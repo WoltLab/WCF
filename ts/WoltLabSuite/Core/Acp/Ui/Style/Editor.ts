@@ -280,19 +280,6 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
   });
 }
 
-function selectColorVariable() {
-  document.querySelectorAll(".spColor .spVariable").forEach((element) => {
-    element.addEventListener("dblclick", () => {
-      const range = document.createRange();
-      range.selectNodeContents(element);
-
-      const selection = window.getSelection()!;
-      selection.removeAllRanges();
-      selection.addRange(range);
-    });
-  });
-}
-
 /**
  * Sets up dynamic style options.
  */
@@ -306,7 +293,6 @@ export function setup(options: StyleEditorOptions): void {
   }
 
   initVisualEditor(options.styleRuleMap);
-  selectColorVariable();
 
   UiScreen.on("screen-sm-down", {
     match() {
