@@ -87,7 +87,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             });
         });
     }
-    function initVisualEditor(styleRuleMap) {
+    function initVisualEditor() {
         _stylePreviewWindow.querySelectorAll("[data-region]").forEach((region) => {
             _stylePreviewRegions.set(region.dataset.region, region);
         });
@@ -151,47 +151,21 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         style.appendChild(document.createTextNode(""));
         style.dataset.createdBy = "WoltLab/Acp/Ui/Style/Editor";
         document.head.appendChild(style);
-        function updateCSSRule(identifier, value) {
-            if (styleRuleMap[identifier] === undefined) {
-                return;
-            }
-            const rule = styleRuleMap[identifier].replace(/VALUE/g, value + " !important");
-            if (!rule) {
-                return;
-            }
-            let rules;
-            if (rule.indexOf("__COMBO_RULE__")) {
-                rules = rule.split("__COMBO_RULE__");
-            }
-            else {
-                rules = [rule];
-            }
-            rules.forEach((rule) => {
-                try {
-                    style.sheet.insertRule(rule, style.sheet.cssRules.length);
-                }
-                catch (e) {
-                    // ignore errors for unknown placeholder selectors
-                    if (!/[a-z]+-placeholder/.test(rule)) {
-                        console.debug(e.message);
-                    }
-                }
-            });
-        }
+        const spWindow = document.getElementById("spWindow");
         const wrapper = document.getElementById("spVariablesWrapper");
         wrapper.querySelectorAll(".styleVariableColor").forEach((colorField) => {
             const variableName = colorField.dataset.store.replace(/_value$/, "");
             const observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.attributeName === "style") {
-                        updateCSSRule(variableName, colorField.style.getPropertyValue("background-color"));
+                        spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
                     }
                 });
             });
             observer.observe(colorField, {
                 attributes: true,
             });
-            updateCSSRule(variableName, colorField.style.getPropertyValue("background-color"));
+            spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
         });
         // category selection by clicking on the area
         const buttonToggleColorPalette = document.querySelector(".jsButtonToggleColorPalette");
@@ -244,7 +218,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         if (!options.isTainted) {
             handleProtection(options.styleId);
         }
-        initVisualEditor(options.styleRuleMap);
+        initVisualEditor();
         UiScreen.on("screen-sm-down", {
             match() {
                 hideVisualEditor();

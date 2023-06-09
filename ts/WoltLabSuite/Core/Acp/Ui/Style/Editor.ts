@@ -21,14 +21,9 @@ let _isVisible = true;
 let _isSmartphone = false;
 let _updateRegionMarker: () => void;
 
-interface StyleRuleMap {
-  [key: string]: string;
-}
-
 interface StyleEditorOptions {
   isTainted: boolean;
   styleId: number;
-  styleRuleMap: StyleRuleMap;
 }
 
 /**
@@ -104,7 +99,7 @@ function handleProtection(styleId: number): void {
   });
 }
 
-function initVisualEditor(styleRuleMap: StyleRuleMap): void {
+function initVisualEditor(): void {
   _stylePreviewWindow.querySelectorAll("[data-region]").forEach((region: HTMLElement) => {
     _stylePreviewRegions.set(region.dataset.region!, region);
   });
@@ -180,35 +175,7 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
   style.dataset.createdBy = "WoltLab/Acp/Ui/Style/Editor";
   document.head.appendChild(style);
 
-  function updateCSSRule(identifier: string, value: string): void {
-    if (styleRuleMap[identifier] === undefined) {
-      return;
-    }
-
-    const rule = styleRuleMap[identifier].replace(/VALUE/g, value + " !important");
-    if (!rule) {
-      return;
-    }
-
-    let rules: string[];
-    if (rule.indexOf("__COMBO_RULE__")) {
-      rules = rule.split("__COMBO_RULE__");
-    } else {
-      rules = [rule];
-    }
-
-    rules.forEach((rule) => {
-      try {
-        style.sheet!.insertRule(rule, style.sheet!.cssRules.length);
-      } catch (e) {
-        // ignore errors for unknown placeholder selectors
-        if (!/[a-z]+-placeholder/.test(rule)) {
-          console.debug(e.message);
-        }
-      }
-    });
-  }
-
+  const spWindow = document.getElementById("spWindow")!;
   const wrapper = document.getElementById("spVariablesWrapper")!;
   wrapper.querySelectorAll(".styleVariableColor").forEach((colorField: HTMLElement) => {
     const variableName = colorField.dataset.store!.replace(/_value$/, "");
@@ -216,7 +183,7 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === "style") {
-          updateCSSRule(variableName, colorField.style.getPropertyValue("background-color"));
+          spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
         }
       });
     });
@@ -225,7 +192,7 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
       attributes: true,
     });
 
-    updateCSSRule(variableName, colorField.style.getPropertyValue("background-color"));
+    spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
   });
 
   // category selection by clicking on the area
@@ -292,7 +259,7 @@ export function setup(options: StyleEditorOptions): void {
     handleProtection(options.styleId);
   }
 
-  initVisualEditor(options.styleRuleMap);
+  initVisualEditor();
 
   UiScreen.on("screen-sm-down", {
     match() {
