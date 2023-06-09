@@ -326,7 +326,7 @@ html[dir="rtl"] #spTable th {
 
 /* ### editor ### */
 #spEditorContent {
-	border: 1px solid rgb(224, 224, 224);
+	border: 1px solid var(--wcfContentBorderInner);
 	border-top-width: 0;
 	min-height: 100px;
 	padding: 10px;
@@ -342,7 +342,7 @@ html[dir="rtl"] #spTable th {
 	padding: 10px;
 }
 .spEditorToolbar {
-	border: 1px solid rgb(224, 224, 224);
+	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0;
 	column-gap: 3px;
 	display: flex;
@@ -369,7 +369,7 @@ html[dir="rtl"] #spTable th {
 	color: var(--wcfEditorButtonTextDisabled);
 }
 .spEditorToolbarDivider {
-	background-color: rgb(224, 224, 224);
+	background-color: var(--wcfContentBorderInner);
 	display: block;
 	width: 1px;
 }
