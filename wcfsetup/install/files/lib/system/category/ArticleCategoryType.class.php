@@ -43,19 +43,24 @@ class ArticleCategoryType extends AbstractCategoryType
     /**
      * @inheritDoc
      */
-    public function afterDeletion(CategoryEditor $categoryEditor)
+    public function beforeDeletion(CategoryEditor $categoryEditor)
     {
-        // delete articles with no categories
-        $eventList = new ArticleList();
-        $eventList->getConditionBuilder()->add("article.categoryID IS NULL");
-        $eventList->readObjects();
+        parent::beforeDeletion($categoryEditor);
 
-        if (\count($eventList)) {
-            $eventAction = new ArticleAction($eventList->getObjects(), 'delete');
-            $eventAction->executeAction();
+        // Delete articles in this category.
+        $sql = "SELECT  articleID
+                FROM    wcf1_article
+                WHERE   categoryID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $categoryEditor->categoryID,
+        ]);
+        $articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($articleIDs !== []) {
+            $articleAction = new ArticleAction($articleIDs, 'delete');
+            $articleAction->executeAction();
         }
-
-        parent::afterDeletion($categoryEditor);
     }
 
     /**

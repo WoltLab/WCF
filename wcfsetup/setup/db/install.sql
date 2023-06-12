@@ -152,7 +152,7 @@ CREATE TABLE wcf1_article (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
-	categoryID INT(10),
+	categoryID INT(10) NOT NULL,
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
 	publicationStatus TINYINT(1) NOT NULL DEFAULT 1,
 	publicationDate INT(10) NOT NULL DEFAULT 0,
@@ -1965,7 +1965,7 @@ ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package
 ALTER TABLE wcf1_application ADD FOREIGN KEY (landingPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_article ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
-ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
+ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (articleID) REFERENCES wcf1_article (articleID) ON DELETE CASCADE;
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;

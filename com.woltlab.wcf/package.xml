@@ -84,6 +84,9 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Run before the database migrations, because the data is gone otherwise. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_landingPage.php</instruction>
 
+		<!-- Run before the database migrations, because otherwise the migration fails. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_articleOrphans.php</instruction>
+
 		<!-- Migrate the database as early as possible. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step1.php</instruction>
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step2.php</instruction>

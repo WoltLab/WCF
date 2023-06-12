@@ -409,6 +409,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function delete()
     {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
         $usersToArticles = $articleIDs = $articleContentIDs = $attachmentArticleIDs = [];
         foreach ($this->getObjects() as $article) {
             $articleIDs[] = $article->articleID;

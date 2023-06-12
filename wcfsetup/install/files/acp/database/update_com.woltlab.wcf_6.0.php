@@ -19,6 +19,7 @@ use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
+use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
@@ -27,12 +28,22 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
         ]),
+    // This needs to be separate, because the FK needs to be adjusted first.
+    PartialDatabaseTable::create('wcf1_article')
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['categoryID'])
+                ->referencedTable('wcf1_category')
+                ->referencedColumns(['categoryID'])
+                ->onDelete('CASCADE'),
+        ]),
     PartialDatabaseTable::create('wcf1_article')
         ->columns([
             SmallintDatabaseTableColumn::create('attachments')
                 ->length(5)
                 ->notNull()
                 ->defaultValue(0),
+            NotNullInt10DatabaseTableColumn::create('categoryID'),
         ]),
     PartialDatabaseTable::create('wcf1_captcha_question')
         ->columns([
