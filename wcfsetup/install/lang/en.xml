@@ -5398,7 +5398,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written in moderation]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Page]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Notify me when new comments are written on pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written on pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Notify me when someone replies to my comments on pages]]></item>
