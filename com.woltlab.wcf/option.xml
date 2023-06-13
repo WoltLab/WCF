@@ -1601,5 +1601,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="google_maps_enable_double_click_zoom"/>
 		<option name="google_maps_access_user_location"/>
 		<option name="module_amp"/>
+		<option name="article_enable_visit_tracking"/>
 	</delete>
 </data>
