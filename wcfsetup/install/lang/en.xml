@@ -889,7 +889,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.category.user.profile.payment"><![CDATA[Payment]]></item>
 		<item name="wcf.acp.group.option.user.profile.payment.canBuyPaidSubscription"><![CDATA[Can buy paid subscriptions]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Cover Photos]]></item>
-		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view  users’ cover photos]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view users’ cover photos]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
@@ -4296,7 +4296,7 @@ Attachments:
 		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to a comment by <strong>{$commentAuthor}</strong> on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to comments on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$commentAuthor}’s comment on {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
-		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>  waiting for approval:</p>]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval:</p>]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
 		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete {if !$moderationQueueCount|isset || $moderationQueueCount == 1}this content{else}these contents{/if}?]]></item>
 	</category>
