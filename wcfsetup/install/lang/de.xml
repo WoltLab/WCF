@@ -1921,7 +1921,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[Das Paket „{$packageName|phrase}“ ist bereits in Version „{$packageVersion}“ installiert.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[Die API-Version „{$version}“ ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine ältere Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[Neben der &lt;void/&gt;-Anweisung werden weitere Package Installation Plugins angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[Die &lt;void/&gt;-Anweisung ist in den Installations-Anweisungen unzulässig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.18"><![CDATA[Die bereits installierte App „{$application->getPackage()->package}“ verwendet die gleiche App-Abkürzung.]]></item>
@@ -4838,7 +4838,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Angemeldet als]]></item>
 		<item name="wcf.user.reauthentication.logoutAndChangeUser"><![CDATA[Nicht {$__wcf->user->username}? <a href="{link controller='FullLogout' application='wcf'}t={csrfToken type='url'}{/link}">Abmelden und Benutzer wechseln</a>.]]></item>
 		<item name="wcf.user.ignore.type"><![CDATA[Benutzer blockieren]]></item>
-		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Nicht Blockieren]]></item>
+		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Nicht blockieren]]></item>
 		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Direkten Kontakt blockieren]]></item>
 		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Direkten Kontakt blockieren und erstellte Inhalte ausblenden]]></item>
 		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[Der Benutzer kann nicht blockiert werden.]]></item>
@@ -5383,7 +5383,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar in der Moderation]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Seite]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Neuer Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf einer Seite]]></item>
