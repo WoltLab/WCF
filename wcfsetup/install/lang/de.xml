@@ -4843,7 +4843,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Angemeldet als]]></item>
 		<item name="wcf.user.reauthentication.logoutAndChangeUser"><![CDATA[Nicht {$__wcf->user->username}? <a href="{link controller='FullLogout' application='wcf'}t={csrfToken type='url'}{/link}">Abmelden und Benutzer wechseln</a>.]]></item>
 		<item name="wcf.user.ignore.type"><![CDATA[Benutzer blockieren]]></item>
-		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Nicht Blockieren]]></item>
+		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Nicht blockieren]]></item>
 		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Direkten Kontakt blockieren]]></item>
 		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Direkten Kontakt blockieren und erstellte Inhalte ausblenden]]></item>
 		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[Der Benutzer kann nicht blockiert werden.]]></item>
