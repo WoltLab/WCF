@@ -810,7 +810,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
-		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Can edit their signature]]></item>
+		<item name="wcf.acp.group.option.user.signature.canEditSignature"><![CDATA[Can edit own signature]]></item>
 		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Can import data]]></item>
 		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
@@ -893,7 +893,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
-		<item name="wcf.acp.group.option.user.signature.canEditSignature"><![CDATA[Can edit own signature]]></item>
 		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Contact Form]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
