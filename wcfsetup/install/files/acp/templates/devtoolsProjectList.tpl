@@ -1,9 +1,10 @@
 {include file='header' pageTitle='wcf.acp.devtools.project.list'}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function(AcpUiDevtoolsProjectQuickSetup, Language) {
+	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/FilterByName', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function({ setup: setupFilterByName }, AcpUiDevtoolsProjectQuickSetup, Language) {
 		Language.add('wcf.acp.devtools.project.quickSetup', '{jslang}wcf.acp.devtools.project.quickSetup{/jslang}');
 		
+		setupFilterByName();
 		AcpUiDevtoolsProjectQuickSetup.init();
 	});
 </script>
@@ -26,8 +27,19 @@
 <p class="info">{lang}wcf.acp.devtools.project.introduction{/lang}</p>
 
 {hascontent}
+	<div class="section">
+		<dl>
+			<dt>
+				<label for="filterByName">{lang}wcf.acp.devtools.project.filterByName{/lang}</label>
+			</dt>
+			<dd>
+				<input type="text" id="filterByName" class="long">
+			</dd>
+		</dl>
+	</div>
+
 	<div class="section tabularBox">
-		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\project\DevtoolsProjectAction">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\project\DevtoolsProjectAction" id="devtoolsProjectList">
 			<thead>
 				<tr>
 					<th class="columnID{if $sortField === 'projectID'} active {@$sortOrder}{/if}" colspan="3"><a href="{link controller='DevtoolsProjectList'}sortField=projectID&sortOrder={if $sortField === 'projectID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -41,7 +53,7 @@
 			<tbody>
 				{content}
 					{foreach from=$objects item=object}
-						<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$object->getObjectID()}">
+						<tr class="jsObjectRow jsObjectActionObject devtoolsProject" data-object-id="{$object->getObjectID()}" data-name="{$object->name}">
 							<td class="columnIcon">
 								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.sync{/lang}</a>
 								<a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.pips{/lang}</a>
