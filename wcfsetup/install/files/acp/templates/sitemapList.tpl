@@ -75,7 +75,7 @@
 		document.getElementById('sitemapRebuildButton').addEventListener('click', () => {
 			new AcpUiWorker({
 				dialogId: 'sitemapRebuild',
-				dialogTitle: '{jslang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/jslang}',
+				dialogTitle: '{jslang}wcf.acp.rebuildData.wcf_system_worker_SitemapRebuildWorker{/jslang}',
 				className: 'wcf\\system\\worker\\SitemapRebuildWorker',
 				parameters: {
 					forceRebuild: true,
