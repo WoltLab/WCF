@@ -7,12 +7,11 @@
             return;
         }
 
-        let value = event.clipboardData.getData("text/plain").trim();
-        if (value.match(/.+[/\\]([^/\\]+)[/\\]?$/)) {
-            value = RegExp.$1;
-            if (value.includes(".")) {
-                name.value = value;
-            }
+        const value = event.clipboardData.getData("text/plain").trim();
+
+        const matches = value.match(/.+[/\\]([^/\\]+)[/\\]?$/);
+        if (matches !== null && matches[1].includes(".")) {
+            name.value = matches[1];
         }
     });
 }
