@@ -368,6 +368,9 @@ class Instructions {
 
     // toggle application selector
     this.toggleApplicationFormField(instructionsId);
+
+    const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!;
+    value.focus();
   }
 
   /**

@@ -264,6 +264,8 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             }
             // toggle application selector
             this.toggleApplicationFormField(instructionsId);
+            const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
+            value.focus();
         }
         /**
          * Opens a dialog to edit an existing instruction.
