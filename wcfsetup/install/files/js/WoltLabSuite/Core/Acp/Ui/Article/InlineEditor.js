@@ -125,7 +125,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             });
             const buttonTrash = scope.querySelector(".jsButtonTrash");
             buttonTrash.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().softDelete(title, false);
+                const { result } = await (0, Confirmation_1.confirmationFactory)().softDelete(title, false);
                 if (result) {
                     this.invoke(objectId, "trash");
                 }

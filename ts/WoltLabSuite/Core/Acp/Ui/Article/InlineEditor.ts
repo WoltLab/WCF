@@ -180,7 +180,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLButtonElement;
     buttonTrash.addEventListener("click", async () => {
-      const result = await confirmationFactory().softDelete(title, false);
+      const { result } = await confirmationFactory().softDelete(title, false);
 
       if (result) {
         this.invoke(objectId, "trash");
