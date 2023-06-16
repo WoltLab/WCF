@@ -32,7 +32,7 @@ interface RequestData {
 class AcpUiDevtoolsProjectSync {
   private readonly buttons = new Map<string, HTMLButtonElement>();
   private readonly buttonStatus = new Map<string, HTMLElement>();
-  private buttonSyncAll?: HTMLAnchorElement = undefined;
+  private readonly buttonSyncAll: HTMLButtonElement = document.getElementById("devtoolsSyncAll") as HTMLButtonElement;
   private readonly container = document.getElementById("syncPipMatches")!;
   private readonly pips: PipData[] = [];
   private readonly projectId: number;
@@ -140,15 +140,7 @@ class AcpUiDevtoolsProjectSync {
       }
     }
 
-    const syncAll = document.createElement("li");
-    syncAll.innerHTML = `<a href="#" class="button"><fa-icon name="arrows-rotate" solid></fa-icon> ${Language.get(
-      "wcf.acp.devtools.sync.syncAll",
-    )}</a>`;
-    this.buttonSyncAll = syncAll.children[0] as HTMLAnchorElement;
-    this.buttonSyncAll.addEventListener("click", this.syncAll.bind(this));
-
-    const list = document.querySelector(".contentHeaderNavigation > ul") as HTMLUListElement;
-    list.insertAdjacentElement("afterbegin", syncAll);
+    this.buttonSyncAll.addEventListener("click", () => this.syncAll());
   }
 
   private sync(pluginName: string, target: string): void {
@@ -164,14 +156,12 @@ class AcpUiDevtoolsProjectSync {
     });
   }
 
-  private syncAll(event: MouseEvent): void {
-    event.preventDefault();
-
-    if (this.buttonSyncAll!.classList.contains("disabled")) {
+  private syncAll(): void {
+    if (this.buttonSyncAll.classList.contains("disabled")) {
       return;
     }
 
-    this.buttonSyncAll!.classList.add("disabled");
+    this.buttonSyncAll.classList.add("disabled");
 
     this.queue = [];
     this.pips.forEach((pip) => {
@@ -184,7 +174,7 @@ class AcpUiDevtoolsProjectSync {
 
   private syncNext(): void {
     if (this.queue.length === 0) {
-      this.buttonSyncAll!.classList.remove("disabled");
+      this.buttonSyncAll.classList.remove("disabled");
 
       UiNotification.show();
 
@@ -238,7 +228,7 @@ class AcpUiDevtoolsProjectSync {
       }
     });
 
-    this.buttonSyncAll!.classList.remove("disabled");
+    this.buttonSyncAll.classList.remove("disabled");
 
     return true;
   }

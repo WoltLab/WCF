@@ -9,6 +9,12 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $object->validate() === ''}
+				<li>
+					<button class="button" id="devtoolsSyncAll">
+						{icon name='arrows-rotate' type='solid'}
+						{lang}wcf.acp.devtools.sync.syncAll{/lang}
+					</button>
+				</li>
 				<li><a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pips{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.devtools.project.edit{/lang}</span></a></li>
