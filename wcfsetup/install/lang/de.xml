@@ -410,6 +410,7 @@
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Projekt bearbeiten]]></item>
 		<item name="wcf.acp.devtools.project.filterByName"><![CDATA[Nach Name filtern]]></item>
+		<item name="wcf.acp.devtools.project.filterByName.description"><![CDATA[Die Auswahl des hervorgehobenen Projekts kann mit <kbd>↑</kbd> und <kbd>↓</kbd> verändert werden. Mit <kbd>⮐</kbd> wird der Daten-Abgleich des hervorgehobenen Projekts geöffnet.]]></item>
 		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="https://docs.woltlab.com/latest/getting-started/#developer-tools" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>

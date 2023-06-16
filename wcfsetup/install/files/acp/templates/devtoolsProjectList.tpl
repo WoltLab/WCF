@@ -34,6 +34,7 @@
 			</dt>
 			<dd>
 				<input type="text" id="filterByName" class="long">
+				<small>{lang}wcf.acp.devtools.project.filterByName.description{/lang}</small>
 			</dd>
 		</dl>
 	</div>
@@ -55,7 +56,7 @@
 					{foreach from=$objects item=object}
 						<tr class="jsObjectRow jsObjectActionObject devtoolsProject" data-object-id="{$object->getObjectID()}" data-name="{$object->name}">
 							<td class="columnIcon">
-								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.sync{/lang}</a>
+								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small devtoolsProjectSync">{lang}wcf.acp.devtools.project.sync{/lang}</a>
 								<a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.pips{/lang}</a>
 							</td>
 							<td class="columnIcon">
@@ -98,5 +99,11 @@
 		<button type="button" id="projectQuickSetupSubmit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 </div>
+
+<style>
+.devtoolsProject.devtoolsProject--highlighted td {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
+</style>
 
 {include file='footer'}

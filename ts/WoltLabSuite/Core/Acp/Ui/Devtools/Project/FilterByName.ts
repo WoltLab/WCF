@@ -19,23 +19,104 @@ function filterProjects(): void {
     return;
   }
 
+  let firstProject: HTMLTableRowElement | undefined = undefined;
   projects.forEach((row, name) => {
     if (name.includes(value)) {
       row.hidden = false;
+
+      if (!firstProject) {
+        firstProject = row;
+      }
     } else {
       row.hidden = true;
     }
   });
+
+  if (firstProject) {
+    highlightProject(firstProject);
+  }
 }
 
 function resetFilter(): void {
   filterByName.value = "";
-  projects.forEach((row) => (row.hidden = false));
+  projects.forEach((row) => {
+    row.hidden = false;
+    row.classList.remove("devtoolsProject--highlighted");
+  });
+}
+
+function highlightProject(target: HTMLTableRowElement): void {
+  projects.forEach((row) => {
+    if (row === target) {
+      row.classList.add("devtoolsProject--highlighted");
+    } else {
+      row.classList.remove("devtoolsProject--highlighted");
+    }
+  });
+}
+
+function syncHighlightedProject(): void {
+  const row = getHighlightedProject();
+
+  if (row) {
+    const button = row.querySelector(".devtoolsProjectSync") as HTMLAnchorElement;
+    button.click();
+  }
+}
+
+function highlightPreviousProject(): void {
+  const projects = getVisibleProjects();
+  const current = getHighlightedProject();
+  if (!current) {
+    return;
+  }
+
+  let index = projects.indexOf(current) - 1;
+  if (index < 0) {
+    index = projects.length - 1;
+  }
+
+  highlightProject(projects[index]);
+}
+
+function highlightNextProject(): void {
+  const projects = getVisibleProjects();
+  const current = getHighlightedProject();
+  if (!current) {
+    return;
+  }
+
+  let index = projects.indexOf(current) + 1;
+  if (index >= projects.length) {
+    index = 0;
+  }
+
+  highlightProject(projects[index]);
+}
+
+function getVisibleProjects(): HTMLTableRowElement[] {
+  return Array.from(projects.values()).filter((project) => project.hidden === false);
+}
+
+function getHighlightedProject(): HTMLTableRowElement | undefined {
+  return Array.from(projects.values()).find((project) => project.classList.contains("devtoolsProject--highlighted"));
 }
 
 export function setup(): void {
   filterByName.addEventListener("input", () => filterProjects());
-  filterByName.addEventListener("keyup", (event) => {
+  filterByName.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      highlightNextProject();
+    }
+
+    if (event.key === "ArrowUp") {
+      highlightPreviousProject();
+    }
+
+    if (event.key === "Enter") {
+      syncHighlightedProject();
+    }
+
     if (event.key === "Escape") {
       resetFilter();
     }
