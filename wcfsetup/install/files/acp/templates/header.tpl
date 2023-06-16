@@ -130,7 +130,6 @@
 	{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
-	{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
 	<script>
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
