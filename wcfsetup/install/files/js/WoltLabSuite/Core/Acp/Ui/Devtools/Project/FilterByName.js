@@ -30,6 +30,13 @@ define(["require", "exports", "WoltLabSuite/Core/Environment"], function (requir
                 row.hidden = true;
             }
         });
+        // Prefer exact matches when selecting packages.
+        for (const [name, project] of projects) {
+            if (name === value) {
+                firstProject = project;
+                break;
+            }
+        }
         if (firstProject) {
             highlightProject(firstProject);
         }
