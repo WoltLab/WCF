@@ -22,9 +22,11 @@ define(["require", "exports", "https://platform.twitter.com/widgets.js"], functi
      */
     async function embedTweet(container, tweetId, removeChildren = false) {
         const twitter = await twitterReady;
+        const theme = document.documentElement.dataset.colorScheme === "dark" ? "dark" : "light";
         const tweet = await twitter.widgets.createTweet(tweetId, container, {
             dnt: true,
             lang: document.documentElement.lang,
+            theme,
         });
         if (tweet && removeChildren) {
             while (container.lastChild) {

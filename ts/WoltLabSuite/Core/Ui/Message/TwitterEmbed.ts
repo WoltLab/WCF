@@ -29,9 +29,11 @@ export async function embedTweet(
 ): Promise<HTMLElement> {
   const twitter = await twitterReady;
 
+  const theme = document.documentElement.dataset.colorScheme === "dark" ? "dark" : "light";
   const tweet = await twitter.widgets.createTweet(tweetId, container, {
     dnt: true,
     lang: document.documentElement.lang,
+    theme,
   });
 
   if (tweet && removeChildren) {
