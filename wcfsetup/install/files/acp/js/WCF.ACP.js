@@ -1168,6 +1168,35 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 				}
 			}
 		}, this));
+
+		const searchInput = document.querySelector("#pageHeaderSearch input[name=q]");
+		document.addEventListener("keydown", (event) => {
+			if (event.key !== "s") {
+				return;
+			}
+			
+			if (!event.defaultPrevented && document.activeElement === document.body) {
+				searchInput.focus();
+
+				event.preventDefault();
+			}
+		}, {
+			passive: false,
+		});
+
+		searchInput.addEventListener("keydown", (event) => {
+			if (event.key !== "Escape") {
+				return;
+			}
+
+			if (!event.defaultPrevented && searchInput.value.trim() === "") {
+				event.preventDefault();
+
+				searchInput.blur();
+			}
+		}, {
+			passive: false,
+		});
 	},
 	
 	/**
