@@ -21,10 +21,17 @@
 
     <dl>
         <dt>TODO: License Number</dt>
+        {* TODO: The WoltLab Cloud does not really follows the concept of
+           license numbers therefore this needs to be hidden for these. *}
         <dd>{$licenseNumber}</dd>
     </dl>
     <dl>
         <dt>TODO: License Type</dt>
+        {* TODO: Do we want to display additional information depending on the
+           license type? This could be useful for WoltLab Cloud installations
+           to show the subscription name. But this could also show a reminder
+           for developer licenses that they only qualify for demo/testing
+           purpose and not for production sites. *}
         <dd>{$licenseData[license][type]}</dd>
     </dl>
 </section>
@@ -43,8 +50,14 @@
             <tbody>
                 {foreach from=$licenseData[woltlab] key=package item=majorVersion}
                     <tr>
+                        {* TODO: Install button? *}
+
                         <td>{$package}</td>
                         <td>{$majorVersion}</td>
+
+                        {* TODO: We might want to suggest upgrading the license
+                           if we can determine that this is an outdated version.
+                           Maybe we can deeplink the LicenseExtend page here? *}
                     </tr>
                 {/foreach}
             </tbody>
@@ -66,8 +79,18 @@
             <tbody>
                 {foreach from=$licenseData[pluginstore] key=package item=majorVersion}
                     <tr>
+                        {* TODO: Install button? *}
+
                         <td>{$package}</td>
                         <td>{$majorVersion}</td>
+
+                        {* TODO: Are we able to suggest if there is a newer
+                           version available? And if yes, how do we display this
+                           without breaking the version filter? Or does it only
+                           affect the availibility of the install button and not
+                           the row itself? *}
+                        
+                        {* TODO: Do we want to display the time of purchase here? *}
                     </tr>
                 {/foreach}
             </tbody>
