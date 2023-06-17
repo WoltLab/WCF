@@ -45,6 +45,7 @@
                 <tr>
                     <th>TODO: Name</th>
                     <th>TODO: Major Version</th>
+                    <th>TODO: Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +59,10 @@
                         {* TODO: We might want to suggest upgrading the license
                            if we can determine that this is an outdated version.
                            Maybe we can deeplink the LicenseExtend page here? *}
+
+                        <td>
+                            {if $package|in_array:$installedPackages}TODO: Installed.{/if}
+                        </td>
                     </tr>
                 {/foreach}
             </tbody>
@@ -74,6 +79,7 @@
                 <tr>
                     <th>TODO: Name</th>
                     <th>TODO: Major Version</th>
+                    <th>TODO: Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,6 +97,10 @@
                            the row itself? *}
                         
                         {* TODO: Do we want to display the time of purchase here? *}
+
+                        <td>
+                            {if $package|in_array:$installedPackages}TODO: Installed.{/if}
+                        </td>
                     </tr>
                 {/foreach}
             </tbody>

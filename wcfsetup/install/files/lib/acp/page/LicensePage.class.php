@@ -7,6 +7,7 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 
@@ -22,6 +23,8 @@ final class LicensePage extends AbstractPage
     // TODO: This could be part of the aforementioned custom object.
     private int $licenseNumber;
 
+    private array $installedPackages;
+
     public function readData()
     {
         parent::readData();
@@ -33,6 +36,12 @@ final class LicensePage extends AbstractPage
         // also needs tobe a way to manually trigger a refresh in case of a
         // recent purchase.
         $this->licenseData = $this->fetchLicenseData();
+
+        $identifiers = \array_merge(
+            \array_keys($this->licenseData['woltlab']),
+            \array_keys($this->licenseData['pluginstore'])
+        );
+        $this->installedPackages = $this->getInstalledPackages($identifiers);
 
         // TODO: This might need to use `getAuthData()` to inject the correct
         // credentials for the WoltLab Cloud.
@@ -50,7 +59,22 @@ final class LicensePage extends AbstractPage
         WCF::getTPL()->assign([
             'licenseData' => $this->licenseData,
             'licenseNumber' => $this->licenseNumber,
+            'installedPackages' => $this->installedPackages,
         ]);
+    }
+
+    private function getInstalledPackages(array $identifiers): array
+    {
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package IN (?)", [$identifiers]);
+
+        $sql = "SELECT  package
+                FROM    wcf1_package
+                " . $conditions;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
     // TODO: This code was stol… liberated from "FirstTimeSetupLicenseForm" and
