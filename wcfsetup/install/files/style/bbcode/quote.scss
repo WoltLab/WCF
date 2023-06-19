@@ -1,125 +1,79 @@
 .quoteBox {
 	background-color: var(--wcfContentBackground);
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	border-radius: 2px;
+	border-left: 5px solid var(--wcfContentBorderInner);
+	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
 	clear: both;
-	display: block;
+	column-gap: 5px;
+	display: grid;
 	font-style: normal;
+	grid-template-areas:
+		"icon title"
+		"content content";
+	grid-template-columns: 24px auto;
 	margin: 1em 0;
 	overflow: hidden;
-
-	&:first-child {
-		margin-top: 0;
-	}
-
-	// hide nested icons
-	.quoteBox {
-		clear: both;
-
-		.quoteBoxIcon {
-			display: none;
-		}
-	}
-
-	@include screen-md-up {
-		padding: 20px;
-	}
-
-	@include screen-sm-down {
-		padding: 10px;
-	}
+	padding: 15px 10px;
+	row-gap: 10px;
 }
 
-.quoteBox {
-	@include screen-md-up {
-		min-height: 104px;
-	}
+.quoteBox.collapsed {
+	position: relative;
 
-	&.collapsed {
-		position: relative;
-
-		> .quoteBoxContent {
-			overflow: hidden;
-			max-height: 100px;
-		}
-
-		> .toggleButton {
-			bottom: 0;
-			box-shadow: 0 -10px 50px 10px rgba(var(--wcfContentBackground-rgb) / 0.9);
-			left: 0;
-			padding-bottom: 10px;
-			position: absolute;
-			right: 0;
-			z-index: 1;
-		}
+	> .quoteBoxContent {
+		overflow: hidden;
+		max-height: 100px;
 	}
 
 	> .toggleButton {
-		background-color: rgba(var(--wcfContentBackground-rgb) / 0.9);
-		cursor: pointer;
-		display: block;
-		padding: 10px 20px 0 10px;
-		text-align: center;
-
-		@include wcfFontSmall;
+		bottom: 0;
+		box-shadow: 0 -10px 50px 10px rgba(var(--wcfContentBackground-rgb) / 0.9);
+		left: 0;
+		padding-bottom: 10px;
+		position: absolute;
+		right: 0;
+		z-index: 1;
 	}
+}
 
-	.quoteBox {
-		min-height: 0;
-	}
+.quoteBox > .toggleButton {
+	background-color: rgba(var(--wcfContentBackground-rgb) / 0.9);
+	cursor: pointer;
+	display: block;
+	padding: 10px 20px 0 10px;
+	text-align: center;
+
+	@include wcfFontSmall;
 }
 
 .quoteBoxTitle {
-	font-style: normal;
-	margin-bottom: 20px;
+	align-self: center;
+	color: var(--wcfContentDimmedText);
+	grid-area: title;
 
-	@include wcfFontHeadline;
+	a {
+		color: inherit;
+	}
+
+	a:hover {
+		color: inherit;
+		text-decoration: underline;
+	}
 }
 
 .quoteBoxIcon {
-	float: right;
-	margin: 0 0 10px 10px;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	grid-area: icon;
+}
 
-	> a {
-		display: block;
-		font-size: 0;
+.quoteBoxContent {
+	grid-area: content;
+
+	> :first-child {
+		margin-top: 0 !important;
 	}
 
-	> .quoteBoxQuoteSymbol {
-		color: var(--wcfContentDimmedText);
-		display: block;
-		font-family: Georgia, "Times New Roman", serif;
-		font-style: normal;
-		text-align: center;
-
-		@include screen-md-up {
-			font-size: 160px;
-			line-height: 160px;
-			height: 64px;
-			width: 64px;
-		}
-
-		@include screen-sm-down {
-			font-size: 80px;
-			line-height: 80px;
-			height: 32px;
-			width: 32px;
-		}
-
-		&::before {
-			content: "\201c";
-			position: relative;
-
-			@include screen-md-up {
-				top: -5px;
-			}
-		}
-	}
-
-	@include screen-sm-down {
-		.userAvatarImage {
-			width: 32px !important;
-			height: 32px !important;
-		}
+	> :last-child {
+		margin-bottom: 0 !important;
 	}
 }

@@ -3417,6 +3417,10 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
+	<category name="wcf.ckeditor">
+		<item name="wcf.ckeditor.quote"><![CDATA[Zitat]]></item>
+		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Zitat von %0]]></item>
+	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>

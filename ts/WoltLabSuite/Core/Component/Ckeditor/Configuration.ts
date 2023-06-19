@@ -270,7 +270,11 @@ class ConfigurationBuilder {
     const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
 
     const key = language ? language : "en";
-    window.CKEDITOR_TRANSLATIONS[key].dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
+    const { dictionary } = window.CKEDITOR_TRANSLATIONS[key];
+
+    dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
+    dictionary["Quote"] = getPhrase("wcf.ckeditor.quote");
+    dictionary["Quote from %0"] = getPhrase("wcf.ckeditor.quoteFrom");
 
     // TODO: The typings are both incompleted and outdated.
     return {
