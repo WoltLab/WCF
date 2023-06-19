@@ -217,6 +217,10 @@
 	border-radius: 50%;
 }
 
+html[data-color-scheme="dark"] .userAvatarImage {
+	background-color: #333;
+}
+
 .userAvatarList {
 	display: flex;
 	flex-wrap: wrap;
