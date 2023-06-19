@@ -6,9 +6,9 @@
 
 {event name='userNotice'}
 
-{capture assign='statusOk'}{icon name='check'}{/capture}
-{capture assign='statusSufficient'}{icon name='circle-exclamation'}{/capture}
-{capture assign='statusInsufficient'}{icon name='triangle-exclamation'}{/capture}
+{capture assign='statusOk'}<span class="green">{icon name='check'}</span>{/capture}
+{capture assign='statusSufficient'}<span class="orange">{icon name='circle-exclamation'}</span>{/capture}
+{capture assign='statusInsufficient'}<span class="red">{icon name='triangle-exclamation'}</span>{/capture}
 
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.systemCheck.result{/lang}</h2>
