@@ -61,7 +61,11 @@
                            Maybe we can deeplink the LicenseExtend page here? *}
 
                         <td>
-                            {if $package|in_array:$installedPackages}TODO: Installed.{/if}
+                            {if $package|in_array:$installedPackages}
+                                TODO: Installed.
+                            {elseif $installablePackages[$package]|isset}
+                                TODO: #{$installablePackages[$package]}
+                            {/if}
                         </td>
                     </tr>
                 {/foreach}
@@ -99,7 +103,11 @@
                         {* TODO: Do we want to display the time of purchase here? *}
 
                         <td>
-                            {if $package|in_array:$installedPackages}TODO: Installed.{/if}
+                            {if $package|in_array:$installedPackages}
+                                TODO: Installed.
+                            {elseif $installablePackages[$package]|isset}
+                                TODO: #{$installablePackages[$package]}
+                            {/if}
                         </td>
                     </tr>
                 {/foreach}
