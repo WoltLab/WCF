@@ -158,38 +158,62 @@ fa-icon {
   }
 }
 
+fa-icon {
+  --preset-black: #333;
+  --preset-blue: #369;
+  --preset-brown: #c63;
+  --preset-green: #090;
+  --preset-orange: #f90;
+  --preset-pink: #f0c;
+  --preset-purple: #c0f;
+  --preset-red: #c00;
+  --preset-yellow: #ff0;
+}
+
+html[data-color-scheme="dark"] fa-icon {
+  --preset-black: #333;
+  --preset-blue: #204f7e;
+  --preset-brown: #795548;
+  --preset-green: #1b5e20;
+  --preset-orange: #f57c00;
+  --preset-pink: #e10fb0;
+  --preset-purple: #673ab7;
+  --preset-red: #c1183d;
+  --preset-yellow: #ffeb3b;
+}
+
 .green fa-icon {
-  color: #090;
+  color: var(--preset-green);
 }
 
 .red fa-icon {
-  color: #c00;
+  color: var(--preset-red);
 }
 
 .black fa-icon {
-  color: #333;
+  color: var(--preset-black);
 }
 
 .brown fa-icon {
-  color: #c63;
+  color: var(--preset-brown);
 }
 
 .orange fa-icon {
-  color: #f90;
+  color: var(--preset-orange);
 }
 
 .yellow fa-icon {
-  color: #ff0;
+  color: var(--preset-yellow);
 }
 
 .blue fa-icon {
-  color: #369;
+  color: var(--preset-blue);
 }
 
 .purple fa-icon {
-  color: #c0f;
+  color: var(--preset-purple);
 }
 
 .pink fa-icon {
-  color: #f0c;
+  color: var(--preset-pink);
 }
