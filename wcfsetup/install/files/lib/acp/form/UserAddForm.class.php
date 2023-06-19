@@ -174,7 +174,7 @@ class UserAddForm extends UserOptionListForm
             }
             if ($this->disableSignature && !isset($_POST['disableSignatureNeverExpires'])) {
                 if (isset($_POST['disableSignatureExpires'])) {
-                    $this->disableSignatureExpires = @\strtotime(StringUtil::trim($_POST['disableSignatureExpires']));
+                    $this->disableSignatureExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableSignatureExpires'])));
                 }
             }
         }
