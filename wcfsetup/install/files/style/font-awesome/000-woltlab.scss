@@ -156,40 +156,40 @@ fa-icon {
     --font-size: 130px;
     --icon-size: 144px;
   }
+}
 
-  &.green {
-    color: rgba(0, 153, 0, 1);
-  }
+.green fa-icon {
+  color: #090;
+}
 
-  &.red {
-    color: rgba(204, 0, 0, 1);
-  }
+.red fa-icon {
+  color: #c00;
+}
 
-  &.black {
-    color: #333;
-  }
+.black fa-icon {
+  color: #333;
+}
 
-  &.brown {
-    color: #c63;
-  }
+.brown fa-icon {
+  color: #c63;
+}
 
-  &.orange {
-    color: #f90;
-  }
+.orange fa-icon {
+  color: #f90;
+}
 
-  &.yellow {
-    color: #ff0;
-  }
+.yellow fa-icon {
+  color: #ff0;
+}
 
-  &.blue {
-    color: #369;
-  }
+.blue fa-icon {
+  color: #369;
+}
 
-  &.purple {
-    color: #c0f;
-  }
+.purple fa-icon {
+  color: #c0f;
+}
 
-  &.pink {
-    color: #f0c;
-  }
+.pink fa-icon {
+  color: #f0c;
 }
