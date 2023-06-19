@@ -229,7 +229,7 @@ class UserEditForm extends UserAddForm
             }
             if ($this->disableAvatar && !isset($_POST['disableAvatarNeverExpires'])) {
                 if (isset($_POST['disableAvatarExpires'])) {
-                    $this->disableAvatarExpires = @\strtotime(StringUtil::trim($_POST['disableAvatarExpires']));
+                    $this->disableAvatarExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableAvatarExpires'])));
                 }
             }
         }
@@ -246,7 +246,7 @@ class UserEditForm extends UserAddForm
             }
             if ($this->disableCoverPhoto && !isset($_POST['disableCoverPhotoNeverExpires'])) {
                 if (isset($_POST['disableCoverPhotoExpires'])) {
-                    $this->disableCoverPhotoExpires = @\strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires']));
+                    $this->disableCoverPhotoExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires'])));
                 }
             }
         }
