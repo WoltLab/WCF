@@ -11,6 +11,8 @@
 		{ setupCkeditor },
 		PrismMeta
 	) => {
+		{jsphrase name='wcf.ckeditor.quote'}
+		{jsphrase name='wcf.ckeditor.quoteFrom'}
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
 		{jsphrase name='wcf.editor.button.group.list'}
