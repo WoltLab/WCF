@@ -187,7 +187,7 @@
 			{/if}
 			
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
-				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
+				<ul class="articleButtons buttonGroup buttonList smallButtons">
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
 						<li>
 							<button
@@ -203,9 +203,10 @@
 						</li>
 					{/if}
 					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
-						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
+						<li class="jsOnly"><span class="button jsTooltip reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
 					{/if}
-					{event name='articleLikeButtons'}
+					{event name='articleLikeButtons'}{* deprecated: use articleButtons instead *}
+					{event name='articleButtons'}
 				</ul>
 			</div>
 		</div>
