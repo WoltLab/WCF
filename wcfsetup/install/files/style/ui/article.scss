@@ -52,16 +52,12 @@
 		align-items: center;
 	}
 
-	.articleLikeButtons {
+	.articleButtons {
 		justify-content: flex-end;
-
-		.invisible {
-			display: inline;
-		}
 	}
 
 	.articleLikesSummery:not(:empty),
-	.articleLikeButtons:not(:empty) {
+	.articleButtons:not(:empty) {
 		margin-top: 20px;
 	}
 
