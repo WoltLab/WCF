@@ -114,18 +114,26 @@ export function setup(): void {
   filterByName.addEventListener("input", () => filterProjects());
   filterByName.addEventListener("keydown", (event) => {
     if (event.key === "ArrowDown") {
+      event.preventDefault();
+
       highlightNextProject();
     }
 
     if (event.key === "ArrowUp") {
+      event.preventDefault();
+
       highlightPreviousProject();
     }
 
     if (event.key === "Enter") {
+      event.preventDefault();
+
       syncHighlightedProject();
     }
 
     if (event.key === "Escape") {
+      event.preventDefault();
+
       resetFilter();
     }
   });
