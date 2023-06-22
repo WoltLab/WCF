@@ -8,7 +8,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     class AcpUiDevtoolsProjectSync {
         buttons = new Map();
         buttonStatus = new Map();
-        buttonSyncAll = undefined;
+        buttonSyncAll = document.getElementById("devtoolsSyncAll");
         container = document.getElementById("syncPipMatches");
         pips = [];
         projectId;
@@ -91,12 +91,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                     break;
                 }
             }
-            const syncAll = document.createElement("li");
-            syncAll.innerHTML = `<a href="#" class="button"><fa-icon name="arrows-rotate" solid></fa-icon> ${Language.get("wcf.acp.devtools.sync.syncAll")}</a>`;
-            this.buttonSyncAll = syncAll.children[0];
-            this.buttonSyncAll.addEventListener("click", this.syncAll.bind(this));
-            const list = document.querySelector(".contentHeaderNavigation > ul");
-            list.insertAdjacentElement("afterbegin", syncAll);
+            this.buttonSyncAll.addEventListener("click", () => this.syncAll());
         }
         sync(pluginName, target) {
             const identifier = this.getButtonIdentifier(pluginName, target);
@@ -109,8 +104,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 },
             });
         }
-        syncAll(event) {
-            event.preventDefault();
+        syncAll() {
             if (this.buttonSyncAll.classList.contains("disabled")) {
                 return;
             }

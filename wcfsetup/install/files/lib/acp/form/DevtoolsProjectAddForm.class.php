@@ -29,6 +29,7 @@ use wcf\system\form\builder\field\UrlFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -229,6 +230,9 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                             }
                         }
                     })),
+                TemplateFormNode::create('pathPasteHelper')
+                    ->application('wcf')
+                    ->templateName('__devtoolsProjectPathPasteHelper')
             ]);
         $dataTab->appendChild($dataContainer);
 

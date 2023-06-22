@@ -8,6 +8,9 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $project->validate() === ''}
+				<li><a href="{link controller='DevtoolsProjectSync' id=$project->getObjectID()}{/link}" class="button">{icon name='arrows-rotate'} <span>{lang}wcf.acp.devtools.project.sync{/lang}</span></a></li>
+			{/if}
 			<li class="dropdown">
 				<a class="button dropdownToggle">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pip.list{/lang}</span></a>
 				<div class="dropdownMenu">

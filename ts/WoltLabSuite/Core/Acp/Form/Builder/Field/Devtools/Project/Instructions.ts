@@ -312,9 +312,15 @@ class Instructions {
       .getElementById(`${this.formFieldId}_instructions${instructionsId}_pip`)!
       .addEventListener("change", (ev) => this.changeInstructionPip(ev));
 
-    document
-      .getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!
-      .addEventListener("keypress", (ev) => this.instructionKeyPress(ev));
+    const value = document.getElementById(
+      `${this.formFieldId}_instructions${instructionsId}_value`,
+    ) as HTMLInputElement;
+    value.addEventListener("keypress", (ev) => this.instructionKeyPress(ev));
+
+    const application = document.getElementById(
+      `${this.formFieldId}_instructions${instructionsId}_application`,
+    ) as HTMLSelectElement;
+    application.addEventListener("focus", () => this.#deriveApplicationFromPipName(application, value));
 
     document
       .getElementById(`${this.formFieldId}_instructions${instructionsId}_addButton`)!
@@ -324,6 +330,20 @@ class Instructions {
       instructionsData.instructions.forEach((instruction) => {
         this.addInstructionByData(instructionsId, instruction);
       });
+    }
+  }
+
+  #deriveApplicationFromPipName(application: HTMLSelectElement, value: HTMLInputElement): void {
+    if (application.value !== "") {
+      return;
+    }
+
+    const matches = value.value.trim().match(/_([a-z]+).tar$/);
+    if (matches !== null) {
+      const isValid = Array.from(application.options).some((option) => option.value === matches[1]);
+      if (isValid) {
+        application.value = matches[1];
+      }
     }
   }
 
@@ -348,6 +368,9 @@ class Instructions {
 
     // toggle application selector
     this.toggleApplicationFormField(instructionsId);
+
+    const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!;
+    value.focus();
   }
 
   /**

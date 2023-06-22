@@ -220,9 +220,10 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             document
                 .getElementById(`${this.formFieldId}_instructions${instructionsId}_pip`)
                 .addEventListener("change", (ev) => this.changeInstructionPip(ev));
-            document
-                .getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)
-                .addEventListener("keypress", (ev) => this.instructionKeyPress(ev));
+            const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
+            value.addEventListener("keypress", (ev) => this.instructionKeyPress(ev));
+            const application = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_application`);
+            application.addEventListener("focus", () => this.#deriveApplicationFromPipName(application, value));
             document
                 .getElementById(`${this.formFieldId}_instructions${instructionsId}_addButton`)
                 .addEventListener("click", (ev) => this.addInstruction(ev));
@@ -230,6 +231,18 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                 instructionsData.instructions.forEach((instruction) => {
                     this.addInstructionByData(instructionsId, instruction);
                 });
+            }
+        }
+        #deriveApplicationFromPipName(application, value) {
+            if (application.value !== "") {
+                return;
+            }
+            const matches = value.value.trim().match(/_([a-z]+).tar$/);
+            if (matches !== null) {
+                const isValid = Array.from(application.options).some((option) => option.value === matches[1]);
+                if (isValid) {
+                    application.value = matches[1];
+                }
             }
         }
         /**
@@ -251,6 +264,8 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             }
             // toggle application selector
             this.toggleApplicationFormField(instructionsId);
+            const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
+            value.focus();
         }
         /**
          * Opens a dialog to edit an existing instruction.
