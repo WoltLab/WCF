@@ -1389,7 +1389,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <strong>in addition</strong> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Private API Key (Invisible reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio]]></item>
+		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail aspect ratio]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
 		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatic Image Scaling]]></item>
@@ -1413,7 +1413,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Content Share]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Display content share button]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edit History]]></item>
-		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
+		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable edit history]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores older versions of user-created content.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage Time Period]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Content in the edit history will be removed after the following days. Use 0 to disable.]]></item>
@@ -1551,7 +1551,7 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Default Map Position (Latitude)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
-		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
+		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable URL rewrite]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Rerun Test]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Enabling this option will rewrite URLs into a better readable representation, “https://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “https://example.com/thread/1-hello-i-am-john-doe/”.
 <strong>Attention</strong>: This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you!<br>
@@ -1560,7 +1560,7 @@ Please read the manual for instructions: <a href="https://manual.woltlab.com/en/
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[The webserver cannot handle rewrites or it has not been configured correctly.<br>
 <br>
 Please follow the instructions described in <a href="https://manual.woltlab.com/en/url-rewrites/" class="externalURL">Setting up user friendly URLs</a> or contact your hosting provider for assistance.]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running …]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Test Result]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Failed]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.success"><![CDATA[Pass]]></item>
@@ -1627,10 +1627,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
-		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable Image Proxy]]></item>
+		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
-		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove Cached Images Regularly]]></item>
+		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove cached images regularly]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exception]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
@@ -1638,13 +1638,13 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Use informal language variant]]></item>
 		<item name="wcf.acp.option.category.cms.media.thumbnail"><![CDATA[Thumbnails]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_height"><![CDATA[Large Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (large)]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail aspect ratio (large)]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_width"><![CDATA[Large Thumbnail Width]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_height"><![CDATA[Medium Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (medium)]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail aspect ratio (medium)]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_width"><![CDATA[Medium Thumbnail Width]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_height"><![CDATA[Small Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (small)]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail aspect ratio (small)]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Small Thumbnail Width]]></item>
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Choose default sort order of articles.]]></item>
@@ -1660,7 +1660,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Enables a specialized view mode for guests and search engines alike, providing greatly reduced JavaScript files to achieve faster loading and page rendering.<br><strong>Warning:</strong> This mode is highly restricted and reduces the abilities of guests to interact with your site, such as creating new content. Please review your installed plugins before enabling to see if they are compatible with this setting.]]></item>
 		<item name="wcf.acp.option.fb_share_app_id"><![CDATA[Facebook App ID]]></item>
 		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[You can obtain the app ID from your <a href="https://developers.facebook.com/apps/" class="externalURL">app’s dashboard</a>, and is used with the Open Graph tags for sharing.]]></item>
-		<item name="wcf.acp.option.enable_polling"><![CDATA[Enable Background Notifications]]></item>
+		<item name="wcf.acp.option.enable_polling"><![CDATA[Enable background notifications]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Periodically retrieves new notifications in the background, requests are dispatched every 5 minutes. Interval increases to up to 15 minutes on inactivity.]]></item>
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Enable contact form]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
@@ -1729,7 +1729,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[The entry <strong>{$item}</strong> already exists.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
 		<item name="wcf.acp.option.category.message.general.unfurl"><![CDATA[Rich Embeds]]></item>
-		<item name="wcf.acp.option.module_url_unfurling"><![CDATA[Enable Rich Embeds]]></item>
+		<item name="wcf.acp.option.module_url_unfurling"><![CDATA[Enable rich embeds]]></item>
 		<item name="wcf.acp.option.module_url_unfurling.description"><![CDATA[Creates a preview with title, description and image for external links in messages.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
