@@ -4904,16 +4904,6 @@ Wir haben {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} eine E-Mail an {
 Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freigeschaltet ist, {if LANGUAGE_USE_INFORMAL_VARIANT}wirst du{else}werden Sie{/if} per E-Mail darüber in Kenntnis gesetzt.]]></item>
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Die Registrierung ist momentan deaktiviert.]]></item>
-		<!-- Administrator Notification -->
-		<item name="wcf.user.register.notification.mail"><![CDATA[Hallo Administrator,
-
-auf der Website {@PAGE_TITLE|phrase} erfolgte eine neue Benutzeranmeldung durch: {@$user->username}.
-
-Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du erreichst{else}Sie erreichen{/if} das Benutzerprofil des neuen Benutzers, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} folgenden Link {if LANGUAGE_USE_INFORMAL_VARIANT}aufrufst{else}aufrufen{/if}:
-{link controller='User' object=$user isEmail=true}{/link}]]></item>
-		<item name="wcf.user.register.notification.mail.subject"><![CDATA[Neue Benutzeranmeldung auf der Website: {@PAGE_TITLE|phrase}]]></item>
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>

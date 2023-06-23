@@ -4901,16 +4901,6 @@ Your account is awaiting approval from an administrator.<br>
 A notification will be sent once your account has been approved.]]></item>
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
-		<!-- Administrator Notification -->
-		<item name="wcf.user.register.notification.mail"><![CDATA[Dear Administrator,
-
-someone registered with your website {@PAGE_TITLE|phrase}: {@$user->username}.
-
-Email address used: {@$user->email}.
-
-Open the link below to access the user profile:
-{link controller='User' object=$user isEmail=true}{/link}]]></item>
-		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|phrase}]]></item>
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Decline]]></item>
