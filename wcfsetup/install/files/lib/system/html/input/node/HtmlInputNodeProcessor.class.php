@@ -42,6 +42,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             'woltlabSuiteMedia',
         ],
         'li' => ['text-center', 'text-justify', 'text-right'],
+        'mark' => ['marker-danger', 'marker-information', 'marker-success', 'marker-warning'],
         'p' => ['text-center', 'text-justify', 'text-right'],
         'pre' => ['woltlabHtml'],
         'td' => ['text-center', 'text-justify', 'text-right'],

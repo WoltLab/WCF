@@ -131,6 +131,11 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
             'class' => 'Text',
         ]);
 
+        // <mark> for text markers
+        $definition->addElement('mark', 'Inline', 'Inline', '', [
+            'class' => 'Text',
+        ]);
+
         $parameters = [
             'config' => $config,
             'definition' => $definition,

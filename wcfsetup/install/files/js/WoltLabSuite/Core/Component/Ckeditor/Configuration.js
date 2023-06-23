@@ -60,10 +60,10 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 this.#removePlugins.push("Superscript");
             }
             if (this.#features.fontColor) {
-                items.push("fontColor");
+                items.push("highlight");
             }
             else {
-                this.#removePlugins.push("FontColor");
+                this.#removePlugins.push("Highlight");
             }
             if (this.#features.fontFamily) {
                 items.push("fontFamily");
@@ -245,6 +245,38 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                         { name: "left", className: "text-left" },
                         { name: "justify", className: "text-justify" },
                         { name: "right", className: "text-right" },
+                    ],
+                },
+                highlight: {
+                    options: [
+                        {
+                            model: "markerWarning",
+                            class: "marker-warning",
+                            title: "TODO: Warning",
+                            color: "var(--wcfStatusWarningBackground)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerError",
+                            class: "marker-error",
+                            title: "TODO: Error",
+                            color: "var(--wcfStatusErrorBackground)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerInfo",
+                            class: "marker-info",
+                            title: "TODO: Info",
+                            color: "var(--wcfStatusInfoBackground)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerSuccess",
+                            class: "marker-success",
+                            title: "TODO: Success",
+                            color: "var(--wcfStatusSuccessBackground)",
+                            type: "marker",
+                        },
                     ],
                 },
                 language,

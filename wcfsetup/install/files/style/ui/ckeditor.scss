@@ -315,6 +315,37 @@ html[data-color-scheme="dark"] {
 	}
 }
 
+/* Text Markers */
+.marker-error,
+.marker-info,
+.marker-success,
+.marker-warning {
+	border-radius: 2px;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+	padding: 0 4px;
+}
+
+.marker-error {
+	background-color: var(--wcfStatusErrorBackground);
+	color: var(--wcfStatusErrorText);
+}
+
+.marker-info {
+	background-color: var(--wcfStatusInfoBackground);
+	color: var(--wcfStatusInfoText);
+}
+
+.marker-success {
+	background-color: var(--wcfStatusSuccessBackground);
+	color: var(--wcfStatusSuccessText);
+}
+
+.marker-warning {
+	background-color: var(--wcfStatusWarningBackground);
+	color: var(--wcfStatusWarningText);
+}
+
 /* Fake visuals for the WYSIWYG editor while it is still loading. */
 .wysiwygTextarea {
 	background-color: var(--wcfContentContainerBackground) !important;
