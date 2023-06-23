@@ -820,7 +820,11 @@ const DatePicker = {
         container.appendChild(openButton);
 
         let icon = document.createElement("fa-icon");
-        icon.setIcon("calendar");
+        if (isTimeOnly) {
+          icon.setIcon("clock");
+        } else {
+          icon.setIcon("calendar");
+        }
         openButton.appendChild(icon);
 
         element.parentNode!.insertBefore(container, element);
