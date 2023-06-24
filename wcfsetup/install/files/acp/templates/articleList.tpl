@@ -149,9 +149,9 @@
 								</span>
 							{/if}
 							{if $article->canDelete()}
-								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='arrows-rotate'}</a>
-								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
-								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
+								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='arrows-rotate'}</a>
+								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
+								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
 									{icon name='xmark'}
