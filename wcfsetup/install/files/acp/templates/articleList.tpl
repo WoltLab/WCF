@@ -138,7 +138,7 @@
 			
 			<tbody>
 				{foreach from=$objects item=article}
-					<tr class="jsArticleRow jsClipboardObject" data-object-id="{@$article->articleID}">
+					<tr class="jsArticleRow jsClipboardObject" data-object-id="{@$article->articleID}" data-title="{$article->title}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$article->articleID}"></td>
 						<td class="columnIcon">
 							{if $article->canEdit()}

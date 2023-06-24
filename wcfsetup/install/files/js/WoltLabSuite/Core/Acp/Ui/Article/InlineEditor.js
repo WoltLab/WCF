@@ -95,15 +95,16 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
          */
         initArticle(article, objectId) {
             let isArticleEdit = false;
+            let title;
             if (!article && objectId > 0) {
                 isArticleEdit = true;
                 article = undefined;
             }
             else {
                 objectId = parseInt(article.dataset.objectId);
+                title = article.dataset.title;
             }
             const scope = article || document;
-            let title;
             if (isArticleEdit) {
                 const languageId = this.options.i18n.isI18n ? this.options.i18n.defaultLanguageId : 0;
                 const inputField = document.getElementById(`title${languageId}`);

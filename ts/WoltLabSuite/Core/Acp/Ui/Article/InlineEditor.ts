@@ -146,16 +146,17 @@ class AcpUiArticleInlineEditor {
    */
   private initArticle(article: HTMLElement | undefined, objectId: number): void {
     let isArticleEdit = false;
+    let title: string;
     if (!article && objectId > 0) {
       isArticleEdit = true;
       article = undefined;
     } else {
       objectId = parseInt(article!.dataset.objectId!);
+      title = article!.dataset.title!;
     }
 
     const scope = article || document;
 
-    let title: string;
     if (isArticleEdit) {
       const languageId = this.options.i18n.isI18n ? this.options.i18n.defaultLanguageId : 0;
       const inputField = document.getElementById(`title${languageId}`) as HTMLInputElement;
