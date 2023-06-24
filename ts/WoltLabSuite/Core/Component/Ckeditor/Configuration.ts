@@ -68,10 +68,16 @@ class ConfigurationBuilder {
       this.#removePlugins.push("Superscript");
     }
 
-    if (this.#features.fontColor) {
+    if (this.#features.mark) {
       items.push("highlight");
     } else {
       this.#removePlugins.push("Highlight");
+    }
+
+    if (this.#features.fontColor) {
+      items.push("fontColor");
+    } else {
+      this.#removePlugins.push("FontColor");
     }
 
     if (this.#features.fontFamily) {
@@ -291,29 +297,29 @@ class ConfigurationBuilder {
           {
             model: "markerWarning",
             class: "marker-warning",
-            title: "TODO: Warning",
-            color: "var(--wcfStatusWarningBackground)",
+            title: getPhrase("wcf.ckeditor.marker.warning"),
+            color: "var(--marker-warning)",
             type: "marker",
           },
           {
             model: "markerError",
             class: "marker-error",
-            title: "TODO: Error",
-            color: "var(--wcfStatusErrorBackground)",
+            title: getPhrase("wcf.ckeditor.marker.error"),
+            color: "var(--marker-error)",
             type: "marker",
           },
           {
             model: "markerInfo",
             class: "marker-info",
-            title: "TODO: Info",
-            color: "var(--wcfStatusInfoBackground)",
+            title: getPhrase("wcf.ckeditor.marker.info"),
+            color: "var(--marker-info)",
             type: "marker",
           },
           {
             model: "markerSuccess",
             class: "marker-success",
-            title: "TODO: Success",
-            color: "var(--wcfStatusSuccessBackground)",
+            title: getPhrase("wcf.ckeditor.marker.success"),
+            color: "var(--marker-success)",
             type: "marker",
           },
         ],
@@ -362,6 +368,7 @@ export type Features = {
   image: boolean;
   link: boolean;
   list: boolean;
+  mark: boolean;
   media: boolean;
   mention: boolean;
   quoteBlock: boolean;

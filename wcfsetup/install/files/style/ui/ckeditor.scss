@@ -13,6 +13,11 @@
 
 .ck.ck-editor,
 .ck.ck-body {
+	--marker-error: #ff0000;
+	--marker-info: #0000ff;
+	--marker-success: #008000;
+	--marker-warning: #ffff00;
+
 	--ck-color-base-background: var(--wcfContentContainerBackground);
 	--ck-border-radius: var(--wcfBorderRadius);
 	--ck-color-base-border: var(--wcfContentBorderInner);
