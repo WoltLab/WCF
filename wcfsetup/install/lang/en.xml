@@ -1731,6 +1731,13 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.category.message.general.unfurl"><![CDATA[Rich Embeds]]></item>
 		<item name="wcf.acp.option.module_url_unfurling"><![CDATA[Enable rich embeds]]></item>
 		<item name="wcf.acp.option.module_url_unfurling.description"><![CDATA[Creates a preview with title, description and image for external links in messages.]]></item>
+		<item name="wcf.acp.option.category.message.general.formatting"><![CDATA[Text Format]]></item>
+		<item name="wcf.acp.option.formatting_remove_color"><![CDATA[Remove font color]]></item>
+		<item name="wcf.acp.option.formatting_remove_color.description"><![CDATA[Prevents the use of different font colors and removes them when displaying existing messages.]]></item>
+		<item name="wcf.acp.option.formatting_remove_font"><![CDATA[Remove font family]]></item>
+		<item name="wcf.acp.option.formatting_remove_font.description"><![CDATA[Prevents the use of different font families and removes them when displaying existing messages.]]></item>
+		<item name="wcf.acp.option.formatting_remove_size"><![CDATA[Remove font size]]></item>
+		<item name="wcf.acp.option.formatting_remove_size.description"><![CDATA[Prevents the use of different font sizes and removes them when displaying existing messages.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>

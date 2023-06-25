@@ -1748,6 +1748,13 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.category.message.general.unfurl"><![CDATA[Rich Embeds]]></item>
 		<item name="wcf.acp.option.module_url_unfurling"><![CDATA[Rich Embeds aktivieren]]></item>
 		<item name="wcf.acp.option.module_url_unfurling.description"><![CDATA[Erzeugt eine Vorschau mit Titel, Beschreibung und Bild für externe Links in Nachrichten.]]></item>
+		<item name="wcf.acp.option.category.message.general.formatting"><![CDATA[Textformatierung]]></item>
+		<item name="wcf.acp.option.formatting_remove_color"><![CDATA[Schriftfarbe entfernen]]></item>
+		<item name="wcf.acp.option.formatting_remove_color.description"><![CDATA[Verhindert die Verwendung von abweichenden Schriftfarben und entfernt diese bei der Anzeige bereits bestehender Nachrichten.]]></item>
+		<item name="wcf.acp.option.formatting_remove_font"><![CDATA[Schriftart entfernen]]></item>
+		<item name="wcf.acp.option.formatting_remove_font.description"><![CDATA[Verhindert die Verwendung von abweichenden Schriftarten und entfernt diese bei der Anzeige bereits bestehender Nachrichten.]]></item>
+		<item name="wcf.acp.option.formatting_remove_size"><![CDATA[Schriftgröße entfernen]]></item>
+		<item name="wcf.acp.option.formatting_remove_size.description"><![CDATA[Verhindert die Verwendung von abweichenden Schriftgrößen und entfernt diese bei der Anzeige bereits bestehender Nachrichten.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
