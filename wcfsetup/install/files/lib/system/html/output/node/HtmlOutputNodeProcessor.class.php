@@ -85,10 +85,10 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
      */
     public function process()
     {
-        // fire event action
         EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 
-        // highlight keywords
+        $this->removeTextFormatting();
+
         $this->highlightKeywords();
 
         $this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
@@ -288,5 +288,62 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         $htmlNode->setOutputType($this->outputType);
 
         parent::invokeHtmlNode($htmlNode);
+    }
+
+    protected function removeTextFormatting(): void
+    {
+        if (!\FORMATTING_REMOVE_COLOR && !\FORMATTING_REMOVE_FONT && !\FORMATTING_REMOVE_SIZE) {
+            return;
+        }
+
+        /** @var list<\DOMElement> */
+        $elementsWithStyles = [];
+        foreach ($this->getXPath()->query("//*[@style]") as $element) {
+            \assert($element instanceof \DOMElement);
+            $elementsWithStyles[] = $element;
+        }
+
+        if ($elementsWithStyles === []) {
+            return;
+        }
+
+        foreach ($elementsWithStyles as $element) {
+            $style = $element->getAttribute("style");
+            $values = \array_map(
+                fn (string $value) => StringUtil::trim($value),
+                \explode(";", $style)
+            );
+
+            $values = \array_filter($values, static function (string $value) {
+                list($keyword,) = \explode(":", $value, 2);
+
+                switch (StringUtil::trim($keyword)) {
+                    case "color":
+                        return \FORMATTING_REMOVE_COLOR === 0;
+
+                    case "font-family":
+                        return \FORMATTING_REMOVE_FONT === 0;
+
+                    case "font-size":
+                        return \FORMATTING_REMOVE_SIZE === 0;
+                }
+
+                return true;
+            });
+
+            $style = \implode(";", $values);
+            if ($style !== "") {
+                $element->setAttribute("style", $style);
+                continue;
+            }
+
+            if ($element->tagName === "span") {
+                $parent = $element->parentNode;
+                while ($element->hasChildNodes()) {
+                    $parent->insertBefore($element->childNodes->item(0), $element);
+                }
+                $element->remove();
+            }
+        }
     }
 }

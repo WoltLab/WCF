@@ -222,6 +222,9 @@
 			<category name="message.general.unfurl">
 				<parent>message.general</parent>
 			</category>
+			<category name="message.general.formatting">
+				<parent>message.general</parent>
+			</category>
 			<category name="message.attachment">
 				<parent>message</parent>
 			</category>
@@ -1019,6 +1022,23 @@ XING</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.unfurl -->
+			<!-- message.general.formatting -->
+			<option name="formatting_remove_color">
+				<categoryname>message.general.formatting</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="formatting_remove_font">
+				<categoryname>message.general.formatting</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="formatting_remove_size">
+				<categoryname>message.general.formatting</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /message.general.formatting -->
 			<!-- message.censorship -->
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
