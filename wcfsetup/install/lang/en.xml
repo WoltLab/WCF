@@ -4763,7 +4763,7 @@ not register with us.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.signature.current"><![CDATA[Current Signature]]></item>
-		<item name="wcf.user.signature.error.disabled"><![CDATA[Your signature has been disabled{if $__wcf->user->disableSignatureReason}: {$__wcf->user->disableSignatureReason}{else}.{/if}]]></item>
+		<item name="wcf.user.signature.error.disabled"><![CDATA[The administrators {if $__wcf->user->signature}have blocked your signature and {/if}disallowed you from using a signature{if $__wcf->user->disableSignatureReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Points]]></item>
 		<item name="wcf.user.activityPoint.showActivityPoints"><![CDATA[Display Points of {$user->username}]]></item>
 		<item name="wcf.user.activityPoint.objects"><![CDATA[Count]]></item>
@@ -5186,7 +5186,7 @@ You also received a list of emergency codes to use when your second factor becom
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
-		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
+		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128×128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
@@ -5256,7 +5256,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete your cover photo? This will replace your current photo with the default image.]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have banned your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
+		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have blocked your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
