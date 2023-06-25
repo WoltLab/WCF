@@ -3420,6 +3420,10 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	<category name="wcf.ckeditor">
+		<item name="wcf.ckeditor.marker.error"><![CDATA[Roter Textmarker]]></item>
+		<item name="wcf.ckeditor.marker.info"><![CDATA[Blauer Textmarker]]></item>
+		<item name="wcf.ckeditor.marker.success"><![CDATA[Grüner Textmarker]]></item>
+		<item name="wcf.ckeditor.marker.warning"><![CDATA[Gelber Textmarker]]></item>
 		<item name="wcf.ckeditor.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Zitat von %0]]></item>
 	</category>

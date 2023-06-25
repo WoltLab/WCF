@@ -240,5 +240,16 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		<bbcode name="mark">
+			<htmlopen><![CDATA[mark]]></htmlopen>
+			<htmlclose><![CDATA[mark]]></htmlclose>
+			<attributes>
+				<attribute name="0">
+					<html><![CDATA[class="%s"]]></html>
+					<validationpattern><![CDATA[^marker-(info|error|success|warning)$]]></validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
 	</import>
 </data>

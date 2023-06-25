@@ -59,6 +59,12 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("Superscript");
             }
+            if (this.#features.mark) {
+                items.push("highlight");
+            }
+            else {
+                this.#removePlugins.push("Highlight");
+            }
             if (this.#features.fontColor) {
                 items.push("fontColor");
             }
@@ -245,6 +251,38 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                         { name: "left", className: "text-left" },
                         { name: "justify", className: "text-justify" },
                         { name: "right", className: "text-right" },
+                    ],
+                },
+                highlight: {
+                    options: [
+                        {
+                            model: "markerWarning",
+                            class: "marker-warning",
+                            title: (0, Language_1.getPhrase)("wcf.ckeditor.marker.warning"),
+                            color: "var(--marker-warning)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerError",
+                            class: "marker-error",
+                            title: (0, Language_1.getPhrase)("wcf.ckeditor.marker.error"),
+                            color: "var(--marker-error)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerInfo",
+                            class: "marker-info",
+                            title: (0, Language_1.getPhrase)("wcf.ckeditor.marker.info"),
+                            color: "var(--marker-info)",
+                            type: "marker",
+                        },
+                        {
+                            model: "markerSuccess",
+                            class: "marker-success",
+                            title: (0, Language_1.getPhrase)("wcf.ckeditor.marker.success"),
+                            color: "var(--marker-success)",
+                            type: "marker",
+                        },
                     ],
                 },
                 language,

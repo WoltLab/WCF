@@ -68,6 +68,12 @@ class ConfigurationBuilder {
       this.#removePlugins.push("Superscript");
     }
 
+    if (this.#features.mark) {
+      items.push("highlight");
+    } else {
+      this.#removePlugins.push("Highlight");
+    }
+
     if (this.#features.fontColor) {
       items.push("fontColor");
     } else {
@@ -286,6 +292,38 @@ class ConfigurationBuilder {
           { name: "right", className: "text-right" },
         ],
       },
+      highlight: {
+        options: [
+          {
+            model: "markerWarning",
+            class: "marker-warning",
+            title: getPhrase("wcf.ckeditor.marker.warning"),
+            color: "var(--marker-warning)",
+            type: "marker",
+          },
+          {
+            model: "markerError",
+            class: "marker-error",
+            title: getPhrase("wcf.ckeditor.marker.error"),
+            color: "var(--marker-error)",
+            type: "marker",
+          },
+          {
+            model: "markerInfo",
+            class: "marker-info",
+            title: getPhrase("wcf.ckeditor.marker.info"),
+            color: "var(--marker-info)",
+            type: "marker",
+          },
+          {
+            model: "markerSuccess",
+            class: "marker-success",
+            title: getPhrase("wcf.ckeditor.marker.success"),
+            color: "var(--marker-success)",
+            type: "marker",
+          },
+        ],
+      },
       language,
       removePlugins: this.#removePlugins,
       fontFamily: {
@@ -330,6 +368,7 @@ export type Features = {
   image: boolean;
   link: boolean;
   list: boolean;
+  mark: boolean;
   media: boolean;
   mention: boolean;
   quoteBlock: boolean;

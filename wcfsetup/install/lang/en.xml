@@ -3344,6 +3344,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.button.choose"><![CDATA[Choose Category]]></item>
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 	</category>
+	<category name="wcf.ckeditor">
+		<item name="wcf.ckeditor.marker.error"><![CDATA[Red Text Marker]]></item>
+		<item name="wcf.ckeditor.marker.info"><![CDATA[Blue Text Marker]]></item>
+		<item name="wcf.ckeditor.marker.success"><![CDATA[Green Text Marker]]></item>
+		<item name="wcf.ckeditor.marker.warning"><![CDATA[Yellow Text Marker]]></item>
+		<item name="wcf.ckeditor.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Quote from %0]]></item>
+	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.version"><![CDATA[Displays the version number and exits.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Displays this help and exits.]]></item>

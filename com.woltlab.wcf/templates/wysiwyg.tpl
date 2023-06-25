@@ -11,6 +11,10 @@
 		{ setupCkeditor },
 		PrismMeta
 	) => {
+		{jsphrase name='wcf.ckeditor.marker.error'}
+		{jsphrase name='wcf.ckeditor.marker.info'}
+		{jsphrase name='wcf.ckeditor.marker.success'}
+		{jsphrase name='wcf.ckeditor.marker.warning'}
 		{jsphrase name='wcf.ckeditor.quote'}
 		{jsphrase name='wcf.ckeditor.quoteFrom'}
 		{jsphrase name='wcf.editor.button.group.block'}
@@ -45,6 +49,7 @@
 			image: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 			link: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}true{else}false{/if},
 			list: true,
+			mark: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('mark')}true{else}false{/if},
 			media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 			mention: element.dataset.supportMention === "true",
 			quoteBlock: true,
