@@ -64,6 +64,18 @@ class BBCodeHandler extends SingletonFactory
      */
     public function isAvailableBBCode($bbCodeTag)
     {
+        if ($bbCodeTag === "color" && \FORMATTING_REMOVE_COLOR) {
+            return false;
+        }
+
+        if ($bbCodeTag === "font" && \FORMATTING_REMOVE_FONT) {
+            return false;
+        }
+
+        if ($bbCodeTag === "size" && \FORMATTING_REMOVE_SIZE) {
+            return false;
+        }
+
         return !\in_array($bbCodeTag, $this->disallowedBBCodes);
     }
 
