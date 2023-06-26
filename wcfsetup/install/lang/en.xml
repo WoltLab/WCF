@@ -643,7 +643,7 @@
 		<item name="wcf.acp.exceptionLog.email.subject"><![CDATA[Logged Errors since {$date|plainTime}]]></item>
 		<item name="wcf.acp.exceptionLog.email.body"><![CDATA[Dear Administrator,
 
-the following errors have been logged on your website {@PAGE_TITLE|phrase} since {$date|plainTime}:
+The following errors have been logged on your website {@PAGE_TITLE|phrase} since {$date|plainTime}:
 
 {foreach from=$files key=file item=data}
 log/{$file}.txt{if !$data[verdict]|isset} ({#$data[count]} error{if $data[count] > 1}s{/if}){/if} {* this line ends with a space *}
