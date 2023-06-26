@@ -34,6 +34,12 @@
 	}
 }
 
+.boxContent {
+	.section:first-child {
+		margin-top: 0;
+	}
+}
+
 .boxContentSeparator {
 	background-color: var(--wcfContentBorderInner);
 	border: 0;
