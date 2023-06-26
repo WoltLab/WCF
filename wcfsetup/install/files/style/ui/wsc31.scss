@@ -17,7 +17,9 @@
 	// sheet-like presentation of content containers
 	.content > .section,
 	.content > form,
-	.sectionContainer {
+	.sectionContainer,
+	.boxesContentTop .box,
+	.boxesContentBottom .box {
 		border: 1px solid var(--wcfContentContainerBorder);
 		border-radius: var(--wcfBorderRadius);
 		background-color: var(--wcfContentContainerBackground);
