@@ -325,29 +325,33 @@ html[data-color-scheme="dark"] {
 .marker-info,
 .marker-success,
 .marker-warning {
-	border-radius: 2px;
+	border-style: solid;
+	border-width: 1px 0;
 	-webkit-box-decoration-break: clone;
 	box-decoration-break: clone;
-	padding: 0 4px;
 }
 
 .marker-error {
 	background-color: var(--wcfStatusErrorBackground);
+	border-color: var(--wcfStatusErrorBorder);
 	color: var(--wcfStatusErrorText);
 }
 
 .marker-info {
 	background-color: var(--wcfStatusInfoBackground);
+	border-color: var(--wcfStatusInfoBorder);
 	color: var(--wcfStatusInfoText);
 }
 
 .marker-success {
 	background-color: var(--wcfStatusSuccessBackground);
+	border-color: var(--wcfStatusSuccessBorder);
 	color: var(--wcfStatusSuccessText);
 }
 
 .marker-warning {
 	background-color: var(--wcfStatusWarningBackground);
+	border-color: var(--wcfStatusWarningBorder);
 	color: var(--wcfStatusWarningText);
 }
 

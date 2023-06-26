@@ -343,6 +343,8 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
                     $parent->insertBefore($element->childNodes->item(0), $element);
                 }
                 $element->remove();
+            } else {
+                $element->removeAttribute("style");
             }
         }
     }
