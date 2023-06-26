@@ -92,6 +92,12 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
     return;
   }
 
+  // Check if the stored value is outdated.
+  const lastEditTime = parseInt(editor.sourceElement!.dataset.autosaveLastEditTime!) || 0;
+  if (lastEditTime && lastEditTime * 1_000 >= value.timestamp) {
+    return;
+  }
+
   const originalValue = editor.data.get();
   editor.data.set(value.html);
 
