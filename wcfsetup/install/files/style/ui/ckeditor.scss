@@ -325,10 +325,12 @@ html[data-color-scheme="dark"] {
 .marker-info,
 .marker-success,
 .marker-warning {
+	border-radius: 2px;
 	border-style: solid;
 	border-width: 1px 0;
 	-webkit-box-decoration-break: clone;
 	box-decoration-break: clone;
+	padding: 0.15em;
 }
 
 .marker-error {
