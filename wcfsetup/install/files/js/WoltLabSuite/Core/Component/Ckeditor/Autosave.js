@@ -80,6 +80,10 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             return;
         }
         const originalValue = editor.data.get();
+        // Check if the stored value is identical to the current value.
+        if (originalValue === value.html) {
+            return;
+        }
         editor.data.set(value.html);
         const wrapper = document.createElement("div");
         wrapper.classList.add("ckeditor5__restoreDraft");

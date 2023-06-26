@@ -99,6 +99,12 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
   }
 
   const originalValue = editor.data.get();
+
+  // Check if the stored value is identical to the current value.
+  if (originalValue === value.html) {
+    return;
+  }
+
   editor.data.set(value.html);
 
   const wrapper = document.createElement("div");
