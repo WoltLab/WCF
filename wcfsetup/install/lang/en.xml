@@ -4954,32 +4954,32 @@ A notification will be sent once your account has been approved.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Dear {$setup->getUser()->username},</h2>
 
-<p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don’t have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
+<p>You used the backup code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don’t have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
 
-<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
+<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account Security</a> page. Within account security you can generate new backup codes or disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
 
-You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don\'t have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
+You used the backup code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don\'t have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
 
-You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using emergency code on {@PAGE_TITLE|phrase}]]></item>
-		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
-		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
+You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}]. Within account security you can generate new backup codes or disable multi-factor authentication.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using backup code on {@PAGE_TITLE|phrase}]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Backup Code]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An backup code consists of 20 digits and may only be used once.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Please try again later.]]></item>
-		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>You can find the latest set of emergency codes for use with the multi-factor authentication below. Codes that are striked out have been used and are no longer valid. Use the bold identifier to compare the list to your notes. Please generate a new set of codes if the listed codes do not match your notes.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.printMetadata"><![CDATA[<p class="multifactorBackupCodesPrintMetadata">Emergency Codes for <strong>{$__wcf->user->username}</strong> on <strong>{PAGE_TITLE|phrase}</strong> generated at <strong>{time time=TIME_NOW type='plainTime'}</strong>.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.print"><![CDATA[Print Emergency Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Backup Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>You can find the latest set of backup codes for use with the multi-factor authentication below. Codes that are striked out have been used and are no longer valid. Use the bold identifier to compare the list to your notes. Please generate a new set of codes if the listed codes do not match your notes.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.printMetadata"><![CDATA[<p class="multifactorBackupCodesPrintMetadata">Backup Codes for <strong>{$__wcf->user->username}</strong> on <strong>{PAGE_TITLE|phrase}</strong> generated at <strong>{time time=TIME_NOW type='plainTime'}</strong>.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.print"><![CDATA[Print Backup Codes]]></item>
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Generate Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>Generate new emergency codes if you lost or used up your existing set. Generating new emergency codes will invalidate all existing codes.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Backup Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>Generate new backup codes if you lost or used up your existing set. Generating new backup codes will invalidate all existing codes.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small dotSeparated">
 <li>{plural value=$count 0="No codes remaining" 1="One code remaining" other="# codes remaining"}</li>
 {if $lastUsed}<li>Last used on {@$lastUsed|plainTime}</li>{/if}
 </ul>]]></item>
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[New Codes were generated successfully. Any existing codes are no longer valid. Please carefully note down the codes.]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Backup Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Backup Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Code via Email]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<small>You will receive a one time code via email after logging in.</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Code via Email]]></item>
@@ -5020,9 +5020,9 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Enabling this method failed. Please try again.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
 <p><br></p>
-<p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
+<p>In addition we generated backup codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
 <p><br></p>
-<p>Please carefully note or save the emergency codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
+<p>Please carefully note or save the backup codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
 		<item name="wcf.user.security.multifactor.manage"><![CDATA[Manage]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Method]]></item>
 		<item name="wcf.user.security.multifactor.setup"><![CDATA[Set Up]]></item>
@@ -5030,12 +5030,12 @@ You can manage multi-factor authentication within the Account Security page [URL
 
 <p>You successfully enabled multi-factor authentication using the <b>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</b> method. Going forward you will need to have your second factor handy for every login.</p>
 
-<p>You also received a list of emergency codes to use when your second factor becomes unavailable. <b>Did you store these emergency codes securely?</b> If you forgot you can do now by generating new codes in the <a href="{link controller='MultifactorManage' object=$backupMethod isHtmlEmail=true}{/link}">Emergency Code Management</a>.</p>]]></item>
+<p>You also received a list of backup codes to use when your second factor becomes unavailable. <b>Did you store these backup codes securely?</b> If you forgot you can do now by generating new codes in the <a href="{link controller='MultifactorManage' object=$backupMethod isHtmlEmail=true}{/link}">Backup Code Management</a>.</p>]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.plain"><![CDATA[Dear {$user->username},
 
 You successfully enabled multi-factor authentication using the “{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}” method. Going forward you will need to have your second factor handy for every login.
 
-You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
+You also received a list of backup codes to use when your second factor becomes unavailable. **Did you store these backup codes securely?** If you forgot you can do now by generating new codes in the Backup Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[One Time Code]]></item>
 		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[The 6-digit one time code generated by the smartphone app.]]></item>

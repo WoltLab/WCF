@@ -349,7 +349,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     }
 
     /**
-     * Notifies the user that an emergency code has been used.
+     * Notifies the user that an backup code has been used.
      */
     private function sendAuthenticationEmail(Setup $setup, array $usedCode): void
     {
