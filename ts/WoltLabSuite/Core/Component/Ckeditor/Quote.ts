@@ -23,7 +23,8 @@ function insertQuote(editor: CKEditor, payload: InsertQuoteEventPayload) {
   link = escapeHTML(link);
 
   editor.insertHtml(
-    `<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>`,
+    `<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>
+    <p><br data-cke-filler="true"></p>`,
   );
 }
 

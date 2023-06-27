@@ -103,7 +103,6 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             editor.ui.focusTracker.off("change:isFocused", callbackIsFocused);
             wrapper.insertAdjacentElement("beforebegin", editor.ui.element);
             wrapper.remove();
-            editor.editing.view.focus();
         };
         dialog.querySelector('button[data-type="submit"]').addEventListener("click", () => {
             revertEditor();

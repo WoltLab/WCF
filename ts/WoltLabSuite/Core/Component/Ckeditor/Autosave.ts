@@ -131,8 +131,6 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
 
     wrapper.insertAdjacentElement("beforebegin", editor.ui.element!);
     wrapper.remove();
-
-    editor.editing.view.focus();
   };
 
   dialog.querySelector('button[data-type="submit"]')!.addEventListener("click", () => {

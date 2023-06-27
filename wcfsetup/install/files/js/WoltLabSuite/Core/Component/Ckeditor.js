@@ -40,9 +40,13 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             return this.#editor.data.get();
         }
         insertHtml(html) {
-            const viewFragment = this.#editor.data.processor.toView(html);
-            const modelFragment = this.#editor.data.toModel(viewFragment);
-            this.#editor.model.insertContent(modelFragment);
+            this.#editor.model.change((writer) => {
+                const viewFragment = this.#editor.data.processor.toView(html);
+                const modelFragment = this.#editor.data.toModel(viewFragment);
+                const range = this.#editor.model.insertContent(modelFragment);
+                writer.setSelection(range.end);
+                this.#editor.focus();
+            });
         }
         insertText(text) {
             const div = document.createElement("div");

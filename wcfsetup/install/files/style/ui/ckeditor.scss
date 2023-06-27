@@ -314,6 +314,7 @@ html[data-color-scheme="dark"] {
 	background-color: var(--wcfContentBackground);
 	border-left: 5px solid var(--wcfContentBorderInner);
 	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
+	margin: 1em 0;
 
 	&::before {
 		color: var(--wcfContentDimmedText);

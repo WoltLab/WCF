@@ -17,7 +17,8 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
         }
         author = (0, StringUtil_1.escapeHTML)(author);
         link = (0, StringUtil_1.escapeHTML)(link);
-        editor.insertHtml(`<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>`);
+        editor.insertHtml(`<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>
+    <p><br data-cke-filler="true"></p>`);
     }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {

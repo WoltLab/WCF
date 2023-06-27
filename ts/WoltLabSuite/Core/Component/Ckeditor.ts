@@ -59,10 +59,15 @@ class Ckeditor {
   }
 
   insertHtml(html: string): void {
-    const viewFragment = this.#editor.data.processor.toView(html);
-    const modelFragment = this.#editor.data.toModel(viewFragment);
+    this.#editor.model.change((writer) => {
+      const viewFragment = this.#editor.data.processor.toView(html);
+      const modelFragment = this.#editor.data.toModel(viewFragment);
 
-    this.#editor.model.insertContent(modelFragment);
+      const range = this.#editor.model.insertContent(modelFragment);
+
+      writer.setSelection(range.end);
+      this.#editor.focus();
+    });
   }
 
   insertText(text: string): void {
