@@ -24,7 +24,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     public function getFormElement(Option $option, $value)
     {
         // get selected group
-        $selectedGroups = \explode(',', $value);
+        $selectedGroups = \explode(',', $value ?? '');
 
         // get all groups
         $groups = UserGroup::getSortedGroupsByType();
