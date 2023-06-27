@@ -1,14 +1,11 @@
 .embeddedContent {
 	background-color: var(--wcfContentBackground);
 	box-shadow: var(--wcfBoxShadowCard);
+	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
 	margin: 10px 0;
 	max-width: 400px;
 	overflow: hidden;
-}
-
-html[data-color-scheme="dark"] .embeddedContent {
-	border: 1px solid var(--wcfContentBorderInner);
 }
 
 /* @deprecated 5.4 Use `<img class="embeddedContentImageElement">` instead */
