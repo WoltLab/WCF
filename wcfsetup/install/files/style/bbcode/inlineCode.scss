@@ -1,5 +1,5 @@
 .inlineCode, /* deprecated, legacy class */
-.ck-content code,
+.ck-content *:not(pre) > code,
 kbd {
 	background-color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(196, 196, 196, 1) !important;
@@ -21,7 +21,7 @@ kbd {
 	word-wrap: break-word;
 }
 
-html[data-color-scheme="dark"] :is(.inlineCode, .ck-content code, kbd) {
+html[data-color-scheme="dark"] :is(.inlineCode, .ck-content *:not(pre) > code, kbd) {
 	background-color: #424242 !important;
 	border-color: #616161 !important;
 	color: #bdbdbd !important;
