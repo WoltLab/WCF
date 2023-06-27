@@ -151,15 +151,11 @@ class ConfigurationBuilder {
         this.#removePlugins.push("ImageUpload", "ImageUploadUI", "WoltlabAttachment");
       }
     } else {
-      this.#removePlugins.push("ImageInsertUI", "ImageToolbar", "ImageStyle", "ImageUpload", "ImageUploadUI");
+      this.#removePlugins.push("ImageInsertUI");
 
       if (this.#features.link) {
         this.#removePlugins.push("LinkImage");
       }
-
-      // Disable built-in plugins that rely on the image plugin.
-      this.#removePlugins.push("WoltlabAttachment");
-      this.#removePlugins.push("WoltlabSmiley");
     }
   }
 
