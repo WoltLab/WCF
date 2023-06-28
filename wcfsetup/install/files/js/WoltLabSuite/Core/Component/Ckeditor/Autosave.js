@@ -161,6 +161,9 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             waitingTime: 15000,
         };
         (0, Event_1.listenToCkeditor)(element).reset(() => deleteDraft(identifier));
+        if (element instanceof HTMLTextAreaElement && element.form) {
+            element.form.addEventListener("submit", () => deleteDraft(identifier));
+        }
     }
     exports.initializeAutosave = initializeAutosave;
 });

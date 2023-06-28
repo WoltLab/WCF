@@ -199,4 +199,8 @@ export function initializeAutosave(element: HTMLElement, configuration: EditorCo
   };
 
   listenToCkeditor(element).reset(() => deleteDraft(identifier));
+
+  if (element instanceof HTMLTextAreaElement && element.form) {
+    element.form.addEventListener("submit", () => deleteDraft(identifier));
+  }
 }
