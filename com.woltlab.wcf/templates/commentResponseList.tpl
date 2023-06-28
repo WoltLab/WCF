@@ -41,47 +41,51 @@
 						{event name='commentResponseStatus'}
 					</div>
 
-					<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
-						<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+					{hascontent}
+						<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
+							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
-						<ul class="dropdownMenu">
-							{if $response->isDisabled && $commentCanModerate}
-								<li>
-									<a href="#" class="commentResponse__option commentResponse__option--enable">
-										{lang}wcf.comment.approve{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-								<li>
-									<a
-										href="#"
-										data-report-content="com.woltlab.wcf.comment.response"
-										data-object-id="{$response->responseID}"
-										class="commentResponse__option commentResponse__option--report"
-									>
-										{lang}wcf.moderation.report.reportContent{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $response->isEditable()}
-								<li>
-									<a href="#" class="commentResponse__option commentResponse__option--edit">
-										{lang}wcf.global.button.edit{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $response->isDeletable()}
-								<li>
-									<a href="#" class="commentResponse__option commentResponse__option--delete">
-										{lang}wcf.global.button.delete{/lang}
-									</a>
-								</li>
-							{/if}
+							<ul class="dropdownMenu">
+								{content}
+									{if $response->isDisabled && $commentCanModerate}
+										<li>
+											<a href="#" class="commentResponse__option commentResponse__option--enable">
+												{lang}wcf.comment.approve{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
+										<li>
+											<a
+												href="#"
+												data-report-content="com.woltlab.wcf.comment.response"
+												data-object-id="{$response->responseID}"
+												class="commentResponse__option commentResponse__option--report"
+											>
+												{lang}wcf.moderation.report.reportContent{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $response->isEditable()}
+										<li>
+											<a href="#" class="commentResponse__option commentResponse__option--edit">
+												{lang}wcf.global.button.edit{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $response->isDeletable()}
+										<li>
+											<a href="#" class="commentResponse__option commentResponse__option--delete">
+												{lang}wcf.global.button.delete{/lang}
+											</a>
+										</li>
+									{/if}
 
-							{event name='commentResponseMenuOptions'}
-						</ul>
-					</div>
+									{event name='commentResponseMenuOptions'}
+								{/content}
+							</ul>
+						</div>
+					{/hascontent}
 
 					{event name='commentResponseHeader'}
 				</div>
