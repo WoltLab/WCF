@@ -43,47 +43,51 @@
 
 						{event name='commentStatus'}
 					</div>
-					<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
-						<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+					{hascontent}
+						<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
+							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
-						<ul class="dropdownMenu">
-							{if $comment->isDisabled && $commentCanModerate}
-								<li>
-									<a href="#" class="comment__option comment__option--enable">
-										{lang}wcf.comment.approve{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-								<li>
-									<a
-										href="#"
-										data-report-content="com.woltlab.wcf.comment.comment"
-										data-object-id="{$comment->commentID}"
-										class="comment__option comment__option--report"
-									>
-										{lang}wcf.moderation.report.reportContent{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $comment->isEditable()}
-								<li>
-									<a href="#" class="comment__option comment__option--edit">
-										{lang}wcf.global.button.edit{/lang}
-									</a>
-								</li>
-							{/if}
-							{if $comment->isDeletable()}
-								<li>
-									<a href="#" class="comment__option comment__option--delete">
-										{lang}wcf.global.button.delete{/lang}
-									</a>
-								</li>
-							{/if}
+							<ul class="dropdownMenu">
+								{content}
+									{if $comment->isDisabled && $commentCanModerate}
+										<li>
+											<a href="#" class="comment__option comment__option--enable">
+												{lang}wcf.comment.approve{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
+										<li>
+											<a
+												href="#"
+												data-report-content="com.woltlab.wcf.comment.comment"
+												data-object-id="{$comment->commentID}"
+												class="comment__option comment__option--report"
+											>
+												{lang}wcf.moderation.report.reportContent{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $comment->isEditable()}
+										<li>
+											<a href="#" class="comment__option comment__option--edit">
+												{lang}wcf.global.button.edit{/lang}
+											</a>
+										</li>
+									{/if}
+									{if $comment->isDeletable()}
+										<li>
+											<a href="#" class="comment__option comment__option--delete">
+												{lang}wcf.global.button.delete{/lang}
+											</a>
+										</li>
+									{/if}
 
-							{event name='commentMenuOptions'}
-						</ul>
-					</div>
+									{event name='commentMenuOptions'}
+								{/content}
+							</ul>
+						</div>
+					{/hascontent}
 
 					{event name='commentHeader'}
 				</div>
