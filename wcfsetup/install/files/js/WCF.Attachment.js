@@ -146,10 +146,20 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					});
 				
 				const ckeditor = getCkeditor(this._sourceElement);
-				if (ckeditor.getHtml() === "") {
-					// This check is performed during the CKEditor initialization,
-					// but the triggered event occurs too early for jQuery code.
-					discardAllAttachments();
+				if (ckeditor) {
+					if (ckeditor.getHtml() === "") {
+						// This check is performed during the CKEditor initialization,
+						// but the triggered event occurs too early for jQuery code.
+						discardAllAttachments();
+					}
+				} else {
+					listenToCkeditor(this._sourceElement).ready(({ ckeditor }) => {
+						if (ckeditor.getHtml() === "") {
+							// This check is performed during the CKEditor initialization,
+							// but the triggered event occurs too early for jQuery code.
+							discardAllAttachments();
+						}
+					});
 				}
 			});
 			
