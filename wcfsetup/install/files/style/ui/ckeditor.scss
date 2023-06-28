@@ -44,6 +44,8 @@
 	--ck-color-list-button-on-background: var(--wcfDropdownBackgroundActive);
 	--ck-color-list-button-on-background-focus: var(--wcfDropdownBackgroundActive);
 	--ck-color-list-button-on-text: var(--wcfDropdownLink);
+
+	--ck-color-link-default: var(--wcfContentLink);
 }
 
 .ck.ck-content {
@@ -191,6 +193,14 @@
 
 .ck.ck-sticky-panel__content {
 	--ck-z-modal: 1;
+}
+
+/* Fixes the hover state of the link balloon tooltip. */
+.ck.ck-link-actions .ck-button.ck-link-actions__preview:hover .ck-button__label {
+	color: var(--wcfButtonTextActive);
+}
+.ck.ck-link-actions .ck-button.ck-link-actions__preview .ck-button__label:hover {
+	text-decoration: none !important;
 }
 
 html[data-color-scheme="dark"] {
