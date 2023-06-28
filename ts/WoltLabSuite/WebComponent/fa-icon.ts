@@ -37,6 +37,7 @@
       this.setIcon(this.name, this.solid);
 
       this.setAttribute("aria-hidden", "true");
+      this.translate = false;
     }
 
     private validate(): void {

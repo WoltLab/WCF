@@ -1004,6 +1004,7 @@
         slot.name = "svg";
         root.append(slot);
         this.setAttribute("aria-hidden", "true");
+        this.translate = false;
       }
       validate() {
         if (this.size === 0) {
@@ -1079,6 +1080,7 @@
         this.validate();
         this.setIcon(this.name, this.solid);
         this.setAttribute("aria-hidden", "true");
+        this.translate = false;
       }
       validate() {
         if (!HeightMap.has(this.size)) {

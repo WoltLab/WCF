@@ -26,6 +26,7 @@
       root.append(slot);
 
       this.setAttribute("aria-hidden", "true");
+      this.translate = false;
     }
 
     private validate(): void {
