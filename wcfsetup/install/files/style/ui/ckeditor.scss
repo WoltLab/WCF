@@ -209,6 +209,28 @@
 	overflow: auto;
 }
 
+/* Prevent the “Material Design” like behavior of form labels. */
+.ck.ck-labeled-field-view__input-wrapper {
+	display: flex;
+	flex-direction: column-reverse;
+	row-gap: 5px;
+
+	.ck.ck-label {
+		color: var(--wcfInputLabel) !important;
+		padding: 0 !important;
+		position: static !important;
+		transform: none !important;
+	}
+}
+.ck.ck-link-form {
+	align-items: end;
+
+	> .ck.ck-button {
+		height: 30px;
+		padding: 5px !important;
+	}
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
