@@ -26,6 +26,7 @@ import Devtools from "../Devtools";
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
 
 import "ckeditor5-bundle";
+import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -236,6 +237,8 @@ export async function setupCkeditor(
   if (ckeditor.getHtml() === "") {
     dispatchToCkeditor(element).discardRecoveredData();
   }
+
+  setupSubmitShortcut(ckeditor);
 
   const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
   if (enableDebug && Devtools._internal_.editorInspector()) {
