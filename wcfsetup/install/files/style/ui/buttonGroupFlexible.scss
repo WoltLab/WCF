@@ -21,10 +21,6 @@
 
 			&:checked + label {
 				cursor: default;
-
-				> .icon {
-					cursor: default !important;
-				}
 			}
 
 			&:focus + label {
@@ -41,14 +37,10 @@
 			cursor: pointer;
 			padding: 5px 10px;
 
-			> .icon {
+			:is(fa-brand, fa-icon) {
 				color: inherit;
 			}
 
-			> .icon {
-				color: inherit !important;
-				cursor: pointer !important;
-			}
 		}
 
 		> a.active,
@@ -77,8 +69,4 @@
 	cursor: default;
 	opacity: 0.54;
 	pointer-events: none;
-
-	> .icon {
-		cursor: default !important;
-	}
 }
