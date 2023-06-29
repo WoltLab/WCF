@@ -151,7 +151,7 @@
 	position: static;
 }
 
-html:not([data-color-scheme="dark"]) {
+html[data-color-scheme="light"] {
 	/* PrismJS 1.29.0
 	https://prismjs.com/download.html#themes=prism */
 	/**
