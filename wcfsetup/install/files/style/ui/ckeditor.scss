@@ -225,6 +225,10 @@ html[data-color-scheme="dark"] {
 		border-color: var(--wcfContentBorderInner);
 		color: var(--wcfContentText);
 	}
+
+	.ck.ck-editor__editable_inline.ck-blurred ::selection {
+		background: rgb(255 255 255 / 12%);
+	}
 }
 
 /* Dialog overlay to restore a draft */
