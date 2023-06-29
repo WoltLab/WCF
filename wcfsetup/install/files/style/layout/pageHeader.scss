@@ -106,7 +106,7 @@
 		.boxMenuDepth1 {
 			background-color: var(--wcfHeaderMenuDropdownBackground);
 			border: 1px solid var(--wcfHeaderMenuDropdownBorder);
-			border-radius: var(--wcfBorderRadius);
+			border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
 			box-shadow: var(--wcfBoxShadow);
 			padding: 5px 0;
 			position: absolute;
