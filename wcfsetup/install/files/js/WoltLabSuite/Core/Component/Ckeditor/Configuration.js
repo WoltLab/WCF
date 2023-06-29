@@ -27,9 +27,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 this.#removePlugins.push("Heading");
             }
         }
-        #setupRemoveFormatting() {
-            this.#toolbar.push("removeFormat");
-        }
         #setupBasicFormat() {
             this.#toolbar.push("bold", "italic");
         }
@@ -88,6 +85,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
             else {
                 this.#removePlugins.push("Code");
+            }
+            if (items.length !== 0) {
+                items.push(this.#divider, "removeFormat");
             }
             if (items.length > 0) {
                 this.#toolbar.push({
@@ -219,7 +219,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
             this.#setupHeading();
             this.#insertDivider();
-            this.#setupRemoveFormatting();
             this.#insertDivider();
             this.#setupBasicFormat();
             this.#setupTextFormat();

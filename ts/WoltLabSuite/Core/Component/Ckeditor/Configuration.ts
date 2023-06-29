@@ -34,10 +34,6 @@ class ConfigurationBuilder {
     }
   }
 
-  #setupRemoveFormatting(): void {
-    this.#toolbar.push("removeFormat");
-  }
-
   #setupBasicFormat(): void {
     this.#toolbar.push("bold", "italic");
   }
@@ -96,6 +92,10 @@ class ConfigurationBuilder {
       items.push("code");
     } else {
       this.#removePlugins.push("Code");
+    }
+
+    if (items.length !== 0) {
+      items.push(this.#divider, "removeFormat");
     }
 
     if (items.length > 0) {
@@ -246,8 +246,6 @@ class ConfigurationBuilder {
     this.#setupHeading();
 
     this.#insertDivider();
-
-    this.#setupRemoveFormatting();
 
     this.#insertDivider();
 
