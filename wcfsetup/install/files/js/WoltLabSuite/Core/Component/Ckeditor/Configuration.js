@@ -44,18 +44,13 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("Strikethrough");
             }
-            if (this.#features.subscript) {
-                items.push("subscript");
+            if (this.#features.code) {
+                items.push("code");
             }
             else {
-                this.#removePlugins.push("Subscript");
+                this.#removePlugins.push("Code");
             }
-            if (this.#features.superscript) {
-                items.push("superscript");
-            }
-            else {
-                this.#removePlugins.push("Superscript");
-            }
+            items.push(this.#divider);
             if (this.#features.mark) {
                 items.push("highlight");
             }
@@ -80,11 +75,18 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("FontSize");
             }
-            if (this.#features.code) {
-                items.push("code");
+            items.push(this.#divider);
+            if (this.#features.subscript) {
+                items.push("subscript");
             }
             else {
-                this.#removePlugins.push("Code");
+                this.#removePlugins.push("Subscript");
+            }
+            if (this.#features.superscript) {
+                items.push("superscript");
+            }
+            else {
+                this.#removePlugins.push("Superscript");
             }
             if (items.length !== 0) {
                 items.push(this.#divider, "removeFormat");
@@ -153,6 +155,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("Table", "TableToolbar");
             }
+            items.push(this.#divider);
             if (this.#features.quoteBlock) {
                 items.push("blockQuote");
             }
@@ -223,9 +226,11 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             this.#setupBasicFormat();
             this.#setupTextFormat();
             this.#insertDivider();
+            this.#setupLink();
+            this.#insertDivider();
             this.#setupList();
             this.#setupAlignment();
-            this.#setupLink();
+            this.#insertDivider();
             this.#setupImage();
             this.#setupBlocks();
             this.#insertDivider();
