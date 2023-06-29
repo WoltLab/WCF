@@ -12,10 +12,12 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
     exports.setup = void 0;
     let currentScheme = "system";
     let mediaQuery;
+    let themeColor;
     function setScheme(scheme) {
         currentScheme = scheme;
         if (currentScheme === "light" || currentScheme === "dark") {
             document.documentElement.dataset.colorScheme = currentScheme;
+            updateThemeColor();
         }
         else {
             applySystemScheme();
@@ -30,7 +32,11 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
     function applySystemScheme() {
         if (currentScheme === "system") {
             document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "light";
+            updateThemeColor();
         }
+    }
+    function updateThemeColor() {
+        themeColor.content = window.getComputedStyle(document.body).getPropertyValue("--wcfPageThemeColor");
     }
     function initializeButton(button) {
         const dropdownMenu = (0, Builder_1.create)([
@@ -79,6 +85,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
         catch {
             /* Ignore any errors when accessing the `localStorage`. */
         }
+        themeColor = document.querySelector('meta[name="theme-color"]');
         mediaQuery = matchMedia("(prefers-color-scheme: dark)");
         mediaQuery.addEventListener("change", () => {
             applySystemScheme();

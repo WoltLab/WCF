@@ -15,12 +15,14 @@ export type ColorScheme = "dark" | "light" | "system";
 
 let currentScheme: ColorScheme = "system";
 let mediaQuery: MediaQueryList;
+let themeColor: HTMLMetaElement;
 
 function setScheme(scheme: ColorScheme): void {
   currentScheme = scheme;
 
   if (currentScheme === "light" || currentScheme === "dark") {
     document.documentElement.dataset.colorScheme = currentScheme;
+    updateThemeColor();
   } else {
     applySystemScheme();
   }
@@ -35,7 +37,12 @@ function setScheme(scheme: ColorScheme): void {
 function applySystemScheme(): void {
   if (currentScheme === "system") {
     document.documentElement.dataset.colorScheme = mediaQuery.matches ? "dark" : "light";
+    updateThemeColor();
   }
+}
+
+function updateThemeColor(): void {
+  themeColor.content = window.getComputedStyle(document.body).getPropertyValue("--wcfPageThemeColor");
 }
 
 function initializeButton(button: HTMLElement): void {
@@ -88,6 +95,8 @@ export function setup(): void {
   } catch {
     /* Ignore any errors when accessing the `localStorage`. */
   }
+
+  themeColor = document.querySelector('meta[name="theme-color"]')!;
 
   mediaQuery = matchMedia("(prefers-color-scheme: dark)");
   mediaQuery.addEventListener("change", () => {
