@@ -46,6 +46,11 @@
 	--ck-color-list-button-on-text: var(--wcfDropdownLink);
 
 	--ck-color-link-default: var(--wcfContentLink);
+
+	--ck-font-face: var(--wcfFontFamily);
+	--ck-font-size-normal: var(--wcfFontSizeDefault);
+	--ck-font-size-small: var(--wcfFontSizeSmall);
+	--ck-font-size-tiny: var(--wcfFontSizeSmall);
 }
 
 .ck.ck-content {
