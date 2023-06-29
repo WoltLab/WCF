@@ -203,6 +203,12 @@
 	text-decoration: none !important;
 }
 
+/* Prevent lists inside drop down menus from becoming a huge skyscraper. */
+.ck.ck-dropdown .ck-dropdown__panel .ck-list {
+	max-height: 300px;
+	overflow: auto;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
