@@ -3352,11 +3352,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 	</category>
 	<category name="wcf.ckeditor">
+		<item name="wcf.ckeditor.code.fileName"><![CDATA[File Name]]></item>
+		<item name="wcf.ckeditor.code.lineNumber"><![CDATA[Line Number]]></item>
 		<item name="wcf.ckeditor.marker.error"><![CDATA[Red Text Marker]]></item>
 		<item name="wcf.ckeditor.marker.info"><![CDATA[Blue Text Marker]]></item>
 		<item name="wcf.ckeditor.marker.success"><![CDATA[Green Text Marker]]></item>
 		<item name="wcf.ckeditor.marker.warning"><![CDATA[Yellow Text Marker]]></item>
 		<item name="wcf.ckeditor.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.ckeditor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Quote from %0]]></item>
 	</category>
 	<category name="wcf.cli">

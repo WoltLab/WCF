@@ -237,9 +237,12 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
             const key = language ? language : "en";
             const { dictionary } = window.CKEDITOR_TRANSLATIONS[key];
-            dictionary["Spoiler"] = (0, Language_1.getPhrase)("wcf.editor.button.spoiler");
+            dictionary["Author"] = (0, Language_1.getPhrase)("wcf.ckeditor.quote.author");
+            dictionary["Filename"] = (0, Language_1.getPhrase)("wcf.ckeditor.code.fileName");
+            dictionary["Line number"] = (0, Language_1.getPhrase)("wcf.ckeditor.code.lineNumber");
             dictionary["Quote"] = (0, Language_1.getPhrase)("wcf.ckeditor.quote");
             dictionary["Quote from %0"] = (0, Language_1.getPhrase)("wcf.ckeditor.quoteFrom");
+            dictionary["Spoiler"] = (0, Language_1.getPhrase)("wcf.editor.button.spoiler");
             // TODO: The typings are both incompleted and outdated.
             return {
                 alignment: {

@@ -11,11 +11,14 @@
 		{ setupCkeditor },
 		PrismMeta
 	) => {
+		{jsphrase name='wcf.ckeditor.code.fileName'}
+		{jsphrase name='wcf.ckeditor.code.lineNumber'}
 		{jsphrase name='wcf.ckeditor.marker.error'}
 		{jsphrase name='wcf.ckeditor.marker.info'}
 		{jsphrase name='wcf.ckeditor.marker.success'}
 		{jsphrase name='wcf.ckeditor.marker.warning'}
 		{jsphrase name='wcf.ckeditor.quote'}
+		{jsphrase name='wcf.ckeditor.quote.author'}
 		{jsphrase name='wcf.ckeditor.quoteFrom'}
 		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}

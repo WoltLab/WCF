@@ -274,9 +274,12 @@ class ConfigurationBuilder {
     const key = language ? language : "en";
     const { dictionary } = window.CKEDITOR_TRANSLATIONS[key];
 
-    dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
+    dictionary["Author"] = getPhrase("wcf.ckeditor.quote.author");
+    dictionary["Filename"] = getPhrase("wcf.ckeditor.code.fileName");
+    dictionary["Line number"] = getPhrase("wcf.ckeditor.code.lineNumber");
     dictionary["Quote"] = getPhrase("wcf.ckeditor.quote");
     dictionary["Quote from %0"] = getPhrase("wcf.ckeditor.quoteFrom");
+    dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
 
     // TODO: The typings are both incompleted and outdated.
     return {
