@@ -26,6 +26,14 @@ class ConfigurationBuilder {
     this.#features = features;
   }
 
+  #setupUndo(): void {
+    if (this.#features.undo) {
+      this.#toolbar.push("undo", "redo");
+    } else {
+      this.#removePlugins.push("Undo");
+    }
+  }
+
   #setupHeading(): void {
     if (this.#features.heading) {
       this.#toolbar.push("heading");
@@ -249,6 +257,10 @@ class ConfigurationBuilder {
       throw new Error("Cannot build the configuration twice.");
     }
 
+    this.#setupUndo();
+
+    this.#insertDivider();
+
     this.#setupHeading();
 
     this.#insertDivider();
@@ -391,6 +403,7 @@ export type Features = {
   superscript: boolean;
   table: boolean;
   underline: boolean;
+  undo: boolean;
 };
 
 export function createConfigurationFor(features: Features): EditorConfig {

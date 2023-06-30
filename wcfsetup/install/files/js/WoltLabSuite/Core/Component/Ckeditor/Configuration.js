@@ -19,6 +19,14 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         constructor(features) {
             this.#features = features;
         }
+        #setupUndo() {
+            if (this.#features.undo) {
+                this.#toolbar.push("undo", "redo");
+            }
+            else {
+                this.#removePlugins.push("Undo");
+            }
+        }
         #setupHeading() {
             if (this.#features.heading) {
                 this.#toolbar.push("heading");
@@ -220,6 +228,8 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             if (this.#removePlugins.length > 0 || this.#toolbar.length > 0) {
                 throw new Error("Cannot build the configuration twice.");
             }
+            this.#setupUndo();
+            this.#insertDivider();
             this.#setupHeading();
             this.#insertDivider();
             this.#insertDivider();

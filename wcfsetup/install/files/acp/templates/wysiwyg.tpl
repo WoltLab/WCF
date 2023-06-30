@@ -63,6 +63,7 @@
 			spoiler: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('spoiler')}true{else}false{/if},
 			table: true,
 			underline: true,
+			undo: true,
 		};
 
 		const bbcodes = [
