@@ -20,7 +20,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
     Simple_1 = tslib_1.__importDefault(Simple_1);
     UiPageAction = tslib_1.__importStar(UiPageAction);
     UiScreen = tslib_1.__importStar(UiScreen);
-    const _specialCheckboxSelector = '.message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
     class ControllerClipboard {
         containers = new Map();
         editors = new Map();
@@ -67,11 +66,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                 if (containerData === undefined) {
                     const markAll = container.querySelector(".jsClipboardMarkAll");
                     if (markAll !== null) {
-                        if (markAll.matches(_specialCheckboxSelector)) {
-                            const label = markAll.closest("label");
-                            label.title = Language.get("wcf.clipboard.item.markAll");
-                            label.classList.add("jsTooltip");
-                        }
                         markAll.dataset.containerId = containerId;
                         markAll.addEventListener("click", (ev) => this.markAll(ev));
                     }
@@ -88,11 +82,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                         return;
                     }
                     checkbox.dataset.containerId = containerId;
-                    if (checkbox.matches(_specialCheckboxSelector)) {
-                        const label = checkbox.closest("label");
-                        label.title = Language.get("wcf.clipboard.item.mark");
-                        label.classList.add("jsTooltip");
-                    }
                     const link = checkbox.closest("a");
                     if (link === null) {
                         checkbox.addEventListener("click", (ev) => this.mark(ev));
