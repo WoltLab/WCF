@@ -53,9 +53,12 @@ class UserMailbox extends Mailbox implements IUserMailbox
      */
     public function getPersonalizedText(string $text): string
     {
-        $text = \str_replace('{$username}', $this->getUser()->username, $text);
-        $text = \str_replace('{$email}', $this->getUser()->email, $text);
-
-        return $text;
+        return \strtr(
+            $text,
+            [
+                '{$username}' => $this->getUser()->username,
+                '{$email}' => $this->getUser()->email,
+            ]
+        );
     }
 }
