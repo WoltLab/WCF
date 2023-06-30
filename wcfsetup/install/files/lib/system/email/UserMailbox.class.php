@@ -47,4 +47,18 @@ class UserMailbox extends Mailbox implements IUserMailbox
 
         return $user;
     }
+
+    /**
+     * Takes the passed text and replaces the placeholders for username and email address with the user's values.
+     */
+    public function getPersonalizedText(string $text): string
+    {
+        return \strtr(
+            $text,
+            [
+                '{$username}' => $this->getUser()->username,
+                '{$email}' => $this->getUser()->email,
+            ]
+        );
+    }
 }
