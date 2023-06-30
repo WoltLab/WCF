@@ -334,6 +334,9 @@ class ConfigurationBuilder {
         ],
       },
       language,
+      link: {
+        defaultProtocol: "https://",
+      },
       removePlugins: this.#removePlugins,
       fontFamily: {
         options: [

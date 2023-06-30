@@ -290,6 +290,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                     ],
                 },
                 language,
+                link: {
+                    defaultProtocol: "https://",
+                },
                 removePlugins: this.#removePlugins,
                 fontFamily: {
                     options: [
