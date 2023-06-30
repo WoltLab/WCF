@@ -63,28 +63,20 @@
 	}
 }
 
-.messageCheckboxLabel input[type="checkbox"] {
-	height: 18px;
-	width: 18px;
-}
-
 .message {
 	@include screen-md-up {
 		display: flex;
 	}
 
 	.messageClipboardCheckbox {
+		display: block;
 		height: 24px;
 		width: 24px;
 
-		@extend .messageCheckboxLabel;
-	}
-
-	&.jsMarked .messageClipboardCheckbox::after {
-		display: block;
-		font-size: 14px;
-		left: 5px;
-		top: 1px;
+		input[type="checkbox"] {
+			height: 18px;
+			width: 18px;
+		}
 	}
 }
 
