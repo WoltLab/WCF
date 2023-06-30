@@ -20,9 +20,6 @@ import * as UiPageAction from "../Ui/Page/Action";
 import * as UiScreen from "../Ui/Screen";
 import { ClipboardOptions, ContainerData, ClipboardActionData, AjaxResponse } from "./Clipboard/Data";
 
-const _specialCheckboxSelector =
-  '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
-
 class ControllerClipboard {
   private readonly containers = new Map<string, ContainerData>();
   private readonly editors = new Map<string, HTMLAnchorElement>();
@@ -79,20 +76,6 @@ class ControllerClipboard {
         const markAll = container.querySelector(".jsClipboardMarkAll") as HTMLInputElement;
 
         if (markAll !== null) {
-          if (markAll.matches(_specialCheckboxSelector)) {
-            const label = markAll.closest("label") as HTMLLabelElement;
-            label.setAttribute("role", "checkbox");
-            label.tabIndex = 0;
-            label.setAttribute("aria-checked", "false");
-            label.setAttribute("aria-label", Language.get("wcf.clipboard.item.markAll"));
-
-            label.addEventListener("keyup", (event) => {
-              if (event.key === "Enter" || event.key === "Space") {
-                markAll.click();
-              }
-            });
-          }
-
           markAll.dataset.containerId = containerId;
           markAll.addEventListener("click", (ev) => this.markAll(ev));
         }
@@ -112,20 +95,6 @@ class ControllerClipboard {
         }
 
         checkbox.dataset.containerId = containerId;
-
-        if (checkbox.matches(_specialCheckboxSelector)) {
-          const label = checkbox.closest("label") as HTMLLabelElement;
-          label.setAttribute("role", "checkbox");
-          label.tabIndex = 0;
-          label.setAttribute("aria-checked", "false");
-          label.setAttribute("aria-label", Language.get("wcf.clipboard.item.mark"));
-
-          label.addEventListener("keyup", (event) => {
-            if (event.key === "Enter" || event.key === "Space") {
-              checkbox.click();
-            }
-          });
-        }
 
         const link = checkbox.closest("a");
         if (link === null) {
