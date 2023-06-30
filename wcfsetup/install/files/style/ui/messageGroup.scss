@@ -44,16 +44,13 @@
 	}
 
 	.columnMark > label {
-		cursor: pointer;
 		display: block;
 		height: 24px;
 		width: 24px;
 
-		@extend .messageCheckboxLabel;
-
-		&::before {
-			font-size: 24px;
-			top: -6px;
+		input[type="checkbox"] {
+			height: 18px;
+			width: 18px;
 		}
 	}
 
