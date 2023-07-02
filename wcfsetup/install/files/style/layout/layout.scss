@@ -142,10 +142,6 @@ html.iOS select {
    <rightSidebar>
 */
 @include screen-md-down {
-	.sidebar {
-		margin: 0 -10px;
-	}
-
 	.sidebar + .content,
 	.content + .sidebar {
 		// gap between sidebars and content
