@@ -11,7 +11,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Devtools", "./Ckeditor/Keyboard", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Devtools_1, Keyboard_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -34,7 +34,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             }
         }
         focus() {
-            this.#editor.editing.view.focus();
+            (0, Scroll_1.element)(this.#editor.ui.element, () => {
+                this.#editor.editing.view.focus();
+            });
         }
         getHtml() {
             return this.#editor.data.get();
@@ -45,7 +47,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
                 const modelFragment = this.#editor.data.toModel(viewFragment);
                 const range = this.#editor.model.insertContent(modelFragment);
                 writer.setSelection(range.end);
-                this.#editor.focus();
+                this.focus();
             });
         }
         insertText(text) {

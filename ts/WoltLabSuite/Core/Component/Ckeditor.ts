@@ -21,6 +21,7 @@ import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import { normalizeLegacyMessage } from "./Ckeditor/Normalizer";
+import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
@@ -52,7 +53,9 @@ class Ckeditor {
   }
 
   focus(): void {
-    this.#editor.editing.view.focus();
+    scrollToElement(this.#editor.ui.element!, () => {
+      this.#editor.editing.view.focus();
+    });
   }
 
   getHtml(): string {
@@ -67,7 +70,7 @@ class Ckeditor {
       const range = this.#editor.model.insertContent(modelFragment);
 
       writer.setSelection(range.end);
-      this.#editor.focus();
+      this.focus();
     });
   }
 
