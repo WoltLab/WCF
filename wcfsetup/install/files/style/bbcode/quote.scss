@@ -1,6 +1,7 @@
 .quoteBox {
 	background-color: var(--wcfContentBackground);
-	border-left: 5px solid var(--wcfContentBorderInner);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-left-width: 5px;
 	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
 	clear: both;
 	column-gap: 5px;
