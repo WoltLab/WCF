@@ -66,7 +66,8 @@
 }
 
 .embeddedContentTitle,
-.messageBody > .messageText .embeddedContentTitle {
+.messageBody > .messageText .embeddedContentTitle,
+#messagePreview > .htmlContent .embeddedContentTitle {
 	color: var(--wcfContentHeadlineText);
 	display: -webkit-box;
 	margin: 0;

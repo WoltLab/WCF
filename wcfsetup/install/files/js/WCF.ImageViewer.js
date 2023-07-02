@@ -895,11 +895,11 @@ $.widget('ui.wcfImageViewer', {
 		var $imageContainer = $('<div><img /><img /></div>').appendTo(this._container);
 		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious"><fa-icon size="24" name="angles-left"></fa-icon></span><div><ul /></div><span class="wcfImageViewerButtonNext"><fa-icon size="24" name="angles-right"></fa-icon></span></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
-		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><fa-icon size="48" name="angle-left"></fa-icon></li>').appendTo($slideshowContainer);
-		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><fa-icon size="48" name="play"></fa-icon></li>').appendTo($slideshowContainer);
-		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><fa-icon size="48" name="angle-right"></fa-icon></li>').appendTo($slideshowContainer);
-		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><fa-icon size="48" name="expand"></fa-icon></li>').appendTo($slideshowContainer);
-		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><fa-icon size="48" name="arrow-up-right-from-square"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><fa-icon size="32" name="angle-left"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><fa-icon size="32" name="play"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><fa-icon size="32" name="angle-right"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><fa-icon size="32" name="expand"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><fa-icon size="32" name="arrow-up-right-from-square"></fa-icon></li>').appendTo($slideshowContainer);
 		
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),

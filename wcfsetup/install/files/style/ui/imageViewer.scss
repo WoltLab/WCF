@@ -275,36 +275,16 @@
 
 				> li {
 					flex: 0 0 auto;
+					padding: 5px;
 
-					&:not(.pointer) > .icon {
+					&:not(.pointer) fa-icon {
 						color: rgb(66, 66, 66) !important;
-					}
-
-					&.pointer > span.icon {
-						cursor: pointer;
-					}
-
-					&.wcfImageViewerSlideshowButtonToggle > span,
-					&.wcfImageViewerSlideshowButtonEnlarge > span,
-					&.wcfImageViewerSlideshowButtonFull > span {
-						font-size: 28px;
-						/*
-						&:before {
-							left: 2px;
-							position: relative;
-							top: 9px;
-						}
-						*/
 					}
 
 					&.wcfImageViewerSlideshowButtonEnlarge,
 					&.wcfImageViewerSlideshowButtonFull {
 						border-left: 1px solid var(--wcfImageViewerBorderColor);
 						box-sizing: border-box;
-					}
-
-					> span {
-						vertical-align: middle;
 					}
 				}
 			}
