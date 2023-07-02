@@ -1,7 +1,7 @@
 .codeBox {
 	background-color: var(--wcfContentBackground);
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	border-radius: 2px;
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
 	clear: both;
 	margin: 1em 0;
 	padding: 10px;
@@ -39,18 +39,17 @@
 	}
 
 	.codeBoxHeader {
+		align-items: center;
+		background-color: var(--wcfContentBackground);
+		border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0;
+		display: flex;
+		margin: -10px -10px 0;
+		/* required to avoid layout jumping caused by the dynamically added 24px button */
+		min-height: 24px;
+		padding: 10px 10px 10px;
 		position: sticky;
 		top: 50px;
 		z-index: 1;
-		padding: 10px 10px 10px;
-		margin: -10px -10px 0;
-		background-color: var(--wcfContentBackground);
-
-		align-items: center;
-		display: flex;
-
-		/* required to avoid layout jumping caused by the dynamically added 24px button */
-		min-height: 24px;
 
 		> .codeBoxHeadline {
 			flex: 1 1 auto;
@@ -125,6 +124,7 @@
 
 	> .toggleButton {
 		background-color: rgba(var(--wcfContentBackground-rgb) / 0.9);
+		border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
 		cursor: pointer;
 		display: block;
 		padding: 10px 20px 0 10px;
