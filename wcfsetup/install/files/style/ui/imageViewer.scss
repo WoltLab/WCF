@@ -178,6 +178,10 @@
 
 		h1 {
 			font-size: 1.75rem;
+			max-width: calc(100% - 70px);
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		h2 {
