@@ -31,17 +31,6 @@ const _cloneObject = function (obj: object | any[]): object | any[] | null {
 
 const _prefix = "wsc" + window.WCF_PATH.hashCode() + "-";
 
-let _blockFocusIn = false;
-document.addEventListener(
-  "focusin",
-  (event) => {
-    if (_blockFocusIn) {
-      event.stopImmediatePropagation();
-    }
-  },
-  true,
-);
-
 /**
  * Deep clones an object.
  */
@@ -301,28 +290,4 @@ export function getXsrfToken(): string {
   const [_key, value] = xsrfToken.split(/=/, 2);
 
   return decodeURIComponent(value.trim());
-}
-
-/**
- * Permits the interaction with Redactor, that usually requires
- * changes to the selection, without interfering with an active
- * focus trap.
- *
- * It is strongly recommended to close a dialog before interacting
- * with Redactor. This helper is designed for cases where this
- * is not possible.
- */
-export function interactWithRedactor(callback: () => void | Promise<void>): void {
-  _blockFocusIn = true;
-
-  const activeElement = document.activeElement;
-
-  void callback();
-
-  // Shift the focus back to preserve the behavior of the focus trap.
-  if (activeElement instanceof HTMLElement) {
-    activeElement.focus();
-  }
-
-  _blockFocusIn = false;
 }
