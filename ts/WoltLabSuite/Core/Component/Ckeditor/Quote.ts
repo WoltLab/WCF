@@ -16,7 +16,7 @@ function insertQuote(editor: CKEditor, payload: InsertQuoteEventPayload) {
   let { author, content, link } = payload;
 
   if (payload.isText) {
-    content = escapeHTML(content);
+    content = approximateHtmlRepresentation(content);
   }
 
   author = escapeHTML(author);
@@ -26,6 +26,22 @@ function insertQuote(editor: CKEditor, payload: InsertQuoteEventPayload) {
     `<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>
     <p><br data-cke-filler="true"></p>`,
   );
+}
+
+function approximateHtmlRepresentation(text: string): string {
+  text = escapeHTML(text);
+
+  // An empty paragraph is marked by 5 consecutive new lines.
+  text = text.replaceAll("\n\n\n\n\n", '</p><p><br data-cke-filler="true"></p><p>');
+
+  return text
+    .split("\n\n")
+    .map((value) => {
+      value = value.replaceAll("\n", "<br>");
+
+      return `<p>${value}</p>`;
+    })
+    .join("");
 }
 
 export type InsertQuoteEventPayload = {

@@ -13,12 +13,24 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
     function insertQuote(editor, payload) {
         let { author, content, link } = payload;
         if (payload.isText) {
-            content = (0, StringUtil_1.escapeHTML)(content);
+            content = approximateHtmlRepresentation(content);
         }
         author = (0, StringUtil_1.escapeHTML)(author);
         link = (0, StringUtil_1.escapeHTML)(link);
         editor.insertHtml(`<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>
     <p><br data-cke-filler="true"></p>`);
+    }
+    function approximateHtmlRepresentation(text) {
+        text = (0, StringUtil_1.escapeHTML)(text);
+        // An empty paragraph is marked by 5 consecutive new lines.
+        text = text.replaceAll("\n\n\n\n\n", '</p><p><br data-cke-filler="true"></p><p>');
+        return text
+            .split("\n\n")
+            .map((value) => {
+            value = value.replaceAll("\n", "<br>");
+            return `<p>${value}</p>`;
+        })
+            .join("");
     }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element).ready(({ ckeditor }) => {
