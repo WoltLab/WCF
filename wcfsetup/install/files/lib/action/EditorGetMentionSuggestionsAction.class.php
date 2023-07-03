@@ -27,7 +27,7 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                     array {
-                        query: string
+                        query: non-empty-string
                     }
                     EOT,
         );
