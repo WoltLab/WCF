@@ -261,6 +261,10 @@ html[data-color-scheme="dark"] .userAvatarImage {
 	}
 }
 
+html[data-color-scheme="dark"] .userAvatarList > li > a > img {
+	border-color: rgb(255 255 255 / 12%);
+}
+
 .userList {
 	.box48 {
 		align-items: center;
