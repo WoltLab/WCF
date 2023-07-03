@@ -34,6 +34,11 @@ type Mention = {
 };
 
 async function getPossibleMentions(query: string): Promise<Mention[]> {
+  // Prevent excessive attempts to resolve mentions.
+  if (query.length > 24) {
+    return [];
+  }
+
   // TODO: Provide the URL as a parameter.
   const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
   url.searchParams.set("query", query);
