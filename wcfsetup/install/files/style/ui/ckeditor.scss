@@ -199,6 +199,12 @@
 .ck.ck-sticky-panel__content {
 	--ck-z-modal: 1;
 }
+.ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+	box-shadow: none !important;
+}
+.ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content_sticky .ck-toolbar {
+	border-bottom-color: var(--wcfInputBorderActive) !important;
+}
 
 /* Fixes the hover state of the link balloon tooltip. */
 .ck.ck-link-actions .ck-button.ck-link-actions__preview:hover .ck-button__label {
