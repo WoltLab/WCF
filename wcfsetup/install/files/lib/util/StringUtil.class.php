@@ -486,10 +486,17 @@ final class StringUtil
         $string = \preg_replace('~<!--(.*?)-->~', '', $string);
 
         return \preg_replace(
-            '~</?[a-z]+[1-6]?
-			(?:\s*[a-z\-]+\s*(=\s*(?:
-			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
-			))?)*\s*/?>~ix',
+            // Note the possessive quantifier '*+' at the end of the
+            // regular expression. This quantifier needs to be possessive
+            // for performance reasons, because otherwise catastrophic
+            // backtracking will occur due to the use of two quantifiers
+            // right next to each other (the + in the first alternative and
+            // the * repating the whole alternation). It also prevents trying
+            // all the alternatives once again for incorrectly quoted attributes:
+            // For '<foo bar=">' the regular expression would retry matching a
+            // quote for each =, r, a, b, ... if the quantifier would not be
+            // possessive.
+            '/<\/?[a-zA-Z](?:[^>"\']+|"[^"]*"|\'[^\']*\')*+>/',
             '',
             $string
         );
