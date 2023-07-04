@@ -165,7 +165,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
                 $metaData
             );
         } else {
-            $searchIndexManager
+            $this
                 ->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
         }
     }
