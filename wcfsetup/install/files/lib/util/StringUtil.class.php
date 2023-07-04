@@ -16,13 +16,6 @@ use wcf\system\WCF;
  */
 final class StringUtil
 {
-    const HTML_PATTERN = '~</?[a-z]+[1-6]?
-			(?:\s*[a-z\-]+\s*(=\s*(?:
-			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
-			))?)*\s*/?>~ix';
-
-    const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
-
     /**
      * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
      * @var string
@@ -490,7 +483,16 @@ final class StringUtil
      */
     public static function stripHTML($string): string
     {
-        return \preg_replace(self::HTML_PATTERN, '', \preg_replace(self::HTML_COMMENT_PATTERN, '', $string));
+        $string = \preg_replace('~<!--(.*?)-->~', '', $string);
+
+        return \preg_replace(
+            '~</?[a-z]+[1-6]?
+			(?:\s*[a-z\-]+\s*(=\s*(?:
+			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
+			))?)*\s*/?>~ix',
+            '',
+            $string
+        );
     }
 
     /**
