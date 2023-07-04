@@ -46,6 +46,15 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 return;
             }
             // TODO: The typings do not include our custom plugins yet.
+            configuration.woltlabAttachment = {
+                resolveAttachmentUrl(attachmentId, isThumbnail) {
+                    let thumbnail = "";
+                    if (isThumbnail) {
+                        thumbnail = "&thumbnail=1";
+                    }
+                    return `${window.WSC_API_URL}index.php?attachment/${attachmentId}/${thumbnail}`;
+                },
+            };
             configuration.woltlabUpload = {
                 uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
                 uploadOther: (file) => uploadAttachment(element, file),

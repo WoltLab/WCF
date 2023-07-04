@@ -81,6 +81,16 @@ export function setup(element: HTMLElement): void {
     }
 
     // TODO: The typings do not include our custom plugins yet.
+    (configuration as any).woltlabAttachment = {
+      resolveAttachmentUrl(attachmentId: number, isThumbnail: boolean) {
+        let thumbnail = "";
+        if (isThumbnail) {
+          thumbnail = "&thumbnail=1";
+        }
+
+        return `${window.WSC_API_URL}index.php?attachment/${attachmentId}/${thumbnail}`;
+      },
+    };
     (configuration as any).woltlabUpload = {
       uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
       uploadOther: (file: File) => uploadAttachment(element, file),

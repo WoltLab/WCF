@@ -109,8 +109,15 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $thumbnail = true;
         }
 
-        if (\preg_match('~\bmessageFloatObject(?P<float>Left|Right)\b~', $class, $matches)) {
-            $float = ($matches['float'] === 'Left') ? 'left' : 'right';
+        $replaceElement = $element;
+        $parent = $element->parentNode;
+        \assert($parent instanceof \DOMElement);
+        if ($parent->tagName === "figure") {
+            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
+                $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
+            }
+
+            $replaceElement = $parent;
         }
 
         $attributes = [
@@ -122,7 +129,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
         $newElement->setAttribute('data-name', 'attach');
         $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
-        DOMUtil::replaceElement($element, $newElement, false);
+        DOMUtil::replaceElement($replaceElement, $newElement, false);
     }
 
     /**
@@ -171,6 +178,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $blockLevelParent = null;
         $blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
         while ($parent = $parent->parentNode) {
+            \assert($parent instanceof \DOMElement);
+
             switch ($parent->nodeName) {
                 case 'a':
                     // Permit the media element to be placed inside a link.
@@ -198,6 +207,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         if ($blockLevelParent !== null) {
+            \assert($parent instanceof \DOMElement);
             $element = DOMUtil::splitParentsUntil($newElement, $parent);
             if ($element !== $newElement) {
                 DOMUtil::insertBefore($newElement, $element);
