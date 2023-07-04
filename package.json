@@ -33,6 +33,6 @@
     "qr-creator": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "tabbable": "^6.2.0",
-    "tslib": "^2.5.2"
+    "tslib": "^2.6.0"
   }
 }
