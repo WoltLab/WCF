@@ -18,7 +18,7 @@ $styleVariables = [
     ['wcfButtonText', 'rgba(33, 33, 33, 1)', 'rgba(230, 231, 234, 1)'],
     ['wcfButtonTextActive', 'rgba(255, 255, 255, 1)', 'rgba(230, 231, 234, 1)'],
     ['wcfContentBackground', 'rgba(250, 250, 250, 1)', 'rgba(26, 29, 33, 1)'],
-    ['wcfContentBorder', 'rgba(65, 121, 173, 1)', 'rgba(54, 55, 59, 1)'],
+    ['wcfContentBorder', 'rgba(65, 121, 173, 1)', 'rgba(98, 113, 136, 1)'],
     ['wcfContentBorderInner', 'rgba(224, 224, 224, 1)', 'rgba(54, 55, 59, 1)'],
     ['wcfContentContainerBackground', 'rgba(255, 255, 255, 1)', 'rgba(34, 37, 41, 1)'],
     ['wcfContentContainerBorder', 'rgba(236, 241, 247, 1)', 'rgba(54, 55, 59, 1)'],
