@@ -158,8 +158,15 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $thumbnail = $matches['thumbnail'];
         }
 
-        if (\preg_match('~\bmessageFloatObject(?P<float>Left|Right)\b~', $class, $matches)) {
-            $float = ($matches['float'] === 'Left') ? 'left' : 'right';
+        $replaceElement = $element;
+        $parent = $element->parentNode;
+        \assert($parent instanceof \DOMElement);
+        if ($parent->tagName === "figure") {
+            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
+                $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
+            }
+
+            $replaceElement = $parent;
         }
 
         $attributes = [
@@ -171,7 +178,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
         $newElement->setAttribute('data-name', 'wsm');
         $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
-        DOMUtil::replaceElement($element, $newElement, false);
+        DOMUtil::replaceElement($replaceElement, $newElement, false);
 
         // The media bbcode is a block element that may not be placed inside inline elements.
         $parent = $newElement;
