@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
         Origin["Document"] = "document";
         Origin["DropDown"] = "dropdown";
         Origin["Search"] = "search";
-    })(Origin = exports.Origin || (exports.Origin = {}));
+    })(Origin || (exports.Origin = Origin = {}));
     let hasGlobalListener = false;
     function add(identifier, callback) {
         _callbackList.add(identifier, callback);

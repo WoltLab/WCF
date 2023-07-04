@@ -21,7 +21,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
     (function (PollViews) {
         PollViews["vote"] = "vote";
         PollViews["results"] = "results";
-    })(PollViews = exports.PollViews || (exports.PollViews = {}));
+    })(PollViews || (exports.PollViews = PollViews = {}));
     class Poll {
         constructor(pollID) {
             this.voteView = undefined;
