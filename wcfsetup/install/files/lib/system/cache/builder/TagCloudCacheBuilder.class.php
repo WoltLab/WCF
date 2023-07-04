@@ -114,7 +114,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
                 }
 
                 // sort by counter
-                \uasort($this->tags, ['self', 'compareTags']);
+                \uasort($this->tags, self::compareTags(...));
             }
         }
     }
