@@ -119,8 +119,13 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
         // lines to be effectively be glued together when the tags are removed.
         $message = \preg_replace('~(<br>|</(?:h[1-6]|kbd|li|p|pre|td|woltlab-metacode)>)~', '\\1 ', $message);
 
-        // strip html; remove whitespace from beginning and end of the message
-        $message = StringUtil::trim(StringUtil::stripHTML($message));
+        // Strip HTML tags.
+        $dom = new \DOMDocument();
+        @$dom->loadHTML(\sprintf(
+            '<?xml version="1.0" encoding="UTF-8"?><html><body>%s</body></html>',
+            $message
+        ));
+        $message = $dom->documentElement->textContent;
 
         $this->getSearchIndexManager()
             ->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
@@ -149,7 +154,13 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
             // lines to be effectively be glued together when the tags are removed.
             $message = \preg_replace('~(<br>|</(?:h[1-6]|kbd|li|p|pre|td|woltlab-metacode)>)~', '\\1 ', $message);
 
-            $message = StringUtil::trim(StringUtil::stripHTML($message));
+            // Strip HTML tags.
+            $dom = new \DOMDocument();
+            @$dom->loadHTML(\sprintf(
+                '<?xml version="1.0" encoding="UTF-8"?><html><body>%s</body></html>',
+                $message
+            ));
+            $message = $dom->documentElement->textContent;
 
             $searchIndexManager->setWithContext(
                 $objectType,
