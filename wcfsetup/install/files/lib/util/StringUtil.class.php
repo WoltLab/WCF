@@ -16,13 +16,6 @@ use wcf\system\WCF;
  */
 final class StringUtil
 {
-    const HTML_PATTERN = '~</?[a-z]+[1-6]?
-			(?:\s*[a-z\-]+\s*(=\s*(?:
-			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
-			))?)*\s*/?>~ix';
-
-    const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
-
     /**
      * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
      * @var string
@@ -490,7 +483,23 @@ final class StringUtil
      */
     public static function stripHTML($string): string
     {
-        return \preg_replace(self::HTML_PATTERN, '', \preg_replace(self::HTML_COMMENT_PATTERN, '', $string));
+        $string = \preg_replace('~<!--(.*?)-->~', '', $string);
+
+        return \preg_replace(
+            // Note the possessive quantifier '*+' at the end of the
+            // regular expression. This quantifier needs to be possessive
+            // for performance reasons, because otherwise catastrophic
+            // backtracking will occur due to the use of two quantifiers
+            // right next to each other (the + in the first alternative and
+            // the * repating the whole alternation). It also prevents trying
+            // all the alternatives once again for incorrectly quoted attributes:
+            // For '<foo bar=">' the regular expression would retry matching a
+            // quote for each =, r, a, b, ... if the quantifier would not be
+            // possessive.
+            '/<\/?[a-zA-Z](?:[^>"\']+|"[^"]*"|\'[^\']*\')*+>/',
+            '',
+            $string
+        );
     }
 
     /**
