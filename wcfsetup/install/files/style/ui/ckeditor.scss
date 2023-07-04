@@ -443,4 +443,8 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
 		font-size: 16px;
 	}
+
+	.ck.ck-input {
+		--ck-input-width: 100%;
+	}
 }
