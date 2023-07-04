@@ -161,6 +161,10 @@
 .ck.ck-body {
 	.ck-button:not(.ck-disabled) {
 		color: var(--ck-color-text);
+
+		&.ck-on {
+			color: var(--ck-color-button-on-color);
+		}
 	}
 
 	.ck-button.ck-disabled {
