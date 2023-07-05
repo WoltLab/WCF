@@ -22,6 +22,8 @@ html,
 body {
 	font-weight: 400;
 	height: 100%;
+	overflow-x: hidden;
+	width: 100%;
 
 	@include wcfLineHeight;
 	@include wcfFontDefault;
@@ -32,7 +34,6 @@ body {
 	color: var(--wcfContentText);
 	font-family: var(--wcfFontFamily);
 	position: relative;
-	width: 100%;
 	word-wrap: break-word;
 }
 
