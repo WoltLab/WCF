@@ -22,6 +22,11 @@ final class HtmlOutputNodeNormalizer
         $this->reduceSpacerParagraphs($candidates);
 
         $this->stripMarkerOnBr($xpath);
+
+        $this->reduceSubsequentHr($xpath);
+        $this->reduceBrInEmptyParagraph($xpath);
+        $this->reduceSubsequentEmptyParagraphs($xpath);
+        $this->reduceSubsequentBr($xpath);
     }
 
     /**
@@ -156,6 +161,165 @@ final class HtmlOutputNodeNormalizer
     {
         foreach ($xpath->query(".//br[@data-cke-filler='true']") as $br) {
             $br->removeAttribute("data-cke-filler");
+        }
+    }
+
+    /**
+     * Reduces multiple subsequent <hr> into a single <hr>.
+     */
+    private function reduceSubsequentHr(\DOMXPath $xpath): void
+    {
+        /** @var list<\DOMElement> */
+        $elements = [];
+        foreach ($xpath->query(".//hr") as $hr) {
+            \assert($hr instanceof \DOMElement);
+            $elements[] = $hr;
+        }
+
+        for ($i = 0, $length = \count($elements); $i < $length; $i++) {
+            $hr = $elements[$i];
+
+            /** @var list<\DOMElement> */
+            $foundHrs = [];
+            while ($i + 1 < $length) {
+                if ($hr->nextElementSibling === $elements[$i + 1]) {
+                    $superfluousHr = $elements[$i + 1];
+                    $foundHrs[] = $superfluousHr;
+                    $hr = $superfluousHr;
+
+                    $i++;
+                } else {
+                    break;
+                }
+            }
+
+            if ($foundHrs !== []) {
+                foreach ($foundHrs as $hr) {
+                    $hr->remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Reduce multiple <br> inside a <p> if they are the only children.
+     */
+    private function reduceBrInEmptyParagraph(\DOMXPath $xpath): void
+    {
+        foreach ($xpath->query(".//p") as $paragraph) {
+            \assert($paragraph instanceof \DOMElement);
+
+            $foundBrs = [];
+            foreach ($paragraph->childNodes as $child) {
+                if ($child instanceof \DOMElement && $child->tagName === 'br') {
+                    $foundBrs[] = $child;
+                } else {
+                    // Check the next paragraph.
+                    continue 2;
+                }
+            }
+
+            $length = \count($foundBrs);
+            if ($length > 1) {
+                for ($i = 1; $i < $length; $i++) {
+                    $br = $foundBrs[$i];
+                    \assert($br instanceof \DOMElement);
+
+                    $br->remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Reduces multiple empty paragraphs into a single one.
+     */
+    private function reduceSubsequentEmptyParagraphs(\DOMXPath $xpath): void
+    {
+        /** @var list<\DOMElement> */
+        $elements = [];
+        foreach ($xpath->query(".//p") as $paragraph) {
+            \assert($paragraph instanceof \DOMElement);
+
+            $elements[] = $paragraph;
+        }
+
+        for ($i = 0, $length = \count($elements); $i < $length; $i++) {
+            $paragraph = $elements[$i];
+
+            if ($paragraph->childNodes->length > 1 || $paragraph->childElementCount !== 1) {
+                continue;
+            }
+
+            if ($paragraph->firstElementChild->tagName !== "br") {
+                continue;
+            }
+
+            $subsequentParagraphs = [$paragraph];
+            while ($i + 1 < $length) {
+                $nextParagraph = $elements[$i + 1];
+
+                if ($paragraph->nextElementSibling !== $nextParagraph) {
+                    break;
+                }
+
+                if ($nextParagraph->childNodes->length > 1 || $nextParagraph->childElementCount !== 1) {
+                    break;
+                }
+
+                if ($nextParagraph->firstElementChild->tagName !== "br") {
+                    break;
+                }
+
+                $subsequentParagraphs[] = $nextParagraph;
+                $paragraph = $nextParagraph;
+                $i++;
+            }
+
+            $foundParagraphs = \count($subsequentParagraphs);
+            if ($foundParagraphs > 1) {
+                for ($j = 1; $j < $foundParagraphs; $j++) {
+                    $subsequentParagraphs[$j]->remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Reduces more than three subsequent <br>.
+     */
+    private function reduceSubsequentBr(\DOMXPath $xpath): void
+    {
+        /** @var list<\DOMElement> */
+        $elements = [];
+        foreach ($xpath->query(".//br") as $br) {
+            \assert($br instanceof \DOMElement);
+            $elements[] = $br;
+        }
+
+        for ($i = 0, $length = \count($elements); $i < $length; $i++) {
+            $br = $elements[$i];
+
+            $chainedBrs = [$br];
+            while ($i + 1 < $length) {
+                $nextBr = $elements[$i + 1];
+
+                if ($br->nextSibling === $nextBr) {
+                    $chainedBrs[] = $nextBr;
+                    $br = $nextBr;
+
+                    $i++;
+                } else {
+                    break;
+                }
+            }
+
+            $foundBrs = \count($chainedBrs);
+            if ($foundBrs > 3) {
+                for ($j = 3; $j < $foundBrs; $j++) {
+                    $chainedBrs[$j]->remove();
+                }
+            }
         }
     }
 }
