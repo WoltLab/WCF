@@ -714,8 +714,9 @@
 		}
 	}
 
-	.boxInfo {
+	.box.boxInfo {
 		background-color: var(--wcfStatusInfoBackground);
+		border-color: var(--wcfStatusInfoBorder);
 		color: var(--wcfStatusInfoText);
 		padding: 20px;
 		text-align: center;
