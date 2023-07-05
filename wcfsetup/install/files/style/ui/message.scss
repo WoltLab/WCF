@@ -18,6 +18,10 @@
 				border-top: 1px solid var(--wcfContentBorder);
 			}
 
+			> li:first-child .messageSidebar {
+				border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0;
+			}
+
 			> .messageListPagination {
 				border-top: 1px solid var(--wcfContentBorder);
 				margin: 0 -10px;
