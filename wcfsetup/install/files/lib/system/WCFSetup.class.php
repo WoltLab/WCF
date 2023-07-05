@@ -562,7 +562,7 @@ final class WCFSetup extends WCF
                             break;
 
                         case 1115: // work-around for older MySQL versions that don't know utf8mb4
-                            throw new SystemException("Insufficient MySQL version. Version '8.0.29' or greater is needed.");
+                            throw new SystemException("Insufficient MySQL version. Version '8.0.30' or greater is needed.");
                             break;
 
                         default:
@@ -578,8 +578,8 @@ final class WCFSetup extends WCF
                         throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.5.12' or greater is needed.");
                     }
                 } else {
-                    if (!(\version_compare($compareSQLVersion, '8.0.29') >= 0)) {
-                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '8.0.29' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '8.0.30') >= 0)) {
+                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '8.0.30' or greater is needed.");
                     }
                 }
 

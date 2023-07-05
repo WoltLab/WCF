@@ -121,7 +121,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $sqlFork = 'MariaDB';
         } else {
             $sqlFork = 'MySQL';
-            $neededSqlVersion = '8.0.29';
+            $neededSqlVersion = '8.0.30';
         }
 
         if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {

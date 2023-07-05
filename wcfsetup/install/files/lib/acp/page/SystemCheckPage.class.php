@@ -54,7 +54,7 @@ class SystemCheckPage extends AbstractPage
 
     public $mysqlVersions = [
         'mysql' => [
-            '8' => '8.0.29',
+            '8' => '8.0.30',
         ],
         'mariadb' => [
             '10' => '10.5.12',

@@ -49,7 +49,7 @@ if (\stripos($sqlVersion, 'MariaDB') !== false) {
     $sqlFork = 'MariaDB';
 } else {
     $sqlFork = 'MySQL';
-    $neededSqlVersion = '8.0.29';
+    $neededSqlVersion = '8.0.30';
 }
 
 if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
