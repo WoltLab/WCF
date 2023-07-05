@@ -3856,6 +3856,8 @@ Attachments:
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Do you want to restore the saved draft?]]></item>
+		<item name="wcf.editor.restoreDraft.preview"><![CDATA[Preview]]></item>
+		<item name="wcf.editor.restoreDraft.restoreOrDiscard"><![CDATA[Discard or Restore Draft]]></item>
 	</category>
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>

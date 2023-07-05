@@ -25,6 +25,8 @@
 		{jsphrase name='wcf.editor.button.group.list'}
 		{jsphrase name='wcf.editor.button.spoiler'}
 		{jsphrase name='wcf.editor.restoreDraft'}
+		{jsphrase name='wcf.editor.restoreDraft.preview'}
+		{jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
 
 		{include file='mediaJavaScript'}
 

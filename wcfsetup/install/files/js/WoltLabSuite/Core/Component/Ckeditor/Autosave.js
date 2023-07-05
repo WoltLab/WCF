@@ -30,9 +30,22 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
       <button type="button" class="button small" data-type="cancel">
         ${(0, StringUtil_1.escapeHTML)((0, Language_1.getPhrase)("wcf.dialog.button.cancel"))}
       </button>
+      <button type="button" class="button small" data-type="preview">
+        ${(0, StringUtil_1.escapeHTML)((0, Language_1.getPhrase)("wcf.editor.restoreDraft.preview"))}
+      </button>
     </div>
   `;
         return dialog;
+    }
+    function getReturnToRestoreDialogOverlay() {
+        const overlay = document.createElement("div");
+        overlay.classList.add("ck", "ck-toolbar__items");
+        overlay.innerHTML = `
+    <button type="button" class="ck ck-button">
+      ${(0, StringUtil_1.escapeHTML)((0, Language_1.getPhrase)("wcf.editor.restoreDraft.restoreOrDiscard"))}
+    </button>
+  `;
+        return overlay;
     }
     function deleteDraft(identifier) {
         try {
@@ -114,6 +127,24 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
                 (0, Event_1.dispatchToCkeditor)(editor.sourceElement).discardRecoveredData();
             }
             revertEditor();
+        });
+        const lockId = Symbol("autosave");
+        dialog.querySelector('button[data-type="preview"]').addEventListener("click", () => {
+            editor.enableReadOnlyMode(lockId);
+            const overlay = getReturnToRestoreDialogOverlay();
+            const toolbar = editor.ui.view.toolbar.element;
+            const existingItems = Array.from(toolbar.children);
+            existingItems.forEach((items) => (items.hidden = true));
+            toolbar.append(overlay);
+            dialogWrapper.hidden = true;
+            const closeOverlayButton = overlay.querySelector("button");
+            closeOverlayButton.addEventListener("click", () => {
+                editor.disableReadOnlyMode(lockId);
+                dialogWrapper.hidden = false;
+                overlay.remove();
+                existingItems.forEach((items) => (items.hidden = false));
+            });
+            closeOverlayButton.focus();
         });
     }
     exports.setupRestoreDraft = setupRestoreDraft;

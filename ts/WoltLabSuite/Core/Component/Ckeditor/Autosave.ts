@@ -41,10 +41,26 @@ function getRestoreDialog(): HTMLElement {
       <button type="button" class="button small" data-type="cancel">
         ${escapeHTML(getPhrase("wcf.dialog.button.cancel"))}
       </button>
+      <button type="button" class="button small" data-type="preview">
+        ${escapeHTML(getPhrase("wcf.editor.restoreDraft.preview"))}
+      </button>
     </div>
   `;
 
   return dialog;
+}
+
+function getReturnToRestoreDialogOverlay(): HTMLElement {
+  const overlay = document.createElement("div");
+  overlay.classList.add("ck", "ck-toolbar__items");
+
+  overlay.innerHTML = `
+    <button type="button" class="ck ck-button">
+      ${escapeHTML(getPhrase("wcf.editor.restoreDraft.restoreOrDiscard"))}
+    </button>
+  `;
+
+  return overlay;
 }
 
 export function deleteDraft(identifier: string): void {
@@ -146,6 +162,30 @@ export function setupRestoreDraft(editor: ClassicEditor, identifier: string): vo
     }
 
     revertEditor();
+  });
+
+  const lockId = Symbol("autosave");
+  dialog.querySelector('button[data-type="preview"]')!.addEventListener("click", () => {
+    editor.enableReadOnlyMode(lockId);
+
+    const overlay = getReturnToRestoreDialogOverlay();
+
+    const toolbar = editor.ui.view.toolbar.element!;
+    const existingItems = Array.from(toolbar.children) as HTMLElement[];
+    existingItems.forEach((items) => (items.hidden = true));
+
+    toolbar.append(overlay);
+    dialogWrapper.hidden = true;
+
+    const closeOverlayButton = overlay.querySelector("button")!;
+    closeOverlayButton.addEventListener("click", () => {
+      editor.disableReadOnlyMode(lockId);
+
+      dialogWrapper.hidden = false;
+      overlay.remove();
+      existingItems.forEach((items) => (items.hidden = false));
+    });
+    closeOverlayButton.focus();
   });
 }
 

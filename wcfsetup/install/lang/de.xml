@@ -3910,6 +3910,8 @@ Dateianhänge:
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Möchten Sie den zwischengespeicherten Entwurf wiederherstellen?]]></item>
+		<item name="wcf.editor.restoreDraft.preview"><![CDATA[Vorschau]]></item>
+		<item name="wcf.editor.restoreDraft.restoreOrDiscard"><![CDATA[Entwurf wiederherstellen oder verwerfen]]></item>
 	</category>
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Hinzufügen]]></item>

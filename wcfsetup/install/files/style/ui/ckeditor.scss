@@ -312,6 +312,10 @@ html[data-color-scheme="dark"] {
 	margin-top: 20px;
 }
 
+.ckeditor5__restoreDraft__buttons button[data-type="preview"] {
+	margin-right: auto;
+}
+
 html[data-color-scheme="dark"] {
 	.ckeditor5__restoreDraft__dialog {
 		border-color: var(--wcfContentBorderInner);
