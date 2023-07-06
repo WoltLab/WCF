@@ -20,6 +20,7 @@
 
 			> li:first-child .messageSidebar {
 				border-radius: var(--wcfBorderRadius) var(--wcfBorderRadius) 0 0;
+				border-top-color: var(--wcfSidebarBorder);
 			}
 
 			> .messageListPagination {
