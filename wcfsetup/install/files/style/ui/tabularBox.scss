@@ -12,10 +12,10 @@
 	&.divider + li:not(.divider) {
 		border-top-color: var(--wcfContentBorder);
 	}
+}
 
-	&:not(.tabularListRowHead):hover {
-		background-color: var(--wcfTabularBoxBackgroundActive);
-	}
+html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
+	background-color: var(--wcfTabularBoxBackgroundActive);
 }
 
 .tabularListRowHead {
