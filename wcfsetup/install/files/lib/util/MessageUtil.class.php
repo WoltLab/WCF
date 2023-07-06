@@ -196,7 +196,7 @@ class MessageUtil
                 // check if there is a link set and if it points to any of the apps
                 $link = $element->getAttribute('data-link');
                 $host = ($link) ? Url::parse($link)['host'] : '';
-                if ($host === $ownHost) {
+                if ($host !== $ownHost) {
                     // links mismatch, do not treat this occurrence as a username
                     continue;
                 }
