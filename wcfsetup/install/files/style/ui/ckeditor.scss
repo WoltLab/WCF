@@ -192,6 +192,30 @@
 	}
 }
 
+.ck-body-wrapper {
+	.ck.ck-balloon-panel {
+		box-shadow: var(--wcfBoxShadow);
+	}
+
+	.ck.ck-list__item .ck-button {
+		&:not(.ck-disabled) {
+			cursor: pointer;
+		}
+
+		&:not(.ck-on) {
+			background-color: var(--ck-color-panel-background);
+		}
+
+		&.ck-on {
+			color: var(--ck-color-list-button-on-text);
+		}
+	}
+}
+
+html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
+	border-width: 0;
+}
+
 .ck.ck-labeled-field-view > .ck.ck-labeled-field-view__input-wrapper > .ck.ck-label {
 	--ck-color-labeled-field-label-background: var(--ck-color-base-background);
 }
