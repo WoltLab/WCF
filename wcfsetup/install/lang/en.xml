@@ -3281,7 +3281,7 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.attachment.upload.error.http413"><![CDATA[The file size exceeds the web server’s maximum request size (HTTP status code 413).]]></item>
 		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[The file size exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[The maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br>
-Maximum File Size: {@$attachmentHandler->getMaxSize()|filesize}<br>
+Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
 		<item name="wcf.attachment.insertAll"><![CDATA[Insert All]]></item>
