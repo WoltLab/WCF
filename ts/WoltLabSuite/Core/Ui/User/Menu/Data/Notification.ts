@@ -16,7 +16,7 @@ import { enableNotifications } from "../../../../Notification/Handler";
 
 let originalFavicon = "";
 function setFaviconCounter(counter: number): void {
-  const favicon = document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
+  const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
   if (!favicon) {
     return;
   }
