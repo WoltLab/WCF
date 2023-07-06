@@ -72,14 +72,14 @@ function tryAlignmentVertical(
   }
 
   if (alignment === "top") {
-    const bodyHeight = document.body.clientHeight;
-    bottom = bodyHeight - refOffsets.top + verticalOffset;
-    if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset) + pageHeaderOffset) {
+    const bottomBoundary = refOffsets.top - verticalOffset;
+    bottom = windowHeight - bottomBoundary;
+    if (bottomBoundary - elDimensions.height < pageHeaderOffset) {
       result = false;
     }
   } else {
     top = refOffsets.top + refDimensions.height + verticalOffset;
-    if (top + elDimensions.height - (window.scrollY || window.pageYOffset) > windowHeight) {
+    if (top + elDimensions.height > windowHeight) {
       result = false;
     }
   }
@@ -195,7 +195,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
   const refDimensions = DomUtil.outerDimensions(
     options.refDimensionsElement instanceof HTMLElement ? options.refDimensionsElement : referenceElement,
   );
-  const refOffsets = DomUtil.offset(referenceElement);
+  const refOffsets = referenceElement.getBoundingClientRect();
   const windowHeight = window.innerHeight;
   const windowWidth = document.body.clientWidth;
 
@@ -265,8 +265,6 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     }
   }
 
-  let isForcedVerticalPosition = false;
-
   const left = horizontal!.left;
   const right = horizontal!.right;
   let vertical = tryAlignmentVertical(
@@ -315,13 +313,12 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
           top: preferTop ? "auto" : 0,
         };
       }
-
-      isForcedVerticalPosition = true;
     }
   }
 
-  let bottom = vertical.bottom;
-  let top = vertical.top;
+  const bottom = vertical.bottom;
+  const top = vertical.top;
+
   // set pointer position
   if (options.pointer) {
     const pointers = DomTraverse.childrenByClass(element, "elementPointer");
@@ -347,18 +344,6 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
   } else if (options.pointerClassNames.length === 2) {
     element.classList[top === "auto" ? "add" : "remove"](options.pointerClassNames[PointerClass.Bottom]);
     element.classList[left === "auto" ? "add" : "remove"](options.pointerClassNames[PointerClass.Right]);
-  }
-
-  // Check if the element itself has a position of `fixed`.
-  if (
-    window.getComputedStyle(element).position === "fixed" ||
-    (element.offsetParent && window.getComputedStyle(element.offsetParent).position === "fixed")
-  ) {
-    if (!isForcedVerticalPosition) {
-      // Ignore offsets caused by page scrolling.
-      if (bottom !== "auto") bottom = bottom + window.scrollY;
-      if (top !== "auto") top = top - window.scrollY;
-    }
   }
 
   DomUtil.setStyles(element, {
