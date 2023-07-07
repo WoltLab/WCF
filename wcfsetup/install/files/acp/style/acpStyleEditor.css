@@ -655,6 +655,7 @@ html:not(.touch) .spColorBox {
 }
 .spVariable {
 	font-family: Consolas, Courier, monospace;
+	-webkit-user-select: all;
 	user-select: all;
 }
 .spVariableInvisible {
