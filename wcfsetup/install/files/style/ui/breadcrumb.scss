@@ -38,8 +38,46 @@
 	}
 }
 
-@include screen-lg {
+@include screen-md-up {
+	.pageNavigation {
+		background-color: var(--wcfNavigationBackground);
+		color: var(--wcfNavigationText);
+		flex: 0 0 auto;
+		padding: 10px 0;
+	}
+
+	.boxesHeaderBoxes + .pageNavigation {
+		margin-top: 1px;
+	}
+
 	.breadcrumbs__parent_indicator {
 		display: none;
+	}
+}
+
+@include screen-sm-down {
+	.breadcrumbs {
+		margin-bottom: -5px;
+		margin-top: 5px;
+	}
+
+	.breadcrumbs__item {
+		display: none;
+	}
+
+	.breadcrumbs__item:last-child {
+		align-items: center;
+		display: flex;
+		flex: 1;
+
+		.breadcrumbs__link {
+			color: var(--wcfContentDimmedLink);
+			display: block;
+			flex: 1;
+			overflow: hidden;
+			padding: 5px 0;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 }
