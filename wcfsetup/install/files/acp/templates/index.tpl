@@ -56,28 +56,37 @@
 	{if ENABLE_WOLTLAB_NEWS}
 		<div id="news" class="hidden tabMenuContent">
 			<div class="section">
-				<div id="news-twitter-timeline">
-					{if $__wcf->language->languageCode == 'de'}
-						<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="noheader nofooter" data-dnt="1" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
-						
-						<div style="margin-top: 20px">
-							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Folge @woltlab_de</a>
-						</div>
-					{else}
-						<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="noheader nofooter" data-dnt="1" data-widget-id="335166618281865217">Tweets by @woltlab</a>
-						
-						<div style="margin-top: 20px">
-							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Follow @woltlab</a>
-						</div>
-					{/if}
-					
-					{literal}
-						<script data-eager="true">
-							document.querySelector("#news .twitter-timeline").dataset.theme = document.documentElement.dataset.colorScheme;
-						</script>
-						<script data-relocate="true">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-					{/literal}
-				</div>
+				<iframe
+					id="woltlab_newsfeed"
+					referrerpolicy="no-referrer"
+					sandbox
+					hidden
+				></iframe>
+				<script data-eager="true">
+				{
+					const languageCode = "{if $__wcf->language->languageCode === 'de'}de{else}en{/if}";
+					let colorScheme = document.documentElement.dataset.colorScheme;
+					const iframe = document.getElementById("woltlab_newsfeed");
+
+					const updateColorScheme = () => {
+						iframe.src = `https://newsfeed.woltlab.com/${ languageCode }_${ colorScheme }.html`;
+					};
+
+					const observer = new MutationObserver(() => {
+						const newScheme = document.documentElement.dataset.colorScheme;
+						if (newScheme === "light" || newScheme === "dark") {
+							colorScheme = newScheme;
+							updateColorScheme();
+						}
+					});
+					observer.observe(document.documentElement, {
+						attributeFilter: ["data-color-scheme"]
+					});
+
+					updateColorScheme();
+					iframe.hidden = false;
+				}
+				</script>
 			</div>
 		</div>
 	{/if}

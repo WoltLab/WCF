@@ -869,3 +869,11 @@ html[data-color-scheme="dark"] {
 		row-gap: 5px;
 	}
 }
+
+#woltlab_newsfeed {
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	height: 100vh;
+	max-width: 100%;
+	width: 600px;
+}
