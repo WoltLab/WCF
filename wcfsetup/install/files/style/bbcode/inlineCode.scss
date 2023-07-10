@@ -20,6 +20,10 @@ kbd {
 	word-wrap: break-word;
 }
 
+a:hover :is(.inlineCode, .ck-content *:not(pre) > code, kbd) {
+	text-decoration: underline;
+}
+
 html[data-color-scheme="dark"] :is(.inlineCode, .ck-content *:not(pre) > code, kbd) {
 	background-color: #3a3f49 !important;
 	border-color: #546172 !important;
