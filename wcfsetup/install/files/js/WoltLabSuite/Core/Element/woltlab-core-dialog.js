@@ -32,6 +32,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                 throw new Error("Cannot open the modal dialog without a title.");
             }
             this.#title.textContent = title;
+            if (this.open) {
+                return;
+            }
             if (dialogContainer.parentElement === null) {
                 document.getElementById("content").append(dialogContainer);
             }

@@ -57,6 +57,10 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     this.#title.textContent = title;
 
+    if (this.open) {
+      return;
+    }
+
     if (dialogContainer.parentElement === null) {
       document.getElementById("content")!.append(dialogContainer);
     }
