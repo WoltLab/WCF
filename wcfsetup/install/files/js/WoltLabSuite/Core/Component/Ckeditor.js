@@ -34,9 +34,26 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             }
         }
         focus() {
-            (0, Scroll_1.element)(this.#editor.ui.element, () => {
+            // Check if the editor is (at least partially) in the viewport otherwise
+            // scroll to it before setting the focus.
+            const editorContainer = this.#editor.ui.element;
+            const { bottom, top } = editorContainer.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            let isPartiallyVisible = false;
+            if (top > 0 && top < viewportHeight) {
+                isPartiallyVisible = true;
+            }
+            else if (bottom > 0 && bottom < viewportHeight) {
+                isPartiallyVisible = true;
+            }
+            if (isPartiallyVisible) {
                 this.#editor.editing.view.focus();
-            });
+            }
+            else {
+                (0, Scroll_1.element)(editorContainer, () => {
+                    this.#editor.editing.view.focus();
+                });
+            }
         }
         getHtml() {
             return this.#editor.data.get();
