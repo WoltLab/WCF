@@ -576,3 +576,11 @@ $wcfAcpSubMenuWidth: 300px;
 		margin-top: 0;
 	}
 }
+
+#woltlab_newsfeed {
+	border: 1px solid $wcfContentBorderInner;
+	border-radius: 4px;
+	height: 100vh;
+	max-width: 100%;
+	width: 600px;
+}
