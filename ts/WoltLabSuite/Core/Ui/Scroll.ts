@@ -9,8 +9,9 @@ import DomUtil from "../Dom/Util";
 
 type Callback = () => void;
 
-let _callback: Callback | null = null;
+let _callbacks: Callback[] = [];
 let _offset: number | null = null;
+let _targetElement: HTMLElement | undefined = undefined;
 let _timeoutScroll: number | null = null;
 
 /**
@@ -22,12 +23,13 @@ function onScroll(): void {
   }
 
   _timeoutScroll = window.setTimeout(() => {
-    if (_callback !== null) {
-      _callback();
+    for (const callback of _callbacks) {
+      callback();
     }
 
     window.removeEventListener("scroll", onScroll);
-    _callback = null;
+    _callbacks = [];
+    _targetElement = undefined;
     _timeoutScroll = null;
   }, 100);
 }
@@ -45,14 +47,24 @@ export function element(element: HTMLElement, callback?: Callback, behavior: Scr
     throw new TypeError("Expected a valid callback function.");
   } else if (!document.body.contains(element)) {
     throw new Error("Element must be part of the visible DOM.");
-  } else if (_callback !== null) {
-    throw new Error("Cannot scroll to element, a concurrent request is running.");
+  } else if (_callbacks.length > 0) {
+    if (element !== _targetElement) {
+      throw new Error("Cannot scroll to element, a concurrent request is running.");
+    }
   }
 
   if (callback) {
-    _callback = callback;
-    window.addEventListener("scroll", onScroll);
+    _callbacks.push(callback);
+
+    if (_callbacks.length === 1) {
+      window.addEventListener("scroll", onScroll);
+    }
   }
+
+  if (_targetElement !== undefined) {
+    return;
+  }
+  _targetElement = element;
 
   let y = DomUtil.offset(element).top;
   if (_offset === null) {

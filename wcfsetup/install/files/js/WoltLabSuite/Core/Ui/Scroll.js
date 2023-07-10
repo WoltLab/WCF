@@ -3,8 +3,9 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.element = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
-    let _callback = null;
+    let _callbacks = [];
     let _offset = null;
+    let _targetElement = undefined;
     let _timeoutScroll = null;
     /**
      * Monitors scroll event to only execute the callback once scrolling has ended.
@@ -14,11 +15,12 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             window.clearTimeout(_timeoutScroll);
         }
         _timeoutScroll = window.setTimeout(() => {
-            if (_callback !== null) {
-                _callback();
+            for (const callback of _callbacks) {
+                callback();
             }
             window.removeEventListener("scroll", onScroll);
-            _callback = null;
+            _callbacks = [];
+            _targetElement = undefined;
             _timeoutScroll = null;
         }, 100);
     }
@@ -38,13 +40,21 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         else if (!document.body.contains(element)) {
             throw new Error("Element must be part of the visible DOM.");
         }
-        else if (_callback !== null) {
-            throw new Error("Cannot scroll to element, a concurrent request is running.");
+        else if (_callbacks.length > 0) {
+            if (element !== _targetElement) {
+                throw new Error("Cannot scroll to element, a concurrent request is running.");
+            }
         }
         if (callback) {
-            _callback = callback;
-            window.addEventListener("scroll", onScroll);
+            _callbacks.push(callback);
+            if (_callbacks.length === 1) {
+                window.addEventListener("scroll", onScroll);
+            }
         }
+        if (_targetElement !== undefined) {
+            return;
+        }
+        _targetElement = element;
         let y = Util_1.default.offset(element).top;
         if (_offset === null) {
             _offset = 50;
