@@ -275,7 +275,11 @@ class CLIWCF extends WCF
                 Log::warn('Previous command had an open transaction.');
             }
             self::getReader()->setHistoryEnabled(true);
-            $line = self::getReader()->readLine('>');
+            $now = new \DateTimeImmutable('now', WCF::getUser()->getTimeZone());
+            $line = self::getReader()->readLine(\sprintf(
+                '%s>',
+                $now->format('H:i:s'),
+            ));
             if ($line === null) {
                 exit;
             }
