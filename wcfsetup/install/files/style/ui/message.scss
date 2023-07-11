@@ -384,6 +384,10 @@
 	column-gap: 5px;
 	display: flex;
 
+	a {
+		color: inherit;
+	}
+
 	@include screen-md-up {
 		.messageQuickOptionsMobile {
 			display: none;
