@@ -55,6 +55,7 @@ function tryAlignmentVertical(
   refOffsets: ElementOffset,
   windowHeight: number,
   verticalOffset: number,
+  isFixedPositioning: boolean,
 ): VerticalResult {
   let bottom: Offset = "auto";
   let top: Offset = "auto";
@@ -71,16 +72,34 @@ function tryAlignmentVertical(
     }
   }
 
-  if (alignment === "top") {
-    const bottomBoundary = refOffsets.top - verticalOffset;
-    bottom = windowHeight - bottomBoundary;
-    if (bottomBoundary - elDimensions.height < pageHeaderOffset) {
-      result = false;
+  if (isFixedPositioning) {
+    if (alignment === "top") {
+      const bottomBoundary = refOffsets.top - verticalOffset;
+      bottom = windowHeight - bottomBoundary;
+      if (bottomBoundary - elDimensions.height < pageHeaderOffset) {
+        result = false;
+      }
+    } else {
+      top = refOffsets.top + refDimensions.height + verticalOffset;
+      if (top + elDimensions.height > windowHeight) {
+        result = false;
+      }
     }
   } else {
-    top = refOffsets.top + refDimensions.height + verticalOffset;
-    if (top + elDimensions.height > windowHeight) {
-      result = false;
+    const offsetTop = refOffsets.top + window.scrollY;
+
+    if (alignment === "top") {
+      const { clientHeight } = document.body;
+
+      bottom = clientHeight - offsetTop + verticalOffset;
+      if (clientHeight - (bottom + elDimensions.height) < window.scrollY + pageHeaderOffset) {
+        result = false;
+      }
+    } else {
+      top = offsetTop + refDimensions.height + verticalOffset;
+      if (top + elDimensions.height - window.scrollY > windowHeight) {
+        result = false;
+      }
     }
   }
 
@@ -265,6 +284,8 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     }
   }
 
+  const isFixedPositioning = window.getComputedStyle(element).position === "fixed";
+
   const left = horizontal!.left;
   const right = horizontal!.right;
   let vertical = tryAlignmentVertical(
@@ -274,6 +295,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     refOffsets,
     windowHeight,
     options.verticalOffset!,
+    isFixedPositioning,
   );
   if (!vertical.result && (options.allowFlip === "both" || options.allowFlip === "vertical")) {
     const verticalFlipped = tryAlignmentVertical(
@@ -283,6 +305,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
       refOffsets,
       windowHeight,
       options.verticalOffset!,
+      isFixedPositioning,
     );
     // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
     if (verticalFlipped.result) {

@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
     /**
      * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
      */
-    function tryAlignmentVertical(alignment, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset) {
+    function tryAlignmentVertical(alignment, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset, isFixedPositioning) {
         let bottom = "auto";
         let top = "auto";
         let result = true;
@@ -32,17 +32,35 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                 pageHeaderOffset = 0;
             }
         }
-        if (alignment === "top") {
-            const bottomBoundary = refOffsets.top - verticalOffset;
-            bottom = windowHeight - bottomBoundary;
-            if (bottomBoundary - elDimensions.height < pageHeaderOffset) {
-                result = false;
+        if (isFixedPositioning) {
+            if (alignment === "top") {
+                const bottomBoundary = refOffsets.top - verticalOffset;
+                bottom = windowHeight - bottomBoundary;
+                if (bottomBoundary - elDimensions.height < pageHeaderOffset) {
+                    result = false;
+                }
+            }
+            else {
+                top = refOffsets.top + refDimensions.height + verticalOffset;
+                if (top + elDimensions.height > windowHeight) {
+                    result = false;
+                }
             }
         }
         else {
-            top = refOffsets.top + refDimensions.height + verticalOffset;
-            if (top + elDimensions.height > windowHeight) {
-                result = false;
+            const offsetTop = refOffsets.top + window.scrollY;
+            if (alignment === "top") {
+                const { clientHeight } = document.body;
+                bottom = clientHeight - offsetTop + verticalOffset;
+                if (clientHeight - (bottom + elDimensions.height) < window.scrollY + pageHeaderOffset) {
+                    result = false;
+                }
+            }
+            else {
+                top = offsetTop + refDimensions.height + verticalOffset;
+                if (top + elDimensions.height - window.scrollY > windowHeight) {
+                    result = false;
+                }
             }
         }
         return {
@@ -199,11 +217,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                 }
             }
         }
+        const isFixedPositioning = window.getComputedStyle(element).position === "fixed";
         const left = horizontal.left;
         const right = horizontal.right;
-        let vertical = tryAlignmentVertical(options.vertical, elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
+        let vertical = tryAlignmentVertical(options.vertical, elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset, isFixedPositioning);
         if (!vertical.result && (options.allowFlip === "both" || options.allowFlip === "vertical")) {
-            const verticalFlipped = tryAlignmentVertical(options.vertical === "top" ? "bottom" : "top", elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
+            const verticalFlipped = tryAlignmentVertical(options.vertical === "top" ? "bottom" : "top", elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset, isFixedPositioning);
             // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
             if (verticalFlipped.result) {
                 vertical = verticalFlipped;
