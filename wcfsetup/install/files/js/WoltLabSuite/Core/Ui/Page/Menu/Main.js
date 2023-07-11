@@ -165,7 +165,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 element.addEventListener("click", (event) => {
                     event.preventDefault();
                     const identifier = element.dataset.identifier;
-                    languageMapping.get(identifier).click();
+                    languageMapping.get(identifier)?.click();
                 });
             });
             return nav;

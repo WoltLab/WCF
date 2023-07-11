@@ -206,7 +206,7 @@ export class PageMenuMain implements PageMenuProvider {
           event.preventDefault();
 
           const identifier = element.dataset.identifier!;
-          languageMapping.get(identifier)!.click();
+          languageMapping.get(identifier)?.click();
         });
       });
 
