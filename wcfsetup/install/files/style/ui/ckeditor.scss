@@ -400,7 +400,7 @@ html[data-color-scheme="dark"] {
 	border: 1px solid var(--wcfContentBorderInner);
 	border-left-width: 5px;
 	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
-	margin: 1em 0;
+	margin: 2em 0 1em 0;
 
 	&::before {
 		color: var(--wcfContentDimmedText);
