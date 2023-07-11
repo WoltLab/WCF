@@ -129,6 +129,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             Array.from(dropDownMenu.children).forEach((listItem) => {
                 const identifier = listItem.dataset.languageCode;
                 const title = listItem.querySelector("span").textContent.trim();
+                const icon = listItem.querySelector("img.iconFlag") || undefined;
                 languageMapping.set(identifier, listItem.querySelector("a"));
                 children.push({
                     active: false,
@@ -137,8 +138,12 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     depth: 1,
                     identifier,
                     title,
+                    icon,
                 });
             });
+            const icon = document.createElement("fa-icon");
+            icon.setIcon("language");
+            icon.size = 24;
             const menuItems = [
                 {
                     active: false,
@@ -147,6 +152,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     depth: 0,
                     identifier: "language",
                     title: Language.get("wcf.user.language"),
+                    icon,
                 },
             ];
             const nav = document.createElement("nav");
@@ -233,7 +239,15 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 const label = document.createElement("a");
                 label.classList.add("pageMenuMainItemLabel");
                 label.href = "#";
-                label.textContent = menuItem.title;
+                if (menuItem.icon) {
+                    label.append(menuItem.icon);
+                    const span = document.createElement("span");
+                    span.textContent = menuItem.title;
+                    label.append(span);
+                }
+                else {
+                    label.textContent = menuItem.title;
+                }
                 if (menuItem.identifier) {
                     label.dataset.identifier = menuItem.identifier;
                 }

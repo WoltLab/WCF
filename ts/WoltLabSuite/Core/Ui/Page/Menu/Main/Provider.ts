@@ -19,6 +19,7 @@ export type MenuItem = {
   link?: string;
   openInNewWindow?: boolean;
   title: string;
+  icon?: FaIcon | HTMLImageElement;
 };
 
 export interface PageMenuMainProvider {
