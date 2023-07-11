@@ -92,13 +92,11 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
                 _scrollOffsetFrom = "documentElement";
             }
             const pageContainer = document.getElementById("pageContainer");
-            // setting translateY causes Mobile Safari to snap
+            // iOS does not handle overflow and fixed positioning well, we need to
+            // simulate the scrolling by vertically moving the container.
             if (Environment.platform() === "ios") {
                 pageContainer.style.setProperty("position", "relative", "");
                 pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
-            }
-            else {
-                pageContainer.style.setProperty("margin-top", `-${_scrollTop}px`, "");
             }
             document.documentElement.classList.add("disableScrolling");
         }
@@ -117,9 +115,6 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
                 if (Environment.platform() === "ios") {
                     pageContainer.style.removeProperty("position");
                     pageContainer.style.removeProperty("top");
-                }
-                else {
-                    pageContainer.style.removeProperty("margin-top");
                 }
                 if (_scrollTop) {
                     document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
