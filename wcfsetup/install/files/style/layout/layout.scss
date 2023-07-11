@@ -22,7 +22,7 @@ html,
 body {
 	font-weight: 400;
 	min-height: 100vh;
-	overflow-x: hidden;
+	overflow-x: clip;
 	width: 100%;
 
 	@include wcfLineHeight;
