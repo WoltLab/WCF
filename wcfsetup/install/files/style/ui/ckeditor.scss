@@ -270,6 +270,18 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	}
 }
 
+/* Increase the width of the splitbutton arrows. */
+.ck.ck-toolbar__items .ck.ck-splitbutton > .ck-splitbutton__arrow {
+	min-width: var(--ck-ui-component-min-height);
+}
+/* Add a visual indicator for the split button functionality. */
+.ck.ck-splitbutton:not(:hover, .ck-splitbutton_open) > .ck-splitbutton__arrow::before {
+	border-left: 1px dotted var(--ck-color-toolbar-border);
+	content: "";
+	inset: 5px auto 5px -1px;
+	position: absolute;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
