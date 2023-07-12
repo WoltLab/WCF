@@ -23,10 +23,7 @@ import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import { normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
-
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
-
-import "ckeditor5-bundle";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
@@ -219,6 +216,8 @@ export async function setupCkeditor(
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
+
+  await import("ckeditor5-bundle");
 
   initializeFeatures(element, features);
 
