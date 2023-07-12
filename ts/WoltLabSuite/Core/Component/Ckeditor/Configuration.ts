@@ -34,20 +34,19 @@ class ConfigurationBuilder {
     }
   }
 
-  #setupHeading(): void {
-    if (this.#features.heading) {
-      this.#toolbar.push("heading");
-    } else {
-      this.#removePlugins.push("Heading");
-    }
-  }
-
   #setupBasicFormat(): void {
     this.#toolbar.push("bold", "italic");
   }
 
   #setupTextFormat(): void {
     const items: string[] = [];
+
+    if (this.#features.heading) {
+      items.push("heading");
+    } else {
+      this.#removePlugins.push("Heading");
+    }
+
     if (this.#features.underline) {
       items.push("underline");
     } else {
@@ -58,12 +57,6 @@ class ConfigurationBuilder {
       items.push("strikethrough");
     } else {
       this.#removePlugins.push("Strikethrough");
-    }
-
-    if (this.#features.code) {
-      items.push("code");
-    } else {
-      this.#removePlugins.push("Code");
     }
 
     items.push(this.#divider);
@@ -171,6 +164,20 @@ class ConfigurationBuilder {
     }
   }
 
+  #setupCodeFormat(): void {
+    if (this.#features.code) {
+      this.#toolbar.push("code");
+    } else {
+      this.#removePlugins.push("Code");
+    }
+
+    if (this.#features.codeBlock) {
+      this.#toolbar.push("codeBlock");
+    } else {
+      this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
+    }
+  }
+
   #setupBlocks(): void {
     const items: string[] = [];
 
@@ -186,12 +193,6 @@ class ConfigurationBuilder {
       items.push("blockQuote");
     } else {
       this.#removePlugins.push("BlockQuote", "WoltlabBlockQuote");
-    }
-
-    if (this.#features.codeBlock) {
-      items.push("codeBlock");
-    } else {
-      this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
     }
 
     if (this.#features.spoiler) {
@@ -261,18 +262,11 @@ class ConfigurationBuilder {
 
     this.#insertDivider();
 
-    this.#setupHeading();
-
-    this.#insertDivider();
-
     this.#insertDivider();
 
     this.#setupBasicFormat();
-    this.#setupTextFormat();
-
-    this.#insertDivider();
-
     this.#setupLink();
+    this.#setupTextFormat();
 
     this.#insertDivider();
 
@@ -282,6 +276,7 @@ class ConfigurationBuilder {
     this.#insertDivider();
 
     this.#setupImage();
+    this.#setupCodeFormat();
     this.#setupBlocks();
 
     this.#insertDivider();

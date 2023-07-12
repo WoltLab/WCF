@@ -27,19 +27,17 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 this.#removePlugins.push("Undo");
             }
         }
-        #setupHeading() {
-            if (this.#features.heading) {
-                this.#toolbar.push("heading");
-            }
-            else {
-                this.#removePlugins.push("Heading");
-            }
-        }
         #setupBasicFormat() {
             this.#toolbar.push("bold", "italic");
         }
         #setupTextFormat() {
             const items = [];
+            if (this.#features.heading) {
+                items.push("heading");
+            }
+            else {
+                this.#removePlugins.push("Heading");
+            }
             if (this.#features.underline) {
                 items.push("underline");
             }
@@ -51,12 +49,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
             else {
                 this.#removePlugins.push("Strikethrough");
-            }
-            if (this.#features.code) {
-                items.push("code");
-            }
-            else {
-                this.#removePlugins.push("Code");
             }
             items.push(this.#divider);
             if (this.#features.mark) {
@@ -155,6 +147,20 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 }
             }
         }
+        #setupCodeFormat() {
+            if (this.#features.code) {
+                this.#toolbar.push("code");
+            }
+            else {
+                this.#removePlugins.push("Code");
+            }
+            if (this.#features.codeBlock) {
+                this.#toolbar.push("codeBlock");
+            }
+            else {
+                this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
+            }
+        }
         #setupBlocks() {
             const items = [];
             if (this.#features.table) {
@@ -169,12 +175,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
             else {
                 this.#removePlugins.push("BlockQuote", "WoltlabBlockQuote");
-            }
-            if (this.#features.codeBlock) {
-                items.push("codeBlock");
-            }
-            else {
-                this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
             }
             if (this.#features.spoiler) {
                 items.push("spoiler");
@@ -230,18 +230,16 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
             this.#setupUndo();
             this.#insertDivider();
-            this.#setupHeading();
-            this.#insertDivider();
             this.#insertDivider();
             this.#setupBasicFormat();
-            this.#setupTextFormat();
-            this.#insertDivider();
             this.#setupLink();
+            this.#setupTextFormat();
             this.#insertDivider();
             this.#setupList();
             this.#setupAlignment();
             this.#insertDivider();
             this.#setupImage();
+            this.#setupCodeFormat();
             this.#setupBlocks();
             this.#insertDivider();
             this.#setupMedia();
