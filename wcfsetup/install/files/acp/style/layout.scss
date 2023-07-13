@@ -870,10 +870,24 @@ html[data-color-scheme="dark"] {
 	}
 }
 
-#woltlab_newsfeed {
+.woltlabNewsfeed__loading {
+	text-align: center;
+	width: 600px;
+}
+
+.woltlabNewsfeed.loaded .woltlabNewsfeed__loading {
+	display: none;
+}
+
+.woltlabNewsfeed__iframe {
 	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
 	height: 100vh;
 	max-width: 100%;
+	visibility: hidden;
 	width: 600px;
+}
+
+.woltlabNewsfeed.loaded .woltlabNewsfeed__iframe {
+	visibility: visible;
 }
