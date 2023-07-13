@@ -674,7 +674,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 openButton.type = "button";
                 openButton.className = "inputSuffix button jsTooltip";
                 openButton.title = Language.get("wcf.date.datePicker");
-                openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
                 openButton.setAttribute("aria-haspopup", "true");
                 openButton.setAttribute("aria-expanded", "false");
                 openButton.addEventListener("click", (event) => {
@@ -699,7 +698,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                     clearButton.type = "button";
                     clearButton.className = "inputSuffix button jsTooltip";
                     clearButton.title = Language.get("wcf.date.datePicker.clear");
-                    clearButton.setAttribute("aria-label", Language.get("wcf.date.datePicker.clear"));
                     clearButton.addEventListener("click", () => {
                         if (!element.disabled) {
                             this.clear(element);

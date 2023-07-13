@@ -809,7 +809,6 @@ const DatePicker = {
         openButton.type = "button";
         openButton.className = "inputSuffix button jsTooltip";
         openButton.title = Language.get("wcf.date.datePicker");
-        openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
         openButton.setAttribute("aria-haspopup", "true");
         openButton.setAttribute("aria-expanded", "false");
         openButton.addEventListener("click", (event) => {
@@ -836,7 +835,6 @@ const DatePicker = {
           clearButton.type = "button";
           clearButton.className = "inputSuffix button jsTooltip";
           clearButton.title = Language.get("wcf.date.datePicker.clear");
-          clearButton.setAttribute("aria-label", Language.get("wcf.date.datePicker.clear"));
           clearButton.addEventListener("click", () => {
             if (!element.disabled) {
               this.clear(element);
