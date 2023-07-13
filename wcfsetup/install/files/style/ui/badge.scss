@@ -25,7 +25,7 @@ a.badge {
 
 	/* default label colors */
 	&.green {
-		--background-color: rgba(0, 153, 0, 1);
+		--background-color: rgba(0, 133, 0, 1);
 		--color: rgba(238, 255, 238, 1);
 	}
 
@@ -40,13 +40,13 @@ a.badge {
 	}
 
 	&.brown {
-		--background-color: #c63;
+		--background-color: #b85c2e;
 		--color: #fff;
 	}
 
 	&.orange {
 		--background-color: #f90;
-		--color: #fff;
+		--color: #000;
 	}
 
 	&.yellow {
@@ -60,13 +60,13 @@ a.badge {
 	}
 
 	&.purple {
-		--background-color: #c0f;
+		--background-color: #c000f0;
 		--color: #fff;
 	}
 
 	&.pink {
 		--background-color: #f0c;
-		--color: #fff;
+		--color: #000;
 	}
 }
 
@@ -88,10 +88,12 @@ a.badge:hover {
 
 	&.orange {
 		--background-color: #f60;
+		--color: #000;
 	}
 
 	&.yellow {
 		--background-color: #cc0;
+		--color: #333;
 	}
 
 	&.green {
@@ -108,5 +110,6 @@ a.badge:hover {
 
 	&.pink {
 		--background-color: #c09;
+		--color: #fff;
 	}
 }
