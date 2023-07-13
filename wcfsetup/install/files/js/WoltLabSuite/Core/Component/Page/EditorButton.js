@@ -1,3 +1,12 @@
+/**
+ * Provides a custom editor button to insert page links.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Ckeditor/Event"], function (require, exports, Language_1, Search_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -7,8 +16,8 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Cked
             const bbcode = evt.detail;
             if (bbcode === "wsp") {
                 evt.preventDefault();
-                (0, Search_1.open)((articleId) => {
-                    ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
+                (0, Search_1.open)((pageId) => {
+                    ckeditor.insertText(`[wsp='${pageId}'][/wsp]`);
                 });
             }
         });

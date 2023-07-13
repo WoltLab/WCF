@@ -1,9 +1,11 @@
 /**
  * Provides suggestions for map locations.
  *
- * @author  Marcel Werk
- * @copyright  2001-2022 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Ui/Search/Input"], function (require, exports, tslib_1, Input_1) {
     "use strict";

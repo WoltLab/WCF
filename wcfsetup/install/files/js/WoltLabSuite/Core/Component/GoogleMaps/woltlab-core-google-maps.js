@@ -5,6 +5,7 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
