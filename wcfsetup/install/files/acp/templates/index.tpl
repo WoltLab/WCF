@@ -56,8 +56,8 @@
 	{if ENABLE_WOLTLAB_NEWS}
 		<div id="news" class="hidden tabMenuContent">
 			<div class="section">
-				<div class="woltlabNewsfeed">
-					<div class="woltlabNewsfeed__loading">{icon name='spinner' size=64}</div>
+				<div class="woltlabNewsfeed woltlabNewsfeed--loading">
+					<woltlab-core-loading-indicator size="48"></woltlab-core-loading-indicator>
 					<iframe
 						class="woltlabNewsfeed__iframe"
 						referrerpolicy="no-referrer"
@@ -69,17 +69,17 @@
 				{
 					const languageCode = "{if $__wcf->language->languageCode === 'de'}de{else}en{/if}";
 					let colorScheme = document.documentElement.dataset.colorScheme;
-					const container = document.querySelector('.woltlabNewsfeed');
+					const container = document.querySelector(".woltlabNewsfeed");
 					const iframe = container.querySelector(".woltlabNewsfeed__iframe");
 
 					const updateColorScheme = () => {
-						container.classList.remove('loaded');
-						iframe.src = `https://newsfeed.woltlab.com/${ languageCode }_${ colorScheme }.html`;
+						container.classList.add("woltlabNewsfeed--loading");
 						iframe.addEventListener(
-							'load',
-							() => container.classList.add('loaded'),
+							"load",
+							() => container.classList.remove("woltlabNewsfeed--loading"),
 							{ once: true }
 						);
+						iframe.src = `https://newsfeed.woltlab.com/${ languageCode }_${ colorScheme }.html`;
 					};
 
 					const observer = new MutationObserver(() => {
