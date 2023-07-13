@@ -695,15 +695,18 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 container.insertBefore(element, openButton);
                 let clearButton = null;
                 if (!disableClear) {
-                    clearButton = document.createElement("a");
-                    clearButton.className = "inputSuffix button";
+                    clearButton = document.createElement("button");
+                    clearButton.type = "button";
+                    clearButton.className = "inputSuffix button jsTooltip";
+                    clearButton.title = Language.get("wcf.date.datePicker.clear");
+                    clearButton.setAttribute("aria-label", Language.get("wcf.date.datePicker.clear"));
                     clearButton.addEventListener("click", () => {
                         if (!element.disabled) {
                             this.clear(element);
                         }
                     });
                     if (isEmpty) {
-                        clearButton.style.setProperty("visibility", "hidden", "");
+                        clearButton.hidden = true;
                     }
                     container.appendChild(clearButton);
                     icon = document.createElement("fa-icon");
@@ -822,7 +825,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             data.shadow.value = DateUtil.format(date, format);
             // show clear button
             if (!data.disableClear) {
-                data.clearButton.style.removeProperty("visibility");
+                data.clearButton.hidden = false;
             }
         },
         /**
@@ -845,7 +848,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             element.removeAttribute("data-value");
             element.value = "";
             if (!data.disableClear) {
-                data.clearButton.style.setProperty("visibility", "hidden", "");
+                data.clearButton.hidden = true;
             }
             data.isEmpty = true;
             data.shadow.value = "";

@@ -34,6 +34,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.date.datePicker.nextMonth');
         $event->preload('wcf.date.datePicker.previousMonth');
         $event->preload('wcf.date.datePicker.year');
+        $event->preload('wcf.date.datePicker.clear');
 
         $event->preload('wcf.dialog.button.cancel');
         $event->preload('wcf.dialog.button.close');
