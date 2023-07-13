@@ -420,32 +420,31 @@ class HtmlInputNodeTextParser
      */
     protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia)
     {
-        static $urlPattern = '';
-        if ($urlPattern === '') {
-            $urlPattern = "#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))#iS";
-        }
+        return \preg_replace_callback(
+            "#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))#iS",
+            function ($matches) use ($text, $allowURL, $allowMedia) {
+                $link = $matches[0];
 
-        return \preg_replace_callback($urlPattern, function ($matches) use ($text, $allowURL, $allowMedia) {
-            $link = $matches[0];
+                if ($allowMedia && BBCodeMediaProvider::isMediaURL($link)) {
+                    $element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
+                    $element->appendChild($element->ownerDocument->createTextNode($link));
+                } elseif ($allowURL) {
+                    // add protocol if necessary
+                    if (!\preg_match('/[a-z]:\/\//si', $link)) {
+                        $link = 'http://' . $link;
+                    }
 
-            if ($allowMedia && BBCodeMediaProvider::isMediaURL($link)) {
-                $element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
-                $element->appendChild($element->ownerDocument->createTextNode($link));
-            } elseif ($allowURL) {
-                // add protocol if necessary
-                if (!\preg_match('/[a-z]:\/\//si', $link)) {
-                    $link = 'http://' . $link;
+                    $element = $text->ownerDocument->createElement('a');
+                    $element->setAttribute('href', $link);
+                    $element->appendChild($element->ownerDocument->createTextNode($link));
+                } else {
+                    return $matches[0];
                 }
 
-                $element = $text->ownerDocument->createElement('a');
-                $element->setAttribute('href', $link);
-                $element->appendChild($element->ownerDocument->createTextNode($link));
-            } else {
-                return $matches[0];
-            }
-
-            return $this->addReplacement($text, $element);
-        }, $value);
+                return $this->addReplacement($text, $element);
+            },
+            $value
+        );
     }
 
     /**
