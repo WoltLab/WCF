@@ -422,24 +422,7 @@ class HtmlInputNodeTextParser
     {
         static $urlPattern = '';
         if ($urlPattern === '') {
-            $urlPattern = '~
-			(?<!\B|"|\'|=|/|,|\?|\.)
-			(?:						# hostname
-				(?:ftp|https?)://' . static::$illegalChars . '(?:\.' . static::$illegalChars . ')*
-				|
-				www\.(?:' . static::$illegalChars . '\.)+
-				(?:[a-z]{2,63}(?=\b))			# tld
-			)
-			
-			(?::\d+)?					# port
-			
-			(?:
-				/
-				[^!.,?;"\'<>()\[\]{}\s]*
-				(?:
-					[!.,?;(){}]+ [^!.,?;"\'<>()\[\]{}\s]+
-				)*
-			)?~ix';
+            $urlPattern = "#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))#iS";
         }
 
         return \preg_replace_callback($urlPattern, function ($matches) use ($text, $allowURL, $allowMedia) {
