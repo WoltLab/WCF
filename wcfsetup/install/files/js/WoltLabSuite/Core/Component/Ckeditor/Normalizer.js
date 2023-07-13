@@ -9,6 +9,7 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";

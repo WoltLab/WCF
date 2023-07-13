@@ -6,6 +6,7 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "../../Core", "../../Language", "../../StringUtil", "./Event"], function (require, exports, Core_1, Language_1, StringUtil_1, Event_1) {
     "use strict";
