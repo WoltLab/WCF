@@ -54,8 +54,7 @@ input[type="text"] {
 	-webkit-appearance: none;
 }
 
-/* prevent iOS from zooming when focusing inputs */
-.iOS {
+@media (pointer: coarse) {
 	input[type="date"],
 	input[type="datetime"],
 	input[type="email"],
@@ -68,6 +67,7 @@ input[type="text"] {
 	select,
 	textarea {
 		font-size: 16px;
+		padding: 6px 8px;
 	}
 }
 

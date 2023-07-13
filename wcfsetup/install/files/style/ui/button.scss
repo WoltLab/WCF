@@ -64,6 +64,20 @@ a.button {
 	}
 }
 
+@media (pointer: coarse) {
+	input[type="button"],
+	input[type="reset"],
+	input[type="submit"],
+	.button,
+	a.button {
+		padding: 10px 18px;
+
+		&.small {
+			padding: 8px;
+		}
+	}
+}
+
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary,
