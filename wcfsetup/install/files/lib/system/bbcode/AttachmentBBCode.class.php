@@ -70,7 +70,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
             $source = StringUtil::encodeHTML($attachment->getLink());
             $title = StringUtil::encodeHTML($attachment->filename);
-            $image = \sprintf(
+            $imageElement = \sprintf(
                 '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
                 $source,
                 $attachment->width,
@@ -78,27 +78,35 @@ final class AttachmentBBCode extends AbstractBBCode
             );
 
             if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
-                $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
-                return <<<HTML
-                    <a href="{$source}" title="{$title}" class="embeddedAttachmentLink jsImageViewer {$class}'">
-                        {$image}
-                        <span class="embeddedAttachmentLinkEnlarge">
-                            {$icon}
-                        </span>
-                    </a>
-                    HTML;
+                return \sprintf(
+                    <<<'HTML'
+                        <a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s">
+                            %s
+                            <span class="embeddedAttachmentLinkEnlarge">
+                                %s
+                            </span>
+                        </a>
+                        HTML,
+                    $source,
+                    $title,
+                    $class,
+                    $imageElement,
+                    FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
+                );
             }
 
             return \sprintf(
                 '<span title="%s" class="%s">%s</span>',
                 $title,
                 $class,
-                $image,
+                $imageElement,
             );
         }
 
-        $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
-        $enlarge = '<span class="embeddedAttachmentLinkEnlarge">' . $icon . '</span>';
+        $enlargeImageControls = \sprintf(
+            '<span class="embeddedAttachmentLinkEnlarge">%s</span>',
+            FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
+        );
 
         $linkParameters = [
             'object' => $attachment,
@@ -121,7 +129,7 @@ final class AttachmentBBCode extends AbstractBBCode
             $imageClasses .= ' ' . $class;
         }
 
-        $image = \sprintf(
+        $imageElement = \sprintf(
             '<img src="%s" class="%s" width="%d" height="%d" alt="" loading="lazy">',
             StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)),
             $imageClasses,
@@ -135,16 +143,16 @@ final class AttachmentBBCode extends AbstractBBCode
                 StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])),
                 StringUtil::encodeHTML($attachment->filename),
                 $class,
-                $image,
-                $enlarge,
+                $imageElement,
+                $enlargeImageControls,
             );
         }
 
         return \sprintf(
             '<span class="%s">%s%s</span>',
             $class,
-            $image,
-            \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlarge : '',
+            $imageElement,
+            \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlargeImageControls : '',
         );
     }
 
