@@ -35,7 +35,18 @@ final class AttachmentBBCode extends AbstractBBCode
         $outputType = $parser->getOutputType();
 
         if ($attachment->showAsImage() && $attachment->canViewPreview() && ($outputType == 'text/html' || $outputType == 'text/simplified-html')) {
-            return $this->showImage($attachment, $outputType, $openingTag['attributes']);
+            $hasParentLink = false;
+            if (!empty($closingTag['__parents'])) {
+                /** @var \DOMElement $parent */
+                foreach ($closingTag['__parents'] as $parent) {
+                    if ($parent->nodeName === 'a') {
+                        $hasParentLink = true;
+                        break;
+                    }
+                }
+            }
+
+            return $this->showImage($attachment, $outputType, $openingTag['attributes'], $hasParentLink);
         } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType == 'text/html') {
             return $this->showVideoPlayer($attachment);
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
@@ -45,28 +56,17 @@ final class AttachmentBBCode extends AbstractBBCode
         return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);
     }
 
-    private function showImage(Attachment $attachment, string $outputType, array $attributes): string
+    private function showImage(Attachment $attachment, string $outputType, array $attributes, bool $hasParentLink): string
     {
         $alignment = $attributes[1] ?? '';
-
         $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
 
-        $hasParentLink = false;
-        if (!empty($closingTag['__parents'])) {
-            /** @var \DOMElement $parent */
-            foreach ($closingTag['__parents'] as $parent) {
-                if ($parent->nodeName === 'a') {
-                    $hasParentLink = true;
-                    break;
-                }
-            }
-        }
-
         if ($thumbnail === false) {
-            $class = '';
-            if ($alignment === 'left' || $alignment === 'right') {
-                $class = 'messageFloatObject' . \ucfirst($alignment);
-            }
+            $class = match ($alignment) {
+                "left" => "messageFloatObjectLeft",
+                "right" => "messageFloatObjectRight",
+                default => ""
+            };
 
             $source = StringUtil::encodeHTML($attachment->getLink());
             $title = StringUtil::encodeHTML($attachment->filename);
@@ -115,10 +115,11 @@ final class AttachmentBBCode extends AbstractBBCode
             $linkParameters['thumbnail'] = 1;
         }
 
-        $class = '';
-        if ($alignment == 'left' || $alignment == 'right') {
-            $class = 'messageFloatObject' . \ucfirst($alignment);
-        }
+        $class = match ($alignment) {
+            "left" => "messageFloatObjectLeft",
+            "right" => "messageFloatObjectRight",
+            default => ""
+        };
 
         $imageClasses = '';
         if (!$attachment->hasThumbnail()) {
