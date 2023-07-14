@@ -53,7 +53,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
             // value for `URI.AllowedSchemes` below
             $config->autoFinalize = false;
 
-            $config->set('CSS.AllowedProperties', ['color', 'font-family', 'font-size']);
+            $config->set('CSS.AllowedProperties', ['color', 'font-family', 'font-size', 'width']);
+            $config->set('CSS.MaxImgLength', null);
+            $config->set('HTML.MaxImgLength', null);
             $config->set('HTML.ForbiddenAttributes', ['*@lang', '*@xml:lang']);
 
             $allowedSchemes = $config->get('URI.AllowedSchemes');
@@ -80,6 +82,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
      */
     protected function setAttributeDefinitions(\HTMLPurifier_Config $config)
     {
+        //$definition = $config->getCSSDefinition();
+        //$definition->info['width'] = new HTMLPurifier_AttrDef_CSS_Percentage(true);
+
         $definition = $config->getHTMLDefinition(true);
 
         // <br>
@@ -125,10 +130,12 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
         // add data-attachment-id="" for <img>
         $definition->addAttribute('img', 'data-attachment-id', 'Number');
         $definition->addAttribute('img', 'srcset', 'Text');
+        $definition->addAttribute('img', 'data-width', new \HTMLPurifier_AttrDef_CSS_Percentage(true));
 
         // <figure> element for images
         $definition->addElement('figure', 'Block', 'Flow', '', [
             'class' => 'Text',
+            'data-width' => new \HTMLPurifier_AttrDef_CSS_Percentage(true),
         ]);
 
         // <mark> for text markers
