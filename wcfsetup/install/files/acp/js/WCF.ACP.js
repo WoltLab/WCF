@@ -317,6 +317,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			document.activeElement.blur();
 		}
 		
+		require(['WoltLabSuite/Core/Ajax/Status'], ({show}) => show());
 		this._proxy.setOption('data', this._getParameters());
 		this._proxy.sendRequest();
 	},
@@ -351,6 +352,7 @@ WCF.ACP.Package.Installation = Class.extend({
 				closable: false,
 				title: WCF.Language.get(this._dialogTitle)
 			});
+			require(['WoltLabSuite/Core/Ajax/Status'], ({hide}) => hide());
 		}
 		
 		this._setIcon('spinner');
