@@ -115,7 +115,7 @@ class PreparedStatement
                                 );
                             }
 
-                            return "'" . \substr($parameter, 0, 100) . "'";
+                            return "'" . \mb_substr($parameter, 0, 100) . "'";
                         },
                         $this->query
                     ),
