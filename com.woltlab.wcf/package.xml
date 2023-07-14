@@ -129,6 +129,11 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="templateDelete" />
 	</instructions>
 
+	<!-- Run this with the next update: -->
+	<!--
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
+	-->
+
 	<instructions type="update" fromversion="6.0.0 Alpha 4">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>

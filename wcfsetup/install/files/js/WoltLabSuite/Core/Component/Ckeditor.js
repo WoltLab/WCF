@@ -10,8 +10,9 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "ckeditor5-bundle"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -154,6 +155,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
+        await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
         initializeFeatures(element, features);
         if (features.attachment) {
             (0, Attachment_1.setup)(element);
@@ -185,7 +187,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         (0, Keyboard_1.setupSubmitShortcut)(ckeditor);
         const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
         if (enableDebug && Devtools_1.default._internal_.editorInspector()) {
-            void new Promise((resolve_1, reject_1) => { require(["@ckeditor/ckeditor5-inspector"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((inspector) => {
+            void new Promise((resolve_2, reject_2) => { require(["@ckeditor/ckeditor5-inspector"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((inspector) => {
                 inspector.default.attach(cke);
             });
         }
