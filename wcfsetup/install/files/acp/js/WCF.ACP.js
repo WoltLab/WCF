@@ -259,7 +259,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Initializes the package installation.
 	 */
 	_init: function() {
-		$('#submitButton').click($.proxy(this.prepareInstallation, this));
+		const button = document.getElementById('submitButton');
+		button.addEventListener(
+			'click',
+			() => {
+				button.disabled = true;
+				this.prepareInstallation();
+			}
+		);
 	},
 	
 	/**
@@ -310,6 +317,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			document.activeElement.blur();
 		}
 		
+		require(['WoltLabSuite/Core/Ajax/Status'], ({show}) => show());
 		this._proxy.setOption('data', this._getParameters());
 		this._proxy.sendRequest();
 	},
@@ -344,6 +352,7 @@ WCF.ACP.Package.Installation = Class.extend({
 				closable: false,
 				title: WCF.Language.get(this._dialogTitle)
 			});
+			require(['WoltLabSuite/Core/Ajax/Status'], ({hide}) => hide());
 		}
 		
 		this._setIcon('spinner');
