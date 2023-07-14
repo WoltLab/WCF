@@ -3,7 +3,6 @@
 namespace wcf\system\bbcode;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
@@ -13,26 +12,12 @@ use wcf\util\StringUtil;
 /**
  * Parses the [attach] bbcode tag.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Alexander Ebert, Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 final class AttachmentBBCode extends AbstractBBCode
 {
-    /**
-     * list of attachments
-     * @var GroupedAttachmentList
-     * @deprecated
-     */
-    protected static $attachmentList;
-
-    /**
-     * active object id
-     * @var int
-     * @deprecated
-     */
-    protected static $objectID = 0;
-
     /**
      * @inheritDoc
      */
@@ -60,17 +45,6 @@ final class AttachmentBBCode extends AbstractBBCode
             'com.woltlab.wcf.attachment',
             $attachmentID
         );
-        if ($attachment === null) {
-            if (self::$attachmentList !== null) {
-                $attachments = self::$attachmentList->getGroupedObjects(self::$objectID);
-                if (isset($attachments[$attachmentID])) {
-                    $attachment = $attachments[$attachmentID];
-
-                    // mark attachment as embedded
-                    $attachment->markAsEmbedded();
-                }
-            }
-        }
 
         if ($attachment !== null) {
             if ($attachment->showAsImage() && $attachment->canViewPreview() && ($parser->getOutputType() == 'text/html' || $parser->getOutputType() == 'text/simplified-html')) {
@@ -190,27 +164,5 @@ final class AttachmentBBCode extends AbstractBBCode
         return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
             'id' => $attachmentID,
         ]));
-    }
-
-    /**
-     * Sets the attachment list.
-     *
-     * @param GroupedAttachmentList $attachmentList
-     * @deprecated
-     */
-    public static function setAttachmentList(GroupedAttachmentList $attachmentList)
-    {
-        self::$attachmentList = $attachmentList;
-    }
-
-    /**
-     * Sets the active object id.
-     *
-     * @param int $objectID
-     * @deprecated
-     */
-    public static function setObjectID($objectID)
-    {
-        self::$objectID = $objectID;
     }
 }
