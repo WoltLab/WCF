@@ -46,7 +46,12 @@ final class AttachmentBBCode extends AbstractBBCode
                 }
             }
 
-            return $this->showImage($attachment, $outputType, $openingTag['attributes'], $hasParentLink);
+            return $this->showImage(
+                $attachment,
+                $outputType,
+                $openingTag['attributes'],
+                $hasParentLink,
+            );
         } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType == 'text/html') {
             return $this->showVideoPlayer($attachment);
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
@@ -61,25 +66,32 @@ final class AttachmentBBCode extends AbstractBBCode
         $alignment = $attributes[1] ?? '';
         $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
 
-        if ($thumbnail === false) {
-            $class = match ($alignment) {
-                "left" => "messageFloatObjectLeft",
-                "right" => "messageFloatObjectRight",
-                default => ""
-            };
-
-            $source = StringUtil::encodeHTML($attachment->getLink());
-            $title = StringUtil::encodeHTML($attachment->filename);
-            $imageElement = \sprintf(
-                '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
-                $source,
-                $attachment->width,
-                $attachment->height,
+        if ($thumbnail) {
+            return $this->showImageAsThumbnail(
+                $attachment,
+                $alignment,
+                $hasParentLink,
             );
+        }
 
-            if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
-                return \sprintf(
-                    <<<'HTML'
+        $class = match ($alignment) {
+            "left" => "messageFloatObjectLeft",
+            "right" => "messageFloatObjectRight",
+            default => ""
+        };
+
+        $source = StringUtil::encodeHTML($attachment->getLink());
+        $title = StringUtil::encodeHTML($attachment->filename);
+        $imageElement = \sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
+            $source,
+            $attachment->width,
+            $attachment->height,
+        );
+
+        if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
+            return \sprintf(
+                <<<'HTML'
                         <a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s">
                             %s
                             <span class="embeddedAttachmentLinkEnlarge">
@@ -87,22 +99,24 @@ final class AttachmentBBCode extends AbstractBBCode
                             </span>
                         </a>
                         HTML,
-                    $source,
-                    $title,
-                    $class,
-                    $imageElement,
-                    FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
-                );
-            }
-
-            return \sprintf(
-                '<span title="%s" class="%s">%s</span>',
+                $source,
                 $title,
                 $class,
                 $imageElement,
+                FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
             );
         }
 
+        return \sprintf(
+            '<span title="%s" class="%s">%s</span>',
+            $title,
+            $class,
+            $imageElement,
+        );
+    }
+
+    private function showImageAsThumbnail(Attachment $attachment, string $alignment, bool $hasParentLink): string
+    {
         $enlargeImageControls = \sprintf(
             '<span class="embeddedAttachmentLinkEnlarge">%s</span>',
             FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
