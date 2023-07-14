@@ -259,7 +259,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Initializes the package installation.
 	 */
 	_init: function() {
-		$('#submitButton').click($.proxy(this.prepareInstallation, this));
+		const button = document.getElementById('submitButton');
+		button.addEventListener(
+			'click',
+			() => {
+				button.disabled = true;
+				this.prepareInstallation();
+			}
+		);
 	},
 	
 	/**
