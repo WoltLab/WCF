@@ -35,45 +35,21 @@ final class AttachmentBBCode extends AbstractBBCode
         $outputType = $parser->getOutputType();
 
         if ($attachment->showAsImage() && $attachment->canViewPreview() && ($outputType == 'text/html' || $outputType == 'text/simplified-html')) {
-            return $this->renderAsImage($attachment, $outputType, $openingTag['attributes']);
+            return $this->showImage($attachment, $outputType, $openingTag['attributes']);
         } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType == 'text/html') {
-            return $this->renderAsVideoPlayer($attachment);
+            return $this->showVideoPlayer($attachment);
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
-            return $this->rederAsAudioPlayer($attachment);
+            return $this->showAudioPlayer($attachment);
         }
 
         return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);
     }
 
-    private function renderAsImage(Attachment $attachment, string $outputType, array $attributes): string
+    private function showImage(Attachment $attachment, string $outputType, array $attributes): string
     {
-        // image
-        $alignment = ($attributes[1] ?? '');
-        $thumbnail = ($attributes[2] ?? false);
+        $alignment = $attributes[1] ?? '';
 
-        // backward compatibility, check if width is larger than thumbnail's width to display full version
-        if (\is_numeric($thumbnail)) {
-            if ($thumbnail == 0) {
-                $thumbnail = true;
-            } else {
-                // true if supplied width is smaller or equal to thumbnail's width
-                $thumbnail = ($attachment->thumbnailWidth >= $thumbnail) ? true : false;
-            }
-        } elseif ($thumbnail === 'false') {
-            $thumbnail = false;
-        } elseif ($thumbnail !== false) {
-            $thumbnail = true;
-        }
-
-        // always use thumbnail in simplified version
-        if ($outputType == 'text/simplified-html') {
-            $thumbnail = true;
-        }
-
-        // Force the use of the thumbnail if the user cannot access the full version.
-        if (!$thumbnail && !$attachment->canDownload()) {
-            $thumbnail = true;
-        }
+        $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
 
         $hasParentLink = false;
         if (!empty($closingTag['__parents'])) {
@@ -86,77 +62,124 @@ final class AttachmentBBCode extends AbstractBBCode
             }
         }
 
-        if (!$thumbnail) {
+        if ($thumbnail === false) {
             $class = '';
-            if ($alignment == 'left' || $alignment == 'right') {
+            if ($alignment === 'left' || $alignment === 'right') {
                 $class = 'messageFloatObject' . \ucfirst($alignment);
             }
 
             $source = StringUtil::encodeHTML($attachment->getLink());
             $title = StringUtil::encodeHTML($attachment->filename);
-            $result = '<img src="' . $source . '" width="' . $attachment->width . '" height="' . $attachment->height . '" alt="">';
+            $image = \sprintf(
+                '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
+                $source,
+                $attachment->width,
+                $attachment->height,
+            );
 
             if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
                 $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
-                $result = <<<HTML
-                        <a href="{$source}" title="{$title}" class="embeddedAttachmentLink jsImageViewer {$class}'">
-                            {$result}
-                            <span class="embeddedAttachmentLinkEnlarge">
-                                {$icon}
-                            </span>
-                        </a>
-                        HTML;
-            } else {
-                $result = '<span title="' . $title . '"' . ($class ? (' class="' . $class . '"') : '') . '>' . $result . '</span>';
-            }
-        } else {
-            $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
-            $enlarge = '<span class="embeddedAttachmentLinkEnlarge">' . $icon . '</span>';
-
-            $linkParameters = [
-                'object' => $attachment,
-            ];
-            if ($attachment->hasThumbnail()) {
-                $linkParameters['thumbnail'] = 1;
+                return <<<HTML
+                    <a href="{$source}" title="{$title}" class="embeddedAttachmentLink jsImageViewer {$class}'">
+                        {$image}
+                        <span class="embeddedAttachmentLinkEnlarge">
+                            {$icon}
+                        </span>
+                    </a>
+                    HTML;
             }
 
-            $class = '';
-            if ($alignment == 'left' || $alignment == 'right') {
-                $class = 'messageFloatObject' . \ucfirst($alignment);
-            }
-
-            $imageClasses = '';
-            if (!$attachment->hasThumbnail()) {
-                $imageClasses = 'embeddedAttachmentLink jsResizeImage';
-            }
-
-            if ($class && (!$attachment->hasThumbnail() || !$attachment->canDownload())) {
-                $imageClasses .= ' ' . $class;
-            }
-
-            $result = '<img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
-                'Attachment',
-                $linkParameters
-            )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" alt="" loading="lazy">';
-
-            if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
-                $result = '<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
-                    'Attachment',
-                    ['object' => $attachment]
-                )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . $enlarge . '</a>';
-            } else {
-                if (\str_contains($imageClasses, 'embeddedAttachmentLink')) {
-                    $result = $result . $enlarge;
-                }
-
-                $result = '<span' . ($class ? (' class="' . $class . '"') : '') . '>' . $result . '</span>';
-            }
+            return \sprintf(
+                '<span title="%s" class="%s">%s</span>',
+                $title,
+                $class,
+                $image,
+            );
         }
 
-        return $result;
+        $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
+        $enlarge = '<span class="embeddedAttachmentLinkEnlarge">' . $icon . '</span>';
+
+        $linkParameters = [
+            'object' => $attachment,
+        ];
+        if ($attachment->hasThumbnail()) {
+            $linkParameters['thumbnail'] = 1;
+        }
+
+        $class = '';
+        if ($alignment == 'left' || $alignment == 'right') {
+            $class = 'messageFloatObject' . \ucfirst($alignment);
+        }
+
+        $imageClasses = '';
+        if (!$attachment->hasThumbnail()) {
+            $imageClasses = 'embeddedAttachmentLink jsResizeImage';
+        }
+
+        if ($class && (!$attachment->hasThumbnail() || !$attachment->canDownload())) {
+            $imageClasses .= ' ' . $class;
+        }
+
+        $image = \sprintf(
+            '<img src="%s" class="%s" width="%d" height="%d" alt="" loading="lazy">',
+            StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)),
+            $imageClasses,
+            $attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width,
+            $attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height,
+        );
+
+        if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
+            return \sprintf(
+                '<a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s">%s%s</a>',
+                StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])),
+                StringUtil::encodeHTML($attachment->filename),
+                $class,
+                $image,
+                $enlarge,
+            );
+        }
+
+        return \sprintf(
+            '<span class="%s">%s%s</span>',
+            $class,
+            $image,
+            \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlarge : '',
+        );
     }
 
-    private function renderAsVideoPlayer(Attachment $attachment): string
+    private function renderImageAsThumbnail(Attachment $attachment, string $outputType, mixed $thumbnail): bool
+    {
+        // Always use thumbnails for the simplified HTML output.
+        if ($outputType == 'text/simplified-html') {
+            return true;
+        }
+
+        // WCF 2.x permitted image resizing using exact pixel values. These
+        // values are interpreted as a signal for the use of thumbnails.
+        if (\is_numeric($thumbnail)) {
+            if ($thumbnail === 0) {
+                $thumbnail = true;
+            } else {
+                // Interpret the number as a request for the thumbnail if the
+                // width matches or falls short of the thumbnail’s width.
+                $thumbnail = ($attachment->thumbnailWidth >= $thumbnail);
+            }
+        } elseif ($thumbnail === 'false') {
+            $thumbnail = false;
+        } elseif ($thumbnail !== false) {
+            $thumbnail = true;
+        }
+
+        // Force the use of the thumbnail if the user cannot access the full version.
+        if (!$thumbnail && !$attachment->canDownload()) {
+            $thumbnail = true;
+        }
+
+        return $thumbnail;
+    }
+
+    private function showVideoPlayer(Attachment $attachment): string
     {
         return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
             'attachment' => $attachment,
@@ -164,7 +187,7 @@ final class AttachmentBBCode extends AbstractBBCode
         ]);
     }
 
-    private function rederAsAudioPlayer(Attachment $attachment): string
+    private function showAudioPlayer(Attachment $attachment): string
     {
         return WCF::getTPL()->fetch('__audioAttachmentBBCode', 'wcf', [
             'attachment' => $attachment,
