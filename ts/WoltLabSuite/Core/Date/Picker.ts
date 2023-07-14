@@ -809,7 +809,6 @@ const DatePicker = {
         openButton.type = "button";
         openButton.className = "inputSuffix button jsTooltip";
         openButton.title = Language.get("wcf.date.datePicker");
-        openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
         openButton.setAttribute("aria-haspopup", "true");
         openButton.setAttribute("aria-expanded", "false");
         openButton.addEventListener("click", (event) => {
@@ -830,10 +829,12 @@ const DatePicker = {
         element.parentNode!.insertBefore(container, element);
         container.insertBefore(element, openButton);
 
-        let clearButton: HTMLAnchorElement | null = null;
+        let clearButton: HTMLButtonElement | null = null;
         if (!disableClear) {
-          clearButton = document.createElement("a");
-          clearButton.className = "inputSuffix button";
+          clearButton = document.createElement("button");
+          clearButton.type = "button";
+          clearButton.className = "inputSuffix button jsTooltip";
+          clearButton.title = Language.get("wcf.date.datePicker.clear");
           clearButton.addEventListener("click", () => {
             if (!element.disabled) {
               this.clear(element);
@@ -841,7 +842,7 @@ const DatePicker = {
           });
 
           if (isEmpty) {
-            clearButton.style.setProperty("visibility", "hidden", "");
+            clearButton.hidden = true;
           }
 
           container.appendChild(clearButton);
@@ -975,7 +976,7 @@ const DatePicker = {
 
     // show clear button
     if (!data.disableClear) {
-      data.clearButton!.style.removeProperty("visibility");
+      data.clearButton!.hidden = false;
     }
   },
 
@@ -1004,7 +1005,7 @@ const DatePicker = {
     element.value = "";
 
     if (!data.disableClear) {
-      data.clearButton!.style.setProperty("visibility", "hidden", "");
+      data.clearButton!.hidden = true;
     }
 
     data.isEmpty = true;
@@ -1054,7 +1055,7 @@ type InputElementOrString = HTMLInputElement | string;
 type Callback = () => void;
 
 interface DatePickerData {
-  clearButton: HTMLAnchorElement | null;
+  clearButton: HTMLButtonElement | null;
   shadow: HTMLInputElement;
 
   disableClear: boolean;
