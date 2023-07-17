@@ -508,8 +508,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment->getDecoratedObject());
 
-                    // make sure that the active user gets no notification
-                    $recipientIDs = \array_diff($recipientIDs, [WCF::getUser()->userID]);
+                    // make sure that the comment's author gets no notification
+                    $recipientIDs = \array_diff($recipientIDs, [$comment->getUserID()]);
 
                     if (!empty($recipientIDs)) {
                         UserNotificationHandler::getInstance()->fireEvent(
@@ -521,9 +521,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                     }
                 } else {
                     /** @var ICommentUserNotificationObjectType $notificationObjectType */
-
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
-                    if ($userID != WCF::getUser()->userID) {
+                    if ($userID != $comment->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'comment',
                             $objectType->objectType . '.notification',
@@ -717,12 +716,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment);
 
-                    // make sure that the active user gets no notification
-                    $recipientIDs = \array_diff($recipientIDs, [WCF::getUser()->userID]);
+                    // make sure that the response's author gets no notification
+                    $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
 
                     if ($notificationObjectType instanceof IMultiRecipientCommentResponseOwnerUserNotificationObjectType) {
                         $userID = $notificationObjectType->getCommentOwnerID($comment);
-                        if ($userID && $userID != WCF::getUser()->userID) {
+                        if ($userID && $userID != $response->getUserID()) {
                             UserNotificationHandler::getInstance()->fireEvent(
                                 'commentResponseOwner',
                                 $objectType->objectType . '.response.notification',
@@ -756,8 +755,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 } else {
                     /** @var ICommentUserNotificationObjectType $notificationObjectType */
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
-
-                    if ($comment->userID != WCF::getUser()->userID) {
+                    if ($comment->userID != $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'commentResponse',
                             $objectType->objectType . '.response.notification',
@@ -774,7 +772,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                     // notify the container owner
                     if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
-                        if ($userID != $comment->userID && $userID != WCF::getUser()->userID) {
+                        if ($userID != $comment->userID && $userID != $response->getUserID()) {
                             UserNotificationHandler::getInstance()->fireEvent(
                                 'commentResponseOwner',
                                 $objectType->objectType . '.response.notification',
