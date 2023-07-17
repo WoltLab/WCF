@@ -9,6 +9,7 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Processes `<img>` to handle embedded attachments.
@@ -68,6 +69,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
+            $this->mirrorWidthAttribute($element);
+
             $class = $element->getAttribute('class');
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
                 $this->handleAttachment($element, $class);
@@ -120,10 +123,16 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $replaceElement = $parent;
         }
 
+        $width = $replaceElement->getAttribute("data-width");
+        if (!$width || $width === '100%') {
+            $width = '';
+        }
+
         $attributes = [
             $attachmentID,
             $float,
             $thumbnail,
+            $width,
         ];
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
@@ -253,6 +262,30 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             }
 
             $this->smiliesFound++;
+        }
+    }
+
+    protected function mirrorWidthAttribute(\DOMElement $element): void
+    {
+        // Aligned images are wrapped in a `<figure>` element that is the target
+        // of the resize operation.
+        if ($element->parentNode->nodeName === 'figure') {
+            $this->mirrorWidthAttribute($element->parentNode);
+            return;
+        }
+
+
+        $width = $element->getAttribute("data-width");
+        if ($width && $width !== "100%") {
+            $style = $element->getAttribute("style");
+            if ($style !== "") {
+                $style .= "; ";
+            }
+
+            $style .= "width: {$width}";
+            $element->setAttribute("style", $style);
+        } else {
+            $element->removeAttribute("data-width");
         }
     }
 }

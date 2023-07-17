@@ -65,6 +65,8 @@ final class AttachmentBBCode extends AbstractBBCode
     {
         $alignment = $attributes[1] ?? '';
         $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
+        $width = $attributes[3] ?? '100%';
+
 
         if ($thumbnail) {
             return $this->showImageAsThumbnail(
@@ -92,25 +94,27 @@ final class AttachmentBBCode extends AbstractBBCode
         if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
             return \sprintf(
                 <<<'HTML'
-                        <a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s">
+                    <a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s" style="width: %s">
+                        %s
+                        <span class="embeddedAttachmentLinkEnlarge">
                             %s
-                            <span class="embeddedAttachmentLinkEnlarge">
-                                %s
-                            </span>
-                        </a>
-                        HTML,
+                        </span>
+                    </a>
+                    HTML,
                 $source,
                 $title,
                 $class,
+                $width,
                 $imageElement,
                 FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
             );
         }
 
         return \sprintf(
-            '<span title="%s" class="%s">%s</span>',
+            '<span title="%s" class="%s" style="width: %s">%s</span>',
             $title,
             $class,
+            $width,
             $imageElement,
         );
     }
@@ -154,18 +158,20 @@ final class AttachmentBBCode extends AbstractBBCode
 
         if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
             return \sprintf(
-                '<a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s">%s%s</a>',
+                '<a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s" style="width: %s">%s%s</a>',
                 StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])),
                 StringUtil::encodeHTML($attachment->filename),
                 $class,
+                $width,
                 $imageElement,
                 $enlargeImageControls,
             );
         }
 
         return \sprintf(
-            '<span class="%s">%s%s</span>',
+            '<span class="%s" stlye="width: %s">%s%s</span>',
             $class,
+            $width,
             $imageElement,
             \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlargeImageControls : '',
         );

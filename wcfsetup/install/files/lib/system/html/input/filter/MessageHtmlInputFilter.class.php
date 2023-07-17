@@ -125,10 +125,12 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
         // add data-attachment-id="" for <img>
         $definition->addAttribute('img', 'data-attachment-id', 'Number');
         $definition->addAttribute('img', 'srcset', 'Text');
+        $definition->addAttribute('img', 'data-width', new \HTMLPurifier_AttrDef_CSS_Percentage(true));
 
         // <figure> element for images
         $definition->addElement('figure', 'Block', 'Flow', '', [
             'class' => 'Text',
+            'data-width' => new \HTMLPurifier_AttrDef_CSS_Percentage(true),
         ]);
 
         // <mark> for text markers
