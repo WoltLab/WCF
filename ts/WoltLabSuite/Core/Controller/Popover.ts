@@ -12,7 +12,6 @@ import DomUtil from "../Dom/Util";
 import * as Environment from "../Environment";
 import * as UiAlignment from "../Ui/Alignment";
 import { AjaxCallbackObject, AjaxCallbackSetup, CallbackFailure, CallbackSuccess, RequestPayload } from "../Ajax/Data";
-import { getPageOverlayContainer } from "../Helper/PageOverlay";
 
 const enum State {
   None,
@@ -83,7 +82,7 @@ class ControllerPopover implements AjaxCallbackObject {
     pointer.appendChild(document.createElement("span"));
     this.popover.appendChild(pointer);
 
-    getPageOverlayContainer().append(this.popover);
+    document.body.append(this.popover);
 
     // event listener
     this.popover.addEventListener("mouseenter", () => this.popoverMouseEnter());
