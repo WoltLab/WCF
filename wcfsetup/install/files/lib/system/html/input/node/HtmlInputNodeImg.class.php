@@ -274,7 +274,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
                 $style .= "; ";
             }
 
-            $style .= "widht: {$width}";
+            $style .= "width: {$width}";
             $element->setAttribute("style", $style);
         } else {
             $element->removeAttribute("data-width");
