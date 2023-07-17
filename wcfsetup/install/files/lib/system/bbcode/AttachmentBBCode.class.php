@@ -73,6 +73,7 @@ final class AttachmentBBCode extends AbstractBBCode
                 $attachment,
                 $alignment,
                 $hasParentLink,
+                $width,
             );
         }
 
@@ -119,7 +120,7 @@ final class AttachmentBBCode extends AbstractBBCode
         );
     }
 
-    private function showImageAsThumbnail(Attachment $attachment, string $alignment, bool $hasParentLink): string
+    private function showImageAsThumbnail(Attachment $attachment, string $alignment, bool $hasParentLink, string $width): string
     {
         $enlargeImageControls = \sprintf(
             '<span class="embeddedAttachmentLinkEnlarge">%s</span>',
