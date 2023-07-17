@@ -267,6 +267,14 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
+        // Aligned images are wrapped in a `<figure>` element that is the target
+        // of the resize operation.
+        if ($element->parentNode->nodeName === 'figure') {
+            $this->mirrorWidthAttribute($element->parentNode);
+            return;
+        }
+
+
         $width = $element->getAttribute("data-width");
         if ($width && $width !== "100%") {
             $style = $element->getAttribute("style");
