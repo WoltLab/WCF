@@ -260,7 +260,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 */
 	_init: function() {
 		const button = document.getElementById('submitButton');
-		button.addEventListener(
+		button?.addEventListener(
 			'click',
 			() => {
 				button.disabled = true;
