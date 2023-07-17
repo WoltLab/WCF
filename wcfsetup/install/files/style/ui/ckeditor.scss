@@ -329,6 +329,7 @@ html[data-color-scheme="dark"] {
 	inset: 0;
 	justify-content: center;
 	position: absolute;
+	z-index: 1;
 }
 
 .ckeditor5__restoreDraft__dialog {
