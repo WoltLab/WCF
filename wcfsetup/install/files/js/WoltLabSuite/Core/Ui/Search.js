@@ -76,8 +76,6 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             event.stopPropagation();
             if (searchButton.getAttribute("aria-expanded") === "true") {
                 closeSearch();
-                searchButton.setAttribute("aria-expanded", "false");
-                searchButton.querySelector("fa-icon").setIcon("magnifying-glass");
             }
             else {
                 // iOS Safari behaves unpredictable when the keyboard focus
@@ -103,8 +101,6 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             if (event.target === _pageHeaderSearch) {
                 event.preventDefault();
                 closeSearch();
-                searchButton.setAttribute("aria-expanded", "false");
-                searchButton.querySelector("fa-icon").setIcon("magnifying-glass");
             }
         });
     }
@@ -148,6 +144,11 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         }
         if (_isMobile) {
             _pageHeaderSearchInput.blur();
+        }
+        const searchButton = document.getElementById("pageHeaderSearchMobile");
+        if (searchButton) {
+            searchButton.setAttribute("aria-expanded", "false");
+            searchButton.querySelector("fa-icon").setIcon("magnifying-glass");
         }
         const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType");
         Simple_1.default.close(scope.id);

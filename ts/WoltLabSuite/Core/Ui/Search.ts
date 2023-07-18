@@ -86,9 +86,6 @@ function initMobileSearch(): void {
 
     if (searchButton.getAttribute("aria-expanded") === "true") {
       closeSearch();
-
-      searchButton.setAttribute("aria-expanded", "false");
-      searchButton.querySelector("fa-icon")!.setIcon("magnifying-glass");
     } else {
       // iOS Safari behaves unpredictable when the keyboard focus
       // is moved into a HTML element that is inside a parent with
@@ -120,9 +117,6 @@ function initMobileSearch(): void {
       event.preventDefault();
 
       closeSearch();
-
-      searchButton.setAttribute("aria-expanded", "false");
-      searchButton.querySelector("fa-icon")!.setIcon("magnifying-glass");
     }
   });
 }
@@ -177,6 +171,12 @@ function closeSearch(): void {
 
   if (_isMobile) {
     _pageHeaderSearchInput.blur();
+  }
+
+  const searchButton = document.getElementById("pageHeaderSearchMobile");
+  if (searchButton) {
+    searchButton.setAttribute("aria-expanded", "false");
+    searchButton.querySelector("fa-icon")!.setIcon("magnifying-glass");
   }
 
   const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType")!;
