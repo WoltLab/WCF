@@ -41,13 +41,26 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             ckeditor.removeAll("imageInline", { attachmentId });
         });
     }
+    function getInlineImageIds(element) {
+        const messageTabMenu = element.nextElementSibling;
+        if (!messageTabMenu || !messageTabMenu.classList.contains("messageTabMenu")) {
+            return [];
+        }
+        const attachmentList = messageTabMenu.querySelector(".formAttachmentContent > .formAttachmentList");
+        if (!attachmentList) {
+            return [];
+        }
+        return Array.from(attachmentList.querySelectorAll('.formAttachmentListItem[data-is-image="1"]')).map((listItem) => parseInt(listItem.dataset.objectId));
+    }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
             if (!features.attachment) {
                 return;
             }
+            const inlineImageIds = getInlineImageIds(element);
             // TODO: The typings do not include our custom plugins yet.
             configuration.woltlabAttachment = {
+                inlineImageIds,
                 resolveAttachmentUrl(attachmentId, isThumbnail) {
                     let thumbnail = "";
                     if (isThumbnail) {
