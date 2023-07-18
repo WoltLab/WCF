@@ -260,10 +260,10 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             return {
                 alignment: {
                     options: [
-                        { name: "center", className: "text-center" },
                         { name: "left", className: "text-left" },
-                        { name: "justify", className: "text-justify" },
+                        { name: "center", className: "text-center" },
                         { name: "right", className: "text-right" },
+                        { name: "justify", className: "text-justify" },
                     ],
                 },
                 highlight: {
