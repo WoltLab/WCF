@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Environment"], function (require, exports, tslib_1, Core, Environment) {
+define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setDialogContainer = exports.pageOverlayIsActive = exports.pageOverlayClose = exports.pageOverlayOpen = exports.scrollEnable = exports.scrollDisable = exports.is = exports.remove = exports.on = void 0;
     Core = tslib_1.__importStar(Core);
-    Environment = tslib_1.__importStar(Environment);
     const _mql = new Map();
     let _scrollDisableCounter = 0;
     let _scrollOffsetFrom;
@@ -94,7 +93,7 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
             const pageContainer = document.getElementById("pageContainer");
             // iOS does not handle overflow and fixed positioning well, we need to
             // simulate the scrolling by vertically moving the container.
-            if (Environment.platform() === "ios") {
+            if (is("screen-md-down")) {
                 pageContainer.style.setProperty("position", "relative", "");
                 pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
             }
@@ -112,7 +111,7 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
             if (_scrollDisableCounter === 0) {
                 document.documentElement.classList.remove("disableScrolling");
                 const pageContainer = document.getElementById("pageContainer");
-                if (Environment.platform() === "ios") {
+                if (is("screen-md-down")) {
                     pageContainer.style.removeProperty("position");
                     pageContainer.style.removeProperty("top");
                 }
