@@ -7,7 +7,6 @@
  */
 
 import * as Core from "../Core";
-import * as Environment from "../Environment";
 
 const _mql = new Map<string, MediaQueryData>();
 
