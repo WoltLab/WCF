@@ -192,6 +192,13 @@
 	}
 }
 
+@media (pointer: coarse) {
+	.ck-button:not(.ck-disabled, .ck-on) {
+		background: var(--ck-color-button-default-background) !important;
+		color: var(--ck-color-text) !important;
+	}
+}
+
 .ck-body-wrapper {
 	.ck.ck-balloon-panel {
 		box-shadow: var(--wcfBoxShadow);
