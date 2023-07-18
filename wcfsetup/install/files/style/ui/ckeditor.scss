@@ -201,6 +201,8 @@
 
 .ck-body-wrapper {
 	.ck.ck-balloon-panel {
+		--ck-color-base-foreground: var(--ck-color-toolbar-background);
+
 		box-shadow: var(--wcfBoxShadow);
 	}
 
