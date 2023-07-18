@@ -65,7 +65,10 @@ final class AttachmentBBCode extends AbstractBBCode
     {
         $alignment = $attributes[1] ?? '';
         $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
-        $width = $attributes[3] ?? '100%';
+        $width = $attributes[3] ?? '';
+        if (!\preg_match('~^(?:100%|\d{2}(?:\.\d{2})?%)$~', $width)) {
+            $width = '100%';
+        }
 
 
         if ($thumbnail) {
