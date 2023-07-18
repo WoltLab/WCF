@@ -221,6 +221,12 @@
 	}
 }
 
+.ck.ck-content td {
+	/* Workaround for an ancient bug in Firefox that cause the background color
+	   to overlap the collapsed border: https://bugzilla.mozilla.org/show_bug.cgi?id=688556#c43 */
+	background-clip: padding-box;
+}
+
 html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	border-width: 0;
 }
