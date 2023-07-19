@@ -71,7 +71,7 @@
 		// this causes a blurry text rendering in Chromium.
 		// The offset is calculated using a `ResizeObserver`.
 		left: 50%;
-		transform: translateX(var(--translate-x)) translateY(-50%);
+		transform: translateX(var(--translate-x, 0)) translateY(-50%);
 
 		&[aria-hidden="false"] {
 			animation: wcfDialog 0.24s;
@@ -312,6 +312,11 @@
 .dialog::backdrop {
 	animation: 0.24s dialogBackdrop;
 	background-color: rgba(0, 0, 0, 0.34);
+	overflow-y: scroll;
+}
+
+html[data-color-scheme="dark"] .dialog::backdrop {
+	color-scheme: dark;
 }
 
 .dialog__document {

@@ -35,6 +35,12 @@
 	}
 }
 
+@include screen-lg {
+	html.disableScrolling .pageHeaderPanel {
+		right: var(--scrollbar-width, 0);
+	}
+}
+
 .pageHeaderFacade {
 	&:first-child {
 		// page header without user-panel (during setup)

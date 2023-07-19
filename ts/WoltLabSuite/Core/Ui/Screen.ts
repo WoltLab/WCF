@@ -102,8 +102,6 @@ export function scrollDisable(): void {
 
     const pageContainer = document.getElementById("pageContainer")!;
 
-    // iOS does not handle overflow and fixed positioning well, we need to
-    // simulate the scrolling by vertically moving the container.
     if (is("screen-md-down")) {
       pageContainer.style.setProperty("position", "relative", "");
       pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");

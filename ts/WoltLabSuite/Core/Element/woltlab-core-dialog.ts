@@ -277,6 +277,8 @@ export class WoltlabCoreDialogElement extends HTMLElement {
         event.preventDefault();
         return;
       }
+
+      this.#detachDialog();
     });
 
     // Close the dialog by clicking on the backdrop.
