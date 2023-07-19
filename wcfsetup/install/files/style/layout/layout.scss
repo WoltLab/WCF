@@ -29,6 +29,10 @@ body {
 	@include wcfFontDefault;
 }
 
+html {
+	overflow-y: scroll;
+}
+
 body {
 	background-color: var(--wcfContentBackground);
 	color: var(--wcfContentText);
