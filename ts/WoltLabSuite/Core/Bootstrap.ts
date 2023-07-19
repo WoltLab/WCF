@@ -141,6 +141,11 @@ export function setup(options: BoostrapOptions): void {
 
   document.querySelectorAll(".pagination").forEach((el: HTMLElement) => UiPageJumpTo.init(el));
 
+  window.requestAnimationFrame(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
+  });
+
   initA11y();
 
   DomChangeListener.add("WoltLabSuite/Core/Bootstrap", () => initA11y);

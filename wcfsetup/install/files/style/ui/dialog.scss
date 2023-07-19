@@ -312,6 +312,11 @@
 .dialog::backdrop {
 	animation: 0.24s dialogBackdrop;
 	background-color: rgba(0, 0, 0, 0.34);
+	overflow-y: scroll;
+}
+
+html[data-color-scheme="dark"] .dialog::backdrop {
+	color-scheme: dark;
 }
 
 .dialog__document {

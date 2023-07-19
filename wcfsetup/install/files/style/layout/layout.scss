@@ -6,6 +6,12 @@ html.disableScrolling {
 	}
 }
 
+@include screen-lg {
+	html.disableScrolling {
+		padding-right: var(--scrollbar-width, 0);
+	}
+}
+
 @include screen-md-down {
 	html.disableScrolling {
 		/* Fix for the gap when using fullscreen dialogs and the navbar collapses.

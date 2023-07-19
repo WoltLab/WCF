@@ -66,6 +66,12 @@
 	}
 }
 
+@include screen-lg {
+	html.disableScrolling .pageAction {
+		right: calc(10px + var(--scrollbar-width, 0));
+	}
+}
+
 .pageOverlayActive .pageAction {
 	display: none;
 }

@@ -110,6 +110,10 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
             }
         }, 20);
         document.querySelectorAll(".pagination").forEach((el) => UiPageJumpTo.init(el));
+        window.requestAnimationFrame(() => {
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.documentElement.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
+        });
         initA11y();
         Listener_1.default.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
         if (options.colorScheme === "system") {
