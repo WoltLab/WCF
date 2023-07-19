@@ -65,7 +65,7 @@
 	@include wcfFontSmall;
 }
 
-.embeddedContentTitle,
+.embeddedContent .embeddedContentTitle,
 .messageBody > .messageText .embeddedContentTitle,
 #messagePreview > .htmlContent .embeddedContentTitle {
 	color: var(--wcfContentHeadlineText);
@@ -87,7 +87,7 @@
 
 .embeddedContentDescription {
 	color: var(--wcfContentDimmedText);
-	margin-top: 5px;
+	margin-top: 10px;
 	max-height: calc(5em * #{var(--wcfFontLineHeight)});
 	overflow: hidden;
 	position: relative;
