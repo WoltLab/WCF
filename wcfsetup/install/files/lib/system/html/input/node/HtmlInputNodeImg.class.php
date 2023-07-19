@@ -132,7 +132,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $attachmentID,
             $float,
             $thumbnail,
-            $width,
+            //$width,
         ];
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
@@ -267,6 +267,9 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
+        // TODO: Remove this.
+        return;
+
         // Aligned images are wrapped in a `<figure>` element that is the target
         // of the resize operation.
         if ($element->parentNode->nodeName === 'figure') {
