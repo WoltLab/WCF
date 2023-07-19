@@ -392,9 +392,11 @@ html[data-color-scheme="dark"] {
 
 .ck.ck-list__item .ck-button.ckeditor5__mention {
 	display: block;
+	font-size: var(--wcfFontSizeDefault);
 }
 .ck.ck-list__item .ck-button.ckeditor5__mention .userAvatarImage {
 	height: 16px;
+	margin-right: 2px;
 	width: 16px;
 }
 
