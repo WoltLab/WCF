@@ -92,7 +92,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="' . StringUtil::encodeHTML($returnURL) . '">
 			
-					<button class="small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.subscribe') . '</button>
+					<button class="button small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.subscribe') . '</button>
 				</form>';
         } else {
             return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
@@ -112,7 +112,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="' . StringUtil::encodeHTML($returnURL) . '">
 					
-					<button class="small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.purchase') . '</button>
+					<button class="button small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.purchase') . '</button>
 				</form>';
         }
     }
