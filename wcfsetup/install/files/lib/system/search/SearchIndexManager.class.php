@@ -9,7 +9,6 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\search\mysql\MysqlSearchIndexManager;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Manages the search index.

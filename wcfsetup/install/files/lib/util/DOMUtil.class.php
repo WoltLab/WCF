@@ -2,8 +2,6 @@
 
 namespace wcf\util;
 
-use wcf\system\exception\SystemException;
-
 /**
  * Provides helper methods to work with PHP's DOM implementation.
  *

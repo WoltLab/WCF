@@ -127,7 +127,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         }
 
         return new CronExpression(match ($expression) {
-            '@hourly' => \sprintf('%d * * * *', $engine(0, 59)), 
+            '@hourly' => \sprintf('%d * * * *', $engine(0, 59)),
             '@daily' => \sprintf('%d %d * * *', $engine(0, 59), $engine(0, 23)),
             '@weekly' => \sprintf('%d %d * * %d', $engine(0, 59), $engine(0, 23), $engine(0, 6)),
             '@monthly' => \sprintf('%d %d %d * *', $engine(0, 59), $engine(0, 23), $engine(1, 28)),

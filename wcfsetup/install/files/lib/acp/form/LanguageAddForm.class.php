@@ -181,7 +181,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
         ));
         $this->form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'sourceLanguage',
-            function (IFormDocument $document, array $parameters) {
+            static function (IFormDocument $document, array $parameters) {
                 if ($document->getFormMode() !== IFormDocument::FORM_MODE_CREATE) {
                     return $parameters;
                 }

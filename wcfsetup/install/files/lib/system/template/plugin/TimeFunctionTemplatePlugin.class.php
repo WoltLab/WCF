@@ -37,10 +37,10 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         if ($time instanceof \DateTimeImmutable) {
             $dateTime = $time;
-        } else if ($time instanceof \DateTime) {
+        } elseif ($time instanceof \DateTime) {
             // Ensure we do not modify the original object.
             $dateTime = \DateTimeImmutable::createFromMutable($time);
-        } else if (\is_string($time) || \is_int($time)) {
+        } elseif (\is_string($time) || \is_int($time)) {
             $timestamp = \intval($time);
             $dateTime = (new \DateTimeImmutable('@' . $timestamp));
         } else {

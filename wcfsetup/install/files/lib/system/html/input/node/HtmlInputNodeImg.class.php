@@ -9,7 +9,6 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
-use wcf\util\StringUtil;
 
 /**
  * Processes `<img>` to handle embedded attachments.
@@ -274,9 +273,9 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         // of the resize operation.
         if ($element->parentNode->nodeName === 'figure') {
             $this->mirrorWidthAttribute($element->parentNode);
+
             return;
         }
-
 
         $width = $element->getAttribute("data-width");
         if ($width && $width !== "100%") {

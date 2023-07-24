@@ -2,7 +2,6 @@
 
 namespace wcf\util;
 
-use Spoofchecker;
 use wcf\system\event\EventHandler;
 use wcf\system\user\event\UsernameValidating;
 

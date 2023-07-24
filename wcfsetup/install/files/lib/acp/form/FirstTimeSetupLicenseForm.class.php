@@ -129,6 +129,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
         );
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
+
         return (new MapperBuilder())
             ->allowSuperfluousKeys()
             ->mapper()

@@ -232,7 +232,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                     })),
                 TemplateFormNode::create('pathPasteHelper')
                     ->application('wcf')
-                    ->templateName('__devtoolsProjectPathPasteHelper')
+                    ->templateName('__devtoolsProjectPathPasteHelper'),
             ]);
         $dataTab->appendChild($dataContainer);
 

@@ -73,7 +73,6 @@ final class AttachmentBBCode extends AbstractBBCode
         // TODO: Remove this.
         $width = 'auto';
 
-
         if ($thumbnail) {
             return $this->showImageAsThumbnail(
                 $attachment,

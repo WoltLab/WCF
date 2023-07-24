@@ -76,10 +76,10 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
     /**
      * Returns the name of the type to which the comment belong.
      */
-    protected abstract function getTypeName(): string;
+    abstract protected function getTypeName(): string;
 
     /**
      * Returns the title of the object to which the comment belong.
      */
-    protected abstract function getObjectTitle(): string;
+    abstract protected function getObjectTitle(): string;
 }

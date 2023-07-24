@@ -3,7 +3,6 @@
 namespace wcf\data\user\rank;
 
 use wcf\data\I18nDatabaseObjectList;
-use wcf\data\user\rank\UserRank;
 
 /**
  * I18n implementation of user rank list.

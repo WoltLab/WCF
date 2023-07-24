@@ -310,12 +310,12 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         foreach ($elementsWithStyles as $element) {
             $style = $element->getAttribute("style");
             $values = \array_map(
-                fn (string $value) => StringUtil::trim($value),
+                static fn (string $value) => StringUtil::trim($value),
                 \explode(";", $style)
             );
 
             $values = \array_filter($values, static function (string $value) {
-                list($keyword,) = \explode(":", $value, 2);
+                [$keyword] = \explode(":", $value, 2);
 
                 switch (StringUtil::trim($keyword)) {
                     case "color":

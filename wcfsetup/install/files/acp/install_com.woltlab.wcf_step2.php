@@ -8,7 +8,6 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 // set default landing page
 $sql = "UPDATE  wcf1_application

@@ -219,7 +219,6 @@ class Style extends DatabaseObject
             $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
         }
         if ($this->hasDarkMode && empty($this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'])) {
-
             $this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'] = $this->variables[self::DARK_MODE_PREFIX . 'wcfHeaderBackground'];
         }
 

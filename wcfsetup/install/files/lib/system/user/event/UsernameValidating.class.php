@@ -8,7 +8,7 @@ use wcf\system\event\TInterruptableEvent;
 /**
  * Indicates that a username is currently validated. If this event
  * is interrupted, the username is considered to be invalid.
- * 
+ *
  * This event will not be fired for usernames changed by an administrator.
  *
  * @author Tim Duesterhus

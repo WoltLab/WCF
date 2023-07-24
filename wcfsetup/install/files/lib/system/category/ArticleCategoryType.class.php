@@ -3,7 +3,6 @@
 namespace wcf\system\category;
 
 use wcf\data\article\ArticleAction;
-use wcf\data\article\ArticleList;
 use wcf\data\category\CategoryEditor;
 use wcf\system\WCF;
 
