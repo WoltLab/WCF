@@ -182,19 +182,27 @@ final class StringUtil
     /**
      * Formats a double.
      *
-     * @deprecated 6.0 Use `formatNumeric()` instead, apply `\round()` manually if required.
+     * @deprecated 6.0 Use `formatNumeric()` instead. Create a custom NumberFormatter for more / less than 2 decimals.
      */
     public static function formatDouble(float $double, int $maxDecimals = 0): string
     {
-        $double = \round($double, ($maxDecimals > 0 ? $maxDecimals : 2));
+        $maxDecimals = ($maxDecimals > 0 ? $maxDecimals : 2);
 
-        $double = self::getNumberFormatter()->format($double);
-
-        if ($double < 0) {
-            $double = self::formatNegative($double);
+        if ($maxDecimals === 2) {
+            return self::formatNumeric($double);
         }
 
-        return $double;
+        $locale = WCF::getLanguage()->getLocale();
+        $formatter = new \NumberFormatter($locale, \NumberFormatter::DEFAULT_STYLE);
+        $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, $maxDecimals);
+
+        $formatted = $formatter->format($double);
+
+        if ($double < 0) {
+            $formatted = self::formatNegative($formatted);
+        }
+
+        return $formatted;
     }
 
     /**
