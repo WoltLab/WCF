@@ -824,6 +824,7 @@ final class StringUtil
         $locale = WCF::getLanguage()->getLocale();
         if (!isset($formatters[$locale])) {
             $formatters[$locale] = new \NumberFormatter($locale, \NumberFormatter::DEFAULT_STYLE);
+            $formatters[$locale]->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 2);
         }
 
         return $formatters[$locale];
