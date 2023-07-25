@@ -10,7 +10,7 @@
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 	color: var(--wcfDropdownText);
 	display: none;
-	position: absolute;
+	position: fixed;
 	width: 240px;
 	z-index: 450;
 
