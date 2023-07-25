@@ -441,7 +441,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         }
         // update active day
         if (day) {
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 37; i++) {
                 const cell = _dateCells[i];
                 cell.classList[!cell.classList.contains("otherMonth") && +cell.textContent === day ? "add" : "remove"]("active");
             }
