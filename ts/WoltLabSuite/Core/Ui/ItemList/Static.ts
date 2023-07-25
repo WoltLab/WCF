@@ -168,7 +168,7 @@ function keyDown(event: KeyboardEvent): void {
  * Handles the `[ENTER]` and `[,]` key to add an item to the list.
  */
 function keyPress(event: KeyboardEvent): void {
-  if (event.key === "Enter" || event.key === "Comma") {
+  if (event.key === "Enter" || event.key === ",") {
     event.preventDefault();
 
     const input = event.currentTarget as HTMLInputElement;
