@@ -116,7 +116,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
      * Handles the `[ENTER]` and `[,]` key to add an item to the list.
      */
     function keyPress(event) {
-        if (event.key === "Enter" || event.key === "Comma") {
+        if (event.key === "Enter" || event.key === ",") {
             event.preventDefault();
             const input = event.currentTarget;
             const value = input.value.trim();
