@@ -61,7 +61,7 @@
 					<iframe
 						class="woltlabNewsfeed__iframe"
 						referrerpolicy="no-referrer"
-						sandbox
+						sandbox="allow-popups allow-popups-to-escape-sandbox"
 					></iframe>
 				</div>
 

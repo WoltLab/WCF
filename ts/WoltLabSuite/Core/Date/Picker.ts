@@ -564,7 +564,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
 
   // update active day
   if (day) {
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 37; i++) {
       const cell = _dateCells[i];
 
       let active = +cell.textContent! === day;

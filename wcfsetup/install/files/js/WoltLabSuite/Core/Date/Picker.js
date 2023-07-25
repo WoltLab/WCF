@@ -470,7 +470,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         }
         // update active day
         if (day) {
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 37; i++) {
                 const cell = _dateCells[i];
                 let active = +cell.textContent === day;
                 if (cell.classList.contains("otherMonth") || cell.classList.contains("disabled")) {
