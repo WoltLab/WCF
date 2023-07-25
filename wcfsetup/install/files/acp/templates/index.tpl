@@ -62,7 +62,7 @@
 					id="woltlab_newsfeed"
 					src="https://newsfeed.woltlab.com/{if $__wcf->language->languageCode === 'de'}de{else}en{/if}_light.html"
 					referrerpolicy="no-referrer"
-					sandbox
+					sandbox="allow-popups allow-popups-to-escape-sandbox"
 				></iframe>
 			</div>
 		</div>
