@@ -8,7 +8,9 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	transition: opacity 0.12s linear, visibility 0s linear 0.24s;
+	transition:
+		opacity 0.12s linear,
+		visibility 0s linear 0.24s;
 	visibility: hidden;
 	will-change: opacity;
 	z-index: 399;
@@ -50,6 +52,7 @@
 
 	@include screen-xs {
 		margin: auto;
+		min-width: calc(80% - 20px);
 		max-width: calc(100% - 20px);
 		position: relative;
 	}
@@ -215,7 +218,9 @@
 	text-align: center;
 	top: 200px;
 	transform: translateX(-50%);
-	transition: visibility 0s linear 0.12s, opacity 0.12s linear;
+	transition:
+		visibility 0s linear 0.12s,
+		opacity 0.12s linear;
 	visibility: hidden;
 	z-index: 401;
 
@@ -235,7 +240,10 @@
 	position: fixed;
 	top: 0;
 	transform: translateY(-100%);
-	transition: visibility 0.12s linear 0.12s, transform 0.12s linear, opacity 0.12s linear;
+	transition:
+		visibility 0.12s linear 0.12s,
+		transform 0.12s linear,
+		opacity 0.12s linear;
 	visibility: hidden;
 	width: 100%;
 	z-index: 460;
