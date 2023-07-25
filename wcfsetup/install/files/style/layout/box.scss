@@ -343,7 +343,7 @@
 			grid-template-columns: repeat(var(--column-count), 1fr);
 
 			> .box {
-				margin: 0 !important
+				margin: 0 !important;
 			}
 		}
 	}
@@ -571,8 +571,11 @@
 
 .boxesSidebarLeft .box .boxMenu {
 	li.active > .boxMenuLink {
+		border-radius: var(--wcfBorderRadius);
 		margin-left: 10px;
+		margin-right: 10px;
 		padding-left: 10px;
+		padding-right: 10px;
 	}
 
 	.boxMenuDepth1 li.active > .boxMenuLink {
@@ -599,7 +602,10 @@
 }
 
 .boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
+	border-radius: var(--wcfBorderRadius);
+	margin-left: 10px;
 	margin-right: 10px;
+	padding-left: 10px;
 	padding-right: 10px;
 }
 
