@@ -873,8 +873,9 @@ html[data-color-scheme="dark"] {
 .woltlabNewsfeed {
 	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
-	height: 100vh;
+	height: 70vh;
 	max-width: 100%;
+	overflow: hidden;
 	text-align: center;
 	width: 600px;
 }
@@ -889,7 +890,7 @@ html[data-color-scheme="dark"] {
 
 .woltlabNewsfeed__iframe {
 	border-radius: var(--wcfBorderRadius);
-	height: 100vh;
+	height: 100%;
 	max-width: 100%;
 	width: 600px;
 }
