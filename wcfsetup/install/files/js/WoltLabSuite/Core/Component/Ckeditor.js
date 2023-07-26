@@ -156,6 +156,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
+        await new Promise((resolve) => {
+            window.requestAnimationFrame(resolve);
+        });
         initializeFeatures(element, features);
         if (features.attachment) {
             (0, Attachment_1.setup)(element);

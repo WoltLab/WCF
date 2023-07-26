@@ -220,6 +220,10 @@ export async function setupCkeditor(
 
   await import("ckeditor5-bundle");
 
+  await new Promise((resolve) => {
+    window.requestAnimationFrame(resolve);
+  });
+
   initializeFeatures(element, features);
 
   if (features.attachment) {
