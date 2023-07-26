@@ -22,7 +22,7 @@
 		<item identifier="com.woltlab.wcf.WatchedArticleList">
 			<parent>com.woltlab.wcf.ArticleList</parent>
 			<title language="de">Abonnierte Artikel</title>
-			<title language="en">Watched Articles</title>
+			<title language="en">Subscribed Articles</title>
 			<page>com.woltlab.wcf.WatchedArticleList</page>
 		</item>
 		<item identifier="com.woltlab.wcf.MembersList">

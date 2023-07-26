@@ -2189,7 +2189,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.statDailyHandler.description"><![CDATA[This object type definition is used to register types of statistics entries shown in the ACP statistics.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.tagging.taggableObject.description"><![CDATA[This object type definition is used to register types of objects that can be tagged.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.activityPointEvent.description"><![CDATA[This object type definition is used to register events for which users are awarded activity points.]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.objectWatch.description"><![CDATA[This object type definition is used to register types of objects that can be watched/subscribed to resulting in notifications for updates of the watched/subscribed objects.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.objectWatch.description"><![CDATA[This object type definition is used to register types of objects that can be subscribed to resulting in notifications for updates of the subscribed objects.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.recentActivityEvent.description"><![CDATA[This object type definition is used to register events for which a recent activity entry can be created.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.versionTracker.objectType.description"><![CDATA[This object type definition is used to register types of objects of which different versions can be tracked using the version tracker API.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.visitTracker.objectType.description"><![CDATA[This object type definition is used to register types of objects for which it can be tracked if and when users have already seen or accessed them (the last time).]]></item>
@@ -5446,7 +5446,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to a comment by <strong>{$commentAuthor}</strong> on your article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to {@$commentAuthor}’s comment on your article “{@$article->getTitle()}” [URL:{@$article->getLink()}#comments/comment{@$commentID}/response{@$responseID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on your article <a href="{$article->getLink()}#comments/comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a>:</p>]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.article.notification.article"><![CDATA[Notify me of new articles in watched categories]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.article.notification.article"><![CDATA[Notify me of new articles in subscribed categories]]></item>
 		<item name="wcf.user.notification.article.title"><![CDATA[New Article]]></item>
 		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} wrote the article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{@$author} wrote the article “{@$articleContent->getTitle()}” [URL:{@$articleContent->getLink()}]:]]></item>
@@ -5493,9 +5493,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<category name="wcf.user.objectWatch">
 		<item name="wcf.user.objectWatch.button.subscribe"><![CDATA[Subscribe]]></item>
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
-		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
-		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
-		<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"><![CDATA[Unwatch this category]]></item>
 		<item name="wcf.user.objectWatch.button.subscribed"><![CDATA[Subscribed]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed"><![CDATA[Not subscribed]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Receive notifications for mentions, quotes and reactions.]]></item>
@@ -7454,5 +7451,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.comment.response.add"/>
 	<item name="wcf.dialog.confirmation.softDelete.reason"/>
 	<item name="wcf.dialog.confirmation.reason"/>
+	<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"/>
+	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
+	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
 </delete>
 </language>
