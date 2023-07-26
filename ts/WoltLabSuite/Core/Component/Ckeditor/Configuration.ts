@@ -365,6 +365,9 @@ class ConfigurationBuilder {
       },
       toolbar: this.#getToolbar(),
       ui: {
+        poweredBy: {
+          label: null,
+        },
         viewportOffset: {
           top: 50,
         },

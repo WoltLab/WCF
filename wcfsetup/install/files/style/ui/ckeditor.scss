@@ -303,6 +303,14 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	margin-top: 0 !important;
 }
 
+.ck.ck-balloon-panel.ck-powered-by-balloon {
+	--ck-powered-by-text-color: var(--wcfContentText);
+	--ck-powered-by-background: var(--ck-color-base-background);
+	--ck-powered-by-border-color: var(--wcfInputBorderActive);
+
+	border-width: 1px !important;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
@@ -351,7 +359,9 @@ html[data-color-scheme="dark"] {
 	background-color: var(--wcfContentBackground);
 	border: 1px solid transparent;
 	border-radius: 8px;
-	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	box-shadow:
+		rgb(0 0 0 / 20%) 0 12px 28px 0,
+		rgb(0 0 0 / 10%) 0 2px 4px 0;
 	color: var(--wcfContentText);
 	max-width: 400px;
 	padding: 20px;

@@ -322,6 +322,9 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 },
                 toolbar: this.#getToolbar(),
                 ui: {
+                    poweredBy: {
+                        label: null,
+                    },
                     viewportOffset: {
                         top: 50,
                     },
