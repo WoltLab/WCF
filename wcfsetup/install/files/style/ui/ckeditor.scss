@@ -7,6 +7,10 @@
 	@extend .htmlContent;
 }
 
+.ck.ck-content.ck-editor__editable > .ck-widget.ck-widget_with-selection-handle:first-child {
+	margin-top: 1.5em !important;
+}
+
 .ck.ck-content.ck-editor__editable .image-inline {
 	vertical-align: middle;
 }
