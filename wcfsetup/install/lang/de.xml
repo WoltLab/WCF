@@ -5488,9 +5488,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<category name="wcf.user.objectWatch">
 		<item name="wcf.user.objectWatch.button.subscribe"><![CDATA[Abonnieren]]></item>
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Abonnement verwalten]]></item>
-		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Kategorie abonnieren]]></item>
-		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Benachrichtigung über neue Artikel aus dieser Kategorie aktivieren]]></item>
-		<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"><![CDATA[Kategorie nicht abonnieren]]></item>
 		<item name="wcf.user.objectWatch.button.subscribed"><![CDATA[Abonniert]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed"><![CDATA[Nicht abonniert]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Erhalte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} Benachrichtigungen für Erwähnungen, Zitate und Reaktionen.]]></item>
@@ -7560,5 +7557,8 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.comment.response.add"/>
 	<item name="wcf.dialog.confirmation.softDelete.reason"/>
 	<item name="wcf.dialog.confirmation.reason"/>
+	<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"/>
+	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
+	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
 </delete>
 </language>

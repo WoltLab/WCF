@@ -569,12 +569,12 @@
 			<pageType>system</pageType>
 			<controller>wcf\page\WatchedArticleListPage</controller>
 			<name language="de">Abonnierte Artikel</name>
-			<name language="en">Watched Articles</name>
+			<name language="en">Subscribed Articles</name>
 			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
 			<options>module_article</options>
 			<content language="en">
-				<title>Watched Articles</title>
+				<title>Subscribed Articles</title>
 			</content>
 			<content language="de">
 				<title>Abonnierte Artikel</title>
