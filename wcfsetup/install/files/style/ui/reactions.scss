@@ -1,9 +1,10 @@
 .reactionPopover {
 	animation: wcfPopoverOut 0.3s;
 	animation-fill-mode: forwards;
-	background-color: var(--wcfContentBackground);
-	border-radius: 2px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	background-color: var(--wcfDropdownBackground);
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadow);
+	color: var(--wcfDropdownText);
 	overflow: hidden;
 	position: absolute;
 	top: 0;
@@ -32,9 +33,18 @@
 	}
 }
 
+html[data-color-scheme="dark"] .reactionPopover {
+	border: 1px solid var(--wcfDropdownBorderInner);
+}
+
 .reactionType {
 	width: 20px;
 	height: 20px;
+}
+
+.reactionPopoverContent .reactionType {
+	width: 24px;
+	height: 24px;
 }
 
 .reactionCount {
@@ -47,28 +57,12 @@
 	}
 }
 
+.reactionTypeButton.active {
+	background-color: var(--wcfDropdownBackgroundActive);
+	color: var(--wcfDropdownLinkActive);
+}
+
 .reactionPopoverContent {
-	background-color: var(--wcfContentBackground);
-	border-radius: 3px;
-	color: var(--wcfContentText);
-
-	a {
-		color: var(--wcfContentLink);
-
-		&:hover {
-			color: var(--wcfContentLinkActive);
-		}
-	}
-
-	.reactionTypeButton > img {
-		width: 24px;
-		height: 24px;
-
-		&:hover {
-			transform: scale(1.2);
-		}
-	}
-
 	@include screen-xs {
 		max-height: 200px;
 		overflow: auto;
@@ -118,10 +112,6 @@
 			display: block;
 			padding: 5px 25px;
 
-			&.active {
-				background-color: var(--wcfContentBorderInner);
-			}
-
 			> .reactionTypeButtonTitle {
 				vertical-align: middle;
 				padding-left: 5px;
@@ -130,35 +120,26 @@
 	}
 
 	@include screen-lg {
-		padding: 5px 15px;
+		padding: 5px;
+
+		.reactionTypeButtonList {
+			display: flex;
+			column-gap: 5px;
+		}
 
 		.reactionTypeButton {
-			display: inline-block;
-			padding-top: 10px;
-			padding-bottom: 10px;
+			border-radius: var(--wcfBorderRadius);
 			cursor: pointer;
-			margin-left: 10px;
+			padding: 5px;
 
-			&:first-child {
-				margin-left: 0;
+			&:hover {
+				background-color: var(--wcfDropdownBackgroundActive);
+				color: var(--wcfDropdownLinkActive);
 			}
+		}
 
-			&.active {
-				padding-left: 5px;
-				padding-right: 5px;
-
-				> img {
-					transform: scale(1.4);
-
-					&:hover {
-						transform: scale(1.2);
-					}
-				}
-			}
-
-			> .reactionTypeButtonTitle {
-				display: none;
-			}
+		.reactionTypeButtonTitle {
+			display: none;
 		}
 	}
 }
