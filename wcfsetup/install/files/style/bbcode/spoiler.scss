@@ -1,13 +1,16 @@
 .spoilerBox {
-	margin: 1em 0;
-}
-
-.spoilerBox[open] .spoilerContent {
 	background-color: var(--wcfContentBackground);
 	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
-	margin-top: 5px;
+	margin: 1em 0;
+}
+
+.spoilerSummary {
 	padding: 10px;
+}
+
+.spoilerBox[open] .spoilerContent {
+	padding: 0 10px 10px 10px;
 }
 
 .spoilerContent > :first-child {
