@@ -5490,9 +5490,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Abonnement verwalten]]></item>
 		<item name="wcf.user.objectWatch.button.subscribed"><![CDATA[Abonniert]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed"><![CDATA[Nicht abonniert]]></item>
-		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Erhalte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} Benachrichtigungen für Erwähnungen, Zitate und Reaktionen.]]></item>
+		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Keine Benachrichtigungen über neue Inhalte erhalten.]]></item>
 		<item name="wcf.user.objectWatch.subscribed"><![CDATA[Abonniert]]></item>
-		<item name="wcf.user.objectWatch.subscribed.description"><![CDATA[Erhalte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} Benachrichtigungen über neue Inhalte, Erwähnungen, Zitate und Reaktionen.]]></item>
+		<item name="wcf.user.objectWatch.subscribed.description"><![CDATA[Erhalte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} Benachrichtigungen über neue Inhalte.]]></item>
 	</category>
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.aboutMe"><![CDATA[Über mich]]></item>

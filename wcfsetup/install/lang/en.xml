@@ -5495,9 +5495,9 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
 		<item name="wcf.user.objectWatch.button.subscribed"><![CDATA[Subscribed]]></item>
 		<item name="wcf.user.objectWatch.notSubscribed"><![CDATA[Not subscribed]]></item>
-		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Receive notifications for mentions, quotes and reactions.]]></item>
+		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Do not receive notifications for new content.]]></item>
 		<item name="wcf.user.objectWatch.subscribed"><![CDATA[Subscribed]]></item>
-		<item name="wcf.user.objectWatch.subscribed.description"><![CDATA[Receive notifications for new content, mentions, quotes and reactions.]]></item>
+		<item name="wcf.user.objectWatch.subscribed.description"><![CDATA[Receive notifications for new content.]]></item>
 	</category>
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.aboutMe"><![CDATA[About Me]]></item>
