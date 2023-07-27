@@ -1,6 +1,11 @@
 @mixin box($imageSize, $margin: 0) {
 	display: flex;
 
+	> :first-child fa-icon {
+		left: #{($imageSize - $imageSize * 1.25) / 2};
+		position: relative;
+	}
+
 	> :first-child:not(:last-child) {
 		flex: 0 0 auto;
 		margin-right: $margin;
