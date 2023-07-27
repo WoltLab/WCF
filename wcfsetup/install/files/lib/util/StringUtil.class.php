@@ -89,12 +89,33 @@ final class StringUtil
      */
     public static function trim($text): string
     {
-        // These regular expressions use character properties
-        // to find characters defined as space in the unicode
-        // specification.
+        // $boundaryCharacters can always be removed when appearing at either the beginning
+        // or the end of the input.
+        //
+        // Cc = Other, Control
+        // Zs = Separator, Space
+        // Zl = Separator, Line
+        // Zp = Separator, Paragraph
+        $boundaryCharacters = "\p{Cc}\p{Zs}\p{Zl}\p{Zp}"
+            . "\s"
+            . "\x{202E}\x{200B}";
+
+        // $fullStringCharacters will be removed if the resulting string consists only of
+        // these characters. However they may have a valid use case at the beginning or end
+        // provided there *are* printable characters.
+        //
+        // Cf = Other, Format
+        // List of characters as per https://invisible-characters.com/
+        $fullStringCharacters = "{$boundaryCharacters}\p{Cf}"
+            . "\x{0009}\x{0020}\x{00A0}\x{00AD}\x{034F}\x{061C}\x{115F}\x{1160}\x{17B4}\x{17B5}\x{180E}\x{2000}"
+            . "\x{2001}\x{2002}\x{2003}\x{2004}\x{2005}\x{2006}\x{2007}\x{2008}\x{2009}\x{200A}\x{200B}\x{200C}"
+            . "\x{200D}\x{200E}\x{200F}\x{202F}\x{205F}\x{2060}\x{2061}\x{2062}\x{2063}\x{2064}\x{206A}\x{206B}"
+            . "\x{206C}\x{206D}\x{206E}\x{206F}\x{3000}\x{2800}\x{3164}\x{FEFF}\x{FFA0}\x{1D159}\x{1D173}\x{1D174}"
+            . "\x{1D175}\x{1D176}\x{1D177}\x{1D178}\x{1D179}\x{1D17A}";
+
         // Do not merge the expressions, they are separated for
         // performance reasons.
-        $trimmed = \preg_replace('/^[\p{Zs}\s\x{202E}\x{200B}]+/u', '', $text);
+        $trimmed = \preg_replace("/^[{$boundaryCharacters}]+/u", '', $text);
 
         // Check if preg_replace() failed, indicating that the
         // input is not valid UTF-8. In this case the original
@@ -104,10 +125,16 @@ final class StringUtil
             return $text;
         }
 
-        $trimmed = \preg_replace('/[\p{Zs}\s\x{202E}\x{200B}]+$/u', '', $trimmed);
+        $trimmed = \preg_replace("/[{$boundaryCharacters}]+$/u", '', $trimmed);
 
         if ($trimmed === null) {
             return $text;
+        }
+
+        // If the remaining string consists of $fullStringCharacters only, they
+        // will all be removed.
+        if (\preg_match("/^[{$fullStringCharacters}]+$/u", $trimmed)) {
+            return '';
         }
 
         return $trimmed;
