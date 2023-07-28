@@ -237,6 +237,18 @@ class ControllerPopover implements AjaxCallbackObject {
     }
   }
 
+  resetCache(identifier: string, objectId: number): void {
+    const cacheId = `${identifier}-${objectId}`;
+    if (!this.cache.has(cacheId)) {
+      return;
+    }
+
+    this.cache.set(cacheId, {
+      content: null,
+      state: State.None,
+    });
+  }
+
   /**
    * Handles the mouse start hovering the popover-enabled element.
    */
@@ -485,4 +497,11 @@ export function setContent(identifier: string, objectId: number, content: string
  */
 export function ajaxApi(data: RequestPayload, success: CallbackSuccess, failure: CallbackFailure): void {
   getControllerPopover().ajaxApi(data, success, failure);
+}
+
+/**
+ * Resets the cached data for an object.
+ */
+export function resetCache(identifier: string, objectId: number): void {
+  getControllerPopover().resetCache(identifier, objectId);
 }

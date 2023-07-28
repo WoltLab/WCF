@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ajaxApi = exports.setContent = exports.init = void 0;
+    exports.resetCache = exports.ajaxApi = exports.setContent = exports.init = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -165,6 +165,16 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                     this.show();
                 }
             }
+        }
+        resetCache(identifier, objectId) {
+            const cacheId = `${identifier}-${objectId}`;
+            if (!this.cache.has(cacheId)) {
+                return;
+            }
+            this.cache.set(cacheId, {
+                content: null,
+                state: 0 /* State.None */,
+            });
         }
         /**
          * Handles the mouse start hovering the popover-enabled element.
@@ -372,4 +382,11 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
         getControllerPopover().ajaxApi(data, success, failure);
     }
     exports.ajaxApi = ajaxApi;
+    /**
+     * Resets the cached data for an object.
+     */
+    function resetCache(identifier, objectId) {
+        getControllerPopover().resetCache(identifier, objectId);
+    }
+    exports.resetCache = resetCache;
 });
