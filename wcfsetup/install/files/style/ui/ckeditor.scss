@@ -457,6 +457,11 @@ html[data-color-scheme="dark"] {
 	}
 }
 
+/* Code Blocks */
+.ck.ck-content pre {
+	margin: 1em 0;
+}
+
 /* Text Markers */
 .marker-error,
 .marker-info,
