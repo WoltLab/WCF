@@ -134,12 +134,16 @@ class Smiley extends DatabaseObject implements ITitledObject
         $srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
         $height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
         $width = ($this->getWidth()) ? ' width="' . $this->getWidth() . '"' : '';
-        if ($class !== '') {
-            $class = ' ' . $class;
-        }
 
-        $title = StringUtil::encodeHTML(WCF::getLanguage()->get($this->smileyTitle));
-
-        return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . $title . '" class="smiley' . $class . '"' . $srcset . $height . $width . ' loading="eager">';
+        return \sprintf(
+            '<img src="%s" alt="%s" title="%s" class="%s" %s %s %s loading="eager">',
+            StringUtil::encodeHTML($this->getURL()),
+            StringUtil::encodeHTML($this->smileyCode),
+            StringUtil::encodeHTML(WCF::getLanguage()->get($this->smileyTitle)),
+            'smiley' . ($class ? " {$class}" : ''),
+            $srcset,
+            $height,
+            $width,
+        );
     }
 }
