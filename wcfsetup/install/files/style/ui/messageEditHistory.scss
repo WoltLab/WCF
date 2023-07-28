@@ -4,6 +4,8 @@
 	--diffAdded-color: #3c763d;
 	--diffRemoved-background: #f2dede;
 	--diffRemoved-color: #a94442;
+	--diffSection-background: #eceff1;
+	--diffSection-color: #2c3e50;
 
 	@include screen-md-down {
 		overflow: auto;
@@ -47,9 +49,9 @@
 
 			&.diffSection {
 				background-clip: padding-box;
-				background-color: rgb(236, 239, 241);
+				background-color: var(--diffSection-background);
 				border-bottom: 20px solid transparent;
-				color: rgb(44, 62, 80);
+				color: var(--diffSection-color);
 				padding: 10px;
 				text-align: center;
 
@@ -85,6 +87,8 @@ html[data-color-scheme="dark"] {
 		--diffAdded-color: #4f9c51;
 		--diffRemoved-background: #281010;
 		--diffRemoved-color: #d95654;
+		--diffSection-background: #252e3d;
+		--diffSection-color: #959595;
 	}
 }
 
