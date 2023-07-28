@@ -159,7 +159,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
           objectID: this._getObjectId(element!),
         },
       });
-    } else {
+    } else if (this._activeElement !== element) {
       UiNotification.show("wcf.message.error.editorAlreadyInUse", undefined, "warning");
     }
   }

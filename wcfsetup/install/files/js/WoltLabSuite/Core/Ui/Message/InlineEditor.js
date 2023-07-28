@@ -112,7 +112,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                     },
                 });
             }
-            else {
+            else if (this._activeElement !== element) {
                 UiNotification.show("wcf.message.error.editorAlreadyInUse", undefined, "warning");
             }
         }
