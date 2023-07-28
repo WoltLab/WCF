@@ -617,6 +617,16 @@ final class FileUtil
     }
 
     /**
+     * Returns whether the given $extension might allow for execution of
+     * PHP code and thus must not be used for untrusted files uploaded by
+     * a user.
+     */
+    public function extensionAllowsPhpExecution(string $extension): bool
+    {
+        return !!\preg_match('/^\.?(php[0-9]*|phtml)$/i', $extension);
+    }
+
+    /**
      * Forbid creation of FileUtil objects.
      */
     private function __construct()
