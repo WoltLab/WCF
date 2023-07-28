@@ -746,7 +746,7 @@ final class FileUtil
      */
     public function extensionAllowsPhpExecution(string $extension): bool
     {
-        return !!\preg_match('/^\.?(php[0-9]*|phtml)$/', $extension);
+        return !!\preg_match('/^\.?(php[0-9]*|phtml)$/i', $extension);
     }
 
     /**
