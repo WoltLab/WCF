@@ -12,7 +12,7 @@
 		const optionName = searchParams.get("optionName");
 		if (optionName) {
 			window.setTimeout(() => {
-				const element = document.getElementById(optionName);
+				const element = document.querySelector(`#${ optionName }, label[for="${ optionName }"]`);
 				if (!element) {
 					return;
 				}
@@ -24,14 +24,17 @@
 
 				const elementTop = Math.trunc(element.getBoundingClientRect().top);
 				window.scrollTo(0, elementTop - 50);
-				element.focus();
+
+				try {
+					element.focus();
+				} catch {}
 				
 				window.setTimeout(() => {
 					const label = dl.querySelector("dt label");
 					label.classList.add("hightlightOptionLabel");
 					label.addEventListener("transitionEnd",() => label.classList.remove("hightlightOptionLabel"), { once: true });
 				}, 500);
-			}, 200);
+			}, 1_000);
 		}
 	});
 	
