@@ -136,7 +136,7 @@ class Smiley extends DatabaseObject implements ITitledObject
         $width = ($this->getWidth()) ? ' width="' . $this->getWidth() . '"' : '';
 
         return \sprintf(
-            '<img src="%s" alt="%s" title="%s" class="%s" %s %s %s loading="eager">',
+            '<img src="%s" alt="%s" title="%s" class="%s" %s %s %s loading="eager" translate="no">',
             StringUtil::encodeHTML($this->getURL()),
             StringUtil::encodeHTML($this->smileyCode),
             StringUtil::encodeHTML(WCF::getLanguage()->get($this->smileyTitle)),
