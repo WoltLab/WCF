@@ -28,7 +28,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
             if (item.type === "user") {
                 return {
                     id: `@${item.username}`,
-                    text: item.username,
+                    text: `@${item.username}`,
                     icon: item.avatarTag,
                     objectId: item.userID,
                     type: item.type,
@@ -37,7 +37,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
             else {
                 return {
                     id: `@${item.name}`,
-                    text: item.name,
+                    text: `@${item.name}`,
                     icon: '<fa-icon name="users"></fa-icon>',
                     objectId: item.groupID,
                     type: item.type,

@@ -54,7 +54,7 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
     if (item.type === "user") {
       return {
         id: `@${item.username}`,
-        text: item.username,
+        text: `@${item.username}`,
         icon: item.avatarTag,
         objectId: item.userID,
         type: item.type,
@@ -62,7 +62,7 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
     } else {
       return {
         id: `@${item.name}`,
-        text: item.name,
+        text: `@${item.name}`,
         icon: '<fa-icon name="users"></fa-icon>',
         objectId: item.groupID,
         type: item.type,
