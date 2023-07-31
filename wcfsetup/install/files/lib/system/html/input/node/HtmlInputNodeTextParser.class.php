@@ -152,7 +152,7 @@ class HtmlInputNodeTextParser
             }
 
             // check if node is within a code element or link
-            if ($this->hasCodeParent($node) || $this->hasLinkParent($node)) {
+            if ($this->hasCodeParent($node) || $this->hasLinkParent($node) || $this->hasMentionParent($node)) {
                 continue;
             }
 
@@ -685,6 +685,24 @@ class HtmlInputNodeTextParser
         while ($parent = $parent->parentNode) {
             $nodeName = $parent->nodeName;
             if ($nodeName === 'a') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function hasMentionParent(\DOMText $text): bool
+    {
+        $parent = $text;
+        while ($parent = $parent->parentNode) {
+            if ($parent->nodeName !== 'woltlab-metacode') {
+                continue;
+            }
+
+            \assert($parent instanceof \DOMElement);
+            $type = $parent->getAttribute('data-name');
+            if ($type === 'user' || $type === 'group') {
                 return true;
             }
         }

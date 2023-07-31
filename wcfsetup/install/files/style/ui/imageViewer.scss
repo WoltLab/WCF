@@ -14,7 +14,7 @@
 	top: 0;
 	z-index: 399;
 
-	.icon {
+	fa-icon {
 		color: rgb(158, 158, 158);
 	}
 
@@ -55,7 +55,9 @@
 				opacity: 0;
 				visibility: hidden;
 
-				transition: visibility 0s linear 0.24s, opacity 0.24s linear;
+				transition:
+					visibility 0s linear 0.24s,
+					opacity 0.24s linear;
 			}
 
 			> div > ul > li.pointer {
@@ -234,7 +236,12 @@
 			z-index: 10;
 
 			&.animateTransformation {
-				transition: left 0.24s, margin-top 0.24s, height 0.24s, width 0.24s, opacity 0.24s;
+				transition:
+					left 0.24s,
+					margin-top 0.24s,
+					height 0.24s,
+					width 0.24s,
+					opacity 0.24s;
 			}
 
 			&.active {
@@ -245,7 +252,8 @@
 	}
 
 	&:not(.wcfImageViewerMobile) {
-		.icon:hover {
+		.pointer:hover fa-icon,
+		.wcfImageViewerButtonClose:hover fa-icon {
 			color: rgb(255, 255, 255);
 		}
 
