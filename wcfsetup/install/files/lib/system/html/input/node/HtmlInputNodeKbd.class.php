@@ -49,6 +49,13 @@ class HtmlInputNodeKbd extends AbstractHtmlInputNode
             }
 
             if ($containsElements) {
+                // Check if the *entire* content is striked through and wrap it.
+                $isStrikedThrough = false;
+                $strikethroughs = $htmlNodeProcessor->getXPath()->query("./s", $element);
+                if ($strikethroughs->length === 1 && $strikethroughs->item(0)->textContent === $element->textContent) {
+                    $isStrikedThrough = true;
+                }
+
                 $newElement = $element->ownerDocument->createElement('kbd');
                 $newElement->appendChild(
                     $element->ownerDocument->createTextNode(
@@ -57,6 +64,12 @@ class HtmlInputNodeKbd extends AbstractHtmlInputNode
                 );
 
                 DOMUtil::replaceElement($element, $newElement, false);
+
+                if ($isStrikedThrough) {
+                    $strikethrough = $newElement->ownerDocument->createElement("s");
+                    $newElement->parentNode->insertBefore($strikethrough, $newElement);
+                    $strikethrough->append($newElement);
+                }
             }
         }
     }
