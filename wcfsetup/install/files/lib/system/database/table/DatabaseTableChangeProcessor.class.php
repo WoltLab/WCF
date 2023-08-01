@@ -1284,6 +1284,16 @@ final class DatabaseTableChangeProcessor
                             'type' => 'unknownTableInForeignKey',
                         ];
                     }
+
+                    if (!\str_ends_with($foreignKey->getName(), '_fk') && !$foreignKey->willBeDropped()) {
+                        $errors[] = [
+                            'name' => $foreignKey->getName(),
+                            'columnNames' => \implode(',', $foreignKey->getColumns()),
+                            'referencedTableName' => $foreignKey->getReferencedTable(),
+                            'tableName' => $table->getName(),
+                            'type' => 'missingFkSuffixInForeignKey',
+                        ];
+                    }
                 }
             }
         }
