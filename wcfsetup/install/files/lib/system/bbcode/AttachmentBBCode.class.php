@@ -64,13 +64,9 @@ final class AttachmentBBCode extends AbstractBBCode
     private function showImage(Attachment $attachment, string $outputType, array $attributes, bool $hasParentLink): string
     {
         $alignment = $attributes[1] ?? '';
-        $thumbnail = $this->renderImageAsThumbnail($attachment, $outputType, $attributes[2] ?? false);
-        $width = $attributes[3] ?? '';
-        if (!\preg_match('~^(?:100%|\d{2}(?:\.\d{2})?%)$~', $width)) {
-            $width = '100%';
-        }
+        [$isThumbnail, $width] = $this->getImageStyle($attachment, $outputType, $attributes[2] ?? false);
 
-        if ($thumbnail) {
+        if ($isThumbnail) {
             return $this->showImageAsThumbnail(
                 $attachment,
                 $alignment,
@@ -180,35 +176,49 @@ final class AttachmentBBCode extends AbstractBBCode
         );
     }
 
-    private function renderImageAsThumbnail(Attachment $attachment, string $outputType, mixed $thumbnail): bool
+    /**
+     * @return array{bool, string}
+     */
+    private function getImageStyle(Attachment $attachment, string $outputType, mixed $thumbnail): array
     {
         // Always use thumbnails for the simplified HTML output.
         if ($outputType == 'text/simplified-html') {
-            return true;
+            return [true, "auto"];
         }
 
-        // WCF 2.x permitted image resizing using exact pixel values. These
-        // values are interpreted as a signal for the use of thumbnails.
+        $isThumbnail = false;
+        $width = "auto";
+
         if (\is_numeric($thumbnail)) {
             if ($thumbnail === 0) {
-                $thumbnail = true;
+                $isThumbnail = true;
             } else {
-                // Interpret the number as a request for the thumbnail if the
-                // width matches or falls short of the thumbnail’s width.
-                $thumbnail = ($attachment->thumbnailWidth >= $thumbnail);
+                if ($thumbnail <= $attachment->thumbnailWidth) {
+                    $isThumbnail = true;
+                    $width = $thumbnail;
+                } else {
+                    $width = \min($thumbnail, $attachment->width);
+                }
             }
         } elseif ($thumbnail === 'false') {
-            $thumbnail = false;
+            $isThumbnail = false;
         } elseif ($thumbnail !== false) {
-            $thumbnail = true;
+            $isThumbnail = true;
         }
 
         // Force the use of the thumbnail if the user cannot access the full version.
         if (!$thumbnail && !$attachment->canDownload()) {
-            $thumbnail = true;
+            $isThumbnail = true;
+            if ($width !== "auto" && $width > $attachment->thumbnailWidth) {
+                $width = "auto";
+            }
         }
 
-        return $thumbnail;
+        if (\is_numeric($width)) {
+            $width = "{$width}px";
+        }
+
+        return [$isThumbnail, $width];
     }
 
     private function showVideoPlayer(Attachment $attachment): string

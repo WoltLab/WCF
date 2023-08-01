@@ -176,9 +176,6 @@
 				<attribute name="2">
 					<validationpattern><![CDATA[^(\d+|true|false)$]]></validationpattern>
 				</attribute>
-				<attribute name="3">
-					<validationpattern><![CDATA[^(100%|\d{2}\.\d{2}%)$]]></validationpattern>
-				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="wsm">

@@ -123,15 +123,20 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $width = $replaceElement->getAttribute("data-width");
-        if (!$width || $width === '100%') {
-            $width = '';
+        if (\preg_match('~(?<width>\d+)px$~', $width, $matches)) {
+            $width = (int)$matches['width'];
+        } else {
+            $width = "auto";
+        }
+
+        if ($width !== "auto") {
+            $thumbnail = $width;
         }
 
         $attributes = [
             $attachmentID,
             $float,
             $thumbnail,
-            $width,
         ];
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
@@ -275,7 +280,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $width = $element->getAttribute("data-width");
-        if ($width && $width !== "100%") {
+        if ($width && \preg_match('~^\d+px$~', $width)) {
             $style = $element->getAttribute("style");
             if ($style !== "") {
                 $style .= "; ";
