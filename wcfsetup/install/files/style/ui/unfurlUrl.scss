@@ -88,6 +88,12 @@
 	}
 }
 
+@media (pointer: fine) {
+	.unfurlUrlCard:hover .unfurlUrlTitle {
+		text-decoration: underline;
+	}
+}
+
 .unfurlUrlDescription {
 	color: var(--wcfContentDimmedText);
 	margin-top: 5px;

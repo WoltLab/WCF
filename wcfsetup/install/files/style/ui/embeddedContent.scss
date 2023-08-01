@@ -53,6 +53,12 @@
 	}
 }
 
+@media (pointer: fine) {
+	.embeddedContent:hover .embeddedContentTitleLink {
+		text-decoration: underline;
+	}
+}
+
 /* @deprecated 6.0 Use `.embeddedContentTitleLink` instead */
 .embeddedContentLinkShadow {
 	inset: 0;
