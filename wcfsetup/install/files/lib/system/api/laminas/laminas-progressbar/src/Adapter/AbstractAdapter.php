@@ -5,6 +5,12 @@ namespace Laminas\ProgressBar\Adapter;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function in_array;
+use function is_array;
+use function method_exists;
+use function strtolower;
+use function ucfirst;
+
 /**
  * Abstract class for Laminas\ProgressBar Adapters
  */
@@ -67,7 +73,7 @@ abstract class AbstractAdapter
      * @param  float   $max           Max progress value
      * @param  float   $percent       Current percent value
      * @param  int $timeTaken     Taken time in seconds
-     * @param  int $timeRemaining Remaining time in seconds
+     * @param  int|null $timeRemaining Remaining time in seconds
      * @param  string  $text          Status text
      * @return void
      */

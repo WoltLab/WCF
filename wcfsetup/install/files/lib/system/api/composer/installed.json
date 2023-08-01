@@ -593,17 +593,17 @@
         },
         {
             "name": "laminas/laminas-diactoros",
-            "version": "3.0.0",
-            "version_normalized": "3.0.0.0",
+            "version": "3.1.0",
+            "version_normalized": "3.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-diactoros.git",
-                "reference": "2515f4134258b1b418c23cb86606b8a09dd01aea"
+                "reference": "860660e0774719660699e2b851071555c7b7d45c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/2515f4134258b1b418c23cb86606b8a09dd01aea",
-                "reference": "2515f4134258b1b418c23cb86606b8a09dd01aea",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/860660e0774719660699e2b851071555c7b7d45c",
+                "reference": "860660e0774719660699e2b851071555c7b7d45c",
                 "shasum": ""
             },
             "require": {
@@ -627,7 +627,7 @@
                 "psalm/plugin-phpunit": "^0.18.4",
                 "vimeo/psalm": "^5.9"
             },
-            "time": "2023-05-04T21:18:23+00:00",
+            "time": "2023-08-01T12:40:44+00:00",
             "type": "library",
             "extra": {
                 "laminas": {
@@ -751,17 +751,17 @@
         },
         {
             "name": "laminas/laminas-progressbar",
-            "version": "2.11.0",
-            "version_normalized": "2.11.0.0",
+            "version": "2.12.0",
+            "version_normalized": "2.12.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-progressbar.git",
-                "reference": "f4ab187791a64370825e9012b756e49d568230ea"
+                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/f4ab187791a64370825e9012b756e49d568230ea",
-                "reference": "f4ab187791a64370825e9012b756e49d568230ea",
+                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/a7cb86bd5cc7ce9a96700297776f567119d65834",
+                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834",
                 "shasum": ""
             },
             "require": {
@@ -772,14 +772,14 @@
                 "zendframework/zend-progressbar": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-session": "^2.13",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-session": "^2.16",
                 "phpunit/phpunit": "^9.5.25"
             },
             "suggest": {
                 "laminas/laminas-session": "To support progressbar persistent"
             },
-            "time": "2022-10-25T14:08:59+00:00",
+            "time": "2023-08-01T13:29:34+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

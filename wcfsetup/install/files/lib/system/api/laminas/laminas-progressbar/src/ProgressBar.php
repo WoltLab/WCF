@@ -2,7 +2,13 @@
 
 namespace Laminas\ProgressBar;
 
+use Laminas\ProgressBar\Adapter\AbstractAdapter;
 use Laminas\Session;
+
+use function max;
+use function min;
+use function round;
+use function time;
 
 /**
  * Laminas\ProgressBar offers an interface for multiple environments.
@@ -47,7 +53,7 @@ class ProgressBar
     /**
      * Adapter for the output
      *
-     * @var \Laminas\ProgressBar\Adapter\AbstractAdapter
+     * @var AbstractAdapter
      */
     protected $adapter;
 
@@ -56,18 +62,17 @@ class ProgressBar
      *
      * @var string
      */
-    protected $persistenceNamespace = null;
+    protected $persistenceNamespace;
 
     /**
      * Create a new progressbar backend.
      *
-     * @param  Adapter\AbstractAdapter $adapter
      * @param  float|int               $min
      * @param  float|int               $max
      * @param  string|null             $persistenceNamespace
-     * @throws Exception\OutOfRangeException When $min is greater than $max
+     * @throws Exception\OutOfRangeException When $min is greater than $max.
      */
-    public function __construct(Adapter\AbstractAdapter $adapter, $min = 0, $max = 100, $persistenceNamespace = null)
+    public function __construct(AbstractAdapter $adapter, $min = 0, $max = 100, $persistenceNamespace = null)
     {
         // Check min/max values and set them
         if ($min > $max) {
@@ -109,7 +114,7 @@ class ProgressBar
     /**
      * Get the current adapter
      *
-     * @return Adapter\AbstractAdapter
+     * @return AbstractAdapter
      */
     public function getAdapter()
     {
@@ -154,7 +159,7 @@ class ProgressBar
         if ($percent === .0 || $percent === false) {
             $timeRemaining = null;
         } else {
-            $timeRemaining = round(((1 / $percent) * $timeTaken) - $timeTaken);
+            $timeRemaining = (int) round(((1 / $percent) * $timeTaken) - $timeTaken);
         }
 
         // Poll the adapter

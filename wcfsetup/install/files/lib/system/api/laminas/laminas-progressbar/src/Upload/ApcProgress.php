@@ -4,6 +4,10 @@ namespace Laminas\ProgressBar\Upload;
 
 use Laminas\ProgressBar\Exception;
 
+use function ini_get;
+use function is_array;
+use function is_callable;
+
 /**
  * Progress Bar Upload Handler for the APC extension
  */
@@ -25,16 +29,16 @@ class ApcProgress extends AbstractUploadHandler
             return false;
         }
 
-        $status  = [
-            'total'    => 0,
-            'current'  => 0,
-            'rate'     => 0,
-            'message'  => '',
-            'done'     => false
+        $status = [
+            'total'   => 0,
+            'current' => 0,
+            'rate'    => 0,
+            'message' => '',
+            'done'    => false,
         ];
         $status = $uploadInfo + $status;
         if (! empty($status['cancel_upload'])) {
-            $status['done'] = true;
+            $status['done']    = true;
             $status['message'] = 'The upload has been canceled';
         }
 

@@ -2,10 +2,39 @@
 
 namespace Laminas\ProgressBar\Adapter;
 
-use Laminas\ProgressBar\Adapter\Exception\RuntimeException;
+use Laminas\ProgressBar\Adapter\Exception\InvalidArgumentException;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Stdlib\StringUtils;
+use Traversable;
 use ValueError;
+
+use function array_diff;
+use function ceil;
+use function count;
+use function defined;
+use function fclose;
+use function floor;
+use function fopen;
+use function fwrite;
+use function implode;
+use function in_array;
+use function is_int;
+use function min;
+use function preg_match;
+use function round;
+use function shell_exec;
+use function sprintf;
+use function str_pad;
+use function str_repeat;
+use function strlen;
+use function substr;
+
+use const E_DEPRECATED;
+use const PHP_EOL;
+use const PHP_OS;
+use const STDOUT;
+use const STR_PAD_LEFT;
+use const STR_PAD_RIGHT;
 
 /**
  * Laminas\ProgressBar\Adapter\Console offers a text-based progressbar for console
@@ -16,44 +45,44 @@ class Console extends AbstractAdapter
     /**
      * Percentage value of the progress
      */
-    const ELEMENT_PERCENT = 'ELEMENT_PERCENT';
+    public const ELEMENT_PERCENT = 'ELEMENT_PERCENT';
 
     /**
      * Visual value of the progress
      */
-    const ELEMENT_BAR = 'ELEMENT_BAR';
+    public const ELEMENT_BAR = 'ELEMENT_BAR';
 
     /**
      * ETA of the progress
      */
-    const ELEMENT_ETA = 'ELEMENT_ETA';
+    public const ELEMENT_ETA = 'ELEMENT_ETA';
 
     /**
      * Text part of the progress
      */
-    const ELEMENT_TEXT = 'ELEMENT_TEXT';
+    public const ELEMENT_TEXT = 'ELEMENT_TEXT';
 
     /**
      * Finish action: End of Line
      */
-    const FINISH_ACTION_EOL = 'FINISH_ACTION_EOL';
+    public const FINISH_ACTION_EOL = 'FINISH_ACTION_EOL';
 
     /**
      * Finish action: Clear Line
      */
-    const FINISH_ACTION_CLEAR_LINE = 'FINISH_ACTION_CLEAR_LINE';
+    public const FINISH_ACTION_CLEAR_LINE = 'FINISH_ACTION_CLEAR_LINE';
 
     /**
      * Finish action: None
      */
-    const FINISH_ACTION_NONE = 'FINISH_ACTION_NONE';
+    public const FINISH_ACTION_NONE = 'FINISH_ACTION_NONE';
 
     /**
      * Width of the progressbar
      *
      * @var int
      */
-    protected $width = null;
+    protected $width;
 
     /**
      * Elements to display
@@ -106,7 +135,7 @@ class Console extends AbstractAdapter
      *
      * @var resource
      */
-    protected $outputStream = null;
+    protected $outputStream;
 
     /**
      * Width of the text element
@@ -132,7 +161,7 @@ class Console extends AbstractAdapter
     /**
      * Defined by Laminas\ProgressBar adapter
      *
-     * @param  array|\Traversable $options
+     * @param array|Traversable $options
      */
     public function __construct($options = null)
     {
@@ -159,7 +188,7 @@ class Console extends AbstractAdapter
      * Set a different output-stream
      *
      * @param  string $resource
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function setOutputStream($resource)
     {
@@ -207,7 +236,7 @@ class Console extends AbstractAdapter
      * Set the width of the progressbar
      *
      * @param  int $width
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @return Console
      */
     public function setWidth($width = null)
     {
@@ -244,19 +273,20 @@ class Console extends AbstractAdapter
      * Set the elements to display with the progressbar
      *
      * @param  array $elements
-     * @throws \Laminas\ProgressBar\Adapter\Exception\InvalidArgumentException When an invalid element is found
-     *                                                                      in the array
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @throws InvalidArgumentException When an invalid element is found in the array.
+     * @return Console
      */
     public function setElements(array $elements)
     {
-        $allowedElements = [self::ELEMENT_PERCENT,
-                                 self::ELEMENT_BAR,
-                                 self::ELEMENT_ETA,
-                                 self::ELEMENT_TEXT];
+        $allowedElements = [
+            self::ELEMENT_PERCENT,
+            self::ELEMENT_BAR,
+            self::ELEMENT_ETA,
+            self::ELEMENT_TEXT,
+        ];
 
         if (count(array_diff($elements, $allowedElements)) > 0) {
-            throw new Exception\InvalidArgumentException('Invalid element found in $elements array');
+            throw new InvalidArgumentException('Invalid element found in $elements array');
         }
 
         $this->elements = $elements;
@@ -270,13 +300,13 @@ class Console extends AbstractAdapter
      * Set the left-hand character for the bar
      *
      * @param  string $char
-     * @throws \Laminas\ProgressBar\Adapter\Exception\InvalidArgumentException When character is empty
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @throws InvalidArgumentException When character is empty.
+     * @return Console
      */
     public function setBarLeftChar($char)
     {
         if (empty($char)) {
-            throw new Exception\InvalidArgumentException('Character may not be empty');
+            throw new InvalidArgumentException('Character may not be empty');
         }
 
         $this->barLeftChar = (string) $char;
@@ -288,13 +318,13 @@ class Console extends AbstractAdapter
      * Set the right-hand character for the bar
      *
      * @param  string $char
-     * @throws \Laminas\ProgressBar\Adapter\Exception\InvalidArgumentException When character is empty
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @throws InvalidArgumentException When character is empty.
+     * @return Console
      */
     public function setBarRightChar($char)
     {
         if (empty($char)) {
-            throw new Exception\InvalidArgumentException('Character may not be empty');
+            throw new InvalidArgumentException('Character may not be empty');
         }
 
         $this->barRightChar = (string) $char;
@@ -306,7 +336,7 @@ class Console extends AbstractAdapter
      * Set the indicator character for the bar
      *
      * @param  string $char
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @return Console
      */
     public function setBarIndicatorChar($char)
     {
@@ -319,7 +349,7 @@ class Console extends AbstractAdapter
      * Set the width of the text element
      *
      * @param  int $width
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @return Console
      */
     public function setTextWidth($width)
     {
@@ -344,17 +374,19 @@ class Console extends AbstractAdapter
      * Set the finish action
      *
      * @param  string $action
-     * @throws \Laminas\ProgressBar\Adapter\Exception\InvalidArgumentException When an invalid action is specified
-     * @return \Laminas\ProgressBar\Adapter\Console
+     * @throws InvalidArgumentException When an invalid action is specified.
+     * @return Console
      */
     public function setFinishAction($action)
     {
-        $allowedActions = [self::FINISH_ACTION_CLEAR_LINE,
-                                self::FINISH_ACTION_EOL,
-                                self::FINISH_ACTION_NONE];
+        $allowedActions = [
+            self::FINISH_ACTION_CLEAR_LINE,
+            self::FINISH_ACTION_EOL,
+            self::FINISH_ACTION_NONE,
+        ];
 
         if (! in_array($action, $allowedActions)) {
-            throw new Exception\InvalidArgumentException('Invalid finish action specified');
+            throw new InvalidArgumentException('Invalid finish action specified');
         }
 
         $this->finishAction = $action;
@@ -369,7 +401,7 @@ class Console extends AbstractAdapter
      * @param  float   $max           Max progress value
      * @param  float   $percent       Current percent value
      * @param  int $timeTaken     Taken time in seconds
-     * @param  int $timeRemaining Remaining time in seconds
+     * @param  int|null $timeRemaining Remaining time in seconds
      * @param  string  $text          Status text
      * @return void
      */
@@ -379,7 +411,7 @@ class Console extends AbstractAdapter
         if ($this->outputStarted) {
             $data = str_repeat("\x08", $this->width);
         } else {
-            $data = '';
+            $data                = '';
             $this->outputStarted = true;
         }
 
@@ -437,7 +469,7 @@ class Console extends AbstractAdapter
                     } else {
                         $hours   = floor($timeRemaining / 3600);
                         $minutes = floor(($timeRemaining % 3600) / 60);
-                        $seconds = ($timeRemaining % 3600 % 60);
+                        $seconds = $timeRemaining % 3600 % 60;
 
                         $etaFormatted = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
                     }
@@ -446,7 +478,7 @@ class Console extends AbstractAdapter
                     break;
 
                 case self::ELEMENT_TEXT:
-                    $wrapper = StringUtils::getWrapper($this->charset);
+                    $wrapper            = StringUtils::getWrapper($this->charset);
                     $renderedElements[] = $wrapper->strPad(
                         $wrapper->substr($text, 0, $this->textWidth),
                         $this->textWidth,

@@ -4,6 +4,9 @@ namespace Laminas\ProgressBar\Upload;
 
 use Laminas\ProgressBar\Exception;
 
+use function is_array;
+use function is_callable;
+
 /**
  * Progress Bar Upload Handler for the UploadProgress extension
  */
@@ -27,17 +30,19 @@ class UploadProgress extends AbstractUploadHandler
             return false;
         }
 
-        $status  = [
-            'total'    => 0,
-            'current'  => 0,
-            'rate'     => 0,
-            'message'  => '',
-            'done'     => false
+        $status            = [
+            'total'   => 0,
+            'current' => 0,
+            'rate'    => 0,
+            'message' => '',
+            'done'    => false,
         ];
-        $status = $uploadInfo + $status;
+        $status            = $uploadInfo + $status;
         $status['total']   = $status['bytes_total'];
         $status['current'] = $status['bytes_uploaded'];
         $status['rate']    = $status['speed_average'];
+
+        // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
         if ($status['total'] == $status['current']) {
             $status['done'] = true;
         }

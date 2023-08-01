@@ -8,19 +8,18 @@ use Laminas\ProgressBar\ProgressBar;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function is_array;
+use function round;
+
 /**
  * Abstract class for Upload Progress Handlers
  */
 abstract class AbstractUploadHandler implements UploadHandlerInterface
 {
-    /**
-     * @var string
-     */
-    protected $sessionNamespace = 'Laminas\ProgressBar\Upload\AbstractUploadHandler';
+    /** @var string */
+    protected $sessionNamespace = self::class;
 
-    /**
-     * @var AbstractProgressAdapter|ProgressBar
-     */
+    /** @var AbstractProgressAdapter|ProgressBar */
     protected $progressAdapter;
 
     /**
@@ -105,12 +104,12 @@ abstract class AbstractUploadHandler implements UploadHandlerInterface
      */
     public function getProgress($id)
     {
-        $status  = [
-            'total'    => 0,
-            'current'  => 0,
-            'rate'     => 0,
-            'message'  => 'No upload in progress',
-            'done'     => true
+        $status = [
+            'total'   => 0,
+            'current' => 0,
+            'rate'    => 0,
+            'message' => 'No upload in progress',
+            'done'    => true,
         ];
         if (empty($id)) {
             return $status;
@@ -122,8 +121,8 @@ abstract class AbstractUploadHandler implements UploadHandlerInterface
         }
         $status = $newStatus;
         if ('' === $status['message']) {
-            $status['message'] = $this->toByteString($status['current']) .
-                " - " . $this->toByteString($status['total']);
+            $status['message'] = $this->toByteString($status['current'])
+                . " - " . $this->toByteString($status['total']);
         }
         $status['id'] = $id;
 

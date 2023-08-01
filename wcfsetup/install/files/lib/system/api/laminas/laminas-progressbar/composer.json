@@ -16,15 +16,21 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.99"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "require": {
         "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~1.0.0",
-        "laminas/laminas-session": "^2.13",
+        "laminas/laminas-coding-standard": "~2.5.0",
+        "laminas/laminas-session": "^2.16",
         "phpunit/phpunit": "^9.5.25"
     },
     "suggest": {
