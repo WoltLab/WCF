@@ -1286,7 +1286,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.category.general.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
+		<item name="wcf.acp.option.category.module"><![CDATA[Modules]]></item>
 		<item name="wcf.acp.option.category.module.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.option.category.module.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
