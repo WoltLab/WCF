@@ -22,6 +22,7 @@
     switchPage: CustomEvent<number>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
   class WoltlabCorePaginationElement extends HTMLElement {
     readonly #className = "pagination";
 
@@ -245,7 +246,7 @@
 
       const url = new URL(this.url);
       url.search += url.search !== "" ? "&" : "?";
-      url.search += new URLSearchParams([["pageNo", page.toString()]]);
+      url.search += (new URLSearchParams([["pageNo", page.toString()]])).toString();
 
       return url.toString();
     }
@@ -299,6 +300,7 @@
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
   interface WoltlabCorePaginationElement extends HTMLElement {
     addEventListener: {
       <T extends keyof WoltlabCorePaginationEventMap>(

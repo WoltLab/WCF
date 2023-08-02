@@ -1267,13 +1267,12 @@
       // Example: today
       TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" })
     };
-    let TimePeriod;
-    ((TimePeriod2) => {
-      TimePeriod2[TimePeriod2["OneMinute"] = 60] = "OneMinute";
-      TimePeriod2[TimePeriod2["OneHour"] = 3600] = "OneHour";
-      TimePeriod2[TimePeriod2["OneDay"] = 86400] = "OneDay";
-      TimePeriod2[TimePeriod2["OneWeek"] = 604800] = "OneWeek";
-    })(TimePeriod || (TimePeriod = {}));
+    const TimePeriod = {
+      OneMinute: 60,
+      OneHour: 3600,
+      OneDay: 86400,
+      OneWeek: 86400 * 7
+    };
     class WoltlabCoreDateTimeElement extends HTMLElement {
       #date;
       #timeElement;
@@ -1328,12 +1327,12 @@
         if (this.static) {
           value = this.#timeElement.title;
         } else {
-          if (difference < 60 /* OneMinute */) {
+          if (difference < TimePeriod.OneMinute) {
             value = window.WoltLabLanguage.getPhrase("wcf.date.relative.now");
-          } else if (difference < 3600 /* OneHour */) {
-            const minutes = Math.trunc(difference / 60 /* OneMinute */);
+          } else if (difference < TimePeriod.OneHour) {
+            const minutes = Math.trunc(difference / TimePeriod.OneMinute);
             value = DateFormatter.Minutes.format(minutes * -1, "minute");
-          } else if (difference < 604800 /* OneWeek */) {
+          } else if (difference < TimePeriod.OneWeek) {
             const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
             const weekdayFirst = dateParts[0].type === "weekday";
             if (weekdayFirst) {
@@ -1651,7 +1650,7 @@
         }
         const url = new URL(this.url);
         url.search += url.search !== "" ? "&" : "?";
-        url.search += new URLSearchParams([["pageNo", page.toString()]]);
+        url.search += new URLSearchParams([["pageNo", page.toString()]]).toString();
         return url.toString();
       }
       jumpToPage(page) {

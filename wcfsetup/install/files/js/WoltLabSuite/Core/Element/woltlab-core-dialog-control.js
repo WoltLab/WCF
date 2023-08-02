@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreDialogControlElement = void 0;
     Language = tslib_1.__importStar(Language);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreDialogControlElement extends HTMLElement {
         #cancelButton;
         #extraButton;

@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     const dialogContainer = document.createElement("div");
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreDialogElement extends HTMLElement {
         #content;
         #dialog;

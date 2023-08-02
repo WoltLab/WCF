@@ -36,6 +36,7 @@ export type WoltlabCoreDialogControlOptions = {
   primary: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreDialogElement extends HTMLElement {
   readonly #content: HTMLElement;
   readonly #dialog: HTMLDialogElement;
@@ -311,6 +312,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface WoltlabCoreDialogElement extends HTMLElement {
   addEventListener: {
     <T extends keyof WoltlabCoreDialogEventMap>(

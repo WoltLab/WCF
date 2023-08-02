@@ -18,6 +18,7 @@ interface WoltlabCoreDialogControlEventMap {
   extra: CustomEvent;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreDialogControlElement extends HTMLElement {
   #cancelButton?: HTMLButtonElement;
   #extraButton?: HTMLButtonElement;
@@ -146,6 +147,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface WoltlabCoreDialogControlElement extends HTMLElement {
   addEventListener: {
     <T extends keyof WoltlabCoreDialogControlEventMap>(

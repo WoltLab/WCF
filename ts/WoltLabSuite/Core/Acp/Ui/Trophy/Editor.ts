@@ -20,10 +20,10 @@ function setupTypeChange(): void {
 
   const typeSelection = document.querySelector("select[name=type]") as HTMLSelectElement;
   typeSelection.addEventListener("change", () => {
-    if (typeSelection.value === TrophyType.Image) {
+    if (typeSelection.value as TrophyType === TrophyType.Image) {
       badgeContainer.hidden = true;
       imageContainer.hidden = false;
-    } else if (typeSelection.value === TrophyType.Badge) {
+    } else if (typeSelection.value as TrophyType === TrophyType.Badge) {
       badgeContainer.hidden = false;
       imageContainer.hidden = true;
     }

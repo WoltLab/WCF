@@ -82,12 +82,12 @@
     TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
   };
 
-  const enum TimePeriod {
-    OneMinute = 60,
-    OneHour = 3_600,
-    OneDay = 86_400,
-    OneWeek = 86_400 * 7,
-  }
+  const TimePeriod = {
+    OneMinute: 60,
+    OneHour: 3_600,
+    OneDay: 86_400,
+    OneWeek: 86_400 * 7,
+  };
 
   class WoltlabCoreDateTimeElement extends HTMLElement {
     #date?: Date;
