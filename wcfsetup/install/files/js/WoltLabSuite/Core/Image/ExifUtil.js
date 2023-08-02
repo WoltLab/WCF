@@ -6,30 +6,11 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setExifData = exports.removeExifData = exports.getExifBytesFromJpeg = void 0;
-    var Tag;
-    (function (Tag) {
-        Tag[Tag["SOI"] = 216] = "SOI";
-        Tag[Tag["APP0"] = 224] = "APP0";
-        Tag[Tag["APP1"] = 225] = "APP1";
-        Tag[Tag["APP2"] = 226] = "APP2";
-        Tag[Tag["APP3"] = 227] = "APP3";
-        Tag[Tag["APP4"] = 228] = "APP4";
-        Tag[Tag["APP5"] = 229] = "APP5";
-        Tag[Tag["APP6"] = 230] = "APP6";
-        Tag[Tag["APP7"] = 231] = "APP7";
-        Tag[Tag["APP8"] = 232] = "APP8";
-        Tag[Tag["APP9"] = 233] = "APP9";
-        Tag[Tag["APP10"] = 234] = "APP10";
-        Tag[Tag["APP11"] = 235] = "APP11";
-        Tag[Tag["APP12"] = 236] = "APP12";
-        Tag[Tag["APP13"] = 237] = "APP13";
-        Tag[Tag["APP14"] = 238] = "APP14";
-        Tag[Tag["COM"] = 254] = "COM";
-    })(Tag || (Tag = {}));
     // Known sequence signatures
     const _signatureEXIF = "Exif";
     const _signatureXMP = "http://ns.adobe.com/xap/1.0/";
@@ -69,7 +50,7 @@ define(["require", "exports"], function (require, exports) {
         }
         const bytes = await blobToUint8(blob);
         let exif = new Uint8Array(0);
-        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+        if (bytes[0] !== 0xff && bytes[1] !== 216 /* Tag.SOI */) {
             throw new Error("Not a JPEG");
         }
         for (let i = 2; i < bytes.length;) {
@@ -78,7 +59,7 @@ define(["require", "exports"], function (require, exports) {
                 break;
             const length = 2 + ((bytes[i + 2] << 8) | bytes[i + 3]);
             // Check if the next byte indicates an EXIF sequence
-            if (bytes[i + 1] === Tag.APP1) {
+            if (bytes[i + 1] === 225 /* Tag.APP1 */) {
                 let signature = "";
                 for (let j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
                     signature += String.fromCharCode(bytes[j]);
@@ -103,7 +84,7 @@ define(["require", "exports"], function (require, exports) {
             throw new TypeError("The argument must be a Blob or a File");
         }
         const bytes = await blobToUint8(blob);
-        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+        if (bytes[0] !== 0xff && bytes[1] !== 216 /* Tag.SOI */) {
             throw new Error("Not a JPEG");
         }
         let result = bytes;
@@ -113,7 +94,7 @@ define(["require", "exports"], function (require, exports) {
                 break;
             const length = 2 + ((result[i + 2] << 8) | result[i + 3]);
             // Check if the next byte indicates an EXIF sequence
-            if (result[i + 1] === Tag.APP1) {
+            if (result[i + 1] === 225 /* Tag.APP1 */) {
                 let signature = "";
                 for (let j = i + 4; result[j] !== 0 && j < result.length; j++) {
                     signature += String.fromCharCode(result[j]);
@@ -143,7 +124,7 @@ define(["require", "exports"], function (require, exports) {
         const bytes = await blobToUint8(blob);
         let offset = 2;
         // check if the second tag is the JFIF tag
-        if (bytes[2] === 0xff && bytes[3] === Tag.APP0) {
+        if (bytes[2] === 0xff && bytes[3] === 224 /* Tag.APP0 */) {
             offset += 2 + ((bytes[4] << 8) | bytes[5]);
         }
         const start = bytes.slice(0, offset);

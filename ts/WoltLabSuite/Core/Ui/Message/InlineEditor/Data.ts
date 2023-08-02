@@ -19,6 +19,7 @@ export interface MessageInlineEditorOptions {
 }
 
 export interface ItemData {
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   item: "divider" | "editItem" | string;
   label?: string;
 }

@@ -149,8 +149,10 @@ export class UiSearchExtended {
     if (searchAction !== SearchAction.Navigation) {
       this.searchParameters = [];
       new FormData(this.form).forEach((value, key) => {
-        if (value.toString().trim()) {
-          this.searchParameters.push([key, value.toString().trim()]);
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        const trimmed = value.toString().trim();
+        if (trimmed) {
+          this.searchParameters.push([key, trimmed]);
         }
       });
     }
@@ -159,7 +161,7 @@ export class UiSearchExtended {
     if (this.activePage > 1) {
       parameters.push(["pageNo", this.activePage.toString()]);
     }
-    url.search += new URLSearchParams(parameters);
+    url.search += (new URLSearchParams(parameters)).toString();
 
     if (searchAction === SearchAction.Init) {
       window.history.replaceState({ searchAction }, document.title, url.toString());
@@ -171,6 +173,7 @@ export class UiSearchExtended {
   private getFormData(): Record<string, unknown> {
     const data = {};
     new FormData(this.form).forEach((value, key) => {
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
       if (value.toString()) {
         data[key] = value;
       }

@@ -887,6 +887,7 @@ const UiDialog = {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return id.toString();
   },
 

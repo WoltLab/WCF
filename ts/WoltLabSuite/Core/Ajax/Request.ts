@@ -207,6 +207,7 @@ class AjaxRequest {
   /**
    * Returns an option by key or undefined.
    */
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   getOption(key: string): unknown | null {
     if (Object.prototype.hasOwnProperty.call(this._options, key)) {
       return this._options[key];

@@ -6,8 +6,9 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 
-enum Tag {
+const enum Tag {
   SOI = 0xd8, // Start of image
   APP0 = 0xe0, // JFIF tag
   APP1 = 0xe1, // EXIF / XMP

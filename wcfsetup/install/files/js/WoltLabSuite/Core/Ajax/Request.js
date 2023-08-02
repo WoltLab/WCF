@@ -177,6 +177,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
         /**
          * Returns an option by key or undefined.
          */
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         getOption(key) {
             if (Object.prototype.hasOwnProperty.call(this._options, key)) {
                 return this._options[key];
