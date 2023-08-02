@@ -488,13 +488,13 @@ fieldset {
 
 .contentInteractionShareButton {
 	display: flex;
-	flex: 1 auto;
+	flex: 1 0 auto;
 	margin-left: 5px;
 }
 
 .contentInteractionDropdown {
 	display: flex;
-	flex: 1 auto;
+	flex: 1 0 auto;
 	margin-left: 5px;
 
 	.dropdownToggle {
