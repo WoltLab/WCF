@@ -7,27 +7,26 @@
  * @module	WoltLabSuite/Core/Image/ExifUtil
  * @woltlabExcludeBundle tiny
  */
-/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 
-const enum Tag {
-  SOI = 0xd8, // Start of image
-  APP0 = 0xe0, // JFIF tag
-  APP1 = 0xe1, // EXIF / XMP
-  APP2 = 0xe2, // General purpose tag
-  APP3 = 0xe3, // General purpose tag
-  APP4 = 0xe4, // General purpose tag
-  APP5 = 0xe5, // General purpose tag
-  APP6 = 0xe6, // General purpose tag
-  APP7 = 0xe7, // General purpose tag
-  APP8 = 0xe8, // General purpose tag
-  APP9 = 0xe9, // General purpose tag
-  APP10 = 0xea, // General purpose tag
-  APP11 = 0xeb, // General purpose tag
-  APP12 = 0xec, // General purpose tag
-  APP13 = 0xed, // General purpose tag
-  APP14 = 0xee, // Often used to store copyright information
-  COM = 0xfe, // Comments
-}
+const Tag = {
+  SOI: 0xd8, // Start of image
+  APP0: 0xe0, // JFIF tag
+  APP1: 0xe1, // EXIF / XMP
+  APP2: 0xe2, // General purpose tag
+  APP3: 0xe3, // General purpose tag
+  APP4: 0xe4, // General purpose tag
+  APP5: 0xe5, // General purpose tag
+  APP6: 0xe6, // General purpose tag
+  APP7: 0xe7, // General purpose tag
+  APP8: 0xe8, // General purpose tag
+  APP9: 0xe9, // General purpose tag
+  APP10: 0xea, // General purpose tag
+  APP11: 0xeb, // General purpose tag
+  APP12: 0xec, // General purpose tag
+  APP13: 0xed, // General purpose tag
+  APP14: 0xee, // Often used to store copyright information
+  COM: 0xfe, // Comments
+};
 
 // Known sequence signatures
 const _signatureEXIF = "Exif";
