@@ -14,6 +14,9 @@ on:
     paths:
     - '*.php'
 
+permissions:
+  contents: read
+
 jobs:
   syntax:
     name: "Check Syntax (${{ matrix.php }})"
