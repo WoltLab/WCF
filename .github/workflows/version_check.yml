@@ -6,6 +6,9 @@ on:
     - 'com.woltlab.wcf/package.xml'
     - 'wcfsetup/install/files/lib/system/WCF.class.php'
 
+permissions:
+  contents: read
+
 jobs:
   wcf_version:
     name: "Check that WCF_VERSION is in sync"

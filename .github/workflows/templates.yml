@@ -10,6 +10,9 @@ on:
     - master
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   sync:
     name: Check for differing synced templates.

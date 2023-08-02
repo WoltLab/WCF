@@ -8,6 +8,9 @@ on:
     - master
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   tsc:
     name: "TSC"
