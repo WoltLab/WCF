@@ -103,8 +103,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             if (searchAction !== 1 /* SearchAction.Navigation */) {
                 this.searchParameters = [];
                 new FormData(this.form).forEach((value, key) => {
-                    if (value.toString().trim()) {
-                        this.searchParameters.push([key, value.toString().trim()]);
+                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                    const trimmed = value.toString().trim();
+                    if (trimmed) {
+                        this.searchParameters.push([key, trimmed]);
                     }
                 });
             }
@@ -112,7 +114,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             if (this.activePage > 1) {
                 parameters.push(["pageNo", this.activePage.toString()]);
             }
-            url.search += new URLSearchParams(parameters);
+            url.search += (new URLSearchParams(parameters)).toString();
             if (searchAction === 2 /* SearchAction.Init */) {
                 window.history.replaceState({ searchAction }, document.title, url.toString());
             }
@@ -123,6 +125,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         getFormData() {
             const data = {};
             new FormData(this.form).forEach((value, key) => {
+                // eslint-disable-next-line @typescript-eslint/no-base-to-string
                 if (value.toString()) {
                     data[key] = value;
                 }

@@ -141,7 +141,7 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
   private setRoute(result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus): void {
     AjaxStatus.hide();
 
-    if (status === "OK") {
+    if (status === google.maps.DirectionsStatus.OK) {
       DomUtil.show(this.map!.getDiv().parentElement!);
 
       google.maps.event.trigger(this.map!, "resize");
@@ -154,7 +154,10 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
       DomUtil.innerError(this.originInput!, false);
     } else {
       // map irrelevant errors to not found error
-      if (status !== "OVER_QUERY_LIMIT" && status !== "REQUEST_DENIED") {
+      if (
+        status !== google.maps.DirectionsStatus.OVER_QUERY_LIMIT &&
+        status !== google.maps.DirectionsStatus.REQUEST_DENIED
+      ) {
         status = google.maps.DirectionsStatus.NOT_FOUND;
       }
 

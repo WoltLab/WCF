@@ -752,6 +752,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     return dialogData.id;
                 }
             }
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             return id.toString();
         },
         _ajaxSetup() {

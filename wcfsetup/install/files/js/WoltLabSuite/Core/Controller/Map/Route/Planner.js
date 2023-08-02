@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
          */
         setRoute(result, status) {
             AjaxStatus.hide();
-            if (status === "OK") {
+            if (status === google.maps.DirectionsStatus.OK) {
                 Util_1.default.show(this.map.getDiv().parentElement);
                 google.maps.event.trigger(this.map, "resize");
                 this.directionsRenderer.setDirections(result);
@@ -118,7 +118,8 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
             }
             else {
                 // map irrelevant errors to not found error
-                if (status !== "OVER_QUERY_LIMIT" && status !== "REQUEST_DENIED") {
+                if (status !== google.maps.DirectionsStatus.OVER_QUERY_LIMIT &&
+                    status !== google.maps.DirectionsStatus.REQUEST_DENIED) {
                     status = google.maps.DirectionsStatus.NOT_FOUND;
                 }
                 Util_1.default.innerError(this.originInput, Language.get(`wcf.map.route.error.${status.toLowerCase()}`));
