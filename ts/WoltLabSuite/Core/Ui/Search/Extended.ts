@@ -71,13 +71,7 @@ export class UiSearchExtended {
     });
     this.typeInput.addEventListener("change", () => this.changeType());
 
-    window.addEventListener("popstate", (event) => {
-      if (event.state.searchAction && event.state.searchAction === SearchAction.Init) {
-        // Safari fires the `popstate` for the initial request on
-        // navigation, causing the search to be dispatched twice.
-        return;
-      }
-
+    window.addEventListener("popstate", () => {
       this.initQueryString();
     });
   }
@@ -161,7 +155,7 @@ export class UiSearchExtended {
     if (this.activePage > 1) {
       parameters.push(["pageNo", this.activePage.toString()]);
     }
-    url.search += (new URLSearchParams(parameters)).toString();
+    url.search += new URLSearchParams(parameters).toString();
 
     if (searchAction === SearchAction.Init) {
       window.history.replaceState({ searchAction }, document.title, url.toString());

@@ -45,12 +45,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 void this.search(0 /* SearchAction.Modify */);
             });
             this.typeInput.addEventListener("change", () => this.changeType());
-            window.addEventListener("popstate", (event) => {
-                if (event.state.searchAction && event.state.searchAction === 2 /* SearchAction.Init */) {
-                    // Safari fires the `popstate` for the initial request on
-                    // navigation, causing the search to be dispatched twice.
-                    return;
-                }
+            window.addEventListener("popstate", () => {
                 this.initQueryString();
             });
         }
@@ -123,7 +118,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             if (this.activePage > 1) {
                 parameters.push(["pageNo", this.activePage.toString()]);
             }
-            url.search += (new URLSearchParams(parameters)).toString();
+            url.search += new URLSearchParams(parameters).toString();
             if (searchAction === 2 /* SearchAction.Init */) {
                 window.history.replaceState({ searchAction }, document.title, url.toString());
             }
