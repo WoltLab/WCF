@@ -74,7 +74,7 @@ class SystemCheckPage extends AbstractPage
         'zlib',
     ];
 
-    public $phpMemoryLimit = 128;
+    public $phpMemoryLimit = 128 * 1024 * 1024;
 
     public $phpVersions = [
         'minimum' => '8.1.2',
@@ -331,50 +331,17 @@ class SystemCheckPage extends AbstractPage
 
     protected function validatePhpMemoryLimit()
     {
-        $this->results['php']['memoryLimit']['required'] = $this->phpMemoryLimit . 'M';
+        $this->results['php']['memoryLimit']['required'] = $this->phpMemoryLimit;
 
-        $memoryLimit = \ini_get('memory_limit');
+        $memoryLimit = FileUtil::getMemoryLimit();
 
         // Memory is not limited through PHP.
         if ($memoryLimit == -1) {
             $this->results['php']['memoryLimit']['value'] = "\u{221E}";
             $this->results['php']['memoryLimit']['result'] = true;
         } else {
-            // Completely numeric, PHP assumes this to be a value in bytes.
-            if (\is_numeric($memoryLimit)) {
-                $memoryLimit = $memoryLimit / 1024 / 1024;
-
-                $this->results['php']['memoryLimit']['value'] = $memoryLimit . 'M';
-                $this->results['php']['memoryLimit']['result'] = ($memoryLimit >= $this->phpMemoryLimit);
-            } else {
-                // PHP supports the 'K', 'M' and 'G' shorthand notations.
-                if (\preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-                    switch ($matches[2]) {
-                        case 'K':
-                            $memoryLimit = $matches[1] / 1024;
-
-                            $this->results['php']['memoryLimit']['value'] = $memoryLimit . 'M';
-                            $this->results['php']['memoryLimit']['result'] = ($memoryLimit >= $this->phpMemoryLimit);
-                            break;
-
-                        case 'M':
-                            $this->results['php']['memoryLimit']['value'] = $memoryLimit;
-                            $this->results['php']['memoryLimit']['result'] = ($matches[1] >= $this->phpMemoryLimit);
-                            break;
-
-                        case 'G':
-                            $this->results['php']['memoryLimit']['value'] = $memoryLimit;
-                            $this->results['php']['memoryLimit']['result'] = ($matches[1] * 1024 >= $this->phpMemoryLimit);
-                            break;
-
-                        default:
-                            $this->results['php']['memoryLimit']['value'] = $memoryLimit;
-                            $this->results['php']['memoryLimit']['result'] = false;
-
-                            return;
-                    }
-                }
-            }
+            $this->results['php']['memoryLimit']['value'] = FileUtil::formatFilesizeBinary($memoryLimit);
+            $this->results['php']['memoryLimit']['result'] = ($memoryLimit >= $this->phpMemoryLimit);
         }
 
         $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['memoryLimit']['result'];
