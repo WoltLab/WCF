@@ -530,4 +530,13 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 	.ck.ck-input {
 		--ck-input-width: 100%;
 	}
+
+	.ckeditor5__restoreDraft__buttons {
+		flex-direction: column-reverse;
+		row-gap: 10px;
+	}
+
+	.ckeditor5__restoreDraft__buttons button[data-type="preview"] {
+		margin-right: 0;
+	}
 }
