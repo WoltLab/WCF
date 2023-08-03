@@ -197,9 +197,9 @@
 }
 
 @media (pointer: coarse) {
-	.ck-button:not(.ck-disabled, .ck-on) {
-		background: var(--ck-color-button-default-background) !important;
-		color: var(--ck-color-text) !important;
+	.ck.ck-toolbar__items .ck.ck-button:not(.ck-disabled, .ck-on):hover {
+		background: var(--ck-color-button-default-background);
+		color: var(--ck-color-text);
 	}
 }
 
