@@ -35,6 +35,10 @@ type Response =
 
 function detectCode(): void {
   const value = codeInput.value.trim();
+  if (value === "") {
+    innerError(codeInput, false);
+    return;
+  }
 
   let isValid = false;
   if (value.startsWith("WoltLab_StoreCode_Do_Not_Share_")) {
@@ -136,20 +140,7 @@ export function setup(): void {
     void refreshPackageDatabase();
   });
 
-  codeInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-
-      detectCode();
-    }
-  });
-
-  codeInput.addEventListener("paste", (event) => {
-    event.preventDefault();
-
-    const value = event.clipboardData!.getData("text/plain");
-    codeInput.value = value;
-
+  codeInput.addEventListener("input", () => {
     detectCode();
   });
 }
