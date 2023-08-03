@@ -547,7 +547,7 @@ final class FileUtil
     /**
      * Returns true if the given amount of memory is available.
      */
-    public static function checkMemoryLimit(int $neededMemory): bool
+    public static function checkMemoryLimit(int|float $neededMemory): bool
     {
         return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (\memory_get_usage() + $neededMemory);
     }
