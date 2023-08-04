@@ -46,6 +46,10 @@
 		padding: 10px 0;
 	}
 
+	.pageNavigation .layoutBoundary {
+		min-height: 20px;
+	}
+
 	.boxesHeaderBoxes + .pageNavigation {
 		margin-top: 1px;
 	}
