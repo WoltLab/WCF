@@ -23,7 +23,7 @@ class LineBreakSeparatedTextOptionType extends TextareaOptionType
      */
     public function getFormElement(Option $option, $value)
     {
-        $values = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines($value)));
+        $values = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines($value ?? '')));
         \uasort($values, 'strnatcmp');
 
         static $identifiers = [];
