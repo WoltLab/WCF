@@ -526,6 +526,9 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
                 throw new \LogicException("Unreachable");
         }
 
+        // When converting an animated WEBP to another format,
+        // we need to make sure that only the 1st frame is used.
+        // Otherwise Imagick will create a separate file for each frame.
         if ($image->getImageFormat() == 'WEBP' && $filename != 'webp') {
             $sourceImage = $image;
             $image = new \Imagick();
