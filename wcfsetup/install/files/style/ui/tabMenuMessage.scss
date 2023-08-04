@@ -129,6 +129,14 @@
 	}
 }
 
+@include screen-xs {
+	.messageTabMenu + .formSubmit,
+	.messageFooter .formSubmit {
+		display: grid;
+		grid-auto-flow: column;
+	}
+}
+
 /* fix for Firefox - fieldsets are set to display: table-column which cause an odd gap between the fieldset
    and the next element, similar to gaps with display: inline-block and font-size > 0 */
 @-moz-document url-prefix() {
