@@ -21,7 +21,7 @@ import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/A
 import { createConfigurationFor, Features } from "./Ckeditor/Configuration";
 import { dispatchToCkeditor } from "./Ckeditor/Event";
 import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
-import { normalizeLegacyMessage } from "./Ckeditor/Normalizer";
+import { normalizeLegacyHtml, normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
@@ -78,6 +78,8 @@ class Ckeditor {
   }
 
   insertHtml(html: string): void {
+    html = normalizeLegacyHtml(html);
+
     this.#editor.model.change((writer) => {
       const viewFragment = this.#editor.data.processor.toView(html);
       const modelFragment = this.#editor.data.toModel(viewFragment);

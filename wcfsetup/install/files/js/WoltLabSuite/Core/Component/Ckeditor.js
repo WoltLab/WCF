@@ -60,6 +60,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             return this.#editor.data.get();
         }
         insertHtml(html) {
+            html = (0, Normalizer_1.normalizeLegacyHtml)(html);
             this.#editor.model.change((writer) => {
                 const viewFragment = this.#editor.data.processor.toView(html);
                 const modelFragment = this.#editor.data.toModel(viewFragment);

@@ -151,18 +151,22 @@ function imageToFigure(img: HTMLImageElement, alignmentClass: string): void {
   }
 }
 
-export function normalizeLegacyMessage(element: HTMLElement): void {
-  if (!(element instanceof HTMLTextAreaElement)) {
-    throw new TypeError("Expected the element to be a <textarea>.");
-  }
-
+export function normalizeLegacyHtml(html: string): string {
   const div = document.createElement("div");
-  div.innerHTML = element.value;
+  div.innerHTML = html;
 
   normalizeBr(div);
   const paragraphs = getPossibleSpacerParagraphs(div);
   reduceSpacerParagraphs(paragraphs);
   convertFloatingImages(div);
 
-  element.value = div.innerHTML;
+  return div.innerHTML;
+}
+
+export function normalizeLegacyMessage(element: HTMLElement): void {
+  if (!(element instanceof HTMLTextAreaElement)) {
+    throw new TypeError("Expected the element to be a <textarea>.");
+  }
+
+  element.value = normalizeLegacyHtml(element.value);
 }
