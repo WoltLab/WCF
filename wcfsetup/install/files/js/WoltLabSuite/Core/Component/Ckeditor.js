@@ -152,10 +152,23 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return configuration;
     }
+    const stylesheetId = "ckeditor5-stylesheet";
+    function injectCss() {
+        if (document.getElementById(stylesheetId) !== null) {
+            return;
+        }
+        const stylesheet = document.createElement("link");
+        stylesheet.rel = "stylesheet";
+        stylesheet.type = "text/css";
+        stylesheet.href = `${window.WSC_API_URL}style/ckeditor5.css`;
+        stylesheet.id = stylesheetId;
+        document.head.append(stylesheet);
+    }
     async function setupCkeditor(element, features, bbcodes, codeBlockLanguages) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
+        injectCss();
         await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
         await new Promise((resolve) => {
             window.requestAnimationFrame(resolve);

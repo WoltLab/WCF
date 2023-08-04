@@ -210,6 +210,21 @@ function initializeConfiguration(
   return configuration;
 }
 
+const stylesheetId = "ckeditor5-stylesheet";
+function injectCss(): void {
+  if (document.getElementById(stylesheetId) !== null) {
+    return;
+  }
+
+  const stylesheet = document.createElement("link");
+  stylesheet.rel = "stylesheet";
+  stylesheet.type = "text/css";
+  stylesheet.href = `${window.WSC_API_URL}style/ckeditor5.css`;
+  stylesheet.id = stylesheetId;
+
+  document.head.append(stylesheet);
+}
+
 export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
@@ -219,6 +234,8 @@ export async function setupCkeditor(
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
+
+  injectCss();
 
   await import("ckeditor5-bundle");
 
