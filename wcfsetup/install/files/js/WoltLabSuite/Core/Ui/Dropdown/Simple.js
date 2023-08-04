@@ -503,6 +503,10 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 if (dropdown.classList.contains("dropdownOpen")) {
                     dropdown.classList.remove("dropdownOpen");
                     _menus.get(containerId).classList.remove("dropdownOpen");
+                    const button = dropdown.querySelector(".dropdownToggle");
+                    if (button) {
+                        button.setAttribute("aria-expanded", "false");
+                    }
                     notifyCallbacks(containerId, "close");
                 }
             });
