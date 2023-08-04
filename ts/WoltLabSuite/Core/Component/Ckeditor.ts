@@ -211,18 +211,21 @@ function initializeConfiguration(
 }
 
 const stylesheetId = "ckeditor5-stylesheet";
-function injectCss(): void {
-  if (document.getElementById(stylesheetId) !== null) {
-    return;
+function injectCss(): HTMLLinkElement | null {
+  let stylesheet = document.getElementById(stylesheetId) as HTMLLinkElement | null;
+  if (stylesheet !== null) {
+    return null;
   }
 
-  const stylesheet = document.createElement("link");
+  stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
   stylesheet.type = "text/css";
   stylesheet.href = `${window.WSC_API_URL}style/ckeditor5.css`;
   stylesheet.id = stylesheetId;
 
   document.head.append(stylesheet);
+
+  return stylesheet;
 }
 
 export async function setupCkeditor(
@@ -235,9 +238,20 @@ export async function setupCkeditor(
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
 
-  injectCss();
+  const injectedStylesheet = injectCss();
 
-  await import("ckeditor5-bundle");
+  await Promise.all([
+    new Promise<void>((resolve) => {
+      if (injectedStylesheet === null) {
+        resolve();
+      } else {
+        injectedStylesheet.addEventListener("load", () => {
+          resolve();
+        });
+      }
+    }),
+    import("ckeditor5-bundle"),
+  ]);
 
   await new Promise((resolve) => {
     window.requestAnimationFrame(resolve);
