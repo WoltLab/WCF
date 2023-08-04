@@ -4,7 +4,7 @@
 		<!-- profile -->
 		<usermenuitem name="wcf.user.menu.profile">
 			<showorder>1</showorder>
-			<iconclassname>user</iconclassname>
+			<iconclassname solid="true">user</iconclassname>
 		</usermenuitem>
 		<usermenuitem name="wcf.user.menu.profile.accountManagement">
 			<controller>wcf\form\AccountManagementForm</controller>
