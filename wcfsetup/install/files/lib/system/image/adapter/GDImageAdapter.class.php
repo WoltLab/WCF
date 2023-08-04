@@ -34,7 +34,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 
     /**
      * loaded image
-     * @var resource
+     * @var \GDImage
      */
     protected $image;
 
@@ -493,8 +493,8 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      *
      * @see http://php.net/manual/en/function.imagecopymerge.php#88456
      *
-     * @param resource $dst_im destination image resource
-     * @param resource $src_im source image resource
+     * @param \GDImage $dst_im destination image resource
+     * @param \GDImage $src_im source image resource
      * @param int $dst_x x-coordinate of destination point
      * @param int $dst_y y-coordinate of destination point
      * @param int $src_x x-coordinate of source point

@@ -47,6 +47,11 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
     protected $supportsWritingAnimatedGIF = true;
 
     /**
+     * List of image format that support animations.
+     */
+    protected static array $animatedFormats = ['GIF', 'WEBP'];
+
+    /**
      * Creates a new ImagickImageAdapter.
      */
     public function __construct()
@@ -95,7 +100,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
         // fix height/width for animated gifs as getImageHeight/getImageWidth
         // returns the height/width of ONE frame of the animated image,
         // not the "real" height/width of the image
-        if ($this->imagick->getImageFormat() == 'GIF') {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $imagick = $this->imagick->coalesceImages();
 
             $this->height = $imagick->getImageHeight();
@@ -126,7 +131,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
     {
         $thumbnail = clone $this->imagick;
 
-        if ($thumbnail->getImageFormat() == 'GIF') {
+        if (\in_array($thumbnail->getImageFormat(), self::$animatedFormats)) {
             $thumbnail = $thumbnail->coalesceImages();
 
             do {
@@ -152,7 +157,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
      */
     public function clip($originX, $originY, $width, $height)
     {
-        if ($this->imagick->getImageFormat() == 'GIF') {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -169,7 +174,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
      */
     public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight)
     {
-        if ($this->imagick->getImageFormat() == 'GIF') {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $image = $this->imagick->coalesceImages();
 
             foreach ($image as $frame) {
@@ -214,7 +219,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
         // draw text
         $draw->annotation($x, $y, $text);
 
-        if ($this->imagick->getImageFormat() == 'GIF') {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -425,7 +430,7 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
 
         $overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
 
-        if ($this->imagick->getImageFormat() == 'GIF') {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -519,6 +524,15 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
 
             default:
                 throw new \LogicException("Unreachable");
+        }
+
+        if ($image->getImageFormat() == 'WEBP' && $filename != 'webp') {
+            $sourceImage = $image;
+            $image = new \Imagick();
+            foreach ($sourceImage as $frame) {
+                $image->addImage($frame->getImage());
+                break;
+            }
         }
 
         $image->writeImages("{$fileFormat}:{$filename}", true);
