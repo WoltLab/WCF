@@ -1,4 +1,4 @@
-{if $object->status == "SUCCESSFUL"}
+{if $object->hasFetchedContent()}
 	{if $object->isPlainUrl()}
 		<a {anchorAttributes url=$object->url isUgc=$enableUgc}>{$object->title}</a>
 	{else}

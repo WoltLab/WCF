@@ -2,6 +2,7 @@
 
 namespace wcf\system\html\output\node;
 
+use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
@@ -62,7 +63,18 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
                     'enableUgc' => $enableUgc,
                 ]);
 
+                $parentParagraph = null;
+                if ($this->getUnfurlUrl($attribute)->hasFetchedContent() && $element->parentNode->nodeName === 'p') {
+                    $parentParagraph = $element->parentNode;
+                    $parentParagraph->parentNode->insertBefore($element, $parentParagraph);
+                }
+
                 $htmlNodeProcessor->renameTag($element, $tagName);
+
+                if ($parentParagraph !== null && !$parentParagraph->hasChildNodes()) {
+                    /** @var \DOMElement $parentParagraph */
+                    $parentParagraph->remove();
+                }
             }
         }
     }
@@ -72,9 +84,14 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
      */
     public function replaceTag(array $data)
     {
-        /** @var \wcf\data\unfurl\url\UnfurlUrl $object */
-        $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $data['urlId']);
+        return $this->getUnfurlUrl($data['urlId'])->render($data['enableUgc']);
+    }
 
-        return $object->render($data['enableUgc']);
+    /**
+     * @since 6.0
+     */
+    protected function getUnfurlUrl(int $id): UnfurlUrl
+    {
+        return MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $id);
     }
 }

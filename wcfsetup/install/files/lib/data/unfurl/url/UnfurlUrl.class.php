@@ -152,6 +152,14 @@ class UnfurlUrl extends DatabaseObject
     }
 
     /**
+     * @since 6.0
+     */
+    public function hasFetchedContent(): bool
+    {
+        return $this->status === self::STATUS_SUCCESSFUL;
+    }
+
+    /**
      * Returns the unfurl url object for a given url.
      *
      * @throws \InvalidArgumentException If the given URL is invalid.
