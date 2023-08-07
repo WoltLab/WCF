@@ -51,9 +51,9 @@ https?://open.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+
 		</provider>
 		<provider name="spotify">
 			<title>Spotify</title>
-			<regex><![CDATA[https?://play.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
-https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:{$TYPE}:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
+			<regex><![CDATA[https?://play.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
+https?://open.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 		</provider>
 		<provider name="twitch">
 			<title>Twitch</title>
