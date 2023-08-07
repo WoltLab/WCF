@@ -85,11 +85,20 @@
 		color: inherit;
 	}
 
-	.ck-button:not(.ck-disabled):hover,
-	.ck-splitbutton:hover .ck-button:not(.ck-disabled):not(:hover),
 	.ck-splitbutton_open .ck-button:not(.ck-disabled):not(:hover) {
 		/* The editor does not support a separate text color on hover. */
 		color: var(--wcfEditorButtonText);
+	}
+}
+
+@media (hover: hover) {
+	.ck.ck-toolbar__items,
+	.ck.ck-toolbar__grouped-dropdown {
+		.ck-button:not(.ck-disabled):hover,
+		.ck-splitbutton:hover .ck-button:not(.ck-disabled):not(:hover) {
+			/* The editor does not support a separate text color on hover. */
+			color: var(--wcfEditorButtonText);
+		}
 	}
 }
 
@@ -118,8 +127,10 @@
 	color: var(--wcfInputPlaceholder);
 }
 
-.ck.ck-list .ck-list__item .ck-button:not(.ck-disabled):hover {
-	color: var(--wcfDropdownLink);
+@media (hover: hover) {
+	.ck.ck-list .ck-list__item .ck-button:not(.ck-disabled):hover {
+		color: var(--wcfDropdownLink);
+	}
 }
 
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable),
@@ -177,26 +188,29 @@
 		background-color: var(--wcfButtonDisabledBackground) !important;
 	}
 
-	.ck-button[type="button"]:not(.ck-disabled):hover {
-		--ck-color-text: var(--wcfButtonTextActive);
-
-		background-color: var(--wcfButtonBackgroundActive);
-	}
-
 	.ck-button[type="submit"]:not(.ck-disabled) {
 		--ck-color-text: var(--wcfButtonPrimaryText);
 
 		background-color: var(--wcfButtonPrimaryBackground);
+	}
+}
 
-		&:hover {
+@media (hover: hover) {
+	.ck.ck-form__row,
+	.ck.ck-body {
+		.ck-button[type="button"]:not(.ck-disabled):hover {
+			--ck-color-text: var(--wcfButtonTextActive);
+
+			background-color: var(--wcfButtonBackgroundActive);
+		}
+
+		.ck-button[type="submit"]:not(.ck-disabled):hover {
 			--ck-color-text: var(--wcfButtonPrimaryTextActive);
 
 			background-color: var(--wcfButtonPrimaryBackgroundActive);
 		}
 	}
-}
 
-@media (pointer: coarse) {
 	.ck.ck-toolbar__items .ck.ck-button:not(.ck-disabled, .ck-on):hover {
 		background: var(--ck-color-button-default-background);
 		color: var(--ck-color-text);
@@ -254,11 +268,13 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 }
 
 /* Fixes the hover state of the link balloon tooltip. */
-.ck.ck-link-actions .ck-button.ck-link-actions__preview:hover .ck-button__label {
-	color: var(--wcfButtonTextActive);
-}
-.ck.ck-link-actions .ck-button.ck-link-actions__preview .ck-button__label:hover {
-	text-decoration: none !important;
+@media (hover: hover) {
+	.ck.ck-link-actions .ck-button.ck-link-actions__preview:hover .ck-button__label {
+		color: var(--wcfButtonTextActive);
+	}
+	.ck.ck-link-actions .ck-button.ck-link-actions__preview .ck-button__label:hover {
+		text-decoration: none !important;
+	}
 }
 
 /* Prevent lists inside drop down menus from becoming a huge skyscraper. */
