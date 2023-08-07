@@ -525,6 +525,31 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 	display: none;
 }
 
+/* HTML Embed */
+.ck .ck-widget.raw-html-embed {
+	--ck-color-button-default-hover-background: var(--wcfEditorButtonBackground);
+	--ck-color-button-default-active-background: var(--wcfEditorButtonBackground);
+
+	--ck-color-button-on-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-hover-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-active-background: var(--wcfEditorButtonBackgroundActive);
+	--ck-color-button-on-disabled-background: transparent;
+	--ck-color-button-on-color: var(--wcfEditorButtonTextActive);
+
+	background-color: var(--wcfContentContainerBackground);
+	font-size: var(--wcfFontSizeSmall);
+
+	&::before {
+		padding: 0 var(--ck-spacing-tiny) !important;
+	}
+}
+
+@media (hover: hover) {
+	.ck-widget.raw-html-embed .ck.ck-button.ck-button:not(.ck-disabled):hover {
+		background-color: var(--ck-color-button-default-hover-background);
+	}
+}
+
 @include screen-xs {
 	html.iOS .ck.ck-content {
 		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
