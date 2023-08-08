@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @deprecated 6.0 Use `dialogFactory()` instead.
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap", "../Helper/PageOverlay"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1, PageOverlay_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
@@ -234,6 +234,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     data.content.querySelector("input, textarea")?.focus();
                 }, 200);
             }
+            (0, PageOverlay_1.adoptPageOverlayContainer)(data.dialog);
             return data;
         },
         /**
@@ -668,6 +669,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     break;
                 }
             }
+            (0, PageOverlay_1.releasePageOverlayContainer)(data.dialog);
             UiScreen.pageOverlayClose();
             if (_activeDialog === null) {
                 _container.setAttribute("aria-hidden", "true");

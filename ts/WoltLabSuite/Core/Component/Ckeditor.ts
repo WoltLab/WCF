@@ -26,6 +26,7 @@ import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
+import { setup as setupLayer } from "./Ckeditor/Layer";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -237,6 +238,8 @@ export async function setupCkeditor(
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
+
+  setupLayer();
 
   const injectedStylesheet = injectCss();
 

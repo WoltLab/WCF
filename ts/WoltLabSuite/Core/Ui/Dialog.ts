@@ -25,6 +25,7 @@ import * as EventHandler from "../Event/Handler";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import CloseOverlay from "./CloseOverlay";
 import { createFocusTrap } from "focus-trap";
+import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 
 let _activeDialog: string | null = null;
 let _container: HTMLElement;
@@ -284,6 +285,8 @@ const UiDialog = {
         data.content.querySelector<HTMLElement>("input, textarea")?.focus();
       }, 200);
     }
+
+    adoptPageOverlayContainer(data.dialog);
 
     return data;
   },
@@ -811,6 +814,7 @@ const UiDialog = {
       }
     }
 
+    releasePageOverlayContainer(data.dialog);
     UiScreen.pageOverlayClose();
 
     if (_activeDialog === null) {
