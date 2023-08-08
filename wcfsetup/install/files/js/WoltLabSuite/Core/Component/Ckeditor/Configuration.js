@@ -153,7 +153,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 this.#toolbar.push("code");
             }
             else {
-                this.#removePlugins.push("Code");
+                this.#removePlugins.push("Code", "WoltlabCode");
             }
             if (this.#features.codeBlock) {
                 this.#toolbar.push("codeBlock");

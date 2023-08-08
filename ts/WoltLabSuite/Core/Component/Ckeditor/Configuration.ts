@@ -169,7 +169,7 @@ class ConfigurationBuilder {
     if (this.#features.code) {
       this.#toolbar.push("code");
     } else {
-      this.#removePlugins.push("Code");
+      this.#removePlugins.push("Code", "WoltlabCode");
     }
 
     if (this.#features.codeBlock) {
