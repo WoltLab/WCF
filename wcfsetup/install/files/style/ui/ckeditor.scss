@@ -335,6 +335,10 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	fill: var(--wcfContentText);
 }
 
+.ck.ck-sticky-panel__content {
+	--ck-z-modal: 400;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
