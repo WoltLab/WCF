@@ -167,7 +167,8 @@ ol.nativeList {
 		list-style-type: decimal;
 	}
 
-	td {
+	td,
+	th {
 		> :first-child {
 			margin-top: 0 !important;
 		}
