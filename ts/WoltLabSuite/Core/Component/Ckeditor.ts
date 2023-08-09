@@ -143,11 +143,12 @@ function* findModelForRemoval(
   attributes: Record<string, string | number | boolean>,
 ): Generator<CkeElement> {
   if (element.is("element", model)) {
-    let isMatch = true;
-    Object.entries(attributes).forEach(([key, value]) => {
+    const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {
-        isMatch = false;
-      } else if (element.getAttribute(key) !== value) isMatch = false;
+        return false;
+      }
+
+      return String(element.getAttribute(key)) === value.toString();
     });
 
     if (isMatch) {

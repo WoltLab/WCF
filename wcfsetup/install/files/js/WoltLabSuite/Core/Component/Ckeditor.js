@@ -106,13 +106,11 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
     }
     function* findModelForRemoval(element, model, attributes) {
         if (element.is("element", model)) {
-            let isMatch = true;
-            Object.entries(attributes).forEach(([key, value]) => {
+            const isMatch = Object.entries(attributes).every(([key, value]) => {
                 if (!element.hasAttribute(key)) {
-                    isMatch = false;
+                    return false;
                 }
-                else if (element.getAttribute(key) !== value)
-                    isMatch = false;
+                return String(element.getAttribute(key)) === value.toString();
             });
             if (isMatch) {
                 yield element;
