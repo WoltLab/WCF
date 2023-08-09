@@ -29,15 +29,15 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             }, options);
             super(options);
             this._forceClipboard = true;
-            this._options.ckeditor?.sourceElement.addEventListener("ckeditor5:bbcode", (event) => {
-                const { bbcode } = event.detail;
-                if (bbcode === "media") {
-                    event.preventDefault();
-                    this._click(event);
-                }
-            });
             if (this._options.ckeditor !== undefined) {
                 const ckeditor = this._options.ckeditor;
+                (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
+                    if (bbcode !== "media") {
+                        return false;
+                    }
+                    this._click();
+                    return true;
+                });
                 if (!ckeditor.features.attachment) {
                     (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).uploadMedia((payload) => {
                         this._editorUpload(payload);
