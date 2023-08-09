@@ -13,7 +13,7 @@ import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
 import * as Language from "../../../Language";
 import { createFocusTrap, FocusTrap } from "focus-trap";
-import * as perfectScrollbar from "perfect-scrollbar";
+import PerfectScrollbar from "perfect-scrollbar";
 import * as UiScreen from "../../Screen";
 import type { DesktopNotifications } from "./Data/Notification";
 
@@ -22,6 +22,7 @@ export class UserMenuView {
   private usePerfectScrollbar = false;
   private readonly focusTrap: FocusTrap;
   private readonly markAllAsReadButton: HTMLElement;
+  private perfectScrollbar: PerfectScrollbar | undefined = undefined;
   private readonly provider: UserMenuProvider;
 
   constructor(provider: UserMenuProvider) {
@@ -127,26 +128,28 @@ export class UserMenuView {
   }
 
   private rebuildScrollbar(): void {
-    const content = this.getContent();
     if (this.usePerfectScrollbar) {
+      const content = this.getContent();
       this.enablePerfectScrollbar(content);
     } else {
-      this.disablePerfectScrollbar(content);
+      this.disablePerfectScrollbar();
     }
   }
 
   private enablePerfectScrollbar(content: HTMLElement): void {
-    if (content.dataset.psId) {
-      perfectScrollbar.update(content);
+    if (this.perfectScrollbar) {
+      this.perfectScrollbar.update();
     } else {
-      perfectScrollbar.initialize(content, {
+      this.perfectScrollbar = new PerfectScrollbar(content, {
         suppressScrollX: true,
+        wheelPropagation: false,
       });
     }
   }
 
-  private disablePerfectScrollbar(content: HTMLElement): void {
-    perfectScrollbar.destroy(content);
+  private disablePerfectScrollbar(): void {
+    this.perfectScrollbar?.destroy();
+    this.perfectScrollbar = undefined;
   }
 
   private createItem(itemData: UserMenuData): HTMLElement {

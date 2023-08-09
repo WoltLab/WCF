@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Hand
     const _menuItemContainers = new Map();
     const _pageContainer = document.getElementById("pageContainer");
     let _perfectScrollbarActive = false;
+    const _perfectScrollbars = new Map();
     /**
      * Initializes the ACP menu navigation.
      */
@@ -46,25 +47,24 @@ define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Hand
         });
         window.addEventListener("resize", () => {
             if (_perfectScrollbarActive) {
-                perfect_scrollbar_1.default.update(_acpPageMenu);
-                perfect_scrollbar_1.default.update(_acpPageSubMenu);
+                _perfectScrollbars.get(_acpPageMenu)?.update();
+                _perfectScrollbars.get(_acpPageSubMenu)?.update();
             }
         });
     }
     exports.init = init;
     function enablePerfectScrollbar() {
         const options = {
-            wheelPropagation: false,
-            swipePropagation: false,
             suppressScrollX: true,
+            wheelPropagation: false,
         };
-        perfect_scrollbar_1.default.initialize(_acpPageMenu, options);
-        perfect_scrollbar_1.default.initialize(_acpPageSubMenu, options);
+        _perfectScrollbars.set(_acpPageMenu, new perfect_scrollbar_1.default(_acpPageMenu, options));
+        _perfectScrollbars.set(_acpPageSubMenu, new perfect_scrollbar_1.default(_acpPageSubMenu, options));
         _perfectScrollbarActive = true;
     }
     function disablePerfectScrollbar() {
-        perfect_scrollbar_1.default.destroy(_acpPageMenu);
-        perfect_scrollbar_1.default.destroy(_acpPageSubMenu);
+        _perfectScrollbars.get(_acpPageMenu)?.destroy();
+        _perfectScrollbars.get(_acpPageSubMenu)?.destroy();
         _perfectScrollbarActive = false;
     }
     /**
@@ -99,7 +99,7 @@ define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Hand
         }
         if (_perfectScrollbarActive) {
             _acpPageSubMenu.scrollTop = 0;
-            perfect_scrollbar_1.default.update(_acpPageSubMenu);
+            _perfectScrollbars.get(_acpPageSubMenu)?.update();
         }
         EventHandler.fire("com.woltlab.wcf.AcpMenu", "resize");
     }

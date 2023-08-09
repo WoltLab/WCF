@@ -6,19 +6,20 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1, perfectScrollbar, UiScreen) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1, perfect_scrollbar_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     Language = tslib_1.__importStar(Language);
-    perfectScrollbar = tslib_1.__importStar(perfectScrollbar);
+    perfect_scrollbar_1 = tslib_1.__importDefault(perfect_scrollbar_1);
     UiScreen = tslib_1.__importStar(UiScreen);
     class UserMenuView {
         element;
         usePerfectScrollbar = false;
         focusTrap;
         markAllAsReadButton;
+        perfectScrollbar = undefined;
         provider;
         constructor(provider) {
             this.provider = provider;
@@ -101,26 +102,28 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             this.rebuildScrollbar();
         }
         rebuildScrollbar() {
-            const content = this.getContent();
             if (this.usePerfectScrollbar) {
+                const content = this.getContent();
                 this.enablePerfectScrollbar(content);
             }
             else {
-                this.disablePerfectScrollbar(content);
+                this.disablePerfectScrollbar();
             }
         }
         enablePerfectScrollbar(content) {
-            if (content.dataset.psId) {
-                perfectScrollbar.update(content);
+            if (this.perfectScrollbar) {
+                this.perfectScrollbar.update();
             }
             else {
-                perfectScrollbar.initialize(content, {
+                this.perfectScrollbar = new perfect_scrollbar_1.default(content, {
                     suppressScrollX: true,
+                    wheelPropagation: false,
                 });
             }
         }
-        disablePerfectScrollbar(content) {
-            perfectScrollbar.destroy(content);
+        disablePerfectScrollbar() {
+            this.perfectScrollbar?.destroy();
+            this.perfectScrollbar = undefined;
         }
         createItem(itemData) {
             const element = document.createElement("div");
