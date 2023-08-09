@@ -1,3 +1,12 @@
+/**
+ * Integrates an editor button to inserts links to CMS articles.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+
 import { getPhrase } from "../../Language";
 import { open as searchArticle } from "../../Ui/Article/Search";
 import { listenToCkeditor } from "../Ckeditor/Event";
