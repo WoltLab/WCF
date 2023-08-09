@@ -8,6 +8,7 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodePlainLink;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\node\IHtmlNode;
+use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 use wcf\system\worker\AbstractWorker;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -631,9 +632,22 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     {
         // cloning the body allows custom event handlers to alter the contents
         // without making permanent changes to the document, avoids side-effects
-        $body = $this->getDocument()->getElementsByTagName('body')->item(0)->cloneNode(true);
+        $document = clone $this->getDocument();
 
-        $parameters = ['body' => $body];
+        // insert a trailing whitespace plus newline for certain elements, such as `<br>` or `<li>`
+        $tagNames = HtmlOutputNodeProcessor::$plainTextNewlineTags;
+        $tagNames[] = 'p';
+
+        $xpath = new \DOMXPath($document);
+        foreach ($tagNames as $tagName) {
+            foreach ($xpath->query("//{$tagName}") as $element) {
+                $newline = $document->createTextNode(" \n");
+                $element->parentNode->insertBefore($newline, $element->nextSibling);
+                DOMUtil::removeNode($element, true);
+            }
+        }
+
+        $parameters = ['body' => $document->getElementsByTagName('body')->item(0)];
         EventHandler::getInstance()->fireAction($this, 'getTextContent', $parameters);
 
         return StringUtil::trim($parameters['body']->textContent);
