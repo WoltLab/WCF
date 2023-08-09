@@ -14,12 +14,12 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-autosave": "^37.1.0",
-    "@ckeditor/ckeditor5-code-block": "^37.1.0",
-    "@ckeditor/ckeditor5-core": "^37.1.0",
-    "@ckeditor/ckeditor5-editor-classic": "^37.1.0",
+    "@ckeditor/ckeditor5-autosave": "^39.0.0",
+    "@ckeditor/ckeditor5-code-block": "^39.0.0",
+    "@ckeditor/ckeditor5-core": "^39.0.0",
+    "@ckeditor/ckeditor5-editor-classic": "^39.0.0",
     "@ckeditor/ckeditor5-inspector": "^4.1.0",
-    "@ckeditor/ckeditor5-mention": "^37.1.0",
+    "@ckeditor/ckeditor5-mention": "^39.0.0",
     "@googlemaps/markerclusterer": "^2.0.15",
     "@types/facebook-js-sdk": "^3.3.6",
     "@types/google.maps": "^3.53.5",
