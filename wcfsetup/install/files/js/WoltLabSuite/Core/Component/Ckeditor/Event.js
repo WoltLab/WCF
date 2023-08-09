@@ -83,6 +83,18 @@ define(["require", "exports"], function (require, exports) {
         constructor(element) {
             this.#element = element;
         }
+        bbcode(callback) {
+            this.#element.addEventListener("ckeditor5:bbcode" /* EventNames.Bbcode */, (event) => {
+                const result = callback(event.detail);
+                if (result === true) {
+                    event.preventDefault();
+                }
+                else if (result !== false) {
+                    throw new Error("An event listener for the bbcode event did not return a boolean to indicate if the BBCode is handled.");
+                }
+            });
+            return this;
+        }
         collectMetaData(callback) {
             this.#element.addEventListener("ckeditor5:collect-meta-data" /* EventNames.CollectMetaData */, (event) => {
                 callback(event.detail);

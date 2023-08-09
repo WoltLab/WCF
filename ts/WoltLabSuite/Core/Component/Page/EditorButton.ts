@@ -5,15 +5,16 @@ import { listenToCkeditor } from "../Ckeditor/Event";
 import type { CKEditor } from "../Ckeditor";
 
 function setupBbcode(ckeditor: CKEditor): void {
-  ckeditor.sourceElement.addEventListener("bbcode", (evt: CustomEvent<string>) => {
-    const bbcode = evt.detail;
-    if (bbcode === "wsp") {
-      evt.preventDefault();
-
-      searchPage((articleId) => {
-        ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
-      });
+  listenToCkeditor(ckeditor.sourceElement).bbcode(({ bbcode }) => {
+    if (bbcode !== "wsp") {
+      return false;
     }
+
+    searchPage((articleId) => {
+      ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
+    });
+
+    return true;
   });
 }
 

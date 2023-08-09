@@ -3,14 +3,14 @@ define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Cked
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     function setupBbcode(ckeditor) {
-        ckeditor.sourceElement.addEventListener("bbcode", (evt) => {
-            const bbcode = evt.detail;
-            if (bbcode === "wsp") {
-                evt.preventDefault();
-                (0, Search_1.open)((articleId) => {
-                    ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
-                });
+        (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
+            if (bbcode !== "wsp") {
+                return false;
             }
+            (0, Search_1.open)((articleId) => {
+                ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
+            });
+            return true;
         });
     }
     function setup(element) {

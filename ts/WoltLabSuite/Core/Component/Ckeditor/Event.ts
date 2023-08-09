@@ -16,6 +16,7 @@ import type { UploadMediaEventPayload } from "./Media";
 import type { InsertQuoteEventPayload } from "./Quote";
 
 const enum EventNames {
+  Bbcode = "ckeditor5:bbcode",
   CollectMetaData = "ckeditor5:collect-meta-data",
   Destroy = "ckeditor5:destroy",
   DiscardRecoveredData = "ckeditor5:discard-recovered-data",
@@ -30,6 +31,9 @@ const enum EventNames {
   UploadAttachment = "ckeditor5:upload-attachment",
   UploadMedia = "ckeditor5:upload-media",
 }
+type BbcodeEventPayload = {
+  bbcode: string;
+};
 type CollectMetaDataEventPayload = {
   metaData: Record<string, unknown>;
 };
@@ -160,6 +164,21 @@ class EventListener {
 
   constructor(element: HTMLElement) {
     this.#element = element;
+  }
+
+  bbcode(callback: (payload: BbcodeEventPayload) => boolean): this {
+    this.#element.addEventListener(EventNames.Bbcode, (event: CustomEvent<BbcodeEventPayload>) => {
+      const result = callback(event.detail);
+      if (result === true) {
+        event.preventDefault();
+      } else if (result !== false) {
+        throw new Error(
+          "An event listener for the bbcode event did not return a boolean to indicate if the BBCode is handled.",
+        );
+      }
+    });
+
+    return this;
   }
 
   collectMetaData(callback: (payload: CollectMetaDataEventPayload) => void): this {
