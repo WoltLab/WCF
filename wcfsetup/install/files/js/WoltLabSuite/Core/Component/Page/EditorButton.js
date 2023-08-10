@@ -1,16 +1,24 @@
+/**
+ * Integrates an editor button to inserts links to CMS pages.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports", "../../Language", "../../Ui/Page/Search", "../Ckeditor/Event"], function (require, exports, Language_1, Search_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     function setupBbcode(ckeditor) {
-        ckeditor.sourceElement.addEventListener("bbcode", (evt) => {
-            const bbcode = evt.detail;
-            if (bbcode === "wsp") {
-                evt.preventDefault();
-                (0, Search_1.open)((articleId) => {
-                    ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
-                });
+        (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
+            if (bbcode !== "wsp") {
+                return false;
             }
+            (0, Search_1.open)((articleId) => {
+                ckeditor.insertText(`[wsp='${articleId}'][/wsp]`);
+            });
+            return true;
         });
     }
     function setup(element) {

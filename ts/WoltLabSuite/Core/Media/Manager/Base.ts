@@ -106,8 +106,8 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   /**
    * Handles clicks on the media manager button.
    */
-  protected _click(event: Event): void {
-    event.preventDefault();
+  protected _click(event?: Event): void {
+    event?.preventDefault();
 
     UiDialog.open(this);
   }

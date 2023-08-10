@@ -132,8 +132,15 @@
 @include screen-xs {
 	.messageTabMenu + .formSubmit,
 	.messageFooter .formSubmit {
+		column-gap: 10px;
 		display: grid;
+		grid-auto-columns: 1fr;
 		grid-auto-flow: column;
+
+		.button {
+			margin-left: 0;
+			margin-right: 0;
+		}
 	}
 }
 

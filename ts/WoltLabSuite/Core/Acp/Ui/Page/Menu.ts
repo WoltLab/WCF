@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import perfectScrollbar from "perfect-scrollbar";
+import PerfectScrollbar from "perfect-scrollbar";
 
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScreen from "../../../Ui/Screen";
@@ -18,6 +18,7 @@ const _menuItems = new Map<string, HTMLAnchorElement>();
 const _menuItemContainers = new Map<string, HTMLOListElement>();
 const _pageContainer = document.getElementById("pageContainer") as HTMLElement;
 let _perfectScrollbarActive = false;
+const _perfectScrollbars: Map<HTMLElement, PerfectScrollbar> = new Map();
 
 /**
  * Initializes the ACP menu navigation.
@@ -52,28 +53,27 @@ export function init(): void {
 
   window.addEventListener("resize", () => {
     if (_perfectScrollbarActive) {
-      perfectScrollbar.update(_acpPageMenu);
-      perfectScrollbar.update(_acpPageSubMenu);
+      _perfectScrollbars.get(_acpPageMenu)?.update();
+      _perfectScrollbars.get(_acpPageSubMenu)?.update();
     }
   });
 }
 
 function enablePerfectScrollbar(): void {
   const options = {
-    wheelPropagation: false,
-    swipePropagation: false,
     suppressScrollX: true,
+    wheelPropagation: false,
   };
 
-  perfectScrollbar.initialize(_acpPageMenu, options);
-  perfectScrollbar.initialize(_acpPageSubMenu, options);
+  _perfectScrollbars.set(_acpPageMenu, new PerfectScrollbar(_acpPageMenu, options));
+  _perfectScrollbars.set(_acpPageSubMenu, new PerfectScrollbar(_acpPageSubMenu, options));
 
   _perfectScrollbarActive = true;
 }
 
 function disablePerfectScrollbar(): void {
-  perfectScrollbar.destroy(_acpPageMenu);
-  perfectScrollbar.destroy(_acpPageSubMenu);
+  _perfectScrollbars.get(_acpPageMenu)?.destroy();
+  _perfectScrollbars.get(_acpPageSubMenu)?.destroy();
 
   _perfectScrollbarActive = false;
 }
@@ -114,7 +114,8 @@ function toggle(event: MouseEvent): void {
 
   if (_perfectScrollbarActive) {
     _acpPageSubMenu.scrollTop = 0;
-    perfectScrollbar.update(_acpPageSubMenu);
+
+    _perfectScrollbars.get(_acpPageSubMenu)?.update();
   }
 
   EventHandler.fire("com.woltlab.wcf.AcpMenu", "resize");

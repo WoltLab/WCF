@@ -2,6 +2,20 @@
 
 {event name='wysiwyg'}
 
+<script data-eager="true">
+{
+	let stylesheet = document.getElementById("ckeditor5-stylesheet");
+	if (stylesheet === null) {
+		stylesheet = document.createElement("link");
+		stylesheet.rel = "stylesheet";
+		stylesheet.type = "text/css";
+		stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
+		stylesheet.id = "ckeditor5-stylesheet";
+
+		document.head.append(stylesheet);
+	}
+}
+</script>
 <script data-relocate="true">
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",

@@ -143,11 +143,12 @@ function* findModelForRemoval(
   attributes: Record<string, string | number | boolean>,
 ): Generator<CkeElement> {
   if (element.is("element", model)) {
-    let isMatch = true;
-    Object.entries(attributes).forEach(([key, value]) => {
+    const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {
-        isMatch = false;
-      } else if (element.getAttribute(key) !== value) isMatch = false;
+        return false;
+      }
+
+      return String(element.getAttribute(key)) === value.toString();
     });
 
     if (isMatch) {
@@ -211,24 +212,6 @@ function initializeConfiguration(
   return configuration;
 }
 
-const stylesheetId = "ckeditor5-stylesheet";
-function injectCss(): HTMLLinkElement | null {
-  let stylesheet = document.getElementById(stylesheetId) as HTMLLinkElement | null;
-  if (stylesheet !== null) {
-    return null;
-  }
-
-  stylesheet = document.createElement("link");
-  stylesheet.rel = "stylesheet";
-  stylesheet.type = "text/css";
-  stylesheet.href = `${window.WSC_API_URL}style/ckeditor5.css`;
-  stylesheet.id = stylesheetId;
-
-  document.head.append(stylesheet);
-
-  return stylesheet;
-}
-
 export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
@@ -241,20 +224,7 @@ export async function setupCkeditor(
 
   setupLayer();
 
-  const injectedStylesheet = injectCss();
-
-  await Promise.all([
-    new Promise<void>((resolve) => {
-      if (injectedStylesheet === null) {
-        resolve();
-      } else {
-        injectedStylesheet.addEventListener("load", () => {
-          resolve();
-        });
-      }
-    }),
-    import("ckeditor5-bundle"),
-  ]);
+  await import("ckeditor5-bundle");
 
   await new Promise((resolve) => {
     window.requestAnimationFrame(resolve);

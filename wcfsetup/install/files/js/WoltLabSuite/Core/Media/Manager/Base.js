@@ -75,7 +75,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
          * Handles clicks on the media manager button.
          */
         _click(event) {
-            event.preventDefault();
+            event?.preventDefault();
             UiDialog.open(this);
         }
         /**
