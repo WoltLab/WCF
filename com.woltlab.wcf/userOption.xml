@@ -156,6 +156,14 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="colorScheme">
+				<categoryname>hidden</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions>system:wcf.style.setColorScheme.system
+light:wcf.style.setColorScheme.light
+dark:wcf.style.setColorScheme.dark</selectoptions>
+				<defaultvalue>system</defaultvalue>
+			</option>
 			<option name="timezone">
 				<categoryname>settings.general.date</categoryname>
 				<optiontype>timezone</optiontype>
