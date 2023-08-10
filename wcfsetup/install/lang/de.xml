@@ -4659,6 +4659,8 @@ Dateianhänge:
 		<item name="wcf.user.style"><![CDATA[Stil]]></item>
 		<item name="wcf.user.styles"><![CDATA[Stile]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Stil der Benutzeroberfläche]]></item>
+		<item name="wcf.user.style.colorScheme"><![CDATA[Bevorzugtes Farbschema]]></item>
+		<item name="wcf.user.style.colorScheme.description"><![CDATA[Die automatische Erkennung wendet das Farbschema basierend auf den Präferenzen Ihres Geräts an. Einige Stile verfügen möglicherweise nicht über angepasste Farbschemata.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[Ein sicheres Kennwort sollte mindestens 10 Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.strength"><![CDATA[Kennwortstärke]]></item>

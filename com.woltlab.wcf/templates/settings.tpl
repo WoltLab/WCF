@@ -64,10 +64,10 @@
 			</section>
 		{/if}
 		
-		{if $availableStyles|count > 1}
-			<section class="section" id="section_style">
-				<h2 class="sectionTitle">{lang}wcf.user.styles{/lang}</h2>
+		<section class="section" id="section_style">
+			<h2 class="sectionTitle">{lang}wcf.user.styles{/lang}</h2>
 				
+			{if $availableStyles|count > 1}
 				<dl>
 					<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
 					<dd>
@@ -80,10 +80,22 @@
 						<small>{lang}wcf.user.style.description{/lang}</small>
 					</dd>
 				</dl>
-				
-				{event name='styleFields'}
-			</section>
-		{/if}
+			{/if}
+			
+			<dl>
+				<dt><label for="colorScheme">{lang}wcf.user.style.colorScheme{/lang}</label></dt>
+				<dd>
+					<select id="colorScheme" name="colorScheme">
+						<option value="system"{if $colorScheme === 'system'} selected{/if}>{lang}wcf.style.setColorScheme.system{/lang}</option>
+						<option value="light"{if $colorScheme === 'light'} selected{/if}>{lang}wcf.style.setColorScheme.light{/lang}</option>
+						<option value="dark"{if $colorScheme === 'dark'} selected{/if}>{lang}wcf.style.setColorScheme.dark{/lang}</option>
+					</select>
+					<small>{lang}wcf.user.style.colorScheme.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			{event name='styleFields'}
+		</section>
 		
 		{if MODULE_TROPHY && $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 0 && $availableTrophies|count}
 			<section class="section" id="section_trophy">
