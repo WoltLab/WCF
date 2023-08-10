@@ -32,6 +32,7 @@ import { init as initSearch } from "./Ui/Search";
 import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 import { whenFirstSeen } from "./LazyLoader";
 import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
+import User from "./User"
 
 import type { ColorScheme } from "./Controller/Style/ColorScheme";
 
@@ -150,8 +151,8 @@ export function setup(options: BoostrapOptions): void {
 
   DomChangeListener.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
 
-  if (options.colorScheme === "system") {
-    void import("./Controller/Style/ColorScheme").then(({ setup }) => setup());
+  if (options.colorScheme === "system" && User.userId) {
+    void import("./Controller/Style/ColorScheme").then(({ setup }) => setup(options.colorScheme));
   }
 
   whenFirstSeen("[data-report-content]", () => {

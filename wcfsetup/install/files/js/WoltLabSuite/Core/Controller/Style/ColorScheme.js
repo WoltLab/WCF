@@ -5,6 +5,7 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/Builder", "../../Ui/Dropdown/Simple"], function (require, exports, Language_1, Builder_1, Simple_1) {
     "use strict";
@@ -21,12 +22,6 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
         }
         else {
             applySystemScheme();
-        }
-        try {
-            localStorage.setItem("wsc_colorScheme", currentScheme);
-        }
-        catch {
-            /* Ignore any errors when accessing the `localStorage`. */
         }
     }
     function applySystemScheme() {
@@ -71,20 +66,12 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Ui/Dropdown/B
             }
         });
     }
-    function setup() {
+    function setup(colorScheme) {
         const button = document.querySelector(".jsButtonStyleColorScheme");
         if (button) {
-            initializeButton(button);
+            //initializeButton(button);
         }
-        try {
-            const value = localStorage.getItem("wsc_colorScheme");
-            if (value === "light" || value === "dark") {
-                currentScheme = value;
-            }
-        }
-        catch {
-            /* Ignore any errors when accessing the `localStorage`. */
-        }
+        currentScheme = colorScheme;
         themeColor = document.querySelector('meta[name="theme-color"]');
         mediaQuery = matchMedia("(prefers-color-scheme: dark)");
         mediaQuery.addEventListener("change", () => {

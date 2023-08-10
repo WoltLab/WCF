@@ -5,6 +5,7 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @woltlabExcludeBundle tiny
  */
 
 import { getPhrase } from "WoltLabSuite/Core/Language";
@@ -25,12 +26,6 @@ function setScheme(scheme: ColorScheme): void {
     updateThemeColor();
   } else {
     applySystemScheme();
-  }
-
-  try {
-    localStorage.setItem("wsc_colorScheme", currentScheme);
-  } catch {
-    /* Ignore any errors when accessing the `localStorage`. */
   }
 }
 
@@ -81,21 +76,13 @@ function initializeButton(button: HTMLElement): void {
   });
 }
 
-export function setup(): void {
+export function setup(colorScheme: ColorScheme): void {
   const button = document.querySelector<HTMLElement>(".jsButtonStyleColorScheme");
   if (button) {
-    initializeButton(button);
+    //initializeButton(button);
   }
 
-  try {
-    const value = localStorage.getItem("wsc_colorScheme");
-    if (value === "light" || value === "dark") {
-      currentScheme = value;
-    }
-  } catch {
-    /* Ignore any errors when accessing the `localStorage`. */
-  }
-
+  currentScheme = colorScheme;
   themeColor = document.querySelector('meta[name="theme-color"]')!;
 
   mediaQuery = matchMedia("(prefers-color-scheme: dark)");

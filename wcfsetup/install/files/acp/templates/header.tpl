@@ -2,7 +2,7 @@
 <html
 	dir="{@$__wcf->getLanguage()->getPageDirection()}"
 	lang="{$__wcf->getLanguage()->getBcp47()}"
-	data-color-scheme="system"
+	data-color-scheme="{$__wcf->getStyleHandler()->getColorScheme()}"
 >
 <head>
 	<meta charset="utf-8">
@@ -50,17 +50,12 @@
 		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
 		var COMPILER_TARGET_DEFAULT = true;
 
+		{if $__wcf->getStyleHandler()->getColorScheme() === 'system'}
 		{
-			let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-			try {
-				const value = localStorage.getItem("wsc_colorScheme");
-				if (value === "light" || value === "dark") {
-					colorScheme = value;
-				}
-			} catch {}
-
+			const colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 			document.documentElement.dataset.colorScheme = colorScheme;
 		}
+		{/if}
 	</script>
 
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>
@@ -99,7 +94,8 @@
 			
 			AcpBootstrap.setup({
 				bootstrap: {
-					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if}
+					colorScheme: '{@$__wcf->getStyleHandler()->getColorScheme()|encodeJS}',
+					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if},
 				}
 			});
 		});

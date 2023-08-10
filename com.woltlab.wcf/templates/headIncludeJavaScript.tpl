@@ -22,16 +22,9 @@
 		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
 	{/if}
 
-	{if $__wcf->getStyleHandler()->getStyle()->hasDarkMode}
+	{if $__wcf->getStyleHandler()->getColorScheme() === 'system'}
 	{
-		let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-		try {
-			const value = localStorage.getItem("wsc_colorScheme");
-			if (value === "light" || value === "dark") {
-				colorScheme = value;
-			}
-		} catch {}
-
+		const colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 		document.documentElement.dataset.colorScheme = colorScheme;
 	}
 	{/if}
