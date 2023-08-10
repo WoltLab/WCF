@@ -144,9 +144,6 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.reactions.summary.listReactions');
 
         $event->preload('wcf.style.changeStyle');
-        $event->preload('wcf.style.setColorScheme.dark');
-        $event->preload('wcf.style.setColorScheme.light');
-        $event->preload('wcf.style.setColorScheme.system');
 
         $event->preload('wcf.user.activityPoint');
         $event->preload('wcf.user.language');

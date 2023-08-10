@@ -24,28 +24,14 @@
 		{assign var=__showStyleChanger value=false}
 	{/if}
 
-	{if $__boxesFooter|count || !$boxesFooter|empty || $__showStyleChanger || $__wcf->getStyleHandler()->showColorSchemeSelector()}
+	{if $__boxesFooter|count || !$boxesFooter|empty || $__showStyleChanger}
 		<div class="boxesFooter">
-			<div class="layoutBoundary{if $__showStyleChanger || $__wcf->getStyleHandler()->showColorSchemeSelector()} clearfix{/if}">
-				{hascontent}
+			<div class="layoutBoundary{if $__showStyleChanger} clearfix{/if}">
+				{if $__showStyleChanger}
 					<div class="styleChanger jsOnly">
-						{content}
-							{if $__showStyleChanger}
-								<button type="button" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</button>
-							{/if}
-							{if $__wcf->getStyleHandler()->showColorSchemeSelector()}
-								<button type="button" class="page__colorScheme jsButtonStyleColorScheme jsTooltip" title="{lang}wcf.style.setColorScheme{/lang}">
-									<span class="page__colorScheme--dark">
-										{icon name='moon' type='solid'}
-									</span>
-									<span class="page__colorScheme--light">
-										{icon name='sun' type='solid'}
-									</span>
-								</button>
-							{/if}
-						{/content}
+						<button type="button" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</button>
 					</div>
-				{/hascontent}
+				{/if}
 				{hascontent}
 					<div class="boxContainer">
 						{content}

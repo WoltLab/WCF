@@ -94,7 +94,7 @@
 			
 			AcpBootstrap.setup({
 				bootstrap: {
-					colorScheme: '{@$__wcf->getStyleHandler()->getColorScheme()|encodeJS}',
+					dynamicColorScheme: {if $__wcf->getStyleHandler()->getColorScheme() === 'system'}true{else}false{/if},
 					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if},
 				}
 			});

@@ -32,9 +32,6 @@ import { init as initSearch } from "./Ui/Search";
 import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 import { whenFirstSeen } from "./LazyLoader";
 import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
-import User from "./User"
-
-import type { ColorScheme } from "./Controller/Style/ColorScheme";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
@@ -53,7 +50,7 @@ window.WCF.Language.addObject = Language.addObject;
 window.__wcf_bc_eventHandler = EventHandler;
 
 export interface BoostrapOptions {
-  colorScheme: ColorScheme;
+  dynamicColorScheme: boolean;
   enableMobileMenu: boolean;
   pageMenuMainProvider: PageMenuMainProvider;
 }
@@ -151,8 +148,10 @@ export function setup(options: BoostrapOptions): void {
 
   DomChangeListener.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
 
-  if (options.colorScheme === "system" && User.userId) {
-    void import("./Controller/Style/ColorScheme").then(({ setup }) => setup(options.colorScheme));
+  if (options.dynamicColorScheme) {
+    void import("./Controller/Style/ColorScheme").then(({ setup }) => {
+      setup();
+    });
   }
 
   whenFirstSeen("[data-report-content]", () => {
