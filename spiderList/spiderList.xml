@@ -1660,4 +1660,8 @@
 	<spider ident="360Spider">
 		<name>360Spider</name>
 	</spider>
+	<spider ident="GPTBot/">
+		<name>GPTBot</name>
+		<url>https://openai.com/gptbot</url>
+	</spider>
 </data>
