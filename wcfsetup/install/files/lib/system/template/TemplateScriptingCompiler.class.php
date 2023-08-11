@@ -98,6 +98,7 @@ class TemplateScriptingCompiler
         'str_replace',
         'str_starts_with',
         'trim',
+        'ucfirst',
         'var_dump',
         'version_compare',
         'wcfDebug',
