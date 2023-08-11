@@ -140,7 +140,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

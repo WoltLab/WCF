@@ -58,23 +58,12 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[In the article]]></item>
 	</category>
 	<category name="wcf.acp.application">
-		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
-		<item name="wcf.acp.application.cookie.warning"><![CDATA[The setting below is used to establish a persistent login for your website; Keep in mind to update this value whenever the domain name changes. If you are unsure which value you need to provide, you can safely copy the value of “Domain”.]]></item>
-		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[The cookie domain cannot contain path components.]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[The cookie domain does not match the domain entered above (sub-domains like “www” can be omitted).]]></item>
-		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[If you are accessing this application through “https://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[The domain cannot contain path components.]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
 		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”.]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you are accessing this application through “https://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
-		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
 		<item name="wcf.acp.application.landingPage"><![CDATA[Entry Page]]></item>
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Default)]]></item>
-		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain Configuration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
@@ -325,7 +314,6 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Display Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries at the moment.]]></item>
 	</category>
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>

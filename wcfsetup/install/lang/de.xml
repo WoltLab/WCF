@@ -58,23 +58,12 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[Innerhalb des Artikels]]></item>
 	</category>
 	<category name="wcf.acp.application">
-		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
-		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass die Anmeldung gespeichert wird und eine automatische Anmeldung möglich ist. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diese Einstellungen anpassen, sollte sich die Domain geändert haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dir{else}Sollten Sie sich{/if} bei dem korrekten Wert nicht sicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}übernimm{else}übernehmen Sie{/if} bitte die exakte Angabe im Feld „Domain“.]]></item>
-		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
-		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Domain an, über die diese App erreichbar ist. Wenn die App zum Beispiel unter „https://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „www.example.com“ lauten.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[Dieser Pfad ist bereits durch die App „{$conflictApplication->getName()}“ belegt]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Pfad an, über den diese App erreichbar ist. Wenn die App zum Beispiel unter „https://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „/community/forum/“ lauten.]]></item>
-		<item name="wcf.acp.application.edit"><![CDATA[App bearbeiten]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[App bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.landingPage"><![CDATA[Einstiegsseite]]></item>
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Standard)]]></item>
-		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Seite an, die angezeigt wird, wenn diese App direkt aufgerufen wird.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain-Konfiguration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
@@ -347,7 +336,6 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Fehler]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Details anzeigen]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Fehlermeldung]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Datenimport]]></item>
