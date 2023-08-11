@@ -11,11 +11,11 @@ import * as Clipboard from "../../../Clipboard";
 import * as UiNotification from "../../Notification";
 import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
-import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
 import { dialogFactory } from "../../../Component/Dialog";
 import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import * as EventHandler from "../../../Event/Handler";
 
 type Label = string;
 type Value = string;
@@ -26,6 +26,15 @@ const shareButtons = new WeakSet<HTMLElement>();
 const offerNativeSharing = window.navigator.share !== undefined;
 
 let dialog: WoltlabCoreDialogElement | undefined = undefined;
+
+interface Provider {
+  selector: string;
+  share(): void;
+}
+
+interface Providers {
+  [key: string]: Provider;
+}
 
 /**
  * Copies the contents of one of the share dialog's input elements to the clipboard.
@@ -227,7 +236,7 @@ function openDialog(event: MouseEvent): void {
     }
 
     if (providerButtons) {
-      UiMessageShare.init();
+      initProviderButtons(dialog.content, link);
     }
   }
 
@@ -250,6 +259,81 @@ function getLink(button: HTMLElement): string {
   }
 
   return button.dataset.link!;
+}
+
+function initProviderButtons(container: HTMLElement, link: string): void {
+  const providers: Providers = {
+    facebook: {
+      selector: '.messageShareProvider[data-identifier="Facebook"]',
+      share(): void {
+        share("facebook", "https://www.facebook.com/sharer.php?u={pageURL}&t={text}", true, link);
+      },
+    },
+    reddit: {
+      selector: '.messageShareProvider[data-identifier="Reddit"]',
+      share(): void {
+        share("reddit", "https://ssl.reddit.com/submit?url={pageURL}", false, link);
+      },
+    },
+    twitter: {
+      selector: '.messageShareProvider[data-identifier="Twitter"]',
+      share(): void {
+        share("twitter", "https://twitter.com/share?url={pageURL}&text={text}", false, link);
+      },
+    },
+    linkedIn: {
+      selector: '.messageShareProvider[data-identifier="LinkedIn"]',
+      share(): void {
+        share("linkedIn", "https://www.linkedin.com/cws/share?url={pageURL}", false, link);
+      },
+    },
+    pinterest: {
+      selector: '.messageShareProvider[data-identifier="Pinterest"]',
+      share(): void {
+        share("pinterest", "https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}", false, link);
+      },
+    },
+    xing: {
+      selector: '.messageShareProvider[data-identifier="XING"]',
+      share(): void {
+        share("xing", "https://www.xing.com/social_plugins/share?url={pageURL}", false, link);
+      },
+    },
+    whatsApp: {
+      selector: '.messageShareProvider[data-identifier="WhatsApp"]',
+      share(): void {
+        window.location.href = "https://api.whatsapp.com/send?text=" + getPageDescription() + "%20" + link;
+      },
+    },
+  };
+
+  EventHandler.fire("com.woltlab.wcf.message.share", "shareProvider", {
+    container,
+    providers,
+    pageDescription: getPageDescription(),
+    pageUrl: link,
+  });
+
+  Object.values(providers).forEach((provider) => {
+    container.querySelector(provider.selector)?.addEventListener("click", () => provider.share());
+  });
+}
+
+function share(objectName: string, url: string, appendUrl: boolean, pageUrl: string): void {
+  window.open(
+    url.replace("{pageURL}", pageUrl).replace("{text}", getPageDescription() + (appendUrl ? `%20${pageUrl}` : "")),
+    objectName,
+    "height=600,width=600",
+  );
+}
+
+function getPageDescription(): string {
+  const title = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
+  if (title !== null) {
+    return encodeURIComponent(title.content);
+  }
+
+  return "";
 }
 
 export function setup(): void {
