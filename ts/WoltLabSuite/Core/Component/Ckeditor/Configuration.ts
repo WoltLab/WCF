@@ -201,7 +201,7 @@ class ConfigurationBuilder {
     if (this.#features.html) {
       this.#toolbar.push("htmlEmbed");
     } else {
-      this.#removePlugins.push("HtmlEmbed");
+      this.#removePlugins.push("HtmlEmbed", "WoltlabHtmlEmbed");
     }
   }
 
