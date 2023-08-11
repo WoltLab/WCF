@@ -646,7 +646,20 @@ html:not(.touch) .spColorBox {
 .spColorBox > span {
 	display: block;
 	height: 24px;
+	position: relative;
 	width: 24px;
+}
+.spColorBox > span::before {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+.spColorBox > span::after {
+	background-color: inherit;
+	content: "";
+	inset: 0;
+	position: absolute;
 }
 .spVariable,
 .spDescription {
