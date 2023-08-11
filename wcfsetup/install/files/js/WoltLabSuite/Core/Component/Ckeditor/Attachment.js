@@ -42,8 +42,8 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         });
     }
     function getInlineImageIds(element) {
-        const messageTabMenu = element.nextElementSibling;
-        if (!messageTabMenu || !messageTabMenu.classList.contains("messageTabMenu")) {
+        const messageTabMenu = document.querySelector(`.messageTabMenu[data-wysiwyg-container-id="${element.id}"]`);
+        if (!messageTabMenu) {
             return [];
         }
         const attachmentList = messageTabMenu.querySelector(".formAttachmentContent > .formAttachmentList");

@@ -76,8 +76,10 @@ function setupRemoveAttachment(ckeditor: CKEditor): void {
 }
 
 function getInlineImageIds(element: HTMLElement): number[] {
-  const messageTabMenu = element.nextElementSibling;
-  if (!messageTabMenu || !messageTabMenu.classList.contains("messageTabMenu")) {
+  const messageTabMenu = document.querySelector<HTMLElement>(
+    `.messageTabMenu[data-wysiwyg-container-id="${element.id}"]`,
+  );
+  if (!messageTabMenu) {
     return [];
   }
 
