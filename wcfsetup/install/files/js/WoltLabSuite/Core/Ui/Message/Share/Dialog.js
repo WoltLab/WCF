@@ -5,7 +5,7 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, DomTraverse, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1, Dialog_1, Language_1) {
+define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language", "../../../Event/Handler"], function (require, exports, tslib_1, DomTraverse, Clipboard, UiNotification, StringUtil, Listener_1, Providers_1, Dialog_1, Language_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -14,7 +14,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
     UiNotification = tslib_1.__importStar(UiNotification);
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    UiMessageShare = tslib_1.__importStar(UiMessageShare);
+    EventHandler = tslib_1.__importStar(EventHandler);
     const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
     let dialog = undefined;
@@ -183,7 +183,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
                 dialog.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
             }
             if (providerButtons) {
-                UiMessageShare.init();
+                initProviderButtons(dialog.content, link);
             }
         }
         dialog.show((0, Language_1.getPhrase)("wcf.message.share"));
@@ -201,6 +201,71 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
             return button.href;
         }
         return button.dataset.link;
+    }
+    function initProviderButtons(container, link) {
+        const providers = {
+            facebook: {
+                selector: '.messageShareProvider[data-identifier="Facebook"]',
+                share() {
+                    share("facebook", "https://www.facebook.com/sharer.php?u={pageURL}&t={text}", true, link);
+                },
+            },
+            reddit: {
+                selector: '.messageShareProvider[data-identifier="Reddit"]',
+                share() {
+                    share("reddit", "https://ssl.reddit.com/submit?url={pageURL}", false, link);
+                },
+            },
+            twitter: {
+                selector: '.messageShareProvider[data-identifier="Twitter"]',
+                share() {
+                    share("twitter", "https://twitter.com/share?url={pageURL}&text={text}", false, link);
+                },
+            },
+            linkedIn: {
+                selector: '.messageShareProvider[data-identifier="LinkedIn"]',
+                share() {
+                    share("linkedIn", "https://www.linkedin.com/cws/share?url={pageURL}", false, link);
+                },
+            },
+            pinterest: {
+                selector: '.messageShareProvider[data-identifier="Pinterest"]',
+                share() {
+                    share("pinterest", "https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}", false, link);
+                },
+            },
+            xing: {
+                selector: '.messageShareProvider[data-identifier="XING"]',
+                share() {
+                    share("xing", "https://www.xing.com/social_plugins/share?url={pageURL}", false, link);
+                },
+            },
+            whatsApp: {
+                selector: '.messageShareProvider[data-identifier="WhatsApp"]',
+                share() {
+                    window.location.href = "https://api.whatsapp.com/send?text=" + getPageDescription() + "%20" + link;
+                },
+            },
+        };
+        EventHandler.fire("com.woltlab.wcf.message.share", "shareProvider", {
+            container,
+            providers,
+            pageDescription: getPageDescription(),
+            pageUrl: link,
+        });
+        Object.values(providers).forEach((provider) => {
+            container.querySelector(provider.selector)?.addEventListener("click", () => provider.share());
+        });
+    }
+    function share(objectName, url, appendUrl, pageUrl) {
+        window.open(url.replace("{pageURL}", pageUrl).replace("{text}", getPageDescription() + (appendUrl ? `%20${pageUrl}` : "")), objectName, "height=600,width=600");
+    }
+    function getPageDescription() {
+        const title = document.querySelector('meta[property="og:title"]');
+        if (title !== null) {
+            return encodeURIComponent(title.content);
+        }
+        return "";
     }
     function setup() {
         registerButtons();
