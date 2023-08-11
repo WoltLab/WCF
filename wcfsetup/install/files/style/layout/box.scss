@@ -933,10 +933,21 @@
 			}
 		}
 	}
+}
 
-	.styleChanger {
-		float: right;
-		padding-left: 20px;
+.styleChanger {
+	float: right;
+	padding-left: 20px;
+
+	button {
+		color: var(--wcfFooterLink);
+	}
+}
+
+@media (hover: hover) {
+	.styleChanger button:hover {
+		color: var(--wcfFooterLinkActive);
+		text-decoration: underline;
 	}
 }
 
