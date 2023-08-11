@@ -24,6 +24,12 @@
 	fa-icon {
 		transform: scale(0.5625);
 		width: var(--icon-size);
+
+		/*
+			We need to override the positioning by the .box classes here
+			to prevent the icon from being moved too far to the left.
+		*/
+		position: static !important;
 	}
 }
 
