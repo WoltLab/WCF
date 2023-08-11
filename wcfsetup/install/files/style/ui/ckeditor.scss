@@ -210,11 +210,6 @@
 			background-color: var(--wcfButtonPrimaryBackgroundActive);
 		}
 	}
-
-	.ck.ck-toolbar__items .ck.ck-button:not(.ck-disabled, .ck-on):hover {
-		background: var(--ck-color-button-default-background);
-		color: var(--ck-color-text);
-	}
 }
 
 .ck-body-wrapper {

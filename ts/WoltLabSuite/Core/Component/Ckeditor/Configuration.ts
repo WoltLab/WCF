@@ -180,40 +180,28 @@ class ConfigurationBuilder {
   }
 
   #setupBlocks(): void {
-    const items: string[] = [];
-
     if (this.#features.table) {
-      items.push("insertTable");
+      this.#toolbar.push("insertTable");
     } else {
       this.#removePlugins.push("Table", "TableToolbar");
     }
 
-    items.push(this.#divider);
-
     if (this.#features.quoteBlock) {
-      items.push("blockQuote");
+      this.#toolbar.push("blockQuote");
     } else {
       this.#removePlugins.push("BlockQuote", "WoltlabBlockQuote");
     }
 
     if (this.#features.spoiler) {
-      items.push("spoiler");
+      this.#toolbar.push("spoiler");
     } else {
       this.#removePlugins.push("WoltlabSpoiler");
     }
 
     if (this.#features.html) {
-      items.push("htmlEmbed");
+      this.#toolbar.push("htmlEmbed");
     } else {
       this.#removePlugins.push("HtmlEmbed");
-    }
-
-    if (items.length > 0) {
-      this.#toolbar.push({
-        label: getPhrase("wcf.editor.button.group.block"),
-        icon: "plus",
-        items,
-      });
     }
   }
 

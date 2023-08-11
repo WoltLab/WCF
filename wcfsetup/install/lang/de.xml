@@ -3907,7 +3907,6 @@ Dateianhänge:
 		<item name="wcf.editor.table.rows"><![CDATA[Zeilen]]></item>
 
 		<item name="wcf.editor.button.article"><![CDATA[CMS-Artikel]]></item>
-		<item name="wcf.editor.button.group.block"><![CDATA[Block einfügen]]></item>
 		<item name="wcf.editor.button.group.format"><![CDATA[Text formatieren]]></item>
 		<item name="wcf.editor.button.group.list"><![CDATA[Listen]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
@@ -7564,5 +7563,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
+	<item name="wcf.editor.button.group.block"/>
 </delete>
 </language>
