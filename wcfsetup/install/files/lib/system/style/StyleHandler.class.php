@@ -304,6 +304,6 @@ class StyleHandler extends SingletonFactory
             return 'system';
         }
 
-        return WCF::getUser()->getUserOption('colorScheme');
+        return WCF::getUser()->getUserOption('colorScheme') ?? 'system';
     }
 }
