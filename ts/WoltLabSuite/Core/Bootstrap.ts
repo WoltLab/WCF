@@ -32,6 +32,7 @@ import { init as initSearch } from "./Ui/Search";
 import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 import { whenFirstSeen } from "./LazyLoader";
 import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
+import { setup as setupFormBuilderButton } from "./Component/FormBuilder/Button";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
@@ -103,6 +104,7 @@ export function setup(options: BoostrapOptions): void {
   UiObjectActionDelete.setup();
   UiObjectActionToggle.setup();
   initSearch();
+  setupFormBuilderButton();
 
   // Convert forms with `method="get"` into `method="post"`
   document.querySelectorAll("form[method=get]").forEach((form: HTMLFormElement) => {
