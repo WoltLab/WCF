@@ -100,6 +100,7 @@ class ExceptionMailerCronjob extends AbstractCronjob
         $email->setBody(new PlainTextMimePart($language->getDynamicVariable('wcf.acp.exceptionLog.email.body', [
             'date' => $timestamp,
             'files' => $files,
+            'logPath' => WCF_DIR . 'log/',
         ])));
         $email->send();
         RegistryHandler::getInstance()->set('com.woltlab.wcf', 'exceptionMailerTimestamp', TIME_NOW);

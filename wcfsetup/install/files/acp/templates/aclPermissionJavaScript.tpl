@@ -1,5 +1,5 @@
 {if $categoryName|isset && $categoryName|str_ends_with:'.*'}
-	{assign var='__categoryNameStart' value=$categoryName|substr:0:-1}
+	{assign var='__categoryNameStart' value=$categoryName|mb_substr:0:-1}
 {/if}
 <script data-relocate="true">
 	$(function() {

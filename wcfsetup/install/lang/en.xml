@@ -638,9 +638,9 @@ log/{$file}.txt{if !$data[verdict]|isset} ({#$data[count]} error{if $data[count]
 ==================
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
-This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+This protocol file is corrupted. Please check the protocol manually: {$logPath}{$file}.txt
 {elseif $data[verdict] == 'huge'}
-This protocol file is very large. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+This protocol file is very large. Please check the protocol manually: {$logPath}{$file}.txt
 {/if}
 {else}
 {foreach from=$data[messages] item=message}
@@ -2458,7 +2458,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.iconType.filePath"><![CDATA[Image]]></item>
 		<item name="wcf.acp.pip.bbcode.iconType.fontAwesome"><![CDATA[FontAwesome Icon]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath"><![CDATA[Path to icon file]]></item>
-		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}icon/</kbd>.]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -2469,10 +2469,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath2x"><![CDATA[HD Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option is only available for registered members-only user groups.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have. Additionally, the option type also determines how the final option value is determined if a user is in multiple user groups with different option values.]]></item>
@@ -5323,8 +5323,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:]]></item>
-		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
+You currently have {#$notificationCount} unread notification{if $notificationCount != 1}s{/if} older than 24 hours:]]></item>
+		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $remaining}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 
@@ -5335,8 +5335,8 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationUnsubscribe' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
-<p>You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:</p>]]></item>
-		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isHtmlEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
+<p>You currently have {#$notificationCount} unread notification{if $notificationCount != 1}s{/if} older than 24 hours:</p>]]></item>
+		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $remaining}Visit your <a href="{link controller='NotificationList' isHtmlEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
 

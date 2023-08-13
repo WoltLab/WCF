@@ -482,7 +482,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             TextFormField::create('iconPath')
                 ->objectProperty('wysiwygicon')
                 ->label('wcf.acp.pip.bbcode.iconPath')
-                ->description('wcf.acp.pip.bbcode.iconPath.description')
+                ->description(
+                    'wcf.acp.pip.bbcode.iconPath.description',
+                    ['path' => WCF_DIR . 'icon/']
+                )
                 ->required()
                 ->maximumLength(255)
                 ->addValidator(new FormFieldValidator('fileExists', static function (TextFormField $formField) {
