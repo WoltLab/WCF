@@ -17,8 +17,8 @@
 				</li>
 				
 				{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
-					<li>
-						<a href="{link controller='PackageUpdate'}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}">
+					<li id="outstandingUpdatesNotification">
+						<a href="{link controller='PackageList' searchForUpdates=true}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}">
 							{icon size=16 name='arrows-rotate'}
 							{icon size=32 name='arrows-rotate'}
 							<span class="badge badgeUpdate">{#$__wcf->getAvailableUpdates()}</span>

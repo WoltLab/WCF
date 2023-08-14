@@ -822,7 +822,14 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		}
 		
 		this._button = elBySel('.jsButtonSearchForUpdates');
-		if (this._button) this._button.addEventListener('click', this._click.bind(this));
+		if (this._button) {
+			this._button.addEventListener('click', this._click.bind(this));
+
+			const url = new URL(window.location.href);
+			if (url.searchParams.has("searchForUpdates")) {
+				this._click();
+			}
+		}
 	},
 	
 	/**
@@ -831,7 +838,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	 * @param {Event} event
 	 */
 	_click: function(event) {
-		event.preventDefault();
+		event?.preventDefault();
 		
 		if (this._button.classList.contains('disabled')) {
 			return;
