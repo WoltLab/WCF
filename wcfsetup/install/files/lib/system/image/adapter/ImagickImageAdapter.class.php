@@ -129,6 +129,9 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
      */
     public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true)
     {
+        $maxHeight = (int)$maxHeight;
+        $maxWidth = (int)$maxWidth;
+
         $thumbnail = clone $this->imagick;
 
         if (\in_array($thumbnail->getImageFormat(), self::$animatedFormats)) {

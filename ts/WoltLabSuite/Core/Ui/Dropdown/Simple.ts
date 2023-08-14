@@ -584,6 +584,11 @@ const UiDropdownSimple = {
         dropdown.classList.remove("dropdownOpen");
         _menus.get(containerId)!.classList.remove("dropdownOpen");
 
+        const button = dropdown.querySelector<HTMLElement>(".dropdownToggle");
+        if (button) {
+          button.setAttribute("aria-expanded", "false");
+        }
+
         notifyCallbacks(containerId, "close");
       }
     });

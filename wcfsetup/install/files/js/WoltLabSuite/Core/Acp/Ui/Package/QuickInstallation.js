@@ -16,6 +16,10 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", 
     let codeInput;
     function detectCode() {
         const value = codeInput.value.trim();
+        if (value === "") {
+            (0, Util_1.innerError)(codeInput, false);
+            return;
+        }
         let isValid = false;
         if (value.startsWith("WoltLab_StoreCode_Do_Not_Share_")) {
             const decodedValue = window.atob(value.replace(/^WoltLab_StoreCode_Do_Not_Share_/, ""));
@@ -106,16 +110,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", 
             // pasting the StoreCode into the input.
             void refreshPackageDatabase();
         });
-        codeInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                detectCode();
-            }
-        });
-        codeInput.addEventListener("paste", (event) => {
-            event.preventDefault();
-            const value = event.clipboardData.getData("text/plain");
-            codeInput.value = value;
+        codeInput.addEventListener("input", () => {
             detectCode();
         });
     }
