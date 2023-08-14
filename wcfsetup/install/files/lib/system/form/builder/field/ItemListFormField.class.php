@@ -245,6 +245,10 @@ class ItemListFormField extends AbstractFormField implements
                 throw new \LogicException("Unreachable");
         }
 
+        // If the input value is an empty string then the resulting array will
+        // contain exactly one empty string element.
+        $this->value = ArrayUtil::trim($this->value);
+
         return $this;
     }
 
