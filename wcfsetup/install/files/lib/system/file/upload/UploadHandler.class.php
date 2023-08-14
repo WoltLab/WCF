@@ -136,13 +136,21 @@ class UploadHandler extends SingletonFactory
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
      */
-    public function getRemovedFiledByFieldId($fieldId, $processFiles = true)
+    public function getRemovedFilesByFieldId($fieldId, $processFiles = true)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
         }
 
-        return $this->getRemovedFiledByInternalId($this->fields[$fieldId]->getInternalId(), $processFiles);
+        return $this->getRemovedFilesByInternalId($this->fields[$fieldId]->getInternalId(), $processFiles);
+    }
+
+    /**
+     * @deprecated 6.0 This method exists only because of a spelling error in the method name. Use `getRemovedFiledByFieldId` instead.
+     */
+    public function getRemovedFiledByFieldId($fieldId, $processFiles = true)
+    {
+        return $this->getRemovedFilesByFieldId($fieldId, $processFiles);
     }
 
     /**
@@ -152,7 +160,7 @@ class UploadHandler extends SingletonFactory
      * @param bool $processFiles
      * @return      UploadFile[]
      */
-    public function getRemovedFiledByInternalId($internalId, $processFiles = true)
+    public function getRemovedFilesByInternalId($internalId, $processFiles = true)
     {
         if (isset($this->getStorage()[$internalId])) {
             $files = $this->getStorage()[$internalId]['removedFiles'];
@@ -173,6 +181,14 @@ class UploadHandler extends SingletonFactory
         }
 
         return [];
+    }
+
+    /**
+     * @deprecated 6.0 This method exists only because of a spelling error in the method name. Use `getRemovedFilesByInternalId` instead.
+     */
+    public function getRemovedFiledByInternalId($internalId, $processFiles = true)
+    {
+        return $this->getRemovedFilesByInternalId($internalId, $processFiles);
     }
 
     /**
