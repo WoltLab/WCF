@@ -181,7 +181,7 @@ class UserRankAddForm extends AbstractForm
             $this->hideTitle = \intval($_POST['hideTitle']);
         }
 
-        $this->removedRankImages = UploadHandler::getInstance()->getRemovedFiledByFieldId('rankImage');
+        $this->removedRankImages = UploadHandler::getInstance()->getRemovedFilesByFieldId('rankImage');
         $rankImageFiles = UploadHandler::getInstance()->getFilesByFieldId('rankImage');
         $this->rankImageFile = \reset($rankImageFiles);
     }

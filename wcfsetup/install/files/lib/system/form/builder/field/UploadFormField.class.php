@@ -185,7 +185,7 @@ class UploadFormField extends AbstractFormField
             $this->registerField();
         }
 
-        return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getPrefixedId(), $processFiles);
+        return UploadHandler::getInstance()->getRemovedFilesByFieldId($this->getPrefixedId(), $processFiles);
     }
 
     /**

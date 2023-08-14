@@ -400,7 +400,7 @@ class StyleAddForm extends AbstractForm
 
         $this->uploads = [];
         foreach (\array_keys($this->getUploadFields()) as $field) {
-            $removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
+            $removedFiles = UploadHandler::getInstance()->getRemovedFilesByFieldId($field);
             if (!empty($removedFiles)) {
                 $this->uploads[$field] = null;
             }
@@ -412,7 +412,7 @@ class StyleAddForm extends AbstractForm
         }
 
         $this->customAssets = [
-            'removed' => UploadHandler::getInstance()->getRemovedFiledByFieldId('customAssets'),
+            'removed' => UploadHandler::getInstance()->getRemovedFilesByFieldId('customAssets'),
             'added' => UploadHandler::getInstance()->getFilesByFieldId('customAssets'),
         ];
     }
