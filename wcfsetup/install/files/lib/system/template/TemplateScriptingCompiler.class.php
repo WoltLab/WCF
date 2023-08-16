@@ -97,6 +97,7 @@ class TemplateScriptingCompiler
         'str_repeat',
         'str_replace',
         'str_starts_with',
+        'substr',
         'trim',
         'ucfirst',
         'var_dump',
