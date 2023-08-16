@@ -21,30 +21,36 @@ export function adoptPageOverlayContainer(element: HTMLElement): void {
  * in reverse order to ensure the correct placement.
  */
 export function releasePageOverlayContainer(element: HTMLElement): void {
-  const currentParent = adoptiveParents.pop();
-  if (element !== currentParent) {
-    // TODO: `cause` is cast to `any` as a work-around for TS2322
-    //       https://github.com/microsoft/TypeScript/pull/49639
-    throw new Error("Invalid call, cannot release the page overlay while it is still adopted by another element.", {
+  if (!adoptiveParents.includes(element)) {
+    throw new Error("Cannot release the page overlay from a container that (no longer) adopts it.", {
       cause: {
-        currentParent,
         element,
-      } as any,
+      },
     });
   }
 
-  const previousParent = adoptiveParents[adoptiveParents.length - 1];
-  if (previousParent === undefined) {
-    // TODO: `cause` is cast to `any` as a work-around for TS2322
-    //       https://github.com/microsoft/TypeScript/pull/49639
+  const index = adoptiveParents.indexOf(element);
+  if (index === 0) {
     throw new Error("Cannot release the page overlay, there is no previous owner.", {
       cause: {
         element,
-      } as any,
+      },
     });
   }
 
-  previousParent.append(container);
+  if (index === adoptiveParents.length - 1) {
+    adoptiveParents.pop();
+
+    const previousParent = adoptiveParents[adoptiveParents.length - 1];
+    previousParent.append(container);
+
+    return;
+  }
+
+  // `element` was an intermediate owner but is no longer holding a reference
+  // to it. This can happen when there are nested dialogs and the parent dialog
+  // is disposed while the new dialog is being shown.
+  adoptiveParents.splice(index, 1);
 }
 
 /**
