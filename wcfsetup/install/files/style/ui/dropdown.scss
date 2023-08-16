@@ -76,7 +76,7 @@
 
 	// prevents text being hidden when displayed in user panel
 	> span {
-		display: inline !important;
+		display: inline-flex !important;
 	}
 
 	&.dropdownToggle {
