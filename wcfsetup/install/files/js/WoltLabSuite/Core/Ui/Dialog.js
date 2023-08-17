@@ -234,7 +234,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     data.content.querySelector("input, textarea")?.focus();
                 }, 200);
             }
-            (0, PageOverlay_1.adoptPageOverlayContainer)(data.dialog);
+            (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
             return data;
         },
         /**
@@ -669,7 +669,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     break;
                 }
             }
-            (0, PageOverlay_1.releasePageOverlayContainer)(data.dialog);
+            (0, PageOverlay_1.releasePageOverlayContainer)(_container);
             UiScreen.pageOverlayClose();
             if (_activeDialog === null) {
                 _container.setAttribute("aria-hidden", "true");

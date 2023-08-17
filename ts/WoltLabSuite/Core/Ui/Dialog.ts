@@ -286,7 +286,7 @@ const UiDialog = {
       }, 200);
     }
 
-    adoptPageOverlayContainer(data.dialog);
+    adoptPageOverlayContainer(_container);
 
     return data;
   },
@@ -814,7 +814,7 @@ const UiDialog = {
       }
     }
 
-    releasePageOverlayContainer(data.dialog);
+    releasePageOverlayContainer(_container);
     UiScreen.pageOverlayClose();
 
     if (_activeDialog === null) {
