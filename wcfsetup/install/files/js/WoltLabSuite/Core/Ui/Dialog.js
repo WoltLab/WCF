@@ -664,7 +664,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             _activeDialog = null;
             for (let i = 0; i < _container.childElementCount; i++) {
                 const child = _container.children[i];
-                if (!Core.stringToBool(child.getAttribute("aria-hidden"))) {
+                if (child.classList.contains("dialogContainer") && !Core.stringToBool(child.getAttribute("aria-hidden"))) {
                     _activeDialog = child.dataset.id || "";
                     break;
                 }
