@@ -574,11 +574,6 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 	}
 }
 
-html.iOS .ck.ck-content {
-	/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
-	font-size: 16px;
-}
-
 @include screen-xs {
 	.ck.ck-input {
 		--ck-input-width: 100%;
@@ -591,5 +586,19 @@ html.iOS .ck.ck-content {
 
 	.ckeditor5__restoreDraft__buttons button[data-type="preview"] {
 		margin-right: 0;
+	}
+}
+
+/* Workarounds for iOS */
+html.iOS {
+	/* Fixed positioning does not work in iOS when the screen keyboard is open. */
+	.ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+		position: absolute !important;
+		top: 0 !important;
+	}
+
+	/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
+	.ck.ck-content {
+		font-size: 16px;
 	}
 }
