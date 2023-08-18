@@ -20,10 +20,15 @@ final class GroupBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
-        $groupID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
+        $content = $openingTag['attributes'][0];
+        if (!\str_starts_with($content, '@')) {
+            $content = "@{$content}";
+        }
+
+        $groupID = (!empty($openingTag['attributes'][1])) ? \intval($openingTag['attributes'][1]) : 0;
         $group = UserGroup::getGroupByID($groupID);
         if ($group === null || !$group->canBeMentioned()) {
-            return "[group]{$content}[/group]";
+            return $content;
         }
 
         return WCF::getTPL()->fetch('groupBBCodeTag', 'wcf', [

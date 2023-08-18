@@ -21,9 +21,14 @@ final class UserBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
-        $userID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
+        $content = $openingTag['attributes'][0];
+        if (!\str_starts_with($content, '@')) {
+            $content = "@{$content}";
+        }
+
+        $userID = (!empty($openingTag['attributes'][1])) ? \intval($openingTag['attributes'][1]) : 0;
         if (!$userID) {
-            return "[user]{$content}[/user]";
+            return $content;
         }
 
         /** @var UserProfile $userProfile */
