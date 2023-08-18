@@ -74,6 +74,7 @@ class TemplateScriptingCompiler
         'ltrim',
         'max',
         'mb_strlen',
+        'mb_strpos',
         'mb_strtolower',
         'mb_strtoupper',
         'mb_substr',
