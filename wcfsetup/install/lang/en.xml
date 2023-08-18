@@ -2963,7 +2963,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.group.styles"><![CDATA[Styles]]></item>
-		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[Please <a href="{link controller='TemplateGroupAdd'}{/link}">add a template group</a> before creating custom templates.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
