@@ -373,7 +373,14 @@ trait TI18nFormField
                 $values[$languageItem->languageID] = $languageItem->languageItemValue;
             }
 
-            I18nHandler::getInstance()->setValues($this->getPrefixedId(), $values);
+            if ($values === []) {
+                // The value should be an i18n value but the phrases are missing
+                // for an unknown reason. Recovery by forcing the value to be
+                // treated as plain text. See https://github.com/WoltLab/WCF/issues/5622
+                I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value, true);
+            } else {
+                I18nHandler::getInstance()->setValues($this->getPrefixedId(), $values);
+            }
         } else {
             I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value, !$this->isI18nRequired());
         }
