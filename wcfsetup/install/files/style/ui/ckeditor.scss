@@ -574,12 +574,12 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 	}
 }
 
-@include screen-xs {
-	html.iOS .ck.ck-content {
-		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
-		font-size: 16px;
-	}
+html.iOS .ck.ck-content {
+	/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
+	font-size: 16px;
+}
 
+@include screen-xs {
 	.ck.ck-input {
 		--ck-input-width: 100%;
 	}
