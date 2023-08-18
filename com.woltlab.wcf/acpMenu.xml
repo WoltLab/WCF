@@ -338,7 +338,7 @@
 		<!-- content -->
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>3</showorder>
-			<icon>file-lines</icon>
+			<icon solid="true">file-lines</icon>
 		</acpmenuitem>
 		<!-- cms -->
 		<acpmenuitem name="wcf.acp.menu.link.cms">
@@ -519,7 +519,7 @@
 		<!-- application -->
 		<acpmenuitem name="wcf.acp.menu.link.application">
 			<showorder>4</showorder>
-			<icon>comments</icon>
+			<icon solid="true">comments</icon>
 		</acpmenuitem>
 		<!-- /application -->
 		<!-- customization -->
