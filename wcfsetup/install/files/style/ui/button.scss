@@ -21,12 +21,15 @@ input[type="submit"],
 .button,
 a.button {
 	// a.button is required to override link formatting, such as drop-down buttons
+	align-items: center;
 	background-color: var(--wcfButtonBackground);
 	border-radius: var(--wcfBorderRadius);
 	border-width: 0;
 	color: var(--wcfButtonText);
+	// `0.25em` is the average width of a space that previously separated elements.
+	column-gap: 0.25em;
 	cursor: pointer;
-	display: inline-block;
+	display: inline-flex;
 	font-weight: 400;
 	margin: 0;
 	padding: 8px 18px;
