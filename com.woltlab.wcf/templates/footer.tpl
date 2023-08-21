@@ -20,51 +20,14 @@
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</div>
-				
-			{capture assign='__sidebarRightContent'}
-				{event name='boxesSidebarRightTop'}
-				
-				{* WCF2.1 Fallback *}
-				{if !$sidebar|empty}
-					{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
-						{@$sidebar}
-					{/if}
-				{/if}
-				
-				{if !$sidebarRight|empty}
-					{@$sidebarRight}
-				{/if}
-				
-				{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-					{@$box->render()}
-				{/foreach}
-				
-				{event name='boxesSidebarRightBottom'}
-			{/capture}
-				
-			{if $__sidebarRightContent|trim}
+			
+			{hascontent}
 				<aside class="sidebar boxesSidebarRight" aria-label="{lang}wcf.page.sidebar.right{/lang}">
 					<div class="boxContainer">
-						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
-							<div class="box boxBorderless">
-								<div class="boxContent">
-									{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
-								</div>
-							</div>
-						{/if}
-							
-						{@$__sidebarRightContent}	
-						
-						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
-							<div class="box boxBorderless">
-								<div class="boxContent">
-									{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
-								</div>
-							</div>
-						{/if}
+						{content}{@$__sidebarRightContent}{/content}
 					</div>
 				</aside>
-			{/if}
+			{/hascontent}
 		</div>
 	</section>
 	

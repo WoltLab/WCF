@@ -110,14 +110,13 @@ html.iOS select {
 	.content {
 		flex: 1 1 0px;
 
-		// sidebar follows
-		&:not(:last-child) {
+		&.content--sidebar-right {
 			flex-basis: calc(100% - 340px);
-			max-width: calc(100% - 340px); // IE fix
-		}
+			max-width: calc(100% - 340px);
 
-		& + .sidebar {
-			margin-left: 30px;
+			& + .sidebar {
+				margin-left: 30px;
+			}
 		}
 	}
 
