@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d94553c231572f020140e0c1ed535635",
+    "content-hash": "19268d8275d6b8c74c4fc8303d9cb0f2",
     "packages": [
         {
             "name": "cuyz/valinor",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "229098184cf5877ec01305461cdcb8a73379bf5b"
+                "reference": "668cd3f0f95c57d75981a31d63b5b1422606bc7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/229098184cf5877ec01305461cdcb8a73379bf5b",
-                "reference": "229098184cf5877ec01305461cdcb8a73379bf5b",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/668cd3f0f95c57d75981a31d63b5b1422606bc7e",
+                "reference": "668cd3f0f95c57d75981a31d63b5b1422606bc7e",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CuyZ/Valinor/issues",
-                "source": "https://github.com/CuyZ/Valinor/tree/1.4.0"
+                "source": "https://github.com/CuyZ/Valinor/tree/1.5.0"
             },
             "funding": [
                 {
@@ -77,20 +77,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-17T11:25:01+00:00"
+            "time": "2023-08-07T18:29:08+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.3.2",
+            "version": "v3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "782ca5968ab8b954773518e9e49a6f892a34b2a8"
+                "reference": "adfb1f505deb6384dc8b39804c5065dd3c8c8c0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/782ca5968ab8b954773518e9e49a6f892a34b2a8",
-                "reference": "782ca5968ab8b954773518e9e49a6f892a34b2a8",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/adfb1f505deb6384dc8b39804c5065dd3c8c8c0a",
+                "reference": "adfb1f505deb6384dc8b39804c5065dd3c8c8c0a",
                 "shasum": ""
             },
             "require": {
@@ -130,7 +130,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.2"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.3"
             },
             "funding": [
                 {
@@ -138,7 +138,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-10T18:51:20+00:00"
+            "time": "2023-08-10T19:36:49+00:00"
         },
         {
             "name": "erusev/parsedown",

@@ -339,6 +339,7 @@ return array(
     'CuyZ\\Valinor\\Utility\\Reflection\\PhpParser' => $vendorDir . '/cuyz/valinor/src/Utility/Reflection/PhpParser.php',
     'CuyZ\\Valinor\\Utility\\Reflection\\Reflection' => $vendorDir . '/cuyz/valinor/src/Utility/Reflection/Reflection.php',
     'CuyZ\\Valinor\\Utility\\Reflection\\TokenParser' => $vendorDir . '/cuyz/valinor/src/Utility/Reflection/TokenParser.php',
+    'CuyZ\\Valinor\\Utility\\String\\StringCutter' => $vendorDir . '/cuyz/valinor/src/Utility/String/StringCutter.php',
     'CuyZ\\Valinor\\Utility\\String\\StringFormatter' => $vendorDir . '/cuyz/valinor/src/Utility/String/StringFormatter.php',
     'CuyZ\\Valinor\\Utility\\String\\StringFormatterError' => $vendorDir . '/cuyz/valinor/src/Utility/String/StringFormatterError.php',
     'CuyZ\\Valinor\\Utility\\TypeHelper' => $vendorDir . '/cuyz/valinor/src/Utility/TypeHelper.php',

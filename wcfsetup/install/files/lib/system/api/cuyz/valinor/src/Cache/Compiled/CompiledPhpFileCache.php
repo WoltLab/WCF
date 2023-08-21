@@ -44,8 +44,7 @@ final class CompiledPhpFileCache implements CacheInterface
     public function __construct(
         private string $cacheDir,
         private CacheCompiler $compiler
-    ) {
-    }
+    ) {}
 
     public function has($key): bool
     {
@@ -114,6 +113,10 @@ final class CompiledPhpFileCache implements CacheInterface
 
     public function clear(): bool
     {
+        if (! is_dir($this->cacheDir)) {
+            return true;
+        }
+
         $success = true;
 
         /** @var FilesystemIterator $file */

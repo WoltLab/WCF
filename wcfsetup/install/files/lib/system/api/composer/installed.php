@@ -20,18 +20,18 @@
             'dev_requirement' => false,
         ),
         'cuyz/valinor' => array(
-            'pretty_version' => '1.4.0',
-            'version' => '1.4.0.0',
-            'reference' => '229098184cf5877ec01305461cdcb8a73379bf5b',
+            'pretty_version' => '1.5.0',
+            'version' => '1.5.0.0',
+            'reference' => '668cd3f0f95c57d75981a31d63b5b1422606bc7e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../cuyz/valinor',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'dragonmantank/cron-expression' => array(
-            'pretty_version' => 'v3.3.2',
-            'version' => '3.3.2.0',
-            'reference' => '782ca5968ab8b954773518e9e49a6f892a34b2a8',
+            'pretty_version' => 'v3.3.3',
+            'version' => '3.3.3.0',
+            'reference' => 'adfb1f505deb6384dc8b39804c5065dd3c8c8c0a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../dragonmantank/cron-expression',
             'aliases' => array(),
@@ -187,8 +187,8 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '^1.1 || ^2.0',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '^1.1 || ^2.0',
             ),
         ),
         'psr/http-message' => array(
@@ -203,8 +203,8 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '^1.1 || ^2.0',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '^1.1 || ^2.0',
             ),
         ),
         'psr/http-server-handler' => array(

@@ -521,6 +521,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Utility\\Reflection\\PhpParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/PhpParser.php',
         'CuyZ\\Valinor\\Utility\\Reflection\\Reflection' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/Reflection.php',
         'CuyZ\\Valinor\\Utility\\Reflection\\TokenParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/TokenParser.php',
+        'CuyZ\\Valinor\\Utility\\String\\StringCutter' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/String/StringCutter.php',
         'CuyZ\\Valinor\\Utility\\String\\StringFormatter' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/String/StringFormatter.php',
         'CuyZ\\Valinor\\Utility\\String\\StringFormatterError' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/String/StringFormatterError.php',
         'CuyZ\\Valinor\\Utility\\TypeHelper' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/TypeHelper.php',
