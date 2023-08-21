@@ -427,7 +427,7 @@ final class WCFSetup extends WCF
                         'wcf',
                         [
                             'system' => $system,
-                            'nextStep' => 'unzipFiles',
+                            'nextStep' => 'configureDB',
                         ]
                     )
                 );
