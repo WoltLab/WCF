@@ -627,8 +627,10 @@ const UiDialog = {
     const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
     contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
 
-    const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
-    data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+    if (data.dialog.style.getPropertyValue("--translate-x") === "") {
+      const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
+      data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+    }
 
     const callbackObject = _dialogToObject.get(id);
     //noinspection JSUnresolvedVariable
