@@ -94,9 +94,14 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
                 ckeditor: this,
             });
             if ((0, Environment_1.browser)() === "safari" && !(0, Environment_1.touch)()) {
+                // Safari sometimes suffers from a “reverse typing” effect caused by the
+                // improper shift of the focus out of the editing area.
+                // https://github.com/ckeditor/ckeditor5/issues/14702
                 const editor = this.#editor.ui.element;
                 editor.focus();
-                editor.blur();
+                window.setTimeout(() => {
+                    editor.blur();
+                }, 0);
             }
         }
         get element() {
