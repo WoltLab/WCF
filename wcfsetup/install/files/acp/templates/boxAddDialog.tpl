@@ -33,7 +33,7 @@
 		
 		const boxAddDialog = new AcpUiBoxAdd(
 			'{link controller='BoxAdd' encode=false}{literal}boxType={$boxType}&isMultilingual={$isMultilingual}{/literal}{/link}',
-			{if $availableLanguages|count > 0}true{else}false{/if}
+			{if $availableLanguages|count > 1}true{else}false{/if}
 		);
 		
 		{if $showBoxAddDialog}
