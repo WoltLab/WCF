@@ -477,7 +477,6 @@
 }
 
 .messageFooterGroup {
-	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
 
@@ -490,6 +489,7 @@
 	}
 
 	> woltlab-core-reaction-summary {
+		align-self: center;
 		flex: 0 1 auto;
 
 		@include wcfFontSmall;
