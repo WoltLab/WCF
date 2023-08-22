@@ -22,7 +22,12 @@ define(["require", "exports"], function (require, exports) {
      * Escapes special HTML-characters within a string
      */
     function escapeHTML(string) {
-        return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return String(string)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
     }
     exports.escapeHTML = escapeHTML;
     /**
