@@ -31,9 +31,9 @@ a.button {
 	cursor: pointer;
 	display: inline-flex;
 	font-weight: 400;
+	justify-content: center;
 	margin: 0;
 	padding: 8px 18px;
-	text-align: center;
 	text-decoration: none;
 
 	// input elements do not inherit font family, size and line-height from body
