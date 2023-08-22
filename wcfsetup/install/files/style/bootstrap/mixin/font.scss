@@ -25,7 +25,7 @@
 }
 
 @mixin wcfFontHeadline {
-	font-weight: 600;
+	font-weight: 400;
 	line-height: 1.28;
 
 	@include screen-md-up {
