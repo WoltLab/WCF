@@ -246,7 +246,7 @@
 
       const url = new URL(this.url);
       url.search += url.search !== "" ? "&" : "?";
-      url.search += (new URLSearchParams([["pageNo", page.toString()]])).toString();
+      url.search += new URLSearchParams([["pageNo", page.toString()]]).toString();
 
       return url.toString();
     }

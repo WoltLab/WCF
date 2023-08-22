@@ -58,7 +58,10 @@ class PasswordStrength {
   private readonly score = document.createElement("span");
   private readonly verdictResult = document.createElement("input");
 
-  constructor(private readonly input: HTMLInputElement, options: Partial<Options>) {
+  constructor(
+    private readonly input: HTMLInputElement,
+    options: Partial<Options>,
+  ) {
     void import("zxcvbn").then(({ default: zxcvbn }) => {
       this.zxcvbn = zxcvbn;
 

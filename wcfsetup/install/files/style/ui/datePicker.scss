@@ -7,7 +7,9 @@
 .datePicker {
 	background-color: var(--wcfDropdownBackground);
 	border-radius: var(--wcfBorderRadius);
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	box-shadow:
+		0 2px 6px rgba(0, 0, 0, 0.16),
+		0 3px 6px rgba(0, 0, 0, 0.23);
 	color: var(--wcfDropdownText);
 	display: none;
 	position: fixed;

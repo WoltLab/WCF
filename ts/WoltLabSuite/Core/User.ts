@@ -7,7 +7,11 @@
  */
 
 class User {
-  constructor(readonly userId: number, readonly username: string, readonly link: string) {}
+  constructor(
+    readonly userId: number,
+    readonly username: string,
+    readonly link: string,
+  ) {}
 }
 
 let user: User;

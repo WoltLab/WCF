@@ -190,8 +190,8 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
 </div>
 <small class="googleMapsDirectionsGoogleLinkContainer">
   <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${Language.get(
-        "wcf.map.route.viewOnGoogleMaps",
-      )}</a>
+    "wcf.map.route.viewOnGoogleMaps",
+  )}</a>
 </small>
 <dl>
   <dt>${Language.get("wcf.map.route.origin")}</dt>

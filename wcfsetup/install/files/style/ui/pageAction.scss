@@ -37,7 +37,9 @@
 	.pageActionButton,
 	.pageActionButtonToTop {
 		opacity: 0;
-		transition: visibility 0.12s linear, opacity 0.12s linear;
+		transition:
+			visibility 0.12s linear,
+			opacity 0.12s linear;
 		visibility: hidden;
 
 		&[aria-hidden="false"] {
