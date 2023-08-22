@@ -208,15 +208,21 @@ input {
 }
 
 .formError {
+	--color-error: #c00;
+
 	dt {
-		color: rgba(204, 0, 1, 1) !important;
+		color: var(--color-error) !important;
 	}
 
 	input,
 	select,
 	textarea {
-		border-color: rgba(204, 0, 1, 1) !important;
+		border-color: var(--color-error) !important;
 	}
+}
+
+html[data-color-scheme="dark"] .formError {
+	--color-error: #ff4747;
 }
 
 /* grid-based form controls */
