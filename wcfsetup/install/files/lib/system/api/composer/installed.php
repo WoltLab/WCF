@@ -297,12 +297,27 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'symfony/polyfill-php80' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
         'symfony/polyfill-php82' => array(
             'pretty_version' => 'v1.27.0',
             'version' => '1.27.0.0',
             'reference' => '80ddf7bfa17ef7b06db4e6d007a95bf584e07b44',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php82',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-php83' => array(
+            'pretty_version' => 'v1.27.0',
+            'version' => '1.27.0.0',
+            'reference' => '508c652ba3ccf69f8c97f251534f229791b52a57',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-php83',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

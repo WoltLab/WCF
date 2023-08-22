@@ -30,7 +30,11 @@
         "scssphp/scssphp": "^1.11",
         "sebastian/diff": "^5.0.3",
         "symfony/polyfill-php82": "^1.27.0",
+        "symfony/polyfill-php83": "^1.27",
         "willdurand/negotiation": "^3.1"
+    },
+    "replace": {
+        "symfony/polyfill-php80": "*"
     },
     "type": "project"
 }

@@ -1025,6 +1025,7 @@ return array(
     'Symfony\\Polyfill\\Php82\\NoDynamicProperties' => $vendorDir . '/symfony/polyfill-php82/NoDynamicProperties.php',
     'Symfony\\Polyfill\\Php82\\Random\\Engine\\Secure' => $vendorDir . '/symfony/polyfill-php82/Random/Engine/Secure.php',
     'Symfony\\Polyfill\\Php82\\SensitiveParameterValue' => $vendorDir . '/symfony/polyfill-php82/SensitiveParameterValue.php',
+    'Symfony\\Polyfill\\Php83\\Php83' => $vendorDir . '/symfony/polyfill-php83/Php83.php',
     'Webmozart\\Assert\\Assert' => $vendorDir . '/webmozart/assert/src/Assert.php',
     'Webmozart\\Assert\\InvalidArgumentException' => $vendorDir . '/webmozart/assert/src/InvalidArgumentException.php',
     'Webmozart\\Assert\\Mixin' => $vendorDir . '/webmozart/assert/src/Mixin.php',
