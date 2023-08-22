@@ -10,6 +10,10 @@
 		cursor: text;
 	}
 
+	&:focus-within {
+		border-color: var(--wcfInputBorderActive);
+	}
+
 	> .item,
 	> .input {
 		flex: 0 0 auto;
