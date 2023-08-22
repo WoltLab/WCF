@@ -203,6 +203,7 @@ a.button {
 	@include inlineList;
 
 	> li {
+		display: flex;
 		margin-bottom: 1px;
 
 		&:not(:last-child) {
