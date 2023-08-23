@@ -35,6 +35,11 @@
 					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
 					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
+
+				<li>
+					{icon name='eye'}
+					{lang}wcf.article.articleViews{/lang}
+				</li>
 				
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
@@ -46,11 +51,6 @@
 						<meta itemprop="userInteractionCount" content="{@$article->getDiscussionProvider()->getDiscussionCount()}">
 					</li>
 				{/if}
-				
-				<li>
-					{icon name='eye'}
-					{lang}wcf.article.articleViews{/lang}
-				</li>
 				
 				{if $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
 				
