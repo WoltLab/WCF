@@ -1065,6 +1065,16 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
 		<item name="wcf.acp.language.locale.description"><![CDATA[Die ausgewählte Region beeinflusst Datumsangaben und die Formatierung von Zahlen.]]></item>
 	</category>
+	<category name="wcf.acp.license">
+		<item name="wcf.acp.license"><![CDATA[Lizensierte Produkte]]></item>
+		<item name="wcf.acp.license.licenseNo"><![CDATA[Lizenz {$licenseNumber}]]></item>
+		<item name="wcf.acp.license.developerLicense"><![CDATA[{icon name='wrench'} <strong>Entwickler-Lizenz</strong><br>
+<br>
+Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwickler sowie zum Betrieb von Demo-Installationen. Berechtigt nicht zum Einsatz der Software in produktiven Umgebungen.]]></item>
+		<item name="wcf.acp.license.package.install"><![CDATA[Installieren]]></item>
+		<item name="wcf.acp.license.package.installed"><![CDATA[Bereits installiert]]></item>
+		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
+	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>

@@ -6,6 +6,7 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\package\Package;
+use wcf\data\package\update\PackageUpdate;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -17,16 +18,15 @@ final class LicensePage extends AbstractPage
     // TODO: This should be the actual menu item.
     public $activeMenuItem = 'wcf.acp.menu.link.package';
 
-    // TODO: This untyped array is awful, maybe use a custom object intead and
-    // ask Valinor to hydrate it?
     private array $licenseData;
 
-    // TODO: This could be part of the aforementioned custom object.
     private int $licenseNumber;
 
     private array $installedPackages;
 
     private array $installablePackages = [];
+
+    private array $packageUpdates = [];
 
     public function readData()
     {
@@ -46,9 +46,37 @@ final class LicensePage extends AbstractPage
         );
         $this->installedPackages = $this->getInstalledPackages($identifiers);
 
-        $identifiers = \array_diff($identifiers, $this->installedPackages);
+        $identifiers = \array_diff($identifiers, \array_keys($this->installedPackages));
+        $identifiers = $this->removeUnknownPackages($identifiers);
+
         if ($identifiers !== []) {
             $this->installablePackages = $this->getInstallablePackages($identifiers);
+            $this->packageUpdates = $this->getPackageUpdates($this->installablePackages);
+        }
+
+        foreach (['woltlab', 'pluginstore'] as $type) {
+            $this->licenseData[$type] = \array_filter(
+                $this->licenseData[$type],
+                function (string $package) use ($identifiers) {
+                    if (isset($this->installedPackages[$package])) {
+                        return true;
+                    }
+
+                    return \in_array($package, $identifiers);
+                },
+                \ARRAY_FILTER_USE_KEY
+            );
+
+            \uksort($this->licenseData[$type], function ($packageA, $packageB) {
+                $a = $this->installedPackages[$packageA] ?? $this->packageUpdates[$packageA];
+                $b = $this->installedPackages[$packageB] ?? $this->packageUpdates[$packageB];
+
+                if ($a->isApplication === $b->isApplication) {
+                    return $a->getName() <=> $b->getName();
+                }
+
+                return $b->isApplication <=> $a->isApplication;
+            });
         }
 
         // TODO: This might need to use `getAuthData()` to inject the correct
@@ -69,21 +97,68 @@ final class LicensePage extends AbstractPage
             'licenseNumber' => $this->licenseNumber,
             'installedPackages' => $this->installedPackages,
             'installablePackages' => $this->installablePackages,
+            'packageUpdates' => $this->packageUpdates,
         ]);
     }
 
+    /**
+     * @return array<string, Package>
+     */
     private function getInstalledPackages(array $identifiers): array
     {
+        if ($identifiers === []) {
+            return [];
+        }
+
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("package IN (?)", [$identifiers]);
 
-        $sql = "SELECT  package
+        $sql = "SELECT  *
                 FROM    wcf1_package
                 " . $conditions;
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
-        return $statement->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $packages = [];
+        while ($package = $statement->fetchObject(Package::class)) {
+            $packages[$package->package] = $package;
+        }
+
+        return $packages;
+    }
+
+    private function removeUnknownPackages(array $identifiers): array
+    {
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package IN (?)", [$identifiers]);
+        $sql = "SELECT  package
+                FROM    wcf1_package_update
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * @return array<string, PackageUpdate>
+     */
+    private function getPackageUpdates(array $packages): array
+    {
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package IN (?)", [\array_keys($packages)]);
+        $sql = "SELECT  *
+                FROM    wcf1_package_update
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+
+        $packageUpdates = [];
+        while ($packageUpdate = $statement->fetchObject(PackageUpdate::class)) {
+            $packageUpdates[$packageUpdate->package] = $packageUpdate;
+        }
+
+        return $packageUpdates;
     }
 
     // Stolen from PackageUpdateAction::search() and slightly modified.
