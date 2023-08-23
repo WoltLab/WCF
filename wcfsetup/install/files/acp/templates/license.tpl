@@ -62,9 +62,16 @@
 
                         <td>
                             {if $package|in_array:$installedPackages}
-                                TODO: Installed.
+                                <span class="green">
+                                    {icon name='check'}
+                                    TODO: Installed
+                                </span>
                             {elseif $installablePackages[$package]|isset}
-                                TODO: #{$installablePackages[$package]}
+                                <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
+                                    TODO: Install {$installablePackages[$package]}
+                                </button>
+                            {else}
+                                TODO: Not available.
                             {/if}
                         </td>
                     </tr>
@@ -104,9 +111,16 @@
 
                         <td>
                             {if $package|in_array:$installedPackages}
-                                TODO: Installed.
+                                <span class="green">
+                                    {icon name='check'}
+                                    TODO: Installed
+                                </span>
                             {elseif $installablePackages[$package]|isset}
-                                TODO: #{$installablePackages[$package]}
+                                <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
+                                    TODO: Install {$installablePackages[$package]}
+                                </button>
+                            {else}
+                                TODO: Not available.
                             {/if}
                         </td>
                     </tr>
@@ -115,5 +129,13 @@
         </table>
     </div>
 </section>
+
+<script data-relocate="true">
+    require(["WoltLabSuite/Core/Acp/Component/License"], ({ setup }) => {
+        {jsphrase name='wcf.acp.package.install.title'}
+        
+        setup();
+    });
+</script>
 
 {include file='footer'}

@@ -86,7 +86,7 @@ final class LicensePage extends AbstractPage
         return $statement->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
-    // TODO: Stolen from PackageUpdateAction::search() and slightly modified.
+    // Stolen from PackageUpdateAction::search() and slightly modified.
     private function getInstallablePackages(array $identifiers): array
     {
         $availableUpdateServers = \array_filter(
@@ -250,14 +250,28 @@ final class LicensePage extends AbstractPage
             }
         }
 
-        return $availablePackages;
+        if ($availablePackages === []) {
+            return [];
+        }
+
+        // Retrieve the actual version numbers that match the package update ids.
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("packageUpdateVersionID IN (?)", [\array_values($availablePackages)]);
+        $sql = "SELECT  packageUpdateVersionID, packageVersion
+                FROM    wcf1_package_update_version
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $packageVersions = $statement->fetchMap('packageUpdateVersionID', 'packageVersion');
+
+        return \array_map(fn ($id) => $packageVersions[$id], $availablePackages);
     }
 
     /**
-     * TODO: Stolen from PackageUpdateAction::canInstall()
-     *
      * Validates dependencies and exclusions of a package,
      * optionally limited by a minimum version number.
+     *
+     * Stolen from PackageUpdateAction::canInstall()
      *
      * @param int $packageUpdateID
      * @param string|null $minVersion
@@ -486,12 +500,13 @@ final class LicensePage extends AbstractPage
         return $packageUpdates;
     }
 
-    // TODO: This code was stol… liberated from "FirstTimeSetupLicenseForm" and
+    // This code was stolen from "FirstTimeSetupLicenseForm" and
     // should propably be moved into a helper class. We might even want to refresh
     // the data with requests to the package servers to implicitly fetch the
     // latest purchases.
     private function fetchLicenseData(): array|object
     {
+        // TODO: Fixed server id
         $pus = new PackageUpdateServer(1);
 
         $request = new Request(
