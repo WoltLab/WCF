@@ -277,7 +277,7 @@ class CLIWCF extends WCF
             self::getReader()->setHistoryEnabled(true);
             $now = new \DateTimeImmutable('now', WCF::getUser()->getTimeZone());
             $line = self::getReader()->readLine(\sprintf(
-                '%s>',
+                '%s> ',
                 $now->format('H:i:s'),
             ));
             if ($line === null) {

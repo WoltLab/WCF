@@ -61,7 +61,7 @@ jobs:
     - run: rm -r wcfsetup/install/files/js/WoltLabSuite/
     - run: |
         npx tsc
-        npx esbuild ts/WoltLabSuite/WebComponent/index.ts --bundle --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js
+        npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff
       run: |

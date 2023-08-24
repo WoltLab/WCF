@@ -907,6 +907,7 @@ final class WCFSetup extends WCF
                 // create user
                 $data = [
                     'data' => [
+                        'userID' => 1,
                         'email' => $email,
                         'languageID' => $languageID,
                         'password' => $password,

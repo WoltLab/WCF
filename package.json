@@ -1,7 +1,7 @@
 {
   "name": "@woltlab/wcf",
   "scripts": {
-    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js"
+    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.2.1",
