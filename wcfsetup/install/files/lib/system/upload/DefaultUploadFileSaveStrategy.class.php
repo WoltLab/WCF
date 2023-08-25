@@ -226,13 +226,8 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                                     $adapter->writeImage($object->getLocation());
 
                                     // update width, height and filesize of the object
-                                    if (
-                                        $newImage !== null
-                                        && (
-                                            $orientation == ExifUtil::ORIENTATION_90_ROTATE
-                                            || $orientation == ExifUtil::ORIENTATION_270_ROTATE
-                                        )
-                                    ) {
+                                    $isRotatedBy90Degrees = $orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE;
+                                    if ($newImage !== null && $isRotatedBy90Degrees) {
                                         $updateData = \array_merge($updateData, [
                                             'height' => $object->width,
                                             'width' => $object->height,
@@ -336,7 +331,18 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 $updateData[$prefix . 'Height'] = 0;
             }
 
-            if ($file->width > $sizeData['width'] || $file->height > $sizeData['height']) {
+            // Thumbnails should only be created if at least one side exceeds the
+            // dimensions of the thumbnail and the other side is at least of equal
+            // size. This prevents attempts to create a thumbnail of an image that
+            // underflows the thumbnail dimensions on one side.
+            $createThumbnail = false;
+            if ($file->width > $sizeData['width'] && $file->height >= $sizeData['height']) {
+                $createThumbnail = true;
+            } else if ($file->height > $sizeData['height'] && $file->width >= $sizeData['width']) {
+                $createThumbnail = true;
+            }
+
+            if ($createThumbnail) {
                 try {
                     $thumbnail = $adapter->createThumbnail(
                         $sizeData['width'],
