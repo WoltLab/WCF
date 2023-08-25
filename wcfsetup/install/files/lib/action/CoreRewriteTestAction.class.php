@@ -43,9 +43,6 @@ final class CoreRewriteTestAction extends AbstractAction
                 'core_rewrite_test' => 'passed',
             ],
             200,
-            [
-                'access-control-allow-origin' => '*',
-            ]
         );
     }
 }
