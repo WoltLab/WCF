@@ -167,7 +167,7 @@ namespace wcf\functions\exception {
 
 	/**
 	 * Logs the given Throwable.
-	 * 
+	 *
 	 * @param	string			$logFile	The log file to use. If set to `null` the default log file will be used and the variable contents will be replaced by the actual path.
 	 * @return	string					The ID of the log entry.
 	 */
@@ -251,7 +251,7 @@ namespace wcf\functions\exception {
 	/**
 	 * Pretty prints the given Throwable. It is recommended to `exit;`
 	 * the request after calling this function.
-	 * 
+	 *
 	 * @throws	\Exception
 	 */
 	function printThrowable(\Throwable $e)
@@ -290,12 +290,12 @@ EXPLANATION;
 
 		/*
 		 * A notice on the HTML used below:
-		 * 
+		 *
 		 * It might appear a bit weird to use <p> all over the place where semantically
 		 * other elements would fit in way better. The reason behind this is that we avoid
 		 * inheriting unwanted styles (e.g. exception displayed in an overlay) and that
 		 * the output needs to be properly readable when copied & pasted somewhere.
-		 * 
+		 *
 		 * Besides the visual appearance, the output was built to provide a maximum of
 		 * compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
 		 * without the potential of messing up the formatting and thus harming the readability.
@@ -621,7 +621,7 @@ EXPLANATION;
 																echo "Final ";
 															} ?>Error</p>
 							<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
-								<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
+								<p class="exceptionText"><?php echo StringUtil::encodeHTML($e->getDescription()); ?></p>
 							<?php } ?>
 							<ul class="exceptionErrorDetails">
 								<li>
@@ -765,7 +765,7 @@ EXPLANATION;
 	/**
 	 * Returns the stack trace of the given Throwable with sensitive
 	 * information removed.
-	 * 
+	 *
 	 * @param	bool			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
 	 * @return	mixed[]
 	 */
