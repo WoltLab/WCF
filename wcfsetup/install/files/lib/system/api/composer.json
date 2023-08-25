@@ -10,7 +10,7 @@
         }
     },
     "require": {
-        "cuyz/valinor": "^1.5.0",
+        "cuyz/valinor": "^1.6.0",
         "dragonmantank/cron-expression": "^3.3.3",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "^4.16",
