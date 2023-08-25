@@ -1453,7 +1453,9 @@
 		<file>js/WoltLabSuite/Core/Api.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
+		<file>js/WoltLabSuite/Core/Bbcode/Spoiler.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
+		<file>js/WoltLabSuite/Core/Component/Ckeditor/Cleanup.js</file>
 		<file>js/WoltLabSuite/Core/Component/Ckeditor/woltlab-core-ckeditor.js</file>
 		<file>js/WoltLabSuite/Core/Component/Comment/CommentList.js</file>
 		<file>js/WoltLabSuite/Core/Component/Comment/Handler.js</file>
@@ -1462,6 +1464,7 @@
 		<file>js/WoltLabSuite/Core/Component/Confirmation/SoftDelete.js</file>
 		<file>js/WoltLabSuite/Core/Component/Dialog/woltlab-core-dialog-control.js</file>
 		<file>js/WoltLabSuite/Core/Component/Dialog/woltlab-core-dialog.js</file>
+		<file>js/WoltLabSuite/Core/Component/FormBuilder/Button.js</file>
 		<file>js/WoltLabSuite/Core/Controller/ClipboardData.js</file>
 		<file>js/WoltLabSuite/Core/Core.ts</file>
 		<file>js/WoltLabSuite/Core/Date/Time/Relative.js</file>
@@ -1769,12 +1772,19 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/ShellVisitor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/TreeMapperContainer.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/EnumType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Constant/MissingClassConstantColon.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Enum/MissingEnumColon.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToAccessOutboundToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToReadFinishedStream.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/WrongTokenType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/InvalidTemplate.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/InvalidTemplateType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Factory/Specifications/HandleClassGenericSpecification.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/LazyParser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/ClassGenericLexer.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/GenericClassNameToken.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Template/BasicTemplateParser.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Template/TemplateParser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveObjectType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveTypeFromUnion.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/UnionTypeDoesNotAllowNull.php</file>
@@ -1822,6 +1832,7 @@
 		<file>lib/system/api/doctrine/lexer/composer.json</file>
 		<file>lib/system/api/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php</file>
 		<file>lib/system/api/doctrine/lexer/psalm.xml</file>
+		<file>lib/system/api/dragonmantank/cron-expression/phpstan.neon</file>
 		<file>lib/system/api/erusev/parsedown/.travis.yml</file>
 		<file>lib/system/api/erusev/parsedown/phpunit.xml.dist</file>
 		<file>lib/system/api/erusev/parsedown/test/CommonMarkTest.php</file>
@@ -2008,6 +2019,11 @@
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/psalm.xml</file>
+		<file>lib/system/api/guzzlehttp/promises/src/functions.php</file>
+		<file>lib/system/api/guzzlehttp/promises/src/functions_include.php</file>
+		<file>lib/system/api/guzzlehttp/promises/vendor-bin/php-cs-fixer/composer.json</file>
+		<file>lib/system/api/guzzlehttp/promises/vendor-bin/phpstan/composer.json</file>
+		<file>lib/system/api/guzzlehttp/promises/vendor-bin/psalm/composer.json</file>
 		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/bc.yml</file>
 		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/ci.yml</file>
 		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/integration.yml</file>
@@ -2036,6 +2052,7 @@
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/renovate.json</file>
+		<file>lib/system/api/laminas/laminas-progressbar/.laminas-ci.json</file>
 		<file>lib/system/api/laminas/laminas-progressbar/CHANGELOG.md</file>
 		<file>lib/system/api/laminas/laminas-progressbar/composer.lock</file>
 		<file>lib/system/api/laminas/laminas-progressbar/phpcs.xml.dist</file>
@@ -2684,6 +2701,7 @@
 		<file>lib/system/form/FormElementContainer.class.php</file>
 		<file>lib/system/form/builder/FormDataHandler.class.php</file>
 		<file>lib/system/form/builder/IFormDataHandler.class.php</file>
+		<file>lib/system/form/builder/Psr15DialogFormResponse.class.php</file>
 		<file>lib/system/form/builder/field/AclFormField.class.php</file>
 		<file>lib/system/form/builder/field/IObjectTypeFormField.class.php</file>
 		<file>lib/system/form/builder/field/IObjectTypeFormNode.class.php</file>
@@ -2715,6 +2733,8 @@
 		<file>lib/system/html/output/HtmlOutputNodeProcessor.class.php</file>
 		<file>lib/system/html/output/node/AmpHtmlOutputNodeProcessor.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeBlockquote.class.php</file>
+		<file>lib/system/html/output/node/HtmlOutputNodeBr.class.php</file>
+		<file>lib/system/html/output/node/HtmlOutputNodeP.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabColor.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabFont.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabMention.class.php</file>
