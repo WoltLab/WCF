@@ -104,12 +104,6 @@ class OptionForm extends AbstractOptionListForm
     {
         parent::assignVariables();
 
-        if ($this->category->categoryName === "general") {
-            WCF::getTPL()->assign([
-                'uuidHash' => \hash('sha256', \WCF_UUID),
-            ]);
-        }
-
         WCF::getTPL()->assign([
             'category' => $this->category,
             'optionTree' => $this->optionTree,

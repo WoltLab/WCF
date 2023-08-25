@@ -3,7 +3,7 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
-use wcf\system\exception\IllegalLinkException;
+use wcf\util\HeaderUtil;
 
 /**
  * Internal action used to run a test for url rewriting.
@@ -19,33 +19,16 @@ final class CoreRewriteTestAction extends AbstractAction
 
     /**
      * @inheritDoc
-     *
-     * @throws      IllegalLinkException
-     */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        if (!isset($_GET['uuidHash']) || !\hash_equals(\hash('sha256', WCF_UUID), $_GET['uuidHash'])) {
-            throw new IllegalLinkException();
-        }
-    }
-
-    /**
-     * @inheritDoc
      */
     public function execute()
     {
         parent::execute();
 
-        return new JsonResponse(
+        return HeaderUtil::withNoCacheHeaders(new JsonResponse(
             [
                 'core_rewrite_test' => 'passed',
             ],
             200,
-            [
-                'access-control-allow-origin' => '*',
-            ]
-        );
+        ));
     }
 }

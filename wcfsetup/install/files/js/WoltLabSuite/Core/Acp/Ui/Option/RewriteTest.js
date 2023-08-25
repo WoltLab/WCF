@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Request_1, Language, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, tslib_1, Language, Dialog_1, Util_1, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Request_1 = tslib_1.__importDefault(Request_1);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -58,31 +57,24 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Langua
             this.buttonStartTest.classList.add("disabled");
             this.setStatus("running");
             const tests = Array.from(this.apps).map(([app, url]) => {
-                return new Promise((resolve, reject) => {
-                    const request = new Request_1.default({
-                        ignoreError: true,
-                        // bypass the LinkHandler, because rewrites aren't enabled yet
-                        url: url,
-                        type: "GET",
-                        includeRequestedWith: false,
-                        success: (data) => {
-                            if (!Object.prototype.hasOwnProperty.call(data, "core_rewrite_test") ||
-                                data.core_rewrite_test !== "passed") {
-                                reject({ app, pass: false });
-                            }
-                            else {
-                                resolve({ app, pass: true });
-                            }
-                        },
-                        failure: () => {
-                            reject({ app, pass: false });
-                            return true;
-                        },
-                    });
-                    request.sendRequest(false);
+                return (0, Backend_1.prepareRequest)(url)
+                    .get()
+                    .disableLoadingIndicator()
+                    .fetchAsJson()
+                    .then((data) => {
+                    if (!Object.prototype.hasOwnProperty.call(data, "core_rewrite_test") ||
+                        data.core_rewrite_test !== "passed") {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }, () => false)
+                    .then((pass) => {
+                    return { app, pass };
                 });
             });
-            const results = await Promise.all(tests.map((test) => test.catch((result) => result)));
+            const results = await Promise.all(tests);
             const passed = results.every((result) => result.pass);
             // Delay the status update to prevent UI flicker.
             await new Promise((resolve) => window.setTimeout(resolve, 500));
