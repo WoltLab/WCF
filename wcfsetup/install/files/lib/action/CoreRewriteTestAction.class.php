@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use wcf\util\HeaderUtil;
 
 /**
  * Internal action used to run a test for url rewriting.
@@ -23,11 +24,11 @@ final class CoreRewriteTestAction extends AbstractAction
     {
         parent::execute();
 
-        return new JsonResponse(
+        return HeaderUtil::withNoCacheHeaders(new JsonResponse(
             [
                 'core_rewrite_test' => 'passed',
             ],
             200,
-        );
+        ));
     }
 }
