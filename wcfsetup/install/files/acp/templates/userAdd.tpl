@@ -628,7 +628,7 @@
 
 					<dl class="avatarType jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
 						<dt>
-							{if $avatarType == 'custom'}
+							{if $avatarType == 'custom' && $userAvatar !== null}
 								{@$userAvatar->getImageTag(96)}
 							{else}
 								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96">
