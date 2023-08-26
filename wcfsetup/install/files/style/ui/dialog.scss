@@ -52,6 +52,7 @@
 
 	@include screen-xs {
 		margin: auto;
+		max-height: calc(100% - 20px);
 		min-width: calc(80% - 20px);
 		max-width: calc(100% - 20px);
 		position: relative;
