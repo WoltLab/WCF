@@ -631,7 +631,7 @@
 							{if $avatarType == 'custom' && $userAvatar !== null}
 								{@$userAvatar->getImageTag(96)}
 							{else}
-								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96">
+								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" height="96" width="96">
 							{/if}
 						</dt>
 						<dd>
