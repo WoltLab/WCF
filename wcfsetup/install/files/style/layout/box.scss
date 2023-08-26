@@ -378,11 +378,11 @@
 	}
 
 	.box {
-		border: 1px solid var(--wcfSidebarBorder);
 		border-radius: var(--wcfBorderRadius);
 
 		&:not(.boxBorderless) {
 			background-color: var(--wcfSidebarBackground);
+			border: 1px solid var(--wcfSidebarBorder);
 
 			@include screen-md-down {
 				padding: 20px 10px;
