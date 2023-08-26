@@ -771,7 +771,7 @@ EXPLANATION;
 	 */
 	function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false)
 	{
-		$trace = $e->getTrace();
+		$trace = getTraceWithoutIntermediateMiddleware($e);
 
 		return array_map(function ($item) use ($ignorePaths) {
 			if (!isset($item['file'])) $item['file'] = '[internal function]';
@@ -863,6 +863,42 @@ EXPLANATION;
 	}
 
 	/**
+	 * Suppresses stack frames from the middleware unless the exception occurred
+	 * inside a middleware. This massively cleans up the stack trace which has
+	 * seen ratios of >80% frames originating from the middleware.
+	 *
+	 * This has the downside that the middleware is less opaque but they simply
+	 * rendered stack traces, especially those pasted into messages, unreadable.
+	 * In particular wrapped exceptions could yield massive stack traces.
+	 */
+	function getTraceWithoutIntermediateMiddleware(\Throwable $e): array
+	{
+		$trace = $e->getTrace();
+		if (\str_contains($trace[0]['class'] ?? '', '\\http\\middleware\\')) {
+			return $trace;
+		}
+
+		$insideMiddleware = false;
+		return \array_values(
+			\array_filter($trace, function ($item) use (&$insideMiddleware) {
+				if (isMiddlewareEnd($item)) {
+					$insideMiddleware = true;
+
+					return false;
+				} else if (isMiddlewareStart($item)) {
+					$insideMiddleware = false;
+
+					return false;
+				} else if ($insideMiddleware) {
+					return false;
+				}
+
+				return true;
+			})
+		);
+	}
+
+	/**
 	 * Returns the given path relative to `WCF_DIR`, unless both,
 	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
 	 */
@@ -897,11 +933,19 @@ EXPLANATION;
 
 	function isMiddlewareStart(array $segment): bool
 	{
+		if (!isset($segment['class'])) {
+			return false;
+		}
+
 		return $segment['class'] === Pipeline::class && $segment['function'] === 'process';
 	}
 
 	function isMiddlewareEnd(array $segment): bool
 	{
+		if (!isset($segment['class'])) {
+			return false;
+		}
+
 		return $segment['class'] === Request::class && $segment['function'] === 'handle';
 	}
 }
