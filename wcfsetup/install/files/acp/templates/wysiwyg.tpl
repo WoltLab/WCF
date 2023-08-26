@@ -12,7 +12,7 @@
 		stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
 		stylesheet.id = "ckeditor5-stylesheet";
 
-		document.head.append(stylesheet);
+		document.querySelector('link[rel="stylesheet"]').before(stylesheet);
 	}
 }
 </script>
