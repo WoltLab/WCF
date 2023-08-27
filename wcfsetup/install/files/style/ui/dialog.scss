@@ -425,7 +425,7 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 	}
 
 	> .section:first-child,
-	> form > .section:first-child {
+	> :is(form, section) > .section:first-child {
 		margin-top: 0;
 	}
 
