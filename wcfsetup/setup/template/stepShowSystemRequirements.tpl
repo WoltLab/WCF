@@ -51,13 +51,13 @@
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
-					<dd>128M</dd>
+					<dd>128 MiB</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
 					<dd>
-						<span class="badge {if !$system.memoryLimit.result}red{else}green{/if}">{$system.memoryLimit.value}</span>
+						<span class="badge {if !$system.memoryLimit.result}red{else}green{/if}">{$system.memoryLimit.value|filesizeBinary}</span>
 						{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
 					</dd>
 				</dl>
