@@ -300,6 +300,10 @@ class StyleHandler extends SingletonFactory
      */
     public function getColorScheme(): string
     {
+        if (!RequestHandler::getInstance()->isACPRequest() && !$this->style->hasDarkMode) {
+            return 'light';
+        }
+
         if (!WCF::getUser()->userID) {
             return 'system';
         }
