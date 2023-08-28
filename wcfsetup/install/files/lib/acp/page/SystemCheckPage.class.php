@@ -318,7 +318,7 @@ class SystemCheckPage extends AbstractPage
             // Attempt to reset ourselves to perform a functional check.
             WCF::resetZendOpcache(__FILE__);
 
-            if (\extension_loaded('Zend Opcache') && @\ini_get('opcache.enable')) {
+            if (\extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
                 $this->results['php']['opcache'] = \function_exists('opcache_reset') && \function_exists('opcache_invalidate');
             }
         } catch (\Exception $e) {

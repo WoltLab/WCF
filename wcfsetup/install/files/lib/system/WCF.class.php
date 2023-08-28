@@ -48,7 +48,7 @@ if (($error = \error_get_last()) !== null) {
 @\set_time_limit(0);
 
 // fix timezone warning issue
-if (!@\ini_get('date.timezone')) {
+if (!\ini_get('date.timezone')) {
     @\date_default_timezone_set('UTC');
 }
 
@@ -64,7 +64,7 @@ if (\PHP_VERSION_ID >= 80200) {
 @\ini_set('assert.exception', 1);
 
 // setting global gzip compression breaks output buffering
-if (@\ini_get('zlib.output_compression')) {
+if (\ini_get('zlib.output_compression')) {
     @\ini_set('zlib.output_compression', '0');
 }
 
@@ -427,7 +427,7 @@ class WCF
 
                 // zend.assertions can't be enabled at runtime if the value is set to -1, because
                 // the necessary opcodes will not be compiled.
-                if (@\ini_get('zend.assertions') >= 0) {
+                if (\ini_get('zend.assertions') >= 0) {
                     @\ini_set('zend.assertions', 1);
                 }
 
@@ -1032,7 +1032,7 @@ class WCF
         if (self::$zendOpcacheEnabled === null) {
             self::$zendOpcacheEnabled = false;
 
-            if (\extension_loaded('Zend Opcache') && @\ini_get('opcache.enable')) {
+            if (\extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
                 self::$zendOpcacheEnabled = true;
             }
         }

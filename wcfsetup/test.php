@@ -366,7 +366,7 @@ function checkInstallFile() {
 	return @file_exists('install.php');
 }
 function checkOpcache() {
-	if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+	if (extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
 		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
 			return false;
 		}
