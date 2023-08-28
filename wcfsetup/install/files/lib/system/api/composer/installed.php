@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.7.0',
-            'version' => '7.7.0.0',
-            'reference' => 'fb7566caccf22d74d1ab270de3551f72a58399f5',
+            'pretty_version' => '7.8.0',
+            'version' => '7.8.0.0',
+            'reference' => '1110f66a6530a40fe7aea0378fe608ee2b2248f9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
@@ -74,9 +74,9 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.6.0',
-            'version' => '2.6.0.0',
-            'reference' => '8bd7c33a0734ae1c5d074360512beb716bef3f77',
+            'pretty_version' => '2.6.1',
+            'version' => '2.6.1.0',
+            'reference' => 'be45764272e8873c72dbe3d2edcfdfcc3bc9f727',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
@@ -187,8 +187,8 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '^1.1 || ^2.0',
+                0 => '^1.1 || ^2.0',
+                1 => '1.0',
             ),
         ),
         'psr/http-message' => array(
@@ -203,8 +203,8 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '^1.1 || ^2.0',
+                0 => '^1.1 || ^2.0',
+                1 => '1.0',
             ),
         ),
         'psr/http-server-handler' => array(
@@ -304,18 +304,18 @@
             ),
         ),
         'symfony/polyfill-php82' => array(
-            'pretty_version' => 'v1.27.0',
-            'version' => '1.27.0.0',
-            'reference' => '80ddf7bfa17ef7b06db4e6d007a95bf584e07b44',
+            'pretty_version' => 'v1.28.0',
+            'version' => '1.28.0.0',
+            'reference' => '7716bea9c86776fb3362d6b52fe1fc9471056a49',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php82',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'symfony/polyfill-php83' => array(
-            'pretty_version' => 'v1.27.0',
-            'version' => '1.27.0.0',
-            'reference' => '508c652ba3ccf69f8c97f251534f229791b52a57',
+            'pretty_version' => 'v1.28.0',
+            'version' => '1.28.0.0',
+            'reference' => 'b0f46ebbeeeda3e9d2faebdfbf4b4eae9b59fa11',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php83',
             'aliases' => array(),
