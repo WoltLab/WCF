@@ -4877,10 +4877,10 @@ not register with us.]]></item>
 		<item name="wcf.user.register"><![CDATA[Registration]]></item>
 		<!-- Need Activation -->
 		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
-		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|phrase}]]></item>
+		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration on {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>Thank you for registering at: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>. Before you are able to use your
+<p>Thank you for registering on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>. Before you are able to use your
 user account to its full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
