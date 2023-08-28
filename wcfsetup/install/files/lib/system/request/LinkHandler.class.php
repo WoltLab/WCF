@@ -105,7 +105,9 @@ final class LinkHandler extends SingletonFactory
         // enforce a certain level of sanitation and protection for links embedded in emails
         if (isset($parameters['isEmail'])) {
             if ((bool)$parameters['isEmail']) {
-                $parameters['forceFrontend'] = true;
+                if (!isset($parameters['isACP']) || !(bool)$parameters['isACP']) {
+                    $parameters['forceFrontend'] = true;
+                }
             }
 
             unset($parameters['isEmail']);
