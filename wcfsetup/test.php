@@ -14,7 +14,7 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<title>WSC System Requirements Test</title>
+	<title>WoltLab Suite System Requirements Test</title>
 	
 	<style>
 		html {
