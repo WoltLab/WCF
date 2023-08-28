@@ -867,7 +867,7 @@ EXPLANATION;
 	 * inside a middleware. This massively cleans up the stack trace which has
 	 * seen ratios of >80% frames originating from the middleware.
 	 *
-	 * This has the downside that the middleware is less opaque but they simply
+	 * This has the downside that the middleware is less transparent but they simply
 	 * rendered stack traces, especially those pasted into messages, unreadable.
 	 * In particular wrapped exceptions could yield massive stack traces.
 	 */
@@ -883,12 +883,8 @@ EXPLANATION;
 			\array_filter($trace, function ($item) use (&$insideMiddleware) {
 				if (isMiddlewareEnd($item)) {
 					$insideMiddleware = true;
-
-					return false;
 				} else if (isMiddlewareStart($item)) {
 					$insideMiddleware = false;
-
-					return false;
 				} else if ($insideMiddleware) {
 					return false;
 				}
