@@ -794,7 +794,7 @@ class UploadFormField extends AbstractFormField
             }
 
             $minimumImageHeight = $this->getMinimumImageHeight();
-            if ($minimumImageHeight !== null && $maximumImageHeight > $minimumImageHeight) {
+            if ($minimumImageHeight !== null && $minimumImageHeight > $maximumImageHeight) {
                 throw new \InvalidArgumentException(
                     "Maximum image height ({$maximumImageHeight}) cannot be smaller than minimum image height ({$minimumImageHeight}) for field '{$this->getId()}'."
                 );
