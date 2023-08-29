@@ -1,2 +1,1 @@
-declare module "ckeditor5-bundle" {
-}
+declare module "ckeditor5-bundle" {}

@@ -104,8 +104,45 @@
 					</div>
 				</aside>
 			{/hascontent}
+
+			{capture assign='__sidebarRightContent'}
+				{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+					<div class="box boxBorderless">
+						<div class="boxContent">
+							{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+						</div>
+					</div>
+				{/if}
+				
+				{event name='boxesSidebarRightTop'}
+				
+				{* WCF2.1 Fallback *}
+				{if !$sidebar|empty}
+					{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+						{@$sidebar}
+					{/if}
+				{/if}
+				
+				{if !$sidebarRight|empty}
+					{@$sidebarRight}
+				{/if}
+				
+				{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+					{@$box->render()}
+				{/foreach}
+				
+				{event name='boxesSidebarRightBottom'}
+
+				{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+					<div class="box boxBorderless">
+						<div class="boxContent">
+							{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+						</div>
+					</div>
+				{/if}
+			{/capture}
 			
-			<div id="content" class="content">
+			<div id="content" class="content{if $__sidebarRightContent|trim} content--sidebar-right{/if}">
 				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
 				
 				{if $__disableContentHeader|empty}

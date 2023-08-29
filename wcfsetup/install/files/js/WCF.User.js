@@ -1559,12 +1559,12 @@ if (COMPILER_TARGET_DEFAULT) {
 					// toogle icon title
 					if (data.returnValues.following) {
 						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow'));
-						button[0].querySelector("fa-icon").setIcon("minus");
+						button[0].querySelector("fa-icon").setIcon("circle-minus");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
 					}
 					else {
 						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow'));
-						button[0].querySelector("fa-icon").setIcon("plus");
+						button[0].querySelector("fa-icon").setIcon("circle-plus");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
 					}
 					

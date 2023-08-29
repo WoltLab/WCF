@@ -38,14 +38,17 @@ export function send(
   const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);
   const script = document.createElement("script");
 
-  const timeout = window.setTimeout(() => {
-    if (typeof failure === "function") {
-      failure();
-    }
+  const timeout = window.setTimeout(
+    () => {
+      if (typeof failure === "function") {
+        failure();
+      }
 
-    window[callbackName] = undefined;
-    script.remove();
-  }, (~~options.timeout || 10) * 1_000);
+      window[callbackName] = undefined;
+      script.remove();
+    },
+    (~~options.timeout || 10) * 1_000,
+  );
 
   window[callbackName] = (...args: any[]) => {
     window.clearTimeout(timeout);

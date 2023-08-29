@@ -6,8 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-let _browser = "other";
-let _platform = "desktop";
+type Browser = "chrome" | "firefox" | "microsoft" | "other" | "safari";
+type Platform = "android" | "desktop" | "ios" | "mobile" | "windows";
+
+let _browser: Browser = "other";
+let _platform: Platform = "desktop";
 let _touch = false;
 
 /**
@@ -72,7 +75,7 @@ export function setup(): void {
  *  - microsoft: Internet Explorer and Microsoft Edge
  *  - safari
  */
-export function browser(): string {
+export function browser(): Browser {
   return _browser;
 }
 
@@ -85,7 +88,7 @@ export function browser(): string {
  *  - ios: iPhone, iPad and iPod
  *  - windows: Windows on phones/tablets
  */
-export function platform(): string {
+export function platform(): Platform {
   return _platform;
 }
 

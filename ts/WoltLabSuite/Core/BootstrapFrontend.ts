@@ -20,14 +20,12 @@ import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 import { whenFirstSeen } from "./LazyLoader";
 import { prepareRequest } from "./Ajax/Backend";
 
-import type { ColorScheme } from "./Controller/Style/ColorScheme";
-
 interface BootstrapOptions {
   backgroundQueue: {
     url: string;
     force: boolean;
   };
-  colorScheme: ColorScheme;
+  dynamicColorScheme: boolean;
   enableUserPopover: boolean;
   executeCronjobs: string | undefined;
   shareButtonProviders?: ShareProvider[];
@@ -63,7 +61,7 @@ export function setup(options: BootstrapOptions): void {
   options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
 
   Bootstrap.setup({
-    colorScheme: options.colorScheme,
+    dynamicColorScheme: options.dynamicColorScheme,
     enableMobileMenu: true,
     pageMenuMainProvider: new UiPageMenuMainFrontend(),
   });

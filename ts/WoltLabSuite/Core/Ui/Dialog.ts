@@ -286,7 +286,7 @@ const UiDialog = {
       }, 200);
     }
 
-    adoptPageOverlayContainer(data.dialog);
+    adoptPageOverlayContainer(_container);
 
     return data;
   },
@@ -627,8 +627,10 @@ const UiDialog = {
     const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
     contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
 
-    const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
-    data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+    if (data.dialog.style.getPropertyValue("--translate-x") === "") {
+      const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
+      data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+    }
 
     const callbackObject = _dialogToObject.get(id);
     //noinspection JSUnresolvedVariable
@@ -808,13 +810,13 @@ const UiDialog = {
     _activeDialog = null;
     for (let i = 0; i < _container.childElementCount; i++) {
       const child = _container.children[i] as HTMLElement;
-      if (!Core.stringToBool(child.getAttribute("aria-hidden"))) {
+      if (child.classList.contains("dialogContainer") && !Core.stringToBool(child.getAttribute("aria-hidden"))) {
         _activeDialog = child.dataset.id || "";
         break;
       }
     }
 
-    releasePageOverlayContainer(data.dialog);
+    releasePageOverlayContainer(_container);
     UiScreen.pageOverlayClose();
 
     if (_activeDialog === null) {

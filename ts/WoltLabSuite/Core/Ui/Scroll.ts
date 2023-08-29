@@ -55,16 +55,13 @@ export function element(element: HTMLElement, callback?: Callback, behavior: Scr
 
   if (callback) {
     _callbacks.push(callback);
-
-    if (_callbacks.length === 1) {
-      window.addEventListener("scroll", onScroll);
-    }
   }
 
   if (_targetElement !== undefined) {
     return;
   }
   _targetElement = element;
+  window.addEventListener("scroll", onScroll);
 
   let y = DomUtil.offset(element).top;
   if (_offset === null) {

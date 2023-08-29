@@ -31,6 +31,7 @@ use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\setup\SetupFileHandler;
 use wcf\system\template\SetupTemplateEngine;
+use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -398,8 +399,8 @@ final class WCFSetup extends WCF
         }
 
         // memory limit
-        $system['memoryLimit']['value'] = \ini_get('memory_limit');
-        $system['memoryLimit']['result'] = $this->compareMemoryLimit();
+        $system['memoryLimit']['value'] = FileUtil::getMemoryLimit();
+        $system['memoryLimit']['result'] = $system['memoryLimit']['value'] === -1 || $system['memoryLimit']['value'] >= 128 * 1024 * 1024;
 
         // openssl extension
         $system['openssl']['result'] = \extension_loaded('openssl');
@@ -427,7 +428,7 @@ final class WCFSetup extends WCF
                         'wcf',
                         [
                             'system' => $system,
-                            'nextStep' => 'unzipFiles',
+                            'nextStep' => 'configureDB',
                         ]
                     )
                 );
@@ -436,44 +437,6 @@ final class WCFSetup extends WCF
 
         // If all system requirements are met, directly go to next step.
         return $this->gotoNextStep('configureDB');
-    }
-
-    /**
-     * Returns true if memory_limit is set to at least 128 MB
-     */
-    protected function compareMemoryLimit(): bool
-    {
-        $memoryLimit = \ini_get('memory_limit');
-
-        // no limit
-        if ($memoryLimit == -1) {
-            return true;
-        }
-
-        // completely numeric, PHP assumes byte
-        if (\is_numeric($memoryLimit)) {
-            $memoryLimit = $memoryLimit / 1024 / 1024;
-
-            return $memoryLimit >= 128;
-        }
-
-        // PHP supports 'K', 'M' and 'G' shorthand notation
-        if (\preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-            switch ($matches[2]) {
-                case 'K':
-                    $memoryLimit = $matches[1] * 1024;
-
-                    return $memoryLimit >= 128;
-
-                case 'M':
-                    return $matches[1] >= 128;
-
-                case 'G':
-                    return $matches[1] >= 1;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -907,6 +870,7 @@ final class WCFSetup extends WCF
                 // create user
                 $data = [
                     'data' => [
+                        'userID' => 1,
                         'email' => $email,
                         'languageID' => $languageID,
                         'password' => $password,

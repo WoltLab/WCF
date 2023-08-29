@@ -229,7 +229,10 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             TextFormField::create('smileyPath')
                 ->objectProperty('path')
                 ->label('wcf.acp.pip.smiley.smileyPath')
-                ->description('wcf.acp.pip.smiley.smileyPath.description')
+                ->description(
+                    'wcf.acp.pip.smiley.smileyPath.description',
+                    ['path' => WCF_DIR]
+                )
                 ->required()
                 ->maximumLength(255)
                 ->addValidator($fileValidator),
@@ -237,7 +240,10 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             TextFormField::create('smileyPath2x')
                 ->objectProperty('path2x')
                 ->label('wcf.acp.pip.smiley.smileyPath2x')
-                ->description('wcf.acp.pip.smiley.smileyPath2x.description')
+                ->description(
+                    'wcf.acp.pip.smiley.smileyPath2x.description',
+                    ['path' => WCF_DIR]
+                )
                 ->maximumLength(255)
                 ->addValidator($fileValidator),
         ]);

@@ -10,6 +10,7 @@ use CuyZ\Valinor\Type\Parser\TypeParser;
 use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Type\Types\MixedType;
 use CuyZ\Valinor\Type\Types\UnresolvableType;
+use CuyZ\Valinor\Utility\Reflection\DocParser;
 use CuyZ\Valinor\Utility\Reflection\Reflection;
 use ReflectionFunctionAbstract;
 use ReflectionParameter;
@@ -21,10 +22,9 @@ final class ReflectionTypeResolver
     public function __construct(
         private TypeParser $nativeParser,
         private TypeParser $advancedParser
-    ) {
-    }
+    ) {}
 
-    public function resolveType(\ReflectionProperty|\ReflectionParameter|\ReflectionFunctionAbstract $reflection): Type
+    public function resolveType(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): Type
     {
         $nativeType = $this->nativeType($reflection);
         $typeFromDocBlock = $this->typeFromDocBlock($reflection);
@@ -52,11 +52,24 @@ final class ReflectionTypeResolver
         return $typeFromDocBlock;
     }
 
-    private function typeFromDocBlock(\ReflectionProperty|\ReflectionParameter|\ReflectionFunctionAbstract $reflection): ?Type
+    private function typeFromDocBlock(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): ?Type
     {
-        $type = $reflection instanceof ReflectionFunctionAbstract
-            ? Reflection::docBlockReturnType($reflection)
-            : Reflection::docBlockType($reflection);
+        if ($reflection instanceof ReflectionFunctionAbstract) {
+            $type = DocParser::functionReturnType($reflection);
+        } elseif ($reflection instanceof ReflectionProperty) {
+            $type = DocParser::propertyType($reflection);
+        } else {
+            $type = null;
+
+            if ($reflection->isPromoted()) {
+                // @phpstan-ignore-next-line / parameter is promoted so class exists for sure
+                $type = DocParser::propertyType($reflection->getDeclaringClass()->getProperty($reflection->name));
+            }
+
+            if ($type === null) {
+                $type = DocParser::parameterType($reflection);
+            }
+        }
 
         if ($type === null) {
             return null;
@@ -65,7 +78,7 @@ final class ReflectionTypeResolver
         return $this->parseType($type, $reflection, $this->advancedParser);
     }
 
-    private function nativeType(\ReflectionProperty|\ReflectionParameter|\ReflectionFunctionAbstract $reflection): ?Type
+    private function nativeType(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): ?Type
     {
         $reflectionType = $reflection instanceof ReflectionFunctionAbstract
             ? $reflection->getReturnType()
@@ -84,7 +97,7 @@ final class ReflectionTypeResolver
         return $this->parseType($type, $reflection, $this->nativeParser);
     }
 
-    private function parseType(string $raw, \ReflectionProperty|\ReflectionParameter|\ReflectionFunctionAbstract $reflection, TypeParser $parser): Type
+    private function parseType(string $raw, ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection, TypeParser $parser): Type
     {
         try {
             return $parser->parse($raw);

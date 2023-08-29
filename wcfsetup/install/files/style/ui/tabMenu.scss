@@ -27,7 +27,9 @@
 
 				&::before {
 					left: 0;
-					transition: left 0.12s linear, width 0.12s linear;
+					transition:
+						left 0.12s linear,
+						width 0.12s linear;
 					width: 100%;
 				}
 
@@ -113,7 +115,9 @@
 	opacity: 0;
 	position: absolute;
 	top: 0;
-	transition: opacity 0.24s linear, visibility 0s linear 0.24s;
+	transition:
+		opacity 0.24s linear,
+		visibility 0s linear 0.24s;
 	visibility: hidden;
 	width: 30px;
 	z-index: 50;

@@ -185,7 +185,7 @@ class UploadFormField extends AbstractFormField
             $this->registerField();
         }
 
-        return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getPrefixedId(), $processFiles);
+        return UploadHandler::getInstance()->getRemovedFilesByFieldId($this->getPrefixedId(), $processFiles);
     }
 
     /**
@@ -284,7 +284,7 @@ class UploadFormField extends AbstractFormField
                             'file' => $file,
                         ]
                     ));
-                } elseif ($this->getMaximumImageHeight() !== null && $imagesize[0] > $this->getMaximumImageHeight()) {
+                } elseif ($this->getMaximumImageHeight() !== null && $imagesize[1] > $this->getMaximumImageHeight()) {
                     $this->addValidationError(new FormFieldValidationError(
                         'maximumImageHeight',
                         'wcf.form.field.upload.error.maximumImageHeight',

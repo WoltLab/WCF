@@ -12,7 +12,7 @@
 		stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
 		stylesheet.id = "ckeditor5-stylesheet";
 
-		document.head.append(stylesheet);
+		document.querySelector('link[rel="stylesheet"]').before(stylesheet);
 	}
 }
 </script>
@@ -34,7 +34,6 @@
 		{jsphrase name='wcf.ckeditor.quote'}
 		{jsphrase name='wcf.ckeditor.quote.author'}
 		{jsphrase name='wcf.ckeditor.quoteFrom'}
-		{jsphrase name='wcf.editor.button.group.block'}
 		{jsphrase name='wcf.editor.button.group.format'}
 		{jsphrase name='wcf.editor.button.group.list'}
 		{jsphrase name='wcf.editor.button.spoiler'}

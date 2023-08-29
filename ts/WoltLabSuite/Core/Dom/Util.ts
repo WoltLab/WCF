@@ -75,7 +75,7 @@ const DomUtil = {
    * @since 6.0
    */
   escapeAttributeSelector(selector: string): string {
-    return selector.replace(/(["\\])/g, '\\$1');
+    return selector.replace(/(["\\])/g, "\\$1");
   },
 
   /**

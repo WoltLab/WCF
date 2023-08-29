@@ -14,7 +14,7 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<title>WSC System Requirements Test</title>
+	<title>WoltLab Suite System Requirements Test</title>
 	
 	<style>
 		html {
@@ -210,7 +210,7 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	
 	<main>
 <?php
-const WSC_SRT_VERSION = '5.5.0';
+const WSC_SRT_VERSION = '6.0.0';
 $requiredExtensions = [
 	'ctype',
 	'dom',
@@ -366,7 +366,7 @@ function checkInstallFile() {
 	return @file_exists('install.php');
 }
 function checkOpcache() {
-	if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+	if (extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
 		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
 			return false;
 		}

@@ -47,14 +47,12 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         }
         if (callback) {
             _callbacks.push(callback);
-            if (_callbacks.length === 1) {
-                window.addEventListener("scroll", onScroll);
-            }
         }
         if (_targetElement !== undefined) {
             return;
         }
         _targetElement = element;
+        window.addEventListener("scroll", onScroll);
         let y = Util_1.default.offset(element).top;
         if (_offset === null) {
             _offset = 50;

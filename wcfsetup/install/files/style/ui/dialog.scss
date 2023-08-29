@@ -52,6 +52,7 @@
 
 	@include screen-xs {
 		margin: auto;
+		max-height: calc(100% - 20px);
 		min-width: calc(80% - 20px);
 		max-width: calc(100% - 20px);
 		position: relative;
@@ -424,7 +425,7 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 	}
 
 	> .section:first-child,
-	> form > .section:first-child {
+	> :is(form, section) > .section:first-child {
 		margin-top: 0;
 	}
 

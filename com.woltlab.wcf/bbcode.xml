@@ -208,6 +208,7 @@
 		</bbcode>
 		<bbcode name="user">
 			<classname>wcf\system\bbcode\UserBBCode</classname>
+			<sourcecode>1</sourcecode>
 			<attributes>
 				<attribute name="0">
 					<validationpattern><![CDATA[^\d+$]]></validationpattern>
@@ -232,6 +233,7 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="group">
+			<sourcecode>1</sourcecode>
 			<classname>wcf\system\bbcode\GroupBBCode</classname>
 			<attributes>
 				<attribute name="0">

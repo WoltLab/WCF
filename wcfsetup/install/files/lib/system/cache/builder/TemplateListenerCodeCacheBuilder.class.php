@@ -44,7 +44,7 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
                     $options = \explode(',', \strtoupper($templateListener->options));
 
                     $options = \array_map(static function ($value) {
-                        return "('" . $value . "'|defined && '" . $value . "'|constant)";
+                        return "('{$value}'|defined && {$value})";
                     }, $options);
 
                     $templateCode .= '(' . \implode(' || ', $options) . ')';

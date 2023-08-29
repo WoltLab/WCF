@@ -210,11 +210,6 @@
 			background-color: var(--wcfButtonPrimaryBackgroundActive);
 		}
 	}
-
-	.ck.ck-toolbar__items .ck.ck-button:not(.ck-disabled, .ck-on):hover {
-		background: var(--ck-color-button-default-background);
-		color: var(--ck-color-text);
-	}
 }
 
 .ck-body-wrapper {
@@ -265,6 +260,15 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 }
 .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content_sticky .ck-toolbar {
 	border-bottom-color: var(--wcfInputBorderActive) !important;
+}
+
+.ck.ck-splitbutton {
+	display: flex;
+}
+
+.ck.ck-button.ck-splitbutton__action {
+	border-top-right-radius: unset !important;
+	border-bottom-right-radius: unset !important;
 }
 
 /* Fixes the hover state of the link balloon tooltip. */
@@ -336,7 +340,7 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 }
 
 .ck.ck-sticky-panel__content {
-	--ck-z-modal: 400;
+	--ck-z-modal: 90;
 }
 
 html[data-color-scheme="dark"] {
@@ -571,11 +575,6 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 }
 
 @include screen-xs {
-	html.iOS .ck.ck-content {
-		/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
-		font-size: 16px;
-	}
-
 	.ck.ck-input {
 		--ck-input-width: 100%;
 	}
@@ -587,5 +586,19 @@ html.touch .ck.ck-balloon-panel.ck-tooltip {
 
 	.ckeditor5__restoreDraft__buttons button[data-type="preview"] {
 		margin-right: 0;
+	}
+}
+
+/* Workarounds for iOS */
+html.iOS {
+	/* Fixed positioning does not work in iOS when the screen keyboard is open. */
+	.ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+		position: absolute !important;
+		top: 0 !important;
+	}
+
+	/* Font sizes below 16px cause iOS to zoom when moving the focus inside of it. */
+	.ck.ck-content {
+		font-size: 16px;
 	}
 }

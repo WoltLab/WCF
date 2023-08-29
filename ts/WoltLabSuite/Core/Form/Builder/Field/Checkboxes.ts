@@ -14,6 +14,12 @@ import { escapeAttributeSelector } from "WoltLabSuite/Core/Dom/Util";
 class Checkboxes extends Field {
   protected _fields: HTMLInputElement[];
 
+  constructor(fieldId: string) {
+    super(fieldId);
+
+    this._fields = Array.from(document.querySelectorAll(`input[name="${escapeAttributeSelector(this._fieldId)}[]"]`));
+  }
+
   protected _getData(): FormBuilderData {
     const values = this._fields
       .map((input) => {
@@ -31,7 +37,7 @@ class Checkboxes extends Field {
   }
 
   protected _readField(): void {
-    this._fields = Array.from(document.querySelectorAll(`input[name="${escapeAttributeSelector(this._fieldId)}[]"]`));
+    /* Does nothing. */
   }
 }
 

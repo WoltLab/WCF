@@ -292,18 +292,22 @@ class StyleHandler extends SingletonFactory
     }
 
     /**
-     * The color scheme is 'light' for styles without a dark mode. For styles
-     * with a dark mode, the special value 'system' is used to indicate that
-     * the client is able to negotiate a color scheme.
+     * Returns the preferred color scheme of the user. For guests this value
+     * will always be 'system' to indicate that the device preferences should
+     * be used to negotiate the color scheme.
      *
      * @since 6.0
      */
     public function getColorScheme(): string
     {
-        if ($this->getStyle()->hasDarkMode) {
+        if (!RequestHandler::getInstance()->isACPRequest() && !$this->style->hasDarkMode) {
+            return 'light';
+        }
+
+        if (!WCF::getUser()->userID) {
             return 'system';
         }
 
-        return 'light';
+        return WCF::getUser()->getUserOption('colorScheme') ?? 'system';
     }
 }

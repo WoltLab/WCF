@@ -64,7 +64,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * @since 6.0
          */
         escapeAttributeSelector(selector) {
-            return selector.replace(/(["\\])/g, '\\$1');
+            return selector.replace(/(["\\])/g, "\\$1");
         },
         /**
          * Returns the element's id. If there is no id set, a unique id will be

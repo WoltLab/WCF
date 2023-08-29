@@ -282,7 +282,7 @@ class UserEditForm extends UserAddForm
         parent::readData();
 
         // get the avatar object
-        if ($this->avatarType == 'custom') {
+        if ($this->avatarType == 'custom' && $this->user->avatarID) {
             $this->userAvatar = new UserAvatar($this->user->avatarID);
         }
 

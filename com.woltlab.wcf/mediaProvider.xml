@@ -43,17 +43,11 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)/?(?P<hash>(?(?<=/)[a-zA-Z0-9
 			<regex><![CDATA[https?://(?:www\.)?(?:instagram\.com|instagr\.am)/p/(?<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/{$ID}/" data-instgrm-version="14"><a href="https://www.instagram.com/p/{$ID}/">https://www.instagram.com/p/{$ID}/</a></blockquote><script async src="https://www.instagram.com/embed.js"></script>]]></html>
 		</provider>
-		<provider name="spotify-playlist">
-			<title>Spotify Playlist</title>
-			<regex><![CDATA[https?://play.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)
-https?://open.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)]]></regex>
-			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:user:{$USER}:playlist:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
-		</provider>
 		<provider name="spotify">
 			<title>Spotify</title>
-			<regex><![CDATA[https?://play.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
-https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
-			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:{$TYPE}:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
+			<regex><![CDATA[https?://play.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
+https?://open.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
+			<html><![CDATA[<iframe style="border-radius:12px" src="https://open.spotify.com/embed/{$TYPE}/{$ID}" width="400" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>]]></html>
 		</provider>
 		<provider name="twitch">
 			<title>Twitch</title>
@@ -66,7 +60,8 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
 		</provider>
 		<provider name="twitter-tweet">
 			<title>Twitter Tweet</title>
-			<regex><![CDATA[https://twitter.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)]]></regex>
+			<regex><![CDATA[https://twitter.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)
+https://x.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)]]></regex>
 			<html><![CDATA[<div data-wsc-twitter-tweet="{$ID}"><a href="https://twitter.com/{$USERNAME}/status/{$ID}/" class="externalURL" rel="nofollow ugc">https://twitter.com/{$USERNAME}/status/{$ID}/</a></div>
 <script>require(["WoltLabSuite/Core/Ui/Message/TwitterEmbed"],function(t){t.embedAll()});</script>]]></html>
 		</provider>
@@ -79,4 +74,7 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
 <script>require(['WoltLabSuite/Core/Wrapper/FacebookSdk'],function(FB){FB.XFBML.parse()})</script>]]></html>
 		</provider>
 	</import>
+	<delete>
+		<provider name="spotify-playlist"/>
+	</delete>
 </data>

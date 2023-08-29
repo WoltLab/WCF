@@ -58,23 +58,12 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[In the article]]></item>
 	</category>
 	<category name="wcf.acp.application">
-		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
-		<item name="wcf.acp.application.cookie.warning"><![CDATA[The setting below is used to establish a persistent login for your website; Keep in mind to update this value whenever the domain name changes. If you are unsure which value you need to provide, you can safely copy the value of “Domain”.]]></item>
-		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[The cookie domain cannot contain path components.]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[The cookie domain does not match the domain entered above (sub-domains like “www” can be omitted).]]></item>
-		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[If you are accessing this application through “https://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[The domain cannot contain path components.]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
 		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”.]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you are accessing this application through “https://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
-		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
 		<item name="wcf.acp.application.landingPage"><![CDATA[Entry Page]]></item>
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Default)]]></item>
-		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain Configuration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
@@ -325,7 +314,6 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Display Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries at the moment.]]></item>
 	</category>
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
@@ -650,9 +638,9 @@ log/{$file}.txt{if !$data[verdict]|isset} ({#$data[count]} error{if $data[count]
 ==================
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
-This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+This protocol file is corrupted. Please check the protocol manually: {$logPath}{$file}.txt
 {elseif $data[verdict] == 'huge'}
-This protocol file is very large. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+This protocol file is very large. Please check the protocol manually: {$logPath}{$file}.txt
 {/if}
 {else}
 {foreach from=$data[messages] item=message}
@@ -1621,7 +1609,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.article_related_articles"><![CDATA[Number of “Related Articles”]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
-		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
+		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “About the Author” box]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
 		<item name="wcf.acp.option.category.message.general.imageProxy"><![CDATA[Image Proxy]]></item>
 		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
@@ -2470,7 +2458,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.iconType.filePath"><![CDATA[Image]]></item>
 		<item name="wcf.acp.pip.bbcode.iconType.fontAwesome"><![CDATA[FontAwesome Icon]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath"><![CDATA[Path to icon file]]></item>
-		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}icon/</kbd>.]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -2481,10 +2469,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath2x"><![CDATA[HD Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <kbd>{$path}</kbd>.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option is only available for registered members-only user groups.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have. Additionally, the option type also determines how the final option value is determined if a user is in multiple user groups with different option values.]]></item>
@@ -2975,7 +2963,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.group.styles"><![CDATA[Styles]]></item>
-		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[Please <a href="{link controller='TemplateGroupAdd'}{/link}">add a template group</a> before creating custom templates.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
@@ -3177,14 +3165,14 @@ the lost password form <a href="{link controller='LostPassword' isHtmlEmail=true
 		<item name="wcf.acp.user.authentication.failure.validationError"><![CDATA[Error]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError.invalidPassword"><![CDATA[Incorrect password]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError.invalidUsername"><![CDATA[Unknown user]]></item>
-		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|phrase} has been approved]]></item>
+		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on {@PAGE_TITLE|phrase} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
-<p>Your account on the website: <a href="{link}{/link}">{PAGE_TITLE|phrase}</a> has been approved
+<p>Your account on <a href="{link}{/link}">{PAGE_TITLE|phrase}</a> has been approved
 by an administrator. You are now able to use your user account to its full extent.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been approved by an administrator. You are now able to use your user account to its full extent.]]></item>
+Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been approved by an administrator. You are now able to use your user account to its full extent.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here will not affect existing users. Users can customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users also]]></item>
@@ -3853,7 +3841,6 @@ Attachments:
 		<item name="wcf.editor.table.rows"><![CDATA[Rows]]></item>
 
 		<item name="wcf.editor.button.article"><![CDATA[CMS Article]]></item>
-		<item name="wcf.editor.button.group.block"><![CDATA[Insert Block]]></item>
 		<item name="wcf.editor.button.group.format"><![CDATA[Format Text]]></item>
 		<item name="wcf.editor.button.group.list"><![CDATA[Lists]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
@@ -4664,6 +4651,8 @@ Attachments:
 		<item name="wcf.user.style"><![CDATA[Style]]></item>
 		<item name="wcf.user.styles"><![CDATA[Styles]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
+		<item name="wcf.user.style.colorScheme"><![CDATA[Preferred Color Scheme]]></item>
+		<item name="wcf.user.style.colorScheme.description"><![CDATA[The automatic detection applies the color scheme based on your device’s preferences. Some styles might not offer a custom color scheme.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[A secure password should be at least 10 characters long.]]></item>
 		<item name="wcf.user.password.strength"><![CDATA[Password Strength]]></item>
@@ -4888,10 +4877,10 @@ not register with us.]]></item>
 		<item name="wcf.user.register"><![CDATA[Registration]]></item>
 		<!-- Need Activation -->
 		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
-		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|phrase}]]></item>
+		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration on {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>Thank you for registering at: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>. Before you are able to use your
+<p>Thank you for registering on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>. Before you are able to use your
 user account to its full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
@@ -5334,8 +5323,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:]]></item>
-		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
+You currently have {#$notificationCount} unread notification{if $notificationCount != 1}s{/if} older than 24 hours:]]></item>
+		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $remaining}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 
@@ -5346,8 +5335,8 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationUnsubscribe' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
-<p>You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:</p>]]></item>
-		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isHtmlEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
+<p>You currently have {#$notificationCount} unread notification{if $notificationCount != 1}s{/if} older than 24 hours:</p>]]></item>
+		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $remaining}Visit your <a href="{link controller='NotificationList' isHtmlEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
 
@@ -7456,5 +7445,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
+	<item name="wcf.editor.button.group.block"/>
 </delete>
 </language>

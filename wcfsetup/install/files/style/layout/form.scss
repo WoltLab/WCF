@@ -108,26 +108,26 @@ select {
 }
 
 .formSubmit {
-	text-align: center;
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
 
 	&:not(:first-child) {
 		margin-top: 30px;
 	}
+}
 
-	/* the `margin-bottom` styles are required to deal with buttons wrapping
-	   into the next row, also requires some changes to `.dialogFormSubmit`! */
-	margin-bottom: -10px;
-
-	> input[type="button"],
-	> input[type="reset"],
-	> input[type="submit"],
-	> .button,
-	> a.button {
-		margin-bottom: 10px;
-	}
-
-	> :not(:first-child) {
-		margin-left: 10px;
+@include screen-xs {
+	.formSubmit {
+		input[type="button"],
+		input[type="reset"],
+		input[type="submit"],
+		.button,
+		a.button {
+			flex: 1;
+		}
 	}
 }
 
@@ -208,15 +208,21 @@ input {
 }
 
 .formError {
+	--color-error: #c00;
+
 	dt {
-		color: rgba(204, 0, 1, 1) !important;
+		color: var(--color-error) !important;
 	}
 
 	input,
 	select,
 	textarea {
-		border-color: rgba(204, 0, 1, 1) !important;
+		border-color: var(--color-error) !important;
 	}
+}
+
+html[data-color-scheme="dark"] .formError {
+	--color-error: #ff4747;
 }
 
 /* grid-based form controls */
@@ -284,7 +290,9 @@ html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
 		left: 0;
 		position: absolute;
 		top: 0;
-		transition: background-color 0.12s linear, width 0.12s linear;
+		transition:
+			background-color 0.12s linear,
+			width 0.12s linear;
 		width: 0;
 	}
 

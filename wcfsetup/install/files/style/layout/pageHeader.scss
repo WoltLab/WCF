@@ -166,7 +166,9 @@
 		opacity: 0;
 		position: absolute;
 		top: 0;
-		transition: opacity 0.24s linear, visibility 0s linear 0.24s;
+		transition:
+			opacity 0.24s linear,
+			visibility 0s linear 0.24s;
 		visibility: hidden;
 		width: 50px;
 
@@ -246,7 +248,9 @@
 
 				/* special styling for update badge */
 				> .badgeUpdate {
-					box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(225, 225, 225, 0.3);
+					box-shadow:
+						-1px 2px 3px rgba(0, 0, 0, 0.3),
+						inset 0 2px 5px rgba(225, 225, 225, 0.3);
 					left: 35px;
 					padding: 1px 6px;
 					position: absolute;

@@ -22,6 +22,7 @@
 			'WoltLabSuite.Core.min',
 			'WoltLabSuite.Core.tiny.min',
 			"pica",
+			"@googlemaps/markerclusterer",
 		],
 		rawText: {
 			'WoltLabSuite.Core.min': 'define([], function() {});',

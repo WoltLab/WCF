@@ -27,6 +27,7 @@ import Devtools from "../Devtools";
 import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
+import { browser, touch } from "../Environment";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -122,6 +123,17 @@ class Ckeditor {
     dispatchToCkeditor(this.sourceElement).reset({
       ckeditor: this,
     });
+
+    if (browser() === "safari" && !touch()) {
+      // Safari sometimes suffers from a “reverse typing” effect caused by the
+      // improper shift of the focus out of the editing area.
+      // https://github.com/ckeditor/ckeditor5/issues/14702
+      const editor = this.#editor.ui.element!;
+      editor.focus();
+      window.setTimeout(() => {
+        editor.blur();
+      }, 0);
+    }
   }
 
   get element(): HTMLElement {

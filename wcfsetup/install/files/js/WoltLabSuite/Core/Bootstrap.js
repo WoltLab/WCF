@@ -116,8 +116,10 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         });
         initA11y();
         Listener_1.default.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
-        if (options.colorScheme === "system") {
-            void new Promise((resolve_1, reject_1) => { require(["./Controller/Style/ColorScheme"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        if (options.dynamicColorScheme) {
+            void new Promise((resolve_1, reject_1) => { require(["./Controller/Style/ColorScheme"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => {
+                setup();
+            });
         }
         (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
             void new Promise((resolve_2, reject_2) => { require(["./Ui/Moderation/Report"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());

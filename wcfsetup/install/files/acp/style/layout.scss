@@ -206,6 +206,12 @@ html[data-color-scheme="dark"] {
 		.pageHeaderPanel fa-icon[size="32"] {
 			display: none;
 		}
+
+		#outstandingUpdatesNotification .badgeUpdate {
+			left: 29px;
+			top: -4px;
+			padding: 0 4px;
+		}
 	}
 
 	@include screen-md-down {

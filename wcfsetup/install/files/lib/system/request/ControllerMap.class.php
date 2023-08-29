@@ -2,6 +2,7 @@
 
 namespace wcf\system\request;
 
+use wcf\action\CoreRewriteTestAction;
 use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -90,6 +91,15 @@ final class ControllerMap extends SingletonFactory
             }
             if ($classData === null) {
                 $classData = $this->getClassData($application, $controller, $isAcpRequest, 'action');
+            }
+            if ($classData === null) {
+                // The CoreRewriteTest controller is special and needs to be available in all apps.
+                if ($controller === 'CoreRewriteTest') {
+                    $classData = [
+                        'controller' => 'CoreRewriteTest',
+                        'className' => CoreRewriteTestAction::class,
+                    ];
+                }
             }
         }
 

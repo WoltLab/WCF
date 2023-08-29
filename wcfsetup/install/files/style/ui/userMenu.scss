@@ -241,7 +241,9 @@ html:not(.touch) .userMenuItem:hover {
 }
 
 html:not(.touch) .userMenuItemUnread::before {
-	transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
+	transition:
+		left 0.12s ease-in-out,
+		opacity 0.12s ease-in-out;
 }
 
 html:not(.touch) .userMenuItem:hover .userMenuItemUnread::before {
@@ -259,7 +261,10 @@ html:not(.touch) .userMenuItem:hover .userMenuItemUnread::before {
 
 html:not(.touch) .userMenuItemMarkAsRead {
 	transform: scale(1);
-	transition: opacity 0.12s ease-in-out, left 0.12s ease-in-out, transform 0.24s ease-in-out;
+	transition:
+		opacity 0.12s ease-in-out,
+		left 0.12s ease-in-out,
+		transform 0.24s ease-in-out;
 
 	&:hover {
 		transform: scale(1.5);

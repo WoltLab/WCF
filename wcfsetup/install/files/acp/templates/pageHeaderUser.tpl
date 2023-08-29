@@ -17,8 +17,8 @@
 				</li>
 				
 				{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
-					<li>
-						<a href="{link controller='PackageUpdate'}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}">
+					<li id="outstandingUpdatesNotification">
+						<a href="{link controller='PackageList' searchForUpdates=true}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}">
 							{icon size=16 name='arrows-rotate'}
 							{icon size=32 name='arrows-rotate'}
 							<span class="badge badgeUpdate">{#$__wcf->getAvailableUpdates()}</span>
@@ -40,22 +40,6 @@
 					<li><a class="externalURL" href="https://www.woltlab.com/ticket-add/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
 					<li><a class="externalURL" href="https://www.woltlab.com/pluginstore/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
 				</ul>
-			</li>
-
-			<li>
-				<a
-					href="#"
-					role="button"
-					class="page__colorScheme jsButtonStyleColorScheme jsTooltip"
-					title="{lang}wcf.style.setColorScheme{/lang}"
-				>
-					<span class="iconWrapper page__colorScheme--dark">
-						{icon size=16 name='moon' type='solid'}
-					</span>
-					<span class="iconWrapper page__colorScheme--light">
-						{icon size=16 name='sun' type='solid'}
-					</span>
-				</a>
 			</li>
 		{/if}
 		

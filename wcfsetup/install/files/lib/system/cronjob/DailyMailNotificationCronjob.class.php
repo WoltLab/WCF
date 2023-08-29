@@ -253,17 +253,35 @@ class DailyMailNotificationCronjob extends AbstractCronjob
                 true
             );
 
+            $maximumNotificationCount = 7;
+            $notificationCount = \count($notifications);
+            if ($notificationCount === $maximumNotificationCount + 1) {
+                $maximumNotificationCount++;
+            }
+            $remainingNotificationCount = $notificationCount - $maximumNotificationCount;
+            $notifications = \array_slice($notifications, 0, $maximumNotificationCount);
+
             $html = new RecipientAwareTextMimePart(
                 'text/html',
                 'email_dailyNotification',
                 'wcf',
-                ['notifications' => $notifications]
+                [
+                    'notifications' => $notifications,
+                    'remaining' => $remainingNotificationCount,
+                    'maximum' => $maximumNotificationCount,
+                    'notificationCount' => $notificationCount,
+                ]
             );
             $plainText = new RecipientAwareTextMimePart(
                 'text/plain',
                 'email_dailyNotification',
                 'wcf',
-                ['notifications' => $notifications]
+                [
+                    'notifications' => $notifications,
+                    'remaining' => $remainingNotificationCount,
+                    'maximum' => $maximumNotificationCount,
+                    'notificationCount' => $notificationCount,
+                ]
             );
             $email->setBody(new MimePartFacade([$html, $plainText]));
 

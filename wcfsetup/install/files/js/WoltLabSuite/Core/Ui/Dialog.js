@@ -234,7 +234,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     data.content.querySelector("input, textarea")?.focus();
                 }, 200);
             }
-            (0, PageOverlay_1.adoptPageOverlayContainer)(data.dialog);
+            (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
             return data;
         },
         /**
@@ -516,8 +516,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             unavailableHeight += Util_1.default.outerHeight(data.header);
             const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
             contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
-            const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
-            data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+            if (data.dialog.style.getPropertyValue("--translate-x") === "") {
+                const offset = Math.floor(data.dialog.getBoundingClientRect().width / 2);
+                data.dialog.style.setProperty("--translate-x", `-${offset}px`);
+            }
             const callbackObject = _dialogToObject.get(id);
             //noinspection JSUnresolvedVariable
             if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === "function") {
@@ -664,12 +666,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             _activeDialog = null;
             for (let i = 0; i < _container.childElementCount; i++) {
                 const child = _container.children[i];
-                if (!Core.stringToBool(child.getAttribute("aria-hidden"))) {
+                if (child.classList.contains("dialogContainer") && !Core.stringToBool(child.getAttribute("aria-hidden"))) {
                     _activeDialog = child.dataset.id || "";
                     break;
                 }
             }
-            (0, PageOverlay_1.releasePageOverlayContainer)(data.dialog);
+            (0, PageOverlay_1.releasePageOverlayContainer)(_container);
             UiScreen.pageOverlayClose();
             if (_activeDialog === null) {
                 _container.setAttribute("aria-hidden", "true");

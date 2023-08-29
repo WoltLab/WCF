@@ -6,11 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import AjaxRequest from "../../../Ajax/Request";
 import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import DomUtil from "../../../Dom/Util";
+import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 
 interface TestResult {
   app: string;
@@ -72,35 +72,29 @@ class RewriteTest {
     this.setStatus("running");
 
     const tests: Promise<TestResult>[] = Array.from(this.apps).map(([app, url]) => {
-      return new Promise((resolve, reject) => {
-        const request = new AjaxRequest({
-          ignoreError: true,
-          // bypass the LinkHandler, because rewrites aren't enabled yet
-          url: url,
-          type: "GET",
-          includeRequestedWith: false,
-          success: (data) => {
+      return prepareRequest(url)
+        .get()
+        .disableLoadingIndicator()
+        .fetchAsJson()
+        .then(
+          (data: any) => {
             if (
               !Object.prototype.hasOwnProperty.call(data, "core_rewrite_test") ||
               data.core_rewrite_test !== "passed"
             ) {
-              reject({ app, pass: false });
+              return false;
             } else {
-              resolve({ app, pass: true });
+              return true;
             }
           },
-          failure: () => {
-            reject({ app, pass: false });
-
-            return true;
-          },
+          () => false,
+        )
+        .then((pass) => {
+          return { app, pass };
         });
-
-        request.sendRequest(false);
-      });
     });
 
-    const results: TestResult[] = await Promise.all(tests.map((test) => test.catch((result: TestResult) => result)));
+    const results: TestResult[] = await Promise.all(tests);
 
     const passed = results.every((result) => result.pass);
 

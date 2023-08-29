@@ -33,7 +33,7 @@
 			
 			const apps = new Map(Object.entries({
 				{* this bypasses the route system to force rewritten urls *}
-				{implode from=$rewriteTestApplications item=$rewriteTestApplication}'{$rewriteTestApplication->getPackage()|encodeJS}': '{$__wcf->getPath($rewriteTestApplication->getAbbreviation())}core-rewrite-test/?uuidHash={'sha256'|hash:WCF_UUID}'{/implode}
+				{implode from=$rewriteTestApplications item=$rewriteTestApplication}'{$rewriteTestApplication->getPackage()|encodeJS}': '{$__wcf->getPath($rewriteTestApplication->getAbbreviation())}core-rewrite-test/'{/implode}
 			}));
 			
 			AcpUiOptionRewriteTest.init(apps);

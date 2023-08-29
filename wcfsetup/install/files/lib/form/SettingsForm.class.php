@@ -18,6 +18,7 @@ use wcf\system\menu\user\UserMenu;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -101,6 +102,8 @@ class SettingsForm extends AbstractForm
      */
     public $specialTrophies = [];
 
+    public string $colorScheme = 'system';
+
     /**
      * @inheritDoc
      */
@@ -161,6 +164,9 @@ class SettingsForm extends AbstractForm
             if (isset($_POST['specialTrophies'])) {
                 $this->specialTrophies = ArrayUtil::toIntegerArray($_POST['specialTrophies']);
             }
+            if (isset($_POST['colorScheme'])) {
+                $this->colorScheme = $_POST['colorScheme'];
+            }
         }
     }
 
@@ -215,6 +221,10 @@ class SettingsForm extends AbstractForm
                     throw new UserInputException('specialTrophies', 'invalid');
                 }
             }
+
+            if ($this->colorScheme !== 'light' && $this->colorScheme !== 'dark') {
+                $this->colorScheme = 'system';
+            }
         }
     }
 
@@ -238,6 +248,8 @@ class SettingsForm extends AbstractForm
                 $this->specialTrophies = \array_unique(\array_map(static function ($trophy) {
                     return $trophy->trophyID;
                 }, (new UserProfile(WCF::getUser()))->getSpecialTrophies()));
+
+                $this->colorScheme = WCF::getUser()->getUserOption('colorScheme');
             }
         }
     }
@@ -272,6 +284,11 @@ class SettingsForm extends AbstractForm
                 'trophyIDs' => $this->specialTrophies,
             ]);
             $userProfileAction->executeAction();
+
+            if (WCF::getUser()->getUserOption('colorScheme') !== $this->colorScheme) {
+                $command = new SetColorScheme(WCF::getUser(), $this->colorScheme);
+                $command();
+            }
         }
         $this->saved();
 
@@ -310,6 +327,7 @@ class SettingsForm extends AbstractForm
                 'languageID' => $this->languageID,
                 'styleID' => $this->styleID,
                 'specialTrophies' => $this->specialTrophies,
+                'colorScheme' => $this->colorScheme,
             ]);
         }
     }

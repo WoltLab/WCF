@@ -44,7 +44,7 @@ use wcf\util\XMLWriter;
  */
 final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
-    const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
+    const EXCLUDE_WCF_VERSION = '7.0.0 Alpha 1';
 
     const INFO_FILE = 'style.xml';
 
