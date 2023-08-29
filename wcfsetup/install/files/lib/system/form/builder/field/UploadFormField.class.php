@@ -696,7 +696,7 @@ class UploadFormField extends AbstractFormField
             }
 
             $minimumImageWidth = $this->getMinimumImageWidth();
-            if ($maximumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
+            if ($minimumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
                 throw new \InvalidArgumentException(
                     "Maximum image width ({$maximumImageWidth}) cannot be smaller than minimum image width ({$minimumImageWidth}) for field '{$this->getId()}'."
                 );
