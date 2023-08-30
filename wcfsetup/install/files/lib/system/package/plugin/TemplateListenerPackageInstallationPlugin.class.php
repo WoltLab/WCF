@@ -39,6 +39,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 {
     use TXmlGuiPackageInstallationPlugin {
         setEntryData as defaultSetEntryData;
+        editEntry as private traitEditEntry;
     }
 
     /**
@@ -381,14 +382,16 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                 ->packageIDs(\array_merge(
                     [$this->installation->getPackage()->packageID],
                     \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-                )),
+                ))
+                ->available($form->getFormMode() !== IFormDocument::FORM_MODE_CREATE),
 
             UserGroupOptionFormField::create()
                 ->description('wcf.acp.pip.templateListener.permissions.description')
                 ->packageIDs(\array_merge(
                     [$this->installation->getPackage()->packageID],
                     \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-                )),
+                ))
+                ->available($form->getFormMode() !== IFormDocument::FORM_MODE_CREATE),
         ]);
 
         // ensure proper normalization of template code
@@ -457,29 +460,37 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     public function setEntryData($identifier, IFormDocument $document)
     {
         if ($this->defaultSetEntryData($identifier, $document)) {
+            $options = $document->getNodeById('options');
+            \assert($options instanceof OptionFormField);
+            $permissions = $document->getNodeById('permissions');
+            \assert($permissions instanceof UserGroupOptionFormField);
+    
+            if (!$options->getValue()) {
+                $options->available(false);
+            }
+            if (!$permissions->getValue()) {
+                $permissions->available(false);
+            }
+
             $data = $this->getElementData($this->getElementByIdentifier($this->getProjectXml(), $identifier));
 
             switch ($data['environment']) {
                 case 'admin':
-                    /** @var SingleSelectionFormField $templateName */
                     $templateName = $document->getNodeById('acpTemplateName');
-
-                    /** @var SingleSelectionFormField $eventName */
                     $eventName = $document->getNodeById('acp_' . $data['templateName'] . '_eventName');
                     break;
 
                 case 'user':
-                    /** @var SingleSelectionFormField $templateName */
                     $templateName = $document->getNodeById('frontendTemplateName');
-
-                    /** @var SingleSelectionFormField $eventName */
                     $eventName = $document->getNodeById($data['templateName'] . '_eventName');
                     break;
 
                 default:
-                    throw new \LogicException("Unknown enviornment '{$data['environment']}'.");
+                    throw new \LogicException("Unknown environment '{$data['environment']}'.");
             }
 
+            \assert($templateName instanceof SingleSelectionFormField);
+            \assert($eventName instanceof SingleSelectionFormField);
             $templateName->value($data['templateName']);
             $eventName->value($data['eventName']);
 
@@ -487,6 +498,28 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         }
 
         return false;
+    }
+
+    /**
+     * Shows options and permissions if already specified.
+     */
+    public function editEntry(IFormDocument $form, $identifier)
+    {
+        $options = $form->getNodeById('options');
+        \assert($options instanceof OptionFormField);
+        $permissions = $form->getNodeById('permissions');
+        \assert($permissions instanceof UserGroupOptionFormField);
+
+        $result = $this->traitEditEntry($form, $identifier);
+
+        if (!$options->getValue()) {
+            $options->available(false);
+        }
+        if (!$permissions->getValue()) {
+            $permissions->available(false);
+        }
+
+        return $result;
     }
 
     /**
