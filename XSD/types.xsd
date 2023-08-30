@@ -23,13 +23,4 @@
 			<xs:maxInclusive value="1" />
 		</xs:restriction>
 	</xs:simpleType>
-	
-	<!-- user/admin environment type which only accepts 'user' or 'admin' -->
-	<xs:simpleType name="woltlab_environment">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="user" />
-			<xs:enumeration value="admin" />
-			<xs:enumeration value="all" />
-		</xs:restriction>
-	</xs:simpleType>
 </xs:schema>
