@@ -129,7 +129,7 @@ class AdHandler extends SingletonFactory
         }
 
         foreach ($selection as &$subSelection) {
-            \asort($subSelection);
+            \asort($subSelection, \SORT_NATURAL);
         }
 
         $globalCategory = WCF::getLanguage()->get('wcf.acp.ad.location.category.com.woltlab.wcf.global');
