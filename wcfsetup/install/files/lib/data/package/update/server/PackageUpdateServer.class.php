@@ -151,6 +151,15 @@ class PackageUpdateServer extends DatabaseObject
         return \current($pluginStoreServer);
     }
 
+    final public static function getWoltLabUpdateServer(): self
+    {
+        $pluginStoreServer = \array_filter(self::getActiveUpdateServers(), static function (self $updateServer) {
+            return $updateServer->isWoltLabUpdateServer();
+        });
+
+        return \current($pluginStoreServer);
+    }
+
     /**
      * Restricts the available sources to official package
      * servers when a secure download is requested.

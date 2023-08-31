@@ -28,9 +28,13 @@ final class LicensePage extends AbstractPage
 
     private array $packageUpdates = [];
 
+    private PackageUpdateServer $updateServer;
+
     public function readData()
     {
         parent::readData();
+
+        $this->updateServer = PackageUpdateServer::getWoltLabUpdateServer();
 
         // TODO: We actually need to fetch the data from the official package
         // update servers first, because we rely on the human readable names.
@@ -78,10 +82,6 @@ final class LicensePage extends AbstractPage
                 return $b->isApplication <=> $a->isApplication;
             });
         }
-
-        // TODO: This might need to use `getAuthData()` to inject the correct
-        // credentials for the WoltLab Cloud.
-        $this->licenseNumber = (new PackageUpdateServer(1))->loginUsername;
 
         // TODO: We need the data from the official package update servers to
         // determine the human readable values for each package and to filter
@@ -581,8 +581,8 @@ final class LicensePage extends AbstractPage
     // latest purchases.
     private function fetchLicenseData(): array|object
     {
-        // TODO: Fixed server id
-        $pus = new PackageUpdateServer(1);
+        $authData = $this->updateServer->getAuthData();
+        $this->licenseNumber = $authData['username'];
 
         $request = new Request(
             'POST',
@@ -591,8 +591,8 @@ final class LicensePage extends AbstractPage
                 'content-type' => 'application/x-www-form-urlencoded',
             ],
             \http_build_query([
-                'licenseNo' => $pus->loginUsername,
-                'serialNo' => $pus->loginPassword,
+                'licenseNo' => $this->licenseNumber,
+                'serialNo' => $authData['password'],
                 'instanceId' => \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID),
             ], '', '&', \PHP_QUERY_RFC1738)
         );
