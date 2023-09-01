@@ -27,6 +27,7 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getLength(): int
     {
         if ($this->length === null) {

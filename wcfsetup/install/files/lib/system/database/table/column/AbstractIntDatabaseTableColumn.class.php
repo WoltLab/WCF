@@ -30,6 +30,7 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
     /**
      * @inheritDoc
      */
+    #[\Override]
     public static function createFromData(string $name, array $data): static
     {
         $length = $data['length'] ?? null;

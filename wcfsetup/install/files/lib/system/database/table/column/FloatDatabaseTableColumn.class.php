@@ -20,6 +20,7 @@ final class FloatDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMaximumDecimals(): int
     {
         return 30;
@@ -28,6 +29,7 @@ final class FloatDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMaximumLength(): int
     {
         return 255;

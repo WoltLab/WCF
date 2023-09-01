@@ -20,6 +20,7 @@ final class IntDatabaseTableColumn extends AbstractIntDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMaximumLength(): int
     {
         return 11;

@@ -27,6 +27,7 @@ final class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn imp
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getLength(): int
     {
         if ($this->length === null) {

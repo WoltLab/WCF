@@ -20,6 +20,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function decimals(?int $decimals): static
     {
         if ($this->getLength() === null) {
@@ -32,6 +33,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMaximumDecimals(): int
     {
         return 30;
@@ -40,6 +42,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMaximumLength(): int
     {
         return 65;
@@ -48,6 +51,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getMinimumLength(): int
     {
         return 1;

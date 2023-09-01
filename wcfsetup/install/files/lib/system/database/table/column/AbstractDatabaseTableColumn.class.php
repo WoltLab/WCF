@@ -39,6 +39,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getData(): array
     {
         $data = [
@@ -91,6 +92,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @inheritDoc
      * @since       5.4
      */
+    #[\Override]
     public function getNewName(): ?string
     {
         return $this->newName;
@@ -99,6 +101,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getName(): string
     {
         if (!isset($this->name)) {
@@ -111,6 +114,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function getType(): string
     {
         if ($this->type === null) {
@@ -125,6 +129,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function isNotNull(): bool
     {
         return $this->notNull;
@@ -133,6 +138,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function name(string $name): static
     {
         if (isset($this->name)) {
@@ -147,6 +153,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function notNull(bool $notNull = true): static
     {
         $this->notNull = $notNull;
@@ -158,6 +165,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @inheritDoc
      * @since       5.4
      */
+    #[\Override]
     public function renameTo(string $newName): static
     {
         if ($newName === $this->getName()) {
