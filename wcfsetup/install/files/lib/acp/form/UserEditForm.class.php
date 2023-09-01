@@ -18,6 +18,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -158,6 +159,11 @@ class UserEditForm extends UserAddForm
     public $styleID = 0;
 
     /**
+     * @since 6.0
+     */
+    public string $colorScheme = 'system';
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -218,6 +224,9 @@ class UserEditForm extends UserAddForm
         }
         if (isset($_POST['styleID'])) {
             $this->styleID = \intval($_POST['styleID']);
+        }
+        if (isset($_POST['colorScheme'])) {
+            $this->colorScheme = $_POST['colorScheme'];
         }
 
         if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
@@ -339,6 +348,8 @@ class UserEditForm extends UserAddForm
         if ($this->user->avatarID) {
             $this->avatarType = 'custom';
         }
+
+        $this->colorScheme = $this->user->getUserOption('colorScheme');
     }
 
     /**
@@ -370,6 +381,7 @@ class UserEditForm extends UserAddForm
             'ownerGroupID' => UserGroup::getOwnerGroupID(),
             'availableStyles' => $this->availableStyles,
             'styleID' => $this->styleID,
+            'colorScheme' => $this->colorScheme,
         ]);
     }
 
@@ -487,6 +499,11 @@ class UserEditForm extends UserAddForm
                 'multifactorActive' => 0,
             ]);
             WCF::getDB()->commitTransaction();
+        }
+
+        if ($this->user->getUserOption('colorScheme') !== $this->colorScheme) {
+            $command = new SetColorScheme($this->user->getDecoratedObject(), $this->colorScheme);
+            $command();
         }
 
         // reload user
@@ -613,6 +630,10 @@ class UserEditForm extends UserAddForm
 
         if (!isset($this->availableStyles[$this->styleID])) {
             $this->styleID = 0;
+        }
+
+        if ($this->colorScheme !== 'light' && $this->colorScheme !== 'dark') {
+            $this->colorScheme = 'system';
         }
     }
 }

@@ -484,6 +484,20 @@
 									</dd>
 								</dl>
 							{/if}
+							
+							{if $action === 'edit'}
+								<dl>
+									<dt><label for="colorScheme">{lang}wcf.user.style.colorScheme{/lang}</label></dt>
+									<dd>
+										<select id="colorScheme" name="colorScheme">
+											<option value="system"{if $colorScheme === 'system'} selected{/if}>{lang}wcf.style.setColorScheme.system{/lang}</option>
+											<option value="light"{if $colorScheme === 'light'} selected{/if}>{lang}wcf.style.setColorScheme.light{/lang}</option>
+											<option value="dark"{if $colorScheme === 'dark'} selected{/if}>{lang}wcf.style.setColorScheme.dark{/lang}</option>
+										</select>
+										<small>{lang}wcf.user.style.colorScheme.description{/lang}</small>
+									</dd>
+								</dl>
+							{/if}
 						{/if}
 
 						{if $categoryLevel2[object]->categoryName == 'profile.personal' && MODULE_USER_RANK}
