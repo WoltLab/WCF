@@ -230,6 +230,7 @@ final class WysiwygFormField extends AbstractFormField implements
             'wysiwyg',
             function (IFormDocument $document, array $parameters) {
                 if ($this->checkDependencies()) {
+                    $parameters[$this->getObjectProperty()] = $this->htmlInputProcessor->getHtml();
                     $parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
                 }
 

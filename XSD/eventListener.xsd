@@ -49,7 +49,15 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="inherit" type="woltlab_boolean" minOccurs="0" />
-			<xs:element name="environment" type="woltlab_environment" minOccurs="0" />
+			<xs:element name="environment" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="user" />
+						<xs:enumeration value="admin" />
+						<xs:enumeration value="all" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="nice" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:integer">

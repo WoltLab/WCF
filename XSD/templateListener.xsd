@@ -31,7 +31,14 @@
 	<!-- deleted template listeners -->
 	<xs:complexType name="templatelistener_delete">
 		<xs:all>
-			<xs:element name="environment" type="woltlab_environment" />
+			<xs:element name="environment">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="user" />
+						<xs:enumeration value="admin" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="templatename" type="xs:string" />
 			<xs:element name="eventname" type="xs:string" />
 		</xs:all>
@@ -41,7 +48,14 @@
 	<!-- imported/updated template listeners -->
 	<xs:complexType name="templatelistener_import">
 		<xs:all>
-			<xs:element name="environment" type="woltlab_environment" />
+			<xs:element name="environment">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="user" />
+						<xs:enumeration value="admin" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="templatename" type="xs:string" />
 			<xs:element name="eventname" type="xs:string" />
 			<xs:element name="templatecode" type="xs:string" />
