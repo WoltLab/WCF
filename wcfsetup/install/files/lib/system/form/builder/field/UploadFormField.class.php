@@ -801,7 +801,7 @@ class UploadFormField extends AbstractFormField
             }
         }
 
-        $this->maximumImageWidth = $maximumImageHeight;
+        $this->maximumImageHeight = $maximumImageHeight;
 
         return $this;
     }
