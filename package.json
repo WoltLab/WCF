@@ -7,10 +7,10 @@
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
-    "esbuild": "^0.18.17",
+    "esbuild": "^0.19.2",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.0.2",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
   "dependencies": {
