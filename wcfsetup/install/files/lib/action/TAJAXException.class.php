@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\IExtraInformationException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
@@ -81,13 +82,16 @@ trait TAJAXException
                 $returnValues['description'] = $e->getDescription();
             }
 
+            $extraInformation = ($e instanceof IExtraInformationException) ? $e->getExtraInformation() : [];
+
             throw new AJAXException(
                 $e->getMessage(),
                 AJAXException::INTERNAL_ERROR,
                 AJAXException::getSanitizedTraceAsString($e),
                 $returnValues,
                 \wcf\functions\exception\logThrowable($e),
-                $e->getPrevious()
+                $e->getPrevious(),
+                $extraInformation,
             );
         }
     }

@@ -2,6 +2,7 @@
 
 namespace wcf\system\exception;
 
+use Throwable;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\JSON;
@@ -68,7 +69,8 @@ class AJAXException extends LoggedException
         $stacktrace = null,
         $returnValues = [],
         $exceptionID = '',
-        $previous = null
+        $previous = null,
+        array $extraInformation = [],
     ) {
         if ($stacktrace === null) {
             $stacktrace = self::getSanitizedTraceAsString($this);
@@ -110,17 +112,18 @@ class AJAXException extends LoggedException
             'code' => $errorType,
             'file' => $file,
             'line' => $line,
+            'extraInformation' => $extraInformation,
             'message' => $message,
             'previous' => [],
             'returnValues' => $returnValues,
         ];
 
         if ($includeStacktrace) {
-            $responseData['stacktrace'] = '<pre>' . $stacktrace . '</pre>';
+            $responseData['stacktrace'] = $stacktrace;
 
             while ($previous) {
                 $data = ['message' => $previous->getMessage()];
-                $data['stacktrace'] = '<pre>' . self::getSanitizedTraceAsString($previous) . '</pre>';
+                $data['stacktrace'] = self::getSanitizedTraceAsString($previous);
 
                 $responseData['previous'][] = $data;
                 $previous = $previous->getPrevious();
@@ -171,6 +174,9 @@ class AJAXException extends LoggedException
         exit;
     }
 
+    /**
+     * @since 6.0
+     */
     public static function getSanitizedTraceAsString(\Throwable $e): string
     {
         $trace = \wcf\functions\exception\sanitizeStacktrace($e);
@@ -181,7 +187,7 @@ class AJAXException extends LoggedException
             $item = $trace[$i];
 
             $trace[$i] = \sprintf(
-                '%s <strong>%s</strong>%s%s(%s)',
+                '%s %s%s%s(%s)',
                 \str_pad("#{$i}", $maxWidth, ' ', \STR_PAD_LEFT),
                 $item['class'],
                 $item['type'],

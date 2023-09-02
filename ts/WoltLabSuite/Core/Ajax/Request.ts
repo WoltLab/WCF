@@ -325,10 +325,20 @@ class AjaxRequest {
         details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
       }
 
+      if (data.extraInformation) {
+        details += "<br>";
+
+        details += data.extraInformation
+          .map(([key, value]) => {
+            return `<p>${key}: <code>${value.toString()}</code></p>`;
+          })
+          .join("");
+      }
+
       if (data.exception) {
         details += `<br>Exception: <div style="white-space: pre;">${escapeHTML(data.exception)}</div>`;
       } else if (data.stacktrace) {
-        details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
+        details += `<br><p>Stacktrace:</p><pre>${data.stacktrace}</pre>`;
       } else if (data.exceptionID) {
         details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
       }
@@ -338,7 +348,7 @@ class AjaxRequest {
       if (data.previous) {
         data.previous.forEach((previous) => {
           details += `<hr><p>${previous.message}</p>`;
-          details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+          details += `<br><p>Stacktrace</p><pre>${previous.stacktrace}</pre>`;
         });
       }
     } else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
