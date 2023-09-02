@@ -5,6 +5,7 @@ namespace wcf\system\exception;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * AJAXException provides JSON-encoded exceptions.
@@ -70,7 +71,7 @@ class AJAXException extends LoggedException
         $previous = null
     ) {
         if ($stacktrace === null) {
-            $stacktrace = $this->getTraceAsString();
+            $stacktrace = self::getSanitizedTraceAsString($this);
         }
 
         // include a stacktrace if:
@@ -115,11 +116,11 @@ class AJAXException extends LoggedException
         ];
 
         if ($includeStacktrace) {
-            $responseData['stacktrace'] = \nl2br($stacktrace, false);
+            $responseData['stacktrace'] = '<pre>' . $stacktrace . '</pre>';
 
             while ($previous) {
                 $data = ['message' => $previous->getMessage()];
-                $data['stacktrace'] = \nl2br($previous->getTraceAsString(), false);
+                $data['stacktrace'] = '<pre>' . self::getSanitizedTraceAsString($previous) . '</pre>';
 
                 $responseData['previous'][] = $data;
                 $previous = $previous->getPrevious();
@@ -168,5 +169,63 @@ class AJAXException extends LoggedException
         echo JSON::encode($responseData);
 
         exit;
+    }
+
+    public static function getSanitizedTraceAsString(\Throwable $e): string
+    {
+        $trace = \wcf\functions\exception\sanitizeStacktrace($e);
+
+        $length = \count($trace);
+        $maxWidth = \strlen((string)$length) + 1;
+        for ($i = 0, $length = \count($trace); $i < $length; $i++) {
+            $item = $trace[$i];
+
+            $trace[$i] = \sprintf(
+                '%s <strong>%s</strong>%s%s(%s)',
+                \str_pad("#{$i}", $maxWidth, ' ', \STR_PAD_LEFT),
+                $item['class'],
+                $item['type'],
+                $item['function'],
+                \implode(', ', \array_map(
+                    static function ($item) {
+                        switch (\gettype($item)) {
+                            case 'integer':
+                            case 'double':
+                                return $item;
+                            case 'NULL':
+                                return 'null';
+                            case 'string':
+                                return "'" . StringUtil::encodeHTML(addcslashes($item, "\\'")) . "'";
+                            case 'boolean':
+                                return $item ? 'true' : 'false';
+                            case 'array':
+                                $keys = \array_keys($item);
+                                if (\count($keys) > 5) return "[ " . \count($keys) . " items ]";
+                                return '[ ' . \implode(', ', \array_map(static function ($item) {
+                                    return $item . ' => ';
+                                }, $keys)) . ']';
+                            case 'object':
+                                if ($item instanceof \UnitEnum) {
+                                    return $item::class . '::' . $item->name;
+                                }
+                                if ($item instanceof \SensitiveParameterValue) {
+                                    return '<span class="exceptionStacktraceSensitiveParameterValue">' . $item::class . '</span>';
+                                }
+
+                                return $item::class;
+                            case 'resource':
+                                return 'resource(' . \get_resource_type($item) . ')';
+                            case 'resource (closed)':
+                                return 'resource (closed)';
+                        }
+
+                        throw new \LogicException('Unreachable');
+                    },
+                    $item['args']
+                )),
+            );
+        }
+
+        return \implode("\n", $trace);
     }
 }

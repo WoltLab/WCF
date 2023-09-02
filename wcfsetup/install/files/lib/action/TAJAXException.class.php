@@ -10,6 +10,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
+use wcf\util\StringUtil;
 
 /**
  * Default implementation for the AJAXException throw method.
@@ -65,7 +66,7 @@ trait TAJAXException
             throw new AJAXException(
                 $e->getMessage(),
                 AJAXException::BAD_PARAMETERS,
-                $e->getTraceAsString(),
+                AJAXException::getSanitizedTraceAsString($e),
                 [
                     'file' => $e->getFile(),
                     'line' => $e->getLine(),
@@ -83,7 +84,7 @@ trait TAJAXException
             throw new AJAXException(
                 $e->getMessage(),
                 AJAXException::INTERNAL_ERROR,
-                $e->getTraceAsString(),
+                AJAXException::getSanitizedTraceAsString($e),
                 $returnValues,
                 \wcf\functions\exception\logThrowable($e),
                 $e->getPrevious()
