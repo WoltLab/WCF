@@ -7,6 +7,7 @@
  * @since 6.0
  */
 
+import { clickGuard } from "WoltLabSuite/Core/Helper/ClickGuard";
 import { dialogFactory } from "../../Component/Dialog";
 import { getPhrase } from "../../Language";
 import { show as showNotification } from "../../Ui/Notification";
@@ -54,7 +55,5 @@ function updateStatus(status: string): void {
 }
 
 export function setup(button: HTMLElement): void {
-  button.addEventListener("click", () => {
-    void showDialog(button.dataset.url!);
-  });
+  clickGuard(button, () => showDialog(button.dataset.url!));
 }
