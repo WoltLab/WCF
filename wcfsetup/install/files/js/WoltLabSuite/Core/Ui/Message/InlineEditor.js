@@ -283,6 +283,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             messageBodyEditor.appendChild(icon);
             data.messageBody.insertAdjacentElement("afterend", messageBodyEditor);
             Util_1.default.hide(data.messageBody);
+            UiScroll.element(this._activeElement, undefined, "instant");
         }
         /**
          * Shows the message editor.
@@ -320,7 +321,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                 if (this._options.quoteManager) {
                     this._options.quoteManager.setAlternativeEditor(id);
                 }
-                UiScroll.element(activeElement);
+                UiScroll.element(activeElement, undefined, "instant");
             }, 250);
         }
         /**

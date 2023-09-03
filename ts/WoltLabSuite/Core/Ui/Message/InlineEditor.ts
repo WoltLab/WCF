@@ -365,6 +365,8 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     data.messageBody.insertAdjacentElement("afterend", messageBodyEditor);
 
     DomUtil.hide(data.messageBody);
+
+    UiScroll.element(this._activeElement!, undefined, "instant");
   }
 
   /**
@@ -414,7 +416,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
         this._options.quoteManager.setAlternativeEditor(id);
       }
 
-      UiScroll.element(activeElement);
+      UiScroll.element(activeElement, undefined, "instant");
     }, 250);
   }
 
