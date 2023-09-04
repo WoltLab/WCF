@@ -683,7 +683,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[Die Gültigkeit der Lizenzdaten konnte nicht bestätigt werden.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Schritt überspringen (nicht empfohlen)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Ohne Eingabe der Lizenzdaten fortfahren]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps erforderlich.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps sowie der Installation von erworbenen Produkten aus dem offiziellen Plugin-Store erforderlich.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Die Eingabe der Lizenzdaten wird empfohlen. Falls noch keine Internetverbindung zu unseren Paket-Servern zur Verfügung steht oder Sie noch keine Lizenzdaten besitzen, können Sie die Eingabe überspringen. Lizenzdaten können jederzeit hinterlegt werden, um die gekauften WoltLab Suite™-Apps zu installieren.]]></item>
 		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[Erstmalige Einrichtung: Allgemeine Einstellungen]]></item>
 		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalisieren Sie Ihre Community, indem Sie einen Namen und optional eine Beschreibung vergeben. Während der Installation haben wir versucht, die Zeitzone automatisch zu erkennen. Es ist jetzt {TIME_NOW|plainTime}. Wählen Sie die korrekte Zeitzone, falls die Uhrzeit nicht korrekt ist.]]></item>
@@ -1067,10 +1067,13 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 	</category>
 	<category name="wcf.acp.license">
 		<item name="wcf.acp.license"><![CDATA[Lizensierte Produkte]]></item>
+		<item name="wcf.acp.license.edit"><![CDATA[Lizenzdaten bearbeiten]]></item>
+		<item name="wcf.acp.license.noCredentials"><![CDATA[Lizenzdaten entfernen]]></item>
+		<item name="wcf.acp.license.noCredentialsConfirm"><![CDATA[Die hinterlegten Lizenzdaten entfernen]]></item>
 		<item name="wcf.acp.license.licenseNo"><![CDATA[Lizenz {$licenseNumber}]]></item>
 		<item name="wcf.acp.license.developerLicense"><![CDATA[{icon name='wrench'} <strong>Entwickler-Lizenz</strong><br>
 <br>
-Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwickler sowie zum Betrieb von Demo-Installationen. Berechtigt nicht zum Einsatz der Software in produktiven Umgebungen.]]></item>
+Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwicklung sowie zum Betrieb von Demo-Installationen. Berechtigt nicht zum Einsatz der Software in produktiven Umgebungen.]]></item>
 		<item name="wcf.acp.license.package.install"><![CDATA[Installieren]]></item>
 		<item name="wcf.acp.license.package.installed"><![CDATA[Bereits installiert]]></item>
 		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>

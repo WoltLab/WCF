@@ -661,7 +661,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[The license data could not be confirmed as valid.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Skip Step (Not Recommended)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Continue without entering license information]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ apps as well as any purchased plugin or style from the official Plugin-Store.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
 		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: General Settings]]></item>
 		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalize your community by entering a custom name and an optional description. We attempted to detect the correct time zone during installation. The current time is {TIME_NOW|plainTime}. Please select the correct time zone if the time is incorrect.]]></item>
@@ -1042,6 +1042,19 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
 		<item name="wcf.acp.language.locale.description"><![CDATA[The selected region affects dates and the formatting of numbers.]]></item>
+	</category>
+	<category name="wcf.acp.license">
+		<item name="wcf.acp.license"><![CDATA[Licensed Products]]></item>
+		<item name="wcf.acp.license.edit"><![CDATA[Edit License Data]]></item>
+		<item name="wcf.acp.license.noCredentials"><![CDATA[Remove License Data]]></item>
+		<item name="wcf.acp.license.noCredentialsConfirm"><![CDATA[Remove the existing license data]]></item>
+		<item name="wcf.acp.license.licenseNo"><![CDATA[License {$licenseNumber}]]></item>
+		<item name="wcf.acp.license.developerLicense"><![CDATA[{icon name='wrench'} <strong>Developer License</strong><br>
+<br>
+The developer license permits exclusively the use during the development as well as for the operation of demo installations. It does not authorize the use of the software in productive environments.]]></item>
+		<item name="wcf.acp.license.package.install"><![CDATA[Install]]></item>
+		<item name="wcf.acp.license.package.installed"><![CDATA[Already installed]]></item>
+		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>

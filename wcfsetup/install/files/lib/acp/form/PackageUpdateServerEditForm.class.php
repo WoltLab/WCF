@@ -2,11 +2,14 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows the server edit form.
@@ -47,6 +50,12 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
         $this->updateServer = new PackageUpdateServer($this->packageUpdateServerID);
         if (!$this->updateServer->packageUpdateServerID) {
             throw new IllegalLinkException();
+        }
+
+        if ($this->updateServer->isWoltLabUpdateServer() || $this->updateServer->isWoltLabStoreServer()) {
+            return new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(LicenseEditForm::class),
+            );
         }
     }
 
