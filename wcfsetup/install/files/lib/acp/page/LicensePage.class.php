@@ -5,14 +5,26 @@ namespace wcf\acp\page;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\RedirectResponse;
+use wcf\acp\form\LicenseEditForm;
 use wcf\data\package\Package;
 use wcf\data\package\update\PackageUpdate;
+use wcf\data\package\update\PackageUpdateAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\HttpFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
+/**
+ * Lists the licensed products and offers to install them.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 final class LicensePage extends AbstractPage
 {
     // TODO: This should be the actual menu item.
@@ -36,12 +48,14 @@ final class LicensePage extends AbstractPage
 
         $this->updateServer = PackageUpdateServer::getWoltLabUpdateServer();
 
-        // TODO: We actually need to fetch the data from the official package
-        // update servers first, because we rely on the human readable names.
+        if (!$this->hasLicenseCredentials()) {
+            return new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(LicenseEditForm::class),
+            );
+        }
 
-        // TODO: We should cache this data for a certain amount of time. There
-        // also needs tobe a way to manually trigger a refresh in case of a
-        // recent purchase.
+        (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
+
         $this->licenseData = $this->fetchLicenseData();
 
         $identifiers = \array_merge(
@@ -82,10 +96,16 @@ final class LicensePage extends AbstractPage
                 return $b->isApplication <=> $a->isApplication;
             });
         }
+    }
 
-        // TODO: We need the data from the official package update servers to
-        // determine the human readable values for each package and to filter
-        // out those that are incompatible with the installed version.
+    private function hasLicenseCredentials(): bool
+    {
+        $authData = $this->updateServer->getAuthData();
+        if (empty($authData['username']) || empty($authData['password'])) {
+            return false;
+        }
+
+        return true;
     }
 
     public function assignVariables()

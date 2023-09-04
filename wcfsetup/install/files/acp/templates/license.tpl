@@ -48,7 +48,7 @@
     <h1 class="sectionTitle">WoltLab®</h1>
 
     <div class="section tabularBox">
-        <table class="table licensed_packages licensed_packages--woltlab">
+        <table class="table licensed_packages">
             <thead>
                 <tr>
                     <th colspan="2">{lang}wcf.acp.package.name{/lang}</th>
@@ -96,43 +96,40 @@
     <h1 class="sectionTitle">WoltLab® Plugin-Store</h1>
 
     <div class="section tabularBox">
-        <table class="table">
+        <table class="table licensed_packages">
             <thead>
                 <tr>
-                    <th>TODO: Name</th>
-                    <th>TODO: Major Version</th>
-                    <th>TODO: Action</th>
+                    <th colspan="2">{lang}wcf.acp.package.name{/lang}</th>
                 </tr>
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[pluginstore] key=package item=majorVersion}
-                    <tr>
-                        <td>{$package}</td>
-                        <td>{$majorVersion}</td>
-
-                        {* TODO: Are we able to suggest if there is a newer
-                           version available? And if yes, how do we display this
-                           without breaking the version filter? Or does it only
-                           affect the availibility of the install button and not
-                           the row itself? *}
-                        
-                        {* TODO: Do we want to display the time of purchase here? *}
-
-                        <td>
-                            {if $package|in_array:$installedPackages}
-                                <span class="green">
+                {foreach from=$licenseData[woltlab] key=package item=majorVersion}
+                    <tr class="licensed_packages__package" data-package="{$package}">
+                        {if $installedPackages[$package]|isset}
+                            <td class="columnText">
+                                <span class="licensed_packages__package__title">{$installedPackages[$package]}</span>
+                                <span class="licensed_packages__package__version">{$installedPackages[$package]->packageVersion}</span>
+                                <small class="licensed_packages__package__description">{$installedPackages[$package]->getDescription()}</small>
+                            </td>
+                            <td class="columnStatus">
+                                <small class="green licensed_packages__package__action">
                                     {icon name='check'}
-                                    TODO: Installed
-                                </span>
-                            {elseif $installablePackages[$package]|isset}
+                                    {lang}wcf.acp.license.package.installed{/lang}
+                                </small>
+                            </td>
+                        {else}
+                            <td class="columnText">
+                                <span class="licensed_packages__package__title">{$packageUpdates[$package]->packageName}</span>
+                                <span class="licensed_packages__package__version">{$installablePackages[$package]}</span>
+                                <small class="licensed_packages__package__description">{$packageUpdates[$package]->packageDescription}</small>
+                            </td>
+                            <td class="columnStatus">
                                 <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
-                                    TODO: Install {$installablePackages[$package]}
+                                    {lang}wcf.acp.license.package.install{/lang}
                                 </button>
-                            {else}
-                                TODO: Not available.
-                            {/if}
-                        </td>
+                            </td>
+                        {/if}
                     </tr>
                 {/foreach}
                 {/content}
