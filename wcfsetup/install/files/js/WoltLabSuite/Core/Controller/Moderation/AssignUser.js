@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "../../Component/Dialog", "../../Language", "../../Ui/Notification"], function (require, exports, Dialog_1, Language_1, Notification_1) {
+define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Component/Dialog", "../../Language", "../../Ui/Notification"], function (require, exports, PromiseMutex_1, Dialog_1, Language_1, Notification_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -37,9 +37,7 @@ define(["require", "exports", "../../Component/Dialog", "../../Language", "../..
         document.getElementById("moderationQueueStatus").textContent = status;
     }
     function setup(button) {
-        button.addEventListener("click", () => {
-            void showDialog(button.dataset.url);
-        });
+        button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => showDialog(button.dataset.url)));
     }
     exports.setup = setup;
 });

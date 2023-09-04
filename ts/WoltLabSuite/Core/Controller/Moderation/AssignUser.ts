@@ -7,6 +7,7 @@
  * @since 6.0
  */
 
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dialogFactory } from "../../Component/Dialog";
 import { getPhrase } from "../../Language";
 import { show as showNotification } from "../../Ui/Notification";
@@ -54,7 +55,8 @@ function updateStatus(status: string): void {
 }
 
 export function setup(button: HTMLElement): void {
-  button.addEventListener("click", () => {
-    void showDialog(button.dataset.url!);
-  });
+  button.addEventListener(
+    "click",
+    promiseMutex(() => showDialog(button.dataset.url!)),
+  );
 }
