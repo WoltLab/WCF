@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-httphandlerrunner' => array(
-            'pretty_version' => '2.8.0',
-            'version' => '2.8.0.0',
-            'reference' => 'df88be883823fb479fc901ea3354b09ced7cb2ef',
+            'pretty_version' => '2.9.0',
+            'version' => '2.9.0.0',
+            'reference' => 'd3e84755a17e563b1c5f8290cbfb150210501a77',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-httphandlerrunner',
             'aliases' => array(),
