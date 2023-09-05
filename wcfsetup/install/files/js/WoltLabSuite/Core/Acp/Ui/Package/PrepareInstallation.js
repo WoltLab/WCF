@@ -15,10 +15,17 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
     class AcpUiPackagePrepareInstallation {
         identifier = "";
         version = "";
+        #resolve;
         start(identifier, version) {
+            if (this.#resolve !== undefined) {
+                throw new Error("There is already a pending installation.");
+            }
             this.identifier = identifier;
             this.version = version;
-            this.prepare({});
+            return new Promise((resolve) => {
+                this.#resolve = resolve;
+                this.prepare({});
+            });
         }
         prepare(authData) {
             const packages = {};
@@ -66,6 +73,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
             else if (data.returnValues.template) {
                 Dialog_1.default.open(this, data.returnValues.template);
             }
+            this.#resolve();
+            this.#resolve = undefined;
         }
         _ajaxSetup() {
             return {

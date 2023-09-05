@@ -5,7 +5,7 @@
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax) {
+define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax, PromiseMutex_1) {
     "use strict";
     PrepareInstallation_1 = tslib_1.__importDefault(PrepareInstallation_1);
     Ajax = tslib_1.__importStar(Ajax);
@@ -86,11 +86,15 @@ define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax"]
                         this.resultList.innerHTML = data.returnValues.template;
                         this.resultCounter.textContent = data.returnValues.count.toString();
                         this.setStatus("showResults");
+                        const callback = (0, PromiseMutex_1.promiseMutex)((button) => {
+                            return this.installation.start(button.dataset.package, button.dataset.packageVersion);
+                        });
                         this.resultList.querySelectorAll(".jsInstallPackage").forEach((button) => {
                             button.addEventListener("click", (event) => {
                                 event.preventDefault();
-                                button.blur();
-                                this.installation.start(button.dataset.package, button.dataset.packageVersion);
+                                if (callback(button)) {
+                                    button.blur();
+                                }
                             });
                         });
                     }

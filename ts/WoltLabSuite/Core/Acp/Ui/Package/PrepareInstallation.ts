@@ -24,12 +24,21 @@ interface AjaxResponse {
 class AcpUiPackagePrepareInstallation {
   private identifier = "";
   private version = "";
+  #resolve?: () => void;
 
-  start(identifier: string, version: string): void {
+  start(identifier: string, version: string): Promise<void> {
+    if (this.#resolve !== undefined) {
+      throw new Error("There is already a pending installation.");
+    }
+
     this.identifier = identifier;
     this.version = version;
 
-    this.prepare({});
+    return new Promise<void>((resolve) => {
+      this.#resolve = resolve;
+
+      this.prepare({});
+    });
   }
 
   private prepare(authData: ArbitraryObject): void {
@@ -82,6 +91,9 @@ class AcpUiPackagePrepareInstallation {
     } else if (data.returnValues.template) {
       UiDialog.open(this, data.returnValues.template);
     }
+
+    this.#resolve!();
+    this.#resolve = undefined;
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
