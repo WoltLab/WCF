@@ -90,11 +90,7 @@ final class LicensePage extends AbstractPage
                 $a = $this->installedPackages[$packageA] ?? $this->packageUpdates[$packageA];
                 $b = $this->installedPackages[$packageB] ?? $this->packageUpdates[$packageB];
 
-                if ($a->isApplication === $b->isApplication) {
-                    return $a->getName() <=> $b->getName();
-                }
-
-                return $b->isApplication <=> $a->isApplication;
+                return ($b->isApplication <=> $a->isApplication) ?: ($a->getName() <=> $b->getName());
             });
         }
     }
