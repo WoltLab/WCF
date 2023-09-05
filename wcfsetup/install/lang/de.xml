@@ -683,7 +683,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[Die Gültigkeit der Lizenzdaten konnte nicht bestätigt werden.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Schritt überspringen (nicht empfohlen)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Ohne Eingabe der Lizenzdaten fortfahren]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps erforderlich.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Die Eingabe von Lizenzdaten ist zur Installation und zur Aktualisierung der gekauften WoltLab Suite™-Apps sowie der Installation von erworbenen Produkten aus dem offiziellen Plugin-Store erforderlich.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Die Eingabe der Lizenzdaten wird empfohlen. Falls noch keine Internetverbindung zu unseren Paket-Servern zur Verfügung steht oder Sie noch keine Lizenzdaten besitzen, können Sie die Eingabe überspringen. Lizenzdaten können jederzeit hinterlegt werden, um die gekauften WoltLab Suite™-Apps zu installieren.]]></item>
 		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[Erstmalige Einrichtung: Allgemeine Einstellungen]]></item>
 		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalisieren Sie Ihre Community, indem Sie einen Namen und optional eine Beschreibung vergeben. Während der Installation haben wir versucht, die Zeitzone automatisch zu erkennen. Es ist jetzt {TIME_NOW|plainTime}. Wählen Sie die korrekte Zeitzone, falls die Uhrzeit nicht korrekt ist.]]></item>
@@ -1065,6 +1065,19 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
 		<item name="wcf.acp.language.locale.description"><![CDATA[Die ausgewählte Region beeinflusst Datumsangaben und die Formatierung von Zahlen.]]></item>
 	</category>
+	<category name="wcf.acp.license">
+		<item name="wcf.acp.license"><![CDATA[Lizenzierte Produkte]]></item>
+		<item name="wcf.acp.license.edit"><![CDATA[Lizenzdaten bearbeiten]]></item>
+		<item name="wcf.acp.license.noCredentials"><![CDATA[Lizenzdaten entfernen]]></item>
+		<item name="wcf.acp.license.noCredentialsConfirm"><![CDATA[Die hinterlegten Lizenzdaten entfernen]]></item>
+		<item name="wcf.acp.license.licenseNo"><![CDATA[Lizenz {$licenseNumber}]]></item>
+		<item name="wcf.acp.license.developerLicense"><![CDATA[{icon name='wrench'} <strong>Entwickler-Lizenz</strong><br>
+<br>
+Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwicklung sowie zum Betrieb von Demo-Installationen und berechtigt nicht zum Einsatz der Software in produktiven Umgebungen.]]></item>
+		<item name="wcf.acp.license.package.install"><![CDATA[Installieren]]></item>
+		<item name="wcf.acp.license.package.installed"><![CDATA[Bereits installiert]]></item>
+		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
+	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
@@ -1092,6 +1105,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
+		<item name="wcf.acp.menu.link.package.license"><![CDATA[Lizenzierte Produkte]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>
@@ -2087,28 +2101,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Mitgliedschaft manuell zuweisen]]></item>
 		<item name="wcf.acp.paidSubscription.user.edit"><![CDATA[Aktive Mitgliedschaft bearbeiten]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
-	</category>
-	<category name="wcf.acp.pluginStore">
-		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Fehler {@$status}: Der Server konnte die Anfrage nicht erfolgreich bearbeiten.]]></item>
-		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Autorisierung erforderlich]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Zugangsdaten]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} Lizenz- und Seriennummer einer {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Lizenzen auf WoltLab.com ein.]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.rejected"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Zugangsdaten wurden vom Server abgewiesen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} Benutzername und Kennwort!]]></item>
-		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Lizenznummer]]></item>
-		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Seriennummer]]></item>
-		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Zugangsdaten für aktuelle Sitzung speichern]]></item>
-		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
-		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Eintrag im Plugin-Store anzeigen]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[Die Suche ergab keine Treffer, entweder {if LANGUAGE_USE_INFORMAL_VARIANT}hast du{else}haben Sie{/if} noch keine Produkte erworben oder diese sind nicht kompatibel.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Paket-Server muss abgefragt werden]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Neuere Version verfügbar]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Paket-Server nicht installiert]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[Aktuelle Version bereits installiert]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Produkt <span class="confirmationObject">{$product[packageName]}</span> wirklich installieren?]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Die Paket-Server wurden noch nicht vollständig abgefragt, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lass{else}lassen Sie{/if} zuerst nach Updates suchen.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
 	</category>
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.data.title"><![CDATA[Daten des Dateianhangtyps]]></item>

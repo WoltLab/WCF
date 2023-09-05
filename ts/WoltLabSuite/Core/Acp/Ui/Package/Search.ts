@@ -10,6 +10,7 @@ import AcpUiPackagePrepareInstallation from "./PrepareInstallation";
 import * as Ajax from "../../../Ajax";
 import AjaxRequest from "../../../Ajax/Request";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 
 interface AjaxResponse {
   actionName: string;
@@ -120,12 +121,16 @@ class AcpUiPackageSearch implements AjaxCallbackObject {
 
           this.setStatus("showResults");
 
+          const callback = promiseMutex((button: HTMLAnchorElement) => {
+            return this.installation.start(button.dataset.package!, button.dataset.packageVersion!);
+          });
           this.resultList.querySelectorAll(".jsInstallPackage").forEach((button: HTMLAnchorElement) => {
             button.addEventListener("click", (event) => {
               event.preventDefault();
-              button.blur();
 
-              this.installation.start(button.dataset.package!, button.dataset.packageVersion!);
+              if (callback(button)) {
+                button.blur();
+              }
             });
           });
         } else {

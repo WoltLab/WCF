@@ -661,7 +661,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[The license data could not be confirmed as valid.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Skip Step (Not Recommended)]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm"><![CDATA[Continue without entering license information]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ Apps.</p>]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.explanation"><![CDATA[<p>Entering license credentials is required to install and update the purchased WoltLab Suite™ apps as well as any purchased plugin or style from the official Plugin-Store.</p>]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentialsConfirm.description"><![CDATA[Entering license information is recommended. If no network connection to our package servers is available yet, or if you do not yet have license information, you can skip this step. License information can be entered at any time to install purchased WoltLab Suite™ Apps.]]></item>
 		<item name="wcf.acp.firstTimeSetup.options"><![CDATA[First Time Setup: General Settings]]></item>
 		<item name="wcf.acp.firstTimeSetup.options.description"><![CDATA[Personalize your community by entering a custom name and an optional description. We attempted to detect the correct time zone during installation. The current time is {TIME_NOW|plainTime}. Please select the correct time zone if the time is incorrect.]]></item>
@@ -1043,6 +1043,19 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
 		<item name="wcf.acp.language.locale.description"><![CDATA[The selected region affects dates and the formatting of numbers.]]></item>
 	</category>
+	<category name="wcf.acp.license">
+		<item name="wcf.acp.license"><![CDATA[Licensed Products]]></item>
+		<item name="wcf.acp.license.edit"><![CDATA[Edit License Data]]></item>
+		<item name="wcf.acp.license.noCredentials"><![CDATA[Remove License Data]]></item>
+		<item name="wcf.acp.license.noCredentialsConfirm"><![CDATA[Remove the existing license data]]></item>
+		<item name="wcf.acp.license.licenseNo"><![CDATA[License {$licenseNumber}]]></item>
+		<item name="wcf.acp.license.developerLicense"><![CDATA[{icon name='wrench'} <strong>Developer License</strong><br>
+<br>
+The developer license permits exclusively the use during the development as well as for the operation of demo installations. It does not authorize the use of the software in productive environments.]]></item>
+		<item name="wcf.acp.license.package.install"><![CDATA[Install]]></item>
+		<item name="wcf.acp.license.package.installed"><![CDATA[Already installed]]></item>
+		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
+	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
@@ -1070,6 +1083,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
+		<item name="wcf.acp.menu.link.package.license"><![CDATA[Licensed Products]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>
@@ -2017,28 +2031,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.user.edit"><![CDATA[Edit Active Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the “Supported Payment Methods” option.]]></item>
-	</category>
-	<category name="wcf.acp.pluginStore">
-		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
-		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Authorization Required]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Credentials]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter the license and serial number of one of your licenses on WoltLab.com.]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.rejected"><![CDATA[Your provided credentials are invalid, please check your username and password!]]></item>
-		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[License Number]]></item>
-		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Serial Number]]></item>
-		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Save credentials for this session only]]></item>
-		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
-		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Purchased Products (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Purchased Products (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[The search returned no results, because either you have not purchased any products yet, or your purchases are not compatible with this version.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Newer Version Available]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Package server not installed]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[You already have the most recent version installed]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Package server must be updated]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product <span class="confirmationObject">{$product[packageName]}</span>?]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The package servers have not been fetched yet, please search for available updates first.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Package server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
