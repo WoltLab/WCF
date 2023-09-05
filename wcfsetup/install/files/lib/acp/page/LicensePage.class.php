@@ -76,12 +76,12 @@ final class LicensePage extends AbstractPage
         foreach (['woltlab', 'pluginstore'] as $type) {
             $this->licenseData[$type] = \array_filter(
                 $this->licenseData[$type],
-                function (string $package) use ($identifiers) {
+                function (string $package) {
                     if (isset($this->installedPackages[$package])) {
                         return true;
                     }
 
-                    return \in_array($package, $identifiers);
+                    return isset($this->installablePackages[$package]);
                 },
                 \ARRAY_FILTER_USE_KEY
             );
