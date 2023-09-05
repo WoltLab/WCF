@@ -35,6 +35,7 @@ final class Pipeline implements MiddlewareInterface
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         foreach (\array_reverse($this->middlewares) as $middleware) {
