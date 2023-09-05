@@ -5,14 +5,20 @@
 	<xs:include schemaLocation="types.xsd" />
 	
 	<!-- Represents the variables-node. -->
-	<xs:complexType name="variables">
-		<xs:sequence>
-			<xs:element name="variable" type="variable" minOccurs="0" maxOccurs="unbounded" />
-		</xs:sequence>
-	</xs:complexType>
+	<xs:element name="variables">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="variable" type="variable" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	
 	<!-- Represents a style variable value. -->
 	<xs:complexType name="variable">
-		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="woltlab_varchar" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 </xs:schema>
