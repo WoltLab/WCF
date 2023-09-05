@@ -35,8 +35,17 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
+					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
+						<li>
+							<a href="{link controller='License'}{/link}" class="button">
+								{icon name='cart-arrow-down'}
+								<span>{lang}wcf.acp.license{/lang}</span>
+							</a>
+						</li>
+					{/if}
+
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><a href="#" class="button jsButtonSearchForUpdates">{icon name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+						<li><button type="button" class="button jsButtonSearchForUpdates">{icon name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></button></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}

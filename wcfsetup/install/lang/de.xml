@@ -1105,6 +1105,7 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
+		<item name="wcf.acp.menu.link.package.license"><![CDATA[Lizensierte Produkte]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>

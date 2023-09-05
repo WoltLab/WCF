@@ -32,6 +32,15 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
+                    {if $__wcf->session->getPermission('admin.configuration.package.canEditServer')}
+						<li>
+							<a href="{link controller='LicenseEdit'}{/link}" class="button">
+								{icon name='pencil'}
+								<span>{lang}wcf.acp.license.edit{/lang}</span>
+							</a>
+						</li>
+					{/if}
+
 					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>

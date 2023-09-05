@@ -1083,6 +1083,7 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
+		<item name="wcf.acp.menu.link.package.license"><![CDATA[Licensed Products]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>

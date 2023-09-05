@@ -27,8 +27,9 @@ use wcf\system\WCF;
  */
 final class LicensePage extends AbstractPage
 {
-    // TODO: This should be the actual menu item.
-    public $activeMenuItem = 'wcf.acp.menu.link.package';
+    public $activeMenuItem = 'wcf.acp.menu.link.package.license';
+
+    public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
     private array $licenseData;
 
