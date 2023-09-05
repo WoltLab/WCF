@@ -113,7 +113,7 @@
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[woltlab] key=package item=majorVersion}
+                {foreach from=$licenseData[pluginstore] key=package item=majorVersion}
                     <tr class="licensed_packages__package" data-package="{$package}">
                         {if $installedPackages[$package]|isset}
                             <td class="columnText">
