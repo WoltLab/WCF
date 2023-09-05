@@ -15,7 +15,7 @@ jobs:
         branch:
         - 'master'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ matrix.branch }}
     - name: Determine commit
@@ -28,7 +28,7 @@ jobs:
         node-version: "18"
         cache: "npm"
     - run: npm install
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: WoltLab/d.ts
         ssh-key: ${{ secrets.WOLTLAB_D_TS_DEPLOY_KEY }}
