@@ -30,71 +30,85 @@ final class LegacyPlaceholderResponse implements ResponseInterface
         ));
     }
 
+    #[\Override]
     public function getStatusCode(): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withStatus(int $code, string $reasonPhrase = ''): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getReasonPhrase(): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getProtocolVersion(): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withProtocolVersion(string $version): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getHeaders(): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function hasHeader(string $name): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getHeader(string $name): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getHeaderLine(string $name): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withHeader(string $name, $value): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withAddedHeader(string $name, $value): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withoutHeader(string $name): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function getBody(): never
     {
         $this->throwException();
     }
 
+    #[\Override]
     public function withBody(StreamInterface $body): never
     {
         $this->throwException();
