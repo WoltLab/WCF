@@ -2032,28 +2032,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.paidSubscription.user.edit"><![CDATA[Edit Active Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the “Supported Payment Methods” option.]]></item>
 	</category>
-	<category name="wcf.acp.pluginStore">
-		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
-		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Authorization Required]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Credentials]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter the license and serial number of one of your licenses on WoltLab.com.]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.rejected"><![CDATA[Your provided credentials are invalid, please check your username and password!]]></item>
-		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[License Number]]></item>
-		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Serial Number]]></item>
-		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Save credentials for this session only]]></item>
-		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
-		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Purchased Products (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Purchased Products (Plugin-Store)]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[The search returned no results, because either you have not purchased any products yet, or your purchases are not compatible with this version.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Newer Version Available]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Package server not installed]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[You already have the most recent version installed]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Package server must be updated]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product <span class="confirmationObject">{$product[packageName]}</span>?]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The package servers have not been fetched yet, please search for available updates first.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Package server for “{$wcfMajorRelease}”]]></item>
-	</category>
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName"><![CDATA[Category]]></item>

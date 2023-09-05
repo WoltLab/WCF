@@ -6,10 +6,6 @@
 			'wcf.acp.package.searchForUpdates': '{jslang}wcf.acp.package.searchForUpdates{/jslang}',
 			'wcf.acp.package.searchForUpdates.noResults': '{jslang}wcf.acp.package.searchForUpdates.noResults{/jslang}',
 			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
-			'wcf.acp.pluginStore.authorization': '{jslang}wcf.acp.pluginStore.authorization{/jslang}',
-			'wcf.acp.pluginStore.purchasedItems': '{jslang}wcf.acp.pluginStore.purchasedItems{/jslang}',
-			'wcf.acp.pluginStore.purchasedItems.button.search': '{jslang}wcf.acp.pluginStore.purchasedItems.button.search{/jslang}',
-			'wcf.acp.pluginStore.purchasedItems.noResults': '{jslang}wcf.acp.pluginStore.purchasedItems.noResults{/jslang}'
 		});
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
@@ -18,10 +14,6 @@
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 			new WCF.ACP.Package.Update.Search(true);
-		{/if}
-		
-		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-			new WCF.ACP.PluginStore.PurchasedItems.Search();
 		{/if}
 	});
 </script>
