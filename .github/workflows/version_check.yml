@@ -14,7 +14,7 @@ jobs:
     name: "Check that WCF_VERSION is in sync"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: |
         set -x
         PACKAGE_VERSION="$(sed '/<version>/!d;s!^.*<version>!!;s!</version>$!!' com.woltlab.wcf/package.xml)"

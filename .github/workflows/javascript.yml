@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: "18"
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: echo "::add-matcher::.github/javascript-syntax.json"
     - name: Remove files to be ignored
       run: |
@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up node.js
       uses: actions/setup-node@v3
       with:

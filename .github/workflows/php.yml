@@ -31,7 +31,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: echo "::add-matcher::.github/php-syntax.json"
     - name: Remove files to be ignored
       run: |
