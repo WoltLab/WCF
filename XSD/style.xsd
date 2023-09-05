@@ -26,7 +26,15 @@
 			<xs:element name="copyright" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="license" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="default" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="description" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="description" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="woltlab_varchar">
+							<xs:attribute name="language" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="coverPhoto" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="hasDarkMode" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 		</xs:choice>
