@@ -784,47 +784,24 @@
 
 	.boxContainer {
 		@include screen-sm-down {
+			display: flex;
+			flex-direction: column;
 			padding: 40px 0;
-		}
-
-		@include screen-md-down {
-			margin-left: -10px;
-			margin-right: -10px;
+			row-gap: 40px;
 		}
 
 		@include screen-md-up {
-			display: flex;
-			flex-wrap: wrap;
-			margin-bottom: -60px;
+			column-gap: 30px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
 			padding: 60px 0;
-		}
-
-		@include screen-lg {
-			margin-left: -15px;
-			margin-right: -15px;
+			row-gap: 60px;
 		}
 	}
 
-	.box {
-		overflow: hidden;
-		padding-left: 15px;
-		padding-right: 15px;
-
-		@include screen-sm-down {
-			&:not(:last-child) {
-				margin-bottom: 40px;
-			}
-		}
-
-		@include screen-md-up {
-			flex: 0 0 50%;
-			margin-bottom: 60px;
-			max-width: 50%;
-
-			&.boxFullWidth {
-				flex-basis: 100%;
-				max-width: 100%;
-			}
+	@include screen-md-up {
+		.box.boxFullWidth {
+			grid-column: span 2;
 		}
 	}
 
