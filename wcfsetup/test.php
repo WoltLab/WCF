@@ -8,6 +8,171 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	$language = $_GET['language'];
 }
 
+const WSC_SRT_VERSION = '6.0.0';
+$requiredExtensions = [
+	'ctype',
+	'dom',
+	'exif',
+	'intl',
+	'libxml',
+	'mbstring',
+	'pdo',
+	'pdo_mysql',
+	'zlib',
+];
+$requiredPHPVersion = '8.1.2';
+$phrases = [
+	'php_requirements' => [
+		'de' => 'PHP',
+		'en' => 'PHP Requirements'
+	],
+	'php_version_success' => [
+		'de' => 'PHP-Version %s',
+		'en' => 'PHP version %s',
+	],
+	'php_version_failure' => [
+		'de' => 'Gefundene PHP-Version %s ist unzureichend. PHP %s oder höher wird benötigt.',
+		'en' => 'PHP version %s is insufficient. PHP %s or above is required.',
+	],
+	'php_extension_success' => [
+		'de' => 'Erweiterung %s vorhanden',
+		'en' => '%s extension loaded',
+	],
+	'php_extension_failure' => [
+		'de' => 'Erweiterung %s fehlt',
+		'en' => '%s extension missing',
+	],
+	'php_extension_gd_or_imagick_failure' => [
+		'de' => 'Erweiterung für Bildverarbeitung (GD oder Imagick) fehlt',
+		'en' => 'Extension for image processing (GD or Imagick) missing',
+	],
+	'php_extension_gd_or_imagick_webp_failure' => [
+		'de' => 'Unterstützung für WebP-Grafiken in %s fehlt',
+		'en' => 'Support for WebP images in %s missing',
+	],
+	'php_memory_limit_success' => [
+		'de' => 'Arbeitsspeicher-Limit %s',
+		'en' => '%s memory limit',
+	],
+	'php_memory_limit_failure' => [
+		'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128M oder mehr wird benötigt.',
+		'en' => 'Memory limit %s is too low. It needs to be set to 128M or more.',
+	],
+	'php_opcache_failure' => [
+		'de' => 'OPcache ist aktiviert aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
+		'en' => 'OPcache is enabled but the required management functions (opcache_reset, opcache_invalidate) are disabled.',
+	],
+	'mysql_requirements' => [
+		'de' => 'MySQL',
+		'en' => 'MySQL Requirements'
+	],
+	'mysql_version' => [
+		'de' => 'Bitte stellen Sie sicher, dass MySQL 8.0.30+  oder MariaDB 10.5.12+ mit InnoDB-Unterstützung vorhanden ist.',
+		'en' => 'Please make sure that MySQL 8.0.30+ or MariaDB 10.5.12+, with InnoDB support is available.'
+	],
+	'result' => [
+		'de' => 'Ergebnis',
+		'en' => 'Summary'
+	],
+	'result_success' => [
+		'de' => 'Alle Systemvoraussetzungen sind erfüllt. Sie können die Installation von WoltLab Suite beginnen.',
+		'en' => 'Your system fulfills all of WoltLab Suite\'s system requirements. You are ready to install WoltLab Suite!'
+	],
+	'result_failure' => [
+		'de' => 'Die Systemvoraussetzungen sind nicht erfüllt. Bitte beachten Sie die oben genannten Informationen. Wenden Sie sich ggf. an Ihren Webhoster oder Ihren Serveradministrator.',
+		'en' => 'The system requirements are not met. Please note the above information and contact your web host or server administrator if necessary.'
+	],
+	'button_start_installation' => [
+		'de' => 'Installation starten',
+		'en' => 'Start Installation'
+	]
+];
+function getPhrase($phrase, array $values = []) {
+	global $language, $phrases;
+	
+	if (!isset($phrases[$phrase]) || !isset($phrases[$phrase][$language])) {
+		return "[unknown:{$phrase}]";
+	}
+	
+	return vsprintf($phrases[$phrase][$language], $values);
+}
+function checkPHPVersion() {
+	global $requiredPHPVersion;
+	
+	$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', phpversion());
+	return version_compare($comparePhpVersion, $requiredPHPVersion) >= 0;
+}
+function checkMemoryLimit() {
+	$memoryLimit = ini_get('memory_limit');
+	
+	// no limit
+	if ($memoryLimit == -1) {
+		return true;
+	}
+	
+	// completely numeric, PHP assumes byte
+	if (is_numeric($memoryLimit)) {
+		$memoryLimit = $memoryLimit / 1024 / 1024;
+		return ($memoryLimit >= 128);
+	}
+	
+	// PHP supports 'K', 'M' and 'G' shorthand notation
+	if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
+		switch ($matches[2]) {
+			case 'K':
+				$memoryLimit = $matches[1] * 1024;
+				return ($memoryLimit >= 128);
+				break;
+			
+			case 'M':
+				return ($matches[1] >= 128);
+				break;
+			
+			case 'G':
+				return ($matches[1] >= 1);
+				break;
+		}
+	}
+	
+	return false;
+}
+function checkResult() {
+	global $requiredExtensions;
+	
+	if (!checkPHPVersion() || !checkMemoryLimit() || !checkOpcache()) return false;
+	
+	foreach ($requiredExtensions as $extension) {
+		if (!extension_loaded($extension)) return false;
+	}
+
+	$hasSufficientImageLibrary = false;
+	if (extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) {
+		$hasSufficientImageLibrary = true;
+	}
+
+	if (extension_loaded('gd') && !empty(\gd_info()['WebP Support'])) {
+		$hasSufficientImageLibrary = true;
+	}
+
+	if (!$hasSufficientImageLibrary) {
+		return false;
+	}
+	
+	return true;
+}
+function checkInstallFile() {
+	return @file_exists('install.php');
+}
+function checkOpcache() {
+	if (extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
+		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -209,172 +374,6 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	</header>
 	
 	<main>
-<?php
-const WSC_SRT_VERSION = '6.0.0';
-$requiredExtensions = [
-	'ctype',
-	'dom',
-	'exif',
-	'intl',
-	'libxml',
-	'mbstring',
-	'pdo',
-	'pdo_mysql',
-	'zlib',
-];
-$requiredPHPVersion = '8.1.2';
-$phrases = [
-	'php_requirements' => [
-		'de' => 'PHP',
-		'en' => 'PHP Requirements'
-	],
-	'php_version_success' => [
-		'de' => 'PHP-Version %s',
-		'en' => 'PHP version %s',
-	],
-	'php_version_failure' => [
-		'de' => 'Gefundene PHP-Version %s ist unzureichend. PHP %s oder höher wird benötigt.',
-		'en' => 'PHP version %s is insufficient. PHP %s or above is required.',
-	],
-	'php_extension_success' => [
-		'de' => 'Erweiterung %s vorhanden',
-		'en' => '%s extension loaded',
-	],
-	'php_extension_failure' => [
-		'de' => 'Erweiterung %s fehlt',
-		'en' => '%s extension missing',
-	],
-	'php_extension_gd_or_imagick_failure' => [
-		'de' => 'Erweiterung für Bildverarbeitung (GD oder Imagick) fehlt',
-		'en' => 'Extension for image processing (GD or Imagick) missing',
-	],
-	'php_extension_gd_or_imagick_webp_failure' => [
-		'de' => 'Unterstützung für WebP-Grafiken in %s fehlt',
-		'en' => 'Support for WebP images in %s missing',
-	],
-	'php_memory_limit_success' => [
-		'de' => 'Arbeitsspeicher-Limit %s',
-		'en' => '%s memory limit',
-	],
-	'php_memory_limit_failure' => [
-		'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128M oder mehr wird benötigt.',
-		'en' => 'Memory limit %s is too low. It needs to be set to 128M or more.',
-	],
-	'php_opcache_failure' => [
-		'de' => 'OPcache ist aktiviert aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
-		'en' => 'OPcache is enabled but the required management functions (opcache_reset, opcache_invalidate) are disabled.',
-	],
-	'mysql_requirements' => [
-		'de' => 'MySQL',
-		'en' => 'MySQL Requirements'
-	],
-	'mysql_version' => [
-		'de' => 'Bitte stellen Sie sicher, dass MySQL 8.0.30+  oder MariaDB 10.5.12+ mit InnoDB-Unterstützung vorhanden ist.',
-		'en' => 'Please make sure that MySQL 8.0.30+ or MariaDB 10.5.12+, with InnoDB support is available.'
-	],
-	'result' => [
-		'de' => 'Ergebnis',
-		'en' => 'Summary'
-	],
-	'result_success' => [
-		'de' => 'Alle Systemvoraussetzungen sind erfüllt. Sie können die Installation von WoltLab Suite beginnen.',
-		'en' => 'Your system fulfills all of WoltLab Suite\'s system requirements. You are ready to install WoltLab Suite!'
-	],
-	'result_failure' => [
-		'de' => 'Die Systemvoraussetzungen sind nicht erfüllt. Bitte beachten Sie die oben genannten Informationen. Wenden Sie sich ggf. an Ihren Webhoster oder Ihren Serveradministrator.',
-		'en' => 'The system requirements are not met. Please note the above information and contact your web host or server administrator if necessary.'
-	],
-	'button_start_installation' => [
-		'de' => 'Installation starten',
-		'en' => 'Start Installation'
-	]
-];
-function getPhrase($phrase, array $values = []) {
-	global $language, $phrases;
-	
-	if (!isset($phrases[$phrase]) || !isset($phrases[$phrase][$language])) {
-		return "[unknown:{$phrase}]";
-	}
-	
-	return vsprintf($phrases[$phrase][$language], $values);
-}
-function checkPHPVersion() {
-	global $requiredPHPVersion;
-	
-	$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', phpversion());
-	return version_compare($comparePhpVersion, $requiredPHPVersion) >= 0;
-}
-function checkMemoryLimit() {
-	$memoryLimit = ini_get('memory_limit');
-	
-	// no limit
-	if ($memoryLimit == -1) {
-		return true;
-	}
-	
-	// completely numeric, PHP assumes byte
-	if (is_numeric($memoryLimit)) {
-		$memoryLimit = $memoryLimit / 1024 / 1024;
-		return ($memoryLimit >= 128);
-	}
-	
-	// PHP supports 'K', 'M' and 'G' shorthand notation
-	if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-		switch ($matches[2]) {
-			case 'K':
-				$memoryLimit = $matches[1] * 1024;
-				return ($memoryLimit >= 128);
-				break;
-			
-			case 'M':
-				return ($matches[1] >= 128);
-				break;
-			
-			case 'G':
-				return ($matches[1] >= 1);
-				break;
-		}
-	}
-	
-	return false;
-}
-function checkResult() {
-	global $requiredExtensions;
-	
-	if (!checkPHPVersion() || !checkMemoryLimit() || !checkOpcache()) return false;
-	
-	foreach ($requiredExtensions as $extension) {
-		if (!extension_loaded($extension)) return false;
-	}
-
-	$hasSufficientImageLibrary = false;
-	if (extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) {
-		$hasSufficientImageLibrary = true;
-	}
-
-	if (extension_loaded('gd') && !empty(\gd_info()['WebP Support'])) {
-		$hasSufficientImageLibrary = true;
-	}
-
-	if (!$hasSufficientImageLibrary) {
-		return false;
-	}
-	
-	return true;
-}
-function checkInstallFile() {
-	return @file_exists('install.php');
-}
-function checkOpcache() {
-	if (extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
-		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
-			return false;
-		}
-	}
-	
-	return true;
-}
-?>
 		<h2>WoltLab Suite System Requirements Test</h2>
 		
 		<h3><?=getPhrase('php_requirements')?></h3>
