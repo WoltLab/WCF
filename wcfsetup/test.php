@@ -58,11 +58,11 @@ $phrases = [
         'en' => '%s memory limit',
     ],
     'php_memory_limit_failure' => [
-        'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128M oder mehr wird benötigt.',
-        'en' => 'Memory limit %s is too low. It needs to be set to 128M or more.',
+        'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128 MiB oder mehr wird benötigt.',
+        'en' => 'Memory limit %s is too low. It needs to be set to 128 MiB or more.',
     ],
     'php_opcache_failure' => [
-        'de' => 'OPcache ist aktiviert aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
+        'de' => 'OPcache ist aktiviert, aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
         'en' => 'OPcache is enabled but the required management functions (opcache_reset, opcache_invalidate) are disabled.',
     ],
     'mysql_requirements' => [
@@ -108,42 +108,63 @@ function checkPHPVersion()
 
     return \version_compare($comparePhpVersion, $requiredPHPVersion) >= 0;
 }
-function checkMemoryLimit()
+function getMemoryLimit()
 {
     $memoryLimit = \ini_get('memory_limit');
 
     // no limit
-    if ($memoryLimit == -1) {
-        return true;
-    }
+    if ($memoryLimit == "-1") {
+        return -1;
+    } else if (\function_exists('ini_parse_quantity')) {
+        return \ini_parse_quantity($memoryLimit);
+    } else {
+        // completely numeric, PHP assumes byte
+        if (\is_numeric($memoryLimit)) {
+            return $memoryLimit;
+        }
 
-    // completely numeric, PHP assumes byte
-    if (\is_numeric($memoryLimit)) {
-        $memoryLimit = $memoryLimit / 1024 / 1024;
+        // PHP supports 'K', 'M' and 'G' shorthand notation
+        if (\preg_match('~^(\d+)\s*([KMG])$~i', $memoryLimit, $matches)) {
+            switch (\strtoupper($matches[2])) {
+                case 'K':
+                    return $matches[1] * 1024;
 
-        return $memoryLimit >= 128;
-    }
+                case 'M':
+                    return $matches[1] * 1024 * 1024;
 
-    // PHP supports 'K', 'M' and 'G' shorthand notation
-    if (\preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-        switch ($matches[2]) {
-            case 'K':
-                $memoryLimit = $matches[1] * 1024;
-
-                return $memoryLimit >= 128;
-                break;
-
-            case 'M':
-                return $matches[1] >= 128;
-                break;
-
-            case 'G':
-                return $matches[1] >= 1;
-                break;
+                case 'G':
+                    return $matches[1] * 1024 * 1024 * 1024;
+            }
         }
     }
 
-    return false;
+    return 0;
+}
+function checkMemoryLimit()
+{
+    return getMemoryLimit() >= 128 * 1024 * 1024;
+}
+function formatFilesizeBinary($byte): string
+{
+    $symbol = 'Byte';
+    if ($byte >= 1024) {
+        $byte /= 1024;
+        $symbol = 'KiB';
+    }
+    if ($byte >= 1024) {
+        $byte /= 1024;
+        $symbol = 'MiB';
+    }
+    if ($byte >= 1024) {
+        $byte /= 1024;
+        $symbol = 'GiB';
+    }
+    if ($byte >= 1024) {
+        $byte /= 1024;
+        $symbol = 'TiB';
+    }
+
+    return \floor($byte) . ' ' . $symbol;
 }
 function checkResult()
 {
@@ -422,9 +443,9 @@ function checkOpcache()
             <?php } ?>
 
             <?php if (checkMemoryLimit()) { ?>
-                <li class="success"><?=getPhrase('php_memory_limit_success', [\ini_get('memory_limit')])?></li>
+                <li class="success"><?=getPhrase('php_memory_limit_success', [formatFilesizeBinary(getMemoryLimit())])?></li>
             <?php } else { ?>
-                <li class="failure"><?=getPhrase('php_memory_limit_failure', [\ini_get('memory_limit')])?></li>
+                <li class="failure"><?=getPhrase('php_memory_limit_failure', [formatFilesizeBinary(getMemoryLimit())])?></li>
             <?php } ?>
 
             <?php if (!checkOpcache()) { ?>
