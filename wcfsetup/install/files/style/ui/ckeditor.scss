@@ -226,6 +226,7 @@
 
 		&:not(.ck-on) {
 			background-color: var(--ck-color-panel-background);
+			color: var(--wcfDropdownLink);
 		}
 
 		&.ck-on {
