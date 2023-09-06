@@ -33,6 +33,11 @@ final class FileUtil
     protected static $mode;
 
     /**
+     * A regular expression that allows to detect links within text.
+     */
+    public const LINK_REGEX = "#(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
+
+    /**
      * Prepares the temporary folder and returns its path.
      *
      * @throws \RuntimeException if the temporary folder is not usable.
