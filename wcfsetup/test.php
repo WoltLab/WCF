@@ -23,7 +23,8 @@ $requiredExtensions = [
     'pdo_mysql',
     'zlib',
 ];
-$requiredPHPVersion = '8.1.2';
+$phpVersionLowerBound = '8.1.2';
+$phpVersionUpperBound = '8.2.x';
 $phrases = [
     'php_requirements' => [
         'de' => 'PHP',
@@ -34,8 +35,8 @@ $phrases = [
         'en' => 'PHP version %s',
     ],
     'php_version_failure' => [
-        'de' => 'Gefundene PHP-Version %s ist unzureichend. PHP %s oder höher wird benötigt.',
-        'en' => 'PHP version %s is insufficient. PHP %s or above is required.',
+        'de' => 'Gefundene PHP-Version %s ist inkompatibel. PHP %s – %s wird benötigt.',
+        'en' => 'PHP version %s is incompatible. PHP %s – %s is required.',
     ],
     'php_extension_success' => [
         'de' => 'Erweiterung %s vorhanden',
@@ -102,11 +103,12 @@ function getPhrase($phrase, array $values = [])
 }
 function checkPHPVersion()
 {
-    global $requiredPHPVersion;
+    global $phpVersionLowerBound, $phpVersionUpperBound;
 
     $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', \PHP_VERSION);
 
-    return \version_compare($comparePhpVersion, $requiredPHPVersion) >= 0;
+    return \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
+        && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=');
 }
 function getMemoryLimit()
 {
@@ -419,7 +421,7 @@ function checkOpcache()
             <?php if (checkPHPVersion()) { ?>
                 <li class="success"><?=getPhrase('php_version_success', [\PHP_VERSION])?></li>
             <?php } else { ?>
-                <li class="failure"><?=getPhrase('php_version_failure', [\PHP_VERSION, $requiredPHPVersion])?></li>
+                <li class="failure"><?=getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersionUpperBound])?></li>
             <?php } ?>
 
             <?php foreach ($requiredExtensions as $extension) { ?>
