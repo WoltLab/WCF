@@ -144,7 +144,8 @@ function getMemoryLimit()
 }
 function checkMemoryLimit()
 {
-    return getMemoryLimit() >= 128 * 1024 * 1024;
+    $memoryLimit = getMemoryLimit();
+    return $memoryLimit == -1 || $memoryLimit >= 128 * 1024 * 1024;
 }
 function formatFilesizeBinary($byte): string
 {
