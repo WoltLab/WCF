@@ -421,38 +421,38 @@ function checkOpcache()
         <ul class="system-requirements">
             <?php if (checkPHPVersion()) { ?>
                 <li class="success"><?=getPhrase('php_version_success', [\PHP_VERSION])?></li>
+
+                <?php foreach ($requiredExtensions as $extension) { ?>
+                    <?php if (\extension_loaded($extension)) { ?>
+                        <li class="success"><?=getPhrase('php_extension_success', [$extension])?></li>
+                    <?php } else { ?>
+                        <li class="failure"><?=getPhrase('php_extension_failure', [$extension])?></li>
+                    <?php } ?>
+                <?php } ?>
+
+                <?php if (\extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) { ?>
+                    <li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
+                <?php } elseif (\extension_loaded('gd')) { ?>
+                    <?php if (!empty(\gd_info()['WebP Support'])) { ?>
+                        <li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
+                    <?php } else { ?>
+                        <li class="failure"><?=getPhrase('php_extension_gd_or_imagick_webp_failure', ['GD'])?></li>
+                    <?php } ?>
+                <?php } else { ?>
+                    <li class="failure"><?=getPhrase('php_extension_gd_or_imagick_failure')?></li>
+                <?php } ?>
+
+                <?php if (checkMemoryLimit()) { ?>
+                    <li class="success"><?=getPhrase('php_memory_limit_success', [formatFilesizeBinary(getMemoryLimit())])?></li>
+                <?php } else { ?>
+                    <li class="failure"><?=getPhrase('php_memory_limit_failure', [formatFilesizeBinary(getMemoryLimit())])?></li>
+                <?php } ?>
+
+                <?php if (!checkOpcache()) { ?>
+                    <li class="failure"><?=getPhrase('php_opcache_failure')?></li>
+                <?php } ?>
             <?php } else { ?>
                 <li class="failure"><?=getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersionUpperBound])?></li>
-            <?php } ?>
-
-            <?php foreach ($requiredExtensions as $extension) { ?>
-                <?php if (\extension_loaded($extension)) { ?>
-                    <li class="success"><?=getPhrase('php_extension_success', [$extension])?></li>
-                <?php } else { ?>
-                    <li class="failure"><?=getPhrase('php_extension_failure', [$extension])?></li>
-                <?php } ?>
-            <?php } ?>
-
-            <?php if (\extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) { ?>
-                <li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
-            <?php } elseif (\extension_loaded('gd')) { ?>
-                <?php if (!empty(\gd_info()['WebP Support'])) { ?>
-                    <li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
-                <?php } else { ?>
-                    <li class="failure"><?=getPhrase('php_extension_gd_or_imagick_webp_failure', ['GD'])?></li>
-                <?php } ?>
-            <?php } else { ?>
-                <li class="failure"><?=getPhrase('php_extension_gd_or_imagick_failure')?></li>
-            <?php } ?>
-
-            <?php if (checkMemoryLimit()) { ?>
-                <li class="success"><?=getPhrase('php_memory_limit_success', [formatFilesizeBinary(getMemoryLimit())])?></li>
-            <?php } else { ?>
-                <li class="failure"><?=getPhrase('php_memory_limit_failure', [formatFilesizeBinary(getMemoryLimit())])?></li>
-            <?php } ?>
-
-            <?php if (!checkOpcache()) { ?>
-                <li class="failure"><?=getPhrase('php_opcache_failure')?></li>
             <?php } ?>
         </ul>
 
