@@ -2,10 +2,13 @@
 
 namespace wcf\system\html\output\node;
 
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\UriComparator;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\RouteHandler;
 use wcf\util\DOMUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -40,16 +43,23 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
 
             $value = StringUtil::trim($element->textContent);
 
+            if ($this->isSuspiciousValue($value, $href)) {
+                $value = $href;
+            }
+
             if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
-                if (!empty($value) && $value === $href && \mb_strlen($value) > 60) {
+                if (!empty($value) && $value === $href) {
                     while ($element->childNodes->length) {
                         DOMUtil::removeNode($element->childNodes->item(0));
                     }
 
+                    $newValue = $value;
+                    if (\mb_strlen($value) > 60) {
+                        $newValue = \mb_substr($value, 0, 30) . StringUtil::HELLIP . \mb_substr($value, -25);
+                    }
+
                     $element->appendChild(
-                        $element->ownerDocument->createTextNode(
-                            \mb_substr($value, 0, 30) . StringUtil::HELLIP . \mb_substr($value, -25)
-                        )
+                        $element->ownerDocument->createTextNode($newValue)
                     );
                 }
             } elseif ($this->outputType === 'text/plain') {
@@ -62,6 +72,24 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                 $htmlNodeProcessor->replaceElementWithText($element, $text, false);
             }
         }
+    }
+
+    /**
+     * Returns whether the given link value is suspicious with regard
+     * to the actual link target.
+     *
+     * A value is considered suspicious if it is a cross-origin URI (i.e.
+     * if one of host, port or scheme differs).
+     *
+     * @see \GuzzleHttp\Psr7\UriComparator::isCrossOrigin()
+     */
+    private function isSuspiciousValue(string $value, string $href): bool
+    {
+        if (!\preg_match(FileUtil::LINK_REGEX, $value)) {
+            return false;
+        }
+
+        return UriComparator::isCrossOrigin(new Uri($href), new Uri($value));
     }
 
     /**
