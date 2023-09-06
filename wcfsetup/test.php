@@ -38,6 +38,14 @@ $phrases = [
         'de' => 'Gefundene PHP-Version %s ist inkompatibel. PHP %s – %s wird benötigt.',
         'en' => 'PHP version %s is incompatible. PHP %s – %s is required.',
     ],
+    'php_x64_success' => [
+        'de' => '64-Bit-Unterstützung',
+        'en' => '64-bit Support',
+    ],
+    'php_x64_failure' => [
+        'de' => '64-Bit-Unterstützung fehlt',
+        'en' => '64-bit support missing',
+    ],
     'php_extension_success' => [
         'de' => 'Erweiterung %s vorhanden',
         'en' => '%s extension loaded',
@@ -147,6 +155,10 @@ function checkMemoryLimit()
     $memoryLimit = getMemoryLimit();
     return $memoryLimit == -1 || $memoryLimit >= 128 * 1024 * 1024;
 }
+function checkX64()
+{
+    return \PHP_INT_SIZE == 8;
+}
 function formatFilesizeBinary($byte): string
 {
     $symbol = 'Byte';
@@ -173,7 +185,7 @@ function checkResult()
 {
     global $requiredExtensions;
 
-    if (!checkPHPVersion() || !checkMemoryLimit() || !checkOpcache()) {
+    if (!checkPHPVersion() || !checkX64() || !checkMemoryLimit() || !checkOpcache()) {
         return false;
     }
 
@@ -421,6 +433,12 @@ function checkOpcache()
         <ul class="system-requirements">
             <?php if (checkPHPVersion()) { ?>
                 <li class="success"><?=getPhrase('php_version_success', [\PHP_VERSION])?></li>
+
+                <?php if (checkX64()) { ?>
+                    <li class="success"><?=getPhrase('php_x64_success')?></li>
+                <?php } else { ?>
+                    <li class="success"><?=getPhrase('php_x64_failure')?></li>
+                <?php } ?>
 
                 <?php foreach ($requiredExtensions as $extension) { ?>
                     <?php if (\extension_loaded($extension)) { ?>
