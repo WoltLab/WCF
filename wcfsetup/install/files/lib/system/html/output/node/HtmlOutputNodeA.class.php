@@ -54,8 +54,26 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                     }
 
                     $newValue = $value;
-                    if (\mb_strlen($value) > 60) {
-                        $newValue = \mb_substr($value, 0, 30) . StringUtil::HELLIP . \mb_substr($value, -25);
+                    if (\mb_strlen($newValue) > 60) {
+                        $uri = new Uri($newValue);
+                        $schemeHost = Uri::composeComponents(
+                            $uri->getScheme(),
+                            $uri->getAuthority(),
+                            '',
+                            null,
+                            null,
+                        );
+                        $pathQueryFragment = Uri::composeComponents(
+                            null,
+                            null,
+                            $uri->getPath(),
+                            $uri->getQuery(),
+                            $uri->getFragment(),
+                        );
+                        if (\mb_strlen($pathQueryFragment) > 35) {
+                            $pathQueryFragment = \mb_substr($pathQueryFragment, 0, 15) . StringUtil::HELLIP . \mb_substr($pathQueryFragment, -15);
+                        }
+                        $newValue = $schemeHost . $pathQueryFragment;
                     }
 
                     $element->appendChild(
