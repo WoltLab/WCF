@@ -86,7 +86,7 @@ class TrophyEditForm extends TrophyAddForm
 
             // reset badge values for non badge trophies
             if ($this->trophy->type != Trophy::TYPE_BADGE) {
-                $this->iconName = 'trophy';
+                $this->iconName = 'trophy;false';
                 $this->iconColor = 'rgba(255, 255, 255, 1)';
                 $this->badgeColor = 'rgba(50, 92, 132, 1)';
             }
