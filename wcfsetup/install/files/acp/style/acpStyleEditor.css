@@ -508,6 +508,8 @@ html[dir="rtl"] #spContentSidebar {
 #spContentSidebar .spContentSidebarBox {
 	padding: 20px;
 	background-color: var(--wcfSidebarBackground);
+	border: 1px solid var(--wcfSidebarBorder);
+	border-radius: var(--wcfBorderRadius);
 	color: var(--wcfSidebarText);
 }
 #spContentSidebar .spContentSidebarBox a {
