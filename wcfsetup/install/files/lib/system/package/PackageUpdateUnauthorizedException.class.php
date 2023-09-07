@@ -63,12 +63,10 @@ class PackageUpdateUnauthorizedException extends UserException
         $authInsufficient = (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized');
         if ($authInsufficient && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
             $hasOnlyTrustedServers = true;
-            if (!ENABLE_ENTERPRISE_MODE) {
-                foreach (PackageUpdateServer::getActiveUpdateServers() as $updateServer) {
-                    if (!$updateServer->isWoltLabUpdateServer() && !$updateServer->isWoltLabStoreServer()) {
-                        $hasOnlyTrustedServers = false;
-                        break;
-                    }
+            foreach (PackageUpdateServer::getActiveUpdateServers() as $updateServer) {
+                if (!$updateServer->isWoltLabUpdateServer() && !$updateServer->isWoltLabStoreServer()) {
+                    $hasOnlyTrustedServers = false;
+                    break;
                 }
             }
 
