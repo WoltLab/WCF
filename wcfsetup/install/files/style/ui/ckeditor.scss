@@ -217,6 +217,10 @@
 		--ck-color-base-foreground: var(--ck-color-toolbar-background);
 
 		box-shadow: var(--wcfBoxShadow);
+
+		&.ck-powered-by-balloon {
+			box-shadow: none;
+		}
 	}
 
 	.ck.ck-list__item .ck-button {
