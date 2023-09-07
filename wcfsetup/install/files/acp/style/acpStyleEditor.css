@@ -108,8 +108,8 @@ html[dir="ltr"] #spHeaderPanel ol.inlineList > li.active > a::after {
 html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after {
 	margin-right: 5px;
 }
-#spHeaderPanel ol.inlineList > li.active,
-#spHeaderPanel ol.inlineList > li:hover {
+#spHeaderPanel ol.inlineList > li.active > a,
+#spHeaderPanel ol.inlineList > li:hover > a {
 	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 	color: var(--wcfHeaderMenuLinkActive);
 	position: relative;
@@ -401,7 +401,9 @@ html[dir="rtl"] #spTable th {
 /* ### user menu ### */
 #spUserMenu {
 	border-radius: var(--wcfBorderRadius);
-	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	box-shadow:
+		rgb(0 0 0 / 20%) 0 12px 28px 0,
+		rgb(0 0 0 / 10%) 0 2px 4px 0;
 	position: relative;
 	margin-bottom: 40px;
 	max-width: 400px;
