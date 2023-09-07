@@ -24,7 +24,7 @@ $requiredExtensions = [
     'zlib',
 ];
 $phpVersionLowerBound = '8.1.2';
-$phpVersionUpperBound = '8.2.x';
+$phpVersionUpperBound = '8.3.x';
 $phrases = [
     'php_requirements' => [
         'de' => 'PHP',
