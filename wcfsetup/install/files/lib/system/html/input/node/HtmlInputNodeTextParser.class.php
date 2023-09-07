@@ -10,6 +10,7 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -421,7 +422,7 @@ class HtmlInputNodeTextParser
     protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia)
     {
         return \preg_replace_callback(
-            "#(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS",
+            FileUtil::LINK_REGEX,
             function ($matches) use ($text, $allowURL, $allowMedia) {
                 $link = $matches[0];
 
