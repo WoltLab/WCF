@@ -233,7 +233,7 @@ class HtmlInputNodeTextParser
      * @param string $value node value
      * @param string[] $usernames list of already found usernames
      */
-    protected function detectMention(\DOMText $text, $value, array &$usernames)
+    protected function detectMention(\DOMText $text, string $value, array &$usernames)
     {
         if (!\str_contains($value, '@')) {
             return;
@@ -363,7 +363,7 @@ class HtmlInputNodeTextParser
      * @param string[] $groups list of group names by group id
      * @return      string          modified node value with replacement placeholders
      */
-    protected function parseMention(\DOMText $text, $value, array $users, array $groups)
+    protected function parseMention(\DOMText $text, string $value, array $users, array $groups)
     {
         if (!\str_contains($value, '@')) {
             return $value;
@@ -419,7 +419,7 @@ class HtmlInputNodeTextParser
      * @param bool $allowMedia media bbcode is allowed
      * @return      string          modified node value with replacement placeholders
      */
-    protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia)
+    protected function parseURL(\DOMText $text, string $value, bool $allowURL, bool $allowMedia)
     {
         return \preg_replace_callback(
             FileUtil::LINK_REGEX,
@@ -455,7 +455,7 @@ class HtmlInputNodeTextParser
      * @param string $value node value
      * @return      string          modified node value with replacement placeholders
      */
-    protected function parseEmail(\DOMText $text, $value)
+    protected function parseEmail(\DOMText $text, string $value)
     {
         if (!\str_contains($value, '@')) {
             return $value;
@@ -489,7 +489,7 @@ class HtmlInputNodeTextParser
      * @param string $value node value
      * @return      string          modified node value with replacement placeholders
      */
-    protected function parseSmiley(\DOMText $text, $value)
+    protected function parseSmiley(\DOMText $text, string $value)
     {
         static $smileyPatterns = null;
         if ($smileyPatterns === null) {
