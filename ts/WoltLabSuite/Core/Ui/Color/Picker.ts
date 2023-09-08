@@ -288,17 +288,26 @@ class UiColorPicker implements DialogCallbackObject {
     }
 
     const { r, g, b, a } = color;
-    const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
 
-    if (source !== ColorSource.HSL) {
+    if (source === ColorSource.HSL) {
+      const h = this.hsl.get(HSL.Hue)!.value;
+      const s = this.hsl.get(HSL.Saturation)!.value;
+      const l = this.hsl.get(HSL.Lightness)!.value;
+
+      this.hslContainer!.style.setProperty(`--${HSL.Hue}`, `${h}`);
+      this.hslContainer!.style.setProperty(`--${HSL.Saturation}`, `${s}%`);
+      this.hslContainer!.style.setProperty(`--${HSL.Lightness}`, `${l}%`);
+    } else {
+      const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
+
       this.hsl.get(HSL.Hue)!.value = h.toString();
       this.hsl.get(HSL.Saturation)!.value = s.toString();
       this.hsl.get(HSL.Lightness)!.value = l.toString();
-    }
 
-    this.hslContainer!.style.setProperty(`--${HSL.Hue}`, `${h}`);
-    this.hslContainer!.style.setProperty(`--${HSL.Saturation}`, `${s}%`);
-    this.hslContainer!.style.setProperty(`--${HSL.Lightness}`, `${l}%`);
+      this.hslContainer!.style.setProperty(`--${HSL.Hue}`, `${h}`);
+      this.hslContainer!.style.setProperty(`--${HSL.Saturation}`, `${s}%`);
+      this.hslContainer!.style.setProperty(`--${HSL.Lightness}`, `${l}%`);
+    }
 
     if (source !== ColorSource.RGBA) {
       this.channels.get(Channel.R)!.value = r.toString();

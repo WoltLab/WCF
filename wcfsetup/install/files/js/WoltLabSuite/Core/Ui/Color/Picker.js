@@ -227,15 +227,23 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                 color = ColorUtil.stringToRgba(color);
             }
             const { r, g, b, a } = color;
-            const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
-            if (source !== "hsl" /* ColorSource.HSL */) {
+            if (source === "hsl" /* ColorSource.HSL */) {
+                const h = this.hsl.get("hue" /* HSL.Hue */).value;
+                const s = this.hsl.get("saturation" /* HSL.Saturation */).value;
+                const l = this.hsl.get("lightness" /* HSL.Lightness */).value;
+                this.hslContainer.style.setProperty(`--${"hue" /* HSL.Hue */}`, `${h}`);
+                this.hslContainer.style.setProperty(`--${"saturation" /* HSL.Saturation */}`, `${s}%`);
+                this.hslContainer.style.setProperty(`--${"lightness" /* HSL.Lightness */}`, `${l}%`);
+            }
+            else {
+                const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
                 this.hsl.get("hue" /* HSL.Hue */).value = h.toString();
                 this.hsl.get("saturation" /* HSL.Saturation */).value = s.toString();
                 this.hsl.get("lightness" /* HSL.Lightness */).value = l.toString();
+                this.hslContainer.style.setProperty(`--${"hue" /* HSL.Hue */}`, `${h}`);
+                this.hslContainer.style.setProperty(`--${"saturation" /* HSL.Saturation */}`, `${s}%`);
+                this.hslContainer.style.setProperty(`--${"lightness" /* HSL.Lightness */}`, `${l}%`);
             }
-            this.hslContainer.style.setProperty(`--${"hue" /* HSL.Hue */}`, `${h}`);
-            this.hslContainer.style.setProperty(`--${"saturation" /* HSL.Saturation */}`, `${s}%`);
-            this.hslContainer.style.setProperty(`--${"lightness" /* HSL.Lightness */}`, `${l}%`);
             if (source !== "rgba" /* ColorSource.RGBA */) {
                 this.channels.get("r" /* Channel.R */).value = r.toString();
                 this.channels.get("g" /* Channel.G */).value = g.toString();
