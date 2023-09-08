@@ -103,6 +103,10 @@
 		margin-top: -6px;
 		width: 24px;
 	}
+
+	&[data-coordinate="hue"]::-webkit-slider-thumb {
+		background-color: hsl(var(--hue), 100%, 50%);
+	}
 }
 
 /* Do not merge these with the block above, it breaks Chrome. */
@@ -125,48 +129,52 @@
 		margin-top: -6px;
 		width: 24px;
 	}
+
+	&[data-coordinate="hue"]::-moz-range-thumb {
+		background-color: hsl(var(--hue), 100%, 50%);
+	}
 }
 
 .colorPickerHslRange[data-coordinate="hue"] {
 	--track-image: linear-gradient(
 		to right,
-		hsl(0, var(--saturation), var(--lightness)),
-		hsl(10, var(--saturation), var(--lightness)),
-		hsl(20, var(--saturation), var(--lightness)),
-		hsl(30, var(--saturation), var(--lightness)),
-		hsl(40, var(--saturation), var(--lightness)),
-		hsl(50, var(--saturation), var(--lightness)),
-		hsl(60, var(--saturation), var(--lightness)),
-		hsl(70, var(--saturation), var(--lightness)),
-		hsl(80, var(--saturation), var(--lightness)),
-		hsl(90, var(--saturation), var(--lightness)),
-		hsl(100, var(--saturation), var(--lightness)),
-		hsl(110, var(--saturation), var(--lightness)),
-		hsl(120, var(--saturation), var(--lightness)),
-		hsl(130, var(--saturation), var(--lightness)),
-		hsl(140, var(--saturation), var(--lightness)),
-		hsl(150, var(--saturation), var(--lightness)),
-		hsl(160, var(--saturation), var(--lightness)),
-		hsl(170, var(--saturation), var(--lightness)),
-		hsl(180, var(--saturation), var(--lightness)),
-		hsl(190, var(--saturation), var(--lightness)),
-		hsl(200, var(--saturation), var(--lightness)),
-		hsl(210, var(--saturation), var(--lightness)),
-		hsl(220, var(--saturation), var(--lightness)),
-		hsl(230, var(--saturation), var(--lightness)),
-		hsl(240, var(--saturation), var(--lightness)),
-		hsl(250, var(--saturation), var(--lightness)),
-		hsl(260, var(--saturation), var(--lightness)),
-		hsl(270, var(--saturation), var(--lightness)),
-		hsl(280, var(--saturation), var(--lightness)),
-		hsl(290, var(--saturation), var(--lightness)),
-		hsl(300, var(--saturation), var(--lightness)),
-		hsl(310, var(--saturation), var(--lightness)),
-		hsl(320, var(--saturation), var(--lightness)),
-		hsl(330, var(--saturation), var(--lightness)),
-		hsl(340, var(--saturation), var(--lightness)),
-		hsl(350, var(--saturation), var(--lightness)),
-		hsl(359, var(--saturation), var(--lightness))
+		hsl(0, 100%, 50%),
+		hsl(10, 100%, 50%),
+		hsl(20, 100%, 50%),
+		hsl(30, 100%, 50%),
+		hsl(40, 100%, 50%),
+		hsl(50, 100%, 50%),
+		hsl(60, 100%, 50%),
+		hsl(70, 100%, 50%),
+		hsl(80, 100%, 50%),
+		hsl(90, 100%, 50%),
+		hsl(100, 100%, 50%),
+		hsl(110, 100%, 50%),
+		hsl(120, 100%, 50%),
+		hsl(130, 100%, 50%),
+		hsl(140, 100%, 50%),
+		hsl(150, 100%, 50%),
+		hsl(160, 100%, 50%),
+		hsl(170, 100%, 50%),
+		hsl(180, 100%, 50%),
+		hsl(190, 100%, 50%),
+		hsl(200, 100%, 50%),
+		hsl(210, 100%, 50%),
+		hsl(220, 100%, 50%),
+		hsl(230, 100%, 50%),
+		hsl(240, 100%, 50%),
+		hsl(250, 100%, 50%),
+		hsl(260, 100%, 50%),
+		hsl(270, 100%, 50%),
+		hsl(280, 100%, 50%),
+		hsl(290, 100%, 50%),
+		hsl(300, 100%, 50%),
+		hsl(310, 100%, 50%),
+		hsl(320, 100%, 50%),
+		hsl(330, 100%, 50%),
+		hsl(340, 100%, 50%),
+		hsl(350, 100%, 50%),
+		hsl(359, 100%, 50%)
 	);
 }
 
