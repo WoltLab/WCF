@@ -273,6 +273,10 @@ final class LicensePage extends AbstractPage
             }
         }
 
+        if ($packageUpdates === []) {
+            return [];
+        }
+
         // remove duplicates by picking either the lowest available version of a package
         // or the version exposed by trusted package servers
         $conditions = new PreparedStatementConditionBuilder();
