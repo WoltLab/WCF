@@ -258,16 +258,4 @@ final class LicenseEditForm extends AbstractFormBuilderForm
             return new RedirectResponse($this->url);
         }
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'url' => $this->url,
-        ]);
-    }
 }
