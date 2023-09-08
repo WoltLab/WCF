@@ -716,8 +716,8 @@ class PackageArchive
         // throw error message if not found.
         if (($fileIndex = $this->tar->getIndexByFilename($filename)) === false) {
             throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, [
-                'archive' => $this->archive,
-                'targetArchive' => $filename,
+                'targetArchive' => $this->archive,
+                'archive' => $filename,
             ]);
         }
 
