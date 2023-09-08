@@ -144,7 +144,7 @@ export function rgbToHsl(r: number, g: number, b: number): HSL {
 
   const l = (max + min) / 2;
 
-  if (max === 0) {
+  if (diff === 0) {
     s = 0;
   } else {
     s = diff / (1 - Math.abs(2 * l - 1));

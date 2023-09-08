@@ -126,7 +126,7 @@ define(["require", "exports"], function (require, exports) {
             }
         }
         const l = (max + min) / 2;
-        if (max === 0) {
+        if (diff === 0) {
             s = 0;
         }
         else {
