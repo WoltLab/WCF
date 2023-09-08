@@ -190,13 +190,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function migrateStorage()
     {
-        foreach (
-            [
-                $this->getLocation(),
-                $this->getThumbnailLocation(),
-                $this->getThumbnailLocation('tiny'),
-            ] as $location
-        ) {
+        foreach ([
+            $this->getLocation(),
+            $this->getThumbnailLocation(),
+            $this->getThumbnailLocation('tiny'),
+        ] as $location) {
             if (!\str_ends_with($location, '.bin')) {
                 \rename($location, $location . '.bin');
             }
@@ -277,8 +275,21 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function showAsImage()
     {
         if ($this->isImage) {
-            if (!$this->hasThumbnail() && ($this->width > ATTACHMENT_THUMBNAIL_WIDTH || $this->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
-                return false;
+            if (!$this->hasThumbnail() && ($this->width > \ATTACHMENT_THUMBNAIL_WIDTH || $this->height > \ATTACHMENT_THUMBNAIL_HEIGHT)) {
+                // Some images have no thumbnail because this is not really an
+                // image or it is unrecognized. However, there are images that
+                // do not have a thumbnail because one of its dimensions is
+                // less then the thumbnails minimum of that side.
+                $shouldHaveThumbnail = true;
+                if ($this->width > \ATTACHMENT_THUMBNAIL_WIDTH && $this->height < \ATTACHMENT_THUMBNAIL_HEIGHT) {
+                    $shouldHaveThumbnail = false;
+                } else if ($this->height > ATTACHMENT_THUMBNAIL_HEIGHT && $this->width < \ATTACHMENT_THUMBNAIL_WIDTH) {
+                    $shouldHaveThumbnail = false;
+                }
+
+                if ($shouldHaveThumbnail) {
+                    return false;
+                }
             }
 
             if ($this->canDownload()) {
