@@ -7,6 +7,7 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
@@ -15,6 +16,7 @@ use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\CheckboxFormField;
 use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
@@ -22,6 +24,8 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\io\HttpFactory;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Set up or edit the license data.
@@ -49,6 +53,21 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     public $templateName = 'licenseEdit';
 
     private array $apiResponse;
+
+    private string $url;
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        $url = $_GET['url'] ?? '';
+        if ($url && ApplicationHandler::getInstance()->isInternalURL($url)) {
+            $this->url = $url;
+        }
+    }
 
     /**
      * @inheritDoc
@@ -123,6 +142,23 @@ final class LicenseEditForm extends AbstractFormBuilderForm
                     ->fieldId('noCredentialsConfirm')
             );
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setFormAction()
+    {
+        if (!isset($this->url)) {
+            parent::setFormAction();
+            return;
+        }
+
+        $this->form->action(
+            LinkHandler::getInstance()->getControllerLink(static::class, [
+                'url' => $this->url,
+            ])
+        );
     }
 
     private function getLicenseData(string $licenseNo, string $serialNo): array
@@ -217,5 +253,21 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         }
 
         $this->saved();
+
+        if (isset($this->url)) {
+            return new RedirectResponse($this->url);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'url' => $this->url,
+        ]);
     }
 }

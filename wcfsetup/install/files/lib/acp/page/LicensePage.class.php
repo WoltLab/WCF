@@ -51,7 +51,12 @@ final class LicensePage extends AbstractPage
 
         if (!$this->hasLicenseCredentials()) {
             return new RedirectResponse(
-                LinkHandler::getInstance()->getControllerLink(LicenseEditForm::class),
+                LinkHandler::getInstance()->getControllerLink(
+                    LicenseEditForm::class,
+                    [
+                        'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
+                    ],
+                ),
             );
         }
 
