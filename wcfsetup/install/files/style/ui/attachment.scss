@@ -146,6 +146,10 @@
 		}
 	}
 
+	.formAttachmentListItem > fa-icon[size="64"] {
+		flex-basis: 64px;
+	}
+
 	@include screen-md-up {
 		.formAttachmentList {
 			margin-right: -20px;
