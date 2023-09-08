@@ -18,6 +18,17 @@
     .licensed_packages__package__action {
         white-space: nowrap;
     }
+
+    .license_packages__package__purchase {
+        display: flex;
+        flex-direction: column;
+        font-size: var(--wcfFontSizeSmall);
+        row-gap: 5px;
+    }
+
+    .license_packages__package__purchase__outdated {
+        color: var(--wcfContentDimmedText);
+    }
 </style>
 
 <header class="contentHeader">
@@ -86,9 +97,20 @@
                                 <small class="licensed_packages__package__description">{$packageUpdates[$package]->packageDescription}</small>
                             </td>
                             <td class="columnStatus">
-                                <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
-                                    {lang}wcf.acp.license.package.install{/lang}
-                                </button>
+                                {if $requiresLicenseExtension[$package]|isset}
+                                    <span class="license_packages__package__purchase">
+                                        {if $requiresLicenseExtension[$package] !== 'purchase'}
+                                            <span class="license_packages__package__purchase__outdated">
+                                                {lang accessibleVersion=$requiresLicenseExtension[$package]}wcf.acp.license.package.outdated{/lang}
+                                            </span>
+                                        {/if}
+                                        <a href="https://www.woltlab.com/license-extend/{$licenseNumber}/" class="externalURL" rel="nofollow noopener" target="_blank">{lang}wcf.acp.license.extend{/lang}</a>
+                                    </span>
+                                {else}
+                                    <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
+                                        {lang}wcf.acp.license.package.install{/lang}
+                                    </button>
+                                {/if}
                             </td>
                         {/if}
                     </tr>

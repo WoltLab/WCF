@@ -43,6 +43,10 @@ final class LicensePage extends AbstractPage
 
     private PackageUpdateServer $updateServer;
 
+    private array $requiresLicenseExtension = [];
+
+    private const CURRENT_MAJOR = '6.0';
+
     public function readData()
     {
         parent::readData();
@@ -95,8 +99,23 @@ final class LicensePage extends AbstractPage
                 $a = $this->installedPackages[$packageA] ?? $this->packageUpdates[$packageA];
                 $b = $this->installedPackages[$packageB] ?? $this->packageUpdates[$packageB];
 
-                return ($b->isApplication <=> $a->isApplication) ?: ($a->getName() <=> $b->getName());
+                $aName = \mb_strtolower($a->getName());
+                $bName = \mb_strtolower($b->getName());
+
+                return ($b->isApplication <=> $a->isApplication) ?: ($aName <=> $bName);
             });
+        }
+
+        foreach ($this->licenseData['woltlab'] as $identifier => $accessibleVersion) {
+            if ($accessibleVersion === '*') {
+                continue;
+            }
+
+            if ($accessibleVersion === '0.0') {
+                $this->requiresLicenseExtension[$identifier] = 'purchase';
+            } else if (\version_compare($accessibleVersion, self::CURRENT_MAJOR, '<')) {
+                $this->requiresLicenseExtension[$identifier] = $accessibleVersion;
+            }
         }
     }
 
@@ -120,6 +139,7 @@ final class LicensePage extends AbstractPage
             'installedPackages' => $this->installedPackages,
             'installablePackages' => $this->installablePackages,
             'packageUpdates' => $this->packageUpdates,
+            'requiresLicenseExtension' => $this->requiresLicenseExtension,
         ]);
     }
 
@@ -415,13 +435,18 @@ final class LicensePage extends AbstractPage
             }
         }
 
+        // Mark WoltLab packages to be always accessible in order to include
+        // them in the dynamically generated list.
+        $woltlabUpdateServerID = PackageUpdateServer::getWoltLabUpdateServer()->packageUpdateServerID;
+
         // filter by version
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add(
             "puv.packageUpdateID IN (?)",
             [$packageUpdateID]
         );
-        $sql = "SELECT      pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
+        $sql = "SELECT      pu.package, pu.packageUpdateServerID, puv.packageUpdateVersionID,
+                            puv.packageUpdateID, puv.packageVersion, puv.isAccessible
                 FROM        wcf" . WCF_N . "_package_update_version puv
                 LEFT JOIN   wcf" . WCF_N . "_package_update pu
                 ON          pu.packageUpdateID = puv.packageUpdateID
@@ -481,7 +506,7 @@ final class LicensePage extends AbstractPage
                 ];
             }
 
-            if ($row['isAccessible']) {
+            if ($row['packageUpdateServerID'] === $woltlabUpdateServerID || $row['isAccessible']) {
                 $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
             }
             $packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;
@@ -608,7 +633,7 @@ final class LicensePage extends AbstractPage
 
         $request = new Request(
             'POST',
-            'https://api.woltlab.com/2.0/customer/license/list.json',
+            'https://api.woltlab.com/2.1/customer/license/list.json',
             [
                 'content-type' => 'application/x-www-form-urlencoded',
             ],

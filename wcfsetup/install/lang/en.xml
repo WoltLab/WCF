@@ -1046,6 +1046,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	<category name="wcf.acp.license">
 		<item name="wcf.acp.license"><![CDATA[Licensed Products]]></item>
 		<item name="wcf.acp.license.edit"><![CDATA[Edit License Data]]></item>
+		<item name="wcf.acp.license.extend"><![CDATA[Extend License]]></item>
 		<item name="wcf.acp.license.noCredentials"><![CDATA[Remove License Data]]></item>
 		<item name="wcf.acp.license.noCredentialsConfirm"><![CDATA[Remove the existing license data]]></item>
 		<item name="wcf.acp.license.licenseNo"><![CDATA[License {$licenseNumber}]]></item>
@@ -1054,6 +1055,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 The developer license permits exclusively the use during the development as well as for the operation of demo installations. It does not authorize the use of the software in productive environments.]]></item>
 		<item name="wcf.acp.license.package.install"><![CDATA[Install]]></item>
 		<item name="wcf.acp.license.package.installed"><![CDATA[Already installed]]></item>
+		<item name="wcf.acp.license.package.outdated"><![CDATA[Up to version {$accessibleVersion}]]></item>
 		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
 	</category>
 	<category name="wcf.acp.menu">
