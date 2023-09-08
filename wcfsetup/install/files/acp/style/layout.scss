@@ -224,6 +224,11 @@ html[data-color-scheme="dark"] {
 		.pageHeaderSearchShortcut {
 			display: none;
 		}
+
+		#userMenu .userAvatarImage {
+			height: 32px;
+			width: 32px;
+		}
 	}
 }
 
