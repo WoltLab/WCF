@@ -350,6 +350,10 @@ $.widget('ui.wcfImageViewer', {
 		if (this._isOpen) {
 			return false;
 		}
+
+		if (document.activeElement instanceof HTMLElement) {
+			document.activeElement.blur();
+		}
 		
 		// add history item for the image viewer
 		if (!event || event.type !== 'popstate') {
