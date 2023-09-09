@@ -19,7 +19,7 @@ export type { Element } from "@ckeditor/ckeditor5-engine";
 import type {} from "@ckeditor/ckeditor5-autosave";
 import type {} from "@ckeditor/ckeditor5-mention";
 
-import type { EditorConfig as UpstreamEditorConfig } from "@ckeditor/ckeditor5-core";
+import type { EditorConfig as UpstreamEditorConfig, ToolbarConfigItem } from "@ckeditor/ckeditor5-core";
 
 type WoltlabBbcodeButton = {
   icon?: string;
@@ -33,4 +33,4 @@ interface EditorConfig extends UpstreamEditorConfig {
   woltlabBbcode?: WoltlabBbcodeConfig;
 }
 
-export type { EditorConfig };
+export type { EditorConfig, ToolbarConfigItem };

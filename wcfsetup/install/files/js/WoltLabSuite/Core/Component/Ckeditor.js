@@ -155,10 +155,28 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             configuration,
             features,
         });
-        for (const { name } of bbcodes) {
-            configuration.toolbar.push(`woltlabBbcode_${name}`);
+        const toolbar = configuration.toolbar;
+        for (let { name } of bbcodes) {
+            name = `woltlabBbcode_${name}`;
+            if (hasToolbarButton(toolbar, name)) {
+                continue;
+            }
+            toolbar.push(name);
         }
         return configuration;
+    }
+    function hasToolbarButton(items, name) {
+        for (const item of items) {
+            if (typeof item === "string") {
+                if (item === name) {
+                    return true;
+                }
+            }
+            else if (hasToolbarButton(item.items, name)) {
+                return true;
+            }
+        }
+        return false;
     }
     async function setupCkeditor(element, features, bbcodes, codeBlockLanguages) {
         if (instances.has(element)) {

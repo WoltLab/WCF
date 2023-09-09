@@ -24,7 +24,13 @@ import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import { normalizeLegacyHtml, normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
-import { ClassicEditor, CodeBlockConfig, EditorConfig, Element as CkeElement } from "./Ckeditor/Types";
+import type {
+  ClassicEditor,
+  CodeBlockConfig,
+  EditorConfig,
+  Element as CkeElement,
+  ToolbarConfigItem,
+} from "./Ckeditor/Types";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
 import { browser, touch } from "../Environment";
@@ -217,11 +223,32 @@ function initializeConfiguration(
     features,
   });
 
-  for (const { name } of bbcodes) {
-    (configuration.toolbar as any).push(`woltlabBbcode_${name}`);
+  const toolbar = configuration.toolbar as ToolbarConfigItem[];
+  for (let { name } of bbcodes) {
+    name = `woltlabBbcode_${name}`;
+
+    if (hasToolbarButton(toolbar, name)) {
+      continue;
+    }
+
+    toolbar.push(name);
   }
 
   return configuration;
+}
+
+function hasToolbarButton(items: ToolbarConfigItem[], name: string): boolean {
+  for (const item of items) {
+    if (typeof item === "string") {
+      if (item === name) {
+        return true;
+      }
+    } else if (hasToolbarButton(item.items, name)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export async function setupCkeditor(
