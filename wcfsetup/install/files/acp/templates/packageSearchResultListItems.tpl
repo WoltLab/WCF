@@ -8,7 +8,7 @@
 			<div class="packageSearchDescription small">{$package->packageDescription}</div>
 			<span class="packageSearchPackage small">{$package->package}</span>
 			{if $package->pluginStoreFileID}
-				<span class="packageSearchPluginStorePage separatorLeft small"><a href="https://pluginstore.woltlab.com/file/{@$package->pluginStoreFileID}/" class="externalURL jsTooltip" title="{lang}wcf.acp.pluginStore.file.link{/lang}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.pluginStore.file{/lang}</a></span>
+				<span class="packageSearchPluginStorePage separatorLeft small"><a href="https://pluginstore.woltlab.com/file/{@$package->pluginStoreFileID}/" class="externalURL jsTooltip" title="{lang}wcf.acp.package.pluginStore.file.link{/lang}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.package.pluginStore.file{/lang}</a></span>
 			{/if}
 		</td>
 		<td class="columnText small packageSearchAuthor{if $package->getUpdateServer()->isWoltLabUpdateServer()} packageSearchAuthorWoltlab{/if}" title="{$package->author}">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$package->author|truncate:30}</a>{else}{$package->author|truncate:30}{/if}</td>

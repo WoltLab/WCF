@@ -83,8 +83,8 @@
 			</dl>
 			{if $pluginStoreFileID}
 				<dl>
-					<dt>{lang}wcf.acp.pluginStore.file{/lang}</dt>
-					<dd><a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
+					<dt>{lang}wcf.acp.package.pluginStore.file{/lang}</dt>
+					<dd><a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.package.pluginStore.file.link{/lang}</a></dd>
 				</dl>
 			{/if}
 			
