@@ -234,8 +234,16 @@
 		}
 
 		&.ck-on {
-			color: var(--ck-color-list-button-on-text);
+			background-color: var(--wcfDropdownBackgroundActive);
+			color: var(--wcfDropdownLinkActive);
 		}
+	}
+}
+
+@media (hover: hover) {
+	.ck-body-wrapper .ck.ck-list__item .ck-button:not(.ck-disabled, .ck-on):hover {
+		background-color: var(--wcfDropdownBackgroundActive);
+		color: var(--wcfDropdownLinkActive);
 	}
 }
 
