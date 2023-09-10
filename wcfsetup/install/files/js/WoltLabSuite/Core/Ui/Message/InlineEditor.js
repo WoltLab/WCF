@@ -461,7 +461,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                     elementData.messageBody.insertAdjacentElement("afterbegin", pollContainer);
                 }
             }
-            (0, Ckeditor_1.getCkeditorById)(this._getEditorId()).discardDraft();
             this._restoreMessage();
             this._updateHistory(this._getHash(this._getObjectId(activeElement)));
             UiNotification.show();
@@ -498,7 +497,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
          * Destroys the editor instance.
          */
         _destroyEditor() {
-            void (0, Ckeditor_1.getCkeditorById)(this._getEditorId(), false)?.destroy();
+            const ckeditor = (0, Ckeditor_1.getCkeditorById)(this._getEditorId(), false);
+            void ckeditor?.destroy().then(() => {
+                ckeditor.discardDraft();
+            });
         }
         /**
          * Returns the hash added to the url after successfully editing a message.

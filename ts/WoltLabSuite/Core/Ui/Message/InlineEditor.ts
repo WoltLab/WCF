@@ -589,8 +589,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       }
     }
 
-    getCkeditorById(this._getEditorId())!.discardDraft();
-
     this._restoreMessage();
 
     this._updateHistory(this._getHash(this._getObjectId(activeElement)));
@@ -636,7 +634,10 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
    * Destroys the editor instance.
    */
   protected _destroyEditor(): void {
-    void getCkeditorById(this._getEditorId(), false)?.destroy();
+    const ckeditor = getCkeditorById(this._getEditorId(), false);
+    void ckeditor?.destroy().then(() => {
+      ckeditor.discardDraft();
+    });
   }
 
   /**
