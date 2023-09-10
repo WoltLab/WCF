@@ -195,6 +195,12 @@
 	}
 }
 
+.ck.ck-body .ck-button[type="button"].ck-on:not(.ck-disabled) {
+	--ck-color-text: var(--wcfButtonTextActive);
+
+	background-color: var(--wcfButtonBackgroundActive);
+}
+
 @media (hover: hover) {
 	.ck.ck-form__row,
 	.ck.ck-body {
