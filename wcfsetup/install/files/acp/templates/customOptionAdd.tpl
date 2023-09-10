@@ -21,7 +21,7 @@
 	<dl{if $errorField == 'optionTitle'} class="formError"{/if}>
 		<dt><label for="optionTitle">{lang}wcf.global.name{/lang}</label></dt>
 		<dd>
-			<input type="text" id="optionTitle" name="optionTitle" value="{$i18nPlainValues['optionTitle']}" required autofocus class="long">
+			<input type="text" id="optionTitle" name="optionTitle" value="{$i18nPlainValues['optionTitle']}" required autofocus maxlength="255" class="long">
 			{if $errorField == 'optionTitle'}
 				<small class="innerError">
 					{if $errorType == 'multilingual'}
