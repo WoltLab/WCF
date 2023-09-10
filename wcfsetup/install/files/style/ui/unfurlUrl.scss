@@ -4,7 +4,7 @@
 
 .unfurlUrlCard {
 	background-color: var(--wcfContentBackground);
-	border-radius: 3px;
+	border-radius: var(--wcfBorderRadius);
 	box-shadow:
 		0 0 3px rgba(0, 0, 0, 0.12),
 		0 1px 2px rgba(0, 0, 0, 0.24);
@@ -61,6 +61,10 @@
 			}
 		}
 	}
+}
+
+html[data-color-scheme="dark"] .unfurlUrlCard {
+	border: 1px solid var(--wcfContentBorderInner);
 }
 
 .unfurlUrlInformation {
