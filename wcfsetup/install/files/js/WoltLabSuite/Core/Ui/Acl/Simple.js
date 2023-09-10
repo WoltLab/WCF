@@ -34,6 +34,9 @@ define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "..
                 }
             });
             this.list = document.getElementById(this.prefix + "aclAccessList");
+            this.list.querySelectorAll(".aclItemDeleteButton").forEach((button) => {
+                button.addEventListener("click", (event) => this.removeItem(event));
+            });
             const excludedSearchValues = [];
             this.list.querySelectorAll(".aclLabel").forEach((label) => {
                 excludedSearchValues.push(label.textContent);

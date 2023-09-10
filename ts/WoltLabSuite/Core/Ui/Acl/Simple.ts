@@ -38,6 +38,9 @@ class UiAclSimple {
     });
 
     this.list = document.getElementById(this.prefix + "aclAccessList") as HTMLUListElement;
+    this.list.querySelectorAll<HTMLButtonElement>(".aclItemDeleteButton").forEach((button) => {
+      button.addEventListener("click", (event) => this.removeItem(event));
+    });
 
     const excludedSearchValues: string[] = [];
     this.list.querySelectorAll(".aclLabel").forEach((label) => {
