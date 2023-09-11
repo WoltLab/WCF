@@ -5,14 +5,6 @@
  */
 WCF.Label = {};
 
-/** @deprecated 5.3 */
-WCF.Label.ACPList = Class.extend({
-	_labelInput: {},
-	_labelList: {},
-	init: function() {},
-	_keyPressed: function() {}
-});
-
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * Provides simple logic to inherit associations within structured lists.
