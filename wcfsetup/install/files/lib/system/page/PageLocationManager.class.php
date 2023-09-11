@@ -6,7 +6,7 @@ use wcf\data\ITitledLinkObject;
 use wcf\data\page\PageCache;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\page\event\ResolveCurrentPage;
+use wcf\system\page\event\PageLocationResolving;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -55,7 +55,7 @@ class PageLocationManager extends SingletonFactory
             $page = PageCache::getInstance()->getPageByController($activeRequest->getClassName());
 
             if ($page === null) {
-                $event = new ResolveCurrentPage($activeRequest);
+                $event = new PageLocationResolving($activeRequest);
                 EventHandler::getInstance()->fire($event);
                 $page = $event->page;
             }

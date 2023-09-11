@@ -14,7 +14,7 @@ use wcf\system\request\Request;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   6.0
  */
-final class ResolveCurrentPage implements IEvent
+final class PageLocationResolving implements IEvent
 {
     public Page|null $page = null;
 
