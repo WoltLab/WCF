@@ -107,7 +107,6 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         EventHandler::getInstance()->fireAction($this, 'getIssuesPreventingUpgrade', $parameters);
 
         $issues = [
-            ...$parameters['issues'],
             $this->checkMinimumPhpVersion(),
             $this->checkMaximumPhpVersion(),
             $this->checkRequiredPhpExtensions(),
@@ -115,6 +114,9 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $this->checkMinimumDatabaseVersion(),
             $this->checkMysqlNativeDriver(),
             $this->checkForAppsWithDifferentDomains(),
+            $this->checkCacheSourceIsNotMemcached(),
+            $this->checkAttachmentStorage(),
+            ...$parameters['issues'],
         ];
 
         return \array_filter($issues);
@@ -143,7 +145,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
     private function checkMaximumPhpVersion(): ?array
     {
         // Maximum: PHP 8.3.x
-        if (\PHP_VERSION_ID > 80399) {
+        if (\PHP_VERSION_ID < 80399) {
             return null;
         }
 
@@ -308,6 +310,51 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             return [
                 'title' => 'Using multiple domains',
                 'description' => 'The support for apps running on different (sub)domains has been discontinued.',
+            ];
+        }
+    }
+
+    private function checkCacheSourceIsNotMemcached(): ?array
+    {
+        if (\CACHE_SOURCE_TYPE !== 'memcached') {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Eingestellte Unterstützung für Memcached',
+                'description' => 'Memcached wird nicht mehr unterstützt, als Alternative bietet sich die Nutzung von „Redis“ an.',
+            ];
+        } else {
+            return [
+                'title' => 'Discountinued support for Memcached',
+                'description' => 'Memcached is no longer supported, it is recommended to switch to an alternative like “Redis”.',
+            ];
+        }
+    }
+
+    private function checkAttachmentStorage(): ?array
+    {
+
+        if (!\defined('ATTACHMENT_STORAGE') || !ATTACHMENT_STORAGE) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Alternativer Speicherort für Dateianhänge',
+                'description' => \sprintf(
+                    "Die Unterst&uuml;tzung f&uuml;r einen alternativen Speicherort von Dateianh&auml;ngen wird mit dem Upgrade entfernt. Es ist notwendig die Dateianh&auml;nge in das Standardverzeichnis '%s' zu verschieben und anschlie&szlig;end die PHP-Konstante 'ATTACHMENT_STORAGE' zu entfernen.",
+                    WCF_DIR . 'attachments/',
+                ),
+            ];
+        } else {
+            return [
+                'title' => 'Alternative storage location for attachments',
+                'description' => \sprintf(
+                    "The support for an alternative attachment storage location will be removed during the upgrade. It is required to move the attachments into the default directory '%s' and then to remove the PHP constant 'ATTACHMENT_STORAGE'.",
+                    WCF_DIR . 'attachments/',
+                ),
             ];
         }
     }
