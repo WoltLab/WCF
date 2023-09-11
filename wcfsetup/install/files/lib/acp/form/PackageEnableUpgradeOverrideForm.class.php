@@ -2,19 +2,17 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
-use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 
 /**
@@ -73,6 +71,10 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $this->form->appendChildren([
                 TemplateFormNode::create('issues')
                     ->templateName('packageEnableUpgradeOverrideSuccess'),
+                MultilineTextFormField::create('ckeditor5-license')
+                    ->immutable()
+                    ->label('CKEditor 5 FREE FOR OPEN SOURCE LICENSE AGREEMENT')
+                    ->value('THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL CKSOURCE OR ITS LICENSORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'),
                 BooleanFormField::create('enable')
                     ->label('wcf.acp.package.enableUpgradeOverride.enable')
                     ->value(PackageUpdateServer::isUpgradeOverrideEnabled()),
