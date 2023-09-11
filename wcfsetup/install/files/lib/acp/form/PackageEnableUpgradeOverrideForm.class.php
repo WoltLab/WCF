@@ -7,6 +7,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\RejectEverythingFormField;
@@ -99,41 +100,179 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
     private function getIssuesPreventingUpgrade()
     {
-        $issues = [];
+        $parameters = ['issues' => []];
+        EventHandler::getInstance()->fireAction($this, 'getIssuesPreventingUpgrade', $parameters);
 
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
-        $tableNames = [];
-        foreach ($objectTypes as $objectType) {
-            $tableNames[] = SearchIndexManager::getTableName($objectType->objectType);
+        $issues = [
+            ...$parameters['issues'],
+            $this->checkMinimumPhpVersion(),
+            $this->checkMaximumPhpVersion(),
+            $this->checkRequiredPhpExtensions(),
+            $this->checkPhpX64(),
+            $this->checkMinimumDatabaseVersion(),
+            $this->checkMysqlNativeDriver(),
+        ];
+
+        return \array_filter($issues);
+    }
+
+    private function checkMinimumPhpVersion(): ?array
+    {
+        // Minimum: PHP 8.1.2
+        if (\PHP_VERSION_ID >= 80102) {
+            return null;
         }
-        $conditionBuilder = new PreparedStatementConditionBuilder(true);
-        $conditionBuilder->add('TABLE_NAME IN (?)', [$tableNames]);
-        $conditionBuilder->add('TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
-        $conditionBuilder->add('ENGINE <> ?', ['InnoDB']);
 
-        $sql = "SELECT  COUNT(*)
-                FROM    INFORMATION_SCHEMA.TABLES
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute($conditionBuilder->getParameters());
-        $nonInnoDbSearch = $statement->fetchSingleColumn() > 0;
-
-        if ($nonInnoDbSearch) {
-            if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-                $title = "Umstellung auf InnoDB-Suchindex";
-                $description = "Es wurden noch nicht alle Tabellen auf InnoDB migriert.";
-            } else {
-                $title = "Migration to InnoDB Search Index";
-                $description = "Not all tables have been migrated to InnoDB yet.";
-            }
-
-            $issues[] = [
-                'title' => $title,
-                'description' => $description,
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Unzureichende PHP-Version',
+                'description' => 'Es wird mindestens PHP 8.1.2 benötigt.',
+            ];
+        } else {
+            return [
+                'title' => 'Insufficient PHP version',
+                'description' => 'PHP 8.1.2 or newer is required.',
             ];
         }
+    }
 
-        return $issues;
+    private function checkMaximumPhpVersion(): ?array
+    {
+        // Maximum: PHP 8.3.x
+        if (\PHP_VERSION_ID > 80399) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Inkompatible PHP-Version',
+                'description' => 'Es wird nur PHP 8.1, 8.2 oder 8.3 unterstützt.',
+            ];
+        } else {
+            return [
+                'title' => 'Incompatible PHP version',
+                'description' => 'Only PHP 8.1, 8.2 or 8.3 are supported.',
+            ];
+        }
+    }
+
+    private function checkRequiredPhpExtensions(): ?array
+    {
+        $requiredExtensions = [
+            'ctype',
+            'dom',
+            'exif',
+            'gd',
+            'intl',
+            'libxml',
+            'mbstring',
+            'pdo_mysql',
+            'pdo',
+            'zlib',
+        ];
+
+        $missingExtensions = [];
+        foreach ($requiredExtensions as $extension) {
+            if (!\extension_loaded($extension)) {
+                $missingExtensions[] = $extension;
+            }
+        }
+
+        if ($missingExtensions === []) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Fehlende PHP-Erweiterungen',
+                'description' => 'Die folgenden PHP-Erweiterungen werden für den Betrieb benötigt: ' . \implode(', ', $missingExtensions),
+            ];
+        } else {
+            return [
+                'title' => 'Missing PHP extensions',
+                'description' => 'The following PHP extensions are required for the operation: ' . \implode(', ', $missingExtensions),
+            ];
+        }
+    }
+
+    private function checkPhpX64(): ?array
+    {
+        if (\PHP_INT_SIZE === 8) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Fehlende Unterstützung für 64-Bit Werte',
+                'description' => 'Die eingesetzte PHP-Version wurde ohne die Unterstützung von 64-Bit Werten erstellt.',
+            ];
+        } else {
+            return [
+                'title' => 'Missing support for 64-bit values',
+                'description' => 'The PHP version being used was created without support for 64-bit values.',
+            ];
+        }
+    }
+
+    private function checkMinimumDatabaseVersion(): ?array
+    {
+        $sqlVersion = WCF::getDB()->getVersion();
+        $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
+
+        if (\stripos($sqlVersion, 'MariaDB') !== false) {
+            $databaseName = "MariaDB {$compareSQLVersion}";
+            $expectedVersion = '10.5.12';
+            $alternativeDatabase = 'MySQL 8.0.30+';
+        } else {
+            $databaseName = "MySQL {$compareSQLVersion}";
+            $expectedVersion = $databaseName = "MariaDB {$compareSQLVersion}";
+            $expectedVersion = '8.0.30';
+            $alternativeDatabase = 'MariaDB 10.5.12+';
+        }
+
+        $result = (\version_compare(
+            $compareSQLVersion,
+            $expectedVersion,
+        ) >= 0);
+
+        if ($result) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Inkompatible Datenbank-Version',
+                'description' => "Die verwendete Datenbank {$databaseName} ist zu alt, es wird mindestens die Version {$expectedVersion} benötigt, alternativ {$alternativeDatabase}.",
+            ];
+        } else {
+            return [
+                'title' => 'Incompatible database version',
+                'description' => "The database {$databaseName} being used is too old, version {$expectedVersion} or newer is required, alternatively {$alternativeDatabase}.",
+            ];
+        }
+    }
+
+    private function checkMysqlNativeDriver(): ?array
+    {
+        $sql = "SELECT 1";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute();
+
+        if ($statement->fetchSingleColumn() === 1) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Inkompatibler Treiber für den Datenbank-Zugriff',
+                'description' => 'Für den Zugriff auf die Datenbank wird der moderne „MySQL Native Driver“ benötigt.',
+            ];
+        } else {
+            return [
+                'title' => 'Incompatible driver for the database access',
+                'description' => 'The access to the database requires the modern “MySQL Native Driver”.',
+            ];
+        }
     }
 
     /**
