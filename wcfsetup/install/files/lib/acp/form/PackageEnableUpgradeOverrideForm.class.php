@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -111,6 +112,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $this->checkPhpX64(),
             $this->checkMinimumDatabaseVersion(),
             $this->checkMysqlNativeDriver(),
+            $this->checkForAppsWithDifferentDomains(),
         ];
 
         return \array_filter($issues);
@@ -271,6 +273,39 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             return [
                 'title' => 'Incompatible driver for the database access',
                 'description' => 'The access to the database requires the modern “MySQL Native Driver”.',
+            ];
+        }
+    }
+
+    private function checkForAppsWithDifferentDomains(): ?array
+    {
+        $usesDifferentDomains = false;
+        $domainName = '';
+        foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+            if ($domainName === '') {
+                $domainName = $application->domainName;
+                continue;
+            }
+
+            if ($domainName !== $application->domainName) {
+                $usesDifferentDomains = true;
+                break;
+            }
+        }
+
+        if (!$usesDifferentDomains) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
+                'title' => 'Nutzung mehrerer Domains',
+                'description' => 'Der Betrieb von Apps auf unterschiedlichen (Sub-)Domains wird nicht mehr unterstützt.',
+            ];
+        } else {
+            return [
+                'title' => 'Using multiple domains',
+                'description' => 'The support for apps running on different (sub)domains has been discontinued.',
             ];
         }
     }
