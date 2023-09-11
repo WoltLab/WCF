@@ -18,7 +18,7 @@
 	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">{lang}wcf.global.button.rss{/lang}</a></li>
 {/capture}
 
-{include file='header' __sidebarLeftHasMenu=true}
+{include file='header'}
 
 {if $notifications[notifications]}
 	{assign var=lastPeriod value=''}
