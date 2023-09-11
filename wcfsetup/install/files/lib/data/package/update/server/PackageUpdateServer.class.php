@@ -67,15 +67,17 @@ class PackageUpdateServer extends DatabaseObject
 
         $prefix = ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
         $officialPath = \wcf\getMinorVersion();
+        $protocol = 'http';
         if (self::isUpgradeOverrideEnabled()) {
             $officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
+            $protocol = 'https';
         }
 
         if ($this->isWoltLabUpdateServer()) {
-            $this->data['serverURL'] = "https://update.woltlab.com/{$prefix}{$officialPath}/";
+            $this->data['serverURL'] = "{$protocol}://update.woltlab.com/{$prefix}{$officialPath}/";
         }
         if ($this->isWoltLabStoreServer()) {
-            $this->data['serverURL'] = "https://store.woltlab.com/{$prefix}{$officialPath}/";
+            $this->data['serverURL'] = "{$protocol}://store.woltlab.com/{$prefix}{$officialPath}/";
         }
         if ($this->isWoltLabUpdateServer() || $this->isWoltLabStoreServer()) {
             $this->data['isDisabled'] = 0;
