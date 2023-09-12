@@ -98,6 +98,8 @@
 		<file>acp/templates/pageMenuMobile.tpl</file>
 		<file>acp/templates/pageMenuUser.tpl</file>
 		<file>acp/templates/pageSearchArea.tpl</file>
+		<file>acp/templates/pluginStoreAuthorization.tpl</file>
+		<file>acp/templates/pluginStorePurchasedItems.tpl</file>
 		<file>acp/templates/reactionTypeIcon.tpl</file>
 		<file>acp/templates/searchArea.tpl</file>
 		<file>acp/templates/setupFooter.tpl</file>
@@ -1581,6 +1583,7 @@
 		<file>lib/acp/page/PackageUpdateSearchResultPage.class.php</file>
 		<file>lib/acp/page/PackageViewPage.class.php</file>
 		<file>lib/acp/page/PageMenuItemListPage.class.php</file>
+		<file>lib/acp/page/PluginStorePurchasedItemsPage.class.php</file>
 		<file>lib/acp/page/UpdateServerListPage.class.php</file>
 		<file>lib/action/APIAction.class.php</file>
 		<file>lib/action/AbstractSecureObjectAction.class.php</file>
@@ -2047,6 +2050,7 @@
 		<file>lib/system/api/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php</file>
 		<file>lib/system/api/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php</file>
 		<file>lib/system/api/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/.laminas-ci.json</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/CHANGELOG.md</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/composer.lock</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
@@ -2836,6 +2840,7 @@
 		<file>lib/system/package/plugin/UserGroupOptionsPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/UserOptionsPackageInstallationPlugin.class.php</file>
 		<file>lib/system/page/PageManager.class.php</file>
+		<file>lib/system/page/event/ResolveCurrentPage.class.php</file>
 		<file>lib/system/page/location/IPageLocation.class.php</file>
 		<file>lib/system/payment/method/SofortUeberweisungPaymentMethod.class.php</file>
 		<file>lib/system/recaptcha/RecaptchaHandler.class.php</file>
