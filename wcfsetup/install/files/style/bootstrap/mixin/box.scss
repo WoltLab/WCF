@@ -7,7 +7,7 @@
 	}
 
 	> :first-child:not(:last-child) {
-		flex: 0 0 auto;
+		flex: 0 0 $imageSize;
 		margin-right: $margin;
 	}
 
