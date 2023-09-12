@@ -67,7 +67,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkCache.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php</instruction>
-		<!--instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php</instruction-->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php</instruction>
 
 		<!-- Required for wcf1_package_installation_file_log. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
