@@ -206,6 +206,7 @@ function initializeConfiguration(
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
   codeBlockLanguages: CodeBlockConfig["languages"],
+  modules: Record<string, any>,
 ): EditorConfig {
   const configuration = createConfigurationFor(features);
   configuration.codeBlock = {
@@ -221,6 +222,7 @@ function initializeConfiguration(
   dispatchToCkeditor(element).setupConfiguration({
     configuration,
     features,
+    modules,
   });
 
   const toolbar = configuration.toolbar as ToolbarConfigItem[];
@@ -282,7 +284,7 @@ export async function setupCkeditor(
     setupQuote(element);
   }
 
-  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages);
+  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5.modules);
 
   normalizeLegacyMessage(element);
 

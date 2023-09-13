@@ -49,6 +49,7 @@ type SetupFeaturesEventPayload = {
 type SetupConfigurationEventPayload = {
   configuration: EditorConfig;
   features: Features;
+  modules: Record<string, any>;
 };
 type SubmitOnEnterPayload = {
   ckeditor: CKEditor;
