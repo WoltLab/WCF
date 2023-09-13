@@ -13,7 +13,6 @@
 				<xs:element name="requiredpackages" type="requiredPackages" minOccurs="0" maxOccurs="1" />
 				<xs:element name="optionalpackages" type="optionalPackages" minOccurs="0" maxOccurs="1" />
 				<xs:element name="excludedpackages" type="excludedPackages" minOccurs="0" maxOccurs="1" />
-				<xs:element name="compatibility" type="compatibility" minOccurs="0" maxOccurs="1" />
 			</xs:choice>
 			<xs:attribute name="name" type="woltlab_varchar" use="required" />
 		</xs:complexType>
