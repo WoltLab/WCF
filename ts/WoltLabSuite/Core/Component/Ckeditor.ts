@@ -263,7 +263,7 @@ export async function setupCkeditor(
 
   setupLayer();
 
-  await import("ckeditor5-bundle");
+  const CKEditor5 = await import("ckeditor5-bundle");
 
   await new Promise((resolve) => {
     window.requestAnimationFrame(resolve);
@@ -286,7 +286,7 @@ export async function setupCkeditor(
 
   normalizeLegacyMessage(element);
 
-  const cke = await window.CKEditor5.create(element, configuration);
+  const cke = await CKEditor5.create(element, configuration);
   const ckeditor = new Ckeditor(cke, features);
 
   if (features.autosave) {

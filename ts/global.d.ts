@@ -9,7 +9,6 @@ import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
-import type { ClassicEditor, EditorConfig } from "WoltLabSuite/Core/Component/Ckeditor/Types";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -18,17 +17,12 @@ type IconMetadata = [Codepoint, HasRegularVariant];
 type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
 type LoadingIndicatorIconSize = 24 | 48 | 96;
 
-interface CKEditor5 {
-  create(element: HTMLElement, configuration: EditorConfig): Promise<ClassicEditor>;
-}
-
 declare global {
   interface WoltLabTemplate {
     fetch(v: object): string;
   }
 
   interface Window {
-    CKEditor5: CKEditor5;
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
     ENABLE_DEVELOPER_TOOLS: boolean;

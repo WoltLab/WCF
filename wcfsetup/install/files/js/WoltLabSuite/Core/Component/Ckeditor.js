@@ -183,7 +183,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         (0, Layer_1.setup)();
-        await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
+        const CKEditor5 = await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
         await new Promise((resolve) => {
             window.requestAnimationFrame(resolve);
         });
@@ -200,7 +200,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages);
         (0, Normalizer_1.normalizeLegacyMessage)(element);
-        const cke = await window.CKEditor5.create(element, configuration);
+        const cke = await CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
