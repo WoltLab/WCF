@@ -209,6 +209,20 @@ class PackageValidationException extends SystemException
     const DUPLICATE_PACKAGE_INFORMATION = 28;
 
     /**
+     * no version information is given
+     * @var int
+     * @since 6.0
+     */
+    const MISSING_PACKAGE_VERSION = 29;
+
+    /**
+     * no release date is given
+     * @var int
+     * @since 6.0
+     */
+    const MISSING_PACKAGE_DATE = 30;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code

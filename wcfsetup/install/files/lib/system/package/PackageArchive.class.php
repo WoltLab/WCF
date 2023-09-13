@@ -291,6 +291,18 @@ class PackageArchive
             }
         }
 
+        if (!isset($this->packageInfo['version'])) {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_PACKAGE_VERSION
+            );
+        }
+
+        if (!isset($this->packageInfo['date'])) {
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_PACKAGE_DATE
+            );
+        }
+
         // set default values
         $this->packageInfo['isApplication'] ??= 0;
         $this->packageInfo['packageURL'] ??= '';
