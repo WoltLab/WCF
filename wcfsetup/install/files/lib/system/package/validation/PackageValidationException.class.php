@@ -202,6 +202,13 @@ class PackageValidationException extends SystemException
     const MISSING_DISPLAY_NAME = 27;
 
     /**
+     * an duplicate tag is given in the <packageinformation>
+     * @var int
+     * @since 6.0
+     */
+    const DUPLICATE_PACKAGE_INFORMATION = 28;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code

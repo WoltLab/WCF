@@ -174,16 +174,12 @@ class PackageArchive
 
         $this->packageInfo['name'] = $packageName;
 
-        // set default values
-        $this->packageInfo['isApplication'] = 0;
-        $this->packageInfo['packageURL'] = '';
-
-        // get package information
         $packageInformation = $xpath->query('./ns:packageinformation', $package)->item(0);
         if ($packageInformation !== null) {
             $elements = $xpath->query('child::*', $packageInformation);
-            /** @var \DOMElement $element */
             foreach ($elements as $element) {
+                \assert($element instanceof \DOMElement);
+
                 switch ($element->tagName) {
                     case 'packagename':
                     case 'packagedescription':
@@ -209,20 +205,56 @@ class PackageArchive
                         break;
 
                     case 'isapplication':
+                        if (isset($this->packageInfo['isApplication'])) {
+                            throw new PackageValidationException(
+                                PackageValidationException::DUPLICATE_PACKAGE_INFORMATION,
+                                [
+                                    'tag' => $element->tagName,
+                                ]
+                            );
+                        }
+
                         $this->packageInfo['isApplication'] = \intval($element->nodeValue);
                         break;
 
                     case 'applicationdirectory':
+                        if (isset($this->packageInfo['applicationdirectory'])) {
+                            throw new PackageValidationException(
+                                PackageValidationException::DUPLICATE_PACKAGE_INFORMATION,
+                                [
+                                    'tag' => $element->tagName,
+                                ]
+                            );
+                        }
+
                         if (\preg_match('~^[a-z0-9\-\_]+$~', $element->nodeValue)) {
                             $this->packageInfo['applicationDirectory'] = $element->nodeValue;
                         }
                         break;
 
                     case 'packageurl':
+                        if (isset($this->packageInfo['packageURL'])) {
+                            throw new PackageValidationException(
+                                PackageValidationException::DUPLICATE_PACKAGE_INFORMATION,
+                                [
+                                    'tag' => $element->tagName,
+                                ]
+                            );
+                        }
+
                         $this->packageInfo['packageURL'] = $element->nodeValue;
                         break;
 
                     case 'version':
+                        if (isset($this->packageInfo['version'])) {
+                            throw new PackageValidationException(
+                                PackageValidationException::DUPLICATE_PACKAGE_INFORMATION,
+                                [
+                                    'tag' => $element->tagName,
+                                ]
+                            );
+                        }
+
                         if (!Package::isValidVersion($element->nodeValue)) {
                             throw new PackageValidationException(
                                 PackageValidationException::INVALID_PACKAGE_VERSION,
@@ -234,6 +266,15 @@ class PackageArchive
                         break;
 
                     case 'date':
+                        if (isset($this->packageInfo['date'])) {
+                            throw new PackageValidationException(
+                                PackageValidationException::DUPLICATE_PACKAGE_INFORMATION,
+                                [
+                                    'tag' => $element->tagName,
+                                ]
+                            );
+                        }
+
                         DateUtil::validateDate($element->nodeValue);
 
                         $this->packageInfo['date'] = @\strtotime($element->nodeValue);
@@ -249,6 +290,10 @@ class PackageArchive
                 }
             }
         }
+
+        // set default values
+        $this->packageInfo['isApplication'] ??= 0;
+        $this->packageInfo['packageURL'] ??= '';
 
         // get author information
         $authorInformation = $xpath->query('./ns:authorinformation', $package)->item(0);
