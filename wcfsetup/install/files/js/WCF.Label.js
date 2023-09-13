@@ -6,6 +6,8 @@
 WCF.Label = {};
 
 if (COMPILER_TARGET_DEFAULT) {
+	WCF.Label.ACPList = {};
+	
 	/**
 	 * Provides simple logic to inherit associations within structured lists.
 	 */
@@ -52,6 +54,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 }
 else {
+	WCF.Label.ACPList = {};
 	WCF.Label.ACPList.Connect = Class.extend({
 		init: function() {},
 		_click: function() {}
