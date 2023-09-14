@@ -6,7 +6,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
-    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#0b350f51095283becc133db5db72cb73fca052a3",
+    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#d054bfa2fb0ea37930162b3ea7d53dc75f26f1d0",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "esbuild": "^0.19.2",
     "eslint": "^8.48.0",
