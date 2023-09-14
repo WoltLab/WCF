@@ -142,7 +142,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         Object.freeze(features);
     }
-    function initializeConfiguration(element, features, bbcodes, codeBlockLanguages) {
+    function initializeConfiguration(element, features, bbcodes, codeBlockLanguages, modules) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
         configuration.codeBlock = {
             languages: codeBlockLanguages,
@@ -154,6 +154,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         (0, Event_1.dispatchToCkeditor)(element).setupConfiguration({
             configuration,
             features,
+            modules,
         });
         const toolbar = configuration.toolbar;
         for (let { name } of bbcodes) {
@@ -198,7 +199,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (features.quoteBlock) {
             (0, Quote_1.setup)(element);
         }
-        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages);
+        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5.modules);
         (0, Normalizer_1.normalizeLegacyMessage)(element);
         const cke = await CKEditor5.create(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
