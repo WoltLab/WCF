@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "../Helper/PageOverlay", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, PageOverlay_1, focus_trap_1) {
+define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "../Helper/PageOverlay", "focus-trap", "../Helper/Selector"], function (require, exports, tslib_1, Core, DateUtil, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, PageOverlay_1, focus_trap_1, Selector_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     DateUtil = tslib_1.__importStar(DateUtil);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     UiAlignment = tslib_1.__importStar(UiAlignment);
@@ -198,18 +197,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             value = new Date(isMinDate ? 1902 : 2038, 0, 1).getTime().toString();
         }
         element.dataset[name] = value;
-    }
-    /**
-     * Sets up callbacks and event listeners.
-     */
-    function setup() {
-        if (_didInit) {
-            return;
-        }
-        _didInit = true;
-        _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
-        Listener_1.default.add("WoltLabSuite/Core/Date/Picker", () => DatePicker.init());
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Date/Picker", () => close());
     }
     function getDateValue(attributeName) {
         let date = _input.dataset[attributeName] || "";
@@ -551,11 +538,13 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
          * Initializes all date and datetime input fields.
          */
         init() {
-            setup();
-            const now = new Date();
-            document
-                .querySelectorAll('input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)')
-                .forEach((element) => {
+            if (_didInit) {
+                return;
+            }
+            _didInit = true;
+            _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
+            (0, Selector_1.wheneverFirstSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
+                const now = new Date();
                 element.classList.add("inputDatePicker");
                 element.readOnly = true;
                 // Use `getAttribute()`, because `.type` is normalized to "text" for unknown values.
@@ -700,7 +689,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                     clearButton.title = Language.get("wcf.date.datePicker.clear");
                     clearButton.addEventListener("click", () => {
                         if (!element.disabled) {
-                            this.clear(element);
+                            DatePicker.clear(element);
                         }
                     });
                     if (isEmpty) {
@@ -751,6 +740,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                     onClose: null,
                 });
             });
+            CloseOverlay_1.default.add("WoltLabSuite/Core/Date/Picker", () => close());
         },
         /**
          * Shows the previous month.

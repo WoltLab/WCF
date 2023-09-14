@@ -8,7 +8,6 @@
 
 import * as Core from "../Core";
 import * as DateUtil from "./Util";
-import DomChangeListener from "../Dom/Change/Listener";
 import * as EventHandler from "../Event/Handler";
 import * as Language from "../Language";
 import * as UiAlignment from "../Ui/Alignment";
@@ -16,6 +15,7 @@ import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { createFocusTrap, FocusTrap } from "focus-trap";
+import { wheneverFirstSeen } from "../Helper/Selector";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
@@ -234,21 +234,6 @@ function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean)
   }
 
   element.dataset[name] = value;
-}
-
-/**
- * Sets up callbacks and event listeners.
- */
-function setup() {
-  if (_didInit) {
-    return;
-  }
-  _didInit = true;
-
-  _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
-
-  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", () => DatePicker.init());
-  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", () => close());
 }
 
 function getDateValue(attributeName: string): Date {
@@ -668,14 +653,17 @@ const DatePicker = {
    * Initializes all date and datetime input fields.
    */
   init(): void {
-    setup();
+    if (_didInit) {
+      return;
+    }
+    _didInit = true;
 
-    const now = new Date();
-    document
-      .querySelectorAll<HTMLInputElement>(
-        'input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)',
-      )
-      .forEach((element) => {
+    _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
+
+    wheneverFirstSeen(
+      `input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`,
+      (element: HTMLInputElement) => {
+        const now = new Date();
         element.classList.add("inputDatePicker");
         element.readOnly = true;
 
@@ -837,7 +825,7 @@ const DatePicker = {
           clearButton.title = Language.get("wcf.date.datePicker.clear");
           clearButton.addEventListener("click", () => {
             if (!element.disabled) {
-              this.clear(element);
+              DatePicker.clear(element);
             }
           });
 
@@ -896,7 +884,10 @@ const DatePicker = {
 
           onClose: null,
         });
-      });
+      },
+    );
+
+    UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", () => close());
   },
 
   /**
