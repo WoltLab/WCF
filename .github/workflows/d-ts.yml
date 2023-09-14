@@ -15,6 +15,10 @@ jobs:
         branch:
         - 'master'
     steps:
+    - run: |
+        apt install -y \
+          jq \
+          moreutils
     - uses: actions/checkout@v4
       with:
         ref: ${{ matrix.branch }}
@@ -34,9 +38,23 @@ jobs:
         ssh-key: ${{ secrets.WOLTLAB_D_TS_DEPLOY_KEY }}
         path: d.ts
         ref: ${{ matrix.branch }}
-    - run: |
+    - name: Update the .d.ts files
+      run: |
         npx tsc --declaration --emitDeclarationOnly --outdir ./d.ts/
         cp ./ts/global.d.ts ./d.ts/
+    - name: Update dependencies in package.json
+      run: |
+        set -x
+        cd d.ts/
+
+        jq --argfile dependencies ../package.json '.dependencies = ($dependencies |.dependencies)' ./package.json \
+          |sponge ./package.json
+        
+        if ! git diff --quiet package.json; then
+          npm install
+        fi
+
+        cd ../
     - name: Prepare git
       run: |
         git config --global user.name "WoltLab GmbH"
