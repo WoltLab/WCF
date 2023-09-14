@@ -49,10 +49,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
         return {
             feeds: [
                 {
-                    feed: (query) => {
-                        // TODO: The typings are outdated, cast the result to `any`.
-                        return getPossibleMentions(query);
-                    },
+                    feed: (query) => getPossibleMentions(query),
                     itemRenderer: (item) => {
                         return (0, Util_1.createFragmentFromHtml)(`
             <span class="ckeditor5__mention">${item.icon} ${item.text}</span>

@@ -101,8 +101,7 @@ export function setup(element: HTMLElement): void {
 
     const inlineImageIds = getInlineImageIds(element);
 
-    // TODO: The typings do not include our custom plugins yet.
-    (configuration as any).woltlabAttachment = {
+    configuration.woltlabAttachment = {
       inlineImageIds,
       resolveAttachmentUrl(attachmentId: number, isThumbnail: boolean) {
         let thumbnail = "";
@@ -113,7 +112,7 @@ export function setup(element: HTMLElement): void {
         return `${window.WSC_API_URL}index.php?attachment/${attachmentId}/${thumbnail}`;
       },
     };
-    (configuration as any).woltlabUpload = {
+    configuration.woltlabUpload = {
       uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
       uploadOther: (file: File) => uploadAttachment(element, file),
     };

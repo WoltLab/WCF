@@ -8,9 +8,8 @@
  * @woltlabExcludeBundle tiny
  */
 
+import type { CKEditor5 } from "@woltlab/editor";
 import { getPhrase } from "../../Language";
-
-import type { EditorConfig } from "./Types";
 
 // The typings for CKEditor’s toolbar are outdated.
 type ToolbarItem = string | { label: string; icon?: string; items: string[] };
@@ -274,7 +273,7 @@ class ConfigurationBuilder {
     this.#setupMention();
   }
 
-  toConfig(): EditorConfig {
+  toConfig(): CKEditor5.Core.EditorConfig {
     const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
 
     const key = language ? language : "en";
@@ -355,13 +354,13 @@ class ConfigurationBuilder {
       ui: {
         poweredBy: {
           label: null,
-        },
+        } as CKEditor5.Core.UiConfig["poweredBy"],
         viewportOffset: {
           top: 50,
         },
       },
       woltlabToolbarGroup: this.#toolbarGroups,
-    } as any;
+    };
   }
 }
 
@@ -393,7 +392,7 @@ export type Features = {
   undo: boolean;
 };
 
-export function createConfigurationFor(features: Features): EditorConfig {
+export function createConfigurationFor(features: Features): CKEditor5.Core.EditorConfig {
   const configuration = new ConfigurationBuilder(features);
   configuration.build();
 

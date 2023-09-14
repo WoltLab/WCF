@@ -184,7 +184,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         (0, Layer_1.setup)();
-        const CKEditor5 = await new Promise((resolve_1, reject_1) => { require(["ckeditor5-bundle"], resolve_1, reject_1); }).then(tslib_1.__importStar);
+        const { create: createEditor, CKEditor5 } = await new Promise((resolve_1, reject_1) => { require(["@woltlab/editor"], resolve_1, reject_1); }).then(tslib_1.__importStar);
         await new Promise((resolve) => {
             window.requestAnimationFrame(resolve);
         });
@@ -199,9 +199,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (features.quoteBlock) {
             (0, Quote_1.setup)(element);
         }
-        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5.modules);
+        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
         (0, Normalizer_1.normalizeLegacyMessage)(element);
-        const cke = await CKEditor5.create(element, configuration);
+        const cke = await createEditor(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);

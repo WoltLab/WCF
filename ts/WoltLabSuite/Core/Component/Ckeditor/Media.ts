@@ -46,7 +46,7 @@ function uploadMedia(element: HTMLElement, file: File, abortController?: AbortCo
 export function setup(element: HTMLElement): void {
   listenToCkeditor(element)
     .setupConfiguration(({ configuration, features }) => {
-      (configuration as any).woltlabMedia = {
+      configuration.woltlabMedia = {
         resolveMediaUrl(mediaId: number, mediaSize: string) {
           let thumbnail = "";
           if (mediaSize !== "original") {
@@ -62,7 +62,7 @@ export function setup(element: HTMLElement): void {
       }
 
       // TODO: The typings do not include our custom plugins yet.
-      (configuration as any).woltlabUpload = {
+      configuration.woltlabUpload = {
         uploadImage: (file: File, abortController: AbortController) => uploadMedia(element, file, abortController),
         uploadOther: (file: File) => uploadMedia(element, file),
       };

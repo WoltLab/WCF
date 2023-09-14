@@ -58,7 +58,6 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 return;
             }
             const inlineImageIds = getInlineImageIds(element);
-            // TODO: The typings do not include our custom plugins yet.
             configuration.woltlabAttachment = {
                 inlineImageIds,
                 resolveAttachmentUrl(attachmentId, isThumbnail) {

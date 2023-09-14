@@ -6,6 +6,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
+    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#0b350f51095283becc133db5db72cb73fca052a3",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "esbuild": "^0.19.2",
     "eslint": "^8.48.0",
@@ -14,12 +15,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-autosave": "^39.0.1",
-    "@ckeditor/ckeditor5-code-block": "^39.0.1",
-    "@ckeditor/ckeditor5-core": "^39.0.1",
-    "@ckeditor/ckeditor5-editor-classic": "^39.0.1",
     "@ckeditor/ckeditor5-inspector": "^4.1.0",
-    "@ckeditor/ckeditor5-mention": "^39.0.1",
     "@googlemaps/markerclusterer": "^2.0.15",
     "@types/facebook-js-sdk": "^3.3.6",
     "@types/google.maps": "^3.54.0",
