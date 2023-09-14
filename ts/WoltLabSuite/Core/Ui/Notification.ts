@@ -65,5 +65,5 @@ export function show(message?: string, callback?: Callback | null, cssClassName?
   _message.textContent = getPhrase(message || "wcf.global.success");
 
   _notificationElement.classList.add("active");
-  _timeout = setTimeout(hide, 2000);
+  _timeout = window.setTimeout(hide, 2000);
 }

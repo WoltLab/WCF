@@ -51,7 +51,7 @@ define(["require", "exports", "../Helper/PageOverlay", "../Language"], function 
         _message.className = cssClassName || "success";
         _message.textContent = (0, Language_1.getPhrase)(message || "wcf.global.success");
         _notificationElement.classList.add("active");
-        _timeout = setTimeout(hide, 2000);
+        _timeout = window.setTimeout(hide, 2000);
     }
     exports.show = show;
 });
