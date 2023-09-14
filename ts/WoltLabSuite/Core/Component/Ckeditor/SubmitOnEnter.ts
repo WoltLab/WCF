@@ -10,7 +10,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import { CKEditor5 } from "@woltlab/editor";
+import type { CKEditor5 } from "@woltlab/editor";
 import { dispatchToCkeditor } from "./Event";
 import type { CKEditor } from "../Ckeditor";
 
