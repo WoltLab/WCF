@@ -13,6 +13,7 @@
  * @woltlabExcludeBundle tiny
  */
 
+import type { CKEditor5 } from "@woltlab/editor";
 import { setup as setupAttachment } from "./Ckeditor/Attachment";
 import { setup as setupMedia } from "./Ckeditor/Media";
 import { setup as setupMention } from "./Ckeditor/Mention";
@@ -24,13 +25,6 @@ import { setup as setupSubmitOnEnter } from "./Ckeditor/SubmitOnEnter";
 import { normalizeLegacyHtml, normalizeLegacyMessage } from "./Ckeditor/Normalizer";
 import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
-import type {
-  ClassicEditor,
-  CodeBlockConfig,
-  EditorConfig,
-  Element as CkeElement,
-  ToolbarConfigItem,
-} from "./Ckeditor/Types";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
 import { browser, touch } from "../Environment";
@@ -38,10 +32,10 @@ import { browser, touch } from "../Environment";
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 class Ckeditor {
-  readonly #editor: ClassicEditor;
+  readonly #editor: CKEditor5.ClassicEditor.ClassicEditor;
   readonly #features: Features;
 
-  constructor(editor: ClassicEditor, features: Features) {
+  constructor(editor: CKEditor5.ClassicEditor.ClassicEditor, features: Features) {
     this.#editor = editor;
     this.#features = features;
   }
@@ -156,10 +150,10 @@ class Ckeditor {
 }
 
 function* findModelForRemoval(
-  element: CkeElement,
+  element: CKEditor5.Engine.Element,
   model: string,
   attributes: Record<string, string | number | boolean>,
-): Generator<CkeElement> {
+): Generator<CKEditor5.Engine.Element> {
   if (element.is("element", model)) {
     const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {
@@ -205,9 +199,9 @@ function initializeConfiguration(
   element: HTMLElement,
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
-  codeBlockLanguages: CodeBlockConfig["languages"],
-  modules: Record<string, any>,
-): EditorConfig {
+  codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
+  modules: typeof CKEditor5,
+): CKEditor5.Core.EditorConfig {
   const configuration = createConfigurationFor(features);
   configuration.codeBlock = {
     languages: codeBlockLanguages,
@@ -225,7 +219,7 @@ function initializeConfiguration(
     modules,
   });
 
-  const toolbar = configuration.toolbar as ToolbarConfigItem[];
+  const toolbar = configuration.toolbar as CKEditor5.Core.ToolbarConfigItem[];
   for (let { name } of bbcodes) {
     name = `woltlabBbcode_${name}`;
 
@@ -239,7 +233,7 @@ function initializeConfiguration(
   return configuration;
 }
 
-function hasToolbarButton(items: ToolbarConfigItem[], name: string): boolean {
+function hasToolbarButton(items: CKEditor5.Core.ToolbarConfigItem[], name: string): boolean {
   for (const item of items) {
     if (typeof item === "string") {
       if (item === name) {
@@ -257,7 +251,7 @@ export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
-  codeBlockLanguages: CodeBlockConfig["languages"],
+  codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
 ): Promise<CKEditor> {
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -265,7 +259,7 @@ export async function setupCkeditor(
 
   setupLayer();
 
-  const CKEditor5 = await import("ckeditor5-bundle");
+  const { create: createEditor, CKEditor5 } = await import("@woltlab/editor");
 
   await new Promise((resolve) => {
     window.requestAnimationFrame(resolve);
@@ -284,11 +278,11 @@ export async function setupCkeditor(
     setupQuote(element);
   }
 
-  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5.modules);
+  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
 
   normalizeLegacyMessage(element);
 
-  const cke = await CKEditor5.create(element, configuration);
+  const cke = await createEditor(element, configuration);
   const ckeditor = new Ckeditor(cke, features);
 
   if (features.autosave) {

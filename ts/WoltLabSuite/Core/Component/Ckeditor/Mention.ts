@@ -8,11 +8,10 @@
  * @woltlabExcludeBundle tiny
  */
 
+import type { CKEditor5 } from "@woltlab/editor";
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
-
 import { listenToCkeditor } from "./Event";
-import { EditorConfig } from "./Types";
 
 type SearchResultItem =
   | {
@@ -71,14 +70,11 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
   });
 }
 
-function getMentionConfiguration(): EditorConfig["mention"] {
+function getMentionConfiguration(): CKEditor5.Mention.MentionConfig {
   return {
     feeds: [
       {
-        feed: (query) => {
-          // TODO: The typings are outdated, cast the result to `any`.
-          return getPossibleMentions(query) as any;
-        },
+        feed: (query) => getPossibleMentions(query),
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
           return createFragmentFromHtml(`
             <span class="ckeditor5__mention">${item.icon} ${item.text}</span>

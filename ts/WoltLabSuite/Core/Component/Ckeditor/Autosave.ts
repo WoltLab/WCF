@@ -9,11 +9,10 @@
  * @woltlabExcludeBundle tiny
  */
 
+import type { CKEditor5 } from "@woltlab/editor";
 import { getStoragePrefix } from "../../Core";
 import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
-
-import type { ClassicEditor, EditorConfig } from "./Types";
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
 type Payload = {
@@ -91,7 +90,7 @@ function saveDraft(identifier: string, html: string): void {
   }
 }
 
-export function setupRestoreDraft(editor: ClassicEditor, identifier: string): void {
+export function setupRestoreDraft(editor: CKEditor5.ClassicEditor.ClassicEditor, identifier: string): void {
   let value: Payload | undefined = undefined;
 
   try {
@@ -227,7 +226,11 @@ function removeExpiredDrafts(): void {
     });
 }
 
-export function initializeAutosave(element: HTMLElement, configuration: EditorConfig, identifier: string): void {
+export function initializeAutosave(
+  element: HTMLElement,
+  configuration: CKEditor5.Core.EditorConfig,
+  identifier: string,
+): void {
   removeExpiredDrafts();
 
   configuration.autosave = {
