@@ -3,6 +3,7 @@ name: SQL
 on:
   push:
     branches:
+    - "6.0"
     - master
     paths:
     - wcfsetup/setup/db/install.sql
