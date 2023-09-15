@@ -360,6 +360,7 @@ class ConfigurationBuilder {
         },
       },
       woltlabToolbarGroup: this.#toolbarGroups,
+      extraPlugins: [],
     };
   }
 }
