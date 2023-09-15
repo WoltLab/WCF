@@ -13,6 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         branch:
+        - '6.0'
         - 'master'
     steps:
     - run: |
@@ -49,7 +50,7 @@ jobs:
 
         jq --argfile dependencies ../package.json '.dependencies = ($dependencies |.dependencies)' ./package.json \
           |sponge ./package.json
-        
+
         if ! git diff --quiet package.json; then
           npm install
         fi
