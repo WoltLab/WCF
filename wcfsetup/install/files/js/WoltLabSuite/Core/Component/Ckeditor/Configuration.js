@@ -321,6 +321,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                     },
                 },
                 woltlabToolbarGroup: this.#toolbarGroups,
+                extraPlugins: [],
             };
         }
     }
