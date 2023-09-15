@@ -4,7 +4,7 @@
  * and runs modules that are needed on page load.
  *
  * @author  Tim Duesterhus
- * @copyright  2001-2022 WoltLab GmbH
+ * @copyright  2001-2023 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
