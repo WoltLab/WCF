@@ -211,6 +211,9 @@ final class SearchHandler
                 continue;
             }
         }
+
+        // Make sure we have a sequential numerical index in the array.
+        $this->objectTypeNames = \array_values($this->objectTypeNames);
     }
 
     /**

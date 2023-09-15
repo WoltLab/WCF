@@ -87,10 +87,16 @@ class PackageListPage extends SortablePage
             $taintedApplications[$application->getPackage()->packageID] = $application;
         }
 
+        $availableUpgradeVersion = WCF::AVAILABLE_UPGRADE_VERSION;
+        // During the RC phase the upgrade should only be offered when the maintenance mode is enabled.
+        if (!\OFFLINE) {
+            $availableUpgradeVersion = null;
+        }
+
         WCF::getTPL()->assign([
             'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
             'taintedApplications' => $taintedApplications,
-            'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
+            'availableUpgradeVersion' => $availableUpgradeVersion,
             'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
         ]);
     }
