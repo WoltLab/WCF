@@ -4,6 +4,7 @@ namespace wcf\data\reaction\type;
 
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
 /**
@@ -26,6 +27,18 @@ class ReactionType extends DatabaseObject implements ITitledObject
      * @inheritDoc
      */
     protected static $databaseTableIndexName = 'reactionTypeID';
+
+    /**
+     * @inheritDoc
+     */
+    public function __wakeup()
+    {
+        $reaction = ReactionHandler::getInstance()->getReactionTypeByID($this->reactionTypeID);
+        if ($reaction) {
+            $this->title = $reaction->title;
+            $this->iconFile = $reaction->iconFile;
+        }
+    }
 
     /**
      * @inheritDoc
