@@ -398,7 +398,8 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 'data',
                 function (IFormDocument $document, array $parameters) {
                     $parameters['data']['objectTypeID'] = $this->objectType->getObjectID();
-                    if ($parameters['data']['parentCategoryID'] === null) {
+
+                    if (empty($parameters['data']['parentCategoryID'])) {
                         $parameters['data']['parentCategoryID'] = 0;
                     }
 
