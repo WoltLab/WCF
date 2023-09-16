@@ -3714,6 +3714,8 @@ Attachments:
 		<item name="wcf.date.datePicker.hour"><![CDATA[Hour]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
 		<item name="wcf.date.datePicker.clear"><![CDATA[Reset Date Selection]]></item>
+		<item name="wcf.date.datePicker.time"><![CDATA[Choose Time]]></item>
+		<item name="wcf.date.datePicker.time.clear"><![CDATA[Reset Time Selection]]></item>
 		<item name="wcf.date.pointInTime"><![CDATA[Time]]></item>
 	</category>
 	<category name="wcf.dialog">
