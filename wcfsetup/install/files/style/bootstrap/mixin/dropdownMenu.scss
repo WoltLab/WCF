@@ -33,7 +33,7 @@
 			background-color: var(--wcfDropdownBackgroundActive);
 			color: var(--wcfDropdownLinkActive);
 
-			> a {
+			> :is(a, button) {
 				color: var(--wcfDropdownLinkActive);
 			}
 		}
@@ -66,8 +66,7 @@
 			}
 		}
 
-		> a,
-		> span {
+		> :is(a, button, span) {
 			clear: both;
 			cursor: pointer;
 			display: block;
@@ -86,7 +85,7 @@
 			}
 		}
 
-		> a {
+		> :is(a, button) {
 			color: var(--wcfDropdownLink);
 		}
 
@@ -94,7 +93,7 @@
 			display: block;
 		}
 
-		> a + span.badge {
+		> :is(a, button) + span.badge {
 			display: none;
 		}
 
