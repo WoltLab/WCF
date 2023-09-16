@@ -4,8 +4,11 @@
 	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/FilterByName', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function({ setup: setupFilterByName }, AcpUiDevtoolsProjectQuickSetup, Language) {
 		Language.add('wcf.acp.devtools.project.quickSetup', '{jslang}wcf.acp.devtools.project.quickSetup{/jslang}');
 		
-		setupFilterByName();
 		AcpUiDevtoolsProjectQuickSetup.init();
+
+		{if $objects|count}
+			setupFilterByName();
+		{/if}
 	});
 </script>
 
