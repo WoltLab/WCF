@@ -1,8 +1,8 @@
 <ol class="containerList styleList{if $styleList|count > 4} doubleColumned{/if}">
 	{foreach from=$styleList item=style}
 		<li data-style-id="{@$style->styleID}">
-			<div class="box64">
-				<span>
+			<div class="box128">
+				<span class="styleListPreviewImage">
 					<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
 				</span>
 				<div class="details">
