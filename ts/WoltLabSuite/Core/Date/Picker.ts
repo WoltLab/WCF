@@ -15,7 +15,7 @@ import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { createFocusTrap, FocusTrap } from "focus-trap";
-import { wheneverFirstSeen } from "../Helper/Selector";
+import { wheneverSeen } from "../Helper/Selector";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
@@ -660,7 +660,7 @@ const DatePicker = {
 
     _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
 
-    wheneverFirstSeen(
+    wheneverSeen(
       `input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`,
       (element: HTMLInputElement) => {
         const now = new Date();

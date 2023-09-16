@@ -543,7 +543,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
             }
             _didInit = true;
             _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
-            (0, Selector_1.wheneverFirstSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
+            (0, Selector_1.wheneverSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
                 const now = new Date();
                 element.classList.add("inputDatePicker");
                 element.readOnly = true;
