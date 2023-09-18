@@ -173,8 +173,15 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         $data = parent::fetchElementData($element, $saveData);
 
         $icon = $element->getElementsByTagName('icon')->item(0);
-        if ($icon !== null) {
-            $data['icon'] = $icon->nodeValue;
+        if ($icon !== null && !\str_starts_with($icon->nodeValue, 'fa-')) {
+            \assert($icon instanceof \DOMElement);
+            $solid = $icon->getAttribute('solid') === 'true';
+
+            $data['icon'] = \sprintf(
+                '%s;%s',
+                $icon->nodeValue,
+                $solid ? 'true' : 'false'
+            );
         } else {
             $data['icon'] = '';
         }
@@ -191,6 +198,18 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         $menuItem = parent::prepareXmlElement($document, $form);
 
         $this->appendElementChildren($menuItem, ['icon' => null], $form);
+
+        $icon = $menuItem->getElementsByTagName('icon')->item(0);
+        if ($icon !== null) {
+            \assert($icon instanceof \DOMElement);
+
+            [$name, $solid] = \explode(';', $icon->textContent, 2);
+            if ($solid === 'true') {
+                $icon->setAttribute('solid', 'true');
+            }
+
+            $icon->textContent = $name;
+        }
 
         return $menuItem;
     }
