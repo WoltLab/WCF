@@ -63,7 +63,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             }
 
             if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
-                if (!empty($value) && $value === $href->__toString()) {
+                if ($value === $href->__toString()) {
                     while ($element->childNodes->length) {
                         DOMUtil::removeNode($element->childNodes->item(0));
                     }
@@ -96,7 +96,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                     );
                 }
             } elseif ($this->outputType === 'text/plain') {
-                if (!empty($value) && $value !== $href->__toString()) {
+                if ($value !== $href->__toString()) {
                     $text = $value . ' [URL:' . $href->__toString() . ']';
                 } else {
                     $text = $href->__toString();
