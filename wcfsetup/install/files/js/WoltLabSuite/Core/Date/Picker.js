@@ -543,7 +543,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
             }
             _didInit = true;
             _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
-            (0, Selector_1.wheneverFirstSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
+            (0, Selector_1.wheneverSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
                 const now = new Date();
                 element.classList.add("inputDatePicker");
                 element.readOnly = true;
@@ -662,7 +662,12 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                 const openButton = document.createElement("button");
                 openButton.type = "button";
                 openButton.className = "inputSuffix button jsTooltip";
-                openButton.title = Language.get("wcf.date.datePicker");
+                if (isTimeOnly) {
+                    openButton.title = Language.getPhrase("wcf.date.datePicker.time");
+                }
+                else {
+                    openButton.title = Language.getPhrase("wcf.date.datePicker");
+                }
                 openButton.setAttribute("aria-haspopup", "true");
                 openButton.setAttribute("aria-expanded", "false");
                 openButton.addEventListener("click", (event) => {
@@ -686,7 +691,12 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                     clearButton = document.createElement("button");
                     clearButton.type = "button";
                     clearButton.className = "inputSuffix button jsTooltip";
-                    clearButton.title = Language.get("wcf.date.datePicker.clear");
+                    if (isTimeOnly) {
+                        clearButton.title = Language.getPhrase("wcf.date.datePicker.time.clear");
+                    }
+                    else {
+                        clearButton.title = Language.getPhrase("wcf.date.datePicker.clear");
+                    }
                     clearButton.addEventListener("click", () => {
                         if (!element.disabled) {
                             DatePicker.clear(element);

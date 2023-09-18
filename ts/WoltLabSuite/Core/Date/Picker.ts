@@ -15,7 +15,7 @@ import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { createFocusTrap, FocusTrap } from "focus-trap";
-import { wheneverFirstSeen } from "../Helper/Selector";
+import { wheneverSeen } from "../Helper/Selector";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
@@ -660,7 +660,7 @@ const DatePicker = {
 
     _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
 
-    wheneverFirstSeen(
+    wheneverSeen(
       `input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`,
       (element: HTMLInputElement) => {
         const now = new Date();
@@ -796,7 +796,11 @@ const DatePicker = {
         const openButton = document.createElement("button");
         openButton.type = "button";
         openButton.className = "inputSuffix button jsTooltip";
-        openButton.title = Language.get("wcf.date.datePicker");
+        if (isTimeOnly) {
+          openButton.title = Language.getPhrase("wcf.date.datePicker.time");
+        } else {
+          openButton.title = Language.getPhrase("wcf.date.datePicker");
+        }
         openButton.setAttribute("aria-haspopup", "true");
         openButton.setAttribute("aria-expanded", "false");
         openButton.addEventListener("click", (event) => {
@@ -822,7 +826,11 @@ const DatePicker = {
           clearButton = document.createElement("button");
           clearButton.type = "button";
           clearButton.className = "inputSuffix button jsTooltip";
-          clearButton.title = Language.get("wcf.date.datePicker.clear");
+          if (isTimeOnly) {
+            clearButton.title = Language.getPhrase("wcf.date.datePicker.time.clear");
+          } else {
+            clearButton.title = Language.getPhrase("wcf.date.datePicker.clear");
+          }
           clearButton.addEventListener("click", () => {
             if (!element.disabled) {
               DatePicker.clear(element);

@@ -42,8 +42,8 @@
 	<ol class="containerList styleList jsObjectActionContainer" data-object-action-class-name="wcf\data\style\StyleAction">
 		{foreach from=$objects item=style}
 			<li class="jsObjectActionObject" data-object-id="{@$style->getObjectID()}">
-				<div class="box64">
-					<span>
+				<div class="box128">
+					<span class="styleListPreviewImage">
 						<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
 					</span>
 					<div class="details">

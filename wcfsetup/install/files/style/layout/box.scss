@@ -914,10 +914,14 @@
 
 .styleChanger {
 	float: right;
-	padding: 10px 0 10px 20px;
+	padding-left: 20px;
 
 	button {
 		color: var(--wcfFooterLink);
+	}
+
+	@include screen-md-down {
+		padding: 10px 0 10px 20px;
 	}
 }
 

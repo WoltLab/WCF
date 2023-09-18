@@ -1176,6 +1176,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
             // description
             foreach ($styleDescriptions as $languageCode => $value) {
+                // The description of a style is effectively stored in a TEXT column
+                // but packages use a VARCHAR(255) to store it.
+                $value = \mb_substr($value, 0, 255);
+
                 $xml->writeElement('packagedescription', $value, ['language' => $languageCode]);
             }
 

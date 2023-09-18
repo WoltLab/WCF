@@ -396,6 +396,10 @@
 	}
 }
 
+.styleListPreviewImage {
+	text-align: center;
+}
+
 @include screen-md-down {
 	.styleList > li {
 		padding: 10px;

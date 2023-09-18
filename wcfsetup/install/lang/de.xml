@@ -3768,6 +3768,8 @@ Dateianhänge:
 		<item name="wcf.date.datePicker.hour"><![CDATA[Stunde]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
 		<item name="wcf.date.datePicker.clear"><![CDATA[Datumsauswahl zurücksetzen]]></item>
+		<item name="wcf.date.datePicker.time"><![CDATA[Uhrzeit auswählen]]></item>
+		<item name="wcf.date.datePicker.time.clear"><![CDATA[Uhrzeit zurücksetzen]]></item>
 		<item name="wcf.date.pointInTime"><![CDATA[Zeitpunkt]]></item>
 	</category>
 	<category name="wcf.dialog">
