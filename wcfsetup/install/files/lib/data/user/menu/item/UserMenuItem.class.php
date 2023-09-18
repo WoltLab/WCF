@@ -10,6 +10,8 @@ use wcf\system\menu\user\IUserMenuItemProvider;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\style\FontAwesomeIconBrand;
+use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -150,10 +152,14 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     /**
      * @since 6.0
      */
-    public function getIcon(): ?FontAwesomeIcon
+    public function getIcon(): ?IFontAwesomeIcon
     {
         if ($this->iconClassName && !\str_starts_with($this->iconClassName, 'fa-')) {
-            return FontAwesomeIcon::fromString($this->iconClassName);
+            if (\str_starts_with($this->iconClassName, '@brand:')) {
+                return FontAwesomeIconBrand::fromName(\substr($this->iconClassName, 7));
+            } else {
+                return FontAwesomeIcon::fromString($this->iconClassName);
+            }
         }
 
         return FontAwesomeIcon::fromValues('bars');

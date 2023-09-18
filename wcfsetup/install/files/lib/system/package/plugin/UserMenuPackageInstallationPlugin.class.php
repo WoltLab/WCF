@@ -64,12 +64,20 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         if ($element->tagName === 'iconclassname') {
-            $solid = $element->getAttribute('solid');
-            $elements['iconClassName'] = \sprintf(
-                "%s;%s",
-                $element->nodeValue,
-                $solid === 'true' ? 'true' : 'false'
-            );
+            $isBrandIcon = $element->getAttribute('type') === 'brand';
+            if ($isBrandIcon) {
+                $elements['iconClassName'] = \sprintf(
+                    "@brand:%s",
+                    $element->nodeValue,
+                );
+            } else {
+                $solid = $element->getAttribute('solid');
+                $elements['iconClassName'] = \sprintf(
+                    "%s;%s",
+                    $element->nodeValue,
+                    $solid === 'true' ? 'true' : 'false'
+                );
+            }
         } else {
             $elements[$element->tagName] = $element->nodeValue;
         }
