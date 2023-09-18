@@ -2,8 +2,10 @@
 
 namespace wcf\system\html\output\node;
 
+use GuzzleHttp\Psr7\Exception\MalformedUriException;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriComparator;
+use Psr\Http\Message\UriInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\RouteHandler;
@@ -33,9 +35,22 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
     {
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            $href = $element->getAttribute('href');
-            if (ApplicationHandler::getInstance()->isInternalURL($href)) {
-                $element->setAttribute('href', \preg_replace('~^https?://~', RouteHandler::getProtocol(), $href));
+            try {
+                $href = new Uri($element->getAttribute('href'));
+            } catch (MalformedUriException) {
+                // If the link href is not a valid URI we drop the entire link.
+                DOMUtil::removeNode($element, true);
+
+                continue;
+            }
+
+            if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
+                $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
+
+                $element->setAttribute(
+                    'href',
+                    $href->__toString(),
+                );
             } else {
                 /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
                 self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
@@ -44,11 +59,11 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             $value = StringUtil::trim($element->textContent);
 
             if ($this->isSuspiciousValue($value, $href)) {
-                $value = $href;
+                $value = $href->__toString();
             }
 
             if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
-                if (!empty($value) && $value === $href) {
+                if (!empty($value) && $value === $href->__toString()) {
                     while ($element->childNodes->length) {
                         DOMUtil::removeNode($element->childNodes->item(0));
                     }
@@ -81,10 +96,10 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                     );
                 }
             } elseif ($this->outputType === 'text/plain') {
-                if (!empty($value) && $value !== $href) {
-                    $text = $value . ' [URL:' . $href . ']';
+                if (!empty($value) && $value !== $href->__toString()) {
+                    $text = $value . ' [URL:' . $href->__toString() . ']';
                 } else {
-                    $text = $href;
+                    $text = $href->__toString();
                 }
 
                 $htmlNodeProcessor->replaceElementWithText($element, $text, false);
@@ -101,13 +116,19 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
      *
      * @see \GuzzleHttp\Psr7\UriComparator::isCrossOrigin()
      */
-    private function isSuspiciousValue(string $value, string $href): bool
+    private function isSuspiciousValue(string $value, UriInterface $href): bool
     {
         if (!\preg_match(FileUtil::LINK_REGEX, $value)) {
             return false;
         }
 
-        return UriComparator::isCrossOrigin(new Uri($href), new Uri($value));
+        try {
+            $value = new Uri($value);
+        } catch (MalformedUriException) {
+            return false;
+        }
+
+        return UriComparator::isCrossOrigin($href, $value);
     }
 
     /**
