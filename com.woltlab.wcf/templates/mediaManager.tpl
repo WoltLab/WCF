@@ -28,7 +28,7 @@
 <div class="inputAddon mediaManagerSearch">
 	<input type="text" class="mediaManagerSearchField" placeholder="{lang}wcf.media.search.placeholder{/lang}">
 	<span class="inputSuffix">
-		<button type="button" class="mediaManagerSearchCancelButton jsTooltip" title="{lang}wcf.media.search.cancel{/lang}">
+		<button type="button" class="button mediaManagerSearchCancelButton jsTooltip" title="{lang}wcf.media.search.cancel{/lang}">
 			{icon name='xmark'}
 		</button>
 	</span>

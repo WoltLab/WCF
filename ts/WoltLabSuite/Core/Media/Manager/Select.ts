@@ -14,7 +14,6 @@ import * as DomTraverse from "../../Dom/Traverse";
 import * as FileUtil from "../../FileUtil";
 import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
-import DomUtil from "../../Dom/Util";
 
 class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   protected _activeButton: HTMLElement | null = null;
