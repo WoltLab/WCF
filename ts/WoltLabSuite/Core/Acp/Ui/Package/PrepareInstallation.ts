@@ -21,18 +21,22 @@ interface AjaxResponse {
   };
 }
 
+type RedirectLocation = "license";
+
 class AcpUiPackagePrepareInstallation {
   private identifier = "";
   private version = "";
   #resolve?: () => void;
+  #redirectLocation?: RedirectLocation;
 
-  start(identifier: string, version: string): Promise<void> {
+  start(identifier: string, version: string, redirectLocation?: RedirectLocation): Promise<void> {
     if (this.#resolve !== undefined) {
       throw new Error("There is already a pending installation.");
     }
 
     this.identifier = identifier;
     this.version = version;
+    this.#redirectLocation = redirectLocation;
 
     return new Promise<void>((resolve) => {
       this.#resolve = resolve;
@@ -86,7 +90,9 @@ class AcpUiPackagePrepareInstallation {
         UiDialog.close(this);
       }
 
-      const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+      const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, false, {
+        redirectLocation: this.#redirectLocation,
+      });
       installation.prepareInstallation();
     } else if (data.returnValues.template) {
       UiDialog.open(this, data.returnValues.template);

@@ -29,6 +29,8 @@ class InstallPackageAction extends AbstractSecureAction
 
     public PackageInstallationQueue $queue;
 
+    private string $redirectLocation = '';
+
     /**
      * @inheritDoc
      */
@@ -61,6 +63,11 @@ class InstallPackageAction extends AbstractSecureAction
 
         if (!isset($this->queue) || !$this->queue->queueID) {
             throw new IllegalLinkException();
+        }
+
+        $redirectLocation = $_REQUEST['redirectLocation'] ?? '';
+        if ($redirectLocation === 'license') {
+            $this->redirectLocation = $redirectLocation;
         }
 
         $this->installation = new PackageInstallationDispatcher($this->queue);
@@ -182,6 +189,8 @@ class InstallPackageAction extends AbstractSecureAction
             $controller = 'first-time-setup';
 
             WCF::getSession()->unregister('__wcfSetup_completed');
+        } else if ($this->redirectLocation === 'license') {
+            $controller = 'license';
         }
 
         // Do not use the LinkHandler here as it is sort of unreliable during WCFSetup.

@@ -16,12 +16,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
         identifier = "";
         version = "";
         #resolve;
-        start(identifier, version) {
+        #redirectLocation;
+        start(identifier, version, redirectLocation) {
             if (this.#resolve !== undefined) {
                 throw new Error("There is already a pending installation.");
             }
             this.identifier = identifier;
             this.version = version;
+            this.#redirectLocation = redirectLocation;
             return new Promise((resolve) => {
                 this.#resolve = resolve;
                 this.prepare({});
@@ -67,7 +69,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
                 if (Dialog_1.default.isOpen(this)) {
                     Dialog_1.default.close(this);
                 }
-                const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+                const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, false, {
+                    redirectLocation: this.#redirectLocation,
+                });
                 installation.prepareInstallation();
             }
             else if (data.returnValues.template) {

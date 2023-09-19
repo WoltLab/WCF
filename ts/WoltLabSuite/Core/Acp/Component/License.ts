@@ -12,7 +12,7 @@ import AcpUiPackagePrepareInstallation from "../Ui/Package/PrepareInstallation";
 
 function installPackage(button: HTMLButtonElement): Promise<void> {
   const installation = new AcpUiPackagePrepareInstallation();
-  return installation.start(button.dataset.package!, button.dataset.packageVersion!);
+  return installation.start(button.dataset.package!, button.dataset.packageVersion!, "license");
 }
 
 export function setup(): void {
