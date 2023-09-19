@@ -58,7 +58,7 @@
 		{/if}
 	</script>
 
-	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script data-eager="true" src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
