@@ -2,8 +2,8 @@
 
 {if $pageType == 'html' || $pageType == 'tpl'}
 	<ul class="codemirrorToolbar">
-		<li><a href="#" id="codemirror-{@$__pageContentID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</a></li>
-		<li><a href="#" id="codemirror-{@$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</a></li>
+		<li><button type="button" id="codemirror-{@$__pageContentID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</button></li>
+		<li><button type="button" id="codemirror-{@$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
 	</ul>
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}

@@ -6,10 +6,9 @@ define(["require", "exports", "tslib", "../../../Ui/Page/Search"], function (req
         constructor(elementId) {
             this.element = document.getElementById(elementId);
             const insertButton = document.getElementById(`codemirror-${elementId}-page`);
-            insertButton.addEventListener("click", (ev) => this._click(ev));
+            insertButton.addEventListener("click", () => this._click());
         }
-        _click(event) {
-            event.preventDefault();
+        _click() {
             UiPageSearch.open((pageID) => this._insert(pageID));
         }
         _insert(pageID) {

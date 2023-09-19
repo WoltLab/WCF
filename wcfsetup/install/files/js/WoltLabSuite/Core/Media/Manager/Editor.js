@@ -29,7 +29,16 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             }, options);
             super(options);
             this._forceClipboard = true;
-            if (this._options.ckeditor !== undefined) {
+            if (this._options.ckeditor === undefined) {
+                if (typeof this._options.buttonClass === "string") {
+                    document.querySelectorAll(`.${this._options.buttonClass}`).forEach((button) => {
+                        button.addEventListener("click", (event) => {
+                            this._click(event);
+                        });
+                    });
+                }
+            }
+            else {
                 const ckeditor = this._options.ckeditor;
                 (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
                     if (bbcode !== "media") {
