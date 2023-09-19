@@ -147,10 +147,21 @@ class StyleHandler extends SingletonFactory
                 StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
             }
 
-            if (\is_readable(WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json')) {
-                $decoded = JSON::decode(\file_get_contents(WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json'));
-                if (isset($decoded['html']) && \is_array($decoded['html'])) {
-                    $preload = \implode('', $decoded['html']);
+            $preloadFilename = WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json';
+            if (\is_readable($preloadFilename)) {
+                try {
+                    $decoded = \json_decode(
+                        \file_get_contents($preloadFilename),
+                        associative: true,
+                        flags: \JSON_THROW_ON_ERROR
+                    );
+                    if (isset($decoded['html']) && \is_array($decoded['html'])) {
+                        $preload = \implode('', $decoded['html']);
+                    } else {
+                        @\unlink($preloadFilename);
+                    }
+                } catch (\JsonException) {
+                    @\unlink($preloadFilename);
                 }
             }
         }
