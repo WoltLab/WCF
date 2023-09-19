@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog, Util_1) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
     FileUtil = tslib_1.__importStar(FileUtil);
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
-    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSelect extends Base_1.default {
         _activeButton = null;
         _buttons;
@@ -30,17 +29,26 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                     if (storeElement && storeElement.tagName === "INPUT") {
                         button.addEventListener("click", (ev) => this._click(ev));
                         this._storeElements.set(button, storeElement);
-                        // add remove button
-                        const removeButton = document.createElement("p");
-                        removeButton.className = "button";
-                        button.insertAdjacentElement("afterend", removeButton);
-                        const icon = document.createElement("fa-icon");
-                        icon.setIcon("xmark");
-                        removeButton.appendChild(icon);
-                        if (!storeElement.value) {
-                            Util_1.default.hide(removeButton);
+                        const removeButton = document.createElement("button");
+                        removeButton.type = "button";
+                        removeButton.classList.add("button", "jsTooltip");
+                        removeButton.title = Language.getPhrase("wcf.global.button.delete");
+                        removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
+                        if (button.parentElement.tagName === "LI") {
+                            const listItem = document.createElement("li");
+                            listItem.append(removeButton);
+                            button.parentElement.insertAdjacentElement("afterend", listItem);
+                            if (!storeElement.value) {
+                                listItem.hidden = true;
+                            }
                         }
-                        removeButton.addEventListener("click", (ev) => this._removeMedia(ev));
+                        else {
+                            button.insertAdjacentElement("afterend", removeButton);
+                            if (!storeElement.value) {
+                                removeButton.hidden = true;
+                            }
+                        }
+                        removeButton.addEventListener("click", () => this._removeMedia(button, removeButton));
                     }
                 }
             });
@@ -100,7 +108,14 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                 }
             }
             // show remove button
-            this._activeButton.nextElementSibling.style.removeProperty("display");
+            if (this._activeButton.parentElement.tagName === "LI") {
+                const removeButton = this._activeButton.parentElement.nextElementSibling;
+                removeButton.hidden = false;
+            }
+            else {
+                const removeButton = this._activeButton.nextElementSibling;
+                removeButton.hidden = false;
+            }
             UiDialog.close(this);
         }
         _click(event) {
@@ -141,15 +156,17 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
         /**
          * Handles clicking on the remove button.
          */
-        _removeMedia(event) {
-            event.preventDefault();
-            const removeButton = event.currentTarget;
-            const button = removeButton.previousElementSibling;
-            removeButton.remove();
-            const input = document.getElementById(button.dataset.store);
+        _removeMedia(selectButton, removeButton) {
+            if (removeButton.parentElement.tagName === "LI") {
+                removeButton.parentElement.hidden = true;
+            }
+            else {
+                removeButton.hidden = true;
+            }
+            const input = document.getElementById(selectButton.dataset.store);
             input.value = "";
             Core.triggerEvent(input, "change");
-            const display = button.dataset.display;
+            const display = selectButton.dataset.display;
             if (display) {
                 const displayElement = document.getElementById(display);
                 if (displayElement) {

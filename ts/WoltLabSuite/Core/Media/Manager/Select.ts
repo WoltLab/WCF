@@ -37,19 +37,30 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
 
           this._storeElements.set(button, storeElement);
 
-          // add remove button
-          const removeButton = document.createElement("p");
-          removeButton.className = "button";
-          button.insertAdjacentElement("afterend", removeButton);
+          const removeButton = document.createElement("button");
+          removeButton.type = "button";
+          removeButton.classList.add("button", "jsTooltip");
+          removeButton.title = Language.getPhrase("wcf.global.button.delete");
+          removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
 
-          const icon = document.createElement("fa-icon");
-          icon.setIcon("xmark");
-          removeButton.appendChild(icon);
+          if (button.parentElement!.tagName === "LI") {
+            const listItem = document.createElement("li");
+            listItem.append(removeButton);
 
-          if (!storeElement.value) {
-            DomUtil.hide(removeButton);
+            button.parentElement!.insertAdjacentElement("afterend", listItem);
+
+            if (!storeElement.value) {
+              listItem.hidden = true;
+            }
+          } else {
+            button.insertAdjacentElement("afterend", removeButton);
+
+            if (!storeElement.value) {
+              removeButton.hidden = true;
+            }
           }
-          removeButton.addEventListener("click", (ev) => this._removeMedia(ev));
+
+          removeButton.addEventListener("click", () => this._removeMedia(button, removeButton));
         }
       }
     });
@@ -117,7 +128,13 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
     }
 
     // show remove button
-    (this._activeButton.nextElementSibling as HTMLElement).style.removeProperty("display");
+    if (this._activeButton.parentElement!.tagName === "LI") {
+      const removeButton = this._activeButton.parentElement!.nextElementSibling as HTMLLIElement;
+      removeButton.hidden = false;
+    } else {
+      const removeButton = this._activeButton.nextElementSibling as HTMLButtonElement;
+      removeButton.hidden = false;
+    }
 
     UiDialog.close(this);
   }
@@ -168,18 +185,17 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   /**
    * Handles clicking on the remove button.
    */
-  protected _removeMedia(event: Event): void {
-    event.preventDefault();
+  protected _removeMedia(selectButton: HTMLElement, removeButton: HTMLElement): void {
+    if (removeButton.parentElement!.tagName === "LI") {
+      removeButton.parentElement!.hidden = true;
+    } else {
+      removeButton.hidden = true;
+    }
 
-    const removeButton = event.currentTarget as HTMLSpanElement;
-    const button = removeButton.previousElementSibling as HTMLElement;
-
-    removeButton.remove();
-
-    const input = document.getElementById(button.dataset.store!) as HTMLInputElement;
+    const input = document.getElementById(selectButton.dataset.store!) as HTMLInputElement;
     input.value = "";
     Core.triggerEvent(input, "change");
-    const display = button.dataset.display;
+    const display = selectButton.dataset.display;
     if (display) {
       const displayElement = document.getElementById(display);
       if (displayElement) {
