@@ -134,6 +134,22 @@ class Mailbox
     }
 
     /**
+     * Returns the properly encoded address for use within
+     * the 'mailto' URI scheme.
+     *
+     * This method takes care to encode the localpart and domain
+     * separately, leaving the '@' as-is.
+     *
+     * @since 6.0
+     */
+    public function getAddressForMailto(): string
+    {
+        [$localpart, $domain] = self::splitLocalpartAndDomain($this->getAddress());
+
+        return \rawurlencode($localpart) . '@' . \rawurlencode($domain);
+    }
+
+    /**
      * Returns the language the recipient of this mailbox wants.
      * This is used for localization of the email template.
      */
