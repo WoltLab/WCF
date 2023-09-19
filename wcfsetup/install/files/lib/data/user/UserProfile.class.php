@@ -21,6 +21,7 @@ use wcf\data\user\rank\UserRank;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\email\Mailbox;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
@@ -992,12 +993,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
     /**
      * Returns the encoded email address.
-     *
-     * @return  string
      */
-    public function getEncodedEmail()
+    public function getEncodedEmail(): string
     {
-        return StringUtil::encodeAllChars($this->email);
+        $mailbox = new Mailbox($this->email);
+
+        return StringUtil::encodeAllChars($mailbox->getAddressForMailto());
     }
 
     /**
