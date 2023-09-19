@@ -534,7 +534,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         }
         $trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
 
-        $filteredTrophies = $trophies = \array_filter($trophies);
+        $filteredTrophies = \array_filter($trophies);
         if ($filteredTrophies !== $trophies) {
             // One or more trophies no longer exists, remove them from the return
             // value and force a cache reset.
