@@ -533,6 +533,16 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', \serialize($specialTrophies));
         }
         $trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
+
+        $filteredTrophies = $trophies = \array_filter($trophies);
+        if ($filteredTrophies !== $trophies) {
+            // One or more trophies no longer exists, remove them from the return
+            // value and force a cache reset.
+            $trophies = $filteredTrophies;
+
+            UserStorageHandler::getInstance()->reset([$this->userID], 'specialTrophies');
+        }
+
         Trophy::sort($trophies, 'showOrder');
 
         return $trophies;
