@@ -300,7 +300,11 @@
 										{@$images[0]->getThumbnailTag('small')}
 									{/if}
 								</div>
-								<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
+								<ul class="buttonGroup">
+									<li>
+										<button type="button" class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.media.chooseImage{/lang}</button>
+									</li>
+								</ul>
 								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{$imageID[0]}"{/if}>
 								{if $errorField == 'image'}
 									<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
@@ -376,7 +380,11 @@
 														{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
 													{/if}
 												</div>
-												<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
+												<ul class="buttonGroup">
+													<li>
+														<button type="button" class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
+													</li>
+												</ul>
 												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
 												{if $errorField == 'image'|concat:$availableLanguage->languageID}
 													<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
