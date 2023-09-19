@@ -316,7 +316,7 @@ class UserListPage extends SortablePage
                 foreach ($this->columns as $column) {
                     switch ($column) {
                         case 'email':
-                            $this->columnValues[$user->userID][$column] = '<a href="mailto:' . StringUtil::encodeHTML($user->email) . '">' . StringUtil::encodeHTML($user->email) . '</a>';
+                            $this->columnValues[$user->userID][$column] = '<a href="mailto:' . $user->getEncodedEmail() . '">' . StringUtil::encodeHTML($user->email) . '</a>';
                             break;
 
                         case 'registrationDate':
