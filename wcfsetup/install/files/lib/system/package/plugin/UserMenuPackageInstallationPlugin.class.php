@@ -159,8 +159,15 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
         }
 
         $icon = $element->getElementsByTagName('iconclassname')->item(0);
-        if ($icon !== null) {
-            $data['iconClassName'] = $icon->nodeValue;
+        if ($icon !== null && !\str_starts_with($icon->nodeValue, 'fa-')) {
+            \assert($icon instanceof \DOMElement);
+            $solid = $icon->getAttribute('solid') === 'true';
+
+            $data['iconClassName'] = \sprintf(
+                '%s;%s',
+                $icon->nodeValue,
+                $solid ? 'true' : 'false'
+            );
         } elseif ($saveData) {
             $data['iconClassName'] = '';
         }
@@ -184,6 +191,18 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
             ],
             $form
         );
+
+        $icon = $menuItem->getElementsByTagName('iconclassname')->item(0);
+        if ($icon !== null) {
+            \assert($icon instanceof \DOMElement);
+
+            [$name, $solid] = \explode(';', $icon->textContent, 2);
+            if ($solid === 'true') {
+                $icon->setAttribute('solid', 'true');
+            }
+
+            $icon->textContent = $name;
+        }
 
         return $menuItem;
     }
