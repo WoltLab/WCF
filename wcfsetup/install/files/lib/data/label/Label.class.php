@@ -60,10 +60,20 @@ class Label extends DatabaseObject implements IRouteController
      * @return      string
      * @since       5.3
      */
-    public function render($additionalClasses = '')
+    public function render($additionalClasses = ''): string
     {
-        return '<span class="badge label' . ($this->getClassNames() ? ' ' . $this->getClassNames() : '')
-            . ($additionalClasses ? ' ' . $additionalClasses : '') . '">'
-            . StringUtil::encodeHTML($this->getTitle()) . '</span>';
+        $classNames = 'badge label';
+        if ($this->getClassNames()) {
+            $classNames .= " {$this->getClassNames()}";
+        }
+        if ($additionalClasses) {
+            $classNames .= " {$additionalClasses}";
+        }
+        return \sprintf(
+            '<span class="%s" data-label-id="%d">%s</span>',
+            $classNames,
+            $this->labelID,
+            StringUtil::encodeHTML($this->getTitle()),
+        );
     }
 }
