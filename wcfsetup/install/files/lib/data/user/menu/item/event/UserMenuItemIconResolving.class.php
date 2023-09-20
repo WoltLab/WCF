@@ -16,7 +16,7 @@ use wcf\system\style\IFontAwesomeIcon;
  */
 final class UserMenuItemIconResolving implements IEvent
 {
-    public ?IFontAwesomeIcon $icon = null;
+    public IFontAwesomeIcon $icon;
 
     public function __construct(public readonly UserMenuItem $userMenuItem)
     {
