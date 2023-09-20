@@ -153,7 +153,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     /**
      * @since 6.0
      */
-    public function getIcon(): ?IFontAwesomeIcon
+    public function getIcon(): IFontAwesomeIcon
     {
         if ($this->iconClassName && !\str_starts_with($this->iconClassName, 'fa-')) {
             $icon = FontAwesomeIcon::fromString($this->iconClassName);
