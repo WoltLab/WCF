@@ -161,8 +161,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
             $icon = FontAwesomeIcon::fromValues('bars');
         }
 
-        $event = new UserMenuItemIconResolving($this);
-        $event->icon = $icon;
+        $event = new UserMenuItemIconResolving($this, $icon);
         EventHandler::getInstance()->fire($event);
 
         return $event->icon;
