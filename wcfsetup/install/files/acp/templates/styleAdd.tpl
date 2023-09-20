@@ -899,10 +899,14 @@
 									<ul>
 										{foreach from=$spColors item=spType}
 											{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
-											<li class="box24 spColor">
-												<div class="spColorBox">
-													<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
-													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
+											<li class="box32 spColor">
+												<div>
+													<div class="spColorBoxWrapper">
+														<div class="spColorBox">
+															<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
+															<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
+														</div>
+													</div>
 												</div>
 												<div>
 													<span class="spVariable">{*
