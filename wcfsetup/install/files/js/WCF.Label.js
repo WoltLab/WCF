@@ -5,62 +5,6 @@
  */
 WCF.Label = {};
 
-if (COMPILER_TARGET_DEFAULT) {
-	WCF.Label.ACPList = {};
-	
-	/**
-	 * Provides simple logic to inherit associations within structured lists.
-	 */
-	WCF.Label.ACPList.Connect = Class.extend({
-		/**
-		 * Initializes inheritation for structured lists.
-		 */
-		init: function () {
-			var $listItems = $('#connect .structuredList li');
-			if (!$listItems.length) return;
-			
-			$listItems.each($.proxy(function (index, item) {
-				$(item).find('input[type="checkbox"]').click($.proxy(this._click, this));
-			}, this));
-		},
-		
-		/**
-		 * Marks items as checked if they're logically below current item.
-		 *
-		 * @param        object                event
-		 */
-		_click: function (event) {
-			var $listItem = $(event.currentTarget);
-			if ($listItem.is(':checked')) {
-				$listItem = $listItem.parents('li');
-				var $depth = $listItem.data('depth');
-				
-				while (true) {
-					$listItem = $listItem.next();
-					if (!$listItem.length) {
-						// no more siblings
-						return true;
-					}
-					
-					// element is on the same or higher level (= lower depth)
-					if ($listItem.data('depth') <= $depth) {
-						return true;
-					}
-					
-					$listItem.find('input[type="checkbox"]').prop('checked', 'checked');
-				}
-			}
-		}
-	});
-}
-else {
-	WCF.Label.ACPList = {};
-	WCF.Label.ACPList.Connect = Class.extend({
-		init: function() {},
-		_click: function() {}
-	});
-}
-
 /**
  * Provides a flexible label chooser.
  * 
