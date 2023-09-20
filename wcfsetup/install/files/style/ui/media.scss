@@ -29,7 +29,7 @@
 		&.jsMarked {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: rgba(var(--wcfButtonPrimaryBackground-rgb) / 0.2);
+				background-color: rgb(var(--wcfButtonPrimaryBackground-rgb) / 80%);
 				color: var(--wcfButtonPrimaryText);
 
 				a {
@@ -46,7 +46,7 @@
 		&.jsSelected {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: rgba(0, 128, 0, 0.2);
+				background-color: rgb(0 128 0 / 80%);
 				color: white;
 
 				a {

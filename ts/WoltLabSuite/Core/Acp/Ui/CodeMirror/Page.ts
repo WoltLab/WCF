@@ -7,12 +7,10 @@ class AcpUiCodeMirrorPage {
     this.element = document.getElementById(elementId)!;
 
     const insertButton = document.getElementById(`codemirror-${elementId}-page`)!;
-    insertButton.addEventListener("click", (ev) => this._click(ev));
+    insertButton.addEventListener("click", () => this._click());
   }
 
-  private _click(event: MouseEvent): void {
-    event.preventDefault();
-
+  private _click(): void {
     UiPageSearch.open((pageID) => this._insert(pageID));
   }
 

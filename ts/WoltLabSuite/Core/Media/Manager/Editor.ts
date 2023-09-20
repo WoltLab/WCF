@@ -37,7 +37,15 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
 
     this._forceClipboard = true;
 
-    if (this._options.ckeditor !== undefined) {
+    if (this._options.ckeditor === undefined) {
+      if (typeof this._options.buttonClass === "string") {
+        document.querySelectorAll<HTMLElement>(`.${this._options.buttonClass}`).forEach((button) => {
+          button.addEventListener("click", (event) => {
+            this._click(event);
+          });
+        });
+      }
+    } else {
       const ckeditor = this._options.ckeditor;
       listenToCkeditor(ckeditor.sourceElement).bbcode(({ bbcode }) => {
         if (bbcode !== "media") {

@@ -535,28 +535,27 @@ html[data-color-scheme="dark"] {
 	background-color: var(--wcfEditorButtonBackground);
 	display: flex;
 	flex-wrap: wrap;
+	gap: 2px;
+	padding: 2px;
 
-	> li {
+	li {
+		display: flex;
 		flex: 0 0 auto;
-		margin-bottom: 1px;
+	}
 
-		> a {
-			color: var(--wcfEditorButtonText);
-			display: block;
-			font-size: 12px;
-			outline: none;
-			padding: 10px;
-			text-align: center;
-			font-weight: 400;
+	:is(a, button) {
+		border-radius: var(--wcfBorderRadius);
+		color: var(--wcfEditorButtonText);
+		display: block;
+		font-size: 12px;
+		outline: none;
+		padding: 8px;
+		text-align: center;
+		font-weight: 400;
 
-			&:hover {
-				background-color: var(--wcfEditorButtonBackgroundActive);
-				color: var(--wcfEditorButtonTextActive);
-			}
-
-			.icon {
-				color: inherit;
-			}
+		&:hover {
+			background-color: var(--wcfEditorButtonBackgroundActive);
+			color: var(--wcfEditorButtonTextActive);
 		}
 	}
 }

@@ -621,28 +621,27 @@ html[dir="rtl"] #spContentSidebar {
 .spColor:not(:first-child) {
 	margin-top: 5px;
 }
-html:not(.touch) .spColor:hover .spColorBox {
-	border: 2px dashed #6e7792;
-	left: -2px;
-	padding: 2px;
-	position: relative;
-}
-.spColorBox {
+.spColorBoxWrapper {
 	background-color: #fff;
 	border: 1px solid #ccc;
+	display: inline-flex;
 	padding: 1px;
 }
-html[dir="ltr"] .spColorBox {
-	margin-right: 10px !important;
-}
-html[dir="ltr"]:not(.touch) .spColor:hover .spColorBox {
-	margin-right: 6px !important;
-}
-html[dir="rtl"] .spColorBox {
-	margin-left: 10px !important;
-}
-html[dir="rtl"]:not(.touch) .spColor:hover .spColorBox {
-	margin-left: 6px !important;
+@media (hover: hover) {
+	.spColorBox {
+		cursor: pointer;
+	}
+
+	.spColor:hover .spColorBox {
+		position: relative;
+	}
+
+	.spColor:hover .spColorBox::before {
+		border: 2px dashed #6e7792;
+		content: "";
+		inset: -2px;
+		position: absolute;
+	}
 }
 html:not(.touch) .spColorBox {
 	cursor: pointer;

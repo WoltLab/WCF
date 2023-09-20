@@ -13,7 +13,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/PromiseMutex", 
     PrepareInstallation_1 = tslib_1.__importDefault(PrepareInstallation_1);
     function installPackage(button) {
         const installation = new PrepareInstallation_1.default();
-        return installation.start(button.dataset.package, button.dataset.packageVersion);
+        return installation.start(button.dataset.package, button.dataset.packageVersion, "license");
     }
     function setup() {
         const callback = (0, PromiseMutex_1.promiseMutex)((button) => installPackage(button));
