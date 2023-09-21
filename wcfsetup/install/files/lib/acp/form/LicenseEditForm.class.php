@@ -186,7 +186,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
                     array {
                         status: 200,
                         license: array {
-                            authCode: string,
+                            authCode?: string,
                             type: string,
                             expiryDates?: array<string, int>,
                         },
@@ -238,7 +238,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
             $objectAction->executeAction();
         }
 
-        if (isset($this->apiResponse)) {
+        if (isset($this->apiResponse) && isset($this->apiResponse['license']['authCode'])) {
             $optionData = [
                 Option::getOptionByName('package_server_auth_code')->optionID => $this->apiResponse['license']['authCode'],
             ];

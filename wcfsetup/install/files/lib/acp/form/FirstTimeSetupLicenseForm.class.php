@@ -138,7 +138,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                     array {
                         status: 200,
                         license: array {
-                            authCode: string,
+                            authCode?: string,
                             type: string,
                             expiryDates?: array<string, int>,
                         },
@@ -189,7 +189,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
             Option::getOptionByName('first_time_setup_state')->optionID => 1,
         ];
 
-        if (isset($this->apiResponse)) {
+        if (isset($this->apiResponse) && isset($this->apiResponse['license']['authCode'])) {
             $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->apiResponse['license']['authCode'];
         }
 
