@@ -32,31 +32,31 @@
 </style>
 
 <header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.license{/lang}</span></h1>
+    <div class="contentHeaderTitle">
+        <h1 class="contentTitle">{lang}wcf.acp.license{/lang}</span></h1>
         {if $licenseNumber}
             <p class="contentDescription">{lang}wcf.acp.license.licenseNo{/lang}</p>
         {/if}
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.configuration.package.canEditServer')}
-						<li>
-							<a href="{link controller='LicenseEdit'}{/link}" class="button">
-								{icon name='pencil'}
-								<span>{lang}wcf.acp.license.edit{/lang}</span>
-							</a>
-						</li>
-					{/if}
+    </div>
 
-					{event name='contentHeaderNavigation'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+    {hascontent}
+        <nav class="contentHeaderNavigation">
+            <ul>
+                {content}
+                    {if $__wcf->session->getPermission('admin.configuration.package.canEditServer')}
+                        <li>
+                            <a href="{link controller='LicenseEdit'}{/link}" class="button">
+                                {icon name='pencil'}
+                                <span>{lang}wcf.acp.license.edit{/lang}</span>
+                            </a>
+                        </li>
+                    {/if}
+
+                    {event name='contentHeaderNavigation'}
+                {/content}
+            </ul>
+        </nav>
+    {/hascontent}
 </header>
 
 {if $licenseData[license][type] === 'developer'}
@@ -172,7 +172,12 @@
 
 <script data-relocate="true">
     require(["WoltLabSuite/Core/Acp/Component/License"], ({ setup }) => {
+        {jsphrase name='wcf.acp.package.error.uniqueAlreadyInstalled'}
         {jsphrase name='wcf.acp.package.install.title'}
+        {jsphrase name='wcf.acp.package.quickInstallation.code.error.invalid'}
+        {jsphrase name='wcf.acp.package.update.excludedPackages'}
+        {jsphrase name='wcf.acp.package.update.title'}
+        {jsphrase name='wcf.acp.package.update.unauthorized'}
         
         setup();
     });

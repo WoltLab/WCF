@@ -35,7 +35,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.package.license">
 			<controller>wcf\acp\page\LicensePage</controller>
 			<parent>wcf.acp.menu.link.package.list</parent>
-			<permissions>admin.configuration.package.canEditServer</permissions>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
 			<icon>cart-arrow-down</icon>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.package.install">

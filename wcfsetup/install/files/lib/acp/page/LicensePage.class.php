@@ -33,7 +33,7 @@ final class LicensePage extends AbstractPage
 
     private array $licenseData;
 
-    private int $licenseNumber;
+    private string $licenseNumber;
 
     private array $installedPackages;
 
@@ -657,7 +657,7 @@ final class LicensePage extends AbstractPage
                     array {
                         status: 200,
                         license: array {
-                            authCode: string,
+                            authCode?: string,
                             type: string,
                             expiryDates?: array<string, int>,
                         },

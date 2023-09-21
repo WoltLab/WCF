@@ -7,14 +7,14 @@
 
 <script data-relocate="true">
 	require([
-		"Language", "WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation", "WoltLabSuite/Core/Acp/Ui/Package/Search"],
-		(Language, AcpUiPackageQuickInstallation, AcpUiPackageSearch) => {
-		Language.addObject({
-			'wcf.acp.package.error.uniqueAlreadyInstalled': '{jslang}wcf.acp.package.error.uniqueAlreadyInstalled{/jslang}',
-			'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}',
-			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}',
-			'wcf.acp.package.quickInstallation.code.error.invalid': '{jslang}wcf.acp.package.quickInstallation.code.error.invalid{/jslang}',
-		});
+		"WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation", "WoltLabSuite/Core/Acp/Ui/Package/Search"],
+		(AcpUiPackageQuickInstallation, AcpUiPackageSearch) => {
+		{jsphrase name='wcf.acp.package.error.uniqueAlreadyInstalled'}
+		{jsphrase name='wcf.acp.package.install.title'}
+		{jsphrase name='wcf.acp.package.quickInstallation.code.error.invalid'}
+		{jsphrase name='wcf.acp.package.update.excludedPackages'}
+		{jsphrase name='wcf.acp.package.update.title'}
+		{jsphrase name='wcf.acp.package.update.unauthorized'}
 		
 		AcpUiPackageQuickInstallation.setup();
 		new AcpUiPackageSearch();
