@@ -17,6 +17,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\label\LabelPicker;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
@@ -191,6 +192,12 @@ class ArticleAddForm extends AbstractForm
      * @var ViewableLabelGroup[]
      */
     public $labelGroups;
+
+    /**
+     * @var LabelPicker[]
+     * @since 6.1
+     */
+    public array $labelPickers = [];
 
     /**
      * list of label ids
@@ -592,6 +599,7 @@ class ArticleAddForm extends AbstractForm
 
         $this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
         $this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
+        $this->labelPickers = ArticleCategory::getLabelPickers();
 
         if (empty($_POST)) {
             $this->setDefaultValues();
@@ -663,6 +671,7 @@ class ArticleAddForm extends AbstractForm
             'labelIDs' => $this->labelIDs,
             'labelGroups' => $this->labelGroups,
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
+            'labelPickers' => $this->labelPickers,
             'attachmentHandler' => $this->attachmentHandler,
             'attachmentObjectID' => $this->attachmentObjectID,
             'attachmentObjectType' => $this->attachmentObjectType,

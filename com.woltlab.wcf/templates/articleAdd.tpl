@@ -161,6 +161,13 @@
 		</dl>
 		
 		{event name='categoryFields'}
+
+		{foreach from=$labelPickers item=labelPicker}
+			<dl>
+				<dt>{$labelPicker->labelGroup->getTitle()}</dt>
+				<dd>{@$labelPicker->toHtml()}</dd>
+			</dl>
+		{/foreach}
 		
 		{if $labelGroups|count}
 			{foreach from=$labelGroups item=labelGroup}
