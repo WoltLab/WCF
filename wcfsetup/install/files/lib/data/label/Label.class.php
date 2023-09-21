@@ -70,9 +70,8 @@ class Label extends DatabaseObject implements IRouteController
             $classNames .= " {$additionalClasses}";
         }
         return \sprintf(
-            '<span class="%s" data-label-id="%d">%s</span>',
+            '<span class="%s">%s</span>',
             $classNames,
-            $this->labelID,
             StringUtil::encodeHTML($this->getTitle()),
         );
     }

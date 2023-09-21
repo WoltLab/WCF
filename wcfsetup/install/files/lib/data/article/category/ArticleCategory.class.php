@@ -195,6 +195,24 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         return [];
     }
 
+    public static function getLabelPickers(): array
+    {
+        $labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+        $accessibleCategoryIDs = self::getAccessibleCategoryIDs();
+
+        $groupIDs = [];
+        foreach ($labelGroupsToCategories as $categoryID => $__groupIDs) {
+            if (\in_array($categoryID, $accessibleCategoryIDs)) {
+                $groupIDs = \array_merge($groupIDs, $__groupIDs);
+            }
+        }
+        if (empty($groupIDs)) {
+            return [];
+        }
+
+        return LabelHandler::getInstance()->getLabelPickers(\array_unique($groupIDs));
+    }
+
     /**
      * Returns all userIDs which have subscribed this category.
      *
