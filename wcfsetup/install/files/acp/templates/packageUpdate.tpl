@@ -39,12 +39,13 @@
 </div>
 
 <script data-relocate="true">
-	require(["WoltLabSuite/Core/Language", "WoltLabSuite/Core/Acp/Ui/Package/Update/Manager"], (Language, { setup }) => {
-		Language.addObject({
-			'wcf.acp.package.update.excludedPackages': '{jslang}wcf.acp.package.update.excludedPackages{/jslang}',
-			'wcf.acp.package.update.title': '{jslang}wcf.acp.package.update.title{/jslang}',
-			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}',
-		});
+	require(["WoltLabSuite/Core/Acp/Ui/Package/Update/Manager"], ({ setup }) => {
+		{jsphrase name='wcf.acp.package.error.uniqueAlreadyInstalled'}
+		{jsphrase name='wcf.acp.package.install.title'}
+		{jsphrase name='wcf.acp.package.quickInstallation.code.error.invalid'}
+		{jsphrase name='wcf.acp.package.update.excludedPackages'}
+		{jsphrase name='wcf.acp.package.update.title'}
+		{jsphrase name='wcf.acp.package.update.unauthorized'}
 
 		setup();
 	});

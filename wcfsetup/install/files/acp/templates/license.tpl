@@ -172,7 +172,12 @@
 
 <script data-relocate="true">
     require(["WoltLabSuite/Core/Acp/Component/License"], ({ setup }) => {
+        {jsphrase name='wcf.acp.package.error.uniqueAlreadyInstalled'}
         {jsphrase name='wcf.acp.package.install.title'}
+        {jsphrase name='wcf.acp.package.quickInstallation.code.error.invalid'}
+        {jsphrase name='wcf.acp.package.update.excludedPackages'}
+        {jsphrase name='wcf.acp.package.update.title'}
+        {jsphrase name='wcf.acp.package.update.unauthorized'}
         
         setup();
     });
