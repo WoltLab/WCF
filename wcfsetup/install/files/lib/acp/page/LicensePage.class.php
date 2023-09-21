@@ -33,7 +33,7 @@ final class LicensePage extends AbstractPage
 
     private array $licenseData;
 
-    private int $licenseNumber;
+    private string $licenseNumber;
 
     private array $installedPackages;
 
