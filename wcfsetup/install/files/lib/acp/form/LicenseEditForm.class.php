@@ -242,15 +242,20 @@ final class LicenseEditForm extends AbstractFormBuilderForm
             $optionData = [
                 Option::getOptionByName('package_server_auth_code')->optionID => $this->apiResponse['license']['authCode'],
             ];
-            $objectAction = new OptionAction(
-                [],
-                'updateAll',
-                [
-                    'data' => $optionData,
-                ]
-            );
-            $objectAction->executeAction();
+        } else {
+            $optionData = [
+                Option::getOptionByName('package_server_auth_code')->optionID => '',
+            ];
         }
+
+        $objectAction = new OptionAction(
+            [],
+            'updateAll',
+            [
+                'data' => $optionData,
+            ]
+        );
+        $objectAction->executeAction();
 
         $this->saved();
 
