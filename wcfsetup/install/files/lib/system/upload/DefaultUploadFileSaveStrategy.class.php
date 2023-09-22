@@ -331,18 +331,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 $updateData[$prefix . 'Height'] = 0;
             }
 
-            // Thumbnails should only be created if at least one side exceeds the
-            // dimensions of the thumbnail and the other side is at least of equal
-            // size. This prevents attempts to create a thumbnail of an image that
-            // underflows the thumbnail dimensions on one side.
-            $createThumbnail = false;
-            if ($file->width > $sizeData['width'] && $file->height >= $sizeData['height']) {
-                $createThumbnail = true;
-            } else if ($file->height > $sizeData['height'] && $file->width >= $sizeData['width']) {
-                $createThumbnail = true;
-            }
-
-            if ($createThumbnail) {
+            if ($file->width > $sizeData['width'] || $file->height > $sizeData['height']) {
                 try {
                     $thumbnail = $adapter->createThumbnail(
                         $sizeData['width'],
