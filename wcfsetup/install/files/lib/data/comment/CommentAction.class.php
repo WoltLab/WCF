@@ -717,9 +717,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment);
 
-                    // make sure that the response's author gets no notification
-                    $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
-
                     if ($notificationObjectType instanceof IMultiRecipientCommentResponseOwnerUserNotificationObjectType) {
                         $userID = $notificationObjectType->getCommentOwnerID($comment);
                         if ($userID && $userID != $response->getUserID()) {
@@ -741,10 +738,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                     }
                 } else {
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
-                    $recipientIDs = [];
-                    if ($comment->userID != $response->getUserID()) {
-                        $recipientIDs = [$comment->userID];
-                    }
+                    $recipientIDs = [$comment->userID];
 
                     // notify the container owner
                     if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
@@ -764,6 +758,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         }
                     }
                 }
+
+                // make sure that the response's author gets no notification
+                $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
 
                 UserNotificationHandler::getInstance()->fireEvent(
                     'commentResponse',
