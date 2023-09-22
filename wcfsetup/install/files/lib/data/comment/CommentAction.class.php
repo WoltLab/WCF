@@ -30,7 +30,6 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
-use wcf\system\user\notification\object\type\IMultiRecipientCommentResponseOwnerUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -707,50 +706,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment);
-
-                    if ($notificationObjectType instanceof IMultiRecipientCommentResponseOwnerUserNotificationObjectType) {
-                        $userID = $notificationObjectType->getCommentOwnerID($comment);
-                        if ($userID && $userID != $response->getUserID()) {
-                            UserNotificationHandler::getInstance()->fireEvent(
-                                'commentResponseOwner',
-                                $objectType->objectType . '.response.notification',
-                                $notificationObject,
-                                [$userID],
-                                [
-                                    'commentID' => $comment->commentID,
-                                    'objectID' => $comment->objectID,
-                                    'objectUserID' => $userID,
-                                    'userID' => $comment->userID,
-                                ]
-                            );
-
-                            $recipientIDs = \array_diff($recipientIDs, [$userID]);
-                        }
-                    }
                 } else {
-                    $userID = $notificationObjectType->getOwnerID($comment->commentID);
                     $recipientIDs = [];
-
-                    // notify the container owner
-                    if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
-                        if ($userID != $comment->userID && $userID != $response->getUserID()) {
-                            UserNotificationHandler::getInstance()->fireEvent(
-                                'commentResponseOwner',
-                                $objectType->objectType . '.response.notification',
-                                $notificationObject,
-                                [$userID],
-                                [
-                                    'commentID' => $comment->commentID,
-                                    'objectID' => $comment->objectID,
-                                    'objectUserID' => $userID,
-                                    'userID' => $comment->userID,
-                                ]
-                            );
-                        }
-                    }
                 }
 
                 $recipientIDs[] = $comment->userID;
+
+                $userID = $notificationObjectType->getOwnerID($comment->commentID);
 
                 // make sure that the response's author gets no notification
                 $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
@@ -766,6 +728,24 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         'userID' => $comment->userID,
                     ]
                 );
+
+                // notify the container owner
+                if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
+                    if ($userID != $comment->userID && $userID != $response->getUserID()) {
+                        UserNotificationHandler::getInstance()->fireEvent(
+                            'commentResponseOwner',
+                            $objectType->objectType . '.response.notification',
+                            $notificationObject,
+                            [$userID],
+                            [
+                                'commentID' => $comment->commentID,
+                                'objectID' => $comment->objectID,
+                                'objectUserID' => $userID,
+                                'userID' => $comment->userID,
+                            ]
+                        );
+                    }
+                }
             }
         }
     }
