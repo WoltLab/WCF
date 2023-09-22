@@ -500,7 +500,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
 
             // fire notification event
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
+            if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.notification', 'comment')) {
                 $notificationObject = new CommentUserNotificationObject($comment->getDecoratedObject());
                 $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
                 \assert($notificationObjectType instanceof ICommentUserNotificationObjectType);
