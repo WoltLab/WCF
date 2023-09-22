@@ -699,7 +699,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
 
             // fire notification event
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
+            if (
+                UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')
+                && (
+                    UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse')
+                    || UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')
+                )
+            ) {
                 $notificationObject = new CommentResponseUserNotificationObject($response);
                 $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
                 \assert($notificationObjectType instanceof ICommentUserNotificationObjectType);
@@ -717,20 +723,22 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 // make sure that the response's author gets no notification
                 $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
 
-                UserNotificationHandler::getInstance()->fireEvent(
-                    'commentResponse',
-                    $objectType->objectType . '.response.notification',
-                    $notificationObject,
-                    $recipientIDs,
-                    [
-                        'commentID' => $comment->commentID,
-                        'objectID' => $comment->objectID,
-                        'userID' => $comment->userID,
-                    ]
-                );
+                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse')) {
+                    UserNotificationHandler::getInstance()->fireEvent(
+                        'commentResponse',
+                        $objectType->objectType . '.response.notification',
+                        $notificationObject,
+                        $recipientIDs,
+                        [
+                            'commentID' => $comment->commentID,
+                            'objectID' => $comment->objectID,
+                            'userID' => $comment->userID,
+                        ]
+                    );
+                }
 
                 // notify the container owner
-                if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
+                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')) {
                     if ($userID != $comment->userID && $userID != $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'commentResponseOwner',
