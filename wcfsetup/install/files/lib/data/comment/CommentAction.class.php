@@ -504,6 +504,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
                 $notificationObject = new CommentUserNotificationObject($comment->getDecoratedObject());
                 $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
+                \assert($notificationObjectType instanceof ICommentUserNotificationObjectType);
 
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment->getDecoratedObject());
@@ -520,7 +521,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         );
                     }
                 } else {
-                    /** @var ICommentUserNotificationObjectType $notificationObjectType */
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
                     if ($userID != $comment->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
@@ -710,8 +710,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
             // fire notification event
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
-                $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
                 $notificationObject = new CommentResponseUserNotificationObject($response);
+                $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
+                \assert($notificationObjectType instanceof ICommentUserNotificationObjectType);
 
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment);
@@ -753,7 +754,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         );
                     }
                 } else {
-                    /** @var ICommentUserNotificationObjectType $notificationObjectType */
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
                     if ($comment->userID != $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
