@@ -5397,7 +5397,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Notify me when new comments are written on pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written on pages]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Notify me when someone replies to my comments on pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Notify me when someone reacted to my articles]]></item>
 		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on the page <strong>{$page->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on the page <strong>{$page->getTitle()}</strong>.]]></item>
