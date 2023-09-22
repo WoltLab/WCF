@@ -739,35 +739,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                             $recipientIDs = \array_diff($recipientIDs, [$userID]);
                         }
                     }
-
-                    if (!empty($recipientIDs)) {
-                        UserNotificationHandler::getInstance()->fireEvent(
-                            'commentResponse',
-                            $objectType->objectType . '.response.notification',
-                            $notificationObject,
-                            $recipientIDs,
-                            [
-                                'commentID' => $comment->commentID,
-                                'objectID' => $comment->objectID,
-                                'userID' => $comment->userID,
-                            ]
-                        );
-                    }
                 } else {
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
+                    $recipientIDs = [];
                     if ($comment->userID != $response->getUserID()) {
-                        UserNotificationHandler::getInstance()->fireEvent(
-                            'commentResponse',
-                            $objectType->objectType . '.response.notification',
-                            $notificationObject,
-                            [$comment->userID],
-                            [
-                                'commentID' => $comment->commentID,
-                                'objectID' => $comment->objectID,
-                                'objectUserID' => $userID,
-                                'userID' => $comment->userID,
-                            ]
-                        );
+                        $recipientIDs = [$comment->userID];
                     }
 
                     // notify the container owner
@@ -788,6 +764,18 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         }
                     }
                 }
+
+                UserNotificationHandler::getInstance()->fireEvent(
+                    'commentResponse',
+                    $objectType->objectType . '.response.notification',
+                    $notificationObject,
+                    $recipientIDs,
+                    [
+                        'commentID' => $comment->commentID,
+                        'objectID' => $comment->objectID,
+                        'userID' => $comment->userID,
+                    ]
+                );
             }
         }
     }
