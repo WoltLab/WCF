@@ -511,27 +511,20 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                     // make sure that the comment's author gets no notification
                     $recipientIDs = \array_diff($recipientIDs, [$comment->getUserID()]);
-
-                    if (!empty($recipientIDs)) {
-                        UserNotificationHandler::getInstance()->fireEvent(
-                            'comment',
-                            $objectType->objectType . '.notification',
-                            $notificationObject,
-                            $recipientIDs
-                        );
-                    }
                 } else {
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
+                    $recipientIDs = [];
                     if ($userID != $comment->getUserID()) {
-                        UserNotificationHandler::getInstance()->fireEvent(
-                            'comment',
-                            $objectType->objectType . '.notification',
-                            $notificationObject,
-                            [$userID],
-                            ['objectUserID' => $userID]
-                        );
+                        $recipientIDs = [$userID];
                     }
                 }
+
+                UserNotificationHandler::getInstance()->fireEvent(
+                    'comment',
+                    $objectType->objectType . '.notification',
+                    $notificationObject,
+                    $recipientIDs
+                );
             }
         }
     }
