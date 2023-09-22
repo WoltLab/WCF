@@ -215,6 +215,18 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             if (button.link === "#") {
                 link = document.createElement("button");
                 link.type = "button";
+                if (button.name === "markAllAsRead") {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        void this.markAllAsRead();
+                    });
+                }
+                else if (typeof button.clickCallback === "function") {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        button.clickCallback();
+                    });
+                }
             }
             else {
                 link = document.createElement("a");
@@ -223,12 +235,6 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             link.classList.add("userMenuButton", "jsTooltip");
             link.title = button.title;
             link.innerHTML = button.icon;
-            if (button.name === "markAllAsRead") {
-                link.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    void this.markAllAsRead();
-                });
-            }
             return link;
         }
         async markAllAsRead() {
