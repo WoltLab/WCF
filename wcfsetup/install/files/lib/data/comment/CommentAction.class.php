@@ -508,16 +508,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                 if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
                     $recipientIDs = $notificationObjectType->getRecipientIDs($comment->getDecoratedObject());
-
-                    // make sure that the comment's author gets no notification
-                    $recipientIDs = \array_diff($recipientIDs, [$comment->getUserID()]);
                 } else {
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
-                    $recipientIDs = [];
-                    if ($userID != $comment->getUserID()) {
-                        $recipientIDs = [$userID];
-                    }
+                    $recipientIDs = [$userID];
                 }
+
+                // make sure that the comment's author gets no notification
+                $recipientIDs = \array_diff($recipientIDs, [$comment->getUserID()]);
 
                 UserNotificationHandler::getInstance()->fireEvent(
                     'comment',
