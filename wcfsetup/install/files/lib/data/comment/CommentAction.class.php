@@ -729,7 +729,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                     }
                 } else {
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
-                    $recipientIDs = [$comment->userID];
+                    $recipientIDs = [];
 
                     // notify the container owner
                     if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
@@ -749,6 +749,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                         }
                     }
                 }
+
+                $recipientIDs[] = $comment->userID;
 
                 // make sure that the response's author gets no notification
                 $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
