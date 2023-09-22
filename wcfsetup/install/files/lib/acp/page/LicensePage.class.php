@@ -2,9 +2,6 @@
 
 namespace wcf\acp\page;
 
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\MapperBuilder;
-use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\form\LicenseEditForm;
 use wcf\data\package\Package;
@@ -13,7 +10,7 @@ use wcf\data\package\update\PackageUpdateAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\io\HttpFactory;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -31,17 +28,17 @@ final class LicensePage extends AbstractPage
 
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
+    private LicenseApi $licenseApi;
+
     private array $licenseData;
 
-    private string $licenseNumber;
+    private int $licenseNumber;
 
     private array $installedPackages;
 
     private array $installablePackages = [];
 
     private array $packageUpdates = [];
-
-    private PackageUpdateServer $updateServer;
 
     private array $requiresLicenseExtension = [];
 
@@ -51,9 +48,9 @@ final class LicensePage extends AbstractPage
     {
         parent::readData();
 
-        $this->updateServer = PackageUpdateServer::getWoltLabUpdateServer();
+        $this->licenseApi = new LicenseApi();
 
-        if (!$this->hasLicenseCredentials()) {
+        if (!$this->licenseApi->hasLicenseCredentials()) {
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(
                     LicenseEditForm::class,
@@ -66,7 +63,10 @@ final class LicensePage extends AbstractPage
 
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
-        $this->licenseData = $this->fetchLicenseData();
+        $this->licenseData = $this->licenseApi->fetchLicenseData();
+        if (isset($this->licenseData['license']['licenseID'])) {
+            $this->licenseNumber = $this->licenseData['license']['licenseID'];
+        }
 
         $identifiers = \array_merge(
             \array_keys($this->licenseData['woltlab']),
@@ -117,16 +117,6 @@ final class LicensePage extends AbstractPage
                 $this->requiresLicenseExtension[$identifier] = $accessibleVersion;
             }
         }
-    }
-
-    private function hasLicenseCredentials(): bool
-    {
-        $authData = $this->updateServer->getAuthData();
-        if (empty($authData['username']) || empty($authData['password'])) {
-            return false;
-        }
-
-        return true;
     }
 
     public function assignVariables()
@@ -624,48 +614,5 @@ final class LicensePage extends AbstractPage
         }
 
         return $packageUpdates;
-    }
-
-    // This code was stolen from "FirstTimeSetupLicenseForm" and
-    // should propably be moved into a helper class. We might even want to refresh
-    // the data with requests to the package servers to implicitly fetch the
-    // latest purchases.
-    private function fetchLicenseData(): array|object
-    {
-        $authData = $this->updateServer->getAuthData();
-        $this->licenseNumber = $authData['username'];
-
-        $request = new Request(
-            'POST',
-            'https://api.woltlab.com/2.1/customer/license/list.json',
-            [
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            \http_build_query([
-                'licenseNo' => $this->licenseNumber,
-                'serialNo' => $authData['password'],
-                'instanceId' => \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID),
-            ], '', '&', \PHP_QUERY_RFC1738)
-        );
-
-        $response = HttpFactory::makeClientWithTimeout(5)->send($request);
-        return (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->mapper()
-            ->map(
-                <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
-                Source::json($response->getBody())
-            );
     }
 }
