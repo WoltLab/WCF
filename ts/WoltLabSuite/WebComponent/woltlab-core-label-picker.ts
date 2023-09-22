@@ -1,6 +1,7 @@
 {
   class WoltlabCoreLabelPickerElement extends HTMLElement {
     readonly #button: HTMLButtonElement;
+    #formValue: HTMLInputElement | undefined;
     #labels = new Map<number, string>();
 
     constructor() {
@@ -19,8 +20,11 @@
         throw new Error("Expected a non empty list of labels.");
       }
 
+      const emptyLabel = `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
+
+      this.#button.type = "button";
       this.#button.classList.add("dropdownToggle");
-      this.#button.innerHTML = `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
+      this.#button.innerHTML = emptyLabel;
       this.#button.addEventListener("click", (event) => {
         event.preventDefault();
 
@@ -33,28 +37,58 @@
       const dropdownMenu = document.createElement("ul");
       dropdownMenu.classList.add("dropdownMenu");
       for (const [labelId, html] of this.#labels) {
-        const button = document.createElement("button");
-        button.dataset.labelId = labelId.toString();
-        button.innerHTML = html;
-        button.addEventListener("click", () => {
-          this.selected = labelId;
-        });
+        dropdownMenu.append(this.#createLabelItem(labelId, html));
+      }
 
-        const listItem = document.createElement("li");
-        listItem.append(button);
+      if (!this.required) {
+        const divider = document.createElement("li");
+        divider.classList.add("dropdownDivider");
 
-        dropdownMenu.append(listItem);
+        dropdownMenu.append(divider, this.#createLabelItem(0, emptyLabel));
       }
 
       this.append(dropdownMenu);
 
       this.classList.add("dropdown");
+
+      if (this.closest("form") !== null) {
+        if (this.#formValue === undefined) {
+          this.#formValue = document.createElement("input");
+          this.#formValue.type = "hidden";
+          this.#formValue.name = "labelIDs[]";
+          this.append(this.#formValue);
+        }
+
+        this.#formValue.value = (this.selected || 0).toString();
+      } else {
+        this.#formValue?.remove();
+      }
+    }
+
+    #createLabelItem(labelId: number, html: string): HTMLLIElement {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.labelId = labelId.toString();
+      button.innerHTML = html;
+      button.addEventListener("click", () => {
+        this.selected = labelId;
+      });
+
+      const listItem = document.createElement("li");
+      listItem.append(button);
+
+      return listItem;
     }
 
     set selected(selected: number) {
       this.setAttribute("selected", selected.toString());
 
-      this.#button.innerHTML = this.#labels.get(selected)!;
+      this.#button.innerHTML =
+        this.#labels.get(selected) ||
+        `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
+      if (this.#formValue !== undefined) {
+        this.#formValue.value = selected.toString();
+      }
     }
 
     get selected(): number | undefined {
@@ -71,6 +105,11 @@
         this.setAttribute("disabled", "");
       } else {
         this.removeAttribute("disabled");
+      }
+
+      this.#button.disabled = disabled;
+      if (this.#formValue) {
+        this.#formValue.disabled = disabled;
       }
     }
 
