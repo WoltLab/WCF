@@ -378,8 +378,11 @@ const UiDropdownSimple = {
   init(button: HTMLElement, isLazyInitialization?: boolean | MouseEvent): boolean {
     UiDropdownSimple.setup();
 
-    button.setAttribute("role", "button");
-    button.tabIndex = 0;
+    if (!(button instanceof HTMLButtonElement)) {
+      button.setAttribute("role", "button");
+      button.tabIndex = 0;
+    }
+
     button.setAttribute("aria-haspopup", "true");
     button.setAttribute("aria-expanded", "false");
 

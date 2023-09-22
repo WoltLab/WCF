@@ -38,7 +38,7 @@
 		}
 	}
 
-	.dropdownToggle {
+	.dropdownToggle:not([disabled]) {
 		cursor: pointer;
 	}
 }

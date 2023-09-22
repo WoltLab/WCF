@@ -114,6 +114,8 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.rss.withoutAccessToken');
         $event->preload('wcf.global.rss.withAccessToken');
 
+        $event->preload('wcf.label.none');
+
         $event->preload('wcf.like.button.dislike');
         $event->preload('wcf.like.button.like');
         $event->preload('wcf.like.details');
