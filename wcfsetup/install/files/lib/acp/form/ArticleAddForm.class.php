@@ -6,7 +6,6 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\category\CategoryNodeTree;
-use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
@@ -186,12 +185,6 @@ class ArticleAddForm extends AbstractForm
      * @var Language[]
      */
     public $availableLanguages = [];
-
-    /**
-     * label group list
-     * @var ViewableLabelGroup[]
-     */
-    public $labelGroups;
 
     /**
      * @var LabelPicker[]
@@ -607,7 +600,6 @@ class ArticleAddForm extends AbstractForm
         parent::readData();
 
         $this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
-        $this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
 
         if (empty($_POST)) {
             $this->setDefaultValues();
@@ -677,7 +669,6 @@ class ArticleAddForm extends AbstractForm
             'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
             'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
             'labelIDs' => $this->labelIDs,
-            'labelGroups' => $this->labelGroups,
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
             'labelPickers' => $this->labelPickers,
             'attachmentHandler' => $this->attachmentHandler,

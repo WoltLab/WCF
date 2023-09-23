@@ -87,7 +87,7 @@
 {/if}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor', "WoltLabSuite/Core/Component/Article/LabelPicker"], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor, { setup: setupLabelPicker }) {
 		Language.addObject({
 			'wcf.article.convertFromI18n.question': '{jslang}wcf.article.convertFromI18n.question{/jslang}',
 			'wcf.article.convertFromI18n.description': '{jslang}wcf.article.convertFromI18n.description{/jslang}',
@@ -108,6 +108,12 @@
 				redirectUrl: '{link controller='ArticleList'}{/link}'
 			});
 		{/if}
+
+		setupLabelPicker(new Map([
+			{implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}
+				[ {$__labelCategoryID}, [ {implode from=$labelGroupIDs item=labelGroupID}{$labelGroupID}{/implode} ] ],
+			{/implode}
+		]));
 	});
 </script>
 
@@ -591,13 +597,8 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
 			'wcf.global.preview': '{jslang}wcf.global.preview{/jslang}',
 		});
-		
-		{if !$labelGroups|empty}
-			//new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
-		{/if}
 		
 		new WCF.Message.I18nPreview({
 			messageFields: [

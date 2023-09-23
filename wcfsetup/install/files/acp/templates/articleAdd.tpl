@@ -88,7 +88,7 @@
 {/if}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor', "WoltLabSuite/Core/Component/Article/LabelPicker"], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor, { setup: setupLabelPicker }) {
 		Language.addObject({
 			'wcf.article.convertFromI18n.question': '{jslang}wcf.article.convertFromI18n.question{/jslang}',
 			'wcf.article.convertFromI18n.description': '{jslang}wcf.article.convertFromI18n.description{/jslang}',
@@ -109,6 +109,12 @@
 				redirectUrl: '{link controller='ArticleList'}{/link}'
 			});
 		{/if}
+
+		setupLabelPicker(new Map([
+			{implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}
+				[ {$__labelCategoryID}, [ {implode from=$labelGroupIDs item=labelGroupID}{$labelGroupID}{/implode} ] ],
+			{/implode}
+		]));
 	});
 </script>
 
@@ -163,45 +169,23 @@
 		
 		{event name='categoryFields'}
 		
-		{if $labelGroups|count}
-			{foreach from=$labelGroups item=labelGroup}
-				{if $labelGroup|count}
-					<dl{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset} class="formError"{/if}>
-						<dt><label>{$labelGroup->getTitle()}</label></dt>
-						<dd>
-							<ul class="labelList jsOnly" data-object-id="{@$labelGroup->groupID}">
-								<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}" data-force-selection="{if $labelGroup->forceSelection}true{else}false{/if}">
-									<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
-									<div class="dropdownMenu">
-										<ul class="scrollableDropdownMenu">
-											{foreach from=$labelGroup item=label}
-												<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
-											{/foreach}
-										</ul>
-									</div>
-								</li>
-							</ul>
-							<noscript>
-								<select name="labelIDs[{@$labelGroup->groupID}]">
-									{foreach from=$labelGroup item=label}
-										<option value="{$label->labelID}">{$label->getTitle()}</option>
-									{/foreach}
-								</select>
-							</noscript>
-							{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset}
-								<small class="innerError">
-									{if $errorType[$labelGroup->groupID] == 'missing'}
-										{lang}wcf.label.error.missing{/lang}
-									{else}
-										{lang}wcf.label.error.invalid{/lang}
-									{/if}
-								</small>
+		{foreach from=$labelPickers item=labelPicker}
+			<dl>
+				<dt><label for="{$labelPicker->getId()}">{$labelPicker->labelGroup->getTitle()}</label></dt>
+				<dd>
+					{@$labelPicker->toHtml()}
+					{if $errorField == 'label' && $errorType[$labelPicker->labelGroup->groupID]|isset}
+						<small class="innerError">
+							{if $errorType[$labelPicker->labelGroup->groupID] == 'missing'}
+								{lang}wcf.label.error.missing{/lang}
+							{else}
+								{lang}wcf.label.error.invalid{/lang}
 							{/if}
-						</dd>
-					</dl>
-				{/if}
-			{/foreach}
-		{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		{/foreach}
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.acp.article.author{/lang}</label></dt>
@@ -614,13 +598,8 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
 			'wcf.global.preview': '{jslang}wcf.global.preview{/jslang}',
 		});
-		
-		{if !$labelGroups|empty}
-			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
-		{/if}
 		
 		new WCF.Message.I18nPreview({
 			messageFields: [
