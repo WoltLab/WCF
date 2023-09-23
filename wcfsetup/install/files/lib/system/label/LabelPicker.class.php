@@ -9,6 +9,8 @@ use wcf\util\StringUtil;
 
 final class LabelPicker
 {
+    public int $selected = 0;
+
     public function __construct(public readonly ViewableLabelGroup $labelGroup)
     {
     }
@@ -23,10 +25,25 @@ final class LabelPicker
         }
 
         return \sprintf(
-            '<woltlab-core-label-picker group-id="%d" title="%s" labels="%s"></woltlab-core-label-picker>',
-            $this->labelGroup->groupID,
+            <<<'EOT'
+                <woltlab-core-label-picker
+                    selected="%d"
+                    id="%s"
+                    title="%s"
+                    labels="%s"
+                    data-group-id="%d"
+                ></woltlab-core-label-picker>
+            EOT,
+            $this->selected,
+            $this->getId(),
             $this->labelGroup->getTitle(),
             StringUtil::encodeHTML(JSON::encode($labels)),
+            $this->labelGroup->groupID,
         );
+    }
+
+    public function getId(): string
+    {
+        return "labelGroup{$this->labelGroup->groupID}";
     }
 }
