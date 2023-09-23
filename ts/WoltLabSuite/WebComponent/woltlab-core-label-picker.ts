@@ -20,6 +20,7 @@
         throw new Error("Expected a non empty list of labels.");
       }
 
+      // TODO: This HTML is duplicated in `set selected()`
       const emptyLabel = `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
 
       this.#button.type = "button";
@@ -32,20 +33,28 @@
         this.dispatchEvent(evt);
       });
 
+      // Moving the ID to the button allows clicks on the label to be forwarded.
+      this.#button.id = this.id;
+      this.removeAttribute("id");
+
       this.append(this.#button);
 
-      const dropdownMenu = document.createElement("ul");
-      dropdownMenu.classList.add("dropdownMenu");
+      const scrollableDropdownMenu = document.createElement("ul");
+      scrollableDropdownMenu.classList.add("scrollableDropdownMenu");
       for (const [labelId, html] of this.#labels) {
-        dropdownMenu.append(this.#createLabelItem(labelId, html));
+        scrollableDropdownMenu.append(this.#createLabelItem(labelId, html));
       }
 
       if (!this.required) {
         const divider = document.createElement("li");
         divider.classList.add("dropdownDivider");
 
-        dropdownMenu.append(divider, this.#createLabelItem(0, emptyLabel));
+        scrollableDropdownMenu.append(divider, this.#createLabelItem(0, emptyLabel));
       }
+
+      const dropdownMenu = document.createElement("ul");
+      dropdownMenu.classList.add("dropdownMenu");
+      dropdownMenu.append(scrollableDropdownMenu);
 
       this.append(dropdownMenu);
 
@@ -55,13 +64,18 @@
         if (this.#formValue === undefined) {
           this.#formValue = document.createElement("input");
           this.#formValue.type = "hidden";
-          this.#formValue.name = "labelIDs[]";
+          this.#formValue.name = `labelIDs[${this.dataset.groupId}]`;
           this.append(this.#formValue);
         }
 
         this.#formValue.value = (this.selected || 0).toString();
       } else {
         this.#formValue?.remove();
+      }
+
+      if (this.selected) {
+        // TODO: This is _slightly_ awkward.
+        this.selected = this.selected!;
       }
     }
 

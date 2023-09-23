@@ -206,7 +206,12 @@ class ArticleEditForm extends ArticleAddForm
             );
             if (isset($assignedLabels[$this->article->articleID])) {
                 foreach ($assignedLabels[$this->article->articleID] as $label) {
-                    $this->labelIDs[$label->groupID] = $label->labelID;
+                    foreach ($this->labelPickers as $labelPicker) {
+                        if ($labelPicker->labelGroup->groupID === $label->groupID) {
+                            $labelPicker->selected = $label->labelID;
+                            break;
+                        }
+                    }
                 }
             }
         }

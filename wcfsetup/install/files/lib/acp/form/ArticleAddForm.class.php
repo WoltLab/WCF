@@ -249,6 +249,7 @@ class ArticleAddForm extends AbstractForm
 
         // labels
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
+        $this->labelPickers = ArticleCategory::getLabelPickers();
 
         if (isset($_REQUEST['tmpHash'])) {
             $this->tmpHash = $_REQUEST['tmpHash'];
@@ -490,6 +491,14 @@ class ArticleAddForm extends AbstractForm
         if (!empty($validationResult)) {
             throw new UserInputException('label', $validationResult);
         }
+
+        foreach ($this->labelIDs as $groupID => $labelID) {
+            foreach ($this->labelPickers as $labelPicker) {
+                if ($labelPicker->labelGroup->groupID == $groupID) {
+                    $labelPicker->selected = $labelID;
+                }
+            }
+        }
     }
 
     /**
@@ -599,7 +608,6 @@ class ArticleAddForm extends AbstractForm
 
         $this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
         $this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
-        $this->labelPickers = ArticleCategory::getLabelPickers();
 
         if (empty($_POST)) {
             $this->setDefaultValues();
