@@ -11,8 +11,6 @@
 		<div id="pageHeaderFacade" class="pageHeaderFacade">
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}
-				
-				{include file='pageHeaderSearch'}
 			</div>
 		</div>
 	</header>

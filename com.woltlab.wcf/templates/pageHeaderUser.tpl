@@ -209,10 +209,14 @@
 			{event name='menuItems'}
 		{/if}
 		
-		<!-- page search -->
-		<li>
-			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
-		</li>
+		{if !(FORCE_LOGIN && !$__wcf->user->userID)}
+			<!-- page search -->
+			<li>
+				<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
+
+				{include file='pageHeaderSearch'}
+			</li>
+		{/if}
 	</ul>
 </nav>
 {if $__wcf->user->userID}
