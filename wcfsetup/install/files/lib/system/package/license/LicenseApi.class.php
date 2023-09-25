@@ -2,11 +2,14 @@
 
 namespace wcf\system\package\license;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\io\HttpFactory;
+use wcf\system\package\license\exception\MissingCredentials;
+use wcf\system\package\license\exception\ParsingFailed;
 
 /**
  * Provides access to the license data.
@@ -18,21 +21,75 @@ use wcf\system\io\HttpFactory;
  */
 final class LicenseApi
 {
-    private readonly PackageUpdateServer $packageUpdateServer;
+    private readonly array $data;
+    private readonly string $json;
 
-    public function __construct()
+    private const LICENSE_FILE = \WCF_DIR . 'license.php';
+
+    private function __construct(string $json)
     {
-        $this->packageUpdateServer = PackageUpdateServer::getWoltLabUpdateServer();
+        $this->json = $json;
+        $this->data = $this->parseLicenseData($this->json);
+
+        $this->updateLicenseFile();
     }
 
-    public function fetchLicenseData(): array|object
+    public function getData(): array
     {
-        if (!$this->hasLicenseCredentials()) {
-            // TODO
-            throw new \Exception("no credentials");
+        return $this->data;
+    }
+
+    private function updateLicenseFile(): void
+    {
+        @\file_put_contents(
+            self::LICENSE_FILE,
+            \sprintf(
+                <<<'EOT'
+                return '%s';
+                EOT,
+                $this->json,
+            )
+        );
+    }
+
+    private function parseLicenseData(string $json): array
+    {
+        try {
+            /** @var array $result */
+            $result = (new MapperBuilder())
+                ->allowSuperfluousKeys()
+                ->mapper()
+                ->map(
+                    <<<'EOT'
+                    array {
+                        status: 200,
+                        license: array {
+                            authCode?: string,
+                            licenseID?: int,
+                            type: string,
+                            expiryDates?: array<string, int>,
+                            ckeditorLicenseKey?: string,
+                        },
+                        pluginstore: array<string, string>,
+                        woltlab: array<string, string>,
+                    }
+                    EOT,
+                    Source::json($json)
+                );
+        } catch (MappingError $e) {
+            throw new ParsingFailed($e);
         }
 
-        $authData = $this->packageUpdateServer->getAuthData();
+        return $result;
+    }
+
+    public static function fetchFromRemote(): LicenseApi
+    {
+        if (!self::hasLicenseCredentials()) {
+            throw new MissingCredentials();
+        }
+
+        $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
 
         $request = new Request(
             'POST',
@@ -48,30 +105,28 @@ final class LicenseApi
         );
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
-        return (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->mapper()
-            ->map(
-                <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            licenseID?: int,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
-                Source::json($response->getBody())
-            );
+
+        return new LicenseApi($response->getBody());
     }
 
-    public function hasLicenseCredentials(): bool
+    public static function readFromFile(): ?LicenseApi
     {
-        $authData = $this->packageUpdateServer->getAuthData();
+        if (!\is_readable(self::LICENSE_FILE)) {
+            return null;
+        }
+
+        $content = \file_get_contents(self::LICENSE_FILE);
+
+        try {
+            return new LicenseApi($content);
+        } catch (ParsingFailed) {
+            return null;
+        }
+    }
+
+    public static function hasLicenseCredentials(): bool
+    {
+        $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
         if (empty($authData['username']) || empty($authData['password'])) {
             return false;
         }

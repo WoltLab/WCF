@@ -28,8 +28,6 @@ final class LicensePage extends AbstractPage
 
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
-    private LicenseApi $licenseApi;
-
     private array $licenseData;
 
     private int $licenseNumber;
@@ -48,9 +46,7 @@ final class LicensePage extends AbstractPage
     {
         parent::readData();
 
-        $this->licenseApi = new LicenseApi();
-
-        if (!$this->licenseApi->hasLicenseCredentials()) {
+        if (!LicenseApi::hasLicenseCredentials()) {
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(
                     LicenseEditForm::class,
@@ -63,7 +59,7 @@ final class LicensePage extends AbstractPage
 
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
-        $this->licenseData = $this->licenseApi->fetchLicenseData();
+        $this->licenseData = LicenseApi::fetchFromRemote()->getData();
         if (isset($this->licenseData['license']['licenseID'])) {
             $this->licenseNumber = $this->licenseData['license']['licenseID'];
         }
