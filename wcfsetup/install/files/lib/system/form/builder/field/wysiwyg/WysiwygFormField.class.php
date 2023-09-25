@@ -201,9 +201,9 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function hasSaveValue()
+    public function getSaveValue()
     {
-        return false;
+        return $this->htmlInputProcessor->getHtml();
     }
 
     /**
@@ -230,7 +230,6 @@ final class WysiwygFormField extends AbstractFormField implements
             'wysiwyg',
             function (IFormDocument $document, array $parameters) {
                 if ($this->checkDependencies()) {
-                    $parameters['data'][$this->getObjectProperty()] = $this->htmlInputProcessor->getHtml();
                     $parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
                 }
 
