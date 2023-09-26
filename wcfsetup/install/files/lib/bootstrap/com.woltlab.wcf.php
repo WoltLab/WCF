@@ -15,6 +15,7 @@ use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\system\language\preload\PhrasePreloader;
 use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\event\PackageListChanged;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\event\UsernameValidating;
 use wcf\system\WCF;
@@ -62,4 +63,22 @@ return static function (): void {
         $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
         $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
     });
+
+    try {
+        $licenseApi = LicenseApi::readFromFile();
+        if ($licenseApi !== null) {
+            $licenseData = $licenseApi->getData();
+            $brandingFree = $licenseData['woltlab']['com.woltlab.brandingFree'] ?? '0.0';
+            $expiresAt = $licenseData['expiryDates']['com.woltlab.brandingFree'] ?? \TIME_NOW;
+            if ($brandingFree !== '0.0' && $expiresAt >= \TIME_NOW) {
+                define('WOLTLAB_BRANDING', false);
+            }
+        }
+    } catch (\Throwable) {
+        // Reading the license file must never cause any errors.
+    }
+
+    if (!defined('WOLTLAB_BRANDING')) {
+        define('WOLTLAB_BRANDING', true);
+    }
 };
