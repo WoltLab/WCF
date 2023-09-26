@@ -30,8 +30,6 @@ final class LicenseApi
     {
         $this->json = $json;
         $this->data = $this->parseLicenseData($this->json);
-
-        $this->updateLicenseFile();
     }
 
     public function getData(): array
@@ -39,7 +37,7 @@ final class LicenseApi
         return $this->data;
     }
 
-    private function updateLicenseFile(): void
+    public function updateLicenseFile(): void
     {
         @\file_put_contents(
             self::LICENSE_FILE,
@@ -83,13 +81,15 @@ final class LicenseApi
         return $result;
     }
 
-    public static function fetchFromRemote(): LicenseApi
+    public static function fetchFromRemote(array $authData = []): LicenseApi
     {
-        if (!self::hasLicenseCredentials()) {
-            throw new MissingCredentials();
-        }
+        if ($authData === []) {
+            if (!self::hasLicenseCredentials()) {
+                throw new MissingCredentials();
+            }
 
-        $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
+            $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
+        }
 
         $request = new Request(
             'POST',
@@ -106,7 +106,10 @@ final class LicenseApi
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
 
-        return new LicenseApi($response->getBody());
+        $licenseApi = new LicenseApi($response->getBody());
+        $licenseApi->updateLicenseFile();
+
+        return $licenseApi;
     }
 
     public static function readFromFile(): ?LicenseApi
@@ -122,6 +125,15 @@ final class LicenseApi
         } catch (ParsingFailed) {
             return null;
         }
+    }
+
+    public static function removeLicenseFile(): void
+    {
+        if (!\file_exists(self::LICENSE_FILE)) {
+            return;
+        }
+
+        \unlink(self::LICENSE_FILE);
     }
 
     public static function hasLicenseCredentials(): bool

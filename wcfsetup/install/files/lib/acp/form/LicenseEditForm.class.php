@@ -2,11 +2,7 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\option\Option;
@@ -23,9 +19,9 @@ use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\io\HttpFactory;
+use wcf\system\package\license\exception\ParsingFailed;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
  * Set up or edit the license data.
@@ -52,7 +48,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
      */
     public $templateName = 'licenseEdit';
 
-    private array $apiResponse;
+    private LicenseApi $licenseApi;
 
     private string $url;
 
@@ -109,13 +105,16 @@ final class LicenseEditForm extends AbstractFormBuilderForm
                             \assert($licenseNo instanceof TextFormField);
 
                             try {
-                                $this->apiResponse = $this->getLicenseData($licenseNo->getValue(), $serialNo->getValue());
+                                $this->licenseApi = LicenseApi::fetchFromRemote([
+                                    'username' => $licenseNo->getValue(),
+                                    'password' => $serialNo->getValue(),
+                                ]);
                             } catch (ConnectException) {
                                 $serialNo->addValidationError(new FormFieldValidationError(
                                     'failedConnect',
                                     'wcf.acp.firstTimeSetup.license.credentials.error.failedConnect'
                                 ));
-                            } catch (ClientExceptionInterface | MappingError) {
+                            } catch (ClientExceptionInterface | ParsingFailed) {
                                 $serialNo->addValidationError(new FormFieldValidationError(
                                     'failedValidation',
                                     'wcf.acp.firstTimeSetup.license.credentials.error.failedValidation'
@@ -161,43 +160,6 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         );
     }
 
-    private function getLicenseData(string $licenseNo, string $serialNo): array
-    {
-        $request = new Request(
-            'POST',
-            'https://api.woltlab.com/2.0/customer/license/list.json',
-            [
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            \http_build_query([
-                'licenseNo' => $licenseNo,
-                'serialNo' => $serialNo,
-                'instanceId' => \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID),
-            ], '', '&', \PHP_QUERY_RFC1738)
-        );
-
-        $response = HttpFactory::makeClientWithTimeout(5)->send($request);
-
-        return (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->mapper()
-            ->map(
-                <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
-                Source::json($response->getBody())
-            );
-    }
-
     /**
      * @inheritDoc
      */
@@ -238,21 +200,20 @@ final class LicenseEditForm extends AbstractFormBuilderForm
             $objectAction->executeAction();
         }
 
-        if (isset($this->apiResponse) && isset($this->apiResponse['license']['authCode'])) {
-            $optionData = [
-                Option::getOptionByName('package_server_auth_code')->optionID => $this->apiResponse['license']['authCode'],
-            ];
+        $authCode = '';
+        if (isset($this->licenseApi)) {
+            $authCode = $this->licenseApi->getData()['license']['authCode'] ?? '';
         } else {
-            $optionData = [
-                Option::getOptionByName('package_server_auth_code')->optionID => '',
-            ];
+            LicenseApi::removeLicenseFile();
         }
 
         $objectAction = new OptionAction(
             [],
             'updateAll',
             [
-                'data' => $optionData,
+                'data' => [
+                    Option::getOptionByName('package_server_auth_code')->optionID => $authCode
+                ],
             ]
         );
         $objectAction->executeAction();
