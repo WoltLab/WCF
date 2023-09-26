@@ -106,6 +106,6 @@
 			{/foreach}
 		];
 
-		void setupCkeditor(element, features, bbcodes, codeBlockLanguages);
+		void setupCkeditor(element, features, bbcodes, codeBlockLanguages, '{@$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
 	});
 </script>

@@ -43,8 +43,13 @@ final class LicenseApi
             self::LICENSE_FILE,
             \sprintf(
                 <<<'EOT'
-                return '%s';
+                <?php
+                /* GENERATED AT %s -- DO NOT EDIT */
+                return <<<'JSON'
+                %s
+                JSON;
                 EOT,
+                \gmdate('r', \TIME_NOW),
                 $this->json,
             )
         );
@@ -118,7 +123,7 @@ final class LicenseApi
             return null;
         }
 
-        $content = \file_get_contents(self::LICENSE_FILE);
+        $content = require(self::LICENSE_FILE);
 
         try {
             return new LicenseApi($content);

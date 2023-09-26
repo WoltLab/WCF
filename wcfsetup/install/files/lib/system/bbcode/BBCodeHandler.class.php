@@ -5,6 +5,7 @@ namespace wcf\system\bbcode;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -320,5 +321,18 @@ class BBCodeHandler extends SingletonFactory
         // The default locale "en" is part of the generated bundle, we must not
         // yield any module if this locale is (implicitly) requested.
         return "";
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getCkeditorLicenseKey(): string
+    {
+        $licenseApi = LicenseApi::readFromFile();
+        if ($licenseApi === null) {
+            return '';
+        }
+
+        return $licenseApi->getData()['license']['ckeditorLicenseKey'] ?? '';
     }
 }

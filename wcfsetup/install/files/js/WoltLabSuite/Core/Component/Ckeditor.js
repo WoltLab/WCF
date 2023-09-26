@@ -179,7 +179,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return false;
     }
-    async function setupCkeditor(element, features, bbcodes, codeBlockLanguages) {
+    async function setupCkeditor(element, features, bbcodes, codeBlockLanguages, licenseKey) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
@@ -200,6 +200,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             (0, Quote_1.setup)(element);
         }
         const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
+        if (licenseKey) {
+            configuration.licenseKey = licenseKey;
+        }
         (0, Normalizer_1.normalizeLegacyMessage)(element);
         const cke = await createEditor(element, configuration);
         const ckeditor = new Ckeditor(cke, features);

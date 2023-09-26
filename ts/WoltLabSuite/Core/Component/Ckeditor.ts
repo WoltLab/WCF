@@ -207,7 +207,7 @@ function initializeConfiguration(
     languages: codeBlockLanguages,
   };
 
-  (configuration as any).woltlabBbcode = bbcodes;
+  configuration.woltlabBbcode = bbcodes;
 
   if (features.autosave !== "") {
     initializeAutosave(element, configuration, features.autosave);
@@ -252,6 +252,7 @@ export async function setupCkeditor(
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
   codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
+  licenseKey: string,
 ): Promise<CKEditor> {
   if (instances.has(element)) {
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -279,6 +280,9 @@ export async function setupCkeditor(
   }
 
   const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
+  if (licenseKey) {
+    configuration.licenseKey = licenseKey;
+  }
 
   normalizeLegacyMessage(element);
 
