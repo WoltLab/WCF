@@ -84,8 +84,8 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         #setLocation(lat, lng) {
             this.#element.dataset.googleMapsLat = lat.toString();
             this.#element.dataset.googleMapsLng = lng.toString();
-            if ("googleMapsGeocodingStore" in this.#element.dataset && this.#element.form) {
-                this.#store(this.#element.dataset.googleMapsGeocodingStore, lat, lng);
+            if (this.#element.hasAttribute("data-google-maps-geocoding-store") && this.#element.form) {
+                this.#store(this.#element.dataset.googleMapsGeocodingStore || "", lat, lng);
             }
         }
         #store(prefix, lat, lng) {
