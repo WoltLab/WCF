@@ -115,8 +115,9 @@ class Geocoding {
     this.#element.dataset.googleMapsLat = lat.toString();
     this.#element.dataset.googleMapsLng = lng.toString();
 
-    if ("googleMapsGeocodingStore" in this.#element.dataset && this.#element.form) {
-      this.#store(this.#element.dataset.googleMapsGeocodingStore!, lat, lng);
+    const prefix = this.#element.dataset.googleMapsGeocodingStore;
+    if (prefix != null && this.#element.form) {
+      this.#store(prefix, lat, lng);
     }
   }
 
