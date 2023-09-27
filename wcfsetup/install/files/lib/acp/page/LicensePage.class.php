@@ -59,7 +59,10 @@ final class LicensePage extends AbstractPage
 
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
-        $this->licenseData = LicenseApi::fetchFromRemote()->getData();
+        $licenseApi = LicenseApi::fetchFromRemote();
+        $licenseApi->updateLicenseFile();
+
+        $this->licenseData = $licenseApi->getData();
         if (isset($this->licenseData['license']['licenseID'])) {
             $this->licenseNumber = $this->licenseData['license']['licenseID'];
         }

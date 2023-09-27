@@ -111,10 +111,7 @@ final class LicenseApi
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
 
-        $licenseApi = new LicenseApi($response->getBody());
-        $licenseApi->updateLicenseFile();
-
-        return $licenseApi;
+        return new LicenseApi($response->getBody());
     }
 
     public static function readFromFile(): ?LicenseApi

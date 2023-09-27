@@ -13,8 +13,8 @@ use wcf\data\package\update\server\PackageUpdateServerEditor;
 use wcf\system\package\license\LicenseApi;
 
 try {
-    // Side-effect: Writes the license file.
-    LicenseApi::fetchFromRemote();
+    $licenseApi = LicenseApi::fetchFromRemote();
+    $licenseApi->updateLicenseFile();
 
     // If we’re still here it means that the credentials are actually valid. Now
     // we can check if the credentials for both servers are in sync, because
