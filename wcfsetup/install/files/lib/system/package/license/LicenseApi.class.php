@@ -22,14 +22,12 @@ use wcf\system\package\license\exception\ParsingFailed;
 final class LicenseApi
 {
     private readonly LicenseData $data;
-    private readonly string $json;
 
     private const LICENSE_FILE = \WCF_DIR . 'license.php';
 
-    private function __construct(string $json)
+    private function __construct(LicenseData $data)
     {
-        $this->json = $json;
-        $this->data = $this->parseLicenseData($this->json);
+        $this->data = $data;
     }
 
     public function getData(): LicenseData
@@ -45,17 +43,15 @@ final class LicenseApi
                 <<<'EOT'
                 <?php
                 /* GENERATED AT %s -- DO NOT EDIT */
-                return <<<'JSON'
-                %s
-                JSON;
+                return unserialize(%s);
                 EOT,
                 \gmdate('r', \TIME_NOW),
-                $this->json,
+                \var_export(\serialize($this->data), true),
             )
         );
     }
 
-    private function parseLicenseData(string $json): LicenseData
+    private static function parseLicenseData(string $json): LicenseData
     {
         try {
             return (new MapperBuilder())
@@ -95,7 +91,7 @@ final class LicenseApi
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
 
-        return new LicenseApi($response->getBody());
+        return new LicenseApi(self::parseLicenseData($response->getBody()));
     }
 
     public static function readFromFile(): ?LicenseApi
@@ -104,13 +100,7 @@ final class LicenseApi
             return null;
         }
 
-        $content = require(self::LICENSE_FILE);
-
-        try {
-            return new LicenseApi($content);
-        } catch (ParsingFailed) {
-            return null;
-        }
+        return new LicenseApi(require(self::LICENSE_FILE));
     }
 
     public static function removeLicenseFile(): void
