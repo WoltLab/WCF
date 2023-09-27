@@ -21,6 +21,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\package\license\exception\ParsingFailed;
 use wcf\system\package\license\LicenseApi;
+use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -50,6 +51,8 @@ final class LicenseEditForm extends AbstractFormBuilderForm
 
     private LicenseApi $licenseApi;
 
+    private LicenseData $licenseData;
+
     private string $url;
 
     /**
@@ -71,6 +74,8 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     protected function createForm()
     {
         parent::createForm();
+
+        $this->licenseApi = new LicenseApi();
 
         $licenseNo = '';
         $serialNo = '';
@@ -105,7 +110,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
                             \assert($licenseNo instanceof TextFormField);
 
                             try {
-                                $this->licenseApi = LicenseApi::fetchFromRemote([
+                                $this->licenseData = $this->licenseApi->fetchFromRemote([
                                     'username' => $licenseNo->getValue(),
                                     'password' => $serialNo->getValue(),
                                 ]);
@@ -201,12 +206,12 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         }
 
         $authCode = '';
-        if (isset($this->licenseApi)) {
-            $this->licenseApi->updateLicenseFile();
+        if (isset($this->licenseData)) {
+            $this->licenseApi->updateLicenseFile($this->licenseData);
 
-            $authCode = $this->licenseApi->getData()->license['authCode'] ?? '';
+            $authCode = $this->licenseData->license['authCode'] ?? '';
         } else {
-            LicenseApi::removeLicenseFile();
+            $this->licenseApi->removeLicenseFile();
         }
 
         $objectAction = new OptionAction(

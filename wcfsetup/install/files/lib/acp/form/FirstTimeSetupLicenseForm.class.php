@@ -19,6 +19,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\package\license\exception\ParsingFailed;
 use wcf\system\package\license\LicenseApi;
+use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
 use wcf\util\HeaderUtil;
 
@@ -39,6 +40,8 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
 
     private LicenseApi $licenseApi;
 
+    private LicenseData $licenseData;
+
     /**
      * @inheritDoc
      */
@@ -57,6 +60,8 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
     protected function createForm()
     {
         parent::createForm();
+
+        $this->licenseApi = new LicenseApi();
 
         $this->form->appendChildren([
             $credentialsContainer = FormContainer::create('credentials')
@@ -81,7 +86,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                             \assert($licenseNo instanceof TextFormField);
 
                             try {
-                                $this->licenseApi = LicenseApi::fetchFromRemote([
+                                $this->licenseData = $this->licenseApi->fetchFromRemote([
                                     'username' => $licenseNo->getValue(),
                                     'password' => $serialNo->getValue(),
                                 ]);
@@ -152,11 +157,11 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
             Option::getOptionByName('first_time_setup_state')->optionID => 1,
         ];
 
-        if (isset($this->licenseApi)) {
-            $this->licenseApi->updateLicenseFile();
+        if (isset($this->licenseData)) {
+            $this->licenseApi->updateLicenseFile($this->licenseData);
 
-            if (isset($this->licenseApi->getData()->license['authCode'])) {
-                $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->licenseApi->getData()->license['authCode'];
+            if (isset($this->licenseData->license['authCode'])) {
+                $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->licenseData->license['authCode'];
             }
         }
 

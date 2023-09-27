@@ -60,10 +60,9 @@ final class LicensePage extends AbstractPage
 
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
-        $licenseApi = LicenseApi::fetchFromRemote();
-        $licenseApi->updateLicenseFile();
-
-        $this->licenseData = $licenseApi->getData();
+        $licenseApi = new LicenseApi();
+        $this->licenseData = $licenseApi->fetchFromRemote();
+        $licenseApi->updateLicenseFile($this->licenseData);
 
         $identifiers = \array_merge(
             \array_keys($this->licenseData->woltlab),

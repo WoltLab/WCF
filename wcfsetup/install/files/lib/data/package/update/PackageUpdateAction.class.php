@@ -613,8 +613,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         // Try to update the cached license data to check for recent purchases.
         if (LicenseApi::hasLicenseCredentials()) {
-            $licenseApi = LicenseApi::fetchFromRemote();
-            $licenseApi->updateLicenseFile();
+            $licenseApi = new LicenseApi();
+            $licenseData = $licenseApi->fetchFromRemote();
+            $licenseApi->updateLicenseFile($licenseData);
         }
 
         $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();

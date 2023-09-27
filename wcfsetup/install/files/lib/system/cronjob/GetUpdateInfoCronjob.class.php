@@ -51,8 +51,9 @@ class GetUpdateInfoCronjob extends AbstractCronjob
     private function refreshLicenseFile(): void
     {
         try {
-            $licenseApi = LicenseApi::fetchFromRemote();
-            $licenseApi->updateLicenseFile();
+            $licenseApi = new LicenseApi();
+            $licenseData = $licenseApi->fetchFromRemote();
+            $licenseApi->updateLicenseFile($licenseData);
         } catch (\Throwable) {
             // This is a “silent” operation that should not interrupt the
             // execution of cronjobs in case of an error.

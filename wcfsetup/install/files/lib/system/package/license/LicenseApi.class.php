@@ -21,21 +21,9 @@ use wcf\system\package\license\exception\ParsingFailed;
  */
 final class LicenseApi
 {
-    private readonly LicenseData $data;
-
     private const LICENSE_FILE = \WCF_DIR . 'license.php';
 
-    private function __construct(LicenseData $data)
-    {
-        $this->data = $data;
-    }
-
-    public function getData(): LicenseData
-    {
-        return $this->data;
-    }
-
-    public function updateLicenseFile(): void
+    public function updateLicenseFile(LicenseData $data): void
     {
         @\file_put_contents(
             self::LICENSE_FILE,
@@ -46,7 +34,7 @@ final class LicenseApi
                 return unserialize(%s);
                 EOT,
                 \gmdate('r', \TIME_NOW),
-                \var_export(\serialize($this->data), true),
+                \var_export(\serialize($data), true),
             )
         );
     }
@@ -66,7 +54,7 @@ final class LicenseApi
         }
     }
 
-    public static function fetchFromRemote(array $authData = []): LicenseApi
+    public static function fetchFromRemote(array $authData = []): LicenseData
     {
         if ($authData === []) {
             if (!self::hasLicenseCredentials()) {
@@ -91,19 +79,19 @@ final class LicenseApi
 
         $response = HttpFactory::makeClientWithTimeout(5)->send($request);
 
-        return new LicenseApi(self::parseLicenseData($response->getBody()));
+        return self::parseLicenseData($response->getBody());
     }
 
-    public static function readFromFile(): ?LicenseApi
+    public static function readFromFile(): ?LicenseData
     {
         if (!\is_readable(self::LICENSE_FILE)) {
             return null;
         }
 
-        return new LicenseApi(require(self::LICENSE_FILE));
+        return require(self::LICENSE_FILE);
     }
 
-    public static function removeLicenseFile(): void
+    public function removeLicenseFile(): void
     {
         if (!\file_exists(self::LICENSE_FILE)) {
             return;

@@ -65,9 +65,8 @@ return static function (): void {
     });
 
     try {
-        $licenseApi = LicenseApi::readFromFile();
-        if ($licenseApi !== null) {
-            $licenseData = $licenseApi->getData();
+        $licenseData = LicenseApi::readFromFile();
+        if ($licenseData !== null) {
             $brandingFree = $licenseData->woltlab['com.woltlab.brandingFree'] ?? '0.0';
             $expiresAt = $licenseData->license['expiryDates']['com.woltlab.brandingFree'] ?? \TIME_NOW;
             if ($brandingFree !== '0.0' && $expiresAt >= \TIME_NOW) {
