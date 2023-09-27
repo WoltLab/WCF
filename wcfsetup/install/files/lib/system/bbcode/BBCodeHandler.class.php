@@ -328,7 +328,9 @@ class BBCodeHandler extends SingletonFactory
      */
     public function getCkeditorLicenseKey(): string
     {
-        $licenseData = LicenseApi::readFromFile();
+        $licenseApi = new LicenseApi();
+        $licenseData = $licenseApi->readFromFile();
+
         if ($licenseData === null) {
             return '';
         }

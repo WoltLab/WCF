@@ -82,13 +82,15 @@ final class LicenseApi
         return self::parseLicenseData($response->getBody());
     }
 
-    public static function readFromFile(): ?LicenseData
+    public function readFromFile(): ?LicenseData
     {
-        if (!\is_readable(self::LICENSE_FILE)) {
+        try {
+            return require(self::LICENSE_FILE);
+        } catch (\Throwable) {
+            $this->clearLicenseFile();
+
             return null;
         }
-
-        return require(self::LICENSE_FILE);
     }
 
     public function clearLicenseFile(): void
