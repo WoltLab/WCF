@@ -13,6 +13,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\package\PackageInstallationScheduler;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\package\PackageUpdateUnauthorizedException;
@@ -609,6 +610,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     public function searchForUpdates()
     {
         PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], $this->parameters['ignoreCache']);
+
+        // Try to update the cached license data to check for recent purchases.
+        if (LicenseApi::hasLicenseCredentials()) {
+            $licenseApi = LicenseApi::fetchFromRemote();
+            $licenseApi->updateLicenseFile();
+        }
 
         $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
         $url = '';

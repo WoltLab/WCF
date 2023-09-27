@@ -4,6 +4,7 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\license\LicenseApi;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
 
@@ -39,6 +40,22 @@ class GetUpdateInfoCronjob extends AbstractCronjob
             if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
                 WCF::setLanguage($currentLanguage);
             }
+        }
+
+        $this->refreshLicenseFile();
+    }
+
+    /**
+     * Refresh the license file to update any recently made purchases.
+     */
+    private function refreshLicenseFile(): void
+    {
+        try {
+            $licenseApi = LicenseApi::fetchFromRemote();
+            $licenseApi->updateLicenseFile();
+        } catch (\Throwable) {
+            // This is a “silent” operation that should not interrupt the
+            // execution of cronjobs in case of an error.
         }
     }
 }
