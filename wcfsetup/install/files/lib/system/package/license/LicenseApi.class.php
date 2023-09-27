@@ -3,6 +3,7 @@
 namespace wcf\system\package\license;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
@@ -52,7 +53,7 @@ final class LicenseApi
                    LicenseData::class,
                     Source::json($json)
                 );
-        } catch (MappingError $e) {
+        } catch (MappingError | InvalidSource $e) {
             throw new ParsingFailed($e);
         }
     }
