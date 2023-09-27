@@ -23,7 +23,7 @@ final class LicenseApi
 {
     private const LICENSE_FILE = \WCF_DIR . 'license.php';
 
-    public function updateLicenseFile(LicenseData $data): void
+    public function updateLicenseFile(?LicenseData $data): void
     {
         @\file_put_contents(
             self::LICENSE_FILE,
@@ -91,13 +91,9 @@ final class LicenseApi
         return require(self::LICENSE_FILE);
     }
 
-    public function removeLicenseFile(): void
+    public function clearLicenseFile(): void
     {
-        if (!\file_exists(self::LICENSE_FILE)) {
-            return;
-        }
-
-        \unlink(self::LICENSE_FILE);
+        $this->updateLicenseFile(null);
     }
 
     public static function hasLicenseCredentials(): bool

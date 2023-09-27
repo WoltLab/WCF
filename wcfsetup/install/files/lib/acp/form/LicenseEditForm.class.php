@@ -211,7 +211,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
 
             $authCode = $this->licenseData->license['authCode'] ?? '';
         } else {
-            $this->licenseApi->removeLicenseFile();
+            $this->licenseApi->clearLicenseFile();
         }
 
         $objectAction = new OptionAction(
