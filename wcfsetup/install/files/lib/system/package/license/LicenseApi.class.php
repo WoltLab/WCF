@@ -10,6 +10,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\io\HttpFactory;
 use wcf\system\package\license\exception\MissingCredentials;
 use wcf\system\package\license\exception\ParsingFailed;
+use wcf\system\WCF;
 
 /**
  * Provides access to the license data.
@@ -37,6 +38,8 @@ final class LicenseApi
                 \var_export(\serialize($data), true),
             )
         );
+
+        WCF::resetZendOpcache(self::LICENSE_FILE);
     }
 
     private static function parseLicenseData(string $json): LicenseData
