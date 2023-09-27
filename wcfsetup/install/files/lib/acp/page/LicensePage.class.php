@@ -33,8 +33,6 @@ final class LicensePage extends AbstractPage
 
     private array $availablePackages = [];
 
-    private int $licenseNumber;
-
     private array $installedPackages;
 
     private array $installablePackages = [];
@@ -66,9 +64,6 @@ final class LicensePage extends AbstractPage
         $licenseApi->updateLicenseFile();
 
         $this->licenseData = $licenseApi->getData();
-        if (isset($this->licenseData->license['licenseID'])) {
-            $this->licenseNumber = $this->licenseData->license['licenseID'];
-        }
 
         $identifiers = \array_merge(
             \array_keys($this->licenseData->woltlab),
@@ -128,7 +123,6 @@ final class LicensePage extends AbstractPage
         WCF::getTPL()->assign([
             'licenseData' => $this->licenseData,
             'availablePackages' => $this->availablePackages,
-            'licenseNumber' => $this->licenseNumber,
             'installedPackages' => $this->installedPackages,
             'installablePackages' => $this->installablePackages,
             'packageUpdates' => $this->packageUpdates,

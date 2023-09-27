@@ -30,4 +30,14 @@ final class LicenseData
     )
     {
     }
+
+    public function getLicenseNumber(): ?string
+    {
+        return $this->license['licenseID'] ?? null;
+    }
+
+    public function getLicenseType(): string
+    {
+        return $this->license['type'];
+    }
 }
