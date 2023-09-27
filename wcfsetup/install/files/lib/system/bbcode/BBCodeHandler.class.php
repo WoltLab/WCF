@@ -333,6 +333,6 @@ class BBCodeHandler extends SingletonFactory
             return '';
         }
 
-        return $licenseApi->getData()['license']['ckeditorLicenseKey'] ?? '';
+        return $licenseApi->getData()->license['ckeditorLicenseKey'] ?? '';
     }
 }

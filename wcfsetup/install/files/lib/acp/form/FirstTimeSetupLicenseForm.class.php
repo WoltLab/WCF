@@ -155,8 +155,8 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
         if (isset($this->licenseApi)) {
             $this->licenseApi->updateLicenseFile();
 
-            if (isset($this->licenseApi->getData()['license']['authCode'])) {
-                $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->licenseApi->getData()['license']['authCode'];
+            if (isset($this->licenseApi->getData()->license['authCode'])) {
+                $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->licenseApi->getData()->license['authCode'];
             }
         }
 

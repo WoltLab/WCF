@@ -204,7 +204,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         if (isset($this->licenseApi)) {
             $this->licenseApi->updateLicenseFile();
 
-            $authCode = $this->licenseApi->getData()['license']['authCode'] ?? '';
+            $authCode = $this->licenseApi->getData()->license['authCode'] ?? '';
         } else {
             LicenseApi::removeLicenseFile();
         }

@@ -21,7 +21,7 @@ use wcf\system\package\license\exception\ParsingFailed;
  */
 final class LicenseApi
 {
-    private readonly array $data;
+    private readonly LicenseData $data;
     private readonly string $json;
 
     private const LICENSE_FILE = \WCF_DIR . 'license.php';
@@ -32,7 +32,7 @@ final class LicenseApi
         $this->data = $this->parseLicenseData($this->json);
     }
 
-    public function getData(): array
+    public function getData(): LicenseData
     {
         return $this->data;
     }
@@ -55,35 +55,19 @@ final class LicenseApi
         );
     }
 
-    private function parseLicenseData(string $json): array
+    private function parseLicenseData(string $json): LicenseData
     {
         try {
-            /** @var array $result */
-            $result = (new MapperBuilder())
+            return (new MapperBuilder())
                 ->allowSuperfluousKeys()
                 ->mapper()
                 ->map(
-                    <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            licenseID?: int,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                            ckeditorLicenseKey?: string,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
+                   LicenseData::class,
                     Source::json($json)
                 );
         } catch (MappingError $e) {
             throw new ParsingFailed($e);
         }
-
-        return $result;
     }
 
     public static function fetchFromRemote(array $authData = []): LicenseApi

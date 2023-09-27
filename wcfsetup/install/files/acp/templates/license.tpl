@@ -59,7 +59,7 @@
     {/hascontent}
 </header>
 
-{if $licenseData[license][type] === 'developer'}
+{if $licenseData->license[type] === 'developer'}
     <p class="warning">{lang}wcf.acp.license.developerLicense{/lang}</p>
 {/if}
 
@@ -76,7 +76,7 @@
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[woltlab] key=package item=majorVersion}
+                {foreach from=$availablePackages[woltlab] key=package item=majorVersion}
                     <tr class="licensed_packages__package" data-package="{$package}">
                         {if $installedPackages[$package]|isset}
                             <td class="columnText">
@@ -135,7 +135,7 @@
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[pluginstore] key=package item=majorVersion}
+                {foreach from=$availablePackages[pluginstore] key=package item=majorVersion}
                     <tr class="licensed_packages__package" data-package="{$package}">
                         {if $installedPackages[$package]|isset}
                             <td class="columnText">

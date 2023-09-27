@@ -11,6 +11,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\license\LicenseApi;
+use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -28,7 +29,9 @@ final class LicensePage extends AbstractPage
 
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
-    private array $licenseData;
+    private LicenseData $licenseData;
+
+    private array $availablePackages = [];
 
     private int $licenseNumber;
 
@@ -63,13 +66,13 @@ final class LicensePage extends AbstractPage
         $licenseApi->updateLicenseFile();
 
         $this->licenseData = $licenseApi->getData();
-        if (isset($this->licenseData['license']['licenseID'])) {
-            $this->licenseNumber = $this->licenseData['license']['licenseID'];
+        if (isset($this->licenseData->license['licenseID'])) {
+            $this->licenseNumber = $this->licenseData->license['licenseID'];
         }
 
         $identifiers = \array_merge(
-            \array_keys($this->licenseData['woltlab']),
-            \array_keys($this->licenseData['pluginstore'])
+            \array_keys($this->licenseData->woltlab),
+            \array_keys($this->licenseData->pluginstore)
         );
         $this->installedPackages = $this->getInstalledPackages($identifiers);
 
@@ -82,8 +85,8 @@ final class LicensePage extends AbstractPage
         }
 
         foreach (['woltlab', 'pluginstore'] as $type) {
-            $this->licenseData[$type] = \array_filter(
-                $this->licenseData[$type],
+            $this->availablePackages[$type] = \array_filter(
+                $this->licenseData->{$type},
                 function (string $package) {
                     if (isset($this->installedPackages[$package])) {
                         return true;
@@ -94,7 +97,7 @@ final class LicensePage extends AbstractPage
                 \ARRAY_FILTER_USE_KEY
             );
 
-            \uksort($this->licenseData[$type], function ($packageA, $packageB) {
+            \uksort($this->availablePackages[$type], function ($packageA, $packageB) {
                 $a = $this->installedPackages[$packageA] ?? $this->packageUpdates[$packageA];
                 $b = $this->installedPackages[$packageB] ?? $this->packageUpdates[$packageB];
 
@@ -105,7 +108,7 @@ final class LicensePage extends AbstractPage
             });
         }
 
-        foreach ($this->licenseData['woltlab'] as $identifier => $accessibleVersion) {
+        foreach ($this->availablePackages['woltlab'] as $identifier => $accessibleVersion) {
             if ($accessibleVersion === '*') {
                 continue;
             }
@@ -124,6 +127,7 @@ final class LicensePage extends AbstractPage
 
         WCF::getTPL()->assign([
             'licenseData' => $this->licenseData,
+            'availablePackages' => $this->availablePackages,
             'licenseNumber' => $this->licenseNumber,
             'installedPackages' => $this->installedPackages,
             'installablePackages' => $this->installablePackages,
