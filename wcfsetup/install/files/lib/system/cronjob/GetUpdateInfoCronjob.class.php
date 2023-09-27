@@ -23,19 +23,21 @@ class GetUpdateInfoCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        if (!ENABLE_BENCHMARK) {
-            try {
-                $currentLanguage = WCF::getLanguage();
-                // Always fetch package information using the default language.
-                if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
-                    WCF::setLanguage(LanguageFactory::getInstance()->getDefaultLanguage());
-                }
+        if (ENABLE_BENCHMARK) {
+            return;
+        }
 
-                PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
-            } finally {
-                if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
-                    WCF::setLanguage($currentLanguage);
-                }
+        try {
+            $currentLanguage = WCF::getLanguage();
+            // Always fetch package information using the default language.
+            if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
+                WCF::setLanguage(LanguageFactory::getInstance()->getDefaultLanguage());
+            }
+
+            PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
+        } finally {
+            if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
+                WCF::setLanguage($currentLanguage);
             }
         }
     }
