@@ -2,11 +2,7 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
@@ -21,7 +17,9 @@ use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\io\HttpFactory;
+use wcf\system\package\license\exception\ParsingFailed;
+use wcf\system\package\license\LicenseApi;
+use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
 use wcf\util\HeaderUtil;
 
@@ -40,7 +38,9 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
      */
     public $neededPermissions = ['admin.configuration.package.canEditServer'];
 
-    private array $apiResponse;
+    private LicenseApi $licenseApi;
+
+    private LicenseData $licenseData;
 
     /**
      * @inheritDoc
@@ -60,6 +60,8 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
     protected function createForm()
     {
         parent::createForm();
+
+        $this->licenseApi = new LicenseApi();
 
         $this->form->appendChildren([
             $credentialsContainer = FormContainer::create('credentials')
@@ -84,13 +86,16 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                             \assert($licenseNo instanceof TextFormField);
 
                             try {
-                                $this->apiResponse = $this->getLicenseData($licenseNo->getValue(), $serialNo->getValue());
+                                $this->licenseData = $this->licenseApi->fetchFromRemote([
+                                    'username' => $licenseNo->getValue(),
+                                    'password' => $serialNo->getValue(),
+                                ]);
                             } catch (ConnectException) {
                                 $serialNo->addValidationError(new FormFieldValidationError(
                                     'failedConnect',
                                     'wcf.acp.firstTimeSetup.license.credentials.error.failedConnect'
                                 ));
-                            } catch (ClientExceptionInterface | MappingError) {
+                            } catch (ClientExceptionInterface | ParsingFailed) {
                                 $serialNo->addValidationError(new FormFieldValidationError(
                                     'failedValidation',
                                     'wcf.acp.firstTimeSetup.license.credentials.error.failedValidation'
@@ -111,43 +116,6 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
             EmptyFormFieldDependency::create('noCredentialsConfirm')
                 ->fieldId('noCredentialsConfirm')
         );
-    }
-
-    private function getLicenseData(string $licenseNo, string $serialNo): array
-    {
-        $request = new Request(
-            'POST',
-            'https://api.woltlab.com/2.0/customer/license/list.json',
-            [
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            \http_build_query([
-                'licenseNo' => $licenseNo,
-                'serialNo' => $serialNo,
-                'instanceId' => \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID),
-            ], '', '&', \PHP_QUERY_RFC1738)
-        );
-
-        $response = HttpFactory::makeClientWithTimeout(5)->send($request);
-
-        return (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->mapper()
-            ->map(
-                <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
-                Source::json($response->getBody())
-            );
     }
 
     /**
@@ -189,8 +157,12 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
             Option::getOptionByName('first_time_setup_state')->optionID => 1,
         ];
 
-        if (isset($this->apiResponse) && isset($this->apiResponse['license']['authCode'])) {
-            $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->apiResponse['license']['authCode'];
+        if (isset($this->licenseData)) {
+            $this->licenseApi->updateLicenseFile($this->licenseData);
+
+            if (isset($this->licenseData->license['authCode'])) {
+                $optionData[Option::getOptionByName('package_server_auth_code')->optionID] = $this->licenseData->license['authCode'];
+            }
         }
 
         $objectAction = new OptionAction(

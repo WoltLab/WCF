@@ -158,6 +158,10 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
         // get all options
         $options = $secretOptions + Option::getOptions();
         foreach ($options as $optionName => $option) {
+            if ($optionName === 'WOLTLAB_BRANDING') {
+                continue;
+            }
+
             $writeValue = $option->optionValue;
             if ($writeValue === null) {
                 $writeValue = "''";

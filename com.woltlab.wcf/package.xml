@@ -123,12 +123,19 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_favicon.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_trophies.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeDownloadedGravatars.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_license.php</instruction>
 
 		<!-- Clean Up. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeLegacyAppConfig.php</instruction>
 		<instruction type="fileDelete" />
 		<instruction type="templateDelete" />
 	</instructions>
+
+	<!--
+		Include in the update RC 1 → RC 2:
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_license.php</instruction>
+	-->
 
 	<instructions type="update" fromversion="6.0.0 Beta 4">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
