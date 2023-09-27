@@ -12,6 +12,8 @@ namespace wcf\system\package\license;
  */
 final class LicenseData
 {
+    public readonly \DateTimeImmutable $creationDate;
+
     /**
      * @param   array{
      *              authCode?: string,
@@ -29,6 +31,7 @@ final class LicenseData
         public readonly array $woltlab,
     )
     {
+        $this->creationDate = new \DateTimeImmutable();
     }
 
     public function getLicenseNumber(): ?string
