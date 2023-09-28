@@ -477,20 +477,20 @@ class ArticleAddForm extends AbstractForm
         // reset category ids to accessible category ids
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
 
-        if (!empty($validationResult[0])) {
-            throw new UserInputException('labelIDs');
-        }
-
-        if (!empty($validationResult)) {
-            throw new UserInputException('label', $validationResult);
-        }
-
         foreach ($this->labelIDs as $groupID => $labelID) {
             foreach ($this->labelPickers as $labelPicker) {
                 if ($labelPicker->labelGroup->groupID == $groupID) {
                     $labelPicker->selected = $labelID;
                 }
             }
+        }
+
+        if (!empty($validationResult[0])) {
+            throw new UserInputException('labelIDs');
+        }
+
+        if (!empty($validationResult)) {
+            throw new UserInputException('label', $validationResult);
         }
     }
 
@@ -668,7 +668,6 @@ class ArticleAddForm extends AbstractForm
             'availableLanguages' => $this->availableLanguages,
             'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
             'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
-            'labelIDs' => $this->labelIDs,
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
             'labelPickers' => $this->labelPickers,
             'attachmentHandler' => $this->attachmentHandler,
