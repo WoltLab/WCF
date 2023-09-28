@@ -1,3 +1,13 @@
+/**
+ * The `<woltlab-core-label-picker>` provides an interactive widget to select a
+ * label out of a label group.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+
 {
   class WoltlabCoreLabelPickerElement extends HTMLElement {
     readonly #button: HTMLButtonElement;
@@ -141,10 +151,6 @@
 
     get required(): boolean {
       return this.hasAttribute("required");
-    }
-
-    get labels(): Map<number, string> {
-      return new Map(this.#labels);
     }
   }
 

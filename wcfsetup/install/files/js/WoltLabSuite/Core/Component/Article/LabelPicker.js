@@ -1,3 +1,11 @@
+/**
+ * Toggles the visibility of label groups based on the selected category.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -6,7 +14,6 @@ define(["require", "exports"], function (require, exports) {
         if (showLabelGroupIds === undefined) {
             showLabelGroupIds = [];
         }
-        // TODO: Missing typings for `<woltlab-core-label-picker>`
         document.querySelectorAll("woltlab-core-label-picker").forEach((labelPicker) => {
             const groupId = parseInt(labelPicker.dataset.groupId);
             if (showLabelGroupIds.includes(groupId)) {
