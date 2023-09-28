@@ -1,3 +1,12 @@
+/**
+ * Toggles the visibility of label groups based on the selected category.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+
 type CategoryId = number;
 type LabelGroupId = number;
 
@@ -6,14 +15,13 @@ function toggleVisibility(showLabelGroupIds: LabelGroupId[] | undefined): void {
     showLabelGroupIds = [];
   }
 
-  // TODO: Missing typings for `<woltlab-core-label-picker>`
-  document.querySelectorAll<HTMLElement>("woltlab-core-label-picker").forEach((labelPicker) => {
+  document.querySelectorAll("woltlab-core-label-picker").forEach((labelPicker) => {
     const groupId = parseInt(labelPicker.dataset.groupId!);
     if (showLabelGroupIds!.includes(groupId)) {
-      (labelPicker as any).disabled = false;
+      labelPicker.disabled = false;
       labelPicker.closest("dl")!.hidden = false;
     } else {
-      (labelPicker as any).disabled = true;
+      labelPicker.disabled = true;
       labelPicker.closest("dl")!.hidden = true;
     }
   });
