@@ -101,9 +101,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-progressbar' => array(
-            'pretty_version' => '2.12.0',
-            'version' => '2.12.0.0',
-            'reference' => 'a7cb86bd5cc7ce9a96700297776f567119d65834',
+            'pretty_version' => '2.13.0',
+            'version' => '2.13.0.0',
+            'reference' => 'f3b26b977cdb1986083bf4915dd088698bcb8f2e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-progressbar',
             'aliases' => array(),
