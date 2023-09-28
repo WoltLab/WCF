@@ -34,8 +34,8 @@
 <header class="contentHeader">
     <div class="contentHeaderTitle">
         <h1 class="contentTitle">{lang}wcf.acp.license{/lang}</span></h1>
-        {if $licenseNumber}
-            <p class="contentDescription">{lang}wcf.acp.license.licenseNo{/lang}</p>
+        {if $licenseData->getLicenseNumber()}
+            <p class="contentDescription">{lang licenseNumber=$licenseData->getLicenseNumber()}wcf.acp.license.licenseNo{/lang}</p>
         {/if}
     </div>
 
@@ -59,7 +59,7 @@
     {/hascontent}
 </header>
 
-{if $licenseData[license][type] === 'developer'}
+{if $licenseData->getLicenseType() === 'developer'}
     <p class="warning">{lang}wcf.acp.license.developerLicense{/lang}</p>
 {/if}
 
@@ -76,7 +76,7 @@
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[woltlab] key=package item=majorVersion}
+                {foreach from=$availablePackages[woltlab] key=package item=majorVersion}
                     <tr class="licensed_packages__package" data-package="{$package}">
                         {if $installedPackages[$package]|isset}
                             <td class="columnText">
@@ -104,7 +104,7 @@
                                                 {lang accessibleVersion=$requiresLicenseExtension[$package]}wcf.acp.license.package.outdated{/lang}
                                             </span>
                                         {/if}
-                                        <a href="https://www.woltlab.com/license-extend/{$licenseNumber}/" class="externalURL" rel="nofollow noopener" target="_blank">{lang}wcf.acp.license.extend{/lang}</a>
+                                        <a href="https://www.woltlab.com/license-extend/{$licenseData->getLicenseNumber()}/" class="externalURL" rel="nofollow noopener" target="_blank">{lang}wcf.acp.license.extend{/lang}</a>
                                     </span>
                                 {else}
                                     <button type="button" class="button small jsInstallPackage" data-package="{$package}" data-package-version="{$installablePackages[$package]}">
@@ -135,7 +135,7 @@
             </thead>
             <tbody>
                 {content}
-                {foreach from=$licenseData[pluginstore] key=package item=majorVersion}
+                {foreach from=$availablePackages[pluginstore] key=package item=majorVersion}
                     <tr class="licensed_packages__package" data-package="{$package}">
                         {if $installedPackages[$package]|isset}
                             <td class="columnText">

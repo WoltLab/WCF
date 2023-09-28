@@ -2,9 +2,6 @@
 
 namespace wcf\acp\page;
 
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\MapperBuilder;
-use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\form\LicenseEditForm;
 use wcf\data\package\Package;
@@ -13,7 +10,8 @@ use wcf\data\package\update\PackageUpdateAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\io\HttpFactory;
+use wcf\system\package\license\LicenseApi;
+use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -31,17 +29,15 @@ final class LicensePage extends AbstractPage
 
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
-    private array $licenseData;
+    private LicenseData $licenseData;
 
-    private string $licenseNumber;
+    private array $availablePackages = [];
 
     private array $installedPackages;
 
     private array $installablePackages = [];
 
     private array $packageUpdates = [];
-
-    private PackageUpdateServer $updateServer;
 
     private array $requiresLicenseExtension = [];
 
@@ -51,9 +47,7 @@ final class LicensePage extends AbstractPage
     {
         parent::readData();
 
-        $this->updateServer = PackageUpdateServer::getWoltLabUpdateServer();
-
-        if (!$this->hasLicenseCredentials()) {
+        if (!LicenseApi::hasLicenseCredentials()) {
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(
                     LicenseEditForm::class,
@@ -66,11 +60,13 @@ final class LicensePage extends AbstractPage
 
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
-        $this->licenseData = $this->fetchLicenseData();
+        $licenseApi = new LicenseApi();
+        $this->licenseData = $licenseApi->fetchFromRemote();
+        $licenseApi->updateLicenseFile($this->licenseData);
 
         $identifiers = \array_merge(
-            \array_keys($this->licenseData['woltlab']),
-            \array_keys($this->licenseData['pluginstore'])
+            \array_keys($this->licenseData->woltlab),
+            \array_keys($this->licenseData->pluginstore)
         );
         $this->installedPackages = $this->getInstalledPackages($identifiers);
 
@@ -83,8 +79,8 @@ final class LicensePage extends AbstractPage
         }
 
         foreach (['woltlab', 'pluginstore'] as $type) {
-            $this->licenseData[$type] = \array_filter(
-                $this->licenseData[$type],
+            $this->availablePackages[$type] = \array_filter(
+                $this->licenseData->{$type},
                 function (string $package) {
                     if (isset($this->installedPackages[$package])) {
                         return true;
@@ -95,7 +91,7 @@ final class LicensePage extends AbstractPage
                 \ARRAY_FILTER_USE_KEY
             );
 
-            \uksort($this->licenseData[$type], function ($packageA, $packageB) {
+            \uksort($this->availablePackages[$type], function ($packageA, $packageB) {
                 $a = $this->installedPackages[$packageA] ?? $this->packageUpdates[$packageA];
                 $b = $this->installedPackages[$packageB] ?? $this->packageUpdates[$packageB];
 
@@ -106,7 +102,7 @@ final class LicensePage extends AbstractPage
             });
         }
 
-        foreach ($this->licenseData['woltlab'] as $identifier => $accessibleVersion) {
+        foreach ($this->availablePackages['woltlab'] as $identifier => $accessibleVersion) {
             if ($accessibleVersion === '*') {
                 continue;
             }
@@ -119,23 +115,13 @@ final class LicensePage extends AbstractPage
         }
     }
 
-    private function hasLicenseCredentials(): bool
-    {
-        $authData = $this->updateServer->getAuthData();
-        if (empty($authData['username']) || empty($authData['password'])) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function assignVariables()
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
             'licenseData' => $this->licenseData,
-            'licenseNumber' => $this->licenseNumber,
+            'availablePackages' => $this->availablePackages,
             'installedPackages' => $this->installedPackages,
             'installablePackages' => $this->installablePackages,
             'packageUpdates' => $this->packageUpdates,
@@ -624,48 +610,5 @@ final class LicensePage extends AbstractPage
         }
 
         return $packageUpdates;
-    }
-
-    // This code was stolen from "FirstTimeSetupLicenseForm" and
-    // should propably be moved into a helper class. We might even want to refresh
-    // the data with requests to the package servers to implicitly fetch the
-    // latest purchases.
-    private function fetchLicenseData(): array|object
-    {
-        $authData = $this->updateServer->getAuthData();
-        $this->licenseNumber = $authData['username'];
-
-        $request = new Request(
-            'POST',
-            'https://api.woltlab.com/2.1/customer/license/list.json',
-            [
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            \http_build_query([
-                'licenseNo' => $this->licenseNumber,
-                'serialNo' => $authData['password'],
-                'instanceId' => \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID),
-            ], '', '&', \PHP_QUERY_RFC1738)
-        );
-
-        $response = HttpFactory::makeClientWithTimeout(5)->send($request);
-        return (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->mapper()
-            ->map(
-                <<<'EOT'
-                    array {
-                        status: 200,
-                        license: array {
-                            authCode?: string,
-                            type: string,
-                            expiryDates?: array<string, int>,
-                        },
-                        pluginstore: array<string, string>,
-                        woltlab: array<string, string>,
-                    }
-                    EOT,
-                Source::json($response->getBody())
-            );
     }
 }
