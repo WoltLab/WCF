@@ -148,9 +148,11 @@ class TemplateListPage extends SortablePage
             $package->getName();
         }
 
-        \uasort($this->availableApplications, static function (Package $a, Package $b) {
-            return $a->getName() <=> $b->getName();
-        });
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $this->availableApplications,
+            static fn (Package $a, Package $b) => $collator->compare($a->getName(), $b->getName())
+        );
     }
 
     /**
