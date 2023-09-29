@@ -2,6 +2,7 @@
 
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
+use wcf\system\event\listener\PackageUpdateListChangedLicenseListener;
 use wcf\system\event\listener\PhraseChangedPreloadListener;
 use wcf\system\event\listener\PipSyncedPhrasePreloadListener;
 use wcf\system\event\listener\PreloadPhrasesCollectingListener;
@@ -15,6 +16,7 @@ use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\system\language\preload\PhrasePreloader;
 use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\event\PackageListChanged;
+use wcf\system\package\event\PackageUpdateListChanged;
 use wcf\system\package\license\LicenseApi;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\event\UsernameValidating;
@@ -63,6 +65,8 @@ return static function (): void {
         $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
         $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
     });
+
+    $eventHandler->register(PackageUpdateListChanged::class, PackageUpdateListChangedLicenseListener::class);
 
     try {
         $licenseApi = new LicenseApi();
