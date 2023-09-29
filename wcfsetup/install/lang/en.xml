@@ -3135,7 +3135,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
-		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|phrase}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account on {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
 An administrator has reset your password. You are now required to set a new password to be able to use your
@@ -4738,7 +4738,7 @@ the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|phrase}</a>.</
 		<item name="wcf.user.changeUsername.success"><![CDATA[The username has been changed.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[The email address has been changed.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address{if $newEmail|isset} (“{$newEmail}”){/if} must be verified first. You should have received an email which was sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>
-		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|phrase}]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.intro"><![CDATA[
 <p>You have changed your email address on: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>. To complete
