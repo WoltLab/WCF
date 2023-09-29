@@ -64,15 +64,15 @@ final class LicensePage extends AbstractPage
 
         $licenseApi = new LicenseApi();
         try {
-            $this->licenseData = $licenseApi->readFromFile();
+            $licenseData = $licenseApi->readFromFile();
 
             if (
-                $this->licenseData === null
+                $licenseData === null
                 // Cache valid license data for 2 minutes.
-                || $this->licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
+                || $licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
             ) {
-                $this->licenseData = $licenseApi->fetchFromRemote();
-                $licenseApi->updateLicenseFile($this->licenseData);
+                $licenseData = $licenseApi->fetchFromRemote();
+                $licenseApi->updateLicenseFile($licenseData);
             }
         } catch (ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
@@ -82,10 +82,12 @@ final class LicensePage extends AbstractPage
             throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
                 'wcf.acp.license.error.parsingFailed',
                 [
-                    'licenseData' => $this->licenseData,
+                    'licenseData' => $licenseData,
                 ]
             ));
         }
+
+        $this->licenseData = $licenseData;
 
         $identifiers = \array_merge(
             \array_keys($this->licenseData->woltlab),
