@@ -177,6 +177,8 @@ class WCF
      */
     protected static $zendOpcacheEnabled;
 
+    public const BOOTSTRAP_LOADER = \WCF_DIR . '/lib/bootstrap.php';
+
     /**
      * Calls all init functions of the WCF class.
      */
@@ -207,14 +209,14 @@ class WCF
     final protected function runBootstrappers(): void
     {
         try {
-            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+            $bootstrappers = require(self::BOOTSTRAP_LOADER);
         } catch (\Exception $e) {
             \wcf\functions\exception\logThrowable($e);
 
             $command = new RebuildBootstrapper();
             $command();
 
-            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+            $bootstrappers = require(self::BOOTSTRAP_LOADER);
         }
 
         foreach ($bootstrappers as $bootstrapper) {
