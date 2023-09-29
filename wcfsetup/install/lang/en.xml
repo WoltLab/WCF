@@ -1057,6 +1057,7 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.license.package.installed"><![CDATA[Already installed]]></item>
 		<item name="wcf.acp.license.package.outdated"><![CDATA[Up to version {$accessibleVersion}]]></item>
 		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.license.error.parsingFailed"><![CDATA[The license data could not be retrieved. Please <a href="{link controller="LicenseEdit"}{/link}">verify and update the license credentials</a>.{if $licenseData !== null}<br><br>The license data was last updated on {time type='plainTime' time=$licenseData->creationDate}.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
