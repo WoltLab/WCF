@@ -10,6 +10,8 @@ use wcf\data\package\update\PackageUpdateAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\NamedUserException;
+use wcf\system\package\license\exception\ParsingFailed;
 use wcf\system\package\license\LicenseApi;
 use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
@@ -61,8 +63,29 @@ final class LicensePage extends AbstractPage
         (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
 
         $licenseApi = new LicenseApi();
-        $this->licenseData = $licenseApi->fetchFromRemote();
-        $licenseApi->updateLicenseFile($this->licenseData);
+        try {
+            $this->licenseData = $licenseApi->readFromFile();
+
+            if (
+                $this->licenseData === null
+                // Cache valid license data for 2 minutes.
+                || $this->licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
+            ) {
+                $this->licenseData = $licenseApi->fetchFromRemote();
+                $licenseApi->updateLicenseFile($this->licenseData);
+            }
+        } catch (ParsingFailed $e) {
+            if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+                throw $e;
+            }
+
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.license.error.parsingFailed',
+                [
+                    'licenseData' => $this->licenseData,
+                ]
+            ));
+        }
 
         $identifiers = \array_merge(
             \array_keys($this->licenseData->woltlab),
