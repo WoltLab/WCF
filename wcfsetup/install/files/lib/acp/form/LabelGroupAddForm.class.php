@@ -83,6 +83,12 @@ class LabelGroupAddForm extends AbstractForm
     public $showOrder = 0;
 
     /**
+     * Allow the selection of multiple labels of the same group.
+     * @since 6.1
+     */
+    public bool $multipleSelection = false;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -118,6 +124,9 @@ class LabelGroupAddForm extends AbstractForm
         }
         if (isset($_POST['showOrder'])) {
             $this->showOrder = \intval($_POST['showOrder']);
+        }
+        if (isset($_POST['multipleSelection'])) {
+            $this->multipleSelection = true;
         }
     }
 
@@ -181,6 +190,7 @@ class LabelGroupAddForm extends AbstractForm
                 'groupName' => $this->groupName,
                 'groupDescription' => $this->groupDescription,
                 'showOrder' => $this->showOrder,
+                'multipleSelection' => $this->multipleSelection ? 1 : 0,
             ]),
         ]);
         $returnValues = $this->objectAction->executeAction();
@@ -214,7 +224,7 @@ class LabelGroupAddForm extends AbstractForm
         $this->saved();
 
         // reset values
-        $this->forceSelection = false;
+        $this->forceSelection = $this->multipleSelection = false;
         $this->groupName = $this->groupDescription = '';
         $this->objectTypes = [];
         $this->showOrder = 0;
@@ -250,6 +260,7 @@ class LabelGroupAddForm extends AbstractForm
             'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
             'objectTypeID' => $this->objectTypeID,
             'showOrder' => $this->showOrder,
+            'multipleSelection' => $this->multipleSelection,
         ]);
     }
 

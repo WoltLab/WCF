@@ -80,6 +80,11 @@
 				
 				<dl>
 					<dt></dt>
+					<dd><label><input type="checkbox" name="multipleSelection" id="multipleSelection" value="1"{if $multipleSelection} checked{/if}> {lang}wcf.acp.label.group.multipleSelection{/lang}</label></dd>
+				</dl>
+				
+				<dl>
+					<dt></dt>
 					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked{/if}> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
 				</dl>
 				

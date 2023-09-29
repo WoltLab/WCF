@@ -82,6 +82,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
                     'groupName' => $this->groupName,
                     'groupDescription' => $this->groupDescription,
                     'showOrder' => $this->showOrder,
+                    'multipleSelection' => $this->multipleSelection ? 1 : 0,
                 ]),
             ]
         );
@@ -118,6 +119,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
             $this->groupName = $this->group->groupName;
             $this->groupDescription = $this->group->groupDescription;
             $this->showOrder = $this->group->showOrder;
+            $this->multipleSelection = !!$this->multipleSelection;
         }
     }
 

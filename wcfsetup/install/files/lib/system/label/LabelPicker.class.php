@@ -31,6 +31,7 @@ final class LabelPicker
                     id="%s"
                     title="%s"
                     labels="%s"
+                    %s
                     data-group-id="%d"
                 ></woltlab-core-label-picker>
             EOT,
@@ -38,6 +39,7 @@ final class LabelPicker
             $this->getId(),
             $this->labelGroup->getTitle(),
             StringUtil::encodeHTML(JSON::encode($labels)),
+            $this->labelGroup->multipleSelection ? 'multiple' : '',
             $this->labelGroup->groupID,
         );
     }

@@ -988,6 +988,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
+		<item name="wcf.acp.label.group.multipleSelection"><![CDATA[Erlaube die Auswahl von mehr als einem Label aus dieser Gruppe]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[Die ausgewählte Labelgruppe kann nachträglich nicht mehr verändert werden.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>

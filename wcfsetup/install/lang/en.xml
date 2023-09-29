@@ -966,6 +966,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[The selected label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
+		<item name="wcf.acp.label.group.multipleSelection"><![CDATA[Allow more than one label of this group to be selected]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
 		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[The selected label group cannot be modified and is permanent for this label.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
