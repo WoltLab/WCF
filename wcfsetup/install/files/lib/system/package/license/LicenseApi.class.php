@@ -8,6 +8,7 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\package\update\server\PackageUpdateServer;
+use wcf\system\io\AtomicWriter;
 use wcf\system\io\HttpFactory;
 use wcf\system\package\license\exception\MissingCredentials;
 use wcf\system\package\license\exception\ParsingFailed;
@@ -27,18 +28,17 @@ final class LicenseApi
 
     public function updateLicenseFile(?LicenseData $data): void
     {
-        @\file_put_contents(
-            self::LICENSE_FILE,
-            \sprintf(
-                <<<'EOT'
+        $writer = new AtomicWriter(self::LICENSE_FILE);
+        $writer->write(\sprintf(
+            <<<'EOT'
                 <?php
                 /* GENERATED AT %s -- DO NOT EDIT */
                 return unserialize(%s);
                 EOT,
-                \gmdate('r', \TIME_NOW),
-                \var_export(\serialize($data), true),
-            )
-        );
+            \gmdate('r', \TIME_NOW),
+            \var_export(\serialize($data), true),
+        ));
+        $writer->flush();
 
         WCF::resetZendOpcache(self::LICENSE_FILE);
     }
