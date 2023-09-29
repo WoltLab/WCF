@@ -751,22 +751,22 @@
         },
         {
             "name": "laminas/laminas-progressbar",
-            "version": "2.12.0",
-            "version_normalized": "2.12.0.0",
+            "version": "2.13.0",
+            "version_normalized": "2.13.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-progressbar.git",
-                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834"
+                "reference": "f3b26b977cdb1986083bf4915dd088698bcb8f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/a7cb86bd5cc7ce9a96700297776f567119d65834",
-                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834",
+                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/f3b26b977cdb1986083bf4915dd088698bcb8f2e",
+                "reference": "f3b26b977cdb1986083bf4915dd088698bcb8f2e",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-stdlib": "^3.2.1",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "zendframework/zend-progressbar": "*"
@@ -779,7 +779,7 @@
             "suggest": {
                 "laminas/laminas-session": "To support progressbar persistent"
             },
-            "time": "2023-08-01T13:29:34+00:00",
+            "time": "2023-09-28T16:12:46+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

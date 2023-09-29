@@ -5,6 +5,7 @@ namespace wcf\system\package\command;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\io\AtomicWriter;
+use wcf\system\WCF;
 
 /**
  * Rebuilds the bootstrapping script.
@@ -67,9 +68,11 @@ final class RebuildBootstrapper
             EOT;
         $result .= "\n";
 
-        $writer = new AtomicWriter(\WCF_DIR . 'lib/bootstrap.php');
+        $writer = new AtomicWriter(WCF::BOOTSTRAP_LOADER);
         $writer->write($result);
         $writer->flush();
+
+        WCF::resetZendOpcache(WCF::BOOTSTRAP_LOADER);
     }
 
     private function bootstrapExists(Package $package): bool

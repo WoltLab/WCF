@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ed824326be4ed2b68fdb8ea8258400a",
+    "content-hash": "d1b286c6264e2d8bf1223ce6243ae1a9",
     "packages": [
         {
             "name": "cuyz/valinor",
@@ -730,21 +730,21 @@
         },
         {
             "name": "laminas/laminas-progressbar",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-progressbar.git",
-                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834"
+                "reference": "f3b26b977cdb1986083bf4915dd088698bcb8f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/a7cb86bd5cc7ce9a96700297776f567119d65834",
-                "reference": "a7cb86bd5cc7ce9a96700297776f567119d65834",
+                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/f3b26b977cdb1986083bf4915dd088698bcb8f2e",
+                "reference": "f3b26b977cdb1986083bf4915dd088698bcb8f2e",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-stdlib": "^3.2.1",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "zendframework/zend-progressbar": "*"
@@ -787,7 +787,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-08-01T13:29:34+00:00"
+            "time": "2023-09-28T16:12:46+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",

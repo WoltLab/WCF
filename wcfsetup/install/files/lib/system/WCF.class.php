@@ -81,7 +81,7 @@ if (\function_exists('mb_regex_encoding')) {
 \mb_language('uni');
 
 // define current woltlab suite version
-\define('WCF_VERSION', '6.0.0 RC 1');
+\define('WCF_VERSION', '6.0.0 RC 2');
 
 // define current unix timestamp
 \define('TIME_NOW', \time());
@@ -177,6 +177,8 @@ class WCF
      */
     protected static $zendOpcacheEnabled;
 
+    public const BOOTSTRAP_LOADER = \WCF_DIR . '/lib/bootstrap.php';
+
     /**
      * Calls all init functions of the WCF class.
      */
@@ -207,14 +209,14 @@ class WCF
     final protected function runBootstrappers(): void
     {
         try {
-            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+            $bootstrappers = require(self::BOOTSTRAP_LOADER);
         } catch (\Exception $e) {
             \wcf\functions\exception\logThrowable($e);
 
             $command = new RebuildBootstrapper();
             $command();
 
-            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+            $bootstrappers = require(self::BOOTSTRAP_LOADER);
         }
 
         foreach ($bootstrappers as $bootstrapper) {
