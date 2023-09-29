@@ -1079,6 +1079,7 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.license.package.installed"><![CDATA[Bereits installiert]]></item>
 		<item name="wcf.acp.license.package.outdated"><![CDATA[Bis Version {$accessibleVersion}]]></item>
 		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.license.error.parsingFailed"><![CDATA[Die Lizenzdaten konnten nicht abgerufen werden. Bitte <a href="{link controller="LicenseEdit"}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}kontrolliere und aktualisiere{else}kontrollieren und aktualisieren Sie{/if} die Lizenzdaten</a>.{if $licenseData !== null}<br><br>Der letzte erfolgreiche Abruf der Lizenzinformationen erfolgte am {time type='plainTime' time=$licenseData->creationDate}.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
