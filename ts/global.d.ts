@@ -10,6 +10,10 @@ import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
+import type WoltlabCoreMenuElement from "WoltLabSuite/Core/Element/woltlab-core-menu";
+import type WoltlabCoreMenuGroupElement from "WoltLabSuite/Core/Element/woltlab-core-menu-group";
+import type WoltlabCoreMenuItemElement from "WoltLabSuite/Core/Element/woltlab-core-menu-item";
+import type WoltlabCoreMenuSeparatorElement from "WoltLabSuite/Core/Element/woltlab-core-menu-separator";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -122,6 +126,10 @@ declare global {
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
     "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
+    "woltlab-core-menu": WoltlabCoreMenuElement;
+    "woltlab-core-menu-group": WoltlabCoreMenuGroupElement;
+    "woltlab-core-menu-item": WoltlabCoreMenuItemElement;
+    "woltlab-core-menu-separator": WoltlabCoreMenuSeparatorElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
