@@ -3,6 +3,7 @@
 namespace wcf\system\package\license\exception;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 
 /**
  * The license data does not match the expectations of the license API.
@@ -14,7 +15,7 @@ use CuyZ\Valinor\Mapper\MappingError;
  */
 final class ParsingFailed extends \Exception
 {
-    public function __construct(MappingError $previous)
+    public function __construct(MappingError|InvalidSource $previous)
     {
         parent::__construct('The provided license data cannot be parsed.', 0, $previous);
     }
