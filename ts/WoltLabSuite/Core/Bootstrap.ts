@@ -168,4 +168,11 @@ export function setup(options: BoostrapOptions): void {
   whenFirstSeen("[data-google-maps-geocoding]", () => {
     void import("./Component/GoogleMaps/Geocoding").then(({ setup }) => setup());
   });
+
+  whenFirstSeen("woltlab-core-menu", () => {
+    void import("./Element/woltlab-core-menu");
+    void import("./Element/woltlab-core-menu-group");
+    void import("./Element/woltlab-core-menu-item");
+    void import("./Element/woltlab-core-menu-separator");
+  });
 }

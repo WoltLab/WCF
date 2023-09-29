@@ -133,6 +133,12 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
             void new Promise((resolve_5, reject_5) => { require(["./Component/GoogleMaps/Geocoding"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-menu", () => {
+            void new Promise((resolve_6, reject_6) => { require(["./Element/woltlab-core-menu"], resolve_6, reject_6); }).then(tslib_1.__importStar);
+            void new Promise((resolve_7, reject_7) => { require(["./Element/woltlab-core-menu-group"], resolve_7, reject_7); }).then(tslib_1.__importStar);
+            void new Promise((resolve_8, reject_8) => { require(["./Element/woltlab-core-menu-item"], resolve_8, reject_8); }).then(tslib_1.__importStar);
+            void new Promise((resolve_9, reject_9) => { require(["./Element/woltlab-core-menu-separator"], resolve_9, reject_9); }).then(tslib_1.__importStar);
+        });
     }
     exports.setup = setup;
 });
