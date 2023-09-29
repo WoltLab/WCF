@@ -151,9 +151,11 @@ class LanguageExportForm extends AbstractForm
         parent::assignVariables();
 
         $packages = PackageCache::getInstance()->getPackages();
-        \usort($packages, static function (Package $a, Package $b) {
-            return $a->getName() <=> $b->getName();
-        });
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \usort(
+            $packages,
+            static fn (Package $a, Package $b) => $collator->compare($a->getName(), $b->getName())
+        );
 
         WCF::getTPL()->assign([
             'languageID' => $this->languageID,

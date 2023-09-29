@@ -639,8 +639,10 @@ class UserGroup extends DatabaseObject implements ITitledObject
      */
     public static function sortGroups(array &$userGroups)
     {
-        \uasort($userGroups, static function (self $groupA, self $groupB) {
-            return \strcasecmp($groupA->getName(), $groupB->getName());
-        });
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $userGroups,
+            static fn (self $groupA, self $groupB) => $collator->compare($groupA->getName(), $groupB->getName())
+        );
     }
 }

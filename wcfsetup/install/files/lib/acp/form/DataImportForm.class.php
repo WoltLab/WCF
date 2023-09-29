@@ -133,12 +133,14 @@ class DataImportForm extends AbstractForm
         $this->exporters = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.exporter');
 
         // sort exporters by name
-        \uksort($this->exporters, static function ($a, $b) {
-            return \strcasecmp(
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uksort(
+            $this->exporters,
+            static fn (string $a, string $b) => $collator->compare(
                 WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $a),
                 WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $b)
-            );
-        });
+            )
+        );
 
         $this->importers = \array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
 

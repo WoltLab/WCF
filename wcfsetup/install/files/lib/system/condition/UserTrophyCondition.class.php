@@ -207,9 +207,11 @@ HTML;
             $trophyList->readObjects();
             $this->trophies = $trophyList->getObjects();
 
-            \uasort($this->trophies, static function (Trophy $a, Trophy $b) {
-                return \strcmp($a->getTitle(), $b->getTitle());
-            });
+            $collator = new \Collator(WCF::getLanguage()->getLocale());
+            \uasort(
+                $this->trophies,
+                static fn (Trophy $a, Trophy $b) => $collator->compare($a->getTitle(), $b->getTitle())
+            );
         }
 
         return $this->trophies;

@@ -584,9 +584,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 }
             }
 
-            \usort($list, static function (array $item1, array $item2) {
-                return \strcasecmp($item1['label'], $item2['label']);
-            });
+            $collator = new \Collator(WCF::getLanguage()->getLocale());
+            \usort(
+                $list,
+                static fn (array $item1, array $item2) => $collator->compare($item1['label'], $item2['label'])
+            );
         }
 
         // find users

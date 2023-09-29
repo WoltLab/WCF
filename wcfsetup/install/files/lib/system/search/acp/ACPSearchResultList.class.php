@@ -85,9 +85,11 @@ class ACPSearchResultList implements \Countable, \Iterator
      */
     public function sort(): void
     {
-        \usort($this->results, static function (ACPSearchResult $a, ACPSearchResult $b) {
-            return \strcmp($a->getTitle(), $b->getTitle());
-        });
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \usort(
+            $this->results,
+            static fn (ACPSearchResult $a, ACPSearchResult $b) => $collator->compare($a->getTitle(), $b->getTitle())
+        );
     }
 
     /**
