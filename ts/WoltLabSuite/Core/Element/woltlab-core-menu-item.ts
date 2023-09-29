@@ -7,11 +7,17 @@ const enum MenuItemType {
 
 export class WoltlabCoreMenuItemElement extends HTMLElement {
   #type: MenuItemType = MenuItemType.Item;
+  #checkmark?: FaIcon;
 
   connectedCallback() {
     const shadow = this.attachShadow({ mode: "open" });
 
+    const checkmarkSlot = document.createElement("slot");
+    checkmarkSlot.name = "checkmark";
+    shadow.append(checkmarkSlot);
+
     const defaultSlot = document.createElement("slot");
+    defaultSlot.id = "slot";
     shadow.append(defaultSlot);
 
     this.tabIndex = -1;
@@ -22,11 +28,21 @@ export class WoltlabCoreMenuItemElement extends HTMLElement {
       this.setAttribute("role", "menuitemcheckbox");
 
       this.selected = this.hasAttribute("selected");
+
+      if (this.#checkmark === undefined) {
+        this.#checkmark = document.createElement("fa-icon");
+        this.#checkmark.setIcon("check");
+        this.#checkmark.slot = "checkmark";
+      }
+
+      this.append(this.#checkmark);
     } else {
       this.#type = MenuItemType.Item;
       this.setAttribute("role", "menuitem");
 
       this.removeAttribute("aria-checked");
+
+      this.#checkmark?.remove();
     }
   }
 

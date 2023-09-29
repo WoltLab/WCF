@@ -5,9 +5,14 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group"], function (r
     woltlab_core_menu_group_1 = tslib_1.__importDefault(woltlab_core_menu_group_1);
     class WoltlabCoreMenuItemElement extends HTMLElement {
         #type = 1 /* MenuItemType.Item */;
+        #checkmark;
         connectedCallback() {
             const shadow = this.attachShadow({ mode: "open" });
+            const checkmarkSlot = document.createElement("slot");
+            checkmarkSlot.name = "checkmark";
+            shadow.append(checkmarkSlot);
             const defaultSlot = document.createElement("slot");
+            defaultSlot.id = "slot";
             shadow.append(defaultSlot);
             this.tabIndex = -1;
             this.disabled = this.hasAttribute("disabled");
@@ -15,11 +20,18 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group"], function (r
                 this.#type = 0 /* MenuItemType.Checkbox */;
                 this.setAttribute("role", "menuitemcheckbox");
                 this.selected = this.hasAttribute("selected");
+                if (this.#checkmark === undefined) {
+                    this.#checkmark = document.createElement("fa-icon");
+                    this.#checkmark.setIcon("check");
+                    this.#checkmark.slot = "checkmark";
+                }
+                this.append(this.#checkmark);
             }
             else {
                 this.#type = 1 /* MenuItemType.Item */;
                 this.setAttribute("role", "menuitem");
                 this.removeAttribute("aria-checked");
+                this.#checkmark?.remove();
             }
         }
         get selected() {
