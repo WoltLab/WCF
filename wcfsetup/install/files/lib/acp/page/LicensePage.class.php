@@ -6,12 +6,12 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\form\LicenseEditForm;
 use wcf\data\package\Package;
 use wcf\data\package\update\PackageUpdate;
-use wcf\data\package\update\PackageUpdateAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\license\LicenseApi;
 use wcf\system\package\license\LicenseData;
+use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -58,7 +58,7 @@ final class LicensePage extends AbstractPage
             );
         }
 
-        (new PackageUpdateAction([], 'refreshDatabase'))->executeAction();
+        PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 
         $licenseApi = new LicenseApi();
         $this->licenseData = $licenseApi->fetchFromRemote();
