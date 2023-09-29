@@ -77,6 +77,11 @@ return static function (): void {
             if ($brandingFree !== '0.0' && $expiresAt >= \TIME_NOW) {
                 define('WOLTLAB_BRANDING', false);
             }
+
+            // Expire the cached license data after 60 days.
+            if ($licenseData->creationDate->getTimestamp() < \TIME_NOW - 86400 * 60) {
+                $licenseApi->clearLicenseFile();
+            }
         }
     } catch (\Throwable) {
         // Reading the license file must never cause any errors.
