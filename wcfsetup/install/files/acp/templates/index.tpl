@@ -42,6 +42,17 @@
 
 {event name='userNotice'}
 
+<div class="acpDashboard">
+	{foreach from=$dashboard->getVisibleBoxes() item='box'}
+		<div class="acpDashboardBox">
+			<h2 class="acpDashboardBox__title">{$box->getTitle()}</h2>
+			<div class="acpDashboardBox__content">
+				{@$box->getContent()}
+			</div>
+		</div>
+	{/foreach}
+</div>
+
 <div class="section tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>

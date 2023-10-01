@@ -7,6 +7,7 @@ use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\user\User;
 use wcf\page\AbstractPage;
+use wcf\system\acp\dashboard\AcpDashboard;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -197,6 +198,7 @@ class IndexPage extends AbstractPage
             'taintedApplications' => $taintedApplications,
             'systemIdMismatch' => $systemIdMismatch,
             'missingLanguageItemsMTime' => $missingLanguageItemsMTime,
+            'dashboard' => new AcpDashboard(),
         ]);
     }
 
