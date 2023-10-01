@@ -1,5 +1,7 @@
 <?php
 
+use wcf\system\acp\dashboard\box\NewsAcpDashboardBox;
+use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\event\listener\PackageUpdateListChangedLicenseListener;
@@ -72,6 +74,10 @@ return static function (): void {
     });
 
     $eventHandler->register(PackageUpdateListChanged::class, PackageUpdateListChangedLicenseListener::class);
+
+    $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
+        $event->register('com.woltlab.wcf.news', new NewsAcpDashboardBox());
+    });
 
     try {
         $licenseApi = new LicenseApi();

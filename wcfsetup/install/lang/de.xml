@@ -938,6 +938,9 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Kann persönliche Daten (DSGVO) exportieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[Der Export gemäß der europäischen Datenschutz-Grundverordnung (DSGVO) enthält detaillierte persönliche Daten des jeweiligen Benutzers. Eine Filterung der im Export enthaltenen Information auf Basis der Zugriffsrechte des Administrators findet <strong>nicht</strong> statt und kann unter Umständen Informationen enthalten, die einem Administrator auf andere Weise nicht zugänglich wären.]]></item>
 	</category>
+	<category name="wcf.acp.dashboard">
+		<item name="wcf.acp.dashboard.box.news"><![CDATA[Nachrichten]]></item>
+	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
 		<item name="wcf.acp.index.credits.contributor"><![CDATA[Mitwirkende]]></item>
@@ -948,7 +951,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
-		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>

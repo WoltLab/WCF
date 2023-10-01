@@ -916,6 +916,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Can export personal data (GDPR)]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[The export according to the European General Data Protection Regulation (GDPR) contains detailed personal data of the respective user. The export <strong>will not</strong> be filtered according to the administrator’s permissions and may contain information that would be inaccessible otherwise.]]></item>
 	</category>
+	<category name="wcf.acp.dashboard">
+		<item name="wcf.acp.dashboard.box.news"><![CDATA[News]]></item>
+	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
 		<item name="wcf.acp.index.credits.contributor"><![CDATA[Contributions]]></item>
@@ -926,7 +929,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered European Union trade marks at the European Union Intellectual Property Office (EUIPO) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
-		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>

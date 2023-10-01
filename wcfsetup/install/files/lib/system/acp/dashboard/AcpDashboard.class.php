@@ -6,7 +6,6 @@ use wcf\system\acp\dashboard\box\IAcpDashboardBox;
 use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\event\EventHandler;
 
-
 /**
  * Represents the acp dashboard.
  *
