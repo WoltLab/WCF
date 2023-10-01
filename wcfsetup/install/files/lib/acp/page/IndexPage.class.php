@@ -43,35 +43,6 @@ class IndexPage extends AbstractPage
     public function readData()
     {
         parent::readData();
-
-        $sql = "SELECT @@innodb_flush_log_at_trx_commit";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute();
-        $innodbFlushLogAtTrxCommit = $statement->fetchSingleColumn();
-
-        $this->server = [
-            'os' => \PHP_OS,
-            'webserver' => $_SERVER['SERVER_SOFTWARE'] ?? '',
-            'mySQLVersion' => WCF::getDB()->getVersion(),
-            'load' => '',
-            'memoryLimit' => \ini_get('memory_limit'),
-            'upload_max_filesize' => \ini_get('upload_max_filesize'),
-            'postMaxSize' => \ini_get('post_max_size'),
-            'innodbFlushLogAtTrxCommit' => $innodbFlushLogAtTrxCommit,
-        ];
-
-        // get load
-        if (\function_exists('sys_getloadavg')) {
-            $load = \sys_getloadavg();
-            if (\is_array($load) && \count($load) == 3) {
-                $this->server['load'] = \implode(
-                    ', ',
-                    \array_map(static function (float $value) {
-                        return \sprintf('%.2F', $value);
-                    }, $load)
-                );
-            }
-        }
     }
 
     /**
@@ -182,16 +153,10 @@ class IndexPage extends AbstractPage
             }
         }
 
-        $sql = "SELECT DATABASE()";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-        $databaseName = $statement->fetchSingleColumn();
-
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
             'server' => $this->server,
-            'databaseName' => $databaseName,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,

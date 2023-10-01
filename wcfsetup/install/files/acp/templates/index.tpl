@@ -53,117 +53,14 @@
 	{/foreach}
 </div>
 
-<div class="section tabMenuContainer" data-active="system" data-store="activeTabMenuItem">
+<div class="section tabMenuContainer" data-active="credits" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
-			<li><a href="#system">{lang}wcf.acp.index.system{/lang}</a></li>
 			<li><a href="#credits">{lang}wcf.acp.index.credits{/lang}</a></li>
 			
 			{event name='tabMenuTabs'}
 		</ul>
 	</nav>
-	
-	<div id="system" class="hidden tabMenuContent">
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.acp.index.system.software{/lang}</h2>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.software.version{/lang}</dt>
-				<dd>{WCF_VERSION}</dd>
-			</dl>
-			
-			{event name='softwareFields'}
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.software.databaseName{/lang}</dt>
-				<dd>{$databaseName}</dd>
-			</dl>
-
-			{if WCF_N != 1}
-				<dl>
-					<dt>{lang}wcf.acp.index.system.software.databaseNumber{/lang}</dt>
-					<dd>{WCF_N}</dd>
-				</dl>
-			{/if}
-		</section>
-		
-		{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
-			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.acp.index.system.server{/lang}</h2>
-				
-				<dl>
-					<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
-					<dd>{$server[os]}</dd>
-				</dl>
-				
-				<dl>
-					<dt>{lang}wcf.acp.index.system.webserver{/lang}</dt>
-					<dd>{$server[webserver]}</dd>
-				</dl>
-				
-				<dl>
-					<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
-					<dd>{$server[mySQLVersion]}</dd>
-				</dl>
-				
-				{if $server[load]}
-					<dl>
-						<dt>{lang}wcf.acp.index.system.load{/lang}</dt>
-						<dd>{$server[load]}</dd>
-					</dl>
-				{/if}
-				
-				{if $server[innodbFlushLogAtTrxCommit] !== false}
-					<dl>
-						<dt>innodb_flush_log_at_trx_commit</dt>
-						<dd>{$server[innodbFlushLogAtTrxCommit]}</dd>
-					</dl>
-				{/if}
-				
-				{event name='serverFields'}
-			</section>
-		
-			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.acp.index.system.php{/lang}</h2>
-				
-				<dl>
-					<dt>{lang}wcf.acp.index.system.php.version{/lang}</dt>
-					<dd>
-						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-							<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
-						{else}
-							{PHP_VERSION}
-						{/if}
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt>memory_limit</dt>
-					<dd>
-						{$server[memoryLimit]}
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt>post_max_size</dt>
-					<dd>
-						{$server[postMaxSize]}
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt>upload_max_filesize</dt>
-					<dd>
-						{$server[upload_max_filesize]}
-					</dd>
-				</dl>
-				
-				{event name='phpFields'}
-			</section>
-		{/if}
-		
-		{event name='systemFieldsets'}
-	</div>
 	
 	<div id="credits" class="hidden tabMenuContent">
 		<section class="section">

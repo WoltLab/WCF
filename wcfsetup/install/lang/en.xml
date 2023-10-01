@@ -918,6 +918,18 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	</category>
 	<category name="wcf.acp.dashboard">
 		<item name="wcf.acp.dashboard.box.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo"><![CDATA[System]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software"><![CDATA[Software]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseNumber"><![CDATA[Database Installation Number]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseName"><![CDATA[Database Name]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.server"><![CDATA[Server]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.os"><![CDATA[Operating System]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.webserver"><![CDATA[Web Server]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.php"><![CDATA[PHP]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.php.version"><![CDATA[PHP Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.mySQLVersion"><![CDATA[MySQL Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.load"><![CDATA[Current UNIX Load]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
@@ -931,18 +943,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
-		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
-		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
-		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Database Installation Number]]></item>
-		<item name="wcf.acp.index.system.software.databaseName"><![CDATA[Database Name]]></item>
-		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
-		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
-		<item name="wcf.acp.index.system.webserver"><![CDATA[Web Server]]></item>
-		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
-		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP Version]]></item>
-		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
-		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
 		<item name="wcf.acp.index.woltlab.manual"><![CDATA[Manual]]></item>
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Support Forums]]></item>

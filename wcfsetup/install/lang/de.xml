@@ -940,6 +940,18 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 	</category>
 	<category name="wcf.acp.dashboard">
 		<item name="wcf.acp.dashboard.box.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo"><![CDATA[System]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software"><![CDATA[Software]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseNumber"><![CDATA[Datenbank-Installationsnummer]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseName"><![CDATA[Datenbankname]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.server"><![CDATA[Server]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.os"><![CDATA[Betriebssystem]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.webserver"><![CDATA[Webserver]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.php"><![CDATA[PHP]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.php.version"><![CDATA[PHP-Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.mySQLVersion"><![CDATA[MySQL-Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.load"><![CDATA[Aktueller UNIX Load]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -953,18 +965,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
-		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
-		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
-		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Datenbank-Installationsnummer]]></item>
-		<item name="wcf.acp.index.system.software.databaseName"><![CDATA[Datenbankname]]></item>
-		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
-		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
-		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
-		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
-		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP-Version]]></item>
-		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
-		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
 		<item name="wcf.acp.index.woltlab.manual"><![CDATA[Handbuch]]></item>
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>

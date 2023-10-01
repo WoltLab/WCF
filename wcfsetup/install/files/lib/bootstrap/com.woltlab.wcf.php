@@ -1,6 +1,7 @@
 <?php
 
 use wcf\system\acp\dashboard\box\NewsAcpDashboardBox;
+use wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox;
 use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
@@ -77,6 +78,7 @@ return static function (): void {
 
     $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
         $event->register('com.woltlab.wcf.news', new NewsAcpDashboardBox());
+        $event->register('com.woltlab.wcf.systemInfo', new SystemInfoAcpDashboardBox());
     });
 
     try {
