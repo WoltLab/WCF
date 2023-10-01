@@ -952,16 +952,16 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.systemInfo.php.version"><![CDATA[PHP-Version]]></item>
 		<item name="wcf.acp.dashboard.box.systemInfo.mySQLVersion"><![CDATA[MySQL-Version]]></item>
 		<item name="wcf.acp.dashboard.box.systemInfo.load"><![CDATA[Aktueller UNIX Load]]></item>
+		<item name="wcf.acp.dashboard.box.credits"><![CDATA[Über WoltLab Suite]]></item>
+		<item name="wcf.acp.dashboard.box.credits.contributor"><![CDATA[Mitwirkende]]></item>
+		<item name="wcf.acp.dashboard.box.credits.designer"><![CDATA[Design]]></item>
+		<item name="wcf.acp.dashboard.box.credits.developedBy"><![CDATA[Software entwickelt von]]></item>
+		<item name="wcf.acp.dashboard.box.credits.developer"><![CDATA[Programmierung]]></item>
+		<item name="wcf.acp.dashboard.box.credits.productManager"><![CDATA[Projektleitung]]></item>
+		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
+		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[Weitere]]></item>
 	</category>
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
-		<item name="wcf.acp.index.credits.contributor"><![CDATA[Mitwirkende]]></item>
-		<item name="wcf.acp.index.credits.designer"><![CDATA[Design]]></item>
-		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software entwickelt von]]></item>
-		<item name="wcf.acp.index.credits.developer"><![CDATA[Programmierung]]></item>
-		<item name="wcf.acp.index.credits.productManager"><![CDATA[Projektleitung]]></item>
-		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
-		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>

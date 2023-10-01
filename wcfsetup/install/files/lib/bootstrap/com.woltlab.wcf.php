@@ -1,5 +1,6 @@
 <?php
 
+use wcf\system\acp\dashboard\box\CreditsAcpDashboardBox;
 use wcf\system\acp\dashboard\box\NewsAcpDashboardBox;
 use wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox;
 use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
@@ -79,6 +80,7 @@ return static function (): void {
     $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
         $event->register('com.woltlab.wcf.news', new NewsAcpDashboardBox());
         $event->register('com.woltlab.wcf.systemInfo', new SystemInfoAcpDashboardBox());
+        $event->register('com.woltlab.wcf.credits', new CreditsAcpDashboardBox());
     });
 
     try {
