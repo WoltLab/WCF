@@ -199,6 +199,7 @@
 	--ck-color-text: var(--wcfButtonTextActive);
 
 	background-color: var(--wcfButtonBackgroundActive);
+	color: var(--ck-color-text);
 }
 
 @media (hover: hover) {
