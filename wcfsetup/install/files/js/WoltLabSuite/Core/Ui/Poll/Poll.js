@@ -145,7 +145,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         }
     }
     exports.Poll = Poll;
-    const polls = new WeakMap();
+    const polls = new WeakSet();
     function setup() {
         document.querySelectorAll(".pollContainer").forEach((pollElement) => {
             if (!pollElement.dataset.pollId) {
@@ -155,7 +155,8 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
                 return;
             }
             const pollID = parseInt(pollElement.dataset.pollId, 10);
-            polls.set(pollElement, new Poll(pollID));
+            new Poll(pollID);
+            polls.add(pollElement);
         });
     }
     function setupAll() {
