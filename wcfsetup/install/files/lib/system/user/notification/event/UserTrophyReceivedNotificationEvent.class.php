@@ -89,7 +89,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
                 'type' => Trophy::TYPE_BADGE,
                 'isDisabled' => 0,
                 'awardAutomatically' => 0,
-                'iconName' => 'trophy',
+                'iconName' => 'trophy;false',
                 'iconColor' => 'rgba(255, 255, 255, 1)',
                 'badgeColor' => 'rgba(50, 92, 132, 1)',
             ],
