@@ -23,9 +23,9 @@ final class AcpDashboardCollecting implements IEvent
     /**
      * Registers a new box.
      */
-    public function register(string $name, IAcpDashboardBox $box): void
+    public function register(IAcpDashboardBox $box): void
     {
-        $this->boxes[$name] = $box;
+        $this->boxes[$box->getName()] = $box;
     }
 
     /**

@@ -23,6 +23,11 @@ final class SystemInfoAcpDashboardBox extends AbstractAcpDashboardBox
         return WCF::getTPL()->fetch('systemInfoAcpDashboardBox', 'wcf', $this->getVariables());
     }
 
+    public function getName(): string
+    {
+        return 'com.woltlab.wcf.systemInfo';
+    }
+
     private function getVariables(): array
     {
         return [

@@ -27,4 +27,9 @@ final class NewsAcpDashboardBox extends AbstractAcpDashboardBox
     {
         return WCF::getTPL()->fetch('newsAcpDashboardBox');
     }
+
+    public function getName(): string
+    {
+        return 'com.woltlab.wcf.news';
+    }
 }

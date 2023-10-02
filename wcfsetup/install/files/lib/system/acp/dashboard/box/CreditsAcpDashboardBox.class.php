@@ -22,4 +22,9 @@ final class CreditsAcpDashboardBox extends AbstractAcpDashboardBox
     {
         return WCF::getTPL()->fetch('creditsAcpDashboardBox');
     }
+
+    public function getName(): string
+    {
+        return 'com.woltlab.wcf.credits';
+    }
 }

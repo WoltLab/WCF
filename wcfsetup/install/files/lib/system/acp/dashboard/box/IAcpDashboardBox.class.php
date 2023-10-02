@@ -30,4 +30,9 @@ interface IAcpDashboardBox
      * Returns the content of this box.
      */
     public function getContent(): string;
+
+    /**
+     * Returns the name (identifier) of this box.
+     */
+    public function getName(): string;
 }
