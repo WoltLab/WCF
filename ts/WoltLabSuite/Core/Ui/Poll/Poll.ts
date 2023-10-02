@@ -183,18 +183,21 @@ export class Poll {
   }
 }
 
-const polls: Map<number, Poll> = new Map();
+const polls = new WeakSet<HTMLElement>();
 function setup(): void {
   document.querySelectorAll(".pollContainer").forEach((pollElement: HTMLElement) => {
     if (!pollElement.dataset.pollId) {
       throw new Error("Invalid poll element given. Missing pollID.");
     }
 
-    const pollID = parseInt(pollElement.dataset.pollId, 10);
-
-    if (!polls.has(pollID)) {
-      polls.set(pollID, new Poll(pollID));
+    if (polls.has(pollElement)) {
+      return;
     }
+
+    const pollID = parseInt(pollElement.dataset.pollId, 10);
+    new Poll(pollID);
+
+    polls.add(pollElement);
   });
 }
 
