@@ -442,9 +442,20 @@
 		<name>Feedly</name>
 		<url>http://www.feedly.com/fetcher.html</url>
 	</spider>
-	<spider ident="Feedfetcher-Google">
+	<spider ident="FeedFetcher-Google">
 		<name>FeedFetcher-Google</name>
 		<url>http://www.google.com/feedfetcher.html</url>
+	</spider>
+	<spider ident="Google-Read-Aloud">
+		<name>Google Read Aloud</name>
+		<url>https://developers.google.com/search/docs/crawling-indexing/read-aloud-user-agent</url>
+	</spider>
+	<spider ident="Google-Site-Verification/1.0">
+		<name>Google Site Verifier</name>
+		<url>https://support.google.com/webmasters/answer/9008080</url>
+	</spider>
+	<spider ident="Google-Extended">
+		<name>Google-Extended</name>
 	</spider>
 	<spider ident="UniversalFeedParser">
 		<name>FeedParser</name>
@@ -570,6 +581,22 @@
 		<name>Googlebot-Video</name>
 		<url>https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers</url>
 	</spider>
+	<spider ident="APIs-Google">
+		<name>APIs-Google</name>
+		<url>https://developers.google.com/search/docs/crawling-indexing/apis-user-agent</url>
+	</spider>
+	<spider ident="Google Favicon">
+		<name>Google Favicon</name>
+		<url>https://developers.google.com/search/docs/appearance/favicon-in-search</url>
+	</spider>
+	<spider ident="Storebot-Google/1.0">
+		<name>Google StoreBot</name>
+		<url>https://support.google.com/merchants/answer/13294660</url>
+	</spider>
+	<spider ident="Google-InspectionTool/1.0">
+		<name>Google-InspectionTool</name>
+		<url>https://support.google.com/webmasters/answer/9012289</url>
+	</spider>
 	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
 		<name>Google Stackdriver Monitoring</name>
 		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
@@ -582,6 +609,10 @@
 	</spider>
 	<spider ident="AdsBot-Google">
 		<name>Google Ads-Bot</name>
+		<url>http://www.google.com/adsbot.html</url>
+	</spider>
+	<spider ident="AdsBot-Google-Mobile">
+		<name>Google Ads-Bot Mobile</name>
 		<url>http://www.google.com/adsbot.html</url>
 	</spider>
 	<spider ident="Gpostbot">
