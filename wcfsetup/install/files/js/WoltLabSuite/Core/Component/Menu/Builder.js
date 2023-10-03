@@ -8,8 +8,8 @@ define(["require", "exports", "tslib", "./Group"], function (require, exports, t
         constructor(menu) {
             this.#menu = menu;
         }
-        addGroup(callback) {
-            const group = new Group_1.default(this.#menu);
+        addGroup(label, callback) {
+            const group = new Group_1.default(label, this.#menu);
             callback(group);
             return this;
         }

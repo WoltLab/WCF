@@ -8,8 +8,8 @@ export class MenuBuilder {
     this.#menu = menu;
   }
 
-  addGroup(callback: (group: MenuGroup) => void): this {
-    const group = new MenuGroup(this.#menu);
+  addGroup(label: string, callback: (group: MenuGroup) => void): this {
+    const group = new MenuGroup(label, this.#menu);
     callback(group);
 
     return this;

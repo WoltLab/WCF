@@ -4,8 +4,9 @@ define(["require", "exports"], function (require, exports) {
     exports.MenuGroup = void 0;
     class MenuGroup {
         #group;
-        constructor(menu) {
+        constructor(label, menu) {
             this.#group = document.createElement("woltlab-core-menu-group");
+            this.#group.label = label;
             menu.append(this.#group);
         }
         addItem(value, label) {

@@ -4,8 +4,10 @@ import type WoltlabCoreMenuGroupElement from "WoltLabSuite/Core/Element/woltlab-
 export class MenuGroup {
   readonly #group: WoltlabCoreMenuGroupElement;
 
-  constructor(menu: WoltlabCoreMenuElement) {
+  constructor(label: string, menu: WoltlabCoreMenuElement) {
     this.#group = document.createElement("woltlab-core-menu-group");
+    this.#group.label = label;
+
     menu.append(this.#group);
   }
 
