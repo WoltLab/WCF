@@ -31,6 +31,10 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
         // fetch users
         $userIDs = $users = [];
         foreach ($this->comments as $comment) {
+            if ($comment === null) {
+                continue;
+            }
+
             $userIDs[] = $comment->objectID;
         }
         if (!empty($userIDs)) {
