@@ -37,6 +37,10 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
         // fetch users
         $userIDs = $users = [];
         foreach ($comments as $comment) {
+            if ($comment === null) {
+                continue;
+            }
+
             $userIDs[] = $comment->objectID;
         }
         if (!empty($userIDs)) {
