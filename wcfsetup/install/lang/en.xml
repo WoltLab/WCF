@@ -938,6 +938,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.credits.productManager"><![CDATA[Product Manager]]></item>
 		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered European Union trade marks at the European Union Intellectual Property Office (EUIPO) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[More]]></item>
+		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{plural value=$usersAwaitingApproval one='# User' other='# Users'} Awaiting Approval]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
@@ -3131,7 +3132,6 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Users awaiting approval]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked avatars]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
-		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account on {@PAGE_TITLE|phrase}]]></item>

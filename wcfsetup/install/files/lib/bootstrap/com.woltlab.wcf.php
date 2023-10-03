@@ -76,6 +76,7 @@ return static function (): void {
 
     $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
         $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
     });

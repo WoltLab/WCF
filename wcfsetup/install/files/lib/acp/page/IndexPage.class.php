@@ -5,12 +5,10 @@ namespace wcf\acp\page;
 use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\data\user\User;
 use wcf\page\AbstractPage;
 use wcf\system\acp\dashboard\AcpDashboard;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Environment;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
@@ -45,23 +43,6 @@ class IndexPage extends AbstractPage
     public function assignVariables()
     {
         parent::assignVariables();
-
-        $usersAwaitingApproval = 0;
-        if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('banned = ?', [0]);
-            $conditionBuilder->add('activationCode <> ?', [0]);
-            if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
-                $conditionBuilder->add('emailConfirmed IS NULL');
-            }
-
-            $sql = "SELECT  COUNT(*)
-                    FROM    wcf" . WCF_N . "_user "
-                . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute($conditionBuilder->getParameters());
-            $usersAwaitingApproval = $statement->fetchSingleColumn();
-        }
 
         $optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
         $recaptchaWithoutKey = false;
@@ -150,7 +131,6 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
-            'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,
             'taintedApplications' => $taintedApplications,

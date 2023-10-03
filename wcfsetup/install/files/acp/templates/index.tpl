@@ -32,10 +32,6 @@
 	<woltlab-core-notice type="info">{lang}wcf.acp.index.tinyBuild{/lang}</woltlab-core-notice>
 {/if}
 
-{if $usersAwaitingApproval}
-	<woltlab-core-notice type="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</woltlab-core-notice>
-{/if}
-
 {if $missingLanguageItemsMTime}
 	<woltlab-core-notice type="warning">{lang}wcf.acp.index.missingLanguageItems{/lang}</woltlab-core-notice>
 {/if}

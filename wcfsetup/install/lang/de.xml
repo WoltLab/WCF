@@ -960,6 +960,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.credits.productManager"><![CDATA[Projektleitung]]></item>
 		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[Weitere]]></item>
+		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{#$usersAwaitingApproval} Benutzer {if $usersAwaitingApproval == 1}wartet{else}warten{/if} auf Aktivierung]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
@@ -3202,7 +3203,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Benutzer die auf Freischaltung warten]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Gesperrte Avatare]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Gesperrte Signaturen]]></item>
-		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{#$usersAwaitingApproval} Benutzer</a> {if $usersAwaitingApproval == 1}wartet auf seine{else}warten auf ihre{/if} Aktivierung.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Nicht aktiviert]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|phrase}]]></item>
