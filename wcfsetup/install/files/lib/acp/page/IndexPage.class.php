@@ -32,12 +32,6 @@ class IndexPage extends AbstractPage
     public $neededPermissions = ['admin.general.canUseAcp'];
 
     /**
-     * server information
-     * @var string[]
-     */
-    public $server = [];
-
-    /**
      * @inheritDoc
      */
     public function readData()
@@ -156,7 +150,6 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
-            'server' => $this->server,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,
