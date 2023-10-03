@@ -57,8 +57,11 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             }
 
             $value = StringUtil::trim($element->textContent);
-
-            if ($value === '' || $this->isSuspiciousValue($value, $href)) {
+            if ($value === '') {
+                if ($element->childElementCount === 0) {
+                    $value = $href->__toString();
+                }
+            } else if ($this->isSuspiciousValue($value, $href)) {
                 $value = $href->__toString();
             }
 
