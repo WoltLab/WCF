@@ -939,6 +939,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered European Union trade marks at the European Union Intellectual Property Office (EUIPO) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{plural value=$usersAwaitingApproval one='# User' other='# Users'} Awaiting Approval]]></item>
+		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
