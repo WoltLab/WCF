@@ -170,9 +170,6 @@ export function setup(options: BoostrapOptions): void {
   });
 
   whenFirstSeen("woltlab-core-menu", () => {
-    void import("./Element/woltlab-core-menu");
-    void import("./Element/woltlab-core-menu-group");
-    void import("./Element/woltlab-core-menu-item");
-    void import("./Element/woltlab-core-menu-separator");
+    void import("./Component/Menu");
   });
 }

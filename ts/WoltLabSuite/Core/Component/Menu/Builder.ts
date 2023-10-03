@@ -1,0 +1,48 @@
+import type WoltlabCoreMenuElement from "WoltLabSuite/Core/Element/woltlab-core-menu";
+import MenuGroup from "./Group";
+
+export class MenuBuilder {
+  readonly #menu: WoltlabCoreMenuElement;
+
+  constructor(menu: WoltlabCoreMenuElement) {
+    this.#menu = menu;
+  }
+
+  addGroup(callback: (group: MenuGroup) => void): this {
+    const group = new MenuGroup(this.#menu);
+    callback(group);
+
+    return this;
+  }
+
+  addItem(value: string, label: string): this {
+    const item = document.createElement("woltlab-core-menu-item");
+    item.value = value;
+    item.textContent = label;
+    this.#menu.append(item);
+
+    return this;
+  }
+
+  addItemWithHtml(value: string, html: string): this {
+    const item = document.createElement("woltlab-core-menu-item");
+    item.value = value;
+    item.innerHTML = html;
+    this.#menu.append(item);
+
+    return this;
+  }
+
+  addDivider(): this {
+    const divider = document.createElement("woltlab-core-menu-separator");
+    this.#menu.append(divider);
+
+    return this;
+  }
+
+  finalize(): WoltlabCoreMenuElement {
+    return this.#menu;
+  }
+}
+
+export default MenuBuilder;
