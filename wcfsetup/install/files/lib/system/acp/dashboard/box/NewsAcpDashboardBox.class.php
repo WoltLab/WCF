@@ -13,6 +13,7 @@ use wcf\system\WCF;
  */
 final class NewsAcpDashboardBox extends AbstractAcpDashboardBox
 {
+    #[\Override]
     public function isAccessible(): bool
     {
         return ENABLE_WOLTLAB_NEWS;
