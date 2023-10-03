@@ -8,7 +8,6 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\page\AbstractPage;
 use wcf\system\acp\dashboard\AcpDashboard;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\Environment;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
@@ -43,22 +42,6 @@ class IndexPage extends AbstractPage
     public function assignVariables()
     {
         parent::assignVariables();
-
-        $optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
-        $recaptchaWithoutKey = false;
-        $recaptchaKeyLink = '';
-        if (CAPTCHA_TYPE == 'com.woltlab.wcf.recaptcha' && (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY)) {
-            $recaptchaWithoutKey = true;
-
-            $recaptchaKeyLink = LinkHandler::getInstance()->getLink(
-                'Option',
-                [
-                    'id' => $optionCategories['security']->categoryID,
-                    'optionName' => 'recaptcha_publickey',
-                ],
-                '#category_security.antispam'
-            );
-        }
 
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
@@ -129,8 +112,6 @@ class IndexPage extends AbstractPage
         }
 
         WCF::getTPL()->assign([
-            'recaptchaWithoutKey' => $recaptchaWithoutKey,
-            'recaptchaKeyLink' => $recaptchaKeyLink,
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,
             'taintedApplications' => $taintedApplications,

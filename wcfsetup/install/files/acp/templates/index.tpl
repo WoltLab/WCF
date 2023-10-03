@@ -24,10 +24,6 @@
 	{/if}
 {/if}
 
-{if $recaptchaWithoutKey}
-	<woltlab-core-notice type="error">{lang}wcf.acp.index.recaptchaWithoutKey{/lang}</woltlab-core-notice>
-{/if}
-
 {if !VISITOR_USE_TINY_BUILD}
 	<woltlab-core-notice type="info">{lang}wcf.acp.index.tinyBuild{/lang}</woltlab-core-notice>
 {/if}
