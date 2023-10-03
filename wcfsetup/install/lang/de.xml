@@ -972,7 +972,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
-		<item name="wcf.acp.index.allowsFrameEmbedding"><![CDATA[Die <a href="{$xFrameOptionsLink}">Option zur Unterbindung der Einbindung von WoltLab Suite in einem Frame</a> ist deaktiviert. Diese Option ist veraltet, wird in einer zukünftigen Version entfernt und die Einbindung generell unterbunden. Die Einbindung in einem Frame reduziert die Sicherheit, da <a href="https://de.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking-Angriffe</a> ermöglicht werden. Darüber hinaus können bestimmte Sicherheitsmerkmale von Cookies in Frames nicht verwendet werden.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[Die Systemumgebung hat sich verändert. Es wird empfohlen, eine <a href="{link controller='SystemCheck'}{/link}">Systemüberprüfung</a> durchzuführen.]]></item>
 	</category>
 	<category name="wcf.acp.label">
