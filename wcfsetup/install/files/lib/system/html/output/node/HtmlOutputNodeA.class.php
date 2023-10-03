@@ -161,7 +161,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
         // will cause the link marker to behave properly.
         if ($element->childNodes->length === 1) {
             $child = $element->childNodes->item(0);
-            if ($child->nodeType === \XML_ELEMENT_NODE && $child->nodeName === 'img') {
+            if ($child instanceof \DOMElement && $child->nodeName === 'img') {
                 if (
                     \preg_match(
                         '~\b(?P<className>messageFloatObject(?:Left|Right))\b~',
