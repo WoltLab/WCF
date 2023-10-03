@@ -1,11 +1,27 @@
-define(["require", "exports", "tslib", "./woltlab-core-menu-group"], function (require, exports, tslib_1, woltlab_core_menu_group_1) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreMenuItemElement = void 0;
-    woltlab_core_menu_group_1 = tslib_1.__importDefault(woltlab_core_menu_group_1);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreMenuItemElement extends HTMLElement {
-        #type = 1 /* MenuItemType.Item */;
         #checkmark;
+        constructor() {
+            super();
+            this.addEventListener("click", () => {
+                if (this.disabled) {
+                    return;
+                }
+                const evt = new CustomEvent("beforeSelect", {
+                    cancelable: true,
+                });
+                this.dispatchEvent(evt);
+                if (!evt.defaultPrevented) {
+                    this.selected = !this.selected;
+                    const evt = new CustomEvent("change");
+                    this.dispatchEvent(evt);
+                }
+            });
+        }
         connectedCallback() {
             const shadow = this.attachShadow({ mode: "open" });
             const checkmarkSlot = document.createElement("slot");
@@ -15,35 +31,12 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group"], function (r
             defaultSlot.id = "slot";
             shadow.append(defaultSlot);
             this.tabIndex = -1;
-            this.disabled = this.hasAttribute("disabled");
-            if (this.parentElement instanceof woltlab_core_menu_group_1.default) {
-                this.#type = 0 /* MenuItemType.Checkbox */;
-                this.setAttribute("role", "menuitemcheckbox");
-                this.selected = this.hasAttribute("selected");
-                if (this.#checkmark === undefined) {
-                    this.#checkmark = document.createElement("fa-icon");
-                    this.#checkmark.setIcon("check");
-                    this.#checkmark.slot = "checkmark";
-                }
-                this.append(this.#checkmark);
-            }
-            else {
-                this.#type = 1 /* MenuItemType.Item */;
-                this.setAttribute("role", "menuitem");
-                this.removeAttribute("aria-checked");
-                this.#checkmark?.remove();
-            }
+            this.setAttribute("role", "menuitem");
         }
         get selected() {
-            if (this.#type !== 1 /* MenuItemType.Item */) {
-                return false;
-            }
             return this.hasAttribute("selected");
         }
         set selected(checked) {
-            if (this.#type !== 0 /* MenuItemType.Checkbox */) {
-                return;
-            }
             if (checked) {
                 this.setAttribute("selected", "");
             }
@@ -70,8 +63,29 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group"], function (r
         set value(value) {
             this.setAttribute("value", value);
         }
+        setRole(role) {
+            this.setAttribute("role", role);
+            this.#updateAriaSelected();
+            if (role === "menuitem") {
+                this.#checkmark?.remove();
+            }
+            else if (role === "menuitemcheckbox") {
+                if (this.#checkmark === undefined) {
+                    this.#checkmark = document.createElement("fa-icon");
+                    this.#checkmark.setIcon("check");
+                    this.#checkmark.slot = "checkmark";
+                }
+                this.append(this.#checkmark);
+            }
+        }
+        #updateAriaSelected() {
+            const role = this.getAttribute("role");
+            if (role === "menuitemcheckbox") {
+                this.setAttribute("aria-checked", String(this.selected === true));
+            }
+        }
     }
     exports.WoltlabCoreMenuItemElement = WoltlabCoreMenuItemElement;
-    exports.default = WoltlabCoreMenuItemElement;
     window.customElements.define("woltlab-core-menu-item", WoltlabCoreMenuItemElement);
+    exports.default = WoltlabCoreMenuItemElement;
 });
