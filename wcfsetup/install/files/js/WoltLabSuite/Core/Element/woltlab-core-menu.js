@@ -1,9 +1,13 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "tslib", "./woltlab-core-menu-group", "./woltlab-core-menu-item"], function (require, exports, tslib_1, woltlab_core_menu_group_1, woltlab_core_menu_item_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreMenuElement = void 0;
+    woltlab_core_menu_group_1 = tslib_1.__importDefault(woltlab_core_menu_group_1);
+    woltlab_core_menu_item_1 = tslib_1.__importDefault(woltlab_core_menu_item_1);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreMenuElement extends HTMLElement {
         #index = -1;
+        #items = new Set();
         constructor() {
             super();
             this.addEventListener("keydown", (event) => {
@@ -11,6 +15,40 @@ define(["require", "exports"], function (require, exports) {
             });
         }
         connectedCallback() {
+            const shadow = this.attachShadow({ mode: "open" });
+            const slot = document.createElement("slot");
+            shadow.append(slot);
+            slot.addEventListener("slotchange", () => {
+                for (const element of slot.assignedElements()) {
+                    if (!(element instanceof woltlab_core_menu_group_1.default) && !(element instanceof woltlab_core_menu_item_1.default)) {
+                        element.remove();
+                        continue;
+                    }
+                    if (this.#items.has(element)) {
+                        continue;
+                    }
+                    this.#items.add(element);
+                    element.addEventListener("change", () => {
+                        this.#items.forEach((item) => {
+                            if (item === element) {
+                                return;
+                            }
+                            if (item instanceof woltlab_core_menu_group_1.default) {
+                                item.value = "";
+                            }
+                            else {
+                                item.selected = false;
+                            }
+                        });
+                        const evt = new CustomEvent("change");
+                        this.dispatchEvent(evt);
+                        if (element instanceof woltlab_core_menu_item_1.default) {
+                            const evt = new CustomEvent("close");
+                            this.dispatchEvent(evt);
+                        }
+                    });
+                }
+            });
             this.setAttribute("role", "menu");
             this.label = this.getAttribute("label");
             this.#index = 0;
@@ -22,6 +60,20 @@ define(["require", "exports"], function (require, exports) {
         set label(label) {
             this.setAttribute("label", label);
             this.setAttribute("aria-label", label);
+        }
+        get value() {
+            for (const item of Array.from(this.#items)) {
+                const value = item.value;
+                if (item instanceof woltlab_core_menu_group_1.default) {
+                    if (value !== "") {
+                        return value;
+                    }
+                }
+                else if (item.selected) {
+                    return value;
+                }
+            }
+            return "";
         }
         #keydown(event) {
             const { code, key } = event;
@@ -84,6 +136,6 @@ define(["require", "exports"], function (require, exports) {
         }
     }
     exports.WoltlabCoreMenuElement = WoltlabCoreMenuElement;
-    exports.default = WoltlabCoreMenuElement;
     window.customElements.define("woltlab-core-menu", WoltlabCoreMenuElement);
+    exports.default = WoltlabCoreMenuElement;
 });

@@ -1,7 +1,17 @@
+import WoltlabCoreMenuGroupElement from "./woltlab-core-menu-group";
 import WoltlabCoreMenuItemElement from "./woltlab-core-menu-item";
 
+type MenuChild = WoltlabCoreMenuGroupElement | WoltlabCoreMenuItemElement;
+
+interface WoltlabCoreMenuEventMap {
+  change: CustomEvent;
+  close: CustomEvent;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreMenuElement extends HTMLElement {
   #index = -1;
+  #items = new Set<MenuChild>();
 
   constructor() {
     super();
@@ -12,6 +22,48 @@ export class WoltlabCoreMenuElement extends HTMLElement {
   }
 
   connectedCallback() {
+    const shadow = this.attachShadow({ mode: "open" });
+
+    const slot = document.createElement("slot");
+    shadow.append(slot);
+
+    slot.addEventListener("slotchange", () => {
+      for (const element of slot.assignedElements()) {
+        if (!(element instanceof WoltlabCoreMenuGroupElement) && !(element instanceof WoltlabCoreMenuItemElement)) {
+          element.remove();
+          continue;
+        }
+
+        if (this.#items.has(element)) {
+          continue;
+        }
+
+        this.#items.add(element);
+
+        element.addEventListener("change", () => {
+          this.#items.forEach((item) => {
+            if (item === element) {
+              return;
+            }
+
+            if (item instanceof WoltlabCoreMenuGroupElement) {
+              item.value = "";
+            } else {
+              item.selected = false;
+            }
+          });
+
+          const evt = new CustomEvent("change");
+          this.dispatchEvent(evt);
+
+          if (element instanceof WoltlabCoreMenuItemElement) {
+            const evt = new CustomEvent("close");
+            this.dispatchEvent(evt);
+          }
+        });
+      }
+    });
+
     this.setAttribute("role", "menu");
 
     this.label = this.getAttribute("label")!;
@@ -27,6 +79,22 @@ export class WoltlabCoreMenuElement extends HTMLElement {
   set label(label: string) {
     this.setAttribute("label", label);
     this.setAttribute("aria-label", label);
+  }
+
+  get value(): string {
+    for (const item of Array.from(this.#items)) {
+      const value = item.value;
+
+      if (item instanceof WoltlabCoreMenuGroupElement) {
+        if (value !== "") {
+          return value;
+        }
+      } else if (item.selected) {
+        return value;
+      }
+    }
+
+    return "";
   }
 
   #keydown(event: KeyboardEvent): void {
@@ -106,6 +174,17 @@ export class WoltlabCoreMenuElement extends HTMLElement {
   }
 }
 
-export default WoltlabCoreMenuElement;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+export interface WoltlabCoreMenuElement extends HTMLElement {
+  addEventListener: {
+    <T extends keyof WoltlabCoreMenuEventMap>(
+      type: T,
+      listener: (this: WoltlabCoreMenuItemElement, ev: WoltlabCoreMenuEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+  } & HTMLElement["addEventListener"];
+}
 
 window.customElements.define("woltlab-core-menu", WoltlabCoreMenuElement);
+
+export default WoltlabCoreMenuElement;

@@ -1,5 +1,10 @@
 import WoltlabCoreMenuItemElement from "./woltlab-core-menu-item";
 
+interface WoltlabCoreMenuGroupEventMap {
+  change: CustomEvent;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreMenuGroupElement extends HTMLElement {
   readonly #items = new Set<WoltlabCoreMenuItemElement>();
   #value = "";
@@ -80,6 +85,17 @@ export class WoltlabCoreMenuGroupElement extends HTMLElement {
   }
 }
 
-export default WoltlabCoreMenuGroupElement;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+export interface WoltlabCoreMenuGroupElement extends HTMLElement {
+  addEventListener: {
+    <T extends keyof WoltlabCoreMenuGroupEventMap>(
+      type: T,
+      listener: (this: WoltlabCoreMenuItemElement, ev: WoltlabCoreMenuGroupEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+  } & HTMLElement["addEventListener"];
+}
 
 window.customElements.define("woltlab-core-menu-group", WoltlabCoreMenuGroupElement);
+
+export default WoltlabCoreMenuGroupElement;

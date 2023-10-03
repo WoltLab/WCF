@@ -3,6 +3,7 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-item"], function (re
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreMenuGroupElement = void 0;
     woltlab_core_menu_item_1 = tslib_1.__importDefault(woltlab_core_menu_item_1);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreMenuGroupElement extends HTMLElement {
         #items = new Set();
         #value = "";
@@ -66,6 +67,6 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-item"], function (re
         }
     }
     exports.WoltlabCoreMenuGroupElement = WoltlabCoreMenuGroupElement;
-    exports.default = WoltlabCoreMenuGroupElement;
     window.customElements.define("woltlab-core-menu-group", WoltlabCoreMenuGroupElement);
+    exports.default = WoltlabCoreMenuGroupElement;
 });
