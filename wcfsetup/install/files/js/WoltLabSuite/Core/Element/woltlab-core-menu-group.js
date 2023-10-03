@@ -17,8 +17,18 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-item"], function (re
                         continue;
                     }
                     this.#items.add(element);
-                    element.setRole("menuitemcheckbox");
+                    if (this.multiple) {
+                        element.setRole("menuitemcheckbox");
+                    }
+                    else {
+                        element.setRole("menuitemradio");
+                    }
                     element.addEventListener("change", () => {
+                        if (!this.multiple) {
+                            this.#items.forEach((item) => {
+                                item.selected = item === element;
+                            });
+                        }
                         this.#updateValue();
                     });
                 }
@@ -26,6 +36,9 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-item"], function (re
             shadow.append(slot);
             this.setAttribute("role", "group");
             this.label = this.getAttribute("label");
+        }
+        get multiple() {
+            return this.hasAttribute("multiple");
         }
         get label() {
             return this.getAttribute("label");

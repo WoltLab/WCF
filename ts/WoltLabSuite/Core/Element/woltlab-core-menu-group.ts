@@ -18,9 +18,19 @@ export class WoltlabCoreMenuGroupElement extends HTMLElement {
 
         this.#items.add(element);
 
-        element.setRole("menuitemcheckbox");
+        if (this.multiple) {
+          element.setRole("menuitemcheckbox");
+        } else {
+          element.setRole("menuitemradio");
+        }
 
         element.addEventListener("change", () => {
+          if (!this.multiple) {
+            this.#items.forEach((item) => {
+              item.selected = item === element;
+            });
+          }
+
           this.#updateValue();
         });
       }
@@ -31,6 +41,10 @@ export class WoltlabCoreMenuGroupElement extends HTMLElement {
     this.setAttribute("role", "group");
 
     this.label = this.getAttribute("label")!;
+  }
+
+  get multiple(): boolean {
+    return this.hasAttribute("multiple");
   }
 
   get label(): string {

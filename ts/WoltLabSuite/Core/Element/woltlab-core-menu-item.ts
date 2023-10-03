@@ -1,4 +1,4 @@
-type Role = "menuitem" | "menuitemcheckbox";
+type Role = "menuitem" | "menuitemcheckbox" | "menuitemradio";
 
 interface WoltlabCoreMenuItemEventMap {
   beforeSelect: CustomEvent;
@@ -14,6 +14,11 @@ export class WoltlabCoreMenuItemElement extends HTMLElement {
 
     this.addEventListener("click", () => {
       if (this.disabled) {
+        return;
+      }
+
+      const role = this.getAttribute("role") as Role;
+      if (role === "menuitemradio" && this.selected) {
         return;
       }
 
@@ -88,7 +93,7 @@ export class WoltlabCoreMenuItemElement extends HTMLElement {
 
     if (role === "menuitem") {
       this.#checkmark?.remove();
-    } else if (role === "menuitemcheckbox") {
+    } else if (role === "menuitemcheckbox" || role === "menuitemradio") {
       if (this.#checkmark === undefined) {
         this.#checkmark = document.createElement("fa-icon");
         this.#checkmark.setIcon("check");
@@ -101,7 +106,7 @@ export class WoltlabCoreMenuItemElement extends HTMLElement {
 
   #updateAriaSelected(): void {
     const role = this.getAttribute("role") as Role;
-    if (role === "menuitemcheckbox") {
+    if (role === "menuitemcheckbox" || role === "menuitemradio") {
       this.setAttribute("aria-checked", String(this.selected === true));
     }
   }

@@ -11,6 +11,10 @@ define(["require", "exports"], function (require, exports) {
                 if (this.disabled) {
                     return;
                 }
+                const role = this.getAttribute("role");
+                if (role === "menuitemradio" && this.selected) {
+                    return;
+                }
                 const evt = new CustomEvent("beforeSelect", {
                     cancelable: true,
                 });
@@ -69,7 +73,7 @@ define(["require", "exports"], function (require, exports) {
             if (role === "menuitem") {
                 this.#checkmark?.remove();
             }
-            else if (role === "menuitemcheckbox") {
+            else if (role === "menuitemcheckbox" || role === "menuitemradio") {
                 if (this.#checkmark === undefined) {
                     this.#checkmark = document.createElement("fa-icon");
                     this.#checkmark.setIcon("check");
@@ -80,7 +84,7 @@ define(["require", "exports"], function (require, exports) {
         }
         #updateAriaSelected() {
             const role = this.getAttribute("role");
-            if (role === "menuitemcheckbox") {
+            if (role === "menuitemcheckbox" || role === "menuitemradio") {
                 this.setAttribute("aria-checked", String(this.selected === true));
             }
         }
