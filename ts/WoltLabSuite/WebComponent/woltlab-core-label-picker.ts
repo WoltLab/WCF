@@ -30,8 +30,7 @@
         throw new Error("Expected a non empty list of labels.");
       }
 
-      // TODO: This HTML is duplicated in `set selected()`
-      const emptyLabel = `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
+      const emptyLabel = this.#getHtmlForNoneLabel();
 
       this.#button.type = "button";
       this.#button.classList.add("dropdownToggle");
@@ -84,8 +83,7 @@
       }
 
       if (this.selected) {
-        // TODO: This is _slightly_ awkward.
-        this.selected = this.selected!;
+        this.#updateValue(this.selected);
       }
     }
 
@@ -107,12 +105,7 @@
     set selected(selected: number) {
       this.setAttribute("selected", selected.toString());
 
-      this.#button.innerHTML =
-        this.#labels.get(selected) ||
-        `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
-      if (this.#formValue !== undefined) {
-        this.#formValue.value = selected.toString();
-      }
+      this.#updateValue(selected);
     }
 
     get selected(): number | undefined {
@@ -151,6 +144,17 @@
 
     get required(): boolean {
       return this.hasAttribute("required");
+    }
+
+    #getHtmlForNoneLabel(): string {
+      return `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
+    }
+
+    #updateValue(labelId: number): void {
+      this.#button.innerHTML = this.#labels.get(labelId) || this.#getHtmlForNoneLabel();
+      if (this.#formValue !== undefined) {
+        this.#formValue.value = labelId.toString();
+      }
     }
   }
 
