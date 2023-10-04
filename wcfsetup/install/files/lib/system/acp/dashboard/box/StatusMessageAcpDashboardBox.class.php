@@ -28,7 +28,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     #[\Override]
     public function hasContent(): bool
     {
-        return \count($this->getMessages()) !== 0;
+        return $this->getMessages() !== [];
     }
 
     public function getTitle(): string
@@ -70,7 +70,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         $messages = [];
         if (!(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80399)) {
             $messages[] = new StatusMessage(
-                'error',
+                StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.global.incompatiblePhpVersion')
             );
         }
@@ -81,7 +81,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             }
 
             $messages[] = new StatusMessage(
-                'error',
+                StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.application.isTainted', [
                     'taintedApplication' => $application
                 ])
@@ -95,7 +95,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         if ($storedSystemId !== Environment::getSystemId()) {
             if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess())) {
                 $messages[] = new StatusMessage(
-                    'info',
+                    StatusMessageType::Info,
                     WCF::getLanguage()->getDynamicVariable('wcf.acp.index.systemIdMismatch')
                 );
             }
@@ -110,7 +110,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
 
             if ($logEntry !== null) {
                 $messages[] = new StatusMessage(
-                    'warning',
+                    StatusMessageType::Warning,
                     WCF::getLanguage()->getDynamicVariable('wcf.acp.index.missingLanguageItems', [
                         'missingLanguageItemsMTime' => $logEntry->lastTime,
                     ])
@@ -169,7 +169,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         $messages = [];
         foreach ($evaluationExpired as $expiredApp) {
             $messages[] = new StatusMessage(
-                'error',
+                StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.evaluation.expired', [
                     'packageName' => $expiredApp['packageName'],
                     'isWoltLab' => $expiredApp['isWoltLab'],
@@ -180,7 +180,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
 
         foreach ($evaluationPending as $evaluationEndDate => $pendingApps) {
             $messages[] = new StatusMessage(
-                'warning',
+                StatusMessageType::Warning,
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.evaluation.pending', [
                     'evaluationEndDate' => $evaluationEndDate,
                     'pendingApps' => $pendingApps,

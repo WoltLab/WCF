@@ -12,7 +12,7 @@ namespace wcf\system\acp\dashboard\box;
  */
 final class StatusMessage
 {
-    public function __construct(public readonly string $type, public readonly string $message)
+    public function __construct(public readonly StatusMessageType $type, public readonly string $message)
     {
     }
 }
