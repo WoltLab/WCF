@@ -57,8 +57,11 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             }
 
             $value = StringUtil::trim($element->textContent);
-
-            if ($value === '' || $this->isSuspiciousValue($value, $href)) {
+            if ($value === '') {
+                if ($element->childElementCount === 0) {
+                    $value = $href->__toString();
+                }
+            } else if ($this->isSuspiciousValue($value, $href)) {
                 $value = $href->__toString();
             }
 
@@ -158,7 +161,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
         // will cause the link marker to behave properly.
         if ($element->childNodes->length === 1) {
             $child = $element->childNodes->item(0);
-            if ($child->nodeType === \XML_ELEMENT_NODE && $child->nodeName === 'img') {
+            if ($child instanceof \DOMElement && $child->nodeName === 'img') {
                 if (
                     \preg_match(
                         '~\b(?P<className>messageFloatObject(?:Left|Right))\b~',

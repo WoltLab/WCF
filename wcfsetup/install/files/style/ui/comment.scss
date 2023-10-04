@@ -30,7 +30,7 @@
 	display: grid;
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
-	grid-template-columns: 1fr min-content;
+	grid-template-columns: auto max-content;
 }
 
 .comment__avatar {

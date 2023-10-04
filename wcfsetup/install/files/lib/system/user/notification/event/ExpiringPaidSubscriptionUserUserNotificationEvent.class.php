@@ -95,6 +95,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
         /** @var PaidSubscription $paidSubscription */
         $paidSubscription = (new PaidSubscriptionAction([], 'create', [
             'data' => [
+                'groupIDs' => '',
                 'title' => 'Test Subscription',
             ],
         ]))->executeAction()['returnValues'];

@@ -186,9 +186,10 @@ class LanguageItemListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add('languageItem LIKE ?', ['%' . $this->languageItem . '%']);
         }
         if ($this->languageItemValue) {
+            $searchValue = '%' . WCF::getDB()->escapeLikeValue($this->languageItemValue) . '%';
             $this->objectList->getConditionBuilder()->add(
                 '((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)',
-                ['%' . $this->languageItemValue . '%', '%' . $this->languageItemValue . '%']
+                [$searchValue, $searchValue]
             );
         }
         if ($this->hasCustomValue || $this->hasDisabledCustomValue || $this->hasRecentlyDisabledCustomValue) {

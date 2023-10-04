@@ -199,6 +199,7 @@
 	--ck-color-text: var(--wcfButtonTextActive);
 
 	background-color: var(--wcfButtonBackgroundActive);
+	color: var(--ck-color-text);
 }
 
 @media (hover: hover) {
@@ -226,6 +227,7 @@
 
 		&.ck-powered-by-balloon {
 			box-shadow: none;
+			z-index: 1;
 		}
 	}
 

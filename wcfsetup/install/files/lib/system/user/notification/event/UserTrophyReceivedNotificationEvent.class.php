@@ -12,6 +12,7 @@ use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\cache\builder\TrophyCacheBuilder;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\TestableUserNotificationEventHandler;
 
@@ -89,7 +90,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
                 'type' => Trophy::TYPE_BADGE,
                 'isDisabled' => 0,
                 'awardAutomatically' => 0,
-                'iconName' => 'trophy',
+                'iconName' => FontAwesomeIcon::fromString('trophy;false')->__toString(),
                 'iconColor' => 'rgba(255, 255, 255, 1)',
                 'badgeColor' => 'rgba(50, 92, 132, 1)',
             ],

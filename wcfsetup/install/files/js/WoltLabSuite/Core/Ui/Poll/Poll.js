@@ -145,16 +145,18 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         }
     }
     exports.Poll = Poll;
-    const polls = new Map();
+    const polls = new WeakSet();
     function setup() {
         document.querySelectorAll(".pollContainer").forEach((pollElement) => {
             if (!pollElement.dataset.pollId) {
                 throw new Error("Invalid poll element given. Missing pollID.");
             }
-            const pollID = parseInt(pollElement.dataset.pollId, 10);
-            if (!polls.has(pollID)) {
-                polls.set(pollID, new Poll(pollID));
+            if (polls.has(pollElement)) {
+                return;
             }
+            const pollID = parseInt(pollElement.dataset.pollId, 10);
+            new Poll(pollID);
+            polls.add(pollElement);
         });
     }
     function setupAll() {

@@ -434,6 +434,16 @@ abstract class Database
     }
 
     /**
+     * Escapes a value for use in a `LIKE` condition.
+     *
+     * @since 6.0
+     */
+    public function escapeLikeValue(string $value): string
+    {
+        return \addcslashes($value, "\\%_");
+    }
+
+    /**
      * Returns the sql version.
      *
      * @return  string
