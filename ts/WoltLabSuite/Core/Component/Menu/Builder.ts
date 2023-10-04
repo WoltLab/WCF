@@ -33,6 +33,16 @@ export class MenuBuilder {
     return this;
   }
 
+  addLink(label: string, href: string): this {
+    const link = document.createElement("a");
+    link.href = href;
+    link.setAttribute("role", "menuitem");
+    link.textContent = label;
+    this.#menu.append(link);
+
+    return this;
+  }
+
   addDivider(): this {
     const divider = document.createElement("woltlab-core-menu-separator");
     this.#menu.append(divider);

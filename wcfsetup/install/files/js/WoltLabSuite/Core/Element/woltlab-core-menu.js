@@ -20,12 +20,22 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group", "./woltlab-c
             shadow.append(slot);
             slot.addEventListener("slotchange", () => {
                 for (const element of slot.assignedElements()) {
-                    if (!(element instanceof woltlab_core_menu_group_1.default) && !(element instanceof woltlab_core_menu_item_1.default)) {
+                    if (!(element instanceof HTMLAnchorElement) &&
+                        !(element instanceof woltlab_core_menu_group_1.default) &&
+                        !(element instanceof woltlab_core_menu_item_1.default)) {
                         element.remove();
                         continue;
                     }
                     if (this.#items.has(element)) {
                         continue;
+                    }
+                    if (element instanceof HTMLAnchorElement) {
+                        if (element.href === "" || element.href === "#") {
+                            throw new Error("Anchor elements may only use for actual navigation and must contain a valid 'href' target. Use a `<woltlab-core-menu-item>` button for non navigational items.", {
+                                cause: { element },
+                            });
+                        }
+                        element.setAttribute("role", "menuitem");
                     }
                     this.#items.add(element);
                     element.addEventListener("change", () => {
@@ -36,7 +46,7 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group", "./woltlab-c
                             if (item instanceof woltlab_core_menu_group_1.default) {
                                 item.value = "";
                             }
-                            else {
+                            else if (item instanceof woltlab_core_menu_item_1.default) {
                                 item.selected = false;
                             }
                         });
@@ -63,6 +73,9 @@ define(["require", "exports", "tslib", "./woltlab-core-menu-group", "./woltlab-c
         }
         get value() {
             for (const item of Array.from(this.#items)) {
+                if (item instanceof HTMLAnchorElement) {
+                    continue;
+                }
                 const value = item.value;
                 if (item instanceof woltlab_core_menu_group_1.default) {
                     if (value !== "") {

@@ -1,7 +1,7 @@
 import WoltlabCoreMenuGroupElement from "./woltlab-core-menu-group";
 import WoltlabCoreMenuItemElement from "./woltlab-core-menu-item";
 
-type MenuChild = WoltlabCoreMenuGroupElement | WoltlabCoreMenuItemElement;
+type MenuChild = HTMLAnchorElement | WoltlabCoreMenuGroupElement | WoltlabCoreMenuItemElement;
 
 interface WoltlabCoreMenuEventMap {
   change: CustomEvent;
@@ -29,13 +29,30 @@ export class WoltlabCoreMenuElement extends HTMLElement {
 
     slot.addEventListener("slotchange", () => {
       for (const element of slot.assignedElements()) {
-        if (!(element instanceof WoltlabCoreMenuGroupElement) && !(element instanceof WoltlabCoreMenuItemElement)) {
+        if (
+          !(element instanceof HTMLAnchorElement) &&
+          !(element instanceof WoltlabCoreMenuGroupElement) &&
+          !(element instanceof WoltlabCoreMenuItemElement)
+        ) {
           element.remove();
           continue;
         }
 
         if (this.#items.has(element)) {
           continue;
+        }
+
+        if (element instanceof HTMLAnchorElement) {
+          if (element.href === "" || element.href === "#") {
+            throw new Error(
+              "Anchor elements may only use for actual navigation and must contain a valid 'href' target. Use a `<woltlab-core-menu-item>` button for non navigational items.",
+              {
+                cause: { element },
+              },
+            );
+          }
+
+          element.setAttribute("role", "menuitem");
         }
 
         this.#items.add(element);
@@ -48,7 +65,7 @@ export class WoltlabCoreMenuElement extends HTMLElement {
 
             if (item instanceof WoltlabCoreMenuGroupElement) {
               item.value = "";
-            } else {
+            } else if (item instanceof WoltlabCoreMenuItemElement) {
               item.selected = false;
             }
           });
@@ -83,6 +100,10 @@ export class WoltlabCoreMenuElement extends HTMLElement {
 
   get value(): string {
     for (const item of Array.from(this.#items)) {
+      if (item instanceof HTMLAnchorElement) {
+        continue;
+      }
+
       const value = item.value;
 
       if (item instanceof WoltlabCoreMenuGroupElement) {
