@@ -35,14 +35,14 @@ final class LabelPicker
                 ></woltlab-core-label-picker>
             EOT,
             $this->selected,
-            $this->getId(),
+            $this->getElementID(),
             $this->labelGroup->getTitle(),
             StringUtil::encodeHTML(JSON::encode($labels)),
             $this->labelGroup->groupID,
         );
     }
 
-    public function getId(): string
+    public function getElementID(): string
     {
         return "labelGroup{$this->labelGroup->groupID}";
     }
