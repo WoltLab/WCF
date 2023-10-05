@@ -2,6 +2,7 @@
 
 namespace wcf\util;
 
+use wcf\http\ContentDisposition;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\Regex;
@@ -163,15 +164,12 @@ class FileReader
             // file type
             $this->addHeader('Content-Type', $this->options['mimeType']);
 
-            $filename = $this->sanitizeFilename($this->options['filename']);
-            $asciiFilename = $this->sanitizeFilename($this->getAsciiFilename($filename));
+            $contentDisposition = $this->options['showInline'] ? ContentDisposition::Inline : ContentDisposition::Attachment;
 
             // file name
             $this->addHeader(
                 'Content-disposition',
-                ($this->options['showInline'] ? 'inline' : 'attachment') . '; '
-                . 'filename="' . \rawurlencode($asciiFilename) . '"; '
-                . "filename*=UTF-8''" . \rawurlencode($filename)
+                $contentDisposition->forFilename($this->options['filename']),
             );
 
             // range
@@ -208,7 +206,7 @@ class FileReader
     }
 
     /**
-     * Returns an ASCII filename for the given filename.
+     * @deprecated 6.0 This method is unused internally. Use `wcf\http\ContentDisposition` instead.
      */
     protected function getAsciiFilename(string $filename): string
     {
@@ -216,11 +214,7 @@ class FileReader
     }
 
     /**
-     * Sanitizes the given filename, removing special characters that will
-     * cause issues on Windows.
-     *
-     * @param string $filename
-     * @return  string
+     * @deprecated 6.0 This method is unused internally. Use `wcf\http\ContentDisposition` instead.
      */
     protected function sanitizeFilename($filename)
     {
