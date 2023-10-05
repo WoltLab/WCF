@@ -5,6 +5,7 @@ namespace wcf\system\acp\dashboard\box;
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\system\acp\dashboard\box\event\StatusMessageCollecting;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
 use wcf\system\registry\RegistryHandler;
@@ -86,6 +87,19 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
                 StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.application.isTainted', [
                     'taintedApplication' => $application
+                ])
+            );
+        }
+
+        $data = PackageUpdateCacheBuilder::getInstance()->getData();
+        if (
+            $data['updates']
+            && WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
+        ) {
+            $messages[] = new StatusMessage(
+                StatusMessageType::Info,
+                WCF::getLanguage()->getDynamicVariable('wcf.page.availableUpdates', [
+                    'availableUpdates' => $data['updates']
                 ])
             );
         }
