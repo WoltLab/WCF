@@ -110,7 +110,13 @@ class Mailbox
         // ... and rebuild address.
         $address = $localpart . '@' . $domain;
 
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $address)) {
+        if (
+            !\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $address)
+            // The addr-spec within a RFC 5322 message accepts CFWS, but SMTP does not. Including
+            // CFWS in an email address does not make sense, thus we reject email addresses that
+            // include CFWS, even if they technically match the addr-spec.
+            || \preg_match('(' . EmailGrammar::getGrammar('CFWS') . ')', $address)
+        ) {
             throw new \DomainException("The given email address '" . $address . "' is invalid.");
         }
 
