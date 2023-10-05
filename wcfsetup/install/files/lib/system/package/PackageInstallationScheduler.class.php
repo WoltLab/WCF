@@ -276,15 +276,19 @@ final class PackageInstallationScheduler
                     ]
                 );
             } else {
-                // create request
+                $parameters = [
+                    'apiVersion' => PackageUpdate::API_VERSION,
+                    'packageName' => $packageUpdateVersion['package'],
+                    'packageVersion' => $packageUpdateVersion['packageVersion'],
+                ];
+                if ($this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->isTrustedServer()) {
+                    $parameters['instanceId'] = \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID);
+                }
+
                 $request = new HTTPRequest(
                     $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->getDownloadURL(),
                     (!empty($authData) ? ['auth' => $authData] : []),
-                    [
-                        'apiVersion' => PackageUpdate::API_VERSION,
-                        'packageName' => $packageUpdateVersion['package'],
-                        'packageVersion' => $packageUpdateVersion['packageVersion'],
-                    ]
+                    $parameters
                 );
             }
 
