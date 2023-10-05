@@ -59,6 +59,8 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             );
         }
 
+        \usort($this->messages, static fn (StatusMessage $a, StatusMessage $b) => $a->type->compare($b->type));
+
         return $this->messages;
     }
 

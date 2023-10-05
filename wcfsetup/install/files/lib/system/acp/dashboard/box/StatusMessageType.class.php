@@ -24,4 +24,25 @@ enum StatusMessageType
             self::Warning => 'warning',
         };
     }
+
+    public function compare(StatusMessageType $type): int
+    {
+        if ($this === $type) {
+            return 0;
+        }
+
+        if (
+            $this === self::Error
+            || ($this === self::Warning && $type === self::Info)
+        ) {
+            return -1;
+        }
+
+        if (
+            $type === self::Error
+            || ($type === self::Warning && $this === self::Info)
+        ) {
+            return 1;
+        }
+    }
 }
