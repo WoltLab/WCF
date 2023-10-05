@@ -86,7 +86,7 @@
     OneMinute: 60,
     OneHour: 3_600,
     OneDay: 86_400,
-    OneWeek: 86_400 * 7,
+    SixDays: 86_400 * 6,
   };
 
   class WoltlabCoreDateTimeElement extends HTMLElement {
@@ -162,7 +162,7 @@
         } else if (difference < TimePeriod.OneHour) {
           const minutes = Math.trunc(difference / TimePeriod.OneMinute);
           value = DateFormatter.Minutes.format(minutes * -1, "minute");
-        } else if (difference < TimePeriod.OneWeek) {
+        } else if (difference < TimePeriod.SixDays) {
           const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
           const weekdayFirst = dateParts[0].type === "weekday";
 
