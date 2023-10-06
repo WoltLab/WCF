@@ -112,7 +112,6 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
       <li>
         <button type="button" class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
           ${icon}
-          <span>${label}</span>
         </button>
       </li>
     `;
