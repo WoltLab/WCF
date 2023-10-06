@@ -12,7 +12,7 @@
 		{if 'Twitter'|in_array:$__share_buttons_providers}
 			<li>
 				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}" data-identifier="Twitter">
-					{icon size=24 name='twitter' type='brand'}
+					{icon size=24 name='x-twitter' type='brand'}
 				</button>
 			</li>
 		{/if}
