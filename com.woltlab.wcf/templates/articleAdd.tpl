@@ -168,9 +168,9 @@
 		
 		{event name='categoryFields'}
 
-		{foreach from=$labelPickers item=labelPicker}
+		{foreach from=$labelPickerGroup item=labelPicker}
 			<dl>
-				<dt><label for="{$labelPicker->getId()}">{$labelPicker->labelGroup->getTitle()}</label></dt>
+				<dt><label for="{$labelPicker->getElementID()}">{$labelPicker->labelGroup->getTitle()}</label></dt>
 				<dd>
 					{@$labelPicker->toHtml()}
 					{if $errorField == 'label' && $errorType[$labelPicker->labelGroup->groupID]|isset}

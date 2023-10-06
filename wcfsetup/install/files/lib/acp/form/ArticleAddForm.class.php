@@ -16,7 +16,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\label\LabelPicker;
+use wcf\system\label\LabelPickerGroup;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
@@ -187,16 +187,9 @@ class ArticleAddForm extends AbstractForm
     public $availableLanguages = [];
 
     /**
-     * @var LabelPicker[]
      * @since 6.1
      */
-    public array $labelPickers = [];
-
-    /**
-     * list of label ids
-     * @var int[]
-     */
-    public $labelIDs = [];
+    public LabelPickerGroup $labelPickerGroup;
 
     /**
      * maps the label group ids to the article category ids
@@ -242,7 +235,7 @@ class ArticleAddForm extends AbstractForm
 
         // labels
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
-        $this->labelPickers = ArticleCategory::getLabelPickers();
+        $this->labelPickerGroup = ArticleCategory::getLabelPickerGroup();
 
         if (isset($_REQUEST['tmpHash'])) {
             $this->tmpHash = $_REQUEST['tmpHash'];
@@ -285,7 +278,7 @@ class ArticleAddForm extends AbstractForm
 
         $this->enableComments = 0;
         if (isset($_POST['labelIDs']) && \is_array($_POST['labelIDs'])) {
-            $this->labelIDs = $_POST['labelIDs'];
+            $this->labelPickerGroup->setSelectedLabels($_POST['labelIDs']);
         }
         if (isset($_POST['username'])) {
             $this->username = StringUtil::trim($_POST['username']);
@@ -469,21 +462,13 @@ class ArticleAddForm extends AbstractForm
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs([$this->categoryID]);
 
         $validationResult = ArticleLabelObjectHandler::getInstance()->validateLabelIDs(
-            $this->labelIDs,
+            $this->labelPickerGroup->toLabelIDs(),
             'canSetLabel',
             false
         );
 
         // reset category ids to accessible category ids
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
-
-        foreach ($this->labelIDs as $groupID => $labelID) {
-            foreach ($this->labelPickers as $labelPicker) {
-                if ($labelPicker->labelGroup->groupID == $groupID) {
-                    $labelPicker->selected = $labelID;
-                }
-            }
-        }
 
         if (!empty($validationResult[0])) {
             throw new UserInputException('labelIDs');
@@ -539,7 +524,7 @@ class ArticleAddForm extends AbstractForm
             'userID' => $this->author->userID,
             'username' => $this->author->username,
             'isMultilingual' => $this->isMultilingual,
-            'hasLabels' => empty($this->labelIDs) ? 0 : 1,
+            'hasLabels' => (int)$this->labelPickerGroup->hasSelection(),
         ];
 
         $this->objectAction = new ArticleAction(
@@ -553,9 +538,10 @@ class ArticleAddForm extends AbstractForm
         );
         /** @var Article $article */
         $article = $this->objectAction->executeAction()['returnValues'];
-        // save labels
-        if (!empty($this->labelIDs)) {
-            ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $article->articleID);
+
+        $labelIDs = $this->labelPickerGroup->toLabelIDs();
+        if ($labelIDs !== []) {
+            ArticleLabelObjectHandler::getInstance()->setLabels($labelIDs, $article->articleID);
         }
 
         // mark published article as read
@@ -669,7 +655,7 @@ class ArticleAddForm extends AbstractForm
             'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
             'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
-            'labelPickers' => $this->labelPickers,
+            'labelPickerGroup' => $this->labelPickerGroup,
             'attachmentHandler' => $this->attachmentHandler,
             'attachmentObjectID' => $this->attachmentObjectID,
             'attachmentObjectType' => $this->attachmentObjectType,

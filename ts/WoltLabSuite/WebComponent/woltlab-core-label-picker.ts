@@ -58,7 +58,14 @@
         const divider = document.createElement("li");
         divider.classList.add("dropdownDivider");
 
-        scrollableDropdownMenu.append(divider, this.#createLabelItem(0, emptyLabel));
+        scrollableDropdownMenu.append(divider);
+
+        if (this.invertible) {
+          const invertSelection = this.#createLabelItem(-1, this.#getHtmlForInvertedSelection());
+          scrollableDropdownMenu.append(invertSelection);
+        }
+
+        scrollableDropdownMenu.append(this.#createLabelItem(0, emptyLabel));
       }
 
       const dropdownMenu = document.createElement("ul");
@@ -146,12 +153,27 @@
       return this.hasAttribute("required");
     }
 
+    get invertible(): boolean {
+      return this.hasAttribute("invertible");
+    }
+
     #getHtmlForNoneLabel(): string {
       return `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.none")}</span>`;
     }
 
+    #getHtmlForInvertedSelection(): string {
+      return `<span class="badge label">${window.WoltLabLanguage.getPhrase("wcf.label.withoutSelection")}</span>`;
+    }
+
     #updateValue(labelId: number): void {
-      this.#button.innerHTML = this.#labels.get(labelId) || this.#getHtmlForNoneLabel();
+      let html = "";
+      if (this.#labels.has(labelId)) {
+        html = this.#labels.get(labelId)!;
+      } else if (labelId === -1 && this.invertible) {
+        html = this.#getHtmlForInvertedSelection();
+      }
+
+      this.#button.innerHTML = html || this.#getHtmlForNoneLabel();
       if (this.#formValue !== undefined) {
         this.#formValue.value = labelId.toString();
       }

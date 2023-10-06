@@ -86,8 +86,7 @@ class ArticleEditForm extends ArticleAddForm
     {
         AbstractForm::save();
 
-        // save labels
-        ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->article->articleID);
+        ArticleLabelObjectHandler::getInstance()->setLabels($this->labelPickerGroup->toLabelIDs(), $this->article->articleID);
         $labelIDs = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], false);
 
         $content = [];
@@ -205,14 +204,7 @@ class ArticleEditForm extends ArticleAddForm
                 true
             );
             if (isset($assignedLabels[$this->article->articleID])) {
-                foreach ($assignedLabels[$this->article->articleID] as $label) {
-                    foreach ($this->labelPickers as $labelPicker) {
-                        if ($labelPicker->labelGroup->groupID === $label->groupID) {
-                            $labelPicker->selected = $label->labelID;
-                            break;
-                        }
-                    }
-                }
+                $this->labelPickerGroup->setSelectedLabelsFromAssignedLabels($assignedLabels[$this->article->articleID]);
             }
         }
     }

@@ -169,7 +169,7 @@
 		
 		{event name='categoryFields'}
 		
-		{foreach from=$labelPickers item=labelPicker}
+		{foreach from=$labelPickerGroup item=labelPicker}
 			<dl>
 				<dt><label for="{$labelPicker->getElementID()}">{$labelPicker->labelGroup->getTitle()}</label></dt>
 				<dd>

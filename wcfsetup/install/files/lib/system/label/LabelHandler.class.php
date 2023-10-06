@@ -426,7 +426,13 @@ class LabelHandler extends SingletonFactory
         $statement->execute($conditions->getParameters());
     }
 
-    public function getLabelPickers(array $groupIDs): array
+    /**
+     * @param int[] $groupIDs
+     * @param bool $invertible
+     * @return LabelPicker[]
+     * @since 6.0
+     */
+    public function getLabelPickers(array $groupIDs, bool $invertible): array
     {
         $labelGroups = \array_filter(
             $this->labelGroups['groups'],
@@ -435,8 +441,21 @@ class LabelHandler extends SingletonFactory
         );
 
         return \array_map(
-            fn (ViewableLabelGroup $viewableLabelGroup) => new LabelPicker($viewableLabelGroup),
+            fn (ViewableLabelGroup $viewableLabelGroup) => new LabelPicker($viewableLabelGroup, $invertible),
             $labelGroups
         );
+    }
+
+    /**
+     * @param LabelPicker[] $labelPickers
+     * @param int[] $labelIDs
+     * @since 6.1
+     */
+    public function setSelectedLabels(array $labelPickers, array $labelIDs): void
+    {
+        foreach ($labelPickers as $labelPicker) {
+            $labelID = $labelIDs[$labelPicker->labelGroup->groupID] ?? 0;
+            $labelPicker->setSelectedValue($labelID);
+        }
     }
 }
