@@ -82,7 +82,7 @@ window.addEventListener('pageshow', function(event) {
 				{assign var='__shareProviders' value="\n"|explode:SHARE_BUTTONS_PROVIDERS}
 				shareButtonProviders: [
 					{if 'Facebook'|in_array:$__shareProviders}["Facebook", "{jslang}wcf.message.share.facebook{/jslang}", {icon size=24 name='facebook' type='brand' encodeJson=true}],{/if} 
-					{if 'Twitter'|in_array:$__shareProviders}["Twitter", "{jslang}wcf.message.share.twitter{/jslang}", {icon size=24 name='twitter' type='brand' encodeJson=true}],{/if} 
+					{if 'Twitter'|in_array:$__shareProviders}["Twitter", "{jslang}wcf.message.share.twitter{/jslang}", {icon size=24 name='x-twitter' type='brand' encodeJson=true}],{/if} 
 					{if 'Reddit'|in_array:$__shareProviders}["Reddit", "{jslang}wcf.message.share.reddit{/jslang}", {icon size=24 name='reddit' type='brand' encodeJson=true}],{/if} 
 					{if 'WhatsApp'|in_array:$__shareProviders}["WhatsApp", "{jslang}wcf.message.share.whatsApp{/jslang}", {icon size=24 name='whatsapp' type='brand' encodeJson=true}],{/if} 
 					{if 'LinkedIn'|in_array:$__shareProviders}["LinkedIn", "{jslang}wcf.message.share.linkedIn{/jslang}", {icon size=24 name='linkedin-in' type='brand' encodeJson=true}],{/if} 

@@ -103,7 +103,7 @@
 											href="{link controller='TwitterAuth'}{/link}"
 											class="button thirdPartyLoginButton twitterLoginButton"
 											rel="nofollow"
-										>{icon size=24 name='twitter' type='brand'} <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+										>{icon size=24 name='x-twitter' type='brand'} <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
 									</li>
 								{/if}
 								
