@@ -45,7 +45,7 @@ final class LabelPickerGroup implements \Countable, \Iterator
         }
 
         $this->labelPickers = $pickers;
-        $this->positionToGroupID = \array_keys($labelPickers);
+        $this->positionToGroupID = \array_keys($pickers);
     }
 
     /**
@@ -190,6 +190,16 @@ final class LabelPickerGroup implements \Countable, \Iterator
                     ]
                 );
             }
+        }
+    }
+
+    /**
+     * Set the name of the hidden input field for the label ids.
+     */
+    public function setName(string $name): void
+    {
+        foreach ($this->labelPickers as $labelPicker) {
+            $labelPicker->name = $name;
         }
     }
 

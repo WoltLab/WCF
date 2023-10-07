@@ -23,7 +23,14 @@ final class LabelPicker
      */
     public readonly bool $invertible;
 
+    /**
+     * Name of the hidden input field.
+     */
+    public string $name = 'labelIDs';
+
     public readonly ViewableLabelGroup $labelGroup;
+
+    private string $elementID;
 
     private int $selected = 0;
 
@@ -33,6 +40,11 @@ final class LabelPicker
         $this->invertible = $invertible;
     }
 
+    /**
+     * Sets the selected label of this label picker by providing its id. The
+     * value `0` indicates that no selection is to be made and  `-1` inverts the
+     * selection of the labels.
+     */
     public function setSelectedValue(int $selected): void
     {
         if ($selected === 0) {
@@ -44,16 +56,28 @@ final class LabelPicker
         }
     }
 
+    /**
+     * The returned value can be `0` to indicate that no selection has been
+     * made, `-1` to indicate that the selection should be inverted or the id
+     * of the selected label.
+     */
     public function getSelectedValue(): int
     {
         return $this->selected;
     }
 
+    /**
+     * Returns true if a label has been selected or if the selection has been
+     * inverted.
+     */
     public function hasSelection(): bool
     {
         return $this->selected !== 0;
     }
 
+    /**
+     * Generates the HTML element for the label picker.
+     */
     public function toHtml(): string
     {
         $labels = [];
@@ -70,21 +94,48 @@ final class LabelPicker
                     id="%s"
                     title="%s"
                     labels="%s"
+                    name="%s"
                     data-group-id="%d"
                     %s
                 ></woltlab-core-label-picker>
             EOT,
             $this->selected,
             $this->getElementID(),
-            $this->labelGroup->getTitle(),
+            StringUtil::encodeHTML($this->labelGroup->getTitle()),
             StringUtil::encodeHTML(JSON::encode($labels)),
+            StringUtil::encodeHTML($this->name),
             $this->labelGroup->groupID,
             $this->invertible ? 'invertible' : '',
         );
     }
 
+    /**
+     * Returns the unique element id of this label picker.
+     */
     public function getElementID(): string
     {
-        return "labelGroup{$this->labelGroup->groupID}";
+        if (!isset($this->elementID)) {
+            $this->elementID = \sprintf(
+                '%s_labelGroup%d',
+                \substr(\md5($this->name), 0, 8),
+                $this->labelGroup->groupID,
+            );
+        }
+
+        return $this->elementID;
+    }
+
+    /**
+     * Sets the unique element id of this label picker. Must be set before
+     * attempting to read the element id which is implicitly done by calling
+     * `toHtml()`.
+     */
+    public function setElementID(string $elementID): void
+    {
+        if (isset($this->elementID)) {
+            throw new \RuntimeException("Cannot set the element id, already set.");
+        }
+
+        $this->elementID = $elementID;
     }
 }

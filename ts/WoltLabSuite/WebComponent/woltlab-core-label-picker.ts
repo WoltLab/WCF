@@ -80,7 +80,7 @@
         if (this.#formValue === undefined) {
           this.#formValue = document.createElement("input");
           this.#formValue.type = "hidden";
-          this.#formValue.name = `labelIDs[${this.dataset.groupId}]`;
+          this.#formValue.name = `${this.name}[${this.dataset.groupId}]`;
           this.append(this.#formValue);
         }
 
@@ -155,6 +155,10 @@
 
     get invertible(): boolean {
       return this.hasAttribute("invertible");
+    }
+
+    get name(): string {
+      return this.getAttribute("name")!;
     }
 
     #getHtmlForNoneLabel(): string {
