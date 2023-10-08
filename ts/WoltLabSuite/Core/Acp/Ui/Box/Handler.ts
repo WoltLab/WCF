@@ -173,6 +173,9 @@ class AcpUiBoxHandler {
 
     Array.from(this.position).forEach((option: HTMLOptionElement) => {
       option.hidden = !supportedPositions.includes(option.value);
+
+      // Safari does not support [hidden] on option elements.
+      option.disabled = option.hidden;
     });
 
     // Changing the controller can cause the currently selected
