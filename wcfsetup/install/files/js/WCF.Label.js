@@ -12,6 +12,7 @@ WCF.Label = {};
  * @param	string		containerSelector
  * @param	string		submitButtonSelector
  * @param	boolean		showWithoutSelection
+ * @deprecated 6.1 Use the new `LabelPicker` PHP API
  */
 WCF.Label.Chooser = Class.extend({
 	/**
