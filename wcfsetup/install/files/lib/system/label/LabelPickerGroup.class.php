@@ -15,7 +15,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-final class LabelPickerGroup implements \Countable, \Iterator
+final class LabelPickerGroup implements \Countable, \IteratorAggregate
 {
     /**
      * @var LabelPicker[]
@@ -26,8 +26,6 @@ final class LabelPickerGroup implements \Countable, \Iterator
      * @var list<int>
      */
     private readonly array $positionToGroupID;
-
-    private int $position = 0;
 
     /**
      * @param LabelPicker[] $labelPickers
@@ -204,30 +202,9 @@ final class LabelPickerGroup implements \Countable, \Iterator
         return \count($this->labelPickers);
     }
 
-    public function current(): LabelPicker
+    public function getIterator(): \Traversable
     {
-        $groupID = $this->positionToGroupID[$this->position];
-        return $this->labelPickers[$groupID];
-    }
-
-    public function key(): int
-    {
-        return $this->position;
-    }
-
-    public function next(): void
-    {
-        $this->position++;
-    }
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
-
-    public function valid(): bool
-    {
-        return isset($this->positionToGroupID[$this->position]);
+        return new \ArrayIterator($this->labelPickers);
     }
 
     /**
