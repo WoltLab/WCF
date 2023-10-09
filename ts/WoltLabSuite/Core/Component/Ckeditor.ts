@@ -105,7 +105,19 @@ class Ckeditor {
   }
 
   setHtml(html: string): void {
-    this.#editor.data.set(html);
+    html = normalizeLegacyHtml(html);
+
+    this.#editor.model.change((writer) => {
+      let range = this.#editor.model.createRangeIn(this.#editor.model.document.getRoot()!);
+
+      const viewFragment = this.#editor.data.processor.toView(html);
+      const modelFragment = this.#editor.data.toModel(viewFragment);
+
+      range = this.#editor.model.insertContent(modelFragment, range);
+
+      writer.setSelection(range.end);
+      this.focus();
+    });
   }
 
   removeAll(model: string, attributes: Record<string, string | number | boolean>): void {
