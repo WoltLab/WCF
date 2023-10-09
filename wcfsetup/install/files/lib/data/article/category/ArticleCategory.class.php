@@ -214,7 +214,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
             }
         }
 
-        return LabelPickerGroup::fromGroupIDs(\array_unique($groupIDs), false);
+        return LabelPickerGroup::fromGroupIDs($groupIDs, false);
     }
 
     /**

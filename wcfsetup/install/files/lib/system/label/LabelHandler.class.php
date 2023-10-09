@@ -428,7 +428,6 @@ class LabelHandler extends SingletonFactory
 
     /**
      * @param int[] $groupIDs
-     * @param bool $invertible
      * @return LabelPicker[]
      * @since 6.0
      */

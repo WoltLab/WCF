@@ -8,7 +8,7 @@ use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
- * Provides helper methods to interact with the label group.
+ * Manages the state of a label picker and renders the component.
  *
  * @author Alexander Ebert
  * @copyright 2001-2023 WoltLab GmbH
@@ -117,7 +117,7 @@ final class LabelPicker
         if (!isset($this->elementID)) {
             $this->elementID = \sprintf(
                 '%s_labelGroup%d',
-                \substr(\md5($this->name), 0, 8),
+                \bin2hex(\random_bytes(16)),
                 $this->labelGroup->groupID,
             );
         }

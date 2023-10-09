@@ -97,26 +97,21 @@ final class LabelPickerGroup implements \Countable, \Iterator
 
     /**
      * Returns an unencoded query string for `labelIDs` for use in the LinkHandler.
-     *
-     * @return string
      */
     public function toUrlQueryString(): string
     {
         return \implode(
             '&',
-            \array_filter(
-                \array_map(static function (LabelPicker $labelPicker) {
-                    if (!$labelPicker->hasSelection()) {
-                        return '';
-                    }
-
-                    return \sprintf(
-                        'labelIDs[%d]=%d',
-                        $labelPicker->labelGroup->groupID,
-                        $labelPicker->getSelectedValue(),
-                    );
-                }, $this->labelPickers)
-            )
+            \array_map(static function (LabelPicker $labelPicker) {
+                return \sprintf(
+                    'labelIDs[%d]=%d',
+                    $labelPicker->labelGroup->groupID,
+                    $labelPicker->getSelectedValue(),
+                );
+            }, \array_filter(
+                $this->labelPickers,
+                static fn (LabelPicker $labelPicker) => $labelPicker->hasSelection()
+            ))
         );
     }
 
@@ -127,11 +122,12 @@ final class LabelPickerGroup implements \Countable, \Iterator
      */
     public function toLabelIDs(): array
     {
-        return \array_filter(
-            \array_map(
-                fn (LabelPicker $labelPicker) => $labelPicker->getSelectedValue(),
-                $this->labelPickers
-            ),
+        return \array_map(
+            static fn (LabelPicker $labelPicker) => $labelPicker->getSelectedValue(),
+            \array_filter(
+                $this->labelPickers,
+                static fn (LabelPicker $labelPicker) => $labelPicker->hasSelection()
+            )
         );
     }
 
@@ -250,7 +246,7 @@ final class LabelPickerGroup implements \Countable, \Iterator
     public static function fromViewableLabelGroups(array $viewableLabelGroups, bool $invertible): self
     {
         $labelPickers = \array_map(
-            fn (ViewableLabelGroup $viewableLabelGroup) => new LabelPicker($viewableLabelGroup, $invertible),
+            static fn (ViewableLabelGroup $viewableLabelGroup) => new LabelPicker($viewableLabelGroup, $invertible),
             $viewableLabelGroups
         );
 
