@@ -69,18 +69,18 @@ class Option extends DatabaseObject
     /**
      * Returns a list of options.
      *
-     * @return  Option[]
+     * @return  static[]
      */
-    public static function getOptions()
+    public static function getOptions(): array
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_option";
+                FROM    " . self::getDatabaseTableName();
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 
         $options = [];
         while ($row = $statement->fetchArray()) {
-            $option = new self(null, $row);
+            $option = new static(null, $row);
             $options[$option->getConstantName()] = $option;
         }
 
@@ -89,19 +89,16 @@ class Option extends DatabaseObject
 
     /**
      * Returns the option with the given name or `null` if no such option exists.
-     *
-     * @param string $optionName name of the requested option
-     * @return  Option|null requested option
      */
-    public static function getOptionByName($optionName)
+    public static function getOptionByName(string $optionName): static|null
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_option
+                FROM    " . self::getDatabaseTableName() . "
                 WHERE   optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$optionName]);
 
-        return $statement->fetchObject(self::class);
+        return $statement->fetchObject(static::class);
     }
 
     /**
