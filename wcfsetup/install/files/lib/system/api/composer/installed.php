@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => '6.0.x-dev',
+        'version' => '6.0.9999999.9999999-dev',
+        'reference' => 'ac5b81de7a0ce3346688fb80f203204aee5390e6',
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => '6.0.x-dev',
+            'version' => '6.0.9999999.9999999-dev',
+            'reference' => 'ac5b81de7a0ce3346688fb80f203204aee5390e6',
             'type' => 'project',
             'install_path' => __DIR__ . '/../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'cuyz/valinor' => array(
-            'pretty_version' => '1.6.0',
-            'version' => '1.6.0.0',
-            'reference' => 'f3f3429d90be77f59903923f9bb5ce93c484dfd7',
+            'pretty_version' => '1.6.1',
+            'version' => '1.6.1.0',
+            'reference' => '88c6b0f9299088de632d17610efffb54d55adba6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../cuyz/valinor',
             'aliases' => array(),
