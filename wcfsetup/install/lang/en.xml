@@ -2871,7 +2871,7 @@ WARNING: This is an unstable version intended for test purposes only, do not upg
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
 		<item name="wcf.acp.style.globals.fluidLayoutMinWidth"><![CDATA[Minimum Layout Width]]></item>
 		<item name="wcf.acp.style.globals.fluidLayoutMaxWidth"><![CDATA[Maximum Layout Width]]></item>
-		<item name="wcf.acp.style.globals.font"><![CDATA[Type Face]]></item>
+		<item name="wcf.acp.style.globals.font"><![CDATA[Typeface]]></item>
 		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Font]]></item>
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Font Size]]></item>
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
