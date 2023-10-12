@@ -45,7 +45,7 @@ foreach ($iconData as $trophyID => $oldIconName) {
         // If the old icon is unknown we replace it with a placeholder.
         \wcf\functions\exception\logThrowable($e);
 
-        $newIconName = FontAwesomeIcon::fromString('trophy')->__toString();
+        $newIconName = FontAwesomeIcon::fromString('trophy;false')->__toString();
     }
 
     $statement->execute([
