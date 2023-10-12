@@ -19,7 +19,13 @@
 			{lang}wcf.user.security.multifactor.backup.print{/lang}
 			<script>
 			document.currentScript.closest('button').addEventListener('click', () => {
-				window.print();
+				try {
+					// Safari refuses to execute `window.print()` if there are
+					// any in-flight requests.
+					document.execCommand("print", false, null);
+				} catch {
+					window.print();
+				}
 			});
 			</script>
 		</button>
