@@ -9,6 +9,7 @@ use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\error\NotFoundHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
@@ -30,6 +31,7 @@ use wcf\http\middleware\PreventMimeSniffing;
 use wcf\http\middleware\TriggerBackgroundQueue;
 use wcf\http\middleware\Xsrf;
 use wcf\http\Pipeline;
+use wcf\http\StaticResponseHandler;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
@@ -113,7 +115,7 @@ final class RequestHandler extends SingletonFactory
                     throw new SystemException("Cannot handle request, no valid route provided.");
                 }
 
-                $builtRequest = (new NotFoundHandler())->handle($psrRequest);
+                $builtRequest = new NotFoundHandler();
             }
 
             if ($builtRequest instanceof Request) {
@@ -146,8 +148,18 @@ final class RequestHandler extends SingletonFactory
                     return;
                 }
             } else {
-                \assert($builtRequest instanceof ResponseInterface);
-                $response = $builtRequest;
+                \assert($builtRequest instanceof RequestHandlerInterface);
+
+                $pipeline = new Pipeline([
+                    new HandleStartupErrors(),
+                    new PreventMimeSniffing(),
+                    new AddAcpSecurityHeaders(),
+                    new EnforceCacheControlPrivate(),
+                    new EnforceNoCacheForTemporaryRedirects(),
+                    new EnforceFrameOptions(),
+                ]);
+
+                $response = $pipeline->process($psrRequest, $builtRequest);
             }
 
             $emitter = new SapiEmitter();
@@ -170,7 +182,7 @@ final class RequestHandler extends SingletonFactory
      * @throws  NamedUserException
      * @throws  SystemException
      */
-    protected function buildRequest(RequestInterface $psrRequest, string $application): Request|ResponseInterface
+    protected function buildRequest(RequestInterface $psrRequest, string $application): Request|RequestHandlerInterface
     {
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
@@ -183,10 +195,10 @@ final class RequestHandler extends SingletonFactory
                     $routeData['controller'] = 'index';
 
                     if ($application !== 'wcf') {
-                        return new RedirectResponse(
+                        return new StaticResponseHandler(new RedirectResponse(
                             LinkHandler::getInstance()->getLink(),
                             301
-                        );
+                        ));
                     }
                 } else {
                     $data = ControllerMap::getInstance()->lookupDefaultController($application);
@@ -204,10 +216,10 @@ final class RequestHandler extends SingletonFactory
                 if ($domainName !== $psrRequest->getUri()->getHost()) {
                     $targetUrl = $psrRequest->getUri()->withHost($domainName);
 
-                    return new RedirectResponse(
+                    return new StaticResponseHandler(new RedirectResponse(
                         $targetUrl,
                         301
-                    );
+                    ));
                 }
             }
 
@@ -242,10 +254,10 @@ final class RequestHandler extends SingletonFactory
                         }
                     }
 
-                    return new RedirectResponse(
+                    return new StaticResponseHandler(new RedirectResponse(
                         LinkHandler::getInstance()->getLink($routeData['controller'], $routeData),
                         301
-                    );
+                    ));
                 } else {
                     $className = $classData['className'];
                 }
@@ -282,7 +294,7 @@ final class RequestHandler extends SingletonFactory
                 throw $e;
             }
 
-            return (new NotFoundHandler())->handle($psrRequest);
+            return new NotFoundHandler();
         }
     }
 
