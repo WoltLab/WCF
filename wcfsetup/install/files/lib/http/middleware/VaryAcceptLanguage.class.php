@@ -37,9 +37,9 @@ final class VaryAcceptLanguage implements MiddlewareInterface
         // add a single item.
         //
         // Furthermore adding the `vary: accept-language` is not super necessary,
-        // because caching for might responses should already be disabled.
+        // because caching for responses might already be disabled.
         //
-        // This we attach it to any PSR-7 responses on a best effort basis, the number
+        // Thus we attach it to any PSR-7 responses on a best effort basis, the number
         // of controllers returning a PSR-7 response is expected to grow over time.
 
         $response = $handler->handle($request);
