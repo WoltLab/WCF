@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
-<link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css" type="text/css" rel="stylesheet">
+<link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css?v={LAST_UPDATE_TIME}" type="text/css" rel="stylesheet">
 
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {include file='colorPickerJavaScript'}

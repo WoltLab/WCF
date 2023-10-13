@@ -69,6 +69,9 @@
 
 .ck.ck-toolbar__items,
 .ck.ck-toolbar__grouped-dropdown {
+	--ck-spacing-small: 4px;
+	--ck-spacing-tiny: 2px;
+
 	--ck-color-button-default-hover-background: var(--wcfEditorButtonBackground);
 	--ck-color-button-default-active-background: var(--wcfEditorButtonBackground);
 

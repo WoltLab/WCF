@@ -1378,7 +1378,7 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. {if LANGUAGE_USE_INFORMAL_VARIANT}Versuche{else}Versuchen Sie{/if} in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Standardwert „Open Graph“-Bild]]></item>
-		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, Twitter und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
+		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, X und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
@@ -1445,9 +1445,9 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="https://github.com/settings/developers" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
-		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter API key]]></item>
-		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deinen{else}Sie können Ihren{/if} API key und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} API secret bei <a href="https://developer.twitter.com/en/portal/projects-and-apps" class="externalURL">Twitter</a> anfordern. Die Callback URL ist: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
-		<item name="wcf.acp.option.twitter_private_key"><![CDATA[Twitter API secret]]></item>
+		<item name="wcf.acp.option.twitter_public_key"><![CDATA[X API key]]></item>
+		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deinen{else}Sie können Ihren{/if} API key und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} API secret bei <a href="https://developer.twitter.com/en/portal/projects-and-apps" class="externalURL">X</a> anfordern. Die Callback URL ist: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.twitter_private_key"><![CDATA[X API secret]]></item>
 		<item name="wcf.acp.option.facebook_public_key"><![CDATA[Facebook APP-ID]]></item>
 		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} APP-ID und {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Anwendungs-Geheimcode bei <a href="https://developers.facebook.com/apps" class="externalURL">Facebook</a> anfordern. Die OAuth redirect URI ist: {link controller="FacebookAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.facebook_private_key"><![CDATA[Facebook Anwendungs-Geheimcode]]></item>
@@ -2005,12 +2005,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 {/implode}]]></item>
 		<item name="wcf.acp.package.application.isTainted"><![CDATA[Die App{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} ist nicht vollständig installiert. Für eine weitere Verwendung der App ist eine Deinstallation mit anschließender Neuinstallation von Nöten.]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Aktualisierung auf WoltLab Suite {$version}]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die Testversion freigeben]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die neue Version freigeben]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[Die folgenden Probleme verhindern aktuell eine Aktualisierung:]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride.success"><![CDATA[Die Überprüfung war erfolgreich, alle Systemvoraussetzungen für die Durchführung des Upgrades sind erfüllt.]]></item>
 		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Die neue WoltLab Suite {$version} steht zur Installation bereit. Eine Anleitung zur Durchführung des Upgrades steht im <a href="https://manual.woltlab.com/de/updates/#update-von-woltlab-suite-55-auf-60" class="externalURL">Handbuch</a> zur Verfügung.<br>
-<br>
-ACHTUNG: Es handelt sich aktuell noch um eine Testversion, die nicht für den produktiven Einsatz geeignet ist!<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
 		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation der neuen WoltLab Suite {$version} wurde freigegeben. Zur Durchführung des Upgrades klicken Sie bitte auf den Button „Updates suchen“.<br>
@@ -4252,7 +4250,7 @@ Dateianhänge:
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
 		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
-		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.share.twitter"><![CDATA[X]]></item>
 		<item name="wcf.message.share.whatsApp"><![CDATA[WhatsApp]]></item>
 		<item name="wcf.message.share.linkedIn"><![CDATA[LinkedIn]]></item>
 		<item name="wcf.message.share.pinterest"><![CDATA[Pinterest]]></item>
@@ -5172,14 +5170,14 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Verknüpfung mit GitHub trennen]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto wurde erfolgreich getrennt.]]></item>
-		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
-		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit Twitter anmelden]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='twitter' type='brand'}&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
-		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
-		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto verknüpft.]]></item>
-		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Twitter-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
-		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Verknüpfung mit Twitter trennen]]></item>
-		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto wurde erfolgreich getrennt.]]></item>
+		<item name="wcf.user.3rdparty.twitter"><![CDATA[X]]></item>
+		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit X anmelden]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='x-twitter' type='brand'}&nbsp;X. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit X-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} X-Konto verknüpft.]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} X-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
+		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Verknüpfung mit X trennen]]></item>
+		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} X-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Mit Facebook anmelden]]></item>
 		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='facebook' type='brand'}&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
@@ -5521,7 +5519,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.user.option.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>

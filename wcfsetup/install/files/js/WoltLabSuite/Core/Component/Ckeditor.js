@@ -78,7 +78,15 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             return this.#editor.ui.element.clientWidth !== 0;
         }
         setHtml(html) {
-            this.#editor.data.set(html);
+            html = (0, Normalizer_1.normalizeLegacyHtml)(html);
+            this.#editor.model.change((writer) => {
+                let range = this.#editor.model.createRangeIn(this.#editor.model.document.getRoot());
+                const viewFragment = this.#editor.data.processor.toView(html);
+                const modelFragment = this.#editor.data.toModel(viewFragment);
+                range = this.#editor.model.insertContent(modelFragment, range);
+                writer.setSelection(range.end);
+                this.focus();
+            });
         }
         removeAll(model, attributes) {
             this.#editor.model.change((writer) => {

@@ -134,7 +134,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                     'pluginstore' => ($reply['pluginstore'] ?? []),
                 ];
             }
-        } catch (ClientExceptionInterface) {
+        } catch (ClientExceptionInterface | SystemException) {
             // ignore
         }
     }

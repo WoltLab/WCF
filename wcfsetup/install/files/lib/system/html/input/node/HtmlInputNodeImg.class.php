@@ -9,6 +9,7 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Processes `<img>` to handle embedded attachments.
@@ -69,6 +70,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $this->mirrorWidthAttribute($element);
+            $this->moveClassNameFromFigureToImage($element);
 
             $class = $element->getAttribute('class');
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
@@ -269,6 +271,9 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
     }
 
+    /**
+     * @since 6.0
+     */
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
         // Aligned images are wrapped in a `<figure>` element that is the target
@@ -291,5 +296,40 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         } else {
             $element->removeAttribute("data-width");
         }
+    }
+
+    /**
+     * Setting attachments or embedded media to float will cause the CSS class
+     * name to appear on the `<figure>` rather than the `<img>` itself.
+     *
+     * @since 6.0
+     */
+    protected function moveClassNameFromFigureToImage(\DOMElement $img): void
+    {
+        $figure = $img->parentNode;
+        if (!($figure instanceof \DOMElement) || $figure->nodeName !== 'figure') {
+            return;
+        }
+
+        $classNames = \array_filter(
+            \array_map(
+                fn (string $className) => StringUtil::trim($className),
+                \explode(
+                    ' ',
+                    $figure->getAttribute("class")
+                ),
+            ),
+            static function (string $className) use ($img) {
+                if ($className !== 'woltlabSuiteMedia' && $className !== 'woltlabAttachment') {
+                    return true;
+                }
+
+                $img->setAttribute("class", $img->getAttribute("class") . " {$className}");
+
+                return false;
+            }
+        );
+
+        $figure->setAttribute("class", \implode(' ', $classNames));
     }
 }
