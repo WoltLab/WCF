@@ -146,7 +146,7 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
                         <<<'EOT'
                         %s NOT IN (
                             SELECT  objectID
-                            FROM    wcf%s_label_object
+                            FROM    wcf%d_label_object
                             WHERE   objectTypeID = ?
                                 AND labelID IN (?)
                         )
@@ -165,7 +165,7 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
                         <<<'EOT'
                         %s IN (
                             SELECT  objectID
-                            FROM    wcf%s_label_object
+                            FROM    wcf%d_label_object
                             WHERE   objectTypeID = ?
                                 AND labelID = ?
                         )
