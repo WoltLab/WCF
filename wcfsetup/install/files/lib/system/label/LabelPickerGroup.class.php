@@ -23,9 +23,9 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
     private readonly array $labelPickers;
 
     /**
-     * @var list<int>
+     * Field name of the selected values.
      */
-    private readonly array $positionToGroupID;
+    private string $name = 'labelIDs';
 
     /**
      * @param LabelPicker[] $labelPickers
@@ -43,7 +43,6 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
         }
 
         $this->labelPickers = $pickers;
-        $this->positionToGroupID = \array_keys($pickers);
     }
 
     /**
@@ -98,19 +97,15 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
      */
     public function toUrlQueryString(): string
     {
-        return \implode(
-            '&',
-            \array_map(static function (LabelPicker $labelPicker) {
-                return \sprintf(
-                    'labelIDs[%d]=%d',
-                    $labelPicker->labelGroup->groupID,
-                    $labelPicker->getSelectedValue(),
-                );
-            }, \array_filter(
+        $mapping = \array_map(
+            static fn (LabelPicker $labelPicker) => $labelPicker->getSelectedValue(),
+            \array_filter(
                 $this->labelPickers,
                 static fn (LabelPicker $labelPicker) => $labelPicker->hasSelection()
-            ))
+            )
         );
+
+        return \http_build_query([$this->name => $mapping], '', '&');
     }
 
     /**
@@ -192,6 +187,8 @@ final class LabelPickerGroup implements \Countable, \IteratorAggregate
      */
     public function setName(string $name): void
     {
+        $this->name = $name;
+
         foreach ($this->labelPickers as $labelPicker) {
             $labelPicker->name = $name;
         }
