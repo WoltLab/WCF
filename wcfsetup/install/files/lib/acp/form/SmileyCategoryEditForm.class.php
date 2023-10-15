@@ -9,7 +9,7 @@ namespace wcf\acp\form;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class SmileyCategoryEditForm extends AbstractCategoryEditForm
+class SmileyCategoryEditForm extends SmileyCategoryAddForm
 {
     /**
      * @inheritDoc
@@ -19,15 +19,10 @@ class SmileyCategoryEditForm extends AbstractCategoryEditForm
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.bbcode.smiley';
+    public string $pageTitle = 'wcf.acp.smiley.category.edit';
 
     /**
      * @inheritDoc
      */
-    public $pageTitle = 'wcf.acp.smiley.category.edit';
-
-    /**
-     * @inheritDoc
-     */
-    public $neededModules = ['MODULE_SMILEY'];
+    public $formAction = 'edit';
 }
