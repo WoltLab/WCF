@@ -179,7 +179,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     {
         $processor = $this->getObjectTypeProcessor();
 
-        return [
+        $formFields = [
             TitleFormField::create()
                 ->label($processor->getLanguageVariable('title'))
                 ->description($processor->getLanguageVariable('title.description', true))
@@ -187,7 +187,10 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 ->i18n()
                 ->languageItemPattern($processor->getI18nLangVarPrefix() . '.title.category\d+')
                 ->required(),
-            MultilineTextFormField::create('description')
+        ];
+
+        if ($processor->hasDescription()) {
+            $formFields[] = MultilineTextFormField::create('description')
                 ->label($processor->getLanguageVariable('description'))
                 ->description($processor->getLanguageVariable('description.description', true))
                 ->maximumLength(5000)
@@ -196,17 +199,19 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 ->languageItemPattern(
                     $processor->getI18nLangVarPrefix() . '.description.category\d+'
                 )
-                ->available($processor->hasDescription())
-                ->required($processor->forceDescription()),
-            BooleanFormField::create('descriptionUseHtml')
-                ->label($processor->getLanguageVariable('descriptionUseHtml'))
-                ->available(
-                    $processor->hasDescription() && $processor->supportsHtmlDescription()
-                ),
-            BooleanFormField::create('isDisabled')
-                ->label($processor->getLanguageVariable('isDisabled'))
-                ->description($processor->getLanguageVariable('isDisabled.description', true)),
-        ];
+                ->required($processor->forceDescription());
+        }
+
+        $formFields[] = BooleanFormField::create('descriptionUseHtml')
+            ->label($processor->getLanguageVariable('descriptionUseHtml'))
+            ->available(
+                $processor->hasDescription() && $processor->supportsHtmlDescription()
+            );
+        $formFields[] = BooleanFormField::create('isDisabled')
+            ->label($processor->getLanguageVariable('isDisabled'))
+            ->description($processor->getLanguageVariable('isDisabled.description', true));
+
+        return $formFields;
     }
 
     /**
