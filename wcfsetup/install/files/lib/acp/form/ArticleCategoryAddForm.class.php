@@ -37,6 +37,11 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
     /**
      * @inheritDoc
      */
+    public $objectEditLinkController = ArticleCategoryEditForm::class;
+
+    /**
+     * @inheritDoc
+     */
     protected function getGeneralFormFields(): array
     {
         $formFields = parent::getGeneralFormFields();
