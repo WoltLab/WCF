@@ -2,9 +2,6 @@
 
 namespace wcf\acp\form;
 
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-
 /**
  * Shows the media category add form.
  *
@@ -13,7 +10,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
  */
-class MediaCategoryAddForm extends AbstractCategoryAddForm
+class MediaCategoryAddForm extends CategoryAddFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -23,20 +20,10 @@ class MediaCategoryAddForm extends AbstractCategoryAddForm
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.media.category';
+    public string $objectTypeName = 'com.woltlab.wcf.media.category';
 
     /**
      * @inheritDoc
      */
-    public function save()
-    {
-        parent::save();
-
-        WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                MediaCategoryEditForm::class,
-                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
-            ),
-        ]);
-    }
+    public $objectEditLinkController = MediaCategoryEditForm::class;
 }
