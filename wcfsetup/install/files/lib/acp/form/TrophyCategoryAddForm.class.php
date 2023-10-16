@@ -2,9 +2,6 @@
 
 namespace wcf\acp\form;
 
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-
 /**
  * Represents the trophy category add form.
  *
@@ -13,7 +10,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
  */
-class TrophyCategoryAddForm extends AbstractCategoryAddForm
+class TrophyCategoryAddForm extends CategoryAddFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -23,7 +20,7 @@ class TrophyCategoryAddForm extends AbstractCategoryAddForm
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.trophy.category';
+    public string $objectTypeName = 'com.woltlab.wcf.trophy.category';
 
     /**
      * @inheritDoc
@@ -38,15 +35,5 @@ class TrophyCategoryAddForm extends AbstractCategoryAddForm
     /**
      * @inheritDoc
      */
-    public function save()
-    {
-        parent::save();
-
-        WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                TrophyCategoryEditForm::class,
-                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
-            ),
-        ]);
-    }
+    public $objectEditLinkController = TrophyCategoryEditForm::class;
 }

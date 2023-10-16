@@ -2,10 +2,12 @@
 
 namespace wcf\acp\form;
 
-use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\data\category\Category;
+use wcf\data\IStorableObject;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\SortOrderFormField;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Shows the article category add form.
@@ -15,7 +17,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.0
  */
-class ArticleCategoryAddForm extends AbstractCategoryAddForm
+class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -25,7 +27,7 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.article.category';
+    public string $objectTypeName = 'com.woltlab.wcf.article.category';
 
     /**
      * @inheritDoc
@@ -33,89 +35,73 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm
     public $neededModules = ['MODULE_ARTICLE'];
 
     /**
-     * @var string[]
-     * @since   5.2
+     * @inheritDoc
      */
-    public $availableSortFields = [
-        'publicationDate',
-        'title',
-    ];
-
-    /**
-     * @var string
-     * @since   5.2
-     */
-    public $sortField = 'publicationDate';
-
-    /**
-     * @var string
-     * @since   5.2
-     */
-    public $sortOrder = 'DESC';
+    public $objectEditLinkController = ArticleCategoryEditForm::class;
 
     /**
      * @inheritDoc
      */
-    public function readParameters()
+    protected function getGeneralFormFields(): array
     {
-        parent::readParameters();
+        $formFields = parent::getGeneralFormFields();
 
-        if (isset($_POST['sortField'])) {
-            $this->sortField = StringUtil::trim($_POST['sortField']);
-        }
-        if (isset($_POST['sortOrder'])) {
-            $this->sortOrder = StringUtil::trim($_POST['sortOrder']);
-        }
+        return [
+            ...$formFields,
+            SelectFormField::create('sortField')
+                ->label('wcf.acp.article.category.sortField')
+                ->required()
+                ->options([
+                    'publicationDate' => 'wcf.acp.article.category.sortField.publicationDate',
+                    'title' => 'wcf.acp.article.category.sortField.title',
+                ])
+                ->value('publicationDate'),
+            SortOrderFormField::create()
+                ->required()
+                ->value('DESC'),
+        ];
     }
 
     /**
      * @inheritDoc
      */
-    public function validate()
+    public function finalizeForm()
     {
-        parent::validate();
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'articleSortFields',
+                static function (IFormDocument $document, array $parameters) {
+                    if (!isset($parameters['additionalData'])) {
+                        $parameters['additionalData'] = [];
+                    }
 
-        if (!\in_array($this->sortField, $this->availableSortFields)) {
-            throw new UserInputException('sortField');
-        }
+                    // move sorting data to additional data
+                    $parameters['additionalData']['sortField'] = $parameters['data']['sortField'];
+                    unset($parameters['data']['sortField']);
+                    $parameters['additionalData']['sortOrder'] = $parameters['data']['sortOrder'];
+                    unset($parameters['data']['sortOrder']);
 
-        if ($this->sortOrder !== 'ASC' && $this->sortOrder !== 'DESC') {
-            throw new UserInputException('sortOrder');
-        }
-    }
+                    return $parameters;
+                },
+                function (IFormDocument $document, array $data, IStorableObject $object) {
+                    \assert($object instanceof Category);
 
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        $this->additionalData['sortField'] = $this->sortField;
-        $this->additionalData['sortOrder'] = $this->sortOrder;
+                    $sortField = $this->form->getNodeById('sortField');
+                    \assert($sortField instanceof SelectFormField);
 
-        parent::save();
+                    if ($object->sortField && \in_array($object->sortField, \array_keys($sortField->getOptions()))) {
+                        $data['sortField'] = $object->sortField;
+                    }
 
-        WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                ArticleCategoryEditForm::class,
-                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
-            ),
-        ]);
+                    if ($object->sortOrder) {
+                        $data['sortOrder'] = $object->sortOrder;
+                    }
 
-        $this->sortField = 'publicationDate';
-        $this->sortOrder = 'DESC';
-    }
+                    return $data;
+                }
+            )
+        );
 
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'availableSortFields' => $this->availableSortFields,
-            'sortField' => $this->sortField,
-            'sortOrder' => $this->sortOrder,
-        ]);
+        parent::finalizeForm();
     }
 }
