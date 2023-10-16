@@ -126,12 +126,11 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
      */
     public function showContent(Condition $condition)
     {
-        $activeRequest = RequestHandler::getInstance()->getActiveRequest();
-        if ($activeRequest !== null) {
-            $pageID = $activeRequest->getPageID();
+        $pageID = RequestHandler::getInstance()->getActivePageID();
+        if ($pageID !== null) {
             $pageIDs = $condition->{$this->fieldName};
 
-            if ($pageID && $condition->pageIDs && \is_array($pageIDs)) {
+            if ($condition->pageIDs && \is_array($pageIDs)) {
                 $matchingPageID = \in_array($pageID, $pageIDs);
 
                 if ($condition->{$this->fieldName . '_reverseLogic'}) {

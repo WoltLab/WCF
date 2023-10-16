@@ -8,8 +8,9 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\page\Page;
+use wcf\data\page\PageCache;
 use wcf\http\error\NotFoundHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
@@ -33,12 +34,14 @@ use wcf\http\middleware\Xsrf;
 use wcf\http\Pipeline;
 use wcf\http\StaticResponseHandler;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
+use wcf\system\page\event\PageLocationResolving;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -60,6 +63,8 @@ final class RequestHandler extends SingletonFactory
      * indicates if the request is an acp request
      */
     protected bool $isACPRequest = false;
+
+    private Page|null $activePage;
 
     /**
      * @inheritDoc
@@ -320,5 +325,41 @@ final class RequestHandler extends SingletonFactory
     public function inRescueMode(): bool
     {
         return false;
+    }
+
+    public function getActivePage(): Page|null
+    {
+        if (!isset($this->activePage)) {
+            $this->determineActivePage();
+        }
+
+        return $this->activePage;
+    }
+
+    private function determineActivePage(): void
+    {
+        $this->activePage = null;
+
+        if ($this->getActiveRequest() === null) {
+            return;
+        }
+
+        $metaData = $this->getActiveRequest()->getMetaData();
+        if (isset($metaData['cms'])) {
+            $this->activePage = PageCache::getInstance()->getPage($metaData['cms']['pageID']);
+        } else {
+            $this->activePage = PageCache::getInstance()->getPageByController($this->getActiveRequest()->getClassName());
+
+            if ($this->activePage === null) {
+                $event = new PageLocationResolving($this->getActiveRequest());
+                EventHandler::getInstance()->fire($event);
+                $this->activePage = $event->page;
+            }
+        }
+    }
+
+    public function getActivePageID(): int|null
+    {
+        return $this->getActivePage()?->pageID;
     }
 }

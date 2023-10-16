@@ -4,9 +4,7 @@ namespace wcf\system\page;
 
 use wcf\data\ITitledLinkObject;
 use wcf\data\page\PageCache;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\page\event\PageLocationResolving;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -39,33 +37,13 @@ class PageLocationManager extends SingletonFactory
     public function init()
     {
         $pageID = $pageObjectID = 0;
+        $page = RequestHandler::getInstance()->getActivePage();
 
-        $activeRequest = RequestHandler::getInstance()->getActiveRequest();
-        if ($activeRequest === null) {
-            return;
-        }
+        if ($page !== null) {
+            $pageID = $page->pageID;
 
-        $metaData = $activeRequest->getMetaData();
-        $page = null;
-        if (isset($metaData['cms'])) {
-            $pageID = $metaData['cms']['pageID'];
-
-            $page = PageCache::getInstance()->getPage($pageID);
-        } else {
-            $page = PageCache::getInstance()->getPageByController($activeRequest->getClassName());
-
-            if ($page === null) {
-                $event = new PageLocationResolving($activeRequest);
-                EventHandler::getInstance()->fire($event);
-                $page = $event->page;
-            }
-
-            if ($page !== null) {
-                $pageID = $page->pageID;
-
-                if (!empty($_REQUEST['id'])) {
-                    $pageObjectID = \intval($_REQUEST['id']);
-                }
+            if (!empty($_REQUEST['id'])) {
+                $pageObjectID = \intval($_REQUEST['id']);
             }
         }
 
