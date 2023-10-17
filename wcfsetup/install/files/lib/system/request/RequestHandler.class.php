@@ -64,7 +64,7 @@ final class RequestHandler extends SingletonFactory
      */
     protected bool $isACPRequest = false;
 
-    private Page|null $activePage;
+    private ?Page $activePage;
 
     /**
      * @inheritDoc
@@ -327,7 +327,7 @@ final class RequestHandler extends SingletonFactory
         return false;
     }
 
-    public function getActivePage(): Page|null
+    public function getActivePage(): ?Page
     {
         if (!isset($this->activePage)) {
             $this->determineActivePage();
@@ -358,7 +358,7 @@ final class RequestHandler extends SingletonFactory
         }
     }
 
-    public function getActivePageID(): int|null
+    public function getActivePageID(): ?int
     {
         return $this->getActivePage()?->pageID;
     }

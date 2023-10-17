@@ -107,7 +107,7 @@ final class Request implements RequestHandlerInterface
         }
 
         $page = RequestHandler::getInstance()->getActivePage();
-        if ($page !== null && $page->availableDuringOfflineMode) {
+        if ($page?->availableDuringOfflineMode) {
             return true;
         }
 
