@@ -41,7 +41,7 @@ use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\page\event\PageLocationResolving;
+use wcf\system\request\event\ActivePageResolving;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -351,7 +351,7 @@ final class RequestHandler extends SingletonFactory
             $this->activePage = PageCache::getInstance()->getPageByController($this->getActiveRequest()->getClassName());
 
             if ($this->activePage === null) {
-                $event = new PageLocationResolving($this->getActiveRequest());
+                $event = new ActivePageResolving($this->getActiveRequest());
                 EventHandler::getInstance()->fire($event);
                 $this->activePage = $event->page;
             }
