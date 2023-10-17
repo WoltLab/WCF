@@ -5,7 +5,6 @@ namespace wcf\system\request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\data\page\PageCache;
 use wcf\http\LegacyPlaceholderResponse;
 
 /**
@@ -22,12 +21,6 @@ final class Request implements RequestHandlerInterface
     private readonly bool $isLandingPage;
 
     private readonly array $metaData;
-
-    /**
-     * current page id
-     * @var int
-     */
-    private $pageID;
 
     /**
      * request object
@@ -113,10 +106,9 @@ final class Request implements RequestHandlerInterface
             return true;
         }
 
-        if ($this->getPageID() && ($page = PageCache::getInstance()->getPage($this->getPageID()))) {
-            if ($page->availableDuringOfflineMode) {
-                return true;
-            }
+        $page = RequestHandler::getInstance()->getActivePage();
+        if ($page?->availableDuringOfflineMode) {
+            return true;
         }
 
         return false;
@@ -126,22 +118,10 @@ final class Request implements RequestHandlerInterface
      * Returns the current page id.
      *
      * @return  int     current page id or `0` if unknown
+     * @deprecated 6.1 use `RequestHandler::getInstance()->getActivePageID()` instead
      */
     public function getPageID()
     {
-        if (!isset($this->pageID)) {
-            if (isset($this->metaData['cms'])) {
-                $this->pageID = $this->metaData['cms']['pageID'];
-            } else {
-                $page = PageCache::getInstance()->getPageByController($this->className);
-                if ($page !== null) {
-                    $this->pageID = $page->pageID;
-                } else {
-                    $this->pageID = 0;
-                }
-            }
-        }
-
-        return $this->pageID;
+        return RequestHandler::getInstance()->getActivePageID() ?: 0;
     }
 }

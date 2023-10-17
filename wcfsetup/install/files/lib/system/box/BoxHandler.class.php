@@ -49,12 +49,9 @@ class BoxHandler extends SingletonFactory
      */
     protected function init()
     {
-        // get active page id
         $pageID = 0;
         if (!self::$disablePageLayout) {
-            if (($request = RequestHandler::getInstance()->getActiveRequest()) !== null) {
-                $pageID = $request->getPageID();
-            }
+            $pageID = RequestHandler::getInstance()->getActivePageID() ?: 0;
         }
 
         $this->boxesByPosition = self::loadBoxes($pageID, true);

@@ -990,20 +990,7 @@ class WCF
      */
     public static function getActivePage(): ?Page
     {
-        if (self::getActiveRequest() === null) {
-            return null;
-        }
-
-        if (self::getActiveRequest()->getClassName() === CmsPage::class) {
-            $metaData = self::getActiveRequest()->getMetaData();
-            if (isset($metaData['cms'])) {
-                return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
-            }
-
-            return null;
-        }
-
-        return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+        return RequestHandler::getInstance()->getActivePage();
     }
 
     /**
