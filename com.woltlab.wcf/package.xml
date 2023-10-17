@@ -72,6 +72,10 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Required for wcf1_package_installation_file_log. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
 
+		<!-- Add the dark mode support first, because otherwise a failed migration would brick the ACP. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_style.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
+
 		<!-- Deploy new application code. -->
 		<instruction type="file" />
 		<instruction type="acpTemplate" />
@@ -96,8 +100,6 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step1.php</instruction>
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step2.php</instruction>
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step3.php</instruction>
-
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
 
 		<!-- Deploy the new application code again to build the hashes in wcf1_package_installation_file_log. -->
 		<instruction type="file" />
