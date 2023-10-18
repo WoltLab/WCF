@@ -433,6 +433,9 @@ final class StyleCompiler extends SingletonFactory
 
         $variables = $this->prepareVariables($variables);
 
+        // The theme color implicitly matches the header background color.
+        $variables['wcfPageThemeColor'] = 'var(--wcfHeaderBackground)';
+
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
