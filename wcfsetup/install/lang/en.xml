@@ -3732,6 +3732,8 @@ Attachments:
 		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[Do you want to move this to the trash bin?]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[Do you want to restore “{$title}”?]]></item>
 		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[Do you want to restore this?]]></item>
+		<item name="wcf.dialog.confirmation.reason.optional"><![CDATA[Reason (optional)]]></item>
+		<item name="wcf.dialog.confirmation.reason"><![CDATA[Reason]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
