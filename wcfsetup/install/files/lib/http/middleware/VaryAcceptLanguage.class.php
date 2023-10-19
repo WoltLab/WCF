@@ -37,7 +37,7 @@ final class VaryAcceptLanguage implements MiddlewareInterface
         // add a single item.
         //
         // Furthermore adding the `vary: accept-language` is not super necessary,
-        // because caching for responses might already be disabled.
+        // because caching for most responses should already be disabled.
         //
         // Thus we attach it to any PSR-7 responses on a best effort basis, the number
         // of controllers returning a PSR-7 response is expected to grow over time.
