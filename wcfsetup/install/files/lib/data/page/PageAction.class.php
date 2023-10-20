@@ -96,9 +96,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     'pageID' => $page->pageID,
                     'languageID' => $languageID ?: null,
                     'title' => $content['title'],
-                    'content' => $content['content'],
-                    'metaDescription' => $content['metaDescription'],
-                    'customURL' => $content['customURL'],
+                    'content' => $content['content'] ?? '',
+                    'metaDescription' => $content['metaDescription'] ?? '',
+                    'customURL' => $content['customURL'] ?? '',
                 ]);
                 $pageContentEditor = new PageContentEditor($pageContent);
 
