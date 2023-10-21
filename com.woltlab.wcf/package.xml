@@ -78,6 +78,9 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_style.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
 
+		<!-- Set up an empty bootstrap file if its does not exist. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_initBootstrap.php</instruction>
+
 		<!-- Deploy new application code. -->
 		<instruction type="file" />
 		<instruction type="acpTemplate" />
