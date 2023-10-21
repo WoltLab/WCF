@@ -57,10 +57,11 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_6.0_checkCache.php \
 	acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php \
 	acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php \
+	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php \
+	acp/update_com.woltlab.wcf_6.0_initBootstrap.php \
 	acp/update_com.woltlab.wcf_6.0_styleVariables.php \
 	acp/database/update_com.woltlab.wcf_6.0_pre.php \
-	acp/database/update_com.woltlab.wcf_6.0_style.php \
-	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php
+	acp/database/update_com.woltlab.wcf_6.0_style.php
 		-->
 		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
 

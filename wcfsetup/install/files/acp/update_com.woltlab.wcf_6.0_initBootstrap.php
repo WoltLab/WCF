@@ -12,13 +12,15 @@
 namespace wcf\acp;
 
 use wcf\system\io\AtomicWriter;
-use wcf\system\WCF;
 
-if (\file_exists(WCF::BOOTSTRAP_LOADER)) {
+// Variable taken from 'WCF::BOOTSTRAP_LOADER' which is not defined yet.
+$BOOTSTRAP_LOADER = \WCF_DIR . '/lib/bootstrap.php';
+
+if (\file_exists($BOOTSTRAP_LOADER)) {
     return;
 }
 
-$writer = new AtomicWriter(WCF::BOOTSTRAP_LOADER);
+$writer = new AtomicWriter($BOOTSTRAP_LOADER);
 $writer->write(
     <<<'EOT'
         <?php
