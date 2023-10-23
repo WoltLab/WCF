@@ -74,7 +74,7 @@ return static function (): void {
         if ($licenseData !== null) {
             $brandingFree = $licenseData->woltlab['com.woltlab.brandingFree'] ?? '0.0';
             $expiresAt = $licenseData->license['expiryDates']['com.woltlab.brandingFree'] ?? \TIME_NOW;
-            if ($brandingFree !== '0.0' && $expiresAt >= \TIME_NOW) {
+            if ($brandingFree !== '0.0' && ($expiresAt === -1 || $expiresAt >= \TIME_NOW)) {
                 define('WOLTLAB_BRANDING', false);
             }
 
