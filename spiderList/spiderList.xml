@@ -811,6 +811,7 @@
 	</spider>
 	<spider ident="MJ12bot">
 		<name>Majestics MJ12bot</name>
+		<url>https://mj12bot.com/</url>
 	</spider>
 	<spider ident="Mammoth">
 		<name>Mammoth</name>
