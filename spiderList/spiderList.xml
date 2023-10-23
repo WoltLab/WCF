@@ -158,7 +158,7 @@
 	</spider>
 	<spider ident="BLEXBot">
 		<name>BLEXBot</name>
-		<url>http://webmeup.com/crawler.html</url>
+		<url>http://webmeup-crawler.com/</url>
 	</spider>
 	<spider ident="BlogCrawler by Xango">
 		<name>BlogCrawler</name>
