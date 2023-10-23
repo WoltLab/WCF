@@ -304,7 +304,7 @@
 		<name>CyberSpyder</name>
 	</spider>
 	<spider ident="DataForSeoBot">
-		<name>DataForSeoBot</name>
+		<name>DataForSEO</name>
 		<url>https://dataforseo.com/dataforseo-bot</url>
 	</spider>
 	<spider ident="daypopbot">
