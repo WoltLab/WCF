@@ -35,6 +35,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
           </span>`;
                     }
                     item.innerHTML = box.name + icon;
+                    const sortableIndicator = document.createElement("fa-icon");
+                    sortableIndicator.setIcon("up-down");
+                    item.prepend(sortableIndicator);
                     container.appendChild(item);
                 });
                 if (boxData.length > 1) {

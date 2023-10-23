@@ -2,12 +2,14 @@
 
 <style>
 	#pbo {
-		border: 1px solid #ccc;
+		border: 1px solid var(--wcfContentBorderInner);
+		border-radius: var(--wcfBorderRadius);
 		padding: 5px;
 	}
 	
 	#pbo [data-placeholder] {
 		background-color: rgb(224, 224, 224);
+		border-radius: var(--wcfBorderRadius);
 		padding: 20px 10px;
 		position: relative;
 	}
@@ -58,12 +60,6 @@
 		cursor: move;
 	}
 	
-	#pbo [data-placeholder] .ui-sortable > li::before {
-		content: "\f047";
-		font-family: FontAwesome;
-		padding-right: 5px;
-	}
-	
 	#pbo [data-placeholder] li + li {
 		margin-top: 5px;
 	}
@@ -99,6 +95,7 @@
 	
 	#pboContent {
 		background-color: #BBDEFB;
+		border-radius: var(--wcfBorderRadius);
 		padding: 40px 20px;
 		text-align: center;
 	}
@@ -109,6 +106,18 @@
 	
 	#pboContent:not(:last-child) {
 		margin-bottom: 10px;
+	}
+
+	html[data-color-scheme="dark"] #pbo [data-placeholder] {
+		background-color: rgb(37 46 61);
+	}
+	
+	html[data-color-scheme="dark"] #pbo [data-placeholder]::before {
+		color: rgb(8 166 149);
+	}
+
+	html[data-color-scheme="dark"] #pboContent {
+		background-color: rgb(26 29 33);
 	}
 </style>
 
@@ -128,7 +137,6 @@
 		
 		AcpUiPageBoxOrder.init({@$page->pageID}, boxes);
 	});
-	
 </script>
 
 <header class="contentHeader">
