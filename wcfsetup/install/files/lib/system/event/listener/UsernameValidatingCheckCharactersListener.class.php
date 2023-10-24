@@ -35,12 +35,16 @@ final class UsernameValidatingCheckCharactersListener
             case 2:
                 $spoofchecker = new Spoofchecker();
                 $checks = Spoofchecker::INVISIBLE;
-                if (\defined(Spoofchecker::class . '::HIDDEN_OVERLAY')) {
-                    // The constant will exist with PHP 8.3.
-                    $checks |= Spoofchecker::HIDDEN_OVERLAY;
-                } else {
-                    // HIDDEN_OVERLAY == 256
-                    $checks |= 256;
+
+                // HIDDEN_OVERLAY (256) is available since ICU 62
+                if (\version_compare(\INTL_ICU_VERSION, '62.0', '>=')) {
+                    if (\defined(Spoofchecker::class . '::HIDDEN_OVERLAY')) {
+                        // The constant will exist with PHP 8.3.
+                        $checks |= Spoofchecker::HIDDEN_OVERLAY;
+                    } else {
+                        // HIDDEN_OVERLAY == 256
+                        $checks |= 256;
+                    }
                 }
 
                 // ->setRestrictionLevel() requires ICU 58.
