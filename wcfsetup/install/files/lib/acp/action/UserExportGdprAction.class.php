@@ -159,7 +159,6 @@ final class UserExportGdprAction extends AbstractAction
             'com.woltlab.calendar' => ['calendar' . WCF_N . '_event'],
             'com.woltlab.filebase' => [
                 'filebase' . WCF_N . '_file',
-                'filebase' . WCF_N . '_file_download',
             ],
             'com.woltlab.gallery' => [],
             // intentionally left empty, the image table is queried manually
