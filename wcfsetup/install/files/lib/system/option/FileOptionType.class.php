@@ -67,7 +67,7 @@ class FileOptionType extends AbstractOptionType
         }
 
         // determine location the file will be stored at
-        $relativeFileLocation = $option->filelocation . '.' . $file->getFileExtension();
+        $relativeFileLocation = ($option->filelocation ?: $option->optionName) . '.' . $file->getFileExtension();
 
         $fileLocation = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir() . $relativeFileLocation;
 
