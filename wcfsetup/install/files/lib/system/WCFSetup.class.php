@@ -537,8 +537,8 @@ final class WCFSetup extends WCF
                 $sqlVersion = $db->getVersion();
                 $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
                 if (\stripos($sqlVersion, 'MariaDB')) {
-                    if (!(\version_compare($compareSQLVersion, '10.5.12') >= 0)) {
-                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.5.12' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '10.5.15') >= 0)) {
+                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.5.15' or greater is needed.");
                     }
                 } else {
                     if (!(\version_compare($compareSQLVersion, '8.0.30') >= 0)) {

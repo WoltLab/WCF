@@ -226,13 +226,13 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         if (\stripos($sqlVersion, 'MariaDB') !== false) {
             $databaseName = "MariaDB {$compareSQLVersion}";
-            $expectedVersion = '10.5.12';
+            $expectedVersion = '10.5.15';
             $alternativeDatabase = 'MySQL 8.0.30+';
         } else {
             $databaseName = "MySQL {$compareSQLVersion}";
             $expectedVersion = $databaseName = "MariaDB {$compareSQLVersion}";
             $expectedVersion = '8.0.30';
-            $alternativeDatabase = 'MariaDB 10.5.12+';
+            $alternativeDatabase = 'MariaDB 10.5.15+';
         }
 
         $result = (\version_compare(

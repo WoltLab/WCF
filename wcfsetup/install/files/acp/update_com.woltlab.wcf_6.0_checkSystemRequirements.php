@@ -45,7 +45,7 @@ if (!\extension_loaded('intl')) {
 $sqlVersion = WCF::getDB()->getVersion();
 $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
 if (\stripos($sqlVersion, 'MariaDB') !== false) {
-    $neededSqlVersion = '10.5.12';
+    $neededSqlVersion = '10.5.15';
     $sqlFork = 'MariaDB';
 } else {
     $sqlFork = 'MySQL';
