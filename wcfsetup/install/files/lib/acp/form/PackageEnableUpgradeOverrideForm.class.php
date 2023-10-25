@@ -230,7 +230,6 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $alternativeDatabase = 'MySQL 8.0.30+';
         } else {
             $databaseName = "MySQL {$compareSQLVersion}";
-            $expectedVersion = $databaseName = "MariaDB {$compareSQLVersion}";
             $expectedVersion = '8.0.30';
             $alternativeDatabase = 'MariaDB 10.5.15+';
         }
