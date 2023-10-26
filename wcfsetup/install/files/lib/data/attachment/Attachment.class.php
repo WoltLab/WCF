@@ -232,7 +232,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function getThumbnailLink($size = '')
     {
         $parameters = [
-            'id' => $this->attachmentID,
+            'object' => $this,
         ];
 
         if ($size == 'tiny') {
