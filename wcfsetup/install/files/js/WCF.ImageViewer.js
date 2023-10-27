@@ -766,7 +766,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._ui.header.find('h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
 		
-		this._ui.slideshow.full.data('link', ($image.image.fullURL ? $image.image.fullURL : $image.image.url));
+		this._ui.slideshow.full[0].querySelector('a').href = $image.image.fullURL ? $image.image.fullURL : $image.image.url;
 		
 		this.moveToImage($image.listItem.data('index'));
 		
@@ -899,7 +899,7 @@ $.widget('ui.wcfImageViewer', {
 		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><span class="icon icon48 fa-play" /></li>').appendTo($slideshowContainer);
 		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><span class="icon icon48 fa-angle-right" /></li>').appendTo($slideshowContainer);
 		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><span class="icon icon48 fa-expand" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><span class="icon icon48 fa-external-link" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><a href="#" target="_blank"><span class="icon icon48 fa-external-link" /></a></li>').appendTo($slideshowContainer);
 		
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
@@ -940,7 +940,6 @@ $.widget('ui.wcfImageViewer', {
 				this.startSlideshow();
 			}
 		}, this));
-		$slideshowButtonFull.click(function(event) { window.location = $(event.currentTarget).data('link'); });
 		
 		// close button
 		$('<span class="wcfImageViewerButtonClose icon icon48 fa-times pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
