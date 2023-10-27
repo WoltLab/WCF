@@ -24,11 +24,10 @@ final class Pbkdf2 implements IPasswordAlgorithm
         string $hash
     ): bool {
         $parts = \explode(':', $hash, 5);
-        $hash = $parts[0];
-        $salt = $parts[1];
-        $algo = $parts[2];
-        $iterations = $parts[3];
-        $length = $parts[4];
+        if (\count($parts) !== 5) {
+            return false;
+        }
+        [$hash, $salt, $algo, $iterations, $length] = $parts;
 
         return \hash_equals($hash, \hash_pbkdf2($algo, $password, $salt, $iterations, $length));
     }
@@ -46,7 +45,7 @@ final class Pbkdf2 implements IPasswordAlgorithm
         $length = 32;
         $hash = \hash_pbkdf2($algo, $password, $salt, $iterations, $length);
 
-        return implode(':', [$hash, $salt, $algo, $iterations, $length]);
+        return \implode(':', [$hash, $salt, $algo, $iterations, $length]);
     }
 
     /**
