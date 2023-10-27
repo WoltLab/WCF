@@ -770,7 +770,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._ui.header.find('h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
 		
-		this._ui.slideshow.full.data('link', ($image.image.fullURL ? $image.image.fullURL : $image.image.url));
+		this._ui.slideshow.full[0].querySelector('a').href = $image.image.fullURL ? $image.image.fullURL : $image.image.url;
 		
 		this.moveToImage($image.listItem.data('index'));
 		
@@ -903,7 +903,7 @@ $.widget('ui.wcfImageViewer', {
 		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><fa-icon size="32" name="play"></fa-icon></li>').appendTo($slideshowContainer);
 		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><fa-icon size="32" name="angle-right"></fa-icon></li>').appendTo($slideshowContainer);
 		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><fa-icon size="32" name="expand"></fa-icon></li>').appendTo($slideshowContainer);
-		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><fa-icon size="32" name="arrow-up-right-from-square"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><a href="#" target="_blank"><fa-icon size="32" name="arrow-up-right-from-square"></fa-icon></a></li>').appendTo($slideshowContainer);
 		
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
@@ -944,7 +944,6 @@ $.widget('ui.wcfImageViewer', {
 				this.startSlideshow();
 			}
 		}, this));
-		$slideshowButtonFull.click(function(event) { window.location = $(event.currentTarget).data('link'); });
 		
 		// close button
 		$(`<button type="button" class="wcfImageViewerButtonClose jsTooltip" title="${WCF.Language.get('wcf.global.button.close')}">
