@@ -157,7 +157,7 @@
 	{event name='beforeArticleContent'}
 	
 	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
-		<div class="section htmlContent">
+		<div class="section htmlContent" itemprop="description articleBody">
 			{if MODULE_WCF_AD}
 				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.inArticle')}
 			{/if}
