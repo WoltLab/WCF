@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.0.0</version>
-		<date>2023-10-11</date>
+		<version>6.0.2</version>
+		<date>2023-10-20</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -57,8 +57,11 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_6.0_checkCache.php \
 	acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php \
 	acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php \
+	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php \
+	acp/update_com.woltlab.wcf_6.0_initBootstrap.php \
+	acp/update_com.woltlab.wcf_6.0_styleVariables.php \
 	acp/database/update_com.woltlab.wcf_6.0_pre.php \
-	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php
+	acp/database/update_com.woltlab.wcf_6.0_style.php
 		-->
 		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
 
@@ -71,6 +74,13 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 
 		<!-- Required for wcf1_package_installation_file_log. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
+
+		<!-- Add the dark mode support first, because otherwise a failed migration would brick the ACP. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_style.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
+
+		<!-- Set up an empty bootstrap file if its does not exist. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_initBootstrap.php</instruction>
 
 		<!-- Deploy new application code. -->
 		<instruction type="file" />
@@ -97,8 +107,6 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step2.php</instruction>
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step3.php</instruction>
 
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
-
 		<!-- Deploy the new application code again to build the hashes in wcf1_package_installation_file_log. -->
 		<instruction type="file" />
 
@@ -113,7 +121,6 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="menuItem" />
 		<instruction type="objectType" />
 		<instruction type="page" />
-		<instruction type="smiley" />
 		<instruction type="userGroupOption" />
 		<instruction type="userMenu" />
 		<instruction type="userOption" />
@@ -131,14 +138,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="templateDelete" />
 	</instructions>
 
-	<!--
-		Rerun the update script for trophies to fix any broken fallback values:
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_trophies.php</instruction>
-	-->
-
-	<instructions type="update" fromversion="6.0.0 RC 2">
+	<instructions type="update" fromversion="6.0.1">
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="language"/>
 	</instructions>
 </package>

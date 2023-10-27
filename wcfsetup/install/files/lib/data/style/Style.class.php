@@ -214,11 +214,9 @@ class Style extends DatabaseObject
             }
         }
 
-        // see https://github.com/WoltLab/WCF/issues/2636
-        if (empty($this->variables['wcfPageThemeColor'])) {
-            $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
-        }
-        if ($this->hasDarkMode && empty($this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'])) {
+        // The theme color implicitly matches the header background color.
+        $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
+        if ($this->hasDarkMode) {
             $this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'] = $this->variables[self::DARK_MODE_PREFIX . 'wcfHeaderBackground'];
         }
 

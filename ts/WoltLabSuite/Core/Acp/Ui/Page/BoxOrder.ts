@@ -49,6 +49,11 @@ class AcpUiPageBoxOrder {
 
         item.innerHTML = box.name + icon;
 
+        const sortableIndicator = document.createElement("fa-icon");
+        sortableIndicator.setIcon("up-down");
+
+        item.prepend(sortableIndicator);
+
         container.appendChild(item);
       });
 

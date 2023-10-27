@@ -57,7 +57,7 @@ class SystemCheckPage extends AbstractPage
             '8' => '8.0.30',
         ],
         'mariadb' => [
-            '10' => '10.5.12',
+            '10' => '10.5.15',
         ],
     ];
 

@@ -73,7 +73,14 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
 
                     $newValue = $value;
                     if (\mb_strlen($newValue) > 60) {
-                        $uri = new Uri($newValue);
+                        try {
+                            // The value returned by `Uri::__toString()` can be malformed.
+                            // https://github.com/guzzle/psr7/issues/583
+                            $uri = new Uri($newValue);
+                        } catch (MalformedUriException) {
+                            $uri = clone $href;
+                        }
+
                         $schemeHost = Uri::composeComponents(
                             $uri->getScheme(),
                             $uri->getAuthority(),

@@ -30,6 +30,7 @@ use wcf\http\middleware\HandleValinorMappingErrors;
 use wcf\http\middleware\JsonBody;
 use wcf\http\middleware\PreventMimeSniffing;
 use wcf\http\middleware\TriggerBackgroundQueue;
+use wcf\http\middleware\VaryAcceptLanguage;
 use wcf\http\middleware\Xsrf;
 use wcf\http\Pipeline;
 use wcf\http\StaticResponseHandler;
@@ -133,6 +134,7 @@ final class RequestHandler extends SingletonFactory
                     new EnforceCacheControlPrivate(),
                     new EnforceNoCacheForTemporaryRedirects(),
                     new EnforceFrameOptions(),
+                    new VaryAcceptLanguage(),
                     new CheckHttpMethod(),
                     new Xsrf(),
                     new CheckSystemEnvironment(),
@@ -162,6 +164,7 @@ final class RequestHandler extends SingletonFactory
                     new EnforceCacheControlPrivate(),
                     new EnforceNoCacheForTemporaryRedirects(),
                     new EnforceFrameOptions(),
+                    new VaryAcceptLanguage(),
                 ]);
 
                 $response = $pipeline->process($psrRequest, $builtRequest);

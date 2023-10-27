@@ -50,11 +50,13 @@ class FileOptionType extends AbstractOptionType
         $files = $this->uploadHandlers[$option->optionName]->getFiles();
         $file = \reset($files);
 
+        $packageDir = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir();
+
         // check if file has been uploaded
         if (!$file->getFilename()) {
             // if checkbox is checked, remove file
             if ($newValue) {
-                @\unlink($option->optionValue);
+                @\unlink($packageDir . $option->optionValue);
 
                 return '';
             }
@@ -63,13 +65,13 @@ class FileOptionType extends AbstractOptionType
             return $option->optionValue;
         } elseif ($option->optionValue) {
             // delete old file first
-            @\unlink($option->optionValue);
+            @\unlink($packageDir . $option->optionValue);
         }
 
         // determine location the file will be stored at
-        $relativeFileLocation = $option->filelocation . '.' . $file->getFileExtension();
+        $relativeFileLocation = ($option->filelocation ?: $option->optionName) . '.' . $file->getFileExtension();
 
-        $fileLocation = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir() . $relativeFileLocation;
+        $fileLocation = $packageDir . $relativeFileLocation;
 
         // save file
         $file->moveUploadedFile($fileLocation);

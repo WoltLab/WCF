@@ -316,7 +316,7 @@ class PageAddForm extends AbstractForm
         }
 
         if (isset($_POST['customURL']) && \is_array($_POST['customURL'])) {
-            $this->customURL = \array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
+            $this->customURL = \array_map($this->normalizeCustomUrl(...), ArrayUtil::trim($_POST['customURL']));
         }
         if (isset($_POST['title']) && \is_array($_POST['title'])) {
             $this->title = ArrayUtil::trim($_POST['title']);
@@ -500,6 +500,20 @@ class PageAddForm extends AbstractForm
                 }
             }
         }
+    }
+
+    /**
+     * Replaces consecutive slashes with a single slash and trims any leading
+     * or trailing slashes.
+     *
+     * @since 6.0
+     */
+    protected function normalizeCustomUrl(string $customUrl): string
+    {
+        $customUrl = \mb_strtolower($customUrl);
+        $customUrl = \preg_replace('~/{2,}~', '/', $customUrl);
+
+        return \trim($customUrl, '/');
     }
 
     /**

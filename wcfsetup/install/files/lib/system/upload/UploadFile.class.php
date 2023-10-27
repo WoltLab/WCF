@@ -92,7 +92,10 @@ class UploadFile
                 case \UPLOAD_ERR_PARTIAL:
                     throw new \Exception("The uploaded file was only partially uploaded.");
                 case \UPLOAD_ERR_NO_FILE:
-                    throw new \Exception("No file was uploaded.");
+                    // Don't throw an exception for empty uploads as this breaks the FileOptionType in debug mode.
+                    // see https://github.com/WoltLab/WCF/issues/5693
+                    // throw new \Exception("No file was uploaded.");
+                    break;
                 case \UPLOAD_ERR_NO_TMP_DIR:
                     throw new \Exception("There is no temporary folder where PHP can save the file.");
                 case \UPLOAD_ERR_CANT_WRITE:

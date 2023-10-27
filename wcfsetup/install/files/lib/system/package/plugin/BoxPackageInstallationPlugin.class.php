@@ -175,20 +175,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $isMultilingual = false;
         $position = $data['elements']['position'];
 
-        if (
-            !\in_array($position, [
-                'bottom',
-                'contentBottom',
-                'contentTop',
-                'footer',
-                'footerBoxes',
-                'headerBoxes',
-                'hero',
-                'sidebarLeft',
-                'sidebarRight',
-                'top',
-            ])
-        ) {
+        if (!\in_array($position, Box::$availablePositions)) {
             throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
         }
 
