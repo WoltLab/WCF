@@ -1,4 +1,4 @@
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js?v={LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
