@@ -121,18 +121,9 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
 
     private static function validateName(string $name): void
     {
-        if (self::isValidName($name)) {
-            return;
+        if (!self::isValidName($name)) {
+            throw new UnknownIcon($name);
         }
-
-        // Do not throw an exception when the debug mode and developer tools
-        // are disabled. This allows unknown icons to be passed to the template
-        // which will throw a proper error without bricking the entire page.
-        if (!\ENABLE_DEBUG_MODE || !\ENABLE_DEVELOPER_TOOLS) {
-            return;
-        }
-
-        throw new UnknownIcon($name);
     }
 
     /**
