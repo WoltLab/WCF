@@ -48,9 +48,11 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
             $bbcodes[] = $element->getAttribute('data-name');
         }
 
+        $bbcodes = \array_unique($bbcodes);
+
         $disallowedBBCodes = [];
         foreach ($bbcodes as $bbcode) {
-            if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+            if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode, true)) {
                 continue;
             }
 
