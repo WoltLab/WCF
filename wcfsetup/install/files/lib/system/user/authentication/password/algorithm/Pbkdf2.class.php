@@ -29,7 +29,7 @@ final class Pbkdf2 implements IPasswordAlgorithm
         }
         [$hash, $salt, $algo, $iterations, $length] = $parts;
 
-        return \hash_equals($hash, \bin2hex(\hash_pbkdf2($algo, $password, $salt, $iterations, $length, true)));
+        return \hash_equals($hash, Hex::encode(\hash_pbkdf2($algo, $password, $salt, $iterations, $length, true)));
     }
 
     /**
@@ -43,7 +43,7 @@ final class Pbkdf2 implements IPasswordAlgorithm
         $algo = 'sha256';
         $iterations = 600000;
         $length = 32;
-        $hash = \bin2hex(\hash_pbkdf2($algo, $password, $salt, $iterations, $length, true));
+        $hash = Hex::encode(\hash_pbkdf2($algo, $password, $salt, $iterations, $length, true));
 
         return \implode(':', [$hash, $salt, $algo, $iterations, $length]);
     }
