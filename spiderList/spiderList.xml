@@ -492,6 +492,9 @@
 	<spider ident="Mozilla/4.0 (compatible: FDSE robot)">
 		<name>Fluid Dynamics</name>
 	</spider>
+	<spider ident="my-tiny-bot">
+		<name>My-Tiny-Bot</name>
+	</spider>
 	<spider ident="fouineur.9bit.qc.ca">
 		<name>Fouineur</name>
 	</spider>
