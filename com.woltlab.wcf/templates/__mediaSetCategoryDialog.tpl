@@ -1,6 +1,6 @@
 <div class="section">
 	<dl>
-		<dt><label for="categoryID">{lang}wcf.media.category.choose{/lang}</label></dt>
+		<dt><label for="categoryID">{lang}wcf.global.category{/lang}</label></dt>
 		<dd>
 			<select name="categoryID">
 				<option value="0">{lang}wcf.global.noSelection{/lang}</option>

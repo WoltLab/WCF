@@ -3879,6 +3879,7 @@ Attachments:
 		<item name="wcf.global.button.readMore"><![CDATA[Read More]]></item>
 		<item name="wcf.global.button.resetFilter"><![CDATA[Reset Filter]]></item>
 		<item name="wcf.global.category"><![CDATA[Category]]></item>
+		<item name="wcf.global.categories"><![CDATA[Categories]]></item>
 		<item name="wcf.global.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
@@ -4127,7 +4128,6 @@ Attachments:
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
-		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
 		<item name="wcf.media.category.choose.noCategory"><![CDATA[(no category)]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Select File]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>

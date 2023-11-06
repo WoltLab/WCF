@@ -1,7 +1,7 @@
 {hascontent}
 	<div class="mediaManagerCategoryList">
 		<select name="categoryID" class="fullWidth">
-			<option value="0">{lang}wcf.media.category.choose{/lang}</option>
+			<option value="0">{lang}wcf.global.categories{/lang}</option>
 			<option value="-1">{lang}wcf.media.category.choose.noCategory{/lang}</option>
 			
 			{content}
