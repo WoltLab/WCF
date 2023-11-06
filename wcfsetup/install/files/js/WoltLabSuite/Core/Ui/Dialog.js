@@ -44,6 +44,25 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     event.preventDefault();
                 }
             }, { passive: false });
+            const observer = new MutationObserver((mutations) => {
+                const currentValue = _container.getAttribute("aria-hidden");
+                for (const mutation of mutations) {
+                    if (mutation.oldValue === currentValue) {
+                        continue;
+                    }
+                    if (currentValue === "false") {
+                        (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
+                    }
+                    else {
+                        (0, PageOverlay_1.releasePageOverlayContainer)(_container);
+                    }
+                }
+            });
+            observer.observe(_container, {
+                attributes: true,
+                attributeFilter: ["aria-hidden"],
+                attributeOldValue: true,
+            });
             document.getElementById("content").appendChild(_container);
             _keyupListener = (event) => {
                 if (event.key === "Escape") {
@@ -234,7 +253,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     data.content.querySelector("input, textarea")?.focus();
                 }, 200);
             }
-            (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
             return data;
         },
         /**
@@ -671,7 +689,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     break;
                 }
             }
-            (0, PageOverlay_1.releasePageOverlayContainer)(_container);
             UiScreen.pageOverlayClose();
             if (_activeDialog === null) {
                 _container.setAttribute("aria-hidden", "true");
