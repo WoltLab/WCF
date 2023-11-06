@@ -60,6 +60,20 @@ class PackageUpdateUnauthorizedException extends UserException
     {
         $serverReply = $this->request->getReply();
 
+        $requiresPaidUpgrade = false;
+        if ($this->updateServer->isWoltLabStoreServer() && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
+            $requiresPaidUpgrade = ($serverReply['httpHeaders']['wcf-update-server-requires-paid-upgrade'][0] ?? '') === 'true';
+        }
+
+        if ($requiresPaidUpgrade) {
+            WCF::getTPL()->assign([
+                'packageName' => $this->packageUpdateVersion['packageName'],
+                'pluginStoreFileID' => $this->packageUpdateVersion['pluginStoreFileID'],
+            ]);
+
+            return WCF::getTPL()->fetch('packageUpdateUnauthorizedPaidUpgrade');
+        }
+
         $authInsufficient = (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized');
         if ($authInsufficient && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
             $hasOnlyTrustedServers = true;
@@ -87,6 +101,7 @@ class PackageUpdateUnauthorizedException extends UserException
             'updateServer' => $this->updateServer,
             'serverAuthData' => $this->updateServer->getAuthData(),
             'serverReply' => $serverReply,
+            'requiresPaidUpgrade' => $requiresPaidUpgrade,
         ]);
 
         return WCF::getTPL()->fetch('packageUpdateUnauthorized');
