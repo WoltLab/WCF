@@ -37,7 +37,7 @@
 		{include file='multipleLanguageInputJavascript' elementIdentifier='smileyTitle' forceSelection=false}
 		
 		<dl{if $errorField == 'categoryID'} class="formError"{/if}>
-			<dt><label for="categoryID">{lang}wcf.acp.smiley.categoryID{/lang}</label></dt>
+			<dt><label for="categoryID">{lang}wcf.global.category{/lang}</label></dt>
 			<dd>
 				<select id="categoryID" name="categoryID">
 					<option value="0"{if $categoryID === null} selected{/if}>{lang}wcf.acp.smiley.categoryID.default{/lang}</option>

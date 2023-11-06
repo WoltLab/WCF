@@ -45,7 +45,7 @@
 	
 	{hascontent}
 		<dl>
-			<dt><label for="categoryID_{@$media->mediaID}">{lang}wcf.media.categoryID{/lang}</label></dt>
+			<dt><label for="categoryID_{@$media->mediaID}">{lang}wcf.global.category{/lang}</label></dt>
 			<dd>
 				<select id="categoryID_{@$media->mediaID}" name="categoryID">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>

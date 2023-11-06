@@ -31,7 +31,7 @@ class ArticleCategoryCondition extends AbstractMultiCategoryCondition implements
     /**
      * @inheritDoc
      */
-    protected $label = 'wcf.acp.article.category';
+    protected $label = 'wcf.global.category';
 
     /**
      * @inheritDoc

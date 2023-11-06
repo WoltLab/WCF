@@ -78,7 +78,7 @@
 			</dl>
 			
 			<dl{if $errorField == 'categoryID'} class="formError"{/if}>
-				<dt><label for="categoryID">{lang}wcf.acp.trophy.category{/lang}</label></dt>
+				<dt><label for="categoryID">{lang}wcf.global.category{/lang}</label></dt>
 				<dd>
 					<select name="categoryID" id="categoryID">
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>

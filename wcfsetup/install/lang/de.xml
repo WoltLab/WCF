@@ -80,7 +80,6 @@
 		<item name="wcf.acp.article.author"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Artikel anzeigen]]></item>
-		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
@@ -1030,7 +1029,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
 		<item name="wcf.acp.language.import"><![CDATA[Sprache importieren]]></item>
 		<item name="wcf.acp.language.item.list"><![CDATA[Texte]]></item>
-		<item name="wcf.acp.language.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.language.item.value"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Eigener Inhalt]]></item>
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Eigene Version verwenden]]></item>
@@ -2847,7 +2845,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.smiley.category.edit"><![CDATA[Smiley-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
-		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[Die gewählte Kategorie ist ungültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
@@ -3116,7 +3113,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
-		<item name="wcf.acp.user.option.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Beschreibung]]></item>
@@ -3936,6 +3932,7 @@ Dateianhänge:
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Weiterlesen]]></item>
 		<item name="wcf.global.button.resetFilter"><![CDATA[Filter zurücksetzen]]></item>
+		<item name="wcf.global.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.global.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Abbrechen]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
@@ -4186,7 +4183,6 @@ Dateianhänge:
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
 		<item name="wcf.media.category.choose.noCategory"><![CDATA[(keine Kategorie)]]></item>
-		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
@@ -5082,7 +5078,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophäe]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Beschreibung]]></item>
-		<item name="wcf.acp.trophy.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Trophäe deaktivieren]]></item>
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Trophäe automatisch vergeben]]></item>
 		<item name="wcf.acp.trophy.revokeAutomatically"><![CDATA[Trophäe automatisch entziehen, wenn die Bedingungen nicht mehr erfüllt sind]]></item>

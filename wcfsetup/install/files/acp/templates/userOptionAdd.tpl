@@ -60,7 +60,7 @@
 			{include file='multipleLanguageInputJavascript' elementIdentifier='optionDescription' forceSelection=true}
 			
 			<dl{if $errorField == 'categoryName'} class="formError"{/if}>
-				<dt><label for="categoryName">{lang}wcf.acp.user.option.categoryName{/lang}</label></dt>
+				<dt><label for="categoryName">{lang}wcf.global.category{/lang}</label></dt>
 				<dd>
 					<select name="categoryName" id="categoryName">
 						{foreach from=$availableCategories item=availableCategory}

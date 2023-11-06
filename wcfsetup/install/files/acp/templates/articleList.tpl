@@ -46,7 +46,7 @@
 				<dt></dt>
 				<dd>
 					<select name="categoryID" id="categoryID">
-						<option value="0">{lang}wcf.acp.article.category{/lang}</option>
+						<option value="0">{lang}wcf.global.category{/lang}</option>
 						
 						{foreach from=$categoryNodeList item=category}
 							<option value="{$category->categoryID}"{if $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>

@@ -140,7 +140,7 @@
 <form class="articleAddForm" method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
 	<div class="section">
 		<dl{if $errorField == 'categoryID'} class="formError"{/if}>
-			<dt><label for="categoryID">{lang}wcf.acp.article.category{/lang}</label></dt>
+			<dt><label for="categoryID">{lang}wcf.global.category{/lang}</label></dt>
 			<dd>
 				<select name="categoryID" id="categoryID">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>

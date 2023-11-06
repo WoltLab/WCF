@@ -80,7 +80,6 @@
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
-		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
@@ -1008,7 +1007,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>
 		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
 		<item name="wcf.acp.language.item.list"><![CDATA[Phrases]]></item>
-		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Custom Value]]></item>
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Use custom value]]></item>
@@ -2776,7 +2774,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
-		<item name="wcf.acp.smiley.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[The selected category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -3045,7 +3042,6 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
-		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
@@ -3882,6 +3878,7 @@ Attachments:
 		<item name="wcf.global.button.upload"><![CDATA[Upload]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Read More]]></item>
 		<item name="wcf.global.button.resetFilter"><![CDATA[Reset Filter]]></item>
+		<item name="wcf.global.category"><![CDATA[Category]]></item>
 		<item name="wcf.global.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
@@ -4132,7 +4129,6 @@ Attachments:
 		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
 		<item name="wcf.media.category.choose.noCategory"><![CDATA[(no category)]]></item>
-		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Select File]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete the media file <span class="confirmationObject">{$title}</span>?]]></item>
@@ -5083,7 +5079,6 @@ You also received a list of backup codes to use when your second factor becomes 
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
-		<item name="wcf.acp.trophy.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable Trophy]]></item>
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Award trophy automatically]]></item>
 		<item name="wcf.acp.trophy.revokeAutomatically"><![CDATA[Revoke trophy automatically if the conditions are not longer fulfilled]]></item>

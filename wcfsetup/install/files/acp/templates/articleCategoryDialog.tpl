@@ -1,6 +1,6 @@
 <div class="section">
 	<dl>
-		<dt>{lang}wcf.acp.article.category{/lang}</dt>
+		<dt>{lang}wcf.global.category{/lang}</dt>
 		<dd>
 			<select name="categoryID" id="categoryID">
 				<option value="0">{lang}wcf.global.noSelection{/lang}</option>
