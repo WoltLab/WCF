@@ -62,6 +62,27 @@ const UiDialog = {
       { passive: false },
     );
 
+    const observer = new MutationObserver((mutations) => {
+      const currentValue = _container.getAttribute("aria-hidden");
+
+      for (const mutation of mutations) {
+        if (mutation.oldValue === currentValue) {
+          continue;
+        }
+
+        if (currentValue === "false") {
+          adoptPageOverlayContainer(_container);
+        } else {
+          releasePageOverlayContainer(_container);
+        }
+      }
+    });
+    observer.observe(_container, {
+      attributes: true,
+      attributeFilter: ["aria-hidden"],
+      attributeOldValue: true,
+    });
+
     document.getElementById("content")!.appendChild(_container);
 
     _keyupListener = (event: KeyboardEvent): boolean => {
@@ -285,8 +306,6 @@ const UiDialog = {
         data.content.querySelector<HTMLElement>("input, textarea")?.focus();
       }, 200);
     }
-
-    adoptPageOverlayContainer(_container);
 
     return data;
   },
@@ -816,7 +835,6 @@ const UiDialog = {
       }
     }
 
-    releasePageOverlayContainer(_container);
     UiScreen.pageOverlayClose();
 
     if (_activeDialog === null) {
