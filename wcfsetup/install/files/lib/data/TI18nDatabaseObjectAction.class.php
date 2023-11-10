@@ -32,6 +32,14 @@ trait TI18nDatabaseObjectAction
                 }
             }
         }
+        $this->deleteI18Items($langaugeItems);
+    }
+
+    /**
+     * Deletes language items and clears the language cache.
+     */
+    private function deleteI18Items(array $langaugeItems): void
+    {
         if ($langaugeItems !== []) {
             //find language category id
             $sql = "SELECT  languageCategoryID
@@ -87,12 +95,11 @@ trait TI18nDatabaseObjectAction
      */
     protected function saveI18nValue(DatabaseObject $object): void
     {
-        $updateData = [];
+        $updateData = $deleteData = [];
 
         foreach ($this->getI18nSaveTypes() as $name => $regex) {
+            $languageName = \str_replace('\d+', $object->getObjectID(), $regex);
             if (isset($this->parameters[$name . '_i18n'])) {
-                $languageName = \str_replace('\d+', $object->getObjectID(), $regex);
-
                 I18nHandler::getInstance()->save(
                     $this->parameters[$name . '_i18n'],
                     $languageName,
@@ -101,8 +108,12 @@ trait TI18nDatabaseObjectAction
                 );
 
                 $updateData[$name] = $languageName;
+            } else {
+                $deleteData[] = $languageName;
             }
         }
+        $this->deleteI18Items($deleteData);
+
         if (!empty($updateData)) {
             $editor = new $this->className($object);
             $editor->update($updateData);
