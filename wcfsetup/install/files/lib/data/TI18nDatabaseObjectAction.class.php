@@ -8,7 +8,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
- * Provides two methods to save or delete i18n values from FormBuilder.
+ * Provides methods to save or delete i18n values from FormBuilder.
  *
  * @author    Olaf Braun
  * @copyright 2001-2023 WoltLab GmbH
