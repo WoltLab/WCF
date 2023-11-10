@@ -32,13 +32,13 @@ trait TI18nDatabaseObjectAction
                 }
             }
         }
-        $this->deleteI18Items($langaugeItems);
+        $this->deleteI18nItems($langaugeItems);
     }
 
     /**
      * Deletes language items and clears the language cache.
      */
-    private function deleteI18Items(array $langaugeItems): void
+    private function deleteI18nItems(array $langaugeItems): void
     {
         if ($langaugeItems !== []) {
             //find language category id
@@ -112,7 +112,7 @@ trait TI18nDatabaseObjectAction
                 $deleteData[] = $languageName;
             }
         }
-        $this->deleteI18Items($deleteData);
+        $this->deleteI18nItems($deleteData);
 
         if (!empty($updateData)) {
             $editor = new $this->className($object);
