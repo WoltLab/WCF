@@ -90,8 +90,9 @@ trait TI18nDatabaseObjectAction
         $updateData = [];
 
         foreach ($this->getI18nSaveTypes() as $name => $regex) {
-            $languageName = \str_replace('\d+', $object->getObjectID(), $regex);
             if (isset($this->parameters[$name . '_i18n'])) {
+                $languageName = \str_replace('\d+', $object->getObjectID(), $regex);
+
                 I18nHandler::getInstance()->save(
                     $this->parameters[$name . '_i18n'],
                     $languageName,
