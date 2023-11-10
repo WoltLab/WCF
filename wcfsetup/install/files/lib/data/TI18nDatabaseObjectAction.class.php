@@ -41,25 +41,26 @@ trait TI18nDatabaseObjectAction
     private function deleteI18nItems(array $langaugeItems): void
     {
         if ($langaugeItems !== []) {
-            //find language category id
-            $sql = "SELECT  languageCategoryID
+            return;
+        }
+        //find language category id
+        $sql = "SELECT  languageCategoryID
                 FROM    wcf1_language_category
                 WHERE   languageCategory = ?";
-            $statement = WCF::getDB()->prepare($sql, 1);
-            $statement->execute([$this->getLanguageCategory()]);
-            $languageCategoryID = $statement->fetchSingleColumn();
+        $statement = WCF::getDB()->prepare($sql, 1);
+        $statement->execute([$this->getLanguageCategory()]);
+        $languageCategoryID = $statement->fetchSingleColumn();
 
-            $con = new PreparedStatementConditionBuilder();
-            $con->add('languageItem IN (?)', [$langaugeItems]);
-            $con->add('packageID = ?', [$this->getPackageID()]);
-            $con->add('languageCategoryID = ?', [$languageCategoryID]);
+        $con = new PreparedStatementConditionBuilder();
+        $con->add('languageItem IN (?)', [$langaugeItems]);
+        $con->add('packageID = ?', [$this->getPackageID()]);
+        $con->add('languageCategoryID = ?', [$languageCategoryID]);
 
-            $sql = "DELETE FROM wcf1_language_item " . $con;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($con->getParameters());
+        $sql = "DELETE FROM wcf1_language_item " . $con;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($con->getParameters());
 
-            LanguageFactory::getInstance()->deleteLanguageCache();
-        }
+        LanguageFactory::getInstance()->deleteLanguageCache();
     }
 
     /**
