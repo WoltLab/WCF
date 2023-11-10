@@ -76,18 +76,21 @@
       minute: "2-digit",
       timeZone,
     }),
+    // Example: 6 hours ago
+    Hours: new Intl.RelativeTimeFormat(locale),
     // Example: 16 minutes ago
     Minutes: new Intl.RelativeTimeFormat(locale),
     // Example: today
     TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
-  };
+  } as const;
 
   const TimePeriod = {
     OneMinute: 60,
     OneHour: 3_600,
     OneDay: 86_400,
+    TwelveHours: 3_600 * 12,
     SixDays: 86_400 * 6,
-  };
+  } as const;
 
   class WoltlabCoreDateTimeElement extends HTMLElement {
     #date?: Date;
@@ -162,6 +165,9 @@
         } else if (difference < TimePeriod.OneHour) {
           const minutes = Math.trunc(difference / TimePeriod.OneMinute);
           value = DateFormatter.Minutes.format(minutes * -1, "minute");
+        } else if (difference < TimePeriod.TwelveHours) {
+          const hours = Math.trunc(difference / TimePeriod.OneHour);
+          value = DateFormatter.Hours.format(hours * -1, "hour");
         } else if (difference < TimePeriod.SixDays) {
           const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
           const weekdayFirst = dateParts[0].type === "weekday";

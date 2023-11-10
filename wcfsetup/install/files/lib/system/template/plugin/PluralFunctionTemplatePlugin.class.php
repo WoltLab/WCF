@@ -54,6 +54,12 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $value = $tagArgs['value'];
         if (\is_countable($value)) {
             $value = \count($value);
+        } else if (\is_numeric($value) && \floor($value) != $value) {
+            // ICU represents fractional values with up to 3 decimal places
+            // which differs from the behavior in `StringUtil::formatNumeric`.
+            // The weak comparison of the rounded value allows us to detect
+            // decimal places while leaving integer values as-is.
+            $value = \round($value, 2);
         }
 
         // handle numeric attributes
