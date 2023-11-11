@@ -85,8 +85,8 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                     'boxID' => $box->boxID,
                     'languageID' => $languageID ?: null,
                     'title' => $content['title'],
-                    'content' => $content['content'],
-                    'imageID' => $content['imageID'],
+                    'content' => $content['content'] ?? '',
+                    'imageID' => $content['imageID'] ?? null,
                 ]);
                 $boxContentEditor = new BoxContentEditor($boxContent);
 
