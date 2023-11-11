@@ -419,9 +419,9 @@ class HtmlInputNodeTextParser
      * @param bool $allowMedia media bbcode is allowed
      * @return      string          modified node value with replacement placeholders
      */
-    protected function parseURL(\DOMText $text, string $value, bool $allowURL, bool $allowMedia)
+    protected function parseURL(\DOMText $text, string $value, bool $allowURL, bool $allowMedia): string
     {
-        return \preg_replace_callback(
+        $result = \preg_replace_callback(
             FileUtil::LINK_REGEX,
             function ($matches) use ($text, $allowURL, $allowMedia) {
                 $link = $matches[0];
@@ -446,6 +446,9 @@ class HtmlInputNodeTextParser
             },
             $value
         );
+
+        // Severely malformed links might cause the input to be rejected.
+        return $result === null ? $value : $result;
     }
 
     /**
