@@ -2,8 +2,9 @@
 
 namespace wcf\system\menu\acp;
 
-use wcf\data\acp\menu\item\ACPMenuItem;
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
+use wcf\system\event\EventHandler;
+use wcf\system\menu\acp\event\ACPMenuCollecting;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 use wcf\system\WCF;
@@ -33,10 +34,6 @@ class ACPMenu extends TreeMenu
      */
     protected function checkMenuItem(ITreeMenuItem $item)
     {
-        if (!parent::checkMenuItem($item)) {
-            return false;
-        }
-
         if (
             ENABLE_ENTERPRISE_MODE
             && !WCF::getUser()->hasOwnerAccess()
@@ -59,6 +56,52 @@ class ACPMenu extends TreeMenu
             return;
         }
 
-        $this->menuItems = ACPMenuCacheBuilder::getInstance()->getData();
+        $this->loadLegacyMenuItems();
+
+        $event = new ACPMenuCollecting();
+        EventHandler::getInstance()->fire($event);
+        foreach ($event->getItems() as $item) {
+            $this->menuItems[$item->parentMenuItem][] = $item;
+        }
+    }
+
+    /**
+     * @deprecated 6.1
+     */
+    private function loadLegacyMenuItems(): void
+    {
+        $menuItems = ACPMenuCacheBuilder::getInstance()->getData();
+        foreach ($menuItems as $parentMenuItem => $items) {
+            foreach ($items as $item) {
+                if (!parent::checkMenuItem($item)) {
+                    continue;
+                }
+
+                $this->menuItems[$parentMenuItem][] = new ACPMenuItem(
+                    $item->menuItem,
+                    $item->__toString(),
+                    $item->parentMenuItem,
+                    $item->getLink(),
+                    $item->icon ?? ''
+                );
+            }
+        }
+    }
+
+    protected function removeEmptyItems($parentMenuItem = '')
+    {
+        if (!isset($this->menuItems[$parentMenuItem])) {
+            return;
+        }
+
+        foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
+            $this->removeEmptyItems($item->menuItem);
+            if (
+                !$item->getLink()
+                && (!isset($this->menuItems[$item->menuItem]) || empty($this->menuItems[$item->menuItem]))
+            ) {
+                unset($this->menuItems[$parentMenuItem][$key]);
+            }
+        }
     }
 }
