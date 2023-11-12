@@ -103,7 +103,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                     $nodeValue[$attributeNo][$attributeValue->tagName] = $attributeValue->nodeValue;
                 }
             }
-        } elseif ($element->tagName === 'wysiwygicon') {
+        } elseif ($element->tagName === 'wysiwygicon' && !\str_contains($element->nodeValue, '.')) {
             $solid = $element->getAttribute('solid');
             $nodeValue = \sprintf(
                 "%s;%s",
