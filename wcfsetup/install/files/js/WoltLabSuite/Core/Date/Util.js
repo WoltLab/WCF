@@ -15,7 +15,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     const timeFormatter = new Intl.DateTimeFormat(locale, {
         hour: "numeric",
         minute: "numeric",
-        second: "numeric",
     });
     const dateTimeFormatter = new Intl.DateTimeFormat(locale, {
         year: "numeric",
@@ -23,7 +22,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         month: "long",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric",
     });
     /**
      * Returns the formatted date.
