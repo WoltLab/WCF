@@ -3,7 +3,7 @@
 namespace wcf\system\menu\acp\event;
 
 use wcf\system\event\IEvent;
-use wcf\system\menu\acp\ACPMenuItem;
+use wcf\system\menu\acp\AcpMenuItem;
 
 /**
  * Requests the collection of acp menu items.
@@ -13,20 +13,20 @@ use wcf\system\menu\acp\ACPMenuItem;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class ACPMenuCollecting implements IEvent
+final class AcpMenuCollecting implements IEvent
 {
     /**
-     * @var ACPMenuItem[]
+     * @var AcpMenuItem[]
      */
     private array $items = [];
 
-    public function register(ACPMenuItem $item): void
+    public function register(AcpMenuItem $item): void
     {
         $this->items[] = $item;
     }
 
     /**
-     * @return ACPMenuItem[]
+     * @return AcpMenuItem[]
      */
     public function getItems(): array
     {

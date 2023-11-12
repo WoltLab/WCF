@@ -4,7 +4,7 @@ namespace wcf\system\menu\acp;
 
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\menu\acp\event\ACPMenuCollecting;
+use wcf\system\menu\acp\event\AcpMenuCollecting;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 use wcf\system\WCF;
@@ -30,7 +30,7 @@ class ACPMenu extends TreeMenu
 
     /**
      * @inheritDoc
-     * @param ACPMenuItem $item
+     * @param AcpMenuItem $item
      */
     protected function checkMenuItem(ITreeMenuItem $item)
     {
@@ -58,7 +58,7 @@ class ACPMenu extends TreeMenu
 
         $this->loadLegacyMenuItems();
 
-        $event = new ACPMenuCollecting();
+        $event = new AcpMenuCollecting();
         EventHandler::getInstance()->fire($event);
         foreach ($event->getItems() as $item) {
             $this->menuItems[$item->parentMenuItem][] = $item;
@@ -77,7 +77,7 @@ class ACPMenu extends TreeMenu
                     continue;
                 }
 
-                $this->menuItems[$parentMenuItem][] = new ACPMenuItem(
+                $this->menuItems[$parentMenuItem][] = new AcpMenuItem(
                     $item->menuItem,
                     $item->__toString(),
                     $item->parentMenuItem,

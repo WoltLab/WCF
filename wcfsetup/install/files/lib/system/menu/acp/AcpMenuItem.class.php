@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class ACPMenuItem implements ITreeMenuItem
+final class AcpMenuItem implements ITreeMenuItem
 {
     public function __construct(
         public readonly string $menuItem,
