@@ -47,7 +47,7 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)/?(?P<hash>(?(?<=/)[a-zA-Z0-9
 			<title>Spotify</title>
 			<regex><![CDATA[https?://play.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
 https?://open.spotify.com/(.*/|)(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
-			<html><![CDATA[<iframe style="border-radius:12px" src="https://open.spotify.com/embed/{$TYPE}/{$ID}" width="400" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>]]></html>
+			<html><![CDATA[<iframe style="border-radius:12px;max-width:100%;" src="https://open.spotify.com/embed/{$TYPE}/{$ID}" width="400" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>]]></html>
 		</provider>
 		<provider name="twitch">
 			<title>Twitch</title>
