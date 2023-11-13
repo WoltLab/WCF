@@ -1727,7 +1727,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
-		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be removed after the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.internal_hostnames"><![CDATA[Additional Internal Domains]]></item>
 		<item name="wcf.acp.option.internal_hostnames.description"><![CDATA[The listed domains will be considered as internal domains in addition to the domains in use by installed apps. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.placeholder"><![CDATA[Add new entry]]></item>
@@ -2599,8 +2599,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_ArticleRebuildDataWorker.description"><![CDATA[Rebuilds the article search index.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentRebuildDataWorker"><![CDATA[Rebuild Comments]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentRebuildDataWorker.description"><![CDATA[Rebuilds the comments.]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentResponseRebuildDataWorker"><![CDATA[Rebuild Comment Responses]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentResponseRebuildDataWorker.description"><![CDATA[Rebuilds the comment responses.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentResponseRebuildDataWorker"><![CDATA[Rebuild Comment Replies]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_CommentResponseRebuildDataWorker.description"><![CDATA[Rebuilds the comment replies.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_PageRebuildDataWorker"><![CDATA[Rebuild Pages]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_PageRebuildDataWorker.description"><![CDATA[Rebuilds the page search index.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_SitemapRebuildWorker"><![CDATA[Rebuild Sitemap]]></item>
@@ -3507,7 +3507,7 @@ Attachments:
 		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which content of {if $users|count == 1}“<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>”{else}{#$users|count} users{/if} should be deleted.]]></item>
 		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Attention</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
-		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>
+		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Replies]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.reaction"><![CDATA[Reactions]]></item>
 	</category>
