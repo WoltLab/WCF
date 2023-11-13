@@ -425,4 +425,36 @@ class LabelHandler extends SingletonFactory
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
     }
+
+    /**
+     * @param int[] $groupIDs
+     * @return LabelPicker[]
+     * @since 6.0
+     */
+    public function getLabelPickers(array $groupIDs, bool $invertible): array
+    {
+        $labelGroups = \array_filter(
+            $this->labelGroups['groups'],
+            fn (int $groupID) => \in_array($groupID, $groupIDs),
+            \ARRAY_FILTER_USE_KEY
+        );
+
+        return \array_map(
+            fn (ViewableLabelGroup $viewableLabelGroup) => new LabelPicker($viewableLabelGroup, $invertible),
+            $labelGroups
+        );
+    }
+
+    /**
+     * @param LabelPicker[] $labelPickers
+     * @param int[] $labelIDs
+     * @since 6.1
+     */
+    public function setSelectedLabels(array $labelPickers, array $labelIDs): void
+    {
+        foreach ($labelPickers as $labelPicker) {
+            $labelID = $labelIDs[$labelPicker->labelGroup->groupID] ?? 0;
+            $labelPicker->setSelectedValue($labelID);
+        }
+    }
 }

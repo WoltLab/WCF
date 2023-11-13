@@ -91,6 +91,15 @@ declare global {
     set date(date: Date);
   }
 
+  interface WoltlabCoreLabelPickerElement extends HTMLElement {
+    set disabled(disabled: boolean);
+    get disabled(): boolean;
+    set selected(selected: number);
+    get selected(): number | undefined;
+    set required(required: boolean);
+    get required(): boolean;
+  }
+
   interface WoltlabCoreLoadingIndicatorElement extends HTMLElement {
     get size(): LoadingIndicatorIconSize;
     set size(size: LoadingIndicatorIconSize);
@@ -121,6 +130,7 @@ declare global {
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "woltlab-core-label-picker": WoltlabCoreLabelPickerElement;
     "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;

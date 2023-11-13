@@ -12,6 +12,7 @@ use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
 use wcf\system\label\LabelHandler;
+use wcf\system\label\LabelPickerGroup;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -193,6 +194,27 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
 
         return [];
+    }
+
+    /**
+     * Returns the group of all label pickers that have been assigned to one or
+     * more accessible categories.
+     *
+     * @since 6.1
+     */
+    public static function getLabelPickerGroup(): LabelPickerGroup
+    {
+        $labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+        $accessibleCategoryIDs = self::getAccessibleCategoryIDs();
+
+        $groupIDs = [];
+        foreach ($labelGroupsToCategories as $categoryID => $__groupIDs) {
+            if (\in_array($categoryID, $accessibleCategoryIDs)) {
+                $groupIDs = \array_merge($groupIDs, $__groupIDs);
+            }
+        }
+
+        return LabelPickerGroup::fromGroupIDs($groupIDs, false);
     }
 
     /**

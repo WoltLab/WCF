@@ -24,14 +24,14 @@
 {/capture}
 
 {capture assign='sidebarRight'}
-	{if !$labelGroups|empty}
+	{if $labelPickerGroup|count}
 		<form id="sidebarForm" method="post" action="{link application='wcf' controller=$controllerName object=$controllerObject}{/link}">
 			<section class="box">
 				<h2 class="boxTitle">{lang}wcf.label.label{/lang}</h2>
 				
 				<div class="boxContent">
 					<dl>
-						{include file='__labelSelection'}
+						{include file='__labelPickerGroup'}
 					</dl>
 					<div class="formSubmit">
 						<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
@@ -39,17 +39,6 @@
 				</div>
 			</section>
 		</form>
-		
-		<script data-relocate="true">
-			$(function() {
-				WCF.Language.addObject({
-					'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
-					'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
-				});
-				
-				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true);
-			});
-		</script>
 	{/if}
 {/capture}
 

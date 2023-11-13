@@ -8,6 +8,8 @@ use wcf\data\label\Label;
 use wcf\data\user\User;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Represents a viewable label group.
@@ -268,5 +270,22 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     public function hasPermissions()
     {
         return !empty($this->permissions['group']) || !empty($this->permissions['user']);
+    }
+
+    public function renderPicker(): string
+    {
+        $labels = [];
+        foreach ($this->labels as $label) {
+            $labels[] = [
+                $label->labelID,
+                $label->render(),
+            ];
+        }
+
+        return \sprintf(
+            '<woltlab-core-label-picker group-id="%d" labels="%s"></woltlab-core-label-picker>',
+            $this->groupID,
+            StringUtil::encodeHTML(JSON::encode($labels)),
+        );
     }
 }

@@ -12,6 +12,8 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\label\LabelHandler;
+use wcf\system\label\LabelPicker;
+use wcf\system\label\LabelPickerGroup;
 
 /**
  * Implementation of a form field to select labels.
@@ -36,6 +38,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      */
     protected $labelGroup;
 
+    protected LabelPickerGroup $labelPickerGroup;
+
     /**
      * @inheritDoc
      */
@@ -44,23 +48,43 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     /**
      * loaded labels grouped by label object type and object id to avoid loading the same labels
      * over and over again for the same object and different label groups
-     * @var Label[][]
+     * @var Label[][][]
      */
     protected static $loadedLabels = [];
 
     /**
      * Returns the label group whose labels can be selected via this form field.
-     *
-     * @return  ViewableLabelGroup      label group whose labels can be selected
-     * @throws  \BadMethodCallException     if no label has been set
      */
-    public function getLabelGroup()
+    public function getLabelGroup(): ViewableLabelGroup
     {
-        if ($this->labelGroup === null) {
+        return $this->getLabelPicker()->labelGroup;
+    }
+
+    /**
+     * Returns the label picker for this field.
+     *
+     * @since 6.1
+     */
+    public function getLabelPicker(): LabelPicker
+    {
+        if (!isset($this->labelPickerGroup)) {
             throw new \BadMethodCallException("No label group has been set for field '{$this->getId()}'.");
         }
 
-        return $this->labelGroup;
+        foreach ($this->labelPickerGroup as $labelPicker) {
+            return $labelPicker;
+        }
+
+        throw new \RuntimeException("Unreachable");
+    }
+
+    #[\Override]
+    public function getFieldHtml()
+    {
+        $this->labelPickerGroup->setName($this->getPrefixedId());
+        $this->getLabelPicker()->setElementID($this->getPrefixedId());
+
+        return parent::getFieldHtml();
     }
 
     /**
@@ -91,6 +115,10 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     public function labelGroup(ViewableLabelGroup $labelGroup)
     {
         $this->labelGroup = $labelGroup;
+        $this->labelPickerGroup = LabelPickerGroup::fromViewableLabelGroups(
+            [$this->labelGroup],
+            false,
+        );
 
         if ($this->label === null) {
             $this->label($this->getLabelGroup()->getTitle());
@@ -119,12 +147,10 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
                 static::$loadedLabels[$objectTypeID][$objectID] = $assignedLabels[$objectID] ?? [];
             }
 
-            $labelIDs = $this->getLabelGroup()->getLabelIDs();
-            /** @var Label $label */
-            foreach (static::$loadedLabels[$objectTypeID][$objectID] as $label) {
-                if (\in_array($label->labelID, $labelIDs)) {
-                    $this->value($label->labelID);
-                }
+            $this->labelPickerGroup->setSelectedLabelsFromAssignedLabels(self::$loadedLabels[$objectTypeID][$objectID]);
+            foreach ($this->labelPickerGroup as $labelPicker) {
+                $this->value($labelPicker->getSelectedValue());
+                break;
             }
         }
 
@@ -163,7 +189,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
+            $this->labelPickerGroup->setSelectedLabels($this->getDocument()->getRequestData($this->getPrefixedId()));
+            $this->value = $this->getLabelPicker()->getSelectedValue();
         }
 
         return $this;

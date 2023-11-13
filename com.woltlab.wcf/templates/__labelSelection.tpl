@@ -1,3 +1,4 @@
+{* @deprecated 6.1 Use the new `__labelPickerGroup` template instead. *}
 {foreach from=$labelGroups item=labelGroup}
 	{if $labelGroup|count}
 		<dt><label>{$labelGroup->getTitle()}</label></dt>
