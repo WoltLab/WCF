@@ -363,7 +363,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 }
             } else {
                 foreach ($images as $filename => $length) {
-                    \unlink($style->getAssetPath() . $filename);
+                    if (\file_exists($style->getAssetPath() . $filename)) {
+                        \unlink($style->getAssetPath() . $filename);
+                    }
                 }
                 if (\file_exists($style->getAssetPath() . "favicon.ico")) {
                     \unlink($style->getAssetPath() . "favicon.ico");
