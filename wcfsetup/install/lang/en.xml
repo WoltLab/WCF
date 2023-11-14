@@ -178,7 +178,7 @@
 		<item name="wcf.acp.box.linkType.external"><![CDATA[External link]]></item>
 		<item name="wcf.acp.box.link.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.box.list"><![CDATA[Boxes]]></item>
-		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
+		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[This name is already in use.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
 		<item name="wcf.acp.box.position.error.invalid"><![CDATA[The selected position is invalid.]]></item>
 		<item name="wcf.acp.box.position.hero"><![CDATA[Hero]]></item>
@@ -1033,7 +1033,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[The entered identifier does not begin with the selected language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by a different phrase.]]></item>
 		<item name="wcf.acp.language.item.isCustomLanguageItem"><![CDATA[Manually added phrases]]></item>
-		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[Do you really want to the delete the phrase? It will be deleted for all languages.]]></item>
+		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[Do you really want to delete this phrase? It will be deleted for all languages.]]></item>
 		<item name="wcf.acp.language.item.languageCategory"><![CDATA[Language Category Identifier]]></item>
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[The entered identifier is already used by an existing language category.]]></item>
@@ -1412,8 +1412,8 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
 		<item name="wcf.acp.option.censored_words.description"><![CDATA[You can specify which words will be censored. Using at least one of these words within a message causes an immediate rejection. Examples:
 <ul class="nativeList">
-<li>“*” to match parts: “wolt*” matches “woltlab”</li>
-<li>“~” to find splitted parts: “wolt~” matches “wolt-lab”</li>
+<li>“*” to match parts: “wolt*” matches “woltlab”.</li>
+<li>“~” to find splitted parts: “wolt~” matches “wolt-lab”.</li>
 </ul>]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Content Share]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Display content share button]]></item>
