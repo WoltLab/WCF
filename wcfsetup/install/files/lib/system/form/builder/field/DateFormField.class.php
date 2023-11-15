@@ -299,7 +299,7 @@ class DateFormField extends AbstractFormField implements
             } elseif ($this->getValueDateTimeObject() === null) {
                 try {
                     $this->value($value);
-                } catch (\InvalidArgumentException $e) {
+                } catch (\InvalidArgumentException) {
                     $this->value = null;
                 }
             }
