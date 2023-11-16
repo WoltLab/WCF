@@ -39,6 +39,7 @@
       `;
       const contentWrapper = document.createElement("div");
       contentWrapper.classList.add("content");
+      contentWrapper.setAttribute("role", "status");
       const contentSlot = document.createElement("slot");
       contentWrapper.append(contentSlot);
 
