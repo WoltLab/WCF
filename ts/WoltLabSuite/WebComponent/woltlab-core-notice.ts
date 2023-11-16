@@ -39,7 +39,7 @@
       `;
       const contentWrapper = document.createElement("div");
       contentWrapper.classList.add("content");
-      contentWrapper.setAttribute("role", "status");
+      contentWrapper.setAttribute("role", this.type === Type.Error ? "alert" : "status");
       const contentSlot = document.createElement("slot");
       contentWrapper.append(contentSlot);
 
