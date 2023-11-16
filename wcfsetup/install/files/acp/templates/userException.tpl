@@ -1,12 +1,23 @@
-{include file='header' templateName='userException' templateNameApplication='wcf'}
+{include file='header' pageTitle='wcf.global.error.title' templateName='userException' templateNameApplication='wcf'}
 
-<p id="errorMessage" class="error">
-	{@$message}
-</p>
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.global.error.title{/lang}</h1>
+	</div>
+</header>
+
+<div class="section">
+	<div class="box64 userException">
+		{icon size=64 name='circle-exclamation'}
+		<p id="errorMessage" class="fullPageErrorMessage userExceptionMessage" data-exception-class-name="{$exceptionClassName}">
+			{@$message}
+		</p>
+	</div>
+</div>
 
 <script data-relocate="true">
 	if (document.referrer) {
-		$('#errorMessage').append('<br><a href="' + document.referrer + '">{lang}wcf.page.error.backward{/lang}</a>');
+		$('#errorMessage').append('<br><br><a href="' + document.referrer + '">{lang}wcf.page.error.backward{/lang}</a>');
 	}
 </script>
 
@@ -16,5 +27,10 @@
 	Stacktrace:
 	{$stacktrace}
 	-->
+	<script>
+		console.debug('{$name|encodeJS} thrown in {$file|encodeJS} ({@$line})');
+		console.debug('Stacktrace:\n{@$stacktrace|encodeJS}');
+	</script>
 {/if}
+
 {include file='footer'}
