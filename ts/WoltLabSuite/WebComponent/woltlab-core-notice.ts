@@ -28,13 +28,10 @@
       const style = document.createElement("style");
       style.textContent = `
         :host {
-          display: flex;
-          gap: 5px;
           align-items: center;
-        }
-
-        .content {
-          flex: 1 auto;
+          display: grid;
+          gap: 5px;
+          grid-template-columns: max-content auto;
         }
       `;
       const contentWrapper = document.createElement("div");
