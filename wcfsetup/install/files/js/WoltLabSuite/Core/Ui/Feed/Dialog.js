@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
         const linkWithAccessToken = alternative.href;
         const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
         Dialog_1.default.openStatic("feedLinkDialog", `
-<p class="info">${Language.get("wcf.global.rss.accessToken.info")}</p>
+<woltlab-core-notice type="info">${Language.get("wcf.global.rss.accessToken.info")}</woltlab-core-notice>
 <dl>
   <dt>${Language.get("wcf.global.rss.withoutAccessToken")}</dt>
   <dd>

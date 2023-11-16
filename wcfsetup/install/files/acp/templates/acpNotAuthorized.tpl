@@ -2,7 +2,7 @@
 
 <div id="acpNotAuthorized" style="display: none">
 	{include file='__reauthenticationLoginAs'}
-	<p class="error">{lang}wcf.user.username.error.acpNotAuthorized{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.user.username.error.acpNotAuthorized{/lang}</woltlab-core-notice>
 </div>
 
 <script data-relocate="true">

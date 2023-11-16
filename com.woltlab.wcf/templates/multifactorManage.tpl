@@ -7,9 +7,7 @@
 
 {if $backupForm}
 	{if $form->showsSuccessMessage()}
-		<p class="success">
-			<span>{@$form->getSuccessMessage()}</span>
-		</p>
+		<woltlab-core-notice type="success">{@$form->getSuccessMessage()}</woltlab-core-notice>
 	{/if}
 	
 	{@$backupForm->getNodeById('existingCodesContainer')->getHtml()}

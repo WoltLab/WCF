@@ -87,7 +87,7 @@
 {include file='formNotice'}
 
 {if $action == 'edit' && !$lastVersion|empty}
-	<p class="info">{lang}wcf.acp.box.lastVersion{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.box.lastVersion{/lang}</woltlab-core-notice>
 {/if}
 
 <form id="formContainer" method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">

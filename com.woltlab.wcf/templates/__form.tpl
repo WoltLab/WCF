@@ -20,16 +20,16 @@
 </script>
 
 {if $form->hasValidationErrors() && $form->showsErrorMessage()}
-	<p class="error" role="alert">{@$form->getErrorMessage()}</p>
+	<woltlab-core-notice type="error">{@$form->getErrorMessage()}</woltlab-core-notice>
 {/if}
 
 {if $form->showsSuccessMessage()}
-	<p class="success">
+	<woltlab-core-notice type="success">
 		<span>{@$form->getSuccessMessage()}</span>
 		{if !$objectEditLink|empty}
 			<span>{lang}wcf.global.success.add.editCreatedObject{/lang}</span>
 		{/if}
-	</p>
+	</woltlab-core-notice>
 {/if}
 
 {if $form->isAjax()}

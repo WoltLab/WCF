@@ -207,7 +207,7 @@
 			</header>
 			
 			{if $errorField == 'conditions'}
-				<p class="error">{lang}wcf.acp.trophy.conditions.error.noConditions{/lang}</p>
+				<woltlab-core-notice type="error">{lang}wcf.acp.trophy.conditions.error.noConditions{/lang}</woltlab-core-notice>
 			{/if}
 			
 			{include file='userConditions'}
@@ -221,7 +221,7 @@
 		</div>
 	</form>
 {else}
-	<p class="error">{lang}wcf.acp.trophy.error.noCategories{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.trophy.error.noCategories{/lang}</woltlab-core-notice>
 {/if}
 
 <div id="trophyIconEditor" style="display: none;">

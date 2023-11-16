@@ -36,7 +36,7 @@
 </header>
 
 {hascontent}
-	<p class="info">{content}{lang}wcf.acp.pip.{@$pip}.info{/lang}{/content}</p>
+	<woltlab-core-notice type="info">{content}{lang}wcf.acp.pip.{@$pip}.info{/lang}{/content}</woltlab-core-notice>
 {/hascontent}
 
 <form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{@$linkParameters}{/link}">
@@ -127,7 +127,7 @@
 		</nav>
 	</footer>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">

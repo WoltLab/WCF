@@ -14,9 +14,9 @@
 	</nav>
 </header>
 
-<div class="info">{lang}wcf.acp.sitemap.submitToSearchEngines{/lang}</div>
+<woltlab-core-notice type="info">{lang}wcf.acp.sitemap.submitToSearchEngines{/lang}</woltlab-core-notice>
 
-<p class="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</p>
+<woltlab-core-notice type="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</woltlab-core-notice>
 
 {if $sitemapObjectTypes|count}
 	<div class="section tabularBox">
@@ -65,7 +65,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">

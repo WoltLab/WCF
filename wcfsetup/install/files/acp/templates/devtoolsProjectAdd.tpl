@@ -19,16 +19,16 @@
 </header>
 
 {if $action === 'add'}
-	<p class="info">{lang}wcf.acp.devtools.project.add.info{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.devtools.project.add.info{/lang}</woltlab-core-notice>
 {elseif $action === 'edit'}
 	{if $hasBrokenPath}
-		<p class="error">{lang}wcf.acp.devtools.project.edit.error.brokenPath{/lang}</p>
+		<woltlab-core-notice type="error">{lang}wcf.acp.devtools.project.edit.error.brokenPath{/lang}</woltlab-core-notice>
 	{else}
-		<p class="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
+		<woltlab-core-notice type="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</woltlab-core-notice>
 	{/if}
 	
 	{if !$missingElements|empty}
-		<p class="warning">{lang}wcf.acp.devtools.project.edit.warning.missingElements{/lang}</p>
+		<woltlab-core-notice type="warning">{lang}wcf.acp.devtools.project.edit.warning.missingElements{/lang}</woltlab-core-notice>
 	{/if}
 {/if}
 

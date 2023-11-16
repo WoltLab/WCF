@@ -9,7 +9,7 @@
 {include file='header' __disableAds=true}
 
 {if $isExternalAuthentication}
-	<p class="info" role="status">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formError'}

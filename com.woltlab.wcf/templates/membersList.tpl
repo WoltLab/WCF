@@ -116,7 +116,7 @@
 		</form>
 	</div>
 {else}
-	<p class="info" role="status">{lang}wcf.user.members.noMembers{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.members.noMembers{/lang}</woltlab-core-notice>
 {/if}
 
 <footer class="contentFooter">

@@ -105,11 +105,11 @@
 {include file='formError'}
 
 {if VISITOR_USE_TINY_BUILD && $guestGroupID}
-	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</woltlab-core-notice>
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{link controller='UserGroupOption' id=$userGroupOption->optionID}{/link}">

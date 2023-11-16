@@ -17,10 +17,10 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
-<div class="info">{lang}wcf.acp.firstTimeSetup.optionsEmail.description{/lang}</div>
+<woltlab-core-notice type="info">{lang}wcf.acp.firstTimeSetup.optionsEmail.description{/lang}</woltlab-core-notice>
 
 {include file='formError'}
 

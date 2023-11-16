@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-<p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
+<woltlab-core-notice type="info">{lang}wcf.acp.cronjob.intro{/lang}</woltlab-core-notice>
 
 {include file='formNotice'}
 

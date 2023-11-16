@@ -12,7 +12,7 @@
 	</nav>
 </header>
 
-<p class="warning">{lang}wcf.acp.devtools.notificationTest.contentCreationWarning{/lang}</p>
+<woltlab-core-notice type="warning">{lang}wcf.acp.devtools.notificationTest.contentCreationWarning{/lang}</woltlab-core-notice>
 
 {foreach from=$events key='eventCategory' item='eventList'}
 	<section class="section">

@@ -94,7 +94,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info" role="status">{lang}wcf.user.notification.noNotifications{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.notification.noNotifications{/lang}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">

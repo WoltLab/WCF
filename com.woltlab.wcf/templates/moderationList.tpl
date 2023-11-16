@@ -178,7 +178,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info" role="status">{lang}wcf.moderation.noEntries{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.moderation.noEntries{/lang}</woltlab-core-notice>
 {/if}
 
 <div id="moderationListSortFilter" class="jsStaticDialogContent" data-title="{lang}wcf.moderation.filter{/lang}">

@@ -64,7 +64,7 @@
 			{elseif $results[php][version][result] === 'deprecated'}
 				{@$statusSufficient} {$results[php][version][value]}
 
-				<p class="warning">{lang}wcf.acp.systemCheck.php.version.deprecated{/lang}</p>
+				<woltlab-core-notice type="warning">{lang}wcf.acp.systemCheck.php.version.deprecated{/lang}</woltlab-core-notice>
 			{else}
 				{@$statusInsufficient} {$results[php][version][value]}
 			{/if}

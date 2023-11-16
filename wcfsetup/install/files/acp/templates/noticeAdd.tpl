@@ -115,7 +115,7 @@
 				{/if}
 				<small>{lang}wcf.acp.notice.cssClassName.description{/lang}</small>
 				
-				<p class="info" id="cssClassNameExample">{lang}wcf.acp.notice.example{/lang}</p>
+				<woltlab-core-notice type="info" id="cssClassNameExample">{lang}wcf.acp.notice.example{/lang}</woltlab-core-notice>
 			</dd>
 		</dl>
 		

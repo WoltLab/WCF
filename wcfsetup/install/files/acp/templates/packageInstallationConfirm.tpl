@@ -24,11 +24,11 @@
 </header>
 
 {if !$validationPassed}
-	<p class="error">{lang}wcf.acp.package.validation.failed{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.package.validation.failed{/lang}</woltlab-core-notice>
 {/if}
 
 {if $installingImportedStyle}
-	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</woltlab-core-notice>
 {/if}
 
 <section class="section">

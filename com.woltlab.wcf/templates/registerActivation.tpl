@@ -1,6 +1,8 @@
 {include file='header' __disableAds=true}
 
-{if $__wcf->user->userID && !$__wcf->user->isEmailConfirmed()}<p class="info" role="status">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}
+{if $__wcf->user->userID && !$__wcf->user->isEmailConfirmed()}
+	<woltlab-core-notice type="info">{lang}wcf.user.registerActivation.info{/lang}</woltlab-core-notice>
+{/if}
 
 {include file='formError'}
 

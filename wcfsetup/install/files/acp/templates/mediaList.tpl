@@ -206,7 +206,7 @@
 		</nav>
 	</footer>
 {else}
-	<p class="info" id="noItemsInfo">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info" id="noItemsInfo">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

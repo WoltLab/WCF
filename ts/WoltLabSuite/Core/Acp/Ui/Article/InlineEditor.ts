@@ -328,7 +328,7 @@ class AcpUiArticleInlineEditor {
 
     if (article.isArticleEdit) {
       const notice = document.querySelector(".jsArticleNoticeTrash") as HTMLElement;
-      DomUtil.hide(notice);
+      notice.hidden = true;
     } else {
       const icon = article.element!.querySelector(".jsIconDeleted")!;
       icon.remove();
@@ -351,7 +351,7 @@ class AcpUiArticleInlineEditor {
 
     if (article.isArticleEdit) {
       const notice = document.querySelector(".jsArticleNoticeTrash") as HTMLElement;
-      DomUtil.show(notice);
+      notice.hidden = false;
     } else {
       const badge = document.createElement("span");
       badge.className = "badge label red jsIconDeleted";

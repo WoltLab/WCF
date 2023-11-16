@@ -43,7 +43,7 @@
 </header>
 
 {if $errorField && $installingImportedStyle}
-	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formError'}

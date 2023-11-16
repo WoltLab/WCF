@@ -21,6 +21,6 @@
 	{/content}
 {hascontentelse}
 	<div class="section">
-		<p class="info" role="status">{lang}wcf.user.profile.content.about.noPublicData{/lang}</p>
+		<woltlab-core-notice type="info">{lang}wcf.user.profile.content.about.noPublicData{/lang}</woltlab-core-notice>
 	</div>
 {/hascontent}

@@ -3,7 +3,7 @@
 <div id="login" class="acpLoginForm" style="display: none">
 	<form method="post" action="{link controller='Login' url=$url}{/link}">
 		{if !$errorField|empty && $errorField == 'cookie'}
-			<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+			<woltlab-core-notice type="error">{lang}wcf.user.login.error.cookieRequired{/lang}</woltlab-core-notice>
 		{else}
 			{include file='formError'}
 		{/if}

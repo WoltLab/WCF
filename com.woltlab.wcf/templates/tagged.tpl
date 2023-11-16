@@ -54,7 +54,7 @@
 {if $items}
 	{include file=$resultListTemplateName application=$resultListApplication}
 {else}
-	<p class="info" role="status">{lang}wcf.tagging.taggedObjects.noResults{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.tagging.taggedObjects.noResults{/lang}</woltlab-core-notice>
 {/if}
 
 <footer class="contentFooter">

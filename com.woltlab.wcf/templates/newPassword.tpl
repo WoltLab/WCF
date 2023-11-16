@@ -2,7 +2,7 @@
 
 {include file='formError'}
 
-<p class="info" role="status">{lang}wcf.user.newPassword.info{/lang}</p>
+<woltlab-core-notice type="info">{lang}wcf.user.newPassword.info{/lang}</woltlab-core-notice>
 
 <form method="post" action="{link controller='NewPassword'}{/link}">
 	<div class="section">

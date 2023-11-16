@@ -9,7 +9,7 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{$formAction}">

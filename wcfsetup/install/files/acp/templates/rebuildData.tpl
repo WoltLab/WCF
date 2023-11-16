@@ -33,7 +33,7 @@
 </header>
 
 {if !OFFLINE}
-	<p class="warning">{lang}wcf.acp.rebuildData.offline{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.rebuildData.offline{/lang}</woltlab-core-notice>
 {/if}
 
 {event name='afterContentHeader'}

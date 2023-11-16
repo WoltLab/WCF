@@ -3,7 +3,7 @@
 {include file='formError'}
 
 {if $errorMessage|isset}
-	<p class="error" role="alert">{@$errorMessage}</p>
+	<woltlab-core-notice type="error">{@$errorMessage}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{link controller='TagSearch'}{/link}">

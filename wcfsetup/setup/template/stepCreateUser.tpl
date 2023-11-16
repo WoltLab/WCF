@@ -1,7 +1,7 @@
 {include file='header'}
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.createUser.error{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.global.createUser.error{/lang}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="install.php">

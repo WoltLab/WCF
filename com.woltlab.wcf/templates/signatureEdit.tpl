@@ -5,11 +5,11 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
 {if $__wcf->user->disableSignature}
-	<p class="error" role="alert">{lang}wcf.user.signature.error.disabled{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.user.signature.error.disabled{/lang}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{link controller='SignatureEdit'}{/link}">

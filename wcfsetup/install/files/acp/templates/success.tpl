@@ -1,5 +1,5 @@
 {include file='header' templateName='success' templateNameApplication='wcf'}
 
-<p class="success">{lang}{@$message}{/lang}</p>
+<woltlab-core-notice type="success">{lang}{@$message}{/lang}</woltlab-core-notice>
 
 {include file='footer'}

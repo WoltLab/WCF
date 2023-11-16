@@ -81,7 +81,7 @@
 		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/hascontent}
 
 {include file='footer'}

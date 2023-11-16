@@ -156,7 +156,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

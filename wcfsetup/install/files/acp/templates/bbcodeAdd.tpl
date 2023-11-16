@@ -92,7 +92,7 @@
 </header>
 
 {if $action == 'add'}
-	<p class="info">{lang}wcf.acp.bbcode.add.userGroupOptionInfo{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.bbcode.add.userGroupOptionInfo{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}

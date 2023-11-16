@@ -67,7 +67,7 @@
 		});
 	</script>
 {else}
-	<p class="info" role="status">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.ignoredUsers.noUsers{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

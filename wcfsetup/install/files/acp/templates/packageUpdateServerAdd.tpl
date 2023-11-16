@@ -15,7 +15,7 @@
 </header>
 
 {if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
-	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}

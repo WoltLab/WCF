@@ -1,6 +1,6 @@
 {include file='header' __disableAds=true}
 
-<p class="info" role="status">{lang}wcf.user.lostPassword.description{/lang}</p>
+<woltlab-core-notice type="info">{lang}wcf.user.lostPassword.description{/lang}</woltlab-core-notice>
 
 {include file='formError'}
 

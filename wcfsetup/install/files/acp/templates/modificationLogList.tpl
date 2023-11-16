@@ -15,14 +15,14 @@
 </header>
 
 {if !$unsupportedObjectTypes|empty}
-	<div class="warning">
+	<woltlab-core-notice type="warning">
 		<p>{lang}wcf.acp.modificationLog.unsupportedObjectTypes{/lang}</p>
 		<ul class="nativeList">
 			{foreach from=$unsupportedObjectTypes item=unsupportedObjectType}
 				<li><kbd>{$unsupportedObjectType->objectType}</kbd> ({$unsupportedObjectType->getPackage()})</li>
 			{/foreach}
 		</ul>
-	</div>
+	</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{link controller='ModificationLogList'}{/link}">
@@ -142,7 +142,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

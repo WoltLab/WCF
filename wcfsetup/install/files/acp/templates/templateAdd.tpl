@@ -80,7 +80,7 @@
 		</div>
 	</form>
 {else}
-	<p class="error">{lang}wcf.acp.template.error.noGroups{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.template.error.noGroups{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

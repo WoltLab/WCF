@@ -1,7 +1,7 @@
 {include file='header'}
 
 {if $errorField == 'search'}
-	<p class="error" role="alert">{lang}wcf.user.search.error.noMatches{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.user.search.error.noMatches{/lang}</woltlab-core-notice>
 {else}
 	{include file='formError'}
 {/if}

@@ -57,7 +57,7 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formError'}
@@ -85,7 +85,9 @@
 			<div id="category_{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
 					<div class="section">
-						{if $categoryLevel1[object]->categoryName === 'module.development'}<p class="warning">{lang}wcf.acp.option.category.module.development.notice{/lang}</p>{/if}
+						{if $categoryLevel1[object]->categoryName === 'module.development'}
+							<woltlab-core-notice type="warning">{lang}wcf.acp.option.category.module.development.notice{/lang}</woltlab-core-notice>
+						{/if}
 						
 						{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
 					</div>

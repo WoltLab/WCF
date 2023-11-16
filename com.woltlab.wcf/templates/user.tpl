@@ -308,14 +308,14 @@
 		{/foreach}
 	</div>
 {else}
-	<p class="info" role="status">{lang}wcf.user.profile.protected{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.profile.protected{/lang}</woltlab-core-notice>
 {/if}
 
 {if $user->userID == $__wcf->user->userID || $user->canEdit()}
 	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
 			{if $__wcf->user->disableCoverPhoto}
-				<p class="error" role="alert">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
+				<woltlab-core-notice type="error">{lang}wcf.user.coverPhoto.error.disabled{/lang}</woltlab-core-notice>
 			{else}
 				<div id="coverPhotoUploadPreview"></div>
 				

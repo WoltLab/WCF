@@ -27,7 +27,7 @@
 	</nav>
 </header>
 
-<p class="info">{lang}wcf.acp.devtools.project.introduction{/lang}</p>
+<woltlab-core-notice type="info">{lang}wcf.acp.devtools.project.introduction{/lang}</woltlab-core-notice>
 
 {hascontent}
 	<div class="section">
@@ -78,7 +78,7 @@
 		</div>
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/hascontent}
 
 <footer class="contentFooter">

@@ -1,8 +1,8 @@
 {if !$serverAuthData|empty}
 	{if $authInsufficient}
-		<p class="warning">{lang}wcf.acp.package.update.authInsufficient{/lang}</p>
+		<woltlab-core-notice type="warning">{lang}wcf.acp.package.update.authInsufficient{/lang}</woltlab-core-notice>
 	{else}
-		<p class="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</p>
+		<woltlab-core-notice type="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</woltlab-core-notice>
 	{/if}
 {/if}
 

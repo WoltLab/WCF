@@ -67,7 +67,7 @@
 		</header>
 		
 		{if $errorField == 'conditions'}
-			<p class="error">{lang}wcf.acp.group.assignment.error.noConditions{/lang}</p>
+			<woltlab-core-notice type="error">{lang}wcf.acp.group.assignment.error.noConditions{/lang}</woltlab-core-notice>
 		{/if}
 		
 		{include file='userConditions'}

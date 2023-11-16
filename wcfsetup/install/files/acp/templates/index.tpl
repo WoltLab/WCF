@@ -5,39 +5,39 @@
 </header>
 
 {if !(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80399)}
-	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
+	<woltlab-core-notice type="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</woltlab-core-notice>
 {/if}
 {foreach from=$evaluationExpired item=$expiredApp}
-	<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>
+	<woltlab-core-notice type="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</woltlab-core-notice>
 {/foreach}
 {foreach from=$evaluationPending key=$evaluationEndDate item=$pendingApps}
-	<div class="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</div>
+	<woltlab-core-notice type="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</woltlab-core-notice>
 {/foreach}
 
 {foreach from=$taintedApplications item=$taintedApplication}
-	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
+	<woltlab-core-notice type="error">{lang}wcf.acp.package.application.isTainted{/lang}</woltlab-core-notice>
 {/foreach}
 
 {if $systemIdMismatch}
 	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && (!ENABLE_ENTERPRISE_MODE || $__wcf->user->hasOwnerAccess())}
-		<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>
+		<woltlab-core-notice type="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</woltlab-core-notice>
 	{/if}
 {/if}
 
 {if $recaptchaWithoutKey}
-	<p class="error">{lang}wcf.acp.index.recaptchaWithoutKey{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.index.recaptchaWithoutKey{/lang}</woltlab-core-notice>
 {/if}
 
 {if !VISITOR_USE_TINY_BUILD}
-	<p class="info">{lang}wcf.acp.index.tinyBuild{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.index.tinyBuild{/lang}</woltlab-core-notice>
 {/if}
 
 {if $usersAwaitingApproval}
-	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</woltlab-core-notice>
 {/if}
 
 {if $missingLanguageItemsMTime}
-	<p class="warning">{lang}wcf.acp.index.missingLanguageItems{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.index.missingLanguageItems{/lang}</woltlab-core-notice>
 {/if}
 
 {event name='userNotice'}

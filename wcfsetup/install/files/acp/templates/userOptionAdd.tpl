@@ -242,7 +242,7 @@
 		</div>
 	</form>
 {else}
-	<p class="error">{lang}wcf.acp.user.option.error.noCategories{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.user.option.error.noCategories{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

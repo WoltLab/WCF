@@ -1,6 +1,6 @@
 {include file='header' templateName='permissionDenied' templateNameApplication='wcf'}
 
-<p class="error">{lang}wcf.page.error.permissionDenied{/lang}</p>
+<woltlab-core-notice type="error">{lang}wcf.page.error.permissionDenied{/lang}</woltlab-core-notice>
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 

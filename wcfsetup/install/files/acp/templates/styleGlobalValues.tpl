@@ -18,7 +18,7 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success{/lang}</p>
+	<woltlab-core-notice type="success">{lang}wcf.global.success{/lang}</woltlab-core-notice>
 
 	<script data-relocate="true">
 		require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.notify());

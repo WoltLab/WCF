@@ -17,7 +17,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info" role="status">{lang}wcf.user.recentActivity.noEntries{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.recentActivity.noEntries{/lang}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">

@@ -28,7 +28,7 @@
 </header>
 
 {if $items || $labelSearch || $labelGroup || $cssClassName}
-	<p class="info">{lang}wcf.acp.label.sortAfterGroupFiltering{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.label.sortAfterGroupFiltering{/lang}</woltlab-core-notice>
 	
 	<form action="{link controller='LabelList'}{/link}" method="post">
 		<section class="section">
@@ -149,7 +149,7 @@
 		</nav>
 	</footer>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

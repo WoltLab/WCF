@@ -1,5 +1,5 @@
 <div>
-	<p class="warning">{lang}wcf.acp.content.provider.removeContentWarning{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.content.provider.removeContentWarning{/lang}</woltlab-core-notice>
 	
 	<div class="section">
 		<header class="sectionHeader">
@@ -16,8 +16,7 @@
 			</dd>
 		</dl>
 	</div>
-	
-	
+		
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 	</div>

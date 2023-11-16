@@ -33,7 +33,7 @@
 </header>
 
 {if $errorField == 'search'}
-	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</woltlab-core-notice>
 {else}
 	{include file='formError'}
 {/if}

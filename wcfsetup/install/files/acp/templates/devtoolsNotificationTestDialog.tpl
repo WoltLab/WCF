@@ -1,5 +1,5 @@
 {if $errors}
-	<p class="error">{lang}wcf.acp.devtools.notificationTest.error.generation{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.devtools.notificationTest.error.generation{/lang}</woltlab-core-notice>
 {/if}
 
 <div class="section notificationTestSection" id="notificationTestAllSection">

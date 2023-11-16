@@ -128,7 +128,7 @@
 		</div>
 	</form>
 {else}
-	<p class="error">{lang}wcf.acp.label.error.noGroups{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.label.error.noGroups{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

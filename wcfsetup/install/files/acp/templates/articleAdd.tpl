@@ -132,9 +132,11 @@
 {include file='formNotice'}
 
 {if $action == 'edit'}
-	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>
+	<woltlab-core-notice type="info" class="jsArticleNoticeTrash"{if !$article->isDeleted} hidden{/if}>{lang}wcf.acp.article.trash.notice{/lang}</woltlab-core-notice>
 	
-	{if $lastVersion && $__wcf->session->getPermission('admin.general.canUseAcp')}<p class="info" role="status">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
+	{if $lastVersion && $__wcf->session->getPermission('admin.general.canUseAcp')}
+		<woltlab-core-notice type="info">{lang}wcf.acp.article.lastVersion{/lang}</woltlab-core-notice>
+	{/if}
 {/if}
 
 <form class="articleAddForm" method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">

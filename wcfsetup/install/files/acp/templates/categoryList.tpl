@@ -145,7 +145,7 @@
 		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 {hascontentelse}
-	<p class="info">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</p>
+	<woltlab-core-notice type="info">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</woltlab-core-notice>
 {/hascontent}
 
 {include file='footer'}

@@ -52,22 +52,22 @@
 </header>
 
 {if !(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80399)}
-	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
+	<woltlab-core-notice type="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</woltlab-core-notice>
 {/if}
 {foreach from=$taintedApplications item=$taintedApplication}
-	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
+	<woltlab-core-notice type="error">{lang}wcf.acp.package.application.isTainted{/lang}</woltlab-core-notice>
 {/foreach}
 
 {if $recentlyDisabledCustomValues > 0}
-	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</woltlab-core-notice>
 {/if}
 
 {if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 	{if $availableUpgradeVersion !== null}
 		{if $upgradeOverrideEnabled}
-			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.upgradeOverrideEnabled{/lang}</p>
+			<woltlab-core-notice type="info">{lang version=$availableUpgradeVersion}wcf.acp.package.upgradeOverrideEnabled{/lang}</woltlab-core-notice>
 		{else}
-			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.availableUpgradeVersion{/lang}</p>
+			<woltlab-core-notice type="info">{lang version=$availableUpgradeVersion}wcf.acp.package.availableUpgradeVersion{/lang}</woltlab-core-notice>
 		{/if}
 	{/if}
 {/if}

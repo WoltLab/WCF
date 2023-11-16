@@ -169,7 +169,7 @@
 </header>
 
 {if $userID|isset && $__wcf->user->userID == $userID}
-	<p class="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}
@@ -270,8 +270,8 @@
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.user.3rdparty{/lang}</h2>
 
-						<div class="info">{lang}wcf.user.3rdparty.connect.info{/lang}</div>
-
+						<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.connect.info{/lang}</woltlab-core-notice>
+						
 						<dl>
 							<dt></dt>
 							<dd>
@@ -772,7 +772,7 @@
 							</dl>
 						{/if}
 					{else}
-						<p class="info">{lang}wcf.user.coverPhoto.noImage{/lang}</p>
+						<woltlab-core-notice type="info">{lang}wcf.user.coverPhoto.noImage{/lang}</woltlab-core-notice>
 					{/if}
 
 					{event name='coverPhotoFields'}

@@ -54,7 +54,7 @@
 		{include file='articleListItems'}
 	</div>
 {else}
-	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 <footer class="contentFooter">

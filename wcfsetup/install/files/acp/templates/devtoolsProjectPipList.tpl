@@ -101,9 +101,9 @@
 		</table>
 	</div>
 	
-	<p class="info" style="display: none;">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info" style="display: none;">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {else}
-	<p class="error">{@$project->validate()}</p>
+	<woltlab-core-notice type="error">{@$project->validate()}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">

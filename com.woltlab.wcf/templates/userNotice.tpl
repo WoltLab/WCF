@@ -1,26 +1,26 @@
 {capture assign='__userNotice'}
 	{if OFFLINE && $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
-		<div class="warning" role="status">
+		<woltlab-core-notice type="warning">
 			<p><strong>{lang}wcf.page.offline{/lang}</strong></p>
 			<div>{if OFFLINE_MESSAGE_ALLOW_HTML}{@OFFLINE_MESSAGE|phrase}{else}{@OFFLINE_MESSAGE|phrase|newlineToBreak}{/if}</div>
-		</div>
+		</woltlab-core-notice>
 	{/if}
 
 	{if $templateName != 'accountManagement' && $__wcf->user->userID && $__wcf->user->quitStarted > 0}
-		<p class="warning" role="status">{lang}wcf.user.quit.active{/lang}</p>
+		<woltlab-core-notice type="warning">{lang}wcf.user.quit.active{/lang}</woltlab-core-notice>
 	{/if}
 	
 	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates() && SHOW_UPDATE_NOTICE_FRONTEND}
-		<p class="info" role="status">{lang}wcf.page.availableUpdates{/lang}</p>
+		<woltlab-core-notice type="info">{lang}wcf.page.availableUpdates{/lang}</woltlab-core-notice>
 	{/if}
 	
 	{if $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
 		{if $__wcf->user->requiresEmailActivation()}
-			<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
+			<woltlab-core-notice type="warning">{lang}wcf.user.register.needActivation{/lang}</woltlab-core-notice>
 		{elseif $__wcf->user->requiresAdminActivation()}
-			<p class="warning" role="status">{lang}wcf.user.register.needAdminActivation{/lang}</p>
+			<woltlab-core-notice type="warning">{lang}wcf.user.register.needAdminActivation{/lang}</woltlab-core-notice>
 		{elseif !$__wcf->user->isEmailConfirmed()}
-			<p class="warning" role="status">{lang}wcf.user.register.needEmailConfirmation{/lang}</p>
+			<woltlab-core-notice type="warning">{lang}wcf.user.register.needEmailConfirmation{/lang}</woltlab-core-notice>
 		{/if}
 	{/if}
 	

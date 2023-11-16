@@ -122,7 +122,7 @@
 {include file='header'}
 
 {if !$article->isPublished()}
-	<p class="info">{lang publicationDate=$article->publicationDate}wcf.article.publicationStatus.{@$article->publicationStatus}{/lang}</p>
+	<woltlab-core-notice type="info">{lang publicationDate=$article->publicationDate}wcf.article.publicationStatus.{@$article->publicationStatus}{/lang}</woltlab-core-notice>
 {/if}
 
 <div class="section articleContainer">

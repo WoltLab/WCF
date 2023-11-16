@@ -260,7 +260,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

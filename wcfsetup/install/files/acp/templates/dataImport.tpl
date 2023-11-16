@@ -55,10 +55,10 @@
 
 {if !$exporterName}
 	{if !$availableExporters|count}
-		<p class="info">{lang}wcf.acp.dataImport.selectExporter.noExporters{/lang}</p>
+		<woltlab-core-notice type="info">{lang}wcf.acp.dataImport.selectExporter.noExporters{/lang}</woltlab-core-notice>
 	{else}
 		{if $showMappingNotice}
-			<p class="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</p>
+			<woltlab-core-notice type="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</woltlab-core-notice>
 			<script data-relocate="true">
 				require(['WoltLabSuite/Core/Acp/Ui/DataImport/MappingReset'], (MappingReset) => {
 					MappingReset.setup();

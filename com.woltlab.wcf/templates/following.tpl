@@ -52,7 +52,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info" role="status">{lang}wcf.user.following.noUsers{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.user.following.noUsers{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

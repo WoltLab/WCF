@@ -66,15 +66,15 @@
 </header>
 
 {if VISITOR_USE_TINY_BUILD && $groupIsGuest}
-	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</woltlab-core-notice>
 {/if}
 
 {if $action == 'edit' && $group->isOwner()}
-	<p class="info">{icon name='shield-halved' type='solid'} {lang}wcf.acp.group.type.owner.description{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.group.type.owner.description{/lang}</woltlab-core-notice>
 {/if}
 
 {if $warningSelfEdit|isset}
-	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
+	<woltlab-core-notice type="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}

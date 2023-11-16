@@ -32,10 +32,12 @@
 
 {include file='formError'}
 
-<p class="warning">{hascontent}{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.warning{/lang}{/content}{hascontentelse}{lang}wcf.global.bulkProcessing.warning{/lang}{/hascontent}</p>
+<woltlab-core-notice type="warning">
+	{hascontent}{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.warning{/lang}{/content}{hascontentelse}{lang}wcf.global.bulkProcessing.warning{/lang}{/hascontent}
+</woltlab-core-notice>
 
 {if $success|isset}
-	<p class="success">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.success{/lang}</p>
+	<woltlab-core-notice type="success">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.success{/lang}</woltlab-core-notice>
 {/if}
 
 <form id="formContainer" method="post" action="{link controller=$controller application=$controllerApplication}{/link}">

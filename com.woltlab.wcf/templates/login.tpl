@@ -1,9 +1,11 @@
 {include file='header' __disableAds=true}
 
-{if $forceLoginRedirect}<p class="info" role="status">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
+{if $forceLoginRedirect}
+	<woltlab-core-notice type="info">{lang}wcf.user.login.forceLogin{/lang}</woltlab-core-notice>
+{/if}
 
 {if !$errorField|empty && $errorField == 'cookie'}
-	<p class="error" role="alert">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.user.login.error.cookieRequired{/lang}</woltlab-core-notice>
 {else}
 	{include file='formError'}
 {/if}

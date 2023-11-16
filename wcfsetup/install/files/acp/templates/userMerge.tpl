@@ -16,7 +16,7 @@
 
 {include file='formError'}
 
-<p class="warning">{lang}wcf.acp.user.merge.warning{/lang}</p>
+<woltlab-core-notice type="warning">{lang}wcf.acp.user.merge.warning{/lang}</woltlab-core-notice>
 
 <form method="post" action="{link controller='UserMerge'}{/link}">
 	<section class="section">

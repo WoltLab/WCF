@@ -149,10 +149,10 @@
 			{/hascontent}
 		</footer>
 	{elseif $exceptionID}
-		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
+		<woltlab-core-notice type="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</woltlab-core-notice>
 	{/if}
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

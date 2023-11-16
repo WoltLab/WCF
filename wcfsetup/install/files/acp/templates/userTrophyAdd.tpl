@@ -136,7 +136,7 @@
 		</div>
 	</form>
 {else}
-	<p class="error">{lang}wcf.acp.trophy.error.noSuitableTrophies{/lang}</p>
+	<woltlab-core-notice type="error">{lang}wcf.acp.trophy.error.noSuitableTrophies{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='footer'}

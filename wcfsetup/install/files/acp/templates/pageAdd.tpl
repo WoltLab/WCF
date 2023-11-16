@@ -68,7 +68,7 @@
 </header>
 
 {if $action == 'edit' && !$lastVersion|empty}
-	<p class="info">{lang}wcf.acp.page.lastVersion{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.page.lastVersion{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}
@@ -472,8 +472,8 @@
 
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
-				<p class="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</p>
-
+				<woltlab-core-notice type="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</woltlab-core-notice>
+				
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>

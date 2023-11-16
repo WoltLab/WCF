@@ -4,14 +4,14 @@
 
 {include file='formError'}
 
-<p class="warning" role="status">{lang}wcf.user.accountManagement.warning{/lang}</p>
+<woltlab-core-notice type="warning">{lang}wcf.user.accountManagement.warning{/lang}</woltlab-core-notice>
 
 {if $success|isset && $success|count > 0}
-	<div class="success" role="status">
+	<woltlab-core-notice type="success">
 		{foreach from=$success item=successMessage}
 			<p>{lang}{@$successMessage}{/lang}</p>
 		{/foreach}
-	</div>
+	</woltlab-core-notice>
 {/if}
 
 {assign var=__authProvider value=$__wcf->getUserProfileHandler()->getAuthProvider()}

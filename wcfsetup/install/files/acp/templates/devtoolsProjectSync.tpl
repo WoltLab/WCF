@@ -28,7 +28,7 @@
 {include file='formError'}
 
 {if $object->validate() === ''}
-	<p class="info">{lang}wcf.acp.devtools.pip.notice{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.devtools.pip.notice{/lang}</woltlab-core-notice>
 	
 	<div class="section">
 		<dl>
@@ -146,7 +146,7 @@
 		}
 	</style>
 {else}
-	<p class="error">{@$object->validate()}</p>
+	<woltlab-core-notice type="error">{@$object->validate()}</woltlab-core-notice>
 {/if}
 
 {if $object->validate(true) === ''}

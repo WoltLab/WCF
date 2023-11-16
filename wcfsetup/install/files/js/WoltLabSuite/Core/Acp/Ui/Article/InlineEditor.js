@@ -255,7 +255,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             Util_1.default.show(article.buttons.trash);
             if (article.isArticleEdit) {
                 const notice = document.querySelector(".jsArticleNoticeTrash");
-                Util_1.default.hide(notice);
+                notice.hidden = true;
             }
             else {
                 const icon = article.element.querySelector(".jsIconDeleted");
@@ -276,7 +276,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             Util_1.default.hide(article.buttons.trash);
             if (article.isArticleEdit) {
                 const notice = document.querySelector(".jsArticleNoticeTrash");
-                Util_1.default.show(notice);
+                notice.hidden = false;
             }
             else {
                 const badge = document.createElement("span");

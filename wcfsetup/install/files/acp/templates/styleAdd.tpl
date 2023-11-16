@@ -82,7 +82,7 @@
 </header>
 
 {if !$isTainted}
-	<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
+	<woltlab-core-notice type="info">{lang}wcf.acp.style.protected{/lang}</woltlab-core-notice>
 {/if}
 
 {include file='formNotice'}
