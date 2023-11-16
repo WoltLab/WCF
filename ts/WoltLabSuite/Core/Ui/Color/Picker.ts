@@ -345,6 +345,12 @@ class UiColorPicker implements DialogCallbackObject {
    */
   protected submitDialog(): void {
     const color = this.getColor(ColorSource.RGBA);
+    const hasNanValue = Object.values(color).some((value) => Number.isNaN(value));
+    if (hasNanValue) {
+      // Prevent the submission of invalid color values.
+      return;
+    }
+
     const colorString = ColorUtil.rgbaToString(color);
 
     this.oldColor!.style.backgroundColor = colorString;
