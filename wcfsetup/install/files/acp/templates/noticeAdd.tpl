@@ -1,25 +1,5 @@
 {include file='header' pageTitle='wcf.acp.notice.'|concat:$action}
 
-<script data-relocate="true">
-	$(function() {
-		$('input[name=cssClassName]').change(function() {
-			var $val = $('input[name=cssClassName]:checked').val();
-			if (!$val || $val === 'custom') {
-				$('#cssClassNameExample').hide();
-			}
-			else {
-				$('#cssClassNameExample').show().removeClass('{implode from=$availableCssClassNames item=className glue=' '}{$className}{/implode}').addClass($val);
-			}
-		});
-		
-		$('input[name=cssClassName]:eq(0)').change();
-		
-		$('#customCssClassName').click(function() {
-			$(this).parents('li').find('input[type=radio]').click();
-		});
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.notice.{$action}{/lang}</h1>
@@ -196,5 +176,34 @@
 		{csrfToken}
 	</div>
 </form>
+
+
+<script data-relocate="true">
+	{
+		const example = document.getElementById('cssClassNameExample');
+		const updateExample = (cssClassName) => {
+			if (cssClassName == 'custom') {
+				example.hidden = true;
+			}
+			else {
+				example.type = cssClassName;
+				example.hidden = false;
+			}
+		};
+		
+		document.querySelectorAll('input[name=cssClassName]').forEach((element) => {
+			element.addEventListener('change', () => {
+				updateExample(element.value);
+			});
+		});
+
+		updateExample(document.querySelector('input[name=cssClassName]:checked').value);
+
+		document.getElementById('customCssClassName').addEventListener('focus', function () {
+			this.closest('label').querySelector('input[type=radio]').checked = true;
+			updateExample('custom');
+		});
+	}
+</script>
 
 {include file='footer'}
