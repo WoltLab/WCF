@@ -16,14 +16,17 @@
   }
 
   class WoltlabCoreNoticeElement extends HTMLElement {
+    #iconElement?: FaIcon;
+    #contentWrapper?: HTMLElement;
+
     connectedCallback() {
       const shadow = this.attachShadow({ mode: "open" });
 
-      const icon = document.createElement("fa-icon");
-      icon.size = 24;
-      icon.setIcon(this.icon, true);
-      icon.slot = "icon";
-      this.append(icon);
+      this.#iconElement = document.createElement("fa-icon");
+      this.#iconElement.size = 24;
+      this.#iconElement.setIcon(this.icon, true);
+      this.#iconElement.slot = "icon";
+      this.append(this.#iconElement);
 
       const style = document.createElement("style");
       style.textContent = `
@@ -34,17 +37,23 @@
           grid-template-columns: max-content auto;
         }
       `;
-      const contentWrapper = document.createElement("div");
-      contentWrapper.classList.add("content");
-      contentWrapper.setAttribute("role", this.type === Type.Error ? "alert" : "status");
+      this.#contentWrapper = document.createElement("div");
+      this.#contentWrapper.classList.add("content");
       const contentSlot = document.createElement("slot");
-      contentWrapper.append(contentSlot);
+      this.#contentWrapper.append(contentSlot);
 
       const iconSlot = document.createElement("slot");
       iconSlot.name = "icon";
 
-      shadow.append(style, iconSlot, contentWrapper);
+      shadow.append(style, iconSlot, this.#contentWrapper);
 
+      this.#updateType();
+    }
+
+    #updateType(): void {
+      this.#iconElement!.setIcon(this.icon, true);
+      this.#contentWrapper!.setAttribute("role", this.type === Type.Error ? "alert" : "status");
+      this.classList.remove(...Object.values(Type));
       this.classList.add(this.type);
     }
 
@@ -58,6 +67,16 @@
       }
 
       return type as Type;
+    }
+
+    set type(type: Type) {
+      this.setAttribute("type", type);
+
+      if (this.#iconElement === undefined) {
+        return;
+      }
+
+      this.#updateType();
     }
 
     get icon(): string {
