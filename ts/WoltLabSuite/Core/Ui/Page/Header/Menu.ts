@@ -135,12 +135,13 @@ function setup(): void {
 function setupOverflow(): void {
   _firstElement.addEventListener("transitionend", rebuildVisibility);
 
-  window.addEventListener("resize", () => {
+  const observer = new ResizeObserver(() => {
     _firstElement.style.setProperty("margin-left", "0px", "");
     _marginLeft = 0;
 
     rebuildVisibility();
   });
+  observer.observe(_menu);
 
   enable();
 }
