@@ -76,7 +76,12 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
             foreach ($inputVariables as $variableName => $variableValue) {
                 if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
-                    $variablesDarkMode[\substr($variableName, $prefixLength)] = $variableValue;
+                    $variableName = \substr($variableName, $prefixLength);
+                    if ($variableName === 'individualScssDarkMode') {
+                        continue;
+                    }
+
+                    $variablesDarkMode[$variableName] = $variableValue;
                 } else {
                     $variables[$variableName] = $variableValue;
                 }
@@ -1045,6 +1050,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->styleID]);
             while ($row = $statement->fetchArray()) {
+                if ($row['variableName'] === 'individualScssDarkMode') {
+                    continue;
+                }
+
                 $xml->writeElement('variable', $row['variableValueDarkMode'], ['name' => $row['variableName']]);
             }
 
