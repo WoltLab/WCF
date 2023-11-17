@@ -1,5 +1,5 @@
 {if $success|isset}
-	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}
+	<woltlab-core-notice type="success">
 		<span>{lang}wcf.global.success.{$action}{/lang}</span>
 	
 		{if $action == 'add' && !$objectEditLink|empty}
