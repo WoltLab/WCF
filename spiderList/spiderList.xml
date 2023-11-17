@@ -158,7 +158,7 @@
 	</spider>
 	<spider ident="BLEXBot">
 		<name>BLEXBot</name>
-		<url>http://webmeup.com/crawler.html</url>
+		<url>http://webmeup-crawler.com/</url>
 	</spider>
 	<spider ident="BlogCrawler by Xango">
 		<name>BlogCrawler</name>
@@ -226,6 +226,10 @@
 		<name>Buck</name>
 		<url>https://app.hypefactors.com/media-monitoring/about.html</url>
 	</spider>
+	<spider ident="Bytespider">
+		<name>Bytespider</name>
+		<url>https://www.bytedance.com/</url>
+	</spider>
 	<spider ident="CACTVS Chemistry Spider">
 		<name>CACTVS Chemistry</name>
 	</spider>
@@ -289,11 +293,19 @@
 	<spider ident="CoolBot">
 		<name>CoolBot</name>
 	</spider>
+	<spider ident="CriteoBot">
+		<name>Criteo</name>
+		<url>https://www.criteo.com/criteo-crawler/</url>
+	</spider>
 	<spider ident="Cusco">
 		<name>Cusco</name>
 	</spider>
 	<spider ident="CyberSpyder">
 		<name>CyberSpyder</name>
+	</spider>
+	<spider ident="DataForSeoBot">
+		<name>DataForSEO</name>
+		<url>https://dataforseo.com/dataforseo-bot</url>
 	</spider>
 	<spider ident="daypopbot">
 		<name>daypop</name>
@@ -490,6 +502,9 @@
 	</spider>
 	<spider ident="Mozilla/4.0 (compatible: FDSE robot)">
 		<name>Fluid Dynamics</name>
+	</spider>
+	<spider ident="my-tiny-bot">
+		<name>My-Tiny-Bot</name>
 	</spider>
 	<spider ident="fouineur.9bit.qc.ca">
 		<name>Fouineur</name>
@@ -842,6 +857,7 @@
 	</spider>
 	<spider ident="MJ12bot">
 		<name>Majestics MJ12bot</name>
+		<url>https://mj12bot.com/</url>
 	</spider>
 	<spider ident="Mammoth">
 		<name>Mammoth</name>
@@ -888,6 +904,10 @@
 	</spider>
 	<spider ident="moget">
 		<name>moget</name>
+	</spider>
+	<spider ident="MojeekBot">
+		<name>Mojeek</name>
+		<url>https://www.mojeek.com/bot.html</url>
 	</spider>
 	<spider ident="MOMspider">
 		<name>MOMspider</name>
