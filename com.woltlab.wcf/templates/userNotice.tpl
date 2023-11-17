@@ -27,15 +27,27 @@
 	{hascontent}
 		{content}
 			{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
-				<div class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}" role="status">
-					{if $notice->isDismissible}
-						<button type="button" class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
-							{icon name='xmark'}
-						</button>
-					{/if}
-					
-					{@$notice}
-				</div>
+				{if $notice->isCustom()}
+					<div class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}" role="status">
+						{if $notice->isDismissible}
+							<button type="button" class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
+								{icon name='xmark'}
+							</button>
+						{/if}
+						
+						{@$notice}
+					</div>
+				{else}
+					<woltlab-core-notice type="{$notice->cssClassName}" class="notice{if $notice->isDismissible} noticeDismissible active{/if}">
+						{if $notice->isDismissible}
+							<button type="button" class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
+								{icon name='xmark'}
+							</button>
+						{/if}
+						
+						{@$notice}
+					</woltlab-core-notice>
+				{/if}
 			{/foreach}
 		{/content}
 		

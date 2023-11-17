@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeAction;
 use wcf\data\notice\NoticeEditor;
 use wcf\data\object\type\ObjectType;
@@ -28,19 +29,6 @@ class NoticeAddForm extends AbstractForm
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.notice.add';
-
-    /**
-     * list pf pre-defined CSS class names
-     * @var string[]
-     */
-    public $availableCssClassNames = [
-        'info',
-        'success',
-        'warning',
-        'error',
-
-        'custom',
-    ];
 
     /**
      * name of the chosen CSS class name
@@ -106,7 +94,7 @@ class NoticeAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'action' => 'add',
-            'availableCssClassNames' => $this->availableCssClassNames,
+            'availableCssClassNames' => Notice::TYPES,
             'cssClassName' => $this->cssClassName,
             'customCssClassName' => $this->customCssClassName,
             'isDisabled' => $this->isDisabled,
@@ -297,8 +285,6 @@ class NoticeAddForm extends AbstractForm
         // validate class name
         if (empty($this->cssClassName)) {
             throw new UserInputException('cssClassName');
-        } elseif (!\in_array($this->cssClassName, $this->availableCssClassNames)) {
-            throw new UserInputException('cssClassName', 'invalid');
         } elseif ($this->cssClassName == 'custom') {
             if (empty($this->cssClassName)) {
                 throw new UserInputException('cssClassName');
@@ -306,6 +292,8 @@ class NoticeAddForm extends AbstractForm
             if (!Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
                 throw new UserInputException('cssClassName', 'invalid');
             }
+        } elseif (!\in_array($this->cssClassName, Notice::TYPES)) {
+            throw new UserInputException('cssClassName', 'invalid');
         }
 
         foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
