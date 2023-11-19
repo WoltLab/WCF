@@ -29,6 +29,13 @@ use wcf\util\StringUtil;
 class Notice extends DatabaseObject implements IRouteController
 {
     /**
+     * Available notice types.
+     * @var string[]
+     * @since 6.1
+     */
+    const TYPES = ['info', 'success', 'warning', 'error'];
+
+    /**
      * true if the active user has dismissed the notice
      * @var bool
      */
@@ -126,5 +133,13 @@ class Notice extends DatabaseObject implements IRouteController
         }
 
         return $this->isDismissed;
+    }
+
+    /**
+     * @since 6.1
+     */
+    public function isCustom(): bool
+    {
+        return !\in_array($this->cssClassName, self::TYPES);
     }
 }

@@ -78,12 +78,11 @@
 			<dt><label for="cssClassName">{lang}wcf.acp.notice.cssClassName{/lang}</label></dt>
 			<dd>
 				{foreach from=$availableCssClassNames item=className}
-					{if $className == 'custom'}
-						<label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="medium"></span></label>
-					{else}
-						<label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span>{lang}wcf.acp.notice.cssClassName.{$className}{/lang}</span></label>
-					{/if}
+					<label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span>{lang}wcf.acp.notice.cssClassName.{$className}{/lang}</span></label>
 				{/foreach}
+
+				<label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="medium"></span></label>
+				
 				{if $errorField == 'cssClassName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
