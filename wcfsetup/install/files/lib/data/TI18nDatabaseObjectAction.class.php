@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @author    Olaf Braun
  * @copyright 2001-2023 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  *
  * @mixin AbstractDatabaseObjectAction
  */
@@ -43,7 +44,7 @@ trait TI18nDatabaseObjectAction
         if ($langaugeItems !== []) {
             return;
         }
-        //find language category id
+
         $sql = "SELECT  languageCategoryID
                 FROM    wcf1_language_category
                 WHERE   languageCategory = ?";
@@ -51,14 +52,14 @@ trait TI18nDatabaseObjectAction
         $statement->execute([$this->getLanguageCategory()]);
         $languageCategoryID = $statement->fetchSingleColumn();
 
-        $con = new PreparedStatementConditionBuilder();
-        $con->add('languageItem IN (?)', [$langaugeItems]);
-        $con->add('packageID = ?', [$this->getPackageID()]);
-        $con->add('languageCategoryID = ?', [$languageCategoryID]);
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add('languageItem IN (?)', [$langaugeItems]);
+        $conditions->add('packageID = ?', [$this->getPackageID()]);
+        $conditions->add('languageCategoryID = ?', [$languageCategoryID]);
 
-        $sql = "DELETE FROM wcf1_language_item " . $con;
+        $sql = "DELETE FROM wcf1_language_item {$conditions}";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($con->getParameters());
+        $statement->execute($conditions->getParameters());
 
         LanguageFactory::getInstance()->deleteLanguageCache();
     }
@@ -115,7 +116,7 @@ trait TI18nDatabaseObjectAction
         }
         $this->deleteI18nItems($deleteData);
 
-        if (!empty($updateData)) {
+        if ($updateData !== []) {
             $editor = new $this->className($object);
             $editor->update($updateData);
         }
