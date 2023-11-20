@@ -274,6 +274,11 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          */
         submitDialog() {
             const color = this.getColor("rgba" /* ColorSource.RGBA */);
+            const hasNanValue = Object.values(color).some((value) => Number.isNaN(value));
+            if (hasNanValue) {
+                // Prevent the submission of invalid color values.
+                return;
+            }
             const colorString = ColorUtil.rgbaToString(color);
             this.oldColor.style.backgroundColor = colorString;
             this.input.value = colorString;

@@ -130,6 +130,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         if (data.languageId !== languageId) {
             const values = _values.get(elementId);
             if (data.languageId) {
+                const beforeSelect = data.callbacks.get("beforeSelect");
+                if (beforeSelect) {
+                    beforeSelect(data.element);
+                }
                 values.set(data.languageId, data.element.value);
             }
             if (languageId === 0) {

@@ -32,11 +32,7 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
             throw new InvalidIconSize($size);
         }
 
-        $content = \preg_replace(
-            '~^<svg~',
-            '<svg slot="svg"',
-            \file_get_contents(self::getFilename($this->name))
-        );
+        $content = \file_get_contents(self::getFilename($this->name));
 
         return <<<HTML
         <fa-brand size="{$size}">{$content}</fa-brand>

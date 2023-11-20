@@ -1006,6 +1006,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function getEncodedEmail(): string
     {
+        if ($this->email === '') {
+            return '';
+        }
+
         $mailbox = new Mailbox($this->email);
 
         return StringUtil::encodeAllChars($mailbox->getAddressForMailto());

@@ -13,7 +13,6 @@ const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
 const timeFormatter = new Intl.DateTimeFormat(locale, {
   hour: "numeric",
   minute: "numeric",
-  second: "numeric",
 });
 const dateTimeFormatter = new Intl.DateTimeFormat(locale, {
   year: "numeric",
@@ -21,7 +20,6 @@ const dateTimeFormatter = new Intl.DateTimeFormat(locale, {
   month: "long",
   hour: "numeric",
   minute: "numeric",
-  second: "numeric",
 });
 
 /**

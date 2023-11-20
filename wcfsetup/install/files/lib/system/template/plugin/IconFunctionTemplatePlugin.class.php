@@ -2,6 +2,7 @@
 
 namespace wcf\system\template\plugin;
 
+use wcf\system\style\exception\IconValidationFailed;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\FontAwesomeIconBrand;
 use wcf\system\style\IFontAwesomeIcon;
@@ -49,7 +50,20 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("An unsupported type '{$type}' was specified.");
         }
 
-        $icon = $this->getIcon($type, $name);
+        try {
+            $icon = $this->getIcon($type, $name);
+        } catch (IconValidationFailed) {
+            $attributes = [];
+            foreach ($tagArgs as $key => $value) {
+                $attributes[] = "{$key}='{$value}'";
+            }
+
+            return \sprintf(
+                '{icon %s}',
+                \implode(' ', $attributes),
+            );
+        }
+
         $html = $icon->toHtml($size);
 
         if ($encodeJson) {

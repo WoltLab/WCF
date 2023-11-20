@@ -234,7 +234,7 @@
 				<dt>{lang}wcf.acp.trophy.badge.iconName{/lang}</dt>
 				<dd>
 					<span class="jsTrophyIconName">{$iconName}</span>
-					<button type="button" class="button small">{icon name='magnifying-glass'}</a>
+					<button type="button" class="button small">{icon name='magnifying-glass'}</button>
 				</dd>
 			</dl>
 			
@@ -245,7 +245,7 @@
 						<span id="iconColorValue" class="colorBoxValue jsColorPicker" data-store="iconColorValue"></span>
 						<input type="hidden" id="iconColorValue">
 					</span>
-					<button type="button" class="button small jsButtonIconColorPicker">{icon name='paintbrush'}</a>
+					<button type="button" class="button small jsButtonIconColorPicker">{icon name='paintbrush'}</button>
 				</dd>
 			</dl>
 			
@@ -256,7 +256,7 @@
 						<span id="badgeColorValue" class="colorBoxValue jsColorPicker" data-store="badgeColorValue"></span>
 						<input type="hidden" id="badgeColorValue">
 					</span>
-					<button type="button" id="test" class="button small jsButtonBadgeColorPicker">{icon name='paintbrush'}</a>
+					<button type="button" id="test" class="button small jsButtonBadgeColorPicker">{icon name='paintbrush'}</button>
 				</dd>
 			</dl>
 		</div>

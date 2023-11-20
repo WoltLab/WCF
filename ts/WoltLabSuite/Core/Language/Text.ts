@@ -42,4 +42,7 @@ export function init(
 
   LanguageInput.registerCallback(elementId, "select", callbackSelect);
   LanguageInput.registerCallback(elementId, "submit", callbackSubmit);
+
+  // CKEditor does not permanently mirror the contents to the <textarea>.
+  LanguageInput.registerCallback(elementId, "beforeSelect", callbackSubmit);
 }

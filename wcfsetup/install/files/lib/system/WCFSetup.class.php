@@ -1059,7 +1059,7 @@ final class WCFSetup extends WCF
 
         // Delete tmp files
         foreach (new \DirectoryIterator(\INSTALL_SCRIPT_DIR) as $fileInfo) {
-            if (!$fileInfo->isDir()) {
+            if ($fileInfo->isDot() || !$fileInfo->isDir()) {
                 continue;
             }
 

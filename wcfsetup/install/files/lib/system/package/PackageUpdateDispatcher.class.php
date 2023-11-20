@@ -848,6 +848,10 @@ final class PackageUpdateDispatcher extends SingletonFactory
             $version = $this->getNewestPackageVersion($package);
         }
 
+        if ($version === null) {
+            throw new SystemException("Cannot find the package '" . $package . "'");
+        }
+
         // get versions
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add('pu.package = ?', [$package]);
@@ -867,7 +871,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         if (empty($versions)) {
-            throw new SystemException("Cannot find package '" . $package . "' in version '" . $version . "'");
+            throw new SystemException("Cannot find the package '" . $package . "' in version '" . $version . "'");
         }
 
         return $versions;
@@ -876,7 +880,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns the newest available version of a package.
      */
-    public function getNewestPackageVersion(string $package): string
+    public function getNewestPackageVersion(string $package): ?string
     {
         // get all versions
         $versions = [];

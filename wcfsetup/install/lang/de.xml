@@ -156,7 +156,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/icons">FontAwesome</a>-Icon genutzt werden.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis <kbd>wcf/icon/</kbd> befinden, alternativ kann ein <a href="https://fontawesome.com/icons">FontAwesome</a>-Icon genutzt werden.]]></item>
 		<item name="wcf.acp.bbcode.numberedAttribute"><![CDATA[Attribut {#$attributeNumber}]]></item>
 	</category>
 	<category name="wcf.acp.box">
@@ -1904,6 +1904,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.purchaseRequired"><![CDATA[Kostenpflichtiges Paket]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired.button.purchase"><![CDATA[Im Plugin-Store anzeigen]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[Das Paket „{$packageName}“ ist kostenpflichtig und muss zuvor im Plugin-Store erworben werden.]]></item>
+		<item name="wcf.acp.package.update.paidUpgrade"><![CDATA[Kostenpflichtiges Update]]></item>
+		<item name="wcf.acp.package.update.paidUpgrade.description"><![CDATA[Das Update für das Paket „{$packageName}“ ist kostenpflichtig und muss zuvor im Plugin-Store erworben werden.]]></item>
 		<item name="wcf.acp.package.update.installUpdate"><![CDATA[Dieses Update installieren]]></item>
 		<item name="wcf.acp.package.update.upgrade"><![CDATA[Dieses Paket wird aktualisiert.]]></item>
 		<item name="wcf.acp.package.update.newVersion"><![CDATA[{$currentVersion} → <span class="packageUpdateNewVersion">{$newVersion}</span>]]></item>
@@ -3076,7 +3078,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Ziel]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[Die ausgewählten Benutzer werden in dieses Benutzerkonto zusammengefügt.]]></item>
 		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
-		<item name="wcf.acp.user.merge.warning"><![CDATA[Das Zusammenfügen von Benutzern aktualisiert aus technischen Gründen nicht alle Verweise, Anzeigen und Zähler. Es ist daher notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach der Durchführung die entsprechenden Wartungsaufgaben ausführen {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, um die Anzeigen zu aktualisieren.]]></item>
+		<item name="wcf.acp.user.merge.warning"><![CDATA[Das Zusammenfügen von Benutzern aktualisiert aus technischen Gründen nicht alle Verweise, Anzeigen und Zähler. Es ist daher notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach der Durchführung die entsprechenden Wartungsaufgaben ausführen {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, um die <a href="{link controller='RebuildData'}{/link}">Anzeigen zu aktualisieren</a>.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
@@ -4915,7 +4917,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Haftungsbeschränkung für eigene Inhalte</h2>
 <p>Alle Inhalte unseres Internetauftritts wurden mit Sorgfalt und nach bestem Gewissen erstellt. Eine Gewähr für die Aktualität, Vollständigkeit und Richtigkeit sämtlicher Seiten kann jedoch nicht übernommen werden.</p>
-<p><br></p>
 <p>Gemäß § 7 Abs. 1 TMG sind wir als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, nach den §§ 8 bis 10 TMG jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</p>
 <h2>Haftungsbeschränkung für externe Links</h2>
 <p>Unsere Website enthält sog. „externe Links“ (Verknüpfungen zu Websites Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Websites verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</p>
@@ -4923,11 +4924,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 <p>Die auf dieser Website veröffentlichten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Jede Art der Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers bzw. Autors.</p>
 <h2>Datenschutz</h2>
 <p>Durch den Besuch unseres Internetauftritts können Informationen über den Zugriff (Datum, Uhrzeit, aufgerufene Seite) auf dem Server gespeichert werden. Dies stellt keine Auswertung personenbezogener Daten (z.B. Name, Anschrift oder E-Mail Adresse) dar. Sofern personenbezogene Daten erhoben werden, erfolgt dies – sofern möglich – nur mit dem vorherigen Einverständnis des Nutzers der Website. Eine Weiterleitung der Daten an Dritte findet ohne ausdrückliche Zustimmung des Nutzers nicht statt.</p>
-<p><br></p>
 <p>Wir weisen ausdrücklich darauf hin, dass die Übertragung von Daten im Internet (z.B. per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff Dritter kann nicht gewährleistet werden. Wir können keine Haftung für die durch solche Sicherheitslücken entstehenden Schäden übernehmen.</p>
-<p><br></p>
 <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
-<p><br></p>
 <p><small><em>Quelle: <a href="https://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if LANGUAGE_USE_INFORMAL_VARIANT} dich{else}n Sie sich{/if} direkt an den Administrator dieser Seite.]]></item>
 	</category>

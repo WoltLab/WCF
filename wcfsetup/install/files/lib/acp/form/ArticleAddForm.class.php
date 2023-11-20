@@ -574,6 +574,13 @@ class ArticleAddForm extends AbstractForm
         $this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->teaserImages = $this->teaserImageID == $this->tags = [];
         $this->metaTitle = $this->metaDescription = [];
 
+        // Reload attachment handler to reset the uploaded attachments.
+        $this->attachmentHandler = new AttachmentHandler(
+            $this->attachmentObjectType,
+            $this->attachmentObjectID,
+            $this->tmpHash
+        );
+
         $this->setDefaultValues();
     }
 

@@ -59,6 +59,8 @@
 	input[type="number"] {
 		padding: 4px;
 		text-align: center;
+		/* Firefox requires those fields to be wider due to the overlapping controls. */
+		width: 6ch;
 	}
 }
 

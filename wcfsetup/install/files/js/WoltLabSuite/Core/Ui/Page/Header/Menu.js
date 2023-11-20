@@ -119,11 +119,12 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      */
     function setupOverflow() {
         _firstElement.addEventListener("transitionend", rebuildVisibility);
-        window.addEventListener("resize", () => {
+        const observer = new ResizeObserver(() => {
             _firstElement.style.setProperty("margin-left", "0px", "");
             _marginLeft = 0;
             rebuildVisibility();
         });
+        observer.observe(_menu);
         enable();
     }
     function initOverflowNavigation() {

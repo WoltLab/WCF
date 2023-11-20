@@ -59,22 +59,21 @@ class BBCodeHandler extends SingletonFactory
 
     /**
      * Returns true if the BBCode with the given tag is available in the WYSIWYG editor.
-     *
-     * @param string $bbCodeTag
-     * @return  bool
      */
-    public function isAvailableBBCode($bbCodeTag)
+    public function isAvailableBBCode(string $bbCodeTag, bool $overrideFormattingRemoval = false): bool
     {
-        if ($bbCodeTag === "color" && \FORMATTING_REMOVE_COLOR) {
-            return false;
-        }
+        if ($overrideFormattingRemoval === false) {
+            if ($bbCodeTag === "color" && \FORMATTING_REMOVE_COLOR) {
+                return false;
+            }
 
-        if ($bbCodeTag === "font" && \FORMATTING_REMOVE_FONT) {
-            return false;
-        }
+            if ($bbCodeTag === "font" && \FORMATTING_REMOVE_FONT) {
+                return false;
+            }
 
-        if ($bbCodeTag === "size" && \FORMATTING_REMOVE_SIZE) {
-            return false;
+            if ($bbCodeTag === "size" && \FORMATTING_REMOVE_SIZE) {
+                return false;
+            }
         }
 
         return !\in_array($bbCodeTag, $this->disallowedBBCodes);

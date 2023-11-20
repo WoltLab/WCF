@@ -4,7 +4,9 @@ namespace wcf\acp\page;
 
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractPage;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Shows an attachment.
@@ -28,7 +30,9 @@ class AttachmentPage extends \wcf\page\AttachmentPage
         AbstractPage::checkPermissions();
 
         if ($this->attachment->tmpHash) {
-            throw new PermissionDeniedException();
+            if ($this->attachment->userID && $this->attachment->userID != WCF::getUser()->userID) {
+                throw new IllegalLinkException();
+            }
         }
 
         // check private status of attachment's object type

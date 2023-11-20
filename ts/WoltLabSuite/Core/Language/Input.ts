@@ -28,7 +28,7 @@ type Values = Map<LanguageId, string>;
 
 export type InputOrTextarea = HTMLInputElement | HTMLTextAreaElement;
 
-type CallbackEvent = "select" | "submit";
+type CallbackEvent = "beforeSelect" | "select" | "submit";
 type Callback = (element: InputOrTextarea) => void;
 
 interface ElementData {
@@ -194,6 +194,11 @@ function select(elementId: string, languageId: number, isInit: boolean): void {
     const values = _values.get(elementId)!;
 
     if (data.languageId) {
+      const beforeSelect = data.callbacks.get("beforeSelect");
+      if (beforeSelect) {
+        beforeSelect(data.element);
+      }
+
       values.set(data.languageId, data.element.value);
     }
 

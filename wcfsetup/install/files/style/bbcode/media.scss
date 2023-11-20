@@ -32,3 +32,8 @@ iframe.instagram-media {
 	/* Prevent the <iframe> from overlapping adjacent elements. */
 	position: relative !important;
 }
+
+.twitter-tweet > iframe {
+	/* Workaround for ugly border in embedded tweets. */
+	border-radius: 13px;
+}

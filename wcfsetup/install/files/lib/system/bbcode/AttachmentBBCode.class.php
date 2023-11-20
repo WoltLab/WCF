@@ -215,7 +215,20 @@ final class AttachmentBBCode extends AbstractBBCode
         }
 
         if (\is_numeric($width)) {
-            $width = "{$width}px";
+            // If the value is below 10px then we need to ignore it because
+            // those are bogus values generated in earlier versions.
+            if ($width < 10) {
+                $width = "auto";
+            } else {
+                // If the value is less than 50% of the thumbnail width then the
+                // value should be capped at 50%.
+                $minimumWidth = ($attachment->thumbnailWidth ?: $attachment->width) / 2;
+                if ($width < $minimumWidth) {
+                    $width = \round($minimumWidth);
+                }
+
+                $width = "{$width}px";
+            }
         }
 
         return [$isThumbnail, $width];
