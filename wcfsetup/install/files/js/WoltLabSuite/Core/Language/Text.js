@@ -33,6 +33,8 @@ define(["require", "exports", "tslib", "./Input", "../Component/Ckeditor"], func
         LanguageInput.init(elementId, values, availableLanguages, forceSelection);
         LanguageInput.registerCallback(elementId, "select", callbackSelect);
         LanguageInput.registerCallback(elementId, "submit", callbackSubmit);
+        // CKEditor does not permanently mirror the contents to the <textarea>.
+        LanguageInput.registerCallback(elementId, "beforeSelect", callbackSubmit);
     }
     exports.init = init;
 });
