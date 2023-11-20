@@ -3788,6 +3788,8 @@ Dateianhänge:
 		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies in den Papierkorb verschieben?]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ wiederherstellen?]]></item>
 		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies wiederherstellen?]]></item>
+		<item name="wcf.dialog.confirmation.reason.optional"><![CDATA[Grund (optional)]]></item>
+		<item name="wcf.dialog.confirmation.reason"><![CDATA[Grund]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
