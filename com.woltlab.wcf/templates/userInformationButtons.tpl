@@ -8,7 +8,7 @@
 				
 				{if $user->userID != $__wcf->user->userID}
 					{if $user->isAccessible('canViewEmailAddress')}
-						<li><a class="jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope'} <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+						<li><a class="jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope' type='solid'} <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
 					{/if}
 				{/if}
 				
