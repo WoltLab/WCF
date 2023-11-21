@@ -1,7 +1,5 @@
 <ol class="nativeList" id="{$field->getPrefixedId()}_packageList"></ol>
 
-{include file='__formFieldErrors'}
-
 <div class="row rowColGap formGrid">
 	<dl class="col-xs-12 col-md-4">
 		<dt></dt>
