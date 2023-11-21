@@ -165,16 +165,16 @@ class ConfigurationBuilder {
   }
 
   #setupCodeFormat(): void {
-    if (this.#features.code) {
-      this.#toolbar.push("code");
-    } else {
-      this.#removePlugins.push("Code", "WoltlabCode");
-    }
-
     if (this.#features.codeBlock) {
       this.#toolbar.push("codeBlock");
     } else {
       this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
+    }
+
+    if (this.#features.code) {
+      this.#toolbar.push("code");
+    } else {
+      this.#removePlugins.push("Code", "WoltlabCode");
     }
   }
 
