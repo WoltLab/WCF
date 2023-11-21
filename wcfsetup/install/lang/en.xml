@@ -392,7 +392,7 @@
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Sync Data - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
-		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[The PIP does not have a default filename and the installation instruction does not contain a filename.]]></item>
+		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[This PIP does not have a default filename and the installation instruction does not contain a filename.]]></item>
 		<item name="wcf.acp.devtools.pip.error.noGuiSupport"><![CDATA[This PIP does not support managing entries via a graphical user interface.]]></item>
 		<item name="wcf.acp.devtools.pip.error.className"><![CDATA[The class {$className} does not exist.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
@@ -1636,7 +1636,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove cached images regularly]]></item>
-		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exception]]></item>
+		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exceptions]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
 		<item name="wcf.acp.option.show_style_changer"><![CDATA[Enable style changer]]></item>
@@ -1821,7 +1821,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package <span class="confirmationObject">{@$package->getName()}</span>?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package cannot be installed because the following packages are already installed:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}.]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages that are currently installed prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages that are currently installed prevent installing this package:]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}.]]></item>
 		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve the requirements of this package.]]></item>
 		<item name="wcf.acp.package.install.installingImportedStyle"><![CDATA[The uploaded file is a package containg a style.]]></item>
