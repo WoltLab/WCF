@@ -791,7 +791,7 @@ const DatePicker = {
 
         // create input addon
         const container = document.createElement("div");
-        container.className = "inputAddon";
+        container.className = "inputAddon inputAddonDatePicker";
 
         const openButton = document.createElement("button");
         openButton.type = "button";
