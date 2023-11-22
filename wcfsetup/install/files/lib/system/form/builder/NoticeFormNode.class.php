@@ -12,33 +12,27 @@ namespace wcf\system\form\builder;
  */
 class NoticeFormNode extends LanguageItemFormNode
 {
-    const AVAILABLE_TYPES = ['info', 'success', 'warning', 'error'];
-
-    protected string $type = 'info';
+    protected NoticeFormNodeType $type = NoticeFormNodeType::Info;
 
     /**
      * @inheritDoc
      */
     public function getHtml()
     {
-        return '<woltlab-core-notice type="' . $this->getType() . '">' . parent::getHtml() . '</woltlab-core-notice>';
+        return '<woltlab-core-notice type="' . $this->getType()->toString() . '">' . parent::getHtml() . '</woltlab-core-notice>';
     }
 
     /**
      * Sets the type of this notice.
      */
-    public function type(string $type): static
+    public function type(NoticeFormNodeType $type): static
     {
-        if (!\in_array($type, self::AVAILABLE_TYPES)) {
-            throw new \BadMethodCallException("Invalid value '{$type}' given.");
-        }
-
         $this->type = $type;
 
         return $this;
     }
 
-    public function getType(): string
+    public function getType(): NoticeFormNodeType
     {
         return $this->type;
     }
