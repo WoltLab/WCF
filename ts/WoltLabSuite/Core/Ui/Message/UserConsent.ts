@@ -6,6 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import * as Ajax from "../../Ajax";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
@@ -14,7 +15,6 @@ import User from "../../User";
 
 class UserConsent {
   private enableAll = false;
-  private readonly knownButtons = new WeakSet();
 
   constructor() {
     if (window.sessionStorage.getItem(`${Core.getStoragePrefix()}user-consent`) === "all") {
@@ -30,12 +30,8 @@ class UserConsent {
     if (this.enableAll) {
       this.enableAllExternalMedia();
     } else {
-      document.querySelectorAll(".jsButtonMessageUserConsentEnable").forEach((button: HTMLAnchorElement) => {
-        if (!this.knownButtons.has(button)) {
-          this.knownButtons.add(button);
-
-          button.addEventListener("click", (ev) => this.click(ev));
-        }
+      wheneverFirstSeen(".jsButtonMessageUserConsentEnable", (button) => {
+        button.addEventListener("click", (event) => this.click(event));
       });
     }
   }
