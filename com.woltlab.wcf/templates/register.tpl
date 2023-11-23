@@ -15,29 +15,6 @@
 {include file='formError'}
 
 <form method="post" action="{link controller='Register'}{/link}">
-	<div class="section">
-		<dl{if $errorType[username]|isset} class="formError"{/if}>
-			<dt>
-				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
-			</dt>
-			<dd>
-				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
-				{if $errorType[username]|isset}
-					<small class="innerError">
-						{if $errorType[username] == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.user.username.error.{$errorType[username]}{/lang}
-						{/if}
-					</small>
-				{/if}
-				<small>{lang}wcf.user.username.description{/lang}</small>
-			</dd>
-		</dl>
-		
-		{event name='usernameFields'}
-	</div>
-	
 	<section class="section" id="fieldset1">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
@@ -65,6 +42,29 @@
 		{event name='honeyPotFields'}
 	</section>
 	
+	<div class="section">
+		<dl{if $errorType[username]|isset} class="formError"{/if}>
+			<dt>
+				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
+			</dt>
+			<dd>
+				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
+				{if $errorType[username]|isset}
+					<small class="innerError">
+						{if $errorType[username] == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.username.error.{$errorType[username]}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.user.username.description{/lang}</small>
+			</dd>
+		</dl>
+		
+		{event name='usernameFields'}
+	</div>
+		
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
 		
