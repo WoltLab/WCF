@@ -3,44 +3,41 @@
 namespace wcf\acp\action;
 
 use Laminas\Diactoros\Response\EmptyResponse;
-use Laminas\Diactoros\Response\RedirectResponse;
-use wcf\acp\page\CacheListPage;
-use wcf\action\AbstractSecureAction;
+use Laminas\Diactoros\Response\TextResponse;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\system\cache\command\ClearCache;
-use wcf\system\request\LinkHandler;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Clears the cache.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2022 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Tim Duesterhus
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class CacheClearAction extends AbstractSecureAction
+final class CacheClearAction implements RequestHandlerInterface
 {
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.management.canRebuildData'];
-
-    /**
-     * @inheritDoc
-     */
-    public function execute()
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        parent::execute();
+        if (!WCF::getSession()->getPermission('admin.management.canRebuildData')) {
+            throw new PermissionDeniedException();
+        }
 
-        $command = new ClearCache();
-        $command();
+        if ($request->getMethod() === 'GET') {
+            return new TextResponse('Unsupported', 400);
+        } elseif ($request->getMethod() === 'POST') {
+            $command = new ClearCache();
+            $command();
 
-        $this->executed();
-
-        if (isset($_POST['noRedirect'])) {
             return new EmptyResponse();
         } else {
-            return new RedirectResponse(
-                LinkHandler::getInstance()->getControllerLink(CacheListPage::class)
-            );
+            throw new \LogicException('Unreachable');
         }
     }
 }
