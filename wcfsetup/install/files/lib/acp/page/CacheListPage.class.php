@@ -5,6 +5,8 @@ namespace wcf\acp\page;
 use wcf\acp\action\CacheClearAction;
 use wcf\page\AbstractPage;
 use wcf\system\cache\CacheHandler;
+use wcf\system\cache\source\DiskCacheSource;
+use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
@@ -67,17 +69,18 @@ class CacheListPage extends AbstractPage
         ];
 
         switch ($this->cacheData['source']) {
-            case 'wcf\system\cache\source\DiskCacheSource':
+            case DiskCacheSource::class:
                 // set version
                 $this->cacheData['version'] = WCF_VERSION;
 
                 $this->readCacheFiles('data', WCF_DIR . 'cache');
                 break;
 
-            case 'wcf\system\cache\source\RedisCacheSource':
+            case RedisCacheSource::class:
                 // set version
-                /** @noinspection PhpUndefinedMethodInspection */
-                $this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
+                $cacheSource = CacheHandler::getInstance()->getCacheSource();
+                \assert($cacheSource instanceof RedisCacheSource);
+                $this->cacheData['version'] = $cacheSource->getRedisVersion();
                 break;
         }
 
