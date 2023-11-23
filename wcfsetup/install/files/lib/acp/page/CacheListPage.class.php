@@ -32,12 +32,6 @@ class CacheListPage extends AbstractPage
     public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
-     * indicates if cache was cleared
-     * @var int
-     */
-    public $cleared = 0;
-
-    /**
      * contains a list of cache resources
      * @var array
      */
@@ -55,10 +49,6 @@ class CacheListPage extends AbstractPage
     public function readParameters()
     {
         parent::readParameters();
-
-        if (isset($_REQUEST['cleared'])) {
-            $this->cleared = \intval($_REQUEST['cleared']);
-        }
     }
 
     /**
@@ -169,7 +159,6 @@ class CacheListPage extends AbstractPage
         WCF::getTPL()->assign([
             'caches' => $this->caches,
             'cacheData' => $this->cacheData,
-            'cleared' => $this->cleared,
             'cacheClearEndPoint' => LinkHandler::getInstance()->getControllerLink(CacheClearAction::class),
         ]);
     }
