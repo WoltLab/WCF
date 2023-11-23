@@ -2,10 +2,12 @@
 
 namespace wcf\acp\page;
 
+use wcf\acp\action\CacheClearAction;
 use wcf\page\AbstractPage;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
@@ -168,6 +170,7 @@ class CacheListPage extends AbstractPage
             'caches' => $this->caches,
             'cacheData' => $this->cacheData,
             'cleared' => $this->cleared,
+            'cacheClearEndPoint' => LinkHandler::getInstance()->getControllerLink(CacheClearAction::class),
         ]);
     }
 }
