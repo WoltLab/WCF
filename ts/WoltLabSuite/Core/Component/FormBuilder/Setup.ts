@@ -75,7 +75,7 @@ export class FormBuilderSetup {
         event.detail.push(validationCallback);
       });
 
-      dialog.addEventListener("cancel", () => {
+      dialog.addEventListener("afterClose", () => {
         if (FormBuilderManager.hasForm(json.formId)) {
           FormBuilderManager.unregisterForm(json.formId);
         }
