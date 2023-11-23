@@ -54,12 +54,6 @@
 			</dd>
 		</dl>
 		
-		{event name='usernameFields'}
-	</div>
-		
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
-		
 		<dl{if $errorType[email]|isset} class="formError"{/if}>
 			<dt>
 				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
@@ -77,14 +71,8 @@
 				{/if}
 			</dd>
 		</dl>
-		
-		{event name='emailFields'}
-	</section>
-	
-	{if !$isExternalAuthentication}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
-			
+
+		{if !$isExternalAuthentication}
 			<dl{if $errorType[password]|isset} class="formError"{/if}>
 				<dt>
 					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
@@ -103,15 +91,9 @@
 					<small>{lang}wcf.user.password.description{/lang}</small>
 				</dd>
 			</dl>
-			
-			{event name='passwordFields'}
-		</section>
-	{/if}
-	
-	{if $availableLanguages|count > 1}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.language{/lang}</h2>
-			
+		{/if}
+
+		{if $availableLanguages|count > 1}
 			<dl>
 				<dt><label for="languageID">{lang}wcf.user.language.description{/lang}</label></dt>
 				<dd id="languageIDContainer">
@@ -140,7 +122,7 @@
 					</noscript>
 				</dd>
 			</dl>
-			
+				
 			{hascontent}
 				<dl>
 					<dt><label>{lang}wcf.user.visibleLanguages{/lang}</label></dt>
@@ -153,11 +135,9 @@
 					<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>
 				</dl>
 			{/hascontent}
-			
-			{event name='languageFields'}
-		</section>
-	{/if}
-	
+		{/if}
+	</div>
+		
 	{foreach from=$optionTree item=category}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</h2>
