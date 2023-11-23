@@ -2,10 +2,14 @@
 
 namespace wcf\acp\page;
 
+use wcf\acp\action\CacheClearAction;
 use wcf\page\AbstractPage;
 use wcf\system\cache\CacheHandler;
+use wcf\system\cache\source\DiskCacheSource;
+use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
@@ -30,12 +34,6 @@ class CacheListPage extends AbstractPage
     public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
-     * indicates if cache was cleared
-     * @var int
-     */
-    public $cleared = 0;
-
-    /**
      * contains a list of cache resources
      * @var array
      */
@@ -53,10 +51,6 @@ class CacheListPage extends AbstractPage
     public function readParameters()
     {
         parent::readParameters();
-
-        if (isset($_REQUEST['cleared'])) {
-            $this->cleared = \intval($_REQUEST['cleared']);
-        }
     }
 
     /**
@@ -75,17 +69,18 @@ class CacheListPage extends AbstractPage
         ];
 
         switch ($this->cacheData['source']) {
-            case 'wcf\system\cache\source\DiskCacheSource':
+            case DiskCacheSource::class:
                 // set version
                 $this->cacheData['version'] = WCF_VERSION;
 
                 $this->readCacheFiles('data', WCF_DIR . 'cache');
                 break;
 
-            case 'wcf\system\cache\source\RedisCacheSource':
+            case RedisCacheSource::class:
                 // set version
-                /** @noinspection PhpUndefinedMethodInspection */
-                $this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
+                $cacheSource = CacheHandler::getInstance()->getCacheSource();
+                \assert($cacheSource instanceof RedisCacheSource);
+                $this->cacheData['version'] = $cacheSource->getRedisVersion();
                 break;
         }
 
@@ -167,7 +162,7 @@ class CacheListPage extends AbstractPage
         WCF::getTPL()->assign([
             'caches' => $this->caches,
             'cacheData' => $this->cacheData,
-            'cleared' => $this->cleared,
+            'cacheClearEndPoint' => LinkHandler::getInstance()->getControllerLink(CacheClearAction::class),
         ]);
     }
 }

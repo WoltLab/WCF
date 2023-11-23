@@ -17,9 +17,9 @@
 				{content}
 					{if $cacheData.files}
 						<li>
-							<a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}t={csrfToken type='url'}{/link}" class="button">
+							<button type="button" class="jsCacheClearButton button" data-endpoint="{$cacheClearEndPoint}">
 								{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span>
-							</a>
+							</button>
 						</li>
 					{/if}
 					
@@ -111,9 +111,9 @@
 				{content}
 					{if $cacheData.files}
 						<li>
-							<a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}t={csrfToken type='url'}{/link}" class="button">
+							<button type="button" class="jsCacheClearButton button" data-endpoint="{$cacheClearEndPoint}">
 								{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span>
-							</a>
+							</button>
 						</li>
 					{/if}
 					
@@ -123,5 +123,13 @@
 		</nav>
 	{/hascontent}
 </footer>
+
+<script data-relocate="true">
+	{jsphrase name='wcf.acp.cache.clear.sure'}
+	
+	require(['WoltLabSuite/Core/Acp/Component/Cache/Clear'], ({ setup }) => {
+		setup();
+	});
+</script>
 
 {include file='footer'}
