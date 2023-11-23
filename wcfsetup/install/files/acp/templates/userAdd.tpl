@@ -215,24 +215,7 @@
 					</dd>
 				</dl>
 
-				{if $availableGroups|count}
-					<dl>
-						<dt>
-							<label>{lang}wcf.acp.user.groups{/lang}</label>
-						</dt>
-						<dd class="checkboxList">
-							{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
-						</dd>
-					</dl>
-				{/if}
-
-				{event name='generalFields'}
-			</div>
-
-			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
-
+				{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>
@@ -248,10 +231,61 @@
 							{/if}
 						</dd>
 					</dl>
+				{/if}
 
-					{event name='emailFields'}
-				</section>
-			{/if}
+				{if ($action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')) && ($action == 'add' || $user->authData|empty)}
+					<dl{if $errorType.password|isset} class="formError"{/if}>
+						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
+						<dd>
+							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="new-password">
+							{if $errorType.password|isset}
+								<small class="innerError">
+									{if $errorType.password == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.user.password.error.{@$errorType.password}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+
+					<script data-relocate="true">
+						require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+							{include file='passwordStrengthLanguage'}
+
+							var relatedInputs = [];
+							if (elById('username')) relatedInputs.push(elById('username'));
+							if (elById('email')) relatedInputs.push(elById('email'));
+
+							new PasswordStrength(elById('password'), {
+								relatedInputs: relatedInputs,
+								staticDictionary: [
+									'{$__wcf->user->username|encodeJS}',
+									'{$__wcf->user->email|encodeJS}',
+									{if $user|isset}
+										'{$user->username|encodeJS}',
+										'{$user->email|encodeJS}',
+									{/if}
+								]
+							});
+						})
+					</script>
+				{/if}
+
+				{if $availableGroups|count}
+					<dl>
+						<dt>
+							<label>{lang}wcf.acp.user.groups{/lang}</label>
+						</dt>
+						<dd class="checkboxList">
+							{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
+						</dd>
+					</dl>
+				{/if}
+
+				{event name='generalFields'}
+			</div>
 
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
 				{if $action == 'edit' && !$user->authData|empty}
@@ -266,50 +300,6 @@
 								<label><input type="checkbox" name="disconnect3rdParty" value="1"> {lang}wcf.user.3rdparty.{$user->getAuthProvider()}.disconnect{/lang}</label>
 							</dd>
 						</dl>
-					</section>
-				{else}
-					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
-
-						<dl{if $errorType.password|isset} class="formError"{/if}>
-							<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
-							<dd>
-								<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="new-password">
-								{if $errorType.password|isset}
-									<small class="innerError">
-										{if $errorType.password == 'empty'}
-											{lang}wcf.global.form.error.empty{/lang}
-										{else}
-											{lang}wcf.user.password.error.{@$errorType.password}{/lang}
-										{/if}
-									</small>
-								{/if}
-							</dd>
-						</dl>
-
-						<script data-relocate="true">
-							require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-								{include file='passwordStrengthLanguage'}
-
-								var relatedInputs = [];
-								if (elById('username')) relatedInputs.push(elById('username'));
-								if (elById('email')) relatedInputs.push(elById('email'));
-
-								new PasswordStrength(elById('password'), {
-									relatedInputs: relatedInputs,
-									staticDictionary: [
-										'{$__wcf->user->username|encodeJS}',
-										'{$__wcf->user->email|encodeJS}',
-										{if $user|isset}
-											'{$user->username|encodeJS}',
-											'{$user->email|encodeJS}',
-										{/if}
-									]
-								});
-							})
-						</script>
-
-						{event name='passwordFields'}
 					</section>
 				{/if}
 
