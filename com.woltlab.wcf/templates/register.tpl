@@ -23,7 +23,7 @@
 		
 		<dl>
 			<dt>
-				<label for="username">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="username">{lang}wcf.user.username{/lang}</label>
 			</dt>
 			<dd>
 				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998">
@@ -32,7 +32,7 @@
 		
 		<dl>
 			<dt>
-				<label for="email">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="email">{lang}wcf.user.email{/lang}</label>
 			</dt>
 			<dd>
 				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999">
