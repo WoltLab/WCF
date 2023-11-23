@@ -201,7 +201,7 @@ class UserEditForm extends UserAddForm
         parent::readFormParameters();
 
         if (!WCF::getSession()->getPermission('admin.user.canEditPassword') || !empty($this->user->authData)) {
-            $this->password = $this->confirmPassword = '';
+            $this->password = '';
         }
         if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
             $this->email = $this->user->email;
@@ -530,7 +530,7 @@ class UserEditForm extends UserAddForm
         $this->saved();
 
         // reset password
-        $this->password = $this->confirmPassword = '';
+        $this->password = '';
 
         // reload user
         $this->user = new UserEditor(new User($this->userID));
@@ -568,17 +568,13 @@ class UserEditForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validatePassword(
         #[\SensitiveParameter]
-        $password,
-        #[\SensitiveParameter]
-        $confirmPassword
-    ) {
-        if (!empty($password) || !empty($confirmPassword)) {
-            parent::validatePassword($password, $confirmPassword);
+        string $password
+    ): void {
+        if (!empty($password)) {
+            parent::validatePassword($password);
         }
     }
 

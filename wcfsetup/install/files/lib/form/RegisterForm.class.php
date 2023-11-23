@@ -162,9 +162,6 @@ class RegisterForm extends UserAddForm
                 // ignore
             }
         }
-        if (isset($_POST[$this->randomFieldNames['confirmPassword']])) {
-            $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
-        }
 
         $this->groupIDs = [];
 
@@ -257,7 +254,6 @@ class RegisterForm extends UserAddForm
                 'username' => UserRegistrationUtil::getRandomFieldName('username'),
                 'email' => UserRegistrationUtil::getRandomFieldName('email'),
                 'password' => UserRegistrationUtil::getRandomFieldName('password'),
-                'confirmPassword' => UserRegistrationUtil::getRandomFieldName('confirmPassword'),
             ];
 
             WCF::getSession()->register('registrationRandomFieldNames', $this->randomFieldNames);
@@ -322,17 +318,13 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validatePassword(
         #[\SensitiveParameter]
-        $password,
-        #[\SensitiveParameter]
-        $confirmPassword
-    ) {
+        string $password
+    ): void {
         if (!$this->isExternalAuthentication) {
-            parent::validatePassword($password, $confirmPassword);
+            parent::validatePassword($password);
 
             // check security of the given password
             if (($this->passwordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {

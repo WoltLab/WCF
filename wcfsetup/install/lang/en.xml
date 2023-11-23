@@ -4570,8 +4570,6 @@ Attachments:
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[The following tags do not exist: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmPassword"><![CDATA[Confirm Password]]></item>
-		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[The entered passwords do not match.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
 		<item name="wcf.user.email"><![CDATA[Email Address]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[The email address is already in use.]]></item>

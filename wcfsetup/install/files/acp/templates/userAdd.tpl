@@ -287,18 +287,6 @@
 							</dd>
 						</dl>
 
-						<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
-							<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
-							<dd>
-								<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="new-password">
-								{if $errorType.confirmPassword|isset}
-									<small class="innerError">
-										{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
-									</small>
-								{/if}
-							</dd>
-						</dl>
-
 						<script data-relocate="true">
 							require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
 								{include file='passwordStrengthLanguage'}

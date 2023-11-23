@@ -104,20 +104,6 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorType[confirmPassword]|isset} class="formError"{/if}>
-				<dt>
-					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label> <span class="customOptionRequired">*</span>
-				</dt>
-				<dd>
-					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					{if $errorType[confirmPassword]|isset}
-						<small class="innerError">
-							{lang}wcf.user.confirmPassword.error.{$errorType[confirmPassword]}{/lang}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
 			{event name='passwordFields'}
 		</section>
 	{/if}
@@ -202,8 +188,7 @@
 			'wcf.user.username.error.notUnique': '{jslang}wcf.user.username.error.notUnique{/jslang}',
 			'wcf.user.email.error.invalid' : '{jslang}wcf.user.email.error.invalid{/jslang}',
 			'wcf.user.email.error.notUnique' : '{jslang}wcf.user.email.error.notUnique{/jslang}',
-			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}',
-			'wcf.user.confirmPassword.error.notEqual' : '{jslang}wcf.user.confirmPassword.error.notEqual{/jslang}'
+			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}'
 		});
 		
 		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[email]}'), null);

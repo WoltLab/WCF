@@ -55,12 +55,6 @@ class UserAddForm extends UserOptionListForm
     public $password = '';
 
     /**
-     * confirmed user password
-     * @var string
-     */
-    public $confirmPassword = '';
-
-    /**
      * user group ids
      * @var int[]
      */
@@ -135,9 +129,6 @@ class UserAddForm extends UserOptionListForm
         if (isset($_POST['password'])) {
             $this->password = $_POST['password'];
         }
-        if (isset($_POST['confirmPassword'])) {
-            $this->confirmPassword = $_POST['confirmPassword'];
-        }
         if (isset($_POST['groupIDs']) && \is_array($_POST['groupIDs'])) {
             $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
         }
@@ -189,7 +180,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         try {
-            $this->validatePassword($this->password, $this->confirmPassword);
+            $this->validatePassword($this->password);
         } catch (UserInputException $e) {
             $this->errorType[$e->getField()] = $e->getType();
         }
@@ -306,7 +297,7 @@ class UserAddForm extends UserOptionListForm
 
         // reset values
         $this->disableSignature = $this->disableSignatureExpires = 0;
-        $this->username = $this->email = $this->password = $this->confirmPassword = $this->userTitle = '';
+        $this->username = $this->email = $this->password = $this->userTitle = '';
         $this->signature = $this->disableSignatureReason = '';
         $this->groupIDs = [];
         $this->languageID = $this->getDefaultFormLanguageID();
@@ -360,24 +351,14 @@ class UserAddForm extends UserOptionListForm
 
     /**
      * Throws a UserInputException if the password is not valid.
-     *
-     * @param string $password
-     * @param string $confirmPassword
      * @throws  UserInputException
      */
     protected function validatePassword(
         #[\SensitiveParameter]
-        $password,
-        #[\SensitiveParameter]
-        $confirmPassword
-    ) {
+        string $password
+    ): void {
         if (empty($password)) {
             throw new UserInputException('password');
-        }
-
-        // check confirm input
-        if ($password != $confirmPassword) {
-            throw new UserInputException('confirmPassword', 'notEqual');
         }
     }
 
@@ -410,7 +391,6 @@ class UserAddForm extends UserOptionListForm
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->password,
-            'confirmPassword' => $this->confirmPassword,
             'groupIDs' => $this->groupIDs,
             'optionTree' => $this->optionTree,
             'availableGroups' => $this->getAvailableGroups(),
