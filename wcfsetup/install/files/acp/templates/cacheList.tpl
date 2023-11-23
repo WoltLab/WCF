@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.cache.list'}
 
-<script data-relocate="true">
-	$(function() {
-		WCF.Collapsible.Simple.init();
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.cache.list{/lang}</h1>
@@ -64,17 +58,14 @@
 		{counter name=cacheIndex assign=cacheIndex print=false start=0}
 		
 		{if $files|count}
-			<section class="section tabularBox tabularBoxTitle">
-				<header>
-					<h2>
-						<a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}">{icon name='chevron-right'}</a>
-						{lang}wcf.acp.cache.type.{$cacheType}{/lang}
-						<span class="badge">{#$files|count}</span>
-					</h2>
-					<small>{$cache}</small>
-				</header>
+			<details class="section tabularBox">
+				<summary class="sectionTitle">
+					{lang}wcf.acp.cache.type.{$cacheType}{/lang}
+					<span class="badge">{#$files|count}</span>
+					<br><kbd>{$cache}</kbd>
+				</summary>
 				
-				<table id="cache{@$cacheIndex}" style="display: none;" class="table">
+				<table id="cache{@$cacheIndex}" class="table">
 					<thead>
 						<tr>
 							<th class="columnTitle">{lang}wcf.acp.cache.list.name{/lang}</th>
@@ -99,7 +90,7 @@
 						{/foreach}
 					</tbody>
 				</table>
-			</section>
+			</details>
 		{/if}
 	{/foreach}
 {/foreach}
