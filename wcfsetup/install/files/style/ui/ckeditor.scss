@@ -276,9 +276,6 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	border-radius: 0 !important;
 }
 
-.ck.ck-sticky-panel__content {
-	--ck-z-modal: 1;
-}
 .ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
 	box-shadow: none !important;
 }
@@ -363,7 +360,8 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	fill: var(--wcfContentText);
 }
 
-.ck.ck-sticky-panel__content {
+.ck.ck-sticky-panel__content,
+.ck.ck-balloon-panel {
 	--ck-z-modal: 90;
 }
 
