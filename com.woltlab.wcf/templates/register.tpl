@@ -1,11 +1,3 @@
-{capture assign='headContent'}
-	<style type="text/css">
-		#fieldset1 {
-			display: none;
-		}
-	</style>
-{/capture}
-
 {include file='header' __disableAds=true}
 
 {if $isExternalAuthentication}
@@ -15,7 +7,7 @@
 {include file='formError'}
 
 <form method="post" action="{link controller='Register'}{/link}">
-	<section class="section" id="fieldset1">
+	<section class="section" hidden>
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
 			<p class="sectionDescription">{lang}wcf.user.register.honeyPot.description{/lang}</p>
