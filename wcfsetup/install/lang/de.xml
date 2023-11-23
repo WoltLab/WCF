@@ -4565,9 +4565,7 @@ Dateianhänge:
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[Die folgenden Tags existieren nicht: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>
-		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch.]]></item>
 		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Kontrollzentrum]]></item>
 		<item name="wcf.user.email"><![CDATA[E-Mail-Adresse]]></item>

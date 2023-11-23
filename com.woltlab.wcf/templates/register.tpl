@@ -78,20 +78,6 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorType[confirmEmail]|isset} class="formError"{/if}>
-			<dt>
-				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label> <span class="customOptionRequired">*</span>
-			</dt>
-			<dd>
-				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required class="medium">
-				{if $errorType[confirmEmail]|isset}
-					<small class="innerError">
-						{lang}wcf.user.confirmEmail.error.{$errorType[confirmEmail]}{/lang}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
 		{event name='emailFields'}
 	</section>
 	
@@ -216,12 +202,11 @@
 			'wcf.user.username.error.notUnique': '{jslang}wcf.user.username.error.notUnique{/jslang}',
 			'wcf.user.email.error.invalid' : '{jslang}wcf.user.email.error.invalid{/jslang}',
 			'wcf.user.email.error.notUnique' : '{jslang}wcf.user.email.error.notUnique{/jslang}',
-			'wcf.user.confirmEmail.error.notEqual' : '{jslang}wcf.user.confirmEmail.error.notEqual{/jslang}',
 			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}',
 			'wcf.user.confirmPassword.error.notEqual' : '{jslang}wcf.user.confirmPassword.error.notEqual{/jslang}'
 		});
 		
-		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
+		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[email]}'), null);
 		new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}'), null, {
 			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
 			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}

@@ -49,12 +49,6 @@ class UserAddForm extends UserOptionListForm
     public $email = '';
 
     /**
-     * confirmed email address
-     * @var string
-     */
-    public $confirmEmail = '';
-
-    /**
      * user password
      * @var string
      */
@@ -138,9 +132,6 @@ class UserAddForm extends UserOptionListForm
         if (isset($_POST['email'])) {
             $this->email = StringUtil::trim($_POST['email']);
         }
-        if (isset($_POST['confirmEmail'])) {
-            $this->confirmEmail = StringUtil::trim($_POST['confirmEmail']);
-        }
         if (isset($_POST['password'])) {
             $this->password = $_POST['password'];
         }
@@ -192,7 +183,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         try {
-            $this->validateEmail($this->email, $this->confirmEmail);
+            $this->validateEmail($this->email);
         } catch (UserInputException $e) {
             $this->errorType[$e->getField()] = $e->getType();
         }
@@ -315,7 +306,7 @@ class UserAddForm extends UserOptionListForm
 
         // reset values
         $this->disableSignature = $this->disableSignatureExpires = 0;
-        $this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = $this->userTitle = '';
+        $this->username = $this->email = $this->password = $this->confirmPassword = $this->userTitle = '';
         $this->signature = $this->disableSignatureReason = '';
         $this->groupIDs = [];
         $this->languageID = $this->getDefaultFormLanguageID();
@@ -348,12 +339,9 @@ class UserAddForm extends UserOptionListForm
 
     /**
      * Throws a UserInputException if the email is not unique or not valid.
-     *
-     * @param string $email
-     * @param string $confirmEmail
      * @throws  UserInputException
      */
-    protected function validateEmail($email, $confirmEmail)
+    protected function validateEmail(string $email): void
     {
         if (empty($email)) {
             throw new UserInputException('email');
@@ -367,11 +355,6 @@ class UserAddForm extends UserOptionListForm
         // Check if email exists already.
         if (User::getUserByEmail($email)->userID) {
             throw new UserInputException('email', 'notUnique');
-        }
-
-        // check confirm input
-        if (\mb_strtolower($email) != \mb_strtolower($confirmEmail)) {
-            throw new UserInputException('confirmEmail', 'notEqual');
         }
     }
 
@@ -426,7 +409,6 @@ class UserAddForm extends UserOptionListForm
         WCF::getTPL()->assign([
             'username' => $this->username,
             'email' => $this->email,
-            'confirmEmail' => $this->confirmEmail,
             'password' => $this->password,
             'confirmPassword' => $this->confirmPassword,
             'groupIDs' => $this->groupIDs,

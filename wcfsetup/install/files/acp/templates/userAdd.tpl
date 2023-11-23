@@ -249,18 +249,6 @@
 						</dd>
 					</dl>
 
-					<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
-						<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
-						<dd>
-							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
-							{if $errorType.confirmEmail|isset}
-								<small class="innerError">
-									{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-
 					{event name='emailFields'}
 				</section>
 			{/if}

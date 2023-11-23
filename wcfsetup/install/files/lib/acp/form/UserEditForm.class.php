@@ -204,7 +204,7 @@ class UserEditForm extends UserAddForm
             $this->password = $this->confirmPassword = '';
         }
         if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
-            $this->email = $this->confirmEmail = $this->user->email;
+            $this->email = $this->user->email;
         }
 
         if (!empty($_POST['banned'])) {
@@ -323,7 +323,7 @@ class UserEditForm extends UserAddForm
     protected function readDefaultValues()
     {
         $this->username = $this->user->username;
-        $this->email = $this->confirmEmail = $this->user->email;
+        $this->email = $this->user->email;
         $this->groupIDs = $this->user->getGroupIDs(true);
         $this->languageID = $this->user->languageID;
         $this->banned = $this->user->banned;
@@ -560,18 +560,11 @@ class UserEditForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function validateEmail($email, $confirmEmail)
+    #[\Override]
+    protected function validateEmail(string $email): void
     {
-        // check confirm input
-        if (\mb_strtolower($email) != \mb_strtolower($confirmEmail)) {
-            throw new UserInputException('confirmEmail', 'notEqual');
-        }
-
         if (\mb_strtolower($this->user->email) != \mb_strtolower($email)) {
-            parent::validateEmail($email, $this->confirmEmail);
+            parent::validateEmail($email);
         }
     }
 

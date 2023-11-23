@@ -150,9 +150,6 @@ class RegisterForm extends UserAddForm
         if (isset($_POST[$this->randomFieldNames['email']])) {
             $this->email = StringUtil::trim($_POST[$this->randomFieldNames['email']]);
         }
-        if (isset($_POST[$this->randomFieldNames['confirmEmail']])) {
-            $this->confirmEmail = StringUtil::trim($_POST[$this->randomFieldNames['confirmEmail']]);
-        }
         if (isset($_POST[$this->randomFieldNames['password']])) {
             $this->password = $_POST[$this->randomFieldNames['password']];
         }
@@ -250,7 +247,7 @@ class RegisterForm extends UserAddForm
                 $this->username = WCF::getSession()->getVar('__username');
             }
             if (WCF::getSession()->getVar('__email')) {
-                $this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
+                $this->email = WCF::getSession()->getVar('__email');
             }
 
             WCF::getSession()->register('registrationStartTime', TIME_NOW);
@@ -259,7 +256,6 @@ class RegisterForm extends UserAddForm
             $this->randomFieldNames = [
                 'username' => UserRegistrationUtil::getRandomFieldName('username'),
                 'email' => UserRegistrationUtil::getRandomFieldName('email'),
-                'confirmEmail' => UserRegistrationUtil::getRandomFieldName('confirmEmail'),
                 'password' => UserRegistrationUtil::getRandomFieldName('password'),
                 'confirmPassword' => UserRegistrationUtil::getRandomFieldName('confirmPassword'),
             ];
@@ -345,12 +341,10 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function validateEmail($email, $confirmEmail)
+    #[\Override]
+    protected function validateEmail(string $email): void
     {
-        parent::validateEmail($email, $confirmEmail);
+        parent::validateEmail($email);
 
         if (!UserRegistrationUtil::isValidEmail($email)) {
             throw new UserInputException('email', 'invalid');
