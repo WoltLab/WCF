@@ -11,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -301,7 +302,7 @@ class UserAddForm extends UserOptionListForm
         $this->signature = $this->disableSignatureReason = '';
         $this->groupIDs = [];
         $this->languageID = $this->getDefaultFormLanguageID();
-        /** @noinspection PhpUndefinedMethodInspection */
+        \assert($this->optionHandler instanceof UserOptionHandler);
         $this->optionHandler->resetOptionValues();
     }
 

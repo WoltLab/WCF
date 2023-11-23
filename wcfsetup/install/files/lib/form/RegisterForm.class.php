@@ -19,6 +19,7 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
@@ -175,7 +176,7 @@ class RegisterForm extends UserAddForm
      */
     protected function initOptionHandler()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        \assert($this->optionHandler instanceof UserOptionHandler);
         $this->optionHandler->setInRegistration();
         parent::initOptionHandler();
     }

@@ -17,6 +17,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
@@ -189,7 +190,7 @@ class UserEditForm extends UserAddForm
      */
     protected function initOptionHandler()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        \assert($this->optionHandler instanceof UserOptionHandler);
         $this->optionHandler->setUser($this->user->getDecoratedObject());
     }
 
