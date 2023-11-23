@@ -136,6 +136,8 @@
 				</dl>
 			{/hascontent}
 		{/if}
+
+		{event name='generalFields'}
 	</div>
 		
 	{foreach from=$optionTree item=category}
