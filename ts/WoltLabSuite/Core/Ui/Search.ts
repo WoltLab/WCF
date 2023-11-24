@@ -188,7 +188,7 @@ function closeSearch(): void {
  */
 export function init(): void {
   // The search bar is unavailable during WCFSetup or the login.
-  if (_isAcp && _pageHeaderSearch === null) {
+  if (_pageHeaderSearch === null) {
     return;
   }
 

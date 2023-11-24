@@ -1,4 +1,22 @@
-#tpl_wcf_login {
+.authFlow {
+	@include screen-lg {
+		.pageHeaderContainer {
+			padding-top: 0;
+		}
+	}
+
+	.pageHeaderPanel {
+		display: none;
+	}
+
+	.pageHeaderLogo {
+		text-align: center;
+	}
+
+	.pageHeaderSearchMobile {
+		display: none;
+	}
+
 	.content {
 		max-width: 500px;
 		margin-left: auto;

@@ -2,7 +2,7 @@
 	{capture assign='contentDescription'}{lang}wcf.user.login.noAccount{/lang}{/capture}
 {/if}
 
-{include file='header' __disableAds=true}
+{include file='authFlowHeader'}
 
 {if $forceLoginRedirect}
 	<woltlab-core-notice type="info">{lang}wcf.user.login.forceLogin{/lang}</woltlab-core-notice>
@@ -112,4 +112,4 @@
 	{/hascontent}
 </form>
 
-{include file='footer' __disableAds=true}
+{include file='authFlowFooter'}
