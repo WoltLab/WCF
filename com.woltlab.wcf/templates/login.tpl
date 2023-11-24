@@ -17,7 +17,7 @@
 <form id="loginForm" method="post" action="{$loginController}">
 	<dl{if $errorField == 'username'} class="formError"{/if}>
 		<dt>
-			<label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label> <span class="customOptionRequired">*</span>
+			<label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label> <span class="formFieldRequired">*</span>
 		</dt>
 		<dd>
 			<input type="text" id="username" name="username" value="{$username}" required autofocus class="long" autocomplete="username">
@@ -35,7 +35,7 @@
 	
 	<dl{if $errorField == 'password'} class="formError"{/if}>
 		<dt>
-			<label for="password">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
+			<label for="password">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
 		</dt>
 		<dd>
 			<input type="password" id="password" name="password" value="{$password}" required class="long" autocomplete="current-password">
@@ -65,7 +65,7 @@
 </form>
 
 <p class="formFieldRequiredNotice">
-	<span class="customOptionRequired">*</span>
+	<span class="formFieldRequired">*</span>
 	{lang}wcf.global.form.required{/lang}
 </p>
 

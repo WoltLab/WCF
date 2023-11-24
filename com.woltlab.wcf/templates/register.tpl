@@ -41,7 +41,7 @@
 	<div class="section">
 		<dl{if $errorType[username]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
 				<input
@@ -69,7 +69,7 @@
 		
 		<dl{if $errorType[email]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
 				<input
@@ -97,7 +97,7 @@
 		{if !$isExternalAuthentication}
 			<dl{if $errorType[password]|isset} class="formError"{/if}>
 				<dt>
-					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
+					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
 				</dt>
 				<dd>
 					<input
@@ -192,7 +192,7 @@
 </form>
 
 <p class="formFieldRequiredNotice">
-	<span class="customOptionRequired">*</span>
+	<span class="formFieldRequired">*</span>
 	{lang}wcf.global.form.required{/lang}
 </p>
 
