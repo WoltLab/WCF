@@ -184,7 +184,7 @@
 	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.user.button.register{/lang}" accesskey="s">
 		{csrfToken}
 	</div>
 	
