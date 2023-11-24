@@ -188,12 +188,13 @@
 		{csrfToken}
 	</div>
 	
-	<div class="section">
-		<p><span class="customOptionRequired">*</span> {lang}wcf.global.form.required{/lang}</p>
-	</div>
-
 	{include file='thirdPartySsoButtons'}
 </form>
+
+<p class="formFieldRequiredNotice">
+	<span class="customOptionRequired">*</span>
+	{lang}wcf.global.form.required{/lang}
+</p>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Controller/User/Registration'], ({ setup }) => {

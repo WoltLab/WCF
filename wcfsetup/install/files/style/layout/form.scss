@@ -255,6 +255,12 @@ html[data-color-scheme="dark"] .formError {
 	color: rgba(204, 0, 1, 1) !important;
 }
 
+.formFieldRequiredNotice {
+	color: var(--wcfContentDimmedText);
+	margin-top: 20px;
+	@include wcfFontSmall;
+}
+
 html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
 	color: #ff4444 !important;
 }

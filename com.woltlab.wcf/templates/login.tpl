@@ -16,7 +16,9 @@
 
 <form id="loginForm" method="post" action="{$loginController}">
 	<dl{if $errorField == 'username'} class="formError"{/if}>
-		<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
+		<dt>
+			<label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label> <span class="customOptionRequired">*</span>
+		</dt>
 		<dd>
 			<input type="text" id="username" name="username" value="{$username}" required autofocus class="long" autocomplete="username">
 			{if $errorField == 'username'}
@@ -32,9 +34,11 @@
 	</dl>
 	
 	<dl{if $errorField == 'password'} class="formError"{/if}>
-		<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
+		<dt>
+			<label for="password">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
+		</dt>
 		<dd>
-			<input type="password" id="password" name="password" value="{$password}" class="long" autocomplete="current-password">
+			<input type="password" id="password" name="password" value="{$password}" required class="long" autocomplete="current-password">
 			{if $errorField == 'password'}
 				<small class="innerError">
 					{if $errorType == 'empty'}
@@ -59,5 +63,10 @@
 
 	{include file='thirdPartySsoButtons'}
 </form>
+
+<p class="formFieldRequiredNotice">
+	<span class="customOptionRequired">*</span>
+	{lang}wcf.global.form.required{/lang}
+</p>
 
 {include file='authFlowFooter'}
