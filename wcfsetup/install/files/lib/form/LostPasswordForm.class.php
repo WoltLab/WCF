@@ -20,6 +20,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Shows the lost password form.
@@ -53,9 +54,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
                         ->maximumLength(255)
                         ->addValidator(new FormFieldValidator(
                             'usernameValidator',
-                            function (TextFormField $formField) {
-                                $this->validateUsername($formField);
-                            }
+                            $this->validateUsername(...)
                         )),
                     CaptchaFormField::create()
                         ->available(LOST_PASSWORD_USE_CAPTCHA)
@@ -66,18 +65,34 @@ final class LostPasswordForm extends AbstractFormBuilderForm
 
     private function validateUsername(TextFormField $formField): void
     {
-        $this->user = User::getUserByUsername(StringUtil::trim($formField->getValue()));
+        $value = StringUtil::trim($formField->getValue());
+        $this->user = User::getUserByUsername($value);
         if (!$this->user->userID) {
-            $this->user = User::getUserByEmail(StringUtil::trim($formField->getValue()));
+            $this->user = User::getUserByEmail($value);
         }
 
         if (!$this->user->userID) {
-            $formField->addValidationError(
-                new FormFieldValidationError(
-                    'notFound',
-                    'wcf.user.username.error.notFound'
-                )
-            );
+            if (UserUtil::isValidEmail($value)) {
+                $formField->addValidationError(
+                    new FormFieldValidationError(
+                        'notFound',
+                        'wcf.user.lostPassword.email.error.notFound',
+                        [
+                            'email' => $value,
+                        ]
+                    )
+                );
+            } else {
+                $formField->addValidationError(
+                    new FormFieldValidationError(
+                        'notFound',
+                        'wcf.user.username.error.notFound',
+                        [
+                            'username' => $value,
+                        ]
+                    )
+                );
+            }
         }
     }
 
