@@ -225,6 +225,20 @@ html[data-color-scheme="dark"] .formError {
 	--color-error: #ff4747;
 }
 
+.formSuccess {
+	--color-success: rgb(46, 139, 87);
+
+	dt {
+		color: var(--color-success) !important;
+	}
+
+	input,
+	select,
+	textarea {
+		border-color: var(--color-success) !important;
+	}
+}
+
 /* grid-based form controls */
 .formGrid {
 	dt {
