@@ -4580,10 +4580,10 @@ Attachments:
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
 		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access this page.]]></item>
-		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
-		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>
 		<item name="wcf.user.login.register.registerNow"><![CDATA[Register Yourself]]></item>
+		<item name="wcf.user.login.thirdPartySeparator"><![CDATA[or]]></item>
+		<item name="wcf.user.login.noAccount"><![CDATA[Don’t have an account? <a href="{link controller='Register'}{/link}">Register now!</a>]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The entered password is wrong.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User Interface Language]]></item>
@@ -4791,7 +4791,6 @@ not register with us.]]></item>
 		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Newest Member]]></item>
-		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Reactions Received]]></item>

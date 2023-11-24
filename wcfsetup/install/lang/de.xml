@@ -4575,10 +4575,10 @@ Dateianhänge:
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}aktiviere{else}aktivieren Sie{/if} diese, um die Anmeldung durchzuführen.]]></item>
 		<item name="wcf.user.login.forceLogin"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} angemeldet sein, um diese Seite aufrufen zu können.]]></item>
-		<item name="wcf.user.login.login"><![CDATA[Anmeldung]]></item>
-		<item name="wcf.user.login.register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch kein Benutzerkonto auf unserer Seite? <a href="{link controller='Register'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Registriere dich{else}Registrieren Sie sich{/if} kostenlos</a> und {if LANGUAGE_USE_INFORMAL_VARIANT}nimm{else}nehmen Sie{/if} an unserer Community teil!]]></item>
 		<item name="wcf.user.login.register.registerNow"><![CDATA[Benutzerkonto erstellen]]></item>
+		<item name="wcf.user.login.thirdPartySeparator"><![CDATA[oder]]></item>
+		<item name="wcf.user.login.noAccount"><![CDATA[Noch kein Benutzerkonto? <a href="{link controller='Register'}{/link}">Jetzt registrieren!</a>]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
@@ -4789,7 +4789,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.search"><![CDATA[Mitgliedersuche]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Mitglied gefunden.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Neuestes Mitglied]]></item>
-		<item name="wcf.user.login.3rdParty"><![CDATA[Anmeldung über Drittanbieter]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
