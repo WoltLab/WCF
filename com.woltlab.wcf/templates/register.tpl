@@ -1,4 +1,8 @@
-{include file='header' __disableAds=true}
+{if !REGISTER_DISABLED}
+	{capture assign='contentDescription'}{lang}wcf.user.register.existingUser{/lang}{/capture}
+{/if}
+
+{include file='authFlowHeader'}
 
 {if $isExternalAuthentication}
 	<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</woltlab-core-notice>
@@ -6,7 +10,7 @@
 
 {include file='formError'}
 
-<form method="post" action="{link controller='Register'}{/link}">
+<form id="registerForm" method="post" action="{link controller='Register'}{/link}">
 	<section class="section" hidden>
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
@@ -18,7 +22,7 @@
 				<label for="username">{lang}wcf.user.username{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998">
+				<input type="text" id="username" name="username" value="" autocomplete="off" class="long" tabindex="998">
 			</dd>
 		</dl>
 		
@@ -27,7 +31,7 @@
 				<label for="email">{lang}wcf.user.email{/lang}</label>
 			</dt>
 			<dd>
-				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999">
+				<input type="email" id="email" name="email" value="" autocomplete="off" class="long" tabindex="999">
 			</dd>
 		</dl>
 		
@@ -46,7 +50,7 @@
 					name="{@$randomFieldNames[username]}"
 					value="{$username}"
 					required
-					class="medium"
+					class="long"
 					autocomplete="username"
 					data-validation-endpoint="{$usernameValidationEndpoint}"
 				>
@@ -74,7 +78,7 @@
 					name="{@$randomFieldNames[email]}"
 					value="{$email}"
 					required
-					class="medium"
+					class="long"
 					autocomplete="email"
 					data-validation-endpoint="{$emailValidationEndpoint}"
 				>
@@ -96,7 +100,16 @@
 					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
+					<input
+						type="password"
+						id="{@$randomFieldNames[password]}"
+						name="{@$randomFieldNames[password]}"
+						value="{$password}"
+						required
+						class="long"
+						autocomplete="new-password"
+						passwordrules="{$passwordRulesAttributeValue}"
+					>
 					{if $errorType[password]|isset}
 						<small class="innerError">
 							{if $errorType[password] == 'empty'}
@@ -178,6 +191,8 @@
 	<div class="section">
 		<p><span class="customOptionRequired">*</span> {lang}wcf.global.form.required{/lang}</p>
 	</div>
+
+	{include file='thirdPartySsoButtons'}
 </form>
 
 <script data-relocate="true">
@@ -209,4 +224,4 @@
 	});
 </script>
 
-{include file='footer' __disableAds=true}
+{include file='authFlowFooter'}

@@ -28,6 +28,11 @@
 	}
 }
 
+/* We have to set the margin because the first child element in this form is the invisible honeypot. */
+#registerForm > .section:nth-child(2) {
+	margin-top: 0;
+}
+
 .thirdPartySsoButtons {
 	margin-top: 30px;
 }
