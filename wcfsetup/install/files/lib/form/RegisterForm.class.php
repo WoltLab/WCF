@@ -4,6 +4,8 @@ namespace wcf\form;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\acp\form\UserAddForm;
+use wcf\action\EmailValidationAction;
+use wcf\action\UsernameValidationAction;
 use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\group\UserGroup;
@@ -281,6 +283,8 @@ class RegisterForm extends UserAddForm
             'isExternalAuthentication' => $this->isExternalAuthentication,
             'randomFieldNames' => $this->randomFieldNames,
             'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue(),
+            'usernameValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(UsernameValidationAction::class),
+            'emailValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(EmailValidationAction::class),
         ]);
     }
 

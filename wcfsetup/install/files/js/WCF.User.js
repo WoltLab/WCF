@@ -561,6 +561,7 @@ WCF.User.Registration = {};
  * @param	jQuery		element
  * @param	jQuery		confirmElement
  * @param	object		options
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation = Class.extend({
 	/**
@@ -760,6 +761,7 @@ WCF.User.Registration.Validation = Class.extend({
  * Username validation for registration.
  * 
  * @see	WCF.User.Registration.Validation
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.extend({
 	/**
@@ -818,6 +820,7 @@ WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.ext
  * Email validation for registration.
  * 
  * @see	WCF.User.Registration.Validation
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation.EmailAddress = WCF.User.Registration.Validation.extend({
 	/**

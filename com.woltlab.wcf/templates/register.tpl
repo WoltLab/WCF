@@ -40,7 +40,16 @@
 				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
-				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
+				<input
+					type="text"
+					id="{@$randomFieldNames[username]}"
+					name="{@$randomFieldNames[username]}"
+					value="{$username}"
+					required
+					class="medium"
+					autocomplete="username"
+					data-validation-endpoint="{$usernameValidationEndpoint}"
+				>
 				{if $errorType[username]|isset}
 					<small class="innerError">
 						{if $errorType[username] == 'empty'}
@@ -59,7 +68,16 @@
 				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
-				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required class="medium">
+				<input
+					type="email"
+					id="{@$randomFieldNames[email]}"
+					name="{@$randomFieldNames[email]}"
+					value="{$email}"
+					required
+					class="medium"
+					autocomplete="email"
+					data-validation-endpoint="{$emailValidationEndpoint}"
+				>
 				{if $errorType[email]|isset}
 					<small class="innerError">
 						{if $errorType[email] == 'empty'}
@@ -163,32 +181,31 @@
 </form>
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.global.form.error.empty': '{jslang}wcf.global.form.error.empty{/jslang}',
-			'wcf.user.username.error.invalid': '{jslang}wcf.user.username.error.invalid{/jslang}',
-			'wcf.user.username.error.notUnique': '{jslang}wcf.user.username.error.notUnique{/jslang}',
-			'wcf.user.email.error.invalid' : '{jslang}wcf.user.email.error.invalid{/jslang}',
-			'wcf.user.email.error.notUnique' : '{jslang}wcf.user.email.error.notUnique{/jslang}',
-			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Controller/User/Registration'], ({ setup }) => {
+		{jsphrase name='wcf.user.username.error.invalid'}
+		{jsphrase name='wcf.user.username.error.notUnique'}
+		{jsphrase name='wcf.user.email.error.invalid'}
+		{jsphrase name='wcf.user.email.error.notUnique'}
 		
-		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[email]}'), null);
-		new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}'), null, {
-			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
-			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
-		});
+		setup(
+			document.getElementById('{@$randomFieldNames[username]}'),
+			document.getElementById('{@$randomFieldNames[email]}'),
+			document.getElementById('{@$randomFieldNames[password]}'),
+			{
+				minlength: {@REGISTER_USERNAME_MIN_LENGTH},
+				maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
+			}
+		);
+	});
+	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
+		{include file='passwordStrengthLanguage'}
 		
-		require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-			{include file='passwordStrengthLanguage'}
-			
-			new PasswordStrength(elById('{@$randomFieldNames[password]}'), {
-				relatedInputs: [
-					elById('{@$randomFieldNames[username]}'),
-					elById('{@$randomFieldNames[email]}')
-				]
-			});
-		})
+		new PasswordStrength(document.getElementById('{@$randomFieldNames[password]}'), {
+			relatedInputs: [
+				document.getElementById('{@$randomFieldNames[username]}'),
+				document.getElementById('{@$randomFieldNames[email]}')
+			]
+		});
 	});
 </script>
 
