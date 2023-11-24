@@ -426,6 +426,7 @@
 
 		&.boxError {
 			background-color: var(--wcfStatusErrorBackground);
+			border-color: var(--wcfStatusErrorBorder);
 			color: var(--wcfStatusErrorText);
 
 			a:not(.button) {
@@ -439,6 +440,7 @@
 
 		&.boxInfo {
 			background-color: var(--wcfStatusInfoBackground);
+			border-color: var(--wcfStatusInfoBorder);
 			color: var(--wcfStatusInfoText);
 
 			a:not(.button) {
@@ -452,6 +454,7 @@
 
 		&.boxSuccess {
 			background-color: var(--wcfStatusSuccessBackground);
+			border-color: var(--wcfStatusSuccessBorder);
 			color: var(--wcfStatusSuccessText);
 
 			a:not(.button) {
@@ -465,6 +468,7 @@
 
 		&.boxWarning {
 			background-color: var(--wcfStatusWarningBackground);
+			border-color: var(--wcfStatusWarningBorder);
 			color: var(--wcfStatusWarningText);
 
 			a:not(.button) {
