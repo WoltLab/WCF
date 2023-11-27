@@ -131,9 +131,11 @@ final class UserFormField extends AbstractFormField implements
                 } else {
                     $username = StringUtil::trim($value);
                     $user = UserProfile::getUserProfileByUsername($username);
-                    $this->users = $user !== null ? [$user] : [];
+                    if ($user !== null) {
+                        $this->users = [$user];
 
-                    $this->value = $user?->username;
+                        $this->value = $user->username;
+                    }
                 }
             }
         }
