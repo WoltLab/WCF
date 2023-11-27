@@ -172,11 +172,7 @@
 	</div>
 		
 	{foreach from=$optionTree item=category}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</h2>
-			
-			{include file='userOptionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
-		</section>
+		{include file='userOptionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
 	{/foreach}
 	
 	{event name='sections'}
