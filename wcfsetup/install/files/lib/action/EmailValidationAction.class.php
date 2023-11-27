@@ -33,7 +33,7 @@ final class EmailValidationAction implements RequestHandlerInterface
                 $request->getParsedBody(),
                 <<<'EOT'
                     array {
-                        email: string
+                        email: non-empty-string
                     }
                     EOT
             );

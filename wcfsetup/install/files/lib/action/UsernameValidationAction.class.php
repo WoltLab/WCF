@@ -33,7 +33,7 @@ final class UsernameValidationAction implements RequestHandlerInterface
                 $request->getParsedBody(),
                 <<<'EOT'
                     array {
-                        username: string
+                        username: non-empty-string
                     }
                     EOT
             );
