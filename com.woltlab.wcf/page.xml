@@ -245,7 +245,6 @@
 			<name language="de">Registrierung abschließen</name>
 			<name language="en">Complete Registration</name>
 			<hasFixedParent>1</hasFixedParent>
-			<parent>com.woltlab.wcf.Register</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
 			<content language="en">
 				<title>Complete Registration</title>
