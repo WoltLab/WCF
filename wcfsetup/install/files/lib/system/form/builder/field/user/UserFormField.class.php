@@ -119,9 +119,21 @@ final class UserFormField extends AbstractFormField implements
 
             if (\is_string($value)) {
                 if ($this->allowsMultiple()) {
-                    $this->value = ArrayUtil::trim(\explode(',', $value));
+                    $usernames = ArrayUtil::trim(\explode(',', $value));
+
+                    $this->users = \array_values(\array_filter(
+                        UserProfile::getUserProfilesByUsername($usernames),
+                        static function (?UserProfile $user) {
+                            return $user !== null;
+                        }
+                    ));
+                    $this->value = \array_column($this->users, 'username');
                 } else {
-                    $this->value = StringUtil::trim($value);
+                    $username = StringUtil::trim($value);
+                    $user = UserProfile::getUserProfileByUsername($username);
+                    $this->users = $user !== null ? [$user] : [];
+
+                    $this->value = $user?->username;
                 }
             }
         }
