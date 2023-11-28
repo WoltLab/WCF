@@ -61,7 +61,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
 
     private function validateUsername(TextFormField $formField): void
     {
-        $value = StringUtil::trim($formField->getValue());
+        $value = $formField->getValue();
         $this->user = User::getUserByUsername($value);
 
         if (!$this->user->userID) {
@@ -94,7 +94,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             return;
         }
 
-        if (!\hash_equals($this->user->emailConfirmed, StringUtil::trim($formField->getValue()))) {
+        if (!\hash_equals($this->user->emailConfirmed, $formField->getValue())) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'invalid',

@@ -19,7 +19,6 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -65,7 +64,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
 
     private function validateUsername(TextFormField $formField): void
     {
-        $value = StringUtil::trim($formField->getValue());
+        $value = $formField->getValue();
         $this->user = User::getUserByUsername($value);
         if (!$this->user->userID) {
             $this->user = User::getUserByEmail($value);
