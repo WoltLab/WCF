@@ -1,21 +1,9 @@
 {include file='header' __disableAds=true}
 
-{include file='formError'}
-
-<form method="post" action="{link controller='Disclaimer'}{/link}">
-	<div class="section htmlContent">
-		{lang}wcf.user.register.disclaimer.text{/lang}
-		
-		{event name='sections'}
-	</div>
+<div class="section htmlContent">
+	{lang}wcf.user.register.disclaimer.text{/lang}
 	
-	{if !$__wcf->user->userID}
-		<div class="formSubmit">
-			<input type="submit" name="accept" value="{lang}wcf.user.register.disclaimer.accept{/lang}" accesskey="s">
-			<a class="button" href="{link}{/link}">{lang}wcf.user.register.disclaimer.decline{/lang}</a>
-			{csrfToken}
-		</div>
-	{/if}
-</form>
+	{event name='sections'}
+</div>
 
 {include file='footer' __disableAds=true}

@@ -103,6 +103,11 @@ class RegisterForm extends UserAddForm
     public $passwordStrengthVerdict = [];
 
     /**
+     * @since 6.1
+     */
+    public bool $termsConfirmed = false;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -117,13 +122,6 @@ class RegisterForm extends UserAddForm
         // registration disabled
         if (REGISTER_DISABLED) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
-        }
-
-        // check disclaimer
-        if (REGISTER_ENABLE_DISCLAIMER && !WCF::getSession()->getVar('disclaimerAccepted')) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Disclaimer'));
-
-            exit;
         }
 
         if (WCF::getSession()->getVar('__3rdPartyProvider')) {
@@ -164,6 +162,9 @@ class RegisterForm extends UserAddForm
             } catch (SystemException $e) {
                 // ignore
             }
+        }
+        if (!empty($_POST['termsConfirmed'])) {
+            $this->termsConfirmed = true;
         }
 
         $this->groupIDs = [];
@@ -215,6 +216,10 @@ class RegisterForm extends UserAddForm
                     WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
                 );
             }
+        }
+
+        if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
+            $this->errorType['termsConfirmed'] = 'empty';
         }
     }
 
@@ -285,6 +290,7 @@ class RegisterForm extends UserAddForm
             'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue(),
             'usernameValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(UsernameValidationAction::class),
             'emailValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(EmailValidationAction::class),
+            'termsConfirmed' => $this->termsConfirmed,
         ]);
     }
 

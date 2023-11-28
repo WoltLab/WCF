@@ -228,15 +228,15 @@
 		</page>
 		<page identifier="com.woltlab.wcf.Disclaimer">
 			<pageType>system</pageType>
-			<controller>wcf\form\DisclaimerForm</controller>
-			<name language="de">Disclaimer</name>
-			<name language="en">Disclaimer</name>
+			<controller>wcf\page\DisclaimerPage</controller>
+			<name language="de">Nutzungsbedingungen</name>
+			<name language="en">Terms and Conditions</name>
 			<parent>com.woltlab.wcf.Register</parent>
 			<content language="en">
-				<title>Disclaimer</title>
+				<title>Terms and Conditions</title>
 			</content>
 			<content language="de">
-				<title>Disclaimer</title>
+				<title>Nutzungsbedingungen</title>
 			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.RegisterActivation">

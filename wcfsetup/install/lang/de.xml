@@ -4921,6 +4921,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 <p><small><em>Quelle: <a href="https://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if LANGUAGE_USE_INFORMAL_VARIANT} dich{else}n Sie sich{/if} direkt an den Administrator dieser Seite.]]></item>
 		<item name="wcf.user.register.existingUser"><![CDATA[Bereits registriert? <a href="{link controller='Login'}{/link}">Anmelden</a>]]></item>
+		<item name="wcf.user.register.confirmTerms"><![CDATA[Ich stimme den <a href="{link controller='Disclaimer'}{/link}">Nutzungsbedingungen</a> zu.]]></item>
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Aktive Sitzungen]]></item>

@@ -166,6 +166,24 @@
 			{/hascontent}
 		{/if}
 
+		{if REGISTER_ENABLE_DISCLAIMER}
+			<dl{if $errorType[termsConfirmed]|isset} class="formError"{/if}>
+				<dt></dt>
+				<dd>
+					<label>
+						<input type="checkbox" name="termsConfirmed" value="1" required>
+						{lang}wcf.user.register.confirmTerms{/lang}
+						<span class="formFieldRequired">*</span>	
+					</label>
+					{if $errorType[termsConfirmed]|isset}
+						<small class="innerError">
+							{lang}wcf.global.form.error.empty{/lang}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		{/if}
+
 		{event name='generalFields'}
 	</div>
 		
