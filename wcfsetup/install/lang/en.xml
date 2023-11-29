@@ -4792,8 +4792,6 @@ not register with us.]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Reactions Received]]></item>
-		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
-		<item name="wcf.user.register.honeyPot.description"><![CDATA[Caution! If you can view this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search Content]]></item>
 		<item name="wcf.user.author"><![CDATA[Author]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Moderate User]]></item>
@@ -4923,6 +4921,8 @@ A notification will be sent once your account has been approved.]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[The registration could not be completed due to active restrictions, please contact the site administrator.]]></item>
 		<item name="wcf.user.register.existingUser"><![CDATA[Existing user? <a href="{link controller='Login'}{/link}">Login</a>]]></item>
 		<item name="wcf.user.register.confirmTerms"><![CDATA[I agree to the <a href="{link controller='Disclaimer'}{/link}">terms</a>.]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Caution! If you can view this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Active Sessions]]></item>
