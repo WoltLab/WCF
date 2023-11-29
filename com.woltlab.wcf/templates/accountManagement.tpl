@@ -92,23 +92,6 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
-				<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
-				<dd>
-					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-						
-					{if $errorField == 'confirmNewPassword'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.user.confirmPassword.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
 			{event name='changePasswordFields'}
 			
 			<script data-relocate="true">
@@ -145,23 +128,6 @@
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.user.email.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl{if $errorField == 'confirmEmail'} class="formError"{/if}>
-				<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
-				<dd>
-					<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
-						
-					{if $errorField == 'confirmEmail'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.user.confirmEmail.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
