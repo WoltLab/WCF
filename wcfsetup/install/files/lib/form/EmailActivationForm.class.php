@@ -4,98 +4,121 @@ namespace wcf\form;
 
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the email activation form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class EmailActivationForm extends AbstractForm
+final class EmailActivationForm extends AbstractFormBuilderForm
 {
-    /**
-     * user id
-     * @var int
-     */
-    public $userID;
-
-    /**
-     * activation code
-     * @var int
-     */
-    public $activationCode = '';
-
-    /**
-     * User object
-     * @var User
-     */
-    public $user;
+    public User $user;
 
     /**
      * @inheritDoc
      */
-    public function readParameters()
+    protected function createForm()
     {
-        parent::readParameters();
+        parent::createForm();
 
-        if (isset($_GET['u']) && !empty($_GET['u'])) {
-            $this->userID = \intval($_GET['u']);
-        }
-        if (isset($_GET['a']) && !empty($_GET['a'])) {
-            $this->activationCode = \intval($_GET['a']);
-        }
+        $this->form->appendChild(
+            FormContainer::create('data')
+                ->appendChildren([
+                    IntegerFormField::create('userID')
+                        ->label('wcf.user.userID')
+                        ->required()
+                        ->autoFocus()
+                        ->removeFieldClass('short')
+                        ->addFieldClass('long')
+                        ->addValidator(new FormFieldValidator(
+                            'userIDValidator',
+                            $this->validateUserID(...)
+                        )),
+                    IntegerFormField::create('activationCode')
+                        ->label('wcf.user.activationCode')
+                        ->description('<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(EmailNewActivationCodeForm::class)) . '">' . WCF::getLanguage()->get('wcf.user.newActivationCode') . '</a>')
+                        ->required()
+                        ->removeFieldClass('short')
+                        ->addFieldClass('long')
+                        ->addValidator(new FormFieldValidator(
+                            'activationCodeValidator',
+                            $this->validateActivationCode(...)
+                        ))
+                ])
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readFormParameters()
+    private function validateUserID(IntegerFormField $formField): void
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['u']) && !empty($_POST['u'])) {
-            $this->userID = \intval($_POST['u']);
-        }
-        if (isset($_POST['a']) && !empty($_POST['a'])) {
-            $this->activationCode = \intval($_POST['a']);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        EventHandler::getInstance()->fireAction($this, 'validate');
-
-        // check given user id
-        $this->user = new User($this->userID);
+        $this->user = new User($formField->getValue());
         if (!$this->user->userID) {
-            throw new UserInputException('u', 'invalid');
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'invalid',
+                    'wcf.user.userID.error.invalid'
+                )
+            );
+            return;
         }
 
-        // user is already enabled
         if ($this->user->reactivationCode == 0) {
-            throw new NamedUserException(WCF::getLanguage()->get('wcf.user.emailActivation.error.emailAlreadyEnabled'));
+            throw new NamedUserException(
+                WCF::getLanguage()->get('wcf.user.emailActivation.error.emailAlreadyEnabled')
+            );
         }
 
-        // check whether the new email isn't unique anymore
+        // Check whether the new email isn't unique anymore.
         if (User::getUserByEmail($this->user->newEmail)->userID) {
-            throw new NamedUserException(WCF::getLanguage()->get('wcf.user.email.error.notUnique'));
+            throw new NamedUserException(
+                WCF::getLanguage()->get('wcf.user.email.error.notUnique')
+            );
+        }
+    }
+
+    private function validateActivationCode(IntegerFormField $formField): void
+    {
+        if (!isset($this->user) || !$this->user->reactivationCode) {
+            return;
         }
 
-        // check given activation code
-        if ($this->user->reactivationCode != $this->activationCode) {
-            throw new UserInputException('a', 'invalid');
+        if ($this->user->reactivationCode != $formField->getValue()) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'invalid',
+                    'wcf.user.activationCode.error.invalid'
+                )
+            );
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function show()
+    {
+        if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+            throw new IllegalLinkException();
+        }
+
+        if (empty($_POST) && !empty($_GET['u']) && !empty($_GET['a'])) {
+            $_POST['userID'] = $_GET['u'];
+            $_POST['activationCode'] = $_GET['a'];
+            $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
+        }
+
+        parent::show();
     }
 
     /**
@@ -103,7 +126,7 @@ class EmailActivationForm extends AbstractForm
      */
     public function save()
     {
-        parent::save();
+        AbstractForm::save();
 
         $data = [
             'email' => $this->user->newEmail,
@@ -119,48 +142,20 @@ class EmailActivationForm extends AbstractForm
 
         // confirm email
         if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
-            // enable new email
             $this->objectAction = new UserAction([$this->user], 'confirmEmail');
             $this->objectAction->executeAction();
         }
-
         $this->saved();
 
         // forward to index page
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
-            WCF::getLanguage()->getDynamicVariable('wcf.user.emailActivation.success')
+            WCF::getLanguage()->getDynamicVariable('wcf.user.emailActivation.success'),
+            10,
+            'success',
+            true
         );
 
         exit;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'u' => $this->userID,
-            'a' => $this->activationCode,
-        ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
-            throw new IllegalLinkException();
-        }
-
-        if (empty($_POST) && $this->userID !== null && $this->activationCode != 0) {
-            $this->submit();
-        }
-
-        parent::show();
     }
 }
