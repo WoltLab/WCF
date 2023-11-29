@@ -4894,12 +4894,12 @@ not register with us.]]></item>
 		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
 		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterNewActivationCode'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site{/if}.]]></item>
 		<!-- Success Messages -->
-		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
+		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br><br>
 Your registration is now completed.]]></item>
-		<item name="wcf.user.register.success.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
-An email was sent to “{$user->email}” containing a one-time link to verify your account and ultimately completing your registration.]]></item>
-		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
-Your account is awaiting approval from an administrator.<br>
+		<item name="wcf.user.register.success.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br><br>
+An email was sent to <strong>{$user->email}</strong> containing a one-time link to verify your account and ultimately completing your registration.]]></item>
+		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br><br>
+Your account is awaiting approval from an administrator.<br><br>
 A notification will be sent once your account has been approved.]]></item>
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>

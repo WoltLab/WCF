@@ -128,8 +128,9 @@ final class LostPasswordForm extends AbstractFormBuilderForm
                         'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.' . $this->user->getAuthProvider()),
                     ]
                 ),
-                5,
-                'info'
+                10,
+                'info',
+                true
             );
 
             exit;
@@ -174,7 +175,10 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         // forward to index page
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
-            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent')
+            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent'),
+            10,
+            'success',
+            true
         );
 
         exit;

@@ -146,7 +146,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }
 
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10);
+        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
 
         exit;
     }

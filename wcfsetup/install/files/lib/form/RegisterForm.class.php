@@ -481,7 +481,9 @@ class RegisterForm extends UserAddForm
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
             WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]),
-            15
+            15,
+            'success',
+            true
         );
 
         exit;

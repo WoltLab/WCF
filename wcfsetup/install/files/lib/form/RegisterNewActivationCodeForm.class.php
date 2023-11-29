@@ -192,7 +192,9 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
                 'wcf.user.newActivationCode.success',
                 ['email' => $this->user->email]
             ),
-            10
+            10,
+            'success',
+            true
         );
 
         exit;
