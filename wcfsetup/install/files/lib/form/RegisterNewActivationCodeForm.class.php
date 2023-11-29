@@ -36,7 +36,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
      */
     protected function createForm()
     {
-        parent::createForm();;
+        parent::createForm();
 
         $this->form->appendChild(
             FormContainer::create('data')
@@ -44,7 +44,6 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
                     TextFormField::create('username')
                         ->label('wcf.user.username')
                         ->required()
-                        ->addClass('fubar')
                         ->autoFocus()
                         ->maximumLength(255)
                         ->addValidator(new FormFieldValidator(
@@ -56,6 +55,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
                         ->required()
                         ->removeFieldClass('medium')
                         ->addFieldClass('long')
+                        ->autocomplete('current-password')
                         ->addValidator(new FormFieldValidator(
                             'passwordValidator',
                             $this->validatePassword(...)
