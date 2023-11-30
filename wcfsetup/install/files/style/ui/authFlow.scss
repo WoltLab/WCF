@@ -33,11 +33,11 @@
 	margin-top: 0;
 }
 
-.thirdPartySsoButtons {
+.authOtherOptionButtons {
 	margin-top: 30px;
 }
 
-.thirdPartySsoButtons__separator {
+.authOtherOptionButtons__separator {
 	display: flex;
 	align-items: center;
 	text-align: center;
@@ -57,10 +57,15 @@
 	}
 }
 
-.thirdPartySsoButtons__buttonList {
+.authOtherOptionButtons__buttonList {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+.authOtherOptionButtons__button {
+	display: flex;
+	width: 100%;
 }
 
 .button.thirdPartyLoginButton {

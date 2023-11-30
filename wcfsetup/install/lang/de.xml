@@ -4937,7 +4937,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
 		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Anmelden als]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[Die Mehrfaktor-Authentifizierung wurde nicht rechtzeitig abgeschlossen. Aus Sicherheitsgründen wurde die unvollständige Anmeldung abgebrochen. Bitte <a href="{link controller='Login'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}melde dich{else}melden Sie sich{/if}</a> erneut an.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
@@ -4995,8 +4994,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
-		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode (E-Mail)]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> per E-Mail an <strong>{$emailDomain}</strong> gesendet.]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>Bei aktivierter Bestätigung über E-Mail {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst du{else}erhalten Sie{/if} bei jeder Anmeldung einen Einmalcode an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} hinterlegte E-Mail-Adresse <strong>{$__wcf->user->email}</strong>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst Zugriff auf dein E-Mail-Postfach haben, damit du dich erfolgreich anmelden kannst.{else}Sie müssen Zugriff auf Ihr E-Mail-Postfach haben, damit Sie sich erfolgreich anmelden können.{/if}</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
@@ -5025,8 +5024,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} auch eine Liste von Wiederherstellungscodes erhalten, falls der zusätzliche Faktor unbrauchbar werden sollte. **{if LANGUAGE_USE_INFORMAL_VARIANT}Hast du dir{else}Haben Sie sich{/if} die Wiederherstellungscodes notiert?** Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du es vergessen hast, kannst du{else}Sie es vergessen haben, können Sie{/if} dies nachholen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} in der Verwaltung der Wiederherstellungscodes [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}] neue Wiederherstellungscodes {if LANGUAGE_USE_INFORMAL_VARIANT}generierst{else}generieren{/if}.]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Mehrfaktor-Authentifizierung auf {@PAGE_TITLE|phrase} aktiviert]]></item>
-		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode (Smartphone-App)]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den 6-stelligen Einmalcode aus {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Smartphone-App ein.]]></item>
 		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Einmalcode generiert hat.]]></item>
@@ -5052,6 +5051,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
 		<item name="wcf.user.security.requiresMultifactor"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf diese Seite zugreifen {if LANGUAGE_USE_INFORMAL_VARIANT}darfst, musst du{else}dürfen, müssen Sie{/if} <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">die Mehrfaktor-Authentifizierung aktivieren</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
+		<item name="wcf.user.security.multifactor.otherOptions"><![CDATA[Andere Option wählen]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

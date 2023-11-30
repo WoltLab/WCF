@@ -1,10 +1,10 @@
 {hascontent}
-	<div class="thirdPartySsoButtons">
+	<div class="authOtherOptionButtons">
 		<div class="thirdPartySsoButtons__separator">
 			{lang}wcf.user.login.thirdPartySeparator{/lang}
 		</div>
 
-		<ul class="thirdPartySsoButtons__buttonList">
+		<ul class="authOtherOptionButtons__buttonList">
 			{content}
 				{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 					<li id="facebookAuth" class="thirdPartyLogin">
