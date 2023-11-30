@@ -74,6 +74,6 @@ final class CodeFormField extends TextFormField
      */
     protected static function getDefaultId(): string
     {
-        return 'onetimecode';
+        return 'code';
     }
 }
