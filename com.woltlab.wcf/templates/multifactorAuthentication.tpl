@@ -42,7 +42,7 @@
 
 <script data-relocate="true">
 	{
-		const code = document.getElementById('code');
+		const code = document.getElementById('code') ?? document.getElementById('onetimecode');
 		if (code) {
 			code.addEventListener('input', () => {
 				if (code.value.length == code.maxLength) {
