@@ -88,7 +88,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
 
         \assert(
             !empty($formData['action'])
-            && $formData['action'] === 'enable'
+                && $formData['action'] === 'enable'
         );
     }
 
@@ -149,8 +149,6 @@ final class EmailMultifactorMethod implements IMultifactorMethod
      */
     public function createAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
-        $form->markRequiredFields(false);
-
         $sql = "SELECT  code, createTime
                 FROM    wcf1_user_multifactor_email
                 WHERE   setupID = ?
