@@ -169,7 +169,7 @@
 	{/if}
 </head>
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
+<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp{if !$__isLogin|empty} acpAuthFlow{/if}">
 	<span id="top"></span>
 	
 	{assign var=_acpPageSubMenuActive value=false}

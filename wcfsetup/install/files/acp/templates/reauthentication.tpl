@@ -1,21 +1,11 @@
 {include file='header' pageTitle='wcf.user.reauthentication'}
 
-<div id="reauthentication" style="display: none">
-	{@$form->getHtml()}
-</div>
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.reauthentication{/lang}</h1>
+	</div>
+</header>
 
-<script data-relocate="true">
-	require(["WoltLabSuite/Core/Ui/Dialog"], (UiDialog) => {
-		UiDialog.openStatic("reauthentication", null, {
-			closable: false,
-			title: '{lang}wcf.user.reauthentication{/lang}',
-			onShow() {
-				setTimeout(() => {
-					document.getElementById("password")?.focus();
-				}, 2);
-			}
-		});
-	});
-</script>
+{@$form->getHtml()}
 
 {include file='footer'}
