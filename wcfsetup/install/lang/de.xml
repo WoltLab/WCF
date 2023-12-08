@@ -958,7 +958,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.credits.developedBy"><![CDATA[Software entwickelt von]]></item>
 		<item name="wcf.acp.dashboard.box.credits.developer"><![CDATA[Programmierung]]></item>
 		<item name="wcf.acp.dashboard.box.credits.productManager"><![CDATA[Projektleitung]]></item>
-		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Unionsmarken beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
+		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[„WoltLab&reg;“ ist eine eingetragene Unionsmarke beim Amt der Europäischen Union für geistiges Eigentum (EUIPO) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{#$usersAwaitingApproval} Benutzer {if $usersAwaitingApproval == 1}wartet{else}warten{/if} auf Aktivierung]]></item>
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
