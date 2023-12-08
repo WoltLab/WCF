@@ -16,6 +16,7 @@
 	<dt>{lang}wcf.acp.dashboard.box.credits.developer{/lang}</dt>
 	<dd>
 		<ul class="inlineList commaSeparated">
+			<li>Olaf Braun</li>
 			<li>Tim D&uuml;sterhus</li>
 			<li>Alexander Ebert</li>
 			<li>Joshua R&uuml;sweg</li>
