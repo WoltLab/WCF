@@ -22,19 +22,17 @@
 					<dt><label>{lang}wcf.user.language.description{/lang}</label></dt>
 					<dd id="languageIDContainer">
 						<script data-relocate="true">
-							$(function() {
-								var $languages = {
+							require(['WoltLabSuite/Core/Language/Chooser'], ({ init }) => {
+								const languages = {
 									{implode from=$availableLanguages item=language}
-										'{@$language->languageID}': {
-											iconPath: '{@$language->getIconPath()|encodeJS}',
-											languageName: '{@$language|encodeJS}'
-										}
+									'{@$language->languageID}': {
+										iconPath: '{@$language->getIconPath()|encodeJS}',
+										languageName: '{@$language|encodeJS}'
+									}
 									{/implode}
 								};
 								
-								require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
-									LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
-								});
+								init('languageIDContainer', 'languageID', {@$languageID}, languages);
 							});
 						</script>
 						<noscript>

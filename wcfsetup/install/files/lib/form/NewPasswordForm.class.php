@@ -8,7 +8,11 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\FormDocument;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -19,48 +23,17 @@ use wcf\util\UserRegistrationUtil;
 /**
  * Shows the new password form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class NewPasswordForm extends AbstractForm
+final class NewPasswordForm extends AbstractFormBuilderForm
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 
-    /**
-     * user id
-     * @var int
-     */
-    public $userID = 0;
-
-    /**
-     * lost password key
-     * @var string
-     */
-    public $lostPasswordKey = '';
-
-    /**
-     * User object
-     * @var User
-     */
-    public $user;
-
-    /**
-     * new password
-     * @var string
-     */
-    public $newPassword = '';
-
-    /**
-     * @var mixed[]
-     */
-    public $newPasswordStrengthVerdict = [];
-
-    /**
-     * confirmed new password
-     * @var string
-     */
-    public $confirmNewPassword = '';
+    public int $userID;
+    public string $lostPasswordKey;
+    public User $user;
 
     /**
      * @inheritDoc
@@ -115,75 +88,48 @@ class NewPasswordForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public function readFormParameters()
+    protected function createForm()
     {
-        parent::readFormParameters();
+        // We have to create the form manually here to avoid the form getting the ID 'newPassword'.
+        $this->form = FormDocument::create('newPasswordForm');
 
-        if (isset($_POST['newPassword'])) {
-            $this->newPassword = $_POST['newPassword'];
-        }
+        $this->form->appendChild(
+            FormContainer::create('data')
+                ->appendChildren([
+                    PasswordFormField::create('newPassword')
+                        ->label('wcf.user.newPassword')
+                        ->required()
+                        ->autoFocus()
+                        ->removeFieldClass('medium')
+                        ->addFieldClass('long')
+                        ->autocomplete('new-password')
+                        ->fieldAttribute('passwordrules', UserRegistrationUtil::getPasswordRulesAttributeValue())
+                        ->addValidator(new FormFieldValidator(
+                            'passwordValidator',
+                            $this->validatePassword(...)
+                        )),
+                ])
+        );
+    }
+
+    private function validatePassword(PasswordFormField $formField): void
+    {
         if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
             try {
-                $this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
+                $newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
             } catch (SystemException $e) {
                 // ignore
             }
         }
-        if (isset($_POST['confirmNewPassword'])) {
-            $this->confirmNewPassword = $_POST['confirmNewPassword'];
+
+        if (($newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'notSecure',
+                    'wcf.user.newPassword.error.notSecure'
+                )
+            );
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        parent::validate();
-
-        if (empty($this->newPassword)) {
-            throw new UserInputException('newPassword');
-        }
-
-        if (empty($this->confirmNewPassword)) {
-            throw new UserInputException('confirmNewPassword');
-        }
-
-        if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
-            throw new UserInputException('newPassword', 'notSecure');
-        }
-
-        if ($this->newPassword != $this->confirmNewPassword) {
-            throw new UserInputException('confirmNewPassword', 'notEqual');
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        WCF::getSession()->unregister('lostPasswordRequest');
-
-        // update user
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'password' => $this->newPassword,
-                'lastLostPasswordRequestTime' => 0,
-                'lostPasswordKey' => '',
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-
-        // forward to index page
-        HeaderUtil::delayedRedirect(
-            LinkHandler::getInstance()->getLink(),
-            WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.success', ['user' => $this->user])
-        );
-
-        exit;
     }
 
     /**
@@ -195,13 +141,51 @@ class NewPasswordForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'user' => $this->user,
-            'newPassword' => $this->newPassword,
-            'confirmNewPassword' => $this->confirmNewPassword,
-            'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue(),
         ]);
     }
 
-    private function throwInvalidLinkException()
+    /**
+     * @inheritDoc
+     */
+    public function save()
+    {
+        AbstractForm::save();
+
+        WCF::getSession()->unregister('lostPasswordRequest');
+        $this->updateUser();
+        $this->saved();
+        $this->forwardToIndexPage();
+
+        exit;
+    }
+
+    private function updateUser(): void
+    {
+        $formData = $this->form->getData()['data'];
+        $this->objectAction = new UserAction([$this->user], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'password' => $formData['newPassword'],
+                'lastLostPasswordRequestTime' => 0,
+                'lostPasswordKey' => '',
+            ]),
+        ]);
+        $this->objectAction->executeAction();
+    }
+
+    private function forwardToIndexPage(): void
+    {
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.success', ['user' => $this->user]),
+            10,
+            'success',
+            true
+        );
+
+        exit;
+    }
+
+    private function throwInvalidLinkException(): void
     {
         throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.error.invalidLink'));
     }

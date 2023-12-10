@@ -10,96 +10,93 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\EmailFormField;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
-use wcf\util\UserRegistrationUtil;
 
 /**
  * Shows the new activation code form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class RegisterNewActivationCodeForm extends AbstractForm
+final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
 {
-    /**
-     * username
-     * @var string
-     */
-    public $username = '';
-
-    /**
-     * password
-     * @var string
-     */
-    public $password = '';
-
-    /**
-     * email
-     * @var string
-     */
-    public $email = '';
-
-    /**
-     * user object
-     * @var User
-     */
-    public $user;
+    public User $user;
 
     /**
      * @inheritDoc
      */
-    public function readFormParameters()
+    protected function createForm()
     {
-        parent::readFormParameters();
+        parent::createForm();
 
-        if (isset($_POST['username'])) {
-            $this->username = StringUtil::trim($_POST['username']);
-        }
-        if (isset($_POST['password'])) {
-            $this->password = $_POST['password'];
-        }
-        if (isset($_POST['email'])) {
-            $this->email = StringUtil::trim($_POST['email']);
-        }
+        $this->form->appendChild(
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('username')
+                        ->label('wcf.user.username')
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(255)
+                        ->addValidator(new FormFieldValidator(
+                            'usernameValidator',
+                            $this->validateUsername(...)
+                        )),
+                    PasswordFormField::create('password')
+                        ->label('wcf.user.password')
+                        ->required()
+                        ->removeFieldClass('medium')
+                        ->addFieldClass('long')
+                        ->autocomplete('current-password')
+                        ->addValidator(new FormFieldValidator(
+                            'passwordValidator',
+                            $this->validatePassword(...)
+                        )),
+                    EmailFormField::create('email')
+                        ->label('wcf.user.email')
+                        ->description('wcf.user.registerNewActivationCode.email.description')
+                        ->addValidator(new FormFieldValidator(
+                            'emailValidator',
+                            $this->validateEmail(...)
+                        ))
+                ])
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function validate()
+    private function validateUsername(TextFormField $formField): void
     {
-        parent::validate();
+        $value = $formField->getValue();
+        $this->user = User::getUserByUsername($value);
 
-        // username
-        $this->validateUsername();
-
-        // password
-        $this->validatePassword();
-
-        // activation state
-        $this->validateActivationState();
-
-        // email
-        $this->validateEmail();
-    }
-
-    /**
-     * Validates the username.
-     */
-    public function validateUsername()
-    {
-        if (empty($this->username)) {
-            throw new UserInputException('username');
-        }
-
-        $this->user = User::getUserByUsername($this->username);
         if (!$this->user->userID) {
-            throw new UserInputException('username', 'notFound');
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'notFound',
+                    'wcf.user.username.error.notFound',
+                    [
+                        'username' => $value,
+                    ]
+                )
+            );
+            return;
+        }
+
+        if ($this->user->isEmailConfirmed()) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'userAlreadyEnabled',
+                    'wcf.user.registerActivation.error.userAlreadyEnabled',
+                )
+            );
+            return;
         }
 
         if (!empty($this->user->getBlacklistMatches())) {
@@ -107,50 +104,41 @@ class RegisterNewActivationCodeForm extends AbstractForm
         }
     }
 
-    /**
-     * Validates the password.
-     */
-    public function validatePassword()
+    private function validatePassword(PasswordFormField $formField): void
     {
-        if (empty($this->password)) {
-            throw new UserInputException('password');
+        if (!$this->user->userID) {
+            return;
         }
 
-        // check password
-        if (!$this->user->checkPassword($this->password)) {
-            throw new UserInputException('password', 'false');
-        }
-    }
-
-    /**
-     * Validates the activation state.
-     */
-    public function validateActivationState()
-    {
-        // check if user is already enabled
-        if ($this->user->isEmailConfirmed()) {
-            throw new UserInputException('username', 'alreadyEnabled');
+        if (!$this->user->checkPassword($formField->getValue())) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'false',
+                    'wcf.user.password.error.false'
+                )
+            );
         }
     }
 
-    /**
-     * Validates the email address.
-     */
-    public function validateEmail()
+    private function validateEmail(EmailFormField $formField): void
     {
-        if (!empty($this->email)) {
-            // check whether user entered the same email, instead of leaving the input empty
-            if (\mb_strtolower($this->email) != \mb_strtolower($this->user->email)) {
-                if (!UserRegistrationUtil::isValidEmail($this->email)) {
-                    throw new UserInputException('email', 'invalid');
-                }
+        if (!$this->user->userID) {
+            return;
+        }
 
-                // Check if email exists already.
-                if (User::getUserByEmail($this->email)->userID) {
-                    throw new UserInputException('email', 'notUnique');
-                }
-            } else {
-                $this->email = '';
+        $value = $formField->getValue();
+        if (!$value) {
+            return;
+        }
+
+        if (\mb_strtolower($value) != \mb_strtolower($this->user->email)) {
+            if (User::getUserByEmail($value)->userID) {
+                $formField->addValidationError(
+                    new FormFieldValidationError(
+                        'notUnique',
+                        'wcf.user.email.error.notUnique'
+                    )
+                );
             }
         }
     }
@@ -160,22 +148,32 @@ class RegisterNewActivationCodeForm extends AbstractForm
      */
     public function save()
     {
-        parent::save();
+        AbstractForm::save();
 
-        //  save user
+        $this->updateUser();
+        $this->sendActivationMail();
+        $this->saved();
+        $this->forwardToIndexPage();
+    }
+
+    private function updateUser(): void
+    {
+        $formData = $this->form->getData()['data'];
         $parameters = ['emailConfirmed' => \bin2hex(\random_bytes(20))];
-        if (!empty($this->email)) {
-            $parameters['email'] = $this->email;
+        if (!empty($formData['email'])) {
+            $parameters['email'] = $formData['email'];
         }
         $this->objectAction = new UserAction([$this->user], 'update', [
             'data' => \array_merge($this->additionalFields, $parameters),
         ]);
         $this->objectAction->executeAction();
 
-        // reload user to reflect changes
+        // Reload user to reflect changes.
         $this->user = new User($this->user->userID);
+    }
 
-        // send activation mail
+    private function sendActivationMail(): void
+    {
         $email = new Email();
         $email->addRecipient(new UserMailbox($this->user));
         $email->setSubject(WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
@@ -184,45 +182,22 @@ class RegisterNewActivationCodeForm extends AbstractForm
             new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation'),
         ]));
         $email->send();
-        $this->saved();
+    }
 
-        // forward to index page
+    private function forwardToIndexPage(): void
+    {
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
             WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.newActivationCode.success',
-                ['email' => !empty($this->email) ? $this->email : $this->user->email]
+                ['email' => $this->user->email]
             ),
-            10
+            10,
+            'success',
+            true
         );
 
         exit;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        parent::readData();
-
-        if (empty($_POST) && WCF::getUser()->userID) {
-            $this->username = WCF::getUser()->username;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'username' => $this->username,
-            'password' => $this->password,
-            'email' => $this->email,
-        ]);
     }
 
     /**
@@ -234,7 +209,7 @@ class RegisterNewActivationCodeForm extends AbstractForm
             throw new IllegalLinkException();
         }
 
-        if ($this->user === null && !empty(WCF::getUser()->getBlacklistMatches())) {
+        if (!empty(WCF::getUser()->getBlacklistMatches())) {
             throw new PermissionDeniedException();
         }
 

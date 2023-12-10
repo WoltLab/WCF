@@ -3,11 +3,9 @@
 {else}
 	{if RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY}
 		{if $supportsAsyncCaptcha|isset && $supportsAsyncCaptcha && RECAPTCHA_PUBLICKEY_INVISIBLE && RECAPTCHA_PRIVATEKEY_INVISIBLE}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
 			{assign var="recaptchaBucketID" value=true|microtime|sha1}
 			<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
-				<dt></dt>
+				<dt><label>{lang}wcf.recaptcha.title{/lang}</label></dt>
 				<dd>
 					<input type="hidden" name="recaptcha-type" value="invisible">
 					<div id="recaptchaBucket{$recaptchaBucketID}"></div>
@@ -122,13 +120,10 @@
 			// ensure recaptcha API is loaded at most once
 			if (!window.grecaptcha) $.getScript('https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback');
 			</script>
-		</section>
 		{else}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
 			{assign var="recaptchaBucketID" value=true|microtime|sha1}
 			<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
-				<dt></dt>
+				<dt><label>{lang}wcf.recaptcha.title{/lang}</label></dt>
 				<dd>
 				<input type="hidden" name="recaptcha-type" value="v2">
 					<div id="recaptchaBucket{$recaptchaBucketID}"></div>
@@ -200,7 +195,6 @@
 			// ensure recaptcha API is loaded at most once
 			if (!window.grecaptcha) $.getScript('https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback');
 			</script>
-		</section>
 		{/if}
 	{/if}
 {/if}

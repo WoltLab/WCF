@@ -169,8 +169,17 @@
 					class="loginLink"
 					href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
 					rel="nofollow"
-				>{lang}wcf.user.loginOrRegister{/lang}</a>
+				>{lang}wcf.user.button.login{/lang}</a>
 			</li>
+			{if !REGISTER_DISABLED}
+				<li id="userRegistration">
+					<a
+						class="registrationLink"
+						href="{link controller='Register'}{/link}"
+						rel="nofollow"
+					>{lang}wcf.user.button.register{/lang}</a>
+				</li>
+			{/if}
 		{/if}
 		
 		{if !$__hideUserMenu|isset}
@@ -228,7 +237,7 @@
 	<a
 		href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
 		class="userPanelLoginLink jsTooltip"
-		title="{lang}wcf.user.loginOrRegister{/lang}"
+		title="{lang}wcf.user.button.login{/lang}"
 		rel="nofollow"
 	>
 		{icon size=32 name='arrow-right-to-bracket'}

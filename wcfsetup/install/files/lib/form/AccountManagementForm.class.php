@@ -44,12 +44,6 @@ class AccountManagementForm extends AbstractForm
     public $email = '';
 
     /**
-     * confirmed new email address
-     * @var string
-     */
-    public $confirmEmail = '';
-
-    /**
      * new password
      * @var string
      */
@@ -59,12 +53,6 @@ class AccountManagementForm extends AbstractForm
      * @var mixed[]
      */
     public $newPasswordStrengthVerdict = [];
-
-    /**
-     * confirmed new password
-     * @var string
-     */
-    public $confirmNewPassword = '';
 
     /**
      * new user name
@@ -161,9 +149,6 @@ class AccountManagementForm extends AbstractForm
         if (isset($_POST['email'])) {
             $this->email = $_POST['email'];
         }
-        if (isset($_POST['confirmEmail'])) {
-            $this->confirmEmail = $_POST['confirmEmail'];
-        }
         if (isset($_POST['newPassword'])) {
             $this->newPassword = $_POST['newPassword'];
         }
@@ -173,9 +158,6 @@ class AccountManagementForm extends AbstractForm
             } catch (SystemException $e) {
                 // ignore
             }
-        }
-        if (isset($_POST['confirmNewPassword'])) {
-            $this->confirmNewPassword = $_POST['confirmNewPassword'];
         }
         if (isset($_POST['username'])) {
             $this->username = StringUtil::trim($_POST['username']);
@@ -255,21 +237,9 @@ class AccountManagementForm extends AbstractForm
 
         // password
         if (!WCF::getUser()->authData) {
-            if (!empty($this->newPassword) || !empty($this->confirmNewPassword)) {
-                if (empty($this->newPassword)) {
-                    throw new UserInputException('newPassword');
-                }
-
-                if (empty($this->confirmNewPassword)) {
-                    throw new UserInputException('confirmNewPassword');
-                }
-
+            if (!empty($this->newPassword)) {
                 if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
                     throw new UserInputException('newPassword', 'notSecure');
-                }
-
-                if ($this->newPassword != $this->confirmNewPassword) {
-                    throw new UserInputException('confirmNewPassword', 'notEqual');
                 }
             }
         }
@@ -296,11 +266,6 @@ class AccountManagementForm extends AbstractForm
                     throw new UserInputException('email', 'notUnique');
                 }
             }
-
-            // checks confirm input
-            if (\mb_strtolower($this->email) != \mb_strtolower($this->confirmEmail)) {
-                throw new UserInputException('confirmEmail', 'notEqual');
-            }
         }
     }
 
@@ -314,7 +279,7 @@ class AccountManagementForm extends AbstractForm
         // default values
         if (empty($_POST)) {
             $this->username = WCF::getUser()->username;
-            $this->email = $this->confirmEmail = WCF::getUser()->email;
+            $this->email = WCF::getUser()->email;
         }
     }
 
@@ -328,9 +293,7 @@ class AccountManagementForm extends AbstractForm
         WCF::getTPL()->assign([
             'password' => $this->password,
             'email' => $this->email,
-            'confirmEmail' => $this->confirmEmail,
             'newPassword' => $this->newPassword,
-            'confirmNewPassword' => $this->confirmNewPassword,
             'username' => $this->username,
             'renamePeriod' => WCF::getSession()->getPermission('user.profile.renamePeriod'),
             'quitStarted' => $this->quitStarted,
@@ -416,7 +379,7 @@ class AccountManagementForm extends AbstractForm
 
         // password
         if (!WCF::getUser()->authData) {
-            if (!empty($this->newPassword) || !empty($this->confirmNewPassword)) {
+            if (!empty($this->newPassword)) {
                 $updateParameters['password'] = $this->newPassword;
                 $success[] = 'wcf.user.changePassword.success';
             }
@@ -532,6 +495,6 @@ class AccountManagementForm extends AbstractForm
 
         // reset password
         $this->password = '';
-        $this->newPassword = $this->confirmNewPassword = '';
+        $this->newPassword = '';
     }
 }

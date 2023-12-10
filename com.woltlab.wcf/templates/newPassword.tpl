@@ -1,67 +1,20 @@
-{include file='header' __disableAds=true}
-
-{include file='formError'}
+{include file='authFlowHeader'}
 
 <woltlab-core-notice type="info">{lang}wcf.user.newPassword.info{/lang}</woltlab-core-notice>
 
-<form method="post" action="{link controller='NewPassword'}{/link}">
-	<div class="section">
-		<dl{if $errorField == 'newPassword'} class="formError"{/if}>
-			<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
-			<dd>
-				<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					
-				{if $errorField == 'newPassword'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.user.password.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
-			<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
-			<dd>
-				<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					
-				{if $errorField == 'confirmNewPassword'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.user.confirmPassword.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		{event name='fields'}
-		
-		<script data-relocate="true">
-			require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-				{include file='passwordStrengthLanguage'}
-				
-				new PasswordStrength(elById('newPassword'), {
-					staticDictionary: [
-						'{$user->username|encodeJS}',
-						'{$user->email|encodeJS}',
-					]
-				});
-			})
-		</script>
-	</div>
-	
-	{event name='sections'}
-		
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		{csrfToken}
-	</div>
-</form>
+{@$form->getHtml()}
 
-{include file='footer' __disableAds=true}
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
+		{include file='passwordStrengthLanguage'}
+		
+		new PasswordStrength(document.getElementById('newPassword'), {
+			staticDictionary: [
+				'{$user->username|encodeJS}',
+				'{$user->email|encodeJS}',
+			]
+		});
+	})
+</script>
+
+{include file='authFlowFooter'}

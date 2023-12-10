@@ -11,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -49,22 +50,10 @@ class UserAddForm extends UserOptionListForm
     public $email = '';
 
     /**
-     * confirmed email address
-     * @var string
-     */
-    public $confirmEmail = '';
-
-    /**
      * user password
      * @var string
      */
     public $password = '';
-
-    /**
-     * confirmed user password
-     * @var string
-     */
-    public $confirmPassword = '';
 
     /**
      * user group ids
@@ -138,14 +127,8 @@ class UserAddForm extends UserOptionListForm
         if (isset($_POST['email'])) {
             $this->email = StringUtil::trim($_POST['email']);
         }
-        if (isset($_POST['confirmEmail'])) {
-            $this->confirmEmail = StringUtil::trim($_POST['confirmEmail']);
-        }
         if (isset($_POST['password'])) {
             $this->password = $_POST['password'];
-        }
-        if (isset($_POST['confirmPassword'])) {
-            $this->confirmPassword = $_POST['confirmPassword'];
         }
         if (isset($_POST['groupIDs']) && \is_array($_POST['groupIDs'])) {
             $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
@@ -192,13 +175,13 @@ class UserAddForm extends UserOptionListForm
         }
 
         try {
-            $this->validateEmail($this->email, $this->confirmEmail);
+            $this->validateEmail($this->email);
         } catch (UserInputException $e) {
             $this->errorType[$e->getField()] = $e->getType();
         }
 
         try {
-            $this->validatePassword($this->password, $this->confirmPassword);
+            $this->validatePassword($this->password);
         } catch (UserInputException $e) {
             $this->errorType[$e->getField()] = $e->getType();
         }
@@ -315,11 +298,11 @@ class UserAddForm extends UserOptionListForm
 
         // reset values
         $this->disableSignature = $this->disableSignatureExpires = 0;
-        $this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = $this->userTitle = '';
+        $this->username = $this->email = $this->password = $this->userTitle = '';
         $this->signature = $this->disableSignatureReason = '';
         $this->groupIDs = [];
         $this->languageID = $this->getDefaultFormLanguageID();
-        /** @noinspection PhpUndefinedMethodInspection */
+        \assert($this->optionHandler instanceof UserOptionHandler);
         $this->optionHandler->resetOptionValues();
     }
 
@@ -348,12 +331,9 @@ class UserAddForm extends UserOptionListForm
 
     /**
      * Throws a UserInputException if the email is not unique or not valid.
-     *
-     * @param string $email
-     * @param string $confirmEmail
      * @throws  UserInputException
      */
-    protected function validateEmail($email, $confirmEmail)
+    protected function validateEmail(string $email): void
     {
         if (empty($email)) {
             throw new UserInputException('email');
@@ -368,33 +348,18 @@ class UserAddForm extends UserOptionListForm
         if (User::getUserByEmail($email)->userID) {
             throw new UserInputException('email', 'notUnique');
         }
-
-        // check confirm input
-        if (\mb_strtolower($email) != \mb_strtolower($confirmEmail)) {
-            throw new UserInputException('confirmEmail', 'notEqual');
-        }
     }
 
     /**
      * Throws a UserInputException if the password is not valid.
-     *
-     * @param string $password
-     * @param string $confirmPassword
      * @throws  UserInputException
      */
     protected function validatePassword(
         #[\SensitiveParameter]
-        $password,
-        #[\SensitiveParameter]
-        $confirmPassword
-    ) {
+        string $password
+    ): void {
         if (empty($password)) {
             throw new UserInputException('password');
-        }
-
-        // check confirm input
-        if ($password != $confirmPassword) {
-            throw new UserInputException('confirmPassword', 'notEqual');
         }
     }
 
@@ -426,9 +391,7 @@ class UserAddForm extends UserOptionListForm
         WCF::getTPL()->assign([
             'username' => $this->username,
             'email' => $this->email,
-            'confirmEmail' => $this->confirmEmail,
             'password' => $this->password,
-            'confirmPassword' => $this->confirmPassword,
             'groupIDs' => $this->groupIDs,
             'optionTree' => $this->optionTree,
             'availableGroups' => $this->getAvailableGroups(),

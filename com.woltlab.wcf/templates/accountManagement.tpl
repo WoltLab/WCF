@@ -92,23 +92,6 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
-				<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
-				<dd>
-					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-						
-					{if $errorField == 'confirmNewPassword'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.user.confirmPassword.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
 			{event name='changePasswordFields'}
 			
 			<script data-relocate="true">
@@ -145,23 +128,6 @@
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.user.email.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl{if $errorField == 'confirmEmail'} class="formError"{/if}>
-				<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
-				<dd>
-					<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
-						
-					{if $errorField == 'confirmEmail'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.user.confirmEmail.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -220,22 +186,35 @@
 						</dd>
 					</dl>
 				{elseif !$__wcf->getUser()->hasAdministrativeAccess()}
-					{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
+					{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 						<dl>
-							<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>
+							<dt></dt>
 							<dd>
-								{if $__wcf->session->getVar('__3rdPartyProvider') === 'github' && $__wcf->session->getVar('__oauthUser')}
-									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook' && $__wcf->session->getVar('__oauthUser')}
+									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 								{else}
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton button">{icon size=24 name='github' type='brand'} <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
+									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton button">{icon size=24 name='facebook' type='brand'} <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>
 					{/if}
 					
+					{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
+						<dl>
+							<dt></dt>
+							<dd>
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'google' && $__wcf->session->getVar('__oauthUser')}
+									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
+								{else}
+									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton button">{icon size=24 name='google' type='brand'} <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+								{/if}
+							</dd>
+						</dl>
+					{/if}
+
 					{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
 						<dl>
-							<dt>{lang}wcf.user.3rdparty.twitter{/lang}</dt>
+							<dt></dt>
 							<dd>
 								{if $__wcf->session->getVar('__3rdPartyProvider') === 'twitter' && $__wcf->session->getVar('__oauthUser')}
 									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
@@ -245,28 +224,15 @@
 							</dd>
 						</dl>
 					{/if}
-					
-					{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
+
+					{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 						<dl>
-							<dt>{lang}wcf.user.3rdparty.facebook{/lang}</dt>
+							<dt></dt>
 							<dd>
-								{if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook' && $__wcf->session->getVar('__oauthUser')}
-									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'github' && $__wcf->session->getVar('__oauthUser')}
+									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 								{else}
-									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton button">{icon size=24 name='facebook-f' type='brand'} <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
-								{/if}
-							</dd>
-						</dl>
-					{/if}
-					
-					{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
-						<dl>
-							<dt>{lang}wcf.user.3rdparty.google{/lang}</dt>
-							<dd>
-								{if $__wcf->session->getVar('__3rdPartyProvider') === 'google' && $__wcf->session->getVar('__oauthUser')}
-									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
-								{else}
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton button">{icon size=24 name='google' type='brand'} <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton button">{icon size=24 name='github' type='brand'} <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>

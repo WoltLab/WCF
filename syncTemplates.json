@@ -1,8 +1,5 @@
 {
-  "directories": [
-    "com.woltlab.wcf/templates",
-    "wcfsetup/install/files/acp/templates"
-  ],
+  "directories": ["com.woltlab.wcf/templates", "wcfsetup/install/files/acp/templates"],
   "templates": [
     "__aclFormField",
     "__booleanFormField",
@@ -27,7 +24,6 @@
     "__labelFormField",
     "__mediaSetCategoryDialog",
     "__messageQuoteManager",
-    "__multifactorAuthenticationLoginAs",
     "__multilineTextFormField",
     "__multiPageCondition",
     "__multipleSelectionFormField",

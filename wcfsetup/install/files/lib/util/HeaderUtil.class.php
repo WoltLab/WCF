@@ -231,23 +231,25 @@ final class HeaderUtil
 
     /**
      * Does a delayed redirect.
-     *
-     * @param string $location
-     * @param string $message
-     * @param int $delay
-     * @param string $status
      */
-    public static function delayedRedirect($location, $message, $delay = 5, $status = 'success')
-    {
+    public static function delayedRedirect(
+        string $location,
+        string $message,
+        int $delay = 5,
+        string $status = 'success',
+        bool $authFlowRedirect = false
+    ): void {
+        $templateName = $authFlowRedirect ? 'authFlowRedirect' : 'redirect';
+
         WCF::getTPL()->assign([
             'url' => $location,
             'message' => $message,
             'wait' => $delay,
-            'templateName' => 'redirect',
+            'templateName' => $templateName,
             'templateNameApplication' => 'wcf',
             'status' => $status,
         ]);
-        WCF::getTPL()->display('redirect');
+        WCF::getTPL()->display($templateName);
     }
 
     /**

@@ -9,7 +9,13 @@ use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
-use wcf\system\exception\UserInputException;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -18,46 +24,90 @@ use wcf\util\UserRegistrationUtil;
 /**
  * Shows the new email activation code form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
+final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
 {
+    public User $user;
+
     /**
      * @inheritDoc
      */
-    public function readParameters()
+    protected function createForm()
     {
-        parent::readParameters();
+        parent::createForm();
 
-        if (WCF::getUser()->userID) {
-            $this->username = WCF::getUser()->username;
-        }
+        $this->form->appendChild(
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('username')
+                        ->label('wcf.user.username')
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(255)
+                        ->value(WCF::getUser()->userID ? WCF::getUser()->username : '')
+                        ->addValidator(new FormFieldValidator(
+                            'usernameValidator',
+                            $this->validateUsername(...)
+                        )),
+                    PasswordFormField::create('password')
+                        ->label('wcf.user.password')
+                        ->required()
+                        ->removeFieldClass('medium')
+                        ->addFieldClass('long')
+                        ->autocomplete('current-password')
+                        ->addValidator(new FormFieldValidator(
+                            'passwordValidator',
+                            $this->validatePassword(...)
+                        )),
+                ])
+        );
     }
 
-    /**
-     * Validates the username.
-     */
-    public function validateUsername()
+    private function validateUsername(TextFormField $formField): void
     {
-        if (empty($this->username)) {
-            throw new UserInputException('username');
-        }
+        $value = $formField->getValue();
+        $this->user = User::getUserByUsername($value);
 
-        $this->user = User::getUserByUsername($this->username);
         if (!$this->user->userID) {
-            throw new UserInputException('username', 'notFound');
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'notFound',
+                    'wcf.user.username.error.notFound',
+                    [
+                        'username' => $value,
+                    ]
+                )
+            );
+            return;
+        }
+
+        if ($this->user->reactivationCode == 0) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'userAlreadyEnabled',
+                    'wcf.user.registerActivation.error.userAlreadyEnabled',
+                )
+            );
+            return;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function validateActivationState()
+    private function validatePassword(PasswordFormField $formField): void
     {
-        if ($this->user->reactivationCode == 0) {
-            throw new UserInputException('username', 'alreadyEnabled');
+        if (!$this->user->userID) {
+            return;
+        }
+
+        if (!$this->user->checkPassword($formField->getValue())) {
+            $formField->addValidationError(
+                new FormFieldValidationError(
+                    'false',
+                    'wcf.user.password.error.false'
+                )
+            );
         }
     }
 
@@ -68,26 +118,32 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
     {
         AbstractForm::save();
 
-        // generate activation code
-        $activationCode = UserRegistrationUtil::getActivationCode();
+        $this->updateUser();
+        $this->sendActivationMail();
+        $this->saved();
+        $this->forwardToIndexPage();
+    }
 
-        // save user
+    private function updateUser(): void
+    {
         $this->objectAction = new UserAction([$this->user], 'update', [
             'data' => \array_merge($this->additionalFields, [
-                'reactivationCode' => $activationCode,
+                'reactivationCode' => UserRegistrationUtil::getActivationCode(),
             ]),
         ]);
         $this->objectAction->executeAction();
 
-        // use user list to allow overriding of the fields without duplicating logic
+        // Use user list to allow overriding of the fields without duplicating logic.
         $userList = new UserList();
         $userList->useQualifiedShorthand = false;
         $userList->sqlSelects .= ", user_table.*, newEmail AS email";
         $userList->getConditionBuilder()->add('user_table.userID = ?', [$this->user->userID]);
         $userList->readObjects();
         $this->user = $userList->getObjects()[$this->user->userID];
+    }
 
-        // send activation mail
+    private function sendActivationMail(): void
+    {
         $email = new Email();
         $email->addRecipient(new UserMailbox($this->user));
         $email->setSubject(
@@ -98,16 +154,34 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
             new RecipientAwareTextMimePart('text/plain', 'email_changeEmailNeedReactivation'),
         ]));
         $email->send();
+    }
 
-        $this->saved();
-
-        // forward to index page
+    private function forwardToIndexPage(): void
+    {
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
             WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation'),
-            10
+            10,
+            'success',
+            true
         );
 
         exit;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function show()
+    {
+        if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+            throw new IllegalLinkException();
+        }
+
+        if (!empty(WCF::getUser()->getBlacklistMatches())) {
+            throw new PermissionDeniedException();
+        }
+
+        parent::show();
     }
 }

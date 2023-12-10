@@ -4,6 +4,8 @@ namespace wcf\form;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\acp\form\UserAddForm;
+use wcf\action\EmailValidationAction;
+use wcf\action\UsernameValidationAction;
 use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\group\UserGroup;
@@ -19,6 +21,7 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
@@ -100,6 +103,11 @@ class RegisterForm extends UserAddForm
     public $passwordStrengthVerdict = [];
 
     /**
+     * @since 6.1
+     */
+    public bool $termsConfirmed = false;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -114,13 +122,6 @@ class RegisterForm extends UserAddForm
         // registration disabled
         if (REGISTER_DISABLED) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
-        }
-
-        // check disclaimer
-        if (REGISTER_ENABLE_DISCLAIMER && !WCF::getSession()->getVar('disclaimerAccepted')) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Disclaimer'));
-
-            exit;
         }
 
         if (WCF::getSession()->getVar('__3rdPartyProvider')) {
@@ -150,9 +151,6 @@ class RegisterForm extends UserAddForm
         if (isset($_POST[$this->randomFieldNames['email']])) {
             $this->email = StringUtil::trim($_POST[$this->randomFieldNames['email']]);
         }
-        if (isset($_POST[$this->randomFieldNames['confirmEmail']])) {
-            $this->confirmEmail = StringUtil::trim($_POST[$this->randomFieldNames['confirmEmail']]);
-        }
         if (isset($_POST[$this->randomFieldNames['password']])) {
             $this->password = $_POST[$this->randomFieldNames['password']];
         }
@@ -165,8 +163,8 @@ class RegisterForm extends UserAddForm
                 // ignore
             }
         }
-        if (isset($_POST[$this->randomFieldNames['confirmPassword']])) {
-            $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
+        if (!empty($_POST['termsConfirmed'])) {
+            $this->termsConfirmed = true;
         }
 
         $this->groupIDs = [];
@@ -181,7 +179,7 @@ class RegisterForm extends UserAddForm
      */
     protected function initOptionHandler()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        \assert($this->optionHandler instanceof UserOptionHandler);
         $this->optionHandler->setInRegistration();
         parent::initOptionHandler();
     }
@@ -219,6 +217,10 @@ class RegisterForm extends UserAddForm
                 );
             }
         }
+
+        if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
+            $this->errorType['termsConfirmed'] = 'empty';
+        }
     }
 
     /**
@@ -250,7 +252,7 @@ class RegisterForm extends UserAddForm
                 $this->username = WCF::getSession()->getVar('__username');
             }
             if (WCF::getSession()->getVar('__email')) {
-                $this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
+                $this->email = WCF::getSession()->getVar('__email');
             }
 
             WCF::getSession()->register('registrationStartTime', TIME_NOW);
@@ -259,9 +261,7 @@ class RegisterForm extends UserAddForm
             $this->randomFieldNames = [
                 'username' => UserRegistrationUtil::getRandomFieldName('username'),
                 'email' => UserRegistrationUtil::getRandomFieldName('email'),
-                'confirmEmail' => UserRegistrationUtil::getRandomFieldName('confirmEmail'),
                 'password' => UserRegistrationUtil::getRandomFieldName('password'),
-                'confirmPassword' => UserRegistrationUtil::getRandomFieldName('confirmPassword'),
             ];
 
             WCF::getSession()->register('registrationRandomFieldNames', $this->randomFieldNames);
@@ -288,6 +288,9 @@ class RegisterForm extends UserAddForm
             'isExternalAuthentication' => $this->isExternalAuthentication,
             'randomFieldNames' => $this->randomFieldNames,
             'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue(),
+            'usernameValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(UsernameValidationAction::class),
+            'emailValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(EmailValidationAction::class),
+            'termsConfirmed' => $this->termsConfirmed,
         ]);
     }
 
@@ -326,17 +329,13 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validatePassword(
         #[\SensitiveParameter]
-        $password,
-        #[\SensitiveParameter]
-        $confirmPassword
-    ) {
+        string $password
+    ): void {
         if (!$this->isExternalAuthentication) {
-            parent::validatePassword($password, $confirmPassword);
+            parent::validatePassword($password);
 
             // check security of the given password
             if (($this->passwordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
@@ -345,12 +344,10 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function validateEmail($email, $confirmEmail)
+    #[\Override]
+    protected function validateEmail(string $email): void
     {
-        parent::validateEmail($email, $confirmEmail);
+        parent::validateEmail($email);
 
         if (!UserRegistrationUtil::isValidEmail($email)) {
             throw new UserInputException('email', 'invalid');
@@ -484,7 +481,9 @@ class RegisterForm extends UserAddForm
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
             WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]),
-            15
+            15,
+            'success',
+            true
         );
 
         exit;

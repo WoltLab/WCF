@@ -40,7 +40,7 @@
 				href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
 				class="button"
 				rel="nofollow"
-			>{icon name='key'} {lang}wcf.user.loginOrRegister{/lang}</a>
+			>{icon name='key'} {lang}wcf.user.button.login{/lang}</a>
 		</p>
 	</section>
 {/if}

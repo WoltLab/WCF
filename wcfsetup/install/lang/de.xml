@@ -3389,8 +3389,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	</category>
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine falsche Antwort angegeben.]]></item>
-		<item name="wcf.captcha.question.captcha"><![CDATA[Frage]]></item>
-		<item name="wcf.captcha.question.captcha.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beantworte{else}beantworten Sie{/if} die untenstehende Frage bzw. {if LANGUAGE_USE_INFORMAL_VARIANT}löse{else}lösen Sie{/if} die untenstehende Aufgabe.]]></item>
+		<item name="wcf.captcha.question.captcha.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beantworte{else}Beantworten Sie{/if} die obenstehende Frage bzw. {if LANGUAGE_USE_INFORMAL_VARIANT}löse{else}lösen Sie{/if} die Aufgabe.]]></item>
 	</category>
 	<category name="wcf.captcha.recaptchaV2">
 		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}bestätige{else}bestätigen Sie{/if}, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du kein Roboter bist{else}Sie kein Roboter sind{/if}.]]></item>
@@ -4565,10 +4564,6 @@ Dateianhänge:
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[Die folgenden Tags existieren nicht: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
-		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>
-		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch.]]></item>
-		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Kontrollzentrum]]></item>
 		<item name="wcf.user.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
@@ -4579,10 +4574,10 @@ Dateianhänge:
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}aktiviere{else}aktivieren Sie{/if} diese, um die Anmeldung durchzuführen.]]></item>
 		<item name="wcf.user.login.forceLogin"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} angemeldet sein, um diese Seite aufrufen zu können.]]></item>
-		<item name="wcf.user.login.login"><![CDATA[Anmeldung]]></item>
-		<item name="wcf.user.login.register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch kein Benutzerkonto auf unserer Seite? <a href="{link controller='Register'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Registriere dich{else}Registrieren Sie sich{/if} kostenlos</a> und {if LANGUAGE_USE_INFORMAL_VARIANT}nimm{else}nehmen Sie{/if} an unserer Community teil!]]></item>
 		<item name="wcf.user.login.register.registerNow"><![CDATA[Benutzerkonto erstellen]]></item>
+		<item name="wcf.user.login.thirdPartySeparator"><![CDATA[oder]]></item>
+		<item name="wcf.user.login.noAccount"><![CDATA[Noch kein Benutzerkonto? <a href="{link controller='Register'}{/link}">Jetzt registrieren!</a>]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
@@ -4620,7 +4615,6 @@ Dateianhänge:
 		<item name="wcf.user.button.register"><![CDATA[Registrieren]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Das Benutzerkonto ist mit einem Drittanbieter-Konto verbunden, ein Kennwort kann nicht angefordert werden.]]></item>
 		<item name="wcf.user.username.error.3rdParty.redirect"><![CDATA[Das Benutzerkonto ist mit {$provider} verbunden, ein Kennwort kann nicht angefordert werden. Sie werden jetzt zur Anmeldung mit {$provider} weitergeleitet.]]></item>
-		<item name="wcf.user.loginOrRegister"><![CDATA[Anmelden{if !REGISTER_DISABLED} oder registrieren{/if}]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Benutzername oder E-Mail-Adresse]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Männlich]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Weiblich]]></item>
@@ -4679,7 +4673,6 @@ Dateianhänge:
 		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Alleinstehende Namen sind einfach zu erraten.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Häufige Namen sind einfach zu erraten.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Kennwort vergessen]]></item>
-		<item name="wcf.user.lostPassword.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du dein Kennwort vergessen hast, musst du entweder den Benutzernamen oder die E-Mail-Adresse angeben, die du in deinem Profil hinterlegt hast. Du kannst dabei nur eines der beiden Felder ausfüllen. Wenn du beide Daten nicht mehr weißt, wende dich bitte an den Administrator.{else}Wenn Sie Ihr Kennwort vergessen haben, müssen Sie entweder den Benutzernamen oder die E-Mail-Adresse angeben, die Sie in Ihrem Profil hinterlegt haben. Sie können dabei nur eines der beiden Felder ausfüllen. Wenn Sie beide Daten nicht mehr wissen, wenden Sie sich bitte an den Administrator.{/if}]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Das Kennwort für dieses Benutzerkonto wurde in den letzten 24 Stunden bereits einmal angefordert. Aus Sicherheitsgründen kann das Kennwort eines Benutzers nur einmal pro Tag angefordert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} das Kennwort für dieses Benutzerkonto in {#$hours} Stunde{if $hours != 1}n{/if} erneut anfordern.]]></item>
 		<item name="wcf.user.lostPassword.error.flood"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele neue Kennwörter angefordert. Die Funktion wurde daher aus Sicherheitsgründen temporär deaktiviert. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es später erneut.]]></item>
@@ -4794,12 +4787,9 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.search"><![CDATA[Mitgliedersuche]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Mitglied gefunden.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Neuestes Mitglied]]></item>
-		<item name="wcf.user.login.3rdParty"><![CDATA[Anmeldung über Drittanbieter]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
-		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
-		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} dies sehen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
@@ -4905,10 +4895,12 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.register.needAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss noch von einem Administrator freigeschaltet werden, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
 		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse muss bestätigt werden. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterNewActivationCode'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Bestätige jetzt deine{else}Bestätigen Sie jetzt Ihre{/if} E-Mail-Adresse</a>{else}{if LANGUAGE_USE_INFORMAL_VARIANT}Wende dich{else}Wenden Sie sich{/if} dafür direkt an den Administrator dieser Seite{/if}.]]></item>
 		<!-- Success Messages -->
-		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Registrierung ist hiermit vollständig abgeschlossen.]]></item>
-		<item name="wcf.user.register.success.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br>
-Wir haben {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} eine E-Mail an {$user->email} geschickt. Die E-Mail enthält einen Link, den {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig aufrufen {if LANGUAGE_USE_INFORMAL_VARIANT}musst{else}müssen{/if}, um die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse zu bestätigen und damit {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung abzuschließen.]]></item>
-		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Benutzerdaten werden in Kürze von einem Administrator geprüft.<br>
+		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br><br>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Registrierung ist hiermit vollständig abgeschlossen.]]></item>
+		<item name="wcf.user.register.success.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br><br>
+Wir haben {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} eine E-Mail an <strong>{$user->email}</strong> geschickt. Die E-Mail enthält einen Link, den {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig aufrufen {if LANGUAGE_USE_INFORMAL_VARIANT}musst{else}müssen{/if}, um die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse zu bestätigen und damit {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung abzuschließen.]]></item>
+		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br><br>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Benutzerdaten werden in Kürze von einem Administrator geprüft.<br><br>
 Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freigeschaltet ist, {if LANGUAGE_USE_INFORMAL_VARIANT}wirst du{else}werden Sie{/if} per E-Mail darüber in Kenntnis gesetzt.]]></item>
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Die Registrierung ist momentan deaktiviert.]]></item>
@@ -4928,6 +4920,10 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
 <p><small><em>Quelle: <a href="https://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if LANGUAGE_USE_INFORMAL_VARIANT} dich{else}n Sie sich{/if} direkt an den Administrator dieser Seite.]]></item>
+		<item name="wcf.user.register.existingUser"><![CDATA[Bereits registriert? <a href="{link controller='Login'}{/link}">Anmelden</a>]]></item>
+		<item name="wcf.user.register.confirmTerms"><![CDATA[Ich stimme den <a href="{link controller='Disclaimer'}{/link}">Nutzungsbedingungen</a> zu.]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} dies sehen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Aktive Sitzungen]]></item>
@@ -4941,7 +4937,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
 		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Anmelden als]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[Die Mehrfaktor-Authentifizierung wurde nicht rechtzeitig abgeschlossen. Aus Sicherheitsgründen wurde die unvollständige Anmeldung abgebrochen. Bitte <a href="{link controller='Login'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}melde dich{else}melden Sie sich{/if}</a> erneut an.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
@@ -4999,8 +4994,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
-		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode (E-Mail)]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> per E-Mail an <strong>{$emailDomain}</strong> gesendet.]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>Bei aktivierter Bestätigung über E-Mail {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst du{else}erhalten Sie{/if} bei jeder Anmeldung einen Einmalcode an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} hinterlegte E-Mail-Adresse <strong>{$__wcf->user->email}</strong>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst Zugriff auf dein E-Mail-Postfach haben, damit du dich erfolgreich anmelden kannst.{else}Sie müssen Zugriff auf Ihr E-Mail-Postfach haben, damit Sie sich erfolgreich anmelden können.{/if}</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
@@ -5029,8 +5024,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} auch eine Liste von Wiederherstellungscodes erhalten, falls der zusätzliche Faktor unbrauchbar werden sollte. **{if LANGUAGE_USE_INFORMAL_VARIANT}Hast du dir{else}Haben Sie sich{/if} die Wiederherstellungscodes notiert?** Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du es vergessen hast, kannst du{else}Sie es vergessen haben, können Sie{/if} dies nachholen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} in der Verwaltung der Wiederherstellungscodes [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}] neue Wiederherstellungscodes {if LANGUAGE_USE_INFORMAL_VARIANT}generierst{else}generieren{/if}.]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Mehrfaktor-Authentifizierung auf {@PAGE_TITLE|phrase} aktiviert]]></item>
-		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode (Smartphone-App)]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den 6-stelligen Einmalcode aus {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Smartphone-App ein.]]></item>
 		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Einmalcode generiert hat.]]></item>
@@ -5056,6 +5051,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
 		<item name="wcf.user.security.requiresMultifactor"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf diese Seite zugreifen {if LANGUAGE_USE_INFORMAL_VARIANT}darfst, musst du{else}dürfen, müssen Sie{/if} <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">die Mehrfaktor-Authentifizierung aktivieren</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
+		<item name="wcf.user.security.multifactor.otherOptions"><![CDATA[Andere Option wählen]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
@@ -5155,7 +5151,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Die Kommunikation mit dem externen Dienst ist fehlgeschlagen. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[Bei der Verarbeitung der Anfrage ist ein Fehler aufgetreten. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Die Anfrage konnte nicht zugeordnet werden. Möglicherweise ist {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Sitzung abgelaufen.]]></item>
-		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Mit GitHub anmelden]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='github' type='brand'}&nbsp;GitHub. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'github'}(„<a href="https://github.com/{$__wcf->session->getVar('__oauthUser')->getUsername()}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__oauthUser')->getUsername()}</a>“){/if} verknüpfen]]></item>
@@ -5163,7 +5158,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Verknüpfung mit GitHub trennen]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto wurde erfolgreich getrennt.]]></item>
-		<item name="wcf.user.3rdparty.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit X anmelden]]></item>
 		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='x-twitter' type='brand'}&nbsp;X. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit X-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
@@ -5171,7 +5165,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} X-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Verknüpfung mit X trennen]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} X-Konto wurde erfolgreich getrennt.]]></item>
-		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Mit Facebook anmelden]]></item>
 		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='facebook' type='brand'}&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
@@ -5179,7 +5172,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Facebook-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect"><![CDATA[Verknüpfung mit Facebook trennen]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto wurde erfolgreich getrennt.]]></item>
-		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Mit Google anmelden]]></item>
 		<item name="wcf.user.3rdparty.google.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='google' type='brand'}&nbsp;Google. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Mit Google-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'google'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>

@@ -759,14 +759,6 @@ html[data-color-scheme="dark"] {
 	}
 }
 
-.acpLoginForm {
-	max-width: 500px;
-
-	form > :first-child {
-		margin-top: 0;
-	}
-}
-
 .contentItemList.packageUpdateList {
 	--minimum-column-width: 400px;
 
@@ -908,4 +900,20 @@ html[data-color-scheme="dark"] {
 
 .woltlabNewsfeed--loading .woltlabNewsfeed__iframe {
 	visibility: hidden;
+}
+
+.acpAuthFlow {
+	.content {
+		max-width: 500px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.contentHeader {
+		text-align: center;
+	}
+
+	input[type="submit"] {
+		width: 100%;
+	}
 }

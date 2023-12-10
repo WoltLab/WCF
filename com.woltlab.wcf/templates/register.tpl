@@ -1,12 +1,8 @@
-{capture assign='headContent'}
-	<style type="text/css">
-		#fieldset1 {
-			display: none;
-		}
-	</style>
-{/capture}
+{if !REGISTER_DISABLED}
+	{capture assign='contentDescription'}{lang}wcf.user.register.existingUser{/lang}{/capture}
+{/if}
 
-{include file='header' __disableAds=true}
+{include file='authFlowHeader'}
 
 {if $isExternalAuthentication}
 	<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</woltlab-core-notice>
@@ -14,14 +10,50 @@
 
 {include file='formError'}
 
-<form method="post" action="{link controller='Register'}{/link}">
+<form id="registerForm" method="post" action="{link controller='Register'}{/link}">
+	<section class="section" hidden>
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
+			<p class="sectionDescription">{lang}wcf.user.register.honeyPot.description{/lang}</p>
+		</header>
+		
+		<dl>
+			<dt>
+				<label for="username">{lang}wcf.user.username{/lang}</label>
+			</dt>
+			<dd>
+				<input type="text" id="username" name="username" value="" autocomplete="off" class="long" tabindex="998">
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt>
+				<label for="email">{lang}wcf.user.email{/lang}</label>
+			</dt>
+			<dd>
+				<input type="email" id="email" name="email" value="" autocomplete="off" class="long" tabindex="999">
+			</dd>
+		</dl>
+		
+		{event name='honeyPotFields'}
+	</section>
+	
 	<div class="section">
 		<dl{if $errorType[username]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
-				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
+				<input
+					type="text"
+					id="{@$randomFieldNames[username]}"
+					name="{@$randomFieldNames[username]}"
+					value="{$username}"
+					required
+					class="long"
+					autocomplete="username"
+					data-validation-endpoint="{$usernameValidationEndpoint}"
+				>
 				{if $errorType[username]|isset}
 					<small class="innerError">
 						{if $errorType[username] == 'empty'}
@@ -35,45 +67,21 @@
 			</dd>
 		</dl>
 		
-		{event name='usernameFields'}
-	</div>
-	
-	<section class="section" id="fieldset1">
-		<header class="sectionHeader">
-			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
-			<p class="sectionDescription">{lang}wcf.user.register.honeyPot.description{/lang}</p>
-		</header>
-		
-		<dl>
-			<dt>
-				<label for="username">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
-			</dt>
-			<dd>
-				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998">
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt>
-				<label for="email">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
-			</dt>
-			<dd>
-				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999">
-			</dd>
-		</dl>
-		
-		{event name='honeyPotFields'}
-	</section>
-	
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
-		
 		<dl{if $errorType[email]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
+				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
-				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required class="medium">
+				<input
+					type="email"
+					id="{@$randomFieldNames[email]}"
+					name="{@$randomFieldNames[email]}"
+					value="{$email}"
+					required
+					class="long"
+					autocomplete="email"
+					data-validation-endpoint="{$emailValidationEndpoint}"
+				>
 				{if $errorType[email]|isset}
 					<small class="innerError">
 						{if $errorType[email] == 'empty'}
@@ -85,34 +93,23 @@
 				{/if}
 			</dd>
 		</dl>
-		
-		<dl{if $errorType[confirmEmail]|isset} class="formError"{/if}>
-			<dt>
-				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label> <span class="customOptionRequired">*</span>
-			</dt>
-			<dd>
-				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required class="medium">
-				{if $errorType[confirmEmail]|isset}
-					<small class="innerError">
-						{lang}wcf.user.confirmEmail.error.{$errorType[confirmEmail]}{/lang}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		{event name='emailFields'}
-	</section>
-	
-	{if !$isExternalAuthentication}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
-			
+
+		{if !$isExternalAuthentication}
 			<dl{if $errorType[password]|isset} class="formError"{/if}>
 				<dt>
-					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
+					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
+					<input
+						type="password"
+						id="{@$randomFieldNames[password]}"
+						name="{@$randomFieldNames[password]}"
+						value="{$password}"
+						required
+						class="long"
+						autocomplete="new-password"
+						passwordrules="{$passwordRulesAttributeValue}"
+					>
 					{if $errorType[password]|isset}
 						<small class="innerError">
 							{if $errorType[password] == 'empty'}
@@ -125,35 +122,15 @@
 					<small>{lang}wcf.user.password.description{/lang}</small>
 				</dd>
 			</dl>
-			
-			<dl{if $errorType[confirmPassword]|isset} class="formError"{/if}>
-				<dt>
-					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label> <span class="customOptionRequired">*</span>
-				</dt>
-				<dd>
-					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					{if $errorType[confirmPassword]|isset}
-						<small class="innerError">
-							{lang}wcf.user.confirmPassword.error.{$errorType[confirmPassword]}{/lang}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			{event name='passwordFields'}
-		</section>
-	{/if}
-	
-	{if $availableLanguages|count > 1}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.language{/lang}</h2>
-			
+		{/if}
+
+		{if $availableLanguages|count > 1}
 			<dl>
 				<dt><label for="languageID">{lang}wcf.user.language.description{/lang}</label></dt>
 				<dd id="languageIDContainer">
 					<script data-relocate="true">
-						$(function() {
-							var $languages = {
+						require(['WoltLabSuite/Core/Language/Chooser'], ({ init }) => {
+							const languages = {
 								{implode from=$availableLanguages item=language}
 								'{@$language->languageID}': {
 									iconPath: '{@$language->getIconPath()|encodeJS}',
@@ -162,9 +139,7 @@
 								{/implode}
 							};
 							
-							require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
-								LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
-							});
+							init('languageIDContainer', 'languageID', {@$languageID}, languages);
 						});
 					</script>
 					<noscript>
@@ -176,7 +151,7 @@
 					</noscript>
 				</dd>
 			</dl>
-			
+				
 			{hascontent}
 				<dl>
 					<dt><label>{lang}wcf.user.visibleLanguages{/lang}</label></dt>
@@ -189,17 +164,31 @@
 					<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>
 				</dl>
 			{/hascontent}
-			
-			{event name='languageFields'}
-		</section>
-	{/if}
-	
+		{/if}
+
+		{if REGISTER_ENABLE_DISCLAIMER}
+			<dl{if $errorType[termsConfirmed]|isset} class="formError"{/if}>
+				<dt></dt>
+				<dd>
+					<label>
+						<input type="checkbox" name="termsConfirmed" value="1" required>
+						{lang}wcf.user.register.confirmTerms{/lang}
+						<span class="formFieldRequired">*</span>	
+					</label>
+					{if $errorType[termsConfirmed]|isset}
+						<small class="innerError">
+							{lang}wcf.global.form.error.empty{/lang}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		{/if}
+
+		{event name='generalFields'}
+	</div>
+		
 	{foreach from=$optionTree item=category}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</h2>
-			
-			{include file='userOptionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
-		</section>
+		{include file='userOptionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
 	{/foreach}
 	
 	{event name='sections'}
@@ -207,45 +196,45 @@
 	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.user.button.register{/lang}" accesskey="s">
 		{csrfToken}
 	</div>
 	
-	<div class="section">
-		<p><span class="customOptionRequired">*</span> {lang}wcf.global.form.required{/lang}</p>
-	</div>
+	{include file='thirdPartySsoButtons'}
 </form>
 
+<p class="formFieldRequiredNotice">
+	<span class="formFieldRequired">*</span>
+	{lang}wcf.global.form.required{/lang}
+</p>
+
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.global.form.error.empty': '{jslang}wcf.global.form.error.empty{/jslang}',
-			'wcf.user.username.error.invalid': '{jslang}wcf.user.username.error.invalid{/jslang}',
-			'wcf.user.username.error.notUnique': '{jslang}wcf.user.username.error.notUnique{/jslang}',
-			'wcf.user.email.error.invalid' : '{jslang}wcf.user.email.error.invalid{/jslang}',
-			'wcf.user.email.error.notUnique' : '{jslang}wcf.user.email.error.notUnique{/jslang}',
-			'wcf.user.confirmEmail.error.notEqual' : '{jslang}wcf.user.confirmEmail.error.notEqual{/jslang}',
-			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}',
-			'wcf.user.confirmPassword.error.notEqual' : '{jslang}wcf.user.confirmPassword.error.notEqual{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Controller/User/Registration'], ({ setup }) => {
+		{jsphrase name='wcf.user.username.error.invalid'}
+		{jsphrase name='wcf.user.username.error.notUnique'}
+		{jsphrase name='wcf.user.email.error.invalid'}
+		{jsphrase name='wcf.user.email.error.notUnique'}
 		
-		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
-		new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}'), null, {
-			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
-			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
-		});
+		setup(
+			document.getElementById('{@$randomFieldNames[username]}'),
+			document.getElementById('{@$randomFieldNames[email]}'),
+			document.getElementById('{@$randomFieldNames[password]}'),
+			{
+				minlength: {@REGISTER_USERNAME_MIN_LENGTH},
+				maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
+			}
+		);
+	});
+	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
+		{include file='passwordStrengthLanguage'}
 		
-		require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-			{include file='passwordStrengthLanguage'}
-			
-			new PasswordStrength(elById('{@$randomFieldNames[password]}'), {
-				relatedInputs: [
-					elById('{@$randomFieldNames[username]}'),
-					elById('{@$randomFieldNames[email]}')
-				]
-			});
-		})
+		new PasswordStrength(document.getElementById('{@$randomFieldNames[password]}'), {
+			relatedInputs: [
+				document.getElementById('{@$randomFieldNames[username]}'),
+				document.getElementById('{@$randomFieldNames[email]}')
+			]
+		});
 	});
 </script>
 
-{include file='footer' __disableAds=true}
+{include file='authFlowFooter'}

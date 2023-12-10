@@ -158,7 +158,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
      */
     function init() {
         // The search bar is unavailable during WCFSetup or the login.
-        if (_isAcp && _pageHeaderSearch === null) {
+        if (_pageHeaderSearch === null) {
             return;
         }
         initSearchBar();

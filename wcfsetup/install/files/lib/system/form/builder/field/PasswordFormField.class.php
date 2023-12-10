@@ -102,4 +102,12 @@ class PasswordFormField extends AbstractFormField implements
     {
         return 'password';
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getValidAutoCompleteTokens(): array
+    {
+        return ['new-password', 'current-password'];
+    }
 }

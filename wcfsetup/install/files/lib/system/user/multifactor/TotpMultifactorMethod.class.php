@@ -61,7 +61,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             \assert(\is_array($returnData));
             \assert(
                 isset($returnData['action'])
-                && ($returnData['action'] === 'add' || $returnData['action'] === 'delete')
+                    && ($returnData['action'] === 'add' || $returnData['action'] === 'delete')
             );
             \assert(isset($returnData['deviceName']));
             $form->successMessage('wcf.user.security.multifactor.totp.success.' . $returnData['action'], [
@@ -139,7 +139,8 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                             ->field($button)
                     );
                 } else {
-                    $button = new class extends FormButton {
+                    $button = new class extends FormButton
+                    {
                         protected $templateName = '__multifactorTotpDeviceNoDeleteButton';
                     };
                     $button->id('no-delete-' . $row['deviceID'])
@@ -162,7 +163,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
 
         \assert(
             (!empty($formData['data']) && empty($formData['delete']))
-            || (empty($formData['data']) && !empty($formData['delete']))
+                || (empty($formData['data']) && !empty($formData['delete']))
         );
 
         if (!empty($formData['delete'])) {
@@ -253,8 +254,6 @@ final class TotpMultifactorMethod implements IMultifactorMethod
      */
     public function createAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
-        $form->markRequiredFields(false);
-
         $sql = "SELECT      *
                 FROM        wcf1_user_multifactor_totp
                 WHERE       setupID = ?
@@ -281,12 +280,6 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                     ->objectProperty('deviceID')
                     ->options($deviceOptions)
                     ->value($mostRecentlyUsed['deviceID']),
-            ]);
-        } else {
-            $form->appendChildren([
-                HiddenFormField::create('device')
-                    ->objectProperty('deviceID')
-                    ->value($devices[0]['deviceID']),
             ]);
         }
 
@@ -352,6 +345,14 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                     }
                 )),
         ]);
+
+        if (\count($devices) == 1) {
+            $form->appendChildren([
+                HiddenFormField::create('device')
+                    ->objectProperty('deviceID')
+                    ->value($devices[0]['deviceID']),
+            ]);
+        }
     }
 
     /**

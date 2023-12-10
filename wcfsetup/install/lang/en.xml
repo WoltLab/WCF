@@ -3314,8 +3314,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[The entered answer is incorrect.]]></item>
-		<item name="wcf.captcha.question.captcha"><![CDATA[Question]]></item>
-		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question respectively to solve the problem below.]]></item>
+		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question respectively to solve the problem above.]]></item>
 	</category>
 	<category name="wcf.captcha.recaptchaV2">
 		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you are not a robot.]]></item>
@@ -4570,10 +4569,6 @@ Attachments:
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[The following tags do not exist: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email Address]]></item>
-		<item name="wcf.user.confirmPassword"><![CDATA[Confirm Password]]></item>
-		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[The entered email addresses do not match.]]></item>
-		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[The entered passwords do not match.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
 		<item name="wcf.user.email"><![CDATA[Email Address]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[The email address is already in use.]]></item>
@@ -4584,10 +4579,10 @@ Attachments:
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
 		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access this page.]]></item>
-		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
-		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>
 		<item name="wcf.user.login.register.registerNow"><![CDATA[Register Yourself]]></item>
+		<item name="wcf.user.login.thirdPartySeparator"><![CDATA[or]]></item>
+		<item name="wcf.user.login.noAccount"><![CDATA[Don’t have an account? <a href="{link controller='Register'}{/link}">Register now!</a>]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The entered password is wrong.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User Interface Language]]></item>
@@ -4625,7 +4620,6 @@ Attachments:
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
 		<item name="wcf.user.username.error.3rdParty.redirect"><![CDATA[Account is connected with {$provider}, password cannot be requested. You will now be redirected to the login with {$provider}.]]></item>
-		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
@@ -4684,7 +4678,6 @@ Attachments:
 		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Names and surnames by themselves are easy to guess.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Common names and surnames are easy to guess.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
-		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
 		<item name="wcf.user.lostPassword.error.flood"><![CDATA[You have requested too many passwords. The function has therefore been temporarily deactivated for security reasons. Please try again later.]]></item>
@@ -4796,12 +4789,9 @@ not register with us.]]></item>
 		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Newest Member]]></item>
-		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Reactions Received]]></item>
-		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
-		<item name="wcf.user.register.honeyPot.description"><![CDATA[Caution! If you can view this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search Content]]></item>
 		<item name="wcf.user.author"><![CDATA[Author]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Moderate User]]></item>
@@ -4904,12 +4894,12 @@ not register with us.]]></item>
 		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
 		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterNewActivationCode'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site{/if}.]]></item>
 		<!-- Success Messages -->
-		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
+		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br><br>
 Your registration is now completed.]]></item>
-		<item name="wcf.user.register.success.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
-An email was sent to “{$user->email}” containing a one-time link to verify your account and ultimately completing your registration.]]></item>
-		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
-Your account is awaiting approval from an administrator.<br>
+		<item name="wcf.user.register.success.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br><br>
+An email was sent to <strong>{$user->email}</strong> containing a one-time link to verify your account and ultimately completing your registration.]]></item>
+		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br><br>
+Your account is awaiting approval from an administrator.<br><br>
 A notification will be sent once your account has been approved.]]></item>
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
@@ -4929,6 +4919,10 @@ A notification will be sent once your account has been approved.]]></item>
 <p>The use by third parties of all published contact details for the purpose of advertising is expressly excluded. We reserve the right to take legal steps in the case of the unsolicited sending of advertising information; e.g., by means of spam mail.</p>
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[The registration could not be completed due to active restrictions, please contact the site administrator.]]></item>
+		<item name="wcf.user.register.existingUser"><![CDATA[Existing user? <a href="{link controller='Login'}{/link}">Login</a>]]></item>
+		<item name="wcf.user.register.confirmTerms"><![CDATA[I agree to the <a href="{link controller='Disclaimer'}{/link}">terms</a>.]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Caution! If you can view this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Active Sessions]]></item>
@@ -4942,7 +4936,6 @@ A notification will be sent once your account has been approved.]]></item>
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Active]]></item>
 		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-factor Authentication]]></item>
 		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[This user account is protected by a second factor.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Log in as]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[The multi-factor authentication was not completed in time. The incomplete login process was aborted for security reasons. Please <a href="{link controller='Login'}{/link}">Login</a> once again.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Dear {$setup->getUser()->username},</h2>
@@ -5000,8 +4993,8 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[The multi-factor authentication has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
-		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
-		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code (Email)]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to the email address <strong>{$emailDomain}</strong>.]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email to your account’s email address <strong>{$__wcf->user->email}</strong> whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
@@ -5030,7 +5023,7 @@ You successfully enabled multi-factor authentication using the “{lang}wcf.user
 
 You also received a list of backup codes to use when your second factor becomes unavailable. **Did you store these backup codes securely?** If you forgot you can do now by generating new codes in the Backup Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|phrase}]]></item>
-		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[One Time Code]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[One Time Code (Smartphone App)]]></item>
 		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[The 6-digit one time code generated by the smartphone app.]]></item>
 		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Set Up]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Device Name]]></item>
@@ -5057,6 +5050,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
 		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication. Before you may access this page you must <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">enable multi-factor authentication</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
+		<item name="wcf.user.security.multifactor.otherOptions"><![CDATA[Select another option]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
@@ -5156,7 +5150,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Unable to communicate with the external service. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[An error occurred while processing your authentication request. Please contact the administrator for help. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Unable to find the authentication request. Maybe your session expired.]]></item>
-		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Login with GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through {icon size='16' name='github' type='brand'}&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__3rdPartyProvider') === 'github'} “<a href="https://github.com/{$__wcf->session->getVar('__oauthUser')->getUsername()}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__oauthUser')->getUsername()}</a>”{/if}.]]></item>
@@ -5164,7 +5157,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Cancel connection with GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Your account is no longer connected with GitHub.]]></item>
-		<item name="wcf.user.3rdparty.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Login with X]]></item>
 		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You are creating an account through {icon size='16' name='x-twitter' type='brand'}&nbsp;X. The username has therefore already been entered. Now enter your email address and you can start right away!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your X account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}.]]></item>
@@ -5172,7 +5164,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your X account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Cancel connection with X]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Your account is no longer connected with X.]]></item>
-		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Login with Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You are creating an account through {icon size='16' name='facebook' type='brand'}&nbsp;Facebook. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Connect with your Facebook account{if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'} “{$__wcf->session->getVar('__oauthUser')->getUsername()}”{/if}.]]></item>
@@ -5180,7 +5171,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Your Facebook account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect"><![CDATA[Cancel connection with Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Your account is no longer connected with Facebook.]]></item>
-		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Login with Google]]></item>
 		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through {icon size='16' name='google' type='brand'}&nbsp;Google. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__3rdPartyProvider') === 'google'} “{$__wcf->session->getVar('__oauthUser')->getUsername()}”{/if}.]]></item>

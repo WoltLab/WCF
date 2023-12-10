@@ -64,7 +64,6 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        $this->form->markRequiredFields(false);
         $this->form->appendChildren([
             TemplateFormNode::create('loginAs')
                 ->templateName('__reauthenticationLoginAs'),

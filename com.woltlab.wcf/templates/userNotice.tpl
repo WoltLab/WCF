@@ -14,7 +14,7 @@
 		<woltlab-core-notice type="info">{lang}wcf.page.availableUpdates{/lang}</woltlab-core-notice>
 	{/if}
 	
-	{if $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
+	{if $templateName != 'registerNewActivationCode' && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'authFlowRedirect' && $__wcf->user->getBlacklistMatches()|empty}
 		{if $__wcf->user->requiresEmailActivation()}
 			<woltlab-core-notice type="warning">{lang}wcf.user.register.needActivation{/lang}</woltlab-core-notice>
 		{elseif $__wcf->user->requiresAdminActivation()}

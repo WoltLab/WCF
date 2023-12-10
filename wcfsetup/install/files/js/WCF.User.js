@@ -561,6 +561,7 @@ WCF.User.Registration = {};
  * @param	jQuery		element
  * @param	jQuery		confirmElement
  * @param	object		options
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation = Class.extend({
 	/**
@@ -760,6 +761,7 @@ WCF.User.Registration.Validation = Class.extend({
  * Username validation for registration.
  * 
  * @see	WCF.User.Registration.Validation
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.extend({
 	/**
@@ -818,6 +820,7 @@ WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.ext
  * Email validation for registration.
  * 
  * @see	WCF.User.Registration.Validation
+ * @deprecated 6.1 use `WoltLabSuite/Core/Controller/User/Registration` instead
  */
 WCF.User.Registration.Validation.EmailAddress = WCF.User.Registration.Validation.extend({
 	/**
@@ -847,75 +850,6 @@ WCF.User.Registration.Validation.EmailAddress = WCF.User.Registration.Validation
 			ajaxError: 'wcf.user.email.error.',
 			notEqual: WCF.Language.get('wcf.user.confirmEmail.error.notEqual')
 		};
-	}
-});
-
-/**
- * Toggles input fields for lost password form.
- */
-WCF.User.Registration.LostPassword = Class.extend({
-	/**
-	 * email input
-	 * @var	jQuery
-	 */
-	_email: null,
-	
-	/**
-	 * username input
-	 * @var	jQuery
-	 */
-	_username: null,
-	
-	/**
-	 * Initializes LostPassword-form class.
-	 */
-	init: function() {
-		// bind input fields
-		this._email = $('#emailInput');
-		this._username = $('#usernameInput');
-		
-		// bind event listener
-		this._email.keyup($.proxy(this._checkEmail, this));
-		this._username.keyup($.proxy(this._checkUsername, this));
-		
-		if ($.browser.mozilla && $.browser.touch) {
-			this._email.on('input', $.proxy(this._checkEmail, this));
-			this._username.on('input', $.proxy(this._checkUsername, this));
-		}
-		
-		// toggle fields on init
-		this._checkEmail();
-		this._checkUsername();
-	},
-	
-	/**
-	 * Checks for content in email field and toggles username.
-	 */
-	_checkEmail: function() {
-		if (this._email.val() == '') {
-			this._username.enable();
-			this._username.parents('dl:eq(0)').removeClass('disabled');
-		}
-		else {
-			this._username.disable();
-			this._username.parents('dl:eq(0)').addClass('disabled');
-			this._username.val('');
-		}
-	},
-	
-	/**
-	 * Checks for content in username field and toggles email.
-	 */
-	_checkUsername: function() {
-		if (this._username.val() == '') {
-			this._email.enable();
-			this._email.parents('dl:eq(0)').removeClass('disabled');
-		}
-		else {
-			this._email.disable();
-			this._email.parents('dl:eq(0)').addClass('disabled');
-			this._email.val('');
-		}
 	}
 });
 

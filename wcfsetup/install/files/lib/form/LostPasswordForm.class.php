@@ -10,12 +10,16 @@ use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\CaptchaFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Shows the lost password form.
@@ -24,47 +28,70 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class LostPasswordForm extends AbstractCaptchaForm
+final class LostPasswordForm extends AbstractFormBuilderForm
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 
     private const ALLOWED_RESETS_PER_24H = 5;
 
-    /**
-     * username
-     * @var string
-     */
-    public $username = '';
-
-    /**
-     * email address
-     * @var string
-     */
-    public $email = '';
-
-    /**
-     * user object
-     * @var User
-     */
-    public $user;
+    public User $user;
 
     /**
      * @inheritDoc
      */
-    public $useCaptcha = LOST_PASSWORD_USE_CAPTCHA;
-
-    /**
-     * @inheritDoc
-     */
-    public function readFormParameters()
+    protected function createForm()
     {
-        parent::readFormParameters();
+        parent::createForm();
 
-        if (isset($_POST['username'])) {
-            $this->username = StringUtil::trim($_POST['username']);
+        $this->form->appendChild(
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('username')
+                        ->label('wcf.user.usernameOrEmail')
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(255)
+                        ->addValidator(new FormFieldValidator(
+                            'usernameValidator',
+                            $this->validateUsername(...)
+                        )),
+                    CaptchaFormField::create()
+                        ->available(LOST_PASSWORD_USE_CAPTCHA)
+                        ->objectType(CAPTCHA_TYPE)
+                ])
+        );
+    }
+
+    private function validateUsername(TextFormField $formField): void
+    {
+        $value = $formField->getValue();
+        $this->user = User::getUserByUsername($value);
+        if (!$this->user->userID) {
+            $this->user = User::getUserByEmail($value);
         }
-        if (isset($_POST['email'])) {
-            $this->email = StringUtil::trim($_POST['email']);
+
+        if (!$this->user->userID) {
+            if (UserUtil::isValidEmail($value)) {
+                $formField->addValidationError(
+                    new FormFieldValidationError(
+                        'notFound',
+                        'wcf.user.lostPassword.email.error.notFound',
+                        [
+                            'email' => $value,
+                        ]
+                    )
+                );
+            } else {
+                $formField->addValidationError(
+                    new FormFieldValidationError(
+                        'notFound',
+                        'wcf.user.username.error.notFound',
+                        [
+                            'username' => $value,
+                        ]
+                    )
+                );
+            }
         }
     }
 
@@ -73,8 +100,6 @@ class LostPasswordForm extends AbstractCaptchaForm
      */
     public function validate()
     {
-        parent::validate();
-
         $requests = FloodControl::getInstance()->countContent(
             'com.woltlab.wcf.lostPasswordForm',
             new \DateInterval('PT24H')
@@ -83,21 +108,15 @@ class LostPasswordForm extends AbstractCaptchaForm
             throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.error.flood'));
         }
 
-        if (empty($this->username) && empty($this->email)) {
-            throw new UserInputException('username');
-        }
+        parent::validate();
+    }
 
-        if (!empty($this->username)) {
-            $this->user = User::getUserByUsername($this->username);
-            if (!$this->user->userID) {
-                throw new UserInputException('username', 'notFound');
-            }
-        } else {
-            $this->user = User::getUserByEmail($this->email);
-            if (!$this->user->userID) {
-                throw new UserInputException('email', 'notFound');
-            }
-        }
+    /**
+     * @inheritDoc
+     */
+    public function save()
+    {
+        AbstractForm::save();
 
         // check if using 3rd party
         if ($this->user->authData) {
@@ -109,8 +128,9 @@ class LostPasswordForm extends AbstractCaptchaForm
                         'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.' . $this->user->getAuthProvider()),
                     ]
                 ),
-                5,
-                'info'
+                10,
+                'info',
+                true
             );
 
             exit;
@@ -123,14 +143,6 @@ class LostPasswordForm extends AbstractCaptchaForm
                 ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600)]
             ));
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
 
         // generate a new lost password key
         $lostPasswordKey = Hex::encode(\random_bytes(20));
@@ -163,22 +175,12 @@ class LostPasswordForm extends AbstractCaptchaForm
         // forward to index page
         HeaderUtil::delayedRedirect(
             LinkHandler::getInstance()->getLink(),
-            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent')
+            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent'),
+            10,
+            'success',
+            true
         );
 
         exit;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'username' => $this->username,
-            'email' => $this->email,
-        ]);
     }
 }
