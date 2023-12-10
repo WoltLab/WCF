@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use wcf\acp\action\DashboardConfigureAction;
 use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\page\AbstractPage;
@@ -41,6 +42,7 @@ class IndexPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'dashboard' => new AcpDashboard(),
+            'endpointConfigureDashboard' => LinkHandler::getInstance()->getControllerLink(DashboardConfigureAction::class),
         ]);
     }
 

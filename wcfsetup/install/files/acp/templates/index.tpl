@@ -1,7 +1,27 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
+	</div>
+
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li>
+				<button
+					type="button"
+					id="configureDashboard"
+					class="button"
+					data-url="{$endpointConfigureDashboard}"
+				>
+					{icon name='gear' type='solid'}
+					<span>{lang}wcf.acp.dashboard.configure{/lang}</span>
+				</button>
+			</li>
+
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {event name='userNotice'}
@@ -16,5 +36,11 @@
 		</div>
 	{/foreach}
 </div>
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Acp/Controller/Dashboard/Configure'], ({ setup }) => {
+		setup(document.getElementById('configureDashboard'));
+	});
+</script>
 
 {include file='footer'}

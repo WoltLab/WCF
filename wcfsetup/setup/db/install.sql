@@ -67,6 +67,15 @@ CREATE TABLE wcf1_acl_simple_to_group (
 	UNIQUE KEY groupKey (objectTypeID, objectID, groupID)
 );
 
+DROP TABLE IF EXISTS wcf1_acp_dashboard_box_to_user;
+CREATE TABLE wcf1_acp_dashboard_box_to_user (
+	boxName VARCHAR(191) NOT NULL,
+	userID INT(10) NOT NULL,
+	enabled TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY boxToUser (boxName, userID)
+);
+
 DROP TABLE IF EXISTS wcf1_acp_menu_item;
 CREATE TABLE wcf1_acp_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1948,6 +1957,8 @@ ALTER TABLE wcf1_acl_simple_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_use
 
 ALTER TABLE wcf1_acl_simple_to_group ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_acl_simple_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_acp_dashboard_box_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
