@@ -1384,8 +1384,6 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Package Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key (reCAPTCHA v2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>

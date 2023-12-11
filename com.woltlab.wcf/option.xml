@@ -291,11 +291,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			<option name="enable_woltlab_news">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="module_article">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1622,5 +1617,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="google_maps_access_user_location"/>
 		<option name="module_amp"/>
 		<option name="article_enable_visit_tracking"/>
+		<option name="enable_woltlab_news"/>
 	</delete>
 </data>

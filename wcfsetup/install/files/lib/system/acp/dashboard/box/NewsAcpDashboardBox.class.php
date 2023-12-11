@@ -14,12 +14,6 @@ use wcf\system\WCF;
  */
 final class NewsAcpDashboardBox extends AbstractAcpDashboardBox
 {
-    #[\Override]
-    public function isAccessible(): bool
-    {
-        return ENABLE_WOLTLAB_NEWS;
-    }
-
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.acp.dashboard.box.news');

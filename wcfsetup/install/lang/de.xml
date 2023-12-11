@@ -1406,8 +1406,6 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierungs-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deinen{else}Ihren{/if} Authentifizierungs-Code {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kundenkonto auf woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten anzeigen]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Aktiviert die Anzeige aktueller WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Websiteschlüssel (reCAPTCHA, Version 2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen Websiteschlüssel für die Nutzung der reCAPTCHA-Funktion {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
