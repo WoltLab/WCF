@@ -62,25 +62,21 @@ const UiDialog = {
       { passive: false },
     );
 
-    const observer = new MutationObserver((mutations) => {
+    let containsPageOverlay = false;
+    const observer = new MutationObserver(() => {
       const currentValue = _container.getAttribute("aria-hidden");
 
-      for (const mutation of mutations) {
-        if (mutation.oldValue === currentValue) {
-          continue;
-        }
-
-        if (currentValue === "false") {
-          adoptPageOverlayContainer(_container);
-        } else {
-          releasePageOverlayContainer(_container);
-        }
+      if (currentValue === "true") {
+        releasePageOverlayContainer(_container);
+        containsPageOverlay = false;
+      } else if (!containsPageOverlay) {
+        adoptPageOverlayContainer(_container);
+        containsPageOverlay = true;
       }
     });
     observer.observe(_container, {
       attributes: true,
       attributeFilter: ["aria-hidden"],
-      attributeOldValue: true,
     });
 
     document.getElementById("content")!.appendChild(_container);
