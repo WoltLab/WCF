@@ -2918,7 +2918,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich duplizieren?]]></item>
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Titelbild]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Titelbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Titelbild verwendet.]]></item>
-		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG, PNG und WEBP zulässig.]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth} × {$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG, PNG und WEBP zulässig.]]></item>
 		<item name="wcf.acp.style.customAssets"><![CDATA[Zusätzliche Bilder]]></item>
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}Die hochgeladenen Bilder werden unter demselben Dateinamen im <kbd>custom/</kbd>-Ordner innerhalb des Stil-Ordners gespeichert. Im CSS muss der Ordner mit der Variable <kbd>#{$style_image_path}custom/</kbd> verlinkt werden.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
@@ -2951,7 +2951,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102×64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102 × 64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
@@ -2999,8 +2999,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256×256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256×256 Pixel groß sein.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256 × 256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256 × 256 Pixel groß sein.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>
@@ -3334,7 +3334,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.attachment.file.title"><![CDATA[Datei „{$attachment->filename}“ herunterladen]]></item>
-		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, {#$attachment->downloads} Mal angesehen]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width} × {#$attachment->height}, {#$attachment->downloads} Mal angesehen]]></item>
 		<item name="wcf.attachment.image.title"><![CDATA[Bild „{$attachment->filename}“ anzeigen]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
@@ -4106,7 +4106,7 @@ Dateianhänge:
 		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[Das Bild ist zu schmal.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
-		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
@@ -4198,7 +4198,7 @@ Dateianhänge:
 		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Bildformat]]></item>
-		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width}×{#$media->height}]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height}]]></item>
 		<item name="wcf.media.insert"><![CDATA[Datei einfügen]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Bildgröße]]></item>
 		<item name="wcf.media.insert.imageSize.large"><![CDATA[Großes Vorschaubild]]></item>
@@ -5089,9 +5089,9 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophäen-Typ]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Bild-Datei]]></item>
-		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein quadratisches Bild mit mindestens 64×64 Pixel hoch.]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein quadratisches Bild mit mindestens 64 × 64 Pixel hoch.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[Das Bild ist nicht quadratisch.]]></item>
-		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[Das Bild muss mindestens 64×64 Pixel groß sein.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[Das Bild muss mindestens 64 × 64 Pixel groß sein.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon-Farbe]]></item>
@@ -5201,7 +5201,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar verwalten]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} besitzen. Die Mindestgröße für Avatare liegt bei 128 × 128 Pixel.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Bereits hochgeladene Avatare werden bei Auswahl dieser Option gelöscht.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
@@ -5272,7 +5272,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoHash} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Titelbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Titelbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Titelbild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Titelbild hochladen]]></item>
-		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
+		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[Das Bild ist zu hoch.]]></item>

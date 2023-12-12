@@ -2847,7 +2847,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Default Cover Photo]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete the default cover photo? Once deleted, the global default photo will be used instead.]]></item>
-		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG, PNG and WEBP.]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth} × {$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG, PNG and WEBP.]]></item>
 		<item name="wcf.acp.style.customAssets"><![CDATA[Additional Images]]></item>
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}The uploaded images will be stored with the same file name within the <kbd>custom/</kbd> folder in the style’s image folder. You can retrieve the folder’s path within the CSS by using <kbd>#{$style_image_path}custom/</kbd>.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
@@ -2881,7 +2881,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102×64 pixels, exceeding images will be scaled.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102 × 64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[This image is used on high resolution displays such as the Apple Retina or 4K/UHD-displays. The image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
@@ -2928,8 +2928,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.parsingFailed"><![CDATA[The metadata of the entered font face could not be processed.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256×256 pixels large.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256 × 256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256 × 256 pixels large.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
@@ -3259,7 +3259,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.attachment.file.title"><![CDATA[Download file “{$attachment->filename}”]]></item>
-		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width} × {#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
 		<item name="wcf.attachment.image.title"><![CDATA[View image “{$attachment->filename}”]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Files]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Images]]></item>
@@ -4052,7 +4052,7 @@ Attachments:
 		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
@@ -4144,7 +4144,7 @@ Attachments:
 		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Dimensions]]></item>
-		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width}×{#$media->height}]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height}]]></item>
 		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
 		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail]]></item>
@@ -5090,9 +5090,9 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Image]]></item>
-		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[The image is not square.]]></item>
-		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
 		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon Color]]></item>
@@ -5202,7 +5202,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128×128 pixels.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128 × 128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
@@ -5273,7 +5273,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have blocked your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
+		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
