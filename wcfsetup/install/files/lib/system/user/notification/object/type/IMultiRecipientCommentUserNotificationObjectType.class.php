@@ -9,12 +9,7 @@ use wcf\data\comment\Comment;
  * being sent to multiple recipients.
  *
  * This interface can also be implemented by user notification object types for
- * comment responses. In this case, there is no distinction between commentResponse
- * and commentResponseOwner event and only a commentResponse event is fired.
- *
- * Since version 5.2 it is possible to send an `commentResponseOwner` notification
- * even if you implement this interface. Simple add the interface
- * `IMultiRecipientCommentResponseOwnerUserNotificationObjectType`, too.
+ * comment responses.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH

@@ -85,12 +85,6 @@
 			<preset>1</preset>
 		</event>
 		<event>
-			<name>commentResponseOwner</name>
-			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
-			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
-			<preset>1</preset>
-		</event>
-		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.articleComment.notification</objecttype>
 			<classname>wcf\system\user\notification\event\ArticleCommentUserNotificationEvent</classname>
@@ -148,4 +142,13 @@
 			<preset>0</preset>
 		</event>
 	</import>
+
+	<delete>
+		<event>
+			<name>commentResponseOwner</name>
+			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
+	</delete>
 </data>

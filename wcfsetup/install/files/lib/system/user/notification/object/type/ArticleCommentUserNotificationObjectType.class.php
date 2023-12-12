@@ -68,9 +68,7 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
 
         $users = UserProfileRuntimeCache::getInstance()->getObjects($subscribers);
 
-        // Add the article author to the recipients, to ensure, that he
-        // receives a notifications, even if he has not subscribed the category.
-        $recipients = [$article->getUserID()];
+        $recipients = [];
         foreach ($users as $user) {
             if ($article->canRead($user)) {
                 $recipients[] = $user->userID;

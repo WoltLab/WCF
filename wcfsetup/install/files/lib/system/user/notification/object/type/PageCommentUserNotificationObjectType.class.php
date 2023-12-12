@@ -15,8 +15,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  * @since       5.2
  */
 class PageCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements
-    IMultiRecipientCommentUserNotificationObjectType,
-    IMultiRecipientCommentResponseOwnerUserNotificationObjectType
+    IMultiRecipientCommentUserNotificationObjectType
 {
     use TMultiRecipientPageCommentUserNotificationObjectType;
 
@@ -34,12 +33,4 @@ class PageCommentUserNotificationObjectType extends AbstractUserNotificationObje
      * @inheritDoc
      */
     protected static $objectListClassName = CommentList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public function getCommentOwnerID(Comment $comment)
-    {
-        return $comment->userID;
-    }
 }

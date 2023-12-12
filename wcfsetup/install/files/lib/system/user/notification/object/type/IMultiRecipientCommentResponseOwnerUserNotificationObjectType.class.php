@@ -5,16 +5,7 @@ namespace wcf\system\user\notification\object\type;
 use wcf\data\comment\Comment;
 
 /**
- * Default interface for comment user notification object types with notifications
- * being sent to multiple recipients and has a `commentResponseOwner` event.
- *
- * This interface is only required, if you use the interface `IMultiRecipientCommentUserNotificationObjectType`.
- * If you use not this interface, the `commentResponseOwner` event is fired by default.
- *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   5.2
+ * @deprecated 6.1 The commentResponseOwner event is consistently fired, no matter if the event is a multi-recipient event or not.
  */
 interface IMultiRecipientCommentResponseOwnerUserNotificationObjectType
 {
