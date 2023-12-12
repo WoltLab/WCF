@@ -4206,7 +4206,7 @@ Attachments:
 		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[More Options]]></item>
 		<item name="wcf.message.new"><![CDATA[New]]></item>
-		<item name="wcf.message.error.censoredWordsFound"><![CDATA[The message contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
+		<item name="wcf.message.error.censoredWordsFound"><![CDATA[The message contains disallowed words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[The message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}.]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[The editor is already in use, please finish editing before continuing.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[The message is too long, must be under {#$maxTextLength} characters.]]></item>
