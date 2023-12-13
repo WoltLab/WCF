@@ -1,0 +1,32 @@
+<?php
+
+namespace wcf\system\appmaker\app\preset\event;
+
+use wcf\system\event\IEvent;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfiguration;
+
+/**
+ * Indicates the loading of the configuration.
+ *
+ * @author      Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
+ * @license     WoltLab License <http://www.woltlab.com/license-agreement.html>
+ */
+final class ConfigurationLoading implements IEvent
+{
+    private UserAuthenticationConfiguration $configuration;
+
+    public function register(UserAuthenticationConfiguration $configuration): void
+    {
+        if (isset($this->configuration)) {
+            throw new \BadMethodCallException("A configuration has already been loaded");
+        }
+
+        $this->configuration = $configuration;
+    }
+
+    public function getConfigration(): ?UserAuthenticationConfiguration
+    {
+        return $this->configuration ?? null;
+    }
+}
