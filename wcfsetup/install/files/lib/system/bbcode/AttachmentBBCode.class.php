@@ -91,7 +91,7 @@ final class AttachmentBBCode extends AbstractBBCode
         );
 
         if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
-            return \sprintf(
+            $result = \sprintf(
                 <<<'HTML'
                     <a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s" style="width: %s">
                         %s
@@ -107,23 +107,22 @@ final class AttachmentBBCode extends AbstractBBCode
                 $imageElement,
                 FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
             );
+        } else {
+            $result = \sprintf(
+                '<span title="%s" class="%s" style="width: %s">%s</span>',
+                $title,
+                $class,
+                $width,
+                $imageElement,
+            );
         }
-
-        $span = \sprintf(
-            '<span title="%s" class="%s" style="width: %s">%s</span>',
-            $title,
-            $class,
-            $width,
-            $imageElement,
-        );
-
         if ($alignment === 'center') {
             return \sprintf(
                 '<p class="text-center">%s</p>',
-                $span,
+                $result,
             );
         }
-        return $span;
+        return $result;
     }
 
     private function showImageAsThumbnail(Attachment $attachment, string $alignment, bool $hasParentLink, string $width): string
