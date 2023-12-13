@@ -109,13 +109,21 @@ final class AttachmentBBCode extends AbstractBBCode
             );
         }
 
-        return \sprintf(
+        $span = \sprintf(
             '<span title="%s" class="%s" style="width: %s">%s</span>',
             $title,
             $class,
             $width,
             $imageElement,
         );
+
+        if ($alignment === 'center') {
+            return \sprintf(
+                '<p class="text-center">%s</p>',
+                $span,
+            );
+        }
+        return $span;
     }
 
     private function showImageAsThumbnail(Attachment $attachment, string $alignment, bool $hasParentLink, string $width): string
@@ -156,7 +164,7 @@ final class AttachmentBBCode extends AbstractBBCode
         );
 
         if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
-            return \sprintf(
+            $result = \sprintf(
                 '<a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s" style="width: %s">%s%s</a>',
                 StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])),
                 StringUtil::encodeHTML($attachment->filename),
@@ -165,15 +173,23 @@ final class AttachmentBBCode extends AbstractBBCode
                 $imageElement,
                 $enlargeImageControls,
             );
+        } else {
+            $result = \sprintf(
+                '<span class="%s" stlye="width: %s">%s%s</span>',
+                $class,
+                $width,
+                $imageElement,
+                \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlargeImageControls : '',
+            );
+        }
+        if ($alignment === 'center') {
+            return \sprintf(
+                '<p class="text-center">%s</p>',
+                $result,
+            );
         }
 
-        return \sprintf(
-            '<span class="%s" stlye="width: %s">%s%s</span>',
-            $class,
-            $width,
-            $imageElement,
-            \str_contains($imageClasses, 'embeddedAttachmentLink') ? $enlargeImageControls : '',
-        );
+        return $result;
     }
 
     /**
