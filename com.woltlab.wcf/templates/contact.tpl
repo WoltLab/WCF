@@ -100,10 +100,11 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{csrfToken}
 	</div>
-	
-	<div class="section">
-		<p><span class="customOptionRequired">*</span> {lang}wcf.contact.options.required{/lang}</p>
-	</div>
 </form>
+
+<p class="formFieldRequiredNotice">
+	<span class="formFieldRequired">*</span>
+	{lang}wcf.global.form.required{/lang}
+</p>
 
 {include file='footer'}
