@@ -162,6 +162,12 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $float = 'none';
         $thumbnail = 'original';
+        $width = $element->getAttribute("data-width");
+        if (\preg_match('~(?<width>\d+)px$~', $width, $matches)) {
+            $width = (int)$matches['width'];
+        } else {
+            $width = "auto";
+        }
 
         if (
             \preg_match(
@@ -188,6 +194,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $mediumID,
             $thumbnail,
             $float,
+            $width,
         ];
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
