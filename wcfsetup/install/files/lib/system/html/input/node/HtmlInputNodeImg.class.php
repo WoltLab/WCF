@@ -119,6 +119,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         if ($parent->tagName === "figure") {
             if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
+            } else {
+                $float = 'center';
             }
 
             $replaceElement = $parent;
@@ -185,6 +187,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         if ($parent->tagName === "figure") {
             if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
+            } else {
+                $float = 'center';
             }
 
             $replaceElement = $parent;
