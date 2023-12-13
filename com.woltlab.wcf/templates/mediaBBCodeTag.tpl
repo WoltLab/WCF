@@ -1,5 +1,5 @@
 {if !$removeLinks|isset}{assign var='removeLinks' value=false}{/if}
-<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}">
+<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}"{if $width !== 'auto'} style="width: {$width}px; display: inline-flex"{/if}>
 	{if $media->isImage}
 		{if $thumbnailSize != 'original'}
 			{if !$removeLinks}
