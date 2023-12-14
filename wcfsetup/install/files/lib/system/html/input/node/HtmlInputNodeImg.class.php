@@ -114,16 +114,19 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $replaceElement = $element;
-        $parent = $element->parentNode;
-        \assert($parent instanceof \DOMElement);
-        if ($parent->tagName === "figure") {
-            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
+        $figure = $this->getParentFigure($element);
+        if ($figure !== null) {
+            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $figure->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
             } else {
                 $float = 'center';
             }
+            $replaceElement = $figure;
 
-            $replaceElement = $parent;
+            if (($element->parentNode instanceof \DOMElement) && $element->parentNode->nodeName === "a") {
+                DOMUtil::replaceElement($figure, $element->parentNode, false);
+                $replaceElement = $element;
+            }
         }
 
         $width = $replaceElement->getAttribute("data-width");
@@ -182,9 +185,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $replaceElement = $element;
-        $parent = $element->parentNode;
-        \assert($parent instanceof \DOMElement);
-        if ($parent->tagName === "figure") {
+        $parent = $this->getParentFigure($element);
+        if ($parent !== null && $parent->tagName === "figure") {
             if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
             } else {
@@ -289,9 +291,11 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     {
         // Aligned images are wrapped in a `<figure>` element that is the target
         // of the resize operation.
-        if ($element->parentNode->nodeName === 'figure') {
-            $this->mirrorWidthAttribute($element->parentNode);
-
+        if ($element->nodeName !== 'img') {
+            $figure = $this->getParentFigure($element);
+            if ($figure !== null) {
+                $this->mirrorWidthAttribute($figure);
+            }
             return;
         }
 
@@ -317,8 +321,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
      */
     protected function moveClassNameFromFigureToImage(\DOMElement $img): void
     {
-        $figure = $img->parentNode;
-        if (!($figure instanceof \DOMElement) || $figure->nodeName !== 'figure') {
+        $figure = $this->getParentFigure($img);
+        if ($figure === null) {
             return;
         }
 
@@ -342,5 +346,23 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         );
 
         $figure->setAttribute("class", \implode(' ', $classNames));
+    }
+
+    private function getParentFigure(\DOMElement $img): ?\DOMElement
+    {
+        $parent = $img->parentNode;
+        if ($parent instanceof \DOMElement) {
+            if ($parent->nodeName === 'figure') {
+                return $parent;
+            }
+            if ($parent->nodeName === 'a') {
+                $parent = $parent->parentNode;
+                if ($parent instanceof \DOMElement && $parent->nodeName === 'figure') {
+                    return $parent;
+                }
+            }
+        }
+
+        return null;
     }
 }
