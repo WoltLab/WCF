@@ -52,7 +52,7 @@ class UserTrophyListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['userTrophyID', 'trophyID', 'users.username', 'time'];
+    public $validSortFields = ['userTrophyID', 'trophyID', 'username', 'time'];
 
     /**
      * The filter value for the username search.
@@ -114,6 +114,15 @@ class UserTrophyListPage extends SortablePage
                 ['%' . $this->username . '%']
             );
         }
+    }
+
+    #[\Override]
+    protected function readObjects()
+    {
+        if ($this->sortField == 'username') {
+            $this->sqlOrderBy = 'users.username ' . $this->sortOrder . ', user_trophy.trophyID ' . $this->sortOrder;
+        }
+        parent::readObjects();
     }
 
     /**
