@@ -3,7 +3,6 @@
 namespace wcf\form;
 
 use wcf\system\event\EventHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
 
@@ -40,9 +39,6 @@ class LoginForm extends \wcf\acp\form\LoginForm
 
         $this->saved();
 
-        // redirect to url
-        WCF::getTPL()->assign('__hideUserMenu', true);
-
         $this->performRedirect($needsMultifactor);
     }
 
@@ -54,27 +50,7 @@ class LoginForm extends \wcf\acp\form\LoginForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'loginController' => LinkHandler::getInstance()->getLink('Login', [
-                'url' => $this->url,
-            ]),
             'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null),
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function performRedirect(bool $needsMultifactor = false)
-    {
-        if (
-            empty($this->url) || \mb_stripos($this->url, '?login/') !== false || \mb_stripos(
-                $this->url,
-                '/login/'
-            ) !== false
-        ) {
-            $this->url = LinkHandler::getInstance()->getLink();
-        }
-
-        parent::performRedirect($needsMultifactor);
     }
 }

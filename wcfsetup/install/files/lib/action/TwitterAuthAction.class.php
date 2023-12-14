@@ -17,6 +17,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\event\UserLoggedIn;
+use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
@@ -126,7 +127,7 @@ final class TwitterAuthAction extends AbstractAction
                 );
 
                 return new RedirectResponse(
-                    LinkHandler::getInstance()->getLink()
+                    LoginRedirect::getUrl()
                 );
             }
         } else {

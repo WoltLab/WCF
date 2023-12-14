@@ -23,6 +23,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -113,6 +114,10 @@ class RegisterForm extends UserAddForm
     public function readParameters()
     {
         parent::readParameters();
+
+        if (!empty($_REQUEST['url'])) {
+            LoginRedirect::setUrl(StringUtil::trim($_REQUEST['url']));
+        }
 
         // user is already registered
         if (WCF::getUser()->userID) {
@@ -479,7 +484,7 @@ class RegisterForm extends UserAddForm
 
         // forward to index page
         HeaderUtil::delayedRedirect(
-            LinkHandler::getInstance()->getLink(),
+            LoginRedirect::getUrl(),
             WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]),
             15,
             'success',

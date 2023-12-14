@@ -7,7 +7,6 @@ use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -15,6 +14,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\event\UserLoggedIn;
+use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -49,12 +49,6 @@ class LoginForm extends AbstractCaptchaForm
     public $user;
 
     /**
-     * given forward url
-     * @var string
-     */
-    public $url;
-
-    /**
      * @inheritDoc
      */
     public $useCaptcha = false;
@@ -76,12 +70,7 @@ class LoginForm extends AbstractCaptchaForm
         parent::readParameters();
 
         if (!empty($_REQUEST['url'])) {
-            $this->url = StringUtil::trim($_REQUEST['url']);
-
-            // discard URL if it is not an absolute URL of local content
-            if (!ApplicationHandler::getInstance()->isInternalURL($this->url)) {
-                $this->url = '';
-            }
+            LoginRedirect::setUrl(StringUtil::trim($_REQUEST['url']));
         }
 
         if (WCF::getUser()->userID) {
@@ -251,19 +240,12 @@ class LoginForm extends AbstractCaptchaForm
     protected function performRedirect(bool $needsMultifactor = false)
     {
         if ($needsMultifactor) {
-            $this->url = LinkHandler::getInstance()->getLink('MultifactorAuthentication', [
-                'url' => $this->url,
-            ]);
-        }
-
-        if (!empty($this->url)) {
-            HeaderUtil::redirect($this->url);
+            $url = LinkHandler::getInstance()->getLink('MultifactorAuthentication');
         } else {
-            $application = ApplicationHandler::getInstance()->getActiveApplication();
-            $path = $application->getPageURL() . 'acp/';
-
-            HeaderUtil::redirect($path);
+            $url = LoginRedirect::getUrl();
         }
+
+        HeaderUtil::redirect($url);
 
         exit;
     }
@@ -278,7 +260,7 @@ class LoginForm extends AbstractCaptchaForm
         WCF::getTPL()->assign([
             'username' => $this->username,
             'password' => $this->password,
-            'url' => $this->url,
+            'loginController' => LinkHandler::getInstance()->getControllerLink(static::class),
         ]);
     }
 }

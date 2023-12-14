@@ -12,7 +12,7 @@
 	{include file='formError'}
 {/if}
 
-<form id="loginForm" method="post" action="{link controller='Login' url=$url}{/link}">
+<form id="loginForm" method="post" action="{$loginController}">
 	<dl{if $errorField == 'username'} class="formError"{/if}>
 		<dt>
 			<label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label> <span class="formFieldRequired">*</span>
