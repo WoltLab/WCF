@@ -186,7 +186,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $replaceElement = $element;
         $parent = $this->getParentFigure($element);
-        if ($parent !== null && $parent->tagName === "figure") {
+        if ($parent !== null) {
             if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
             } else {
