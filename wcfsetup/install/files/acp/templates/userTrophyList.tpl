@@ -79,7 +79,7 @@
 			<thead>
 			<tr>
 				<th class="columnID columnUserTrophyID{if $sortField == 'userTrophyID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserTrophyList'}pageNo={@$pageNo}&sortField=userTrophyID&sortOrder={if $sortField == 'userTrophyID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-				<th class="columnText columnUsername{if $sortField == 'userID'} active {@$sortOrder}{/if}"><a href="{link controller='UserTrophyList'}pageNo={@$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.user.username{/lang}</a></th>
+				<th class="columnText columnUsername{if $sortField == 'username'} active {@$sortOrder}{/if}"><a href="{link controller='UserTrophyList'}pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.user.username{/lang}</a></th>
 				<th class="columnTitle columnTrophy{if $sortField == 'trophyID'} active {@$sortOrder}{/if}"><a href="{link controller='UserTrophyList'}pageNo={@$pageNo}&sortField=trophyID&sortOrder={if $sortField == 'trophyID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.trophy{/lang}</a></th>
 				<th class="columnDate columnUserTrophyTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='UserTrophyList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.date{/lang}</a></th>
 
