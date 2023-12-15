@@ -7,7 +7,8 @@ namespace wcf\system\user\authentication\configuration;
  *
  * @author      Marcel Werk
  * @copyright   2001-2023 WoltLab GmbH
- * @license     WoltLab License <http://www.woltlab.com/license-agreement.html>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.1
  */
 final class UserAuthenticationConfiguration
 {
