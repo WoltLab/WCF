@@ -59,7 +59,11 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             $value = StringUtil::trim($element->textContent);
             if ($value === '') {
                 if ($element->childElementCount === 0) {
-                    $value = $href->__toString();
+                    // Discard empty links, these were sometimes created by the
+                    // previous editor when editing links.
+                    DOMUtil::removeNode($element);
+
+                    continue;
                 }
             } else if ($this->isSuspiciousValue($value, $href)) {
                 $value = $href->__toString();
