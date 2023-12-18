@@ -406,7 +406,11 @@ class ReactionHandler extends SingletonFactory
                         $likeable->getLanguageID(),
                         $user->userID,
                         TIME_NOW,
-                        ['reactionType' => $reaction]
+                        [
+                            'reactionTypeID' => $reaction->reactionTypeID,
+                            /* @deprecated 6.1 use `reactionTypeID` */
+                            'reactionType' => $reaction,
+                        ]
                     );
                 }
             }
