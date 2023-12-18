@@ -3,6 +3,7 @@
 namespace wcf\system\user\activity\event;
 
 use wcf\data\article\ViewableArticleList;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -50,7 +51,9 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
                 // short output
                 $text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.likedArticle', [
                     'article' => $article,
-                    'reactionType' => $event->reactionType,
+                    'reactionType' => ReactionHandler::getInstance()->getReactionTypeByID(
+                        $event->reactionTypeID ?? $event->reactionType->reactionTypeID
+                    ),
                 ]);
                 $event->setTitle($text);
 
