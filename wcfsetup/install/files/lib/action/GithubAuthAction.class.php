@@ -13,6 +13,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\event\UserLoggedIn;
+use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -133,7 +134,7 @@ final class GithubAuthAction extends AbstractOauth2Action
                 );
 
                 return new RedirectResponse(
-                    LinkHandler::getInstance()->getLink()
+                    LoginRedirect::getUrl()
                 );
             }
         } else {

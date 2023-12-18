@@ -18,7 +18,9 @@ use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\package\event\PackageUpdateListChanged;
 use wcf\system\package\license\LicenseApi;
+use wcf\system\session\event\PreserveVariablesCollecting;
 use wcf\system\user\authentication\event\UserLoggedIn;
+use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\event\UsernameValidating;
 use wcf\system\WCF;
 use wcf\system\worker\event\RebuildWorkerCollecting;
@@ -32,6 +34,9 @@ return static function (): void {
     );
 
     $eventHandler->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
+    $eventHandler->register(PreserveVariablesCollecting::class, static function (PreserveVariablesCollecting $event) {
+        $event->keys[] = LoginRedirect::SESSION_VAR_KEY;
+    });
 
     $eventHandler->register(UsernameValidating::class, UsernameValidatingCheckCharactersListener::class);
 

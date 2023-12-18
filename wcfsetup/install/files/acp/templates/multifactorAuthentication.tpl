@@ -21,7 +21,7 @@
 			{if $setup->getId() != $method->getId()}
 				<li>
 					<a
-						href="{link controller='MultifactorAuthentication' object=$method url=$redirectUrl}{/link}"
+						href="{link controller='MultifactorAuthentication' object=$method}{/link}"
 						class="button authOtherOptionButtons__button"
 					>
 						{if $method->getObjectType()->icon}

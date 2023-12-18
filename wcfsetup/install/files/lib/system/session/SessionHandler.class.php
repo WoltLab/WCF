@@ -16,6 +16,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RouteHandler;
+use wcf\system\session\event\PreserveVariablesCollecting;
 use wcf\system\SingletonFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -150,7 +151,7 @@ final class SessionHandler extends SingletonFactory
             case 'parentPageObjectID':
                 return $this->legacySession->{$key} ?? null;
 
-            /** @deprecated 5.4 - The below values are deprecated. */
+                /** @deprecated 5.4 - The below values are deprecated. */
             case 'ipAddress':
                 return UserUtil::getIpAddress();
             case 'userAgent':
@@ -930,6 +931,18 @@ final class SessionHandler extends SingletonFactory
      */
     private function changeUserVirtual(User $user): void
     {
+        $event = new PreserveVariablesCollecting();
+        EventHandler::getInstance()->fire($event);
+
+        $saveVars = [];
+        foreach ($event->keys as $key) {
+            if (!$this->getVar($key)) {
+                continue;
+            }
+
+            $saveVars[$key] = $this->getVar($key);
+        }
+
         // We must delete the old session to not carry over any state across different users.
         $this->delete();
 
@@ -990,6 +1003,10 @@ final class SessionHandler extends SingletonFactory
                 $this->getCookieValue(),
                 TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
             );
+
+            foreach ($saveVars as $key => $value) {
+                $this->register($key, $value);
+            }
         }
     }
 
@@ -1057,8 +1074,8 @@ final class SessionHandler extends SingletonFactory
         // If we reach this point we determined that a new authentication is not necessary.
         \assert(
             ($lastAuthentication >= TIME_NOW - $softLimit)
-            || ($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
-                && $lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
+                || ($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
+                    && $lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
         );
 
         // Update the lastCheck timestamp to make sure that the grace period works properly.
