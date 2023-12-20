@@ -19,6 +19,7 @@
 	border: 1px solid rgba(0, 0, 0, 1);
 	box-sizing: content-box;
 	display: block;
+	min-height: 50px;
 
 	> span {
 		display: block;
@@ -59,8 +60,8 @@
 	input[type="number"] {
 		padding: 4px;
 		text-align: center;
-		/* Firefox requires those fields to be wider due to the overlapping controls. */
-		width: 6ch;
+		/* Firefox on Windows requires those fields to be wider due to the overlapping controls. */
+		width: 56px;
 	}
 }
 
@@ -202,4 +203,12 @@
 	display: grid;
 	grid-template-columns: min-content auto;
 	margin-top: 20px;
+}
+
+@include screen-xs {
+	.colorPickerValueContainer {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+	}
 }
