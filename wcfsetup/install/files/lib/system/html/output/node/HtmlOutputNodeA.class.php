@@ -44,16 +44,18 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                 continue;
             }
 
-            if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
-                $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
+            if ($href->getScheme() !== 'mailto') {
+                if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
+                    $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
 
-                $element->setAttribute(
-                    'href',
-                    $href->__toString(),
-                );
-            } else {
-                /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-                self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
+                    $element->setAttribute(
+                        'href',
+                        $href->__toString(),
+                    );
+                } else {
+                    /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
+                    self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
+                }
             }
 
             $value = StringUtil::trim($element->textContent);
