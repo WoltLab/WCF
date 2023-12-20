@@ -1390,4 +1390,16 @@ final class SessionHandler extends SingletonFactory
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$sessionID]);
     }
+
+    /**
+     * Returns the session variables.
+     *
+     * @since 6.1
+     */
+    public function getVariables(): array
+    {
+        $scope = $this->isACP ? 'acp' : 'frontend';
+
+        return $this->variables[$scope] ?? [];
+    }
 }
