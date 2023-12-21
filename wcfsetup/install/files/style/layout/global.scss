@@ -197,6 +197,12 @@ ol.nativeList {
 			margin: 0 0 20px 20px;
 		}
 	}
+
+	.messageFloatObjectLeft, .image-style-side-left, .messageFloatObjectRight, .image-style-side {
+		+ p, + ul {
+			margin-top: 0 !important;
+		}
+	}
 }
 
 .containerContent,
