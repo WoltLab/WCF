@@ -80,6 +80,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'removeLinks' => $removeLinks,
                         'float' => 'none',
                         'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
+                        'width' => 'auto',
                     ]);
                 }
 
