@@ -218,7 +218,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             switch ($parent->nodeName) {
                 case 'a':
                     // Permit the media element to be placed inside a link.
-                    break 2;
+                    break;
 
                 case 'blockquote':
                 case 'body':
