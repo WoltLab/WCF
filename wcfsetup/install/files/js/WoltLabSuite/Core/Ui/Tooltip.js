@@ -11,7 +11,6 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
     exports.setup = void 0;
     Environment = tslib_1.__importStar(Environment);
     UiAlignment = tslib_1.__importStar(UiAlignment);
-    let _pointer;
     let _text;
     let _tooltip;
     /**
@@ -41,8 +40,6 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
         UiAlignment.set(_tooltip, element, {
             horizontal: "center",
             verticalOffset: 4,
-            pointer: true,
-            pointerClassNames: ["inverse"],
             vertical: "top",
         });
     }
@@ -74,10 +71,6 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
         _text = document.createElement("span");
         _text.id = "balloonTooltipText";
         _tooltip.appendChild(_text);
-        _pointer = document.createElement("span");
-        _pointer.classList.add("elementPointer");
-        _pointer.appendChild(document.createElement("span"));
-        _tooltip.appendChild(_pointer);
         (0, PageOverlay_1.getPageOverlayContainer)().append(_tooltip);
         (0, Selector_1.wheneverSeen)(".jsTooltip", (element) => {
             element.classList.remove("jsTooltip");
