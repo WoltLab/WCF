@@ -174,7 +174,7 @@ class BoxEditForm extends BoxAddForm
         // call saved event
         $this->saved();
 
-        // Ensue that the CKEditor has the correct content after save
+        // Ensure that the CKEditor has the correct content after save.
         if ($this->isMultilingual) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $this->content[$language->languageID] = $this->htmlInputProcessors[$language->languageID] ?
