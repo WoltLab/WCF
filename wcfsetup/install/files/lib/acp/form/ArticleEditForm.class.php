@@ -147,10 +147,11 @@ class ArticleEditForm extends ArticleAddForm
         // Ensue that the CKEditor has the correct content after save
         if ($this->isMultilingual) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $this->content[$language->languageID] = $this->htmlInputProcessors[$language->languageID]->getHtml();
+                $this->content[$language->languageID] = $this->htmlInputProcessors[$language->languageID] ?
+                    $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
             }
         } else {
-            $this->content[0] = $this->htmlInputProcessors[0]->getHtml();
+            $this->content[0] = $this->htmlInputProcessors[0] ? $this->htmlInputProcessors[0]->getHtml() : '';
         }
 
         // show success message
