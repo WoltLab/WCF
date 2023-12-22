@@ -273,11 +273,9 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#dialog.classList.add("dialog");
     this.#dialog.setAttribute("aria-labelledby", DomUtil.identify(this.#title));
 
-    this.#dialog.addEventListener("cancel", (event) => {
-      if (!this.#shouldClose()) {
-        event.preventDefault();
-        return;
-      }
+    this.#dialog.addEventListener("cancel", () => {
+      const event = new CustomEvent("cancel");
+      this.dispatchEvent(event);
 
       this.#detachDialog();
     });
