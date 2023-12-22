@@ -285,7 +285,6 @@ class UiReactionHandler {
     this._popoverCurrentObjectId = objectId;
 
     UiAlignment.set(this._getPopover(), element, {
-      pointer: true,
       horizontal: this._options.isButtonGroupNavigation ? "left" : "center",
       vertical: UiScreen.is("screen-xs") ? "bottom" : "top",
     });
@@ -369,11 +368,6 @@ class UiReactionHandler {
       this._popoverContent.addEventListener("scroll", () => this._rebuildOverflowIndicator(), { passive: true });
 
       this._popover.appendChild(this._popoverContent);
-
-      const pointer = document.createElement("span");
-      pointer.className = "elementPointer";
-      pointer.appendChild(document.createElement("span"));
-      this._popover.appendChild(pointer);
 
       document.body.appendChild(this._popover);
 

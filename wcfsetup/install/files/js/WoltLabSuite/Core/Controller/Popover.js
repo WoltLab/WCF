@@ -34,10 +34,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             this.popoverContent = document.createElement("div");
             this.popoverContent.className = "popoverContent";
             this.popover.appendChild(this.popoverContent);
-            const pointer = document.createElement("span");
-            pointer.className = "elementPointer";
-            pointer.appendChild(document.createElement("span"));
-            this.popover.appendChild(pointer);
             document.body.append(this.popover);
             // event listener
             this.popover.addEventListener("mouseenter", () => this.popoverMouseEnter());
@@ -317,7 +313,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             this.popover.classList.remove("forceHide");
             this.popover.classList.add("active");
             UiAlignment.set(this.popover, this.elements.get(this.activeId).element, {
-                pointer: true,
                 vertical: "top",
             });
         }

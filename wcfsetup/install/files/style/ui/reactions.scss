@@ -22,10 +22,6 @@
 		visibility: hidden;
 	}
 
-	> .elementPointer {
-		display: none;
-	}
-
 	@include screen-xs {
 		&.inverseOrder .reactionTypeButtonList {
 			flex-direction: column;

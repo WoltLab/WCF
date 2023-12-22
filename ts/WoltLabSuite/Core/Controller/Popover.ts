@@ -77,11 +77,6 @@ class ControllerPopover implements AjaxCallbackObject {
     this.popoverContent.className = "popoverContent";
     this.popover.appendChild(this.popoverContent);
 
-    const pointer = document.createElement("span");
-    pointer.className = "elementPointer";
-    pointer.appendChild(document.createElement("span"));
-    this.popover.appendChild(pointer);
-
     document.body.append(this.popover);
 
     // event listener
@@ -426,7 +421,6 @@ class ControllerPopover implements AjaxCallbackObject {
     this.popover.classList.add("active");
 
     UiAlignment.set(this.popover, this.elements.get(this.activeId)!.element, {
-      pointer: true,
       vertical: "top",
     });
   }

@@ -11,7 +11,6 @@ import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { wheneverSeen } from "../Helper/Selector";
 import * as UiAlignment from "./Alignment";
 
-let _pointer: HTMLElement;
 let _text: HTMLElement;
 let _tooltip: HTMLElement;
 
@@ -46,8 +45,6 @@ function mouseEnter(event: MouseEvent): void {
   UiAlignment.set(_tooltip, element, {
     horizontal: "center",
     verticalOffset: 4,
-    pointer: true,
-    pointerClassNames: ["inverse"],
     vertical: "top",
   });
 }
@@ -83,11 +80,6 @@ export function setup(): void {
   _text = document.createElement("span");
   _text.id = "balloonTooltipText";
   _tooltip.appendChild(_text);
-
-  _pointer = document.createElement("span");
-  _pointer.classList.add("elementPointer");
-  _pointer.appendChild(document.createElement("span"));
-  _tooltip.appendChild(_pointer);
 
   getPageOverlayContainer().append(_tooltip);
 

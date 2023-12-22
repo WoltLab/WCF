@@ -48,10 +48,6 @@
 		visibility: hidden;
 	}
 
-	> .elementPointer {
-		display: none;
-	}
-
 	@include screen-sm-down {
 		display: none;
 	}
