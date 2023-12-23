@@ -1,68 +1,68 @@
-<section class="section">
-	<h2 class="sectionTitle">{lang}wcf.acp.dashboard.box.systemInfo.software{/lang}</h2>
+<div class="acpDashboardBox__keyValueGroup">
+	<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.software{/lang}</h3>
 	
-	<dl>
-		<dt>{lang}wcf.acp.dashboard.box.systemInfo.software.version{/lang}</dt>
-		<dd>{WCF_VERSION}</dd>
+	<dl class="plain acpDashboardBox__keyValue">
+		<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.software.version{/lang}</dt>
+		<dd class="acpDashboardBox__keyValue__value">{WCF_VERSION}</dd>
 	</dl>
 	
 	{event name='softwareFields'}
 	
-	<dl>
-		<dt>{lang}wcf.acp.dashboard.box.systemInfo.software.databaseName{/lang}</dt>
-		<dd>{$databaseName}</dd>
+	<dl class="plain acpDashboardBox__keyValue">
+		<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.software.databaseName{/lang}</dt>
+		<dd class="acpDashboardBox__keyValue__value">{$databaseName}</dd>
 	</dl>
 
 	{if WCF_N != 1}
-		<dl>
-			<dt>{lang}wcf.acp.dashboard.box.systemInfo.software.databaseNumber{/lang}</dt>
-			<dd>{WCF_N}</dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.software.databaseNumber{/lang}</dt>
+			<dd class="acpDashboardBox__keyValue__value">{WCF_N}</dd>
 		</dl>
 	{/if}
-</section>
+</div>
 
 {if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.acp.dashboard.box.systemInfo.server{/lang}</h2>
+	<div class="acpDashboardBox__keyValueGroup">
+		<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.server{/lang}</h3>
 		
-		<dl>
-			<dt>{lang}wcf.acp.dashboard.box.systemInfo.os{/lang}</dt>
-			<dd>{$server[os]}</dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.os{/lang}</dt>
+			<dd class="acpDashboardBox__keyValue__value">{$server[os]}</dd>
 		</dl>
 		
-		<dl>
-			<dt>{lang}wcf.acp.dashboard.box.systemInfo.webserver{/lang}</dt>
-			<dd>{$server[webserver]}</dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.webserver{/lang}</dt>
+			<dd class="acpDashboardBox__keyValue__value">{$server[webserver]}</dd>
 		</dl>
 		
-		<dl>
-			<dt>{lang}wcf.acp.dashboard.box.systemInfo.mySQLVersion{/lang}</dt>
-			<dd>{$server[mySQLVersion]}</dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.mySQLVersion{/lang}</dt>
+			<dd class="acpDashboardBox__keyValue__value">{$server[mySQLVersion]}</dd>
 		</dl>
 		
 		{if $server[load]}
-			<dl>
-				<dt>{lang}wcf.acp.dashboard.box.systemInfo.load{/lang}</dt>
-				<dd>{$server[load]}</dd>
+			<dl class="plain acpDashboardBox__keyValue">
+				<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.load{/lang}</dt>
+				<dd class="acpDashboardBox__keyValue__value">{$server[load]}</dd>
 			</dl>
 		{/if}
 		
 		{if $server[innodbFlushLogAtTrxCommit] !== false}
-			<dl>
-				<dt>innodb_flush_log_at_trx_commit</dt>
-				<dd>{$server[innodbFlushLogAtTrxCommit]}</dd>
+			<dl class="plain acpDashboardBox__keyValue">
+				<dt class="acpDashboardBox__keyValue__key">innodb_flush_log_at_trx_commit</dt>
+				<dd class="acpDashboardBox__keyValue__value">{$server[innodbFlushLogAtTrxCommit]}</dd>
 			</dl>
 		{/if}
 		
 		{event name='serverFields'}
-	</section>
+	</div>
 
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.acp.dashboard.box.systemInfo.php{/lang}</h2>
+	<div class="acpDashboardBox__keyValueGroup">
+		<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.php{/lang}</h3>
 		
-		<dl>
-			<dt>{lang}wcf.acp.dashboard.box.systemInfo.php.version{/lang}</dt>
-			<dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.php.version{/lang}</dt>
+			<dd class="acpDashboardBox__keyValue__value">
 				{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 					<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
 				{else}
@@ -71,29 +71,29 @@
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt>memory_limit</dt>
-			<dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">memory_limit</dt>
+			<dd class="acpDashboardBox__keyValue__value">
 				{$server[memoryLimit]}
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt>post_max_size</dt>
-			<dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">post_max_size</dt>
+			<dd class="acpDashboardBox__keyValue__value">
 				{$server[postMaxSize]}
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt>upload_max_filesize</dt>
-			<dd>
+		<dl class="plain acpDashboardBox__keyValue">
+			<dt class="acpDashboardBox__keyValue__key">upload_max_filesize</dt>
+			<dd class="acpDashboardBox__keyValue__value">
 				{$server[upload_max_filesize]}
 			</dd>
 		</dl>
 		
 		{event name='phpFields'}
-	</section>
+	</div>
 {/if}
 
 {event name='systemFieldsets'}
