@@ -919,11 +919,25 @@ html[data-color-scheme="dark"] {
 }
 
 .acpDashboard {
+	--column-count: 3;
+
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(var(--column-count), 1fr);
 	gap: 20px;
 	grid-auto-rows: minmax(300px, auto);
 	margin-top: 40px;
+}
+
+@include screen-sm {
+	.acpDashboard {
+		--column-count: 2;
+	}
+}
+
+@include screen-xs {
+	.acpDashboard {
+		--column-count: 1;
+	}
 }
 
 .acpDashboardBox {
