@@ -51,7 +51,6 @@ final class SystemInfoAcpDashboardBox extends AbstractAcpDashboardBox
             'os' => \PHP_OS,
             'webserver' => $_SERVER['SERVER_SOFTWARE'] ?? '',
             'mySQLVersion' => WCF::getDB()->getVersion(),
-            'load' => $this->getLoad(),
             'memoryLimit' => \ini_get('memory_limit'),
             'upload_max_filesize' => \ini_get('upload_max_filesize'),
             'postMaxSize' => \ini_get('post_max_size'),
@@ -65,22 +64,5 @@ final class SystemInfoAcpDashboardBox extends AbstractAcpDashboardBox
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         return $statement->fetchSingleColumn();
-    }
-
-    private function getLoad(): string
-    {
-        if (\function_exists('sys_getloadavg')) {
-            $load = \sys_getloadavg();
-            if (\is_array($load) && \count($load) == 3) {
-                return \implode(
-                    ', ',
-                    \array_map(static function (float $value) {
-                        return \sprintf('%.2F', $value);
-                    }, $load)
-                );
-            }
-        }
-
-        return '';
     }
 }

@@ -1,6 +1,4 @@
 <div class="acpDashboardBox__keyValueGroup">
-	<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.software{/lang}</h3>
-	
 	<dl class="plain acpDashboardBox__keyValue">
 		<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.software.version{/lang}</dt>
 		<dd class="acpDashboardBox__keyValue__value">{WCF_VERSION}</dd>
@@ -23,29 +21,15 @@
 
 {if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
 	<div class="acpDashboardBox__keyValueGroup">
-		<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.server{/lang}</h3>
-		
-		<dl class="plain acpDashboardBox__keyValue">
-			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.os{/lang}</dt>
-			<dd class="acpDashboardBox__keyValue__value">{$server[os]}</dd>
-		</dl>
-		
 		<dl class="plain acpDashboardBox__keyValue">
 			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.webserver{/lang}</dt>
-			<dd class="acpDashboardBox__keyValue__value">{$server[webserver]}</dd>
+			<dd class="acpDashboardBox__keyValue__value">{$server[webserver]} ({$server[os]})</dd>
 		</dl>
 		
 		<dl class="plain acpDashboardBox__keyValue">
 			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.mySQLVersion{/lang}</dt>
 			<dd class="acpDashboardBox__keyValue__value">{$server[mySQLVersion]}</dd>
 		</dl>
-		
-		{if $server[load]}
-			<dl class="plain acpDashboardBox__keyValue">
-				<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.load{/lang}</dt>
-				<dd class="acpDashboardBox__keyValue__value">{$server[load]}</dd>
-			</dl>
-		{/if}
 		
 		{if $server[innodbFlushLogAtTrxCommit] !== false}
 			<dl class="plain acpDashboardBox__keyValue">
@@ -58,8 +42,6 @@
 	</div>
 
 	<div class="acpDashboardBox__keyValueGroup">
-		<h3 class="acpDashboardBox__keyValue__title">{lang}wcf.acp.dashboard.box.systemInfo.php{/lang}</h3>
-		
 		<dl class="plain acpDashboardBox__keyValue">
 			<dt class="acpDashboardBox__keyValue__key">{lang}wcf.acp.dashboard.box.systemInfo.php.version{/lang}</dt>
 			<dd class="acpDashboardBox__keyValue__value">

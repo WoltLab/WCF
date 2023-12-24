@@ -953,16 +953,7 @@ html[data-color-scheme="dark"] {
 }
 
 .acpDashboardBox__keyValueGroup:not(:first-child) {
-	margin-top: 40px;
-}
-
-.acpDashboardBox__keyValue__title {
-	@include wcfFontDefault;
-
-	align-items: center;
-	column-gap: 10px;
-	display: grid;
-	font-weight: 600;
+	margin-top: 30px;
 }
 
 .acpDashboardBox__keyValue {
