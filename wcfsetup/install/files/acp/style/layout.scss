@@ -957,6 +957,10 @@ html[data-color-scheme="dark"] {
 
 .acpDashboardBox__content {
 	padding: 20px;
+
+	> :first-child {
+		margin-top: 0 !important;
+	}
 }
 
 .acpDashboardBox__keyValueGroup {

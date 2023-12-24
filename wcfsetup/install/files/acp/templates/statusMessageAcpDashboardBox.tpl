@@ -1,3 +1,3 @@
 {foreach from=$messages item='status'}
-	<div class="{$status->type->getClassName()}">{@$status->message}</div>
+	<woltlab-core-notice type="{$status->type->getClassName()}">{@$status->message}</woltlab-core-notice>
 {/foreach}
