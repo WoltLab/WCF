@@ -951,7 +951,6 @@ html[data-color-scheme="dark"] {
 
 .acpDashboardBox__title {
 	border-bottom: 1px solid var(--wcfContentContainerBorder);
-	color: var(--wcfContentDimmedText);
 	font-weight: 600;
 	padding: 10px 20px;
 }
@@ -971,21 +970,33 @@ html[data-color-scheme="dark"] {
 }
 
 .acpDashboardBox__keyValue {
-	align-items: center;
+	align-items: start;
 	column-gap: 15px;
 	display: grid;
-	grid-template-areas: "dt spacer dd";
-	grid-template-columns: max-content auto max-content;
+	grid-template-areas: "key spacer value";
+	grid-template-columns: max-content minmax(15px, auto) minmax(min-content, max-content);
 
 	&::before {
 		border-bottom: 5px dotted currentColor;
 		content: "";
 		display: block;
 		grid-area: spacer;
+		margin-top: 0.6em;
 		opacity: 0.12;
 	}
 }
 
 .acpDashboardBox__keyValue__key {
 	color: var(--wcfInputLabel);
+	grid-area: key;
+}
+
+.acpDashboardBox__keyValue__value {
+	grid-area: value;
+	text-align: right;
+}
+
+.acpDashboardBox__keyValue__list {
+	display: flex;
+	flex-direction: column;
 }
