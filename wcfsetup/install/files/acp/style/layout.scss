@@ -933,13 +933,17 @@ html[data-color-scheme="dark"] {
 	box-shadow: var(--wcfBoxShadowCard);
 	display: flex;
 	flex-direction: column;
-	padding: 20px;
-	row-gap: 20px;
 }
 
 .acpDashboardBox__title {
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	border-bottom: 1px solid var(--wcfContentContainerBorder);
+	color: var(--wcfContentDimmedText);
+	font-weight: 600;
+	padding: 10px 20px;
+}
+
+.acpDashboardBox__content {
+	padding: 20px;
 }
 
 .acpDashboardBox__keyValueGroup {
