@@ -593,6 +593,24 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_file_temporary;
+CREATE TABLE wcf1_file_temporary (
+	uuidv4 CHAR(36) NOT NULL PRIMARY KEY,
+	prefix CHAR(40) NOT NULL,
+	lastModified INT NOT NULL,
+	filename VARCHAR(255) NOT NULL,
+	filesize BIGINT NOT NULL,
+	chunks SMALLINT NOT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_file_chunk;
+CREATE TABLE wcf1_file_chunk (
+	uuidv4 CHAR(36) NOT NULL,
+	sequenceNo SMALLINT NOT NULL,
+
+	PRIMARY KEY chunk (uuidv4, sequenceNo)
+);
+
 /* As the flood control table can be a high traffic table and as it is periodically emptied,
 there is no foreign key on the `objectTypeID` to speed up insertions. */
 DROP TABLE IF EXISTS wcf1_flood_control;
