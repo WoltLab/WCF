@@ -91,6 +91,8 @@ declare global {
     set date(date: Date);
   }
 
+  interface WoltlabCoreFileUploadElement extends HTMLElement {}
+
   interface WoltlabCoreLoadingIndicatorElement extends HTMLElement {
     get size(): LoadingIndicatorIconSize;
     set size(size: LoadingIndicatorIconSize);
@@ -121,6 +123,7 @@ declare global {
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "woltlab-core-file-upload": WoltlabCoreFileUploadElement;
     "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
