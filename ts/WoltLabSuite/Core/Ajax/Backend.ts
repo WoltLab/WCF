@@ -24,7 +24,7 @@ const enum RequestType {
   POST,
 }
 
-type Payload = FormData | Record<string, unknown>;
+type Payload = Blob | FormData | Record<string, unknown>;
 
 class SetupRequest {
   private readonly url: string;
@@ -135,7 +135,10 @@ class BackendRequest {
       init.method = "POST";
 
       if (this.#payload) {
-        if (this.#payload instanceof FormData) {
+        if (this.#payload instanceof Blob) {
+          init.headers!["Content-Type"] = "application/octet-stream";
+          init.body = this.#payload;
+        } else if (this.#payload instanceof FormData) {
           init.headers!["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
           init.body = this.#payload;
         } else {
