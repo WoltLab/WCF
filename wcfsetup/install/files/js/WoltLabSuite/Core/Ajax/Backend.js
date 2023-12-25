@@ -95,7 +95,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             if (this.#type === 2 /* RequestType.POST */) {
                 init.method = "POST";
                 if (this.#payload) {
-                    if (this.#payload instanceof FormData) {
+                    if (this.#payload instanceof Blob) {
+                        init.headers["Content-Type"] = "application/octet-stream";
+                        init.body = this.#payload;
+                    }
+                    else if (this.#payload instanceof FormData) {
                         init.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
                         init.body = this.#payload;
                     }
