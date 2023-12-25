@@ -53,7 +53,7 @@
 
 <div class="acpDashboardBox__keyValueGroup">
 	<p class="acpDashboardBox__keyValue__text">
-		Copyright &copy; 2001-{TIME_NOW|date:'Y'} WoltLab&reg; GmbH.<br>All rights reserved.
+		Copyright &copy; 2001-{TIME_NOW|date:'Y'} WoltLab&reg; GmbH. All rights reserved.
 	</p>
 </div>
 
