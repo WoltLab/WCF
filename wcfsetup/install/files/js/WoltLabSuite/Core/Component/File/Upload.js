@@ -3,12 +3,20 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     async function upload(element, file) {
+        const response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
+            .post({
+            filename: file.name,
+            filesize: file.size,
+        })
+            .fetchAsJson());
+        const { endpoints } = response;
         const chunkSize = 2000000;
         const chunks = Math.ceil(file.size / chunkSize);
         for (let i = 0; i < chunks; i++) {
-            const chunk = file.slice(i * chunkSize, i * chunkSize + chunkSize + 1);
-            const response = await (0, Backend_1.prepareRequest)(element.dataset.endpoint).post(chunk).fetchAsResponse();
-            console.log(response);
+            const start = i * chunkSize;
+            const end = start + chunkSize;
+            const chunk = file.slice(start, end);
+            await (0, Backend_1.prepareRequest)(endpoints[i]).post(chunk).fetchAsResponse();
         }
     }
     function setup() {
