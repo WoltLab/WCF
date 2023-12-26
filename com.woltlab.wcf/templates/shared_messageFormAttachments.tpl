@@ -1,7 +1,7 @@
 <div class="messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	<button type="button">
 		<woltlab-core-file-upload
-			data-endpoint="{link controller='FileUpload'}{/link}"
+			data-endpoint="{link controller='FileUploadPreflight'}{/link}"
 		></woltlab-core-file-upload>
 	</button>
 	<dl class="wide">

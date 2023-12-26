@@ -1,15 +1,28 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 
+type PreflightResponse = {
+  endpoints: string[];
+};
+
 async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<void> {
+  const response = (await prepareRequest(element.dataset.endpoint!)
+    .post({
+      filename: file.name,
+      filesize: file.size,
+    })
+    .fetchAsJson()) as PreflightResponse;
+  const { endpoints } = response;
+
   const chunkSize = 2_000_000;
   const chunks = Math.ceil(file.size / chunkSize);
 
   for (let i = 0; i < chunks; i++) {
-    const chunk = file.slice(i * chunkSize, i * chunkSize + chunkSize + 1);
+    const start = i * chunkSize;
+    const end = start + chunkSize;
+    const chunk = file.slice(start, end);
 
-    const response = await prepareRequest(element.dataset.endpoint!).post(chunk).fetchAsResponse();
-    console.log(response);
+    await prepareRequest(endpoints[i]).post(chunk).fetchAsResponse();
   }
 }
 
