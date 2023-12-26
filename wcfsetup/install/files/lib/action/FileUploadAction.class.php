@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\io\AtomicWriter;
 use wcf\system\WCF;
 
 final class FileUploadAction implements RequestHandlerInterface
@@ -44,21 +45,6 @@ final class FileUploadAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        // Check if the actual size matches the expectations.
-        if ($parameters['sequenceNo'] === $chunks - 1) {
-            // The last chunk is most likely smaller than our chunk size.
-            $expectedSize = $row['filesize'] - $chunkSize * ($chunks - 1);
-        } else {
-            $expectedSize = $chunkSize;
-        }
-
-        $chunk = \file_get_contents('php://input');
-        $actualSize = \strlen($chunk);
-
-        if ($actualSize !== $expectedSize) {
-            throw new IllegalLinkException();
-        }
-
         $folderA = \substr($row['identifier'], 0, 2);
         $folderB = \substr($row['identifier'], 2, 2);
 
@@ -77,7 +63,61 @@ final class FileUploadAction implements RequestHandlerInterface
             $parameters['sequenceNo'],
         );
 
-        \file_put_contents($tmpPath . $filename, $chunk);
+        // Write the chunk using a buffer to avoid blowing up the memory limit.
+        // See https://stackoverflow.com/a/61997147
+        $file = new AtomicWriter($tmpPath . $filename);
+        $bufferSize = 1 * 1024 * 1024;
+
+        $fh = \fopen('php://input', 'rb');
+        while (!\feof($fh)) {
+            $file->write(\fread($fh, $bufferSize));
+        }
+        \fclose($fh);
+
+        $file->flush();
+
+        // Check if we have all chunks.
+        $data = [];
+        for ($i = 0; $i < $chunks; $i++) {
+            $filename = \sprintf(
+                '%s-%d.bin',
+                $row['identifier'],
+                $i,
+            );
+
+            if (\file_exists($tmpPath . $filename)) {
+                $data[] = $tmpPath . $filename;
+            }
+        }
+
+        if (\count($data) === $chunks) {
+            // Concatenate the files by reading only a limited buffer at a time
+            // to avoid blowing up the memory limit.
+            // See https://stackoverflow.com/a/61997147
+            $bufferSize = 1 * 1024 * 1024;
+
+            $newFilename = \sprintf('%s-final.bin', $row['identifier']);
+            $file = new AtomicWriter($tmpPath . $newFilename);
+            foreach ($data as $fileChunk) {
+                $fh = \fopen($fileChunk, 'rb');
+                while (!\feof($fh)) {
+                    $file->write(\fread($fh, $bufferSize));
+                }
+                \fclose($fh);
+            }
+
+            $file->flush();
+
+            \wcfDebug(
+                \memory_get_peak_usage(true),
+                \hash_file(
+                    'sha256',
+                    $tmpPath . $newFilename,
+                )
+            );
+        }
+
+        \wcfDebug(\memory_get_peak_usage(true));
 
         // TODO: Dummy response to simulate a successful upload of a chunk.
         return new EmptyResponse();
