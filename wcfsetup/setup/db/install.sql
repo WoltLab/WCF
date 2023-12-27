@@ -602,14 +602,6 @@ CREATE TABLE wcf1_file_temporary (
 	fileHash CHAR(64) NOT NULL
 );
 
-DROP TABLE IF EXISTS wcf1_file_chunk;
-CREATE TABLE wcf1_file_chunk (
-	identifier CHAR(40) NOT NULL,
-	sequenceNo SMALLINT NOT NULL,
-
-	PRIMARY KEY chunk (identifier, sequenceNo)
-);
-
 /* As the flood control table can be a high traffic table and as it is periodically emptied,
 there is no foreign key on the `objectTypeID` to speed up insertions. */
 DROP TABLE IF EXISTS wcf1_flood_control;
