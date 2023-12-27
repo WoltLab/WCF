@@ -598,7 +598,8 @@ CREATE TABLE wcf1_file_temporary (
 	identifier CHAR(40) NOT NULL PRIMARY KEY,
 	time INT NOT NULL,
 	filename VARCHAR(255) NOT NULL,
-	filesize BIGINT NOT NULL
+	fileSize BIGINT NOT NULL,
+	fileHash CHAR(64) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_file_chunk;

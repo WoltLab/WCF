@@ -20,14 +20,15 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
             <<<'EOT'
                     array {
                         filename: non-empty-string,
-                        filesize: positive-int,
+                        fileSize: positive-int,
+                        fileHash: non-empty-string,
                     }
                     EOT,
         );
 
         // TODO: The chunk calculation shouldn’t be based on a fixed number.
         $chunkSize = 2_000_000;
-        $chunks = (int)\ceil($parameters['filesize'] / $chunkSize);
+        $chunks = (int)\ceil($parameters['fileSize'] / $chunkSize);
 
         $identifier = $this->createTemporaryFile($parameters);
 
@@ -52,14 +53,15 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
         $identifier = \bin2hex(\random_bytes(20));
 
         $sql = "INSERT INTO     wcf1_file_temporary
-                                (identifier, time, filename, filesize)
-                         VALUES (?, ?, ?, ?)";
+                                (identifier, time, filename, fileSize, fileHash)
+                         VALUES (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $identifier,
             \TIME_NOW,
             $parameters['filename'],
-            $parameters['filesize'],
+            $parameters['fileSize'],
+            $parameters['fileHash'],
         ]);
 
         return $identifier;
