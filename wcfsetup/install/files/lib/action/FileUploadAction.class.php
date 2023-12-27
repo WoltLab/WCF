@@ -9,6 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\io\AtomicWriter;
+use wcf\system\io\File;
 use wcf\system\WCF;
 
 final class FileUploadAction implements RequestHandlerInterface
@@ -20,6 +21,7 @@ final class FileUploadAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                     array {
+                        checksum: non-empty-string,
                         identifier: non-empty-string,
                         sequenceNo: int,
                     }
@@ -34,14 +36,31 @@ final class FileUploadAction implements RequestHandlerInterface
         $row = $statement->fetchSingleRow();
 
         if ($row === false) {
+            // TODO: Proper error message
             throw new IllegalLinkException();
         }
 
         // Check if this is a valid sequence no.
         // TODO: The chunk calculation shouldn’t be based on a fixed number.
         $chunkSize = 2_000_000;
-        $chunks = (int)\ceil($row['filesize'] / $chunkSize);
+        $chunks = (int)\ceil($row['fileSize'] / $chunkSize);
         if ($parameters['sequenceNo'] >= $chunks) {
+            // TODO: Proper error message
+            throw new IllegalLinkException();
+        }
+
+        // Check if the checksum matches the received data.
+        $ctx = \hash_init('sha256');
+        $bufferSize = 1 * 1024 * 1024;
+        $stream = $request->getBody();
+        while (!$stream->eof()) {
+            \hash_update($ctx, $stream->read($bufferSize));
+        }
+        $result = \hash_final($ctx);
+        $stream->rewind();
+
+        if ($result !== $parameters['checksum']) {
+            // TODO: Proper error message
             throw new IllegalLinkException();
         }
 
@@ -65,16 +84,14 @@ final class FileUploadAction implements RequestHandlerInterface
 
         // Write the chunk using a buffer to avoid blowing up the memory limit.
         // See https://stackoverflow.com/a/61997147
-        $file = new AtomicWriter($tmpPath . $filename);
+        $result = new AtomicWriter($tmpPath . $filename);
         $bufferSize = 1 * 1024 * 1024;
 
-        $fh = \fopen('php://input', 'rb');
-        while (!\feof($fh)) {
-            $file->write(\fread($fh, $bufferSize));
+        while (!$stream->eof()) {
+            $result->write($stream->read($bufferSize));
         }
-        \fclose($fh);
 
-        $file->flush();
+        $result->flush();
 
         // Check if we have all chunks.
         $data = [];
@@ -97,16 +114,16 @@ final class FileUploadAction implements RequestHandlerInterface
             $bufferSize = 1 * 1024 * 1024;
 
             $newFilename = \sprintf('%s-final.bin', $row['identifier']);
-            $file = new AtomicWriter($tmpPath . $newFilename);
+            $result = new AtomicWriter($tmpPath . $newFilename);
             foreach ($data as $fileChunk) {
-                $fh = \fopen($fileChunk, 'rb');
-                while (!\feof($fh)) {
-                    $file->write(\fread($fh, $bufferSize));
+                $source = new File($fileChunk, 'rb');
+                while (!$source->eof()) {
+                    $result->write($source->read($bufferSize));
                 }
-                \fclose($fh);
+                $source->close();
             }
 
-            $file->flush();
+            $result->flush();
 
             \wcfDebug(
                 \memory_get_peak_usage(true),
