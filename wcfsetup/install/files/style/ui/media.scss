@@ -104,9 +104,11 @@
 			overflow: hidden;
 			background: rgba(0, 0, 0, 0.6);
 
-			fa-icon {
-				color: #fff;
-				@include textShadow(#000);
+			@include screen-lg {
+				fa-icon {
+					color: #fff;
+					@include textShadow(#000);
+				}
 			}
 		}
 
@@ -128,6 +130,11 @@
 				> .dropdownLabel {
 					left: calc(100% - 24px);
 					position: relative;
+
+					fa-icon {
+						color: #fff;
+						@include textShadow(#000);
+					}
 				}
 
 				> .buttonList {
