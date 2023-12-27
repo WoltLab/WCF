@@ -227,16 +227,6 @@ final class UserExportGdprAction extends AbstractAction
             }
         }
 
-        if (PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.filebase') !== null) {
-            if (!isset($this->data['com.woltlab.filebase'])) {
-                $this->data['com.woltlab.filebase'] = [];
-            }
-            $this->data['com.woltlab.filebase']['filePaymentLog'] = $this->dumpTable(
-                'filebase' . WCF_N . '_file_payment_log',
-                'userID'
-            );
-        }
-
         $this->data['@@generatedAt'] = TIME_NOW;
 
         $this->executed();
