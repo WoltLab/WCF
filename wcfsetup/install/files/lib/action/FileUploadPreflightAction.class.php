@@ -52,11 +52,11 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
 
         $action = new FileTemporaryAction([], 'create', [
             'data' => [
-                'identifier'=>$identifier,
-                'time'=>\TIME_NOW,
-                'filename'=>$parameters['filename'],
-                'fileSize'=>$parameters['fileSize'],
-                'fileHash'=>$parameters['fileHash'],
+                'identifier' => $identifier,
+                'time' => \TIME_NOW,
+                'filename' => $parameters['filename'],
+                'fileSize' => $parameters['fileSize'],
+                'fileHash' => $parameters['fileHash'],
             ],
         ]);
 

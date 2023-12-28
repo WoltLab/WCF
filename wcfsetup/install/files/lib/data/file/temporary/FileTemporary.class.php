@@ -27,6 +27,20 @@ class FileTemporary extends DatabaseObject
         return \ceil($this->fileSize / $this->getOptimalChunkSize());
     }
 
+    public function getChunkFilename(int $sequenceNo): string
+    {
+        return \sprintf(
+            "%s-%d.bin",
+            $this->identifier,
+            $sequenceNo,
+        );
+    }
+
+    public function getResultFilename(): string
+    {
+        return \sprintf("%s-final.bin", $this->identifier);
+    }
+
     private function getOptimalChunkSize(): int
     {
         $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
