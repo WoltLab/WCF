@@ -26,8 +26,7 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                     EOT,
         );
 
-        // TODO: The chunk calculation shouldn’t be based on a fixed number.
-        $chunkSize = 2_000_000;
+        $chunkSize = $this->getOptimalChunkSize();
         $chunks = (int)\ceil($parameters['fileSize'] / $chunkSize);
 
         $identifier = $this->createTemporaryFile($parameters);
@@ -65,5 +64,17 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
         ]);
 
         return $identifier;
+    }
+
+    // TODO: This is currently duplicated in `FileUploadAction`
+    private function getOptimalChunkSize(): int
+    {
+        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
+        if ($postMaxSize === 0) {
+            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
+            $postMaxSize = 100 * 1_024 * 1_024;
+        }
+
+        return $postMaxSize;
     }
 }

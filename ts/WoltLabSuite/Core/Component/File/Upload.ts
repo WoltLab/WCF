@@ -17,10 +17,9 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     .fetchAsJson()) as PreflightResponse;
   const { endpoints } = response;
 
-  const chunkSize = 2_000_000;
-  const chunks = Math.ceil(file.size / chunkSize);
+  const chunkSize = Math.ceil(file.size / endpoints.length);
 
-  for (let i = 0; i < chunks; i++) {
+  for (let i = 0, length = endpoints.length; i < length; i++) {
     const start = i * chunkSize;
     const end = start + chunkSize;
     const chunk = file.slice(start, end);
