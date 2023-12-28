@@ -12,9 +12,8 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
         })
             .fetchAsJson());
         const { endpoints } = response;
-        const chunkSize = 2000000;
-        const chunks = Math.ceil(file.size / chunkSize);
-        for (let i = 0; i < chunks; i++) {
+        const chunkSize = Math.ceil(file.size / endpoints.length);
+        for (let i = 0, length = endpoints.length; i < length; i++) {
             const start = i * chunkSize;
             const end = start + chunkSize;
             const chunk = file.slice(start, end);

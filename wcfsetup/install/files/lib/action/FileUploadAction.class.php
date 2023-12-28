@@ -41,8 +41,7 @@ final class FileUploadAction implements RequestHandlerInterface
         }
 
         // Check if this is a valid sequence no.
-        // TODO: The chunk calculation shouldn’t be based on a fixed number.
-        $chunkSize = 2_000_000;
+        $chunkSize = $this->getOptimalChunkSize();
         $chunks = (int)\ceil($row['fileSize'] / $chunkSize);
         if ($parameters['sequenceNo'] >= $chunks) {
             // TODO: Proper error message
@@ -117,26 +116,44 @@ final class FileUploadAction implements RequestHandlerInterface
             $result = new AtomicWriter($tmpPath . $newFilename);
             foreach ($data as $fileChunk) {
                 $source = new File($fileChunk, 'rb');
-                while (!$source->eof()) {
-                    $result->write($source->read($bufferSize));
+                try {
+                    while (!$source->eof()) {
+                        $result->write($source->read($bufferSize));
+                    }
+                } finally {
+                    $source->close();
                 }
-                $source->close();
             }
 
             $result->flush();
 
-            \wcfDebug(
-                \memory_get_peak_usage(true),
-                \hash_file(
-                    'sha256',
-                    $tmpPath . $newFilename,
-                )
-            );
+            // Check if the final result matches the expected checksum.
+            $checksum = \hash_file('sha256', $tmpPath . $newFilename);
+            if ($checksum !== $row['checksum']) {
+                // TODO: Proper error message
+                throw new IllegalLinkException();
+            }
+
+            // Remove the temporary chunks.
+            foreach ($data as $fileChunk) {
+                \unlink($fileChunk);
+            }
+
+            // TODO: Move the data from the temporary file to the actual "file".
         }
 
-        \wcfDebug(\memory_get_peak_usage(true));
-
-        // TODO: Dummy response to simulate a successful upload of a chunk.
         return new EmptyResponse();
+    }
+
+    // TODO: This is currently duplicated in `FileUploadPreflightAction`
+    private function getOptimalChunkSize(): int
+    {
+        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
+        if ($postMaxSize === 0) {
+            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
+            $postMaxSize = 100 * 1_024 * 1_024;
+        }
+
+        return $postMaxSize;
     }
 }
