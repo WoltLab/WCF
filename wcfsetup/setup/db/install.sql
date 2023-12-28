@@ -593,6 +593,14 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_file;
+CREATE TABLE wcf1_file (
+	fileID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	filename VARCHAR(255) NOT NULL,
+	fileSize BIGINT NOT NULL,
+	fileHash CHAR(64) NOT NULL
+);
+
 DROP TABLE IF EXISTS wcf1_file_temporary;
 CREATE TABLE wcf1_file_temporary (
 	identifier CHAR(40) NOT NULL PRIMARY KEY,
