@@ -6,11 +6,11 @@ use Laminas\Diactoros\Response\EmptyResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\file\temporary\FileTemporary;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
-use wcf\system\WCF;
 
 final class FileUploadAction implements RequestHandlerInterface
 {
@@ -28,22 +28,15 @@ final class FileUploadAction implements RequestHandlerInterface
                     EOT,
         );
 
-        $sql = "SELECT  *
-                FROM    wcf1_file_temporary
-                WHERE   identifier = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$parameters['identifier']]);
-        $row = $statement->fetchSingleRow();
-
-        if ($row === false) {
+        $fileTemporary = new FileTemporary($parameters['identifier']);
+        if (!$fileTemporary->identifier) {
             // TODO: Proper error message
             throw new IllegalLinkException();
         }
 
         // Check if this is a valid sequence no.
-        $chunkSize = $this->getOptimalChunkSize();
-        $chunks = (int)\ceil($row['fileSize'] / $chunkSize);
-        if ($parameters['sequenceNo'] >= $chunks) {
+        $numberOfChunks = $fileTemporary->getNumberOfChunks();
+        if ($parameters['sequenceNo'] >= $numberOfChunks) {
             // TODO: Proper error message
             throw new IllegalLinkException();
         }
@@ -63,8 +56,8 @@ final class FileUploadAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        $folderA = \substr($row['identifier'], 0, 2);
-        $folderB = \substr($row['identifier'], 2, 2);
+        $folderA = \substr($fileTemporary->identifier, 0, 2);
+        $folderB = \substr($fileTemporary->identifier, 2, 2);
 
         $tmpPath = \sprintf(
             \WCF_DIR . '_data/private/fileUpload/%s/%s/',
@@ -77,7 +70,7 @@ final class FileUploadAction implements RequestHandlerInterface
 
         $filename = \sprintf(
             '%s-%d.bin',
-            $row['identifier'],
+            $fileTemporary->identifier,
             $parameters['sequenceNo'],
         );
 
@@ -94,10 +87,10 @@ final class FileUploadAction implements RequestHandlerInterface
 
         // Check if we have all chunks.
         $data = [];
-        for ($i = 0; $i < $chunks; $i++) {
+        for ($i = 0; $i < $numberOfChunks; $i++) {
             $filename = \sprintf(
                 '%s-%d.bin',
-                $row['identifier'],
+                $fileTemporary->identifier,
                 $i,
             );
 
@@ -106,13 +99,13 @@ final class FileUploadAction implements RequestHandlerInterface
             }
         }
 
-        if (\count($data) === $chunks) {
+        if (\count($data) === $numberOfChunks) {
             // Concatenate the files by reading only a limited buffer at a time
             // to avoid blowing up the memory limit.
             // See https://stackoverflow.com/a/61997147
             $bufferSize = 1 * 1024 * 1024;
 
-            $newFilename = \sprintf('%s-final.bin', $row['identifier']);
+            $newFilename = \sprintf('%s-final.bin', $fileTemporary->identifier);
             $result = new AtomicWriter($tmpPath . $newFilename);
             foreach ($data as $fileChunk) {
                 $source = new File($fileChunk, 'rb');
@@ -129,7 +122,7 @@ final class FileUploadAction implements RequestHandlerInterface
 
             // Check if the final result matches the expected checksum.
             $checksum = \hash_file('sha256', $tmpPath . $newFilename);
-            if ($checksum !== $row['checksum']) {
+            if ($checksum !== $fileTemporary->fileHash) {
                 // TODO: Proper error message
                 throw new IllegalLinkException();
             }
@@ -143,17 +136,5 @@ final class FileUploadAction implements RequestHandlerInterface
         }
 
         return new EmptyResponse();
-    }
-
-    // TODO: This is currently duplicated in `FileUploadPreflightAction`
-    private function getOptimalChunkSize(): int
-    {
-        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
-        if ($postMaxSize === 0) {
-            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
-            $postMaxSize = 100 * 1_024 * 1_024;
-        }
-
-        return $postMaxSize;
     }
 }

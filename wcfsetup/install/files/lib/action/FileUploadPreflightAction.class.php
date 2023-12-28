@@ -6,9 +6,10 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\file\temporary\FileTemporary;
+use wcf\data\file\temporary\FileTemporaryAction;
 use wcf\http\Helper;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 final class FileUploadPreflightAction implements RequestHandlerInterface
 {
@@ -26,17 +27,15 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                     EOT,
         );
 
-        $chunkSize = $this->getOptimalChunkSize();
-        $chunks = (int)\ceil($parameters['fileSize'] / $chunkSize);
-
-        $identifier = $this->createTemporaryFile($parameters);
+        $fileTemporary = $this->createTemporaryFile($parameters);
+        $numberOfChunks = $fileTemporary->getNumberOfChunks();
 
         $endpoints = [];
-        for ($i = 0; $i < $chunks; $i++) {
+        for ($i = 0; $i < $numberOfChunks; $i++) {
             $endpoints[] = LinkHandler::getInstance()->getControllerLink(
                 FileUploadAction::class,
                 [
-                    'identifier' => $identifier,
+                    'identifier' => $fileTemporary->identifier,
                     'sequenceNo' => $i,
                 ]
             );
@@ -47,34 +46,20 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
         ]);
     }
 
-    private function createTemporaryFile(array $parameters): string
+    private function createTemporaryFile(array $parameters): FileTemporary
     {
         $identifier = \bin2hex(\random_bytes(20));
 
-        $sql = "INSERT INTO     wcf1_file_temporary
-                                (identifier, time, filename, fileSize, fileHash)
-                         VALUES (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $identifier,
-            \TIME_NOW,
-            $parameters['filename'],
-            $parameters['fileSize'],
-            $parameters['fileHash'],
+        $action = new FileTemporaryAction([], 'create', [
+            'data' => [
+                'identifier'=>$identifier,
+                'time'=>\TIME_NOW,
+                'filename'=>$parameters['filename'],
+                'fileSize'=>$parameters['fileSize'],
+                'fileHash'=>$parameters['fileHash'],
+            ],
         ]);
 
-        return $identifier;
-    }
-
-    // TODO: This is currently duplicated in `FileUploadAction`
-    private function getOptimalChunkSize(): int
-    {
-        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
-        if ($postMaxSize === 0) {
-            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
-            $postMaxSize = 100 * 1_024 * 1_024;
-        }
-
-        return $postMaxSize;
+        return $action->executeAction()['returnValues'];
     }
 }
