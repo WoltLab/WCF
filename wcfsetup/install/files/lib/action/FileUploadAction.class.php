@@ -3,14 +3,17 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\file\FileEditor;
 use wcf\data\file\temporary\FileTemporary;
+use wcf\data\file\temporary\FileTemporaryEditor;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\io\AtomicWriter;
-use wcf\system\io\File;
+use wcf\system\io\File as IoFile;
 
 final class FileUploadAction implements RequestHandlerInterface
 {
@@ -61,14 +64,7 @@ final class FileUploadAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        $folderA = \substr($fileTemporary->identifier, 0, 2);
-        $folderB = \substr($fileTemporary->identifier, 2, 2);
-
-        $tmpPath = \sprintf(
-            \WCF_DIR . '_data/private/fileUpload/%s/%s/',
-            $folderA,
-            $folderB,
-        );
+        $tmpPath = $fileTemporary->getPath();
         if (!\is_dir($tmpPath)) {
             \mkdir($tmpPath, recursive: true);
         }
@@ -101,7 +97,7 @@ final class FileUploadAction implements RequestHandlerInterface
             $resultFilename = $fileTemporary->getResultFilename();
             $result = new AtomicWriter($tmpPath . $resultFilename);
             foreach ($data as $fileChunk) {
-                $source = new File($fileChunk, 'rb');
+                $source = new IoFile($fileChunk, 'rb');
                 try {
                     while (!$source->eof()) {
                         $result->write($source->read(self::FREAD_BUFFER_SIZE));
@@ -125,7 +121,14 @@ final class FileUploadAction implements RequestHandlerInterface
                 \unlink($fileChunk);
             }
 
-            // TODO: Move the data from the temporary file to the actual "file".
+            $file = FileEditor::createFromTemporary($fileTemporary);
+
+            (new FileTemporaryEditor($fileTemporary))->delete();
+
+            // TODO: This is just debug code.
+            return new JsonResponse([
+                'file' => $file->getPath() . $file->getSourceFilename(),
+            ]);
         }
 
         return new EmptyResponse();

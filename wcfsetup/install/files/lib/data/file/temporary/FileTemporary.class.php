@@ -41,6 +41,18 @@ class FileTemporary extends DatabaseObject
         return \sprintf("%s-final.bin", $this->identifier);
     }
 
+    public function getPath(): string
+    {
+        $folderA = \substr($this->identifier, 0, 2);
+        $folderB = \substr($this->identifier, 2, 2);
+
+        return \sprintf(
+            \WCF_DIR . '_data/private/fileUpload/%s/%s/',
+            $folderA,
+            $folderB,
+        );
+    }
+
     private function getOptimalChunkSize(): int
     {
         $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
