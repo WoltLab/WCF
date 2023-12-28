@@ -14,6 +14,12 @@ use wcf\system\io\File;
 
 final class FileUploadAction implements RequestHandlerInterface
 {
+    /**
+     * Read data in chunks to avoid hitting the memory limit.
+     * See https://stackoverflow.com/a/61997147
+     */
+    private const FREAD_BUFFER_SIZE = 10 * 1_024 * 1_024;
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // TODO: `sequenceNo` should be of type `non-negative-int`, but requires Valinor 1.7+
@@ -43,10 +49,9 @@ final class FileUploadAction implements RequestHandlerInterface
 
         // Check if the checksum matches the received data.
         $ctx = \hash_init('sha256');
-        $bufferSize = 1 * 1024 * 1024;
         $stream = $request->getBody();
         while (!$stream->eof()) {
-            \hash_update($ctx, $stream->read($bufferSize));
+            \hash_update($ctx, $stream->read(self::FREAD_BUFFER_SIZE));
         }
         $result = \hash_final($ctx);
         $stream->rewind();
@@ -68,19 +73,12 @@ final class FileUploadAction implements RequestHandlerInterface
             \mkdir($tmpPath, recursive: true);
         }
 
-        $filename = \sprintf(
-            '%s-%d.bin',
-            $fileTemporary->identifier,
-            $parameters['sequenceNo'],
-        );
-
         // Write the chunk using a buffer to avoid blowing up the memory limit.
         // See https://stackoverflow.com/a/61997147
-        $result = new AtomicWriter($tmpPath . $filename);
-        $bufferSize = 1 * 1024 * 1024;
+        $result = new AtomicWriter($tmpPath . $fileTemporary->getChunkFilename($parameters['sequenceNo']));
 
         while (!$stream->eof()) {
-            $result->write($stream->read($bufferSize));
+            $result->write($stream->read(self::FREAD_BUFFER_SIZE));
         }
 
         $result->flush();
@@ -88,14 +86,10 @@ final class FileUploadAction implements RequestHandlerInterface
         // Check if we have all chunks.
         $data = [];
         for ($i = 0; $i < $numberOfChunks; $i++) {
-            $filename = \sprintf(
-                '%s-%d.bin',
-                $fileTemporary->identifier,
-                $i,
-            );
+            $chunkFilename = $fileTemporary->getChunkFilename($i);
 
-            if (\file_exists($tmpPath . $filename)) {
-                $data[] = $tmpPath . $filename;
+            if (\file_exists($tmpPath . $chunkFilename)) {
+                $data[] = $tmpPath . $chunkFilename;
             }
         }
 
@@ -103,15 +97,14 @@ final class FileUploadAction implements RequestHandlerInterface
             // Concatenate the files by reading only a limited buffer at a time
             // to avoid blowing up the memory limit.
             // See https://stackoverflow.com/a/61997147
-            $bufferSize = 1 * 1024 * 1024;
 
-            $newFilename = \sprintf('%s-final.bin', $fileTemporary->identifier);
-            $result = new AtomicWriter($tmpPath . $newFilename);
+            $resultFilename = $fileTemporary->getResultFilename();
+            $result = new AtomicWriter($tmpPath . $resultFilename);
             foreach ($data as $fileChunk) {
                 $source = new File($fileChunk, 'rb');
                 try {
                     while (!$source->eof()) {
-                        $result->write($source->read($bufferSize));
+                        $result->write($source->read(self::FREAD_BUFFER_SIZE));
                     }
                 } finally {
                     $source->close();
@@ -121,7 +114,7 @@ final class FileUploadAction implements RequestHandlerInterface
             $result->flush();
 
             // Check if the final result matches the expected checksum.
-            $checksum = \hash_file('sha256', $tmpPath . $newFilename);
+            $checksum = \hash_file('sha256', $tmpPath . $resultFilename);
             if ($checksum !== $fileTemporary->fileHash) {
                 // TODO: Proper error message
                 throw new IllegalLinkException();
