@@ -28,7 +28,7 @@
 
 <div class="acpDashboard">
 	{foreach from=$dashboard->getVisibleBoxes() item='box'}
-		<div class="acpDashboardBox">
+		<div class="acpDashboardBox" data-name="{$box->getName()}">
 			<h2 class="acpDashboardBox__title">{$box->getTitle()}</h2>
 			<div class="acpDashboardBox__content">
 				{@$box->getContent()}

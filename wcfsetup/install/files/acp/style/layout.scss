@@ -873,10 +873,13 @@ html[data-color-scheme="dark"] {
 	}
 }
 
+.acpDashboardBox[data-name="com.woltlab.wcf.news"] .acpDashboardBox__content {
+	padding: 0;
+}
+
 .woltlabNewsfeed {
-	border: 1px solid var(--wcfContentBorderInner);
-	border-radius: var(--wcfBorderRadius);
-	height: 70vh;
+	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
+	height: 400px;
 	max-width: 100%;
 	overflow: hidden;
 	text-align: center;
@@ -892,7 +895,7 @@ html[data-color-scheme="dark"] {
 }
 
 .woltlabNewsfeed__iframe {
-	border-radius: var(--wcfBorderRadius);
+	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
 	height: 100%;
 	max-width: 100%;
 	width: 600px;

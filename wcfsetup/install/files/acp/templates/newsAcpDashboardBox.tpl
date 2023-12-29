@@ -21,7 +21,7 @@
 			() => container.classList.remove("woltlabNewsfeed--loading"),
 			{ once: true }
 		);
-		iframe.src = `https://newsfeed.woltlab.com/${ languageCode }_${ colorScheme }.html`;
+		iframe.src = `https://newsfeed.woltlab.com/${ languageCode }_${ colorScheme }_compact.html`;
 	};
 
 	const observer = new MutationObserver(() => {
