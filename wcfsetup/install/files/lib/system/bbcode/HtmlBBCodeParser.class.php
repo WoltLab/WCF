@@ -354,6 +354,8 @@ class HtmlBBCodeParser extends BBCodeParser
      */
     public function buildBBCodeTag($name, $attributes, $openingTagOnly = false)
     {
+        $attributes = \array_filter($attributes, fn ($value) => $value !== null);
+
         if (!empty($attributes)) {
             foreach ($attributes as &$attribute) {
                 $attribute = "'" . \addcslashes($attribute, "'") . "'";
