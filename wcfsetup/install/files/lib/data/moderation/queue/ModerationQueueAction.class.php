@@ -14,6 +14,7 @@ use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Executes moderation queue-related actions.
@@ -145,7 +146,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
         $items = \array_map(static function (ViewableModerationQueue $queue) {
             return [
-                'content' => $queue->getAffectedObject()->getTitle(),
+                'content' => StringUtil::encodeHTML($queue->getAffectedObject()->getTitle()),
                 'image' => '<span class="icon icon48 ' . $queue->getIconName() . '"></span>',
                 'isUnread' => $queue->isNew(),
                 'link' => $queue->getLink(),
