@@ -81,7 +81,7 @@ if (\function_exists('mb_regex_encoding')) {
 \mb_language('uni');
 
 // define current woltlab suite version
-\define('WCF_VERSION', '6.0.5');
+\define('WCF_VERSION', '6.0.6');
 
 // define current unix timestamp
 \define('TIME_NOW', \time());
