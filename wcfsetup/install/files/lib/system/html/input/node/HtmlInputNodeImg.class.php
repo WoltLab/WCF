@@ -71,6 +71,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         foreach ($elements as $element) {
             $this->mirrorWidthAttribute($element);
             $this->moveClassNameFromFigureToImage($element);
+            $this->moveFigureIntoATag($element);
 
             $class = $element->getAttribute('class');
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
@@ -364,5 +365,30 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         return null;
+    }
+
+    /**
+     * Ckeditor will wrap the `<a>` tag into a `<figure>` tag.
+     * This method moves the `<a>` tag out of the `<figure>` tag, to keep the link available.
+     *
+     * So the new structure is:
+     *  <a>
+     *      <figure>
+     *          <img>
+     *      </figure>
+     * </a>
+     */
+    private function moveFigureIntoATag(\DomElement $img): void
+    {
+        $figure = $this->getParentFigure($img);
+        $parent = $img->parentElement;
+        \assert($parent instanceof \DOMElement);
+        if ($figure === null || $parent->nodeName !== 'a') {
+            return;
+        }
+        $figure->parentNode->insertBefore($parent, $figure);
+        $parent->removeChild($img);
+        $parent->appendChild($figure);
+        $figure->appendChild($img);
     }
 }
