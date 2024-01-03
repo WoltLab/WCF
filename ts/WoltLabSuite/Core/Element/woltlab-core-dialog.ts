@@ -83,6 +83,10 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   }
 
   #detachDialog(): void {
+    if (this.parentNode === null) {
+      return;
+    }
+
     const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
 
@@ -202,10 +206,9 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#dialog.addEventListener("close", () => {
       if (this.#dialog.returnValue === "") {
         // Dialog was programmatically closed.
-        return;
+      } else {
+        this.#dispatchPrimaryEvent();
       }
-
-      this.#dispatchPrimaryEvent();
 
       this.#detachDialog();
     });

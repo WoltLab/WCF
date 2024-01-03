@@ -51,6 +51,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#detachDialog();
         }
         #detachDialog() {
+            if (this.parentNode === null) {
+                return;
+            }
             const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
             (0, PageOverlay_1.releasePageOverlayContainer)(this.#dialog);
@@ -148,9 +151,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#dialog.addEventListener("close", () => {
                 if (this.#dialog.returnValue === "") {
                     // Dialog was programmatically closed.
-                    return;
                 }
-                this.#dispatchPrimaryEvent();
+                else {
+                    this.#dispatchPrimaryEvent();
+                }
                 this.#detachDialog();
             });
             formControl.addEventListener("cancel", () => {
