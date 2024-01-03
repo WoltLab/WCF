@@ -193,7 +193,7 @@
 					<validationpattern><![CDATA[^(left|right|center|none)$]]></validationpattern>
 				</attribute>
 				<attribute name="3">
-					<validationpattern><![CDATA[^\d+$]]></validationpattern>
+					<validationpattern><![CDATA[^(\d+|auto)$]]></validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
