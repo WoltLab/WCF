@@ -259,14 +259,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
         thumbnailSize = "original";
       }
 
-      let link = media.link;
-      if (thumbnailSize !== "original") {
-        link = media[thumbnailSize + "ThumbnailLink"];
-      }
-
-      ckeditor.insertHtml(
-        `<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`,
-      );
+      ckeditor.insertText(`[wsm='${media.mediaID}','${thumbnailSize}'][/wsm]`);
     } else {
       ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);
     }
