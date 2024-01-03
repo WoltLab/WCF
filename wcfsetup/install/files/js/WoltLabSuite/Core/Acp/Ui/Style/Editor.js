@@ -49,21 +49,25 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     function handleScss(isTainted) {
         const individualScss = document.getElementById("individualScss");
         const overrideScss = document.getElementById("overrideScss");
+        const refreshCodeMirror = (element) => {
+            element.codemirror.refresh();
+            element.codemirror.setCursor(element.codemirror.getCursor());
+        };
         if (isTainted) {
             EventHandler.add("com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer", "select", () => {
-                individualScss.codemirror.refresh();
-                overrideScss.codemirror.refresh();
+                refreshCodeMirror(individualScss);
+                refreshCodeMirror(overrideScss);
             });
         }
         else {
             EventHandler.add("com.woltlab.wcf.simpleTabMenu_advanced", "select", (data) => {
                 if (data.activeName === "advanced-custom") {
-                    document.getElementById("individualScssCustom").codemirror.refresh();
-                    document.getElementById("overrideScssCustom").codemirror.refresh();
+                    refreshCodeMirror(document.getElementById("individualScssCustom"));
+                    refreshCodeMirror(document.getElementById("overrideScssCustom"));
                 }
                 else if (data.activeName === "advanced-original") {
-                    individualScss.codemirror.refresh();
-                    overrideScss.codemirror.refresh();
+                    refreshCodeMirror(individualScss);
+                    refreshCodeMirror(overrideScss);
                 }
             });
         }
