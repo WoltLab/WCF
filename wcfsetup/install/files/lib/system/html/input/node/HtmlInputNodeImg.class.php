@@ -387,7 +387,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             return;
         }
         $figure->parentNode->insertBefore($parent, $figure);
-        $parent->removeChild($img);
         $parent->appendChild($figure);
         $figure->appendChild($img);
     }
