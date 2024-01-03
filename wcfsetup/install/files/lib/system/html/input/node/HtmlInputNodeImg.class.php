@@ -5,7 +5,6 @@ namespace wcf\system\html\input\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -43,11 +42,11 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $foundImage = false;
 
-        // check if there are only attachments, media or smilies
+        // check if there are only attachments or smilies
         /** @var \DOMElement $element */
         foreach ($htmlNodeProcessor->getDocument()->getElementsByTagName('img') as $element) {
             $class = $element->getAttribute('class');
-            if (!\preg_match('~\b(?:woltlabAttachment|woltlabSuiteMedia|smiley)\b~', $class)) {
+            if (!\preg_match('~\b(?:woltlabAttachment|smiley)\b~', $class)) {
                 $foundImage = true;
                 break;
             }
@@ -148,104 +147,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $newElement->setAttribute('data-name', 'attach');
         $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
         DOMUtil::replaceElement($replaceElement, $newElement, false);
-    }
-
-    /**
-     * Replaces image element with media metacode element.
-     *
-     * @param \DOMElement $element
-     * @param string $class
-     */
-    protected function handleMedium(\DOMElement $element, $class)
-    {
-        $mediumID = \intval($element->getAttribute('data-media-id'));
-        if (!$mediumID) {
-            return;
-        }
-
-        $float = 'none';
-        $thumbnail = 'original';
-        $width = $element->getAttribute("data-width");
-        if (\preg_match('~(?<width>\d+)px$~', $width, $matches)) {
-            $width = (int)$matches['width'];
-        } else {
-            $width = "auto";
-        }
-
-        if (
-            \preg_match(
-                '~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~',
-                $element->getAttribute('src'),
-                $matches
-            )
-        ) {
-            $thumbnail = $matches['thumbnail'];
-        }
-
-        $replaceElement = $element;
-        $parent = $this->getParentFigure($element);
-        if ($parent !== null) {
-            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
-                $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
-            } else {
-                $float = 'center';
-            }
-
-            $replaceElement = $parent;
-        }
-
-        $attributes = [
-            $mediumID,
-            $thumbnail,
-            $float,
-            $width,
-        ];
-
-        $newElement = $element->ownerDocument->createElement('woltlab-metacode');
-        $newElement->setAttribute('data-name', 'wsm');
-        $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
-        DOMUtil::replaceElement($replaceElement, $newElement, false);
-
-        // The media bbcode is a block element that may not be placed inside inline elements.
-        $parent = $newElement;
-        $blockLevelParent = null;
-        $blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
-        while ($parent = $parent->parentNode) {
-            \assert($parent instanceof \DOMElement);
-
-            switch ($parent->nodeName) {
-                case 'a':
-                    // Permit the media element to be placed inside a link.
-                    break 2;
-
-                case 'blockquote':
-                case 'body':
-                case 'code':
-                case 'div':
-                case 'li':
-                case 'p':
-                case 'td':
-                case 'woltlab-quote':
-                case 'woltlab-spoiler':
-                    $blockLevelParent = $parent;
-                    break 2;
-
-                case 'woltlab-metacode':
-                    if (\in_array($parent->getAttribute('data-name'), $blockElements)) {
-                        $blockLevelParent = $parent;
-                        break 2;
-                    }
-                    break;
-            }
-        }
-
-        if ($blockLevelParent !== null) {
-            \assert($parent instanceof \DOMElement);
-            $element = DOMUtil::splitParentsUntil($newElement, $parent);
-            if ($element !== $newElement) {
-                DOMUtil::insertBefore($newElement, $element);
-            }
-        }
     }
 
     /**
