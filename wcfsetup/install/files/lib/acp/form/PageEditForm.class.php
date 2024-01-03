@@ -260,13 +260,16 @@ class PageEditForm extends PageAddForm
         $this->saved();
 
         // Ensure that the CKEditor has the correct content after save.
-        if ($this->isMultilingual) {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
+        if ($this->pageType == 'text') {
+            if ($this->isMultilingual) {
+                foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                    $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
                     $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
+                }
+            } else {
+                $this->content[0] = isset($this->htmlInputProcessors[0]) ?
+                    $this->htmlInputProcessors[0]->getHtml() : '';
             }
-        } else {
-            $this->content[0] = isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0]->getHtml() : '';
         }
 
         // show success message
