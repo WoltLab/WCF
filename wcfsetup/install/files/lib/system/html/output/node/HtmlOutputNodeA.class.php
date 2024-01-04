@@ -33,6 +33,26 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
      */
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
+        // Find links that are nested inside other links.
+        $nestedLinks = \array_filter(
+            $elements,
+            static fn (\DOMElement $element) => DOMUtil::hasParent($element, 'a'),
+        );
+
+        if ($nestedLinks !== []) {
+            $elements = \array_filter(
+                $elements,
+                static function (\DOMElement $element) use ($nestedLinks) {
+                    if (\in_array($element, $nestedLinks, true)) {
+                        DOMUtil::removeNode($element, true);
+                        return false;
+                    }
+
+                    return true;
+                }
+            );
+        }
+
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             try {
