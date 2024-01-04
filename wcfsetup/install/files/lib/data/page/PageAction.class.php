@@ -188,14 +188,14 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                         $pageContentEditor = new PageContentEditor($pageContent);
                         $pageContentEditor->update([
                             'title' => $content['title'],
-                            'content' => $content['content'],
-                            'metaDescription' => $content['metaDescription'],
-                            'customURL' => $content['customURL'],
+                            'content' => $content['content'] ?? '',
+                            'metaDescription' => $content['metaDescription'] ?? '',
+                            'customURL' => $content['customURL'] ?? '',
                         ]);
 
                         $versionData[] = $pageContent;
                         foreach (['title', 'content', 'metaDescription', 'customURL'] as $property) {
-                            if ($pageContent->{$property} != $content[$property]) {
+                            if ($pageContent->{$property} != ($content[$property] ?? '')) {
                                 $hasChanges = true;
                                 break;
                             }
@@ -208,9 +208,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                             'pageID' => $page->pageID,
                             'languageID' => $languageID ?: null,
                             'title' => $content['title'],
-                            'content' => $content['content'],
-                            'metaDescription' => $content['metaDescription'],
-                            'customURL' => $content['customURL'],
+                            'content' => $content['content'] ?? '',
+                            'metaDescription' => $content['metaDescription'] ?? '',
+                            'customURL' => $content['customURL'] ?? '',
                         ]);
                         $pageContentEditor = new PageContentEditor($pageContent);
 
