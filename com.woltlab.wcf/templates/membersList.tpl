@@ -54,9 +54,9 @@
 					title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
 				>
 					{if $sortOrder === 'ASC'}
-						{icon name='arrow-down-wide-short'}
-					{else}
 						{icon name='arrow-down-short-wide'}
+					{else}
+						{icon name='arrow-down-wide-short'}
 					{/if}
 				</a>
 				<span class="dropdown">
