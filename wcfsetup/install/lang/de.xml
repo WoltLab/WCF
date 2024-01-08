@@ -5521,8 +5521,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
-		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
-		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[„{$option->getTitle()}“ enthält:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
@@ -7554,5 +7552,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
 	<item name="wcf.editor.button.group.block"/>
+	<item name="wcf.user.option.editorPastePreserveFormatting"/>
+	<item name="wcf.user.option.editorPastePreserveFormatting.description"/>
 </delete>
 </language>
