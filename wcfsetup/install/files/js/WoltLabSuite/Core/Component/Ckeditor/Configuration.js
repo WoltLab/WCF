@@ -309,7 +309,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                     ],
                 },
                 fontSize: {
-                    options: [11, 12, "default", 18, 24, 36],
+                    options: [11, 13, "default", 24, 32, 48],
                 },
                 toolbar: this.#getToolbar(),
                 ui: {
