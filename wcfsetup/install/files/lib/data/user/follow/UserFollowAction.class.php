@@ -4,14 +4,14 @@ namespace wcf\data\user\follow;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
-use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\command\Follow;
+use wcf\system\user\command\Unfollow;
 use wcf\system\user\GroupedUserList;
-use wcf\system\user\notification\object\UserFollowUserNotificationObject;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -41,6 +41,8 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 
     /**
      * Validates given parameters.
+     *
+     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
      */
     public function validateFollow()
     {
@@ -71,35 +73,12 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      * Follows a user.
      *
      * @return  array
+     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
      */
     public function follow()
     {
-        /** @var UserFollow $follow */
-        $follow = UserFollowEditor::createOrIgnore([
-            'userID' => WCF::getUser()->userID,
-            'followUserID' => $this->parameters['data']['userID'],
-            'time' => TIME_NOW,
-        ]);
-
-        if ($follow !== null) {
-            // send notification
-            UserNotificationHandler::getInstance()->fireEvent(
-                'following',
-                'com.woltlab.wcf.user.follow',
-                new UserFollowUserNotificationObject($follow),
-                [$follow->followUserID]
-            );
-
-            // fire activity event
-            UserActivityEventHandler::getInstance()->fireEvent(
-                'com.woltlab.wcf.user.recentActivityEvent.follow',
-                $this->parameters['data']['userID']
-            );
-
-            // reset storage
-            UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followerUserIDs');
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followingUserIDs');
-        }
+        $command = new Follow(WCF::getUser(), new User($this->parameters['data']['userID']));
+        $command();
 
         return [
             'following' => 1,
@@ -108,6 +87,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
      */
     public function validateUnfollow()
     {
@@ -118,25 +98,12 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      * Stops following a user.
      *
      * @return  array
+     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
      */
     public function unfollow()
     {
-        $follow = UserFollow::getFollow(WCF::getUser()->userID, $this->parameters['data']['userID']);
-
-        if ($follow->followID) {
-            $followEditor = new UserFollowEditor($follow);
-            $followEditor->delete();
-
-            // remove activity event
-            UserActivityEventHandler::getInstance()->removeEvent(
-                'com.woltlab.wcf.user.recentActivityEvent.follow',
-                $this->parameters['data']['userID']
-            );
-        }
-
-        // reset storage
-        UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followerUserIDs');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followingUserIDs');
+        $command = new Unfollow(WCF::getUser(), new User($this->parameters['data']['userID']));
+        $command();
 
         return [
             'following' => 0,
