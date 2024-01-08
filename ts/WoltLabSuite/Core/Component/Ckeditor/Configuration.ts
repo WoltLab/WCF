@@ -348,7 +348,7 @@ class ConfigurationBuilder {
         ],
       },
       fontSize: {
-        options: [11, 13, "default", 24, 32, 48],
+        options: [12, "default", 18, 23, 28],
       },
       toolbar: this.#getToolbar(),
       ui: {

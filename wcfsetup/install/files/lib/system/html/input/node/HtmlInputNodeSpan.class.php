@@ -46,7 +46,7 @@ class HtmlInputNodeSpan extends AbstractHtmlInputNode
                             $min = 8;
                             $max = 36;
                         } else {
-                            $min = 11;
+                            $min = 12;
                             $max = 48;
                         }
 
