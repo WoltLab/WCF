@@ -15,9 +15,8 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    const shareButtons = new WeakSet();
+    const shareButtons = new WeakMap();
     const offerNativeSharing = window.navigator.share !== undefined;
-    let dialog = undefined;
     /**
      * Copies the contents of one of the share dialog's input elements to the clipboard.
      */
@@ -143,6 +142,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         event.preventDefault();
         const target = event.currentTarget;
         const link = getLink(target);
+        let dialog = shareButtons.get(target);
         if (dialog === undefined) {
             const providerButtons = getProviderButtons();
             let providerElement = "";
@@ -175,6 +175,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
       </div>
     `;
             dialog = (0, Dialog_1.dialogFactory)().fromHtml(dialogContent).withoutControls();
+            shareButtons.set(target, dialog);
             dialog.content
                 .querySelectorAll(".shareDialogCopyButton")
                 .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
@@ -191,7 +192,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         document.querySelectorAll(".shareButton, .wsShareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
-                shareButtons.add(shareButton);
+                shareButtons.set(shareButton, undefined);
             }
         });
     }

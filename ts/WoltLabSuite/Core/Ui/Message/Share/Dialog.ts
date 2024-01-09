@@ -21,11 +21,9 @@ type Label = string;
 type Value = string;
 type DialogElement = [Label, Value];
 
-const shareButtons = new WeakSet<HTMLElement>();
+const shareButtons = new WeakMap<HTMLElement, WoltlabCoreDialogElement | undefined>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
-
-let dialog: WoltlabCoreDialogElement | undefined = undefined;
 
 interface Provider {
   selector: string;
@@ -189,6 +187,7 @@ function openDialog(event: MouseEvent): void {
 
   const target = event.currentTarget as HTMLElement;
   const link = getLink(target);
+  let dialog = shareButtons.get(target);
   if (dialog === undefined) {
     const providerButtons = getProviderButtons();
     let providerElement = "";
@@ -226,6 +225,7 @@ function openDialog(event: MouseEvent): void {
     `;
 
     dialog = dialogFactory().fromHtml(dialogContent).withoutControls();
+    shareButtons.set(target, dialog);
 
     dialog.content
       .querySelectorAll(".shareDialogCopyButton")
@@ -247,7 +247,7 @@ function registerButtons(): void {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 
-      shareButtons.add(shareButton);
+      shareButtons.set(shareButton, undefined);
     }
   });
 }
