@@ -8,34 +8,42 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
 
-function toggleFollow(button: HTMLButtonElement): void {
-  if (button.dataset.following != "1") {
-    button.dataset.following = "1";
-    button.dataset.tooltip = getPhrase("wcf.user.button.unfollow");
-    button.querySelector("fa-icon")?.setIcon("circle-minus");
-    void prepareRequest(button.dataset.endpoint!)
+async function toggleFollow(button: HTMLElement): Promise<void> {
+  if (button.dataset.following !== "1") {
+    await prepareRequest(button.dataset.followUser!)
       .post({
         action: "follow",
       })
       .fetchAsResponse();
+
+    button.dataset.following = "1";
+    button.dataset.tooltip = getPhrase("wcf.user.button.unfollow");
+    button.querySelector("fa-icon")?.setIcon("circle-minus");
   } else {
-    button.dataset.following = "0";
-    button.dataset.tooltip = getPhrase("wcf.user.button.follow");
-    button.querySelector("fa-icon")?.setIcon("circle-plus");
-    void prepareRequest(button.dataset.endpoint!)
+    await prepareRequest(button.dataset.followUser!)
       .post({
         action: "unfollow",
       })
       .fetchAsResponse();
+
+    button.dataset.following = "0";
+    button.dataset.tooltip = getPhrase("wcf.user.button.follow");
+    button.querySelector("fa-icon")?.setIcon("circle-plus");
   }
+
+  UiNotification.show();
 }
 
 export function setup(): void {
-  document.querySelectorAll<HTMLButtonElement>(".jsFollowButton").forEach((button) => {
-    button.addEventListener("click", () => {
-      toggleFollow(button);
-    });
+  wheneverFirstSeen("[data-follow-user]", (button) => {
+    button.addEventListener(
+      "click",
+      promiseMutex(() => toggleFollow(button)),
+    );
   });
 }

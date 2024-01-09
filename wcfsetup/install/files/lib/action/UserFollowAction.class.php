@@ -56,7 +56,7 @@ final class UserFollowAction implements RequestHandlerInterface
                     EOT
             );
 
-            if ($bodyParameters['action'] == 'follow') {
+            if ($bodyParameters['action'] === 'follow') {
                 $this->assertUserIsNotIgnored($user);
 
                 $command = new Follow(WCF::getUser(), $user);
@@ -82,10 +82,10 @@ final class UserFollowAction implements RequestHandlerInterface
     private function assertUserIsNotIgnored(User $target): void
     {
         $sql = "SELECT  ignoreID
-                FROM    wcf" . WCF_N . "_user_ignore
+                FROM    wcf1_user_ignore
                 WHERE   userID = ?
                     AND ignoreUserID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $target->userID,
             WCF::getUser()->userID,
