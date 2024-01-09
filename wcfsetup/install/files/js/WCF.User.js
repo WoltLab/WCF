@@ -1151,6 +1151,8 @@ WCF.User.Action = {};
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * Handles user follow and unfollow links.
+	 * 
+	 * @deprecated 6.1 use `WoltLabSuite/Core/Component/User/Follow` instead
 	 */
 	WCF.User.Action.Follow = Class.extend({
 		/**

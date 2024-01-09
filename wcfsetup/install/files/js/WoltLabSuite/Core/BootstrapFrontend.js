@@ -90,6 +90,9 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment-response", () => {
             void new Promise((resolve_4, reject_4) => { require(["./Component/Comment/Response/woltlab-core-comment-response"], resolve_4, reject_4); }).then(tslib_1.__importStar);
         });
+        (0, LazyLoader_1.whenFirstSeen)("[data-follow-user]", () => {
+            void new Promise((resolve_5, reject_5) => { require(["./Component/User/Follow"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
     }
     exports.setup = setup;
 });
