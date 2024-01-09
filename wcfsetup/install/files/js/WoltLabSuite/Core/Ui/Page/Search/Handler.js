@@ -66,10 +66,6 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
           </div>
         </div>
       </div>`;
-                const link = listItem.querySelector("a");
-                link.addEventListener("click", (event) => {
-                    event.preventDefault();
-                });
                 listItem.addEventListener("click", () => {
                     this.click(item.objectID);
                 });
