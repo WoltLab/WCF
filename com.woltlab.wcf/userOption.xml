@@ -250,5 +250,6 @@ dark:wcf.style.setColorScheme.dark</selectoptions>
 	</import>
 	<delete>
 		<option name="editorPastePreserveFormatting"/>
+		<option name="icq"/>
 	</delete>
 </data>
