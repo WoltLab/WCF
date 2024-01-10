@@ -126,7 +126,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             }
         }
 
-        $width = $replaceElement->getAttribute("data-width");
+        $width = $element->getAttribute("data-width");
         if (\preg_match('~(?<width>\d+)px$~', $width, $matches)) {
             $width = (int)$matches['width'];
         } else {
@@ -188,16 +188,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
      */
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
-        // Aligned images are wrapped in a `<figure>` element that is the target
-        // of the resize operation.
-        if ($element->nodeName !== 'img') {
-            $figure = $this->getParentFigure($element);
-            if ($figure !== null) {
-                $this->mirrorWidthAttribute($figure);
-            }
-            return;
-        }
-
         $width = $element->getAttribute("data-width");
         if ($width && \preg_match('~^\d+px$~', $width)) {
             $style = $element->getAttribute("style");
