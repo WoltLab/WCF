@@ -25,7 +25,6 @@
 \define('ENABLE_DEBUG_MODE', 1);
 \define('ENABLE_BENCHMARK', 0);
 \define('LOG_IP_ADDRESS', 1);
-\define('ENABLE_WOLTLAB_NEWS', 1);
 \define('MODULE_SYSTEM_RECAPTCHA', 1);
 \define('MODULE_SMILEY', 1);
 \define('MODULE_USERS_ONLINE', 1);

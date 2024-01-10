@@ -916,40 +916,37 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Can export personal data (GDPR)]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[The export according to the European General Data Protection Regulation (GDPR) contains detailed personal data of the respective user. The export <strong>will not</strong> be filtered according to the administrator’s permissions and may contain information that would be inaccessible otherwise.]]></item>
 	</category>
+	<category name="wcf.acp.dashboard">
+		<item name="wcf.acp.dashboard.box.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo"><![CDATA[System]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseNumber"><![CDATA[Database Installation Number]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.software.databaseName"><![CDATA[Database Name]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.webserver"><![CDATA[Web Server]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.php.version"><![CDATA[PHP Version]]></item>
+		<item name="wcf.acp.dashboard.box.systemInfo.mySQLVersion"><![CDATA[MySQL Version]]></item>
+		<item name="wcf.acp.dashboard.box.credits"><![CDATA[About WoltLab Suite]]></item>
+		<item name="wcf.acp.dashboard.box.credits.contributor"><![CDATA[Contributions]]></item>
+		<item name="wcf.acp.dashboard.box.credits.designer"><![CDATA[Designer]]></item>
+		<item name="wcf.acp.dashboard.box.credits.developedBy"><![CDATA[Software developed by]]></item>
+		<item name="wcf.acp.dashboard.box.credits.developer"><![CDATA[Developer]]></item>
+		<item name="wcf.acp.dashboard.box.credits.productManager"><![CDATA[Product Manager]]></item>
+		<item name="wcf.acp.dashboard.box.credits.trademarks"><![CDATA[“WoltLab&reg;” is a registered European Union trade mark at the European Union Intellectual Property Office (EUIPO) in Alicante, Spain.]]></item>
+		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[More]]></item>
+		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{plural value=$usersAwaitingApproval one='# User' other='# Users'} Awaiting Approval]]></item>
+		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
+		<item name="wcf.acp.dashboard.configure"><![CDATA[Configure Dashboard]]></item>
+	</category>
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
-		<item name="wcf.acp.index.credits.contributor"><![CDATA[Contributions]]></item>
-		<item name="wcf.acp.index.credits.designer"><![CDATA[Designer]]></item>
-		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software developed by]]></item>
-		<item name="wcf.acp.index.credits.developer"><![CDATA[Developer]]></item>
-		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
-		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered European Union trade marks at the European Union Intellectual Property Office (EUIPO) in Alicante, Spain.]]></item>
-		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
-		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
-		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
-		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
-		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Database Installation Number]]></item>
-		<item name="wcf.acp.index.system.software.databaseName"><![CDATA[Database Name]]></item>
-		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
-		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
-		<item name="wcf.acp.index.system.webserver"><![CDATA[Web Server]]></item>
-		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
-		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP Version]]></item>
-		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
-		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
 		<item name="wcf.acp.index.woltlab.manual"><![CDATA[Manual]]></item>
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Support Forums]]></item>
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
-		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
-		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using reCAPTCHA without an individual website key is no longer supported by Google.<br><br>For further use you need to <a href="{$recaptchaKeyLink}">provide a key in your options</a>, please follow the instructions below the input field to obtain a key.]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
-		<item name="wcf.acp.index.allowsFrameEmbedding"><![CDATA[The <a href="{$xFrameOptionsLink}">option to prevent embedding of WoltLab Suite within a frame</a> is disabled. This option is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[The system environment has changed. It is recommended to perform a <a href="{link controller='SystemCheck'}{/link}">System Check</a>.]]></item>
 	</category>
 	<category name="wcf.acp.label">
@@ -1382,8 +1379,6 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Package Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key (reCAPTCHA v2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
@@ -3129,7 +3124,6 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Users awaiting approval]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked avatars]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
-		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account on {@PAGE_TITLE|phrase}]]></item>

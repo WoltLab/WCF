@@ -1,5 +1,6 @@
 <?php
 
+use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\event\listener\PackageUpdateListChangedLicenseListener;
@@ -72,6 +73,14 @@ return static function (): void {
     });
 
     $eventHandler->register(PackageUpdateListChanged::class, PackageUpdateListChangedLicenseListener::class);
+
+    $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
+        $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\StatusMessageAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+    });
 
     try {
         $licenseApi = new LicenseApi();

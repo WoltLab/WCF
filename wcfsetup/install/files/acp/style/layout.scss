@@ -873,10 +873,13 @@ html[data-color-scheme="dark"] {
 	}
 }
 
+.acpDashboardBox[data-name="com.woltlab.wcf.news"] .acpDashboardBox__content {
+	padding: 0;
+}
+
 .woltlabNewsfeed {
-	border: 1px solid var(--wcfContentBorderInner);
-	border-radius: var(--wcfBorderRadius);
-	height: 70vh;
+	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
+	height: 400px;
 	max-width: 100%;
 	overflow: hidden;
 	text-align: center;
@@ -892,7 +895,7 @@ html[data-color-scheme="dark"] {
 }
 
 .woltlabNewsfeed__iframe {
-	border-radius: var(--wcfBorderRadius);
+	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
 	height: 100%;
 	max-width: 100%;
 	width: 600px;
@@ -916,4 +919,91 @@ html[data-color-scheme="dark"] {
 	input[type="submit"] {
 		width: 100%;
 	}
+}
+
+.acpDashboard {
+	--column-count: 3;
+
+	display: grid;
+	grid-template-columns: repeat(var(--column-count), 1fr);
+	gap: 20px;
+	grid-auto-rows: minmax(300px, auto);
+	margin-top: 40px;
+}
+
+@include screen-sm {
+	.acpDashboard {
+		--column-count: 2;
+	}
+}
+
+@include screen-xs {
+	.acpDashboard {
+		--column-count: 1;
+	}
+}
+
+.acpDashboardBox {
+	background-color: var(--wcfContentContainerBackground);
+	border: 1px solid var(--wcfContentContainerBorder);
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadowCard);
+	display: flex;
+	flex-direction: column;
+}
+
+.acpDashboardBox__title {
+	border-bottom: 1px solid var(--wcfContentContainerBorder);
+	font-weight: 600;
+	padding: 10px 20px;
+}
+
+.acpDashboardBox__content {
+	padding: 20px;
+
+	> :first-child {
+		margin-top: 0 !important;
+	}
+}
+
+.acpDashboardBox__keyValueGroup {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+.acpDashboardBox__keyValueGroup:not(:first-child) {
+	margin-top: 30px;
+}
+
+.acpDashboardBox__keyValue {
+	align-items: start;
+	column-gap: 15px;
+	display: grid;
+	grid-template-areas: "key spacer value";
+	grid-template-columns: max-content minmax(15px, auto) minmax(min-content, max-content);
+
+	&::before {
+		border-bottom: 5px dotted currentColor;
+		content: "";
+		display: block;
+		grid-area: spacer;
+		margin-top: 0.6em;
+		opacity: 0.12;
+	}
+}
+
+.acpDashboardBox__keyValue__key {
+	color: var(--wcfInputLabel);
+	grid-area: key;
+}
+
+.acpDashboardBox__keyValue__value {
+	grid-area: value;
+	text-align: right;
+}
+
+.acpDashboardBox__keyValue__list {
+	display: flex;
+	flex-direction: column;
 }

@@ -10,11 +10,6 @@ define(["require", "exports", "tslib", "./Field", "WoltLabSuite/Core/Dom/Util"],
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     class Checkboxes extends Field_1.default {
-        _fields;
-        constructor(fieldId) {
-            super(fieldId);
-            this._fields = Array.from(document.querySelectorAll(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[]"]`));
-        }
         _getData() {
             const values = this._fields
                 .map((input) => {
@@ -30,6 +25,9 @@ define(["require", "exports", "tslib", "./Field", "WoltLabSuite/Core/Dom/Util"],
         }
         _readField() {
             /* Does nothing. */
+        }
+        get _fields() {
+            return Array.from(document.querySelectorAll(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[]"]`));
         }
     }
     return Checkboxes;
