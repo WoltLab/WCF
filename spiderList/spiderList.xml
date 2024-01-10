@@ -1664,4 +1664,8 @@
 		<name>GPTBot</name>
 		<url>https://openai.com/gptbot</url>
 	</spider>
+	<spider ident="PerplexityBot/">
+		<name>PerplexityBot</name>
+		<url>https://perplexity.ai/perplexitybot</url>
+	</spider>
 </data>
