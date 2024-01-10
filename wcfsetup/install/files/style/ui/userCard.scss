@@ -1,23 +1,20 @@
 .userCardList {
+    --column-count: 3;
+
     display: grid;
     gap: 20px;
     grid-auto-rows: minmax(200px, auto);
+    grid-template-columns: repeat(var(--column-count), 1fr);
     padding: 20px 0;
 
-    @include screen-xl {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     @include screen-lg-only {
-        grid-template-columns: repeat(2, 1fr);
+        --column-count: 2;
     }
-
-    @include screen-md {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     @include screen-sm {
-        grid-template-columns: repeat(2, 1fr);
+        --column-count: 2;
+    }
+    @include screen-xs {
+        --column-count: 1;
     }
 }
 
@@ -123,8 +120,12 @@
     gap: 5px;
     margin: 0 auto;
     padding: 5px 10px;
+}
 
-    a {
+.userCard__button {
+    color: inherit;
+
+    &:hover {
         color: inherit;
     }
 }
