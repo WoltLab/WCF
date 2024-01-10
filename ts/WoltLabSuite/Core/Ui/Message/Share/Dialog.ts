@@ -13,7 +13,6 @@ import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import { getShareProviders } from "./Providers";
 import { dialogFactory } from "../../../Component/Dialog";
-import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as EventHandler from "../../../Event/Handler";
 
@@ -24,8 +23,6 @@ type DialogElement = [Label, Value];
 const shareButtons = new WeakSet<HTMLElement>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
-
-let dialog: WoltlabCoreDialogElement | undefined = undefined;
 
 interface Provider {
   selector: string;
@@ -189,21 +186,20 @@ function openDialog(event: MouseEvent): void {
 
   const target = event.currentTarget as HTMLElement;
   const link = getLink(target);
-  if (dialog === undefined) {
-    const providerButtons = getProviderButtons();
-    let providerElement = "";
-    if (providerButtons) {
-      providerElement = `
+  const providerButtons = getProviderButtons();
+  let providerElement = "";
+  if (providerButtons) {
+    providerElement = `
         <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(link)}">
           <dt>${getPhrase("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
       `;
-    }
+  }
 
-    let nativeSharingElement = "";
-    if (offerNativeSharing) {
-      nativeSharingElement = `
+  let nativeSharingElement = "";
+  if (offerNativeSharing) {
+    nativeSharingElement = `
         <dl>
           <dt></dt>
           <dd>
@@ -215,9 +211,9 @@ function openDialog(event: MouseEvent): void {
           </dd>
         </dl>
       `;
-    }
+  }
 
-    const dialogContent = `
+  const dialogContent = `
       <div class="shareContentDialog">
         ${getDialogElements(target)}
         ${providerElement}
@@ -225,18 +221,17 @@ function openDialog(event: MouseEvent): void {
       </div>
     `;
 
-    dialog = dialogFactory().fromHtml(dialogContent).withoutControls();
+  const dialog = dialogFactory().fromHtml(dialogContent).withoutControls();
 
-    dialog.content
-      .querySelectorAll(".shareDialogCopyButton")
-      .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
-    if (offerNativeSharing) {
-      dialog.content.querySelector(".shareDialogNativeButton")!.addEventListener("click", (ev) => nativeShare(ev));
-    }
+  dialog.content
+    .querySelectorAll(".shareDialogCopyButton")
+    .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
+  if (offerNativeSharing) {
+    dialog.content.querySelector(".shareDialogNativeButton")!.addEventListener("click", (ev) => nativeShare(ev));
+  }
 
-    if (providerButtons) {
-      initProviderButtons(dialog.content, link);
-    }
+  if (providerButtons) {
+    initProviderButtons(dialog.content, link);
   }
 
   dialog.show(getPhrase("wcf.message.share"));

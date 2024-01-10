@@ -17,7 +17,6 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
     EventHandler = tslib_1.__importStar(EventHandler);
     const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
-    let dialog = undefined;
     /**
      * Copies the contents of one of the share dialog's input elements to the clipboard.
      */
@@ -143,20 +142,19 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         event.preventDefault();
         const target = event.currentTarget;
         const link = getLink(target);
-        if (dialog === undefined) {
-            const providerButtons = getProviderButtons();
-            let providerElement = "";
-            if (providerButtons) {
-                providerElement = `
+        const providerButtons = getProviderButtons();
+        let providerElement = "";
+        if (providerButtons) {
+            providerElement = `
         <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(link)}">
           <dt>${(0, Language_1.getPhrase)("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
       `;
-            }
-            let nativeSharingElement = "";
-            if (offerNativeSharing) {
-                nativeSharingElement = `
+        }
+        let nativeSharingElement = "";
+        if (offerNativeSharing) {
+            nativeSharingElement = `
         <dl>
           <dt></dt>
           <dd>
@@ -166,24 +164,23 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
           </dd>
         </dl>
       `;
-            }
-            const dialogContent = `
+        }
+        const dialogContent = `
       <div class="shareContentDialog">
         ${getDialogElements(target)}
         ${providerElement}
         ${nativeSharingElement}
       </div>
     `;
-            dialog = (0, Dialog_1.dialogFactory)().fromHtml(dialogContent).withoutControls();
-            dialog.content
-                .querySelectorAll(".shareDialogCopyButton")
-                .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
-            if (offerNativeSharing) {
-                dialog.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
-            }
-            if (providerButtons) {
-                initProviderButtons(dialog.content, link);
-            }
+        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(dialogContent).withoutControls();
+        dialog.content
+            .querySelectorAll(".shareDialogCopyButton")
+            .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
+        if (offerNativeSharing) {
+            dialog.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
+        }
+        if (providerButtons) {
+            initProviderButtons(dialog.content, link);
         }
         dialog.show((0, Language_1.getPhrase)("wcf.message.share"));
     }
