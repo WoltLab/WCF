@@ -127,6 +127,8 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
      */
     public function reset($objectType)
     {
+        $this->createSearchIndex(SearchIndexManager::getInstance()->getObjectType($objectType));
+
         $sql = "TRUNCATE TABLE " . SearchIndexManager::getTableName($objectType);
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
