@@ -11,6 +11,7 @@ import { dboAction } from "../../Ajax";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 import UiPagination from "../../Ui/Pagination";
 import { dialogFactory } from "../Dialog";
+import DomUtil from "WoltLabSuite/Core/Dom/Util";
 
 export class UserList {
   readonly #options: AjaxRequestOptions;
@@ -35,7 +36,7 @@ export class UserList {
     }
 
     const dialog = this.#getDialog();
-    dialog.content.innerHTML = template;
+    DomUtil.setInnerHtml(dialog.content, template);
     dialog.show(this.#dialogTitle);
 
     if (this.#pageCount > 1) {
