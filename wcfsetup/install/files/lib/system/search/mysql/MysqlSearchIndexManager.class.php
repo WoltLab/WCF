@@ -47,60 +47,6 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function update(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    ) {
-        $this->set(
-            $objectType,
-            $objectID,
-            $message,
-            $subject,
-            $time,
-            $userID,
-            $username,
-            $languageID,
-            $metaData
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function add(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    ) {
-        $this->set(
-            $objectType,
-            $objectID,
-            $message,
-            $subject,
-            $time,
-            $userID,
-            $username,
-            $languageID,
-            $metaData
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function delete($objectType, array $objectIDs)
     {
         $itemsPerLoop = 1000;
