@@ -345,7 +345,7 @@ class ImportCLICommand implements ICLICommand
             );
 
             if (!$this->exporter->validateFileAccess()) {
-                CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path.error'));
+                CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path.error.invalid'));
                 continue;
             }
 
