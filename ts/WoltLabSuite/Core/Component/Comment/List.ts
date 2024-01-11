@@ -120,6 +120,7 @@ class CommentList {
         .objectIds([commentId])
         .payload({
           responseID: responseId,
+          objectTypeID: this.#container.dataset.objectTypeId,
         })
         .dispatch()) as ResponseLoadComment;
     } catch (error) {
@@ -188,6 +189,7 @@ class CommentList {
       response = (await dboAction("loadResponse", "wcf\\data\\comment\\CommentAction")
         .payload({
           responseID: responseId,
+          objectTypeID: this.#container.dataset.objectTypeId,
         })
         .dispatch()) as ResponseLoadResponse;
     } catch (error) {

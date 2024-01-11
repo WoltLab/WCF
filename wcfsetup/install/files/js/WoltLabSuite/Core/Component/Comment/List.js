@@ -84,6 +84,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     .objectIds([commentId])
                     .payload({
                     responseID: responseId,
+                    objectTypeID: this.#container.dataset.objectTypeId,
                 })
                     .dispatch());
             }
@@ -135,6 +136,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                 response = (await (0, Ajax_1.dboAction)("loadResponse", "wcf\\data\\comment\\CommentAction")
                     .payload({
                     responseID: responseId,
+                    objectTypeID: this.#container.dataset.objectTypeId,
                 })
                     .dispatch());
             }

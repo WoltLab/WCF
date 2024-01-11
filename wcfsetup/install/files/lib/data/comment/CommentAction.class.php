@@ -284,7 +284,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     public function validateLoadComment()
     {
         $this->readInteger('responseID', true);
+        $this->readInteger('objectTypeID', true);
         $this->comment = $this->getSingleObject()->getDecoratedObject();
+        if (!empty($this->parameters['objectTypeID']) && $this->parameters['objectTypeID'] !== $this->comment->objectTypeID) {
+            throw new UserInputException('objectTypeID');
+        }
+
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
         if (!$this->commentProcessor->isAccessible($this->comment->objectID)) {
@@ -343,12 +348,17 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     public function validateLoadResponse()
     {
         $this->readInteger('responseID');
+        $this->readInteger('objectTypeID', true);
         $this->response = new CommentResponse($this->parameters['responseID']);
         if (!$this->response->responseID) {
             throw new UserInputException('responseID');
         }
 
         $this->comment = $this->response->getComment();
+        if (!empty($this->parameters['objectTypeID']) && $this->parameters['objectTypeID'] !== $this->comment->objectTypeID) {
+            throw new UserInputException('objectTypeID');
+        }
+
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
         if (!$this->commentProcessor->isAccessible($this->comment->objectID)) {
@@ -896,11 +906,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function validateBeginEdit()
     {
-        $this->comment = $this->getSingleObject();
+        $this->comment = $this->getSingleObject()->getDecoratedObject();
 
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
         $processor = $objectType->getProcessor();
-        if (!$processor->canEditComment($this->comment->getDecoratedObject())) {
+        if (!$processor->canEditComment($this->comment)) {
             throw new PermissionDeniedException();
         }
 
