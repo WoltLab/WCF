@@ -197,6 +197,10 @@ final class LicensePage extends AbstractPage
 
     private function removeUnknownPackages(array $identifiers): array
     {
+        if ($identifiers === []) {
+            return [];
+        }
+
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("package IN (?)", [$identifiers]);
         $sql = "SELECT  package
