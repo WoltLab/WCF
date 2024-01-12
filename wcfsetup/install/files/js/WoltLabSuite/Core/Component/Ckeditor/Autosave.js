@@ -8,10 +8,11 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "../../Core", "../../Language", "../../StringUtil", "./Event"], function (require, exports, Core_1, Language_1, StringUtil_1, Event_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Language", "../../StringUtil", "./Event", "../../Event/Handler"], function (require, exports, tslib_1, Core_1, Language_1, StringUtil_1, Event_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.initializeAutosave = exports.setupRestoreDraft = exports.deleteDraft = void 0;
+    EventHandler = tslib_1.__importStar(EventHandler);
     function getLocalStorageKey(identifier) {
         return `${(0, Core_1.getStoragePrefix)()}ckeditor5-${identifier}`;
     }
@@ -51,6 +52,9 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
     function deleteDraft(identifier) {
         try {
             window.localStorage.removeItem(getLocalStorageKey(identifier));
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "deleteDraft", {
+                identifier,
+            });
         }
         catch {
             // We cannot do anything meaningful if this fails.
@@ -68,6 +72,10 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         };
         try {
             window.localStorage.setItem(getLocalStorageKey(identifier), JSON.stringify(payload));
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "saveDraft", {
+                identifier,
+                payload,
+            });
         }
         catch (e) {
             console.warn("Unable to write to the local storage.", e);
