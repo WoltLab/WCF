@@ -276,7 +276,7 @@ html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
 	@include screen-xs {
 		flex-wrap: wrap;
 
-		input.medium {
+		input:is(.medium, .long) {
 			width: auto;
 		}
 	}
