@@ -33,7 +33,7 @@
 			<thead>
 				<tr>
 					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnText columnExpression" title="{lang}wcf.acp.cronjob.expression{/lang}"><span>{lang}wcf.acp.cronjob.expression{/lang}</span></th>
+					<th class="columnText columnExpression"><span>{lang}wcf.acp.cronjob.expression{/lang}</span></th>
 					<th class="columnText columnDescription{if $sortField == 'descriptionI18n'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=descriptionI18n&sortOrder={if $sortField == 'descriptionI18n' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}</a></th>
 					<th class="columnDate columnNextExec{if $sortField == 'nextExec'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=nextExec&sortOrder={if $sortField == 'nextExec' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.nextExec{/lang}</a></th>
 					
