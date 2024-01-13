@@ -84,7 +84,7 @@ class UiPollEditor {
       throw new Error("Unknown wysiwyg field with id '" + wysiwygId + "'.");
     }
 
-    this.questionField = document.getElementById(this.wysiwygId + "Poll_question") as HTMLInputElement;
+    this.questionField = document.getElementById(this.wysiwygId + "pollQuestion") as HTMLInputElement;
 
     const optionList = this.container.querySelector(".sortableList");
     if (optionList === null) {
@@ -92,20 +92,20 @@ class UiPollEditor {
     }
     this.optionList = optionList as HTMLOListElement;
 
-    this.endTimeField = document.getElementById(this.wysiwygId + "Poll_endTime") as HTMLInputElement;
-    this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes") as HTMLInputElement;
-    this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable") as HTMLInputElement;
-    this.isChangeableNoField = document.getElementById(this.wysiwygId + "Poll_isChangeable_no") as HTMLInputElement;
-    this.isPublicYesField = document.getElementById(this.wysiwygId + "Poll_isPublic") as HTMLInputElement;
-    this.isPublicNoField = document.getElementById(this.wysiwygId + "Poll_isPublic_no") as HTMLInputElement;
+    this.endTimeField = document.getElementById(this.wysiwygId + "pollEndTime") as HTMLInputElement;
+    this.maxVotesField = document.getElementById(this.wysiwygId + "pollMaxVotes") as HTMLInputElement;
+    this.isChangeableYesField = document.getElementById(this.wysiwygId + "pollIsChangeable") as HTMLInputElement;
+    this.isChangeableNoField = document.getElementById(this.wysiwygId + "pollIsChangeable_no") as HTMLInputElement;
+    this.isPublicYesField = document.getElementById(this.wysiwygId + "pollIsPublic") as HTMLInputElement;
+    this.isPublicNoField = document.getElementById(this.wysiwygId + "PollIsPublic_no") as HTMLInputElement;
     this.resultsRequireVoteYesField = document.getElementById(
-      this.wysiwygId + "Poll_resultsRequireVote",
+      this.wysiwygId + "pollResultsRequireVote",
     ) as HTMLInputElement;
     this.resultsRequireVoteNoField = document.getElementById(
-      this.wysiwygId + "Poll_resultsRequireVote_no",
+      this.wysiwygId + "pollResultsRequireVote_no",
     ) as HTMLInputElement;
-    this.sortByVotesYesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes") as HTMLInputElement;
-    this.sortByVotesNoField = document.getElementById(this.wysiwygId + "Poll_sortByVotes_no") as HTMLInputElement;
+    this.sortByVotesYesField = document.getElementById(this.wysiwygId + "pollSortByVotes") as HTMLInputElement;
+    this.sortByVotesNoField = document.getElementById(this.wysiwygId + "pollSortByVotes_no") as HTMLInputElement;
 
     this.optionCount = 0;
 
@@ -241,9 +241,9 @@ class UiPollEditor {
    */
   private handleError(data: AjaxResponse): void {
     switch (data.returnValues.fieldName) {
-      case this.wysiwygId + "Poll_endTime":
-      case this.wysiwygId + "Poll_maxVotes": {
-        const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "Poll_", "");
+      case this.wysiwygId + "pollEndTime":
+      case this.wysiwygId + "pollMaxVotes": {
+        const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "poll", "");
 
         const small = document.createElement("small");
         small.classList.add("innerError");
