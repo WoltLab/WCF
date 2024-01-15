@@ -27,6 +27,11 @@ define(["require", "exports"], function (require, exports) {
         discardRecoveredData() {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:discard-recovered-data" /* EventNames.DiscardRecoveredData */));
         }
+        autosave(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:autosave" /* EventNames.Autosave */, {
+                detail: payload,
+            }));
+        }
         insertAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, {
                 detail: payload,
@@ -169,6 +174,12 @@ define(["require", "exports"], function (require, exports) {
         }
         uploadMedia(callback) {
             this.#element.addEventListener("ckeditor5:upload-media" /* EventNames.UploadMedia */, (event) => {
+                callback(event.detail);
+            });
+            return this;
+        }
+        autosave(callback) {
+            this.#element.addEventListener("ckeditor5:autosave" /* EventNames.Autosave */, (event) => {
                 callback(event.detail);
             });
             return this;

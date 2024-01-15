@@ -14,9 +14,8 @@ import { getStoragePrefix } from "../../Core";
 import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
-import * as EventHandler from "../../Event/Handler";
 
-type Payload = {
+export type Payload = {
   html: string;
   timestamp: number;
 };
@@ -67,16 +66,12 @@ function getReturnToRestoreDialogOverlay(): HTMLElement {
 export function deleteDraft(identifier: string): void {
   try {
     window.localStorage.removeItem(getLocalStorageKey(identifier));
-
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", "deleteDraft", {
-      identifier,
-    });
   } catch {
     // We cannot do anything meaningful if this fails.
   }
 }
 
-function saveDraft(identifier: string, html: string): void {
+function saveDraft(element: HTMLElement, identifier: string, html: string): void {
   if (html === "") {
     deleteDraft(identifier);
 
@@ -91,10 +86,7 @@ function saveDraft(identifier: string, html: string): void {
   try {
     window.localStorage.setItem(getLocalStorageKey(identifier), JSON.stringify(payload));
 
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", "saveDraft", {
-      identifier,
-      payload,
-    });
+    dispatchToCkeditor(element).autosave(payload);
   } catch (e) {
     console.warn("Unable to write to the local storage.", e);
   }
@@ -245,7 +237,7 @@ export function initializeAutosave(
 
   configuration.autosave = {
     save(editor) {
-      saveDraft(identifier, editor.data.get());
+      saveDraft(element, identifier, editor.data.get());
 
       return Promise.resolve();
     },
