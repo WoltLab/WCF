@@ -64,6 +64,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             button.addEventListener("click", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
+                closeAllMenus();
                 navigation.classList.toggle("open");
             });
             list.addEventListener("click", function (event) {
