@@ -15,7 +15,7 @@ import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
-export type Payload = {
+export type AutosavePayload = {
   html: string;
   timestamp: number;
 };
@@ -78,7 +78,7 @@ function saveDraft(element: HTMLElement, identifier: string, html: string): void
     return;
   }
 
-  const payload: Payload = {
+  const payload: AutosavePayload = {
     html,
     timestamp: Date.now(),
   };
@@ -93,7 +93,7 @@ function saveDraft(element: HTMLElement, identifier: string, html: string): void
 }
 
 export function setupRestoreDraft(editor: CKEditor5.ClassicEditor.ClassicEditor, identifier: string): void {
-  let value: Payload | undefined = undefined;
+  let value: AutosavePayload | undefined = undefined;
 
   try {
     const payload = window.localStorage.getItem(getLocalStorageKey(identifier));
@@ -211,7 +211,7 @@ function removeExpiredDrafts(): void {
         return;
       }
 
-      let payload: Payload | undefined = undefined;
+      let payload: AutosavePayload | undefined = undefined;
       try {
         payload = JSON.parse(value);
       } catch {
