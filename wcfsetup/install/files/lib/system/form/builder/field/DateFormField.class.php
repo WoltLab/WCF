@@ -291,10 +291,17 @@ class DateFormField extends AbstractFormField implements
             $this->getDocument()->hasRequestData($this->getPrefixedId())
             && \is_string($this->getDocument()->getRequestData($this->getPrefixedId()))
         ) {
-            $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
+            $value = $this->getDocument()->getRequestData($this->getPrefixedId());
+            $this->value = $value;
 
             if ($this->value === '') {
                 $this->value = null;
+            } elseif ($this->getValueDateTimeObject() === null) {
+                try {
+                    $this->value($value);
+                } catch (\InvalidArgumentException) {
+                    $this->value = null;
+                }
             }
         }
 

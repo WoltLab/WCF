@@ -642,7 +642,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
+        $articleIDs = [];
         foreach ($this->getObjects() as $article) {
+            $articleIDs[] = $article->articleID;
             VisitTracker::getInstance()->trackObjectVisit(
                 'com.woltlab.wcf.article',
                 $article->articleID,
@@ -655,6 +657,16 @@ class ArticleAction extends AbstractDatabaseObjectAction
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
+
+            // delete obsolete notifications
+            if ($articleIDs !== []) {
+                UserNotificationHandler::getInstance()->markAsConfirmed(
+                    'article',
+                    'com.woltlab.wcf.article.notification',
+                    [WCF::getUser()->userID],
+                    $articleIDs
+                );
+            }
         }
     }
 

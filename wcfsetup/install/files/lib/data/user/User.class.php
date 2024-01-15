@@ -488,7 +488,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function __toString(): string
     {
-        return $this->username ?: '';
+        return $this->getTitle();
     }
 
     /**
@@ -504,7 +504,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function getTitle(): string
     {
-        return $this->username;
+        return $this->username ?: '';
     }
 
     /**

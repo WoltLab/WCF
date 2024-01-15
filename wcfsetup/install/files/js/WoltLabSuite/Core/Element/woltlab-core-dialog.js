@@ -51,6 +51,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#detachDialog();
         }
         #detachDialog() {
+            if (this.parentNode === null) {
+                return;
+            }
             const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
             (0, PageOverlay_1.releasePageOverlayContainer)(this.#dialog);
@@ -148,9 +151,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#dialog.addEventListener("close", () => {
                 if (this.#dialog.returnValue === "") {
                     // Dialog was programmatically closed.
-                    return;
                 }
-                this.#dispatchPrimaryEvent();
+                else {
+                    this.#dispatchPrimaryEvent();
+                }
                 this.#detachDialog();
             });
             formControl.addEventListener("cancel", () => {
@@ -207,11 +211,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#dialog.append(doc);
             this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));
-            this.#dialog.addEventListener("cancel", (event) => {
-                if (!this.#shouldClose()) {
-                    event.preventDefault();
-                    return;
-                }
+            this.#dialog.addEventListener("cancel", () => {
+                const event = new CustomEvent("cancel");
+                this.dispatchEvent(event);
                 this.#detachDialog();
             });
             // Close the dialog by clicking on the backdrop.

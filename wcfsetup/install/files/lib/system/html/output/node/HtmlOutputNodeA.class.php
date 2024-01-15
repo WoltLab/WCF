@@ -33,6 +33,26 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
      */
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
+        // Find links that are nested inside other links.
+        $nestedLinks = \array_filter(
+            $elements,
+            static fn (\DOMElement $element) => DOMUtil::hasParent($element, 'a'),
+        );
+
+        if ($nestedLinks !== []) {
+            $elements = \array_filter(
+                $elements,
+                static function (\DOMElement $element) use ($nestedLinks) {
+                    if (\in_array($element, $nestedLinks, true)) {
+                        DOMUtil::removeNode($element, true);
+                        return false;
+                    }
+
+                    return true;
+                }
+            );
+        }
+
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             try {
@@ -44,22 +64,28 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
                 continue;
             }
 
-            if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
-                $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
+            if ($href->getScheme() !== 'mailto') {
+                if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
+                    $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
 
-                $element->setAttribute(
-                    'href',
-                    $href->__toString(),
-                );
-            } else {
-                /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-                self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
+                    $element->setAttribute(
+                        'href',
+                        $href->__toString(),
+                    );
+                } else {
+                    /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
+                    self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
+                }
             }
 
             $value = StringUtil::trim($element->textContent);
             if ($value === '') {
                 if ($element->childElementCount === 0) {
-                    $value = $href->__toString();
+                    // Discard empty links, these were sometimes created by the
+                    // previous editor when editing links.
+                    DOMUtil::removeNode($element);
+
+                    continue;
                 }
             } else if ($this->isSuspiciousValue($value, $href)) {
                 $value = $href->__toString();

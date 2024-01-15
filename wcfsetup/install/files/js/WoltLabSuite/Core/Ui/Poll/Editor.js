@@ -40,22 +40,22 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             if (wysiwygId !== "" && document.getElementById(wysiwygId) === null) {
                 throw new Error("Unknown wysiwyg field with id '" + wysiwygId + "'.");
             }
-            this.questionField = document.getElementById(this.wysiwygId + "Poll_question");
+            this.questionField = document.getElementById(this.wysiwygId + "pollQuestion");
             const optionList = this.container.querySelector(".sortableList");
             if (optionList === null) {
                 throw new Error("Cannot find poll options list for container with id '" + containerId + "'.");
             }
             this.optionList = optionList;
-            this.endTimeField = document.getElementById(this.wysiwygId + "Poll_endTime");
-            this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes");
-            this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable");
-            this.isChangeableNoField = document.getElementById(this.wysiwygId + "Poll_isChangeable_no");
-            this.isPublicYesField = document.getElementById(this.wysiwygId + "Poll_isPublic");
-            this.isPublicNoField = document.getElementById(this.wysiwygId + "Poll_isPublic_no");
-            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote");
-            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote_no");
-            this.sortByVotesYesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes");
-            this.sortByVotesNoField = document.getElementById(this.wysiwygId + "Poll_sortByVotes_no");
+            this.endTimeField = document.getElementById(this.wysiwygId + "pollEndTime");
+            this.maxVotesField = document.getElementById(this.wysiwygId + "pollMaxVotes");
+            this.isChangeableYesField = document.getElementById(this.wysiwygId + "pollIsChangeable");
+            this.isChangeableNoField = document.getElementById(this.wysiwygId + "pollIsChangeable_no");
+            this.isPublicYesField = document.getElementById(this.wysiwygId + "pollIsPublic");
+            this.isPublicNoField = document.getElementById(this.wysiwygId + "PollIsPublic_no");
+            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "pollResultsRequireVote");
+            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "pollResultsRequireVote_no");
+            this.sortByVotesYesField = document.getElementById(this.wysiwygId + "pollSortByVotes");
+            this.sortByVotesNoField = document.getElementById(this.wysiwygId + "pollSortByVotes_no");
             this.optionCount = 0;
             this.options = Core.extend({
                 isAjax: false,
@@ -167,9 +167,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          */
         handleError(data) {
             switch (data.returnValues.fieldName) {
-                case this.wysiwygId + "Poll_endTime":
-                case this.wysiwygId + "Poll_maxVotes": {
-                    const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "Poll_", "");
+                case this.wysiwygId + "pollEndTime":
+                case this.wysiwygId + "pollMaxVotes": {
+                    const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "poll", "");
                     const small = document.createElement("small");
                     small.classList.add("innerError");
                     small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);

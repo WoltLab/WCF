@@ -52,6 +52,8 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.dialog.confirmation.softDelete.indeterminate');
         $event->preload('wcf.dialog.confirmation.restore');
         $event->preload('wcf.dialog.confirmation.restore.indeterminate');
+        $event->preload('wcf.dialog.confirmation.reason');
+        $event->preload('wcf.dialog.confirmation.reason.optional');
 
         $event->preload('wcf.global.button.add');
         $event->preload('wcf.global.button.cancel');

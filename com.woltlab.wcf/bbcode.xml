@@ -171,7 +171,7 @@
 					<usetext>1</usetext>
 				</attribute>
 				<attribute name="1">
-					<validationpattern><![CDATA[^(left|right|none)$]]></validationpattern>
+					<validationpattern><![CDATA[^(left|right|center|none)$]]></validationpattern>
 				</attribute>
 				<attribute name="2">
 					<validationpattern><![CDATA[^(\d+|true|false)$]]></validationpattern>
@@ -190,7 +190,10 @@
 					<validationpattern><![CDATA[^(small|medium|large|original)$]]></validationpattern>
 				</attribute>
 				<attribute name="2">
-					<validationpattern><![CDATA[^(left|right|none)$]]></validationpattern>
+					<validationpattern><![CDATA[^(left|right|center|none)$]]></validationpattern>
+				</attribute>
+				<attribute name="3">
+					<validationpattern><![CDATA[^(\d+|auto)$]]></validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>

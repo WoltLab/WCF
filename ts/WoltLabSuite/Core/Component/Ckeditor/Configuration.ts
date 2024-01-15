@@ -165,16 +165,16 @@ class ConfigurationBuilder {
   }
 
   #setupCodeFormat(): void {
-    if (this.#features.code) {
-      this.#toolbar.push("code");
-    } else {
-      this.#removePlugins.push("Code", "WoltlabCode");
-    }
-
     if (this.#features.codeBlock) {
       this.#toolbar.push("codeBlock");
     } else {
       this.#removePlugins.push("CodeBlock", "WoltlabCodeBlock");
+    }
+
+    if (this.#features.code) {
+      this.#toolbar.push("code");
+    } else {
+      this.#removePlugins.push("Code", "WoltlabCode");
     }
   }
 
@@ -348,7 +348,7 @@ class ConfigurationBuilder {
         ],
       },
       fontSize: {
-        options: [8, 10, 12, "default", 18, 24, 36],
+        options: [12, "default", 18, 23, 28],
       },
       toolbar: this.#getToolbar(),
       ui: {

@@ -123,6 +123,12 @@ ol.nativeList {
 
 	> :first-child {
 		margin-top: 0 !important;
+
+		&:is(.messageFloatObjectLeft, .image-style-side-left, .messageFloatObjectRight, .image-style-side) {
+			+ :is(p, ul ,ol, h1, h2, h3, h4, h4, h6) {
+				margin-top: 0 !important;
+			}
+		}
 	}
 
 	> :last-child {
@@ -182,7 +188,7 @@ ol.nativeList {
 
 	figure.image {
 		clear: both;
-		display: table;
+		display: block;
 		margin: 1em auto;
 		min-width: 50px;
 		text-align: center;

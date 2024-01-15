@@ -63,7 +63,8 @@
 										sitekey: '{RECAPTCHA_PUBLICKEY_INVISIBLE|encodeJS}',
 										size: 'invisible',
 										badge: 'inline',
-										callback: resolve
+										callback: resolve,
+										theme: document.documentElement.dataset.colorScheme === "dark" ? "dark" : "light"
 									});
 								});
 								
@@ -171,7 +172,8 @@
 					// clear queue
 					while (bucket = WCF.recaptcha.queue.shift()) {
 						WCF.recaptcha.mapping[bucket] = grecaptcha.render(bucket, {
-							'sitekey' : '{RECAPTCHA_PUBLICKEY|encodeJS}'
+							'sitekey' : '{RECAPTCHA_PUBLICKEY|encodeJS}',
+							theme: document.documentElement.dataset.colorScheme === "dark" ? "dark" : "light"
 						});
 					}
 				}

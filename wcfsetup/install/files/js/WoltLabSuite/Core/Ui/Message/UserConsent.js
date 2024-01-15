@@ -5,7 +5,7 @@
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, User_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Selector_1, Ajax, Core, Listener_1, Util_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     User_1 = tslib_1.__importDefault(User_1);
     class UserConsent {
         enableAll = false;
-        knownButtons = new WeakSet();
         constructor() {
             if (window.sessionStorage.getItem(`${Core.getStoragePrefix()}user-consent`) === "all") {
                 this.enableAll = true;
@@ -29,11 +28,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 this.enableAllExternalMedia();
             }
             else {
-                document.querySelectorAll(".jsButtonMessageUserConsentEnable").forEach((button) => {
-                    if (!this.knownButtons.has(button)) {
-                        this.knownButtons.add(button);
-                        button.addEventListener("click", (ev) => this.click(ev));
-                    }
+                (0, Selector_1.wheneverFirstSeen)(".jsButtonMessageUserConsentEnable", (button) => {
+                    button.addEventListener("click", (event) => this.click(event));
                 });
             }
         }

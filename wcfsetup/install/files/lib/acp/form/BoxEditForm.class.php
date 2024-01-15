@@ -174,6 +174,19 @@ class BoxEditForm extends BoxAddForm
         // call saved event
         $this->saved();
 
+        // Ensure that the CKEditor has the correct content after save.
+        if ($this->boxType == 'text') {
+            if ($this->isMultilingual) {
+                foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                    $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
+                    $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
+                }
+            } else {
+                $this->content[0] = isset($this->htmlInputProcessors[0]) ?
+                    $this->htmlInputProcessors[0]->getHtml() : '';
+            }
+        }
+
         // show success message
         WCF::getTPL()->assign('success', true);
     }

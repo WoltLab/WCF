@@ -176,12 +176,6 @@ dark:wcf.style.setColorScheme.dark</selectoptions>
 				<options>module_user_signature</options>
 				<editable>3</editable>
 			</option>
-			<option name="editorPastePreserveFormatting">
-				<categoryname>settings.general.interface</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<editable>3</editable>
-			</option>
 			<!-- settings.privacy.content -->
 			<option name="canViewOnlineStatus">
 				<categoryname>settings.privacy.content</categoryname>
@@ -254,4 +248,8 @@ dark:wcf.style.setColorScheme.dark</selectoptions>
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="editorPastePreserveFormatting"/>
+		<option name="icq"/>
+	</delete>
 </data>

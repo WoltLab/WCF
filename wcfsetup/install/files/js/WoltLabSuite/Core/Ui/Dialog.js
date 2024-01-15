@@ -44,24 +44,21 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     event.preventDefault();
                 }
             }, { passive: false });
-            const observer = new MutationObserver((mutations) => {
+            let containsPageOverlay = false;
+            const observer = new MutationObserver(() => {
                 const currentValue = _container.getAttribute("aria-hidden");
-                for (const mutation of mutations) {
-                    if (mutation.oldValue === currentValue) {
-                        continue;
-                    }
-                    if (currentValue === "false") {
-                        (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
-                    }
-                    else {
-                        (0, PageOverlay_1.releasePageOverlayContainer)(_container);
-                    }
+                if (currentValue === "true") {
+                    (0, PageOverlay_1.releasePageOverlayContainer)(_container);
+                    containsPageOverlay = false;
+                }
+                else if (!containsPageOverlay) {
+                    (0, PageOverlay_1.adoptPageOverlayContainer)(_container);
+                    containsPageOverlay = true;
                 }
             });
             observer.observe(_container, {
                 attributes: true,
                 attributeFilter: ["aria-hidden"],
-                attributeOldValue: true,
             });
             document.getElementById("content").appendChild(_container);
             _keyupListener = (event) => {

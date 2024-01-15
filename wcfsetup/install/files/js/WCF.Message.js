@@ -1911,7 +1911,10 @@ $.widget('wcf.messageTabMenu', {
 			});
 			this._tabsByName[$name] = $i;
 			
-			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
+			var $anchor = $tab.children('a')
+				.data('index', $i)
+				.on('mousedown', this._showTab.bind(this))
+				.on('touchstart', this._showTab.bind(this));
 			// handle a11y
 			$anchor.attr('role', 'button').attr('tabindex', '0').attr('aria-haspopup', true).attr('aria-expanded', false).attr('aria-controls', $tabContainer[0].id);
 

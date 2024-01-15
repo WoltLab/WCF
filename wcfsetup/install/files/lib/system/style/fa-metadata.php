@@ -1422,7 +1422,6 @@ return [
     'arrow-rotate-back' => true,
     'arrow-rotate-backward' => true,
     'arrow-rotate-forward' => true,
-    'arrow-turn-right' => true,
     'arrows' => true,
     'arrows-alt' => true,
     'arrows-alt-h' => true,

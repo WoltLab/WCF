@@ -59,19 +59,24 @@ function handleScss(isTainted: boolean): void {
   const individualScss = document.getElementById("individualScss")!;
   const overrideScss = document.getElementById("overrideScss")!;
 
+  const refreshCodeMirror = (element: any): void => {
+    element.codemirror.refresh();
+    element.codemirror.setCursor(element.codemirror.getCursor());
+  };
+
   if (isTainted) {
     EventHandler.add("com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer", "select", () => {
-      (individualScss as any).codemirror.refresh();
-      (overrideScss as any).codemirror.refresh();
+      refreshCodeMirror(individualScss);
+      refreshCodeMirror(overrideScss);
     });
   } else {
     EventHandler.add("com.woltlab.wcf.simpleTabMenu_advanced", "select", (data: { activeName: string }) => {
       if (data.activeName === "advanced-custom") {
-        (document.getElementById("individualScssCustom") as any).codemirror.refresh();
-        (document.getElementById("overrideScssCustom") as any).codemirror.refresh();
+        refreshCodeMirror(document.getElementById("individualScssCustom"));
+        refreshCodeMirror(document.getElementById("overrideScssCustom"));
       } else if (data.activeName === "advanced-original") {
-        (individualScss as any).codemirror.refresh();
-        (overrideScss as any).codemirror.refresh();
+        refreshCodeMirror(individualScss);
+        refreshCodeMirror(overrideScss);
       }
     });
   }

@@ -1010,7 +1010,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             return '';
         }
 
-        $mailbox = new Mailbox($this->email);
+        try {
+            $mailbox = new Mailbox($this->email);
+        } catch (\Throwable) {
+            // Skip invalid email addresses.
+            return '';
+        }
 
         return StringUtil::encodeAllChars($mailbox->getAddressForMailto());
     }

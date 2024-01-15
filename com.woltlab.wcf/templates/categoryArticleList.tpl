@@ -3,7 +3,7 @@
 {capture assign='contentTitle'}{$category->getTitle()}{/capture}
 {capture assign='contentDescription'}{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
-{capture assign='headContent'}
+{capture append='headContent'}
 	{if $pageNo < $pages}
 		<link rel="next" href="{link controller='CategoryArticleList' object=$category}pageNo={@$pageNo+1}{/link}">
 	{/if}

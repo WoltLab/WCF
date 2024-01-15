@@ -1,4 +1,4 @@
-{capture assign='headContent'}
+{capture append='headContent'}
 	{if $pageNo < $pages}
 		<link rel="next" href="{link controller='ArticleList'}pageNo={@$pageNo+1}{/link}">
 	{/if}

@@ -5,7 +5,6 @@ namespace wcf\system\html\input\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -43,11 +42,11 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $foundImage = false;
 
-        // check if there are only attachments, media or smilies
+        // check if there are only attachments or smilies
         /** @var \DOMElement $element */
         foreach ($htmlNodeProcessor->getDocument()->getElementsByTagName('img') as $element) {
             $class = $element->getAttribute('class');
-            if (!\preg_match('~\b(?:woltlabAttachment|woltlabSuiteMedia|smiley)\b~', $class)) {
+            if (!\preg_match('~\b(?:woltlabAttachment|smiley)\b~', $class)) {
                 $foundImage = true;
                 break;
             }
@@ -75,8 +74,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $class = $element->getAttribute('class');
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
                 $this->handleAttachment($element, $class);
-            } elseif (\preg_match('~\bwoltlabSuiteMedia\b~', $class)) {
-                $this->handleMedium($element, $class);
             } elseif (\preg_match('~\bsmiley\b~', $class)) {
                 $this->handleSmiley($element);
             }
@@ -114,17 +111,22 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $replaceElement = $element;
-        $parent = $element->parentNode;
-        \assert($parent instanceof \DOMElement);
-        if ($parent->tagName === "figure") {
-            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
+        $figure = $this->getParentFigure($element);
+        if ($figure !== null) {
+            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $figure->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
+            } else {
+                $float = 'center';
             }
+            $replaceElement = $figure;
 
-            $replaceElement = $parent;
+            if (($element->parentNode instanceof \DOMElement) && $element->parentNode->nodeName === "a") {
+                DOMUtil::replaceElement($figure, $element->parentNode, false);
+                $replaceElement = $element;
+            }
         }
 
-        $width = $replaceElement->getAttribute("data-width");
+        $width = $element->getAttribute("data-width");
         if (\preg_match('~(?<width>\d+)px$~', $width, $matches)) {
             $width = (int)$matches['width'];
         } else {
@@ -145,96 +147,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $newElement->setAttribute('data-name', 'attach');
         $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
         DOMUtil::replaceElement($replaceElement, $newElement, false);
-    }
-
-    /**
-     * Replaces image element with media metacode element.
-     *
-     * @param \DOMElement $element
-     * @param string $class
-     */
-    protected function handleMedium(\DOMElement $element, $class)
-    {
-        $mediumID = \intval($element->getAttribute('data-media-id'));
-        if (!$mediumID) {
-            return;
-        }
-
-        $float = 'none';
-        $thumbnail = 'original';
-
-        if (
-            \preg_match(
-                '~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~',
-                $element->getAttribute('src'),
-                $matches
-            )
-        ) {
-            $thumbnail = $matches['thumbnail'];
-        }
-
-        $replaceElement = $element;
-        $parent = $element->parentNode;
-        \assert($parent instanceof \DOMElement);
-        if ($parent->tagName === "figure") {
-            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
-                $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
-            }
-
-            $replaceElement = $parent;
-        }
-
-        $attributes = [
-            $mediumID,
-            $thumbnail,
-            $float,
-        ];
-
-        $newElement = $element->ownerDocument->createElement('woltlab-metacode');
-        $newElement->setAttribute('data-name', 'wsm');
-        $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
-        DOMUtil::replaceElement($replaceElement, $newElement, false);
-
-        // The media bbcode is a block element that may not be placed inside inline elements.
-        $parent = $newElement;
-        $blockLevelParent = null;
-        $blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
-        while ($parent = $parent->parentNode) {
-            \assert($parent instanceof \DOMElement);
-
-            switch ($parent->nodeName) {
-                case 'a':
-                    // Permit the media element to be placed inside a link.
-                    break 2;
-
-                case 'blockquote':
-                case 'body':
-                case 'code':
-                case 'div':
-                case 'li':
-                case 'p':
-                case 'td':
-                case 'woltlab-quote':
-                case 'woltlab-spoiler':
-                    $blockLevelParent = $parent;
-                    break 2;
-
-                case 'woltlab-metacode':
-                    if (\in_array($parent->getAttribute('data-name'), $blockElements)) {
-                        $blockLevelParent = $parent;
-                        break 2;
-                    }
-                    break;
-            }
-        }
-
-        if ($blockLevelParent !== null) {
-            \assert($parent instanceof \DOMElement);
-            $element = DOMUtil::splitParentsUntil($newElement, $parent);
-            if ($element !== $newElement) {
-                DOMUtil::insertBefore($newElement, $element);
-            }
-        }
     }
 
     /**
@@ -276,14 +188,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
      */
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
-        // Aligned images are wrapped in a `<figure>` element that is the target
-        // of the resize operation.
-        if ($element->parentNode->nodeName === 'figure') {
-            $this->mirrorWidthAttribute($element->parentNode);
-
-            return;
-        }
-
         $width = $element->getAttribute("data-width");
         if ($width && \preg_match('~^\d+px$~', $width)) {
             $style = $element->getAttribute("style");
@@ -306,8 +210,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
      */
     protected function moveClassNameFromFigureToImage(\DOMElement $img): void
     {
-        $figure = $img->parentNode;
-        if (!($figure instanceof \DOMElement) || $figure->nodeName !== 'figure') {
+        $figure = $this->getParentFigure($img);
+        if ($figure === null) {
             return;
         }
 
@@ -331,5 +235,23 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         );
 
         $figure->setAttribute("class", \implode(' ', $classNames));
+    }
+
+    private function getParentFigure(\DOMElement $img): ?\DOMElement
+    {
+        $parent = $img->parentNode;
+        if ($parent instanceof \DOMElement) {
+            if ($parent->nodeName === 'figure') {
+                return $parent;
+            }
+            if ($parent->nodeName === 'a') {
+                $parent = $parent->parentNode;
+                if ($parent instanceof \DOMElement && $parent->nodeName === 'figure') {
+                    return $parent;
+                }
+            }
+        }
+
+        return null;
     }
 }

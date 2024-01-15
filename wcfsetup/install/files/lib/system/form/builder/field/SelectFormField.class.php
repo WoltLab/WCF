@@ -14,7 +14,8 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  */
 final class SelectFormField extends AbstractFormField implements
     ICssClassFormField,
-    IImmutableFormField
+    IImmutableFormField,
+    ISelectionFormField
 {
     use TCssClassFormField;
     use TImmutableFormField;

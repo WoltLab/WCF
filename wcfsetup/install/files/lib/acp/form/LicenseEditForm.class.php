@@ -55,6 +55,8 @@ final class LicenseEditForm extends AbstractFormBuilderForm
 
     private string $url;
 
+    private bool $failedValidation = false;
+
     /**
      * @inheritDoc
      */
@@ -65,6 +67,10 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         $url = $_GET['url'] ?? '';
         if ($url && ApplicationHandler::getInstance()->isInternalURL($url)) {
             $this->url = $url;
+        }
+
+        if (isset($_GET['failedValidation'])) {
+            $this->failedValidation = true;
         }
     }
 
@@ -145,6 +151,16 @@ final class LicenseEditForm extends AbstractFormBuilderForm
                 EmptyFormFieldDependency::create('noCredentialsConfirm')
                     ->fieldId('noCredentialsConfirm')
             );
+        }
+
+        if ($this->failedValidation) {
+            $formField = $this->form->getNodeById('serialNo');
+            if ($formField instanceof TextFormField) {
+                $formField->addValidationError(new FormFieldValidationError(
+                    'failedValidation',
+                    'wcf.acp.firstTimeSetup.license.credentials.error.failedValidation'
+                ));
+            }
         }
     }
 

@@ -123,3 +123,11 @@
 		text-align: center;
 	}
 }
+
+@include screen-sm-down {
+	.inputAddon.inputAddonDatePicker .inputDatePicker {
+		flex: 1 auto;
+		min-width: auto;
+		width: auto;
+	}
+}

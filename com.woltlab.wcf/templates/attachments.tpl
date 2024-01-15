@@ -48,7 +48,7 @@
 										</li>
 										<li>
 											{icon name='up-right-and-down-left-from-center'}
-											{#$attachment->width}×{#$attachment->height}
+											{#$attachment->width} × {#$attachment->height}
 										</li>
 										<li>
 											{icon name='eye'}

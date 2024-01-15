@@ -73,6 +73,7 @@ function initButtonGroupNavigation(): void {
     button.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
+      closeAllMenus();
 
       navigation.classList.toggle("open");
     });

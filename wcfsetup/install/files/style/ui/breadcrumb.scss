@@ -77,13 +77,19 @@
 		flex: 1;
 
 		.breadcrumbs__link {
+			align-items: center;
 			color: var(--wcfContentDimmedLink);
-			display: block;
+			column-gap: 5px;
+			display: flex;
 			flex: 1;
 			overflow: hidden;
 			padding: 5px 0;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+
+		.breadcrumbs__parent_indicator {
+			display: flex;
 		}
 	}
 }

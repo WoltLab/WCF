@@ -6,11 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Pagination", "../Dialog"], function (require, exports, tslib_1, Ajax_1, Pagination_1, Dialog_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Pagination", "../Dialog", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Ajax_1, Pagination_1, Dialog_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserList = void 0;
     Pagination_1 = tslib_1.__importDefault(Pagination_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class UserList {
         #options;
         #dialogTitle;
@@ -30,7 +31,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Pagination", "../
                 this.#pageNo = pageNo;
             }
             const dialog = this.#getDialog();
-            dialog.content.innerHTML = template;
+            Util_1.default.setInnerHtml(dialog.content, template);
             dialog.show(this.#dialogTitle);
             if (this.#pageCount > 1) {
                 const element = dialog.content.querySelector(".jsPagination");

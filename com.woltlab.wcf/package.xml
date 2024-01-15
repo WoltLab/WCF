@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.0.2</version>
-		<date>2023-10-20</date>
+		<version>6.0.6</version>
+		<date>2024-01-01</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -50,96 +50,7 @@
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.5.*">
-		<!--
-tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
-	acp/update_com.woltlab.wcf_6.0_articleOrphans.php \
-	acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php \
-	acp/update_com.woltlab.wcf_6.0_checkCache.php \
-	acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php \
-	acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php \
-	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php \
-	acp/update_com.woltlab.wcf_6.0_initBootstrap.php \
-	acp/update_com.woltlab.wcf_6.0_styleVariables.php \
-	acp/database/update_com.woltlab.wcf_6.0_pre.php \
-	acp/database/update_com.woltlab.wcf_6.0_style.php
-		-->
-		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
-
-		<!-- Checks that need to happen before the upgrade starts. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkCache.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php</instruction>
-
-		<!-- Required for wcf1_package_installation_file_log. -->
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
-
-		<!-- Add the dark mode support first, because otherwise a failed migration would brick the ACP. -->
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_style.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
-
-		<!-- Set up an empty bootstrap file if its does not exist. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_initBootstrap.php</instruction>
-
-		<!-- Run before the new code, because some plugins are triggered that would be incompatible. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_articleOrphans.php</instruction>
-
-		<!-- Deploy new application code. -->
-		<instruction type="file" />
-		<instruction type="acpTemplate" />
-		<instruction type="template" />
-
-		<!-- Make all the new options available as early as possible. -->
-		<instruction type="option" run="standalone" />
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_skipFirstTimeSetup.php</instruction>
-
-		<!-- Run before the database migrations, because the data is gone otherwise. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_landingPage.php</instruction>
-
-		<!-- Migrate the database as early as possible. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_reaction_fk_step1.php</instruction>
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step2.php</instruction>
-
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0.php</instruction>
-
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step1.php</instruction>
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step2.php</instruction>
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_trackedVisit_step3.php</instruction>
-
-		<!-- Deploy the new application code again to build the hashes in wcf1_package_installation_file_log. -->
-		<instruction type="file" />
-
-		<!-- Misc. PIPs. -->
-		<instruction type="acpMenu" />
-		<instruction type="bbcode" />
-		<instruction type="coreObject" />
-		<instruction type="cronjob" />
-		<instruction type="eventListener" />
-		<instruction type="language" />
-		<instruction type="mediaProvider" />
-		<instruction type="menuItem" />
-		<instruction type="objectType" />
-		<instruction type="page" />
-		<instruction type="userGroupOption" />
-		<instruction type="userMenu" />
-		<instruction type="userOption" />
-
-		<instruction type="style">defaultStyle.tar</instruction>
-
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_favicon.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_trophies.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeDownloadedGravatars.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_license.php</instruction>
-
-		<!-- Clean Up. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_removeLegacyAppConfig.php</instruction>
-		<instruction type="fileDelete" />
-		<instruction type="templateDelete" />
-	</instructions>
-
-	<instructions type="update" fromversion="6.0.1">
+	<instructions type="update" fromversion="6.0.5">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>

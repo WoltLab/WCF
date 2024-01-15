@@ -35,7 +35,7 @@ final class FileUtil
     /**
      * A regular expression that allows to detect links within text.
      */
-    public const LINK_REGEX = "#(?i)\\b((?:https?://|www\\d{0,3}[.]|(?:[a-z0-9\\-]+[.])+[a-z]{2,4}/)(?:[^\\s()<>]+|\\([^\\s()<>]*\\))+(?:\\([^\\s()<>]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
+    public const LINK_REGEX = "#(?i)\\b((?:https?://|www\\d{0,3}[.]|(?:[a-z0-9\\-]+[.])+[a-z]{2,4}/)(?:[^\\s()<>\\[\\]]+|\\([^\\s()<>\\[\\]]*\\))+(?:\\([^\\s()<>\\[\\]]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
 
     /**
      * Prepares the temporary folder and returns its path.

@@ -2,7 +2,9 @@
 
 namespace wcf\acp\page;
 
+use GuzzleHttp\Exception\ConnectException;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\acp\form\LicenseEditForm;
 use wcf\data\package\Package;
 use wcf\data\package\update\PackageUpdate;
@@ -71,7 +73,20 @@ final class LicensePage extends AbstractPage
                 // Cache valid license data for 2 minutes.
                 || $licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
             ) {
-                $licenseData = $licenseApi->fetchFromRemote();
+                try {
+                    $licenseData = $licenseApi->fetchFromRemote();
+                } catch (ConnectException | ClientExceptionInterface) {
+                    return new RedirectResponse(
+                        LinkHandler::getInstance()->getControllerLink(
+                            LicenseEditForm::class,
+                            [
+                                'failedValidation' => 1,
+                                'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
+                            ],
+                        ),
+                    );
+                }
+
                 $licenseApi->updateLicenseFile($licenseData);
             }
         } catch (ParsingFailed $e) {
@@ -182,6 +197,10 @@ final class LicensePage extends AbstractPage
 
     private function removeUnknownPackages(array $identifiers): array
     {
+        if ($identifiers === []) {
+            return [];
+        }
+
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("package IN (?)", [$identifiers]);
         $sql = "SELECT  package

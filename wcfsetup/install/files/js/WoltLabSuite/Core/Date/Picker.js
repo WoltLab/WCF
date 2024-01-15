@@ -658,7 +658,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                 element.addEventListener("click", open);
                 // create input addon
                 const container = document.createElement("div");
-                container.className = "inputAddon";
+                container.className = "inputAddon inputAddonDatePicker";
                 const openButton = document.createElement("button");
                 openButton.type = "button";
                 openButton.className = "inputSuffix button jsTooltip";

@@ -191,15 +191,12 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                     $dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
                     $return[$cronjob->cronjobID] = [
                         'time' => $nextExec,
-                        'formatted' => \str_replace(
-                            '%time%',
-                            DateUtil::format($dateTime, DateUtil::TIME_FORMAT),
-                            \str_replace(
-                                '%date%',
-                                DateUtil::format($dateTime, DateUtil::DATE_FORMAT),
-                                WCF::getLanguage()->get('wcf.date.dateTimeFormat')
-                            )
-                        ),
+                        'formatted' => \IntlDateFormatter::create(
+                            WCF::getLanguage()->getLocale(),
+                            \IntlDateFormatter::LONG,
+                            \IntlDateFormatter::SHORT,
+                            WCF::getUser()->getTimeZone()
+                        )->format($dateTime),
                     ];
                 }
 

@@ -294,7 +294,7 @@
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Month]]></item>
 		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
-		<item name="wcf.acp.cronjob.expression"><![CDATA[Definition (h m DoM M DoW)]]></item>
+		<item name="wcf.acp.cronjob.expression"><![CDATA[Definition (m h DoM M DoW)]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next Scheduled Execution]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Edit Cronjob]]></item>
@@ -379,19 +379,19 @@
 		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/latest/getting-started/#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
-		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>
+		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[This name is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
 		<item name="wcf.acp.devtools.project.path.description"><![CDATA[The absolute path to the package within the filesystem. The placeholder shows the absolute path of WoltLab Suite Core of this installation.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package has not been installed yet. <a href="#" {if $project->getPackageArchive()->getOpenRequirements()|empty}class="jsDevtoolsInstallPackage"{else}class="jsStaticDialog" data-dialog-id="openPackageRequirements"{/if}>Do you want to install the package?</a>]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[The path is invalid.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[The path is already used by another project.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.packageXml"><![CDATA[The path does not contain a valid <kbd>package.xml</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[This path is already used by another project.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.packageXml"><![CDATA[This path does not contain a valid <kbd>package.xml</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[The version shown in the <kbd>package.xml</kbd> does not match the installed version, you may have selected the wrong path.]]></item>
 		<item name="wcf.acp.devtools.project.sync"><![CDATA[Sync Data]]></item>
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Sync Data - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
-		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[The PIP does not have a default filename and the installation instruction does not contain a filename.]]></item>
+		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[This PIP does not have a default filename and the installation instruction does not contain a filename.]]></item>
 		<item name="wcf.acp.devtools.pip.error.noGuiSupport"><![CDATA[This PIP does not support managing entries via a graphical user interface.]]></item>
 		<item name="wcf.acp.devtools.pip.error.className"><![CDATA[The class {$className} does not exist.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
@@ -565,11 +565,11 @@
 		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Edit instruction]]></item>
 		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[The directory <kbd>{$directory}<kdb> contains no XML files.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[The entered file is no XML file.]]></item>
-		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[Do you really want to delete the instruction?]]></item>
+		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[Do you really want to delete this instruction?]]></item>
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Conflicting packages, installation instructions, and update instructions can only be added when editing an existing project.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete this entry?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the entered directory. The package files have either been deleted or moved.]]></item>
@@ -975,7 +975,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	</category>
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
-		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[The language code is already in use by an installed language.]]></item>
+		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[This language code is already in use by an installed language.]]></item>
         <item name="wcf.acp.language.add.locale.error.languageCodeMismatch"><![CDATA[The selected region (<kbd>{$locale}</kbd>) does not match the language code.]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Blueprint]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Language-Code]]></item>
@@ -1026,13 +1026,13 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[The language category cannot be determined automatically for the entered phrase identifier. You have to either change the phrase identifier or manually select a language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[The entered identifier does not begin with the selected language category.]]></item>
-		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by a different phrase.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[This identifier is already used by a different phrase.]]></item>
 		<item name="wcf.acp.language.item.isCustomLanguageItem"><![CDATA[Manually added phrases]]></item>
 		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[Do you really want to delete this phrase? It will be deleted for all languages.]]></item>
 		<item name="wcf.acp.language.item.languageCategory"><![CDATA[Language Category Identifier]]></item>
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
-		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[The entered identifier is already used by an existing language category.]]></item>
-		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[This identifier is already used by an existing language category.]]></item>
+		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[This category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
 		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
@@ -1479,7 +1479,7 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height]]></item>
 		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Time frame of indexing]]></item>
-		<item name="wcf.acp.option.sitemap_index_time_frame.description"><![CDATA[Maximum age of the objects to be included in the sitemap. Use 0 to disable the time frame.]]></item>
+		<item name="wcf.acp.option.sitemap_index_time_frame.description"><![CDATA[Maximum age of the objects to be included in the sitemap. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[You can specify which user titles are unavailable for users.]]></item>
@@ -1617,7 +1617,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
 		<item name="wcf.acp.option.article_enable_like"><![CDATA[Enable reactions]]></item>
 		<item name="wcf.acp.option.article_related_articles"><![CDATA[Number of “Related Articles”]]></item>
-		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
+		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of “Related Articles”]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “About the Author” box]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
@@ -1629,7 +1629,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove cached images regularly]]></item>
-		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exception]]></item>
+		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exceptions]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
 		<item name="wcf.acp.option.show_style_changer"><![CDATA[Enable style changer]]></item>
@@ -1814,7 +1814,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package <span class="confirmationObject">{@$package->getName()}</span>?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package cannot be installed because the following packages are already installed:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}.]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages that are currently installed prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages that are currently installed prevent installing this package:]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}.]]></item>
 		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve the requirements of this package.]]></item>
 		<item name="wcf.acp.package.install.installingImportedStyle"><![CDATA[The uploaded file is a package containg a style.]]></item>
@@ -2181,28 +2181,28 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.article.discussionProvider.description"><![CDATA[This object type definition is used to register different providers for where discussions on articles take place.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType"><![CDATA[Object Type Identifier]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Textual identifier of the object type that is primarily used in PHP code. The identifier consists of at least four segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
-		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[The entered name is already used by another object type of the same object type definition.]]></item>
-		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[The entered identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[This name is already used by another object type of the same object type definition.]]></item>
+		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[This identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition Name]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[The entered name is already used by another definition.]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[The entered name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[This name is already used by another definition.]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[This name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP Interface]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName.description"><![CDATA[If a PHP interface is entered, every object type of this definition must provide the name of a PHP class that implements the interface.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName.error.nonExistent"><![CDATA[The entered interface does not exist.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName"><![CDATA[Package Installation Plugin Name]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.description"><![CDATA[The name of the package installation plugin is used as the value of the <kbd>type</kbd> attribute of <kbd>instruction</kbd> elements in a <kbd>package.xml</kbd> file. The name may only consist of letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.error.format"><![CDATA[The entered name is invalid.]]></item>
-		<item name="wcf.acp.pip.pip.pluginName.error.notUnique"><![CDATA[The entered name is already used by another package installation plugin.]]></item>
+		<item name="wcf.acp.pip.pip.pluginName.error.notUnique"><![CDATA[This name is already used by another package installation plugin.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem"><![CDATA[Menu Item Name]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.description"><![CDATA[The name of the user profile may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.format"><![CDATA[The entered name is invalid.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.notUnique"><![CDATA[The entered name is already used by another user profile menu item.]]></item>
+		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.notUnique"><![CDATA[This name is already used by another user profile menu item.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder.description"><![CDATA[The entered value determines in which order the user profile menu items are shown.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName"><![CDATA[Event Name]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName.error.format"><![CDATA[The entered name is invalid.]]></item>
-		<item name="wcf.acp.pip.userNotificationEvent.eventName.error.notUnique"><![CDATA[The entered name is already used by another event for the same event object type.]]></item>
+		<item name="wcf.acp.pip.userNotificationEvent.eventName.error.notUnique"><![CDATA[This name is already used by another event for the same event object type.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.objectType"><![CDATA[Event Object Type]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.objectType.description"><![CDATA[Determines the type of object the notification event belongs to.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.preset"><![CDATA[Enable By Default]]></item>
@@ -2218,16 +2218,16 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.templateListener.name"><![CDATA[Template Listener Name]]></item>
 		<item name="wcf.acp.pip.templateListener.name.description"><![CDATA[The name of the template listener may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.templateListener.name.error.format"><![CDATA[The entered name is invalid.]]></item>
-		<item name="wcf.acp.pip.templateListener.name.error.notUnique"><![CDATA[The entered name is already used by another template listener for the same event.]]></item>
+		<item name="wcf.acp.pip.templateListener.name.error.notUnique"><![CDATA[This name is already used by another template listener for the same event.]]></item>
 		<item name="wcf.acp.pip.templateListener.templateCode"><![CDATA[Template Code]]></item>
 		<item name="wcf.acp.pip.templateListener.templateCode.description"><![CDATA[The entered template code is inserted at the location of the selected event into the template.]]></item>
 		<item name="wcf.acp.pip.templateListener.templateName"><![CDATA[Template]]></item>
 		<item name="wcf.acp.pip.templateListener.templateName.description"><![CDATA[The template listeners’ code will be inserted into the selected template.]]></item>
-		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[The entered class is already registered as a core object.]]></item>
+		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[This class is already registered as a core object.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Provider Name]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered name is already used by another acp search result provider.]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[This name is already used by another acp search result provider.]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[This provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[The entered value determines in which order the different types of search results are shown.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.name"><![CDATA[Provider Name]]></item>
 		<item name="wcf.acp.pip.mediaProvider.name.description"><![CDATA[The name of the media provider may only contain letters, numbers and dashes and must begin with a lowercase letter.]]></item>
@@ -2248,11 +2248,11 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.aclOption.options.name.error.format"><![CDATA[The entered option name is invalid.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType"><![CDATA[ACL Object Type]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.categories.description"><![CDATA[The ACL object type determines to which type of objects the category belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
-		<item name="wcf.acp.pip.aclOption.categories.name.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.notUnique"><![CDATA[This name is already used by another ACL option category for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[The ACL object type determines to which type of objects the option belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
-		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[This name is already used by another ACL option for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem"><![CDATA[Menu Item Identifier]]></item>
-		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[This identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent"><![CDATA[You cannot select a child menu item of the menu item as its parent.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent"><![CDATA[You cannot select the menu item itself as its own parent.]]></item>
@@ -2290,8 +2290,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[The entered format is invalid. You have to entered a valid month or a list of valid months.]]></item>
 		<item name="wcf.acp.pip.menu.identifier"><![CDATA[Menu Identifier]]></item>
 		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menu</kbd>]]></item>
-		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
-		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[The entered menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[This identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[This menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatically Create Box for Menu]]></item>
 		<item name="wcf.acp.pip.menu.createBox.description"><![CDATA[If selected, after creating the menu, a box for the menu will also be created.]]></item>
 		<item name="wcf.acp.pip.menu.boxPosition"><![CDATA[Box Position]]></item>
@@ -2304,8 +2304,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.boxCssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box containing the menu.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Menu Item Identifier]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menuItem</kbd>]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[This identifier is already used by another menu item.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[This identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menu]]></item>
 		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[The menu item will belong to the selected menu.]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Menu Item Link Type]]></item>
@@ -2319,8 +2319,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
 		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <kbd>Form</kbd> and <kbd>Page</kbd>. Example: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
-		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another page.]]></item>
-		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[This identifier is already used by another page.]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[This identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.page.pageType"><![CDATA[Page Type]]></item>
 		<item name="wcf.acp.pip.page.pageType.description"><![CDATA[The content of “text” pages can be edited by administrators using the built-in WYSIWYG editor. “html” pages addditionally allow HTML code and “tpl” pages also template scripting. The content of “system” pages cannot be edited by administrators as their content is provided by the pages' controller.]]></item>
 		<item name="wcf.acp.pip.page.name"><![CDATA[Name]]></item>
@@ -2348,7 +2348,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Event Listener Identifier]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Unique textual identifier of the event listener that may only contain letters and must start with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.error.format"><![CDATA[The entered identifier is invalid.]]></item>
-		<item name="wcf.acp.pip.eventListener.listenerName.error.notUnique"><![CDATA[The entered identifier is already used by another event listener.]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerName.error.notUnique"><![CDATA[This identifier is already used by another event listener.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP Event Class]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[The entered class (without leading backslash) fires the event. Alternatively, the entered class inherits from the the class firing the event.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Names]]></item>
@@ -2367,7 +2367,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.clipboardAction.actionName.description"><![CDATA[Unique textual identifier (per clipboard action class) of the clipboard action that may only contain letters and must start with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionName.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionClassName"><![CDATA[Clipboard Action Class Name]]></item>
-		<item name="wcf.acp.pip.clipboardAction.actionClassName.error.notUnique"><![CDATA[There is already a clipboard action with this action name for the entered action class.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionClassName.error.notUnique"><![CDATA[This action class name is already used by another clipboard action.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.showOrder.description"><![CDATA[The entered value determines in which order the clipboard actions for the same clipboard action class are shown.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages.description"><![CDATA[The clipboard action is available on the entered pages.]]></item>
@@ -2378,8 +2378,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.box.objectType.description"><![CDATA[The box controller provides the content of the box.]]></item>
 		<item name="wcf.acp.pip.box.identifier"><![CDATA[Box Identifier]]></item>
 		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.Box</kbd>]]></item>
-		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another box.]]></item>
-		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[This identifier is already used by another box.]]></item>
+		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[This identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.box.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pip.box.name.description"><![CDATA[The box name is displayed in the box list in the ACP.]]></item>
 		<item name="wcf.acp.pip.box.showHeader"><![CDATA[Show Header]]></item>
@@ -2411,7 +2411,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions"><![CDATA[Enabled Options]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[Each enabled options setting has to be written in a new line using the format <kbd>key:otherOptions</kbd> where <kbd>key:</kbd> is optional. If a key is present, the setting is only relevant if this option has the specified key as value. <kbd>otherOptions</kbd> is a comma-separated list refering to the other options that will either be enabled or disabled depending on this option’s value. If an exclamation mark is in front of an option name, the logic is inversed: If this option has the specified key as value, the referenced option will be <strong>disabled</strong> instead of enabled.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[The entered value determines in which order the options in the same category are shown.]]></item>
-		<item name="wcf.acp.pip.option.optionName.error.notUnique"><![CDATA[The entered option name is already used by another option.]]></item>
+		<item name="wcf.acp.pip.option.optionName.error.notUnique"><![CDATA[This option name is already used by another option.]]></item>
 		<item name="wcf.acp.pip.option.options.hidden"><![CDATA[Hidden Option]]></item>
 		<item name="wcf.acp.pip.option.options.hidden.description"><![CDATA[The value of the option cannot be actively set by the administrator in the ACP.]]></item>
 		<item name="wcf.acp.pip.option.options.supportI18n"><![CDATA[Support Multilingual Input]]></item>
@@ -2433,7 +2433,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.description"><![CDATA[The textual BBCode identifier is used to identify BBCodes, for example when updating BBCodes. The identifier may only contain lowercase letters and numbers.]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.allNone"><![CDATA[The identifier may neither be <kbd>all</kbd> nor <kbd>none</kbd>.]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.format"><![CDATA[The identifier may only contain lowercase letters and numbers.]]></item>
-		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.notUnique"><![CDATA[The entered identifier is already used by another BBCode.]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.notUnique"><![CDATA[This identifier is already used by another BBCode.]]></item>
 		<item name="wcf.acp.pip.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
 		<item name="wcf.acp.pip.bbcode.htmlOpen.description"><![CDATA[Opening tag of the HTML element wrapping the BBCode’s content (without leading or trailing angle brackets).]]></item>
 		<item name="wcf.acp.pip.bbcode.htmlOpen.error.leadingBracket"><![CDATA[The tag may not begin with an angle bracket.]]></item>
@@ -2458,7 +2458,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode.description"><![CDATA[Primary code that is converted into this smiley.]]></item>
-		<item name="wcf.acp.pip.smiley.smileyCode.error.notUnique"><![CDATA[The entered smiley code is already used by another smiley.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already used by another smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Secondary Smiley Codes]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[The secondary codes are also converted into this smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
@@ -2839,7 +2839,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Default Cover Photo]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete the default cover photo? Once deleted, the global default photo will be used instead.]]></item>
-		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG, PNG and WEBP.]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth} × {$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG, PNG and WEBP.]]></item>
 		<item name="wcf.acp.style.customAssets"><![CDATA[Additional Images]]></item>
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}The uploaded images will be stored with the same file name within the <kbd>custom/</kbd> folder in the style’s image folder. You can retrieve the folder’s path within the CSS by using <kbd>#{$style_image_path}custom/</kbd>.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
@@ -2873,7 +2873,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102×64 pixels, exceeding images will be scaled.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102 × 64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[This image is used on high resolution displays such as the Apple Retina or 4K/UHD-displays. The image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
@@ -2920,8 +2920,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.parsingFailed"><![CDATA[The metadata of the entered font face could not be processed.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256×256 pixels large.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256 × 256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256 × 256 pixels large.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
@@ -2961,12 +2961,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.invalid"><![CDATA[The specified directory is invalid.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by another template group.]]></item>
-		<item name="wcf.acp.template.group.parentTemplateGroupID.error.invalid"><![CDATA[The specified Parent Template Group is invalid.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.invalid"><![CDATA[This directory is invalid.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[This directory is already in use by another template group.]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroupID.error.invalid"><![CDATA[This parent template group is invalid.]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template.]]></item>
-		<item name="wcf.acp.template.name.error.invalid"><![CDATA[The specified name is invalid.]]></item>
+		<item name="wcf.acp.template.name.error.invalid"><![CDATA[This name is invalid.]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
@@ -3249,7 +3249,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.attachment.file.title"><![CDATA[Download file “{$attachment->filename}”]]></item>
-		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width} × {#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
 		<item name="wcf.attachment.image.title"><![CDATA[View image “{$attachment->filename}”]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Files]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Images]]></item>
@@ -3722,6 +3722,8 @@ Attachments:
 		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[Do you want to move this to the trash bin?]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[Do you want to restore “{$title}”?]]></item>
 		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[Do you want to restore this?]]></item>
+		<item name="wcf.dialog.confirmation.reason.optional"><![CDATA[Reason (optional)]]></item>
+		<item name="wcf.dialog.confirmation.reason"><![CDATA[Reason]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
@@ -4003,7 +4005,7 @@ Attachments:
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
 		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
-		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
+		<item name="wcf.form.field.username.error.notUnique"><![CDATA[This username is already in use.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 		<item name="wcf.form.field.rating"><![CDATA[Rating]]></item>
@@ -4040,7 +4042,7 @@ Attachments:
 		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
@@ -4130,7 +4132,7 @@ Attachments:
 		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Dimensions]]></item>
-		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width}×{#$media->height}]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height}]]></item>
 		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
 		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail]]></item>
@@ -4402,8 +4404,8 @@ Attachments:
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.page.customURL"><![CDATA[Custom URL]]></item>
-		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[URL is invalid. You may use letters a-z/A-Z, numbers, dashes, underscores and forward slashes.]]></item>
-		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[URL is already in use.]]></item>
+		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[This URL is invalid. You may use letters a-z/A-Z, numbers, dashes, underscores and forward slashes.]]></item>
+		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[This URL is already in use.]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Multilingual page]]></item>
@@ -4414,7 +4416,7 @@ Attachments:
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
+		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[This name is already in use.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>
 		<item name="wcf.acp.page.parentPage.error.invalid"><![CDATA[The selected page is invalid.]]></item>
@@ -4564,8 +4566,8 @@ Attachments:
 	<category name="wcf.user">
 		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
 		<item name="wcf.user.email"><![CDATA[Email Address]]></item>
-		<item name="wcf.user.email.error.notUnique"><![CDATA[The email address is already in use.]]></item>
-		<item name="wcf.user.email.error.invalid"><![CDATA[The email address is invalid.]]></item>
+		<item name="wcf.user.email.error.notUnique"><![CDATA[This email address is already in use.]]></item>
+		<item name="wcf.user.email.error.invalid"><![CDATA[This email address is invalid.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.ipAddress.searchEngine"><![CDATA[Search for {if !$ipAddress|empty}{$ipAddress}{else}this IP address{/if} {if !$host|empty}on {$host}{/if}]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
@@ -4591,8 +4593,8 @@ Attachments:
 		<item name="wcf.user.username.placeholder"><![CDATA[Enter a username]]></item>
 		<item name="wcf.user.username.error.acpNotAuthorized"><![CDATA[This user is not authorized to log into the administration control panel.]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[The username “{$username}” does not exist.]]></item>
-		<item name="wcf.user.username.error.notUnique"><![CDATA[The username is already in use.]]></item>
-		<item name="wcf.user.username.error.invalid"><![CDATA[The username is invalid.]]></item>
+		<item name="wcf.user.username.error.notUnique"><![CDATA[This username is already in use.]]></item>
+		<item name="wcf.user.username.error.invalid"><![CDATA[This username is invalid.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[User Group]]></item>
 		<item name="wcf.user.group.groupName"><![CDATA[Group Name]]></item>
@@ -5070,9 +5072,9 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Image]]></item>
-		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[The image is not square.]]></item>
-		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
 		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon Color]]></item>
@@ -5178,7 +5180,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128×128 pixels.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128 × 128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
@@ -5249,7 +5251,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have blocked your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
+		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
@@ -5500,8 +5502,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
-		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
-		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{$option->getTitle()}” contains:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
@@ -7422,5 +7422,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"/>
 	<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"/>
 	<item name="wcf.editor.button.group.block"/>
+	<item name="wcf.user.option.editorPastePreserveFormatting"/>
+	<item name="wcf.user.option.editorPastePreserveFormatting.description"/>
 </delete>
 </language>
