@@ -13,9 +13,11 @@ import type { Features } from "./Configuration";
 import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
 import type { UploadMediaEventPayload } from "./Media";
 import type { InsertQuoteEventPayload } from "./Quote";
+import type { AutosavePayload } from "./Autosave";
 import type { CKEditor5 } from "@woltlab/editor";
 
 const enum EventNames {
+  Autosave = "ckeditor5:autosave",
   Bbcode = "ckeditor5:bbcode",
   CollectMetaData = "ckeditor5:collect-meta-data",
   Destroy = "ckeditor5:destroy",
@@ -77,6 +79,14 @@ class EventDispatcher {
 
   discardRecoveredData(): void {
     this.#element.dispatchEvent(new CustomEvent<void>(EventNames.DiscardRecoveredData));
+  }
+
+  autosave(payload: AutosavePayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<AutosavePayload>(EventNames.Autosave, {
+        detail: payload,
+      }),
+    );
   }
 
   insertAttachment(payload: InsertAttachmentPayload): void {
@@ -296,6 +306,14 @@ class EventListener {
 
   uploadMedia(callback: (payload: UploadMediaEventPayload) => void): this {
     this.#element.addEventListener(EventNames.UploadMedia, (event: CustomEvent<UploadMediaEventPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
+  }
+
+  autosave(callback: (payload: AutosavePayload) => void): this {
+    this.#element.addEventListener(EventNames.Autosave, (event: CustomEvent<AutosavePayload>) => {
       callback(event.detail);
     });
 

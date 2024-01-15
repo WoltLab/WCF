@@ -57,7 +57,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         }
     }
     exports.deleteDraft = deleteDraft;
-    function saveDraft(identifier, html) {
+    function saveDraft(element, identifier, html) {
         if (html === "") {
             deleteDraft(identifier);
             return;
@@ -68,6 +68,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         };
         try {
             window.localStorage.setItem(getLocalStorageKey(identifier), JSON.stringify(payload));
+            (0, Event_1.dispatchToCkeditor)(element).autosave(payload);
         }
         catch (e) {
             console.warn("Unable to write to the local storage.", e);
@@ -187,7 +188,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         removeExpiredDrafts();
         configuration.autosave = {
             save(editor) {
-                saveDraft(identifier, editor.data.get());
+                saveDraft(element, identifier, editor.data.get());
                 return Promise.resolve();
             },
             waitingTime: 15000,

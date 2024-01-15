@@ -15,7 +15,7 @@ import { getPhrase } from "../../Language";
 import { escapeHTML } from "../../StringUtil";
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 
-type Payload = {
+export type AutosavePayload = {
   html: string;
   timestamp: number;
 };
@@ -71,27 +71,29 @@ export function deleteDraft(identifier: string): void {
   }
 }
 
-function saveDraft(identifier: string, html: string): void {
+function saveDraft(element: HTMLElement, identifier: string, html: string): void {
   if (html === "") {
     deleteDraft(identifier);
 
     return;
   }
 
-  const payload: Payload = {
+  const payload: AutosavePayload = {
     html,
     timestamp: Date.now(),
   };
 
   try {
     window.localStorage.setItem(getLocalStorageKey(identifier), JSON.stringify(payload));
+
+    dispatchToCkeditor(element).autosave(payload);
   } catch (e) {
     console.warn("Unable to write to the local storage.", e);
   }
 }
 
 export function setupRestoreDraft(editor: CKEditor5.ClassicEditor.ClassicEditor, identifier: string): void {
-  let value: Payload | undefined = undefined;
+  let value: AutosavePayload | undefined = undefined;
 
   try {
     const payload = window.localStorage.getItem(getLocalStorageKey(identifier));
@@ -209,7 +211,7 @@ function removeExpiredDrafts(): void {
         return;
       }
 
-      let payload: Payload | undefined = undefined;
+      let payload: AutosavePayload | undefined = undefined;
       try {
         payload = JSON.parse(value);
       } catch {
@@ -235,7 +237,7 @@ export function initializeAutosave(
 
   configuration.autosave = {
     save(editor) {
-      saveDraft(identifier, editor.data.get());
+      saveDraft(element, identifier, editor.data.get());
 
       return Promise.resolve();
     },
