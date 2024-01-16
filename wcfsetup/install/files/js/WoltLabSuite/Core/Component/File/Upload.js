@@ -20,7 +20,10 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             const endpoint = new URL(endpoints[i]);
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             endpoint.searchParams.append("checksum", checksum);
-            await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsResponse();
+            const response = await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsResponse();
+            if (response) {
+                console.log(await response.text());
+            }
         }
     }
     async function getSha256Hash(data) {
@@ -34,8 +37,6 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             element.addEventListener("upload", (event) => {
                 void upload(element, event.detail);
             });
-            const file = new File(["a".repeat(4000001)], "test.txt");
-            void upload(element, file);
         });
     }
     exports.setup = setup;

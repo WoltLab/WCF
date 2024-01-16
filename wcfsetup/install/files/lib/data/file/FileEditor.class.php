@@ -38,7 +38,7 @@ class FileEditor extends DatabaseObjectEditor
         }
 
         \rename(
-            $fileTemporary->getPath() . $fileTemporary->getResultFilename(),
+            $fileTemporary->getPath() . $fileTemporary->getFilename(),
             $filePath . $file->getSourceFilename()
         );
 

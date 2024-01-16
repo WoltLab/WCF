@@ -50,18 +50,19 @@ final class FileUploadAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        // Check if the checksum matches the received data.
-        $ctx = \hash_init('sha256');
-        $stream = $request->getBody();
-        while (!$stream->eof()) {
-            \hash_update($ctx, $stream->read(self::FREAD_BUFFER_SIZE));
+        // Check if this chunk has already been written.
+        if ($fileTemporary->hasChunk($parameters['sequenceNo'])) {
+            // 409 Conflict
+            return new EmptyResponse(409);
         }
-        $result = \hash_final($ctx);
-        $stream->rewind();
 
-        if ($result !== $parameters['checksum']) {
-            // TODO: Proper error message
-            throw new IllegalLinkException();
+        // Validate the chunk size.
+        $chunkSize = $fileTemporary->getChunkSize();
+        $stream = $request->getBody();
+        $receivedSize = $stream->getSize();
+        if ($receivedSize !== null && $receivedSize > $chunkSize) {
+            // 413 Content Too Large
+            return new EmptyResponse(413);
         }
 
         $tmpPath = $fileTemporary->getPath();
@@ -69,56 +70,51 @@ final class FileUploadAction implements RequestHandlerInterface
             \mkdir($tmpPath, recursive: true);
         }
 
-        // Write the chunk using a buffer to avoid blowing up the memory limit.
-        // See https://stackoverflow.com/a/61997147
-        $result = new AtomicWriter($tmpPath . $fileTemporary->getChunkFilename($parameters['sequenceNo']));
+        $file = new IoFile($tmpPath . $fileTemporary->getFilename(), 'cb+');
+        $file->lock(\LOCK_EX);
+        $file->seek($parameters['sequenceNo'] * $chunkSize);
 
+        // Check if the checksum matches the received data.
+        $ctx = \hash_init('sha256');
+        $total = 0;
         while (!$stream->eof()) {
-            $result->write($stream->read(self::FREAD_BUFFER_SIZE));
+            // Write the chunk using a buffer to avoid blowing up the memory limit.
+            // See https://stackoverflow.com/a/61997147
+            $chunk = $stream->read(self::FREAD_BUFFER_SIZE);
+            $total += \strlen($chunk);
+
+            if ($total > $chunkSize) {
+                // 413 Content Too Large
+                return new EmptyResponse(413);
+            }
+
+            \hash_update($ctx, $chunk);
+            $file->write($chunk);
+        }
+        $file->sync();
+        $file->close();
+
+        $result = \hash_final($ctx);
+
+        if ($result !== $parameters['checksum']) {
+            // TODO: Proper error message
+            throw new IllegalLinkException();
         }
 
-        $result->flush();
+        // Mark the chunk as written.
+        $chunks = $fileTemporary->chunks;
+        $chunks[$parameters['sequenceNo']] = '1';
+        (new FileTemporaryEditor($fileTemporary))->update([
+            'chunks' => $chunks,
+        ]);
 
         // Check if we have all chunks.
-        $data = [];
-        for ($i = 0; $i < $numberOfChunks; $i++) {
-            $chunkFilename = $fileTemporary->getChunkFilename($i);
-
-            if (\file_exists($tmpPath . $chunkFilename)) {
-                $data[] = $tmpPath . $chunkFilename;
-            }
-        }
-
-        if (\count($data) === $numberOfChunks) {
-            // Concatenate the files by reading only a limited buffer at a time
-            // to avoid blowing up the memory limit.
-            // See https://stackoverflow.com/a/61997147
-
-            $resultFilename = $fileTemporary->getResultFilename();
-            $result = new AtomicWriter($tmpPath . $resultFilename);
-            foreach ($data as $fileChunk) {
-                $source = new IoFile($fileChunk, 'rb');
-                try {
-                    while (!$source->eof()) {
-                        $result->write($source->read(self::FREAD_BUFFER_SIZE));
-                    }
-                } finally {
-                    $source->close();
-                }
-            }
-
-            $result->flush();
-
+        if ($chunks === \str_repeat('1', $fileTemporary->getChunkCount())) {
             // Check if the final result matches the expected checksum.
-            $checksum = \hash_file('sha256', $tmpPath . $resultFilename);
+            $checksum = \hash_file('sha256', $tmpPath . $fileTemporary->getFilename());
             if ($checksum !== $fileTemporary->fileHash) {
                 // TODO: Proper error message
                 throw new IllegalLinkException();
-            }
-
-            // Remove the temporary chunks.
-            foreach ($data as $fileChunk) {
-                \unlink($fileChunk);
             }
 
             $file = FileEditor::createFromTemporary($fileTemporary);
