@@ -25,21 +25,22 @@ class FileTemporary extends DatabaseObject
 
     public const MAX_CHUNK_COUNT = 255;
 
-    public function getChunkFilename(int $sequenceNo): string
-    {
-        return \sprintf(
-            "%s-%d.bin",
-            $this->identifier,
-            $sequenceNo,
-        );
-    }
-
     public function getChunkCount(): int
     {
         return \strlen($this->chunks);
     }
 
-    public function getResultFilename(): string
+    public function getChunkSize(): int
+    {
+        return \ceil($this->fileSize / $this->getChunkCount());
+    }
+
+    public function hasChunk(int $sequenceNo): bool
+    {
+        return $this->chunks[$sequenceNo] === '1';
+    }
+
+    public function getFilename(): string
     {
         return \sprintf("%s-final.bin", $this->identifier);
     }

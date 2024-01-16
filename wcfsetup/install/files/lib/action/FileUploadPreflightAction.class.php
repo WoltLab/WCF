@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,7 +30,8 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
 
         $numberOfChunks = FileTemporary::getNumberOfChunks($parameters['fileSize']);
         if ($numberOfChunks > FileTemporary::MAX_CHUNK_COUNT) {
-            // TODO: Reject
+            // 413 Content Too Large
+            return new EmptyResponse(413);
         }
 
         $fileTemporary = $this->createTemporaryFile($parameters, $numberOfChunks);

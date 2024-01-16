@@ -29,7 +29,10 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     const checksum = await getSha256Hash(await chunk.arrayBuffer());
     endpoint.searchParams.append("checksum", checksum);
 
-    await prepareRequest(endpoint.toString()).post(chunk).fetchAsResponse();
+    const response = await prepareRequest(endpoint.toString()).post(chunk).fetchAsResponse();
+    if (response) {
+      console.log(await response.text());
+    }
   }
 }
 
@@ -46,8 +49,5 @@ export function setup(): void {
     element.addEventListener("upload", (event: CustomEvent<File>) => {
       void upload(element, event.detail);
     });
-
-    const file = new File(["a".repeat(4_000_001)], "test.txt");
-    void upload(element, file);
   });
 }
