@@ -607,7 +607,8 @@ CREATE TABLE wcf1_file_temporary (
 	time INT,
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
-	fileHash CHAR(64) NOT NULL
+	fileHash CHAR(64) NOT NULL,
+	chunks VARBINARY(255) NOT NULL
 );
 
 /* As the flood control table can be a high traffic table and as it is periodically emptied,

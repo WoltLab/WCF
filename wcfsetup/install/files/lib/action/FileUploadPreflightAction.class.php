@@ -27,8 +27,12 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                     EOT,
         );
 
-        $fileTemporary = $this->createTemporaryFile($parameters);
-        $numberOfChunks = $fileTemporary->getNumberOfChunks();
+        $numberOfChunks = FileTemporary::getNumberOfChunks($parameters['fileSize']);
+        if ($numberOfChunks > FileTemporary::MAX_CHUNK_COUNT) {
+            // TODO: Reject
+        }
+
+        $fileTemporary = $this->createTemporaryFile($parameters, $numberOfChunks);
 
         $endpoints = [];
         for ($i = 0; $i < $numberOfChunks; $i++) {
@@ -46,7 +50,7 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
         ]);
     }
 
-    private function createTemporaryFile(array $parameters): FileTemporary
+    private function createTemporaryFile(array $parameters, int $numberOfChunks): FileTemporary
     {
         $identifier = \bin2hex(\random_bytes(20));
 
@@ -57,6 +61,7 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                 'filename' => $parameters['filename'],
                 'fileSize' => $parameters['fileSize'],
                 'fileHash' => $parameters['fileHash'],
+                'chunks' => \str_repeat('0', $numberOfChunks),
             ],
         ]);
 
