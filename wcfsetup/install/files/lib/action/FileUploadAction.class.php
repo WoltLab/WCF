@@ -44,8 +44,8 @@ final class FileUploadAction implements RequestHandlerInterface
         }
 
         // Check if this is a valid sequence no.
-        $numberOfChunks = $fileTemporary->getNumberOfChunks();
-        if ($parameters['sequenceNo'] >= $numberOfChunks) {
+        $numberOfChunks = $fileTemporary->getChunkCount();
+        if ($parameters['sequenceNo'] >= $fileTemporary->getChunkCount()) {
             // TODO: Proper error message
             throw new IllegalLinkException();
         }

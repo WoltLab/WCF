@@ -15,6 +15,7 @@ use wcf\data\DatabaseObject;
  * @property-read string $filename
  * @property-read int $fileSize
  * @property-read string $fileHash
+ * @property-read string $chunks
  */
 class FileTemporary extends DatabaseObject
 {
@@ -22,10 +23,7 @@ class FileTemporary extends DatabaseObject
 
     protected static $databaseTableIndexName = 'identifier';
 
-    public function getNumberOfChunks(): int
-    {
-        return \ceil($this->fileSize / $this->getOptimalChunkSize());
-    }
+    public const MAX_CHUNK_COUNT = 255;
 
     public function getChunkFilename(int $sequenceNo): string
     {
@@ -34,6 +32,11 @@ class FileTemporary extends DatabaseObject
             $this->identifier,
             $sequenceNo,
         );
+    }
+
+    public function getChunkCount(): int
+    {
+        return \strlen($this->chunks);
     }
 
     public function getResultFilename(): string
@@ -53,7 +56,12 @@ class FileTemporary extends DatabaseObject
         );
     }
 
-    private function getOptimalChunkSize(): int
+    public static function getNumberOfChunks(int $fileSize): int
+    {
+        return \ceil($fileSize / self::getOptimalChunkSize());
+    }
+
+    private static function getOptimalChunkSize(): int
     {
         $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
         if ($postMaxSize === 0) {
