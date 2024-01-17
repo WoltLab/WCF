@@ -23,7 +23,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
         options;
         optionList;
         questionField;
-        resultsRequireVoteField;
+        resultsRequireVoteNoField;
+        resultsRequireVoteYesField;
         sortByVotesField;
         wysiwygId;
         constructor(containerId, pollOptions, wysiwygId, options) {
@@ -46,7 +47,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes");
             this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable");
             this.isPublicField = document.getElementById(this.wysiwygId + "Poll_isPublic");
-            this.resultsRequireVoteField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote");
+            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote");
+            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote_no");
             this.sortByVotesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes");
             this.optionCount = 0;
             this.options = Core.extend({
@@ -212,7 +214,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             this.maxVotesField.value = "1";
             this.isChangeableYesField.checked = false;
             this.isPublicField.checked = false;
-            this.resultsRequireVoteField.checked = false;
+            this.resultsRequireVoteYesField.checked = false;
+            if (this.resultsRequireVoteNoField)
+                this.resultsRequireVoteNoField.checked = true;
             this.sortByVotesField.checked = false;
             EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
                 pollEditor: this,
@@ -249,7 +253,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             if (this.isChangeableYesField.checked) {
                 data.pollIsChangeable = true;
             }
-            if (this.resultsRequireVoteField.checked) {
+            if (this.resultsRequireVoteYesField.checked) {
                 data.pollResultsRequireVote = true;
             }
             if (this.sortByVotesField.checked) {
@@ -305,7 +309,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 [this.maxVotesField.id]: this.maxVotesField.value,
                 [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
                 [this.isPublicField.id]: !!this.isPublicField.checked,
-                [this.resultsRequireVoteField.id]: !!this.resultsRequireVoteField.checked,
+                [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
                 [this.sortByVotesField.id]: !!this.sortByVotesField.checked,
             };
         }
