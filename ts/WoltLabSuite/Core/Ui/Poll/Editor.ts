@@ -57,8 +57,10 @@ type PollData = {
 class UiPollEditor {
   private readonly container: HTMLElement;
   private readonly endTimeField: HTMLInputElement;
+  private readonly isChangeableNoField: HTMLInputElement | null;
   private readonly isChangeableYesField: HTMLInputElement;
-  private readonly isPublicField: HTMLInputElement;
+  private readonly isPublicNoField: HTMLInputElement | null;
+  private readonly isPublicYesField: HTMLInputElement;
   private readonly maxVotesField: HTMLInputElement;
   private optionCount: number;
   private readonly options: UiPollEditorOptions;
@@ -66,7 +68,8 @@ class UiPollEditor {
   private readonly questionField: HTMLInputElement;
   private readonly resultsRequireVoteNoField: HTMLInputElement | null;
   private readonly resultsRequireVoteYesField: HTMLInputElement;
-  private readonly sortByVotesField: HTMLInputElement;
+  private readonly sortByVotesNoField: HTMLInputElement | null;
+  private readonly sortByVotesYesField: HTMLInputElement;
   private readonly wysiwygId: string;
 
   constructor(containerId: string, pollOptions: PollOption[], wysiwygId: string, options: UiPollEditorOptions) {
@@ -81,7 +84,7 @@ class UiPollEditor {
       throw new Error("Unknown wysiwyg field with id '" + wysiwygId + "'.");
     }
 
-    this.questionField = document.getElementById(this.wysiwygId + "Poll_question") as HTMLInputElement;
+    this.questionField = document.getElementById(this.wysiwygId + "pollQuestion") as HTMLInputElement;
 
     const optionList = this.container.querySelector(".sortableList");
     if (optionList === null) {
@@ -89,17 +92,20 @@ class UiPollEditor {
     }
     this.optionList = optionList as HTMLOListElement;
 
-    this.endTimeField = document.getElementById(this.wysiwygId + "Poll_endTime") as HTMLInputElement;
-    this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes") as HTMLInputElement;
-    this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable") as HTMLInputElement;
-    this.isPublicField = document.getElementById(this.wysiwygId + "Poll_isPublic") as HTMLInputElement;
+    this.endTimeField = document.getElementById(this.wysiwygId + "pollEndTime") as HTMLInputElement;
+    this.maxVotesField = document.getElementById(this.wysiwygId + "pollMaxVotes") as HTMLInputElement;
+    this.isChangeableYesField = document.getElementById(this.wysiwygId + "pollIsChangeable") as HTMLInputElement;
+    this.isChangeableNoField = document.getElementById(this.wysiwygId + "pollIsChangeable_no") as HTMLInputElement;
+    this.isPublicYesField = document.getElementById(this.wysiwygId + "pollIsPublic") as HTMLInputElement;
+    this.isPublicNoField = document.getElementById(this.wysiwygId + "PollIsPublic_no") as HTMLInputElement;
     this.resultsRequireVoteYesField = document.getElementById(
-      this.wysiwygId + "Poll_resultsRequireVote",
+      this.wysiwygId + "pollResultsRequireVote",
     ) as HTMLInputElement;
     this.resultsRequireVoteNoField = document.getElementById(
-      this.wysiwygId + "Poll_resultsRequireVote_no",
+      this.wysiwygId + "pollResultsRequireVote_no",
     ) as HTMLInputElement;
-    this.sortByVotesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes") as HTMLInputElement;
+    this.sortByVotesYesField = document.getElementById(this.wysiwygId + "pollSortByVotes") as HTMLInputElement;
+    this.sortByVotesNoField = document.getElementById(this.wysiwygId + "pollSortByVotes_no") as HTMLInputElement;
 
     this.optionCount = 0;
 
@@ -299,10 +305,13 @@ class UiPollEditor {
 
     this.maxVotesField.value = "1";
     this.isChangeableYesField.checked = false;
-    this.isPublicField.checked = false;
+    if (this.isChangeableNoField) this.isChangeableNoField.checked = true;
+    this.isPublicYesField.checked = false;
+    if (this.isPublicNoField) this.isPublicNoField.checked = true;
     this.resultsRequireVoteYesField.checked = false;
     if (this.resultsRequireVoteNoField) this.resultsRequireVoteNoField.checked = true;
-    this.sortByVotesField.checked = false;
+    this.sortByVotesYesField.checked = false;
+    if (this.sortByVotesNoField) this.sortByVotesNoField.checked = true;
 
     EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
       pollEditor: this,
@@ -347,11 +356,11 @@ class UiPollEditor {
       data.pollResultsRequireVote = true;
     }
 
-    if (this.sortByVotesField.checked) {
+    if (this.sortByVotesYesField.checked) {
       data.pollSortByVotes = true;
     }
 
-    if (this.isPublicField?.checked) {
+    if (this.isPublicYesField?.checked) {
       data.pollIsPublic = true;
     }
 
@@ -405,9 +414,9 @@ class UiPollEditor {
       [this.endTimeField.id]: this.endTimeField.value,
       [this.maxVotesField.id]: this.maxVotesField.value,
       [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
-      [this.isPublicField.id]: !!this.isPublicField.checked,
+      [this.isPublicYesField.id]: !!this.isPublicYesField.checked,
       [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
-      [this.sortByVotesField.id]: !!this.sortByVotesField.checked,
+      [this.sortByVotesYesField.id]: !!this.sortByVotesYesField.checked,
     };
   }
 
