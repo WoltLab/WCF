@@ -54,6 +54,9 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
 
     private static function removeStyling(HtmlNodePlainLink $element): void
     {
+        if ($element->topLevelParent == null) {
+            return;
+        }
         foreach ($element->topLevelParent->childNodes as $child) {
             DOMUtil::removeNode($child);
         }
