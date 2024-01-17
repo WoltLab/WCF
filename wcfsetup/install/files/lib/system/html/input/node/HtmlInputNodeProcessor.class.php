@@ -825,11 +825,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     // <p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
                     // <p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
                     if (
-                        $previousSibling === null && $nextSibling === null
-                        || (
-                            $previousSibling !== null && $nextSibling !== null
-                            && $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
-                        )
+                        $previousSibling !== null && $nextSibling !== null
+                        && $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
                     ) {
                         $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
                         continue;
