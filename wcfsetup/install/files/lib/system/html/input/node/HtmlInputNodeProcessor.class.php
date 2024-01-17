@@ -807,8 +807,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
 
                 if (!$mayContainOtherContent) {
-                    $nextSibling = $this->getNoneEmptyNode($link, 'nextSibling');
-                    $previousSibling = $this->getNoneEmptyNode($link, 'previousSibling');
+                    $nextSibling = $this->getNoneEmptyNode($parentLinkElement, 'nextSibling');
+                    $previousSibling = $this->getNoneEmptyNode($parentLinkElement, 'previousSibling');
 
                     // Check whether the link is at the beginning or end of the paragraph
                     // and whether the next or previous sibling is a line break.
