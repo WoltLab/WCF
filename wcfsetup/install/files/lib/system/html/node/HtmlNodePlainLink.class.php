@@ -72,6 +72,7 @@ class HtmlNodePlainLink
     {
         $this->standalone = false;
         $this->topLevelParent = null;
+        $this->aloneInParagraph = false;
 
         return $this;
     }
@@ -180,38 +181,38 @@ class HtmlNodePlainLink
                 $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
                 DOMUtil::removeNode($this->topLevelParent);
             } else {
-                //Split at the link and replace the link with the metacode element.
+                $replaceNode = null;
+                $parent = $this->link;
                 $next = $this->findBr($this->link, 'nextSibling');
                 $previous = $this->findBr($this->link, 'previousSibling');
-                $replaceNode = null;
+                //link inside other elements(u, i, b, …)
+                while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
+                    $parent = $parent->parentElement;
+                    $next = $this->findBr($parent, 'nextSibling');
+                    $previous = $this->findBr($parent, 'previousSibling');
+                }
 
                 if ($next !== null) {
                     $replaceNode = DOMUtil::splitParentsUntil(
-                        $this->link,
-                        $this->link->parentElement->parentElement,
+                        $parent,
+                        $this->topLevelParent->parentElement,
                         false
                     );
                 }
                 if ($previous !== null) {
                     $replaceNode = DOMUtil::splitParentsUntil(
-                        $this->link,
-                        $this->link->parentElement->parentElement
+                        $parent,
+                        $this->topLevelParent->parentElement
                     );
                 }
                 \assert($replaceNode instanceof \DOMElement);
 
                 //remove <br> from start and end of the new block elements
-                if ($replaceNode->nextSibling !== null) {
-                    $br = $this->findBr($replaceNode->nextSibling->firstChild, 'nextSibling');
-                    if ($br !== null) {
-                        DOMUtil::removeNode($br);
-                    }
+                if ($next !== null) {
+                    DOMUtil::removeNode($next);
                 }
-                if ($replaceNode->previousSibling !== null) {
-                    $br = $this->findBr($replaceNode->previousSibling->lastChild, 'previousSibling');
-                    if ($br !== null) {
-                        DOMUtil::removeNode($br);
-                    }
+                if ($previous !== null) {
+                    DOMUtil::removeNode($previous);
                 }
                 DOMUtil::replaceElement($replaceNode, $metacodeElement, false);
 
