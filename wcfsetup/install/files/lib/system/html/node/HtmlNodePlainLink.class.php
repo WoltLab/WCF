@@ -77,10 +77,10 @@ class HtmlNodePlainLink
     /**
      * Marks the link as standalone, which means that it is the only content in a line.
      *
-     * @param \DOMElement $topLevelParent
+     * @param \DOMElement|null $topLevelParent
      * @return $this
      */
-    public function setIsStandalone(\DOMElement $topLevelParent)
+    public function setIsStandalone(?\DOMElement $topLevelParent = null)
     {
         $this->standalone = true;
         $this->topLevelParent = $topLevelParent;
@@ -171,9 +171,11 @@ class HtmlNodePlainLink
                 throw new \LogicException('Cannot inject a block bbcode in an inline context.');
             }
 
-            // Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
-            $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
-            DOMUtil::removeNode($this->topLevelParent);
+            if ($this->topLevelParent !== null) {
+                // Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
+                $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
+                DOMUtil::removeNode($this->topLevelParent);
+            }
         }
 
         DOMUtil::replaceElement($this->link, $metacodeElement, false);

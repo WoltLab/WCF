@@ -819,6 +819,30 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     $this->plainLinks[] = $plainLink->setIsStandalone($parent);
                     continue;
                 }
+            } elseif ($parent->nodeName === 'p') {
+                $nextSibling = $this->getNoneEmptyNode($link, 'nextSibling');
+                $previousSibling = $this->getNoneEmptyNode($link, 'previousSibling');
+
+                //Check whether the link is at the beginning or end of the paragraph
+                //and whether the next or previous sibling is a line break.
+                //<p><a href="https://example.com">https://example.com</a><br>…</p>
+                //<p>…<br><a href="https://example.com">https://example.com</a></p>
+                if (
+                    ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br') ||
+                    ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
+                ) {
+                    $this->plainLinks[] = $plainLink->setIsStandalone();
+                    continue;
+                }
+                //If not, the previous and next sibling may be a line break.
+                //<p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
+                if (
+                    $previousSibling !== null && $previousSibling->nodeName === 'br' &&
+                    $nextSibling !== null && $nextSibling->nodeName === 'br'
+                ) {
+                    $this->plainLinks[] = $plainLink->setIsStandalone();
+                    continue;
+                }
             }
 
             $this->plainLinks[] = $plainLink->setIsInline();
@@ -834,5 +858,16 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             }
         }
+    }
+
+    private function getNoneEmptyNode(?\DOMNode $element, string $property): ?\DOMNode
+    {
+        while ($element = $element->{$property}) {
+            if (!DOMUtil::isEmpty($element)) {
+                return $element;
+            }
+        }
+
+        return null;
     }
 }
