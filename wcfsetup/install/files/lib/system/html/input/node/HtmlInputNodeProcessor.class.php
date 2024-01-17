@@ -779,39 +779,16 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 $parent = $parent->parentNode;
             }
             $mayContainOtherContent = false;
+            $linebreaks = 0;
 
             if ($parent->nodeName === 'p' && $parent->textContent === $link->textContent) {
                 // The line may contain nothing but the link, exceptions include basic formatting
                 // and up to a single `<br>` element.
-                $linebreaks = 0;
                 /** @var \DOMElement $element */
                 foreach ($parent->getElementsByTagName('*') as $element) {
-                    switch ($element->nodeName) {
-                        case 'br':
-                            $linebreaks++;
-                            break;
-
-                        case 'span':
-                            if ($element->getAttribute('class')) {
-                                $mayContainOtherContent = true;
-                                break 2;
-                            }
-
-                            // `<span>` is used to hold text formatting.
-                            break;
-
-                        case 'a':
-                        case 'b':
-                        case 'em':
-                        case 'i':
-                        case 'strong':
-                        case 'u':
-                            // These elements are perfectly fine.
-                            break;
-
-                        default:
-                            $mayContainOtherContent = true;
-                            break 2;
+                    if ($this->mayContainOtherContent($element, $linebreaks)) {
+                        $mayContainOtherContent = true;
+                        break;
                     }
                 }
 
@@ -823,29 +800,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 $parentLinkElement = $link;
                 while ($parentLinkElement->parentElement !== $parent) {
                     $parentLinkElement = $parentLinkElement->parentElement;
-                    switch ($parentLinkElement->nodeName) {
-                        case 'span':
-                            if ($parentLinkElement->getAttribute('class')) {
-                                $mayContainOtherContent = true;
-                                break 2;
-                            }
-
-                            // `<span>` is used to hold text formatting.
-                            break;
-
-                        case 'br':
-                        case 'a':
-                        case 'b':
-                        case 'em':
-                        case 'i':
-                        case 'strong':
-                        case 'u':
-                            // These elements are perfectly fine.
-                            break;
-
-                        default:
-                            $mayContainOtherContent = true;
-                            break 2;
+                    if ($this->mayContainOtherContent($parentLinkElement, $linebreaks)) {
+                        $mayContainOtherContent = true;
+                        break;
                     }
                 }
 
@@ -904,5 +861,35 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         }
 
         return null;
+    }
+
+    private function mayContainOtherContent(\DOMElement $element, int &$linebreaks): bool
+    {
+        switch ($element->nodeName) {
+            case 'br':
+                $linebreaks++;
+                break;
+
+            case 'span':
+                if ($element->getAttribute('class')) {
+                    return true;
+                }
+
+                // `<span>` is used to hold text formatting.
+                break;
+
+            case 'a':
+            case 'b':
+            case 'em':
+            case 'i':
+            case 'strong':
+            case 'u':
+                // These elements are perfectly fine.
+                break;
+
+            default:
+                return true;
+        }
+        return false;
     }
 }
