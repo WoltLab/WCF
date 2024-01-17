@@ -815,8 +815,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     //<p><a href="https://example.com">https://example.com</a><br>…</p>
                     //<p>…<br><a href="https://example.com">https://example.com</a></p>
                     if (
-                        ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br') ||
-                        ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
+                        ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br')
+                        || ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
                     ) {
                         $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
                         continue;
@@ -825,10 +825,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     //<p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
                     //<p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
                     if (
-                        $previousSibling === null && $nextSibling === null ||
-                        (
-                            $previousSibling !== null && $nextSibling !== null &&
-                            $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
+                        $previousSibling === null && $nextSibling === null
+                        || (
+                            $previousSibling !== null && $nextSibling !== null
+                            && $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
                         )
                     ) {
                         $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
@@ -890,6 +890,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             default:
                 return true;
         }
+
         return false;
     }
 }
