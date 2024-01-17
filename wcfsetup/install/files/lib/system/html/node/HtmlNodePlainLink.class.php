@@ -185,7 +185,7 @@ class HtmlNodePlainLink
                 $parent = $this->link;
                 $next = $this->findBr($this->link, 'nextSibling');
                 $previous = $this->findBr($this->link, 'previousSibling');
-                //link inside other elements(u, i, b, …)
+                // Link inside other elements(u, i, b, …)
                 while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
                     $parent = $parent->parentElement;
                     $next = $this->findBr($parent, 'nextSibling');
@@ -207,7 +207,7 @@ class HtmlNodePlainLink
                 }
                 \assert($replaceNode instanceof \DOMElement);
 
-                //remove <br> from start and end of the new block elements
+                // Remove <br> from start and end of the new block elements
                 if ($next !== null) {
                     DOMUtil::removeNode($next);
                 }
