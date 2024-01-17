@@ -1,3 +1,4 @@
+{* variable definition for full backwards-compatibility *}
 {if !$notificationCount|isset}{assign var=notificationCount value=$notifications|count}{/if}
 {if !$maximum|isset}{assign var=maximum value=$notificationCount}{/if}
 {if !$remaining|isset}{assign var=remaining value=0}{/if}
