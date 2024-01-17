@@ -45,6 +45,8 @@ class HtmlNodePlainLink
      */
     protected $standalone = false;
 
+    protected bool $aloneInParagraph = true;
+
     /**
      * @var \DOMElement
      */
@@ -77,13 +79,15 @@ class HtmlNodePlainLink
     /**
      * Marks the link as standalone, which means that it is the only content in a line.
      *
-     * @param \DOMElement|null $topLevelParent
+     * @param \DOMElement $topLevelParent
+     * @param bool $aloneInParagraph
      * @return $this
      */
-    public function setIsStandalone(?\DOMElement $topLevelParent = null)
+    public function setIsStandalone(\DOMElement $topLevelParent, bool $aloneInParagraph = true)
     {
         $this->standalone = true;
         $this->topLevelParent = $topLevelParent;
+        $this->aloneInParagraph = $aloneInParagraph;
 
         return $this;
     }
@@ -171,10 +175,47 @@ class HtmlNodePlainLink
                 throw new \LogicException('Cannot inject a block bbcode in an inline context.');
             }
 
-            if ($this->topLevelParent !== null) {
+            if ($this->aloneInParagraph) {
                 // Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
                 $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
                 DOMUtil::removeNode($this->topLevelParent);
+            } else {
+                //Split at the link and replace the link with the metacode element.
+                $next = $this->findBr($this->link, 'nextSibling');
+                $previous = $this->findBr($this->link, 'previousSibling');
+                $replaceNode = null;
+
+                if ($next !== null) {
+                    $replaceNode = DOMUtil::splitParentsUntil(
+                        $this->link,
+                        $this->link->parentElement->parentElement,
+                        false
+                    );
+                }
+                if ($previous !== null) {
+                    $replaceNode = DOMUtil::splitParentsUntil(
+                        $this->link,
+                        $this->link->parentElement->parentElement
+                    );
+                }
+                \assert($replaceNode instanceof \DOMElement);
+
+                //remove <br> from start and end of the new block elements
+                if ($replaceNode->nextSibling !== null) {
+                    $br = $this->findBr($replaceNode->nextSibling->firstChild, 'nextSibling');
+                    if ($br !== null) {
+                        DOMUtil::removeNode($br);
+                    }
+                }
+                if ($replaceNode->previousSibling !== null) {
+                    $br = $this->findBr($replaceNode->previousSibling->lastChild, 'previousSibling');
+                    if ($br !== null) {
+                        DOMUtil::removeNode($br);
+                    }
+                }
+                DOMUtil::replaceElement($replaceNode, $metacodeElement, false);
+
+                return;
             }
         }
 
@@ -188,5 +229,18 @@ class HtmlNodePlainLink
         }
 
         $this->pristine = false;
+    }
+
+    private function findBr(?\DOmNode $node, string $property): ?\DOmNode
+    {
+        if ($node === null) {
+            return null;
+        }
+
+        if ($node->nodeName === 'br') {
+            return $node;
+        }
+
+        return $this->findBr($node->{$property}, $property);
     }
 }

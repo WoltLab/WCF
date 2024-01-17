@@ -778,11 +778,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 /** @var \DOMElement $parent */
                 $parent = $parent->parentNode;
             }
+            $mayContainOtherContent = false;
 
             if ($parent->nodeName === 'p' && $parent->textContent === $link->textContent) {
                 // The line may contain nothing but the link, exceptions include basic formatting
                 // and up to a single `<br>` element.
-                $mayContainOtherContent = false;
                 $linebreaks = 0;
                 /** @var \DOMElement $element */
                 foreach ($parent->getElementsByTagName('*') as $element) {
@@ -820,28 +820,63 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     continue;
                 }
             } elseif ($parent->nodeName === 'p') {
-                $nextSibling = $this->getNoneEmptyNode($link, 'nextSibling');
-                $previousSibling = $this->getNoneEmptyNode($link, 'previousSibling');
+                $parentLinkElement = $link;
+                while ($parentLinkElement->parentElement !== $parent) {
+                    $parentLinkElement = $parentLinkElement->parentElement;
+                    switch ($parentLinkElement->nodeName) {
+                        case 'span':
+                            if ($parentLinkElement->getAttribute('class')) {
+                                $mayContainOtherContent = true;
+                                break 2;
+                            }
 
-                //Check whether the link is at the beginning or end of the paragraph
-                //and whether the next or previous sibling is a line break.
-                //<p><a href="https://example.com">https://example.com</a><br>…</p>
-                //<p>…<br><a href="https://example.com">https://example.com</a></p>
-                if (
-                    ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br') ||
-                    ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
-                ) {
-                    $this->plainLinks[] = $plainLink->setIsStandalone();
-                    continue;
+                            // `<span>` is used to hold text formatting.
+                            break;
+
+                        case 'br':
+                        case 'a':
+                        case 'b':
+                        case 'em':
+                        case 'i':
+                        case 'strong':
+                        case 'u':
+                            // These elements are perfectly fine.
+                            break;
+
+                        default:
+                            $mayContainOtherContent = true;
+                            break 2;
+                    }
                 }
-                //If not, the previous and next sibling may be a line break.
-                //<p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
-                if (
-                    $previousSibling !== null && $previousSibling->nodeName === 'br' &&
-                    $nextSibling !== null && $nextSibling->nodeName === 'br'
-                ) {
-                    $this->plainLinks[] = $plainLink->setIsStandalone();
-                    continue;
+
+                if (!$mayContainOtherContent) {
+                    $nextSibling = $this->getNoneEmptyNode($link, 'nextSibling');
+                    $previousSibling = $this->getNoneEmptyNode($link, 'previousSibling');
+
+                    //Check whether the link is at the beginning or end of the paragraph
+                    //and whether the next or previous sibling is a line break.
+                    //<p><a href="https://example.com">https://example.com</a><br>…</p>
+                    //<p>…<br><a href="https://example.com">https://example.com</a></p>
+                    if (
+                        ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br') ||
+                        ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
+                    ) {
+                        $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
+                        continue;
+                    }
+                    //If not, the previous and next sibling may be a line break.
+                    //<p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
+                    //<p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
+                    if (
+                        $previousSibling === null && $nextSibling === null ||
+                        (
+                            $previousSibling !== null && $nextSibling !== null &&
+                            $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
+                        )
+                    ) {
+                        $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
+                        continue;
+                    }
                 }
             }
 
