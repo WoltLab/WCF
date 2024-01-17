@@ -16,8 +16,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
     class UiPollEditor {
         container;
         endTimeField;
+        isChangeableNoField;
         isChangeableYesField;
-        isPublicField;
+        isPublicNoField;
+        isPublicYesField;
         maxVotesField;
         optionCount;
         options;
@@ -25,7 +27,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
         questionField;
         resultsRequireVoteNoField;
         resultsRequireVoteYesField;
-        sortByVotesField;
+        sortByVotesNoField;
+        sortByVotesYesField;
         wysiwygId;
         constructor(containerId, pollOptions, wysiwygId, options) {
             const container = document.getElementById(containerId);
@@ -37,19 +40,22 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             if (wysiwygId !== "" && document.getElementById(wysiwygId) === null) {
                 throw new Error("Unknown wysiwyg field with id '" + wysiwygId + "'.");
             }
-            this.questionField = document.getElementById(this.wysiwygId + "Poll_question");
+            this.questionField = document.getElementById(this.wysiwygId + "pollQuestion");
             const optionList = this.container.querySelector(".sortableList");
             if (optionList === null) {
                 throw new Error("Cannot find poll options list for container with id '" + containerId + "'.");
             }
             this.optionList = optionList;
-            this.endTimeField = document.getElementById(this.wysiwygId + "Poll_endTime");
-            this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes");
-            this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable");
-            this.isPublicField = document.getElementById(this.wysiwygId + "Poll_isPublic");
-            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote");
-            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote_no");
-            this.sortByVotesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes");
+            this.endTimeField = document.getElementById(this.wysiwygId + "pollEndTime");
+            this.maxVotesField = document.getElementById(this.wysiwygId + "pollMaxVotes");
+            this.isChangeableYesField = document.getElementById(this.wysiwygId + "pollIsChangeable");
+            this.isChangeableNoField = document.getElementById(this.wysiwygId + "pollIsChangeable_no");
+            this.isPublicYesField = document.getElementById(this.wysiwygId + "pollIsPublic");
+            this.isPublicNoField = document.getElementById(this.wysiwygId + "PollIsPublic_no");
+            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "pollResultsRequireVote");
+            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "pollResultsRequireVote_no");
+            this.sortByVotesYesField = document.getElementById(this.wysiwygId + "pollSortByVotes");
+            this.sortByVotesNoField = document.getElementById(this.wysiwygId + "pollSortByVotes_no");
             this.optionCount = 0;
             this.options = Core.extend({
                 isAjax: false,
@@ -213,11 +219,17 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             DatePicker.clear(this.endTimeField);
             this.maxVotesField.value = "1";
             this.isChangeableYesField.checked = false;
-            this.isPublicField.checked = false;
+            if (this.isChangeableNoField)
+                this.isChangeableNoField.checked = true;
+            this.isPublicYesField.checked = false;
+            if (this.isPublicNoField)
+                this.isPublicNoField.checked = true;
             this.resultsRequireVoteYesField.checked = false;
             if (this.resultsRequireVoteNoField)
                 this.resultsRequireVoteNoField.checked = true;
-            this.sortByVotesField.checked = false;
+            this.sortByVotesYesField.checked = false;
+            if (this.sortByVotesNoField)
+                this.sortByVotesNoField.checked = true;
             EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
                 pollEditor: this,
             });
@@ -256,10 +268,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             if (this.resultsRequireVoteYesField.checked) {
                 data.pollResultsRequireVote = true;
             }
-            if (this.sortByVotesField.checked) {
+            if (this.sortByVotesYesField.checked) {
                 data.pollSortByVotes = true;
             }
-            if (this.isPublicField?.checked) {
+            if (this.isPublicYesField?.checked) {
                 data.pollIsPublic = true;
             }
             data.pollOptions = this.getOptions();
@@ -308,9 +320,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 [this.endTimeField.id]: this.endTimeField.value,
                 [this.maxVotesField.id]: this.maxVotesField.value,
                 [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
-                [this.isPublicField.id]: !!this.isPublicField.checked,
+                [this.isPublicYesField.id]: !!this.isPublicYesField.checked,
                 [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
-                [this.sortByVotesField.id]: !!this.sortByVotesField.checked,
+                [this.sortByVotesYesField.id]: !!this.sortByVotesYesField.checked,
             };
         }
         /**
