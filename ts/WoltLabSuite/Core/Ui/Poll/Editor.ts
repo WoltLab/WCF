@@ -64,8 +64,7 @@ class UiPollEditor {
   private readonly options: UiPollEditorOptions;
   private readonly optionList: HTMLOListElement;
   private readonly questionField: HTMLInputElement;
-  private readonly resultsRequireVoteNoField: HTMLInputElement | null;
-  private readonly resultsRequireVoteYesField: HTMLInputElement;
+  private readonly resultsRequireVoteField: HTMLInputElement;
   private readonly sortByVotesField: HTMLInputElement;
   private readonly wysiwygId: string;
 
@@ -93,11 +92,8 @@ class UiPollEditor {
     this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes") as HTMLInputElement;
     this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable") as HTMLInputElement;
     this.isPublicField = document.getElementById(this.wysiwygId + "Poll_isPublic") as HTMLInputElement;
-    this.resultsRequireVoteYesField = document.getElementById(
+    this.resultsRequireVoteField = document.getElementById(
       this.wysiwygId + "Poll_resultsRequireVote",
-    ) as HTMLInputElement;
-    this.resultsRequireVoteNoField = document.getElementById(
-      this.wysiwygId + "Poll_resultsRequireVote_no",
     ) as HTMLInputElement;
     this.sortByVotesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes") as HTMLInputElement;
 
@@ -300,8 +296,7 @@ class UiPollEditor {
     this.maxVotesField.value = "1";
     this.isChangeableYesField.checked = false;
     this.isPublicField.checked = false;
-    this.resultsRequireVoteYesField.checked = false;
-    if (this.resultsRequireVoteNoField) this.resultsRequireVoteNoField.checked = true;
+    this.resultsRequireVoteField.checked = false;
     this.sortByVotesField.checked = false;
 
     EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
@@ -343,7 +338,7 @@ class UiPollEditor {
       data.pollIsChangeable = true;
     }
 
-    if (this.resultsRequireVoteYesField.checked) {
+    if (this.resultsRequireVoteField.checked) {
       data.pollResultsRequireVote = true;
     }
 
@@ -406,7 +401,7 @@ class UiPollEditor {
       [this.maxVotesField.id]: this.maxVotesField.value,
       [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
       [this.isPublicField.id]: !!this.isPublicField.checked,
-      [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
+      [this.resultsRequireVoteField.id]: !!this.resultsRequireVoteField.checked,
       [this.sortByVotesField.id]: !!this.sortByVotesField.checked,
     };
   }
