@@ -33,11 +33,19 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 
         /** @var ViewableArticle $object */
         $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $objectID);
-        if ($object !== null && $object->canRead() && $parser->getOutputType() == 'text/html') {
+        if ($object === null) {
+            return WCF::getTPL()->fetch('contentNotVisible');
+        }
+
+        if ($object->canRead() && $parser->getOutputType() == 'text/html') {
             return WCF::getTPL()->fetch('articleBBCode', 'wcf', [
                 'article' => $object,
                 'articleID' => $object->articleID,
                 'titleHash' => \substr(StringUtil::getRandomID(), 0, 8),
+            ], true);
+        } elseif (!$object->canRead()) {
+            return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
+                'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
             ], true);
         }
 

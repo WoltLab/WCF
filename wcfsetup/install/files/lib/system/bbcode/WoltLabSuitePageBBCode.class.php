@@ -4,6 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\page\Page;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -34,6 +35,6 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
         }
 
-        return '';
+        return WCF::getTPL()->fetch('contentNotVisible');
     }
 }

@@ -27,9 +27,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         $attachment = $this->getAttachment($attachmentID);
         if ($attachment === null) {
-            return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
-                'id' => $attachmentID,
-            ]));
+            return WCF::getTPL()->fetch('contentNotVisible');
         }
 
         $outputType = $parser->getOutputType();
@@ -56,6 +54,10 @@ final class AttachmentBBCode extends AbstractBBCode
             return $this->showVideoPlayer($attachment);
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
             return $this->showAudioPlayer($attachment);
+        } elseif (!$attachment->canDownload()) {
+            return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
+                'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
+            ], true);
         }
 
         return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);

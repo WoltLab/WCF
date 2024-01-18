@@ -47,7 +47,11 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
         /** @var ViewableMedia $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
-        if ($media !== null && $media->isAccessible()) {
+        if ($media === null) {
+            return WCF::getTPL()->fetch('contentNotVisible');
+        }
+
+        if ($media->isAccessible()) {
             if ($removeLinks && !$media->isImage) {
                 if ($parser->getOutputType() === 'text/html' || $parser->getOutputType() === 'text/simplified-html') {
                     return StringUtil::encodeHTML($media->getTitle());
@@ -90,9 +94,11 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
             }
 
             return StringUtil::encodeHTML($this->getLink($media));
+        } else {
+            return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
+                'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
+            ], true);
         }
-
-        return '';
     }
 
     /**
