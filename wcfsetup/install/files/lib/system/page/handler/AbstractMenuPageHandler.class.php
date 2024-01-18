@@ -2,6 +2,8 @@
 
 namespace wcf\system\page\handler;
 
+use wcf\data\menu\item\MenuItem;
+
 /**
  * Default implementation for pages supporting visibility and outstanding items.
  *
@@ -15,6 +17,11 @@ namespace wcf\system\page\handler;
  */
 abstract class AbstractMenuPageHandler implements IMenuPageHandler
 {
+    /**
+     * @since 6.1
+     */
+    private MenuItem $menuItem;
+
     /**
      * @inheritDoc
      */
@@ -36,5 +43,21 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
      */
     public function cacheObject(int $objectID): void
     {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMenuItem(MenuItem $menuItem): void
+    {
+        $this->menuItem = $menuItem;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMenuItem(): MenuItem
+    {
+        return $this->menuItem;
     }
 }

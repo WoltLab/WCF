@@ -185,6 +185,8 @@ class MenuItem extends DatabaseObject implements ITitledObject
                 if (!($this->handler instanceof IMenuPageHandler)) {
                     throw new ImplementationException(\get_class($this->handler), IMenuPageHandler::class);
                 }
+
+                $this->handler->setMenuItem($this);
             }
         }
 
