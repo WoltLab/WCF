@@ -4268,6 +4268,8 @@ Dateianhänge:
 		<item name="wcf.message.user.consent.description"><![CDATA[Inhalte von externen Seiten werden ohne {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zustimmung nicht automatisch geladen und angezeigt.]]></item>
 		<item name="wcf.message.user.consent.notice"><![CDATA[Durch die Aktivierung der externen Inhalte {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass personenbezogene Daten an Drittplattformen übermittelt werden. Mehr Informationen dazu haben wir in unserer Datenschutzerklärung zur Verfügung gestellt.]]></item>
 		<item name="wcf.message.user.consent.title"><![CDATA[Externer Inhalt]]></item>
+		<item name="wcf.message.content.not.available.title"><![CDATA[Der Inhalt kann nicht angezeigt werden, da er nicht mehr verfügbar ist.]]></item>
+		<item name="wcf.message.content.no.permission.title"><![CDATA[Der Inhalt kann nicht angezeigt werden, da du keine Berechtigung hast, diesen Inhalt zu sehen.]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
