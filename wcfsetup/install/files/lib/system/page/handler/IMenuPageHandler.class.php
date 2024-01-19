@@ -50,5 +50,5 @@ interface IMenuPageHandler
     /**
      * @since 6.1
      */
-    public function getMenuItem(): MenuItem;
+    public function getMenuItem(): ?MenuItem;
 }

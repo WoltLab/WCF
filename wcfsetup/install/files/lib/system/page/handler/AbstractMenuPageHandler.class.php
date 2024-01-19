@@ -56,8 +56,8 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function getMenuItem(): MenuItem
+    public function getMenuItem(): ?MenuItem
     {
-        return $this->menuItem;
+        return $this->menuItem ?? null;
     }
 }
