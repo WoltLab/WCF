@@ -2,6 +2,8 @@
 
 namespace wcf\system\page\handler;
 
+use wcf\data\menu\item\MenuItem;
+
 /**
  * Default interface for pages supporting visibility and outstanding items.
  *
@@ -36,4 +38,17 @@ interface IMenuPageHandler
      * @since 6.0
      */
     public function cacheObject(int $objectID): void;
+
+    /**
+     * Sets the menu item of this handler.
+     * This is intended to allow the handler to react to information from the MenuItem.
+     *
+     * @since 6.1
+     */
+    public function setMenuItem(MenuItem $menuItem): void;
+
+    /**
+     * @since 6.1
+     */
+    public function getMenuItem(): ?MenuItem;
 }
