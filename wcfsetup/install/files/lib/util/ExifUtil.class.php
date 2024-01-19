@@ -300,6 +300,12 @@ final class ExifUtil
         $denonimator = $data[1];
         $gcd = self::gcd($numerator, $denonimator);
 
+        // When the numerator equals 0 (e.g. 0/10), then the resulting GCD will
+        // equal null, resulting in a division by zero below.
+        if ($gcd === 0) {
+            return $rational;
+        }
+
         return \sprintf('%d/%d', \intdiv($numerator, $gcd), \intdiv($denonimator, $gcd));
     }
 
