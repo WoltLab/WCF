@@ -143,9 +143,17 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                             // has completed. Triggering the submit again would cause
                             // `validate` to run again, causing an infinite loop.
                             this.#dispatchPrimaryEvent();
-                            this.close();
+                            if (this.#shouldClose()) {
+                                this.close();
+                            }
                         }
                     });
+                }
+                if (!this.#shouldClose()) {
+                    // Prevent the browser from closing the dialog
+                    event.preventDefault();
+                    // but dispatch the `primary` event
+                    this.#dispatchPrimaryEvent();
                 }
             });
             this.#dialog.addEventListener("close", () => {
@@ -160,7 +168,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             formControl.addEventListener("cancel", () => {
                 const event = new CustomEvent("cancel", { cancelable: true });
                 this.dispatchEvent(event);
-                if (!event.defaultPrevented) {
+                if (!event.defaultPrevented && this.#shouldClose()) {
                     this.close();
                 }
             });
@@ -187,7 +195,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                 closeButton.classList.add("dialog__closeButton", "jsTooltip");
                 closeButton.title = Language.get("wcf.dialog.button.close");
                 closeButton.addEventListener("click", () => {
-                    this.close();
+                    if (this.#shouldClose()) {
+                        this.close();
+                    }
                 });
             }
             const header = document.createElement("div");
@@ -211,10 +221,20 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#dialog.append(doc);
             this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));
-            this.#dialog.addEventListener("cancel", () => {
-                const event = new CustomEvent("cancel");
-                this.dispatchEvent(event);
-                this.#detachDialog();
+            this.#dialog.addEventListener("cancel", (event) => {
+                const evt = new CustomEvent("cancel", { cancelable: true });
+                this.dispatchEvent(evt);
+                if (evt.defaultPrevented) {
+                    event.preventDefault();
+                    return;
+                }
+                if (this.#shouldClose()) {
+                    this.#detachDialog();
+                }
+                else {
+                    // Prevent the browser from closing the dialog.
+                    event.preventDefault();
+                }
             });
             // Close the dialog by clicking on the backdrop.
             //
@@ -223,9 +243,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             // dialog and then releasing it on the backdrop.
             this.#dialog.addEventListener("mousedown", (event) => {
                 if (event.target === this.#dialog) {
-                    const event = new CustomEvent("backdrop", { cancelable: true });
-                    this.dispatchEvent(event);
-                    if (event.defaultPrevented) {
+                    const evt = new CustomEvent("backdrop", { cancelable: true });
+                    this.dispatchEvent(evt);
+                    if (evt.defaultPrevented) {
                         return;
                     }
                     if (this.#shouldClose()) {
@@ -236,7 +256,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.append(this.#dialog);
         }
         #shouldClose() {
-            const event = new CustomEvent("close");
+            const event = new CustomEvent("close", { cancelable: true });
             this.dispatchEvent(event);
             return event.defaultPrevented === false;
         }

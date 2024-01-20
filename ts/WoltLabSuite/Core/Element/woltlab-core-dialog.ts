@@ -197,9 +197,18 @@ export class WoltlabCoreDialogElement extends HTMLElement {
             // `validate` to run again, causing an infinite loop.
             this.#dispatchPrimaryEvent();
 
-            this.close();
+            if (this.#shouldClose()) {
+              this.close();
+            }
           }
         });
+      }
+
+      if (!this.#shouldClose()) {
+        // Prevent the browser from closing the dialog
+        event.preventDefault();
+        // but dispatch the `primary` event
+        this.#dispatchPrimaryEvent();
       }
     });
 
@@ -217,7 +226,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       const event = new CustomEvent("cancel", { cancelable: true });
       this.dispatchEvent(event);
 
-      if (!event.defaultPrevented) {
+      if (!event.defaultPrevented && this.#shouldClose()) {
         this.close();
       }
     });
@@ -248,7 +257,9 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       closeButton.classList.add("dialog__closeButton", "jsTooltip");
       closeButton.title = Language.get("wcf.dialog.button.close");
       closeButton.addEventListener("click", () => {
-        this.close();
+        if (this.#shouldClose()) {
+          this.close();
+        }
       });
     }
 
@@ -276,11 +287,22 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#dialog.classList.add("dialog");
     this.#dialog.setAttribute("aria-labelledby", DomUtil.identify(this.#title));
 
-    this.#dialog.addEventListener("cancel", () => {
-      const event = new CustomEvent("cancel");
-      this.dispatchEvent(event);
+    this.#dialog.addEventListener("cancel", (event) => {
+      const evt = new CustomEvent("cancel", { cancelable: true });
+      this.dispatchEvent(evt);
 
-      this.#detachDialog();
+      if (evt.defaultPrevented) {
+        event.preventDefault();
+        return;
+      }
+
+      if (this.#shouldClose()) {
+        this.#detachDialog();
+      }
+      else {
+        // Prevent the browser from closing the dialog.
+        event.preventDefault();
+      }
     });
 
     // Close the dialog by clicking on the backdrop.
@@ -290,9 +312,9 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     // dialog and then releasing it on the backdrop.
     this.#dialog.addEventListener("mousedown", (event) => {
       if (event.target === this.#dialog) {
-        const event = new CustomEvent("backdrop", { cancelable: true });
-        this.dispatchEvent(event);
-        if (event.defaultPrevented) {
+        const evt = new CustomEvent("backdrop", { cancelable: true });
+        this.dispatchEvent(evt);
+        if (evt.defaultPrevented) {
           return;
         }
 
@@ -306,7 +328,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   }
 
   #shouldClose(): boolean {
-    const event = new CustomEvent("close");
+    const event = new CustomEvent("close", { cancelable: true });
     this.dispatchEvent(event);
 
     return event.defaultPrevented === false;
