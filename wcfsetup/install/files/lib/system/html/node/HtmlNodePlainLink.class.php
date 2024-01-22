@@ -232,7 +232,7 @@ class HtmlNodePlainLink
         $this->pristine = false;
     }
 
-    private function findBr(?\DOmNode $node, string $property): ?\DOmNode
+    private function findBr(?\DOMNode $node, string $property): ?\DOMNode
     {
         if ($node === null) {
             return null;
