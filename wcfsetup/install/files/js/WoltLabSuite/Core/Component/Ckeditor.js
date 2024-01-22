@@ -187,6 +187,11 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return false;
     }
+    function notifyOfDataChanges(editor, element) {
+        editor.model.document.on("change:data", () => {
+            (0, Event_1.dispatchToCkeditor)(element).changeData();
+        });
+    }
     async function setupCkeditor(element, features, bbcodes, codeBlockLanguages, licenseKey) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
@@ -228,6 +233,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             (0, Event_1.dispatchToCkeditor)(element).discardRecoveredData();
         }
         (0, Keyboard_1.setupSubmitShortcut)(ckeditor);
+        notifyOfDataChanges(cke, element);
         const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
         if (enableDebug && Devtools_1.default._internal_.editorInspector()) {
             void new Promise((resolve_2, reject_2) => { require(["@ckeditor/ckeditor5-inspector"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((inspector) => {
