@@ -4214,6 +4214,8 @@ Attachments:
 		<item name="wcf.message.user.consent.description"><![CDATA[Content embedded from external sources will not be displayed without your consent.]]></item>
 		<item name="wcf.message.user.consent.notice"><![CDATA[Through the activation of external content, you agree that personal data may be transferred to third party platforms. We have provided more information on this in our privacy policy.]]></item>
 		<item name="wcf.message.user.consent.title"><![CDATA[External Content]]></item>
+		<item name="wcf.message.content.not.available.title"><![CDATA[The content cannot be displayed because it is no longer available.]]></item>
+		<item name="wcf.message.content.no.permission.title"><![CDATA[The content cannot be displayed because you do not have authorisation to view this content.]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
