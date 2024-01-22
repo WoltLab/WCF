@@ -4,7 +4,6 @@ namespace wcf\system\bbcode;
 
 use wcf\data\article\ViewableArticle;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -23,34 +22,39 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
-        $objectID = 0;
+        $articleID = 0;
         if (isset($openingTag['attributes'][0])) {
-            $objectID = \intval($openingTag['attributes'][0]);
+            $articleID = \intval($openingTag['attributes'][0]);
         }
-        if (!$objectID) {
+        if (!$articleID) {
             return '';
         }
 
-        /** @var ViewableArticle $object */
-        $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $objectID);
-        if ($object === null) {
+        $article = $this->getArticle($articleID);
+        if ($article === null) {
             return WCF::getTPL()->fetch('contentNotVisible');
         }
 
-        if ($object->canRead() && $parser->getOutputType() == 'text/html') {
-            return WCF::getTPL()->fetch('articleBBCode', 'wcf', [
-                'article' => $object,
-                'articleID' => $object->articleID,
-                'titleHash' => \substr(StringUtil::getRandomID(), 0, 8),
-            ], true);
-        } elseif (!$object->canRead()) {
+        if (!$article->canRead()) {
             return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
                 'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
             ], true);
+        } else if ($parser->getOutputType() == 'text/html') {
+            return WCF::getTPL()->fetch('articleBBCode', 'wcf', [
+                'article' => $article,
+                'articleID' => $article->articleID,
+                'titleHash' => \substr(StringUtil::getRandomID(), 0, 8),
+            ], true);
         }
 
-        return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Article', [
-            'id' => $objectID,
-        ]));
+        return StringUtil::getAnchorTag($article->getLink(), $article->getTitle());
+    }
+
+    private function getArticle(int $articleID): ?ViewableArticle
+    {
+        return MessageEmbeddedObjectManager::getInstance()->getObject(
+            'com.woltlab.wcf.article',
+            $articleID
+        );
     }
 }
