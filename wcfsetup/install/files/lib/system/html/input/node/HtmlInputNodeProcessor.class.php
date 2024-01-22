@@ -807,8 +807,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
 
                 if (!$mayContainOtherContent) {
-                    $nextSibling = $this->getNoneEmptyNode($parentLinkElement, 'nextSibling');
-                    $previousSibling = $this->getNoneEmptyNode($parentLinkElement, 'previousSibling');
+                    $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
+                    $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
 
                     // Check whether the link is at the beginning or end of the paragraph
                     // and whether the next or previous sibling is a line break.
@@ -849,7 +849,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         }
     }
 
-    private function getNoneEmptyNode(?\DOMNode $element, string $property): ?\DOMNode
+    private function getNonEmptyNode(?\DOMNode $element, string $property): ?\DOMNode
     {
         while ($element = $element->{$property}) {
             if (!DOMUtil::isEmpty($element)) {
