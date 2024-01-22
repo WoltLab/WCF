@@ -185,11 +185,30 @@ class HtmlNodePlainLink
                 $parent = $this->link;
                 $next = $this->findBr($this->link, 'nextSibling');
                 $previous = $this->findBr($this->link, 'previousSibling');
+
+                // If multiple links are in the same paragraph, the `topLevelParent` link to old parent in the DOM
+                // and have to be found again.
+                if ($this->topLevelParent->parentElement === null) {
+                    $this->topLevelParent = $this->link;
+                    while ($this->topLevelParent->parentNode->nodeName !== 'body') {
+                        $this->topLevelParent = $this->topLevelParent->parentNode;
+                    }
+                }
+
                 // Link inside other elements(u, i, b, …)
                 while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
                     $parent = $parent->parentElement;
                     $next = $this->findBr($parent, 'nextSibling');
                     $previous = $this->findBr($parent, 'previousSibling');
+                }
+
+                // Link is the only content in the top level parent.
+                // This will happen, when in one paragraph are multiple links.
+                if ($next === null && $previous === null) {
+                    $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
+                    DOMUtil::removeNode($this->topLevelParent);
+                    DOMUtil::replaceElement($this->link, $metacodeElement, false);
+                    return;
                 }
 
                 if ($next !== null) {
