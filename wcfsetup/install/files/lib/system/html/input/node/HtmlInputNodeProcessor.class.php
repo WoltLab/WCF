@@ -810,24 +810,22 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
                     $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
 
-                    // Check whether the link is at the beginning or end of the paragraph
-                    // and whether the next or previous sibling is a line break.
+                    // Check whether the link is the only content in the line.
+                    // To do this, we need to check whether the next/previous sibling is a `<br>' element or
+                    // is the start/end of the paragraph.
                     // <p><a href="https://example.com">https://example.com</a><br>…</p>
                     // <p>…<br><a href="https://example.com">https://example.com</a></p>
-                    if (
-                        ($nextSibling === null && $previousSibling !== null && $previousSibling->nodeName === 'br')
-                        || ($previousSibling === null && $nextSibling !== null && $nextSibling->nodeName === 'br')
-                    ) {
-                        $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
-                        continue;
-                    }
-                    // If not, the previous and next sibling may be a line break.
                     // <p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
                     // <p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
-                    if (
-                        $previousSibling !== null && $nextSibling !== null
-                        && $previousSibling->nodeName === 'br' && $nextSibling->nodeName === 'br'
-                    ) {
+
+                    if ($nextSibling !== null && $nextSibling->nodeName === 'br') {
+                        $nextSibling = null;
+                    }
+                    if ($previousSibling !== null && $previousSibling->nodeName === 'br') {
+                        $previousSibling = null;
+                    }
+
+                    if ($nextSibling === null && $previousSibling === null) {
                         $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
                         continue;
                     }
