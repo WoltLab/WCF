@@ -849,7 +849,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         }
     }
 
-    private function getNonEmptyNode(?\DOMNode $element, string $property): ?\DOMNode
+    private function getNonEmptyNode(\DOMNode $element, string $property): ?\DOMNode
     {
         while ($element = $element->{$property}) {
             if (!DOMUtil::isEmpty($element)) {
