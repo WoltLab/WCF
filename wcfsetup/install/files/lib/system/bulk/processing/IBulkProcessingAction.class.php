@@ -59,4 +59,25 @@ interface IBulkProcessingAction
      * Validates the additional action parameters.
      */
     public function validate();
+
+    /**
+     * Returns true if the action can be executed in a worker.
+     *
+     * @return  bool
+     */
+    public function canRunInWorker(): bool;
+
+    /**
+     * Returns the additional action parameters that should be serialized.
+     *
+     * @return  array
+     */
+    public function getAdditionalParameters(): array;
+
+    /**
+     * Loads the additional action parameters from the given data.
+     *
+     * @param array $data
+     */
+    public function loadAdditionalParameters(array $data): void;
 }

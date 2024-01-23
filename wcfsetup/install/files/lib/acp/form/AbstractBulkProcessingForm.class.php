@@ -2,9 +2,11 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\object\type\AbstractObjectTypeProcessor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\bulk\processing\IBulkProcessingAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -181,28 +183,61 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
             }
         }
 
-        $this->objectList->readObjectIDs();
+        $action = $this->actions[$this->action]->getProcessor();
+        /** @var IBulkProcessingAction&AbstractObjectTypeProcessor $action */
+        if ($action->canRunInWorker()) {
+            $this->objectList->readObjectIDs();
 
-        $this->affectedObjectCount = \count($this->objectList->getObjectIDs());
-        // save config in session
-        $bulkProcessingData = WCF::getSession()->getVar('bulkProcessingData');
-        if ($bulkProcessingData === null) {
-            $bulkProcessingData = [];
+            $this->affectedObjectCount = \count($this->objectList->getObjectIDs());
+            // save config in session
+            $bulkProcessingData = WCF::getSession()->getVar('bulkProcessingData');
+            if ($bulkProcessingData === null) {
+                $bulkProcessingData = [];
+            }
+            $bulkProcessingID = \count($bulkProcessingData) + 1;
+
+            $bulkProcessingData[$bulkProcessingID] = [
+                'objectTypeID' => $action->objectTypeID,
+                'additionalParameters' => $action->getAdditionalParameters(),
+                'objectIDs' => $this->objectList->getObjectIDs(),
+                'form' => LinkHandler::getInstance()->getControllerLink(\get_called_class(), [
+                    'isACP' => true,
+                    'success' => true,
+                    'count' => $this->affectedObjectCount,
+                ]),
+            ];
+            WCF::getSession()->register('bulkProcessingData', $bulkProcessingData);
+
+            $this->saved();
+
+            WCF::getTPL()->assign('bulkProcessingID', $bulkProcessingID);
+        } else {
+            // Set a limit to avoid the 'Prepared statement contains too many placeholders' error
+            $this->objectList->sqlLimit = 65000;
+
+            $this->objectList->readObjects();
+
+            // execute action
+            if (\count($this->objectList)) {
+                $this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+            }
+
+            $this->affectedObjectCount = \count($this->objectList);
+
+            $this->saved();
+
+            // reset fields
+            $this->actions[$this->action]->getProcessor()->reset();
+
+            foreach ($this->conditions as $groupedObjectTypes) {
+                foreach ($groupedObjectTypes as $objectType) {
+                    $objectType->getProcessor()->reset();
+                }
+            }
+            $this->action = '';
+
+            WCF::getTPL()->assign('success', true);
         }
-        $bulkProcessingData[$this->affectedObjectCount] = [
-            'action' => $this->actions[$this->action]->getProcessor(),
-            'objectIDs' => $this->objectList->getObjectIDs(),
-            'form' => LinkHandler::getInstance()->getControllerLink(get_called_class(), [
-                'isACP' => true,
-                'success' => true,
-                'count' => $this->affectedObjectCount,
-            ]),
-        ];
-        WCF::getSession()->register('bulkProcessingData', $bulkProcessingData);
-
-        $this->saved();
-
-        WCF::getTPL()->assign('bulkProcessingID', $this->affectedObjectCount);
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace wcf\system\worker;
 
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bulk\processing\IBulkProcessingAction;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -33,7 +35,17 @@ final class BulkProcessingWorker extends AbstractWorker
         }
 
         $this->bulkProcessingData = $bulkProcessingData[$this->parameters['bulkProcessingID']];
-        $this->action = $this->bulkProcessingData['action'];
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->bulkProcessingData['objectTypeID']);
+        if (!$objectType->validateOptions() || !$objectType->validatePermissions()) {
+            throw new PermissionDeniedException();
+        }
+
+        $this->action = $objectType->getProcessor();
+        if (!$this->action->canRunInWorker()) {
+            throw new SystemException("action '" . $this->bulkProcessingData['action'] . "' cannot run in worker");
+        }
+
+        $this->action->unserializeData($this->bulkProcessingData['additionalParameters']);
     }
 
     #[\Override]

@@ -138,4 +138,10 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
             }
         }
     }
+
+    #[\Override]
+    public function canRunInWorker(): bool
+    {
+        return true;
+    }
 }
