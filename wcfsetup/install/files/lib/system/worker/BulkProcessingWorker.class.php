@@ -45,7 +45,7 @@ final class BulkProcessingWorker extends AbstractWorker
             throw new SystemException("action '" . $this->bulkProcessingData['action'] . "' cannot run in worker");
         }
 
-        $this->action->unserializeData($this->bulkProcessingData['additionalParameters']);
+        $this->action->loadAdditionalParameters($this->bulkProcessingData['additionalParameters']);
     }
 
     #[\Override]
