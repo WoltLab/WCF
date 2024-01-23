@@ -18,7 +18,7 @@ final class BulkProcessingWorker extends AbstractWorker
     /**
      * @inheritDoc
      */
-    protected $limit = 1;
+    protected $limit = 100;
     protected array $bulkProcessingData;
     protected IBulkProcessingAction $action;
 
