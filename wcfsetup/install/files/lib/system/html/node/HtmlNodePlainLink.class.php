@@ -45,6 +45,8 @@ class HtmlNodePlainLink
      */
     protected $standalone = false;
 
+    protected bool $aloneInParagraph = true;
+
     /**
      * @var \DOMElement
      */
@@ -70,6 +72,7 @@ class HtmlNodePlainLink
     {
         $this->standalone = false;
         $this->topLevelParent = null;
+        $this->aloneInParagraph = false;
 
         return $this;
     }
@@ -78,12 +81,14 @@ class HtmlNodePlainLink
      * Marks the link as standalone, which means that it is the only content in a line.
      *
      * @param \DOMElement $topLevelParent
+     * @param bool $aloneInParagraph
      * @return $this
      */
-    public function setIsStandalone(\DOMElement $topLevelParent)
+    public function setIsStandalone(\DOMElement $topLevelParent, bool $aloneInParagraph = true)
     {
         $this->standalone = true;
         $this->topLevelParent = $topLevelParent;
+        $this->aloneInParagraph = $aloneInParagraph;
 
         return $this;
     }
@@ -171,9 +176,67 @@ class HtmlNodePlainLink
                 throw new \LogicException('Cannot inject a block bbcode in an inline context.');
             }
 
-            // Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
-            $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
-            DOMUtil::removeNode($this->topLevelParent);
+            if ($this->aloneInParagraph) {
+                // Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
+                $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
+                DOMUtil::removeNode($this->topLevelParent);
+            } else {
+                $replaceNode = null;
+                $parent = $this->link;
+                $next = $this->findBr($this->link, 'nextSibling');
+                $previous = $this->findBr($this->link, 'previousSibling');
+
+                // When multiple links are in the same paragraph, `topLevelParent`
+                // may no longer be a valid reference.
+                if ($this->topLevelParent->parentElement === null) {
+                    $this->topLevelParent = $this->link;
+                    while ($this->topLevelParent->parentNode->nodeName !== 'body') {
+                        $this->topLevelParent = $this->topLevelParent->parentNode;
+                    }
+                }
+
+                // Link inside other elements(u, i, b, …)
+                while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
+                    $parent = $parent->parentElement;
+                    $next = $this->findBr($parent, 'nextSibling');
+                    $previous = $this->findBr($parent, 'previousSibling');
+                }
+
+                // The link is the only content in the top level parent. This
+                // can happen when there are multiple links within one paragraph.
+                if ($next === null && $previous === null) {
+                    $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
+                    DOMUtil::removeNode($this->topLevelParent);
+                    DOMUtil::replaceElement($this->link, $metacodeElement, false);
+                    return;
+                }
+
+                if ($next !== null) {
+                    $replaceNode = DOMUtil::splitParentsUntil(
+                        $parent,
+                        $this->topLevelParent->parentElement,
+                        false
+                    );
+                }
+                if ($previous !== null) {
+                    $replaceNode = DOMUtil::splitParentsUntil(
+                        $parent,
+                        $this->topLevelParent->parentElement
+                    );
+                }
+                \assert($replaceNode instanceof \DOMElement);
+
+                // Remove <br> from start and end of the new block elements
+                if ($next !== null) {
+                    DOMUtil::removeNode($next);
+                }
+                if ($previous !== null) {
+                    DOMUtil::removeNode($previous);
+                }
+                DOMUtil::replaceElement($replaceNode, $metacodeElement, false);
+
+                return;
+            }
         }
 
         DOMUtil::replaceElement($this->link, $metacodeElement, false);
@@ -186,5 +249,18 @@ class HtmlNodePlainLink
         }
 
         $this->pristine = false;
+    }
+
+    private function findBr(?\DOMNode $node, string $property): ?\DOMNode
+    {
+        if ($node === null) {
+            return null;
+        }
+
+        if ($node->nodeName === 'br') {
+            return $node;
+        }
+
+        return $this->findBr($node->{$property}, $property);
     }
 }
