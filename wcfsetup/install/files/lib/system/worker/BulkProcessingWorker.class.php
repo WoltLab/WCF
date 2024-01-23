@@ -51,7 +51,7 @@ final class BulkProcessingWorker extends AbstractWorker
     #[\Override]
     public function countObjects()
     {
-        return \count($this->bulkProcessingData['objectIDs']);
+        $this->count = \count($this->bulkProcessingData['objectIDs']);
     }
 
     #[\Override]
