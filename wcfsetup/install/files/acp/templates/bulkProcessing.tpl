@@ -28,16 +28,16 @@
 {if $bulkProcessingID|isset}
 	<script data-relocate="true">
 		{jsphrase name='wcf.acp.worker.abort.confirmMessage'}
-        require(["WoltLabSuite/Core/Acp/Ui/Worker"], (AcpUiWorker) => {
-          new AcpUiWorker({
-            dialogId: "bulkProcessing",
-            dialogTitle: '{jslang}{$pageTitle}{/jslang}',
-            className: "wcf\\system\\worker\\BulkProcessingWorker",
-            parameters: {
-              bulkProcessingID: {@$bulkProcessingID},
-            },
-          });
-        });
+		require(["WoltLabSuite/Core/Acp/Ui/Worker"], (AcpUiWorker) => {
+			new AcpUiWorker({
+				dialogId: "bulkProcessing",
+				dialogTitle: '{jslang}{$pageTitle}{/jslang}',
+				className: "wcf\\system\\worker\\BulkProcessingWorker",
+				parameters: {
+					bulkProcessingID: {@$bulkProcessingID},
+				},
+			});
+		});
 	</script>
 {/if}
 
