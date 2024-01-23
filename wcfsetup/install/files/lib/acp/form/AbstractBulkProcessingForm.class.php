@@ -2,11 +2,10 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\object\type\AbstractObjectTypeProcessor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
-use wcf\system\bulk\processing\IBulkProcessingAction;
+use wcf\system\bulk\processing\AbstractBulkProcessingAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -184,7 +183,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
 
         $action = $this->actions[$this->action]->getProcessor();
-        /** @var IBulkProcessingAction&AbstractObjectTypeProcessor $action */
+        /** @var AbstractBulkProcessingAction $action */
         if ($action->canRunInWorker()) {
             $this->objectList->readObjectIDs();
 
