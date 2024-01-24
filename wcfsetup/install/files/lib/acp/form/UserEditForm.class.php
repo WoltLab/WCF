@@ -21,7 +21,6 @@ use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
-use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -541,7 +540,6 @@ class UserEditForm extends UserAddForm
 
         // reload user
         $this->user = new UserEditor(new User($this->userID));
-        SignatureCache::getInstance()->getSignature($this->user->getDecoratedObject());
 
         // show success message
         WCF::getTPL()->assign('success', true);
