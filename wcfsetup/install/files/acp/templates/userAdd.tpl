@@ -537,7 +537,7 @@
 					<dl>
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
-							<textarea name="signature" id="signature" cols="40" rows="10" class="wysiwygTextarea" data-disable-attachments="true">{$signature}</textarea>
+							<textarea name="signature" id="signature" cols="40" rows="10" class="wysiwygTextarea" data-disable-media="true">{$signature}</textarea>
 							{if $errorField == 'signature'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -555,6 +555,7 @@
 							{/if}
 
 							{include file='wysiwyg' wysiwygSelector='signature'}
+							{include file='messageFormTabs' wysiwygContainerID='signature'}
 						</dd>
 					</dl>
 
