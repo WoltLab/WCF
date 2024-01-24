@@ -957,6 +957,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{#$usersAwaitingApproval} Benutzer {if $usersAwaitingApproval == 1}wartet{else}warten{/if} auf Aktivierung]]></item>
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
+		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[Die {plural value=$missingExtensions|count one='PHP-Erweiterung' other='PHP-Erweiterungen'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='fehlt' other='fehlen'} und {plural value=$missingExtensions|count one='wird' other='werden'} benötigt.]]></item>
 		<item name="wcf.acp.dashboard.configure"><![CDATA[Dashboard konfigurieren]]></item>
 	</category>
 	<category name="wcf.acp.index">
