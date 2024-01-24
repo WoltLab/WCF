@@ -2,6 +2,7 @@
 
 namespace wcf\system\attachment;
 
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
@@ -24,11 +25,14 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
      */
     public function canDownload($objectID)
     {
+        if (!MODULE_USER_SIGNATURE) {
+            return false;
+        }
         if ($objectID) {
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
 
-            if (!MODULE_USER_SIGNATURE) {
-                return false;
+            if ($this->canEditUser($userProfile)) {
+                return true;
             }
             if ($userProfile->disableSignature) {
                 return false;
@@ -40,7 +44,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
             return true;
         }
 
-        return false;
+        return $this->canAddUser();
     }
 
     /**
@@ -56,15 +60,22 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
      */
     public function canUpload($objectID, $parentObjectID = 0)
     {
-        if (!$objectID || $objectID != WCF::getUser()->userID) {
-            return false;
-        }
-
         if (!MODULE_USER_SIGNATURE) {
             return false;
         }
 
+        if (!$objectID) {
+            return $this->canAddUser();
+        }
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
+        if ($this->canEditUser($userProfile)) {
+            return true;
+        }
+
+        if ($objectID != WCF::getUser()->userID) {
+            return false;
+        }
+
         if ($userProfile->disableSignature) {
             return false;
         }
@@ -152,5 +163,16 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
                 ]);
             }
         }
+    }
+
+    private function canAddUser(): bool
+    {
+        return WCF::getSession()->getPermission('admin.user.canAddUser');
+    }
+
+    private function canEditUser(UserProfile $userProfile): bool
+    {
+        return WCF::getSession()->getPermission('admin.user.canEditUser')
+            && UserGroup::isAccessibleGroup($userProfile->getGroupIDs());
     }
 }

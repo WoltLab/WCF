@@ -2,15 +2,19 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\smiley\category\SmileyCategory;
+use wcf\data\smiley\SmileyCache;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -124,6 +128,35 @@ class UserAddForm extends UserOptionListForm
      * @var array
      */
     public $optionTree = [];
+    public ?AttachmentHandler $attachmentHandler;
+    public int $attachmentObjectID = 0;
+    public string $attachmentObjectType = 'com.woltlab.wcf.user.signature';
+    public array $defaultSmilies = [];
+    /**
+     * list of smiley categories
+     * @var SmileyCategory[]
+     */
+    public array $smileyCategories = [];
+    public ?string $tmpHash = '';
+
+    #[\Override]
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        if (isset($_REQUEST['tmpHash'])) {
+            $this->tmpHash = $_REQUEST['tmpHash'];
+        }
+        if (empty($this->tmpHash)) {
+            /** @deprecated 5.5 see QuickReplyManager::setTmpHash() */
+            $this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
+            if ($this->tmpHash === null) {
+                $this->tmpHash = StringUtil::getRandomID();
+            } else {
+                WCF::getSession()->unregister('__wcfAttachmentTmpHash');
+            }
+        }
+    }
 
     /**
      * @inheritDoc
@@ -292,6 +325,7 @@ class UserAddForm extends UserOptionListForm
             'groups' => $this->groupIDs,
             'languageIDs' => $this->visibleLanguages,
             'options' => $saveOptions,
+            'signatureAttachmentHandler' => $this->attachmentHandler,
         ];
 
         if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
@@ -302,6 +336,11 @@ class UserAddForm extends UserOptionListForm
 
         $this->objectAction = new UserAction([], 'create', $data);
         $returnValues = $this->objectAction->executeAction();
+
+        $this->htmlInputProcessor->setObjectID($returnValues['returnValues']->userID);
+        MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
+        $this->attachmentHandler->updateObjectID($returnValues['returnValues']->userID);
+
         $this->saved();
 
         // show empty add form
@@ -321,6 +360,12 @@ class UserAddForm extends UserOptionListForm
         $this->languageID = $this->getDefaultFormLanguageID();
         /** @noinspection PhpUndefinedMethodInspection */
         $this->optionHandler->resetOptionValues();
+        // Reload attachment handler to reset the uploaded attachments.
+        $this->attachmentHandler = new AttachmentHandler(
+            $this->attachmentObjectType,
+            $this->attachmentObjectID,
+            $this->tmpHash
+        );
     }
 
     /**
@@ -403,7 +448,26 @@ class UserAddForm extends UserOptionListForm
      */
     public function readData()
     {
+        if ($this->attachmentObjectType) {
+            $this->attachmentHandler = new AttachmentHandler(
+                $this->attachmentObjectType,
+                $this->attachmentObjectID,
+                $this->tmpHash,
+                0
+            );
+        }
+
         parent::readData();
+        // get default smilies
+        if (MODULE_SMILEY) {
+            $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
+
+            $firstCategory = \reset($this->smileyCategories);
+            if ($firstCategory) {
+                $this->defaultSmilies = SmileyCache::getInstance()
+                    ->getCategorySmilies($firstCategory->categoryID ?: null);
+            }
+        }
 
         $this->readOptionTree();
     }
@@ -442,6 +506,13 @@ class UserAddForm extends UserOptionListForm
             'disableSignature' => $this->disableSignature,
             'disableSignatureReason' => $this->disableSignatureReason,
             'disableSignatureExpires' => $this->disableSignatureExpires,
+            'attachmentHandler' => $this->attachmentHandler,
+            'attachmentObjectID' => $this->attachmentObjectID,
+            'attachmentObjectType' => $this->attachmentObjectType,
+            'attachmentParentObjectID' => 0,
+            'defaultSmilies' => $this->defaultSmilies,
+            'smileyCategories' => $this->smileyCategories,
+            'tmpHash' => $this->tmpHash,
         ]);
     }
 

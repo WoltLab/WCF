@@ -16,10 +16,12 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
+use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -180,6 +182,7 @@ class UserEditForm extends UserAddForm
         if (!UserGroup::isAccessibleGroup($this->user->getGroupIDs())) {
             throw new PermissionDeniedException();
         }
+        $this->attachmentObjectID = $this->user->userID;
 
         parent::readParameters();
     }
@@ -391,6 +394,8 @@ class UserEditForm extends UserAddForm
     public function save()
     {
         AbstractForm::save();
+        $this->htmlInputProcessor->setObjectID($this->userID);
+        MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
 
         // handle avatar
         if ($this->avatarType != 'custom') {
@@ -435,11 +440,13 @@ class UserEditForm extends UserAddForm
                 'languageID' => $this->languageID,
                 'userTitle' => $this->userTitle,
                 'signature' => $this->htmlInputProcessor->getHtml(),
+                'signatureEnableHtml' => 1,
                 'styleID' => $this->styleID,
             ]),
             'groups' => $this->groupIDs,
             'languageIDs' => $this->visibleLanguages,
             'options' => $saveOptions,
+            'signatureAttachmentHandler' => $this->attachmentHandler,
         ];
         // handle changed username
         if (\mb_strtolower($this->username) != \mb_strtolower($this->user->username)) {
@@ -534,6 +541,7 @@ class UserEditForm extends UserAddForm
 
         // reload user
         $this->user = new UserEditor(new User($this->userID));
+        SignatureCache::getInstance()->getSignature($this->user->getDecoratedObject());
 
         // show success message
         WCF::getTPL()->assign('success', true);
