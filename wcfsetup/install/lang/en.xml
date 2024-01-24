@@ -935,7 +935,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.dashboard.box.usersAwaitingApproval"><![CDATA[{plural value=$usersAwaitingApproval one='# User' other='# Users'} Awaiting Approval]]></item>
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
-		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[The PHP {plural value=$missingExtensions|count one='extension' other='extensions'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='is' other='are'} missing and required.]]></item>
+		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[The PHP {plural value=$missingExtensions|count one='extension' other='extensions'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='is' other='are'} missing.]]></item>
 		<item name="wcf.acp.dashboard.configure"><![CDATA[Configure Dashboard]]></item>
 	</category>
 	<category name="wcf.acp.index">
