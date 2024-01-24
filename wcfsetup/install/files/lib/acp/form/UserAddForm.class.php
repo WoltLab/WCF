@@ -128,7 +128,7 @@ class UserAddForm extends UserOptionListForm
      * @var array
      */
     public $optionTree = [];
-    public ?AttachmentHandler $attachmentHandler;
+    public AttachmentHandler $attachmentHandler;
     public int $attachmentObjectID = 0;
     public string $attachmentObjectType = 'com.woltlab.wcf.user.signature';
     public array $defaultSmilies = [];
@@ -448,14 +448,12 @@ class UserAddForm extends UserOptionListForm
      */
     public function readData()
     {
-        if ($this->attachmentObjectType) {
-            $this->attachmentHandler = new AttachmentHandler(
-                $this->attachmentObjectType,
-                $this->attachmentObjectID,
-                $this->tmpHash,
-                0
-            );
-        }
+        $this->attachmentHandler = new AttachmentHandler(
+            $this->attachmentObjectType,
+            $this->attachmentObjectID,
+            $this->tmpHash,
+            0
+        );
 
         parent::readData();
         // get default smilies
