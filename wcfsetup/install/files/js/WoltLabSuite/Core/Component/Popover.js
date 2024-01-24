@@ -1,30 +1,28 @@
-define(["require", "exports", "tslib", "../Ajax/Backend", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment"], function (require, exports, tslib_1, Backend_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment) {
+define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment", "./Popover/SharedCache"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment, SharedCache_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupFor = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     Repeating_1 = tslib_1.__importDefault(Repeating_1);
     UiAlignment = tslib_1.__importStar(UiAlignment);
+    SharedCache_1 = tslib_1.__importDefault(SharedCache_1);
     class Popover {
-        #cache = new Map();
-        #currentElement = undefined;
+        #cache;
         #container = undefined;
-        #endpoint;
         #enabled = true;
         #identifier;
-        #pendingElement = undefined;
         #pendingObjectId = undefined;
         #timerStart = undefined;
         #timerHide = undefined;
-        constructor(selector, endpoint, identifier) {
+        constructor(cache, selector, identifier) {
+            this.#cache = cache;
             this.#identifier = identifier;
-            this.#endpoint = new URL(endpoint);
             (0, Selector_1.wheneverFirstSeen)(selector, (element) => {
                 element.addEventListener("mouseenter", () => {
-                    this.#hoverStart(element);
+                    this.#showPopover(element);
                 });
                 element.addEventListener("mouseleave", () => {
-                    this.#hoverEnd(element);
+                    this.#hidePopover();
                 });
             });
             const mq = window.matchMedia("(hover:hover)");
@@ -36,14 +34,14 @@ define(["require", "exports", "tslib", "../Ajax/Backend", "../Dom/Util", "../Hel
                 this.#setEnabled(false);
             });
         }
-        #hoverStart(element) {
+        #showPopover(element) {
             const objectId = this.#getObjectId(element);
             this.#pendingObjectId = objectId;
             if (this.#timerStart === undefined) {
                 this.#timerStart = new Repeating_1.default((timer) => {
                     timer.stop();
                     const objectId = this.#pendingObjectId;
-                    void this.#getContent(objectId).then((content) => {
+                    void this.#cache.get(objectId).then((content) => {
                         if (objectId !== this.#pendingObjectId) {
                             return;
                         }
@@ -58,31 +56,17 @@ define(["require", "exports", "tslib", "../Ajax/Backend", "../Dom/Util", "../Hel
                 this.#timerStart.restart();
             }
         }
-        #hoverEnd(element) {
-            this.#timerStart?.stop();
-            this.#pendingObjectId = undefined;
+        #hidePopover() {
             if (this.#timerHide === undefined) {
-                this.#timerHide = new Repeating_1.default(() => {
-                    // do something
+                this.#timerHide = new Repeating_1.default((timer) => {
+                    timer.stop();
+                    this.#timerStart?.stop();
+                    this.#container?.setAttribute("aria-hidden", "true");
                 }, 500 /* Delay.Hide */);
             }
             else {
                 this.#timerHide.restart();
             }
-        }
-        async #getContent(objectId) {
-            let content = this.#cache.get(objectId);
-            if (content !== undefined) {
-                return content;
-            }
-            this.#endpoint.searchParams.set("id", objectId.toString());
-            const response = await (0, Backend_1.prepareRequest)(this.#endpoint).get().fetchAsResponse();
-            if (!response?.ok) {
-                return "";
-            }
-            content = await response.text();
-            this.#cache.set(objectId, content);
-            return content;
         }
         #setEnabled(enabled) {
             this.#enabled = enabled;
@@ -104,7 +88,8 @@ define(["require", "exports", "tslib", "../Ajax/Backend", "../Dom/Util", "../Hel
     }
     function setupFor(configuration) {
         const { identifier, endpoint, selector } = configuration;
-        new Popover(selector, endpoint, identifier);
+        const cache = new SharedCache_1.default(endpoint);
+        new Popover(cache, selector, identifier);
     }
     exports.setupFor = setupFor;
 });

@@ -1,9 +1,9 @@
-import { prepareRequest } from "../Ajax/Backend";
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { wheneverFirstSeen } from "../Helper/Selector";
 import RepeatingTimer from "../Timer/Repeating";
 import * as UiAlignment from "../Ui/Alignment";
+import SharedCache from "./Popover/SharedCache";
 
 const enum Delay {
   Hide = 500,
@@ -11,27 +11,24 @@ const enum Delay {
 }
 
 class Popover {
-  readonly #cache = new Map<number, string>();
-  #currentElement: HTMLElement | undefined = undefined;
+  readonly #cache: SharedCache;
   #container: HTMLElement | undefined = undefined;
-  readonly #endpoint: URL;
   #enabled = true;
   readonly #identifier: string;
-  #pendingElement: HTMLElement | undefined = undefined;
   #pendingObjectId: number | undefined = undefined;
   #timerStart: RepeatingTimer | undefined = undefined;
   #timerHide: RepeatingTimer | undefined = undefined;
 
-  constructor(selector: string, endpoint: string, identifier: string) {
+  constructor(cache: SharedCache, selector: string, identifier: string) {
+    this.#cache = cache;
     this.#identifier = identifier;
-    this.#endpoint = new URL(endpoint);
 
     wheneverFirstSeen(selector, (element) => {
       element.addEventListener("mouseenter", () => {
-        this.#hoverStart(element);
+        this.#showPopover(element);
       });
       element.addEventListener("mouseleave", () => {
-        this.#hoverEnd(element);
+        this.#hidePopover();
       });
     });
 
@@ -47,7 +44,7 @@ class Popover {
     });
   }
 
-  #hoverStart(element: HTMLElement): void {
+  #showPopover(element: HTMLElement): void {
     const objectId = this.#getObjectId(element);
 
     this.#pendingObjectId = objectId;
@@ -56,7 +53,7 @@ class Popover {
         timer.stop();
 
         const objectId = this.#pendingObjectId!;
-        void this.#getContent(objectId).then((content) => {
+        void this.#cache.get(objectId).then((content) => {
           if (objectId !== this.#pendingObjectId) {
             return;
           }
@@ -74,36 +71,17 @@ class Popover {
     }
   }
 
-  #hoverEnd(element: HTMLElement): void {
-    this.#timerStart?.stop();
-    this.#pendingObjectId = undefined;
-
+  #hidePopover(): void {
     if (this.#timerHide === undefined) {
-      this.#timerHide = new RepeatingTimer(() => {
-        // do something
+      this.#timerHide = new RepeatingTimer((timer) => {
+        timer.stop();
+
+        this.#timerStart?.stop();
+        this.#container?.setAttribute("aria-hidden", "true");
       }, Delay.Hide);
     } else {
       this.#timerHide.restart();
     }
-  }
-
-  async #getContent(objectId: number): Promise<string> {
-    let content = this.#cache.get(objectId);
-    if (content !== undefined) {
-      return content;
-    }
-
-    this.#endpoint.searchParams.set("id", objectId.toString());
-
-    const response = await prepareRequest(this.#endpoint).get().fetchAsResponse();
-    if (!response?.ok) {
-      return "";
-    }
-
-    content = await response.text();
-    this.#cache.set(objectId, content);
-
-    return content;
   }
 
   #setEnabled(enabled: boolean): void {
@@ -138,5 +116,7 @@ type Configuration = {
 export function setupFor(configuration: Configuration): void {
   const { identifier, endpoint, selector } = configuration;
 
-  new Popover(selector, endpoint, identifier);
+  const cache = new SharedCache(endpoint);
+
+  new Popover(cache, selector, identifier);
 }
