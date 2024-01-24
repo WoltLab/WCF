@@ -3,6 +3,7 @@
 namespace wcf\system\acp\dashboard\box;
 
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
+use wcf\system\acp\dashboard\box\event\PHPExtensionCollecting;
 use wcf\system\acp\dashboard\box\event\StatusMessageCollecting;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
@@ -54,6 +55,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         if (!isset($this->messages)) {
             $this->messages = \array_merge(
+                $this->getPHPExtensionMessage(),
                 $this->getEvaluationMessages(),
                 $this->getBasicMessages(),
                 $this->getCustomMessages()
@@ -219,5 +221,34 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         EventHandler::getInstance()->fire($event);
 
         return $event->getMessages();
+    }
+
+    /**
+     * @return StatusMessage[]
+     */
+    private function getPHPExtensionMessage(): array
+    {
+        $event = new PHPExtensionCollecting();
+        EventHandler::getInstance()->fire($event);
+        $missingExtensions = [];
+
+        foreach ($event->getExtensions() as $extension) {
+            if (!\extension_loaded($extension)) {
+                $missingExtensions[] = $extension;
+            }
+        }
+
+        if ($missingExtensions !== []) {
+            return [
+                new StatusMessage(
+                    StatusMessageType::Error,
+                    WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.missing.extensions', [
+                        'missingExtensions' => $missingExtensions,
+                    ])
+                )
+            ];
+        }
+
+        return [];
     }
 }
