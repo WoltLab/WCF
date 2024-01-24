@@ -56,7 +56,7 @@ final class AttachmentBBCode extends AbstractBBCode
             return $this->showAudioPlayer($attachment);
         } elseif (!$attachment->canDownload()) {
             return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
-                'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
+                'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         }
 

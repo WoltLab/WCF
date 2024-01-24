@@ -96,7 +96,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
             return StringUtil::encodeHTML($this->getLink($media));
         } else {
             return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
-                'message' => WCF::getLanguage()->get('wcf.message.content.no.permission.title')
+                'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         }
     }
