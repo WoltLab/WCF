@@ -238,7 +238,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             }
         }
 
-        if (!empty($missingExtensions)) {
+        if ($missingExtensions !== []) {
             return [
                 new StatusMessage(
                     StatusMessageType::Error,
