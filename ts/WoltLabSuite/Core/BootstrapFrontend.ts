@@ -8,7 +8,6 @@
 
 import * as BackgroundQueue from "./BackgroundQueue";
 import * as Bootstrap from "./Bootstrap";
-import * as ControllerPopover from "./Controller/Popover";
 import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
@@ -26,7 +25,7 @@ interface BootstrapOptions {
     force: boolean;
   };
   dynamicColorScheme: boolean;
-  enableUserPopover: boolean;
+  endpointUserPopover: string;
   executeCronjobs: string | undefined;
   shareButtonProviders?: ShareProvider[];
   styleChanger: boolean;
@@ -35,19 +34,19 @@ interface BootstrapOptions {
 /**
  * Initializes user profile popover.
  */
-function _initUserPopover(): void {
-  ControllerPopover.init({
-    className: "userLink",
-    dboAction: "wcf\\data\\user\\UserProfileAction",
-    identifier: "com.woltlab.wcf.user",
-  });
+function setupUserPopover(endpoint: string): void {
+  if (endpoint === "") {
+    return;
+  }
 
-  // @deprecated since 5.3
-  ControllerPopover.init({
-    attributeName: "data-user-id",
-    className: "userLink",
-    dboAction: "wcf\\data\\user\\UserProfileAction",
-    identifier: "com.woltlab.wcf.user.deprecated",
+  whenFirstSeen(".userLink", () => {
+    void import("./Component/Popover").then(({ setupFor }) => {
+      setupFor({
+        endpoint,
+        identifier: "com.woltlab.wcf.user",
+        selector: ".userLink",
+      });
+    });
   });
 }
 
@@ -73,9 +72,7 @@ export function setup(options: BootstrapOptions): void {
     });
   }
 
-  if (options.enableUserPopover) {
-    _initUserPopover();
-  }
+  setupUserPopover(options.endpointUserPopover);
 
   if (options.executeCronjobs !== undefined) {
     void prepareRequest(options.executeCronjobs)
