@@ -197,6 +197,6 @@ class GetRequest extends BackendRequest {
   }
 }
 
-export function prepareRequest(url: string): SetupRequest {
-  return new SetupRequest(url);
+export function prepareRequest(url: string | URL): SetupRequest {
+  return new SetupRequest(url.toString());
 }
