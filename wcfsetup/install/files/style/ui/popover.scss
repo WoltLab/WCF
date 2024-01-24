@@ -79,3 +79,36 @@
 		display: none;
 	}
 }
+
+/* @since 6.1 */
+.popoverContainer {
+	--padding: 20px;
+
+	background-color: var(--wcfContentContainerBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadow);
+	color: var(--wcfContentText);
+	max-height: 300px;
+	max-width: 500px;
+	opacity: 0;
+	padding: var(--padding);
+	position: absolute;
+	transform: translateY(-20px);
+	transition:
+		opacity 0.12s linear,
+		transform 0.12s linear;
+
+	a {
+		color: var(--wcfContentLink);
+
+		&:hover {
+			color: var(--wcfContentLinkActive);
+		}
+	}
+
+	&[aria-hidden="false"] {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

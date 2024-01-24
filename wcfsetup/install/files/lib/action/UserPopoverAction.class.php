@@ -3,13 +3,9 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileList;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
