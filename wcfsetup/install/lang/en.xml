@@ -2945,6 +2945,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
 		<item name="wcf.acp.template.group.email"><![CDATA[Email Templates]]></item>
+		<item name="wcf.acp.template.group.shared"><![CDATA[Shared Templates]]></item>
 		<item name="wcf.acp.template.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>

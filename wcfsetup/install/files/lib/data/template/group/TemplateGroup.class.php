@@ -34,13 +34,13 @@ class TemplateGroup extends DatabaseObject
 
     /**
      * Returns whether the template group is immutable (i.e. whether it's the email
-     * template group).
+     * or shared template group).
      *
      * @return  bool
      */
     public function isImmutable()
     {
-        return $this->templateGroupFolderName === '_wcf_email/';
+        return $this->templateGroupFolderName === '_wcf_email/' || $this->templateGroupFolderName === '_wcf_shared/';
     }
 
     /**
