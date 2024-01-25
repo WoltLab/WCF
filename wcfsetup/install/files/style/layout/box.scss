@@ -837,6 +837,10 @@
 	color: var(--wcfFooterText);
 	padding: 20px 0;
 
+	.layoutBoundary {
+		position: relative;
+	}
+
 	.icon {
 		color: var(--wcfFooterText);
 	}
@@ -917,15 +921,16 @@
 }
 
 .styleChanger {
-	float: right;
-	padding-left: 20px;
+	position: absolute;
+	right: 20px;
+	z-index: 1;
 
 	button {
 		color: var(--wcfFooterLink);
 	}
 
 	@include screen-md-down {
-		padding: 10px 0 10px 20px;
+		right: 10px;
 	}
 }
 
