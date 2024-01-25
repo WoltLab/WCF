@@ -4,6 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\article\ViewableArticle;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\template\SharedTemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -40,7 +41,7 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
                 'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         } elseif ($parser->getOutputType() == 'text/html') {
-            return WCF::getTPL()->fetch('articleBBCode', 'wcf', [
+            return SharedTemplateEngine::getInstance()->fetch('shared_articleBBCode', 'wcf', [
                 'article' => $article,
                 'articleID' => $article->articleID,
                 'titleHash' => \substr(StringUtil::getRandomID(), 0, 8),
