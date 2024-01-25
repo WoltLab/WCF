@@ -120,4 +120,7 @@ export function setup(options: BootstrapOptions): void {
   whenFirstSeen("[data-follow-user]", () => {
     void import("./Component/User/Follow").then(({ setup }) => setup());
   });
+  whenFirstSeen("[data-ignore-user]", () => {
+    void import("./Component/User/Ignore").then(({ setup }) => setup());
+  });
 }

@@ -70,6 +70,24 @@
 								>{icon name='circle-plus' size=24}</button>
 							{/if}
 						{/if}
+
+						{if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}
+							<button
+								type="button"
+								data-ignored="1"
+								data-ignore-user="{link controller='UserIgnore' id=$user->userID}{/link}"
+								class="userCard__button jsTooltip"
+								title="{lang}wcf.user.button.unignore{/lang}"
+							>{icon name='eye' size=24 type='solid'}</button>
+						{else}
+							<button
+								type="button"
+								data-ignored="0"
+								data-ignore-user="{link controller='UserIgnore' id=$user->userID}{/link}"
+								class="userCard__button jsTooltip"
+								title="{lang}wcf.user.button.ignore{/lang}"
+							>{icon name='eye-slash' size=24 type='solid'}</button>
+						{/if}
 					{/if}
 					{event name='buttons'}
 				{/content}
