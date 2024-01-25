@@ -68,6 +68,10 @@ class Popover {
 
         const objectId = this.#getObjectId();
         void this.#cache.get(objectId).then((content) => {
+          if (content === "") {
+            return;
+          }
+
           const container = this.#getContainer();
           DomUtil.setInnerHtml(container, content);
 

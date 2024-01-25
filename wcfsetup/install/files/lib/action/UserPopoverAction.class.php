@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,15 +32,13 @@ final class UserPopoverAction implements RequestHandlerInterface
                     EOT,
         );
 
-        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($parameters['id']);
-        if ($userProfile) {
-            WCF::getTPL()->assign('user', $userProfile);
-        } else {
-            WCF::getTPL()->assign('unknownUser', true);
+        $user = UserProfileRuntimeCache::getInstance()->getObject($parameters['id']);
+        if (!$user) {
+            return new EmptyResponse();
         }
 
         return new HtmlResponse(
-            WCF::getTPL()->fetch('userProfilePreview'),
+            WCF::getTPL()->fetch('userCard', 'wcf', ['user' => $user]),
         );
     }
 }

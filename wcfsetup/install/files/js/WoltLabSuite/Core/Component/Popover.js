@@ -53,6 +53,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     timer.stop();
                     const objectId = this.#getObjectId();
                     void this.#cache.get(objectId).then((content) => {
+                        if (content === "") {
+                            return;
+                        }
                         const container = this.#getContainer();
                         Util_1.default.setInnerHtml(container, content);
                         UiAlignment.set(container, this.#element, { vertical: "top" });
