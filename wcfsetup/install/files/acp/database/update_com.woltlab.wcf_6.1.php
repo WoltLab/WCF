@@ -14,6 +14,7 @@ use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
+use wcf\system\database\table\PartialDatabaseTable;
 
 return [
     DatabaseTable::create('wcf1_acp_dashboard_box_to_user')
@@ -35,4 +36,10 @@ return [
                 ->referencedColumns(['userID'])
                 ->onDelete('CASCADE'),
         ]),
+    PartialDatabaseTable::create('wcf1_message_embedded_object')
+        ->indices([
+            DatabaseTableIndex::create('id')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['messageObjectTypeID', 'messageID', 'embeddedObjectTypeID', 'embeddedObjectID']),
+        ])
 ];
