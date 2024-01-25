@@ -3,5 +3,60 @@
 	<delete>
 		<template>moderationQueueList</template>
 		<template>notificationListUserPanel</template>
+		<template>__wysiwygPreviewFormButton</template>
+		<template>__formButton</template>
+		<template>__wysiwygSmileyFormContainer</template>
+		<template>__wysiwygTabMenuFormContainer</template>
+		<template>__formContainer</template>
+		<template>__rowFormContainer</template>
+		<template>__rowFormFieldContainer</template>
+		<template>__suffixFormFieldContainer</template>
+		<template>__tabFormContainer</template>
+		<template>__tabMenuFormContainer</template>
+		<template>__tabTabMenuFormContainer</template>
+		<template>__simpleAclFormField</template>
+		<template>__aclFormField</template>
+		<template>__bbcodeAttributesFormField</template>
+		<template>__emptyFormFieldDependency</template>
+		<template>__isNotClickedFormFieldDependency</template>
+		<template>__nonEmptyFormFieldDependency</template>
+		<template>__valueFormFieldDependency</template>
+		<template>__valueIntervalFormFieldDependency</template>
+		<template>__devtoolsProjectExcludedPackagesFormField</template>
+		<template>__devtoolsProjectInstructionsFormField</template>
+		<template>__devtoolsProjectOptionalPackagesFormField</template>
+		<template>__devtoolsProjectRequiredPackagesFormField</template>
+		<template>__labelFormField</template>
+		<template>__contentLanguageFormField</template>
+		<template>__singleMediaSelectionFormField</template>
+		<template>__pollOptionsFormField</template>
+		<template>__tagFormField</template>
+		<template>__userFormField</template>
+		<template>__usernameFormField</template>
+		<template>__userPasswordFormField</template>
+		<template>__formFieldError</template>
+		<template>__wysiwygAttachmentFormField</template>
+		<template>__wysiwygFormField</template>
+		<template>__numericFormField</template>
+		<template>__booleanFormField</template>
+		<template>__buttonFormField</template>
+		<template>__captchaFormField</template>
+		<template>__checkboxFormField</template>
+		<template>__colorFormField</template>
+		<template>__dateFormField</template>
+		<template>__emailFormField</template>
+		<template>__hiddenFormField</template>
+		<template>__iconFormField</template>
+		<template>__itemListFormField</template>
+		<template>__multilineTextFormField</template>
+		<template>__multipleSelectionFormField</template>
+		<template>__passwordFormField</template>
+		<template>__radioButtonFormField</template>
+		<template>__ratingFormField</template>
+		<template>__selectFormField</template>
+		<template>__sourceCodeFormField</template>
+		<template>__uploadFormField</template>
+		<template>__wysiwygSmileyFormNode</template>
+		<template>__form</template>
 	</delete>
 </data>
