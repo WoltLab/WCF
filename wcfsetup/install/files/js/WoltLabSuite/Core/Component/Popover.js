@@ -1,7 +1,16 @@
+/**
+ * Customizable popover overlays that show additional information after a short
+ * delay.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
 define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment", "./Popover/SharedCache"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment, SharedCache_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupFor = void 0;
+    exports.resetCache = exports.setupFor = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     Repeating_1 = tslib_1.__importDefault(Repeating_1);
     UiAlignment = tslib_1.__importStar(UiAlignment);
@@ -35,6 +44,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             this.#showPopover();
         }
         #showPopover() {
+            if (!this.#enabled) {
+                return;
+            }
             this.#timerHide?.stop();
             if (this.#timerShouldShow === undefined) {
                 this.#timerShouldShow = new Repeating_1.default((timer) => {
@@ -53,6 +65,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             }
         }
         #hidePopover() {
+            if (!this.#enabled) {
+                return;
+            }
             this.#timerShouldShow?.stop();
             if (this.#timerHide === undefined) {
                 this.#timerHide = new Repeating_1.default((timer) => {
@@ -66,6 +81,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         }
         #setEnabled(enabled) {
             this.#enabled = enabled;
+            this.#container?.setAttribute("aria-hidden", "true");
         }
         #getObjectId() {
             return parseInt(this.#element.dataset.objectId);
@@ -81,6 +97,12 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                         this.#container.remove();
                     }
                 });
+                this.#container.addEventListener("mouseenter", () => {
+                    this.#timerHide?.stop();
+                });
+                this.#container.addEventListener("mouseleave", () => {
+                    this.#hidePopover();
+                });
             }
             if (this.#container.parentNode === null) {
                 (0, PageOverlay_1.getPageOverlayContainer)().append(this.#container);
@@ -88,14 +110,24 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             return this.#container;
         }
     }
+    const cacheByIdentifier = new Map();
     function setupFor(configuration) {
         const { identifier, endpoint, selector } = configuration;
         const cache = new SharedCache_1.default(endpoint);
+        cacheByIdentifier.set(identifier, cache);
         (0, Selector_1.wheneverFirstSeen)(selector, (element) => {
+            // Disregard elements nested inside a popover.
+            if (element.closest(".popoverContainer") !== null) {
+                return;
+            }
             element.addEventListener("mouseenter", () => {
                 new Popover(cache, element, identifier);
             }, { once: true });
         });
     }
     exports.setupFor = setupFor;
+    function resetCache(identifier, objectId) {
+        cacheByIdentifier.get(identifier).reset(objectId);
+    }
+    exports.resetCache = resetCache;
 });

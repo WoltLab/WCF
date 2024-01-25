@@ -1,3 +1,12 @@
+/**
+ * Shared cache for popover instances serving the same selector.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
+
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 
 type ObjectId = number;
@@ -27,6 +36,10 @@ export class SharedCache {
     this.#data.set(objectId, content);
 
     return content;
+  }
+
+  reset(objectId: ObjectId): void {
+    this.#data.delete(objectId);
   }
 }
 

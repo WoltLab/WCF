@@ -1,3 +1,13 @@
+/**
+ * Customizable popover overlays that show additional information after a short
+ * delay.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
+
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { wheneverFirstSeen } from "../Helper/Selector";
@@ -46,6 +56,10 @@ class Popover {
   }
 
   #showPopover(): void {
+    if (!this.#enabled) {
+      return;
+    }
+
     this.#timerHide?.stop();
 
     if (this.#timerShouldShow === undefined) {
@@ -68,6 +82,10 @@ class Popover {
   }
 
   #hidePopover(): void {
+    if (!this.#enabled) {
+      return;
+    }
+
     this.#timerShouldShow?.stop();
 
     if (this.#timerHide === undefined) {
@@ -83,6 +101,8 @@ class Popover {
 
   #setEnabled(enabled: boolean): void {
     this.#enabled = enabled;
+
+    this.#container?.setAttribute("aria-hidden", "true");
   }
 
   #getObjectId(): number {
@@ -101,6 +121,13 @@ class Popover {
           this.#container!.remove();
         }
       });
+
+      this.#container.addEventListener("mouseenter", () => {
+        this.#timerHide?.stop();
+      });
+      this.#container.addEventListener("mouseleave", () => {
+        this.#hidePopover();
+      });
     }
 
     if (this.#container.parentNode === null) {
@@ -117,12 +144,20 @@ type Configuration = {
   selector: string;
 };
 
+const cacheByIdentifier = new Map<string, SharedCache>();
+
 export function setupFor(configuration: Configuration): void {
   const { identifier, endpoint, selector } = configuration;
 
   const cache = new SharedCache(endpoint);
+  cacheByIdentifier.set(identifier, cache);
 
   wheneverFirstSeen(selector, (element) => {
+    // Disregard elements nested inside a popover.
+    if (element.closest(".popoverContainer") !== null) {
+      return;
+    }
+
     element.addEventListener(
       "mouseenter",
       () => {
@@ -131,4 +166,8 @@ export function setupFor(configuration: Configuration): void {
       { once: true },
     );
   });
+}
+
+export function resetCache(identifier: string, objectId: number): void {
+  cacheByIdentifier.get(identifier)!.reset(objectId);
 }
