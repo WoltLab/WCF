@@ -2,7 +2,6 @@
 
 namespace wcf\data\user;
 
-use wcf\data\IPopoverAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
@@ -37,12 +36,12 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserProfileAction extends UserAction implements IPopoverAction
+class UserProfileAction extends UserAction
 {
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList', 'getPopover'];
+    protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
 
     /**
      * @var User
@@ -111,30 +110,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
             'message' => $htmlOutputProcessor->getHtml(),
             'raw' => $htmlInputProcessor->getHtml(),
         ];
-    }
-
-    /**
-     * Validates user profile preview.
-     *
-     * @throws  UserInputException
-     * @deprecated  since 5.3, use `validateGetPopover()`
-     */
-    public function validateGetUserProfile()
-    {
-        $this->validateGetPopover();
-    }
-
-    /**
-     * Returns user profile preview.
-     *
-     * @return  array
-     * @deprecated  since 5.3, use `getPopover()`
-     */
-    public function getUserProfile()
-    {
-        return \array_merge($this->getPopover(), [
-            'userID' => \reset($this->objectIDs),
-        ]);
     }
 
     /**
