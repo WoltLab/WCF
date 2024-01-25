@@ -31,6 +31,7 @@ use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\EmailTemplateEngine;
+use wcf\system\template\SharedTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\DirectoryUtil;
@@ -658,11 +659,16 @@ class WCF
                 static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
             }
             EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
+            SharedTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 
             // init application and assign it as template variable
             self::$applicationObjects[$application->packageID] = \call_user_func([$className, 'getInstance']);
             static::getTPL()->assign('__' . $abbreviation, self::$applicationObjects[$application->packageID]);
             EmailTemplateEngine::getInstance()->assign(
+                '__' . $abbreviation,
+                self::$applicationObjects[$application->packageID]
+            );
+            SharedTemplateEngine::getInstance()->assign(
                 '__' . $abbreviation,
                 self::$applicationObjects[$application->packageID]
             );
@@ -743,21 +749,24 @@ class WCF
         if (ENABLE_ENTERPRISE_MODE) {
             $wcf = new TemplateScriptingCore($wcf);
         }
+        $tplEngines = [self::getTPL(), SharedTemplateEngine::getInstance()];
 
-        self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
-        self::getTPL()->assign([
-            '__wcf' => $wcf,
-        ]);
+        foreach ($tplEngines as $tplEngine) {
+            $tplEngine->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
+            $tplEngine->assign([
+                '__wcf' => $wcf,
+            ]);
 
-        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
-        // Execute background queue in this request, if it was requested and AJAX isn't used.
-        if (!$isAjax) {
-            if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
-                self::getTPL()->assign([
-                    'forceBackgroundQueuePerform' => true,
-                ]);
+            $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+            // Execute background queue in this request, if it was requested and AJAX isn't used.
+            if (!$isAjax) {
+                if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
+                    $tplEngine->assign([
+                        'forceBackgroundQueuePerform' => true,
+                    ]);
 
-                self::getSession()->unregister('forceBackgroundQueuePerform');
+                    self::getSession()->unregister('forceBackgroundQueuePerform');
+                }
             }
         }
 
@@ -807,6 +816,7 @@ class WCF
         if (self::$tplObj !== null) {
             self::getTPL()->setLanguageID(self::getLanguage()->languageID);
             EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
+            SharedTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
         }
     }
 
