@@ -9,6 +9,7 @@ use wcf\data\page\Page;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Multilingual page sitemap implementation.
@@ -44,6 +45,9 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
             ON          page_content.pageID = page.pageID';
         $pageList->getConditionBuilder()->add('page.isMultilingual = ?', [1]);
         $pageList->getConditionBuilder()->add('page.allowSpidersToIndex = ?', [1]);
+        $pageList->getConditionBuilder()->add('page_content.languageID IN (?)', [
+            \array_keys(LanguageFactory::getInstance()->getLanguages())
+        ]);
 
         return $pageList;
     }
