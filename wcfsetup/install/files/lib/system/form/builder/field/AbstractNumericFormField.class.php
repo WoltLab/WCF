@@ -60,7 +60,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__numericFormField';
+    protected $templateName = 'shared_numericFormField';
 
     /**
      * Creates a new instance of `AbstractNumericFormField`.

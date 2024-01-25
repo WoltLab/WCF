@@ -38,7 +38,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__wysiwygAttachmentFormField';
+    protected $templateName = 'shared_wysiwygAttachmentFormField';
 
     /**
      * Creates a new instance of `WysiwygAttachmentFormField`.

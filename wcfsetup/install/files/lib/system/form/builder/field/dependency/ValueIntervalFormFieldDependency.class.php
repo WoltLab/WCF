@@ -26,7 +26,7 @@ final class ValueIntervalFormFieldDependency extends AbstractFormFieldDependency
     /**
      * @inheritDoc
      */
-    protected $templateName = '__valueIntervalFormFieldDependency';
+    protected $templateName = 'shared_valueIntervalFormFieldDependency';
 
     /**
      * @inheritDoc

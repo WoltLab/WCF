@@ -34,7 +34,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__multipleSelectionFormField';
+    protected $templateName = 'shared_multipleSelectionFormField';
 
     /**
      * @inheritDoc

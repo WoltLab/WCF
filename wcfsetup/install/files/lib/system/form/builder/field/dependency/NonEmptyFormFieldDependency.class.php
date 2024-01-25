@@ -15,7 +15,7 @@ class NonEmptyFormFieldDependency extends AbstractFormFieldDependency
     /**
      * @inheritDoc
      */
-    protected $templateName = '__nonEmptyFormFieldDependency';
+    protected $templateName = 'shared_nonEmptyFormFieldDependency';
 
     /**
      * @inheritDoc

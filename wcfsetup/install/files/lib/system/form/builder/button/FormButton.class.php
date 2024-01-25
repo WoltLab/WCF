@@ -4,7 +4,7 @@ namespace wcf\system\form\builder\button;
 
 use wcf\system\form\builder\TFormChildNode;
 use wcf\system\form\builder\TFormElement;
-use wcf\system\WCF;
+use wcf\system\template\SharedTemplateEngine;
 
 /**
  * Default implementation of a form button.
@@ -34,7 +34,7 @@ class FormButton implements IFormButton
     /**
      * @inheritDoc
      */
-    protected $templateName = '__formButton';
+    protected $templateName = 'shared_formButton';
 
     /**
      * @inheritDoc
@@ -74,7 +74,7 @@ class FormButton implements IFormButton
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch(
+        return SharedTemplateEngine::getInstance()->fetch(
             $this->templateName,
             'wcf',
             [

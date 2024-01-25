@@ -3,7 +3,7 @@
 namespace wcf\system\form\builder;
 
 use wcf\system\application\ApplicationHandler;
-use wcf\system\WCF;
+use wcf\system\template\SharedTemplateEngine;
 
 /**
  * Form node that shows the contents of a specific template.
@@ -79,7 +79,7 @@ class TemplateFormNode implements IFormChildNode
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch(
+        return SharedTemplateEngine::getInstance()->fetch(
             $this->getTemplateName(),
             $this->getApplication(),
             $this->getVariables(),

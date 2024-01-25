@@ -35,7 +35,7 @@ final class SourceCodeFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__sourceCodeFormField';
+    protected $templateName = 'shared_sourceCodeFormField';
 
     public const LANGUAGES = [
         // Languages supported by CodeMirror itself.

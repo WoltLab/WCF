@@ -25,7 +25,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__iconFormField';
+    protected $templateName = 'shared_iconFormField';
 
     /**
      * `true` if the global icon-related JavaScript code has already been included

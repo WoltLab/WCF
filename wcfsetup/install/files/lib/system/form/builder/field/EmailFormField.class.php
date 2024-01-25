@@ -50,7 +50,7 @@ class EmailFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__emailFormField';
+    protected $templateName = 'shared_emailFormField';
 
     /**
      * @inheritDoc

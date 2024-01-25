@@ -9,7 +9,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TFormChildNode;
 use wcf\system\form\builder\TFormElement;
 use wcf\system\form\builder\TFormParentNode;
-use wcf\system\WCF;
+use wcf\system\template\SharedTemplateEngine;
 
 /**
  * Represents a default container.
@@ -33,7 +33,7 @@ class FormContainer implements IFormContainer
      * name of container template
      * @var string
      */
-    protected $templateName = '__formContainer';
+    protected $templateName = 'shared_formContainer';
 
     /**
      * name of the template's application used to output this container
@@ -54,7 +54,7 @@ class FormContainer implements IFormContainer
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch(
+        return SharedTemplateEngine::getInstance()->fetch(
             $this->templateName,
             $this->templateApplication,
             \array_merge($this->getHtmlVariables(), [

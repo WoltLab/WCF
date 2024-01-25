@@ -8,7 +8,7 @@ use wcf\system\form\builder\field\validation\IFormFieldValidationError;
 use wcf\system\form\builder\field\validation\IFormFieldValidator;
 use wcf\system\form\builder\TFormChildNode;
 use wcf\system\form\builder\TFormElement;
-use wcf\system\WCF;
+use wcf\system\template\SharedTemplateEngine;
 
 /**
  * Abstract implementation of a form field.
@@ -108,7 +108,7 @@ abstract class AbstractFormField implements IFormField
             throw new \LogicException("\$templateName property has not been set for class '" . static::class . "'.");
         }
 
-        return WCF::getTPL()->fetch(
+        return SharedTemplateEngine::getInstance()->fetch(
             $this->templateName,
             $this->templateApplication,
             \array_merge($this->getHtmlVariables(), [
@@ -127,8 +127,8 @@ abstract class AbstractFormField implements IFormField
             throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
         }
 
-        return WCF::getTPL()->fetch(
-            '__formField',
+        return SharedTemplateEngine::getInstance()->fetch(
+            'shared_formField',
             'wcf',
             ['field' => $this],
             true

@@ -15,7 +15,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
     /**
      * @inheritDoc
      */
-    protected $templateName = '__tabMenuFormContainer';
+    protected $templateName = 'shared_tabMenuFormContainer';
 
     /**
      * is `true` if the links in the tab menu have anchors

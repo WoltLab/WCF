@@ -22,7 +22,7 @@ class RowFormFieldContainer extends FormContainer
     /**
      * @inheritDoc
      */
-    protected $templateName = '__rowFormFieldContainer';
+    protected $templateName = 'shared_rowFormFieldContainer';
 
     /**
      * @inheritDoc

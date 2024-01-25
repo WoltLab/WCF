@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field\validation;
 
+use wcf\system\template\SharedTemplateEngine;
 use wcf\system\WCF;
 
 /**
@@ -55,7 +56,7 @@ final class FormFieldValidationError implements IFormFieldValidationError
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch('__formFieldError', 'wcf', [
+        return SharedTemplateEngine::getInstance()->fetch('shared_formFieldError', 'wcf', [
             'error' => $this,
         ]);
     }

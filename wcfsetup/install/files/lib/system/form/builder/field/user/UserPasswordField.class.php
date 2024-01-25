@@ -47,7 +47,7 @@ final class UserPasswordField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__userPasswordFormField';
+    protected $templateName = 'shared_userPasswordFormField';
 
     /**
      * Creates a new instance of `UserPasswordField`.

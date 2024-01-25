@@ -28,7 +28,7 @@ final class SimpleAclFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__simpleAclFormField';
+    protected $templateName = 'shared_simpleAclFormField';
 
     /**
      * @var bool

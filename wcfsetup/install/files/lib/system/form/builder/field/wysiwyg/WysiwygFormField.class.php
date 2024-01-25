@@ -94,7 +94,7 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__wysiwygFormField';
+    protected $templateName = 'shared_wysiwygFormField';
 
     /**
      * Sets the identifier used to autosave the field value and returns this field.

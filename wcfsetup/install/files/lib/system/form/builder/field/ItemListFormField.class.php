@@ -43,7 +43,7 @@ class ItemListFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__itemListFormField';
+    protected $templateName = 'shared_itemListFormField';
 
     /**
      * save value return type so that an array with the item values will be returned

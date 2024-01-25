@@ -2,7 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
-use wcf\system\WCF;
+use wcf\system\template\SharedTemplateEngine;
 
 /**
  * Implementation of a checkbox form field for boolean values.
@@ -38,8 +38,8 @@ class CheckboxFormField extends BooleanFormField
             throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
         }
 
-        return WCF::getTPL()->fetch(
-            '__checkboxFormField',
+        return SharedTemplateEngine::getInstance()->fetch(
+            'shared_checkboxFormField',
             'wcf',
             [
                 'field' => $this,
