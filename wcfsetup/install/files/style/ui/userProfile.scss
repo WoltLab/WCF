@@ -271,28 +271,6 @@ html[data-color-scheme="dark"] .userAvatarList > li > a > img {
 	}
 }
 
-.userProfilePreview {
-	position: relative;
-
-	.userInformation {
-		margin-bottom: 20px;
-	}
-
-	.buttonGroupNavigation {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-	}
-}
-
-/* using `dl` + `.inlineDataList` to prevent styles applied to the
-   data list provided by the `userInformation` template */
-.userProfilePreview dl.inlineDataList {
-	margin-top: 10px;
-
-	@include wcfFontSmall;
-}
-
 /* user notifications */
 .userNotificationItemList > .notificationItem {
 	&.notificationUnconfirmed {
@@ -323,13 +301,6 @@ html[data-color-scheme="dark"] .userAvatarList > li > a > img {
 	}
 }
 
-.userProfilePreviewAvatar {
-	align-self: flex-start;
-	display: block;
-	position: relative;
-}
-
-.userProfilePreviewAvatar .badgeOnline,
 .userProfileUser .contentHeaderIcon .badgeOnline {
 	left: 0;
 	pointer-events: none;
