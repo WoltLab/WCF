@@ -155,7 +155,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
     }
     function prepareRequest(url) {
-        return new SetupRequest(url);
+        return new SetupRequest(url.toString());
     }
     exports.prepareRequest = prepareRequest;
 });

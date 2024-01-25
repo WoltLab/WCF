@@ -5,13 +5,12 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     BackgroundQueue = tslib_1.__importStar(BackgroundQueue);
     Bootstrap = tslib_1.__importStar(Bootstrap);
-    ControllerPopover = tslib_1.__importStar(ControllerPopover);
     UiUserIgnore = tslib_1.__importStar(UiUserIgnore);
     UiPageHeaderMenu = tslib_1.__importStar(UiPageHeaderMenu);
     UiMessageUserConsent = tslib_1.__importStar(UiMessageUserConsent);
@@ -22,18 +21,18 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     /**
      * Initializes user profile popover.
      */
-    function _initUserPopover() {
-        ControllerPopover.init({
-            className: "userLink",
-            dboAction: "wcf\\data\\user\\UserProfileAction",
-            identifier: "com.woltlab.wcf.user",
-        });
-        // @deprecated since 5.3
-        ControllerPopover.init({
-            attributeName: "data-user-id",
-            className: "userLink",
-            dboAction: "wcf\\data\\user\\UserProfileAction",
-            identifier: "com.woltlab.wcf.user.deprecated",
+    function setupUserPopover(endpoint) {
+        if (endpoint === "") {
+            return;
+        }
+        (0, LazyLoader_1.whenFirstSeen)(".userLink", () => {
+            void new Promise((resolve_1, reject_1) => { require(["./Component/Popover"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setupFor }) => {
+                setupFor({
+                    endpoint,
+                    identifier: "com.woltlab.wcf.user",
+                    selector: ".userLink",
+                });
+            });
         });
     }
     /**
@@ -49,13 +48,11 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         });
         UiPageHeaderMenu.init();
         if (options.styleChanger) {
-            void new Promise((resolve_1, reject_1) => { require(["./Controller/Style/Changer"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((ControllerStyleChanger) => {
+            void new Promise((resolve_2, reject_2) => { require(["./Controller/Style/Changer"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((ControllerStyleChanger) => {
                 ControllerStyleChanger.setup();
             });
         }
-        if (options.enableUserPopover) {
-            _initUserPopover();
-        }
+        setupUserPopover(options.endpointUserPopover);
         if (options.executeCronjobs !== undefined) {
             void (0, Backend_1.prepareRequest)(options.executeCronjobs)
                 .get()
@@ -82,19 +79,19 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
             UiFeedDialog.setup();
         }
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-reaction-summary", () => {
-            void new Promise((resolve_2, reject_2) => { require(["./Ui/Reaction/SummaryDetails"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_3, reject_3) => { require(["./Ui/Reaction/SummaryDetails"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment", () => {
-            void new Promise((resolve_3, reject_3) => { require(["./Component/Comment/woltlab-core-comment"], resolve_3, reject_3); }).then(tslib_1.__importStar);
+            void new Promise((resolve_4, reject_4) => { require(["./Component/Comment/woltlab-core-comment"], resolve_4, reject_4); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment-response", () => {
-            void new Promise((resolve_4, reject_4) => { require(["./Component/Comment/Response/woltlab-core-comment-response"], resolve_4, reject_4); }).then(tslib_1.__importStar);
+            void new Promise((resolve_5, reject_5) => { require(["./Component/Comment/Response/woltlab-core-comment-response"], resolve_5, reject_5); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-follow-user]", () => {
-            void new Promise((resolve_5, reject_5) => { require(["./Component/User/Follow"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_6, reject_6) => { require(["./Component/User/Follow"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/User/Ignore"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_7, reject_7) => { require(["./Component/User/Ignore"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
     exports.setup = setup;

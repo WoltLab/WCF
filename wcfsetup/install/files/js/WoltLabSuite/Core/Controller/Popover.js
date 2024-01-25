@@ -4,6 +4,7 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1 Use `WoltLabSuite/Core/Component/Popover` instead
  */
 define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment) {
     "use strict";
@@ -358,6 +359,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
      * 		popover.setContent('com.example.bar.foo', objectId, htmlTemplateString);
      * 	}
      * });
+     *
+     * @deprecated 6.1 Use `WoltLabSuite/Core/Component/Popover` instead
      */
     function init(options) {
         getControllerPopover().init(options);

@@ -4585,7 +4585,6 @@ Dateianhänge:
 		<item name="wcf.user.registrationIpAddress"><![CDATA[Registrierungs-IP-Adresse]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Zeigt Inhalte der ausgewählten Sprachen an]]></item>
-		<item name="wcf.user.unknownUser"><![CDATA[Dieser Benutzer existiert nicht oder wurde gelöscht.]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Benutzernamen ein]]></item>

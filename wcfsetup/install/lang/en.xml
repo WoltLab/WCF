@@ -4590,7 +4590,6 @@ Attachments:
 		<item name="wcf.user.registrationIpAddress"><![CDATA[Registration IP Address]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Limits visibility to content associated with the selected languages.]]></item>
-		<item name="wcf.user.unknownUser"><![CDATA[This user does not exist or has been deleted.]]></item>
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Enter a username]]></item>
