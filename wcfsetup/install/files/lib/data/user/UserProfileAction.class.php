@@ -138,41 +138,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
     }
 
     /**
-     * @inheritDoc
-     */
-    public function validateGetPopover()
-    {
-        WCF::getSession()->checkPermissions(['user.profile.canViewUserProfile']);
-
-        if (\count($this->objectIDs) != 1) {
-            throw new UserInputException('objectIDs');
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPopover()
-    {
-        $userID = \reset($this->objectIDs);
-
-        if ($userID) {
-            $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
-            if ($userProfile) {
-                WCF::getTPL()->assign('user', $userProfile);
-            } else {
-                WCF::getTPL()->assign('unknownUser', true);
-            }
-        } else {
-            WCF::getTPL()->assign('unknownUser', true);
-        }
-
-        return [
-            'template' => WCF::getTPL()->fetch('userProfilePreview'),
-        ];
-    }
-
-    /**
      * Validates detailed activity point list
      *
      * @throws  UserInputException
