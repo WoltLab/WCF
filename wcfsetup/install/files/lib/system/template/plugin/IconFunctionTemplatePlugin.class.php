@@ -15,7 +15,7 @@ use wcf\util\JSON;
  *
  * Usage:
  *  {icon name='bell'}
- *  {icon size=32 name='caret-down' type='solid}
+ *  {icon size=32 name='caret-down' type='solid'}
  *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
