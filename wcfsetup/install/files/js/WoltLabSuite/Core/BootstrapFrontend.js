@@ -91,7 +91,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
             void new Promise((resolve_6, reject_6) => { require(["./Component/User/Follow"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/User/Ignore"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_7, reject_7) => { require(["./Component/User/Ignore"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
     exports.setup = setup;
