@@ -15,8 +15,8 @@
 
 	<div class="userCard__content">
 		<h3 class="userCard__username">
-			{user object=$user class='username'}
-
+			<a href="{$user->getLink()}">{@$user->getFormattedUsername()}</a>
+			
 			{if $user->banned}
 				<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
 					{icon name='lock'}
