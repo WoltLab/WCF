@@ -5,8 +5,10 @@ namespace wcf\acp\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\bulk\processing\AbstractBulkProcessingAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -134,6 +136,13 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
 
         parent::readData();
+
+        if (empty($_POST)) {
+            if (isset($_REQUEST['success']) && isset($_REQUEST['count'])) {
+                $this->affectedObjectCount = \intval($_REQUEST['count']);
+                WCF::getTPL()->assign('success', true);
+            }
+        }
     }
 
     /**
@@ -173,31 +182,61 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
             }
         }
 
-        // Set a limit to avoid the 'Prepared statement contains too many placeholders' error
-        $this->objectList->sqlLimit = 65000;
+        $action = $this->actions[$this->action]->getProcessor();
+        /** @var AbstractBulkProcessingAction $action */
+        if ($action->canRunInWorker()) {
+            $this->objectList->readObjectIDs();
 
-        $this->objectList->readObjects();
-
-        // execute action
-        if (\count($this->objectList)) {
-            $this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
-        }
-
-        $this->affectedObjectCount = \count($this->objectList);
-
-        $this->saved();
-
-        // reset fields
-        $this->actions[$this->action]->getProcessor()->reset();
-
-        foreach ($this->conditions as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectType) {
-                $objectType->getProcessor()->reset();
+            $this->affectedObjectCount = \count($this->objectList->getObjectIDs());
+            // save config in session
+            $bulkProcessingData = WCF::getSession()->getVar('bulkProcessingData');
+            if ($bulkProcessingData === null) {
+                $bulkProcessingData = [];
             }
-        }
-        $this->action = '';
+            $bulkProcessingID = \count($bulkProcessingData) + 1;
 
-        WCF::getTPL()->assign('success', true);
+            $bulkProcessingData[$bulkProcessingID] = [
+                'objectTypeID' => $action->objectTypeID,
+                'additionalParameters' => $action->getAdditionalParameters(),
+                'objectIDs' => $this->objectList->getObjectIDs(),
+                'form' => LinkHandler::getInstance()->getControllerLink(\get_called_class(), [
+                    'isACP' => true,
+                    'success' => true,
+                    'count' => $this->affectedObjectCount,
+                ]),
+            ];
+            WCF::getSession()->register('bulkProcessingData', $bulkProcessingData);
+
+            $this->saved();
+
+            WCF::getTPL()->assign('bulkProcessingID', $bulkProcessingID);
+        } else {
+            // Set a limit to avoid the 'Prepared statement contains too many placeholders' error
+            $this->objectList->sqlLimit = 65000;
+
+            $this->objectList->readObjects();
+
+            // execute action
+            if (\count($this->objectList)) {
+                $this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+            }
+
+            $this->affectedObjectCount = \count($this->objectList);
+
+            $this->saved();
+
+            // reset fields
+            $this->actions[$this->action]->getProcessor()->reset();
+
+            foreach ($this->conditions as $groupedObjectTypes) {
+                foreach ($groupedObjectTypes as $objectType) {
+                    $objectType->getProcessor()->reset();
+                }
+            }
+            $this->action = '';
+
+            WCF::getTPL()->assign('success', true);
+        }
     }
 
     /**

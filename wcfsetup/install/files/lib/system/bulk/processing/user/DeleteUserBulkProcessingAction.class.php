@@ -47,4 +47,10 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction
 
         return $userList;
     }
+
+    #[\Override]
+    public function canRunInWorker(): bool
+    {
+        return true;
+    }
 }

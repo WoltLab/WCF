@@ -56,4 +56,18 @@ trait TReasonedBulkProcessingAction
     {
         $this->reason = '';
     }
+
+    #[\Override]
+    public function getAdditionalParameters(): array
+    {
+        return [
+            'reason' => $this->reason,
+        ];
+    }
+
+    #[\Override]
+    public function loadAdditionalParameters(array $data): void
+    {
+        $this->reason = $data['reason'] ?? '';
+    }
 }

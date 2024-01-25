@@ -53,4 +53,22 @@ abstract class AbstractBulkProcessingAction extends AbstractObjectTypeProcessor 
     {
         // does nothing
     }
+
+    #[\Override]
+    public function canRunInWorker(): bool
+    {
+        return false;
+    }
+
+    #[\Override]
+    public function getAdditionalParameters(): array
+    {
+        return [];
+    }
+
+    #[\Override]
+    public function loadAdditionalParameters(array $data): void
+    {
+        // does nothing by default
+    }
 }
