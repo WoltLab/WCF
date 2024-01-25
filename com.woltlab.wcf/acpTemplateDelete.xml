@@ -102,11 +102,12 @@
 		<template>__wysiwygSmileyFormNode</template>
 		<template>__form</template>
 		<template>__formField</template>
-		<template>shared_formContainerChildren</template>
-		<template>shared_formContainerDependencies</template>
-		<template>shared_formField</template>
-		<template>shared_formFieldDependencies</template>
-		<template>shared_formFieldDescription</template>
-		<template>shared_formFieldErrors</template>
+		<template>__formContainerChildren</template>
+		<template>__formContainerDependencies</template>
+		<template>__formField</template>
+		<template>__formFieldDependencies</template>
+		<template>__formFieldDescription</template>
+		<template>__formFieldErrors</template>
+		<template>__formFieldDataHandler</template>
 	</delete>
 </data>
