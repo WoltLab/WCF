@@ -2,6 +2,10 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
+{if $requiresMultifactor}
+	<woltlab-core-notice type="warning">{lang}wcf.user.security.requiresMultifactor{/lang}</woltlab-core-notice>
+{/if}
+
 <section class="section" id="section_multifactor">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>

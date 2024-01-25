@@ -934,7 +934,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximale Dateianhänge]]></item>
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Mehrfaktor-Authentifizierung erzwingen]]></item>
-		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Benutzer, die Mitglied dieser Benutzergruppe sind, können die Mehrfaktor-Authentifizierung nicht deaktivieren und können besonders geschützte Bereiche erst betreten, wenn sie die Mehrfaktor-Authentifizierung eingerichtet haben.]]></item>
+		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Benutzer, die Mitglied dieser Benutzergruppe sind, müssen die Mehrfaktor-Authentifizierung einrichten.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Kann persönliche Daten (DSGVO) exportieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[Der Export gemäß der europäischen Datenschutz-Grundverordnung (DSGVO) enthält detaillierte persönliche Daten des jeweiligen Benutzers. Eine Filterung der im Export enthaltenen Information auf Basis der Zugriffsrechte des Administrators findet <strong>nicht</strong> statt und kann unter Umständen Informationen enthalten, die einem Administrator auf andere Weise nicht zugänglich wären.]]></item>
 	</category>
@@ -5046,7 +5046,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
-		<item name="wcf.user.security.requiresMultifactor"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf diese Seite zugreifen {if LANGUAGE_USE_INFORMAL_VARIANT}darfst, musst du{else}dürfen, müssen Sie{/if} <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">die Mehrfaktor-Authentifizierung aktivieren</a>.]]></item>
+		<item name="wcf.user.security.requiresMultifactor"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 		<item name="wcf.user.security.multifactor.otherOptions"><![CDATA[Andere Option wählen]]></item>
 	</category>

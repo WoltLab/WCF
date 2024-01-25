@@ -21,7 +21,6 @@ use wcf\http\error\PermissionDeniedHandler;
 use wcf\http\Helper;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
-use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\HeaderUtil;
@@ -37,8 +36,6 @@ use wcf\util\UserUtil;
  */
 final class EnforceAcpAuthentication implements MiddlewareInterface
 {
-    use TMultifactorRequirementEnforcer;
-
     private const ALLOWED_CONTROLLERS = [
         LoginForm::class,
         ReauthenticationForm::class,
@@ -75,8 +72,6 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         if (WCF::getSession()->needsReauthentication()) {
             return $this->handleReauthentication($request);
         }
-
-        $this->enforceMultifactorAuthentication();
 
         // force debug mode if in ACP and authenticated
         WCFACP::overrideDebugMode();

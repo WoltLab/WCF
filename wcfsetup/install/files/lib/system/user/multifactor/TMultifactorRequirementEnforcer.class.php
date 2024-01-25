@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.4
+ * @deprecated 6.1
  */
 trait TMultifactorRequirementEnforcer
 {
