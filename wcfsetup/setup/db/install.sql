@@ -800,7 +800,7 @@ CREATE TABLE wcf1_message_embedded_object (
 	embeddedObjectID INT(10) NOT NULL,
 
 	KEY (messageObjectTypeID, messageID),
-	UNIQUE KEY id (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+	UNIQUE KEY messageEmbeddedObject (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
 );
 
 DROP TABLE IF EXISTS wcf1_moderation_queue;

@@ -38,7 +38,7 @@ return [
         ]),
     PartialDatabaseTable::create('wcf1_message_embedded_object')
         ->indices([
-            DatabaseTableIndex::create('id')
+            DatabaseTableIndex::create('messageEmbeddedObject')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['messageObjectTypeID', 'messageID', 'embeddedObjectTypeID', 'embeddedObjectID']),
         ])
