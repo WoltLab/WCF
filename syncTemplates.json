@@ -1,11 +1,6 @@
 {
   "directories": ["com.woltlab.wcf/templates", "wcfsetup/install/files/acp/templates"],
   "templates": [
-    "__formContainerChildren",
-    "__formContainerDependencies",
-    "__formFieldDependencies",
-    "__formFieldDescription",
-    "__formFieldErrors",
     "__mediaSetCategoryDialog",
     "__messageQuoteManager",
     "__multiPageCondition",

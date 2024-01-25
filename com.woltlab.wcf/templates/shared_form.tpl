@@ -71,7 +71,7 @@
 {if $form->needsRequiredFieldsInfo()}
 	<div class="formFieldRequiredNotice">
 		<p><span class="formFieldRequired">*</span> {lang}wcf.global.form.required{/lang}</p>
-		
+
 		{event name='requiredFieldsInfo'}
 	</div>
 {/if}

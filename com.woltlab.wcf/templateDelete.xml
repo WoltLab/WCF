@@ -58,5 +58,12 @@
 		<template>__uploadFormField</template>
 		<template>__wysiwygSmileyFormNode</template>
 		<template>__form</template>
+		<template>__formField</template>
+		<template>shared_formContainerChildren</template>
+		<template>shared_formContainerDependencies</template>
+		<template>shared_formField</template>
+		<template>shared_formFieldDependencies</template>
+		<template>shared_formFieldDescription</template>
+		<template>shared_formFieldErrors</template>
 	</delete>
 </data>
