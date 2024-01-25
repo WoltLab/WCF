@@ -14,22 +14,21 @@ class Popover {
   readonly #cache: SharedCache;
   #container: HTMLElement | undefined = undefined;
   #enabled = true;
+  readonly #element: HTMLElement;
   readonly #identifier: string;
-  #pendingObjectId: number | undefined = undefined;
-  #timerStart: RepeatingTimer | undefined = undefined;
+  #timerShouldShow: RepeatingTimer | undefined = undefined;
   #timerHide: RepeatingTimer | undefined = undefined;
 
-  constructor(cache: SharedCache, selector: string, identifier: string) {
+  constructor(cache: SharedCache, element: HTMLElement, identifier: string) {
     this.#cache = cache;
+    this.#element = element;
     this.#identifier = identifier;
 
-    wheneverFirstSeen(selector, (element) => {
-      element.addEventListener("mouseenter", () => {
-        this.#showPopover(element);
-      });
-      element.addEventListener("mouseleave", () => {
-        this.#hidePopover();
-      });
+    element.addEventListener("mouseenter", () => {
+      this.#showPopover();
+    });
+    element.addEventListener("mouseleave", () => {
+      this.#hidePopover();
     });
 
     const mq = window.matchMedia("(hover:hover)");
@@ -42,41 +41,39 @@ class Popover {
     window.addEventListener("beforeunload", () => {
       this.#setEnabled(false);
     });
+
+    this.#showPopover();
   }
 
-  #showPopover(element: HTMLElement): void {
-    const objectId = this.#getObjectId(element);
+  #showPopover(): void {
+    this.#timerHide?.stop();
 
-    this.#pendingObjectId = objectId;
-    if (this.#timerStart === undefined) {
-      this.#timerStart = new RepeatingTimer((timer) => {
+    if (this.#timerShouldShow === undefined) {
+      this.#timerShouldShow = new RepeatingTimer((timer) => {
         timer.stop();
 
-        const objectId = this.#pendingObjectId!;
+        const objectId = this.#getObjectId();
         void this.#cache.get(objectId).then((content) => {
-          if (objectId !== this.#pendingObjectId) {
-            return;
-          }
-
           const container = this.#getContainer();
           DomUtil.setInnerHtml(container, content);
 
-          UiAlignment.set(container, element, { vertical: "top" });
+          UiAlignment.set(container, this.#element, { vertical: "top" });
 
           container.setAttribute("aria-hidden", "false");
         });
       }, Delay.Show);
     } else {
-      this.#timerStart.restart();
+      this.#timerShouldShow.restart();
     }
   }
 
   #hidePopover(): void {
+    this.#timerShouldShow?.stop();
+
     if (this.#timerHide === undefined) {
       this.#timerHide = new RepeatingTimer((timer) => {
         timer.stop();
 
-        this.#timerStart?.stop();
         this.#container?.setAttribute("aria-hidden", "true");
       }, Delay.Hide);
     } else {
@@ -88,8 +85,8 @@ class Popover {
     this.#enabled = enabled;
   }
 
-  #getObjectId(element: HTMLElement): number {
-    return parseInt(element.dataset.objectId!);
+  #getObjectId(): number {
+    return parseInt(this.#element.dataset.objectId!);
   }
 
   #getContainer(): HTMLElement {
@@ -98,10 +95,17 @@ class Popover {
       this.#container.classList.add("popoverContainer");
       this.#container.dataset.identifier = this.#identifier;
       this.#container.setAttribute("aria-hidden", "true");
+
+      this.#container.addEventListener("transitionend", () => {
+        if (this.#container!.getAttribute("aria-hidden") === "true") {
+          this.#container!.remove();
+        }
+      });
     }
 
-    this.#container.remove();
-    getPageOverlayContainer().append(this.#container);
+    if (this.#container.parentNode === null) {
+      getPageOverlayContainer().append(this.#container);
+    }
 
     return this.#container;
   }
@@ -118,5 +122,13 @@ export function setupFor(configuration: Configuration): void {
 
   const cache = new SharedCache(endpoint);
 
-  new Popover(cache, selector, identifier);
+  wheneverFirstSeen(selector, (element) => {
+    element.addEventListener(
+      "mouseenter",
+      () => {
+        new Popover(cache, element, identifier);
+      },
+      { once: true },
+    );
+  });
 }
