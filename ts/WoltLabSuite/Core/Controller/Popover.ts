@@ -4,6 +4,7 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1 Use `WoltLabSuite/Core/Component/Popover` instead
  */
 
 import * as Ajax from "../Ajax";
@@ -474,6 +475,8 @@ function getControllerPopover(): ControllerPopover {
  * 		popover.setContent('com.example.bar.foo', objectId, htmlTemplateString);
  * 	}
  * });
+ * 
+ * @deprecated 6.1 Use `WoltLabSuite/Core/Component/Popover` instead
  */
 export function init(options: PopoverOptions): void {
   getControllerPopover().init(options);
