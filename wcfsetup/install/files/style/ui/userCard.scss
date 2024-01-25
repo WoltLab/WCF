@@ -129,3 +129,14 @@
 		color: inherit;
 	}
 }
+
+.popoverContainer[data-identifier="com.woltlab.wcf.user"] {
+	--padding: 0;
+	--maxHeight: none;
+	--maxWidth: 300px;
+
+	.userCard {
+		background-color: none;
+		box-shadow: none;
+	}
+}

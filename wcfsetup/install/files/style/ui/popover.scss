@@ -83,6 +83,8 @@
 /* @since 6.1 */
 .popoverContainer {
 	--padding: 20px;
+	--maxHeight: 300px;
+	--maxWidth: 500px;
 
 	background-color: var(--wcfContentContainerBackground);
 	border: 1px solid var(--wcfContentBorderInner);
@@ -90,8 +92,8 @@
 	box-shadow: var(--wcfBoxShadow);
 	color: var(--wcfContentText);
 	display: none;
-	max-height: 300px;
-	max-width: 500px;
+	max-height: var(--maxHeight);
+	max-width: var(--maxWidth);
 	opacity: 0;
 	padding: var(--padding);
 	position: absolute;
