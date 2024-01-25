@@ -1203,4 +1203,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     {
         return new self(new User(null, ['username' => $username]));
     }
+
+    /**
+     * @since 6.1
+     */
+    public function showTrophyPoints(): bool
+    {
+        return MODULE_TROPHY
+            && WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies')
+            && $this->trophyPoints
+            && ($this->isAccessible('canViewTrophies') || $this->userID == WCF::getSession()->userID);
+    }
 }

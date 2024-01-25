@@ -155,5 +155,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.user.panel.showAll');
         $event->preload('wcf.user.button.follow');
         $event->preload('wcf.user.button.unfollow');
+        $event->preload('wcf.user.button.ignore');
+        $event->preload('wcf.user.button.unignore');
     }
 }

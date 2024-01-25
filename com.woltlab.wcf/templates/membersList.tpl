@@ -84,11 +84,12 @@
 				<button type="button" class="button small jsStaticDialog" data-dialog-id="membersListSortFilter">{icon name='filter'} {lang}wcf.global.filter{/lang}</button>
 			</div>
 		</div>
-		<ol class="containerList userList">
+
+		<div class="userCardList">
 			{foreach from=$objects item=user}
-				{include file='userListItem'}
+				{include file='userCard'}
 			{/foreach}
-		</ol>
+		</div>
 	</div>
 	
 	<div id="membersListSortFilter" class="jsStaticDialogContent" data-title="{lang}wcf.user.members.filter{/lang}">
@@ -136,15 +137,6 @@
 </footer>
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.user.button.follow': '{jslang}wcf.user.button.follow{/jslang}',
-			'wcf.user.button.unfollow': '{jslang}wcf.user.button.unfollow{/jslang}',
-		});
-		
-		new WCF.User.Action.Follow($('.userList > li'));
-	});
-	
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('searchUsername'), {
 			callbackSelect(item) {
