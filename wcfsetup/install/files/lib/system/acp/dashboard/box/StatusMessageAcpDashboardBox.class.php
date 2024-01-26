@@ -7,6 +7,7 @@ use wcf\system\acp\dashboard\box\event\PHPExtensionCollecting;
 use wcf\system\acp\dashboard\box\event\StatusMessageCollecting;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
+use wcf\system\cache\CacheHandler;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
 use wcf\system\registry\RegistryHandler;
@@ -137,6 +138,13 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
                     ])
                 );
             }
+        }
+
+        if (!CacheHandler::getInstance()->sanityCheck()) {
+            $messages[] = new StatusMessage(
+                StatusMessageType::Error,
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.index.cacheSanityCheckFailed')
+            );
         }
 
         return $messages;

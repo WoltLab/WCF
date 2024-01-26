@@ -971,6 +971,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[Die Systemumgebung hat sich verändert. Es wird empfohlen, eine <a href="{link controller='SystemCheck'}{/link}">Systemüberprüfung</a> durchzuführen.]]></item>
+		<item name="wcf.acp.index.cacheSanityCheckFailed"><![CDATA[Die eingestellte Cache-Methode („{CACHE_SOURCE_TYPE}“) funktioniert nicht richtig.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>

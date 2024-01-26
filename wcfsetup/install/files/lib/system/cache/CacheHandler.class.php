@@ -152,4 +152,21 @@ class CacheHandler extends SingletonFactory
 
         return $parameters;
     }
+
+    /**
+     * Returns false, if the configured cache source type could not be initialized.
+     *
+     * @since 6.1
+     */
+    public function sanityCheck(): bool
+    {
+        if (
+            CACHE_SOURCE_TYPE != 'disk'
+            && \get_class(CacheHandler::getInstance()->getCacheSource()) === \wcf\system\cache\source\DiskCacheSource::class
+        ) {
+            return false;
+        }
+
+        return true;
+    }
 }
