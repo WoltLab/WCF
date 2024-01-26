@@ -8,8 +8,6 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
-use wcf\data\page\PageCache;
-use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
 use wcf\system\box\BoxHandler;
@@ -750,7 +748,7 @@ class WCF
             $wcf = new TemplateScriptingCore($wcf);
         }
         $tplEngines = [self::getTPL(), SharedTemplateEngine::getInstance()];
-
+        /** @var TemplateEngine[] $tplEngines */
         foreach ($tplEngines as $tplEngine) {
             $tplEngine->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
             $tplEngine->assign([

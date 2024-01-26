@@ -6,10 +6,10 @@
 	<dt>{if $field->getLabel() !== null}<label for="{$field->getPrefixedId()}">{@$field->getLabel()}</label>{if $field->isRequired() && $form->marksRequiredFields()} <span class="formFieldRequired">*</span>{/if}{/if}</dt>
 	<dd>
 		{@$field->getFieldHtml()}
-		
-		{include file='__formFieldErrors'}
-		{include file='__formFieldDescription'}
-		{include file='__formFieldDependencies'}
-		{include file='__formFieldDataHandler'}
+
+		{include file='shared_formFieldErrors'}
+		{include file='shared_formFieldDescription'}
+		{include file='shared_formFieldDependencies'}
+		{include file='shared_formFieldDataHandler'}
 	</dd>
 </dl>

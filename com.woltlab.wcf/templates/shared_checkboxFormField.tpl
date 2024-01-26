@@ -14,10 +14,10 @@
 			*}>
 			{@$field->getLabel()}{if $field->isRequired()} <span class="formFieldRequired">*</span>{/if}
 		</label>
-		
-		{include file='__formFieldDescription'}
-		{include file='__formFieldErrors'}
-		{include file='__formFieldDependencies'}
-		{include file='__formFieldDataHandler'}
+
+		{include file='shared_formFieldDescription'}
+		{include file='shared_formFieldErrors'}
+		{include file='shared_formFieldDependencies'}
+		{include file='shared_formFieldDataHandler'}
 	</dd>
 </dl>
