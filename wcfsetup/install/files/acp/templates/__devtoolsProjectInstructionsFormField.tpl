@@ -169,9 +169,9 @@
 			</div>
 		{/capture}
 		
-		{include file='__formFieldDescription'}
-		{include file='__formFieldDependencies'}
-		{include file='__formFieldDataHandler'}
+		{include file='shared_formFieldDescription'}
+		{include file='shared_formFieldDependencies'}
+		{include file='shared_formFieldDataHandler'}
 	</dd>
 </dl>
 

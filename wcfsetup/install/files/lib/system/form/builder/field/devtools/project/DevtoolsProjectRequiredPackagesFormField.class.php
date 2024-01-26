@@ -21,7 +21,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = 'shared_devtoolsProjectRequiredPackagesFormField';
+    protected $templateName = '__devtoolsProjectRequiredPackagesFormField';
 
     /**
      * @inheritDoc

@@ -38,7 +38,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = 'shared_devtoolsProjectInstructionsFormField';
+    protected $templateName = '__devtoolsProjectInstructionsFormField';
 
     /**
      * @inheritDoc
