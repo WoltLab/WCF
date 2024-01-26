@@ -14,10 +14,10 @@
 		{/if}
 	{/if}
 
-	{sharedInclude file='formContainerChildren'}
+	{include file='shared_formContainerChildren'}
 </section>
 
-{sharedInclude file='formContainerDependencies'}
+{include file='shared_formContainerDependencies'}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {

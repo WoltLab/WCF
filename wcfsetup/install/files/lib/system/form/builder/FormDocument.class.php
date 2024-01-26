@@ -11,7 +11,6 @@ use wcf\system\form\builder\data\IFormDataHandler;
 use wcf\system\form\builder\data\processor\DefaultFormDataProcessor;
 use wcf\system\form\builder\field\IFileFormField;
 use wcf\system\form\builder\field\IFormField;
-use wcf\system\template\SharedTemplateEngine;
 use wcf\system\WCF;
 
 /**
@@ -443,7 +442,7 @@ class FormDocument implements IFormDocument
             throw new \BadMethodCallException("The form document has to be built before it can be rendered.");
         }
 
-        return SharedTemplateEngine::getInstance()->fetch(
+        return WCF::getTPL()->fetch(
             'shared_form',
             'wcf',
             \array_merge($this->getHtmlVariables(), ['form' => $this])

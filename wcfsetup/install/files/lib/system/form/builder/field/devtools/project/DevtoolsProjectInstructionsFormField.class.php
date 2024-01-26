@@ -9,7 +9,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\template\SharedTemplateEngine;
+use wcf\system\WCF;
 
 /**
  * Form field implementation for the instructions of a devtools project.
@@ -90,7 +90,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
 
         $this->removeClass('formError');
 
-        return SharedTemplateEngine::getInstance()->fetch(
+        return WCF::getTPL()->fetch(
             $this->templateName,
             'wcf',
             [

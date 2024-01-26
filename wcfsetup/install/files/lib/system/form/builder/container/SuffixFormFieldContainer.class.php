@@ -5,7 +5,7 @@ namespace wcf\system\form\builder\container;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\ISelectionFormField;
-use wcf\system\template\SharedTemplateEngine;
+use wcf\system\WCF;
 
 /**
  * Represents a form field container for one main field with (optional) support for a suffix selection
@@ -69,7 +69,7 @@ class SuffixFormFieldContainer extends FormContainer
      */
     public function getHtml()
     {
-        return SharedTemplateEngine::getInstance()->fetch('shared_suffixFormFieldContainer', 'wcf', [
+        return WCF::getTPL()->fetch('shared_suffixFormFieldContainer', 'wcf', [
             'element' => $this,
         ]);
     }

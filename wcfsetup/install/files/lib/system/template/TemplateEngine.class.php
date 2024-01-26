@@ -11,6 +11,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -125,6 +126,8 @@ class TemplateEngine extends SingletonFactory
 
     protected $tagStack = [];
 
+    private int $sharedTemplateGroupID = 0;
+
     /**
      * @inheritDoc
      */
@@ -133,6 +136,14 @@ class TemplateEngine extends SingletonFactory
         $this->templatePaths = ['wcf' => WCF_DIR . 'templates/'];
         $this->pluginNamespace = 'wcf\system\template\plugin\\';
         $this->compileDir = WCF_DIR . 'templates/compiled/';
+
+        $sql = "SELECT  templateGroupID
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupFolderName = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute(['_wcf_shared/']);
+
+        $this->sharedTemplateGroupID = $statement->fetchSingleColumn();
 
         $this->loadTemplateGroupCache();
         $this->assignSystemVariables();
@@ -354,11 +365,11 @@ class TemplateEngine extends SingletonFactory
      */
     public function getSourceFilename($templateName, $application)
     {
-        if (\str_starts_with($templateName, 'shared_') && !($this instanceof SharedTemplateEngine)) {
-            throw new \LogicException('Shared templates can only be used with SharedTemplateEngine');
+        if ($this->isSharedTemplate($templateName)) {
+            $sourceFilename = $this->getPath(TemplateEngine::getInstance()->templatePaths[$application], $templateName);
+        } else {
+            $sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
         }
-
-        $sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
         if (!empty($sourceFilename)) {
             return $sourceFilename;
         }
@@ -385,7 +396,6 @@ class TemplateEngine extends SingletonFactory
     {
         if (!Template::isSystemCritical($templateName)) {
             $templateGroupID = $this->getTemplateGroupID();
-
             while ($templateGroupID != 0) {
                 $templateGroup = $this->templateGroupCache[$templateGroupID];
 
@@ -417,7 +427,13 @@ class TemplateEngine extends SingletonFactory
      */
     public function getCompiledFilename($templateName, $application)
     {
-        return $this->compileDir . $this->getTemplateGroupID() . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
+        $path = $this->compileDir;
+        if ($this->isSharedTemplate($templateName)) {
+            $path .= $this->sharedTemplateGroupID;
+        } else {
+            $path .= $this->getTemplateGroupID();
+        }
+        return $path . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
     }
 
     /**
@@ -428,7 +444,13 @@ class TemplateEngine extends SingletonFactory
      */
     public function getMetaDataFilename($templateName)
     {
-        return $this->compileDir . $this->getTemplateGroupID() . '_' . $templateName . '.meta.php';
+        $path = $this->compileDir;
+        if ($this->isSharedTemplate($templateName)) {
+            $path .= $this->sharedTemplateGroupID;
+        } else {
+            $path .= $this->getTemplateGroupID();
+        }
+        return $path . '_' . $templateName . '.meta.php';
     }
 
     /**
@@ -879,5 +901,10 @@ class TemplateEngine extends SingletonFactory
         }
 
         return $data;
+    }
+
+    protected function isSharedTemplate(string $templateName): bool
+    {
+        return \str_starts_with($templateName, 'shared_');
     }
 }

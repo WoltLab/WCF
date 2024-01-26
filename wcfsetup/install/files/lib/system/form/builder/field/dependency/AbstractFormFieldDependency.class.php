@@ -5,7 +5,7 @@ namespace wcf\system\form\builder\field\dependency;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormNode;
-use wcf\system\template\SharedTemplateEngine;
+use wcf\system\WCF;
 
 /**
  * Abstract implementation of a form field dependency.
@@ -144,7 +144,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
             throw new \LogicException("Unknown application with abbreviation '{$this->templateNameApplication}'.");
         }
 
-        return SharedTemplateEngine::getInstance()->fetch($this->templateName, $this->templateNameApplication, [
+        return WCF::getTPL()->fetch($this->templateName, $this->templateNameApplication, [
             'dependency' => $this,
         ], true);
     }

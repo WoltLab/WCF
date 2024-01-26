@@ -2,7 +2,6 @@
 
 namespace wcf\system\template\plugin;
 
-use wcf\system\template\SharedTemplateEngine;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -29,6 +28,6 @@ final class SharedIncludeFunctionTemplatePlugin implements IFunctionTemplatePlug
 
         unset($tagArgs['file'], $tagArgs['application'], $tagArgs['sandbox']);
 
-        return SharedTemplateEngine::getInstance()->fetch($file, $application, $tagArgs, $sandbox);
+        return WCF::getTPL()->fetch($file, $application, $tagArgs, $sandbox);
     }
 }

@@ -5,7 +5,6 @@ namespace wcf\system\bbcode;
 use wcf\data\media\ViewableMedia;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
-use wcf\system\template\SharedTemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -67,7 +66,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
-                    return SharedTemplateEngine::getInstance()->fetch('shared_mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink(
@@ -80,7 +79,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'width' => $width,
                     ]);
                 } elseif ($media->isVideo() || $media->isAudio()) {
-                    return SharedTemplateEngine::getInstance()->fetch('shared_mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'float' => 'none',

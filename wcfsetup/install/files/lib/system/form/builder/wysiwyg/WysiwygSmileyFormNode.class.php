@@ -6,7 +6,7 @@ use wcf\data\smiley\Smiley;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\TFormChildNode;
 use wcf\system\form\builder\TFormNode;
-use wcf\system\template\SharedTemplateEngine;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for the list smilies of a certain category used by a wysiwyg
@@ -35,7 +35,7 @@ class WysiwygSmileyFormNode implements IFormChildNode
      */
     public function getHtml()
     {
-        return SharedTemplateEngine::getInstance()->fetch('shared_wysiwygSmileyFormNode', 'wcf', [
+        return WCF::getTPL()->fetch('shared_wysiwygSmileyFormNode', 'wcf', [
             'node' => $this,
         ]);
     }
