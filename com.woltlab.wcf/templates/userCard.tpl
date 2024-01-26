@@ -97,34 +97,34 @@
 
 	{hascontent}
 		<div class="userCard__footer">
-			<ul class="userCard__footer__stats">
+			<div class="userCard__footer__stats">
 				{content}
 					{event name='beforeStats'}
 					
 					{if MODULE_LIKE && $user->likesReceived}
-						<li class="userCard__footer__statsItem">
+						<div class="userCard__footer__statsItem">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.like.reactionsReceived{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->likesReceived}</span>
-						</li>
+						</div>
 					{/if}
 
 					{if $user->activityPoints}
-						<li class="userCard__footer__statsItem">
+						<div class="userCard__footer__statsItem">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.user.activityPoint{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->activityPoints}</span>
-						</li>
+						</div>
 					{/if}
 
 					{if $user->showTrophyPoints()}
-						<li class="userCard__footer__statsItem">
+						<div class="userCard__footer__statsItem">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.user.trophy.trophyPoints{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->trophyPoints}</span>
-						</li>
+						</div>
 					{/if}
 
 					{event name='afterStats'}
 				{/content}
-			</ul>
+			</div>
 		</div>
 	{/hascontent}
 </div>

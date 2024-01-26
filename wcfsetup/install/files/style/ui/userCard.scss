@@ -96,8 +96,13 @@
 
 .userCard__footer__statsItem {
 	display: flex;
+	color: inherit;
 	flex-direction: column;
 	text-align: center;
+
+	&:hover {
+		color: inherit;
+	}
 }
 
 .userCard__footer__statsItem:nth-child(n + 4) {
