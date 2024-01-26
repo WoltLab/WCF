@@ -40,7 +40,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     /**
      * number of media files per media manager dialog page
      */
-    public const ITEMS_PER_MANAGER_DIALOG_PAGE = 50;
+    const ITEMS_PER_MANAGER_DIALOG_PAGE = 50;
 
     /**
      * @inheritDoc
