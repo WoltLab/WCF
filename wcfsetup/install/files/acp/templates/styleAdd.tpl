@@ -1062,7 +1062,7 @@
 					</dd>
 				</dl>
 			</section>
-					{include file='shared_codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
+			{include file='shared_codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			
