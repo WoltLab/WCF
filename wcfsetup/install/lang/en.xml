@@ -912,7 +912,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Require Multi-factor Authentication]]></item>
-		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group may not disable multi-factor authentication. They will also be required to set up multi-factor authentication before they may enter protected areas.]]></item>
+		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group are required to set up multi-factor authentication.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Can export personal data (GDPR)]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[The export according to the European General Data Protection Regulation (GDPR) contains detailed personal data of the respective user. The export <strong>will not</strong> be filtered according to the administrator’s permissions and may contain information that would be inaccessible otherwise.]]></item>
 	</category>
@@ -5045,7 +5045,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been added.]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
-		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication. Before you may access this page you must <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">enable multi-factor authentication</a>.]]></item>
+		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 		<item name="wcf.user.security.multifactor.otherOptions"><![CDATA[Select another option]]></item>
 	</category>
