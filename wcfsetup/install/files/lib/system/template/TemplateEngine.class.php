@@ -126,7 +126,7 @@ class TemplateEngine extends SingletonFactory
 
     protected $tagStack = [];
 
-    private int $sharedTemplateGroupID = 0;
+    private int $sharedTemplateGroupID;
 
     /**
      * @inheritDoc
@@ -136,14 +136,6 @@ class TemplateEngine extends SingletonFactory
         $this->templatePaths = ['wcf' => WCF_DIR . 'templates/'];
         $this->pluginNamespace = 'wcf\system\template\plugin\\';
         $this->compileDir = WCF_DIR . 'templates/compiled/';
-
-        $sql = "SELECT  templateGroupID
-                FROM    wcf" . WCF_N . "_template_group
-                WHERE   templateGroupFolderName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute(['_wcf_shared/']);
-
-        $this->sharedTemplateGroupID = $statement->fetchSingleColumn();
 
         $this->loadTemplateGroupCache();
         $this->assignSystemVariables();
@@ -915,9 +907,23 @@ class TemplateEngine extends SingletonFactory
     protected function getCompileDir(string $templateName): string
     {
         if ($this->isSharedTemplate($templateName)) {
-            return $this->compileDir . $this->sharedTemplateGroupID;
+            return $this->compileDir . $this->getSharedTemplateGroupID();
         } else {
             return $this->compileDir . $this->getTemplateGroupID();
         }
+    }
+
+    private function getSharedTemplateGroupID(): int
+    {
+        if (!isset($this->sharedTemplateGroupID)) {
+            $sql = "SELECT  templateGroupID
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupFolderName = ?";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute(['_wcf_shared/']);
+
+            $this->sharedTemplateGroupID = $statement->fetchSingleColumn();
+        }
+        return $this->sharedTemplateGroupID;
     }
 }

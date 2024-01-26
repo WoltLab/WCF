@@ -577,8 +577,8 @@
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								
-								{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
-								{include file='shared_wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='__wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">

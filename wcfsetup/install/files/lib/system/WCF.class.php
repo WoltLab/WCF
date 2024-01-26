@@ -741,6 +741,7 @@ class WCF
         if (ENABLE_ENTERPRISE_MODE) {
             $wcf = new TemplateScriptingCore($wcf);
         }
+
         self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
         self::getTPL()->assign([
             '__wcf' => $wcf,
@@ -804,7 +805,6 @@ class WCF
         if (self::$tplObj !== null) {
             self::getTPL()->setLanguageID(self::getLanguage()->languageID);
             EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
-            WCF::getTPL()->setLanguageID(self::getLanguage()->languageID);
         }
     }
 

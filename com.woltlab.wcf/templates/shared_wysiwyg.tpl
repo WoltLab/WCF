@@ -3,55 +3,55 @@
 {event name='wysiwyg'}
 
 <script data-eager="true">
-  {
-    let stylesheet = document.getElementById("ckeditor5-stylesheet");
-    if (stylesheet === null) {
-      stylesheet = document.createElement("link");
-      stylesheet.rel = "stylesheet";
-      stylesheet.type = "text/css";
-      stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
-      stylesheet.id = "ckeditor5-stylesheet";
+{
+  let stylesheet = document.getElementById("ckeditor5-stylesheet");
+  if (stylesheet === null) {
+    stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.type = "text/css";
+    stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
+    stylesheet.id = "ckeditor5-stylesheet";
 
-      document.querySelector("link[rel=\"stylesheet\"]").before(stylesheet);
-    }
+    document.querySelector('link[rel="stylesheet"]').before(stylesheet);
   }
+}
 </script>
 <script data-relocate="true">
   require([
     "WoltLabSuite/Core/Component/Ckeditor",
     "WoltLabSuite/Core/prism-meta",
-	  {@$__wcf->getBBCodeHandler()->getEditorLocalization()}
+    {@$__wcf->getBBCodeHandler()->getEditorLocalization()}
   ], (
     { setupCkeditor },
-    PrismMeta,
+    PrismMeta
   ) => {
-	  {jsphrase name='wcf.ckeditor.code.fileName'}
-	  {jsphrase name='wcf.ckeditor.code.lineNumber'}
-	  {jsphrase name='wcf.ckeditor.marker.error'}
-	  {jsphrase name='wcf.ckeditor.marker.info'}
-	  {jsphrase name='wcf.ckeditor.marker.success'}
-	  {jsphrase name='wcf.ckeditor.marker.warning'}
-	  {jsphrase name='wcf.ckeditor.quote'}
-	  {jsphrase name='wcf.ckeditor.quote.author'}
-	  {jsphrase name='wcf.ckeditor.quoteFrom'}
-	  {jsphrase name='wcf.editor.button.group.format'}
-	  {jsphrase name='wcf.editor.button.group.list'}
-	  {jsphrase name='wcf.editor.button.spoiler'}
-	  {jsphrase name='wcf.editor.restoreDraft'}
-	  {jsphrase name='wcf.editor.restoreDraft.preview'}
-	  {jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
+    {jsphrase name='wcf.ckeditor.code.fileName'}
+    {jsphrase name='wcf.ckeditor.code.lineNumber'}
+    {jsphrase name='wcf.ckeditor.marker.error'}
+    {jsphrase name='wcf.ckeditor.marker.info'}
+    {jsphrase name='wcf.ckeditor.marker.success'}
+    {jsphrase name='wcf.ckeditor.marker.warning'}
+    {jsphrase name='wcf.ckeditor.quote'}
+    {jsphrase name='wcf.ckeditor.quote.author'}
+    {jsphrase name='wcf.ckeditor.quoteFrom'}
+    {jsphrase name='wcf.editor.button.group.format'}
+    {jsphrase name='wcf.editor.button.group.list'}
+    {jsphrase name='wcf.editor.button.spoiler'}
+    {jsphrase name='wcf.editor.restoreDraft'}
+    {jsphrase name='wcf.editor.restoreDraft.preview'}
+    {jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
 
-	  {include file='mediaJavaScript'}
+    {include file='mediaJavaScript'}
 
     const element = document.getElementById('{$wysiwygSelector|encodeJS}');
     if (element === null) {
-      throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.");
+      throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.")
     }
 
     let enableAttachments = element.dataset.disableAttachments !== "true";
-	  {if !$attachmentHandler|empty && !$attachmentHandler->canUpload()}
+    {if !$attachmentHandler|empty && !$attachmentHandler->canUpload()}
     enableAttachments = false;
-	  {/if}
+    {/if}
 
     const features = {
       alignment: true,
@@ -82,13 +82,13 @@
     };
 
     const bbcodes = [
-		{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
-      {
-        icon: '{@$__bbcode->getIcon()|encodeJS}',
-        name: '{@$__bbcode->bbcodeTag|encodeJS}',
-        label: '{@$__bbcode->getButtonLabel()|encodeJS}',
-      },
-		{/foreach}
+      {foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
+        {
+          icon: '{@$__bbcode->getIcon()|encodeJS}',
+          name: '{@$__bbcode->bbcodeTag|encodeJS}',
+          label: '{@$__bbcode->getButtonLabel()|encodeJS}',
+        },
+      {/foreach}
     ];
     if (features.media) {
       bbcodes.push({
@@ -101,12 +101,9 @@
     const codeBlockLanguages = [
       { language: "", label: '{jslang}wcf.editor.code.highlighter.detect{/jslang}' },
       { language: "plain", label: '{jslang}wcf.editor.code.highlighter.plain{/jslang}' },
-		{foreach from=$__wcf->getBBCodeHandler()->getCodeBlockLanguages() item=__codeBlockLanguage}
-      {
-        language: '{@$__codeBlockLanguage|encodeJS}',
-        label: PrismMeta.default['{@$__codeBlockLanguage|encodeJS}'].title,
-      },
-		{/foreach}
+      {foreach from=$__wcf->getBBCodeHandler()->getCodeBlockLanguages() item=__codeBlockLanguage}
+        { language: '{@$__codeBlockLanguage|encodeJS}', label: PrismMeta.default['{@$__codeBlockLanguage|encodeJS}'].title },
+      {/foreach}
     ];
 
     void setupCkeditor(element, features, bbcodes, codeBlockLanguages, '{@$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
