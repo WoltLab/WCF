@@ -11,7 +11,7 @@
 
 {if !$field->isImmutable()}
 	{if $__iconFormFieldIncludeJavaScript}
-		{include file='fontAwesomeJavaScript'}
+		{include file='shared_fontAwesomeJavaScript'}
 	{/if}
 	
 	<script data-relocate="true">

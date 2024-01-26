@@ -87,7 +87,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
      */
     public function getSearchFormElement(Option $option, $value)
     {
-        $this->templateName = 'radioButtonSearchableOptionType';
+        $this->templateName = 'shared_radioButtonSearchableOptionType';
         WCF::getTPL()->assign(
             'searchOption',
             $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName])

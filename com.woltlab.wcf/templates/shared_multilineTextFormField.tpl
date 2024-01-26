@@ -15,5 +15,5 @@
 *}>{$field->getValue()}</textarea>
 
 {if $field->isI18n()}
-	{include file='multipleLanguageInputJavascript'}
+	{include file='shared_multipleLanguageInputJavascript'}
 {/if}

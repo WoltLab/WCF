@@ -82,8 +82,7 @@
 				</label>
 			</dd>
 		</dl>
-		
-		{include file='languageChooser' label='wcf.media.languageID'}
+		{include file='shared_languageChooser' label='wcf.media.languageID'}
 	{/if}
 	
 	<dl>
@@ -93,7 +92,7 @@
 		</dd>
 	</dl>
 	{if $availableLanguages|count > 1}
-		{include file='multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
 	{/if}
 	
 	{if $media->isImage}
@@ -104,7 +103,7 @@
 			</dd>
 		</dl>
 		{if $availableLanguages|count > 1}
-			{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
 		{/if}
 		
 		<dl>
@@ -124,14 +123,14 @@
 			</dd>
 		</dl>
 		{if $availableLanguages|count > 1}
-			{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
 		{/if}
 	{/if}
 	
 	{event name='dataFields'}
 </section>
 
-{include file='aclSimple'}
+{include file='shared_aclSimple'}
 
 <div class="formSubmit">
 	<button type="button" data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>

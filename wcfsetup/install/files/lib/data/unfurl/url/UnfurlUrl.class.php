@@ -80,7 +80,7 @@ class UnfurlUrl extends DatabaseObject
      */
     public function render(bool $enableUgc = true): string
     {
-        return WCF::getTPL()->fetch('unfurlUrl', 'wcf', [
+        return WCF::getTPL()->fetch('shared_unfurlUrl', 'wcf', [
             'object' => $this,
             'enableUgc' => $enableUgc,
         ]);

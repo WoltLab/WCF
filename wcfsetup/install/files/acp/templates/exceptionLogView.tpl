@@ -32,7 +32,7 @@
 	{/hascontent}
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if !$logFiles|empty}
 	<form method="post" action="{link controller='ExceptionLogView'}{/link}">

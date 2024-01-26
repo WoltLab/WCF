@@ -108,6 +108,49 @@
 		<template>__formFieldDependencies</template>
 		<template>__formFieldDescription</template>
 		<template>__formFieldErrors</template>
+		<template>__singleSelectionFormField</template>
 		<template>__formFieldDataHandler</template>
+		<template>__mediaSetCategoryDialog</template>
+		<template>__messageQuoteManager</template>
+		<template>__topReaction</template>
+		<template>__wysiwygCmsToolbar</template>
+		<template>aclPermissionJavaScript</template>
+		<template>aclSimple</template>
+		<template>articleAddDialog</template>
+		<template>benchmark</template>
+		<template>booleanOptionType</template>
+		<template>booleanSearchableOptionType</template>
+		<template>captcha</template>
+		<template>categoryOptionList</template>
+		<template>checkboxesOptionType</template>
+		<template>checkboxesSearchableOptionType</template>
+		<template>codeMetaCode</template>
+		<template>codemirror</template>
+		<template>colorPickerJavaScript</template>
+		<template>fontAwesomeJavaScript</template>
+		<template>formError</template>
+		<template>formNotice</template>
+		<template>formSuccess</template>
+		<template>languageChooser</template>
+		<template>lineBreakSeparatedTextOptionType</template>
+		<template>mediaManager</template>
+		<template>messageFormAttachments</template>
+		<template>messageTableOfContents</template>
+		<template>multipleLanguageInputJavascript</template>
+		<template>passwordStrengthLanguage</template>
+		<template>quoteMetaCode</template>
+		<template>radioButtonSearchableOptionType</template>
+		<template>recaptcha</template>
+		<template>scrollablePageCheckboxList</template>
+		<template>sitemapEnd</template>
+		<template>sitemapStart</template>
+		<template>trophyImage</template>
+		<template>unfurlUrl</template>
+		<template>uploadFieldComponent</template>
+		<template>userBBCodeTag</template>
+		<template>userConditions</template>
+		<template>userOptionsCondition</template>
+		<template>worker</template>
+		<template>wysiwyg</template>
 	</delete>
 </data>

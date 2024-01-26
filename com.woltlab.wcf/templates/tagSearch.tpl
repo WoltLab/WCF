@@ -1,6 +1,6 @@
 {include file='header' __disableAds=true}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $errorMessage|isset}
 	<woltlab-core-notice type="error">{@$errorMessage}</woltlab-core-notice>

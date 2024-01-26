@@ -23,7 +23,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='LanguageItemList'}{/link}" id="languageItemSearchForm">
 	<section class="section">

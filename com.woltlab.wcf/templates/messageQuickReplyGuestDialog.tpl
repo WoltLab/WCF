@@ -16,7 +16,7 @@
 	</dl>
 </div>
 
-{include file='captcha'}
+{include file='shared_captcha'}
 
 <div class="formSubmit">
 	<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" data-captcha-id="{@$captchaID}">

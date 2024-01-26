@@ -88,7 +88,9 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
      */
     function open(callback) {
         if (!uiStyleFontAwesome) {
-            throw new Error("Missing icon data, please include the template before calling this method using `{include file='fontAwesomeJavaScript'}`.");
+          throw new Error(
+			"Missing icon data, please include the template before calling this method using `{include file='shared_fontAwesomeJavaScript'}`.",
+		);
         }
         uiStyleFontAwesome.open(callback);
     }

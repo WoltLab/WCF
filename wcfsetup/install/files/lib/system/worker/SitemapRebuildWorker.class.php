@@ -31,13 +31,13 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * The limit of objects in one sitemap file.
      */
-    const SITEMAP_OBJECT_LIMIT = 25000;
+    public const SITEMAP_OBJECT_LIMIT = 25000;
 
     /**
      * Prefix for stored data in the registry.
      * @since 5.3
      */
-    const REGISTRY_PREFIX = 'sitemapData_';
+    public const REGISTRY_PREFIX = 'sitemapData_';
 
     /**
      * @inheritDoc
@@ -338,7 +338,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
         $this->openFile();
 
-        $this->file->write(WCF::getTPL()->fetch('sitemapStart'));
+        $this->file->write(WCF::getTPL()->fetch('shared_sitemapStart'));
     }
 
     /**
@@ -372,7 +372,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     protected function finishSitemap($filename, $packageID)
     {
-        $this->file->write(WCF::getTPL()->fetch('sitemapEnd'));
+        $this->file->write(WCF::getTPL()->fetch('shared_sitemapEnd'));
         $this->file->close();
 
         \rename($this->workerData['tmpFile'], self::getSitemapPath() . $filename);

@@ -38,9 +38,8 @@
 			{if $action === 'edit'}data-autosave-last-edit-time="{@$page->lastUpdateTime}"{/if}
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
-	
-	{include file='__wysiwygCmsToolbar' wysiwygSelector=$__pageContentID}
-	{include file='wysiwyg' wysiwygSelector=$__pageContentID}
+	{include file='shared_wysiwygCmsToolbar' wysiwygSelector=$__pageContentID}
+	{include file='shared_wysiwyg' wysiwygSelector=$__pageContentID}
 {else}
 	<div dir="ltr">
 		<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
@@ -51,8 +50,8 @@
 		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	</div>
 	{if $pageType == 'html'}
-		{include file='codemirror' codemirrorMode='htmlmixed' codemirrorSelector='#content'|concat:$languageID}
+		{include file='shared_codemirror' codemirrorMode='htmlmixed' codemirrorSelector='#content'|concat:$languageID}
 	{elseif $pageType == 'tpl'}
-		{include file='codemirror' codemirrorMode='smartymixed' codemirrorSelector='#content'|concat:$languageID}
+		{include file='shared_codemirror' codemirrorMode='smartymixed' codemirrorSelector='#content'|concat:$languageID}
 	{/if}
 {/if}

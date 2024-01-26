@@ -44,18 +44,18 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      * The type value, if this trophy is an image trophy.
      * @var int
      */
-    const TYPE_IMAGE = 1;
+    public const TYPE_IMAGE = 1;
 
     /**
      * The type value, if this trophy is a badge trophy (based on CSS icons).
      * @var int
      */
-    const TYPE_BADGE = 2;
+    public const TYPE_BADGE = 2;
 
     /**
      * The default icon size.
      */
-    const DEFAULT_SIZE = 32;
+    public const DEFAULT_SIZE = 32;
 
     /**
      * Returns the title of the trophy.
@@ -97,7 +97,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     {
         switch ($this->type) {
             case self::TYPE_IMAGE:
-                return WCF::getTPL()->fetch('trophyImage', 'wcf', [
+                return WCF::getTPL()->fetch('shared_trophyImage', 'wcf', [
                     'size' => $size,
                     'trophy' => $this,
                     'showTooltip' => $showTooltip,

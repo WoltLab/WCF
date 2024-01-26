@@ -16,7 +16,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $availableTemplateGroups|count}
 	<form method="post" action="{if $action == 'add'}{link controller='TemplateAdd'}{/link}{else}{link controller='TemplateEdit' id=$templateID}{/link}{/if}">
@@ -66,7 +66,7 @@
 				<dt><label for="templateSource">{lang}wcf.acp.template.source{/lang}</label></dt>
 				<dd dir="ltr">
 					<textarea id="templateSource" name="templateSource" cols="40" rows="20">{$templateSource}</textarea>
-					{include file='codemirror' codemirrorMode='smarty' codemirrorSelector='#templateSource'}
+					{include file='shared_codemirror' codemirrorMode='smarty' codemirrorSelector='#templateSource'}
 				</dd>
 			</dl>
 		</section>

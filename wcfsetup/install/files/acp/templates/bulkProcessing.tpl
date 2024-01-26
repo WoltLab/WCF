@@ -17,7 +17,7 @@
 					settings.style.setProperty('display', 'none');
 				}
 			}
-		};
+		}
 		
 		var actions = document.querySelectorAll('input[name=action]');
 		for (var i = 0, length = actions.length; i < length; i++) {
@@ -45,7 +45,7 @@
 	<h1 class="contentTitle">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}{/lang}</h1>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <woltlab-core-notice type="warning">
 	{hascontent}{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.warning{/lang}{/content}{hascontentelse}{lang}wcf.global.bulkProcessing.warning{/lang}{/hascontent}

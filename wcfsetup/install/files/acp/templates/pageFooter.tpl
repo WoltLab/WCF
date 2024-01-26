@@ -13,8 +13,8 @@
 	<div id="pageFooterCopyright" class="pageFooterCopyright">
 		<div class="layoutBoundary">
 			{event name='footerContents'}
-			
-			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
+
+			{if ENABLE_BENCHMARK}{include file='shared_benchmark'}{/if}
 			
 			{event name='copyright'}
 			

@@ -14,12 +14,12 @@ class CheckboxesOptionType extends MultiSelectOptionType
     /**
      * @inheritDoc
      */
-    protected $formElementTemplate = 'checkboxesOptionType';
+    protected $formElementTemplate = 'shared_checkboxesOptionType';
 
     /**
      * @inheritDoc
      */
-    protected $searchableFormElementTemplate = 'checkboxesSearchableOptionType';
+    protected $searchableFormElementTemplate = 'shared_checkboxesSearchableOptionType';
 
     /**
      * @inheritDoc

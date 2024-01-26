@@ -8,9 +8,9 @@
 </script>
 
 {if !$groupID|isset}
-	{include file='aclPermissionJavaScript' containerID='groupPermissions'}
+	{include file='shared_aclPermissionJavaScript' containerID='groupPermissions'}
 {else}
-	{include file='aclPermissionJavaScript' containerID='groupPermissions' objectID=$groupID}
+	{include file='shared_aclPermissionJavaScript' containerID='groupPermissions' objectID=$groupID}
 {/if}
 
 {assign var=labelForceSelection value=$forceSelection}
@@ -32,7 +32,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='LabelGroupAdd'}{/link}{else}{link controller='LabelGroupEdit' object=$labelGroup}{/link}{/if}">
 	<div class="section tabMenuContainer">
@@ -59,7 +59,7 @@
 							</small>
 						{/if}
 						<small>{lang}wcf.acp.label.group.groupName.description{/lang}</small>
-						{include file='multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
+						{include file='shared_multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
 					</dd>
 				</dl>
 				

@@ -1,5 +1,5 @@
 {if $recaptchaLegacyMode|empty}
-	{include file='captcha'}
+	{include file='shared_captcha'}
 {else}
 	{if RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY}
 		{if $supportsAsyncCaptcha|isset && $supportsAsyncCaptcha && RECAPTCHA_PUBLICKEY_INVISIBLE && RECAPTCHA_PRIVATEKEY_INVISIBLE}

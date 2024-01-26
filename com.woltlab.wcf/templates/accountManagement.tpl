@@ -2,7 +2,7 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <woltlab-core-notice type="warning">{lang}wcf.user.accountManagement.warning{/lang}</woltlab-core-notice>
 
@@ -96,7 +96,7 @@
 			
 			<script data-relocate="true">
 				require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-					{include file='passwordStrengthLanguage'}
+					{include file='shared_passwordStrengthLanguage'}
 					
 					var relatedInputs = [];
 					if (elById('username')) relatedInputs.push(elById('username'));

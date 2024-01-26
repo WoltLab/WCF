@@ -6,7 +6,7 @@
     *}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>{$field->getValue()}</textarea>
 
-{include file='codemirror' codemirrorMode=$field->getLanguage() codemirrorSelector='#'|concat:$field->getPrefixedId()}
+{include file='shared_codemirror' codemirrorMode=$field->getLanguage() codemirrorSelector='#'|concat:$field->getPrefixedId()}
 
 <script data-relocate="true">
     (() => {

@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action === 'add'}{link controller='ContactRecipientAdd'}{/link}{else}{link controller='ContactRecipientEdit' id=$recipientID}{/link}{/if}">
 	<div class="section">
@@ -33,8 +33,8 @@
 						{/if}
 					</small>
 				{/if}
-				
-				{include file='multipleLanguageInputJavascript' elementIdentifier='name' forceSelection=false}
+
+				{include file='shared_multipleLanguageInputJavascript' elementIdentifier='name' forceSelection=false}
 			</dd>
 		</dl>
 		
@@ -57,8 +57,8 @@
 							{/if}
 						</small>
 					{/if}
-					
-					{include file='multipleLanguageInputJavascript' elementIdentifier='email' forceSelection=false}
+
+					{include file='shared_multipleLanguageInputJavascript' elementIdentifier='email' forceSelection=false}
 				{/if}
 			</dd>
 		</dl>

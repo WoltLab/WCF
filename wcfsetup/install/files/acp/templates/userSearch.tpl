@@ -35,7 +35,7 @@
 {if $errorField == 'search'}
 	<woltlab-core-notice type="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</woltlab-core-notice>
 {else}
-	{include file='formError'}
+	{include file='shared_formError'}
 {/if}
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
@@ -43,8 +43,8 @@
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.user.search.conditions{/lang}</h2>
 		</header>
-		
-		{include file='userConditions'}
+
+		{include file='shared_userConditions'}
 	</section>
 	
 	<section class="section">

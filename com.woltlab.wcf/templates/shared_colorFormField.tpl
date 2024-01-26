@@ -11,8 +11,7 @@
         *}name="{$field->getPrefixedId()}" {*
         *}value="{$field->getValue()}"{*
     *}>
-
-    {include file='colorPickerJavaScript'}
+	{include file='shared_colorPickerJavaScript'}
 
     <script data-relocate="true">
         require(['WoltLabSuite/Core/Ui/Color/Picker'], (UiColorPicker) => {

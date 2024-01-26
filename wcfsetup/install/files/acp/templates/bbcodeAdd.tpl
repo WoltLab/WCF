@@ -95,7 +95,7 @@
 	<woltlab-core-notice type="info">{lang}wcf.acp.bbcode.add.userGroupOptionInfo{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='BBCodeAdd'}{/link}{else}{link controller='BBCodeEdit' object=$bbcode}{/link}{/if}">
 	<div class="section">
@@ -184,8 +184,8 @@
 							{/if}
 						</small>
 					{/if}
-					
-					{include file='multipleLanguageInputJavascript' elementIdentifier='buttonLabel' forceSelection=false}
+
+					{include file='shared_multipleLanguageInputJavascript' elementIdentifier='buttonLabel' forceSelection=false}
 				</dd>
 			</dl>
 			
@@ -277,7 +277,7 @@
 	</div>
 </form>
 
-{include file='fontAwesomeJavaScript'}
+{include file='shared_fontAwesomeJavaScript'}
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
 		const button = document.querySelector('.jsButtonSearchWysiwygIcon');

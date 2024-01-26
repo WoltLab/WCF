@@ -14,7 +14,7 @@
 	{/hascontent}
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='UserAssignToGroup'}{/link}">
 	<section class="section">

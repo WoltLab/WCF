@@ -14,4 +14,4 @@
 	</dd>
 </dl>
 
-{include file='captcha'}
+{include file='shared_captcha'}

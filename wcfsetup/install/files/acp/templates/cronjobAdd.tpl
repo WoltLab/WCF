@@ -16,7 +16,7 @@
 
 <woltlab-core-notice type="info">{lang}wcf.acp.cronjob.intro{/lang}</woltlab-core-notice>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit' id=$cronjobID}{/link}{/if}">
 	<div class="section">
@@ -51,7 +51,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 		
 		{event name='dataFields'}
 	</div>

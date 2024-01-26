@@ -35,7 +35,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $hasSuitableTrophy}
 	<form method="post" action="{if $action == 'add'}{link controller='UserTrophyAdd'}{/link}{else}{link controller='UserTrophyEdit' id=$userTrophy->getObjectID()}{/link}{/if}">
@@ -116,7 +116,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 			
 			<dl id="trophyUseHtmlDL"{if !$useCustomDescription} style="display: none;"{/if}>
 				<dt></dt>

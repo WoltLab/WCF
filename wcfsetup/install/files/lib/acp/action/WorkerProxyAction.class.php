@@ -22,7 +22,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
     /**
      * @inheritDoc
      */
-    const DO_NOT_LOG = true;
+    public const DO_NOT_LOG = true;
 
     /**
      * loop counter
@@ -132,7 +132,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
 
         // include template on startup
         if ($this->loopCount == -1) {
-            $returnValues['template'] = WCF::getTPL()->fetch('worker');
+            $returnValues['template'] = WCF::getTPL()->fetch('shared_worker');
         }
 
         // send JSON-encoded response

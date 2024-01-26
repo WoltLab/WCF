@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport'}{/link}">
 	<div class="section">

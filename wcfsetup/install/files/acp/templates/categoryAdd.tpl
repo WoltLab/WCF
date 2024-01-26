@@ -4,15 +4,15 @@
 	{include file='aclPermissions'}
 	
 	{if !$category|isset}
-		{include file='aclPermissionJavaScript' containerID='groupPermissions' objectTypeID=$aclObjectTypeID}
+		{include file='shared_aclPermissionJavaScript' containerID='groupPermissions' objectTypeID=$aclObjectTypeID}
 	{else}
-		{include file='aclPermissionJavaScript' containerID='groupPermissions' objectTypeID=$aclObjectTypeID objectID=$category->categoryID}
+		{include file='shared_aclPermissionJavaScript' containerID='groupPermissions' objectTypeID=$aclObjectTypeID objectID=$category->categoryID}
 	{/if}
 {/if}
 
-{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 {if $objectType->getProcessor()->hasDescription()}
-	{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
+	{include file='shared_multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 {/if}
 
 <header class="contentHeader">
@@ -48,7 +48,7 @@
 	{/hascontent}
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	{event name='beforeSections'}
@@ -121,7 +121,7 @@
 				<dd>
 					<select id="parentCategoryID" name="parentCategoryID">
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-						{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
+						{include file='shared_categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
 					</select>
 					{if $errorField == 'parentCategoryID'}
 						<small class="innerError">

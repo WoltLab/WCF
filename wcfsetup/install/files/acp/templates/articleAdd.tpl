@@ -106,8 +106,8 @@
 					isI18n: {if $article->isMultilingual}true{else}false{/if},
 					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
 				},
-				redirectUrl: '{link controller='ArticleList'}{/link}'
-			});
+				'{link controller='ArticleList'}{/link}'
+			})
 		{/if}
 	});
 </script>
@@ -129,7 +129,7 @@
 	{@$__contentHeader}
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $action == 'edit'}
 	<woltlab-core-notice type="info" class="jsArticleNoticeTrash"{if !$article->isDeleted} hidden{/if}>{lang}wcf.acp.article.trash.notice{/lang}</woltlab-core-notice>
@@ -411,8 +411,8 @@
 				<dd>
 					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					
-					{include file='__wysiwygCmsToolbar' wysiwygSelector='content0'}
-					{include file='wysiwyg' wysiwygSelector='content0'}
+					{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content0'}
+					{include file='shared_wysiwyg' wysiwygSelector='content0'}
 					
 					{if $errorField == 'content'}
 						<small class="innerError">
@@ -577,8 +577,8 @@
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								
-								{include file='__wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
-								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='shared_wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">
@@ -621,7 +621,7 @@
 		});
 		
 		{if !$labelGroups|empty}
-			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
+			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm')
 		{/if}
 		
 		new WCF.Message.I18nPreview({

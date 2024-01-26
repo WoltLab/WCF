@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='SmileyAdd'}{/link}{else}{link controller='SmileyEdit' id=$smiley->smileyID}{/link}{/if}" enctype="multipart/form-data">
 	<section class="section">
@@ -34,14 +34,14 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='smileyTitle' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='smileyTitle' forceSelection=false}
 		
 		<dl{if $errorField == 'categoryID'} class="formError"{/if}>
 			<dt><label for="categoryID">{lang}wcf.global.category{/lang}</label></dt>
 			<dd>
 				<select id="categoryID" name="categoryID">
 					<option value="0"{if $categoryID === null} selected{/if}>{lang}wcf.acp.smiley.categoryID.default{/lang}</option>
-					{include file='categoryOptionList'}
+					{include file='shared_categoryOptionList'}
 				</select>
 				
 				{if $errorField == 'categoryID'}

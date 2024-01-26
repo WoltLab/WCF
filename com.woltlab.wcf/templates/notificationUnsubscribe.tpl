@@ -2,7 +2,7 @@
 
 <woltlab-core-notice type="info">{lang}wcf.user.notification.mail.unsubscribe.description{/lang}</woltlab-core-notice>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='NotificationUnsubscribe' userID=$user->userID token=$token}{/link}">
 	<div class="section">

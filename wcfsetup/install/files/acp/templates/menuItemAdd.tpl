@@ -60,7 +60,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuItemAdd'}{/link}{else}{link controller='MenuItemEdit' id=$itemID}{/link}{/if}">
 	<div class="section">
@@ -105,8 +105,8 @@
 						{/if}
 					</small>
 				{/if}
-				
-				{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+
+				{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 			</dd>
 		</dl>
 		
@@ -196,8 +196,8 @@
 						{/if}
 					</small>
 				{/if}
-				
-				{include file='multipleLanguageInputJavascript' elementIdentifier='externalURL' forceSelection=false}
+
+				{include file='shared_multipleLanguageInputJavascript' elementIdentifier='externalURL' forceSelection=false}
 			</dd>
 		</dl>
 		

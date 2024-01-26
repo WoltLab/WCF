@@ -150,7 +150,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
             'lines' => \count($splitContent),
         ]);
 
-        return WCF::getTPL()->fetch('codeMetaCode');
+        return WCF::getTPL()->fetch('shared_codeMetaCode');
     }
 
     /**

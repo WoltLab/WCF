@@ -6,7 +6,7 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
-		{include file='passwordStrengthLanguage'}
+		{include file='shared_passwordStrengthLanguage'}
 		
 		new PasswordStrength(document.getElementById('newPassword'), {
 			staticDictionary: [

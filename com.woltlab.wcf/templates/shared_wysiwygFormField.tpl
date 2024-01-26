@@ -13,13 +13,13 @@
 	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>{$field->getValue()}</textarea>
 
-{include file='wysiwyg' wysiwygSelector=$field->getPrefixedId()}
+{include file='shared_wysiwyg' wysiwygSelector=$field->getPrefixedId()}
 
 {if $field->supportsQuotes()}
 	<script data-relocate="true">
 		// Bootstrap for window.__wcf_bc_eventHandler
 		require(['WoltLabSuite/Core/Bootstrap'], function(Bootstrap) {
-			{include file='__messageQuoteManager' wysiwygSelector=$field->getPrefixedId() supportPaste=true}
+			{include file='shared_messageQuoteManager' wysiwygSelector=$field->getPrefixedId() supportPaste=true}
 			
 			{if $field->getQuoteData() !== null}
 				var quoteHandler = new WCF.Message.Quote.Handler(

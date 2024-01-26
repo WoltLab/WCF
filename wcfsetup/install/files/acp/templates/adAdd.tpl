@@ -22,7 +22,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='AdAdd'}{/link}{else}{link controller='AdEdit' object=$adObject}{/link}{/if}">
 	<div class="section">
@@ -143,8 +143,8 @@
 			<h2 class="sectionTitle">{lang}wcf.acp.ad.conditions.user{/lang}</h2>
 			<p class="sectionDescription">{lang}wcf.acp.ad.conditions.user.description{/lang}</p>
 		</header>
-	
-		{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
+
+		{include file='shared_userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
 	</section>
 	
 	<div class="formSubmit">

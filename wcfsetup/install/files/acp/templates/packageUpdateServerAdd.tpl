@@ -18,7 +18,7 @@
 	<woltlab-core-notice type="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PackageUpdateServerAdd'}{/link}{else}{link controller='PackageUpdateServerEdit' id=$packageUpdateServerID}{/link}{/if}">
 	<div class="section">

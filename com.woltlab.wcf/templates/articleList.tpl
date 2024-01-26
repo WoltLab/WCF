@@ -47,7 +47,7 @@
 					'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
 				});
 				
-				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true);
+				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true)
 			});
 		</script>
 	{/if}
@@ -140,7 +140,7 @@
 </script>
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canManageOwnArticles') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
-	{include file='articleAddDialog'}
+	{include file='shared_articleAddDialog'}
 {/if}
 
 {include file='footer'}

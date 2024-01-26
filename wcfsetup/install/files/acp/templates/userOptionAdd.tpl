@@ -15,7 +15,7 @@
 
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if !$availableCategories|empty}
 	<form method="post" action="{if $action == 'add'}{link controller='UserOptionAdd'}{/link}{else}{link controller='UserOptionEdit' id=$optionID}{/link}{/if}">
@@ -35,7 +35,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='optionName' forceSelection=true}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='optionName' forceSelection=true}
 			
 			<dl{if $errorField == 'optionDescription'} class="formError"{/if}>
 				<dt><label for="optionDescription">{lang}wcf.acp.user.option.description{/lang}</label></dt>
@@ -57,7 +57,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='optionDescription' forceSelection=true}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='optionDescription' forceSelection=true}
 			
 			<dl{if $errorField == 'categoryName'} class="formError"{/if}>
 				<dt><label for="categoryName">{lang}wcf.global.category{/lang}</label></dt>
