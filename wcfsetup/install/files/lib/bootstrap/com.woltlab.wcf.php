@@ -10,6 +10,7 @@ use wcf\system\event\listener\PipSyncedPhrasePreloadListener;
 use wcf\system\event\listener\PreloadPhrasesCollectingListener;
 use wcf\system\event\listener\UserLoginCancelLostPasswordListener;
 use wcf\system\event\listener\UsernameValidatingCheckCharactersListener;
+use wcf\system\file\processor\event\FileProcessorCollecting;
 use wcf\system\language\event\LanguageImported;
 use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
@@ -87,6 +88,10 @@ return static function (): void {
     $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
         $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
         $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
+    });
+
+    $eventHandler->register(FileProcessorCollecting::class, static function (FileProcessorCollecting $event) {
+        $event->register(new \wcf\system\file\processor\AttachmentFileProcessor());
     });
 
     try {

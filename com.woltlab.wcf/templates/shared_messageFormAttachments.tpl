@@ -2,6 +2,9 @@
 	<button type="button">
 		<woltlab-core-file-upload
 			data-endpoint="{link controller='FileUploadPreflight'}{/link}"
+			data-type-name="com.woltlab.wcf.attachment"
+			data-context-object-type=""
+			data-context-object-id=""
 		></woltlab-core-file-upload>
 	</button>
 	<dl class="wide">

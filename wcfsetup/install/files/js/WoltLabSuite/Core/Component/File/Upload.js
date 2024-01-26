@@ -1,14 +1,18 @@
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, Backend_1, Selector_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/StringUtil"], function (require, exports, Backend_1, Selector_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     async function upload(element, file) {
+        const typeName = element.dataset.typeName;
+        const context = getContextFromDataAttributes(element);
         const fileHash = await getSha256Hash(await file.arrayBuffer());
         const response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
             .post({
             filename: file.name,
             fileSize: file.size,
             fileHash,
+            typeName,
+            context,
         })
             .fetchAsJson());
         const { endpoints } = response;
@@ -25,6 +29,27 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 console.log(await response.text());
             }
         }
+    }
+    function getContextFromDataAttributes(element) {
+        const context = {};
+        const prefixContext = "data-context-";
+        for (const attribute of element.attributes) {
+            if (!attribute.name.startsWith(prefixContext)) {
+                continue;
+            }
+            const key = attribute.name
+                .substring(prefixContext.length)
+                .split("-")
+                .map((part, index) => {
+                if (index === 0) {
+                    return part;
+                }
+                return (0, StringUtil_1.ucfirst)(part);
+            })
+                .join("");
+            context[key] = attribute.value;
+        }
+        return context;
     }
     async function getSha256Hash(data) {
         const buffer = await window.crypto.subtle.digest("SHA-256", data);

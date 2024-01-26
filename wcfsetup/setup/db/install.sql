@@ -598,7 +598,8 @@ CREATE TABLE wcf1_file (
 	fileID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
-	fileHash CHAR(64) NOT NULL
+	fileHash CHAR(64) NOT NULL,
+	typeName VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;
@@ -608,6 +609,8 @@ CREATE TABLE wcf1_file_temporary (
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
 	fileHash CHAR(64) NOT NULL,
+	typeName VARCHAR(255) NOT NULL,
+	context TEXT,
 	chunks VARBINARY(255) NOT NULL
 );
 
