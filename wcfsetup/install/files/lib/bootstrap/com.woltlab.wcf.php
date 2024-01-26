@@ -2,6 +2,7 @@
 
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
+use wcf\system\file\processor\event\FileProcessorCollecting;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
 use wcf\system\language\preload\PhrasePreloader;
@@ -119,6 +120,10 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
         }
     );
+
+    $eventHandler->register(FileProcessorCollecting::class, static function (FileProcessorCollecting $event) {
+        $event->register(new \wcf\system\file\processor\AttachmentFileProcessor());
+    });
 
     try {
         $licenseApi = new LicenseApi();

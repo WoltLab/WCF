@@ -14,6 +14,7 @@ use wcf\data\DatabaseObject;
  * @property-read string $filename
  * @property-read int $fileSize
  * @property-read string $fileHash
+ * @property-read string $typeName
  */
 class File extends DatabaseObject
 {

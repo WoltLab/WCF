@@ -28,6 +28,7 @@ class FileEditor extends DatabaseObjectEditor
             'filename' => $fileTemporary->filename,
             'fileSize' => $fileTemporary->fileSize,
             'fileHash' => $fileTemporary->fileHash,
+            'typeName' => $fileTemporary->typeName,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
