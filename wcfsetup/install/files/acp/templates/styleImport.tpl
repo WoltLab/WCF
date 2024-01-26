@@ -32,6 +32,8 @@
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType == 'uploadFailed'}
+							{lang}wcf.upload.error.uploadFailed{/lang}
 						{else}
 							{lang}wcf.acp.style.import.source.error.{@$errorType}{/lang}
 						{/if}
