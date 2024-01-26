@@ -11,8 +11,8 @@
 			{/foreach}
 		</ul>
 	</nav>
-	
-	{include file='__formContainerChildren'}
+
+	{include file='shared_formContainerChildren'}
 </div>
 
-{include file='__formContainerDependencies'}
+{include file='shared_formContainerDependencies'}

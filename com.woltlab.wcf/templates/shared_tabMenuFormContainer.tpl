@@ -12,11 +12,11 @@
 			{/foreach}
 		</ul>
 	</nav>
-	
-	{include file='__formContainerChildren'}
+
+	{include file='shared_formContainerChildren'}
 </div>
 
-{include file='__formContainerDependencies'}
+{include file='shared_formContainerDependencies'}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/TabMenu'], function(TabMenuContainerDependency) {

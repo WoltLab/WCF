@@ -7,9 +7,9 @@
 	<dd>
 		{@$field->getFieldHtml()}
 
-		{include file='shared_formFieldErrors'}
-		{include file='shared_formFieldDescription'}
-		{include file='shared_formFieldDependencies'}
-		{include file='shared_formFieldDataHandler'}
+		{sharedInclude file='formFieldErrors'}
+		{sharedInclude file='formFieldDescription'}
+		{sharedInclude file='formFieldDependencies'}
+		{sharedInclude file='formFieldDataHandler'}
 	</dd>
 </dl>

@@ -354,6 +354,10 @@ class TemplateEngine extends SingletonFactory
      */
     public function getSourceFilename($templateName, $application)
     {
+        if (\str_starts_with($templateName, 'shared_') && !($this instanceof SharedTemplateEngine)) {
+            throw new \LogicException('Shared templates can only be used with SharedTemplateEngine');
+        }
+
         $sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
         if (!empty($sourceFilename)) {
             return $sourceFilename;

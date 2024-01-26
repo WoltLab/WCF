@@ -13,11 +13,11 @@
 			<h2 class="sectionTitle">{@$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
 		{/if}
 	{/if}
-	
-	{include file='__formContainerChildren'}
+
+	{sharedInclude file='formContainerChildren'}
 </section>
 
-{include file='__formContainerDependencies'}
+{sharedInclude file='formContainerDependencies'}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {

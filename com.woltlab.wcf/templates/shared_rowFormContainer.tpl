@@ -3,10 +3,10 @@
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	{include file='__formContainerChildren'}
+	{include file='shared_formContainerChildren'}
 </div>
 
-{include file='__formContainerDependencies'}
+{include file='shared_formContainerDependencies'}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {

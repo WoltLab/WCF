@@ -10,8 +10,9 @@ use wcf\system\WCF;
  * @author  Olaf Braun
  * @copyright   2001-2014 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
  */
-class SharedTemplateEngine extends TemplateEngine
+final class SharedTemplateEngine extends TemplateEngine
 {
     /**
      * @inheritDoc
