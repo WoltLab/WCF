@@ -44,18 +44,18 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      * The type value, if this trophy is an image trophy.
      * @var int
      */
-    public const TYPE_IMAGE = 1;
+    const TYPE_IMAGE = 1;
 
     /**
      * The type value, if this trophy is a badge trophy (based on CSS icons).
      * @var int
      */
-    public const TYPE_BADGE = 2;
+    const TYPE_BADGE = 2;
 
     /**
      * The default icon size.
      */
-    public const DEFAULT_SIZE = 32;
+    const DEFAULT_SIZE = 32;
 
     /**
      * Returns the title of the trophy.
