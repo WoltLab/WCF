@@ -427,13 +427,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function getCompiledFilename($templateName, $application)
     {
-        $path = $this->compileDir;
-        if ($this->isSharedTemplate($templateName)) {
-            $path .= $this->sharedTemplateGroupID;
-        } else {
-            $path .= $this->getTemplateGroupID();
-        }
-        return $path . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
+        return $this->getCompileDir($templateName) . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
     }
 
     /**
@@ -444,13 +438,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function getMetaDataFilename($templateName)
     {
-        $path = $this->compileDir;
-        if ($this->isSharedTemplate($templateName)) {
-            $path .= $this->sharedTemplateGroupID;
-        } else {
-            $path .= $this->getTemplateGroupID();
-        }
-        return $path . '_' . $templateName . '.meta.php';
+        return $this->getCompileDir($templateName) . '_' . $templateName . '.meta.php';
     }
 
     /**
@@ -903,8 +891,33 @@ class TemplateEngine extends SingletonFactory
         return $data;
     }
 
+    /**
+     * Checks whether the given template is a shared template.
+     * Starts with 'shared_'.
+     *
+     * @param string $templateName
+     * @return bool
+     * @since 6.1
+     */
     protected function isSharedTemplate(string $templateName): bool
     {
         return \str_starts_with($templateName, 'shared_');
+    }
+
+    /**
+     * Returns the compile dir for the given template.
+     * This function also checks if the template is a shared template.
+     *
+     * @param string $templateName
+     * @return string
+     * @since 6.1
+     */
+    protected function getCompileDir(string $templateName): string
+    {
+        if ($this->isSharedTemplate($templateName)) {
+            return $this->compileDir . $this->sharedTemplateGroupID;
+        } else {
+            return $this->compileDir . $this->getTemplateGroupID();
+        }
     }
 }
