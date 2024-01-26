@@ -12,21 +12,21 @@
 							
 							{if !$categoryName|isset || ($__categoryNameStart|isset && $__optionCategoryName|str_starts_with:$__categoryNameStart) || (!$__categoryNameStart|isset && $__optionCategoryName == $categoryName)}
 								{@$__optionID}: {
-									'{@$__optionData[categoryName]|encodeJS}',
+									categoryName: '{@$__optionData[categoryName]|encodeJS}',
 									label: '{@$__optionData[label]|encodeJS}',
 									optionName: '{@$__optionData[optionName]|encodeJS}'
 								},
 							{/if}
 						{/foreach}
 					},
-					{
+					categories: {
 						{implode from=$aclValues[$objectTypeID][categories] key='__category' item='__categoryName'}
 							'{@$__category|encodeJS}': '{@$__categoryName|encodeJS}'
 						{/implode}
 					},
-					{
+					user: {
 						{if $aclValues[$objectTypeID][user]|isset}
-							{
+							option: {
 								{foreach from=$aclValues[$objectTypeID][user][option] key='__userID' item='__optionData'}
 									{hascontent}
 										{@$__userID}: {
@@ -43,12 +43,12 @@
 									{/hascontent}
 								{/foreach}
 							},
-							{ }
+							label: { }
 						{/if}
 					},
-					{
+					group: {
 						{if $aclValues[$objectTypeID][group]|isset}
-							{
+							option: {
 								{foreach from=$aclValues[$objectTypeID][group][option] key='__groupID' item='__optionData'}
 									{hascontent}
 										{@$__groupID}: {
@@ -65,11 +65,11 @@
 									{/hascontent}
 								{/foreach}
 							},
-							{ }
+							label: { }
 						{/if}
 					}
 				}
-			}
+			};
 			
 			{if $aclValues[$objectTypeID][user]|isset}
 				{foreach from=$aclValues[$objectTypeID][user][label] key='__userID' item='__label'}
@@ -96,7 +96,7 @@
 			{if !$includeUserGroups|isset || $includeUserGroups}true{else}false{/if},
 			{if $aclValues[$objectTypeID]|isset}initialPermissions{else}undefined{/if},
 			{if $aclValuesFieldName|isset}'{@$aclValuesFieldName}'{else}undefined{/if}
-		)
+		);
 		
 		{if !$aclFormBuilderMode|empty}
 			require(['WoltLabSuite/Core/Form/Builder/Manager'], function(FormBuilderManager) {

@@ -52,7 +52,7 @@
 					'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
 				});
 				
-				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true)
+				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true);
 			});
 		</script>
 	{/if}
