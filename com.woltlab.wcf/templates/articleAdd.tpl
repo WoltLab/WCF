@@ -105,8 +105,8 @@
 					isI18n: {if $article->isMultilingual}true{else}false{/if},
 					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
 				},
-				'{link controller='ArticleList'}{/link}'
-			})
+				redirectUrl: '{link controller='ArticleList'}{/link}'
+			});
 		{/if}
 	});
 </script>
@@ -620,7 +620,7 @@
 		});
 		
 		{if !$labelGroups|empty}
-			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm')
+			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
 		{/if}
 		
 		new WCF.Message.I18nPreview({

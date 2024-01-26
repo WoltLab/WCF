@@ -31,13 +31,13 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * The limit of objects in one sitemap file.
      */
-    public const SITEMAP_OBJECT_LIMIT = 25000;
+    const SITEMAP_OBJECT_LIMIT = 25000;
 
     /**
      * Prefix for stored data in the registry.
      * @since 5.3
      */
-    public const REGISTRY_PREFIX = 'sitemapData_';
+    const REGISTRY_PREFIX = 'sitemapData_';
 
     /**
      * @inheritDoc
