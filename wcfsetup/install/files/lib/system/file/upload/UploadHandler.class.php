@@ -22,14 +22,14 @@ class UploadHandler extends SingletonFactory
      * Session variable name for the file storage.
      * @var string
      */
-    public const UPLOAD_HANDLER_SESSION_VAR = 'file_upload_handler_storage';
+    const UPLOAD_HANDLER_SESSION_VAR = 'file_upload_handler_storage';
 
     /**
      * Contains the valid image extensions w/o svg.
      * @var string
      * @deprecated 5.3 Use \wcf\util\ImageUtil::$imageExtensions instead (direct replacement).
      */
-    public const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+    const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
 
     /**
      * @since 5.5
