@@ -43,7 +43,7 @@
 
 <p class="info">{lang}wcf.acp.rescueMode.description{/lang}</p>
 
-					{include file='shared_formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{$pageURL}">
 	<section class="section">
