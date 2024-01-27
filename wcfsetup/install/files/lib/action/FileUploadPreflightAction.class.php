@@ -4,15 +4,13 @@ namespace wcf\action;
 
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
-use Masterminds\HTML5\Parser\EventHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\temporary\FileTemporaryAction;
 use wcf\http\Helper;
-use wcf\system\event\EventHandler as EventEventHandler;
-use wcf\system\file\processor\event\FileProcessorCollecting;
+use wcf\system\exception\SystemException;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\util\JSON;
@@ -30,7 +28,7 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                         fileSize: positive-int,
                         fileHash: non-empty-string,
                         typeName: non-empty-string,
-                        context: array<non-empty-string, string>,
+                        context: non-empty-string,
                     }
                     EOT,
         );
@@ -43,7 +41,16 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
             ], 400);
         }
 
-        if (!$fileProcessor->acceptUpload($parameters['filename'], $parameters['fileSize'], $parameters['context'])) {
+        try {
+            $decodedContext = JSON::decode($parameters['context']);
+        } catch (SystemException) {
+            // 400 Bad Request
+            return new JsonResponse([
+                'context' => 'invalid',
+            ], 400);
+        }
+
+        if (!$fileProcessor->acceptUpload($parameters['filename'], $parameters['fileSize'], $decodedContext)) {
             // 403 Permission Denied
             return new EmptyResponse(403);
         }
@@ -84,7 +91,7 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
                 'fileSize' => $parameters['fileSize'],
                 'fileHash' => $parameters['fileHash'],
                 'typeName' => $parameters['typeName'],
-                'context' => JSON::encode($parameters['context']),
+                'context' => $parameters['context'],
                 'chunks' => \str_repeat('0', $numberOfChunks),
             ],
         ]);
