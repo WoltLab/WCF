@@ -2,6 +2,7 @@
 
 namespace wcf\system\html\node;
 
+use Laminas\Diactoros\Uri;
 use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\util\DOMUtil;
 use wcf\util\Url;
@@ -45,14 +46,10 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
 
         self::removeStyling($link);
 
-        $object = new UnfurlUrlAction([], 'findOrCreate', [
-            'data' => [
-                'url' => $link->href,
-            ],
-        ]);
-        $returnValues = $object->executeAction();
+        $url = self::lowercaseHostname($link->href);
+        $urlID = self::findOrCreate($url);
 
-        $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, $returnValues['returnValues']->urlID);
+        $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, $urlID);
     }
 
     private static function removeStyling(HtmlNodePlainLink $element): void
@@ -62,5 +59,25 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
         }
 
         $element->topLevelParent->appendChild($element->link);
+    }
+
+    private static function lowercaseHostname(string $url): string
+    {
+        $uri = new Uri($url);
+        $uri->withHost(\mb_strtolower($uri->getHost()));
+
+        return $uri->__toString();
+    }
+
+    private static function findOrCreate(string $url): int
+    {
+        $object = new UnfurlUrlAction([], 'findOrCreate', [
+            'data' => [
+                'url' => $url,
+            ],
+        ]);
+        $returnValues = $object->executeAction();
+
+        return $returnValues['returnValues']->urlID;
     }
 }
