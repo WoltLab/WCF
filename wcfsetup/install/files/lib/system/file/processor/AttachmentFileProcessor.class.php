@@ -17,6 +17,19 @@ final class AttachmentFileProcessor implements IFileProcessor
         return 'com.woltlab.wcf.attachment';
     }
 
+    public function getAllowedFileExtensions(array $context): array
+    {
+        // TODO: Properly validate the shape of `$context`.
+        $objectType = $context['objectType'] ?? '';
+        $objectID = \intval($context['objectID'] ?? 0);
+        $parentObjectID = \intval($context['parentObjectID'] ?? 0);
+        $tmpHash = $context['tmpHash'] ?? '';
+
+        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
+
+        return $attachmentHandler->getAllowedExtensions();
+    }
+
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
         // TODO: Properly validate the shape of `$context`.

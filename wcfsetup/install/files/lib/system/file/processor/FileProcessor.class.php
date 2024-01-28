@@ -40,17 +40,32 @@ final class FileProcessor extends SingletonFactory
     {
         $endpoint = LinkHandler::getInstance()->getControllerLink(FileUploadPreflightAction::class);
 
+        $allowedFileExtensions = $fileProcessor->getAllowedFileExtensions($context);
+        if (\in_array('*', $allowedFileExtensions)) {
+            $allowedFileExtensions = '';
+        } else {
+            $allowedFileExtensions = \implode(
+                ',',
+                \array_map(
+                    static fn (string $fileExtension) => ".{$fileExtension}",
+                    $allowedFileExtensions
+                )
+            );
+        }
+
         return \sprintf(
             <<<'HTML'
                 <woltlab-core-file-upload
                     data-endpoint="%s"
                     data-type-name="%s"
                     data-context="%s"
+                    data-file-extensions="%s"
                 ></woltlab-core-file-upload>
                 HTML,
             StringUtil::encodeHTML($endpoint),
             StringUtil::encodeHTML($fileProcessor->getTypeName()),
             StringUtil::encodeHTML(JSON::encode($context)),
+            StringUtil::encodeHTML($allowedFileExtensions),
         );
     }
 }
