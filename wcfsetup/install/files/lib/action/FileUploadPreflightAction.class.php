@@ -12,6 +12,7 @@ use wcf\data\file\temporary\FileTemporaryAction;
 use wcf\http\Helper;
 use wcf\system\exception\SystemException;
 use wcf\system\file\processor\FileProcessor;
+use wcf\system\file\processor\FileProcessorPreflightResult;
 use wcf\system\request\LinkHandler;
 use wcf\util\JSON;
 
@@ -50,9 +51,15 @@ final class FileUploadPreflightAction implements RequestHandlerInterface
             ], 400);
         }
 
-        if (!$fileProcessor->acceptUpload($parameters['filename'], $parameters['fileSize'], $decodedContext)) {
+        $validationResult = $fileProcessor->acceptUpload($parameters['filename'], $parameters['fileSize'], $decodedContext);
+        if (!$validationResult->ok()) {
             // 403 Permission Denied
-            return new EmptyResponse(403);
+            return new JsonResponse([
+                'error' => [
+                    'type' => $validationResult->toString(),
+                    'message' => $validationResult->toErrorMessage(),
+                ],
+            ], 403);
         }
 
         $numberOfChunks = FileTemporary::getNumberOfChunks($parameters['fileSize']);

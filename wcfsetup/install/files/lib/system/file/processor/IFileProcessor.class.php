@@ -12,5 +12,5 @@ interface IFileProcessor
 {
     public function getTypeName(): string;
 
-    public function acceptUpload(string $filename, int $fileSize, array $context): bool;
+    public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult;
 }

@@ -45,7 +45,7 @@ class FileTemporary extends DatabaseObject
 
     public function getFilename(): string
     {
-        return \sprintf("%s-final.bin", $this->identifier);
+        return \sprintf("%s.bin", $this->identifier);
     }
 
     public function getPath(): string

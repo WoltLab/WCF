@@ -35,7 +35,7 @@ class File extends DatabaseObject
         return \sprintf(
             '%d-%s.bin',
             $this->fileID,
-            $this->filename,
+            $this->fileHash,
         );
     }
 }

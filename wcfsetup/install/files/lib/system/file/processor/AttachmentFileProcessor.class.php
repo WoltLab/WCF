@@ -17,32 +17,45 @@ final class AttachmentFileProcessor implements IFileProcessor
         return 'com.woltlab.wcf.attachment';
     }
 
-    public function acceptUpload(string $filename, int $fileSize, array $context): bool
+    public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
+        // TODO: Properly validate the shape of `$context`.
         $objectType = $context['objectType'] ?? '';
         $objectID = \intval($context['objectID'] ?? 0);
         $parentObjectID = \intval($context['parentObjectID'] ?? 0);
+        $tmpHash = $context['tmpHash'] ?? '';
 
-        $attachmentHandler = new AttachmentHandler($objectType, $objectID, '', $parentObjectID);
+        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
         if (!$attachmentHandler->canUpload()) {
-            return false;
+            return FileProcessorPreflightResult::InsufficientPermissions;
         }
 
         if ($fileSize > $attachmentHandler->getMaxSize()) {
-            return false;
+            return FileProcessorPreflightResult::FileSizeTooLarge;
         }
 
-        $extensions = \implode("|", $attachmentHandler->getAllowedExtensions());
-        $extensions = \str_replace('\*', '.*', \preg_quote($extensions), '/');
+        // TODO: This is a typical use case and should be provided through a helper function.
+        $extensions = \implode(
+            "|",
+            \array_map(
+                static function (string $extension) {
+                    $extension = \preg_quote($extension, '/');
+                    $extension = \str_replace('\*', '.*', $extension);
+
+                    return $extension;
+                },
+                $attachmentHandler->getAllowedExtensions()
+            )
+        );
         $extensionsPattern = '/(' . $extensions . ')$/i';
         if (!\preg_match($extensionsPattern, \mb_strtolower($filename))) {
-            return false;
+            return FileProcessorPreflightResult::FileExtensionNotPermitted;
         }
 
-        return true;
+        return FileProcessorPreflightResult::Passed;
     }
 
-    public function toHtmlElement(string $objectType, int $objectID, int $parentObjectID): string
+    public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string
     {
         return FileProcessor::getInstance()->getHtmlElement(
             $this,
@@ -50,6 +63,7 @@ final class AttachmentFileProcessor implements IFileProcessor
                 'objectType' => $objectType,
                 'objectID' => $objectID,
                 'parentObjectID' => $parentObjectID,
+                'tmpHash' => $tmpHash,
             ],
         );
     }
