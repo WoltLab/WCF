@@ -1,6 +1,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
+import { isPlainObject } from "WoltLabSuite/Core/Core";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
-import { ucfirst } from "WoltLabSuite/Core/StringUtil";
 
 type PreflightResponse = {
   endpoints: string[];
@@ -11,15 +12,30 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
 
   const fileHash = await getSha256Hash(await file.arrayBuffer());
 
-  const response = (await prepareRequest(element.dataset.endpoint!)
-    .post({
-      filename: file.name,
-      fileSize: file.size,
-      fileHash,
-      typeName,
-      context: element.dataset.context,
-    })
-    .fetchAsJson()) as PreflightResponse;
+  let response: PreflightResponse;
+  try {
+    response = (await prepareRequest(element.dataset.endpoint!)
+      .post({
+        filename: file.name,
+        fileSize: file.size,
+        fileHash,
+        typeName,
+        context: element.dataset.context,
+      })
+      .fetchAsJson()) as PreflightResponse;
+  } catch (e) {
+    if (e instanceof StatusNotOk) {
+      const body = await e.response.clone().json();
+      if (isPlainObject(body) && isPlainObject(body.error)) {
+        console.log(body);
+        return;
+      } else {
+        throw e;
+      }
+    } else {
+      throw e;
+    }
+  }
   const { endpoints } = response;
 
   const chunkSize = Math.ceil(file.size / endpoints.length);

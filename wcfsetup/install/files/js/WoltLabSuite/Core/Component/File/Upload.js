@@ -1,19 +1,37 @@
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, Backend_1, Selector_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Ajax/Error", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, Backend_1, Error_1, Core_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     async function upload(element, file) {
         const typeName = element.dataset.typeName;
         const fileHash = await getSha256Hash(await file.arrayBuffer());
-        const response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
-            .post({
-            filename: file.name,
-            fileSize: file.size,
-            fileHash,
-            typeName,
-            context: element.dataset.context,
-        })
-            .fetchAsJson());
+        let response;
+        try {
+            response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
+                .post({
+                filename: file.name,
+                fileSize: file.size,
+                fileHash,
+                typeName,
+                context: element.dataset.context,
+            })
+                .fetchAsJson());
+        }
+        catch (e) {
+            if (e instanceof Error_1.StatusNotOk) {
+                const body = await e.response.clone().json();
+                if ((0, Core_1.isPlainObject)(body) && (0, Core_1.isPlainObject)(body.error)) {
+                    console.log(body);
+                    return;
+                }
+                else {
+                    throw e;
+                }
+            }
+            else {
+                throw e;
+            }
+        }
         const { endpoints } = response;
         const chunkSize = Math.ceil(file.size / endpoints.length);
         for (let i = 0, length = endpoints.length; i < length; i++) {
