@@ -10,7 +10,9 @@ namespace wcf\system\file\processor;
  */
 interface IFileProcessor
 {
-    public function getTypeName(): string;
-
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult;
+
+    public function getAllowedFileExtensions(array $context): array;
+
+    public function getTypeName(): string;
 }

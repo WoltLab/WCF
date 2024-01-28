@@ -34,6 +34,11 @@
     }
 
     connectedCallback() {
+      const allowedFileExtensions = this.dataset.fileExtensions || "";
+      if (allowedFileExtensions !== "") {
+        this.#element.accept = allowedFileExtensions;
+      }
+
       const shadow = this.attachShadow({ mode: "open" });
       shadow.append(this.#element);
 
