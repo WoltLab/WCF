@@ -126,6 +126,9 @@ $templates = [
     'groupBBCodeTag' => 'shared_bbcode_group',
     '__videoAttachmentBBCode' => 'shared_bbcode_attach_video',
     '__audioAttachmentBBCode' => 'shared_bbcode_attach_audio',
+    'mediaBBCodeTag' => 'shared_bbcode_wsm',
+    'articleBBCodeTag' => 'shared_bbcode_wsa',
+    '__multiPageCondition' => 'shared_multiPageCondition',
 ];
 if ($argc !== 2) {
     echo "ERROR: Expected a single argument to the directory that should be used to recursively replace template includes.\n";
