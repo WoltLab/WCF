@@ -798,8 +798,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             } elseif ($parent->nodeName === 'p') {
                 $parentLinkElement = $link;
-                while ($parentLinkElement->parentElement !== $parent) {
-                    $parentLinkElement = $parentLinkElement->parentElement;
+                while ($parentLinkElement->parentNode !== $parent) {
+                    $parentLinkElement = $parentLinkElement->parentNode;
+                    \assert($parentLinkElement instanceof \DOMElement);
                     if ($this->mayContainOtherContent($parentLinkElement, $linebreaks)) {
                         $mayContainOtherContent = true;
                         break;
