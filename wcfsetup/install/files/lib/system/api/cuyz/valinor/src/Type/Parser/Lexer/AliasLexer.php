@@ -83,11 +83,11 @@ final class AliasLexer implements TypeLexer
         $reflection = $this->reflection;
 
         if ($reflection instanceof ReflectionFunction) {
-            $reflection = $reflection->getClosureScopeClass();
-        }
+            $classReflection = $reflection->getClosureScopeClass();
 
-        if (! $reflection) {
-            return $symbol;
+            if ($classReflection && $classReflection->getFileName() === $reflection->getFileName()) {
+                $reflection = $classReflection;
+            }
         }
 
         $namespace = $reflection->getNamespaceName();
