@@ -17,13 +17,12 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\HiddenFormField;
-use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 
@@ -172,14 +171,9 @@ class TemplateAddForm extends AbstractFormBuilderForm
             FormContainer::create('source')
                 ->label('wcf.acp.template.source')
                 ->appendChildren([
-                    MultilineTextFormField::create('templateSource')
+                    SourceCodeFormField::create('templateSource')
+                        ->language('smarty')
                         ->label('wcf.acp.template.source'),
-                    TemplateFormNode::create('codemirror')
-                        ->templateName('shared_codemirror')
-                        ->variables([
-                            'codemirrorMode' => 'smarty',
-                            'codemirrorSelector' => '#templateSource'
-                        ])
                 ]),
             HiddenFormField::create('copy')
                 ->value($this->copy),
