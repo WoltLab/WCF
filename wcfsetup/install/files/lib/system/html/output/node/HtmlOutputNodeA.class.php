@@ -66,6 +66,12 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
 
             if ($href->getScheme() !== 'mailto') {
                 if (ApplicationHandler::getInstance()->isInternalURL($href->__toString())) {
+                    if ($href->getHost() === '') {
+                        // `withScheme()` implicitly adds `localhost`
+                        // https://www.woltlab.com/community/thread/302070-link-ohne-protokoll-zeigt-auf-localhost/
+                        $href = $href->withHost(ApplicationHandler::getInstance()->getDomainName());
+                    }
+
                     $href = $href->withScheme(RouteHandler::secureConnection() ? 'https' : 'http');
 
                     $element->setAttribute(
