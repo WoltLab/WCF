@@ -99,7 +99,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'invalid',
-                                            'wcf.acp.template.group.error.notShared'
+                                            'wcf.acp.template.group.error.shared'
                                         )
                                     );
                                 } elseif (
@@ -109,7 +109,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'invalid',
-                                            'wcf.acp.template.group.error.shared'
+                                            'wcf.acp.template.group.error.notShared'
                                         )
                                     );
                                 }
