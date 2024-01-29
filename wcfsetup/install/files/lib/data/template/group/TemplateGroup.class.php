@@ -3,6 +3,7 @@
 namespace wcf\data\template\group;
 
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
  * @property-read   string $templateGroupName      name of the template group
  * @property-read   string $templateGroupFolderName    name of the folder containing the modified templates (relative to the normal template folder)
  */
-class TemplateGroup extends DatabaseObject
+class TemplateGroup extends DatabaseObject implements ITitledObject
 {
     /**
      * @inheritDoc
@@ -53,6 +54,12 @@ class TemplateGroup extends DatabaseObject
         return WCF::getLanguage()->get($this->templateGroupName);
     }
 
+    #[\Override]
+    public function getTitle(): string
+    {
+        return $this->getName();
+    }
+
     /**
      * Creates a select list of all template groups.
      *
@@ -62,6 +69,16 @@ class TemplateGroup extends DatabaseObject
      * @return  array
      */
     public static function getSelectList($ignore = [], $initialDepth = 0)
+    {
+        self::buildTemplateGroupStructure();
+
+        self::$selectList = [];
+        self::makeSelectList(0, $initialDepth, $ignore);
+
+        return self::$selectList;
+    }
+
+    private static function buildTemplateGroupStructure()
     {
         if (self::$templateGroupStructure === null) {
             self::$templateGroupStructure = [];
@@ -75,11 +92,24 @@ class TemplateGroup extends DatabaseObject
                 self::$templateGroupStructure[$row['parentTemplateGroupID'] ?: 0][] = new self(null, $row);
             }
         }
+    }
 
-        self::$selectList = [];
-        self::makeSelectList(0, $initialDepth, $ignore);
+    /**
+     * Returns a list of all parent template groups.
+     *
+     * @return TemplateGroup[]
+     */
+    public static function getParentTemplatesGroups($parentID = 0): \Generator
+    {
+        self::buildTemplateGroupStructure();
 
-        return self::$selectList;
+        if (!isset(self::$templateGroupStructure[$parentID ?: 0])) {
+            return;
+        }
+
+        foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {
+            yield $templateGroup;
+        }
     }
 
     /**
@@ -91,11 +121,7 @@ class TemplateGroup extends DatabaseObject
      */
     protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = [])
     {
-        if (!isset(self::$templateGroupStructure[$parentID ?: 0])) {
-            return;
-        }
-
-        foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {
+        foreach (self::getParentTemplatesGroups($parentID) as $templateGroup) {
             if (!empty($ignore) && \in_array($templateGroup->templateGroupID, $ignore)) {
                 continue;
             }

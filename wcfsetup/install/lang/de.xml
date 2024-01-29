@@ -3040,6 +3040,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.group.error.shared"><![CDATA[Das Template muss in die Templategruppe „Geteilte-Templates“.]]></item>
+		<item name="wcf.acp.template.group.error.notShared"><![CDATA[Das Template darf nicht in die Templategruppe „Geteilte-Templates“.]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
