@@ -31,7 +31,7 @@ final class GroupBBCode extends AbstractBBCode
             return $content;
         }
 
-        return WCF::getTPL()->fetch('groupBBCodeTag', 'wcf', [
+        return WCF::getTPL()->fetch('shared_bbcode_group', 'wcf', [
             'group' => $group,
             'groupName' => $content,
         ], true);
