@@ -188,7 +188,7 @@ class HtmlNodePlainLink
 
                 // When multiple links are in the same paragraph, `topLevelParent`
                 // may no longer be a valid reference.
-                if ($this->topLevelParent->parentElement === null) {
+                if ($this->topLevelParent->parentNode === null) {
                     $this->topLevelParent = $this->link;
                     while ($this->topLevelParent->parentNode->nodeName !== 'body') {
                         $this->topLevelParent = $this->topLevelParent->parentNode;
@@ -197,7 +197,7 @@ class HtmlNodePlainLink
 
                 // Link inside other elements(u, i, b, …)
                 while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
-                    $parent = $parent->parentElement;
+                    $parent = $parent->parentNode;
                     $next = $this->findBr($parent, 'nextSibling');
                     $previous = $this->findBr($parent, 'previousSibling');
                 }
@@ -212,16 +212,20 @@ class HtmlNodePlainLink
                 }
 
                 if ($next !== null) {
+                    $ancestor = $this->topLevelParent->parentNode;
+                    \assert($ancestor instanceof \DOMElement);
                     $replaceNode = DOMUtil::splitParentsUntil(
                         $parent,
-                        $this->topLevelParent->parentElement,
+                        $ancestor,
                         false
                     );
                 }
                 if ($previous !== null) {
+                    $ancestor = $this->topLevelParent->parentNode;
+                    \assert($ancestor instanceof \DOMElement);
                     $replaceNode = DOMUtil::splitParentsUntil(
                         $parent,
-                        $this->topLevelParent->parentElement
+                        $ancestor
                     );
                 }
                 \assert($replaceNode instanceof \DOMElement);
