@@ -34,7 +34,7 @@ final class UserBBCode extends AbstractBBCode
         /** @var UserProfile $userProfile */
         $userProfile = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.user', $userID);
 
-        return WCF::getTPL()->fetch('shared_userBBCodeTag', 'wcf', [
+        return WCF::getTPL()->fetch('shared_bbcode_user', 'wcf', [
             'username' => $content,
             'userProfile' => $userProfile,
         ], true);
