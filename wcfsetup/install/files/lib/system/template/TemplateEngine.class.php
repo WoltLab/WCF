@@ -357,7 +357,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function getSourceFilename($templateName, $application)
     {
-        if ($this->isSharedTemplate($templateName)) {
+        if (TemplateEngine::isSharedTemplate($templateName)) {
             $sourceFilename = $this->getPath(TemplateEngine::getInstance()->templatePaths[$application], $templateName);
         } else {
             $sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
@@ -891,7 +891,7 @@ class TemplateEngine extends SingletonFactory
      * @return bool
      * @since 6.1
      */
-    protected function isSharedTemplate(string $templateName): bool
+    public static function isSharedTemplate(string $templateName): bool
     {
         return \str_starts_with($templateName, 'shared_');
     }
@@ -906,7 +906,7 @@ class TemplateEngine extends SingletonFactory
      */
     protected function getCompileFilePrefix(string $templateName): string
     {
-        if ($this->isSharedTemplate($templateName)) {
+        if (TemplateEngine::isSharedTemplate($templateName)) {
             return TemplateEngine::getInstance()->compileDir . $this->getSharedTemplateGroupID();
         } else {
             return $this->compileDir . $this->getTemplateGroupID();

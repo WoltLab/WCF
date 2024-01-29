@@ -24,6 +24,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 
 /**
@@ -92,7 +93,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                 $tplName = $tplNameFormField->getSaveValue();
 
                                 if (
-                                    \str_starts_with($tplName, 'shared_')
+                                    TemplateEngine::isSharedTemplate($tplName)
                                     && $templateGroup->templateGroupFolderName !== '_wcf_shared/'
                                 ) {
                                     $formField->addValidationError(
@@ -102,7 +103,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                         )
                                     );
                                 } elseif (
-                                    !\str_starts_with($tplName, 'shared_')
+                                    !TemplateEngine::isSharedTemplate($tplName)
                                     && $templateGroup->templateGroupFolderName === '_wcf_shared/'
                                 ) {
                                     $formField->addValidationError(
