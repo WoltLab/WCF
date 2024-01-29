@@ -64,7 +64,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
     private static function lowercaseHostname(string $url): string
     {
         $uri = new Uri($url);
-        $uri->withHost(\mb_strtolower($uri->getHost()));
+        $uri = $uri->withHost(\mb_strtolower($uri->getHost()));
 
         return $uri->__toString();
     }
