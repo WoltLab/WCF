@@ -18,6 +18,12 @@
 	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
 {/foreach}
 
+{if TIME_NOW < 1719828000}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}

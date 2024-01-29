@@ -2015,6 +2015,16 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The upgrade to WoltLab Suite {$version} is now ready. Please click on the button “Search for Updates” to start the upgrade.<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Cancel the upgrade</a>]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expiring"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support is expiring!</p>
+<p><br></p>
+<p>This version is severely outdated and will only receive security updates until <strong>July 1, 2024</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expired"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support has expired!</p>
+<p><br></p>
+<p>This version is severely outdated and will no longer receive security updates since <strong>July 1, 2024</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
