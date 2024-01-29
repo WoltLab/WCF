@@ -66,7 +66,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
-                    return WCF::getTPL()->fetch('shared_mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink(
@@ -79,7 +79,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'width' => $width,
                     ]);
                 } elseif ($media->isVideo() || $media->isAudio()) {
-                    return WCF::getTPL()->fetch('shared_mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'float' => 'none',
