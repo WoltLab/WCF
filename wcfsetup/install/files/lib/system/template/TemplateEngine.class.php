@@ -419,7 +419,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function getCompiledFilename($templateName, $application)
     {
-        return $this->getCompileDir($templateName) . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
+        return $this->getCompileFilePrefix($templateName) . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
     }
 
     /**
@@ -430,7 +430,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function getMetaDataFilename($templateName)
     {
-        return $this->getCompileDir($templateName) . '_' . $templateName . '.meta.php';
+        return $this->getCompileFilePrefix($templateName) . '_' . $templateName . '.meta.php';
     }
 
     /**
@@ -897,17 +897,17 @@ class TemplateEngine extends SingletonFactory
     }
 
     /**
-     * Returns the compile dir for the given template.
+     * Return for a given template the compile directory and file prefix.
      * This function also checks if the template is a shared template.
      *
      * @param string $templateName
      * @return string
      * @since 6.1
      */
-    protected function getCompileDir(string $templateName): string
+    protected function getCompileFilePrefix(string $templateName): string
     {
         if ($this->isSharedTemplate($templateName)) {
-            return $this->compileDir . $this->getSharedTemplateGroupID();
+            return TemplateEngine::getInstance()->compileDir . $this->getSharedTemplateGroupID();
         } else {
             return $this->compileDir . $this->getTemplateGroupID();
         }

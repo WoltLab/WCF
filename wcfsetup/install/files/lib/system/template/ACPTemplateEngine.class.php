@@ -53,7 +53,7 @@ class ACPTemplateEngine extends TemplateEngine
             $abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
         }
 
-        return $this->getCompileDir($templateName) . '_' . $abbreviation . '_' . $this->languageID . '_' . $templateName . '.php';
+        return $this->getCompileFilePrefix($templateName) . '_' . $abbreviation . '_' . $this->languageID . '_' . $templateName . '.php';
     }
 
     /**
