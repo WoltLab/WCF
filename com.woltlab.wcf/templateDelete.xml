@@ -108,6 +108,8 @@
 		<template>userOptionsCondition</template>
 		<template>worker</template>
 		<template>wysiwyg</template>
+		<template>articleBBCode</template>
+		<template>mediaBBCodeTag</template>
 		<template>groupBBCodeTag</template>
 		<template>__videoAttachmentBBCode</template>
 		<template>__audioAttachmentBBCode</template>

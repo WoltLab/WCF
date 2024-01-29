@@ -387,7 +387,11 @@ class TemplateEngine extends SingletonFactory
     protected function getPath($templatePath, $templateName)
     {
         if (!Template::isSystemCritical($templateName)) {
-            $templateGroupID = $this->getTemplateGroupID();
+            if (TemplateEngine::isSharedTemplate($templateName)) {
+                $templateGroupID = $this->getSharedTemplateGroupID();
+            } else {
+                $templateGroupID = $this->getTemplateGroupID();
+            }
             while ($templateGroupID != 0) {
                 $templateGroup = $this->templateGroupCache[$templateGroupID];
 
@@ -917,8 +921,8 @@ class TemplateEngine extends SingletonFactory
     {
         if (!isset($this->sharedTemplateGroupID)) {
             $sql = "SELECT  templateGroupID
-                FROM    wcf" . WCF_N . "_template_group
-                WHERE   templateGroupFolderName = ?";
+                    FROM    wcf" . WCF_N . "_template_group
+                    WHERE   templateGroupFolderName = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(['_wcf_shared/']);
 
