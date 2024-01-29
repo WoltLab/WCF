@@ -463,7 +463,7 @@ class CssInliner extends AbstractHtmlProcessor
 
         $properties = [];
         foreach (\preg_split('/;(?!base64|charset)/', $cssDeclarationsBlock) as $declaration) {
-            /** @var array<int, string> $matches */
+            /** @var list<string> $matches */
             $matches = [];
             if (!\preg_match('/^([A-Za-z\\-]+)\\s*:\\s*(.+)$/s', \trim($declaration), $matches)) {
                 continue;
@@ -492,7 +492,9 @@ class CssInliner extends AbstractHtmlProcessor
 
         $css = '';
         foreach ($styleNodes as $styleNode) {
-            $css .= "\n\n" . $styleNode->nodeValue;
+            if (\is_string($styleNode->nodeValue)) {
+                $css .= "\n\n" . $styleNode->nodeValue;
+            }
             $parentNode = $styleNode->parentNode;
             if ($parentNode instanceof \DOMNode) {
                 $parentNode->removeChild($styleNode);
@@ -505,7 +507,7 @@ class CssInliner extends AbstractHtmlProcessor
     /**
      * Find the nodes that are not to be emogrified.
      *
-     * @return array<int, \DOMElement>
+     * @return list<\DOMElement>
      *
      * @throws ParseException
      * @throws \UnexpectedValueException
@@ -608,8 +610,8 @@ class CssInliner extends AbstractHtmlProcessor
         \usort(
             $cssRules['inlinable'],
             /**
-             * @param array{selector: string, line: int} $first
-             * @param array{selector: string, line: int} $second
+             * @param array{selector: string, line: int, ...} $first
+             * @param array{selector: string, line: int, ...} $second
              */
             function (array $first, array $second): int {
                 return $this->sortBySelectorPrecedence($first, $second);
@@ -667,8 +669,8 @@ class CssInliner extends AbstractHtmlProcessor
     }
 
     /**
-     * @param array{selector: string, line: int} $first
-     * @param array{selector: string, line: int} $second
+     * @param array{selector: string, line: int, ...} $first
+     * @param array{selector: string, line: int, ...} $second
      *
      * @return int
      */
@@ -1146,7 +1148,7 @@ class CssInliner extends AbstractHtmlProcessor
      *
      * This method only supports strings, not arrays of strings.
      *
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $replacement
      * @param string $subject
      *
