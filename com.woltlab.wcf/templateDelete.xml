@@ -58,7 +58,6 @@
 		<template>__uploadFormField</template>
 		<template>__wysiwygSmileyFormNode</template>
 		<template>__form</template>
-		<template>__formField</template>
 		<template>__formContainerChildren</template>
 		<template>__formContainerDependencies</template>
 		<template>__formField</template>
