@@ -4,6 +4,7 @@
 
 /**
  * Helper script to migrate include templates to new shared templates in WoltLab Suite before 6.1.
+ * Replace in all `.tpl` files the `{include file='__oldTemplateName'}` with the new template name.
  *
  * @author Olaf Braun
  * @copyright 2001-2024 WoltLab GmbH
