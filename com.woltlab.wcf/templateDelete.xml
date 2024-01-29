@@ -109,5 +109,8 @@
 		<template>userOptionsCondition</template>
 		<template>worker</template>
 		<template>wysiwyg</template>
+		<template>groupBBCodeTag</template>
+		<template>__videoAttachmentBBCode</template>
+		<template>__audioAttachmentBBCode</template>
 	</delete>
 </data>

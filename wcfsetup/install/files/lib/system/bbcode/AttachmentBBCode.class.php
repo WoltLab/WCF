@@ -253,7 +253,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
     private function showVideoPlayer(Attachment $attachment): string
     {
-        return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
+        return WCF::getTPL()->fetch('shared_bbcode_attach_video', 'wcf', [
             'attachment' => $attachment,
             'attachmentIdentifier' => StringUtil::getRandomID(),
         ]);
@@ -261,7 +261,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
     private function showAudioPlayer(Attachment $attachment): string
     {
-        return WCF::getTPL()->fetch('__audioAttachmentBBCode', 'wcf', [
+        return WCF::getTPL()->fetch('shared_bbcode_attach_audio', 'wcf', [
             'attachment' => $attachment,
             'attachmentIdentifier' => StringUtil::getRandomID(),
         ]);
