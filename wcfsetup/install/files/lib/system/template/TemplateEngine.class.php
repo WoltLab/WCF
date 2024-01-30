@@ -959,12 +959,19 @@ class TemplateEngine extends SingletonFactory
     public function getTemplateListenerCode($templateName, $eventName)
     {
         $this->loadTemplateListenerCode();
-
+        $listeners = [];
         if (isset($this->templateListeners[$templateName][$eventName])) {
-            return \implode("\n", $this->templateListeners[$templateName][$eventName]);
+            $listeners = $this->templateListeners[$templateName][$eventName];
+        }
+        // Load old template listener code
+        if (\array_key_exists($templateName, TemplateEngine::SHARED_TEMPLATES)) {
+            $templateName = TemplateEngine::SHARED_TEMPLATES[$templateName];
+            if (isset($this->templateListeners[$templateName][$eventName])) {
+                $listeners = \array_merge($listeners, $this->templateListeners[$templateName][$eventName]);
+            }
         }
 
-        return '';
+        return \implode("\n", $listeners);
     }
 
     /**
