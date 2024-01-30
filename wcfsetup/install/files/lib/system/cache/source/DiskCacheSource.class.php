@@ -21,7 +21,7 @@ final class DiskCacheSource implements ICacheSource
     {
         if ($useWildcard) {
             $quoted = \preg_quote($cacheName, '/');
-            $regex = "/^cache\\.{$quoted}(-[a-f0-9]+)?\\.v1\\.php$/";
+            $regex = "/^cache\\.{$quoted}(-[a-f0-9]+)?\\.v2\\.php$/";
 
             $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
             foreach ($iterator as $file) {
