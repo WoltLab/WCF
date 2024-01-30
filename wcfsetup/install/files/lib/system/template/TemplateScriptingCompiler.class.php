@@ -1352,6 +1352,8 @@ class TemplateScriptingCompiler
         $formatNumeric = false;
         if ($tag[0] == '@') {
             $tag = \mb_substr($tag, 1);
+        } elseif (\str_starts_with($tag, 'unsafe:')) {
+            $tag = \mb_substr($tag, 7);
         } elseif ($tag[0] == '#') {
             $tag = \mb_substr($tag, 1);
             $formatNumeric = true;
@@ -1902,7 +1904,7 @@ class TemplateScriptingCompiler
         $this->quotePattern = '(?:' . $this->doubleQuotePattern . '|' . $this->singleQuotePattern . ')';
         $this->numericPattern = '(?i)(?:(?:\-?\d+(?:\.\d+)?)|true|false|null)';
         $this->simpleVarPattern = '(?:\$(' . $this->validVarnamePattern . '))';
-        $this->outputPattern = '(?:(?:@|#)?(?:' . $this->constantPattern . '|' . $this->quotePattern . '|' . $this->numericPattern . '|' . $this->simpleVarPattern . '|\())';
+        $this->outputPattern = '(?:(?:@|#|unsafe:)?(?:' . $this->constantPattern . '|' . $this->quotePattern . '|' . $this->numericPattern . '|' . $this->simpleVarPattern . '|\())';
     }
 
     /**
