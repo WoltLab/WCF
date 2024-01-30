@@ -1047,9 +1047,9 @@ class TemplateEngine extends SingletonFactory
     {
         if (!isset($this->sharedTemplateGroupID)) {
             $sql = "SELECT  templateGroupID
-                    FROM    wcf" . WCF_N . "_template_group
+                    FROM    wcf1_template_group
                     WHERE   templateGroupFolderName = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(['_wcf_shared/']);
 
             $this->sharedTemplateGroupID = $statement->fetchSingleColumn();
