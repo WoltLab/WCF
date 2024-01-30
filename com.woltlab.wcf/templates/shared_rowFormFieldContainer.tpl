@@ -11,9 +11,9 @@
 					<div id="{$field->getPrefixedId()}Container" {if !$field->getClasses()|empty} class="{implode from=$field->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$field->checkDependencies()} style="display: none;"{/if}>
 						{@$field->getFieldHtml()}
 						
-						{include file='__formFieldErrors'}
-						{include file='__formFieldDependencies'}
-						{include file='__formFieldDataHandler'}
+						{include file='shared_formFieldErrors'}
+						{include file='shared_formFieldDependencies'}
+						{include file='shared_formFieldDataHandler'}
 					</div>
 				{/if}
 			{/foreach}

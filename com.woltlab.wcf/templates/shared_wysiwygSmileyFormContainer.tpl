@@ -1,4 +1,4 @@
-{include file='__tabTabMenuFormContainer'}
+{include file='shared_tabTabMenuFormContainer'}
 
 <script data-relocate="true">
 	$(function() {

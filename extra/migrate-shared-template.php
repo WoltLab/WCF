@@ -178,7 +178,7 @@ function replaceTemplateInclude(string $filename): bool
     global $templates;
     $content = file_get_contents($filename);
     $content = preg_replace_callback(
-        '~\{include.*(?<fileInclude>file=[\'\"](?<templateName>\w+)[\'\"]).*}~',
+        '~\{include.*(?<fileInclude>file=[\'\"](?<templateName>'.\implode('|', \array_keys($templates)).')[\'\"]).*}~',
         function (array $matches) use ($templates): string {
             [
                 'fileInclude' => $fileInclude,

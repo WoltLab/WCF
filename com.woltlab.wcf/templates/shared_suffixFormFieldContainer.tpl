@@ -25,8 +25,8 @@
 						<input type="hidden" id="{$element->getSuffixField()->getPrefixedId()}" name="{$element->getSuffixField()->getPrefixedId()}" value="{if $element->getSuffixField()->getValue() === null}{$element->getSelectedSuffixOption()[value]}{else}{$element->getSuffixField()->getValue()}{/if}" />
 					</span>
 					
-					{include file='__formFieldDependencies' field=$element->getSuffixField()}
-					{include file='__formFieldDataHandler' field=$element->getSuffixField()}
+					{include file='shared_formFieldDependencies' field=$element->getSuffixField()}
+					{include file='shared_formFieldDataHandler' field=$element->getSuffixField()}
 				{/if}
 			{/if}
 		</div>
@@ -35,7 +35,7 @@
 			<small>{@$element->getDescription()}</small>
 		{/if}
 		
-		{include file='__formFieldErrors' field=$element->getField()}
+		{include file='shared_formFieldErrors' field=$element->getField()}
 		
 		{if $element->getSuffixField() !== null && $element->getSuffixField()->isAvailable()}
 			{foreach from=$element->getSuffixField()->getValidationErrors() item='validationError'}
@@ -43,8 +43,8 @@
 			{/foreach}
 		{/if}
 		
-		{include file='__formFieldDependencies' field=$element->getField()}
-		{include file='__formFieldDataHandler' field=$element->getField()}
+		{include file='shared_formFieldDependencies' field=$element->getField()}
+		{include file='shared_formFieldDataHandler' field=$element->getField()}
 	</dd>
 </dl>
 
