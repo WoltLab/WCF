@@ -156,5 +156,6 @@
 		<template>groupBBCodeTag</template>
 		<template>__videoAttachmentBBCode</template>
 		<template>__audioAttachmentBBCode</template>
+		<template>__multiPageCondition</template>
 	</delete>
 </data>
