@@ -1630,6 +1630,7 @@ class TemplateScriptingCompiler
                         break;
 
                     case '->': // object access
+                    case '?->':
                         if ($status == 'variable' || $status == 'object') {
                             $result .= $operator;
                             $statusStack[\count($statusStack) - 1] = 'object access';
@@ -1638,7 +1639,7 @@ class TemplateScriptingCompiler
 
                         throw new SystemException(
                             static::formatSyntaxError(
-                                "unexpected '->' in tag '" . $tag . "'",
+                                "unexpected '" . $operator . "' in tag '" . $tag . "'",
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             )
@@ -1891,7 +1892,7 @@ class TemplateScriptingCompiler
      */
     protected function buildPattern()
     {
-        $this->variableOperatorPattern = '\-\>|\.|\(|\)|\[|\]|\||\:|\+|\-|\*|\/|\%|\^|\,';
+        $this->variableOperatorPattern = '\?\-\>|\-\>|\.|\(|\)|\[|\]|\||\:|\+|\-|\*|\/|\%|\^|\,';
         $this->conditionOperatorPattern = '===|!==|==|!=|<=|<|>=|(?<!-)>|\|\||&&|!|=';
         $this->escapedPattern = '(?<!\\\\)';
         $this->validVarnamePattern = '(?:[a-zA-Z_][a-zA-Z_0-9]*)';
