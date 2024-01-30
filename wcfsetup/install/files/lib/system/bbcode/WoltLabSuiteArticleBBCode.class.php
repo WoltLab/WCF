@@ -32,11 +32,11 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 
         $article = $this->getArticle($articleID);
         if ($article === null) {
-            return WCF::getTPL()->fetch('contentNotVisible');
+            return WCF::getTPL()->fetch('shared_contentNotVisible');
         }
 
         if (!$article->canRead()) {
-            return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
+            return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
                 'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         } elseif ($parser->getOutputType() == 'text/html') {

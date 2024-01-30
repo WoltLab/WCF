@@ -650,8 +650,10 @@ class WCF
                 throw new SystemException('Unable to load configuration for ' . $package->package);
             }
 
-            // register template path if not within ACP
-            if (!\class_exists('wcf\system\WCFACP', false)) {
+            if (\class_exists('wcf\system\WCFACP', false)) {
+                // In acp we need to load the application and path into TemplateEngine
+                TemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
+            } else {
                 // add template path and abbreviation
                 static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
             }
