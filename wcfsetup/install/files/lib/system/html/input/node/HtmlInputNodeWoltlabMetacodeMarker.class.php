@@ -574,14 +574,6 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
                 /** @var \DOMElement $node */
                 return \in_array($node->getAttribute('data-name'), $this->blockElements);
 
-            case 'a':
-                /** @var \DOMElement $node */
-                $metacodeChild = $node->firstChild;
-                if (!($metacodeChild instanceof \DOMElement)) {
-                    return false;
-                }
-                return $metacodeChild->nodeName === 'woltlab-metacode-marker'
-                    && $metacodeChild->getAttribute('data-name') === 'wsm';
             default:
                 return \in_array($node->nodeName, self::$customBlockElementTagNames);
         }
