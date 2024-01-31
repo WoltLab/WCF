@@ -75,6 +75,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $class = $element->getAttribute('class');
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
                 $this->handleAttachment($element, $class);
+            } elseif (\preg_match('~\bwoltlabSuiteMedia\b~', $class)) {
+                $this->handleMedium($element, $class);
             } elseif (\preg_match('~\bsmiley\b~', $class)) {
                 $this->handleSmiley($element);
             }
