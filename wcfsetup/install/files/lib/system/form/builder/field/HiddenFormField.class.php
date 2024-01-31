@@ -20,7 +20,7 @@ final class HiddenFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__hiddenFormField';
+    protected $templateName = 'shared_hiddenFormField';
 
     /**
      * @inheritDoc

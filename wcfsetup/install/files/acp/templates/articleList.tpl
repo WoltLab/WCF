@@ -239,6 +239,6 @@
 	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='articleAddDialog'}
+{include file='shared_articleAddDialog'}
 
 {include file='footer'}

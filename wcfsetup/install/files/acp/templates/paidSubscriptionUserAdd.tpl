@@ -31,7 +31,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PaidSubscriptionUserAdd' id=$subscriptionID}{/link}{else}{link controller='PaidSubscriptionUserEdit' id=$subscriptionUserID}{/link}{/if}">
 	<div class="section">

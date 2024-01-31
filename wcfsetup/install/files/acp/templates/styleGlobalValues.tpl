@@ -15,7 +15,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $success|isset}
 	<woltlab-core-notice type="success">{lang}wcf.global.success{/lang}</woltlab-core-notice>
@@ -41,7 +41,7 @@
 				</small>
 			{/if}
 		</dl>
-		{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#styles'}
+		{include file='shared_codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#styles'}
 	</div>
 	
 	{event name='sections'}

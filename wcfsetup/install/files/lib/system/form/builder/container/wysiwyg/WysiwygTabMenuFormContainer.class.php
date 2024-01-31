@@ -18,7 +18,7 @@ class WysiwygTabMenuFormContainer extends TabMenuFormContainer
     /**
      * @inheritDoc
      */
-    protected $templateName = '__wysiwygTabMenuFormContainer';
+    protected $templateName = 'shared_wysiwygTabMenuFormContainer';
 
     /**
      * Creates a new instance of `WysiwygTabMenuFormContainer`.

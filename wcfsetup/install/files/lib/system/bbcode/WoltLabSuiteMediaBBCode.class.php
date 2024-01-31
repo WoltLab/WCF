@@ -48,7 +48,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
         /** @var ViewableMedia $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media === null) {
-            return WCF::getTPL()->fetch('contentNotVisible');
+            return WCF::getTPL()->fetch('shared_contentNotVisible');
         }
 
         if ($media->isAccessible()) {
@@ -66,7 +66,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
-                    return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink(
@@ -79,7 +79,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'width' => $width,
                     ]);
                 } elseif ($media->isVideo() || $media->isAudio()) {
-                    return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
+                    return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
                         'float' => 'none',
@@ -95,7 +95,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             return StringUtil::encodeHTML($this->getLink($media));
         } else {
-            return WCF::getTPL()->fetch('contentNotVisible', 'wcf', [
+            return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
                 'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         }

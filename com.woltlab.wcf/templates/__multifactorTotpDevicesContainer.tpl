@@ -36,7 +36,7 @@
 	</div>
 </section>
 
-{include file='__formContainerDependencies'}
+{include file='shared_formContainerDependencies'}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {

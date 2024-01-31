@@ -39,7 +39,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     /**
      * @inheritDoc
      */
-    protected $templateName = '__labelFormField';
+    protected $templateName = 'shared_labelFormField';
 
     /**
      * loaded labels grouped by label object type and object id to avoid loading the same labels

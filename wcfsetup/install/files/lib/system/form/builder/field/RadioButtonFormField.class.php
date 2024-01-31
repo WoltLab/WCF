@@ -31,7 +31,7 @@ class RadioButtonFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__radioButtonFormField';
+    protected $templateName = 'shared_radioButtonFormField';
 
     /**
      * @inheritDoc

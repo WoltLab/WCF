@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form id="formContainer" method="post" action="{if $action == 'add'}{link controller='NoticeAdd'}{/link}{else}{link controller='NoticeEdit' object=$notice}{/link}{/if}">
 	<div class="section">
@@ -51,7 +51,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='notice' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='notice' forceSelection=false}
 		
 		<dl>
 			<dt></dt>
@@ -164,8 +164,8 @@
 			<h2 class="sectionTitle">{lang}wcf.acp.notice.conditions.user{/lang}</h2>
 			<p class="sectionDescription">{lang}wcf.acp.notice.conditions.user.description{/lang}</p>
 		</header>
-	
-		{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
+
+		{include file='shared_userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
 	</section>
 	
 	{event name='conditionContainers'}

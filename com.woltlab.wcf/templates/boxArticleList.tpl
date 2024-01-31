@@ -16,7 +16,7 @@
 								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 							{elseif $boxSortField == 'cumulativeLikes'}
 								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $boxArticle->cachedReactions}
-									{include file='__topReaction' cachedReactions=$boxArticle->cachedReactions render='full'}
+									{include file='shared_topReaction' cachedReactions=$boxArticle->cachedReactions render='full'}
 								{/if}
 							{/if}
 						</small>

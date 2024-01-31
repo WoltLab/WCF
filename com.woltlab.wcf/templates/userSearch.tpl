@@ -3,7 +3,7 @@
 {if $errorField == 'search'}
 	<woltlab-core-notice type="error">{lang}wcf.user.search.error.noMatches{/lang}</woltlab-core-notice>
 {else}
-	{include file='formError'}
+	{include file='shared_formError'}
 {/if}
 
 <form method="post" action="{link controller='UserSearch'}{/link}">

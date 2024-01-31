@@ -29,7 +29,7 @@ final class SelectFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__selectFormField';
+    protected $templateName = 'shared_selectFormField';
 
     /**
      * @inheritDoc

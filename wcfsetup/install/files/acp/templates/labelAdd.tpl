@@ -38,7 +38,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $labelGroupList|count}
 	<form method="post" action="{if $action == 'add'}{link controller='LabelAdd'}{/link}{else}{link controller='LabelEdit' object=$label}{/link}{/if}">
@@ -82,7 +82,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='label' forceSelection=false}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='label' forceSelection=false}
 			
 			<dl>
 				<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>

@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='StyleExport' id=$styleID}{/link}">
 	<section class="section">

@@ -45,7 +45,7 @@ final class RatingFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__ratingFormField';
+    protected $templateName = 'shared_ratingFormField';
 
     /**
      * Creates a new instance of `RatingFormField`.

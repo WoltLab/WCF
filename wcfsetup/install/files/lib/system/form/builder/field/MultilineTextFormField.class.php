@@ -21,7 +21,7 @@ class MultilineTextFormField extends TextFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__multilineTextFormField';
+    protected $templateName = 'shared_multilineTextFormField';
 
     /**
      * @inheritDoc

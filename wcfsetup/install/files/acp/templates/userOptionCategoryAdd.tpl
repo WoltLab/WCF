@@ -15,7 +15,7 @@
 
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserOptionCategoryAdd'}{/link}{else}{link controller='UserOptionCategoryEdit' id=$categoryID}{/link}{/if}">
 	<div class="section">
@@ -34,7 +34,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='categoryName' forceSelection=true}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='categoryName' forceSelection=true}
 		
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>

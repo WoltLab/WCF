@@ -20,7 +20,7 @@
 	
 	{if MODULE_SMILEY && !$smileyCategories|empty}{include file='messageFormSmilies'}{/if}
 	{if !$attachmentHandler|empty && $attachmentHandler->canUpload()}
-		{include file='messageFormAttachments'}
+		{include file='shared_messageFormAttachments'}
 	{/if}
 	
 	{if $__messageFormSettingsInlineContent}{@$__messageFormSettingsInlineContent}{/if}

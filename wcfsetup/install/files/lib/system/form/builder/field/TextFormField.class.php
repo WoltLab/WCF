@@ -49,7 +49,7 @@ class TextFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__textFormField';
+    protected $templateName = 'shared_textFormField';
 
     /**
      * Creates a new instance of `TextFormField`.

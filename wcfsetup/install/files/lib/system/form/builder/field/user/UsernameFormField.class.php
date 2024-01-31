@@ -64,7 +64,7 @@ final class UsernameFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__usernameFormField';
+    protected $templateName = 'shared_usernameFormField';
 
     /**
      * Creates a new instance of `UsernameFormField`.

@@ -17,5 +17,5 @@ class UserBulkProcessableObjectType extends AbstractBulkProcessableObjectType
     /**
      * @inheritDoc
      */
-    protected $templateName = 'userConditions';
+    protected $templateName = 'shared_userConditions';
 }

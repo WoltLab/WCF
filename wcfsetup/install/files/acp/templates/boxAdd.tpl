@@ -84,7 +84,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $action == 'edit' && !$lastVersion|empty}
 	<woltlab-core-notice type="info">{lang}wcf.acp.box.lastVersion{/lang}</woltlab-core-notice>
@@ -447,7 +447,7 @@
 		</div>
 
 		<div id="acl" class="tabMenuContent">
-			{include file='aclSimple' __supportsInvertedPermissions=true}
+			{include file='shared_aclSimple' __supportsInvertedPermissions=true}
 		</div>
 
 		<div id="conditions" class="tabMenuContent">
@@ -479,7 +479,7 @@
 						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} hidden{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
 					</dt>
 					<dd>
-						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
+						{include file='shared_scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
 					</dd>
 				</dl>
 
@@ -508,7 +508,7 @@
 						<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.user{/lang}</h2>
 					</header>
 
-					{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
+					{include file='shared_userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
 				</section>
 			{/if}
 

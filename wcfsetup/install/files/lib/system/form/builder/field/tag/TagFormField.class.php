@@ -42,7 +42,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     /**
      * @inheritDoc
      */
-    protected $templateName = '__tagFormField';
+    protected $templateName = 'shared_tagFormField';
 
     /**
      * Creates a new instance of `TagFormField`.

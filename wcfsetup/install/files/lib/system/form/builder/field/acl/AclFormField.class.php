@@ -43,7 +43,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     /**
      * @inheritDoc
      */
-    protected $templateName = '__aclFormField';
+    protected $templateName = 'shared_aclFormField';
 
     /**
      * is `true` if acl-related global JavaScript code has already been included

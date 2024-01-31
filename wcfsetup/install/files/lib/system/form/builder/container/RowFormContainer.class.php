@@ -18,7 +18,7 @@ class RowFormContainer extends FormContainer
     /**
      * @inheritDoc
      */
-    protected $templateName = '__rowFormContainer';
+    protected $templateName = 'shared_rowFormContainer';
 
     /**
      * @inheritDoc

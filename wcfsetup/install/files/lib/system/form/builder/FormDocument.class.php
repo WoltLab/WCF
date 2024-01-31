@@ -443,7 +443,7 @@ class FormDocument implements IFormDocument
         }
 
         return WCF::getTPL()->fetch(
-            '__form',
+            'shared_form',
             'wcf',
             \array_merge($this->getHtmlVariables(), ['form' => $this])
         );

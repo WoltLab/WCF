@@ -1,6 +1,6 @@
 {include file='header'}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='Contact'}{/link}">
 	<section class="section">
@@ -73,7 +73,7 @@
 		
 		{if CONTACT_FORM_ENABLE_ATTACHMENTS && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			<div class="contactFormAttachments">
-				{include file='messageFormAttachments' wysiwygSelector=''}
+				{include file='shared_messageFormAttachments' wysiwygSelector=''}
 			</div>
 		{/if}
 		
@@ -93,8 +93,8 @@
 	</section>
 	
 	{event name='sections'}
-	
-	{include file='captcha' supportsAsyncCaptcha=true}
+
+	{include file='shared_captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

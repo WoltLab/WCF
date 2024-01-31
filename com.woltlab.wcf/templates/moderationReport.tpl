@@ -65,7 +65,7 @@
 
 {include file='header'}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>

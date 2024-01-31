@@ -27,7 +27,7 @@ class Template extends DatabaseObject
      * list of system critical templates
      * @var string[]
      */
-    protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'wysiwyg', 'wysiwygToolbar'];
+    protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'shared_wysiwyg', 'wysiwygToolbar'];
 
     /** @noinspection PhpMissingParentConstructorInspection */
 

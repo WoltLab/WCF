@@ -24,7 +24,7 @@ final class ColorFormField extends AbstractFormField implements IImmutableFormFi
     /**
      * @inheritDoc
      */
-    protected $templateName = '__colorFormField';
+    protected $templateName = 'shared_colorFormField';
 
     /**
      * @inheritDoc

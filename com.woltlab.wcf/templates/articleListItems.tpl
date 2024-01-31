@@ -61,7 +61,7 @@
 				<div class="contentItemMetaIcons">
 					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $article->cumulativeLikes}
 						<div class="contentItemMetaIcon">
-							{include file='__topReaction' cachedReactions=$article->cachedReactions render='short'}
+							{include file='shared_topReaction' cachedReactions=$article->cachedReactions render='short'}
 						</div>
 					{/if}
 					{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}

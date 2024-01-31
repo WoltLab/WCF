@@ -51,7 +51,7 @@
 	{/hascontent}
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if !$exporterName}
 	{if !$availableExporters|count}

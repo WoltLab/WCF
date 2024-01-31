@@ -3017,6 +3017,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.template.group"><![CDATA[Templategruppe]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Standardtemplates]]></item>
 		<item name="wcf.acp.template.group.email"><![CDATA[E-Mail-Templates]]></item>
+		<item name="wcf.acp.template.group.shared"><![CDATA[Geteilte-Templates]]></item>
 		<item name="wcf.acp.template.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Template hinzufügen]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Template bearbeiten]]></item>
@@ -3040,6 +3041,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.group.error.shared"><![CDATA[Das Template muss in die Templategruppe „Geteilte-Templates“.]]></item>
+		<item name="wcf.acp.template.group.error.notShared"><![CDATA[Das Template darf nicht in die Templategruppe „Geteilte-Templates“.]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>

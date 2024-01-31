@@ -15,7 +15,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $success|isset}
 	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>

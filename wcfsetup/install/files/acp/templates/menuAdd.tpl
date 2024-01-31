@@ -17,7 +17,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuAdd'}{/link}{else}{link controller='MenuEdit' id=$menuID}{/link}{/if}">
 	{if $action == 'edit' && $menu->identifier == 'com.woltlab.wcf.MainMenu'}
@@ -36,7 +36,7 @@
 							{/if}
 						</small>
 					{/if}
-					{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+					{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 				</dd>
 			</dl>
 		</div>
@@ -68,7 +68,7 @@
 									{/if}
 								</small>
 							{/if}
-							{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+							{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 						</dd>
 					</dl>
 					
@@ -152,7 +152,7 @@
 							<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
 						</dt>
 						<dd>
-							{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='menuVisibilitySettings' pageCheckboxID='pageIDs'}
+							{include file='shared_scrollablePageCheckboxList' pageCheckboxListContainerID='menuVisibilitySettings' pageCheckboxID='pageIDs'}
 						</dd>
 					</dl>
 					
@@ -161,7 +161,7 @@
 			</div>
 			
 			<div id="acl" class="tabMenuContent">
-				{include file='aclSimple'}
+				{include file='shared_aclSimple'}
 			</div>
 		</div>
 	{/if}

@@ -85,7 +85,7 @@ class UploadFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__uploadFormField';
+    protected $templateName = 'shared_uploadFormField';
 
     /**
      * Array of temporary values, which are assigned, after the method `populate` are called.

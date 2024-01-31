@@ -54,8 +54,8 @@
 			<div class="layoutBoundary">
 				{content}
 					{event name='footerContents'}
-					
-					{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
+
+					{if ENABLE_BENCHMARK}{include file='shared_benchmark'}{/if}
 					
 					{include file='pageFooterCopyright'}
 				

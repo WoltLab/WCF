@@ -71,7 +71,7 @@
 	<woltlab-core-notice type="info">{lang}wcf.acp.page.lastVersion{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PageAdd'}{/link}{else}{link controller='PageEdit' id=$pageID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
@@ -523,7 +523,7 @@
 
 		{if $action != 'edit' || $page->pageType != 'system'}
 			<div id="acl" class="tabMenuContent">
-				{include file='aclSimple' __supportsInvertedPermissions=true}
+				{include file='shared_aclSimple' __supportsInvertedPermissions=true}
 			</div>
 		{/if}
 

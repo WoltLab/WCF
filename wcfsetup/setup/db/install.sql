@@ -2490,8 +2490,9 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMod
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('individualScssDarkMode', '', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfHeaderMenuDropdownBorder', 'rgba(36, 66, 95, 1)', 'rgba(36, 66, 95, 1)');
 
--- Email template group
+-- System template groups
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
+INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.shared', '_wcf_shared/');
 
 -- default options: subject and message
 INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (1, 'wcf.contact.option1', 'wcf.contact.optionDescription1', 'text', 1, 1, 1);

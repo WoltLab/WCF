@@ -6,7 +6,7 @@
 	<woltlab-core-notice type="error">{lang}wcf.user.avatar.error.disabled{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $success|isset}
 	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>

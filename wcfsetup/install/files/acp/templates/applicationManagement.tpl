@@ -14,7 +14,7 @@
 	{/hascontent}
 </header>
 
-{include file='formNotice' action='edit'}
+{include file='shared_formNotice' action='edit'}
 
 <form method="post" action="{link controller='ApplicationManagement'}{/link}">
 	{if !ENABLE_ENTERPRISE_MODE || $__wcf->user->hasOwnerAccess()}
