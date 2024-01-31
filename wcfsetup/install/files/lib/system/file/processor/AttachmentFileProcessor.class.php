@@ -2,6 +2,8 @@
 
 namespace wcf\system\file\processor;
 
+use wcf\data\attachment\AttachmentEditor;
+use wcf\data\file\File;
 use wcf\system\attachment\AttachmentHandler;
 
 /**
@@ -28,6 +30,26 @@ final class AttachmentFileProcessor implements IFileProcessor
         $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
 
         return $attachmentHandler->getAllowedExtensions();
+    }
+
+    public function adopt(File $file, array $context): void
+    {
+        // TODO: Properly validate the shape of `$context`.
+        $objectType = $context['objectType'] ?? '';
+        $objectID = \intval($context['objectID'] ?? 0);
+        $parentObjectID = \intval($context['parentObjectID'] ?? 0);
+        $tmpHash = $context['tmpHash'] ?? '';
+
+        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
+
+        // TODO: How do we want to create the attachments? Do we really want to
+        //       keep using the existing attachment table though?
+        AttachmentEditor::fastCreate([
+            'objectTypeID' => $attachmentHandler->getObjectType()->objectTypeID,
+            'objectID' => $attachmentHandler->getObjectID(),
+            'tmpHash' => $tmpHash,
+            'fileID' => $file->fileID,
+        ]);
     }
 
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult

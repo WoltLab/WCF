@@ -2,6 +2,8 @@
 
 namespace wcf\system\file\processor;
 
+use wcf\data\file\File;
+
 /**
  * @author Alexander Ebert
  * @copyright 2001-2024 WoltLab GmbH
@@ -11,6 +13,8 @@ namespace wcf\system\file\processor;
 interface IFileProcessor
 {
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult;
+
+    public function adopt(File $file, array $context): void;
 
     public function getAllowedFileExtensions(array $context): array;
 

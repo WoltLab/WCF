@@ -12,7 +12,6 @@ use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\temporary\FileTemporaryEditor;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\io\AtomicWriter;
 use wcf\system\io\File as IoFile;
 
 final class FileUploadAction implements RequestHandlerInterface
@@ -44,7 +43,6 @@ final class FileUploadAction implements RequestHandlerInterface
         }
 
         // Check if this is a valid sequence no.
-        $numberOfChunks = $fileTemporary->getChunkCount();
         if ($parameters['sequenceNo'] >= $fileTemporary->getChunkCount()) {
             // TODO: Proper error message
             throw new IllegalLinkException();
@@ -119,7 +117,17 @@ final class FileUploadAction implements RequestHandlerInterface
 
             $file = FileEditor::createFromTemporary($fileTemporary);
 
+            $context = $fileTemporary->getContext();
             (new FileTemporaryEditor($fileTemporary))->delete();
+            unset($fileTemporary);
+
+            $processor = $file->getProcessor();
+            if ($processor === null) {
+                // TODO: Mark the file as orphaned.
+                \assert($processor !== null);
+            }
+
+            $processor->adopt($file, $context);
 
             // TODO: This is just debug code.
             return new JsonResponse([
