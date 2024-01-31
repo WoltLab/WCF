@@ -30,6 +30,7 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         }
         if ($width !== 'auto') {
             $element->setAttribute('width', \intval($width));
+            $element->setAttribute('data-width', \intval($width) . 'px');
         }
         $element->setAttribute('data-media-id', \intval($mediaID));
         $element->setAttribute('data-media-size', StringUtil::decodeHTML($thumbnail));
