@@ -31,23 +31,23 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         if ($width !== 'auto') {
             $element->setAttribute('width', \intval($width));
         }
-        if ($alignment === 'none') {
-            $element->setAttribute('class', 'image woltlabSuiteMedia');
-        } else {
-            $figure = $fragment->ownerDocument->createElement('figure');
-            if ($alignment === 'left') {
-                $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side-left');
-            } elseif ($alignment === 'right') {
-                $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side');
-            } else {
-                $figure->setAttribute('class', 'image woltlabSuiteMedia');
-            }
-            $figure->appendChild($element);
-            $element = $figure;
-        }
         $element->setAttribute('data-media-id', \intval($mediaID));
         $element->setAttribute('data-media-size', StringUtil::decodeHTML($thumbnail));
-        return $element;
+        if ($alignment === 'none') {
+            $element->setAttribute('class', 'image woltlabSuiteMedia');
+            return $element;
+        }
+
+        $figure = $fragment->ownerDocument->createElement('figure');
+        if ($alignment === 'left') {
+            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side-left');
+        } elseif ($alignment === 'right') {
+            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side');
+        } else {
+            $figure->setAttribute('class', 'image woltlabSuiteMedia');
+        }
+        $figure->appendChild($element);
+        return $figure;
     }
 
     #[\Override]
