@@ -22,27 +22,32 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         $width = $attributes[3] ?? 'auto';
         $media = ViewableMediaRuntimeCache::getInstance()->getObject($mediaID);
 
-        $img = $fragment->ownerDocument->createElement('img');
+        $element = $fragment->ownerDocument->createElement('img');
         if ($thumbnail === 'original') {
-            $img->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
+            $element->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
         } else {
-            $img->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
+            $element->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
         }
         if ($width !== 'auto') {
-            $img->setAttribute('width', \intval($width));
+            $element->setAttribute('width', \intval($width));
         }
         if ($alignment === 'none') {
-            $img->setAttribute('class', 'image woltlabSuiteMedia');
-            return $img;
+            $element->setAttribute('class', 'image woltlabSuiteMedia');
+        } else {
+            $figure = $fragment->ownerDocument->createElement('figure');
+            if ($alignment === 'left') {
+                $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side-left');
+            } elseif ($alignment === 'right') {
+                $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side');
+            } else {
+                $figure->setAttribute('class', 'image woltlabSuiteMedia');
+            }
+            $figure->appendChild($element);
+            $element = $figure;
         }
-        $figure = $fragment->ownerDocument->createElement('figure');
-        $figure->appendChild($img);
-        if ($alignment === 'left') {
-            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side-left');
-        } elseif ($alignment === 'right') {
-            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side');
-        }
-        return $figure;
+        $element->setAttribute('data-media-id', \intval($mediaID));
+        $element->setAttribute('data-media-size', StringUtil::decodeHTML($thumbnail));
+        return $element;
     }
 
     #[\Override]
