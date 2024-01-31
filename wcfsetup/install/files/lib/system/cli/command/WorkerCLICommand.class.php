@@ -233,6 +233,7 @@ class WorkerCLICommand implements ICLICommand
             'WCF_SESSION_ID' => CLIWCF::getSession()->sessionID,
         ]);
 
+        $cursorOffset = 0;
         try {
             // 1) Spawn the processes.
             $processes = [];
