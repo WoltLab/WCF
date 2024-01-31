@@ -107,6 +107,6 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
      */
     public function replaceTag(array $data)
     {
-        \wcfDebug($data);
+        return $data['parsedTag'];
     }
 }
