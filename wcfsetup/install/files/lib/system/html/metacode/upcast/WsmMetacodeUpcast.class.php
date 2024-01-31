@@ -37,14 +37,15 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
             $element->setAttribute('class', 'image woltlabSuiteMedia');
             return $element;
         }
+        $element->setAttribute('class', 'woltlabSuiteMedia');
 
         $figure = $fragment->ownerDocument->createElement('figure');
         if ($alignment === 'left') {
-            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side-left');
+            $figure->setAttribute('class', 'image image-style-side-left');
         } elseif ($alignment === 'right') {
-            $figure->setAttribute('class', 'image woltlabSuiteMedia image-style-side');
+            $figure->setAttribute('class', 'image image-style-side');
         } else {
-            $figure->setAttribute('class', 'image woltlabSuiteMedia');
+            $figure->setAttribute('class', 'image');
         }
         $figure->appendChild($element);
         return $figure;
