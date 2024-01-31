@@ -223,6 +223,9 @@ CREATE TABLE wcf1_attachment (
 	lastDownloadTime INT(10) NOT NULL DEFAULT 0,
 	uploadTime INT(10) NOT NULL DEFAULT 0,
 	showOrder SMALLINT(5) NOT NULL DEFAULT 0,
+
+	fileID INT,
+
 	KEY (objectTypeID, objectID),
 	KEY (objectTypeID, tmpHash),
 	KEY (objectID, uploadTime)
@@ -2001,6 +2004,7 @@ ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

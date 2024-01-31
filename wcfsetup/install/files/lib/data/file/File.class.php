@@ -3,6 +3,8 @@
 namespace wcf\data\file;
 
 use wcf\data\DatabaseObject;
+use wcf\system\file\processor\FileProcessor;
+use wcf\system\file\processor\IFileProcessor;
 
 /**
  * @author Alexander Ebert
@@ -37,5 +39,10 @@ class File extends DatabaseObject
             $this->fileID,
             $this->fileHash,
         );
+    }
+
+    public function getProcessor(): ?IFileProcessor
+    {
+        return FileProcessor::getInstance()->forTypeName($this->typeName);
     }
 }
