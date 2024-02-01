@@ -646,7 +646,6 @@ class ArticleAddForm extends AbstractForm
 
         SmileyCache::getInstance()->assignVariables();
 
-        // readData not work in edit form
         if (!$this->isMultilingual) {
             if (isset($this->content[0])) {
                 $upcastProcessor = new HtmlUpcastProcessor();

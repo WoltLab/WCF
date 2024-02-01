@@ -21,6 +21,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -809,6 +810,18 @@ class BoxAddForm extends AbstractForm
         parent::assignVariables();
 
         SmileyCache::getInstance()->assignVariables();
+
+        if ($this->boxType == 'system' || $this->isMultilingual) {
+            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                $upcastProcessor = new HtmlUpcastProcessor();
+                $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.box.content');
+                $this->content[$language->languageID] = $upcastProcessor->getHtml();
+            }
+        } else {
+            $upcastProcessor = new HtmlUpcastProcessor();
+            $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.box.content');
+            $this->content[0] = $upcastProcessor->getHtml();
+        }
 
         WCF::getTPL()->assign([
             'action' => 'add',
