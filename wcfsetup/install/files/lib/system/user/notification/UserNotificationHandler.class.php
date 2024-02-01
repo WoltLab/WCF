@@ -141,6 +141,9 @@ class UserNotificationHandler extends SingletonFactory
         // @deprecated 5.2 This event exposes incomplete data and should not
         // be used, please use the following events instead.
         EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
+        if ($recipientIDs === []) {
+            return;
+        }
 
         // find existing notifications
         $conditions = new PreparedStatementConditionBuilder();
