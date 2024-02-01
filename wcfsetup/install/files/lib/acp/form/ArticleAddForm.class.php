@@ -617,6 +617,22 @@ class ArticleAddForm extends AbstractForm
                 }
             }
         }
+
+        if (!$this->isMultilingual) {
+            if (isset($this->content[0])) {
+                $upcastProcessor = new HtmlUpcastProcessor();
+                $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.article.content');
+                $this->content[0] = $upcastProcessor->getHtml();
+            }
+        } else {
+            foreach ($this->availableLanguages as $language) {
+                if (isset($this->content[$language->languageID])) {
+                    $upcastProcessor = new HtmlUpcastProcessor();
+                    $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.article.content');
+                    $this->content[$language->languageID] = $upcastProcessor->getHtml();
+                }
+            }
+        }
     }
 
     /**
@@ -645,23 +661,6 @@ class ArticleAddForm extends AbstractForm
         parent::assignVariables();
 
         SmileyCache::getInstance()->assignVariables();
-
-        // readData not work in edit form
-        if (!$this->isMultilingual) {
-            if (isset($this->content[0])) {
-                $upcastProcessor = new HtmlUpcastProcessor();
-                $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.article.content');
-                $this->content[0] = $upcastProcessor->getHtml();
-            }
-        } else {
-            foreach ($this->availableLanguages as $language) {
-                if (isset($this->content[$language->languageID])) {
-                    $upcastProcessor = new HtmlUpcastProcessor();
-                    $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.article.content');
-                    $this->content[$language->languageID] = $upcastProcessor->getHtml();
-                }
-            }
-        }
 
         WCF::getTPL()->assign([
             'action' => 'add',
