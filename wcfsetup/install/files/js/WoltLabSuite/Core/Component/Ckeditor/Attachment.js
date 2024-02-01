@@ -60,13 +60,6 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             const inlineImageIds = getInlineImageIds(element);
             configuration.woltlabAttachment = {
                 inlineImageIds,
-                resolveAttachmentUrl(attachmentId, isThumbnail) {
-                    let thumbnail = "";
-                    if (isThumbnail) {
-                        thumbnail = "&thumbnail=1";
-                    }
-                    return `${window.WSC_API_URL}index.php?attachment/${attachmentId}/${thumbnail}`;
-                },
             };
             configuration.woltlabUpload = {
                 uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
