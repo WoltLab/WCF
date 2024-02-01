@@ -48,6 +48,7 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         } else {
             $figure->setAttribute('class', 'image');
         }
+        $figure->setAttribute('style', \sprintf('width: %dpx;', \intval($width)));
         $figure->appendChild($element);
         return $figure;
     }
