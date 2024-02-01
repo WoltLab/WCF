@@ -36,12 +36,7 @@ class MessageOptionType extends TextareaOptionType
      */
     public function getData(Option $option, $newValue)
     {
-        if (!$this->messageObjectType) {
-            $this->messageObjectType = $option->messageObjectType;
-        }
-        if (empty($this->messageObjectType)) {
-            throw new \RuntimeException("Message object type '" . $option->optionName . "' requires an object type for definition 'com.woltlab.wcf.message'.");
-        }
+        $this->initMessageObjectType($option);
 
         $permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
         BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
@@ -69,6 +64,7 @@ class MessageOptionType extends TextareaOptionType
             ArrayUtil::trim(WCF::getSession()->getPermission($permission))
         ));
 
+        $this->initMessageObjectType($option);
         $upcastProcessor = new HtmlUpcastProcessor();
         $upcastProcessor->process($value ?? '', $this->messageObjectType);
 
@@ -92,6 +88,20 @@ class MessageOptionType extends TextareaOptionType
         if (!empty($disallowedBBCodes)) {
             WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
             throw new UserInputException($option->optionName, 'disallowedBBCodes');
+        }
+    }
+
+    private function initMessageObjectType(Option $option): void
+    {
+        if (!$this->messageObjectType) {
+            $this->messageObjectType = $option->messageObjectType;
+        }
+        if (empty($this->messageObjectType)) {
+            throw new \RuntimeException(
+                "Message object type '" .
+                $option->optionName .
+                "' requires an object type for definition 'com.woltlab.wcf.message'."
+            );
         }
     }
 }
