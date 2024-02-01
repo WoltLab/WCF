@@ -154,9 +154,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
     /**
      * Replaces image element with media metacode element.
-     *
-     * @param \DOMElement $element
-     * @param string $class
      */
     protected function handleMedium(\DOMElement $element, $class)
     {
