@@ -76,7 +76,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             if (\preg_match('~\bwoltlabAttachment\b~', $class)) {
                 $this->handleAttachment($element, $class);
             } elseif (\preg_match('~\bwoltlabSuiteMedia\b~', $class)) {
-                $this->handleMedium($element, $class);
+                $this->handleMedium($element);
             } elseif (\preg_match('~\bsmiley\b~', $class)) {
                 $this->handleSmiley($element);
             }
@@ -155,7 +155,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with media metacode element.
      */
-    protected function handleMedium(\DOMElement $element, $class)
+    private function handleMedium(\DOMElement $element): void
     {
         $mediumID = \intval($element->getAttribute('data-media-id'));
         if (!$mediumID) {
