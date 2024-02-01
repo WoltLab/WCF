@@ -56,12 +56,12 @@ final class AttachMetacodeUpcast implements IMetacodeUpcast
         } else {
             $figure->setAttribute('class', 'image');
         }
-        if ($width !== 'auto' && \is_numeric($width) && $width > 0) {
-            $figure->setAttribute(
-                'style',
-                $this->getStyle($attachment, $width)
-            );
-        }
+
+        $figure->setAttribute(
+            'style',
+            $this->getStyle($attachment, $width)
+        );
+
         $figure->appendChild($element);
         return $figure;
     }
