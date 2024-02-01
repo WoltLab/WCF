@@ -27,6 +27,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
     {
         /** @var IMetacodeUpcast[] $upcasters */
         $upcasters = [];
+        $nodes = [];
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
@@ -59,7 +60,26 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
             if ($upcast === null) {
                 continue;
             }
-            if (!$upcast->hasValidAttributes($attributes)) {
+
+            $upcast->cacheObject($attributes);
+            $nodes[] = [$element, $name, $upcast, $attributes];
+        }
+
+        foreach ($nodes as [$element, $name, $upcast, $attributes]) {
+            if ($upcast->hasValidAttributes($attributes)) {
+                $fragment = DOMUtil::childNodesToFragment($element);
+                if (!$fragment->hasChildNodes()) {
+                    $fragment->appendChild($fragment->ownerDocument->createTextNode(''));
+                }
+
+                $newElement = $upcast->upcast($fragment, $attributes);
+                if (!($newElement instanceof \DOMElement)) {
+                    throw new \UnexpectedValueException("Expected a valid DOMElement as return value.");
+                }
+
+                DOMUtil::replaceElement($element, $newElement);
+                unset($fragment);
+            } else {
                 // Replace this with a text node
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
                 if ($bbcode !== null) {
@@ -84,21 +104,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 $newElement->textContent = \sprintf('[%s%s][/%s]', $name, $attributes, $name);
 
                 DOMUtil::replaceElement($element, $newElement);
-                continue;
             }
-
-            $fragment = DOMUtil::childNodesToFragment($element);
-            if (!$fragment->hasChildNodes()) {
-                $fragment->appendChild($fragment->ownerDocument->createTextNode(''));
-            }
-
-            $newElement = $upcast->upcast($fragment, $attributes);
-            if (!($newElement instanceof \DOMElement)) {
-                throw new \UnexpectedValueException("Expected a valid DOMElement as return value.");
-            }
-
-            DOMUtil::replaceElement($element, $newElement);
-            unset($fragment);
         }
     }
 

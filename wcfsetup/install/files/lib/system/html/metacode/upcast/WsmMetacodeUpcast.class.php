@@ -71,4 +71,10 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         // Other media types must be converted to the text [wsm…][/wsm]
         return (bool)$media->isImage;
     }
+
+    #[\Override]
+    public function cacheObject(array $attributes): void
+    {
+        ViewableMediaRuntimeCache::getInstance()->cacheObjectID($attributes[0] ?? 0);
+    }
 }

@@ -21,4 +21,5 @@ interface IMetacodeUpcast
     public function upcast(\DOMDocumentFragment $fragment, array $attributes): ?\DOMElement;
 
     public function hasValidAttributes(array $attributes): bool;
+    public function cacheObject(array $attributes): void;
 }
