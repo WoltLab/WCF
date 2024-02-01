@@ -3,7 +3,7 @@
 <link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css?v={LAST_UPDATE_TIME}" type="text/css" rel="stylesheet">
 
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
-{include file='colorPickerJavaScript'}
+{include file='shared_colorPickerJavaScript'}
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
@@ -85,7 +85,7 @@
 	<woltlab-core-notice type="info">{lang}wcf.acp.style.protected{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $success|isset}
 <script data-relocate="true">
@@ -236,8 +236,8 @@
 								{/if}
 							</small>
 						{/if}
-						
-						{include file='multipleLanguageInputJavascript' elementIdentifier='styleDescription' forceSelection=true}
+
+						{include file='shared_multipleLanguageInputJavascript' elementIdentifier='styleDescription' forceSelection=true}
 					</dd>
 				</dl>
 				
@@ -996,7 +996,7 @@
 							</dd>
 						</dl>
 					</section>
-					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #individualScssDarkModeCustom, #overrideScssCustom'}
+					{include file='shared_codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #individualScssDarkModeCustom, #overrideScssCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
 				</div>
@@ -1062,7 +1062,7 @@
 					</dd>
 				</dl>
 			</section>
-			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
+			{include file='shared_codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			

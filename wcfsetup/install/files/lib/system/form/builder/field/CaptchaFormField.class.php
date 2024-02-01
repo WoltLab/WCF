@@ -32,7 +32,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     /**
      * @inheritDoc
      */
-    protected $templateName = '__captchaFormField';
+    protected $templateName = 'shared_captchaFormField';
 
     /**
      * exception thrown by the captcha API during validation

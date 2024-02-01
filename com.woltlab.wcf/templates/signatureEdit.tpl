@@ -2,7 +2,7 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $success|isset}
 	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
@@ -76,5 +76,5 @@
 	});
 </script>
 
-{include file='wysiwyg'}
+{include file='shared_wysiwyg'}
 {include file='footer' __disableAds=true}

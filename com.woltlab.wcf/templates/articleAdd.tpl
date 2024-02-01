@@ -128,7 +128,7 @@
 	{@$__contentHeader}
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $action == 'edit'}
 	<woltlab-core-notice type="info" class="jsArticleNoticeTrash"{if !$article->isDeleted} hidden{/if}>{lang}wcf.acp.article.trash.notice{/lang}</woltlab-core-notice>
@@ -410,8 +410,8 @@
 				<dd>
 					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					
-					{include file='__wysiwygCmsToolbar' wysiwygSelector='content0'}
-					{include file='wysiwyg' wysiwygSelector='content0'}
+					{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content0'}
+					{include file='shared_wysiwyg' wysiwygSelector='content0'}
 					
 					{if $errorField == 'content'}
 						<small class="innerError">
@@ -576,8 +576,8 @@
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								
-								{include file='__wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
-								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								{include file='shared_wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">

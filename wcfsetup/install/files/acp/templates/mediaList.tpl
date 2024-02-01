@@ -32,7 +32,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='MediaList'}{/link}">
 	<section class="section">

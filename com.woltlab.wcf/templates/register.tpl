@@ -8,7 +8,7 @@
 	<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form id="registerForm" method="post" action="{link controller='Register'}{/link}">
 	<section class="section" hidden>
@@ -192,8 +192,8 @@
 	{/foreach}
 	
 	{event name='sections'}
-	
-	{include file='captcha' supportsAsyncCaptcha=true}
+
+	{include file='shared_captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.user.button.register{/lang}" accesskey="s">
@@ -226,7 +226,7 @@
 		);
 	});
 	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
-		{include file='passwordStrengthLanguage'}
+		{include file='shared_passwordStrengthLanguage'}
 		
 		new PasswordStrength(document.getElementById('{@$randomFieldNames[password]}'), {
 			relatedInputs: [

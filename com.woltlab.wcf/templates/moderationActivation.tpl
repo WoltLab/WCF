@@ -60,7 +60,7 @@
 
 {include file='header'}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <section class="section sectionContainerList">
 	<header class="sectionHeader">

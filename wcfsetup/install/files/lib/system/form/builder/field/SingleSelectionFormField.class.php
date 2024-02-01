@@ -33,7 +33,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__singleSelectionFormField';
+    protected $templateName = 'shared_singleSelectionFormField';
 
     /**
      * @inheritDoc

@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAssignmentAdd'}{/link}{else}{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}{/if}">
 	<div class="section">
@@ -69,8 +69,8 @@
 		{if $errorField == 'conditions'}
 			<woltlab-core-notice type="error">{lang}wcf.acp.group.assignment.error.noConditions{/lang}</woltlab-core-notice>
 		{/if}
-		
-		{include file='userConditions'}
+
+		{include file='shared_userConditions'}
 	</section>
 	
 	<div class="formSubmit">

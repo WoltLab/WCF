@@ -21,7 +21,7 @@ class IsNotClickedFormFieldDependency extends AbstractFormFieldDependency
     /**
      * @inheritDoc
      */
-    protected $templateName = '__isNotClickedFormFieldDependency';
+    protected $templateName = 'shared_isNotClickedFormFieldDependency';
 
     /**
      * @inheritDoc

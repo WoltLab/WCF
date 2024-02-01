@@ -9,7 +9,7 @@
 {if !$errorField|empty && $errorField == 'cookie'}
 	<woltlab-core-notice type="error">{lang}wcf.user.login.error.cookieRequired{/lang}</woltlab-core-notice>
 {else}
-	{include file='formError'}
+	{include file='shared_formError'}
 {/if}
 
 <form id="loginForm" method="post" action="{$loginController}">
@@ -48,8 +48,8 @@
 			{/if}
 		</dd>
 	</dl>
-	
-	{include file='captcha' supportsAsyncCaptcha=true}
+
+	{include file='shared_captcha' supportsAsyncCaptcha=true}
 
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.user.button.login{/lang}" accesskey="s">

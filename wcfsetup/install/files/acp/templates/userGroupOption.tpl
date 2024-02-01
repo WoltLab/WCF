@@ -102,7 +102,7 @@
 	{/hascontent}
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if VISITOR_USE_TINY_BUILD && $guestGroupID}
 	<woltlab-core-notice type="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</woltlab-core-notice>

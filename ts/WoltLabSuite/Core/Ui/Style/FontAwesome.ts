@@ -105,7 +105,7 @@ export function setup(): void {
 export function open(callback: CallbackSelect): void {
   if (!uiStyleFontAwesome) {
     throw new Error(
-      "Missing icon data, please include the template before calling this method using `{include file='fontAwesomeJavaScript'}`.",
+      "Missing icon data, please include the template before calling this method using `{include file='shared_fontAwesomeJavaScript'}`.",
     );
   }
 

@@ -104,6 +104,6 @@
 	});
 </script>
 
-{include file='articleAddDialog'}
+{include file='shared_articleAddDialog'}
 
 {include file='footer'}

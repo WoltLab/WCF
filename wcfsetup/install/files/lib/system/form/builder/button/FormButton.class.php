@@ -34,7 +34,7 @@ class FormButton implements IFormButton
     /**
      * @inheritDoc
      */
-    protected $templateName = '__formButton';
+    protected $templateName = 'shared_formButton';
 
     /**
      * @inheritDoc

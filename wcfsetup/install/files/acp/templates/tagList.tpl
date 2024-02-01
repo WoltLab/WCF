@@ -27,7 +27,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 {if $items}
 	<form action="{link controller='TagList'}{/link}" method="post">

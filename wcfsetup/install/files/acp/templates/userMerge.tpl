@@ -14,7 +14,7 @@
 	{/hascontent}
 </header>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <woltlab-core-notice type="warning">{lang}wcf.acp.user.merge.warning{/lang}</woltlab-core-notice>
 

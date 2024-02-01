@@ -38,7 +38,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserRankAdd'}{/link}{else}{link controller='UserRankEdit' id=$rankID}{/link}{/if}">
 	<div class="section">
@@ -59,7 +59,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='rankTitle' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='rankTitle' forceSelection=false}
 		
 		<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 			<dt><label for="cssClassName">{lang}wcf.acp.user.rank.cssClassName{/lang}</label></dt>

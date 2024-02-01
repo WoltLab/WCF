@@ -69,7 +69,7 @@ class SuffixFormFieldContainer extends FormContainer
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch('__suffixFormFieldContainer', 'wcf', [
+        return WCF::getTPL()->fetch('shared_suffixFormFieldContainer', 'wcf', [
             'element' => $this,
         ]);
     }

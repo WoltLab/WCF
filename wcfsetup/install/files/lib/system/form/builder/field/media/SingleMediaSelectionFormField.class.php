@@ -40,7 +40,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     /**
      * @inheritDoc
      */
-    protected $templateName = '__singleMediaSelectionFormField';
+    protected $templateName = 'shared_singleMediaSelectionFormField';
 
     /**
      * Returns the media object with the current value as id.

@@ -8,8 +8,6 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
-use wcf\data\page\PageCache;
-use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
 use wcf\system\box\BoxHandler;
@@ -652,8 +650,10 @@ class WCF
                 throw new SystemException('Unable to load configuration for ' . $package->package);
             }
 
-            // register template path if not within ACP
-            if (!\class_exists('wcf\system\WCFACP', false)) {
+            if (\class_exists('wcf\system\WCFACP', false)) {
+                // In acp we need to load the application and path into TemplateEngine
+                TemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
+            } else {
                 // add template path and abbreviation
                 static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
             }

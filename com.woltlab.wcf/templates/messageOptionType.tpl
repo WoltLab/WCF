@@ -1,5 +1,5 @@
 <textarea id="{$option->optionName}" name="values[{$option->optionName}]" cols="40" rows="10"{if $option->required} required{/if} class="wysiwygTextarea" data-disable-attachments="true">{$value}</textarea>
-{include file='wysiwyg' wysiwygSelector=$option->optionName}
+{include file='shared_wysiwyg' wysiwygSelector=$option->optionName}
 
 <script data-relocate="true">
 $(function() {

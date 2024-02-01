@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.menu.link.trophy.'|concat:$action}
 
-{include file='colorPickerJavaScript'}
-{include file='fontAwesomeJavaScript'}
+{include file='shared_colorPickerJavaScript'}
+{include file='shared_fontAwesomeJavaScript'}
 
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Editor'], (Language, { setup }) => {
@@ -31,7 +31,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 {if $trophyCategories|count}
 	<form id="trophyForm" method="post" action="{if $action == 'add'}{link controller='TrophyAdd'}{/link}{else}{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}{/if}">
@@ -51,7 +51,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 
 			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.trophy.description{/lang}</label></dt>
@@ -68,7 +68,7 @@
 					{/if}
 				</dd>
 			</dl>
-			{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
+			{include file='shared_multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 			
 			<dl id="trophyUseHtmlDL">
 				<dt></dt>
@@ -209,8 +209,8 @@
 			{if $errorField == 'conditions'}
 				<woltlab-core-notice type="error">{lang}wcf.acp.trophy.conditions.error.noConditions{/lang}</woltlab-core-notice>
 			{/if}
-			
-			{include file='userConditions'}
+
+			{include file='shared_userConditions'}
 		</section>
 		
 		{event name='conditionSections'}

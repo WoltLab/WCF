@@ -44,7 +44,7 @@ class PasswordFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__passwordFormField';
+    protected $templateName = 'shared_passwordFormField';
 
     /**
      * Creates a new instance of `PasswordFormField`.

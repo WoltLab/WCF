@@ -33,7 +33,7 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
     /**
      * @inheritDoc
      */
-    protected $templateName = '__buttonFormField';
+    protected $templateName = 'shared_buttonFormField';
 
     /**
      * Sets the text shown on the button and returns this form field.

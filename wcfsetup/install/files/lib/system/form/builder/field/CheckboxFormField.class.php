@@ -39,7 +39,7 @@ class CheckboxFormField extends BooleanFormField
         }
 
         return WCF::getTPL()->fetch(
-            '__checkboxFormField',
+            'shared_checkboxFormField',
             'wcf',
             [
                 'field' => $this,

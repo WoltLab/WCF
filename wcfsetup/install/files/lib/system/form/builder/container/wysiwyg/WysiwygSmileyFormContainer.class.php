@@ -26,7 +26,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer
      * name of container template
      * @var string
      */
-    protected $templateName = '__wysiwygSmileyFormContainer';
+    protected $templateName = 'shared_wysiwygSmileyFormContainer';
 
     /**
      * Creates a new instance of `WysiwygSmileyFormContainer`.

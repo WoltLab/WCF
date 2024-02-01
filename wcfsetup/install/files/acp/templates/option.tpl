@@ -60,7 +60,7 @@
 	<woltlab-core-notice type="success">{lang}wcf.global.success.edit{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}" enctype="multipart/form-data">
 	{*

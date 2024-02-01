@@ -46,7 +46,7 @@ final class UserFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__userFormField';
+    protected $templateName = 'shared_userFormField';
 
     /**
      * user profiles of the entered users

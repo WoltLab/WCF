@@ -46,7 +46,7 @@
 	<woltlab-core-notice type="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <div class="section">
 	<section class="section">

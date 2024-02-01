@@ -22,7 +22,7 @@ final class BBCodeAttributesFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__bbcodeAttributesFormField';
+    protected $templateName = 'shared_bbcodeAttributesFormField';
 
     /**
      * @inheritDoc

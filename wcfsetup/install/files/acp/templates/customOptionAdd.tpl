@@ -33,7 +33,7 @@
 			{/if}
 		</dd>
 	</dl>
-	{include file='multipleLanguageInputJavascript' elementIdentifier='optionTitle' forceSelection=false}
+	{include file='shared_multipleLanguageInputJavascript' elementIdentifier='optionTitle' forceSelection=false}
 	
 	<dl{if $errorField == 'optionDescription'} class="formError"{/if}>
 		<dt><label for="optionDescription">{lang}wcf.global.description{/lang}</label></dt>
@@ -50,7 +50,7 @@
 			{/if}
 		</dd>
 	</dl>
-	{include file='multipleLanguageInputJavascript' elementIdentifier='optionDescription' forceSelection=false}
+	{include file='shared_multipleLanguageInputJavascript' elementIdentifier='optionDescription' forceSelection=false}
 	
 	<dl>
 		<dt><label for="showOrder">{lang}wcf.acp.customOption.showOrder{/lang}</label></dt>

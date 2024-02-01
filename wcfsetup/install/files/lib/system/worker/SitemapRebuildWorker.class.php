@@ -338,7 +338,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
         $this->openFile();
 
-        $this->file->write(WCF::getTPL()->fetch('sitemapStart'));
+        $this->file->write(WCF::getTPL()->fetch('shared_sitemapStart'));
     }
 
     /**
@@ -372,7 +372,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     protected function finishSitemap($filename, $packageID)
     {
-        $this->file->write(WCF::getTPL()->fetch('sitemapEnd'));
+        $this->file->write(WCF::getTPL()->fetch('shared_sitemapEnd'));
         $this->file->close();
 
         \rename($this->workerData['tmpFile'], self::getSitemapPath() . $filename);

@@ -30,7 +30,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
     /**
      * @inheritDoc
      */
-    protected $templateName = '__valueFormFieldDependency';
+    protected $templateName = 'shared_valueFormFieldDependency';
 
     /**
      * @inheritDoc

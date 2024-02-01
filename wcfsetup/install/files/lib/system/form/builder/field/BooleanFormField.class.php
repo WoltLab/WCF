@@ -32,7 +32,7 @@ class BooleanFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__booleanFormField';
+    protected $templateName = 'shared_booleanFormField';
 
     /**
      * @inheritDoc

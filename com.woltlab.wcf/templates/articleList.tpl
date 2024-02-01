@@ -140,7 +140,7 @@
 </script>
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canManageOwnArticles') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
-	{include file='articleAddDialog'}
+	{include file='shared_articleAddDialog'}
 {/if}
 
 {include file='footer'}

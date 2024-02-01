@@ -48,8 +48,8 @@
 							
 							{* in-template call for full backwards-compatibility *}
 							{$commentList->getCommentManager()->setDisallowedBBCodes()}
-							
-							{include file='wysiwyg' wysiwygSelector=$_commentAddWysiwygSelector}
+
+							{include file='shared_wysiwyg' wysiwygSelector=$_commentAddWysiwygSelector}
 							
 							<div class="formSubmit">
 								<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
@@ -87,8 +87,8 @@
 					
 					{* in-template call for full backwards-compatibility *}
 					{$commentList->getCommentManager()->setDisallowedBBCodes()}
-					
-					{include file='wysiwyg' wysiwygSelector=$_commentResponseWysiwygSelector}
+
+					{include file='shared_wysiwyg' wysiwygSelector=$_commentResponseWysiwygSelector}
 					
 					<div class="formSubmit">
 						<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>

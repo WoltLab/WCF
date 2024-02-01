@@ -15,7 +15,7 @@ class TabTabMenuFormContainer extends TabMenuFormContainer implements ITabFormCo
     /**
      * @inheritDoc
      */
-    protected $templateName = '__tabTabMenuFormContainer';
+    protected $templateName = 'shared_tabTabMenuFormContainer';
 
     /**
      * @inheritDoc

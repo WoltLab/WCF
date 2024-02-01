@@ -22,7 +22,7 @@
 
 <woltlab-core-notice type="info">{lang}wcf.acp.firstTimeSetup.options.description{/lang}</woltlab-core-notice>
 
-{include file='formError'}
+{include file='shared_formError'}
 
 <form method="post" action="{link controller='FirstTimeSetupOptions'}{/link}" enctype="multipart/form-data">
 	{include file='optionFieldList' langPrefix='wcf.acp.option.'}

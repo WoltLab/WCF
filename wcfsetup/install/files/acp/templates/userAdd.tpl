@@ -172,7 +172,7 @@
 	<woltlab-core-notice type="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit' id=$userID}{/link}{/if}">
 	<div class="section tabMenuContainer">
@@ -252,7 +252,7 @@
 
 					<script data-relocate="true">
 						require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
-							{include file='passwordStrengthLanguage'}
+							{include file='shared_passwordStrengthLanguage'}
 
 							var relatedInputs = [];
 							if (elById('username')) relatedInputs.push(elById('username'));
@@ -520,7 +520,7 @@
 								</small>
 							{/if}
 
-							{include file='wysiwyg' wysiwygSelector='signature'}
+							{include file='shared_wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
 

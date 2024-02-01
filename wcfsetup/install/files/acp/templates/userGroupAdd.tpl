@@ -77,7 +77,7 @@
 	<woltlab-core-notice type="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</woltlab-core-notice>
 {/if}
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit' id=$groupID}{/link}{/if}">
 	<div class="section">
@@ -96,8 +96,8 @@
 						{/if}
 					</small>
 				{/if}
-				
-				{include file='multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
+
+				{include file='shared_multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
 			</dd>
 		</dl>
 		
@@ -110,8 +110,8 @@
 						{lang}wcf.acp.group.description.error.{@$errorType.groupDescription}{/lang}
 					</small>
 				{/if}
-				
-				{include file='multipleLanguageInputJavascript' elementIdentifier='groupDescription' forceSelection=false}
+
+				{include file='shared_multipleLanguageInputJavascript' elementIdentifier='groupDescription' forceSelection=false}
 			</dd>
 		</dl>
 		

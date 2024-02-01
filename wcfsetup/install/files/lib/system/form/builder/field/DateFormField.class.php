@@ -63,7 +63,7 @@ class DateFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $templateName = '__dateFormField';
+    protected $templateName = 'shared_dateFormField';
 
     const DATE_FORMAT = 'Y-m-d';
 

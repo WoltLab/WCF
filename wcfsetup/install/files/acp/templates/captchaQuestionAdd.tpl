@@ -14,7 +14,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='CaptchaQuestionAdd'}{/link}{else}{link controller='CaptchaQuestionEdit' id=$captchaQuestion->questionID}{/link}{/if}">
 	<div class="section">
@@ -35,7 +35,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='question' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='question' forceSelection=false}
 		
 		<dl{if $errorField == 'answers'} class="formError"{/if}>
 			<dt><label for="answers">{lang}wcf.acp.captcha.question.answers{/lang}</label></dt>
@@ -55,7 +55,7 @@
 				{/if}
 			</dd>
 		</dl>
-		{include file='multipleLanguageInputJavascript' elementIdentifier='answers' forceSelection=false}
+		{include file='shared_multipleLanguageInputJavascript' elementIdentifier='answers' forceSelection=false}
 		
 		<dl>
 			<dt></dt>

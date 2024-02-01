@@ -14,8 +14,8 @@
 	});
 </script>
 
-{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
-{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+{include file='shared_multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
+{include file='shared_multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
@@ -31,7 +31,7 @@
 	</nav>
 </header>
 
-{include file='formNotice'}
+{include file='shared_formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PaidSubscriptionAdd'}{/link}{else}{link controller='PaidSubscriptionEdit' id=$subscriptionID}{/link}{/if}">
 	<div class="section">
@@ -60,7 +60,7 @@
 				          data-disable-attachments="true"
 				          data-disable-media="true"
 				>{$i18nPlainValues[description]}</textarea>
-				{include file='wysiwyg' wysiwygSelector='description'}
+				{include file='shared_wysiwyg' wysiwygSelector='description'}
 				{if $errorField == 'description'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

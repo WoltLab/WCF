@@ -248,7 +248,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
             'media' => $this->getI18nMediaData($mediaList),
             'pageCount' => \ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE),
-            'template' => WCF::getTPL()->fetch('mediaManager', 'wcf', [
+            'template' => WCF::getTPL()->fetch('shared_mediaManager', 'wcf', [
                 'categoryList' => $categoryList,
                 'mediaList' => $mediaList,
                 'mode' => $this->parameters['mode'],
@@ -683,7 +683,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $categoryList->setMaxDepth(0);
 
         return [
-            'template' => WCF::getTPL()->fetch('__mediaSetCategoryDialog', 'wcf', [
+            'template' => WCF::getTPL()->fetch('shared_mediaSetCategoryDialog', 'wcf', [
                 'categoryList' => $categoryList,
             ]),
         ];

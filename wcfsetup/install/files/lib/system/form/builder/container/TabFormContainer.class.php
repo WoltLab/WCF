@@ -15,7 +15,7 @@ class TabFormContainer extends FormContainer implements ITabFormContainer
     /**
      * @inheritDoc
      */
-    protected $templateName = '__tabFormContainer';
+    protected $templateName = 'shared_tabFormContainer';
 
     /**
      * @inheritDoc

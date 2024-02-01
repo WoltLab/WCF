@@ -30,7 +30,7 @@ final class PollOptionsFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    protected $templateName = '__pollOptionsFormField';
+    protected $templateName = 'shared_pollOptionsFormField';
 
     /**
      * @inheritDoc

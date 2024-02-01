@@ -55,7 +55,7 @@ final class FormFieldValidationError implements IFormFieldValidationError
      */
     public function getHtml()
     {
-        return WCF::getTPL()->fetch('__formFieldError', 'wcf', [
+        return WCF::getTPL()->fetch('shared_formFieldError', 'wcf', [
             'error' => $this,
         ]);
     }

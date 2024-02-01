@@ -29,7 +29,7 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
     /**
      * @inheritDoc
      */
-    protected $templateName = '__wysiwygPreviewFormButton';
+    protected $templateName = 'shared_wysiwygPreviewFormButton';
 
     /**
      * Creates a new instance of `WysiwygPreviewFormButton`.

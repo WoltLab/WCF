@@ -33,7 +33,7 @@ class FormContainer implements IFormContainer
      * name of container template
      * @var string
      */
-    protected $templateName = '__formContainer';
+    protected $templateName = 'shared_formContainer';
 
     /**
      * name of the template's application used to output this container

@@ -30,7 +30,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     /**
      * @inheritDoc
      */
-    protected $templateName = '__contentLanguageFormField';
+    protected $templateName = 'shared_contentLanguageFormField';
 
     /**
      * Creates a new instance of `ContentLanguageFormField`.

@@ -2,27 +2,38 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\IStorableObject;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
+use wcf\data\template\group\TemplateGroupNodeTree;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
-use wcf\form\AbstractForm;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
+use wcf\system\form\builder\field\HiddenFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SourceCodeFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class TemplateAddForm extends AbstractForm
+class TemplateAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -35,233 +46,211 @@ class TemplateAddForm extends AbstractForm
     public $neededPermissions = ['admin.template.canManageTemplate'];
 
     /**
-     * template name
-     * @var string
+     * @inheritDoc
      */
-    public $tplName = '';
+    public $objectActionClass = TemplateAction::class;
 
     /**
-     * template group id
-     * @var int
+     * @inheritDoc
      */
-    public $templateGroupID = 0;
-
-    /**
-     * template source code
-     * @var string
-     */
-    public $templateSource = '';
-
-    /**
-     * available template groups
-     * @var array
-     */
-    public $availableTemplateGroups = [];
-
-    /**
-     * template's package id
-     * @var int
-     */
-    public $packageID = 1;
+    public $objectEditLinkController = TemplateEditForm::class;
 
     /**
      * id of copied template
      * @var int
      */
-    public $copy = 0;
+    public int $copy = 0;
 
     /**
      * copied template object
      * @var Template
      */
-    public $copiedTemplate;
+    public Template $copiedTemplate;
 
-    /**
-     * application the template belongs to
-     * @var string
-     */
-    public $application = '';
+    #[\Override]
+    protected function createForm()
+    {
+        parent::createForm();
 
-    /**
-     * @inheritDoc
-     */
+        $this->form->appendChildren([
+            FormContainer::create('general')
+                ->appendChildren([
+                    SingleSelectionFormField::create('templateGroupID')
+                        ->label('wcf.acp.template.group')
+                        ->options(new TemplateGroupNodeTree(), true)
+                        ->addValidator(
+                            new FormFieldValidator('sharedTemplate', function (SingleSelectionFormField $formField) {
+                                $templateGroupID = $formField->getSaveValue();
+                                $templateGroup = TemplateGroupCacheBuilder::getInstance()->getData(
+                                    [],
+                                    $templateGroupID
+                                );
+                                \assert($templateGroup instanceof TemplateGroup);
+
+                                $tplNameFormField = $formField->getDocument()->getNodeById('templateName');
+                                \assert($tplNameFormField instanceof TextFormField);
+                                $tplName = $tplNameFormField->getSaveValue();
+
+                                if (
+                                    TemplateEngine::isSharedTemplate($tplName)
+                                    && $templateGroup->templateGroupFolderName !== '_wcf_shared/'
+                                ) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'invalid',
+                                            'wcf.acp.template.group.error.shared'
+                                        )
+                                    );
+                                } elseif (
+                                    !TemplateEngine::isSharedTemplate($tplName)
+                                    && $templateGroup->templateGroupFolderName === '_wcf_shared/'
+                                ) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'invalid',
+                                            'wcf.acp.template.group.error.notShared'
+                                        )
+                                    );
+                                }
+                            })
+                        ),
+                    TextFormField::create('templateName')
+                        ->required()
+                        ->label('wcf.global.name')
+                        ->addValidator(
+                            new FormFieldValidator('fileName', function (TextFormField $formField) {
+                                $tplName = $formField->getSaveValue();
+                                if (!\preg_match('/^[a-z0-9_\-]+$/i', $tplName)) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError('invalid', 'wcf.acp.template.name.error.invalid')
+                                    );
+                                }
+                            })
+                        )
+                        ->addValidator(
+                            new FormFieldValidator('unique', function (TextFormField $formField) {
+                                $templateGroupIDFormField = $formField->getDocument()->getNodeById('templateGroupID');
+                                \assert($templateGroupIDFormField instanceof SingleSelectionFormField);
+
+                                $conditionBuilder = new PreparedStatementConditionBuilder();
+                                $conditionBuilder->add('templateName = ?', [$formField->getSaveValue()]);
+                                $conditionBuilder->add('templateGroupID = ?', [
+                                    $templateGroupIDFormField->getSaveValue()
+                                ]);
+
+                                if (isset($this->copiedTemplate)) {
+                                    $conditionBuilder->add(
+                                        '(packageID = ? OR application = ?)',
+                                        [$this->copiedTemplate->packageID, $this->copiedTemplate->application]
+                                    );
+                                } else {
+                                    $conditionBuilder->add('packageID = ?', [1]);
+                                }
+
+                                if ($this->formAction === 'edit') {
+                                    $conditionBuilder->add('templateID <> ?', [$this->formObject->getObjectID()]);
+                                }
+
+                                $sql = "SELECT  COUNT(*)
+                                        FROM    wcf" . WCF_N . "_template
+                                        " . $conditionBuilder;
+                                $statement = WCF::getDB()->prepareStatement($sql);
+                                $statement->execute($conditionBuilder->getParameters());
+
+                                if ($statement->fetchSingleColumn()) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'notUnique',
+                                            'wcf.acp.template.name.error.notUnique'
+                                        )
+                                    );
+                                }
+                            })
+                        ),
+                ]),
+            FormContainer::create('source')
+                ->label('wcf.acp.template.source')
+                ->appendChildren([
+                    SourceCodeFormField::create('templateSource')
+                        ->language('smarty')
+                        ->label('wcf.acp.template.source'),
+                ]),
+            HiddenFormField::create('copy')
+                ->value($this->copy),
+        ]);
+
+        $this->form->getDataHandler()
+            ->addProcessor(
+                new CustomFormDataProcessor(
+                    'source',
+                    static function (IFormDocument $document, array $parameters) {
+                        $parameters['source'] = $parameters['data']['templateSource'];
+
+                        return $parameters;
+                    },
+                    function (IFormDocument $document, array $data, IStorableObject $object) {
+                        \assert($object instanceof Template);
+                        $data['templateSource'] = $object->getSource();
+
+                        return $data;
+                    }
+                )
+            )
+            ->addProcessor(new VoidFormDataProcessor('copy'))
+            ->addProcessor(new VoidFormDataProcessor('templateSource'));
+
+        if ($this->formAction === 'create') {
+            $this->form->getDataHandler()
+                ->addProcessor(
+                    new CustomFormDataProcessor(
+                        'application',
+                        function (IFormDocument $document, array $parameters) {
+                            if (isset($this->copiedTemplate)) {
+                                $parameters['data']['application'] = $this->copiedTemplate->application;
+                            } else {
+                                $sql = "SELECT  packageID
+                                    FROM    wcf" . WCF_N . "_template
+                                    WHERE   templateName = ?
+                                        AND templateGroupID IS NULL";
+                                $statement = WCF::getDB()->prepareStatement($sql);
+                                $statement->execute([
+                                    $parameters['data']['templateName']
+                                ]);
+                                $packageID = $statement->fetchSingleRow() ?: 1;
+
+                                $parameters['data']['application'] = Package::getAbbreviation(
+                                    PackageCache::getInstance()->getPackage($packageID)->package
+                                );
+                            }
+
+                            return $parameters;
+                        }
+                    )
+                );
+        }
+    }
+
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
-
         if (!empty($_REQUEST['copy'])) {
             $this->copy = \intval($_REQUEST['copy']);
             $this->copiedTemplate = new Template($this->copy);
             if (!$this->copiedTemplate->templateID) {
                 throw new IllegalLinkException();
             }
-
-            $this->application = $this->copiedTemplate->application;
-            $this->packageID = $this->copiedTemplate->packageID;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if (isset($_POST['tplName'])) {
-            $this->tplName = StringUtil::trim($_POST['tplName']);
-        }
-        if (isset($_POST['templateSource'])) {
-            $this->templateSource = StringUtil::unifyNewlines($_POST['templateSource']);
-        }
-        if (isset($_POST['templateGroupID'])) {
-            $this->templateGroupID = \intval($_POST['templateGroupID']);
-        }
-
-        // get package id for this template
-        if (!$this->packageID) {
-            $sql = "SELECT  packageID
-                    FROM    wcf" . WCF_N . "_template
-                    WHERE   templateName = ?
-                        AND templateGroupID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([$this->tplName]);
-            $row = $statement->fetchArray();
-            if ($row !== false) {
-                $this->packageID = $row['packageID'];
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        parent::validate();
-
-        $this->validateName();
-        $this->validateGroup();
-    }
-
-    /**
-     * Validates the template name.
-     */
-    protected function validateName()
-    {
-        if (empty($this->tplName)) {
-            throw new UserInputException('tplName');
-        }
-
-        if (!\preg_match('/^[a-z0-9_\-]+$/i', $this->tplName)) {
-            throw new UserInputException('tplName', 'invalid');
-        }
-
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('templateName = ?', [$this->tplName]);
-        $conditionBuilder->add('templateGroupID = ?', [$this->templateGroupID]);
-
-        if ($this->copiedTemplate !== null) {
-            $conditionBuilder->add(
-                '(packageID = ? OR application = ?)',
-                [$this->packageID, $this->copiedTemplate->application]
-            );
-        } else {
-            $conditionBuilder->add('packageID = ?', [$this->packageID]);
-        }
-
-        $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_template
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute($conditionBuilder->getParameters());
-
-        if ($statement->fetchSingleColumn()) {
-            throw new UserInputException('tplName', 'notUnique');
-        }
-    }
-
-    /**
-     * Validates the selected template group.
-     */
-    protected function validateGroup()
-    {
-        if (!$this->templateGroupID) {
-            throw new UserInputException('templateGroupID');
-        }
-
-        $templateGroup = new TemplateGroup($this->templateGroupID);
-        if (!$templateGroup->templateGroupID) {
-            throw new UserInputException('templateGroupID');
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        if (empty($this->application)) {
-            $this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->packageID)->package);
-        }
-
-        $this->objectAction = new TemplateAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'application' => $this->application,
-                'templateName' => $this->tplName,
-                'packageID' => $this->packageID,
-                'templateGroupID' => $this->templateGroupID,
-            ]),
-            'source' => $this->templateSource,
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-        $this->saved();
-
-        // reset values
-        $this->tplName = $this->templateSource = '';
-        $this->templateGroupID = 0;
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                TemplateEditForm::class,
-                ['id' => $returnValues['returnValues']->templateID]
-            ),
-        ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
 
-        $this->availableTemplateGroups = TemplateGroup::getSelectList();
-
-        if (!\count($_POST) && $this->copiedTemplate !== null) {
-            $this->tplName = $this->copiedTemplate->templateName;
-            $this->templateSource = $this->copiedTemplate->getSource();
+        if ($_POST === [] && isset($this->copiedTemplate)) {
+            $this->form->getNodeById('templateSource')->value($this->copiedTemplate->getSource());
+            $this->form->getNodeById('templateName')->value($this->copiedTemplate->templateName);
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'tplName' => $this->tplName,
-            'templateGroupID' => $this->templateGroupID,
-            'templateSource' => $this->templateSource,
-            'availableTemplateGroups' => $this->availableTemplateGroups,
-            'copy' => $this->copy,
-        ]);
     }
 }

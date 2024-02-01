@@ -128,7 +128,7 @@ abstract class AbstractFormField implements IFormField
         }
 
         return WCF::getTPL()->fetch(
-            '__formField',
+            'shared_formField',
             'wcf',
             ['field' => $this],
             true

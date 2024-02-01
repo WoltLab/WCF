@@ -255,7 +255,7 @@ class UploadHandler extends SingletonFactory
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
         }
 
-        return WCF::getTPL()->fetch('uploadFieldComponent', 'wcf', [
+        return WCF::getTPL()->fetch('shared_uploadFieldComponent', 'wcf', [
             'uploadField' => $this->fields[$fieldId],
             'uploadFieldId' => $fieldId,
             'uploadFieldFiles' => $this->getFilesByFieldId($fieldId),
