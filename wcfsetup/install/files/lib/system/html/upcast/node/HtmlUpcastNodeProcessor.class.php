@@ -14,7 +14,7 @@ use wcf\system\html\upcast\HtmlUpcastProcessor;
  * @since       6.1
  * @method      HtmlUpcastProcessor     getHtmlProcessor()
  */
-class HtmlUpcastNodeProcessor extends AbstractHtmlNodeProcessor
+final class HtmlUpcastNodeProcessor extends AbstractHtmlNodeProcessor
 {
     /**
      * @inheritDoc

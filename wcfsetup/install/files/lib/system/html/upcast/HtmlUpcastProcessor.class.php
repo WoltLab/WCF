@@ -15,7 +15,7 @@ use wcf\system\html\upcast\node\HtmlUpcastNodeProcessor;
  */
 class HtmlUpcastProcessor extends AbstractHtmlProcessor
 {
-    protected HtmlUpcastNodeProcessor $htmlUpcastNodeProcessor;
+    private HtmlUpcastNodeProcessor $htmlUpcastNodeProcessor;
 
     /**
      * Processes the input html string.
@@ -34,7 +34,7 @@ class HtmlUpcastProcessor extends AbstractHtmlProcessor
     /**
      * @return HtmlUpcastNodeProcessor
      */
-    protected function getHtmlUpcastNodeProcessor(): HtmlUpcastNodeProcessor
+    private function getHtmlUpcastNodeProcessor(): HtmlUpcastNodeProcessor
     {
         if (!isset($this->htmlUpcastNodeProcessor)) {
             $this->htmlUpcastNodeProcessor = new HtmlUpcastNodeProcessor();
