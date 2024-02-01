@@ -173,54 +173,51 @@ class ArticleEditForm extends ArticleAddForm
         }
 
         parent::readData();
-    }
 
-    #[\Override]
-    protected function setDefaultValues()
-    {
-        parent::setDefaultValues();
-        $this->categoryID = $this->article->categoryID;
-        $this->publicationStatus = $this->article->publicationStatus;
-        $this->enableComments = $this->article->enableComments;
-        $this->username = $this->article->username;
-        $dateTime = DateUtil::getDateTimeByTimestamp($this->article->time);
-        $dateTime->setTimezone(WCF::getUser()->getTimeZone());
-        $this->time = $dateTime->format('c');
-        if ($this->article->publicationDate) {
-            $dateTime = DateUtil::getDateTimeByTimestamp($this->article->publicationDate);
+        if (empty($_POST)) {
+            $this->categoryID = $this->article->categoryID;
+            $this->publicationStatus = $this->article->publicationStatus;
+            $this->enableComments = $this->article->enableComments;
+            $this->username = $this->article->username;
+            $dateTime = DateUtil::getDateTimeByTimestamp($this->article->time);
             $dateTime->setTimezone(WCF::getUser()->getTimeZone());
-            $this->publicationDate = $dateTime->format('c');
-        }
-
-        foreach ($this->article->getArticleContents() as $languageID => $content) {
-            $this->title[$languageID] = $content->title;
-            $this->teaser[$languageID] = $content->teaser;
-            $this->content[$languageID] = $content->content;
-            $this->imageID[$languageID] = $content->imageID;
-            $this->teaserImageID[$languageID] = $content->teaserImageID;
-            $this->metaTitle[$languageID] = $content->metaTitle;
-            $this->metaDescription[$languageID] = $content->metaDescription;
-
-            // get tags
-            if (MODULE_TAGGING) {
-                $this->tags[$languageID] = TagEngine::getInstance()->getObjectTags(
-                    'com.woltlab.wcf.article',
-                    $content->articleContentID,
-                    [$languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
-                );
+            $this->time = $dateTime->format('c');
+            if ($this->article->publicationDate) {
+                $dateTime = DateUtil::getDateTimeByTimestamp($this->article->publicationDate);
+                $dateTime->setTimezone(WCF::getUser()->getTimeZone());
+                $this->publicationDate = $dateTime->format('c');
             }
-        }
 
-        $this->readImages();
+            foreach ($this->article->getArticleContents() as $languageID => $content) {
+                $this->title[$languageID] = $content->title;
+                $this->teaser[$languageID] = $content->teaser;
+                $this->content[$languageID] = $content->content;
+                $this->imageID[$languageID] = $content->imageID;
+                $this->teaserImageID[$languageID] = $content->teaserImageID;
+                $this->metaTitle[$languageID] = $content->metaTitle;
+                $this->metaDescription[$languageID] = $content->metaDescription;
 
-        // labels
-        $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels(
-            [$this->article->articleID],
-            true
-        );
-        if (isset($assignedLabels[$this->article->articleID])) {
-            foreach ($assignedLabels[$this->article->articleID] as $label) {
-                $this->labelIDs[$label->groupID] = $label->labelID;
+                // get tags
+                if (MODULE_TAGGING) {
+                    $this->tags[$languageID] = TagEngine::getInstance()->getObjectTags(
+                        'com.woltlab.wcf.article',
+                        $content->articleContentID,
+                        [$languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
+                    );
+                }
+            }
+
+            $this->readImages();
+
+            // labels
+            $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels(
+                [$this->article->articleID],
+                true
+            );
+            if (isset($assignedLabels[$this->article->articleID])) {
+                foreach ($assignedLabels[$this->article->articleID] as $label) {
+                    $this->labelIDs[$label->groupID] = $label->labelID;
+                }
             }
         }
     }
