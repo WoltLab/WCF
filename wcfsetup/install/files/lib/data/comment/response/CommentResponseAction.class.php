@@ -15,6 +15,7 @@ use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -313,8 +314,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      */
     public function beginEdit()
     {
+        $upcastProcessor = new HtmlUpcastProcessor();
+        $upcastProcessor->process($this->response->message, 'com.woltlab.wcf.comment.response');
         WCF::getTPL()->assign([
             'response' => $this->response,
+            'responseMessage' => $upcastProcessor->getHtml(),
             'wysiwygSelector' => 'commentResponseEditor' . $this->response->responseID,
         ]);
 
