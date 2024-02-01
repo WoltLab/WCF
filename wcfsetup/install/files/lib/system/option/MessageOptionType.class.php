@@ -7,6 +7,7 @@ use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -68,10 +69,13 @@ class MessageOptionType extends TextareaOptionType
             ArrayUtil::trim(WCF::getSession()->getPermission($permission))
         ));
 
+        $upcastProcessor = new HtmlUpcastProcessor();
+        $upcastProcessor->process($value ?? '', $this->messageObjectType);
+
         WCF::getTPL()->assign([
             'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),
             'option' => $option,
-            'value' => $value,
+            'value' => $upcastProcessor->getHtml(),
         ]);
 
         return WCF::getTPL()->fetch('messageOptionType');
