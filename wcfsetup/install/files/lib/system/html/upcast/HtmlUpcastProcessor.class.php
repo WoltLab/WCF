@@ -31,9 +31,6 @@ class HtmlUpcastProcessor extends AbstractHtmlProcessor
         $this->getHtmlUpcastNodeProcessor()->process();
     }
 
-    /**
-     * @return HtmlUpcastNodeProcessor
-     */
     private function getHtmlUpcastNodeProcessor(): HtmlUpcastNodeProcessor
     {
         if (!isset($this->htmlUpcastNodeProcessor)) {
