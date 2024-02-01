@@ -964,8 +964,7 @@ class TemplateEngine extends SingletonFactory
             $listeners = $this->templateListeners[$templateName][$eventName];
         }
         // Load old template listener code
-        if (\array_key_exists($templateName, TemplateEngine::SHARED_TEMPLATES)) {
-            $templateName = TemplateEngine::SHARED_TEMPLATES[$templateName];
+        if ($templateName = \array_search($templateName, TemplateEngine::SHARED_TEMPLATES)) {
             if (isset($this->templateListeners[$templateName][$eventName])) {
                 $listeners = \array_merge($listeners, $this->templateListeners[$templateName][$eventName]);
             }
