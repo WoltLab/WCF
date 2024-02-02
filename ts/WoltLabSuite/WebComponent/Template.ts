@@ -53,12 +53,8 @@ function selectPlural(parameters: PluralParameters): string {
   }
 
   // handle numeric attributes
-  const numericAttribute = Object.keys(parameters).find((key) => {
-    return key.toString() === parseInt(key).toString() && key.toString() === value.toString();
-  });
-
-  if (numericAttribute) {
-    return numericAttribute;
+  if (Object.hasOwn(parameters, value.toString())) {
+    return parameters[value];
   }
 
   let category = pluralRules.select(value);
