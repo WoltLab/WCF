@@ -173,8 +173,10 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       });
       this.dispatchEvent(evt);
 
+      // Canceling this event is interpreted as a form validation failure.
       if (evt.defaultPrevented) {
         event.preventDefault();
+        return;
       }
 
       if (evt.detail.length > 0) {
@@ -203,8 +205,9 @@ export class WoltlabCoreDialogElement extends HTMLElement {
           }
         });
       }
-
-      if (!this.#shouldClose()) {
+      // There were no validation handlers to process, so validation has passed.
+      // By default the browser will close the dialog unless the submit event’s default action gets prevented.
+      else if (!this.#shouldClose()) {
         // Prevent the browser from closing the dialog
         event.preventDefault();
         // but dispatch the `primary` event
@@ -298,8 +301,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
       if (this.#shouldClose()) {
         this.#detachDialog();
-      }
-      else {
+      } else {
         // Prevent the browser from closing the dialog.
         event.preventDefault();
       }

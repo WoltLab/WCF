@@ -124,8 +124,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     detail: callbacks,
                 });
                 this.dispatchEvent(evt);
+                // Canceling this event is interpreted as a form validation failure.
                 if (evt.defaultPrevented) {
                     event.preventDefault();
+                    return;
                 }
                 if (evt.detail.length > 0) {
                     // DOM events cannot wait for async functions. We must
@@ -149,7 +151,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                         }
                     });
                 }
-                if (!this.#shouldClose()) {
+                // There were no validation handlers to process, so validation has passed.
+                // By default the browser will close the dialog unless the submit event’s default action gets prevented.
+                else if (!this.#shouldClose()) {
                     // Prevent the browser from closing the dialog
                     event.preventDefault();
                     // but dispatch the `primary` event
