@@ -3364,6 +3364,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.cli.worker.list"><![CDATA[Lists all workers.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Requested number of parallel processes.]]></item>
 		<item name="wcf.cli.worker.threads.windows"><![CDATA[Parallel processing using --threads is not available on Windows.]]></item>
+		<item name="wcf.cli.worker.threads.variables_order"><![CDATA[For parallel processing using --threads, the value "EGPCS" is required for "variables_order" in php.ini.]]></item>
 		<item name="wcf.cli.worker.threadId"><![CDATA[Specifies the thread id when processing in parallel. Used internally when --threads is given.]]></item>
 		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[The entered thread id is not valid.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found.]]></item>
