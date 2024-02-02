@@ -266,7 +266,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
       }
 
       ckeditor.insertHtml(
-        `<img src="${escapeHTML(link)}" class="woltlabSuiteMedia" data-media-id="${
+        `<img src="${escapeHTML(link)}" class="image woltlabSuiteMedia" data-media-id="${
           media.mediaID
         }" data-media-size="${escapeHTML(thumbnailSize)}">`,
       );

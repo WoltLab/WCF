@@ -218,7 +218,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 if (thumbnailSize !== "original") {
                     link = media[thumbnailSize + "ThumbnailLink"];
                 }
-                ckeditor.insertHtml(`<img src="${(0, StringUtil_1.escapeHTML)(link)}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${(0, StringUtil_1.escapeHTML)(thumbnailSize)}">`);
+                ckeditor.insertHtml(`<img src="${(0, StringUtil_1.escapeHTML)(link)}" class="image woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${(0, StringUtil_1.escapeHTML)(thumbnailSize)}">`);
             }
             else {
                 ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);

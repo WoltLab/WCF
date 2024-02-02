@@ -58,7 +58,7 @@ function setupInsertAttachment(ckeditor: CKEditor): void {
       ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
     } else {
       ckeditor.insertHtml(
-        `<img src="${url}" class="woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`,
+        `<img src="${url}" class="image woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`,
       );
     }
   });
