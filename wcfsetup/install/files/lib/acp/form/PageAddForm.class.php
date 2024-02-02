@@ -817,12 +817,15 @@ class PageAddForm extends AbstractForm
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $upcastProcessor = new HtmlUpcastProcessor();
-                    $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.page.content');
+                    $upcastProcessor->process(
+                        $this->content[$language->languageID] ?? '',
+                        'com.woltlab.wcf.page.content'
+                    );
                     $this->content[$language->languageID] = $upcastProcessor->getHtml();
                 }
             } else {
                 $upcastProcessor = new HtmlUpcastProcessor();
-                $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.page.content');
+                $upcastProcessor->process($this->content[0] ?? '', 'com.woltlab.wcf.page.content');
                 $this->content[0] = $upcastProcessor->getHtml();
             }
         }

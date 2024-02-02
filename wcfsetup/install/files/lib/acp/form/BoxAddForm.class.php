@@ -811,16 +811,21 @@ class BoxAddForm extends AbstractForm
 
         SmileyCache::getInstance()->assignVariables();
 
-        if ($this->boxType == 'system' || $this->isMultilingual) {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+        if ($this->boxType == 'text') {
+            if ($this->isMultilingual) {
+                foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                    $upcastProcessor = new HtmlUpcastProcessor();
+                    $upcastProcessor->process(
+                        $this->content[$language->languageID] ?? '',
+                        'com.woltlab.wcf.box.content'
+                    );
+                    $this->content[$language->languageID] = $upcastProcessor->getHtml();
+                }
+            } else {
                 $upcastProcessor = new HtmlUpcastProcessor();
-                $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.box.content');
-                $this->content[$language->languageID] = $upcastProcessor->getHtml();
+                $upcastProcessor->process($this->content[0] ?? '', 'com.woltlab.wcf.box.content');
+                $this->content[0] = $upcastProcessor->getHtml();
             }
-        } else {
-            $upcastProcessor = new HtmlUpcastProcessor();
-            $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.box.content');
-            $this->content[0] = $upcastProcessor->getHtml();
         }
 
         WCF::getTPL()->assign([
