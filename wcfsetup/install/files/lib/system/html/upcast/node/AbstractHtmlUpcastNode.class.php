@@ -15,9 +15,7 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
  */
 abstract class AbstractHtmlUpcastNode extends AbstractHtmlNode implements IHtmlUpcastNode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         // there is no validation for upcast nodes
