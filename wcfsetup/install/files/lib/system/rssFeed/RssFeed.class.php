@@ -26,7 +26,7 @@ final class RssFeed
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
             >
-        EOT;
+            EOT;
 
         $element = new XmlElement(
             $header,
