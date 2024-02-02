@@ -105,6 +105,9 @@ class UserNotificationHandler extends SingletonFactory
         if (!isset($this->availableEvents[$objectType][$eventName])) {
             throw new SystemException("Unknown event " . $objectType . "-" . $eventName . " given");
         }
+        if ($recipientIDs === []) {
+            return;
+        }
 
         // get objects
         $objectTypeObject = $this->availableObjectTypes[$objectType];
@@ -141,9 +144,6 @@ class UserNotificationHandler extends SingletonFactory
         // @deprecated 5.2 This event exposes incomplete data and should not
         // be used, please use the following events instead.
         EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
-        if ($recipientIDs === []) {
-            return;
-        }
 
         // find existing notifications
         $conditions = new PreparedStatementConditionBuilder();
