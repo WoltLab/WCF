@@ -31,8 +31,8 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
+        if ($this->objectIDs !== []) {
+            $this->categoryID = \reset($this->objectIDs);
             $this->category = ArticleCategory::getCategory($this->categoryID);
             if ($this->category === null) {
                 throw new IllegalLinkException();
