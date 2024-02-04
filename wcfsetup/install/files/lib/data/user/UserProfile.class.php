@@ -19,6 +19,7 @@ use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
+use wcf\system\cache\builder\UserRankCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\Mailbox;
@@ -79,6 +80,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * user rank object
      * @var UserRank
+     * @deprecated 6.1 use `->getRank()` instead
      */
     protected $rank;
 
@@ -925,42 +927,17 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         return '';
     }
 
-    /**
-     * Returns the user rank.
-     *
-     * @return  UserRank
-     */
-    public function getRank()
+    public function getRank(): ?UserRank
     {
-        if ($this->rank === null) {
-            if (MODULE_USER_RANK && $this->rankID) {
-                if ($this->rankTitle) {
-                    $this->rank = new UserRank(null, [
-                        'rankID' => $this->rankID,
-                        'groupID' => $this->groupID,
-                        'requiredPoints' => $this->requiredPoints,
-                        'rankTitle' => $this->rankTitle,
-                        'cssClassName' => $this->cssClassName,
-                        'rankImage' => $this->rankImage,
-                        'repeatImage' => $this->repeatImage,
-                        'requiredGender' => $this->requiredGender,
-                        'hideTitle' => $this->hideTitle,
-                    ]);
-                } else {
-                    // load storage data
-                    $data = UserStorageHandler::getInstance()->getField('userRank', $this->userID);
-
-                    if ($data === null) {
-                        $this->rank = new UserRank($this->rankID);
-                        UserStorageHandler::getInstance()->update($this->userID, 'userRank', \serialize($this->rank));
-                    } else {
-                        $this->rank = \unserialize($data);
-                    }
-                }
-            }
+        if (!\MODULE_USER_RANK) {
+            return null;
         }
 
-        return $this->rank;
+        if (!$this->rankID) {
+            return null;
+        }
+
+        return UserRankCacheBuilder::getInstance()->getRank($this->rankID);
     }
 
     /**
