@@ -10,6 +10,7 @@ use wcf\system\feed\enclosure\FeedEnclosure;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1 use `wcf\system\rssFeed\RssFeedItem` instead
  */
 interface IFeedEntryWithEnclosure extends IFeedEntry
 {

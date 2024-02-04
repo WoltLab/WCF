@@ -9,6 +9,7 @@ namespace wcf\data\article;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
+ * @deprecated 6.1
  *
  * @method  FeedArticle current()
  * @method  FeedArticle[]   getObjects()
