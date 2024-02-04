@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
+ * @deprecated 6.1 use `NotificationRssFeedPage` instead
  */
 class NotificationFeedPage extends AbstractFeedPage
 {
@@ -28,6 +29,8 @@ class NotificationFeedPage extends AbstractFeedPage
         }
 
         $this->title = WCF::getLanguage()->get('wcf.user.menu.community.notification');
+
+        $this->redirectToNewPage(NotificationRssFeedPage::class);
     }
 
     /**
