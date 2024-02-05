@@ -13,7 +13,7 @@ use wcf\system\html\upcast\node\HtmlUpcastNodeProcessor;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-class HtmlUpcastProcessor extends AbstractHtmlProcessor
+final class HtmlUpcastProcessor extends AbstractHtmlProcessor
 {
     private HtmlUpcastNodeProcessor $htmlUpcastNodeProcessor;
 
