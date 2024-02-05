@@ -105,7 +105,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
             return false;
         }
 
-        $conditions->add("option_value.userOption" . $option->optionID . " = ?", [StringUtil::trim($value)]);
+        $conditions->add("option_value.userOption" . $option->optionID . " = ?", [StringUtil::trim($value ?: '')]);
 
         return true;
     }
