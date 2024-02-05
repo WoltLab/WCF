@@ -17,7 +17,7 @@ use wcf\data\attachment\AttachmentList;
  * @method  Attachment|null      getObject($objectID)
  * @method  Attachment[]         getObjects(array $objectIDs)
  */
-class AttachmentRuntimeCache extends AbstractRuntimeCache
+final class AttachmentRuntimeCache extends AbstractRuntimeCache
 {
     /**
      * @inheritDoc
