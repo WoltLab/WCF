@@ -12,9 +12,9 @@
 	{/if}
 	
 	{if $__wcf->getUser()->userID}
-		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">
+		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">
 	{else}
-		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleFeed' id=$categoryID}{/link}">
+		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID}{/link}">
 	{/if}
 {/capture}
 
@@ -69,7 +69,7 @@
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
-	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleRssFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleRssFeed' id=$categoryID}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
 {/capture}
 
 {include file='header'}
