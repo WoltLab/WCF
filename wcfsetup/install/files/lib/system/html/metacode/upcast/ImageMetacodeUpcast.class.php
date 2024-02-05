@@ -5,6 +5,8 @@ namespace wcf\system\html\metacode\upcast;
 use wcf\util\DOMUtil;
 
 /**
+ * Default implementation for image elements for CKEditor 5.
+ *
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
