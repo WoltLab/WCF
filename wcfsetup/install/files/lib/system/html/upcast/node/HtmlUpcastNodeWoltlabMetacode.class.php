@@ -65,18 +65,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
 
         foreach ($nodes as [$element, $name, $upcast, $attributes]) {
             if ($upcast->hasValidAttributes($attributes)) {
-                $fragment = DOMUtil::childNodesToFragment($element);
-                if (!$fragment->hasChildNodes()) {
-                    $fragment->appendChild($fragment->ownerDocument->createTextNode(''));
-                }
-
-                $newElement = $upcast->upcast($fragment, $attributes);
-                if (!($newElement instanceof \DOMElement)) {
-                    throw new \UnexpectedValueException("Expected a valid DOMElement as return value.");
-                }
-
-                DOMUtil::replaceElement($element, $newElement);
-                unset($fragment);
+                $upcast->upcast($element, $attributes);
             } else {
                 // Replace this with a text node
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);

@@ -4,6 +4,7 @@ namespace wcf\system\html\metacode\upcast;
 
 use wcf\data\media\Media;
 use wcf\system\cache\runtime\MediaRuntimeCache;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
 final class WsmMetacodeUpcast implements IMetacodeUpcast
 {
     #[\Override]
-    public function upcast(\DOMDocumentFragment $fragment, array $attributes): ?\DOMElement
+    public function upcast(\DOMElement $element, array $attributes): void
     {
         /**
          * @var string $alignment
@@ -27,27 +28,33 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         $alignment = $attributes[2] ?? 'none';
         $width = $attributes[3] ?? 'auto';
         $media = MediaRuntimeCache::getInstance()->getObject($mediaID);
+        $parentLink = $element->parentNode;
+        /** @var \DOMElement|null $parentLink */
+        if ($parentLink !== null && $parentLink->nodeName !== 'a') {
+            $parentLink = null;
+        }
 
-        $element = $fragment->ownerDocument->createElement('img');
+        $imgElement = $element->ownerDocument->createElement('img');
         if ($thumbnail === 'original') {
-            $element->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
+            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
         } else {
-            $element->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
+            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
         }
         if ($width !== 'auto') {
-            $element->setAttribute('width', \intval($width));
-            $element->setAttribute('data-width', \intval($width) . 'px');
+            $imgElement->setAttribute('width', \intval($width));
+            $imgElement->setAttribute('data-width', \intval($width) . 'px');
         }
-        $element->setAttribute('data-media-id', $mediaID);
-        $element->setAttribute('data-media-size', StringUtil::decodeHTML($thumbnail));
+        $imgElement->setAttribute('data-media-id', $mediaID);
+        $imgElement->setAttribute('data-media-size', StringUtil::decodeHTML($thumbnail));
+        $imgElement->setAttribute('style', $this->getStyle($media, $width, $thumbnail));
         if ($alignment === 'none') {
-            $element->setAttribute('class', 'image woltlabSuiteMedia');
-            $element->setAttribute('style', $this->getStyle($media, $width, $thumbnail));
-            return $element;
+            $imgElement->setAttribute('class', 'image woltlabSuiteMedia');
+            DOMUtil::replaceElement($element, $imgElement);
+            return;
         }
-        $element->setAttribute('class', 'woltlabSuiteMedia');
+        $imgElement->setAttribute('class', 'woltlabSuiteMedia');
 
-        $figure = $fragment->ownerDocument->createElement('figure');
+        $figure = $element->ownerDocument->createElement('figure');
         if ($alignment === 'left') {
             $figure->setAttribute('class', 'image image-style-side-left');
         } elseif ($alignment === 'right') {
@@ -55,9 +62,17 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         } else {
             $figure->setAttribute('class', 'image');
         }
-        $figure->setAttribute('style', $this->getStyle($media, $width, $thumbnail));
-        $figure->appendChild($element);
-        return $figure;
+        if ($parentLink !== null) {
+            DOMUtil::replaceElement($parentLink, $figure, false);
+            $figure->appendChild($parentLink);
+            foreach (DomUtil::getChildNodes($parentLink) as $child) {
+                $parentLink->removeChild($child);
+            }
+            $parentLink->appendChild($imgElement);
+        } else {
+            $figure->appendChild($imgElement);
+            DOMUtil::replaceElement($element, $figure, false);
+        }
     }
 
     #[\Override]

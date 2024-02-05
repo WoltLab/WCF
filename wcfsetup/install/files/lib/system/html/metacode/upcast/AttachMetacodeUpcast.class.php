@@ -4,6 +4,7 @@ namespace wcf\system\html\metacode\upcast;
 
 use wcf\data\attachment\Attachment;
 use wcf\system\cache\runtime\AttachmentRuntimeCache;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
 final class AttachMetacodeUpcast implements IMetacodeUpcast
 {
     #[\Override]
-    public function upcast(\DOMDocumentFragment $fragment, array $attributes): ?\DOMElement
+    public function upcast(\DOMElement $element, array $attributes): void
     {
         /**
          * @var string $alignment
@@ -25,45 +26,48 @@ final class AttachMetacodeUpcast implements IMetacodeUpcast
         $alignment = $attributes[1] ?? 'none';
         $width = $attributes[2] ?? 'auto';
         $attachment = AttachmentRuntimeCache::getInstance()->getObject($attachmentID);
+        $parentLink = $element->parentNode;
+        /** @var \DOMElement|null $parentLink */
+        if ($parentLink !== null && $parentLink->nodeName !== 'a') {
+            $parentLink = null;
+        }
 
-        $element = $fragment->ownerDocument->createElement('img');
+        $imgElement = $element->ownerDocument->createElement('img');
         if ($this->isThumbnailWidth($attachment, $width)) {
-            $element->setAttribute('src', StringUtil::decodeHTML($attachment->getThumbnailLink('thumbnail')));
+            $imgElement->setAttribute('src', StringUtil::decodeHTML($attachment->getThumbnailLink('thumbnail')));
         } else {
-            $element->setAttribute('src', StringUtil::decodeHTML($attachment->getLink()));
+            $imgElement->setAttribute('src', StringUtil::decodeHTML($attachment->getLink()));
         }
 
         if (\is_numeric($width) && $width > 0) {
-            $element->setAttribute('width', \intval($width));
-            $element->setAttribute('data-width', \intval($width) . 'px');
+            $imgElement->setAttribute('width', \intval($width));
+            $imgElement->setAttribute('data-width', \intval($width) . 'px');
         }
-        $element->setAttribute('data-attachment-id', $attachmentID);
+        $imgElement->setAttribute('data-attachment-id', $attachmentID);
+        $imgElement->setAttribute('class', 'image woltlabAttachment');
+        $imgElement->setAttribute('style', $this->getStyle($attachment, $width));
         if ($alignment === 'none') {
-            $element->setAttribute('class', 'image woltlabAttachment');
-            $element->setAttribute(
-                'style',
-                $this->getStyle($attachment, $width)
-            );
-            return $element;
+            return;
         }
-        $element->setAttribute('class', 'woltlabAttachment');
 
-        $figure = $fragment->ownerDocument->createElement('figure');
+        $figure = $element->ownerDocument->createElement('figure');
+        $figure->setAttribute('class', 'image');
         if ($alignment === 'left') {
-            $figure->setAttribute('class', 'image image-style-side-left');
+            $imgElement->setAttribute('class', $imgElement->getAttribute('style') . ' image-style-side-left');
         } elseif ($alignment === 'right') {
-            $figure->setAttribute('class', 'image image-style-side');
-        } else {
-            $figure->setAttribute('class', 'image');
+            $imgElement->setAttribute('class', $imgElement->getAttribute('style') . ' image-style-side');
         }
-
-        $figure->setAttribute(
-            'style',
-            $this->getStyle($attachment, $width)
-        );
-
-        $figure->appendChild($element);
-        return $figure;
+        if ($parentLink !== null) {
+            DOMUtil::replaceElement($parentLink, $figure, false);
+            $figure->appendChild($parentLink);
+            foreach (DomUtil::getChildNodes($parentLink) as $child) {
+                $parentLink->removeChild($child);
+            }
+            $parentLink->appendChild($imgElement);
+        } else {
+            $figure->appendChild($imgElement);
+            DOMUtil::replaceElement($imgElement, $figure, false);
+        }
     }
 
     private function isThumbnailWidth(Attachment $attachment, string|bool|int $width): bool

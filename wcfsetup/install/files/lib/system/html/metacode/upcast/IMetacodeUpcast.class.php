@@ -15,13 +15,10 @@ interface IMetacodeUpcast
     /**
      * Converts a known metacode into the HTML representation for use by CKEditor5.
      *
-     * The fragment must be inserted into your returned DOM element.
-     *
-     * @param \DOMDocumentFragment $fragment fragment containing all child nodes, must be appended to returned element
+     * @param \DOMElement $element
      * @param array $attributes list of attributes
-     * @return  null|\DOMElement     new DOM element
      */
-    public function upcast(\DOMDocumentFragment $fragment, array $attributes): ?\DOMElement;
+    public function upcast(\DOMElement $element, array $attributes): void;
 
     /**
      * Returns true if the given attributes are valid for this upcast.
