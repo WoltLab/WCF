@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class WsmMetacodeUpcast implements IMetacodeUpcast
+final class WsmMetacodeUpcast extends ImageMetacodeUpcast
 {
     #[\Override]
     public function upcast(\DOMElement $element, array $attributes): void
@@ -54,25 +54,7 @@ final class WsmMetacodeUpcast implements IMetacodeUpcast
         }
         $imgElement->setAttribute('class', 'woltlabSuiteMedia');
 
-        $figure = $element->ownerDocument->createElement('figure');
-        if ($alignment === 'left') {
-            $figure->setAttribute('class', 'image image-style-side-left');
-        } elseif ($alignment === 'right') {
-            $figure->setAttribute('class', 'image image-style-side');
-        } else {
-            $figure->setAttribute('class', 'image');
-        }
-        if ($parentLink !== null) {
-            DOMUtil::replaceElement($parentLink, $figure, false);
-            $figure->appendChild($parentLink);
-            foreach (DomUtil::getChildNodes($parentLink) as $child) {
-                $parentLink->removeChild($child);
-            }
-            $parentLink->appendChild($imgElement);
-        } else {
-            $figure->appendChild($imgElement);
-            DOMUtil::replaceElement($element, $figure, false);
-        }
+        $this->createFigure($element, $imgElement, $alignment, $parentLink);
     }
 
     #[\Override]

@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class AttachMetacodeUpcast implements IMetacodeUpcast
+final class AttachMetacodeUpcast extends ImageMetacodeUpcast
 {
     #[\Override]
     public function upcast(\DOMElement $element, array $attributes): void
@@ -44,31 +44,15 @@ final class AttachMetacodeUpcast implements IMetacodeUpcast
             $imgElement->setAttribute('data-width', \intval($width) . 'px');
         }
         $imgElement->setAttribute('data-attachment-id', $attachmentID);
-        $imgElement->setAttribute('class', 'image woltlabAttachment');
         $imgElement->setAttribute('style', $this->getStyle($attachment, $width));
         if ($alignment === 'none') {
+            $imgElement->setAttribute('class', 'image woltlabAttachment');
             DOMUtil::replaceElement($element, $imgElement);
             return;
         }
+        $imgElement->setAttribute('class', 'woltlabAttachment');
 
-        $figure = $element->ownerDocument->createElement('figure');
-        $figure->setAttribute('class', 'image');
-        if ($alignment === 'left') {
-            $imgElement->setAttribute('class', $imgElement->getAttribute('style') . ' image-style-side-left');
-        } elseif ($alignment === 'right') {
-            $imgElement->setAttribute('class', $imgElement->getAttribute('style') . ' image-style-side');
-        }
-        if ($parentLink !== null) {
-            DOMUtil::replaceElement($parentLink, $figure, false);
-            $figure->appendChild($parentLink);
-            foreach (DomUtil::getChildNodes($parentLink) as $child) {
-                $parentLink->removeChild($child);
-            }
-            $parentLink->appendChild($imgElement);
-        } else {
-            $figure->appendChild($imgElement);
-            DOMUtil::replaceElement($imgElement, $figure, false);
-        }
+        $this->createFigure($element, $imgElement, $alignment, $parentLink);
     }
 
     private function isThumbnailWidth(Attachment $attachment, string|bool|int $width): bool
