@@ -181,64 +181,11 @@ class HtmlNodePlainLink
                 $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
                 DOMUtil::removeNode($this->topLevelParent);
             } else {
-                $replaceNode = null;
-                $parent = $this->link;
-                $next = $this->findBr($this->link, 'nextSibling');
-                $previous = $this->findBr($this->link, 'previousSibling');
-
-                // When multiple links are in the same paragraph, `topLevelParent`
-                // may no longer be a valid reference.
-                if ($this->topLevelParent->parentNode === null) {
-                    $this->topLevelParent = $this->link;
-                    while ($this->topLevelParent->parentNode->nodeName !== 'body') {
-                        $this->topLevelParent = $this->topLevelParent->parentNode;
-                    }
-                }
-
-                // Link inside other elements(u, i, b, …)
-                while ($next === null && $previous === null && $parent !== $this->topLevelParent) {
-                    $parent = $parent->parentNode;
-                    $next = $this->findBr($parent, 'nextSibling');
-                    $previous = $this->findBr($parent, 'previousSibling');
-                }
-
-                // The link is the only content in the top level parent. This
-                // can happen when there are multiple links within one paragraph.
-                if ($next === null && $previous === null) {
-                    $this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
-                    DOMUtil::removeNode($this->topLevelParent);
-                    DOMUtil::replaceElement($this->link, $metacodeElement, false);
-                    return;
-                }
-
-                if ($next !== null) {
-                    $ancestor = $this->topLevelParent->parentNode;
-                    \assert($ancestor instanceof \DOMElement);
-                    $replaceNode = DOMUtil::splitParentsUntil(
-                        $parent,
-                        $ancestor,
-                        false
-                    );
-                }
-                if ($previous !== null) {
-                    $ancestor = $this->topLevelParent->parentNode;
-                    \assert($ancestor instanceof \DOMElement);
-                    $replaceNode = DOMUtil::splitParentsUntil(
-                        $parent,
-                        $ancestor
-                    );
-                }
-                \assert($replaceNode instanceof \DOMElement);
-
-                // Remove <br> from start and end of the new block elements
-                if ($next !== null) {
-                    DOMUtil::removeNode($next);
-                }
-                if ($previous !== null) {
-                    DOMUtil::removeNode($previous);
-                }
-                DOMUtil::replaceElement($replaceNode, $metacodeElement, false);
-
+                DOMUtil::replaceElement(
+                    HtmlNodePlainLink::splitAtLink($this->link, $this->topLevelParent),
+                    $metacodeElement,
+                    false
+                );
                 return;
             }
         }
@@ -255,7 +202,74 @@ class HtmlNodePlainLink
         $this->pristine = false;
     }
 
-    private function findBr(?\DOMNode $node, string $property): ?\DOMNode
+    /**
+     * Split a link within a block element into its own block element.
+     *
+     * @param \DOMElement $link
+     * @param \DOMElement|null $topLevelParent
+     * @return \DOMElement
+     */
+    public static function splitAtLink(\DOMElement $link, ?\DOMElement $topLevelParent = null): \DOMElement
+    {
+        $replaceNode = null;
+        $parent = $link;
+        $next = HtmlNodePlainLink::findBr($link, 'nextSibling');
+        $previous = HtmlNodePlainLink::findBr($link, 'previousSibling');
+
+        // When multiple links are in the same paragraph, `topLevelParent`
+        // may no longer be a valid reference.
+        if ($topLevelParent === null || $topLevelParent->parentNode === null) {
+            $topLevelParent = $link;
+            while ($topLevelParent->parentNode->nodeName !== 'body') {
+                $topLevelParent = $topLevelParent->parentNode;
+            }
+        }
+
+        // Link inside other elements(u, i, b, …)
+        while ($next === null && $previous === null && $parent !== $topLevelParent) {
+            $parent = $parent->parentNode;
+            $next = HtmlNodePlainLink::findBr($parent, 'nextSibling');
+            $previous = HtmlNodePlainLink::findBr($parent, 'previousSibling');
+        }
+
+        // The link is the only content in the top level parent. This
+        // can happen when there are multiple links within one paragraph.
+        if ($next === null && $previous === null) {
+            $topLevelParent->parentNode->insertBefore($link, $topLevelParent);
+            DOMUtil::removeNode($topLevelParent);
+            return $link;
+        }
+
+        if ($next !== null) {
+            $ancestor = $topLevelParent->parentNode;
+            \assert($ancestor instanceof \DOMElement);
+            $replaceNode = DOMUtil::splitParentsUntil(
+                $parent,
+                $ancestor,
+                false
+            );
+        }
+        if ($previous !== null) {
+            $ancestor = $topLevelParent->parentNode;
+            \assert($ancestor instanceof \DOMElement);
+            $replaceNode = DOMUtil::splitParentsUntil(
+                $parent,
+                $ancestor
+            );
+        }
+        \assert($replaceNode instanceof \DOMElement);
+
+        // Remove <br> from start and end of the new block elements
+        if ($next !== null) {
+            DOMUtil::removeNode($next);
+        }
+        if ($previous !== null) {
+            DOMUtil::removeNode($previous);
+        }
+        return $replaceNode;
+    }
+
+    private static function findBr(?\DOMNode $node, string $property): ?\DOMNode
     {
         if ($node === null) {
             return null;
@@ -265,6 +279,6 @@ class HtmlNodePlainLink
             return $node;
         }
 
-        return $this->findBr($node->{$property}, $property);
+        return HtmlNodePlainLink::findBr($node->{$property}, $property);
     }
 }
