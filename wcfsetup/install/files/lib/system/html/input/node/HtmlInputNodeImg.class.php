@@ -182,15 +182,19 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         }
 
         $replaceElement = $element;
-        $parent = $this->getParentFigure($element);
-        if ($parent !== null) {
-            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $parent->getAttribute('class'), $matches)) {
+        $figure = $this->getParentFigure($element);
+        if ($figure !== null) {
+            if (\preg_match('~\b(?<float>image-style-side-left|image-style-side)\b~', $figure->getAttribute('class'), $matches)) {
                 $float = ($matches['float'] === 'image-style-side-left') ? 'left' : 'right';
             } else {
                 $float = 'center';
             }
 
-            $replaceElement = $parent;
+            $replaceElement = $figure;
+            if (($element->parentNode instanceof \DOMElement) && $element->parentNode->nodeName === "a") {
+                DOMUtil::replaceElement($figure, $element->parentNode, false);
+                $replaceElement = $element;
+            }
         }
 
         $attributes = [
