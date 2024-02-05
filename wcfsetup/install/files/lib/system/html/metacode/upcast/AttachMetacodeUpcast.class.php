@@ -47,6 +47,7 @@ final class AttachMetacodeUpcast implements IMetacodeUpcast
         $imgElement->setAttribute('class', 'image woltlabAttachment');
         $imgElement->setAttribute('style', $this->getStyle($attachment, $width));
         if ($alignment === 'none') {
+            DOMUtil::replaceElement($element, $imgElement);
             return;
         }
 
