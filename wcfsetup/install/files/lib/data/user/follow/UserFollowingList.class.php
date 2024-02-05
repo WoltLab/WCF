@@ -35,13 +35,6 @@ class UserFollowingList extends UserFollowerList
             LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
             ON          user_avatar.avatarID = user_table.avatarID";
 
-        if (MODULE_USER_RANK) {
-            $this->sqlSelects .= ",user_rank.*";
-            $this->sqlJoins .= "
-                LEFT JOIN   wcf" . WCF_N . "_user_rank user_rank
-                ON          user_rank.rankID = user_table.rankID";
-        }
-
         $this->sqlSelects .= ", user_table.*";
     }
 }

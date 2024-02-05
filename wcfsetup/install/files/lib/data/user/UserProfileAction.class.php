@@ -338,7 +338,7 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $resetUserIDs = $userToRank = [];
+        $userToRank = [];
         foreach ($this->getObjects() as $user) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
@@ -361,12 +361,10 @@ class UserProfileAction extends UserAction
             if ($row === false) {
                 if ($user->rankID) {
                     $userToRank[$user->userID] = null;
-                    $resetUserIDs[] = $user->userID;
                 }
             } else {
                 if ($row['rankID'] != $user->rankID) {
                     $userToRank[$user->userID] = $row['rankID'];
-                    $resetUserIDs[] = $user->userID;
                 }
             }
         }
@@ -385,10 +383,6 @@ class UserProfileAction extends UserAction
                 ]);
             }
             WCF::getDB()->commitTransaction();
-        }
-
-        if (!empty($resetUserIDs)) {
-            UserStorageHandler::getInstance()->reset($resetUserIDs, 'userRank');
         }
     }
 
