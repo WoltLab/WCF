@@ -70,12 +70,6 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 $upcast->upcast($element, $attributes);
             } else {
                 // Replace this with a text node
-                $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
-                if ($bbcode !== null) {
-                    $newElement = $element->ownerDocument->createElement($bbcode->isBlockElement ? 'p' : 'span');
-                } else {
-                    $newElement = $element->ownerDocument->createElement('p');
-                }
                 /** @see HtmlBBCodeParser::buildBBCodeTag() */
                 $attributes = \array_filter($attributes, fn($value) => $value !== null);
 
@@ -89,10 +83,17 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 } else {
                     $attributes = '';
                 }
+                $text = \sprintf('[%s%s][/%s]', $name, $attributes, $name);
+                $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
 
-                $newElement->textContent = \sprintf('[%s%s][/%s]', $name, $attributes, $name);
-
-                DOMUtil::replaceElement($element, $newElement);
+                if ($bbcode === null || $bbcode->isBlockElement) {
+                    $newElement = $element->ownerDocument->createElement('p');
+                    $newElement->textContent = $text;
+                    DOMUtil::replaceElement($element, $newElement);
+                } else {
+                    $element->parentNode->insertBefore($element->ownerDocument->createTextNode($text), $element);
+                    $element->parentNode->removeChild($element);
+                }
             }
         }
     }
