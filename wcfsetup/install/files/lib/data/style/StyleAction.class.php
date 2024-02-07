@@ -319,6 +319,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             'favicon-48x48.png' => 48,
             'android-chrome-192x192.png' => 192,
             'android-chrome-256x256.png' => 256,
+            'android-chrome-512x512.png' => 512,
             'apple-touch-icon.png' => 180,
             'mstile-150x150.png' => 150,
         ];
@@ -400,6 +401,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         {
             "src": "android-chrome-256x256.png",
             "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],

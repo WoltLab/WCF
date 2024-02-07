@@ -72,9 +72,9 @@ class Style extends DatabaseObject
 
     const PREVIEW_IMAGE_MAX_WIDTH = 102;
 
-    const FAVICON_IMAGE_HEIGHT = 256;
+    const FAVICON_IMAGE_HEIGHT = 512;
 
-    const FAVICON_IMAGE_WIDTH = 256;
+    const FAVICON_IMAGE_WIDTH = 512;
 
     const BASE_ASSET_PATH = WCF_DIR . 'images/';
 
