@@ -193,6 +193,11 @@ html:not(.touch) .userMenuItem:hover {
 	   regular flow, causing it to be ignored for the calculation of the
 	   `grid-template-rows`. */
 	position: absolute;
+
+	:is(fa-brand, fa-icon) {
+		left: -6px;
+		position: relative;
+	}
 }
 
 .userMenuItemContent {
