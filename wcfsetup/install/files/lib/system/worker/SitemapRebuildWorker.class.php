@@ -204,7 +204,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
                 $objectType = $this->sitemapObjects[$this->workerData['sitemap']];
                 if ($sitemapObject->canView($object)) {
-                    $this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
+                    $this->file->write(WCF::getTPL()->fetch('shared_sitemapEntry', 'wcf', [
                         // strip session links
                         'link' => MessageUtil::stripCrap($link),
                         'lastModifiedTime' => $lastModifiedTime,
@@ -304,7 +304,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     protected function writeIndexFile($closeFile = true)
     {
         $file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');
-        $file->write(WCF::getTPL()->fetch('sitemapIndex', 'wcf', [
+        $file->write(WCF::getTPL()->fetch('shared_sitemapIndex', 'wcf', [
             'sitemaps' => $this->workerData['sitemaps'],
         ]));
         $file->flush();

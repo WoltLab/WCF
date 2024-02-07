@@ -122,6 +122,8 @@ class TemplateEngine extends SingletonFactory
         'recaptcha' => 'shared_recaptcha',
         'scrollablePageCheckboxList' => 'shared_scrollablePageCheckboxList',
         'sitemapEnd' => 'shared_sitemapEnd',
+        'sitemapEntry' => 'shared_sitemapEntry',
+        'sitemapIndex' => 'shared_sitemapIndex',
         'sitemapStart' => 'shared_sitemapStart',
         'trophyImage' => 'shared_trophyImage',
         'unfurlUrl' => 'shared_unfurlUrl',

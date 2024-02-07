@@ -114,6 +114,8 @@ $templates = [
     'recaptcha' => 'shared_recaptcha',
     'scrollablePageCheckboxList' => 'shared_scrollablePageCheckboxList',
     'sitemapEnd' => 'shared_sitemapEnd',
+    'sitemapEntry' => 'shared_sitemapEntry',
+    'sitemapIndex' => 'shared_sitemapIndex',
     'sitemapStart' => 'shared_sitemapStart',
     'trophyImage' => 'shared_trophyImage',
     'unfurlUrl' => 'shared_unfurlUrl',
@@ -178,7 +180,7 @@ function replaceTemplateInclude(string $filename): bool
     global $templates;
     $content = file_get_contents($filename);
     $content = preg_replace_callback(
-        '~\{include.*(?<fileInclude>file=[\'\"](?<templateName>'.\implode('|', \array_keys($templates)).')[\'\"]).*}~',
+        '~\{include.*(?<fileInclude>file=[\'\"](?<templateName>' . \implode('|', \array_keys($templates)) . ')[\'\"]).*}~',
         function (array $matches) use ($templates): string {
             [
                 'fileInclude' => $fileInclude,
