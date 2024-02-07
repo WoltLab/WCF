@@ -75,35 +75,11 @@ function setupRemoveAttachment(ckeditor: CKEditor): void {
   });
 }
 
-function getInlineImageIds(element: HTMLElement): number[] {
-  const messageTabMenu = document.querySelector<HTMLElement>(
-    `.messageTabMenu[data-wysiwyg-container-id="${element.id}"]`,
-  );
-  if (!messageTabMenu) {
-    return [];
-  }
-
-  const attachmentList = messageTabMenu.querySelector<HTMLElement>(".formAttachmentContent > .formAttachmentList");
-  if (!attachmentList) {
-    return [];
-  }
-
-  return Array.from(attachmentList.querySelectorAll<HTMLElement>('.formAttachmentListItem[data-is-image="1"]')).map(
-    (listItem) => parseInt(listItem.dataset.objectId!),
-  );
-}
-
 export function setup(element: HTMLElement): void {
   listenToCkeditor(element).setupConfiguration(({ configuration, features }) => {
     if (!features.attachment) {
       return;
     }
-
-    const inlineImageIds = getInlineImageIds(element);
-
-    configuration.woltlabAttachment = {
-      inlineImageIds,
-    };
     configuration.woltlabUpload = {
       uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element, file, abortController),
       uploadOther: (file: File) => uploadAttachment(element, file),
