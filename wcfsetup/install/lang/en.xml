@@ -2922,8 +2922,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.parsingFailed"><![CDATA[The metadata of the entered font face could not be processed.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256 × 256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256 × 256 pixels large.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 512 × 512 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 512 × 512 pixels large.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
