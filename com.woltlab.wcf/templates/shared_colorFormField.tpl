@@ -7,10 +7,10 @@
 		<span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
 	</a>
 	<input type="hidden" {*
-        *}id="{$field->getPrefixedId()}" {*
-        *}name="{$field->getPrefixedId()}" {*
-        *}value="{$field->getValue()}"{*
-    *}>
+		*}id="{$field->getPrefixedId()}" {*
+		*}name="{$field->getPrefixedId()}" {*
+		*}value="{$field->getValue()}"{*
+	*}>
 	{include file='shared_colorPickerJavaScript'}
 
 	<script data-relocate="true">

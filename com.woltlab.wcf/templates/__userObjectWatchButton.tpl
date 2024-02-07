@@ -19,8 +19,8 @@
 			</li>
 		</ul>
 	</div>
-    
-    <script data-relocate="true">
+
+	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/User/ObjectWatch', 'WoltLabSuite/Core/Language'], (ObjectWatch, Language) => {
 			Language.addObject({
 				'wcf.user.objectWatch.button.subscribe': '{jslang}wcf.user.objectWatch.button.subscribe{/jslang}',
@@ -29,5 +29,5 @@
 
 			ObjectWatch.setup();
 		});
-    </script>
+	</script>
 {/if}

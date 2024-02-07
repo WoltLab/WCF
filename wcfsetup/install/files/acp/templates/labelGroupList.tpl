@@ -44,16 +44,16 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-	                {assign var='linkParameters' value=''}
-	                {if $groupName}
+			{assign var='linkParameters' value=''}
+			{if $groupName}
 				{append var='linkParameters' value='&groupName='}
 				{append var='linkParameters' value=$groupName|rawurlencode}
-	                {/if}
-	                {if $groupDescription}
+			{/if}
+			{if $groupDescription}
 				{append var='linkParameters' value='&groupDescription='}
 				{append var='linkParameters' value=$groupDescription|rawurlencode}
-	                {/if}
-		    
+			{/if}
+			
 			{pages print=true assign=pagesLinks controller="LabelGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
 	</div>

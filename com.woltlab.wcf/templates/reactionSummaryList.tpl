@@ -1,6 +1,6 @@
 {if $__wcf->session->getPermission('user.like.canViewLike')}
 	{assign var='__reactionSummaryJson' value='[]'}
-    {if $reactionData[$objectID]|isset}
+	{if $reactionData[$objectID]|isset}
 		{assign var='__reactionSummaryJson' value=$reactionData[$objectID]->getReactionsJson()}
 	{/if}
 	

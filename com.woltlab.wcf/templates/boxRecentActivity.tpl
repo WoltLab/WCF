@@ -6,11 +6,11 @@
 	{assign var='__events' value=$eventList->getObjects()}
 	{assign var='__lastEvent' value=$__events|end}
 	<ul class="containerList recentActivityList"
-	    data-last-event-time="{@$lastEventTime}"
-	    data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}"
-	    data-filtered-by-followed-users="{if $filteredByFollowedUsers}true{else}false{/if}"
-	    data-user-id="0"
-	    data-box-id="{@$boxID}"
+		data-last-event-time="{@$lastEventTime}"
+		data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}"
+		data-filtered-by-followed-users="{if $filteredByFollowedUsers}true{else}false{/if}"
+		data-user-id="0"
+		data-box-id="{@$boxID}"
 	>
 		{if $canFilterByFollowedUsers}
 			<li class="containerListButtonGroup jsOnly jsRecentActivitySwitchContext">

@@ -4,7 +4,7 @@
 <meta name="msapplication-config" content="{$__wcf->getStyleHandler()->getStyle()->getFaviconBrowserconfig()}">
 <meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfPageThemeColor', true)}">
 <script>
-    {
-        document.querySelector('meta[name="theme-color"]').content = window.getComputedStyle(document.documentElement).getPropertyValue("--wcfPageThemeColor");
-    }
+	{
+		document.querySelector('meta[name="theme-color"]').content = window.getComputedStyle(document.documentElement).getPropertyValue("--wcfPageThemeColor");
+	}
 </script>

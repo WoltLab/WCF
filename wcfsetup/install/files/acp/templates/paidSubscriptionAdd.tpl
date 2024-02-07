@@ -57,8 +57,8 @@
 			<dt><label for="description">{lang}wcf.global.description{/lang}</label></dt>
 			<dd>
 				<textarea id="description" name="description" class="wysiwygTextarea"
-				          data-disable-attachments="true"
-				          data-disable-media="true"
+					data-disable-attachments="true"
+					data-disable-media="true"
 				>{$i18nPlainValues[description]}</textarea>
 				{include file='shared_wysiwyg' wysiwygSelector='description'}
 				{if $errorField == 'description'}
