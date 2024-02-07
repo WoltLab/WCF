@@ -289,7 +289,7 @@
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-							    	{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
+								{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
