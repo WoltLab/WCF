@@ -44,7 +44,7 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
             $this->expiredLicenses = \array_filter(
                 $licenseData->license['expiryDates'] ?? [],
                 function ($date, $packageName) {
-                    $expiryDate = \TIME_NOW - 7_776_000; //90 days
+                    $expiryDate = \TIME_NOW + 7_776_000; //90 days
                     if (PackageCache::getInstance()->getPackageID($packageName) === null) {
                         // package not installed
                         return false;
