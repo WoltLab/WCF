@@ -431,7 +431,7 @@
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[Der Pfad enthält keine neuen Pakete.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[Es {if $count > 1}wurden {#$count} neue Projekte{else}wurde ein neues Projekt{/if} hinzugefügt.]]></item>
-		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtungstest]]></item>
+		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
 		<item name="wcf.acp.devtools.notificationTest.button.test"><![CDATA[Testen]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail"><![CDATA[Tägliche E-Mail]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail.exception"><![CDATA[Tägliche E-Mail-Fehlermeldung]]></item>
