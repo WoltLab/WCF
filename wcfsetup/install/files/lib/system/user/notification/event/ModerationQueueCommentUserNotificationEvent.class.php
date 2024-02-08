@@ -2,6 +2,7 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\UserNotification;
@@ -51,7 +52,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
      */
     public function checkAccess()
     {
-        if ($this->moderationQueue === null || !WCF::getSession()->getPermission('mod.general.canUseModeration')) {
+        if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
             return false;
         }
 
@@ -139,19 +140,16 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
     ) {
         parent::setObject($notification, $object, $author, $additionalData);
 
-        // if the active user has no access, $this->moderationQueue is null
-        $this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue(
-            $this->getUserNotificationObject()->objectID
+        $this->moderationQueue = new ViewableModerationQueue(
+            new ModerationQueue($this->getUserNotificationObject()->objectID)
         );
 
-        if ($this->moderationQueue) {
-            /** @var IModerationQueueHandler $moderationHandler */
-            $moderationHandler = ObjectTypeCache::getInstance()
-                ->getObjectType($this->moderationQueue->objectTypeID)
-                ->getProcessor();
-            $this->languageItemPrefix = $moderationHandler->getCommentNotificationLanguageItemPrefix();
-            $this->typeName = $this->getLanguage()->get($moderationHandler->getCommentNotificationTypeNameLanguageItem());
-        }
+        /** @var IModerationQueueHandler $moderationHandler */
+        $moderationHandler = ObjectTypeCache::getInstance()
+            ->getObjectType($this->moderationQueue->objectTypeID)
+            ->getProcessor();
+        $this->languageItemPrefix = $moderationHandler->getCommentNotificationLanguageItemPrefix();
+        $this->typeName = $this->getLanguage()->get($moderationHandler->getCommentNotificationTypeNameLanguageItem());
     }
 
     /**
