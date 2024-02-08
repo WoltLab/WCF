@@ -13,7 +13,7 @@
 {/hascontent}
 {hascontent}
 	<div class="acpDashboardBox__keyValueGroup">
-		<h2 class="acpDashboardBox__keyValueGroup_title">{lang}wcf.acp.dashboard.box.expiredLicences{/lang}</h2>
+		<h2 class="acpDashboardBox__keyValueGroup_title">{lang}wcf.acp.dashboard.box.expiredLicenses{/lang}</h2>
 		{content}
 			{foreach from=$expiredLicenses item=date key=packageName}
 				<dl class="plain acpDashboardBox__keyValue">

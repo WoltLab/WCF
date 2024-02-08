@@ -70,7 +70,7 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
     public function getTitle(): string
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.expiringLicenses', [
-            'expiredLicenses' => $this->getExpiredLicenses(),
+            'expiringLicenses' => $this->getExpiredLicenses(),
         ]);
     }
 
