@@ -9,23 +9,6 @@
  */
 WCF.Message = { };
 
-/**
- * Namespace for BBCode related classes.
- */
-WCF.Message.BBCode = { };
-
-/**
- * BBCode Viewer for WCF.
- */
-WCF.Message.BBCode.CodeViewer = Class.extend({
-	/**
-	 * @deprecated
-	 */
-	init: function() {
-		
-	}
-});
-
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * Provides the dynamic parts of the edit history interface.
