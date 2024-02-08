@@ -45,7 +45,7 @@ final class LicenseApi
                 ->allowSuperfluousKeys()
                 ->mapper()
                 ->map(
-                   LicenseData::class,
+                    LicenseData::class,
                     Source::json($json)
                 );
         } catch (MappingError | InvalidSource $e) {
@@ -105,5 +105,19 @@ final class LicenseApi
         }
 
         return true;
+    }
+
+    public function getUpToDateLicenseData(): ?LicenseData
+    {
+        $licenseData = $this->readFromFile();
+        if (
+            $licenseData === null
+            // Cache valid license data for 2 minutes.
+            || $licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
+        ) {
+            $licenseData = LicenseApi::fetchFromRemote();
+            $this->updateLicenseFile($licenseData);
+        }
+        return $licenseData;
     }
 }

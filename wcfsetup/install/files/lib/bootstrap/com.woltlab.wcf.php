@@ -80,6 +80,7 @@ return static function (): void {
         $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+        $event->register(new \wcf\system\acp\dashboard\box\ExpiringLicensesAcpDashboardBox());
     });
 
     try {
