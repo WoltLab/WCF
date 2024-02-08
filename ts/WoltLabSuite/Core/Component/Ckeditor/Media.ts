@@ -46,17 +46,6 @@ function uploadMedia(element: HTMLElement, file: File, abortController?: AbortCo
 export function setup(element: HTMLElement): void {
   listenToCkeditor(element)
     .setupConfiguration(({ configuration, features }) => {
-      configuration.woltlabMedia = {
-        resolveMediaUrl(mediaId: number, mediaSize: string) {
-          let thumbnail = "";
-          if (mediaSize !== "original") {
-            thumbnail = `&thumbnail=${mediaSize}`;
-          }
-
-          return `${window.WSC_API_URL}index.php?media/${mediaId}/${thumbnail}`;
-        },
-      };
-
       if (features.attachment || !features.media) {
         return;
       }

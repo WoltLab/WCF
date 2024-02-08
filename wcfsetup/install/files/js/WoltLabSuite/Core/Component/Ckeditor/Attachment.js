@@ -31,7 +31,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                 ckeditor.insertText(`[attach=${attachmentId}][/attach]`);
             }
             else {
-                ckeditor.insertHtml(`<img src="${url}" class="woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`);
+                ckeditor.insertHtml(`<img src="${url}" class="image woltlabAttachment" data-attachment-id="${attachmentId.toString()}">`);
             }
         });
     }
@@ -41,33 +41,11 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             ckeditor.removeAll("imageInline", { attachmentId });
         });
     }
-    function getInlineImageIds(element) {
-        const messageTabMenu = document.querySelector(`.messageTabMenu[data-wysiwyg-container-id="${element.id}"]`);
-        if (!messageTabMenu) {
-            return [];
-        }
-        const attachmentList = messageTabMenu.querySelector(".formAttachmentContent > .formAttachmentList");
-        if (!attachmentList) {
-            return [];
-        }
-        return Array.from(attachmentList.querySelectorAll('.formAttachmentListItem[data-is-image="1"]')).map((listItem) => parseInt(listItem.dataset.objectId));
-    }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element).setupConfiguration(({ configuration, features }) => {
             if (!features.attachment) {
                 return;
             }
-            const inlineImageIds = getInlineImageIds(element);
-            configuration.woltlabAttachment = {
-                inlineImageIds,
-                resolveAttachmentUrl(attachmentId, isThumbnail) {
-                    let thumbnail = "";
-                    if (isThumbnail) {
-                        thumbnail = "&thumbnail=1";
-                    }
-                    return `${window.WSC_API_URL}index.php?attachment/${attachmentId}/${thumbnail}`;
-                },
-            };
             configuration.woltlabUpload = {
                 uploadImage: (file, abortController) => uploadAttachment(element, file, abortController),
                 uploadOther: (file) => uploadAttachment(element, file),

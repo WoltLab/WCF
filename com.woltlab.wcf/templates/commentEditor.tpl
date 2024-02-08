@@ -1,8 +1,8 @@
 {capture assign='wysiwygSelector'}commentEditor{@$comment->commentID}{/capture}
 <textarea id="{$wysiwygSelector}" class="wysiwygTextarea"
-	data-disable-attachments="true"
-	data-support-mention="true"
->{$comment->message}</textarea>
+          data-disable-attachments="true"
+          data-support-mention="true"
+>{$commentMessage}</textarea>
 {include file='messageFormTabsInline'}
 
 <div class="formSubmit">

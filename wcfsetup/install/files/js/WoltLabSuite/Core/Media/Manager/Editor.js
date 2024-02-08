@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util", "../../Component/Ckeditor/Event"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1, Event_1) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1, Event_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MediaManagerEditor = void 0;
@@ -214,7 +214,11 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 if (!thumbnailSize) {
                     thumbnailSize = "original";
                 }
-                ckeditor.insertText(`[wsm='${media.mediaID}','${thumbnailSize}'][/wsm]`);
+                let link = media.link;
+                if (thumbnailSize !== "original") {
+                    link = media[thumbnailSize + "ThumbnailLink"];
+                }
+                ckeditor.insertHtml(`<img src="${(0, StringUtil_1.escapeHTML)(link)}" class="image woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${(0, StringUtil_1.escapeHTML)(thumbnailSize)}">`);
             }
             else {
                 ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);

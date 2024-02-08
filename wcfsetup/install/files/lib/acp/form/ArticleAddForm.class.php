@@ -17,6 +17,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
@@ -644,6 +645,22 @@ class ArticleAddForm extends AbstractForm
         parent::assignVariables();
 
         SmileyCache::getInstance()->assignVariables();
+
+        if (!$this->isMultilingual) {
+            if (isset($this->content[0])) {
+                $upcastProcessor = new HtmlUpcastProcessor();
+                $upcastProcessor->process($this->content[0], 'com.woltlab.wcf.article.content');
+                $this->content[0] = $upcastProcessor->getHtml();
+            }
+        } else {
+            foreach ($this->availableLanguages as $language) {
+                if (isset($this->content[$language->languageID])) {
+                    $upcastProcessor = new HtmlUpcastProcessor();
+                    $upcastProcessor->process($this->content[$language->languageID], 'com.woltlab.wcf.article.content');
+                    $this->content[$language->languageID] = $upcastProcessor->getHtml();
+                }
+            }
+        }
 
         WCF::getTPL()->assign([
             'action' => 'add',

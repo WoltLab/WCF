@@ -23,6 +23,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
@@ -811,6 +812,23 @@ class PageAddForm extends AbstractForm
         parent::assignVariables();
 
         SmileyCache::getInstance()->assignVariables();
+
+        if ($this->pageType === 'text') {
+            if ($this->isMultilingual) {
+                foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                    $upcastProcessor = new HtmlUpcastProcessor();
+                    $upcastProcessor->process(
+                        $this->content[$language->languageID] ?? '',
+                        'com.woltlab.wcf.page.content'
+                    );
+                    $this->content[$language->languageID] = $upcastProcessor->getHtml();
+                }
+            } else {
+                $upcastProcessor = new HtmlUpcastProcessor();
+                $upcastProcessor->process($this->content[0] ?? '', 'com.woltlab.wcf.page.content');
+                $this->content[0] = $upcastProcessor->getHtml();
+            }
+        }
 
         WCF::getTPL()->assign([
             'action' => 'add',

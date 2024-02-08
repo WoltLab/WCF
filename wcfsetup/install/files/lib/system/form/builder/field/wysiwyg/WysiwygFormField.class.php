@@ -18,6 +18,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\message\quote\MessageQuoteManager;
 use wcf\system\WCF;
@@ -468,5 +469,13 @@ final class WysiwygFormField extends AbstractFormField implements
                 'data-support-mention',
             ]
         );
+    }
+
+    #[\Override]
+    public function getValue()
+    {
+        $upcastProcessor = new HtmlUpcastProcessor();
+        $upcastProcessor->process(parent::getValue() ?? '', $this->getObjectType()->objectType);
+        return $upcastProcessor->getHtml();
     }
 }

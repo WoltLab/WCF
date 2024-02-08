@@ -18,6 +18,7 @@ import * as Clipboard from "../../Controller/Clipboard";
 import DomUtil from "../../Dom/Util";
 import type { UploadMediaEventPayload } from "../../Component/Ckeditor/Media";
 import { listenToCkeditor } from "../../Component/Ckeditor/Event";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _mediaToInsert = new Map<number, Media>();
@@ -259,7 +260,16 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
         thumbnailSize = "original";
       }
 
-      ckeditor.insertText(`[wsm='${media.mediaID}','${thumbnailSize}'][/wsm]`);
+      let link = media.link;
+      if (thumbnailSize !== "original") {
+        link = media[thumbnailSize + "ThumbnailLink"];
+      }
+
+      ckeditor.insertHtml(
+        `<img src="${escapeHTML(link)}" class="image woltlabSuiteMedia" data-media-id="${
+          media.mediaID
+        }" data-media-size="${escapeHTML(thumbnailSize)}">`,
+      );
     } else {
       ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);
     }

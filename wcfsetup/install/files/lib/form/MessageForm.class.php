@@ -10,6 +10,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
@@ -328,6 +329,9 @@ abstract class MessageForm extends AbstractCaptchaForm
     {
         parent::assignVariables();
 
+        $upcastProcessor = new HtmlUpcastProcessor();
+        $upcastProcessor->process($this->text, $this->messageObjectType, 0);
+
         WCF::getTPL()->assign([
             'attachmentHandler' => $this->attachmentHandler,
             'attachmentObjectID' => $this->attachmentObjectID,
@@ -339,7 +343,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             'maxTextLength' => $this->maxTextLength,
             'smileyCategories' => $this->smileyCategories,
             'subject' => $this->subject,
-            'text' => $this->text,
+            'text' => $upcastProcessor->getHtml(),
             'tmpHash' => $this->tmpHash,
         ]);
     }

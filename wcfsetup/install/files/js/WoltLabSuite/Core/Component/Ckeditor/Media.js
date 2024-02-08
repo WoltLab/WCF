@@ -48,15 +48,6 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element)
             .setupConfiguration(({ configuration, features }) => {
-            configuration.woltlabMedia = {
-                resolveMediaUrl(mediaId, mediaSize) {
-                    let thumbnail = "";
-                    if (mediaSize !== "original") {
-                        thumbnail = `&thumbnail=${mediaSize}`;
-                    }
-                    return `${window.WSC_API_URL}index.php?media/${mediaId}/${thumbnail}`;
-                },
-            };
             if (features.attachment || !features.media) {
                 return;
             }

@@ -22,6 +22,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -888,8 +889,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function beginEdit()
     {
+        $upcastProcessor = new HtmlUpcastProcessor();
+        $upcastProcessor->process($this->comment->message, 'com.woltlab.wcf.comment');
         WCF::getTPL()->assign([
             'comment' => $this->comment,
+            'commentMessage' => $upcastProcessor->getHtml(),
             'wysiwygSelector' => 'commentEditor' . $this->comment->commentID,
         ]);
 
