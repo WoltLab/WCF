@@ -2993,8 +2993,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256 × 256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256 × 256 Pixel groß sein.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 512 × 512 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 512 × 512 Pixel groß sein.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>

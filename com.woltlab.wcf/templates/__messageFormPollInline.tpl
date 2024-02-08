@@ -21,10 +21,10 @@
 	<div class="jsOnly messageTabMenuContent">
 		<dl>
 			<dt>
-				<label for="{$wysiwygSelector}Poll_question">{lang}wcf.poll.question{/lang}</label>
+				<label for="{$wysiwygSelector}pollQuestion">{lang}wcf.poll.question{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" name="pollQuestion" id="{$wysiwygSelector}Poll_question" value="{$pollQuestion}" class="long" maxlength="255">
+				<input type="text" name="pollQuestion" id="{$wysiwygSelector}pollQuestion" value="{$pollQuestion}" class="long" maxlength="255">
 			</dd>
 			<dt>
 				<label>{lang}wcf.poll.options{/lang}</label>
@@ -36,36 +36,36 @@
 		</dl>
 		<dl>
 			<dt>
-				<label for="{$wysiwygSelector}Poll_endTime">{lang}wcf.poll.endTime{/lang}</label>
+				<label for="{$wysiwygSelector}pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" tabindex="-1" name="pollEndTime" id="{$wysiwygSelector}Poll_endTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
+				<input type="datetime" tabindex="-1" name="pollEndTime" id="{$wysiwygSelector}pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 			</dd>
 		</dl>
 		<dl>
 			<dt>
-				<label for="{$wysiwygSelector}Poll_maxVotes">{lang}wcf.poll.maxVotes{/lang}</label>
+				<label for="{$wysiwygSelector}pollMaxVotes">{lang}wcf.poll.maxVotes{/lang}</label>
 			</dt>
 			<dd>
-				<input type="number" name="pollMaxVotes" id="{$wysiwygSelector}Poll_maxVotes" value="{$pollMaxVotes}" min="1" class="tiny">
+				<input type="number" name="pollMaxVotes" id="{$wysiwygSelector}pollMaxVotes" value="{$pollMaxVotes}" min="1" class="tiny">
 			</dd>
 		</dl>
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="pollIsChangeable" id="{$wysiwygSelector}Poll_isChangeable" value="1"{if $pollIsChangeable} checked{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
+				<label><input type="checkbox" name="pollIsChangeable" id="{$wysiwygSelector}pollIsChangeable" value="1"{if $pollIsChangeable} checked{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
 			</dd>
 			{if $pollID || $__wcf->getPollManager()->canStartPublicPoll()}
 				<dd>
-					<label><input type="checkbox" name="pollIsPublic" id="{$wysiwygSelector}Poll_isPublic" value="1"{if $pollIsPublic} checked{/if} {if $pollID}disabled{/if}> {lang}wcf.poll.isPublic{/lang}</label>
+					<label><input type="checkbox" name="pollIsPublic" id="{$wysiwygSelector}pollIsPublic" value="1"{if $pollIsPublic} checked{/if} {if $pollID}disabled{/if}> {lang}wcf.poll.isPublic{/lang}</label>
 				</dd>
 			{/if}
 			<dd>
-				<label><input type="checkbox" name="pollResultsRequireVote" id="{$wysiwygSelector}Poll_resultsRequireVote" value="1"{if $pollResultsRequireVote} checked{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
+				<label><input type="checkbox" name="pollResultsRequireVote" id="{$wysiwygSelector}pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
 				<small>{lang}wcf.poll.resultsRequireVote.description{/lang}</small>
 			</dd>
 			<dd>
-				<label><input type="checkbox" name="pollSortByVotes" id="{$wysiwygSelector}Poll_sortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
+				<label><input type="checkbox" name="pollSortByVotes" id="{$wysiwygSelector}pollSortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
 			</dd>
 		</dl>
 		
