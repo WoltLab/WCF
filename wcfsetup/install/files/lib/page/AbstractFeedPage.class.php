@@ -2,8 +2,10 @@
 
 namespace wcf\page;
 
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\HeaderUtil;
 
 /**
  * Generates RSS 2-Feeds.
@@ -11,6 +13,7 @@ use wcf\util\ArrayUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1 use `AbstractRssFeedPage` instead
  */
 abstract class AbstractFeedPage extends AbstractAuthedPage
 {
@@ -95,5 +98,27 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
 
         // show template
         WCF::getTPL()->display($this->templateName, $this->application, false);
+    }
+
+    protected function redirectToNewPage(string $className): void
+    {
+        $parameters = [];
+        $url = '';
+        if ($this->objectIDs !== []) {
+            if (\count($this->objectIDs) === 1) {
+                $parameters['id'] = \reset($this->objectIDs);
+            } else {
+                $url = 'id=' . \implode(',', $this->objectIDs);
+            }
+        }
+        if (isset($_REQUEST['at'])) {
+            $parameters['at'] = $_REQUEST['at'];
+        }
+        HeaderUtil::redirect(
+            LinkHandler::getInstance()->getControllerLink($className, $parameters, $url),
+            true,
+            false
+        );
+        exit;
     }
 }

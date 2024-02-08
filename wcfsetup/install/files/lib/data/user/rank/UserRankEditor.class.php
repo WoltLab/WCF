@@ -4,7 +4,7 @@ namespace wcf\data\user\rank;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\cache\builder\UserRankCacheBuilder;
 
 /**
  * Provides functions to edit user ranks.
@@ -29,6 +29,6 @@ class UserRankEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public static function resetCache()
     {
-        UserStorageHandler::getInstance()->resetAll('userRank');
+        UserRankCacheBuilder::getInstance()->reset();
     }
 }
