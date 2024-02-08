@@ -893,7 +893,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $upcastProcessor->process($this->comment->message, 'com.woltlab.wcf.comment');
         WCF::getTPL()->assign([
             'comment' => $this->comment,
-            'commentMessage' => $upcastProcessor->getHtml(),
+            'text' => $upcastProcessor->getHtml(),
             'wysiwygSelector' => 'commentEditor' . $this->comment->commentID,
         ]);
 

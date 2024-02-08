@@ -318,7 +318,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $upcastProcessor->process($this->response->message, 'com.woltlab.wcf.comment.response');
         WCF::getTPL()->assign([
             'response' => $this->response,
-            'responseMessage' => $upcastProcessor->getHtml(),
+            'text' => $upcastProcessor->getHtml(),
             'wysiwygSelector' => 'commentResponseEditor' . $this->response->responseID,
         ]);
 

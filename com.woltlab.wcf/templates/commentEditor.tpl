@@ -2,7 +2,7 @@
 <textarea id="{$wysiwygSelector}" class="wysiwygTextarea"
           data-disable-attachments="true"
           data-support-mention="true"
->{$commentMessage}</textarea>
+>{$text}</textarea>
 {include file='messageFormTabsInline'}
 
 <div class="formSubmit">
