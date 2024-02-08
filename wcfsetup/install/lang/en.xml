@@ -937,8 +937,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
 		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[The PHP {plural value=$missingExtensions|count one='extension' other='extensions'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='is' other='are'} missing.]]></item>
 		<item name="wcf.acp.dashboard.configure"><![CDATA[Configure Dashboard]]></item>
-		<item name="wcf.acp.dashboard.box.expiredLicenses"><![CDATA[Expired {plural value=$expiredLicenses one='license' other='licenses'}]]></item>
-		<item name="wcf.acp.dashboard.box.expiringLicenses"><![CDATA[Expiring {plural value=$expiringLicenses one='license' other='licenses'}]]></item>
+		<item name="wcf.acp.dashboard.box.expiredLicenses.title"><![CDATA[Access to updates and support]]></item>
+		<item name="wcf.acp.dashboard.box.expiredLicenses"><![CDATA[No longer authorised]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses"><![CDATA[Ends soon]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
