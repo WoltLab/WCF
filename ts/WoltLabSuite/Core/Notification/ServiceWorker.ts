@@ -1,3 +1,5 @@
+import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+
 /**
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
@@ -30,7 +32,28 @@ class ServiceWorker {
       applicationServerKey: this.#base64ToUint8Array(this.publicKey),
     });
     const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
-    console.log(subscription);
+    if (!subscription) {
+      // subscription failed
+      return;
+    }
+
+    const key = subscription.getKey("p256dh");
+    const token = subscription.getKey("auth");
+    const contentEncoding = (PushManager.supportedContentEncodings || ["aesgcm"])[0];
+
+    try {
+      await prepareRequest(this.registerUrl)
+        .post({
+          endpoint: subscription.endpoint,
+          publicKey: key ? btoa(String.fromCharCode(...new Uint8Array(key))) : null,
+          authToken: token ? btoa(String.fromCharCode(...new Uint8Array(token))) : null,
+          contentEncoding,
+        })
+        .disableLoadingIndicator()
+        .fetchAsResponse();
+    } catch (_) {
+      // ignore registration errors
+    }
   }
 
   #base64ToUint8Array(base64String: string): Uint8Array {

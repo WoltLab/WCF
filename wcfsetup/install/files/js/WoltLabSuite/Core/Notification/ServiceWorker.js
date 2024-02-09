@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerServiceWorker = exports.init = void 0;
@@ -31,7 +31,27 @@ define(["require", "exports"], function (require, exports) {
                 applicationServerKey: this.#base64ToUint8Array(this.publicKey),
             });
             const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
-            console.log(subscription);
+            if (!subscription) {
+                // subscription failed
+                return;
+            }
+            const key = subscription.getKey("p256dh");
+            const token = subscription.getKey("auth");
+            const contentEncoding = (PushManager.supportedContentEncodings || ["aesgcm"])[0];
+            try {
+                await (0, Backend_1.prepareRequest)(this.registerUrl)
+                    .post({
+                    endpoint: subscription.endpoint,
+                    publicKey: key ? btoa(String.fromCharCode(...new Uint8Array(key))) : null,
+                    authToken: token ? btoa(String.fromCharCode(...new Uint8Array(token))) : null,
+                    contentEncoding,
+                })
+                    .disableLoadingIndicator()
+                    .fetchAsResponse();
+            }
+            catch (_) {
+                // ignore registration errors
+            }
         }
         #base64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
