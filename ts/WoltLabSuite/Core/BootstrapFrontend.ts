@@ -18,11 +18,17 @@ import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 import { whenFirstSeen } from "./LazyLoader";
 import { prepareRequest } from "./Ajax/Backend";
+import * as ServiceWorker from "./Notification/ServiceWorker";
 
 interface BootstrapOptions {
   backgroundQueue: {
     url: string;
     force: boolean;
+  };
+  serviceWorker?: {
+    publicKey: string;
+    serviceWorkerJsUrl: string;
+    registerUrl: string;
   };
   dynamicColorScheme: boolean;
   endpointUserPopover: string;
@@ -103,6 +109,13 @@ export function setup(options: BootstrapOptions): void {
 
   if (User.userId) {
     UiFeedDialog.setup();
+    if (options.serviceWorker) {
+      ServiceWorker.init(
+        options.serviceWorker.publicKey,
+        options.serviceWorker.serviceWorkerJsUrl,
+        options.serviceWorker.registerUrl,
+      );
+    }
   }
 
   whenFirstSeen("woltlab-core-reaction-summary", () => {
