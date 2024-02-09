@@ -77,6 +77,9 @@
 			<category name="general.system.googleMaps">
 				<parent>general.system</parent>
 			</category>
+			<category name="general.system.serviceWorker">
+				<parent>general.system</parent>
+			</category>
 			<category name="general.mail">
 				<parent>general</parent>
 				<showorder>4</showorder>
@@ -759,6 +762,18 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<defaultvalue>13.4</defaultvalue>
 			</option>
 			<!-- /general.system.googleMaps -->
+			<!-- general.system.serviceWorker -->
+			<option name="service_worker_public_key">
+				<categoryname>general.system.serviceWorker</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="service_worker_private_key">
+				<categoryname>general.system.serviceWorker</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<!-- /general.system.serviceWorker -->
 			<!-- general.mail.general -->
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>

@@ -60,7 +60,7 @@ return [
             EnumDatabaseTableColumn::create('contentEncoding')
                 ->enumValues(['aes128gcm', 'aesgcm'])
                 ->notNull()
-                ->defaultValue('aes128gcm'),
+                ->defaultValue('aesgcm'),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
