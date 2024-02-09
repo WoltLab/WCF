@@ -156,8 +156,6 @@ class ConfigurationBuilder {
         this.#removePlugins.push("ImageUpload", "ImageUploadUI", "WoltlabAttachment");
       }
     } else {
-      this.#removePlugins.push("ImageInsertUI");
-
       if (this.#features.link) {
         this.#removePlugins.push("LinkImage");
       }

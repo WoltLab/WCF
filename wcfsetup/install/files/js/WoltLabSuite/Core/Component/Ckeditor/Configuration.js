@@ -142,7 +142,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
                 }
             }
             else {
-                this.#removePlugins.push("ImageInsertUI");
                 if (this.#features.link) {
                     this.#removePlugins.push("LinkImage");
                 }
