@@ -9,8 +9,11 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
+use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
@@ -41,5 +44,29 @@ return [
             DatabaseTableIndex::create('messageEmbeddedObject')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['messageObjectTypeID', 'messageID', 'embeddedObjectTypeID', 'embeddedObjectID']),
+        ]),
+    DatabaseTable::create('wcf1_service_worker')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('userID'),
+            TextDatabaseTableColumn::create('endpoint'),
+            VarcharDatabaseTableColumn::create('publicKey')
+                ->length(88)
+                ->notNull()
+                ->defaultValue(''),
+            VarcharDatabaseTableColumn::create('authToken')
+                ->length(24)
+                ->notNull()
+                ->defaultValue(''),
+            EnumDatabaseTableColumn::create('contentEncoding')
+                ->enumValues(['aes128gcm', 'aesgcm'])
+                ->notNull()
+                ->defaultValue('aes128gcm'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['userID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('CASCADE'),
         ])
 ];
