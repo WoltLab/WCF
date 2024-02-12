@@ -75,7 +75,7 @@ window.addEventListener('pageshow', function(event) {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
-			{if !SERVICE_WORKER_PUBLIC_KEY|empty}
+			{if $__wcf->user->userID && !SERVICE_WORKER_PUBLIC_KEY|empty}
             serviceWorker: {
                 publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
                 serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}js/serviceWorker.js?v={@LAST_UPDATE_TIME}',
