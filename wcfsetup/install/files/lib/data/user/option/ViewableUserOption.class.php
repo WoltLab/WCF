@@ -5,6 +5,7 @@ namespace wcf\data\user\option;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\option\user\IUserOptionOutput;
@@ -75,7 +76,7 @@ class ViewableUserOption extends DatabaseObjectDecorator
         if (!isset(self::$outputObjects[$this->outputClass])) {
             // create instance
             if (!\class_exists($this->outputClass)) {
-                throw new SystemException("unable to find class '" . $this->outputClass . "'");
+                throw new ClassNotFoundException($this->outputClass);
             }
 
             // validate interface

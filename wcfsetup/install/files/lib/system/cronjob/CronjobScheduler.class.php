@@ -7,6 +7,7 @@ use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\user\User;
 use wcf\system\cache\builder\CronjobCacheBuilder;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\session\SessionHandler;
@@ -264,7 +265,7 @@ final class CronjobScheduler extends SingletonFactory
     {
         $className = $cronjobEditor->className;
         if (!\class_exists($className)) {
-            throw new SystemException("unable to find class '" . $className . "'");
+            throw new ClassNotFoundException($className);
         }
 
         // verify class signature

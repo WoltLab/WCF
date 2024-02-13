@@ -20,6 +20,7 @@ use wcf\system\database\statement\PreparedStatement;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
@@ -785,7 +786,7 @@ class PackageInstallationDispatcher
         // valdidate class definition
         $className = $row['className'];
         if (!\class_exists($className)) {
-            throw new SystemException("unable to find class '" . $className . "'");
+            throw new ClassNotFoundException($className);
         }
 
         // set default value
