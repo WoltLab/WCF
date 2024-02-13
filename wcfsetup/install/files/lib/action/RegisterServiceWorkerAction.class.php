@@ -47,12 +47,14 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
         $serviceWorkerList->readObjects();
         // Check if this service worker is already registered.
         foreach ($serviceWorkerList as $serviceWorker) {
-            if (
-                $serviceWorker->endpoint === $parameters['endpoint']
-                || $serviceWorker->publicKey === $parameters['publicKey']
-                || $serviceWorker->authToken === $parameters['authToken']
-                || $serviceWorker->contentEncoding === $parameters['contentEncoding']
-            ) {
+            if ($serviceWorker->endpoint === $parameters['endpoint']) {
+                // Update existing service worker
+                $editor = new ServiceWorkerEditor($serviceWorker);
+                $editor->update([
+                    'publicKey' => $parameters['publicKey'],
+                    'authToken' => $parameters['authToken'],
+                    'contentEncoding' => $parameters['contentEncoding'],
+                ]);
                 return new EmptyResponse(204);
             }
         }

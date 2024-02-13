@@ -12,11 +12,13 @@ use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
+use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
+use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -47,6 +49,7 @@ return [
         ]),
     DatabaseTable::create('wcf1_service_worker')
         ->columns([
+            ObjectIdDatabaseTableColumn::create('workerID'),
             NotNullInt10DatabaseTableColumn::create('userID'),
             TextDatabaseTableColumn::create('endpoint'),
             VarcharDatabaseTableColumn::create('publicKey')
@@ -61,6 +64,10 @@ return [
                 ->enumValues(['aes128gcm', 'aesgcm'])
                 ->notNull()
                 ->defaultValue('aesgcm'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['workerID']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

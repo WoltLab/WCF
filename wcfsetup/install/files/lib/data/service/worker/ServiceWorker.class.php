@@ -10,6 +10,7 @@ use wcf\data\DatabaseObject;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  *
+ * @property-read int $workerID
  * @property-read int $userID
  * @property-read string $endpoint
  * @property-read string $publicKey
@@ -18,6 +19,11 @@ use wcf\data\DatabaseObject;
  */
 final class ServiceWorker extends DatabaseObject
 {
-    public const string CONTENT_ENCODING_AESGCM = 'aesgcm';
-    public const string CONTENT_ENCODING_AES128GCM = 'aes128gcm';
+    public const CONTENT_ENCODING_AESGCM = 'aesgcm';
+    public const CONTENT_ENCODING_AES128GCM = 'aes128gcm';
+
+    public function getEndpoint(): string
+    {
+        return \parse_url($this->endpoint, PHP_URL_SCHEME) . '://' . \parse_url($this->endpoint, PHP_URL_HOST);
+    }
 }
