@@ -272,6 +272,8 @@ final class StyleCompiler extends SingletonFactory
             }
         }
 
+        unset($variables[Style::DARK_MODE_PREFIX . 'individualScssDarkMode']);
+
         // add style image path
         $imagePath = '../images/';
         if ($style->imagePath) {
