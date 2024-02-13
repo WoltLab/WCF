@@ -6,6 +6,7 @@ use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -130,7 +131,7 @@ final class EventHandler extends SingletonFactory
         }
 
         if (!\class_exists($className)) {
-            throw new \LogicException("Unable to find class '" . $className . "'.");
+            throw new ClassNotFoundException($className);
         }
 
         $object = new $className();

@@ -5,6 +5,7 @@ namespace wcf\data\user\profile\menu\item;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
@@ -63,7 +64,7 @@ class UserProfileMenuItem extends DatabaseObject
     {
         if ($this->contentManager === null) {
             if (!\class_exists($this->className)) {
-                throw new SystemException("Unable to find class '" . $this->className . "'");
+                throw new ClassNotFoundException($this->className);
             }
 
             if (!\is_subclass_of($this->className, SingletonFactory::class)) {
