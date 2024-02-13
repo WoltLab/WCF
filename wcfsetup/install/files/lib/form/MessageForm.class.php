@@ -330,7 +330,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         parent::assignVariables();
 
         $upcastProcessor = new HtmlUpcastProcessor();
-        $upcastProcessor->process($this->text, $this->messageObjectType, 0);
+        $upcastProcessor->process($this->text ?? '', $this->messageObjectType, 0);
 
         WCF::getTPL()->assign([
             'attachmentHandler' => $this->attachmentHandler,
