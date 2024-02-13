@@ -1277,6 +1277,7 @@ final class SessionHandler extends SingletonFactory
      * Resets session-specific storage data.
      *
      * @param int[] $userIDs
+     * @deprecated 6.1 see https://github.com/WoltLab/WCF/pull/3767
      */
     public static function resetSessions(array $userIDs = [])
     {
