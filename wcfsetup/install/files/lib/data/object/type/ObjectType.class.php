@@ -8,6 +8,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -86,7 +87,7 @@ class ObjectType extends ProcessibleDatabaseObject
         if ($this->processor === null) {
             if ($this->className) {
                 if (!\class_exists($this->className)) {
-                    throw new SystemException("Unable to find class '" . $this->className . "'");
+                    throw new ClassNotFoundException($this->className);
                 }
 
                 $definitionInterface = ObjectTypeCache::getInstance()

@@ -5,6 +5,7 @@ namespace wcf\system\cache\builder;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\UserGroup;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\option\user\group\IUserGroupOptionType;
@@ -187,7 +188,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
 
             // validate class
             if (!\class_exists($className)) {
-                throw new SystemException("unable to find class '" . $className . "'");
+                throw new ClassNotFoundException($className);
             }
             if (!\is_subclass_of($className, IUserGroupOptionType::class)) {
                 throw new ImplementationException($className, IUserGroupOptionType::class);

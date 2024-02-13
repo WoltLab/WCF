@@ -2,6 +2,7 @@
 
 namespace wcf\data;
 
+use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -40,7 +41,7 @@ class ProcessibleDatabaseObject extends DatabaseObject
         if ($this->processor === null) {
             if ($this->className) {
                 if (!\class_exists($this->className)) {
-                    throw new SystemException("Unable to find class '" . $this->className . "'");
+                    throw new ClassNotFoundException($this->className);
                 }
                 if (!\is_subclass_of($this->className, static::$processorInterface)) {
                     throw new ImplementationException($this->className, static::$processorInterface);
