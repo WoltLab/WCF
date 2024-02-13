@@ -2,6 +2,7 @@
 
 namespace wcf\system;
 
+use Laminas\Diactoros\Uri;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -117,7 +118,15 @@ class WCFACP extends WCF
 
         if (self::inRescueMode()) {
             if (!\preg_match('~^/?rescue-mode/~', $pathInfo)) {
-                $redirectURI = self::$rescueModePageURL . 'acp/index.php?rescue-mode/';
+                if (\PACKAGE_ID != 1) {
+                    $uri = new Uri(self::$rescueModePageURL);
+                    $uri = $uri->withPath(FileUtil::getRealPath($uri->getPath() . 'acp/' . \RELATIVE_WCF_DIR));
+                    $pageURL = $uri->__toString();
+                } else {
+                    $pageURL = self::$rescueModePageURL;
+                }
+
+                $redirectURI = $pageURL . 'acp/index.php?rescue-mode/';
 
                 HeaderUtil::redirect($redirectURI);
 
