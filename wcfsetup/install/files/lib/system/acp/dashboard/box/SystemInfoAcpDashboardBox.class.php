@@ -14,16 +14,19 @@ use wcf\system\WCF;
  */
 final class SystemInfoAcpDashboardBox extends AbstractAcpDashboardBox
 {
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.acp.dashboard.box.systemInfo');
     }
 
+    #[\Override]
     public function getContent(): string
     {
-        return WCF::getTPL()->fetch('systemInfoAcpDashboardBox', 'wcf', $this->getVariables());
+        return WCF::getTPL()->fetch('systemInfoAcpDashboardBox', 'wcf', $this->getVariables(), true);
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.systemInfo';

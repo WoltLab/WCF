@@ -12,11 +12,13 @@ namespace wcf\system\acp\dashboard\box;
  */
 abstract class AbstractAcpDashboardBox implements IAcpDashboardBox
 {
+    #[\Override]
     public function isAccessible(): bool
     {
         return true;
     }
 
+    #[\Override]
     public function hasContent(): bool
     {
         return true;

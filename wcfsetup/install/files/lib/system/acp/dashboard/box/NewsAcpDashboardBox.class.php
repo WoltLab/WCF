@@ -14,16 +14,19 @@ use wcf\system\WCF;
  */
 final class NewsAcpDashboardBox extends AbstractAcpDashboardBox
 {
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.acp.dashboard.box.news');
     }
 
+    #[\Override]
     public function getContent(): string
     {
         return WCF::getTPL()->fetch('newsAcpDashboardBox');
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.news';
