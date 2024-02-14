@@ -34,7 +34,9 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
                 }
                 const key = subscription.getKey("p256dh");
                 const token = subscription.getKey("auth");
-                const contentEncoding = (PushManager.supportedContentEncodings || ["aesgcm"])[0];
+                // aes128gcm must be supported from browser
+                // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
+                const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
                 try {
                     await (0, Backend_1.prepareRequest)(this.registerUrl)
                         .post({
