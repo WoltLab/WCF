@@ -937,9 +937,11 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
 		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[The PHP {plural value=$missingExtensions|count one='extension' other='extensions'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='is' other='are'} missing.]]></item>
 		<item name="wcf.acp.dashboard.configure"><![CDATA[Configure Dashboard]]></item>
-		<item name="wcf.acp.dashboard.box.expiredLicenses.title"><![CDATA[Access to updates and support]]></item>
-		<item name="wcf.acp.dashboard.box.expiredLicenses"><![CDATA[No longer authorised]]></item>
-		<item name="wcf.acp.dashboard.box.expiringLicenses"><![CDATA[Ends soon]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses"><![CDATA[Access to Updates and Support]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon"><![CDATA[The licenses for the following products are about to expire and you will lose your entitlement to updates and access to ticket support.]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon.cta"><![CDATA[Renew now and get a 10% discount!]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expired"><![CDATA[The licenses for the following products have expired and no longer entitle you to access new versions and ticket support.]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Renew Licenses Now ↗]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>

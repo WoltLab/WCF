@@ -14,16 +14,19 @@ use wcf\system\WCF;
  */
 final class CreditsAcpDashboardBox extends AbstractAcpDashboardBox
 {
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.acp.dashboard.box.credits');
     }
 
+    #[\Override]
     public function getContent(): string
     {
         return WCF::getTPL()->fetch('creditsAcpDashboardBox');
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.credits';

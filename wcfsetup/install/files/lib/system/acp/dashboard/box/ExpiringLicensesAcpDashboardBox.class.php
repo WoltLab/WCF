@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * ACP dashboard box listing expired and expiring licenses.
  *
  * @author      Olaf Braun
- * @copyright   2001-2023 WoltLab GmbH
+ * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
@@ -67,24 +67,39 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
         return $this->licenseData;
     }
 
+    #[\Override]
     public function getTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.acp.dashboard.box.expiredLicenses.title');
+        return WCF::getLanguage()->get('wcf.acp.dashboard.box.expiringLicenses');
     }
 
+    #[\Override]
     public function getContent(): string
     {
         $packages = [];
         foreach (\array_keys($this->getExpiredLicenses()) as $packageName) {
             $packages[$packageName] = PackageCache::getInstance()->getPackageByIdentifier($packageName);
         }
+
+        $licenseNo = $this->getLicenseData()->getLicenseNumber();
+        if ($licenseNo === null) {
+            $ctaLink = 'https://www.woltlab.com/license-list/';
+        } else {
+            $ctaLink = \sprintf(
+                'https://www.woltlab.com/license-extend/%s/',
+                $licenseNo,
+            );
+        }
+
         return WCF::getTPL()->fetch('expiringLicensesAcpDashboardBox', 'wcf', [
             'packages' => $packages,
             'expiredLicenses' => \array_filter($this->getExpiredLicenses(), fn($date) => $date < \TIME_NOW),
             'expiringLicenses' => \array_filter($this->getExpiredLicenses(), fn($date) => $date >= \TIME_NOW),
-        ]);
+            'ctaLink' => $ctaLink,
+        ], true);
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.expiringLicenses';
