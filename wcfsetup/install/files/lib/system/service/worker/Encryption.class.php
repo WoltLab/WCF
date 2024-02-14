@@ -34,7 +34,6 @@ final class Encryption
         // Section 3.1
         // user
         $userPublicKey = Base64Url::decode($serviceWorker->publicKey);
-        $userAuthToken = Base64Url::decode($serviceWorker->authToken);
         ['x' => $x, 'y' => $y] = Util::unserializePublicKey($userPublicKey);
         $userJwk = Util::createJWK($x, $y);
         // application-server
@@ -44,13 +43,7 @@ final class Encryption
         $sharedSecret = Encryption::getSharedSecret($userJwk, $newJwk);
 
         // Section 3.3
-        $ikm = \hash_hkdf(
-            Encryption::HASH_ALGORITHM,
-            $sharedSecret,
-            32,
-            "WebPush: info\0" . $userPublicKey . $newPublicKey,
-            $userAuthToken
-        );
+        $ikm = Encryption::getIKM($serviceWorker, $sharedSecret, $userPublicKey, $newPublicKey);
         // Section 3.4
         $salt = \random_bytes(16);
         $content = Encryption::createContext($userPublicKey, $newPublicKey, $serviceWorker->contentEncoding);
@@ -166,5 +159,28 @@ final class Encryption
         $len = "\0A"; // 65 as Uint16BE
 
         return "\0" . $len . $clientPublicKey . $len . $serverPublicKey;
+    }
+
+    private static function getIKM(
+        ServiceWorker $serviceWorker,
+        #[\SensitiveParameter] string $sharedSecret,
+        string $userPublicKey,
+        string $newPublicKey
+    ): string {
+        if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
+            $info = "Content-Encoding: auth\0";
+        } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
+            $info = "WebPush: info\0" . $userPublicKey . $newPublicKey;
+        } else {
+            throw new \RuntimeException('Unknown content encoding "' . $serviceWorker->contentEncoding . '"');
+        }
+
+        return \hash_hkdf(
+            Encryption::HASH_ALGORITHM,
+            $sharedSecret,
+            32,
+            $info,
+            Base64Url::decode($serviceWorker->authToken)
+        );
     }
 }
