@@ -22,6 +22,11 @@ final class ServiceWorker extends DatabaseObject
     public const CONTENT_ENCODING_AESGCM = 'aesgcm';
     public const CONTENT_ENCODING_AES128GCM = 'aes128gcm';
 
+    /**
+     * Parses the endpoint and returns the scheme and host.
+     *
+     * @return string
+     */
     public function getEndpoint(): string
     {
         return \parse_url($this->endpoint, PHP_URL_SCHEME) . '://' . \parse_url($this->endpoint, PHP_URL_HOST);
