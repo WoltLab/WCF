@@ -73,6 +73,7 @@ final class ServiceWorkerHandler extends SingletonFactory
         $content = Encryption::encrypt(
             $serviceWorker,
             $payload,
+            $headers
         );
         $headers['Content-Length'] = Binary::safeStrlen($content);
         VAPID::addHeader($serviceWorker, $headers);
