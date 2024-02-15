@@ -14,6 +14,7 @@ type UploadResponse =
     } & UploadCompleted);
 
 export type UploadCompleted = {
+  endpointThumbnails: string;
   fileID: string;
   typeName: string;
   data: Record<string, unknown>;
@@ -68,11 +69,16 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
         const event = new CustomEvent<UploadCompleted>("uploadCompleted", {
           detail: {
             data: response.data,
+            endpointThumbnails: response.endpointThumbnails,
             fileID: response.fileID,
             typeName: response.typeName,
           },
         });
         element.dispatchEvent(event);
+
+        if (response.endpointThumbnails !== "") {
+          // TODO: Dispatch the request to generate thumbnails.
+        }
       }
     } catch (e) {
       // TODO: Handle errors

@@ -15,11 +15,13 @@ use wcf\system\attachment\AttachmentHandler;
  */
 final class AttachmentFileProcessor implements IFileProcessor
 {
+    #[\Override]
     public function getTypeName(): string
     {
         return 'com.woltlab.wcf.attachment';
     }
 
+    #[\Override]
     public function getAllowedFileExtensions(array $context): array
     {
         // TODO: Properly validate the shape of `$context`.
@@ -33,6 +35,7 @@ final class AttachmentFileProcessor implements IFileProcessor
         return $attachmentHandler->getAllowedExtensions();
     }
 
+    #[\Override]
     public function adopt(File $file, array $context): void
     {
         // TODO: Properly validate the shape of `$context`.
@@ -53,6 +56,7 @@ final class AttachmentFileProcessor implements IFileProcessor
         ]);
     }
 
+    #[\Override]
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
         // TODO: Properly validate the shape of `$context`.
@@ -91,6 +95,7 @@ final class AttachmentFileProcessor implements IFileProcessor
         return FileProcessorPreflightResult::Passed;
     }
 
+    #[\Override]
     public function canDownload(File $file): bool
     {
         $attachment = Attachment::findByFileID($file->fileID);
@@ -101,6 +106,7 @@ final class AttachmentFileProcessor implements IFileProcessor
         return $attachment->canDownload();
     }
 
+    #[\Override]
     public function getUploadResponse(File $file): array
     {
         $attachment = Attachment::findByFileID($file->fileID);
@@ -113,6 +119,7 @@ final class AttachmentFileProcessor implements IFileProcessor
         ];
     }
 
+    #[\Override]
     public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string
     {
         return FileProcessor::getInstance()->getHtmlElement(
@@ -124,5 +131,24 @@ final class AttachmentFileProcessor implements IFileProcessor
                 'tmpHash' => $tmpHash,
             ],
         );
+    }
+
+    #[\Override]
+    public function getThumbnailFormats(): array
+    {
+        return [
+            new ThumbnailFormat(
+                'tiny',
+                144,
+                144,
+                false,
+            ),
+            new ThumbnailFormat(
+                'default',
+                \ATTACHMENT_THUMBNAIL_HEIGHT,
+                \ATTACHMENT_THUMBNAIL_WIDTH,
+                !!\ATTACHMENT_RETAIN_DIMENSIONS,
+            ),
+        ];
     }
 }
