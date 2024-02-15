@@ -36,6 +36,10 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
     public function perform()
     {
         $serviceWorker = new ServiceWorker($this->serviceWorkerID);
+        if ($serviceWorker->workerID) {
+            // Service worker no longer exists
+            return;
+        }
         $user = UserProfileRuntimeCache::getInstance()->getObject($serviceWorker->userID);
         //TODO use cache
         $style = new Style($user->styleID);
@@ -86,14 +90,14 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
             if ($e->getCode() === 413) {
                 // Payload too large, we can't do anything here other than discard the message.
                 \wcf\functions\exception\logThrowable($e);
-                return;
             } elseif ($e->getCode() >= 400 && $e->getCode() <= 499) {
                 // For all status codes 4xx, we should remove the service worker from the database.
                 // The browser will register a new one.
                 (new ServiceWorkerEditor($serviceWorker))->delete();
+            } else {
+                // For internal server errors(5xx), we will try again later
+                throw $e;
             }
-            // For internal server errors(5xx), we will try again later
-            throw $e;
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
         }
