@@ -101,6 +101,18 @@ final class AttachmentFileProcessor implements IFileProcessor
         return $attachment->canDownload();
     }
 
+    public function getUploadResponse(File $file): array
+    {
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment === null) {
+            return [];
+        }
+
+        return [
+            'attachmentID' => $attachment->attachmentID,
+        ];
+    }
+
     public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string
     {
         return FileProcessor::getInstance()->getHtmlElement(

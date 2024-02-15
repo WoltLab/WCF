@@ -41,9 +41,16 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             const endpoint = new URL(endpoints[i]);
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             endpoint.searchParams.append("checksum", checksum);
-            const response = await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsResponse();
-            if (response) {
-                console.log(await response.text());
+            try {
+                const response = (await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsJson());
+                if (response.completed) {
+                    console.log(response);
+                }
+            }
+            catch (e) {
+                // TODO: Handle errors
+                console.log(e);
+                throw e;
             }
         }
     }

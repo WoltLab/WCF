@@ -7,6 +7,18 @@ type PreflightResponse = {
   endpoints: string[];
 };
 
+type UploadResponse =
+  | { completed: false }
+  | ({
+      completed: true;
+    } & UploadCompleted);
+
+export type UploadCompleted = {
+  fileID: string;
+  typeName: string;
+  data: Record<string, unknown>;
+};
+
 async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<void> {
   const typeName = element.dataset.typeName!;
 
@@ -50,9 +62,22 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     const checksum = await getSha256Hash(await chunk.arrayBuffer());
     endpoint.searchParams.append("checksum", checksum);
 
-    const response = await prepareRequest(endpoint.toString()).post(chunk).fetchAsResponse();
-    if (response) {
-      console.log(await response.text());
+    try {
+      const response = (await prepareRequest(endpoint.toString()).post(chunk).fetchAsJson()) as UploadResponse;
+      if (response.completed) {
+        const event = new CustomEvent<UploadCompleted>("uploadCompleted", {
+          detail: {
+            data: response.data,
+            fileID: response.fileID,
+            typeName: response.typeName,
+          },
+        });
+        element.dispatchEvent(event);
+      }
+    } catch (e) {
+      // TODO: Handle errors
+      console.log(e);
+      throw e;
     }
   }
 }
