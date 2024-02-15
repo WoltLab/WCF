@@ -4,7 +4,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-self.addEventListener("push", async (event) => {
+self.addEventListener("push", (event) => {
 	if (!(self.Notification && self.Notification.permission === "granted")) {
 		return;
 	}
@@ -13,34 +13,40 @@ self.addEventListener("push", async (event) => {
 	}
 
 	const payload = event.data.json();
-	const notifications = await self.registration.getNotifications({ tag: payload.notificationID });
-	// Close old notifications
-	notifications
-		.filter((notifications) => {
-			if (!notifications.data || !notifications.data.time) {
-				return false;
-			}
-			return notifications.data.time <= payload.time;
-		})
-		.forEach((notification) => {
-			notification.close();
-		});
+
 	event.waitUntil(
-		self.registration.showNotification(payload.title, {
-			body: payload.message,
-			icon: payload.icon,
-			timestamp: payload.time,
-			tag: payload.notificationID,
-			data: {
-				url: payload.url,
-				time: payload.time,
-			},
-		}),
+		removeOldNotifications(payload.notificationID, payload.time).then(() =>
+			self.registration.showNotification(payload.title, {
+				body: payload.message,
+				icon: payload.icon,
+				timestamp: payload.time,
+				tag: payload.notificationID,
+				data: {
+					url: payload.url,
+					time: payload.time,
+				},
+			}),
+		),
 	);
 });
 
 self.addEventListener("notificationclick", (event) => {
 	event.notification.close();
 
-	event.waitUntil(clients.openWindow(event.notification.data.url));
+    event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
+
+async function removeOldNotifications(notificationID, time) {
+	const notifications = await self.registration.getNotifications({ tag: notificationID });
+	// Close old notifications
+	notifications
+		.filter((notifications) => {
+			if (!notifications.data || !notifications.data.time) {
+				return false;
+			}
+			return notifications.data.time <= time;
+		})
+		.forEach((notification) => {
+			notification.close();
+		});
+}

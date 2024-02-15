@@ -12,57 +12,63 @@ class ServiceWorker {
   private readonly publicKey: string;
   private readonly serviceWorkerJsUrl: string;
   private readonly registerUrl: string;
+  private readonly serviceWorkerRegistration: Promise<ServiceWorkerRegistration>;
 
   constructor(publicKey: string, serviceWorkerJsUrl: string, registerUrl: string) {
     this.publicKey = publicKey;
     this.serviceWorkerJsUrl = serviceWorkerJsUrl;
     this.registerUrl = registerUrl;
+    this.serviceWorkerRegistration = window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+      scope: "/",
+    });
   }
 
   async register(): Promise<void> {
     try {
-      await window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, { scope: "/" });
-      const serviceWorkerRegistration = await window.navigator.serviceWorker.ready;
-      await serviceWorkerRegistration.pushManager.subscribe({
+      const subscription = await (
+        await this.serviceWorkerRegistration
+      ).pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
       });
-      const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
       if (!subscription) {
         // subscription failed
         return;
       }
-
-      const key = subscription.getKey("p256dh");
-      const token = subscription.getKey("auth");
-      // aes128gcm must be supported from browser
-      // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
-      const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
-
-      try {
-        await prepareRequest(this.registerUrl)
-          .post({
-            endpoint: subscription.endpoint,
-            publicKey: key ? window.btoa(String.fromCharCode(...new Uint8Array(key))) : null,
-            authToken: token ? window.btoa(String.fromCharCode(...new Uint8Array(token))) : null,
-            contentEncoding,
-          })
-          .disableLoadingIndicator()
-          .fetchAsResponse();
-      } catch (_) {
-        // ignore registration errors
-      }
+      await this.#sendRequest(subscription);
     } catch (_) {
       // Server keys has possible changed
-      await this.unregister();
+      await this.unsubscribe();
     }
   }
 
-  async unregister(): Promise<void> {
-    const serviceWorkerRegistration = await window.navigator.serviceWorker.ready;
-    const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
+  async unsubscribe(): Promise<void> {
+    const subscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
     if (subscription) {
+      await this.#sendRequest(subscription, true);
       await subscription.unsubscribe();
+    }
+  }
+
+  async #sendRequest(subscription: PushSubscription, remove: boolean = false): Promise<void> {
+    const key = subscription.getKey("p256dh");
+    const token = subscription.getKey("auth");
+    // aes128gcm must be supported from browser
+    // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
+    const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
+    try {
+      await prepareRequest(this.registerUrl)
+        .post({
+          remove: remove,
+          endpoint: subscription.endpoint,
+          publicKey: key ? window.btoa(String.fromCharCode(...new Uint8Array(key))) : null,
+          authToken: token ? window.btoa(String.fromCharCode(...new Uint8Array(token))) : null,
+          contentEncoding: contentEncoding,
+        })
+        .disableLoadingIndicator()
+        .fetchAsResponse();
+    } catch (_) {
+      // ignore registration errors
     }
   }
 

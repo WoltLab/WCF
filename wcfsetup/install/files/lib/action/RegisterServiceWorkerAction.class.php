@@ -35,6 +35,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
             $request->getParsedBody(),
             <<<'EOT'
                 array {
+                    remove: bool,
                     endpoint: non-empty-string,
                     publicKey: non-empty-string,
                     authToken: non-empty-string,
@@ -44,7 +45,17 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
         );
         $serviceWorkerList = new ServiceWorkerList();
         $serviceWorkerList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
+        if ($parameters["remove"]) {
+            $serviceWorkerList->getConditionBuilder()->add('endpoint = ?', [$parameters['endpoint']]);
+            $serviceWorkerList->getConditionBuilder()->add('publicKey = ?', [$parameters['publicKey']]);
+            $serviceWorkerList->getConditionBuilder()->add('authToken = ?', [$parameters['authToken']]);
+            $serviceWorkerList->readObjectIDs();
+            ServiceWorkerEditor::deleteAll($serviceWorkerList->getObjectIDs());
+
+            return new EmptyResponse(204);
+        }
         $serviceWorkerList->readObjects();
+
         // Check if this service worker is already registered.
         foreach ($serviceWorkerList as $serviceWorker) {
             if ($serviceWorker->endpoint === $parameters['endpoint']) {

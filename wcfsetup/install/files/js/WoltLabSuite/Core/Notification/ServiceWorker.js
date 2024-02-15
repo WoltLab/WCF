@@ -13,54 +13,59 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
         publicKey;
         serviceWorkerJsUrl;
         registerUrl;
+        serviceWorkerRegistration;
         constructor(publicKey, serviceWorkerJsUrl, registerUrl) {
             this.publicKey = publicKey;
             this.serviceWorkerJsUrl = serviceWorkerJsUrl;
             this.registerUrl = registerUrl;
+            this.serviceWorkerRegistration = window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+                scope: "/",
+            });
         }
         async register() {
             try {
-                await window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, { scope: "/" });
-                const serviceWorkerRegistration = await window.navigator.serviceWorker.ready;
-                await serviceWorkerRegistration.pushManager.subscribe({
+                const subscription = await (await this.serviceWorkerRegistration).pushManager.subscribe({
                     userVisibleOnly: true,
                     applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
                 });
-                const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
                 if (!subscription) {
                     // subscription failed
                     return;
                 }
-                const key = subscription.getKey("p256dh");
-                const token = subscription.getKey("auth");
-                // aes128gcm must be supported from browser
-                // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
-                const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
-                try {
-                    await (0, Backend_1.prepareRequest)(this.registerUrl)
-                        .post({
-                        endpoint: subscription.endpoint,
-                        publicKey: key ? window.btoa(String.fromCharCode(...new Uint8Array(key))) : null,
-                        authToken: token ? window.btoa(String.fromCharCode(...new Uint8Array(token))) : null,
-                        contentEncoding,
-                    })
-                        .disableLoadingIndicator()
-                        .fetchAsResponse();
-                }
-                catch (_) {
-                    // ignore registration errors
-                }
+                await this.#sendRequest(subscription);
             }
             catch (_) {
                 // Server keys has possible changed
-                await this.unregister();
+                await this.unsubscribe();
             }
         }
-        async unregister() {
-            const serviceWorkerRegistration = await window.navigator.serviceWorker.ready;
-            const subscription = await serviceWorkerRegistration.pushManager.getSubscription();
+        async unsubscribe() {
+            const subscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
             if (subscription) {
+                await this.#sendRequest(subscription, true);
                 await subscription.unsubscribe();
+            }
+        }
+        async #sendRequest(subscription, remove = false) {
+            const key = subscription.getKey("p256dh");
+            const token = subscription.getKey("auth");
+            // aes128gcm must be supported from browser
+            // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
+            const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
+            try {
+                await (0, Backend_1.prepareRequest)(this.registerUrl)
+                    .post({
+                    remove: remove,
+                    endpoint: subscription.endpoint,
+                    publicKey: key ? window.btoa(String.fromCharCode(...new Uint8Array(key))) : null,
+                    authToken: token ? window.btoa(String.fromCharCode(...new Uint8Array(token))) : null,
+                    contentEncoding: contentEncoding,
+                })
+                    .disableLoadingIndicator()
+                    .fetchAsResponse();
+            }
+            catch (_) {
+                // ignore registration errors
             }
         }
         //@see https://github.com/mdn/serviceworker-cookbook/blob/master/tools.js
