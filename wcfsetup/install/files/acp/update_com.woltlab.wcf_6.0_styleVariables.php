@@ -65,7 +65,7 @@ $styleVariables = [
     ['wcfFooterCopyrightText', 'rgba(217, 220, 222, 1)', 'rgba(182, 184, 185, 1)'],
     ['wcfFooterHeadlineLink', 'rgba(255, 255, 255, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfFooterHeadlineLinkActive', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
-    ['wcfFooterHeadlineText', 'rgba(189, 195, 199, 1)', 'rgba(209, 210, 211, 1)'],
+    ['wcfFooterHeadlineText', 'rgba(233, 235, 236, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfFooterLink', 'rgba(255, 255, 255, 1)', 'rgba(30, 163, 220, 1)'],
     ['wcfFooterLinkActive', 'rgba(255, 255, 255, 1)', 'rgba(75, 184, 231, 1)'],
     ['wcfFooterText', 'rgba(217, 220, 222, 1)', 'rgba(158, 158, 158, 1)'],
