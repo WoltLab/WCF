@@ -32,9 +32,15 @@ self.addEventListener("push", async (event) => {
 			timestamp: payload.time,
 			tag: payload.notificationID,
 			data: {
-				link: payload.link,
+				url: payload.url,
 				time: payload.time,
 			},
 		}),
 	);
+});
+
+self.addEventListener("notificationclick", (event) => {
+	event.notification.close();
+
+	event.waitUntil(clients.openWindow(event.notification.data.url));
 });

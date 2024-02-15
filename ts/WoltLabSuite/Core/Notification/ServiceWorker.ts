@@ -17,7 +17,6 @@ class ServiceWorker {
     this.publicKey = publicKey;
     this.serviceWorkerJsUrl = serviceWorkerJsUrl;
     this.registerUrl = registerUrl;
-    // TODO check if service worker is already registered
   }
 
   async register(): Promise<void> {

@@ -17,7 +17,6 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             this.publicKey = publicKey;
             this.serviceWorkerJsUrl = serviceWorkerJsUrl;
             this.registerUrl = registerUrl;
-            // TODO check if service worker is already registered
         }
         async register() {
             try {

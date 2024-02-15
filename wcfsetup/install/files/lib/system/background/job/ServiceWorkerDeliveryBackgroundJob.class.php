@@ -36,7 +36,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
     public function perform()
     {
         $serviceWorker = new ServiceWorker($this->serviceWorkerID);
-        if ($serviceWorker->workerID) {
+        if (!$serviceWorker->workerID) {
             // Service worker no longer exists
             return;
         }
@@ -79,7 +79,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
             $content = [
                 "title" => $event->getTitle(),
                 "message" => StringUtil::stripHTML($event->getMessage()),
-                "link" => $event->getLink(),
+                "url" => $event->getLink(),
                 "notificationID" => $notification->notificationID,
                 "time" => $notification->time,
                 "icon" => $style->getFaviconAppleTouchIcon(),
