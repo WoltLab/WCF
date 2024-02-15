@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\UserProfileHandler;
 
 /**
  * Provides methods for viewable user activity events.
@@ -59,6 +60,11 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
      * @var bool
      */
     protected $isRawHtml = false;
+
+    /**
+     * @since 6.1
+     */
+    protected string $link = '';
 
     /**
      * Marks this event as accessible for current user.
@@ -182,5 +188,29 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     public function isRawHtml()
     {
         return $this->isRawHtml;
+    }
+
+    /**
+     * @since 6.1
+     */
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
+    }
+
+    /**
+     * @since 6.1
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @since 6.1
+     */
+    public function isIgnoredContent(): bool
+    {
+        return UserProfileHandler::getInstance()->getUserProfile()->isIgnoredUser($this->getUserProfile()->userID, 2);
     }
 }

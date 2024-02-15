@@ -1,0 +1,81 @@
+.recentActivityList {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	&.recentActivityList--userProfileContent {
+		padding-top: 20px;
+	}
+}
+
+.recentActivityListItem {
+	display: grid;
+	grid-template-areas:
+		"avatar title"
+		"avatar description"
+		"avatar time";
+	grid-template-columns: min-content 1fr;
+	column-gap: 15px;
+	row-gap: 5px;
+	position: relative;
+
+	&.recentActivityListItem--compact {
+		grid-template-areas:
+			"avatar title"
+			"avatar time";
+	}
+
+	&:not(:last-child) {
+		padding-bottom: 20px;
+		border-bottom: 1px solid var(--wcfContentBorderInner);
+	}
+}
+
+.recentActivityListItem__avatar {
+	grid-area: avatar;
+}
+
+.recentActivityListItem__title {
+	grid-area: title;
+
+	@include wcfFontHeadline;
+}
+
+.recentActivityListItem__description {
+	grid-area: description;
+	margin-top: 5px;
+}
+
+.recentActivityListItem__time {
+	grid-area: time;
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+}
+
+.recentActivityListItem__link {
+	color: inherit;
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+.recentActivityList__showMoreButton {
+	display: flex;
+	justify-content: center;
+}
+
+.recentActivityList__switchContext {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	display: flex;
+	justify-content: end;
+	padding-bottom: 20px;
+}

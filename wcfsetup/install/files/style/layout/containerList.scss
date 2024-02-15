@@ -64,10 +64,6 @@
 					margin-left: 5px;
 				}
 			}
-
-			> .recentActivityFollowedNoResults {
-				text-align: left;
-			}
 		}
 
 		@include screen-md-down {
@@ -286,17 +282,6 @@
 			flex-grow: 0;
 			flex-shrink: 0;
 			flex-basis: calc(100% / 3);
-		}
-	}
-}
-
-.recentActivityList {
-	.box48 {
-		max-height: 500px;
-		overflow: hidden;
-
-		> a:first-child {
-			align-self: flex-start;
 		}
 	}
 }
