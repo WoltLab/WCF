@@ -18,33 +18,38 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             this.publicKey = publicKey;
             this.serviceWorkerJsUrl = serviceWorkerJsUrl;
             this.registerUrl = registerUrl;
-            this.serviceWorkerRegistration = window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+            void window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
                 scope: "/",
             });
+            this.serviceWorkerRegistration = window.navigator.serviceWorker.ready;
         }
         async register() {
-            try {
-                const subscription = await (await this.serviceWorkerRegistration).pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
-                });
-                if (!subscription) {
-                    // subscription failed
-                    return;
-                }
-                await this.#sendRequest(subscription);
+            const currentSubscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+            if (currentSubscription && this.#compareApplicationServerKey(currentSubscription)) {
+                return;
             }
-            catch (_) {
-                // Server keys has possible changed
-                await this.unsubscribe();
+            await this.unsubscribe(currentSubscription);
+            const subscription = await (await this.serviceWorkerRegistration).pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
+            });
+            if (!subscription) {
+                // subscription failed
+                return;
             }
+            await this.#sendRequest(subscription);
         }
-        async unsubscribe() {
-            const subscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+        async unsubscribe(subscription) {
             if (subscription) {
                 await this.#sendRequest(subscription, true);
                 await subscription.unsubscribe();
             }
+        }
+        #compareApplicationServerKey(subscription) {
+            let base64 = window.btoa(String.fromCharCode(...new Uint8Array(subscription.options.applicationServerKey)));
+            base64 = base64.replace(/\+/g, "-").replace(/\//g, "_");
+            base64 = base64.replace(/=+$/, "");
+            return base64 === this.publicKey;
         }
         async #sendRequest(subscription, remove = false) {
             const key = subscription.getKey("p256dh");
@@ -81,6 +86,10 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
         }
     }
     function serviceWorkerSupported() {
+        if (location.protocol !== "https:") {
+            // Service workers are only available on https
+            return false;
+        }
         if (!("serviceWorker" in window.navigator)) {
             return false;
         }

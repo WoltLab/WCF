@@ -18,36 +18,44 @@ class ServiceWorker {
     this.publicKey = publicKey;
     this.serviceWorkerJsUrl = serviceWorkerJsUrl;
     this.registerUrl = registerUrl;
-    this.serviceWorkerRegistration = window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+    void window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
       scope: "/",
     });
+    this.serviceWorkerRegistration = window.navigator.serviceWorker.ready;
   }
 
   async register(): Promise<void> {
-    try {
-      const subscription = await (
-        await this.serviceWorkerRegistration
-      ).pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
-      });
-      if (!subscription) {
-        // subscription failed
-        return;
-      }
-      await this.#sendRequest(subscription);
-    } catch (_) {
-      // Server keys has possible changed
-      await this.unsubscribe();
+    const currentSubscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+    if (currentSubscription && this.#compareApplicationServerKey(currentSubscription)) {
+      return;
     }
+    await this.unsubscribe(currentSubscription);
+    const subscription = await (
+      await this.serviceWorkerRegistration
+    ).pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
+    });
+    if (!subscription) {
+      // subscription failed
+      return;
+    }
+    await this.#sendRequest(subscription);
   }
 
-  async unsubscribe(): Promise<void> {
-    const subscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+  async unsubscribe(subscription: PushSubscription | null): Promise<void> {
     if (subscription) {
       await this.#sendRequest(subscription, true);
       await subscription.unsubscribe();
     }
+  }
+
+  #compareApplicationServerKey(subscription: PushSubscription): boolean {
+    let base64 = window.btoa(String.fromCharCode(...new Uint8Array(subscription.options.applicationServerKey!)));
+    base64 = base64.replace(/\+/g, "-").replace(/\//g, "_");
+    base64 = base64.replace(/=+$/, "");
+
+    return base64 === this.publicKey;
   }
 
   async #sendRequest(subscription: PushSubscription, remove: boolean = false): Promise<void> {
@@ -88,6 +96,11 @@ class ServiceWorker {
 }
 
 function serviceWorkerSupported(): boolean {
+  if (location.protocol !== "https:") {
+    // Service workers are only available on https
+    return false;
+  }
+
   if (!("serviceWorker" in window.navigator)) {
     return false;
   }
