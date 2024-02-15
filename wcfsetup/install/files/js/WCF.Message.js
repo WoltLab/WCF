@@ -223,8 +223,8 @@ WCF.Message.FormGuard = Class.extend({
 		});
 		
 		// restore buttons, prevents disabled buttons on back navigation in Opera
-		$(window).on('unload',function() {
-			$forms.find('.formSubmit input[type=submit]').enable();
+		$(window).on("beforeunload", function () {
+			$forms.find(".formSubmit input[type=submit]").enable();
 		});
 	}
 });

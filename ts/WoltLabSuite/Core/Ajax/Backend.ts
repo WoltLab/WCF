@@ -42,7 +42,7 @@ class SetupRequest {
 }
 
 let ignoreConnectionErrors = false;
-window.addEventListener("unload", () => (ignoreConnectionErrors = true));
+window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
 
 class BackendRequest {
   readonly #url: string;
