@@ -100,6 +100,18 @@ class Comment extends DatabaseObject implements IMessage
     }
 
     /**
+     * @since 6.1
+     */
+    public function getPlainTextMessage(): string
+    {
+        $processor = new HtmlOutputProcessor();
+        $processor->setOutputType('text/plain');
+        $processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+
+        return $processor->getHtml();
+    }
+
+    /**
      * Returns a version of this message optimized for use in emails.
      *
      * @param string $mimeType Either 'text/plain' or 'text/html'
@@ -109,11 +121,7 @@ class Comment extends DatabaseObject implements IMessage
     {
         switch ($mimeType) {
             case 'text/plain':
-                $processor = new HtmlOutputProcessor();
-                $processor->setOutputType('text/plain');
-                $processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
-
-                return $processor->getHtml();
+                return $this->getPlainTextMessage();
             case 'text/html':
                 return $this->getSimplifiedFormattedMessage();
         }

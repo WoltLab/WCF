@@ -6,6 +6,7 @@ use wcf\data\article\ViewableArticleList;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for article comments.
@@ -73,15 +74,19 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
                     }
                     $event->setIsAccessible();
 
-                    // add title
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', [
+                    $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', [
                         'article' => $article,
                         'commentID' => $comment->commentID,
-                    ]);
-                    $event->setTitle($text);
+                        'author' => $event->getUserProfile(),
+                    ]));
+                    $event->setDescription(
+                        StringUtil::encodeHTML(
+                            StringUtil::truncate($comment->getPlainTextMessage(), 500)
+                        ),
+                        true
+                    );
+                    $event->setLink($comment->getLink());
 
-                    // add text
-                    $event->setDescription($comment->getExcerpt());
                     continue;
                 }
             }

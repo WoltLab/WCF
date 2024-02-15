@@ -6,6 +6,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for profile comments.
@@ -55,18 +56,21 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
                     if (!$users[$comment->objectID]->isProtected()) {
                         $event->setIsAccessible();
 
-                        $user = $users[$comment->objectID];
-                        $text = WCF::getLanguage()->getDynamicVariable(
+                        $event->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.user.profile.recentActivity.profileComment',
                             [
                                 'commentID' => $comment->commentID,
-                                'user' => $user,
+                                'user' => $users[$comment->objectID],
+                                'author' => $event->getUserProfile(),
                             ]
+                        ));
+                        $event->setDescription(
+                            StringUtil::encodeHTML(
+                                StringUtil::truncate($comment->getPlainTextMessage(), 500)
+                            ),
+                            true
                         );
-                        $event->setTitle($text);
-
-                        // output
-                        $event->setDescription($comment->getExcerpt());
+                        $event->setLink($comment->getLink());
                     }
                     continue;
                 }

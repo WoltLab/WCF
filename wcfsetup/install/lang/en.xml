@@ -3219,9 +3219,9 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{plural value=$articleContent->comments one='# Comment' other='# Comments'}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
-		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[<strong>{$author}</strong> reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{unsafe:$reactionType->renderIcon()}</span> to the article <strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.article.recentActivity.articleComment"><![CDATA[<strong>{$author}</strong> commented on article <strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[<strong>{$author}</strong> replied to a comment by <strong>{$commentAuthor->username}</strong> on article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.article.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.article.comment"><![CDATA[Article Comment]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Reply to Article Comment]]></item>
@@ -3231,7 +3231,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> wrote the article {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
 		<item name="wcf.article.search"><![CDATA[Search Articles]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[The search returned no results.]]></item>
@@ -4384,8 +4384,8 @@ Attachments:
 		<item name="wcf.page.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.page.comment"><![CDATA[Page Comment]]></item>
 		<item name="wcf.page.commentResponse"><![CDATA[Reply to Page Comment]]></item>
-		<item name="wcf.page.recentActivity.pageComment"><![CDATA[Commented on page <a href="{$page->getLink()}#comment{$commentID}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.page.recentActivity.pageComment"><![CDATA[<strong>{$author}</strong> commented on page <strong>{$page->getTitle()}</strong>.]]></item>
+		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[<strong>{$author}</strong> replied to a comment by <strong>{$commentAuthor}</strong> on page <strong>{$page->getTitle()}</strong>.]]></item>
 		<item name="wcf.page.sidebar.left"><![CDATA[Left Sidebar]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Right Sidebar]]></item>
 		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
@@ -5063,7 +5063,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[Choose the special {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}trophies{else}trophy{/if} that you want to be shown in your profile and in the message sidebar.{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1} You can select a maximum of {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.{/if}]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[You can choose a maximum of {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[The selected trophies are invalid.]]></item>
-		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Has received the trophy <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>.]]></item>
+		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[<strong>{$author}</strong> has received the trophy <strong>{$userTrophy->getTrophy()->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{if $items == 1}Awarded once{else}Awarded {#$items} times{/if}]]></item>
@@ -5141,7 +5141,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Excluded Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
-		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[There are no recent activities by followed users. Displaying activity for all users.]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[There are no recent activities by followed users.]]></item>
 	</category>
 	<category name="wcf.user.3rdparty">
 		<item name="wcf.user.3rdparty"><![CDATA[Third-Party Login]]></item>
@@ -5451,15 +5451,15 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.profile.menu.about"><![CDATA[About Me]]></item>
 		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Recent Activity]]></item>
 		<item name="wcf.user.profile.oldUsername"><![CDATA[Used to be called {$user->getOldUsername()}]]></item>
-		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Now follows <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
+		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[<strong>{$author}</strong> now follows <strong>{$user}</strong>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
 		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments at the moment.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
 		<item name="wcf.user.profile.menu.likes"><![CDATA[Reactions]]></item>
-		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}">{$user->username}’s wall</a>.]]></item>
-		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}/response{@$responseID}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[<strong>{$author}</strong> wrote a comment on <strong>{$user}’s wall</strong>.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[<strong>{$author}</strong> replied to a comment by <strong>{$commentAuthor}</strong> on <strong>{$user}’s wall</strong>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[This member limits who may view their full profile.]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Management]]></item>
