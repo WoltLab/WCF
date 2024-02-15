@@ -1010,6 +1010,7 @@ else {
  * Loads recent activity events once the user scrolls to the very bottom.
  * 
  * @param	integer		userID
+ * @deprecated 6.1 use `WoltLabSuite/Core/Components/User/RecentActivity/Loader` instead
  */
 WCF.User.RecentActivityLoader = Class.extend({
 	/**
