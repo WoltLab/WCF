@@ -1,41 +1,49 @@
-<section class="section sectionContainerList dashboardBoxRecentActivity" id="boxRecentActivity{@$boxID}">
+<section class="section dashboardBoxRecentActivity">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.recentActivity{/lang}</h2>
 	</header>
 	
 	{assign var='__events' value=$eventList->getObjects()}
 	{assign var='__lastEvent' value=$__events|end}
-	<ul class="containerList recentActivityList"
-		data-last-event-time="{@$lastEventTime}"
-		data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}"
+	<div class="recentActivityList"
+		id="boxRecentActivity{$boxID}"
+		data-last-event-time="{$lastEventTime}"
+		data-last-event-id="{if $__lastEvent}{$__lastEvent->eventID}{else}0{/if}"
 		data-filtered-by-followed-users="{if $filteredByFollowedUsers}true{else}false{/if}"
-		data-user-id="0"
-		data-box-id="{@$boxID}"
+		data-box-id="{$boxID}"
 	>
 		{if $canFilterByFollowedUsers}
-			<li class="containerListButtonGroup jsOnly jsRecentActivitySwitchContext">
+			<div class="recentActivityList__switchContext">
 				<ul class="buttonGroup">
-					<li><a href="#" class="button small{if !$filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.all{/lang}</a></li>
-					<li><a href="#" class="button small{if $filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.followedUsers{/lang}</a></li>
+					<li>
+						<button type="button" class="recentActivityList__switchContextButton button small{if !$filteredByFollowedUsers} active{/if}">
+							{lang}wcf.user.recentActivity.scope.all{/lang}
+						</button>
+					</li>
+					<li>
+						<button type="button" class="recentActivityList__switchContextButton button small{if $filteredByFollowedUsers} active{/if}">
+							{lang}wcf.user.recentActivity.scope.followedUsers{/lang}
+						</button>
+					</li>
 				</ul>
-				
-				{if $filteredByFollowedUsersOverride}
-					<p class="info recentActivityFollowedNoResults">{lang}wcf.user.recentActivity.scope.followedUsers.noResults{/lang}</p>
-				{/if}
-			</li>
+			</div>
+
+			{if $filteredByFollowedUsers && !$__events|count}
+				<div class="recentActivityList__showMoreButton">
+					<small>{lang}wcf.user.recentActivity.scope.followedUsers.noResults{/lang}</small>
+				</div>
+			{/if}
 		{/if}
 		
 		{include file='recentActivityListItem'}
-	</ul>
+	</div>
 </section>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Activity/Recent'], function (Language, UiUserActivityRecent) {
-		Language.addObject({
-			'wcf.user.recentActivity.more': '{jslang}wcf.user.recentActivity.more{/jslang}',
-			'wcf.user.recentActivity.noMoreEntries': '{jslang}wcf.user.recentActivity.noMoreEntries{/jslang}'
-		});
-		
-		new UiUserActivityRecent('boxRecentActivity{@$boxID}');
+	require(['WoltLabSuite/Core/Component/User/RecentActivity/Loader'], ({ setup }) => {
+		{jsphrase name='wcf.user.recentActivity.more'}
+		{jsphrase name='wcf.user.recentActivity.noMoreEntries'}
+
+		setup(document.getElementById('boxRecentActivity{unsafe:$boxID|encodeJS}'));
 	});
 </script>
