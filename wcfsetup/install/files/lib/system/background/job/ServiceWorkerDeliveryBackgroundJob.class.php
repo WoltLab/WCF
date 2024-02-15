@@ -41,7 +41,6 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
             return;
         }
         $user = UserProfileRuntimeCache::getInstance()->getObject($serviceWorker->userID);
-        //TODO use cache
         $style = new Style($user->styleID);
         /** @see NotificationEmailDeliveryBackgroundJob::perform() */
         $sql = "SELECT      notification.*, notification_event.eventID, object_type.objectType
