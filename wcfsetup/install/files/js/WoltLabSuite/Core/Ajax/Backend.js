@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
     }
     let ignoreConnectionErrors = false;
-    window.addEventListener("unload", () => (ignoreConnectionErrors = true));
+    window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
     class BackendRequest {
         #url;
         #type;
