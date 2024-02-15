@@ -5,6 +5,7 @@ namespace wcf\system\user\activity\event;
 use wcf\data\article\ViewableArticleList;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for responses to article comments.
@@ -66,20 +67,24 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
                     }
                     $event->setIsAccessible();
 
-                    // title
-                    $text = WCF::getLanguage()->getDynamicVariable(
+                    $event->setTitle(WCF::getLanguage()->getDynamicVariable(
                         'wcf.article.recentActivity.articleCommentResponse',
                         [
                             'commentAuthor' => $this->commentAuthors[$comment->userID],
                             'commentID' => $comment->commentID,
                             'responseID' => $response->responseID,
                             'article' => $article,
+                            'author' => $event->getUserProfile(),
                         ]
+                    ));
+                    $event->setDescription(
+                        StringUtil::encodeHTML(
+                            StringUtil::truncate($response->getPlainTextMessage(), 500)
+                        ),
+                        true
                     );
-                    $event->setTitle($text);
+                    $event->setLink($response->getLink());
 
-                    // description
-                    $event->setDescription($response->getExcerpt());
                     continue;
                 }
             }

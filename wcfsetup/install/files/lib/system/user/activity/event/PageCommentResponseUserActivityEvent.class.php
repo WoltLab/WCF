@@ -5,6 +5,7 @@ namespace wcf\system\user\activity\event;
 use wcf\data\page\PageCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for responses to page comments.
@@ -42,17 +43,21 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
                     }
                     $event->setIsAccessible();
 
-                    // title
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.page.recentActivity.pageCommentResponse', [
+                    $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.page.recentActivity.pageCommentResponse', [
                         'commentAuthor' => $this->commentAuthors[$comment->userID],
                         'commentID' => $comment->commentID,
                         'responseID' => $response->responseID,
                         'page' => $page,
-                    ]);
-                    $event->setTitle($text);
+                        'author' => $event->getUserProfile(),
+                    ]));
+                    $event->setDescription(
+                        StringUtil::encodeHTML(
+                            StringUtil::truncate($response->getPlainTextMessage(), 500)
+                        ),
+                        true
+                    );
+                    $event->setLink($response->getLink());
 
-                    // description
-                    $event->setDescription($response->getExcerpt());
                     continue;
                 }
             }

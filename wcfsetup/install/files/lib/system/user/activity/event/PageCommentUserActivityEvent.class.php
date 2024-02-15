@@ -6,6 +6,7 @@ use wcf\data\page\PageCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for page comments.
@@ -44,15 +45,19 @@ class PageCommentUserActivityEvent extends SingletonFactory implements IUserActi
                     }
                     $event->setIsAccessible();
 
-                    // add title
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.page.recentActivity.pageComment', [
+                    $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.page.recentActivity.pageComment', [
                         'page' => $page,
                         'commentID' => $comment->commentID,
-                    ]);
-                    $event->setTitle($text);
+                        'author' => $event->getUserProfile(),
+                    ]));
+                    $event->setDescription(
+                        StringUtil::encodeHTML(
+                            StringUtil::truncate($comment->getPlainTextMessage(), 500)
+                        ),
+                        true
+                    );
+                    $event->setLink($comment->getLink());
 
-                    // add text
-                    $event->setDescription($comment->getExcerpt());
                     continue;
                 }
             }

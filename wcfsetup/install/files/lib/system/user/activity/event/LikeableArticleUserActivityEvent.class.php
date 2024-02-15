@@ -48,17 +48,14 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
                 }
                 $event->setIsAccessible();
 
-                // short output
-                $text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.likedArticle', [
+                $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.likedArticle', [
                     'article' => $article,
                     'reactionType' => ReactionHandler::getInstance()->getReactionTypeByID(
                         $event->reactionTypeID ?? $event->reactionType->reactionTypeID
                     ),
-                ]);
-                $event->setTitle($text);
-
-                // output
-                $event->setDescription($article->getFormattedTeaser());
+                    'author' => $event->getUserProfile(),
+                ]));
+                $event->setLink($article->getLink());
             } else {
                 $event->setIsOrphaned();
             }

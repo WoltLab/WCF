@@ -3294,9 +3294,9 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.aboutAuthor"><![CDATA[Über den Autor]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{plural value=$articleContent->comments one='# Kommentar' other='# Kommentare'}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} Mal gelesen]]></item>
-		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Hat mit <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a> geschrieben.]]></item>
-		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[<strong>{$author}</strong> hat mit <span title="{$reactionType->getTitle()}" class="jsTooltip">{unsafe:$reactionType->renderIcon()}</span> auf den Artikel <strong>{$article->getTitle()}</strong> reagiert.]]></item>
+		<item name="wcf.article.recentActivity.articleComment"><![CDATA[<strong>{$author}</strong> hat einen Kommentar zum Artikel <strong>{$article->getTitle()}</strong> geschrieben.]]></item>
+		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[<strong>{$author}</strong> hat auf einen Kommentar von <strong>{$commentAuthor->username}</strong> zum Artikel <strong>{$article->getTitle()}</strong> geantwortet.]]></item>
 		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
@@ -3306,7 +3306,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> hat den Artikel {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
 		<item name="wcf.article.search"><![CDATA[Artikel durchsuchen]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
@@ -4432,8 +4432,8 @@ Dateianhänge:
 		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.comment"><![CDATA[Seiten-Kommentar]]></item>
 		<item name="wcf.page.commentResponse"><![CDATA[Antwort auf Seiten-Kommentar]]></item>
-		<item name="wcf.page.recentActivity.pageComment"><![CDATA[Hat einen Kommentar auf der Seite <a href="{$page->getLink()}#comment{$commentID}">{$page->getTitle()}</a> geschrieben.]]></item>
-		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.page.recentActivity.pageComment"><![CDATA[<strong>{$author}</strong> hat einen Kommentar auf der Seite <strong>{$page->getTitle()}</strong> geschrieben.]]></item>
+		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[<strong>{$author}</strong> hat auf einen Kommentar von <strong>{$commentAuthor}</strong> auf der Seite <strong>{$page->getTitle()}</strong> geantwortet.]]></item>
 		<item name="wcf.page.sidebar.left"><![CDATA[Linke Seitenleiste]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Rechte Seitenleiste]]></item>
 		<item name="wcf.page.breadcrumb"><![CDATA[Verlaufsnavigation]]></item>
@@ -5064,7 +5064,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}besonderen Trophäen{else}besondere Trophäe{/if} aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}werden. Es können maximal {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen ausgewählt werden.{else}wird.{/if}]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind ungültig.]]></item>
-		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Hat die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
+		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[<strong>{$author}</strong> hat die Trophäe <strong>{$userTrophy->getTrophy()->getTitle()}</strong> erhalten.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Ausgeschlossene Trophäen Kategorien]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{#$items} Mal vergeben]]></item>
@@ -5142,7 +5142,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
-		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}.]]></item>
 	</category>
 	<category name="wcf.user.3rdparty">
 		<item name="wcf.user.3rdparty"><![CDATA[Drittanbieter]]></item>
@@ -5449,15 +5449,15 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.profile.menu.about"><![CDATA[Über mich]]></item>
 		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.user.profile.oldUsername"><![CDATA[Hieß früher {$user->getOldUsername()}]]></item>
-		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Folgt nun <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
+		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[<strong>{$author}</strong> folgt nun <strong>{$user}</strong>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profil-Besucher]]></item>
 		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Kommentar an der Pinnwand]]></item>
 		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Antwort auf einen Pinnwand-Kommentar]]></item>
 		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[Es wurden noch keine Einträge an der Pinnwand verfasst.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Pinnwand]]></item>
 		<item name="wcf.user.profile.menu.likes"><![CDATA[Reaktionen]]></item>
-		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Hat einen Kommentar an die <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}">Pinnwand von {$user->username}</a> geschrieben.]]></item>
-		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}/response{@$responseID}">Pinnwand von {$user->username}</a> geantwortet.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[<strong>{$author}</strong> hat einen Kommentar an die <strong>Pinnwand von {$user}</strong> geschrieben.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[<strong>{$author}</strong> hat auf einen Kommentar von <strong>{$commentAuthor}</strong> an der <strong>Pinnwand von {$user}</strong> geantwortet.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
