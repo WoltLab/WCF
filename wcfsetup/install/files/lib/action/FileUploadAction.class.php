@@ -131,10 +131,15 @@ final class FileUploadAction implements RequestHandlerInterface
 
             // TODO: This is just debug code.
             return new JsonResponse([
-                'file' => $file->getPath() . $file->getSourceFilename(),
+                'completed' => true,
+                'fileID' => $file->fileID,
+                'typeName' => $file->typeName,
+                'data' => $processor->getUploadResponse($file),
             ]);
         }
 
-        return new EmptyResponse();
+        return new JsonResponse([
+            'completed' => false,
+        ]);
     }
 }
