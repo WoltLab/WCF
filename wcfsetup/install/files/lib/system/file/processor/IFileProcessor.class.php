@@ -16,6 +16,8 @@ interface IFileProcessor
 
     public function adopt(File $file, array $context): void;
 
+    public function canDownload(File $file): bool;
+
     public function getAllowedFileExtensions(array $context): array;
 
     public function getTypeName(): string;

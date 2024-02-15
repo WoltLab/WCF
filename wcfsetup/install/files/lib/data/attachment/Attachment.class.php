@@ -5,6 +5,7 @@ namespace wcf\data\attachment;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
+use wcf\data\file\File;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -58,11 +59,18 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     protected $permissions = [];
 
+    protected File $file;
+
     /**
      * @inheritDoc
      */
     public function getLink(): string
     {
+        $file = $this->getFile();
+        if ($file !== null) {
+            return $file->getLink();
+        }
+
         // Do not use `LinkHandler::getControllerLink()` or `forceFrontend` as attachment
         // links can be opened in the frontend and in the ACP.
         return LinkHandler::getInstance()->getLink('Attachment', [
@@ -191,11 +199,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function migrateStorage()
     {
-        foreach ([
-            $this->getLocation(),
-            $this->getThumbnailLocation(),
-            $this->getThumbnailLocation('tiny'),
-        ] as $location) {
+        foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny'),] as $location) {
             if (!\str_ends_with($location, '.bin')) {
                 \rename($location, $location . '.bin');
             }
@@ -337,6 +341,56 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         }
 
         return 'paperclip';
+    }
+
+    public function getFile(): ?File
+    {
+        // This method is called within `__get()`, therefore we must dereference
+        // the data array directly to avoid recursion.
+        $fileID = $this->data['fileID'] ?? null;
+
+        if (!$fileID) {
+            return null;
+        }
+
+        if (!isset($this->file)) {
+            $this->file = new File($fileID);
+        }
+
+        return $this->file;
+    }
+
+    public function setFile(File $file): void
+    {
+        if ($this->file->fileID === $file->fileID) {
+            $this->file = $file;
+        }
+    }
+
+    #[\Override]
+    public function __get($name)
+    {
+        $file = $this->getFile();
+        if ($file !== null) {
+            return match ($name) {
+                'filename' => $file->filename,
+                'filesize' => $file->fileSize,
+                default => parent::__get($name),
+            };
+        }
+
+        return parent::__get($name);
+    }
+
+    public static function findByFileID(int $fileID): ?Attachment
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_attachment
+                WHERE   fileID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$fileID]);
+
+        return $statement->fetchObject(Attachment::class);
     }
 
     /**

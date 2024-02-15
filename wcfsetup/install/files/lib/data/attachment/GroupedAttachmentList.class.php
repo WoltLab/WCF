@@ -2,6 +2,7 @@
 
 namespace wcf\data\attachment;
 
+use wcf\data\file\FileList;
 use wcf\data\object\type\ObjectTypeCache;
 
 /**
@@ -76,6 +77,8 @@ class GroupedAttachmentList extends AttachmentList
     {
         parent::readObjects();
 
+        $fileIDs = [];
+
         // group by object id
         foreach ($this->objects as $attachmentID => $attachment) {
             if (!isset($this->groupedObjects[$attachment->objectID])) {
@@ -83,6 +86,24 @@ class GroupedAttachmentList extends AttachmentList
             }
 
             $this->groupedObjects[$attachment->objectID][$attachmentID] = $attachment;
+
+            if ($attachment->fileID) {
+                $fileIDs[] = $attachment->fileID;
+            }
+        }
+
+        if ($fileIDs !== []) {
+            $fileList = new FileList();
+            $fileList->setObjectIDs($fileIDs);
+            $fileList->readObjects();
+            $files = $fileList->getObjects();
+
+            foreach ($this->objects as $attachment) {
+                if ($attachment->fileID) {
+                    $file = $files[$attachment->fileID];
+                    $attachment->setFile($file);
+                }
+            }
         }
     }
 
