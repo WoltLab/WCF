@@ -23,4 +23,9 @@ interface IFileProcessor
     public function getTypeName(): string;
 
     public function getUploadResponse(File $file): array;
+
+    /**
+     * @return ThumbnailFormat[]
+     */
+    public function getThumbnailFormats(): array;
 }

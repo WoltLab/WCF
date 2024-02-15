@@ -7,6 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\util\FileUtil;
 
 /**
  * @author Alexander Ebert
@@ -54,5 +55,18 @@ class File extends DatabaseObject
     public function getProcessor(): ?IFileProcessor
     {
         return FileProcessor::getInstance()->forTypeName($this->typeName);
+    }
+
+    public function isImage(): bool
+    {
+        $mimeType = FileUtil::getMimeType($this->getPath() . $this->getSourceFilename());
+
+        return match ($mimeType) {
+            'image/gif' => true,
+            'image/jpg', 'image/jpeg' => true,
+            'image/png' => true,
+            'image/webp' => true,
+            default => false,
+        };
     }
 }

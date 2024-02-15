@@ -129,9 +129,19 @@ final class FileUploadAction implements RequestHandlerInterface
 
             $processor->adopt($file, $context);
 
+            $endpointThumbnails = '';
+            if ($file->isImage()) {
+                $thumbnailFormats = $processor->getThumbnailFormats();
+                if ($thumbnailFormats !== []) {
+                    // TODO: Endpoint to generate thumbnails.
+                    $endpointThumbnails = '';
+                }
+            }
+
             // TODO: This is just debug code.
             return new JsonResponse([
                 'completed' => true,
+                'endpointThumbnails' => $endpointThumbnails,
                 'fileID' => $file->fileID,
                 'typeName' => $file->typeName,
                 'data' => $processor->getUploadResponse($file),
