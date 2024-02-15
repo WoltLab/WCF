@@ -2,6 +2,7 @@
 
 namespace wcf\system\file\processor;
 
+use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\file\File;
 use wcf\system\attachment\AttachmentHandler;
@@ -88,6 +89,16 @@ final class AttachmentFileProcessor implements IFileProcessor
         }
 
         return FileProcessorPreflightResult::Passed;
+    }
+
+    public function canDownload(File $file): bool
+    {
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment === null) {
+            return false;
+        }
+
+        return $attachment->canDownload();
     }
 
     public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string

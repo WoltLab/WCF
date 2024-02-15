@@ -2,9 +2,11 @@
 
 namespace wcf\data\file;
 
+use wcf\action\FileDownloadAction;
 use wcf\data\DatabaseObject;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
+use wcf\system\request\LinkHandler;
 
 /**
  * @author Alexander Ebert
@@ -38,6 +40,14 @@ class File extends DatabaseObject
             '%d-%s.bin',
             $this->fileID,
             $this->fileHash,
+        );
+    }
+
+    public function getLink(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            FileDownloadAction::class,
+            ['id' => $this->fileID]
         );
     }
 
