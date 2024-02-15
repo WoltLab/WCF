@@ -15,6 +15,7 @@ use wcf\data\user\UserProfile;
 use wcf\form\NotificationUnsubscribeForm;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\NotificationEmailDeliveryBackgroundJob;
+use wcf\system\background\job\ServiceWorkerDeliveryBackgroundJob;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -303,7 +304,28 @@ class UserNotificationHandler extends SingletonFactory
                     }
                 }
             }
+            $conditionBuilder = new PreparedStatementConditionBuilder();
+            $conditionBuilder->add('userID IN (?)', [\array_keys($recipients)]);
+            $sql = "SELECT userID, workerID
+                    FROM   wcf1_service_worker " . $conditionBuilder;
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditionBuilder->getParameters());
+            $map = $statement->fetchMap('userID', 'workerID', false);
+            $jobs = [];
 
+            foreach ($map as $userID => $workerIDs) {
+                $notification = $notifications[$userID]['object'] ?? null;
+                if ($notification === null) {
+                    continue;
+                }
+                \assert($notification instanceof UserNotification);
+                foreach ($workerIDs as $workerID) {
+                    $jobs[] = new ServiceWorkerDeliveryBackgroundJob($workerID, $notification->notificationID);
+                }
+            }
+            if ($jobs !== []) {
+                BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
+            }
             // reset notification count
             UserStorageHandler::getInstance()->reset(\array_keys($recipients), 'userNotificationCount');
 

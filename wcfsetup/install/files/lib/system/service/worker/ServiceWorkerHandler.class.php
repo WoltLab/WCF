@@ -86,7 +86,6 @@ final class ServiceWorkerHandler extends SingletonFactory
                 $content
             )
         );
-        // TODO handle exceptions and remove the service worker if needed
     }
 
     private function getClient(): ClientInterface
