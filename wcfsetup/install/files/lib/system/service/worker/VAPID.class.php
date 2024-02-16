@@ -44,7 +44,8 @@ final class VAPID
         ];
         $payload = JSON::encode([
             'aud' => $serviceWorker->getEndpoint(),
-            'exp' => TIME_NOW + (SERVICE_WORKER_EXPIRATION * 3600),
+            // 12h
+            'exp' => TIME_NOW + 43200,
             'sub' => "mailto:" . MAIL_ADMIN_ADDRESS, // TODO possible change it to the web-url?
         ], JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         if (!$payload) {

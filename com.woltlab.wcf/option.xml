@@ -773,14 +773,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<optiontype>text</optiontype>
 				<defaultvalue></defaultvalue>
 			</option>
-			<option name="service_worker_expiration">
-				<categoryname>general.system.serviceWorker</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>12</defaultvalue>
-				<minvalue>0</minvalue>
-				<maxvalue>24</maxvalue>
-				<suffix>hours</suffix>
-			</option>
 			<!-- /general.system.serviceWorker -->
 			<!-- general.mail.general -->
 			<option name="mail_from_name">

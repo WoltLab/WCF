@@ -43,7 +43,7 @@ final class ServiceWorkerHandler extends SingletonFactory
         $jwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
         $binaryPublicKey = \hex2bin(Util::serializePublicKey($jwk->get('x'), $jwk->get('y')));
         $binaryPrivateKey = \hex2bin(
-            \str_pad(bin2hex(Base64Url::decode($jwk->get('d'))), 2 * VAPID::PRIVATE_KEY_LENGTH, '0', STR_PAD_LEFT)
+            \str_pad(\bin2hex(Base64Url::decode($jwk->get('d'))), 2 * VAPID::PRIVATE_KEY_LENGTH, '0', STR_PAD_LEFT)
         );
         OptionEditor::import([
             'service_worker_public_key' => Base64UrlSafe::encodeUnpadded($binaryPublicKey),
