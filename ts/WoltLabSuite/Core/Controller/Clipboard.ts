@@ -496,6 +496,7 @@ class ControllerClipboard {
           UiPageAction.show(actionName);
         } else {
           UiPageAction.add(actionName, editor);
+          created = true;
         }
       }
 
