@@ -1,11 +1,12 @@
-import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-
 /**
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
+
+import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+
 let _serviceWorker: ServiceWorker | null = null;
 
 class ServiceWorker {
