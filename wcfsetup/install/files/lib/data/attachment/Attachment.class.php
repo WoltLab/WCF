@@ -44,6 +44,8 @@ use wcf\util\FileUtil;
  * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
  * @property-read   int $showOrder      position of the attachment in relation to the other attachment to the same message
  * @property-read int|null $fileID
+ * @property-read int|null $thumbnailID
+ * @property-read int|null $tinyThumbnailID
  */
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile
 {

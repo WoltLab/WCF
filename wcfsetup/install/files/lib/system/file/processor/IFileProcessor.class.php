@@ -3,6 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
+use wcf\data\file\thumbnail\FileThumbnail;
 
 /**
  * @author Alexander Ebert
@@ -15,6 +16,8 @@ interface IFileProcessor
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult;
 
     public function adopt(File $file, array $context): void;
+
+    public function adoptThumbnail(FileThumbnail $thumbnail): void;
 
     public function canDownload(File $file): bool;
 

@@ -77,7 +77,8 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
         element.dispatchEvent(event);
 
         if (response.endpointThumbnails !== "") {
-          // TODO: Dispatch the request to generate thumbnails.
+          void (await prepareRequest(response.endpointThumbnails).get().fetchAsResponse());
+          // TODO: Handle errors and notify about the new thumbnails.
         }
       }
     } catch (e) {

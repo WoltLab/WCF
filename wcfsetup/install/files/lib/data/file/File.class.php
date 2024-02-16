@@ -29,7 +29,7 @@ class File extends DatabaseObject
         $folderB = \substr($this->fileHash, 2, 2);
 
         return \sprintf(
-            \WCF_DIR . '_data/public/fileUpload/%s/%s/',
+            \WCF_DIR . '_data/private/fileUpload/%s/%s/',
             $folderA,
             $folderB,
         );

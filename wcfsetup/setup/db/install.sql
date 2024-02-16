@@ -225,6 +225,8 @@ CREATE TABLE wcf1_attachment (
 	showOrder SMALLINT(5) NOT NULL DEFAULT 0,
 
 	fileID INT,
+	thumbnailID INT,
+	tinyThumbnailID INT,
 
 	KEY (objectTypeID, objectID),
 	KEY (objectTypeID, tmpHash),
@@ -615,6 +617,15 @@ CREATE TABLE wcf1_file_temporary (
 	typeName VARCHAR(255) NOT NULL,
 	context TEXT,
 	chunks VARBINARY(255) NOT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_file_thumbnail;
+CREATE TABLE wcf1_file_thumbnail (
+	thumbnailID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	fileID INT NOT NULL,
+	identifier VARCHAR(50) NOT NULL,
+	fileHash CHAR(64) NOT NULL,
+	fileExtension VARCHAR(10) NOT NULL
 );
 
 /* As the flood control table can be a high traffic table and as it is periodically emptied,
@@ -2005,6 +2016,8 @@ ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (thumbnailID) REFERENCES wcf1_file_thumbnail (thumbnailID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (tinyThumbnailID) REFERENCES wcf1_file_thumbnail (thumbnailID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -2054,6 +2067,8 @@ ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENC
 ALTER TABLE wcf1_email_log_entry ADD FOREIGN KEY (recipientID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_file_thumbnail ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
