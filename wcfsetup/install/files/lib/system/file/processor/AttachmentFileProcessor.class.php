@@ -5,7 +5,9 @@ namespace wcf\system\file\processor;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\file\File;
+use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\exception\NotImplementedException;
 
 /**
  * @author Alexander Ebert
@@ -119,7 +121,6 @@ final class AttachmentFileProcessor implements IFileProcessor
         ];
     }
 
-    #[\Override]
     public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string
     {
         return FileProcessor::getInstance()->getHtmlElement(
@@ -138,17 +139,38 @@ final class AttachmentFileProcessor implements IFileProcessor
     {
         return [
             new ThumbnailFormat(
+                '',
+                \ATTACHMENT_THUMBNAIL_HEIGHT,
+                \ATTACHMENT_THUMBNAIL_WIDTH,
+                !!\ATTACHMENT_RETAIN_DIMENSIONS,
+            ),
+            new ThumbnailFormat(
                 'tiny',
                 144,
                 144,
                 false,
             ),
-            new ThumbnailFormat(
-                'default',
-                \ATTACHMENT_THUMBNAIL_HEIGHT,
-                \ATTACHMENT_THUMBNAIL_WIDTH,
-                !!\ATTACHMENT_RETAIN_DIMENSIONS,
-            ),
         ];
+    }
+
+    #[\Override]
+    public function adoptThumbnail(FileThumbnail $thumbnail): void
+    {
+        $attachment = Attachment::findByFileID($thumbnail->fileID);
+        if ($attachment === null) {
+            // TODO: How to handle this case?
+            return;
+        }
+
+        $columnName = match ($thumbnail->identifier) {
+            '' => 'thumbnailID',
+            'tiny'=>'tinyThumbnailID',
+            'default'=>throw new \RuntimeException('TODO'), // TODO
+        };
+
+        $attachmentEditor = new AttachmentEditor($attachment);
+        $attachmentEditor->update([
+            $columnName => $thumbnail->thumbnailID,
+        ]);
     }
 }

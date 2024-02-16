@@ -44,7 +44,19 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             try {
                 const response = (await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsJson());
                 if (response.completed) {
-                    console.log(response);
+                    const event = new CustomEvent("uploadCompleted", {
+                        detail: {
+                            data: response.data,
+                            endpointThumbnails: response.endpointThumbnails,
+                            fileID: response.fileID,
+                            typeName: response.typeName,
+                        },
+                    });
+                    element.dispatchEvent(event);
+                    if (response.endpointThumbnails !== "") {
+                        void (await (0, Backend_1.prepareRequest)(response.endpointThumbnails).get().fetchAsResponse());
+                        // TODO: Handle errors and notify about the new thumbnails.
+                    }
                 }
             }
             catch (e) {

@@ -13,6 +13,7 @@ use wcf\data\file\temporary\FileTemporaryEditor;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\io\File as IoFile;
+use wcf\system\request\LinkHandler;
 
 final class FileUploadAction implements RequestHandlerInterface
 {
@@ -134,7 +135,10 @@ final class FileUploadAction implements RequestHandlerInterface
                 $thumbnailFormats = $processor->getThumbnailFormats();
                 if ($thumbnailFormats !== []) {
                     // TODO: Endpoint to generate thumbnails.
-                    $endpointThumbnails = '';
+                    $endpointThumbnails = LinkHandler::getInstance()->getControllerLink(
+                        FileGenerateThumbnailsAction::class,
+                        ['id' => $file->fileID],
+                    );
                 }
             }
 
