@@ -1,20 +1,18 @@
 {hascontent}
-	<script data-relocate="true">
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.user.recentActivity.more': '{jslang}wcf.user.recentActivity.more{/jslang}',
-				'wcf.user.recentActivity.noMoreEntries': '{jslang}wcf.user.recentActivity.noMoreEntries{/jslang}'
-			});
-			
-			new WCF.User.RecentActivityLoader({@$userID});
-		});
-	</script>
-	
-	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}">
+	<div id="recentActivities" class="recentActivityList recentActivityList--userProfileContent" data-last-event-time="{$lastEventTime}" data-user-id="{$userID}">
 		{content}
 			{include file='recentActivityListItem'}
 		{/content}
-	</ul>
+	</div>
+
+	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Component/User/RecentActivity/Loader'], ({ setup }) => {
+			{jsphrase name='wcf.user.recentActivity.more'}
+			{jsphrase name='wcf.user.recentActivity.noMoreEntries'}
+
+			setup(document.getElementById('recentActivities'));
+		});
+	</script>
 {hascontentelse}
 	<div class="section">
 		{if $placeholder|isset}{$placeholder}{/if}

@@ -1,5 +1,6 @@
 /**
  * @woltlabExcludeBundle all
+ * @deprecated 6.1 use `WoltLabSuite/Core/Components/User/RecentActivity/Loader` instead
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Util_1) {
     "use strict";

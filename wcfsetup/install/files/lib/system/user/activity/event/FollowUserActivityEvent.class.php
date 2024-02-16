@@ -42,9 +42,13 @@ class FollowUserActivityEvent extends SingletonFactory implements IUserActivityE
 
                 $text = WCF::getLanguage()->getDynamicVariable(
                     'wcf.user.profile.recentActivity.follow',
-                    ['user' => $users[$event->objectID]]
+                    [
+                        'user' => $users[$event->objectID],
+                        'author' => $event->getUserProfile(),
+                    ]
                 );
                 $event->setTitle($text);
+                $event->setLink($users[$event->objectID]->getLink());
             } else {
                 $event->setIsOrphaned();
             }

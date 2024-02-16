@@ -1,10 +1,8 @@
 {include file='header'}
 
 {if $eventList|count}
-	<div class="section sectionContainerList">
-		<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}">
-			{include file='recentActivityListItem'}
-		</ul>
+	<div id="recentActivities" class="section recentActivityList" data-last-event-time="{@$lastEventTime}">
+		{include file='recentActivityListItem'}
 	</div>
 	
 	<footer class="contentFooter">
@@ -21,13 +19,11 @@
 {/if}
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.user.recentActivity.more': '{jslang}wcf.user.recentActivity.more{/jslang}',
-			'wcf.user.recentActivity.noMoreEntries': '{jslang}wcf.user.recentActivity.noMoreEntries{/jslang}'
-		});
-		
-		new WCF.User.RecentActivityLoader(null);
+	require(['WoltLabSuite/Core/Component/User/RecentActivity/Loader'], ({ setup }) => {
+		{jsphrase name='wcf.user.recentActivity.more'}
+		{jsphrase name='wcf.user.recentActivity.noMoreEntries'}
+
+		setup(document.getElementById('recentActivities'));
 	});
 </script>
 

@@ -5,6 +5,7 @@ namespace wcf\system\user\activity\event;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for profile comment responses.
@@ -50,20 +51,23 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
                     if (!$users[$comment->objectID]->isProtected()) {
                         $event->setIsAccessible();
 
-                        // title
-                        $text = WCF::getLanguage()->getDynamicVariable(
+                        $event->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.user.profile.recentActivity.profileCommentResponse',
                             [
                                 'commentAuthor' => $this->commentAuthors[$comment->userID],
                                 'commentID' => $comment->commentID,
                                 'responseID' => $response->responseID,
                                 'user' => $users[$comment->objectID],
+                                'author' => $event->getUserProfile(),
                             ]
+                        ));
+                        $event->setDescription(
+                            StringUtil::encodeHTML(
+                                StringUtil::truncate($response->getPlainTextMessage(), 500)
+                            ),
+                            true
                         );
-                        $event->setTitle($text);
-
-                        // description
-                        $event->setDescription($response->getExcerpt());
+                        $event->setLink($response->getLink());
                     }
                     continue;
                 }

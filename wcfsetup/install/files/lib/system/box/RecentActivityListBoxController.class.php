@@ -42,12 +42,6 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     public $filteredByFollowedUsers = false;
 
     /**
-     * is true if filtering by followed users yielded no results
-     * @var bool
-     */
-    public $filteredByFollowedUsersOverride = false;
-
-    /**
      * @inheritDoc
      */
     public $defaultLimit = 10;
@@ -113,7 +107,6 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
                 'eventList' => $this->objectList,
                 'lastEventTime' => $this->objectList->getLastEventTime(),
                 'filteredByFollowedUsers' => $this->filteredByFollowedUsers,
-                'filteredByFollowedUsersOverride' => $this->filteredByFollowedUsersOverride,
             ], true);
         } else {
             return WCF::getTPL()->fetch('boxRecentActivitySidebar', 'wcf', [
@@ -140,11 +133,8 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 
         if (!$hasContent) {
             if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
-                $this->filteredByFollowedUsersOverride = true;
-
-                $this->loadContent();
-
-                return \count($this->objectList) > 0;
+                // Box is empty, but we show it anyway so that the user can change the filtering.
+                return true;
             }
         }
 
@@ -158,13 +148,11 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     {
         // apply filter
         if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
-            if (!$this->filteredByFollowedUsersOverride) {
-                /** @noinspection PhpUndefinedMethodInspection */
-                $this->objectList->getConditionBuilder()->add(
-                    'user_activity_event.userID IN (?)',
-                    [WCF::getUserProfileHandler()->getFollowingUsers()]
-                );
-            }
+            /** @noinspection PhpUndefinedMethodInspection */
+            $this->objectList->getConditionBuilder()->add(
+                'user_activity_event.userID IN (?)',
+                [WCF::getUserProfileHandler()->getFollowingUsers()]
+            );
         } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
             $this->objectList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
