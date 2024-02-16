@@ -25,6 +25,8 @@ final class PHPExtensionCollecting implements IEvent
         'pdo',
         'pdo_mysql',
         'zlib',
+        'openssl',
+        'gmp',
     ];
 
     /**
