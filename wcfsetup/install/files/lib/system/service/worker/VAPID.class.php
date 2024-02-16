@@ -7,6 +7,7 @@ use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Signature\Algorithm\ES256;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Binary;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\util\JSON;
@@ -44,9 +45,8 @@ final class VAPID
         ];
         $payload = JSON::encode([
             'aud' => $serviceWorker->getEndpoint(),
-            // 12h
-            'exp' => TIME_NOW + 43200,
-            'sub' => "mailto:" . MAIL_ADMIN_ADDRESS, // TODO possible change it to the web-url?
+            'exp' => TIME_NOW + 43200, // 12h
+            'sub' => "mailto:" . MAIL_ADMIN_ADDRESS,
         ], JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         if (!$payload) {
             throw new \RuntimeException('Could not encode payload');

@@ -6,6 +6,8 @@ use Base64Url\Base64Url;
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\Util\ECKey;
 use Jose\Component\KeyManagement\JWKFactory;
+use ParagonIE\ConstantTime\Base64;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Binary;
 use wcf\data\service\worker\ServiceWorker;
 
