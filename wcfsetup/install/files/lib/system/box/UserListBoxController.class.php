@@ -42,6 +42,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
+    protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+
+    /**
+     * @inheritDoc
+     */
     public $defaultLimit = 5;
 
     /**
