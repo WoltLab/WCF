@@ -42,6 +42,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
+    protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
+
+    /**
+     * @inheritDoc
+     */
     public $defaultLimit = 5;
 
     /**
@@ -123,6 +128,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
      */
     protected function getTemplate()
     {
+        $templateName = 'boxUserList';
+        if ($this->getBox()->position == 'sidebarLeft' || $this->getBox()->position == 'sidebarRight') {
+            $templateName = 'boxUserListSidebar';
+        }
+
         $userProfiles = [];
         if ($this->userIDs !== null) {
             $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($this->userIDs);
@@ -135,7 +145,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
             DatabaseObject::sort($userProfiles, $this->sortField, $this->sortOrder);
         }
 
-        return WCF::getTPL()->fetch('boxUserList', 'wcf', [
+        return WCF::getTPL()->fetch($templateName, 'wcf', [
             'boxUsers' => $this->userIDs !== null ? $userProfiles : $this->objectList->getObjects(),
             'boxSortField' => $this->box->sortField,
         ], true);
