@@ -68,6 +68,8 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['workerID']),
+            DatabaseTableIndex::create('userID')
+                ->columns(['userID']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

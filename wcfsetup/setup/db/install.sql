@@ -1255,6 +1255,17 @@ CREATE TABLE wcf1_search_keyword (
 	KEY (searches, lastSearchTime)
 );
 
+DROP TABLE IF EXISTS wcf1_service_worker;
+CREATE TABLE wcf1_service_worker (
+	workerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	endpoint TEXT NULL,
+	publicKey VARCHAR(88) DEFAULT '' NOT NULL,
+	authToken VARCHAR(24) DEFAULT '' NOT NULL,
+	contentEncoding ENUM ('aes128gcm', 'aesgcm') DEFAULT 'aes128gcm' NOT NULL,
+	KEY userID (userID)
+);
+
 DROP TABLE IF EXISTS wcf1_session;
 CREATE TABLE wcf1_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
@@ -2120,6 +2131,7 @@ ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_langu
 ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 /* SQL_PARSER_OFFSET */
 
