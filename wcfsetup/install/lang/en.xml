@@ -1738,6 +1738,9 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.formatting_remove_font.description"><![CDATA[Prevents the use of different font families and removes them when displaying existing messages.]]></item>
 		<item name="wcf.acp.option.formatting_remove_size"><![CDATA[Remove font size]]></item>
 		<item name="wcf.acp.option.formatting_remove_size.description"><![CDATA[Prevents the use of different font sizes and removes them when displaying existing messages.]]></item>
+		<item name="wcf.acp.option.category.general.system.serviceWorker"><![CDATA[Service Worker]]></item>
+		<item name="wcf.acp.option.service_worker_public_key"><![CDATA[Public key]]></item>
+		<item name="wcf.acp.option.service_worker_private_key"><![CDATA[Private key]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
