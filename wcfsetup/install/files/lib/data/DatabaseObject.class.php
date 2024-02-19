@@ -237,14 +237,24 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
 
         if ($maintainIndexAssociation) {
             $objects = [];
-            \array_multisort($sortArray, $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC, $objects2);
+            \array_multisort(
+                $sortArray,
+                $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC,
+                \SORT_NATURAL | \SORT_FLAG_CASE,
+                $objects2
+            );
 
             $objects = [];
             foreach ($objects2 as $idx => $obj) {
                 $objects[\substr($idx, 0, -1)] = $obj;
             }
         } else {
-            \array_multisort($sortArray, $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC, $objects);
+            \array_multisort(
+                $sortArray,
+                $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC,
+                \SORT_NATURAL | \SORT_FLAG_CASE,
+                $objects
+            );
         }
     }
 }
