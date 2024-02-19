@@ -158,7 +158,7 @@ final class Encryption
         }
         \assert(Binary::safeStrlen($clientPublicKey) === 65);
 
-        $len = "\0A"; // 65 as Uint16BE
+        $len = \pack('n', 65);
 
         return "\0" . $len . $clientPublicKey . $len . $serverPublicKey;
     }
