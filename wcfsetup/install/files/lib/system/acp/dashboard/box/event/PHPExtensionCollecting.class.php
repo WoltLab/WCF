@@ -19,14 +19,14 @@ final class PHPExtensionCollecting implements IEvent
         'ctype',
         'dom',
         'exif',
+        'gmp',
         'intl',
         'libxml',
         'mbstring',
+        'openssl',
         'pdo',
         'pdo_mysql',
         'zlib',
-        'openssl',
-        'gmp',
     ];
 
     /**
