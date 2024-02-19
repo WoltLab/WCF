@@ -11,32 +11,30 @@ import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 let _serviceWorker: ServiceWorker | null = null;
 
 class ServiceWorker {
-  private readonly publicKey: string;
-  private readonly serviceWorkerJsUrl: string;
-  private readonly registerUrl: string;
-  private readonly serviceWorkerRegistration: Promise<ServiceWorkerRegistration>;
+  readonly #publicKey: string;
+  readonly #serviceWorkerJsUrl: string;
+  readonly #registerUrl: string;
+  readonly #serviceWorkerRegistration: Promise<ServiceWorkerRegistration>;
 
   constructor(publicKey: string, serviceWorkerJsUrl: string, registerUrl: string) {
-    this.publicKey = publicKey;
-    this.serviceWorkerJsUrl = serviceWorkerJsUrl;
-    this.registerUrl = registerUrl;
-    void window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+    this.#publicKey = publicKey;
+    this.#serviceWorkerJsUrl = serviceWorkerJsUrl;
+    this.#registerUrl = registerUrl;
+    void window.navigator.serviceWorker.register(this.#serviceWorkerJsUrl, {
       scope: "/",
     });
-    this.serviceWorkerRegistration = window.navigator.serviceWorker.ready;
+    this.#serviceWorkerRegistration = window.navigator.serviceWorker.ready;
   }
 
   async register(): Promise<void> {
-    const currentSubscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+    const currentSubscription = await(await this.#serviceWorkerRegistration).pushManager.getSubscription();
     if (currentSubscription && this.#compareApplicationServerKey(currentSubscription)) {
       return;
     }
     await this.unsubscribe(currentSubscription);
-    const subscription = await (
-      await this.serviceWorkerRegistration
-    ).pushManager.subscribe({
+    const subscription = await(await this.#serviceWorkerRegistration).pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
+      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
     });
     if (!subscription) {
       // subscription failed
@@ -57,7 +55,7 @@ class ServiceWorker {
     base64 = base64.replace(/\+/g, "-").replace(/\//g, "_");
     base64 = base64.replace(/=+$/, "");
 
-    return base64 === this.publicKey;
+    return base64 === this.#publicKey;
   }
 
   async #sendRequest(subscription: PushSubscription, remove: boolean = false): Promise<void> {
@@ -67,7 +65,7 @@ class ServiceWorker {
     // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
     const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
     try {
-      await prepareRequest(this.registerUrl)
+      await prepareRequest(this.#registerUrl)
         .post({
           remove: remove,
           endpoint: subscription.endpoint,

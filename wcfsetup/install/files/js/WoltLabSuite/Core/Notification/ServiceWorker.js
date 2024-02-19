@@ -11,28 +11,28 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
     exports.registerServiceWorker = exports.setup = void 0;
     let _serviceWorker = null;
     class ServiceWorker {
-        publicKey;
-        serviceWorkerJsUrl;
-        registerUrl;
-        serviceWorkerRegistration;
+        #publicKey;
+        #serviceWorkerJsUrl;
+        #registerUrl;
+        #serviceWorkerRegistration;
         constructor(publicKey, serviceWorkerJsUrl, registerUrl) {
-            this.publicKey = publicKey;
-            this.serviceWorkerJsUrl = serviceWorkerJsUrl;
-            this.registerUrl = registerUrl;
-            void window.navigator.serviceWorker.register(this.serviceWorkerJsUrl, {
+            this.#publicKey = publicKey;
+            this.#serviceWorkerJsUrl = serviceWorkerJsUrl;
+            this.#registerUrl = registerUrl;
+            void window.navigator.serviceWorker.register(this.#serviceWorkerJsUrl, {
                 scope: "/",
             });
-            this.serviceWorkerRegistration = window.navigator.serviceWorker.ready;
+            this.#serviceWorkerRegistration = window.navigator.serviceWorker.ready;
         }
         async register() {
-            const currentSubscription = await (await this.serviceWorkerRegistration).pushManager.getSubscription();
+            const currentSubscription = await (await this.#serviceWorkerRegistration).pushManager.getSubscription();
             if (currentSubscription && this.#compareApplicationServerKey(currentSubscription)) {
                 return;
             }
             await this.unsubscribe(currentSubscription);
-            const subscription = await (await this.serviceWorkerRegistration).pushManager.subscribe({
+            const subscription = await (await this.#serviceWorkerRegistration).pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: this.#urlBase64ToUint8Array(this.publicKey),
+                applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
             });
             if (!subscription) {
                 // subscription failed
@@ -50,7 +50,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             let base64 = window.btoa(String.fromCharCode(...new Uint8Array(subscription.options.applicationServerKey)));
             base64 = base64.replace(/\+/g, "-").replace(/\//g, "_");
             base64 = base64.replace(/=+$/, "");
-            return base64 === this.publicKey;
+            return base64 === this.#publicKey;
         }
         async #sendRequest(subscription, remove = false) {
             const key = subscription.getKey("p256dh");
@@ -59,7 +59,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             // @see https://w3c.github.io/push-api/#dom-pushmanager-supportedcontentencodings
             const contentEncoding = (PushManager.supportedContentEncodings || ["aes128gcm"])[0];
             try {
-                await (0, Backend_1.prepareRequest)(this.registerUrl)
+                await (0, Backend_1.prepareRequest)(this.#registerUrl)
                     .post({
                     remove: remove,
                     endpoint: subscription.endpoint,
