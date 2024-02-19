@@ -27,7 +27,7 @@ final class Util
             throw new \InvalidArgumentException('Invalid public key format');
         }
         $data = Binary::safeSubstr($data, 2);
-        $dataLength = Binary::safeStrlen($data);
+        $dataLength = \mb_strlen($data, '8bit');
 
         return [
             'x' => \hex2bin(Binary::safeSubstr($data, 0, $dataLength / 2)),

@@ -8,7 +8,6 @@ use Jose\Component\Core\Util\ECKey;
 use Jose\Component\KeyManagement\JWKFactory;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Base64UrlSafe;
-use ParagonIE\ConstantTime\Binary;
 use wcf\data\service\worker\ServiceWorker;
 
 /**
@@ -104,9 +103,9 @@ final class Encryption
         return \str_pad($result, 32, "\x00", STR_PAD_LEFT);
     }
 
-    private static function addPadding(string $payload, string $contentEncoding): string
+    private static function addPadding(#[\SensitiveParameter] string $payload, string $contentEncoding): string
     {
-        $length = Binary::safeStrlen($payload);
+        $length = \mb_strlen($payload, '8bit');
         $paddingLength = ServiceWorkerHandler::MAX_PAYLOAD_LENGTH - $length;
 
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
@@ -122,7 +121,7 @@ final class Encryption
     {
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
             \assert($context !== null);
-            \assert(Binary::safeStrlen($context) === 135);
+            \assert(\mb_strlen($context, '8bit') === 135);
 
             return 'Content-Encoding: ' . $type . "\x00" . Encryption::CURVE_ALGORITHM . $context;
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
@@ -140,7 +139,7 @@ final class Encryption
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             return $salt
                 . \pack('N*', 4096)
-                . \pack('C*', Binary::safeStrlen($publicKey))
+                . \pack('C*', \mb_strlen($publicKey, '8bit'))
                 . $publicKey;
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
             return "";
@@ -160,7 +159,7 @@ final class Encryption
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             return null;
         }
-        \assert(mb_strlen($clientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
+        \assert(\mb_strlen($clientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
 
         $len = \pack('n', 65);
 

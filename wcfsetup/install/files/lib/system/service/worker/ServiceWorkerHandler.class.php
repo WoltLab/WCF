@@ -7,7 +7,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Jose\Component\KeyManagement\JWKFactory;
 use ParagonIE\ConstantTime\Base64UrlSafe;
-use ParagonIE\ConstantTime\Binary;
 use wcf\data\option\OptionEditor;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\system\io\HttpFactory;
@@ -36,7 +35,6 @@ final class ServiceWorkerHandler extends SingletonFactory
 
     /**
      * @internal
-     * @TODO
      */
     public static function createNewKeys(): void
     {
@@ -59,7 +57,7 @@ final class ServiceWorkerHandler extends SingletonFactory
      */
     public function sendToServiceWorker(ServiceWorker $serviceWorker, string $payload): void
     {
-        if (Binary::safeStrlen($payload) > self::MAX_PAYLOAD_LENGTH) {
+        if (\mb_strlen($payload, '8bit') > self::MAX_PAYLOAD_LENGTH) {
             throw new \RuntimeException(
                 'Content is too large, maximum payload length is ' . self::MAX_PAYLOAD_LENGTH . ' bytes'
             );
@@ -75,7 +73,7 @@ final class ServiceWorkerHandler extends SingletonFactory
             $payload,
             $headers
         );
-        $headers['Content-Length'] = Binary::safeStrlen($content);
+        $headers['Content-Length'] = \mb_strlen($content, '8bit');
         VAPID::addHeader($serviceWorker, $headers);
 
         $this->getClient()->send(

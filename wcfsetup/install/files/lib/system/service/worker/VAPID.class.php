@@ -8,7 +8,6 @@ use Jose\Component\Signature\Algorithm\ES256;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 use ParagonIE\ConstantTime\Base64UrlSafe;
-use ParagonIE\ConstantTime\Binary;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\util\JSON;
 
@@ -34,7 +33,7 @@ final class VAPID
     {
         $rawPublicKey = Base64Url::decode(SERVICE_WORKER_PUBLIC_KEY);
         // Validate the length of the public key
-        if (Binary::safeStrlen($rawPublicKey) !== VAPID::PUBLIC_KEY_LENGTH) {
+        if (\mb_strlen($rawPublicKey, '8bit') !== VAPID::PUBLIC_KEY_LENGTH) {
             throw new \RuntimeException('Invalid public key length');
         }
         ['x' => $x, 'y' => $y] = Util::unserializePublicKey($rawPublicKey);
