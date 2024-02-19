@@ -1755,9 +1755,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.formatting_remove_font.description"><![CDATA[Verhindert die Verwendung von abweichenden Schriftarten und entfernt diese bei der Anzeige bereits bestehender Nachrichten.]]></item>
 		<item name="wcf.acp.option.formatting_remove_size"><![CDATA[Schriftgröße entfernen]]></item>
 		<item name="wcf.acp.option.formatting_remove_size.description"><![CDATA[Verhindert die Verwendung von abweichenden Schriftgrößen und entfernt diese bei der Anzeige bereits bestehender Nachrichten.]]></item>
-		<item name="wcf.acp.option.category.general.system.serviceWorker"><![CDATA[Service Worker]]></item>
-		<item name="wcf.acp.option.service_worker_public_key"><![CDATA[Öffentlicher Schlüssel]]></item>
-		<item name="wcf.acp.option.service_worker_private_key"><![CDATA[Privater Schlüssel]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
