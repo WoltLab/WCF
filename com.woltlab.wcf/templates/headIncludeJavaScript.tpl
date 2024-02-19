@@ -76,11 +76,11 @@ window.addEventListener('pageshow', function(event) {
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
 			{if $__wcf->user->userID && !SERVICE_WORKER_PUBLIC_KEY|empty}
-            serviceWorker: {
-                publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
-                serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}js/serviceWorker.js',
-                registerUrl: '{link controller="RegisterServiceWorker"}{/link}',
-            },
+			serviceWorker: {
+				publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
+				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}js/serviceWorker.js',
+				registerUrl: '{link controller="RegisterServiceWorker"}{/link}',
+			},
 			{/if}
 			dynamicColorScheme: {if $__wcf->getStyleHandler()->getColorScheme() === 'system'}true{else}false{/if},
 			endpointUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}'{link controller='UserPopover'}{/link}'{else}''{/if},
