@@ -97,7 +97,7 @@ final class Encryption
             256
         );
         \assert($result);
-        return \str_pad($result, 32, "\0", STR_PAD_LEFT);
+        return \str_pad($result, 32, "\x00", STR_PAD_LEFT);
     }
 
     private static function addPadding(string $payload, string $contentEncoding): string
@@ -106,9 +106,9 @@ final class Encryption
         $paddingLength = ServiceWorkerHandler::MAX_PAYLOAD_LENGTH - $length;
 
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
-            return \str_pad($payload . "\2", $paddingLength + $length, "\0", STR_PAD_RIGHT);
+            return \str_pad($payload . "\x02", $paddingLength + $length, "\x00", STR_PAD_RIGHT);
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
-            return \pack('n*', $paddingLength) . \str_pad($payload, $paddingLength + $length, "\0", STR_PAD_LEFT);
+            return \pack('n*', $paddingLength) . \str_pad($payload, $paddingLength + $length, "\x00", STR_PAD_LEFT);
         } else {
             throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
         }
@@ -120,9 +120,9 @@ final class Encryption
             \assert($context !== null);
             \assert(Binary::safeStrlen($context) === 135);
 
-            return 'Content-Encoding: ' . $type . "\0" . Encryption::CURVE_ALGORITHM . $context;
+            return 'Content-Encoding: ' . $type . "\x00" . Encryption::CURVE_ALGORITHM . $context;
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
-            return 'Content-Encoding: ' . $type . "\0";
+            return 'Content-Encoding: ' . $type . "\x00";
         } else {
             throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
         }
@@ -156,11 +156,11 @@ final class Encryption
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             return null;
         }
-        \assert(Binary::safeStrlen($clientPublicKey) === 65);
+        \assert(mb_strlen($clientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
 
         $len = \pack('n', 65);
 
-        return "\0" . $len . $clientPublicKey . $len . $serverPublicKey;
+        return "\x00" . $len . $clientPublicKey . $len . $serverPublicKey;
     }
 
     private static function getIKM(
@@ -172,7 +172,7 @@ final class Encryption
         if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
             $info = "Content-Encoding: auth\x00";
         } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
-            $info = "WebPush: info\0" . $userPublicKey . $newPublicKey;
+            $info = "WebPush: info\x00" . $userPublicKey . $newPublicKey;
         } else {
             throw new \RuntimeException('Unknown content encoding "' . $serviceWorker->contentEncoding . '"');
         }
