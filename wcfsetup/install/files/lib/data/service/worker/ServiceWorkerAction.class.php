@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @method  ServiceWorkerEditor[]     getObjects()
  * @method  ServiceWorkerEditor       getSingleObject()
  */
-final class ServiceWorkerAction extends AbstractDatabaseObjectAction
+class ServiceWorkerAction extends AbstractDatabaseObjectAction
 {
     /**
      * @inheritDoc

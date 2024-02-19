@@ -17,7 +17,7 @@ use wcf\data\DatabaseObject;
  * @property-read string $authToken
  * @property-read string $contentEncoding
  */
-final class ServiceWorker extends DatabaseObject
+class ServiceWorker extends DatabaseObject
 {
     public const CONTENT_ENCODING_AESGCM = 'aesgcm';
     public const CONTENT_ENCODING_AES128GCM = 'aes128gcm';
