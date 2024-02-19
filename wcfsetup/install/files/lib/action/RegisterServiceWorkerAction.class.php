@@ -28,7 +28,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
             return new TextResponse('Unsupported', 400);
         }
         if (!WCF::getUser()->userID) {
-            // Notification not sent to guests
+            // Notifications are not supported for guests.
             throw new PermissionDeniedException();
         }
         $parameters = Helper::mapRequestBody(
