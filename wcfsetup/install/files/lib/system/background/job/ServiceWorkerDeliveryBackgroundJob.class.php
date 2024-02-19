@@ -11,6 +11,7 @@ use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\service\worker\ServiceWorkerHandler;
 use wcf\system\session\SessionHandler;
+use wcf\system\style\StyleHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -42,6 +43,10 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
         }
         $user = UserProfileRuntimeCache::getInstance()->getObject($serviceWorker->userID);
         $style = new Style($user->styleID);
+        if (!$style->styleID) {
+            $style = StyleHandler::getInstance()->getDefaultStyle();
+        }
+
         /** @see NotificationEmailDeliveryBackgroundJob::perform() */
         $sql = "SELECT      notification.*, notification_event.eventID, object_type.objectType
                 FROM        wcf1_user_notification notification
