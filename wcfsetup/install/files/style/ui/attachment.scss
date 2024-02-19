@@ -277,6 +277,7 @@
 	grid-template-columns: 32px auto;
 	padding: 8px;
 	row-gap: 1px;
+	user-select: none;
 
 	&:focus,
 	&:hover {
