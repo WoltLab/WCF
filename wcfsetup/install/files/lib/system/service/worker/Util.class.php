@@ -22,24 +22,24 @@ final class Util
      */
     public static function unserializePublicKey(string $data): array
     {
-        $data = \bin2hex($data);
-        if (Binary::safeSubstr($data, 0, 2) !== '04') {
-            throw new \InvalidArgumentException('Invalid public key format');
+        if (\mb_strlen($data, '8bit') !== VAPID::PUBLIC_KEY_LENGTH || $data[0] !== "\x04") {
+            throw new \InvalidArgumentException('Invalid public key format.');
         }
-        $data = Binary::safeSubstr($data, 2);
+        $data = \mb_substr($data, 1, null, '8bit');
         $dataLength = \mb_strlen($data, '8bit');
 
+        [$x, $y] = \mb_str_split($data, \intdiv($dataLength, 2), '8bit');
         return [
-            'x' => \hex2bin(Binary::safeSubstr($data, 0, $dataLength / 2)),
-            'y' => \hex2bin(Binary::safeSubstr($data, $dataLength / 2)),
+            'x' => $x,
+            'y' => $y,
         ];
     }
 
     /**
      * Serialize the public key.
      *
-     * @param string $x
-     * @param string $y
+     * @param string $x encoded base64 x coordinate
+     * @param string $y encoded base64 y coordinate
      * @return string
      */
     public static function serializePublicKey(string $x, string $y): string

@@ -43,7 +43,7 @@ final class Encryption
         $userJwk = Util::createJWK($x, $y);
         // application-server
         $newJwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
-        $newPublicKey = \hex2bin(Util::serializePublicKey($newJwk->get('x'), $newJwk->get('y')));
+        $newPublicKey = Util::serializePublicKey($newJwk->get('x'), $newJwk->get('y'));
         \assert($newPublicKey, "Failed to serialize public key");
         $sharedSecret = Encryption::getSharedSecret($userJwk, $newJwk);
 
