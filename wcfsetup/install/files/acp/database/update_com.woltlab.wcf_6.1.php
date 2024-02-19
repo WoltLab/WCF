@@ -9,7 +9,6 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
-use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
@@ -54,16 +53,13 @@ return [
             TextDatabaseTableColumn::create('endpoint'),
             VarcharDatabaseTableColumn::create('publicKey')
                 ->length(88)
-                ->notNull()
-                ->defaultValue(''),
+                ->notNull(),
             VarcharDatabaseTableColumn::create('authToken')
                 ->length(24)
-                ->notNull()
-                ->defaultValue(''),
-            EnumDatabaseTableColumn::create('contentEncoding')
-                ->enumValues(['aes128gcm', 'aesgcm'])
-                ->notNull()
-                ->defaultValue('aesgcm'),
+                ->notNull(),
+            VarcharDatabaseTableColumn::create('contentEncoding')
+                ->length(40)
+                ->notNull(),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
