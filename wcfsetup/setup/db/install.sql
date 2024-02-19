@@ -1260,8 +1260,8 @@ CREATE TABLE wcf1_service_worker (
 	workerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	userID INT(10) NOT NULL,
 	endpoint TEXT NOT NULL,
-	publicKey VARCHAR(88) DEFAULT '' NOT NULL,
-	authToken VARCHAR(24) DEFAULT '' NOT NULL,
+	publicKey VARCHAR(88) NOT NULL,
+	authToken VARCHAR(24) NOT NULL,
 	contentEncoding ENUM ('aes128gcm', 'aesgcm') DEFAULT 'aes128gcm' NOT NULL,
 	KEY userID (userID)
 );
