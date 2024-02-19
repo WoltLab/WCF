@@ -605,12 +605,28 @@
 	}
 }
 
-.boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
-	border-radius: var(--wcfBorderRadius);
-	margin-left: 10px;
-	margin-right: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
+.boxesSidebarRight .box .boxMenu {
+	li.active > .boxMenuLink {
+		border-radius: var(--wcfBorderRadius);
+		margin-left: 10px;
+		margin-right: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	li.active {
+		&.boxMenuItemDepth2 .boxMenuLink {
+			padding-left: 30px;
+		}
+
+		&.boxMenuItemDepth3 .boxMenuLink {
+			padding-left: 50px;
+		}
+
+		&.boxMenuItemDepth4 .boxMenuLink {
+			padding-left: 70px;
+		}
+	}
 }
 
 /* collapsible sidebar for mobile devices */
