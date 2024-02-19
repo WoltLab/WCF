@@ -12,13 +12,13 @@ import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
 import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
-import { ShareProvider, addShareProviders } from "./Ui/Message/Share/Providers";
+import { addShareProviders, ShareProvider } from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 import { whenFirstSeen } from "./LazyLoader";
 import { prepareRequest } from "./Ajax/Backend";
-import * as ServiceWorker from "./Notification/ServiceWorker";
+import { setup as serviceWorkerSetup } from "./Notification/ServiceWorker";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -110,7 +110,7 @@ export function setup(options: BootstrapOptions): void {
   if (User.userId) {
     UiFeedDialog.setup();
     if (options.serviceWorker) {
-      ServiceWorker.init(
+      serviceWorkerSetup(
         options.serviceWorker.publicKey,
         options.serviceWorker.serviceWorkerJsUrl,
         options.serviceWorker.registerUrl,

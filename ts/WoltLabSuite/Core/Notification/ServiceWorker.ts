@@ -2,6 +2,7 @@
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
  * @woltlabExcludeBundle tiny
  */
 
@@ -119,7 +120,7 @@ function serviceWorkerSupported(): boolean {
   return true;
 }
 
-export function init(publicKey: string, serviceWorkerJsUrl: string, registerUrl: string): void {
+export function setup(publicKey: string, serviceWorkerJsUrl: string, registerUrl: string): void {
   if (!serviceWorkerSupported()) {
     return;
   }

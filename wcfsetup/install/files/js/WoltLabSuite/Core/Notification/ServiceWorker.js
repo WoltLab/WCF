@@ -2,12 +2,13 @@
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
  * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerServiceWorker = exports.init = void 0;
+    exports.registerServiceWorker = exports.setup = void 0;
     let _serviceWorker = null;
     class ServiceWorker {
         publicKey;
@@ -104,7 +105,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
         }
         return true;
     }
-    function init(publicKey, serviceWorkerJsUrl, registerUrl) {
+    function setup(publicKey, serviceWorkerJsUrl, registerUrl) {
         if (!serviceWorkerSupported()) {
             return;
         }
@@ -113,7 +114,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             registerServiceWorker();
         }
     }
-    exports.init = init;
+    exports.setup = setup;
     function registerServiceWorker() {
         void _serviceWorker?.register();
     }
