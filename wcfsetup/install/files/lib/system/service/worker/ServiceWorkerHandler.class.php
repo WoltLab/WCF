@@ -10,6 +10,7 @@ use ParagonIE\ConstantTime\Base64UrlSafe;
 use wcf\data\option\OptionEditor;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\system\io\HttpFactory;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -20,6 +21,7 @@ use wcf\system\SingletonFactory;
  */
 final class ServiceWorkerHandler extends SingletonFactory
 {
+    private const REGISTRY_KEY = 'service_worker_key_hash';
     /**
      * Maximum payload length that can be sent to the service worker.
      * @see https://stackoverflow.com/a/66222350
@@ -36,17 +38,33 @@ final class ServiceWorkerHandler extends SingletonFactory
     /**
      * @internal
      */
-    public static function createNewKeys(): void
+    public function updateKeys(): void
+    {
+        $hash = RegistryHandler::getInstance()->get('com.woltlab.wcf', ServiceWorkerHandler::REGISTRY_KEY);
+        if ($hash !== null && \hash_equals($hash, \hash('sha256', SERVICE_WORKER_PRIVATE_KEY))) {
+            return;
+        }
+        $this->createNewKeys();
+    }
+
+    private function createNewKeys(): void
     {
         $jwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
         $binaryPublicKey = Util::serializePublicKey($jwk->get('x'), $jwk->get('y'));
         $binaryPrivateKey = \hex2bin(
             \str_pad(\bin2hex(Base64Url::decode($jwk->get('d'))), 2 * VAPID::PRIVATE_KEY_LENGTH, '0', STR_PAD_LEFT)
         );
+        $base64PrivateKey = Base64UrlSafe::encodeUnpadded($binaryPrivateKey);
         OptionEditor::import([
             'service_worker_public_key' => Base64UrlSafe::encodeUnpadded($binaryPublicKey),
-            'service_worker_private_key' => Base64UrlSafe::encodeUnpadded($binaryPrivateKey),
+            'service_worker_private_key' => $base64PrivateKey,
         ]);
+
+        RegistryHandler::getInstance()->set(
+            'com.woltlab.wcf',
+            ServiceWorkerHandler::REGISTRY_KEY,
+            \hash('sha256', $base64PrivateKey)
+        );
     }
 
     /**
