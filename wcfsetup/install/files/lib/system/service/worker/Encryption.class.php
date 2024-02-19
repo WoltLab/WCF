@@ -31,8 +31,12 @@ final class Encryption
      * @param array $headers to this array the encryption headers will be added
      * @return string the encrypted payload
      */
-    public static function encrypt(ServiceWorker $serviceWorker, string $payload, array &$headers): string
-    {
+    public static function encrypt(
+        ServiceWorker $serviceWorker,
+        #[\SensitiveParameter]
+        string $payload,
+        array &$headers
+    ): string {
         // Section 3.1
         // user
         $userPublicKey = Base64Url::decode($serviceWorker->publicKey);
