@@ -170,7 +170,7 @@ final class Encryption
         string $newPublicKey
     ): string {
         if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
-            $info = "Content-Encoding: auth\0";
+            $info = "Content-Encoding: auth\x00";
         } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             $info = "WebPush: info\0" . $userPublicKey . $newPublicKey;
         } else {
