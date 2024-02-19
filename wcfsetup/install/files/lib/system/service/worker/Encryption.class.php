@@ -84,12 +84,14 @@ final class Encryption
             $headers['Encryption'] = 'salt=' . Base64Url::encode($salt);
             $headers['Crypto-Key'] = 'dh=' . Base64Url::encode($newPublicKey);
         }
+        $record = $encryptedText . $tag;
 
         return Encryption::getEncryptionContentCodingHeader(
             $serviceWorker->contentEncoding,
+            \mb_strlen($record, '8bit'),
             $salt,
             $newPublicKey
-        ) . $encryptedText . $tag;
+        ) . $record;
     }
 
     private static function getSharedSecret(JWK $publicKey, #[\SensitiveParameter] JWK $privateKey): string
@@ -133,12 +135,14 @@ final class Encryption
 
     private static function getEncryptionContentCodingHeader(
         string $contentEncoding,
+        int $length,
         string $salt,
         string $publicKey
     ): string {
         if ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
+            /** {@link https://datatracker.ietf.org/doc/html/rfc8188#section-2.1} */
             return $salt
-                . \pack('N*', 4096)
+                . \pack('N*', $length)
                 . \pack('C*', \mb_strlen($publicKey, '8bit'))
                 . $publicKey;
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
