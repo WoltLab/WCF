@@ -41,7 +41,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
                     authToken: non-empty-string,
                     contentEncoding: "aesgcm" | "aes128gcm",
                 }
-            EOT,
+                EOT,
         );
         $serviceWorkerList = new ServiceWorkerList();
         $serviceWorkerList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
