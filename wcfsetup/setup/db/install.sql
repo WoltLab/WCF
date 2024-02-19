@@ -1262,7 +1262,7 @@ CREATE TABLE wcf1_service_worker (
 	endpoint TEXT NOT NULL,
 	publicKey VARCHAR(88) NOT NULL,
 	authToken VARCHAR(24) NOT NULL,
-	contentEncoding ENUM ('aes128gcm', 'aesgcm') DEFAULT 'aes128gcm' NOT NULL,
+	contentEncoding VARCHAR(40) NOT NULL,
 	KEY userID (userID)
 );
 
