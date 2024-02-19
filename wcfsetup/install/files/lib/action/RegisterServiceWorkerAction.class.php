@@ -66,7 +66,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
                     'authToken' => $parameters['authToken'],
                     'contentEncoding' => $parameters['contentEncoding'],
                 ]);
-                return new EmptyResponse(204);
+                return new EmptyResponse();
             }
         }
         ServiceWorkerEditor::fastCreate([
