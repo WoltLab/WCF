@@ -24,8 +24,6 @@ class ServiceWorker extends DatabaseObject
 
     /**
      * Parses the endpoint and returns the scheme and host.
-     *
-     * @return string
      */
     public function getEndpoint(): string
     {
