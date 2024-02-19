@@ -77,6 +77,6 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
             'contentEncoding' => $parameters['contentEncoding'],
         ]);
 
-        return new EmptyResponse(204);
+        return new EmptyResponse();
     }
 }
