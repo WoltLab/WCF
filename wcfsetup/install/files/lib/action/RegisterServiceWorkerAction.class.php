@@ -52,7 +52,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
             $serviceWorkerList->readObjectIDs();
             ServiceWorkerEditor::deleteAll($serviceWorkerList->getObjectIDs());
 
-            return new EmptyResponse(204);
+            return new EmptyResponse();
         }
         $serviceWorkerList->readObjects();
 
