@@ -2,17 +2,20 @@
 
 namespace wcf\form;
 
+use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\email\Mailbox;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ContactOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Customizable contact form with selectable recipients.
@@ -177,6 +180,17 @@ class ContactForm extends AbstractCaptchaForm
 
         if (!$this->privacyPolicyConfirmed) {
             throw new UserInputException('privacyPolicyConfirmed');
+        }
+
+        if (BLACKLIST_SFS_ENABLE) {
+            $matches = BlacklistEntry::getMatches(
+                '',
+                $this->email,
+                UserUtil::getIpAddress()
+            );
+            if ($matches !== [] && BLACKLIST_SFS_ACTION === 'block') {
+                throw new PermissionDeniedException();
+            }
         }
     }
 
