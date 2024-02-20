@@ -877,6 +877,16 @@ html[data-color-scheme="dark"] {
 	padding: 0;
 }
 
+.acpDashboardBox[data-name="com.woltlab.wcf.expiringLicenses"] {
+	border-color: var(--wcfStatusErrorBorder);
+
+	.acpDashboardBox__title {
+		background-color: var(--wcfStatusErrorBackground);
+		border-color: var(--wcfStatusErrorBorder);
+		color: var(--wcfStatusErrorText);
+	}
+}
+
 .woltlabNewsfeed {
 	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
 	height: 400px;
@@ -970,10 +980,15 @@ html[data-color-scheme="dark"] {
 	display: flex;
 	flex-direction: column;
 	row-gap: 10px;
-}
 
-.acpDashboardBox__keyValueGroup:not(:first-child) {
-	margin-top: 30px;
+	&:not(:first-child) {
+		margin-top: 30px;
+	}
+
+	.acpDashboardBox__keyValueGroup_title {
+		font-size: 18px;
+		font-weight: bold;
+	}
 }
 
 .acpDashboardBox__keyValue {
@@ -1006,4 +1021,18 @@ html[data-color-scheme="dark"] {
 .acpDashboardBox__keyValue__list {
 	display: flex;
 	flex-direction: column;
+}
+
+.acpDashboardBox__explanation {
+	@include wcfFontSmall;
+
+	&.acpDashboardBox__explanation--cta {
+		font-weight: 600;
+		text-align: center;
+	}
+}
+
+.acpDashboardBox__cta {
+	margin-top: 20px;
+	text-align: center;
 }

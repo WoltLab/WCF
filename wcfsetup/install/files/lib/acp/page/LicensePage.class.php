@@ -66,29 +66,17 @@ final class LicensePage extends AbstractPage
 
         $licenseApi = new LicenseApi();
         try {
-            $licenseData = $licenseApi->readFromFile();
-
-            if (
-                $licenseData === null
-                // Cache valid license data for 2 minutes.
-                || $licenseData->creationDate->getTimestamp() < (\TIME_NOW - 2 * 60)
-            ) {
-                try {
-                    $licenseData = $licenseApi->fetchFromRemote();
-                } catch (ConnectException | ClientExceptionInterface) {
-                    return new RedirectResponse(
-                        LinkHandler::getInstance()->getControllerLink(
-                            LicenseEditForm::class,
-                            [
-                                'failedValidation' => 1,
-                                'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
-                            ],
-                        ),
-                    );
-                }
-
-                $licenseApi->updateLicenseFile($licenseData);
-            }
+            $licenseData = $licenseApi->getUpToDateLicenseData();
+        } catch (ConnectException | ClientExceptionInterface) {
+            return new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(
+                    LicenseEditForm::class,
+                    [
+                        'failedValidation' => 1,
+                        'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
+                    ],
+                ),
+            );
         } catch (ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
                 throw $e;
@@ -97,7 +85,7 @@ final class LicensePage extends AbstractPage
             throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
                 'wcf.acp.license.error.parsingFailed',
                 [
-                    'licenseData' => $licenseData,
+                    'licenseData' => $licenseApi->readFromFile(),
                 ]
             ));
         }
@@ -149,7 +137,7 @@ final class LicensePage extends AbstractPage
 
             if ($accessibleVersion === '0.0') {
                 $this->requiresLicenseExtension[$identifier] = 'purchase';
-            } else if (\version_compare($accessibleVersion, self::CURRENT_MAJOR, '<')) {
+            } elseif (\version_compare($accessibleVersion, self::CURRENT_MAJOR, '<')) {
                 $this->requiresLicenseExtension[$identifier] = $accessibleVersion;
             }
         }
@@ -519,11 +507,13 @@ final class LicensePage extends AbstractPage
             }
             // check excluded packages of installed packages
             if (isset($excludedPackagesOfInstalledPackages[$row['package']])) {
-                if (Package::compareVersion(
-                    $packageVersion,
-                    $excludedPackagesOfInstalledPackages[$row['package']],
-                    '>='
-                )) {
+                if (
+                    Package::compareVersion(
+                        $packageVersion,
+                        $excludedPackagesOfInstalledPackages[$row['package']],
+                        '>='
+                    )
+                ) {
                     continue;
                 }
             }

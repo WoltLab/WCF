@@ -959,6 +959,11 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.statusMessage"><![CDATA[Status]]></item>
 		<item name="wcf.acp.dashboard.box.missing.extensions"><![CDATA[Die {plural value=$missingExtensions|count one='PHP-Erweiterung' other='PHP-Erweiterungen'} {implode from=$missingExtensions item=extension}<strong>{$extension}</strong>{/implode} {plural value=$missingExtensions|count one='fehlt' other='fehlen'}.]]></item>
 		<item name="wcf.acp.dashboard.configure"><![CDATA[Dashboard konfigurieren]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses"><![CDATA[Zugang zu Updates und Support]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon"><![CDATA[Die Lizenzen für die folgenden Produkte laufen demnächst aus, damit {if LANGUAGE_USE_INFORMAL_VARIANT}verlierst du{else}verlieren Sie{/if} den Anspruch auf Updates und den Zugang zum Ticket-Support.]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon.cta"><![CDATA[Jetzt verlängern und 10% Rabatt sichern!]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.expired"><![CDATA[Die Lizenzen für die folgenden Produkte sind ausgelaufen und berechtigen nicht länger zum Zugriff auf neue Versionen sowie den Ticket-Support.]]></item>
+		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Jetzt Lizenzen verlängern ↗]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>

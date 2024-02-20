@@ -32,6 +32,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
         return $this->getUsersAwaitingApproval() !== 0;
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.usersAwaitingApproval', [
@@ -39,6 +40,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
         ]);
     }
 
+    #[\Override]
     public function getContent(): string
     {
         $userList = $this->getUserList();
@@ -50,6 +52,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
         ]);
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.usersAwaitingApproval';
