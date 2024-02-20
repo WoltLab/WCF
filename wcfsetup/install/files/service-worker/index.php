@@ -1,6 +1,7 @@
 <?php
 
 @\header('Service-Worker-Allowed: /');
+@\header('Content-Type: text/javascript; charset=utf-8');
 ?>
 /**
  * @author      Olaf Braun
