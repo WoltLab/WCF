@@ -64,10 +64,10 @@ final class VAPID
             ->build();
         $jwt = $compactSerializer->serialize($jws, 0);
 
-        if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
+        if ($serviceWorker->getContentEncoding() === Encoding::AesGcm) {
             $request = $request->withHeader('authorization', "WebPush {$jwt}");
             return Util::updateCryptoKeyHeader($request, 'p256ecdsa', SERVICE_WORKER_PUBLIC_KEY);
-        } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
+        } elseif ($serviceWorker->getContentEncoding() === Encoding::Aes128Gcm) {
             return $request->withHeader('authorization', \sprintf("vapid t=%s, k=%s", $jwt, SERVICE_WORKER_PUBLIC_KEY));
         } else {
             throw new \InvalidArgumentException('Invalid content encoding: "' . $serviceWorker->contentEncoding . '"');

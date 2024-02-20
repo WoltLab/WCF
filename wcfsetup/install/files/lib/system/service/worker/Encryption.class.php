@@ -50,27 +50,28 @@ final class Encryption
         $sharedSecret = Encryption::getSharedSecret($userJwk, $newJwk);
 
         // Section 3.3
-        $ikm = Encryption::getIKM($serviceWorker, $sharedSecret, $userPublicKey, $newPublicKey);
+        $encoding = $serviceWorker->getContentEncoding();
+        $ikm = $encoding->getIKM($serviceWorker->authToken, $sharedSecret, $userPublicKey, $newPublicKey);
         // Section 3.4
         $salt = \random_bytes(16);
-        $content = Encryption::createContext($userPublicKey, $newPublicKey, $serviceWorker->contentEncoding);
+        $content = $encoding->getContext($userPublicKey, $newPublicKey);
 
         $cek = \hash_hkdf(
             Encryption::HASH_ALGORITHM,
             $ikm,
             16,
-            Encryption::createInfo($serviceWorker->contentEncoding, $content, $serviceWorker->contentEncoding),
+            $encoding->getInfo($encoding->toString(), $content),
             $salt
         );
         $nonce = \hash_hkdf(
             Encryption::HASH_ALGORITHM,
             $ikm,
             12,
-            Encryption::createInfo('nonce', $content, $serviceWorker->contentEncoding),
+            $encoding->getInfo('nonce', $content),
             $salt
         );
         // Section 4
-        $payload = Encryption::addPadding($payload, $serviceWorker->contentEncoding);
+        $payload = $encoding->pad($payload);
 
         $tag = '';
         $encryptedText = \openssl_encrypt(
@@ -82,15 +83,14 @@ final class Encryption
             $tag
         );
 
-        if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
+        if ($serviceWorker->getContentEncoding() === Encoding::AesGcm) {
             $headers['Encryption'] = 'salt=' . Base64Url::encode($salt);
             $headers['Crypto-Key'] = 'dh=' . Base64Url::encode($newPublicKey);
         }
         $record = $encryptedText . $tag;
 
         $body = new Stream('php://temp', 'wb+');
-        $body->write(Encryption::getEncryptionContentCodingHeader(
-            $serviceWorker->contentEncoding,
+        $body->write($encoding->getEncryptionContentCodingHeader(
             \mb_strlen($record, '8bit'),
             $salt,
             $newPublicKey

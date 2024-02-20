@@ -91,7 +91,6 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
 
             ServiceWorkerHandler::getInstance()->sendToServiceWorker($serviceWorker, JSON::encode($content));
         } catch (ClientExceptionInterface $e) {
-            \wcfDebug($e->getCode(), $e);
             if ($e->getCode() === 413) {
                 // Payload too large, we can't do anything here other than discard the message.
                 \wcf\functions\exception\logThrowable($e);
