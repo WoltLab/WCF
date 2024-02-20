@@ -66,9 +66,8 @@ enum Encoding
             \assert(\mb_strlen($context, '8bit') === 135);
 
             return \sprintf(
-                'Content-Encoding: %s%s%s',
+                "Content-Encoding: %s\x00%s",
                 $type,
-                "\x00",
                 Encryption::CURVE_ALGORITHM . $context
             );
         }
