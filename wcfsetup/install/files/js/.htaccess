@@ -1,5 +1,0 @@
-<IfModule mod_headers.c>
-    <Files ~ "service-worker\.js">
-        Header set Service-Worker-Allowed: /
-    </Files>
-</IfModule>

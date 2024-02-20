@@ -1,3 +1,7 @@
+<?php
+
+@\header('Service-Worker-Allowed: /');
+?>
 /**
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
