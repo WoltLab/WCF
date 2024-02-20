@@ -8,6 +8,7 @@ use Jose\Component\Signature\Algorithm\ES256;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use Psr\Http\Message\RequestInterface;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\util\JSON;
 
@@ -23,13 +24,15 @@ final class VAPID
     public const PRIVATE_KEY_LENGTH = 32;
 
     /**
-     * Add the VAPID header to the request headers.
+     * Return a request with the VAPID header.
      * {@link https://www.rfc-editor.org/rfc/rfc8282}
      *
      * @param ServiceWorker $serviceWorker
-     * @param array $headers
+     * @param RequestInterface $request
+     *
+     * @return RequestInterface
      */
-    public static function addHeader(ServiceWorker $serviceWorker, array &$headers): void
+    public static function addHeader(ServiceWorker $serviceWorker, RequestInterface $request): RequestInterface
     {
         $rawPublicKey = Base64Url::decode(SERVICE_WORKER_PUBLIC_KEY);
         // Validate the length of the public key
@@ -62,10 +65,10 @@ final class VAPID
         $jwt = $compactSerializer->serialize($jws, 0);
 
         if ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
-            $headers['Authorization'] = 'WebPush ' . $jwt;
-            $headers['Crypto-Key'] .= ';p256ecdsa=' . SERVICE_WORKER_PUBLIC_KEY;
+            $request = $request->withHeader('authorization', "WebPush {$jwt}");
+            return Util::updateCryptoKeyHeader($request, 'p256ecdsa', SERVICE_WORKER_PUBLIC_KEY);
         } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
-            $headers['Authorization'] = 'vapid t=' . $jwt . ', k=' . SERVICE_WORKER_PUBLIC_KEY;
+            return $request->withHeader('authorization', \sprintf("vapid t=%s, k=%s", $jwt, SERVICE_WORKER_PUBLIC_KEY));
         } else {
             throw new \InvalidArgumentException('Invalid content encoding: "' . $serviceWorker->contentEncoding . '"');
         }

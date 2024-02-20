@@ -5,6 +5,7 @@ namespace wcf\system\service\worker;
 use Base64Url\Base64Url;
 use Jose\Component\Core\JWK;
 use ParagonIE\ConstantTime\Binary;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author      Olaf Braun
@@ -58,8 +59,16 @@ final class Util
      *
      * @return JWK
      */
-    public static function createJWK(?string $x = null, string $y = null, #[\SensitiveParameter] ?string $d = null): JWK
-    {
+    public static function createJWK(
+        ?string $x = null,
+        ?string $y = null,
+        #[\SensitiveParameter] ?string $d = null
+    ): JWK {
+        \assert(
+            ($x === null && $y === null) || ($x !== null && $y !== null),
+            "Both x and y must be set or both must be null."
+        );
+
         $values = [
             'kty' => 'EC',
             'crv' => Encryption::CURVE_ALGORITHM,
@@ -75,5 +84,26 @@ final class Util
         }
 
         return new JWK($values);
+    }
+
+    /**
+     * Return a request with an updated crypto-key header.
+     * This header needs a `;` to separate multiple keys.
+     *
+     * @param RequestInterface $request
+     * @param string $name
+     * @param string $value
+     *
+     * @return RequestInterface
+     */
+    public static function updateCryptoKeyHeader(
+        RequestInterface $request,
+        string $name,
+        string $value
+    ): RequestInterface {
+        return $request->withHeader('crypto-key', \implode(';', [
+            ...$request->getHeader('crypto-key'),
+            \sprintf('%s=%s', $name, $value)
+        ]));
     }
 }

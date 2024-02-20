@@ -6,8 +6,10 @@ use Base64Url\Base64Url;
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\Util\ECKey;
 use Jose\Component\KeyManagement\JWKFactory;
+use Laminas\Diactoros\Stream;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use Psr\Http\Message\RequestInterface;
 use wcf\data\service\worker\ServiceWorker;
 
 /**
@@ -22,20 +24,20 @@ final class Encryption
     public const HASH_ALGORITHM = 'sha256';
 
     /**
-     * Return the encrypted payload and necessary headers to send a push message to the push-service.
+     * Return a request with the encrypted payload and add necessary headers.
      * {@link https://www.rfc-editor.org/rfc/rfc8291}
      *
      * @param ServiceWorker $serviceWorker
      * @param string $payload
-     * @param array $headers to this array the encryption headers will be added
-     * @return string the encrypted payload
+     * @param RequestInterface $request
+     * @return RequestInterface the new request with the encrypted payload
      */
     public static function encrypt(
         ServiceWorker $serviceWorker,
         #[\SensitiveParameter]
         string $payload,
-        array &$headers
-    ): string {
+        RequestInterface $request,
+    ): RequestInterface {
         // Section 3.1
         // user
         $userPublicKey = Base64Url::decode($serviceWorker->publicKey);
@@ -86,12 +88,16 @@ final class Encryption
         }
         $record = $encryptedText . $tag;
 
-        return Encryption::getEncryptionContentCodingHeader(
+        $body = new Stream('php://temp', 'wb+');
+        $body->write(Encryption::getEncryptionContentCodingHeader(
             $serviceWorker->contentEncoding,
             \mb_strlen($record, '8bit'),
             $salt,
             $newPublicKey
-        ) . $record;
+        ) . $record);
+        $body->rewind();
+
+        return $request->withBody($body)->withHeader('content-length', \mb_strlen($body, '8bit'));
     }
 
     private static function getSharedSecret(JWK $publicKey, #[\SensitiveParameter] JWK $privateKey): string
@@ -115,7 +121,7 @@ final class Encryption
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
             return \pack('n*', $paddingLength) . \str_pad($payload, $paddingLength + $length, "\x00", STR_PAD_LEFT);
         } else {
-            throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
+            throw new \RuntimeException("Unknown content encoding '{$contentEncoding}'");
         }
     }
 
@@ -129,7 +135,7 @@ final class Encryption
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             return "Content-Encoding: {$type}\x00";
         } else {
-            throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
+            throw new \RuntimeException("Unknown content encoding '{$contentEncoding}'");
         }
     }
 
@@ -148,7 +154,7 @@ final class Encryption
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AESGCM) {
             return "";
         } else {
-            throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
+            throw new \RuntimeException("Unknown content encoding '{$contentEncoding}'");
         }
     }
 
@@ -181,7 +187,7 @@ final class Encryption
         } elseif ($serviceWorker->contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
             $info = "WebPush: info\x00" . $userPublicKey . $newPublicKey;
         } else {
-            throw new \RuntimeException('Unknown content encoding "' . $serviceWorker->contentEncoding . '"');
+            throw new \RuntimeException("Unknown content encoding '{$serviceWorker->contentEncoding}'");
         }
 
         return \hash_hkdf(

@@ -81,27 +81,20 @@ final class ServiceWorkerHandler extends SingletonFactory
             );
         }
 
-        $headers = [
+        $request =  new Request('POST', $serviceWorker->endpoint, [
             'content-type' => 'application/octet-stream',
             'content-encoding' => $serviceWorker->contentEncoding,
             'ttl' => ServiceWorkerHandler::TTL,
-        ];
-        $content = Encryption::encrypt(
+        ]);
+
+        $request = Encryption::encrypt(
             $serviceWorker,
             $payload,
-            $headers
+            $request
         );
-        $headers['content-length'] = \mb_strlen($content, '8bit');
-        VAPID::addHeader($serviceWorker, $headers);
+        $request = VAPID::addHeader($serviceWorker, $request);
 
-        $this->getClient()->send(
-            new Request(
-                'POST',
-                $serviceWorker->endpoint,
-                $headers,
-                $content
-            )
-        );
+        $this->getClient()->send($request);
     }
 
     private function getClient(): ClientInterface
