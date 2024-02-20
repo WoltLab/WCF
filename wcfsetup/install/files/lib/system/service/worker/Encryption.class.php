@@ -127,7 +127,7 @@ final class Encryption
 
             return 'Content-Encoding: ' . $type . "\x00" . Encryption::CURVE_ALGORITHM . $context;
         } elseif ($contentEncoding === ServiceWorker::CONTENT_ENCODING_AES128GCM) {
-            return 'Content-Encoding: ' . $type . "\x00";
+            return "Content-Encoding: {$type}\x00";
         } else {
             throw new \RuntimeException('Unknown content encoding "' . $contentEncoding . '"');
         }
