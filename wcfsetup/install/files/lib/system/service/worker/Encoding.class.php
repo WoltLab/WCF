@@ -84,14 +84,13 @@ enum Encoding
         }
         \assert(\mb_strlen($clientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
 
-        $len = \pack('n', 65);
-
-        return \sprintf(
-            "\x00%s%s%s%s",
-            $len,
+        return \pack(
+            'CnA*nA*',
+            0,
+            \strlen($clientPublicKey),
             $clientPublicKey,
-            $len,
-            $serverPublicKey
+            \strlen($serverPublicKey),
+            $serverPublicKey,
         );
     }
 
