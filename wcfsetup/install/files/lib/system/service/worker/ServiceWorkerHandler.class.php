@@ -82,16 +82,16 @@ final class ServiceWorkerHandler extends SingletonFactory
         }
 
         $headers = [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Encoding' => $serviceWorker->contentEncoding,
-            'TTL' => ServiceWorkerHandler::TTL,
+            'content-type' => 'application/octet-stream',
+            'content-encoding' => $serviceWorker->contentEncoding,
+            'ttl' => ServiceWorkerHandler::TTL,
         ];
         $content = Encryption::encrypt(
             $serviceWorker,
             $payload,
             $headers
         );
-        $headers['Content-Length'] = \mb_strlen($content, '8bit');
+        $headers['content-length'] = \mb_strlen($content, '8bit');
         VAPID::addHeader($serviceWorker, $headers);
 
         $this->getClient()->send(
