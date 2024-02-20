@@ -3162,8 +3162,6 @@ the lost password form <a href="{link controller='LostPassword' isHtmlEmail=true
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Date]]></item>
 		<item name="wcf.acp.user.authentication.failure.time.start"><![CDATA[Date from]]></item>
 		<item name="wcf.acp.user.authentication.failure.time.end"><![CDATA[Date to]]></item>
-		<item name="wcf.acp.user.authentication.failure.password"><![CDATA[Invalid Password]]></item>
-		<item name="wcf.acp.user.authentication.failure.username"><![CDATA[Unknown Username]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError"><![CDATA[Error]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError.invalidPassword"><![CDATA[Incorrect password]]></item>
 		<item name="wcf.acp.user.authentication.failure.validationError.invalidUsername"><![CDATA[Unknown user]]></item>

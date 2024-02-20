@@ -111,17 +111,14 @@
 						<td class="columnID columnFailureID">{@$authenticationFailure->failureID}</td>
 						<td class="columnText columnEnvironment">{lang}wcf.acp.user.authentication.failure.environment.{@$authenticationFailure->environment}{/lang}</td>
 						<td class="columnTitle columnUsername">
-							<span class="jsTooltip" title="{lang}wcf.acp.user.authentication.failure.{if $authenticationFailure->userID}password{else}username{/if}{/lang}">
-								{if $authenticationFailure->userID}
-									{icon name='key'}
-								{else}
-									{icon name='user'}
-								{/if}
-							</span>
-							{if $authenticationFailure->userID}<a href="{link controller='UserEdit' id=$authenticationFailure->userID}{/link}">{$authenticationFailure->username}</a>{else}{$authenticationFailure->username}{/if}
+							{if $authenticationFailure->userID}
+								<a href="{link controller='UserEdit' id=$authenticationFailure->userID}{/link}">{$authenticationFailure->username}</a>
+							{else}
+								{$authenticationFailure->username}
+							{/if}
 						</td>
 						<td class="columnDate columnTime">{@$authenticationFailure->time|time}</td>
-						<td class="columnText columnValidationError">
+						<td class="columnSmallText columnValidationError">
 							{if $authenticationFailure->validationError}
 								{lang}wcf.acp.user.authentication.failure.validationError.{$authenticationFailure->validationError}{/lang}
 							{/if}
