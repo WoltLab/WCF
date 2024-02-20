@@ -78,7 +78,7 @@ window.addEventListener('pageshow', function(event) {
 			{if $__wcf->user->userID && SERVICE_WORKER_PUBLIC_KEY !== ''}
 			serviceWorker: {
 				publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
-				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}js/service-worker/',
+				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}service-worker/',
 				registerUrl: '{link controller="RegisterServiceWorker"}{/link}',
 			},
 			{/if}
