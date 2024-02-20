@@ -323,9 +323,7 @@ class UserNotificationHandler extends SingletonFactory
                     $jobs[] = new ServiceWorkerDeliveryBackgroundJob($workerID, $notification->notificationID);
                 }
             }
-            if ($jobs !== []) {
-                BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
-            }
+            BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
             // reset notification count
             UserStorageHandler::getInstance()->reset(\array_keys($recipients), 'userNotificationCount');
 
