@@ -2,8 +2,6 @@
 
 namespace wcf\system\background\job;
 
-use wcf\system\background\BackgroundQueueHandler;
-
 /**
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
@@ -27,32 +25,35 @@ abstract class AbstractUniqueBackgroundJob extends AbstractBackgroundJob
         return static::class;
     }
 
-    #[\Override]
-    final public function perform()
-    {
-        $this->run();
-        if ($this->requeue()) {
-            BackgroundQueueHandler::getInstance()->enqueueIn($this);
-        }
-    }
-
     /**
-     * Runs the job.
+     * Returns a new instance of this job to be queued again.
+     * This will reset the fail counter.
+     *
+     * @return AbstractUniqueBackgroundJob
      */
-    abstract protected function run(): void;
+    public function newInstance(): AbstractUniqueBackgroundJob
+    {
+        return new static();
+    }
 
     /**
      * Returns whether this job should be queued again because it has more to do.
      *
      * @return bool
      */
-    abstract protected function requeue(): bool;
+    abstract public function queueAgain(): bool;
 
     #[\Override]
     final public function onFinalFailure()
     {
-        if ($this->requeue()) {
-            BackgroundQueueHandler::getInstance()->enqueueIn($this, $this->retryAfter());
-        }
+        // onFailure() and onFinalFailure() are called at the same time.
+        // Do your stuff in onFailure().
+    }
+
+    #[\Override]
+    public function retryAfter()
+    {
+        // change the default value to 60 seconds
+        return 60;
     }
 }

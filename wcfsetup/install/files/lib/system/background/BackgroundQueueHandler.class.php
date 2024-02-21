@@ -104,9 +104,9 @@ final class BackgroundQueueHandler extends SingletonFactory
                 }
 
                 $statement->execute([
-                \serialize($job),
-                $time,
-                $identifier
+                    \serialize($job),
+                    $time,
+                    $identifier
                 ]);
             }
             WCF::getDB()->commitTransaction();
@@ -239,6 +239,9 @@ final class BackgroundQueueHandler extends SingletonFactory
                     WHERE       jobID = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$row['jobID']]);
+        }
+        if ($job instanceof AbstractUniqueBackgroundJob && $job->queueAgain()) {
+            $this->enqueueIn($job->newInstance(), $job->retryAfter());
         }
 
         return true;
