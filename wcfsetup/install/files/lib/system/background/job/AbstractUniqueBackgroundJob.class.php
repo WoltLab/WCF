@@ -3,6 +3,9 @@
 namespace wcf\system\background\job;
 
 /**
+ * This background job is only queued once
+ * and is requeued when it has more work to do.
+ *
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
