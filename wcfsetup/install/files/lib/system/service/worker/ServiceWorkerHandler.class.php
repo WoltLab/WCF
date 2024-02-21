@@ -73,7 +73,7 @@ final class ServiceWorkerHandler extends SingletonFactory
      * @param ServiceWorker $serviceWorker
      * @param string $payload
      */
-    public function sendToServiceWorker(ServiceWorker $serviceWorker, string $payload): void
+    public function sendToServiceWorker(ServiceWorker $serviceWorker, #[\SensitiveParameter] string $payload): void
     {
         if (\mb_strlen($payload, '8bit') > self::MAX_PAYLOAD_LENGTH) {
             throw new \RuntimeException(
