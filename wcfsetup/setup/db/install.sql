@@ -234,6 +234,9 @@ CREATE TABLE wcf1_background_job (
 	job MEDIUMBLOB NOT NULL,
 	status ENUM('ready', 'processing') NOT NULL DEFAULT 'ready',
 	time INT(10) NOT NULL,
+	identifier VARCHAR(191) NULL,
+
+	KEY identifier (identifier),
 	KEY (status, time)
 );
 
