@@ -4,6 +4,7 @@ namespace wcf\system\background;
 
 use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
+use wcf\system\background\job\AbstractUniqueBackgroundJob;
 use wcf\system\exception\ParentClassException;
 use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
@@ -70,6 +71,7 @@ final class BackgroundQueueHandler extends SingletonFactory
         if (!\is_array($jobs)) {
             $jobs = [$jobs];
         }
+
         foreach ($jobs as $job) {
             if (!($job instanceof AbstractBackgroundJob)) {
                 throw new ParentClassException(\get_class($job), AbstractBackgroundJob::class);
@@ -81,7 +83,22 @@ final class BackgroundQueueHandler extends SingletonFactory
                             (job, time)
                 VALUES      (?, ?)";
         $statement = WCF::getDB()->prepare($sql);
+        $sql = "SELECT jobID
+                FROM   wcf1_background_job
+                WHERE  identifier = ?
+                FOR UPDATE";
+        $selectJobStatement = WCF::getDB()->prepare($sql);
+
         foreach ($jobs as $job) {
+            if ($job instanceof AbstractUniqueBackgroundJob) {
+                // Check if the job is already in the queue
+                $selectJobStatement->execute([$job->identifier()]);
+                $jobID = $selectJobStatement->fetchSingleColumn();
+                if ($jobID !== null) {
+                    continue;
+                }
+            }
+
             $statement->execute([
                 \serialize($job),
                 $time,
