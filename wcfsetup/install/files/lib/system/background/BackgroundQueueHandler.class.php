@@ -80,8 +80,8 @@ final class BackgroundQueueHandler extends SingletonFactory
 
         WCF::getDB()->beginTransaction();
         $sql = "INSERT INTO wcf1_background_job
-                            (job, time)
-                VALUES      (?, ?)";
+                            (job, time,identifier)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
         $sql = "SELECT jobID
                 FROM   wcf1_background_job
@@ -90,18 +90,21 @@ final class BackgroundQueueHandler extends SingletonFactory
         $selectJobStatement = WCF::getDB()->prepare($sql);
 
         foreach ($jobs as $job) {
+            $identifier = null;
             if ($job instanceof AbstractUniqueBackgroundJob) {
                 // Check if the job is already in the queue
                 $selectJobStatement->execute([$job->identifier()]);
                 $jobID = $selectJobStatement->fetchSingleColumn();
-                if ($jobID !== null) {
+                if ($jobID !== false) {
                     continue;
                 }
+                $identifier = $job->identifier();
             }
 
             $statement->execute([
                 \serialize($job),
                 $time,
+                $identifier
             ]);
         }
         WCF::getDB()->commitTransaction();
