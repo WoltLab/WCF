@@ -13,4 +13,4 @@
 	<button type="button" class="button" data-type="cancel">{lang}wcf.global.button.cancel{/lang}</button>
 </div>
 
-{include file='shared_wysiwyg'}
+{include file='shared_wysiwyg' wysiwygSelector=$wysiwygSelector}
