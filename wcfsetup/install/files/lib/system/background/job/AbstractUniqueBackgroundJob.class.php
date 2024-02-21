@@ -15,7 +15,7 @@ abstract class AbstractUniqueBackgroundJob extends AbstractBackgroundJob
     /**
      * @inheritDoc
      */
-    final public const MAX_FAILURES = 1;
+    final public const MAX_FAILURES = 0;
 
     /**
      * Returns a unique identifier for this job.
