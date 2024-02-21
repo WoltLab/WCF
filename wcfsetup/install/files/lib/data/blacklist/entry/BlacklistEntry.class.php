@@ -35,7 +35,7 @@ class BlacklistEntry extends DatabaseObject
         }
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
-        if (BLACKLIST_SFS_USERNAME) {
+        if (BLACKLIST_SFS_USERNAME && $username !== '') {
             $conditions->add('(type = ? AND hash = ?)', ['username', self::getHash($username)]);
         }
         if (BLACKLIST_SFS_EMAIL_ADDRESS) {
