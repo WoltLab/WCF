@@ -78,36 +78,44 @@ final class BackgroundQueueHandler extends SingletonFactory
             }
         }
 
-        WCF::getDB()->beginTransaction();
-        $sql = "INSERT INTO wcf1_background_job
-                            (job, time,identifier)
-                VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        $sql = "SELECT jobID
-                FROM   wcf1_background_job
-                WHERE  identifier = ?
-                FOR UPDATE";
-        $selectJobStatement = WCF::getDB()->prepare($sql);
+        $committed = false;
+        try {
+            WCF::getDB()->beginTransaction();
+            $sql = "INSERT INTO wcf1_background_job
+                                (job, time,identifier)
+                    VALUES      (?, ?, ?)";
+            $statement = WCF::getDB()->prepare($sql);
+            $sql = "SELECT jobID
+                    FROM   wcf1_background_job
+                    WHERE  identifier = ?
+                    FOR UPDATE";
+            $selectJobStatement = WCF::getDB()->prepare($sql);
 
-        foreach ($jobs as $job) {
-            $identifier = null;
-            if ($job instanceof AbstractUniqueBackgroundJob) {
-                // Check if the job is already in the queue
-                $selectJobStatement->execute([$job->identifier()]);
-                $jobID = $selectJobStatement->fetchSingleColumn();
-                if ($jobID !== false) {
-                    continue;
+            foreach ($jobs as $job) {
+                $identifier = null;
+                if ($job instanceof AbstractUniqueBackgroundJob) {
+                    // Check if the job is already in the queue
+                    $selectJobStatement->execute([$job->identifier()]);
+                    $jobID = $selectJobStatement->fetchSingleColumn();
+                    if ($jobID !== false) {
+                        continue;
+                    }
+                    $identifier = $job->identifier();
                 }
-                $identifier = $job->identifier();
-            }
 
-            $statement->execute([
+                $statement->execute([
                 \serialize($job),
                 $time,
                 $identifier
-            ]);
+                ]);
+            }
+            WCF::getDB()->commitTransaction();
+            $committed = true;
+        } finally {
+            if (!$committed) {
+                WCF::getDB()->rollBackTransaction();
+            }
         }
-        WCF::getDB()->commitTransaction();
     }
 
     /**
