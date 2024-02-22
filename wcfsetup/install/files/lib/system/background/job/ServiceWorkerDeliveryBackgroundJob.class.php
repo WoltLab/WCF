@@ -46,10 +46,6 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
     private function sendNotification(int $serviceWorkerID, int $notificationID): void
     {
         $serviceWorker = new ServiceWorker($serviceWorkerID);
-        if (!$serviceWorker->workerID) {
-            // Service worker no longer exists
-            return;
-        }
         $user = UserProfileRuntimeCache::getInstance()->getObject($serviceWorker->userID);
         $style = new Style($user->styleID);
         if (!$style->styleID) {
