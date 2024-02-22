@@ -11,6 +11,7 @@
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
@@ -41,5 +42,15 @@ return [
             DatabaseTableIndex::create('messageEmbeddedObject')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['messageObjectTypeID', 'messageID', 'embeddedObjectTypeID', 'embeddedObjectID']),
+        ]),
+    PartialDatabaseTable::create('wcf1_background_job')
+        ->columns([
+            VarcharDatabaseTableColumn::create('identifier')
+                ->length(191)
+                ->defaultValue(null),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('identifier')
+                ->columns(['identifier']),
         ])
 ];

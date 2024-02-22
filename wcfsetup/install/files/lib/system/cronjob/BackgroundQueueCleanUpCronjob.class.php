@@ -4,6 +4,7 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\background\job\AbstractUniqueBackgroundJob;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -27,6 +28,8 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
         WCF::getDB()->beginTransaction();
         /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
+        /** @var AbstractUniqueBackgroundJob[] $uniqueJobs */
+        $uniqueJobs = [];
         try {
             $sql = "SELECT      jobID, job
                     FROM        wcf" . WCF_N . "_background_job
@@ -52,6 +55,12 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
 
                         if ($job->getFailures() <= $job::MAX_FAILURES) {
                             BackgroundQueueHandler::getInstance()->enqueueIn($job, $job->retryAfter());
+                        } else {
+                            $job->onFinalFailure();
+
+                            if ($job instanceof AbstractUniqueBackgroundJob) {
+                                $uniqueJobs[] = $job;
+                            }
                         }
                     }
                 } catch (\Exception $e) {
@@ -80,6 +89,13 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
         } finally {
             if (!$committed) {
                 WCF::getDB()->rollBackTransaction();
+            }
+        }
+
+        // Requeue unique jobs if needed
+        foreach ($uniqueJobs as $job) {
+            if ($job->queueAgain()) {
+                BackgroundQueueHandler::getInstance()->enqueueIn($job->newInstance(), $job->retryAfter());
             }
         }
     }
