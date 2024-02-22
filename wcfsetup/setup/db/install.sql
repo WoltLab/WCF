@@ -1275,6 +1275,7 @@ CREATE TABLE wcf1_service_worker_notification
 	notificationID INT(10) NOT NULL,
 	workerID INT(10) NOT NULL,
 	time INT(10) NOT NULL,
+	UNIQUE KEY job (notificationID, workerID),
 	KEY time (time)
 );
 
