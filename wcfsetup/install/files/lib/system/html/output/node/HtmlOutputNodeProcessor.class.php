@@ -134,6 +134,22 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
 
                 DOMUtil::removeNode($paragraph, true);
             }
+            // Add a whitespace before and after each `<wcfNode-*>`.
+            // This is necessary to avoid concatenation with neighbouring text.
+            foreach ($this->getXPath()->query('//*') as $childNode) {
+                if (!\str_starts_with($childNode->nodeName, 'wcfNode-')) {
+                    continue;
+                }
+
+                $childNode->parentNode->insertBefore(
+                    $this->getDocument()->createTextNode(" "),
+                    $childNode
+                );
+                $childNode->parentNode->insertBefore(
+                    $this->getDocument()->createTextNode(" "),
+                    $childNode->nextSibling
+                );
+            }
 
             if ($this->outputType === 'text/plain') {
                 // remove all `\n` first
