@@ -20,8 +20,6 @@ abstract class AbstractUniqueBackgroundJob extends AbstractBackgroundJob
 
     /**
      * Returns a unique identifier for this job.
-     *
-     * @return string
      */
     public function identifier(): string
     {
