@@ -37,8 +37,6 @@ abstract class AbstractUniqueBackgroundJob extends AbstractBackgroundJob
 
     /**
      * Returns whether this job should be queued again because it has more to do.
-     *
-     * @return bool
      */
     abstract public function queueAgain(): bool;
 
