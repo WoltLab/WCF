@@ -36,9 +36,20 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                     ORDER BY time";
             $statement = WCF::getDB()->prepare($sql, 5);
             $statement->execute();
+
+            $sql = "DELETE FROM wcf1_service_worker_notification
+                    WHERE       workerID = ?
+                    AND         notificationID = ?";
+            $deleteStatement = WCF::getDB()->prepare($sql);
+
             while ($row = $statement->fetchArray()) {
                 $this->sendNotification($row['workerID'], $row['notificationID']);
+                $deleteStatement->execute([
+                    $row['workerID'],
+                    $row['notificationID'],
+                ]);
             }
+
             $timeElapsed = \round(\microtime(true) - $startTime, 4);
         } while ($this->queueAgain() && $timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
     }
@@ -95,26 +106,15 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
             ];
 
             ServiceWorkerHandler::getInstance()->sendToServiceWorker($serviceWorker, JSON::encode($content));
-
-            $sql = "DELETE FROM wcf1_service_worker_notification
-                    WHERE       workerID = ?
-                    AND         notificationID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $serviceWorkerID,
-                $notificationID,
-            ]);
         } catch (ClientExceptionInterface $e) {
-            if ($e->getCode() === 413) {
-                // Payload too large, we can't do anything here other than discard the message.
-                \wcf\functions\exception\logThrowable($e);
-            } elseif ($e->getCode() >= 400 && $e->getCode() <= 499) {
+            if ($e->getCode() >= 400 && $e->getCode() <= 499) {
                 // For all status codes 4xx, we should remove the service worker from the database.
                 // The browser will register a new one.
                 (new ServiceWorkerEditor($serviceWorker))->delete();
             } else {
-                // For internal server errors(5xx), we will try again later
-                throw $e;
+                // Payload too large or internal server errors(5xx),
+                // we can't do anything here other than discard the message.
+                \wcf\functions\exception\logThrowable($e);
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
