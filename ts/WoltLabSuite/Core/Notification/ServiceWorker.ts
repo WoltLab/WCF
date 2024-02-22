@@ -95,7 +95,7 @@ class ServiceWorker {
   }
 }
 
-function serviceWorkerSupported(): boolean {
+export function serviceWorkerSupported(): boolean {
   if (location.protocol !== "https:") {
     // Service workers are only available on https
     return false;

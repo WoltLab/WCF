@@ -31,7 +31,9 @@ self.addEventListener("push", (event) => {
 					time: payload.time,
 				},
 			}),
-		),
+		).then(() => {
+      sendToClients(payload);
+    }),
 	);
 });
 

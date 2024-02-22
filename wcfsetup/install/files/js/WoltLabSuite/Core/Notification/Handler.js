@@ -7,7 +7,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, EventHandler) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "./ServiceWorker"], function (require, exports, tslib_1, Ajax, Core, EventHandler, ServiceWorker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.poll = exports.enableNotifications = exports.setup = void 0;
@@ -35,6 +35,14 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"]
             if ("Notification" in window && Notification.permission === "granted") {
                 this.allowNotification = true;
             }
+            if ((0, ServiceWorker_1.serviceWorkerSupported)()) {
+                window.navigator.serviceWorker.addEventListener("message", (event) => {
+                    const payload = event.data;
+                    if (payload.time > this.lastRequestTimestamp) {
+                        this.lastRequestTimestamp = payload.time;
+                    }
+                });
+            }
         }
         enableNotifications() {
             this.allowNotification = true;
@@ -58,17 +66,17 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"]
          */
         getNextDelay() {
             if (this.inactiveSince === 0) {
-                return 5;
+                return 1;
             }
             // milliseconds -> minutes
             const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60000);
             if (inactiveMinutes < 15) {
-                return 5;
+                return 1;
             }
             else if (inactiveMinutes < 30) {
-                return 10;
+                return 1;
             }
-            return 15;
+            return 1;
         }
         /**
          * Resets the request delay timer.

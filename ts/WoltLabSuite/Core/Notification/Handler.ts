@@ -12,6 +12,7 @@ import * as Ajax from "../Ajax";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
+import { serviceWorkerSupported } from "./ServiceWorker";
 
 interface NotificationHandlerOptions {
   icon: string;
@@ -63,6 +64,14 @@ class NotificationHandler {
     if ("Notification" in window && Notification.permission === "granted") {
       this.allowNotification = true;
     }
+    if (serviceWorkerSupported()) {
+      window.navigator.serviceWorker.addEventListener("message", (event) => {
+        const payload = event.data;
+        if (payload.time > this.lastRequestTimestamp) {
+          this.lastRequestTimestamp = payload.time;
+        }
+      });
+    }
   }
 
   enableNotifications(): void {
@@ -90,18 +99,18 @@ class NotificationHandler {
    */
   private getNextDelay(): number {
     if (this.inactiveSince === 0) {
-      return 5;
+      return 1;
     }
 
     // milliseconds -> minutes
     const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60_000);
     if (inactiveMinutes < 15) {
-      return 5;
+      return 1;
     } else if (inactiveMinutes < 30) {
-      return 10;
+      return 1;
     }
 
-    return 15;
+    return 1;
   }
 
   /**
