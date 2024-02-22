@@ -5,7 +5,7 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.0.9</version>
+		<version>6.0.10</version>
 		<date>2024-02-22</date>
 	</packageinformation>
 
@@ -50,13 +50,7 @@
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
 	</instructions>
 
-	<!-- IMPORTANT: Files must include everything since 6.0.7! -->
-	<instructions type="update" fromversion="6.0.8">
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_6.0_styleVariables.php</instruction>
-		<instruction type="language"/>
-	</instructions>
-	<instructions type="update" fromversion="6.0.9 dev 5">
+	<instructions type="update" fromversion="6.0.9">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
