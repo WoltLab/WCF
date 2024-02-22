@@ -31,10 +31,8 @@ abstract class AbstractUniqueBackgroundJob extends AbstractBackgroundJob
     /**
      * Returns a new instance of this job to be queued again.
      * This will reset the fail counter.
-     *
-     * @return AbstractUniqueBackgroundJob
      */
-    public function newInstance(): AbstractUniqueBackgroundJob
+    public function newInstance(): static
     {
         return new static();
     }
