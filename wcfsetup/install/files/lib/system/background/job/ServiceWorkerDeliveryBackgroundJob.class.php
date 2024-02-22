@@ -23,20 +23,29 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
+final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJob
 {
-    /**
-     * @param int $serviceWorkerID
-     * @param int $notificationID
-     */
-    public function __construct(private readonly int $serviceWorkerID, private readonly int $notificationID)
-    {
-    }
-
+    private const MAX_TIME = 10.0;
     #[\Override]
     public function perform()
     {
-        $serviceWorker = new ServiceWorker($this->serviceWorkerID);
+        $startTime = \microtime(true);
+        do {
+            $sql = "SELECT   workerID, notificationID
+                    FROM     wcf1_service_worker_notification
+                    ORDER BY time";
+            $statement = WCF::getDB()->prepare($sql, 5);
+            $statement->execute();
+            while ($row = $statement->fetchArray()) {
+                $this->sendNotification($row['workerID'], $row['notificationID']);
+            }
+            $timeElapsed = \round(\microtime(true) - $startTime, 4);
+        } while ($timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
+    }
+
+    private function sendNotification(int $serviceWorkerID, int $notificationID): void
+    {
+        $serviceWorker = new ServiceWorker($serviceWorkerID);
         if (!$serviceWorker->workerID) {
             // Service worker no longer exists
             return;
@@ -57,7 +66,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
                 WHERE       notification.notificationID = ?
                 ORDER BY    notification.time DESC";
         $statement = WCF::getDB()->prepare($sql, 1);
-        $statement->execute([$this->notificationID]);
+        $statement->execute([$notificationID]);
 
         /** @var UserNotification $notification */
         $notification = $statement->fetchObject(UserNotification::class);
@@ -104,6 +113,25 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractBackgroundJob
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
+
+            $sql = "DELETE FROM wcf1_service_worker_notification
+                    WHERE       workerID = ?
+                    AND         notificationID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $serviceWorkerID,
+                $notificationID,
+            ]);
         }
+    }
+
+    #[\Override]
+    public function queueAgain(): bool
+    {
+        $sql = "SELECT COUNT(*)
+                FROM   wcf1_service_worker_notification";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        return $statement->fetchSingleColumn() > 0;
     }
 }

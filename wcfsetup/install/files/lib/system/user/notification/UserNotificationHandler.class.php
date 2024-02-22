@@ -304,26 +304,26 @@ class UserNotificationHandler extends SingletonFactory
                     }
                 }
             }
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('userID IN (?)', [\array_keys($recipients)]);
-            $sql = "SELECT userID, workerID
-                    FROM   wcf1_service_worker " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-            $map = $statement->fetchMap('userID', 'workerID', false);
-            $jobs = [];
 
-            foreach ($map as $userID => $workerIDs) {
-                $notification = $notifications[$userID]['object'] ?? null;
-                if ($notification === null) {
+            $sql = "INSERT INTO wcf1_service_worker_notification (workerID, notificationID, time)
+                    SELECT                                        workerID, ?, ?
+                    FROM                                          wcf1_service_worker 
+                    WHERE                                         userID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+
+            foreach ($notifications as $userID => $notification) {
+                $notificationObject = $notification['object'] ?? null;
+                if ($notificationObject === null) {
                     continue;
                 }
-                \assert($notification instanceof UserNotification);
-                foreach ($workerIDs as $workerID) {
-                    $jobs[] = new ServiceWorkerDeliveryBackgroundJob($workerID, $notification->notificationID);
-                }
+                \assert($notificationObject instanceof UserNotification);
+                $statement->execute([
+                    $notificationObject->notificationID,
+                    $notificationObject->time,
+                    $userID
+                ]);
             }
-            BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
+            BackgroundQueueHandler::getInstance()->enqueueIn(new ServiceWorkerDeliveryBackgroundJob());
             // reset notification count
             UserStorageHandler::getInstance()->reset(\array_keys($recipients), 'userNotificationCount');
 

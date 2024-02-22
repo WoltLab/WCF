@@ -73,5 +73,40 @@ return [
                 ->referencedTable('wcf1_user')
                 ->referencedColumns(['userID'])
                 ->onDelete('CASCADE'),
+        ]),
+    DatabaseTable::create('wcf1_service_worker_notification')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('notificationID'),
+            NotNullInt10DatabaseTableColumn::create('workerID'),
+            NotNullInt10DatabaseTableColumn::create('time'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('job')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['notificationID', 'workerID']),
+            DatabaseTableIndex::create('time')
+                ->columns(['time']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['notificationID'])
+                ->referencedTable('wcf1_user_notification')
+                ->referencedColumns(['notificationID'])
+                ->onDelete('CASCADE'),
+            DatabaseTableForeignKey::create()
+                ->columns(['workerID'])
+                ->referencedTable('wcf1_service_worker')
+                ->referencedColumns(['workerID'])
+                ->onDelete('CASCADE'),
+        ]),
+    PartialDatabaseTable::create('wcf1_background_job')
+        ->columns([
+            VarcharDatabaseTableColumn::create('identifier')
+                ->length(191)
+                ->defaultValue(null),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('identifier')
+                ->columns(['identifier']),
         ])
 ];
