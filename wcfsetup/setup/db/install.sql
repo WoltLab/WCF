@@ -1269,6 +1269,15 @@ CREATE TABLE wcf1_service_worker (
 	KEY userID (userID)
 );
 
+DROP TABLE IF EXISTS wcf1_service_worker_notification;
+CREATE TABLE wcf1_service_worker_notification
+(
+	notificationID INT(10) NOT NULL,
+	workerID INT(10) NOT NULL,
+	time INT(10) NOT NULL,
+	KEY time (time)
+);
+
 DROP TABLE IF EXISTS wcf1_session;
 CREATE TABLE wcf1_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
@@ -2135,6 +2144,8 @@ ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (p
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_service_worker ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker_notification ADD FOREIGN KEY (workerID) REFERENCES wcf1_service_worker (workerID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker_notification ADD FOREIGN KEY (notificationID) REFERENCES wcf1_user_notification (notificationID) ON DELETE CASCADE;
 
 /* SQL_PARSER_OFFSET */
 
