@@ -95,6 +95,15 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
             ];
 
             ServiceWorkerHandler::getInstance()->sendToServiceWorker($serviceWorker, JSON::encode($content));
+
+            $sql = "DELETE FROM wcf1_service_worker_notification
+                    WHERE       workerID = ?
+                    AND         notificationID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $serviceWorkerID,
+                $notificationID,
+            ]);
         } catch (ClientExceptionInterface $e) {
             if ($e->getCode() === 413) {
                 // Payload too large, we can't do anything here other than discard the message.
@@ -109,15 +118,6 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
-
-            $sql = "DELETE FROM wcf1_service_worker_notification
-                    WHERE       workerID = ?
-                    AND         notificationID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $serviceWorkerID,
-                $notificationID,
-            ]);
         }
     }
 
