@@ -40,7 +40,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                 $this->sendNotification($row['workerID'], $row['notificationID']);
             }
             $timeElapsed = \round(\microtime(true) - $startTime, 4);
-        } while ($timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
+        } while ($this->queueAgain() && $timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
     }
 
     private function sendNotification(int $serviceWorkerID, int $notificationID): void
