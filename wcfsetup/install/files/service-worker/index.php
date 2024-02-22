@@ -41,6 +41,19 @@ self.addEventListener("notificationclick", (event) => {
 	event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
 
+async function sendToClients(payload){
+	const allClients = await self.clients.matchAll({
+		includeUncontrolled: true,
+		type: "window",
+	});
+	for (const client of allClients) {
+		if (!client.url.startsWith(self.origin)) {
+			continue;
+		}
+		client.postMessage(payload);
+	}
+}
+
 async function removeOldNotifications(notificationID, time) {
 	const notifications = await self.registration.getNotifications({ tag: notificationID });
 	// Close old notifications
