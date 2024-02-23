@@ -4,7 +4,6 @@ namespace wcf\data\service\worker;
 
 use Minishlink\WebPush\SubscriptionInterface;
 use wcf\data\DatabaseObject;
-use wcf\system\service\worker\Encoding;
 
 /**
  * @author      Olaf Braun
