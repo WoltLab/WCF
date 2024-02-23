@@ -86,20 +86,25 @@ final class ServiceWorkerHandler extends SingletonFactory
     private function getClient(): WebPush
     {
         if (!isset($this->pushClient)) {
-            $this->pushClient = new WebPush([
-                'VAPID' => [
-                    'subject' => 'mailto:' . MAIL_ADMIN_ADDRESS,
-                    'publicKey' => SERVICE_WORKER_PUBLIC_KEY,
-                    'privateKey' => SERVICE_WORKER_PRIVATE_KEY,
+            $this->pushClient = new WebPush(
+                [
+                    'VAPID' => [
+                        'subject' => 'mailto:' . MAIL_ADMIN_ADDRESS,
+                        'publicKey' => SERVICE_WORKER_PUBLIC_KEY,
+                        'privateKey' => SERVICE_WORKER_PRIVATE_KEY,
+                    ],
                 ],
-            ], ['TTL' => self::TTL], null, [
-                /** @see HttpFactory::makeClient() */
-                RequestOptions::PROXY => PROXY_SERVER_HTTP,
-                RequestOptions::HEADERS => [
-                    'user-agent' => HttpFactory::getDefaultUserAgent(),
-                ],
-                RequestOptions::TIMEOUT => 60,
-            ]);
+                ['TTL' => self::TTL],
+                null,
+                [
+                    /** @see HttpFactory::makeClient() */
+                    RequestOptions::PROXY => PROXY_SERVER_HTTP,
+                    RequestOptions::HEADERS => [
+                        'user-agent' => HttpFactory::getDefaultUserAgent(),
+                    ],
+                    RequestOptions::TIMEOUT => 60,
+                ]
+            );
             $this->pushClient->setAutomaticPadding(self::MAX_PAYLOAD_LENGTH);
             $this->pushClient->setReuseVAPIDHeaders(true);
         }
