@@ -2,7 +2,6 @@
 
 namespace wcf\system\background\job;
 
-use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\data\service\worker\ServiceWorkerEditor;
 use wcf\data\style\Style;
@@ -106,16 +105,9 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                 "icon" => $style->getFaviconAppleTouchIcon(),
             ];
 
-            ServiceWorkerHandler::getInstance()->sendToServiceWorker($serviceWorker, JSON::encode($content));
-        } catch (ClientExceptionInterface $e) {
-            if ($e->getCode() >= 400 && $e->getCode() <= 499) {
-                // For all status codes 4xx, we should remove the service worker from the database.
-                // The browser will register a new one.
+            $report = ServiceWorkerHandler::getInstance()->sendOneNotification($serviceWorker, JSON::encode($content));
+            if (!$report->isSuccess()) {
                 (new ServiceWorkerEditor($serviceWorker))->delete();
-            } else {
-                // Payload too large or internal server errors(5xx),
-                // we can't do anything here other than discard the message.
-                \wcf\functions\exception\logThrowable($e);
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);

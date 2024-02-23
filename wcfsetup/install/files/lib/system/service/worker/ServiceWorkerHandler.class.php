@@ -2,11 +2,10 @@
 
 namespace wcf\system\service\worker;
 
-use Base64Url\Base64Url;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
-use Jose\Component\KeyManagement\JWKFactory;
-use ParagonIE\ConstantTime\Base64UrlSafe;
+use GuzzleHttp\RequestOptions;
+use Minishlink\WebPush\MessageSentReport;
+use Minishlink\WebPush\VAPID;
+use Minishlink\WebPush\WebPush;
 use wcf\data\option\OptionEditor;
 use wcf\data\service\worker\ServiceWorker;
 use wcf\system\io\HttpFactory;
@@ -35,7 +34,7 @@ final class ServiceWorkerHandler extends SingletonFactory
      */
     public const TTL = 604800; // 7 days
 
-    private ClientInterface $client;
+    private WebPush $pushClient;
 
     /**
      * @internal
@@ -51,21 +50,16 @@ final class ServiceWorkerHandler extends SingletonFactory
 
     private function createNewKeys(): void
     {
-        $jwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
-        $binaryPublicKey = Util::serializePublicKey($jwk);
-        $binaryPrivateKey = \hex2bin(
-            \str_pad(\bin2hex(Base64Url::decode($jwk->get('d'))), 2 * VAPID::PRIVATE_KEY_LENGTH, '0', STR_PAD_LEFT)
-        );
-        $base64PrivateKey = Base64UrlSafe::encodeUnpadded($binaryPrivateKey);
+        ['publicKey' => $publicKey, 'privateKey' => $privateKey] = VAPID::createVapidKeys();
         OptionEditor::import([
-            'service_worker_public_key' => Base64UrlSafe::encodeUnpadded($binaryPublicKey),
-            'service_worker_private_key' => $base64PrivateKey,
+            'service_worker_public_key' => $publicKey,
+            'service_worker_private_key' => $privateKey,
         ]);
 
         RegistryHandler::getInstance()->set(
             'com.woltlab.wcf',
             self::REGISTRY_KEY,
-            \hash('sha256', $base64PrivateKey)
+            \hash('sha256', $privateKey)
         );
 
         // Previous client keys are no longer valid
@@ -79,37 +73,37 @@ final class ServiceWorkerHandler extends SingletonFactory
      *
      * @param ServiceWorker $serviceWorker
      * @param string $payload
+     *
+     * @return MessageSentReport
      */
-    public function sendToServiceWorker(ServiceWorker $serviceWorker, #[\SensitiveParameter] string $payload): void
-    {
-        if (\mb_strlen($payload, '8bit') > self::MAX_PAYLOAD_LENGTH) {
-            throw new \RuntimeException(
-                'Content is too large, maximum payload length is ' . self::MAX_PAYLOAD_LENGTH . ' bytes'
-            );
-        }
-
-        $request = new Request('POST', $serviceWorker->endpoint, [
-            'content-type' => 'application/octet-stream',
-            'content-encoding' => $serviceWorker->contentEncoding,
-            'ttl' => self::TTL,
-        ]);
-
-        $request = Encryption::encrypt(
-            $serviceWorker,
-            $payload,
-            $request
-        );
-        $request = VAPID::addHeader($serviceWorker, $request);
-
-        $this->getClient()->send($request);
+    public function sendOneNotification(
+        ServiceWorker $serviceWorker,
+        #[\SensitiveParameter] string $payload
+    ): MessageSentReport {
+        return $this->getClient()->sendOneNotification($serviceWorker, $payload);
     }
 
-    private function getClient(): ClientInterface
+    private function getClient(): WebPush
     {
-        if (!isset($this->client)) {
-            $this->client = HttpFactory::makeClientWithTimeout(10);
+        if (!isset($this->pushClient)) {
+            $this->pushClient = new WebPush([
+                'VAPID' => [
+                    'subject' => 'mailto:' . MAIL_ADMIN_ADDRESS,
+                    'publicKey' => SERVICE_WORKER_PUBLIC_KEY,
+                    'privateKey' => SERVICE_WORKER_PRIVATE_KEY,
+                ],
+            ], ['TTL' => self::TTL], null, [
+                /** @see HttpFactory::makeClient() */
+                RequestOptions::PROXY => PROXY_SERVER_HTTP,
+                RequestOptions::HEADERS => [
+                    'user-agent' => HttpFactory::getDefaultUserAgent(),
+                ],
+                RequestOptions::TIMEOUT => 60,
+            ]);
+            $this->pushClient->setAutomaticPadding(self::MAX_PAYLOAD_LENGTH);
+            $this->pushClient->setReuseVAPIDHeaders(true);
         }
 
-        return $this->client;
+        return $this->pushClient;
     }
 }

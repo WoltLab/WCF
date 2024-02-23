@@ -2,6 +2,7 @@
 
 namespace wcf\data\service\worker;
 
+use Minishlink\WebPush\SubscriptionInterface;
 use wcf\data\DatabaseObject;
 use wcf\system\service\worker\Encoding;
 
@@ -18,21 +19,29 @@ use wcf\system\service\worker\Encoding;
  * @property-read string $authToken
  * @property-read string $contentEncoding
  */
-class ServiceWorker extends DatabaseObject
+class ServiceWorker extends DatabaseObject implements SubscriptionInterface
 {
-    /**
-     * Parses the endpoint and returns the scheme and host.
-     */
+    #[\Override]
     public function getEndpoint(): string
     {
-        return \parse_url($this->endpoint, PHP_URL_SCHEME) . '://' . \parse_url($this->endpoint, PHP_URL_HOST);
+        return $this->endpoint;
     }
 
-    /**
-     * Returns the content encoding.
-     */
-    public function getContentEncoding(): Encoding
+    #[\Override]
+    public function getContentEncoding(): string
     {
-        return Encoding::fromString($this->contentEncoding);
+        return $this->contentEncoding;
+    }
+
+    #[\Override]
+    public function getPublicKey(): ?string
+    {
+        return $this->publicKey;
+    }
+
+    #[\Override]
+    public function getAuthToken(): ?string
+    {
+        return $this->authToken;
     }
 }
