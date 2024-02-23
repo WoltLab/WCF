@@ -46,16 +46,14 @@ final class Encryption
         $userJwk = Util::createJWK($x, $y);
         // application-server
         $newJwk = JWKFactory::createECKey(self::CURVE_ALGORITHM);
-        $newPublicKey = Util::serializePublicKey($newJwk->get('x'), $newJwk->get('y'));
-        \assert($newPublicKey, "Failed to serialize public key");
         $sharedSecret = self::getSharedSecret($userJwk, $newJwk);
 
         // Section 3.3
         $encoding = $serviceWorker->getContentEncoding();
-        $ikm = $encoding->getIKM($serviceWorker->authToken, $sharedSecret, $userPublicKey, $newPublicKey);
+        $ikm = $encoding->getIKM($serviceWorker->authToken, $sharedSecret, $userJwk, $newJwk);
         // Section 3.4
         $salt = \random_bytes(16);
-        $content = $encoding->getContext($userPublicKey, $newPublicKey);
+        $content = $encoding->getContext($userJwk, $newJwk);
 
         $cek = \hash_hkdf(
             self::HASH_ALGORITHM,
@@ -86,7 +84,9 @@ final class Encryption
 
         if ($serviceWorker->getContentEncoding() === Encoding::AesGcm) {
             $headers['Encryption'] = 'salt=' . Base64Url::encode($salt);
-            $headers['Crypto-Key'] = 'dh=' . Base64Url::encode($newPublicKey);
+            $headers['Crypto-Key'] =
+                'dh=' . Base64Url::encode(Util::serializePublicKey($newJwk))
+            );
         }
         $record = $encryptedText . $tag;
 
@@ -94,7 +94,7 @@ final class Encryption
         $body->write($encoding->getEncryptionContentCodingHeader(
             \mb_strlen($record, '8bit'),
             $salt,
-            $newPublicKey
+            $newJwk,
         ) . $record);
         $body->rewind();
 

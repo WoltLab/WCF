@@ -2,6 +2,7 @@
 
 namespace wcf\system\service\worker;
 
+use Jose\Component\Core\JWK;
 use ParagonIE\ConstantTime\Base64;
 
 /**
@@ -27,16 +28,17 @@ enum Encoding
     public function getEncryptionContentCodingHeader(
         int $length,
         string $salt,
-        string $publicKey
+        JWK $publicKey
     ): string {
+        $serializedPublicKey = Util::serializePublicKey($publicKey);
         return match ($this) {
             /** {@link https://datatracker.ietf.org/doc/html/rfc8188#section-2.1} */
             self::Aes128Gcm => \pack(
                 'A*NCA*',
                 $salt,
                 $length,
-                \strlen($publicKey),
-                $publicKey
+                \strlen($serializedPublicKey),
+                $serializedPublicKey
             ),
             self::AesGcm => '',
         };
@@ -78,32 +80,38 @@ enum Encoding
     /**
      * {@link https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-encryption-encoding-00#section-4.2}
      */
-    public function getContext(string $clientPublicKey, string $serverPublicKey): ?string
+    public function getContext(JWK $clientPublicKey, JWK $serverPublicKey): ?string
     {
         if ($this === self::Aes128Gcm) {
             return null;
         }
-        \assert(\mb_strlen($clientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
+        $serializeClientPublicKey = Util::serializePublicKey($clientPublicKey);
+        $serializeServerPublicKey = Util::serializePublicKey($serverPublicKey);
+
+        \assert(\mb_strlen($serializeClientPublicKey, '8bit') === VAPID::PUBLIC_KEY_LENGTH);
 
         return \pack(
             'CnA*nA*',
             0,
-            \strlen($clientPublicKey),
-            $clientPublicKey,
-            \strlen($serverPublicKey),
-            $serverPublicKey,
+            \strlen($serializeClientPublicKey),
+            $serializeClientPublicKey,
+            \strlen($serializeServerPublicKey),
+            $serializeServerPublicKey,
         );
     }
 
     public function getIKM(
         string $authToken,
         #[\SensitiveParameter] string $sharedSecret,
-        string $userPublicKey,
-        string $newPublicKey
+        JWK $userPublicKey,
+        JWK $newPublicKey
     ): string {
+        $serializedPublicKey = Util::serializePublicKey($newPublicKey);
+        $serializedNewPublicKey = Util::serializePublicKey($userPublicKey);
+
         $info = match ($this) {
             self::AesGcm => "Content-Encoding: auth\x00",
-            self::Aes128Gcm => "WebPush: info\x00{$userPublicKey}{$newPublicKey}",
+            self::Aes128Gcm => "WebPush: info\x00{$serializedPublicKey}{$serializedNewPublicKey}",
         };
 
         return \hash_hkdf(

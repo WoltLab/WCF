@@ -40,11 +40,10 @@ final class Util
     /**
      * Serialize the public key.
      *
-     * @param string $x encoded base64 x coordinate
-     * @param string $y encoded base64 y coordinate
+     * @param JWK $publicKey
      * @return string
      */
-    public static function serializePublicKey(string $x, string $y): string
+    public static function serializePublicKey(JWK $publicKey): string
     {
         $hexString = '04';
         $hexString .= \str_pad(\bin2hex(Base64Url::decode($x)), 64, '0', \STR_PAD_LEFT);
