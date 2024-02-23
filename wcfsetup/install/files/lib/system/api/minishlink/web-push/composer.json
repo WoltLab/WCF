@@ -1,0 +1,46 @@
+{
+  "name": "minishlink/web-push",
+  "type": "library",
+  "description": "Web Push library for PHP",
+  "keywords": ["push", "notifications", "web", "WebPush", "Push API"],
+  "homepage": "https://github.com/web-push-libs/web-push-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Louis Lagrange",
+      "email": "lagrange.louis@gmail.com",
+      "homepage": "https://github.com/Minishlink"
+    }
+  ],
+  "scripts": {
+    "test:unit": "./vendor/bin/phpunit --color",
+    "test:typing": "./vendor/bin/phpstan analyse",
+    "test:syntax": "./vendor/bin/php-cs-fixer fix ./src --dry-run --stop-on-violation --using-cache=no"
+  },
+  "require": {
+    "php": ">=8.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "guzzlehttp/guzzle": "^7.0.1|^6.2",
+    "web-token/jwt-signature": "^2.0|^3.0.2",
+    "web-token/jwt-key-mgmt": "^2.0|^3.0.2",
+    "web-token/jwt-signature-algorithm-ecdsa": "^2.0|^3.0.2",
+    "web-token/jwt-util-ecc": "^2.0|^3.0.2",
+    "spomky-labs/base64url": "^2.0"
+  },
+  "suggest": {
+    "ext-gmp": "Optional for performance."
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.27",
+    "phpstan/phpstan": "^1.9.8",
+    "friendsofphp/php-cs-fixer": "^v3.13.2"
+  },
+  "autoload": {
+    "psr-4" : {
+      "Minishlink\\WebPush\\" : "src"
+    }
+  }
+}

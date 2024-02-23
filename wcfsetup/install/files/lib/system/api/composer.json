@@ -19,6 +19,7 @@
         "laminas/laminas-diactoros": "^3.2.0",
         "laminas/laminas-httphandlerrunner": "^2.9.0",
         "laminas/laminas-progressbar": "^2.13",
+        "minishlink/web-push": "^8.0",
         "paragonie/constant_time_encoding": "^2.6.3",
         "pelago/emogrifier": "^7.0.0",
         "psr/clock": "^1.0",
@@ -31,10 +32,17 @@
         "sebastian/diff": "^5.0.3",
         "symfony/polyfill-php82": "^1.28.0",
         "symfony/polyfill-php83": "^1.28",
+        "web-token/jwt-library": "^3.3",
         "willdurand/negotiation": "^3.1"
     },
     "replace": {
-        "symfony/polyfill-php80": "*"
+        "symfony/polyfill-php80": "*",
+        "symfony/console": "*",
+        "symfony/http-client": "*",
+        "web-token/jwt-key-mgmt": "*",
+        "web-token/jwt-signature": "*",
+        "web-token/jwt-signature-algorithm-ecdsa": "*",
+        "web-token/jwt-util-ecc": "*"
     },
     "type": "project"
 }
