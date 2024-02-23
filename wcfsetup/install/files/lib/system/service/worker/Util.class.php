@@ -101,9 +101,15 @@ final class Util
         string $name,
         string $value
     ): RequestInterface {
-        return $request->withHeader('crypto-key', \implode(';', [
-            ...$request->getHeader('crypto-key'),
-            \sprintf('%s=%s', $name, $value)
-        ]));
+        if (!$request->hasHeader('crypto-key')) {
+            return $request->withHeader('crypto-key', \sprintf('%s=%s', $name, $value));
+        }
+
+        $headers = $request->getHeader('crypto-key');
+        if (\count($headers) !== 1) {
+            throw new \InvalidArgumentException('Crypto-Key header cannot exist more than once.');
+        }
+
+        return $request->withHeader('crypto-key', \sprintf('%s; %s=%s', $headers[0], $name, $value));
     }
 }
