@@ -31,6 +31,7 @@ enum Encoding
         JWK $publicKey
     ): string {
         $serializedPublicKey = Util::serializePublicKey($publicKey);
+
         return match ($this) {
             /** {@link https://datatracker.ietf.org/doc/html/rfc8188#section-2.1} */
             self::Aes128Gcm => \pack(
