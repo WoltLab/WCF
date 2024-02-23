@@ -99,18 +99,18 @@ class NotificationHandler {
    */
   private getNextDelay(): number {
     if (this.inactiveSince === 0) {
-      return 1;
+      return 5;
     }
 
     // milliseconds -> minutes
     const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60_000);
     if (inactiveMinutes < 15) {
-      return 1;
+      return 5;
     } else if (inactiveMinutes < 30) {
-      return 1;
+      return 10;
     }
 
-    return 1;
+    return 15;
   }
 
   /**

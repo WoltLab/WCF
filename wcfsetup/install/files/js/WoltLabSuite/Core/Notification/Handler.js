@@ -66,17 +66,17 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
          */
         getNextDelay() {
             if (this.inactiveSince === 0) {
-                return 1;
+                return 5;
             }
             // milliseconds -> minutes
             const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60000);
             if (inactiveMinutes < 15) {
-                return 1;
+                return 5;
             }
             else if (inactiveMinutes < 30) {
-                return 1;
+                return 10;
             }
-            return 1;
+            return 15;
         }
         /**
          * Resets the request delay timer.
