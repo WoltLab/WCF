@@ -100,13 +100,10 @@ enum Encoding
         string $userPublicKey,
         string $newPublicKey
     ): string {
-        if ($this === Encoding::AesGcm) {
-            $info = "Content-Encoding: auth\x00";
-        } elseif ($this === Encoding::Aes128Gcm) {
-            $info = "WebPush: info\x00{$userPublicKey}{$newPublicKey}";
-        } else {
-            throw new \LogicException('Unreachable');
-        }
+        $info = match ($this) {
+            self::AesGcm => "Content-Encoding: auth\x00",
+            self::Aes128Gcm => "WebPush: info\x00{$userPublicKey}{$newPublicKey}",
+        };
 
         return \hash_hkdf(
             Encryption::HASH_ALGORITHM,
