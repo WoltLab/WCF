@@ -50,7 +50,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                 ]);
             }
 
-            $timeElapsed = \round(\microtime(true) - $startTime, 4);
+            $timeElapsed = \microtime(true) - $startTime;
         } while ($this->queueAgain() && $timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
     }
 
