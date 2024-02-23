@@ -12,6 +12,7 @@ use wcf\data\service\worker\ServiceWorker;
 use wcf\system\io\HttpFactory;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * @author      Olaf Braun
@@ -51,7 +52,7 @@ final class ServiceWorkerHandler extends SingletonFactory
     private function createNewKeys(): void
     {
         $jwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
-        $binaryPublicKey = Util::serializePublicKey($jwk->get('x'), $jwk->get('y'));
+        $binaryPublicKey = Util::serializePublicKey($jwk);
         $binaryPrivateKey = \hex2bin(
             \str_pad(\bin2hex(Base64Url::decode($jwk->get('d'))), 2 * VAPID::PRIVATE_KEY_LENGTH, '0', STR_PAD_LEFT)
         );
@@ -66,6 +67,11 @@ final class ServiceWorkerHandler extends SingletonFactory
             self::REGISTRY_KEY,
             \hash('sha256', $base64PrivateKey)
         );
+
+        // Previous client keys are no longer valid
+        $sql = "DELETE FROM wcf1_service_worker";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
     }
 
     /**
