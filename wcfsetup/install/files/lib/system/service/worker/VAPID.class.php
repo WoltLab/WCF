@@ -21,6 +21,7 @@ use wcf\util\JSON;
 final class VAPID
 {
     public const PUBLIC_KEY_LENGTH = 65;
+
     public const PRIVATE_KEY_LENGTH = 32;
 
     private static array $cacheHeaders = [];
@@ -37,10 +38,11 @@ final class VAPID
     public static function addHeader(ServiceWorker $serviceWorker, RequestInterface $request): RequestInterface
     {
         $endpoint = $serviceWorker->getEndpoint();
-        $jwt = VAPID::$cacheHeaders[$endpoint] ??= VAPID::createJWT($endpoint);
+        $jwt = self::$cacheHeaders[$endpoint] ??= self::createJWT($endpoint);
 
         if ($serviceWorker->getContentEncoding() === Encoding::AesGcm) {
             $request = $request->withHeader('authorization', "WebPush {$jwt}");
+
             return Util::updateCryptoKeyHeader($request, 'p256ecdsa', SERVICE_WORKER_PUBLIC_KEY);
         } elseif ($serviceWorker->getContentEncoding() === Encoding::Aes128Gcm) {
             return $request->withHeader('authorization', \sprintf("vapid t=%s, k=%s", $jwt, SERVICE_WORKER_PUBLIC_KEY));
@@ -53,7 +55,7 @@ final class VAPID
     {
         $rawPublicKey = Base64Url::decode(SERVICE_WORKER_PUBLIC_KEY);
         // Validate the length of the public key
-        if (\mb_strlen($rawPublicKey, '8bit') !== VAPID::PUBLIC_KEY_LENGTH) {
+        if (\mb_strlen($rawPublicKey, '8bit') !== self::PUBLIC_KEY_LENGTH) {
             throw new \RuntimeException('Invalid public key length');
         }
         ['x' => $x, 'y' => $y] = Util::unserializePublicKey($rawPublicKey);
@@ -66,7 +68,7 @@ final class VAPID
             'aud' => $endpoint,
             'exp' => TIME_NOW + 43200, // 12h
             'sub' => "mailto:" . MAIL_ADMIN_ADDRESS,
-        ], JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+        ], \JSON_UNESCAPED_SLASHES | \JSON_NUMERIC_CHECK);
         if (!$payload) {
             throw new \RuntimeException('Could not encode payload');
         }
@@ -79,6 +81,7 @@ final class VAPID
             ->withPayload($payload)
             ->addSignature($jwk, $header)
             ->build();
+
         return $compactSerializer->serialize($jws, 0);
     }
 }

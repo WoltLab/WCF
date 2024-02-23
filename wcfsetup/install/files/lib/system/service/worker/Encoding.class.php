@@ -71,6 +71,7 @@ enum Encoding
                 Encryption::CURVE_ALGORITHM . $context
             );
         }
+
         return "Content-Encoding: {$type}\x00";
     }
 

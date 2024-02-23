@@ -30,6 +30,7 @@ final class Util
         $dataLength = \mb_strlen($data, '8bit');
 
         [$x, $y] = \mb_str_split($data, \intdiv($dataLength, 2), '8bit');
+
         return [
             'x' => $x,
             'y' => $y,
@@ -46,8 +47,9 @@ final class Util
     public static function serializePublicKey(string $x, string $y): string
     {
         $hexString = '04';
-        $hexString .= \str_pad(\bin2hex(Base64Url::decode($x)), 64, '0', STR_PAD_LEFT);
-        return $hexString . \str_pad(\bin2hex(Base64Url::decode($y)), 64, '0', STR_PAD_LEFT);
+        $hexString .= \str_pad(\bin2hex(Base64Url::decode($x)), 64, '0', \STR_PAD_LEFT);
+
+        return $hexString . \str_pad(\bin2hex(Base64Url::decode($y)), 64, '0', \STR_PAD_LEFT);
     }
 
     /**

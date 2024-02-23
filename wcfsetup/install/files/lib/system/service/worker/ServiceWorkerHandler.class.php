@@ -22,6 +22,7 @@ use wcf\system\SingletonFactory;
 final class ServiceWorkerHandler extends SingletonFactory
 {
     private const REGISTRY_KEY = 'service_worker_key_hash';
+
     /**
      * Maximum payload length that can be sent to the service worker.
      * @see https://stackoverflow.com/a/66222350
@@ -40,7 +41,7 @@ final class ServiceWorkerHandler extends SingletonFactory
      */
     public function updateKeys(): void
     {
-        $hash = RegistryHandler::getInstance()->get('com.woltlab.wcf', ServiceWorkerHandler::REGISTRY_KEY);
+        $hash = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_KEY);
         if ($hash !== null && \hash_equals($hash, \hash('sha256', SERVICE_WORKER_PRIVATE_KEY))) {
             return;
         }
@@ -62,7 +63,7 @@ final class ServiceWorkerHandler extends SingletonFactory
 
         RegistryHandler::getInstance()->set(
             'com.woltlab.wcf',
-            ServiceWorkerHandler::REGISTRY_KEY,
+            self::REGISTRY_KEY,
             \hash('sha256', $base64PrivateKey)
         );
     }
@@ -81,10 +82,10 @@ final class ServiceWorkerHandler extends SingletonFactory
             );
         }
 
-        $request =  new Request('POST', $serviceWorker->endpoint, [
+        $request = new Request('POST', $serviceWorker->endpoint, [
             'content-type' => 'application/octet-stream',
             'content-encoding' => $serviceWorker->contentEncoding,
-            'ttl' => ServiceWorkerHandler::TTL,
+            'ttl' => self::TTL,
         ]);
 
         $request = Encryption::encrypt(
@@ -102,6 +103,7 @@ final class ServiceWorkerHandler extends SingletonFactory
         if (!isset($this->client)) {
             $this->client = HttpFactory::makeClientWithTimeout(10);
         }
+
         return $this->client;
     }
 }

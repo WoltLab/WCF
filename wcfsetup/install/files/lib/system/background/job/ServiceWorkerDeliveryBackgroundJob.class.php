@@ -26,6 +26,7 @@ use wcf\util\StringUtil;
 final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJob
 {
     private const MAX_TIME = 10.0;
+
     #[\Override]
     public function perform()
     {
@@ -39,7 +40,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
 
             $sql = "DELETE FROM wcf1_service_worker_notification
                     WHERE       workerID = ?
-                    AND         notificationID = ?";
+                            AND notificationID = ?";
             $deleteStatement = WCF::getDB()->prepare($sql);
 
             while ($row = $statement->fetchArray()) {
@@ -51,7 +52,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
             }
 
             $timeElapsed = \microtime(true) - $startTime;
-        } while ($this->queueAgain() && $timeElapsed < ServiceWorkerDeliveryBackgroundJob::MAX_TIME);
+        } while ($this->queueAgain() && $timeElapsed < self::MAX_TIME);
     }
 
     private function sendNotification(int $serviceWorkerID, int $notificationID): void
@@ -128,6 +129,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                 FROM   wcf1_service_worker_notification";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
+
         return $statement->fetchSingleColumn() > 0;
     }
 }

@@ -21,6 +21,7 @@ use wcf\data\service\worker\ServiceWorker;
 final class Encryption
 {
     public const CURVE_ALGORITHM = 'P-256';
+
     public const HASH_ALGORITHM = 'sha256';
 
     /**
@@ -44,10 +45,10 @@ final class Encryption
         ['x' => $x, 'y' => $y] = Util::unserializePublicKey($userPublicKey);
         $userJwk = Util::createJWK($x, $y);
         // application-server
-        $newJwk = JWKFactory::createECKey(Encryption::CURVE_ALGORITHM);
+        $newJwk = JWKFactory::createECKey(self::CURVE_ALGORITHM);
         $newPublicKey = Util::serializePublicKey($newJwk->get('x'), $newJwk->get('y'));
         \assert($newPublicKey, "Failed to serialize public key");
-        $sharedSecret = Encryption::getSharedSecret($userJwk, $newJwk);
+        $sharedSecret = self::getSharedSecret($userJwk, $newJwk);
 
         // Section 3.3
         $encoding = $serviceWorker->getContentEncoding();
@@ -57,14 +58,14 @@ final class Encryption
         $content = $encoding->getContext($userPublicKey, $newPublicKey);
 
         $cek = \hash_hkdf(
-            Encryption::HASH_ALGORITHM,
+            self::HASH_ALGORITHM,
             $ikm,
             16,
             $encoding->getInfo($encoding->toString(), $content),
             $salt
         );
         $nonce = \hash_hkdf(
-            Encryption::HASH_ALGORITHM,
+            self::HASH_ALGORITHM,
             $ikm,
             12,
             $encoding->getInfo('nonce', $content),
@@ -78,7 +79,7 @@ final class Encryption
             $payload,
             'aes-128-gcm',
             $cek,
-            OPENSSL_RAW_DATA,
+            \OPENSSL_RAW_DATA,
             $nonce,
             $tag
         );
@@ -108,7 +109,8 @@ final class Encryption
             256
         );
         \assert($result);
-        return \str_pad($result, 32, "\x00", STR_PAD_LEFT);
+
+        return \str_pad($result, 32, "\x00", \STR_PAD_LEFT);
     }
 
     private static function addPadding(#[\SensitiveParameter] string $payload, string $contentEncoding): string
