@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4ee8e76b0baa0d047720b9dca15ecc86fa42bd61',
+        'reference' => '149f17cb5ccbe006dddede1a8e5b26083cc9fbab',
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4ee8e76b0baa0d047720b9dca15ecc86fa42bd61',
+            'reference' => '149f17cb5ccbe006dddede1a8e5b26083cc9fbab',
             'type' => 'project',
             'install_path' => __DIR__ . '/../',
             'aliases' => array(),
@@ -152,13 +152,10 @@
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
-            'pretty_version' => 'v9.99.100',
-            'version' => '9.99.100.0',
-            'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../paragonie/random_compat',
-            'aliases' => array(),
             'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'paragonie/sodium_compat' => array(
             'pretty_version' => 'v1.20.0',
@@ -364,13 +361,10 @@
             ),
         ),
         'symfony/polyfill-mbstring' => array(
-            'pretty_version' => 'v1.29.0',
-            'version' => '1.29.0.0',
-            'reference' => '9773676c8a1bb1f8d4340a62efe641cf76eda7ec',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
-            'aliases' => array(),
             'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'symfony/polyfill-php80' => array(
             'dev_requirement' => false,

@@ -1547,7 +1547,6 @@ return array(
     'Symfony\\Component\\CssSelector\\XPath\\Translator' => $vendorDir . '/symfony/css-selector/XPath/Translator.php',
     'Symfony\\Component\\CssSelector\\XPath\\TranslatorInterface' => $vendorDir . '/symfony/css-selector/XPath/TranslatorInterface.php',
     'Symfony\\Component\\CssSelector\\XPath\\XPathExpr' => $vendorDir . '/symfony/css-selector/XPath/XPathExpr.php',
-    'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Symfony\\Polyfill\\Php82\\NoDynamicProperties' => $vendorDir . '/symfony/polyfill-php82/NoDynamicProperties.php',
     'Symfony\\Polyfill\\Php82\\Php82' => $vendorDir . '/symfony/polyfill-php82/Php82.php',
     'Symfony\\Polyfill\\Php82\\Random\\Engine\\Secure' => $vendorDir . '/symfony/polyfill-php82/Random/Engine/Secure.php',
