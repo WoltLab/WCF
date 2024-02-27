@@ -9,10 +9,13 @@ namespace wcf\system\spider;
  */
 final readonly class Spider
 {
+    public string $identifier;
+
     public function __construct(
-        public string $identifier,
+        string $identifier,
         public string $name,
         public ?string $url = null,
     ) {
+        $this->identifier = \mb_strtolower($identifier);
     }
 }

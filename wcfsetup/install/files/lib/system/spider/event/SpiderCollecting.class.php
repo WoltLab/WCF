@@ -643,11 +643,10 @@ final class SpiderCollecting implements IEvent
      */
     public function register(Spider $spider): void
     {
-        $identifier = \mb_strtolower($spider->identifier);
-        if (\array_key_exists($identifier, $this->spiders)) {
-            throw new \InvalidArgumentException('Spider with identifier ' . $identifier . ' already exists');
+        if (\array_key_exists($spider->identifier, $this->spiders)) {
+            throw new \InvalidArgumentException('Spider with identifier ' . $spider->identifier . ' already exists');
         }
-        $this->spiders[$identifier] = $spider;
+        $this->spiders[$spider->identifier] = $spider;
     }
 
     /**
