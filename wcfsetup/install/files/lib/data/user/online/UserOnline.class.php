@@ -24,7 +24,7 @@ use wcf\util\UserUtil;
  * @property-read   int|null $pageObjectID       id of the object the last visited page belongs to
  * @property-read   int|null $parentPageObjectID id of the parent of the object the last visited page belongs to
  * @property-read   string|null $userOnlineMarking  HTML code used to print the formatted name of a user group member
- * @property-read   string $spiderIdentifier identifier of the spider
+ * @property-read   ?string $spiderIdentifier identifier of the spider
  */
 class UserOnline extends UserProfile
 {
