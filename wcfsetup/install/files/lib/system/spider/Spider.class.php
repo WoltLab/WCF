@@ -9,9 +9,9 @@ namespace wcf\system\spider;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final readonly class Spider
+final class Spider
 {
-    public string $identifier;
+    public readonly string $identifier;
 
     public function __construct(
         string $identifier,
