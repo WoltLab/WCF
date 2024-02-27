@@ -148,6 +148,10 @@ html:not(.touch) .userMenuButton {
 		.userMenuItemContent {
 			align-self: center;
 		}
+
+		.userMenuItemImage :is(fa-brand, fa-icon) {
+			left: 0;
+		}
 	}
 
 	&.userMenuItemWithUsernames {
