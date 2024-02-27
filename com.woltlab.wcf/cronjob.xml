@@ -8,12 +8,6 @@
 			<expression type="random">@daily</expression>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
-		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
-			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
-			<description>Refreshes list of search robots</description>
-			<description language="de">Aktualisiert die Liste der Suchroboter</description>
-			<expression type="random">@monthly</expression>
-		</cronjob>
 		<cronjob name="com.woltlab.wcf.dailyCleanUp">
 			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
 			<description>Executes daily Cleanup</description>
@@ -142,4 +136,9 @@
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
 	</import>
+	<delete>
+		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
+			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
+		</cronjob>
+	</delete>
 </data>

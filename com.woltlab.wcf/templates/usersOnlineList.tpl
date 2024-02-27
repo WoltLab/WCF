@@ -91,8 +91,8 @@
 			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
 				<dd title="{$user->getFormattedIPAddress()}">{@$user->getFormattedIPAddress()|ipSearch}</dd>
-				
-				{if !$user->spiderID}
+
+				{if !$user->spiderIdentifier}
 					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
 					<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
 				{/if}
@@ -131,7 +131,7 @@
 		{/capture}
 		
 		{assign var=usersOnline value=$usersOnline+1}
-	{elseif $user->spiderID}
+	{elseif $user->spiderIdentifier}
 		{* search robot *}
 		{capture append=robotsOnlineList}
 			<li>
@@ -140,7 +140,9 @@
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3>{if $user->getSpider()->spiderURL}<a {anchorAttributes url=$user->getSpider()->spiderURL}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
+							<h3>{if $user->getSpider()->url}
+									<a {anchorAttributes url=$user->getSpider()->url}>{$user->getSpider()->name}</a>{else}{$user->getSpider()->name}{/if}
+							</h3>
 							{@$locationData}
 						</div>
 						
