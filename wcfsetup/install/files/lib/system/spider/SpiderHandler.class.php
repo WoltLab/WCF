@@ -7,6 +7,8 @@ use wcf\system\SingletonFactory;
 use wcf\system\spider\event\SpiderCollecting;
 
 /**
+ * Handles spider related operations.
+ *
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
