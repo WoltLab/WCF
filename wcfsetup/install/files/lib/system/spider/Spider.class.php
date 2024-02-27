@@ -15,8 +15,8 @@ final class Spider
 
     public function __construct(
         string $identifier,
-        public string $name,
-        public ?string $url = null,
+        public readonly string $name,
+        public readonly ?string $url = null,
     ) {
         $this->identifier = \mb_strtolower($identifier);
     }
