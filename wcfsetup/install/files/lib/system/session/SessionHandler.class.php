@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
  * @property-read   int|null $parentPageID       id of the parent page of latest page visited
  * @property-read   int|null $parentPageObjectID id of the object the parent page of latest page visited belongs to
- * @property-read   int $spiderIdentifier       identifier of the spider
+ * @property-read   ?string $spiderIdentifier       identifier of the spider
  */
 final class SessionHandler extends SingletonFactory
 {
