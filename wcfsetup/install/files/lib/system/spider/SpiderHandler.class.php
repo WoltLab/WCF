@@ -25,8 +25,6 @@ final class SpiderHandler extends SingletonFactory
     {
         parent::init();
         $event = new SpiderCollecting();
-        $event->register(new Spider('ABCdatos', 'ABCdatos BotLink', 'http://www.robotstxt.org/db/abcdatos.html'));
-
         EventHandler::getInstance()->fire($event);
 
         $this->spiders = $event->getSpiders();

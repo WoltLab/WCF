@@ -12,7 +12,7 @@ final readonly class Spider
     public function __construct(
         public string $identifier,
         public string $name,
-        public ?string $url
+        public ?string $url = null,
     ) {
     }
 }

@@ -99,7 +99,8 @@
 			</dl>
 		{/if}
 	{/capture}
-	
+
+	{assign var=spider value=$user->getSpider()}
 	{if $user->userID}
 		{* member *}
 		{capture append=usersOnlineList}
@@ -131,7 +132,7 @@
 		{/capture}
 		
 		{assign var=usersOnline value=$usersOnline+1}
-	{elseif $user->spiderIdentifier}
+	{elseif $spider !== null}
 		{* search robot *}
 		{capture append=robotsOnlineList}
 			<li>
@@ -140,8 +141,8 @@
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3>{if $user->getSpider()->url}
-									<a {anchorAttributes url=$user->getSpider()->url}>{$user->getSpider()->name}</a>{else}{$user->getSpider()->name}{/if}
+							<h3>{if $spider->url}
+									<a {anchorAttributes url=$spider->url}>{$spider->name}</a>{else}{$spider->name}{/if}
 							</h3>
 							{@$locationData}
 						</div>
