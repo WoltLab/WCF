@@ -204,7 +204,7 @@ class VisitTracker extends SingletonFactory
                     VALUES          (?, ?, ?, ?)";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID, $time]);
-        } elseif (WCF::getSession()->spiderID === null) {
+        } elseif (WCF::getSession()->spiderIdentifier === null) {
             WCF::getSession()->register(
                 'trackedUserVisit_' . $this->getObjectTypeID($objectType) . '_' . $objectID,
                 $time
@@ -238,7 +238,7 @@ class VisitTracker extends SingletonFactory
 
             // reset storage
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'trackedUserVisits');
-        } elseif (WCF::getSession()->spiderID === null) {
+        } elseif (WCF::getSession()->spiderIdentifier === null) {
             $this->getVisitTime($objectType);
             $this->userVisits[$this->getObjectTypeID($objectType)] = $time;
             WCF::getSession()->register('trackedUserVisits', $this->userVisits);

@@ -100,7 +100,7 @@ class UsersOnlineList extends SessionList
     public function readStats()
     {
         $conditionBuilder = clone $this->getConditionBuilder();
-        $conditionBuilder->add('session.spiderID IS NULL');
+        $conditionBuilder->add('session.spiderIdentifier IS NULL');
 
         $sql = "SELECT      user_option_value.userOption" . User::getUserOptionID('canViewOnlineStatus') . " AS canViewOnlineStatus, session.userID
                 FROM        wcf" . WCF_N . "_session session

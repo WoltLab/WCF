@@ -41,7 +41,7 @@ abstract class AbstractOauth2Action extends AbstractAction
     {
         parent::readParameters();
 
-        if (WCF::getSession()->spiderID) {
+        if (WCF::getSession()->spiderIdentifier) {
             throw new PermissionDeniedException();
         }
     }

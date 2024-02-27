@@ -1271,8 +1271,8 @@ CREATE TABLE wcf1_session (
 	pageObjectID INT(10),
 	parentPageID INT(10),
 	parentPageObjectID INT(10),
-	spiderID INT(10),
-	KEY packageID (lastActivityTime, spiderID),
+	spiderIdentifier VARCHAR(191) DEFAULT NULL,
+	KEY packageID (lastActivityTime, spiderIdentifier),
 	KEY pageID (pageID, pageObjectID),
 	KEY parentPageID (parentPageID, parentPageObjectID),
 	UNIQUE KEY uniqueUserID (userID)
@@ -1290,15 +1290,6 @@ CREATE TABLE wcf1_smiley (
 	aliases TEXT NOT NULL,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY smileyCode (smileyCode)
-);
-
-DROP TABLE IF EXISTS wcf1_spider;
-CREATE TABLE wcf1_spider (
-	spiderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	spiderIdentifier VARCHAR(191) DEFAULT '',
-	spiderName VARCHAR(255) DEFAULT '',
-	spiderURL VARCHAR(255) DEFAULT '',
-	UNIQUE KEY spiderIdentifier (spiderIdentifier)
 );
 
 DROP TABLE IF EXISTS wcf1_stat_daily;
@@ -2127,7 +2118,6 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 /* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 

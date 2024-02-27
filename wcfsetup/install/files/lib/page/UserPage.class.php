@@ -198,7 +198,7 @@ class UserPage extends AbstractPage
     public function show()
     {
         // update profile hits
-        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderID && !$this->user->isProtected()) {
+        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderIdentifier && !$this->user->isProtected()) {
             $editor = new UserEditor($this->user->getDecoratedObject());
             $editor->updateCounters(['profileHits' => 1]);
 

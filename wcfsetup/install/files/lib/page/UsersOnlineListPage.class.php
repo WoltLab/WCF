@@ -91,18 +91,18 @@ class UsersOnlineListPage extends SortablePage
         $this->objectList->checkRecord();
 
         if (!USERS_ONLINE_SHOW_ROBOTS) {
-            $this->objectList->getConditionBuilder()->add('session.spiderID IS NULL');
+            $this->objectList->getConditionBuilder()->add('session.spiderIdentifier IS NULL');
         }
         if (!USERS_ONLINE_SHOW_GUESTS) {
             if (USERS_ONLINE_SHOW_ROBOTS) {
-                $this->objectList->getConditionBuilder()->add('(session.userID IS NOT NULL OR session.spiderID IS NOT NULL)');
+                $this->objectList->getConditionBuilder()->add('(session.userID IS NOT NULL OR session.spiderIdentifier IS NOT NULL)');
             } else {
                 $this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
             }
         }
 
         $this->objectList->sqlSelects .= ", CASE WHEN session.userID IS NULL THEN 1 ELSE 0 END AS userIsGuest";
-        $this->objectList->sqlSelects .= ", CASE WHEN session.spiderID IS NOT NULL THEN 1 ELSE 0 END AS userIsRobot";
+        $this->objectList->sqlSelects .= ", CASE WHEN session.spiderIdentifier IS NOT NULL THEN 1 ELSE 0 END AS userIsRobot";
     }
 
     /**

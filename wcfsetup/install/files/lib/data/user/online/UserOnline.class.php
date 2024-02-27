@@ -3,11 +3,11 @@
 namespace wcf\data\user\online;
 
 use wcf\data\page\PageCache;
-use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
+use wcf\system\spider\Spider;
+use wcf\system\spider\SpiderHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserAgent;
@@ -24,6 +24,7 @@ use wcf\util\UserUtil;
  * @property-read   int|null $pageObjectID       id of the object the last visited page belongs to
  * @property-read   int|null $parentPageObjectID id of the parent of the object the last visited page belongs to
  * @property-read   string|null $userOnlineMarking  HTML code used to print the formatted name of a user group member
+ * @property-read   ?string $spiderIdentifier identifier of the spider
  */
 class UserOnline extends UserProfile
 {
@@ -35,9 +36,8 @@ class UserOnline extends UserProfile
 
     /**
      * spider object
-     * @var Spider
      */
-    protected $spider;
+    protected ?Spider $spider;
 
     /**
      * Returns the formatted username.
@@ -152,18 +152,15 @@ class UserOnline extends UserProfile
 
     /**
      * Returns the spider object
-     *
-     * @return  Spider|null
      */
-    public function getSpider()
+    public function getSpider(): ?Spider
     {
-        if (!$this->spiderID) {
+        if (!$this->spiderIdentifier) {
             return null;
         }
 
-        if ($this->spider === null) {
-            $spiderList = SpiderCacheBuilder::getInstance()->getData();
-            $this->spider = $spiderList[$this->spiderID];
+        if (!isset($this->spider)) {
+            $this->spider = SpiderHandler::getInstance()->getSpider($this->spiderIdentifier);
         }
 
         return $this->spider;
