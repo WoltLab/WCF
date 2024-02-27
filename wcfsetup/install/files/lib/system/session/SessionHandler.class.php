@@ -586,7 +586,7 @@ final class SessionHandler extends SingletonFactory
                 $condition->add('userID IS NULL');
                 $condition->add('(sessionID = ? OR spiderIdentifier = ?)', [
                     $row['sessionID'],
-                    $this->getSpiderIdentifier(UserUtil::getUserAgent()),
+                    SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()),
                 ]);
             }
 
@@ -662,7 +662,7 @@ final class SessionHandler extends SingletonFactory
         if (!$this->isACP) {
             // Try to find an existing spider session. Order by lastActivityTime to maintain a
             // stable selection in case duplicates exist for some reason.
-            $spiderIdentifier = $this->getSpiderIdentifier(UserUtil::getUserAgent());
+            $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
             if ($spiderIdentifier) {
                 $sql = "SELECT      *
                         FROM        wcf1_session
@@ -684,7 +684,7 @@ final class SessionHandler extends SingletonFactory
     {
         $spiderIdentifier = null;
         if (!$this->user->userID) {
-            $spiderIdentifier = $this->getSpiderIdentifier(UserUtil::getUserAgent());
+            $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
         }
 
         // save session
@@ -1288,14 +1288,6 @@ final class SessionHandler extends SingletonFactory
             UserStorageHandler::getInstance()->resetAll('groupIDs');
             UserStorageHandler::getInstance()->resetAll('languageIDs');
         }
-    }
-
-    /**
-     * Returns the spider identifier for given user agent.
-     */
-    private function getSpiderIdentifier(string $userAgent): ?string
-    {
-        return SpiderHandler::getInstance()->getIdentifier($userAgent);
     }
 
     /**
