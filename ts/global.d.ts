@@ -10,6 +10,7 @@ import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
+import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -123,6 +124,7 @@ declare global {
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "woltlab-core-file": WoltlabCoreFileElement;
     "woltlab-core-file-upload": WoltlabCoreFileUploadElement;
     "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
