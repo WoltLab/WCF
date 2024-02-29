@@ -43,6 +43,7 @@ class CronjobListPage extends SortablePage
         'cronjobID',
         'nextExec',
         'descriptionI18n',
+        'packageID',
     ];
 
     /**
