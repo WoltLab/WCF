@@ -31,7 +31,7 @@ import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
 import { init as initSearch } from "./Ui/Search";
 import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 import { whenFirstSeen } from "./LazyLoader";
-import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
+import { adoptPageOverlayContainer, getPageOverlayContainer } from "./Helper/PageOverlay";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
@@ -167,5 +167,41 @@ export function setup(options: BoostrapOptions): void {
   });
   whenFirstSeen("[data-google-maps-geocoding]", () => {
     void import("./Component/GoogleMaps/Geocoding").then(({ setup }) => setup());
+  });
+
+  // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
+  // when widget form elements are placed in a dialog.
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (!(node instanceof HTMLElement)) {
+          continue;
+        }
+
+        if (node.querySelectorAll(".g-recaptcha-bubble-arrow").length === 0) {
+          return;
+        }
+
+        const iframe = node.querySelector("iframe");
+        if (!iframe) {
+          return;
+        }
+        const name = "a-" + iframe.name.split("-")[1];
+        const widget = document.querySelector(`iframe[name="${name}"]`);
+        if (!widget) {
+          return;
+        }
+        const dialog = widget.closest("woltlab-core-dialog");
+        if (!dialog) {
+          return;
+        }
+
+        getPageOverlayContainer().append(node);
+        node.classList.add("g-recaptcha-container");
+      }
+    }
+  });
+  observer.observe(document.body, {
+    childList: true,
   });
 }
