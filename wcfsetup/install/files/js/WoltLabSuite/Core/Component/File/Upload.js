@@ -5,7 +5,11 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     async function upload(element, file) {
         const typeName = element.dataset.typeName;
         const fileHash = await getSha256Hash(await file.arrayBuffer());
-        let response;
+        const fileElement = document.createElement("woltlab-core-file");
+        fileElement.dataset.filename = file.name;
+        const event = new CustomEvent("uploadStart", { detail: fileElement });
+        element.dispatchEvent(event);
+        let response = undefined;
         try {
             response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
                 .post({
@@ -32,8 +36,14 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 throw e;
             }
         }
+        finally {
+            if (response === undefined) {
+                fileElement.uploadFailed();
+            }
+        }
         const { endpoints } = response;
         const chunkSize = Math.ceil(file.size / endpoints.length);
+        // TODO: Can we somehow report any meaningful upload progress?
         for (let i = 0, length = endpoints.length; i < length; i++) {
             const start = i * chunkSize;
             const end = start + chunkSize;
@@ -41,30 +51,40 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             const endpoint = new URL(endpoints[i]);
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             endpoint.searchParams.append("checksum", checksum);
+            let response;
             try {
-                const response = (await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsJson());
-                if (response.completed) {
-                    const event = new CustomEvent("uploadCompleted", {
-                        detail: {
-                            data: response.data,
-                            endpointThumbnails: response.endpointThumbnails,
-                            fileID: response.fileID,
-                            typeName: response.typeName,
-                        },
-                    });
-                    element.dispatchEvent(event);
-                    if (response.endpointThumbnails !== "") {
-                        void (await (0, Backend_1.prepareRequest)(response.endpointThumbnails).get().fetchAsResponse());
-                        // TODO: Handle errors and notify about the new thumbnails.
-                    }
-                }
+                response = (await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsJson());
             }
             catch (e) {
                 // TODO: Handle errors
-                console.log(e);
+                console.error(e);
+                fileElement.uploadFailed();
                 throw e;
             }
+            await chunkUploadCompleted(fileElement, response);
         }
+    }
+    async function chunkUploadCompleted(fileElement, response) {
+        if (!response.completed) {
+            return;
+        }
+        const hasThumbnails = response.endpointThumbnails !== "";
+        fileElement.uploadCompleted(response.fileID, hasThumbnails);
+        if (hasThumbnails) {
+            await generateThumbnails(fileElement, response.endpointThumbnails);
+        }
+    }
+    async function generateThumbnails(fileElement, endpoint) {
+        let response;
+        try {
+            response = (await (0, Backend_1.prepareRequest)(endpoint).get().fetchAsJson());
+        }
+        catch (e) {
+            // TODO: Handle errors
+            console.error(e);
+            throw e;
+        }
+        fileElement.setThumbnails(response);
     }
     async function getSha256Hash(data) {
         const buffer = await window.crypto.subtle.digest("SHA-256", data);

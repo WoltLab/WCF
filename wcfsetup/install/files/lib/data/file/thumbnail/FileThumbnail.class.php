@@ -3,6 +3,9 @@
 namespace wcf\data\file\thumbnail;
 
 use wcf\data\DatabaseObject;
+use wcf\data\ILinkableObject;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\request\LinkHandler;
 
 /**
  * @author Alexander Ebert
@@ -16,18 +19,11 @@ use wcf\data\DatabaseObject;
  * @property-read string $fileHash
  * @property-read string $fileExtension
  */
-class FileThumbnail extends DatabaseObject
+class FileThumbnail extends DatabaseObject implements ILinkableObject
 {
     public function getPath(): string
     {
-        $folderA = \substr($this->fileHash, 0, 2);
-        $folderB = \substr($this->fileHash, 2, 2);
-
-        return \sprintf(
-            \WCF_DIR . '_data/public/thumbnail/%s/%s/',
-            $folderA,
-            $folderB,
-        );
+        return \WCF_DIR . $this->getRelativePath();
     }
 
     public function getSourceFilename(): string
@@ -37,6 +33,28 @@ class FileThumbnail extends DatabaseObject
             $this->thumbnailID,
             $this->fileHash,
             $this->fileExtension,
+        );
+    }
+
+    public function getLink(): string
+    {
+        return \sprintf(
+            '%s%s%s',
+            ApplicationHandler::getInstance()->getWCF()->getPageURL(),
+            $this->getRelativePath(),
+            $this->getSourceFilename(),
+        );
+    }
+
+    private function getRelativePath(): string
+    {
+        $folderA = \substr($this->fileHash, 0, 2);
+        $folderB = \substr($this->fileHash, 2, 2);
+
+        return \sprintf(
+            '_data/public/thumbnail/%s/%s/',
+            $folderA,
+            $folderB,
         );
     }
 }
