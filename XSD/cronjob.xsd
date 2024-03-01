@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- The file "cronjobs.xsd" is used for xml-files which installs, updates or deletes searchable cronjobs. -->
+<!-- The file "cronjobs.xsd" is used for xml-files which installs, updates or deletes cronjobs. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
@@ -30,33 +30,37 @@
 	
 	<!-- cronjob element type -->
 	<xs:complexType name="cronjob_import">
-		<xs:complexContent>
-			<xs:extension base="cronjob_delete">
-				<xs:choice maxOccurs="unbounded" minOccurs="0">
-					<xs:element name="description" type="description_element" minOccurs="0" maxOccurs="unbounded" />
-					<xs:element name="expression" type="woltlab_varchar" minOccurs="1" />
-					<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" default="1" />
-					<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
-					<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
-					<xs:element name="options" type="xs:string" minOccurs="0" />
-				</xs:choice>
-			</xs:extension>
-		</xs:complexContent>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="classname" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="description" type="description_element" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="expression" type="expression_element" minOccurs="1" maxOccurs="1" />
+			<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" maxOccurs="1" default="1" />
+			<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" maxOccurs="1" default="1" />
+			<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" maxOccurs="1" default="0" />
+			<xs:element name="options" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:choice>
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 	
 	<xs:complexType name="cronjob_delete">
+		<xs:all>
+			<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
+		</xs:all>
 		<xs:attribute name="name" type="woltlab_varchar" use="optional" />
-		<xs:complexContent>
-			<xs:all>
-				<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
-			</xs:all>
-		</xs:complexContent>
 	</xs:complexType>
 	
 	<xs:complexType name="description_element">
 		<xs:simpleContent>
 			<xs:extension base="woltlab_varchar">
 				<xs:attribute name="language" type="woltlab_varchar" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="expression_element">
+		<xs:simpleContent>
+			<xs:extension base="woltlab_varchar">
+				<xs:attribute name="type" type="woltlab_varchar" use="optional" />
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
