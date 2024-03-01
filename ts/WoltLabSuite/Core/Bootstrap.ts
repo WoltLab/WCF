@@ -179,21 +179,21 @@ export function setup(options: BoostrapOptions): void {
         }
 
         if (node.querySelector(".g-recaptcha-bubble-arrow") === null) {
-          return;
+          continue;
         }
 
         const iframe = node.querySelector("iframe");
         if (!iframe) {
-          return;
+          continue;
         }
         const name = "a-" + iframe.name.split("-")[1];
         const widget = document.querySelector(`iframe[name="${name}"]`);
         if (!widget) {
-          return;
+          continue;
         }
         const dialog = widget.closest("woltlab-core-dialog");
         if (!dialog) {
-          return;
+          continue;
         }
 
         getPageOverlayContainer().append(node);

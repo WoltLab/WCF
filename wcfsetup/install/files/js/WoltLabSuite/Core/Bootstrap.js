@@ -141,21 +141,21 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
                     if (!(node instanceof HTMLElement)) {
                         continue;
                     }
-                    if (node.querySelectorAll(".g-recaptcha-bubble-arrow").length === 0) {
-                        return;
+                    if (node.querySelector(".g-recaptcha-bubble-arrow") === null) {
+                        continue;
                     }
                     const iframe = node.querySelector("iframe");
                     if (!iframe) {
-                        return;
+                        continue;
                     }
                     const name = "a-" + iframe.name.split("-")[1];
                     const widget = document.querySelector(`iframe[name="${name}"]`);
                     if (!widget) {
-                        return;
+                        continue;
                     }
                     const dialog = widget.closest("woltlab-core-dialog");
                     if (!dialog) {
-                        return;
+                        continue;
                     }
                     (0, PageOverlay_1.getPageOverlayContainer)().append(node);
                     node.classList.add("g-recaptcha-container");
