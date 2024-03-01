@@ -83,9 +83,8 @@
 			<xs:sequence>
 				<xs:element minOccurs="0" ref="fromversions" />
 				<xs:element minOccurs="0" ref="requiredpackages" />
-				<xs:element ref="updatetype" />
 				<xs:element ref="timestamp" />
-				<xs:element ref="versiontype" />
+				<xs:element name="versiontype" type="woltlab_varchar" />
 				<xs:element ref="license" />
 			</xs:sequence>
 			<xs:attribute name="name" use="required" />

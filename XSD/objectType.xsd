@@ -43,15 +43,37 @@
 			<xs:element name="allowcontent" type="woltlab_boolean" minOccurs="0" />
 			<xs:element name="allowsidebar" type="woltlab_boolean" minOccurs="0" />
 			<xs:element name="nicevalue" type="xs:integer" minOccurs="0" />
+			<xs:element name="options" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="supportsReactions" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="searchindex" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="enableToc" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="disallowedBBCodesPermission" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="tableName" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="tablePrimaryKey" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="default" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="conditiongroup" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="propertyname" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="minvalue" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="conditionobject" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="includeguests" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="cssclassname" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="action" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="permissions" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="ignoreZeroTime" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="priority" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="changeFreq" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="rebuildTime" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="icon" type="woltlab_varchar_nullable" minOccurs="0" />
+
 		</xs:all>
 	</xs:complexType>
 	
 	<!-- delete element type -->
 	<xs:complexType name="type_delete">
-		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 		<xs:all>
 			<xs:element name="name" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="definitionname" type="woltlab_varchar_nullable" minOccurs="0" />
 		</xs:all>
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 </xs:schema>
