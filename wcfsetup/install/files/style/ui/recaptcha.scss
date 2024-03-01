@@ -2,3 +2,21 @@
 #recaptcha_response_field {
 	margin-top: 20px;
 }
+
+/* ReCAPTCHA container for a dialog element */
+.g-recaptcha-container {
+	position: fixed !important;
+
+	> div:not(:first-child):nth-of-type(-n+3) {
+		display: none !important;
+	}
+
+	> div:last-child {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		bottom: 0 !important;
+		right: 0 !important;
+		margin: auto !important;
+	}
+}
