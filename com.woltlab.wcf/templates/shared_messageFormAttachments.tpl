@@ -1,7 +1,5 @@
 <div class="messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
-	<button type="button">
-		{@$attachmentHandler->getHtmlElement()}
-	</button>
+	{@$attachmentHandler->getHtmlElement()}
 	<dl class="wide">
 		<dt></dt>
 		<dd>
@@ -9,6 +7,12 @@
 			<small>{lang}wcf.attachment.upload.limits{/lang}</small>
 		</dd>
 	</dl>
+
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Component/Attachment/List"], ({ setup }) => {
+			setup(document.getElementById("attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}"));
+		});
+	</script>
 	
 	{event name='fields'}
 </div>

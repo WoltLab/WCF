@@ -133,8 +133,12 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
             void new Promise((resolve_5, reject_5) => { require(["./Component/GoogleMaps/Geocoding"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file", () => {
+            void new Promise((resolve_6, reject_6) => { require(["./Component/File/woltlab-core-file"], resolve_6, reject_6); }).then(tslib_1.__importStar);
+        });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file-upload", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/File/Upload"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_7, reject_7) => { require(["./Component/File/woltlab-core-file"], resolve_7, reject_7); }).then(tslib_1.__importStar);
+            void new Promise((resolve_8, reject_8) => { require(["./Component/File/Upload"], resolve_8, reject_8); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
         // when widget form elements are placed in a dialog.

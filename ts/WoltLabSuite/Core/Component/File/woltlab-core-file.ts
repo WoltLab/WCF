@@ -30,6 +30,8 @@ export class Thumbnail {
 }
 
 export class WoltlabCoreFileElement extends HTMLElement {
+  #filename: string = "";
+  #fileId: number | undefined = undefined;
   #state: State = State.Initial;
   readonly #thumbnails: Thumbnail[] = [];
 
@@ -57,10 +59,18 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #initializeState(): void {
     // Files that exist at page load have a valid file id, otherwise a new
     // file element can only be the result of an upload attempt.
-    if (this.fileId === undefined) {
-      this.#state = State.Uploading;
+    if (this.#fileId === undefined) {
+      this.#filename = this.dataset.filename || "";
+      delete this.dataset.filename;
 
-      return;
+      const fileId = parseInt(this.getAttribute("file-id") || "0");
+      if (fileId) {
+        this.#fileId = fileId;
+      } else {
+        this.#state = State.Uploading;
+
+        return;
+      }
     }
 
     // Initialize the list of thumbnails from the data attribute.
@@ -77,11 +87,11 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #rebuildElement(): void {
     switch (this.#state) {
       case State.Uploading:
-        this.#replaceWithIcon().setIcon("spinner");
+        this.#replaceWithIcon("spinner");
         break;
 
       case State.GeneratingThumbnails:
-        this.#replaceWithIcon().setIcon("spinner");
+        this.#replaceWithIcon("spinner");
         break;
 
       case State.Ready:
@@ -89,12 +99,12 @@ export class WoltlabCoreFileElement extends HTMLElement {
           this.#replaceWithImage(this.previewUrl);
         } else {
           const iconName = this.iconName || "file";
-          this.#replaceWithIcon().setIcon(iconName);
+          this.#replaceWithIcon(iconName);
         }
         break;
 
       case State.Failed:
-        this.#replaceWithIcon().setIcon("times");
+        this.#replaceWithIcon("times");
         break;
 
       default:
@@ -128,26 +138,24 @@ export class WoltlabCoreFileElement extends HTMLElement {
     }
   }
 
-  #replaceWithIcon(): FaIcon {
+  #replaceWithIcon(iconName: string): FaIcon {
     let icon = this.querySelector("fa-icon");
     if (icon === null) {
       this.innerHTML = "";
 
       icon = document.createElement("fa-icon");
       icon.size = 64;
+      icon.setIcon(iconName);
       this.append(icon);
+    } else {
+      icon.setIcon(iconName);
     }
 
     return icon;
   }
 
   get fileId(): number | undefined {
-    const fileId = parseInt(this.dataset.fileId || "0");
-    if (fileId === 0) {
-      return undefined;
-    }
-
-    return fileId;
+    return this.#fileId;
   }
 
   get iconName(): string | undefined {
@@ -172,6 +180,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#rebuildElement();
   }
 
+  get filename(): string | undefined {
+    return this.#filename;
+  }
+
   uploadFailed(): void {
     if (this.#state !== State.Uploading) {
       return;
@@ -183,8 +195,11 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyReject();
   }
 
-  uploadCompleted(hasThumbnails: boolean): void {
+  uploadCompleted(fileId: number, hasThumbnails: boolean): void {
     if (this.#state === State.Uploading) {
+      this.#fileId = fileId;
+      this.setAttribute("file-id", fileId.toString());
+
       if (hasThumbnails) {
         this.#state = State.GeneratingThumbnails;
         this.#rebuildElement();
