@@ -954,7 +954,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $xml->beginDocument(
             'style',
             'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/5.4/style.xsd'
+            'http://www.woltlab.com/XSD/6.0/style.xsd'
         );
 
         // general block
@@ -1017,7 +1017,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $xml->beginDocument(
             'variables',
             'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/5.4/styleVariables.xsd'
+            'http://www.woltlab.com/XSD/6.0/styleVariables.xsd'
         );
 
         $sql = "SELECT      variable.variableName, value.variableValue
@@ -1038,7 +1038,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $xml->beginDocument(
                 'variables',
                 'http://www.woltlab.com',
-                'http://www.woltlab.com/XSD/5.4/styleVariables.xsd'
+                'http://www.woltlab.com/XSD/6.0/styleVariables.xsd'
             );
 
             $sql = "SELECT      variable.variableName, value.variableValueDarkMode
@@ -1176,7 +1176,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $xml->beginDocument(
                 'package',
                 'http://www.woltlab.com',
-                'http://www.woltlab.com/XSD/5.4/package.xsd',
+                'http://www.woltlab.com/XSD/6.0/package.xsd',
                 ['name' => $packageName]
             );
 

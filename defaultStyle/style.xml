@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<style xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/style.xsd">
+<style xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/style.xsd">
 	<general>
 		<stylename><![CDATA[WoltLab Suite Core 6.0]]></stylename>
 		<packageName><![CDATA[com.woltlab.wcf]]></packageName>
