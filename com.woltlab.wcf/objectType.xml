@@ -1751,68 +1751,42 @@
 	<delete>
 		<type name="com.woltlab.wcf.like">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\LikeRebuildDataWorker</classname>
-			<nicevalue>-100</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.article">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\ArticleRebuildDataWorker</classname>
-			<nicevalue>50</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.page">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\PageRebuildDataWorker</classname>
-			<nicevalue>50</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.poll">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\PollRebuildDataWorker</classname>
-			<nicevalue>60</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.activityPointEvent">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\UserActivityPointUpdateEventsWorker</classname>
-			<nicevalue>65</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\UserRebuildDataWorker</classname>
-			<nicevalue>70</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.activityPointItems">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\UserActivityPointItemsRebuildDataWorker</classname>
-			<nicevalue>75</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.attachment">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\AttachmentRebuildDataWorker</classname>
-			<nicevalue>100</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.media">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\MediaRebuildDataWorker</classname>
-			<nicevalue>105</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.statDaily">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\StatDailyRebuildDataWorker</classname>
-			<nicevalue>110</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.comment">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\CommentRebuildDataWorker</classname>
-			<nicevalue>120</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.comment.response">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\CommentResponseRebuildDataWorker</classname>
-			<nicevalue>120</nicevalue>
 		</type>
 		<type name="com.woltlab.wcf.sitemap">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\SitemapRebuildWorker</classname>
-			<nicevalue>130</nicevalue>
 		</type>
 	</delete>
 </data>
