@@ -178,7 +178,7 @@ export function setup(options: BoostrapOptions): void {
           continue;
         }
 
-        if (node.querySelectorAll(".g-recaptcha-bubble-arrow").length === 0) {
+        if (node.querySelector(".g-recaptcha-bubble-arrow") === null) {
           return;
         }
 
