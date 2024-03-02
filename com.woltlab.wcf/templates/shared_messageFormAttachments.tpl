@@ -10,7 +10,7 @@
 
 	<script data-relocate="true">
 		require(["WoltLabSuite/Core/Component/Attachment/List"], ({ setup }) => {
-			setup(document.getElementById("attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}"));
+			setup("{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}");
 		});
 	</script>
 	
