@@ -32,6 +32,7 @@ export class Thumbnail {
 export class WoltlabCoreFileElement extends HTMLElement {
   #filename: string = "";
   #fileId: number | undefined = undefined;
+  #mimeType: string | undefined = undefined;
   #state: State = State.Initial;
   readonly #thumbnails: Thumbnail[] = [];
 
@@ -60,8 +61,11 @@ export class WoltlabCoreFileElement extends HTMLElement {
     // Files that exist at page load have a valid file id, otherwise a new
     // file element can only be the result of an upload attempt.
     if (this.#fileId === undefined) {
-      this.#filename = this.dataset.filename || "";
+      this.#filename = this.dataset.filename || "bogus.bin";
       delete this.dataset.filename;
+
+      this.#mimeType = this.dataset.mimeType || "application/octet-stream";
+      delete this.dataset.mimeType;
 
       const fileId = parseInt(this.getAttribute("file-id") || "0");
       if (fileId) {
@@ -184,6 +188,27 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.#filename;
   }
 
+  get mimeType(): string | undefined {
+    return this.#mimeType;
+  }
+
+  isImage(): boolean {
+    if (this.mimeType === undefined) {
+      return false;
+    }
+
+    switch (this.mimeType) {
+      case "image/gif":
+      case "image/jpeg":
+      case "image/png":
+      case "image/webp":
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
   uploadFailed(): void {
     if (this.#state !== State.Uploading) {
       return;
@@ -195,9 +220,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyReject();
   }
 
-  uploadCompleted(fileId: number, hasThumbnails: boolean): void {
+  uploadCompleted(fileId: number, mimeType: string, hasThumbnails: boolean): void {
     if (this.#state === State.Uploading) {
       this.#fileId = fileId;
+      this.#mimeType = mimeType;
       this.setAttribute("file-id", fileId.toString());
 
       if (hasThumbnails) {

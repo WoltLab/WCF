@@ -604,7 +604,8 @@ CREATE TABLE wcf1_file (
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
 	fileHash CHAR(64) NOT NULL,
-	typeName VARCHAR(255) NOT NULL
+	typeName VARCHAR(255) NOT NULL,
+	mimeType VARCHAR(255) NOT NULL,
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;

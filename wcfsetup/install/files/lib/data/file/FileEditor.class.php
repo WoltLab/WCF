@@ -4,6 +4,7 @@ namespace wcf\data\file;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\file\temporary\FileTemporary;
+use wcf\util\FileUtil;
 
 /**
  * @author Alexander Ebert
@@ -24,11 +25,14 @@ class FileEditor extends DatabaseObjectEditor
 
     public static function createFromTemporary(FileTemporary $fileTemporary): File
     {
+        $mimeType = FileUtil::getMimeType($fileTemporary->getPath() . $fileTemporary->getFilename());
+
         $fileAction = new FileAction([], 'create', ['data' => [
             'filename' => $fileTemporary->filename,
             'fileSize' => $fileTemporary->fileSize,
             'fileHash' => $fileTemporary->fileHash,
             'typeName' => $fileTemporary->typeName,
+            'mimeType' => $mimeType,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);

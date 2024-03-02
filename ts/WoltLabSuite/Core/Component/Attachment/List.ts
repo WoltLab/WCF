@@ -7,12 +7,14 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement): void {
   fileList.append(element);
 
   void file.ready.then(() => {
-    const thumbnail = file.thumbnails.find((thumbnail) => {
-      return thumbnail.identifier === "tiny";
-    });
+    if (file.isImage()) {
+      const thumbnail = file.thumbnails.find((thumbnail) => {
+        return thumbnail.identifier === "tiny";
+      });
 
-    if (thumbnail !== undefined) {
-      file.thumbnail = thumbnail;
+      if (thumbnail !== undefined) {
+        file.thumbnail = thumbnail;
+      }
     }
   });
 }

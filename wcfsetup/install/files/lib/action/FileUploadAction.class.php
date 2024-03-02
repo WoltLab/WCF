@@ -148,6 +148,7 @@ final class FileUploadAction implements RequestHandlerInterface
                 'endpointThumbnails' => $endpointThumbnails,
                 'fileID' => $file->fileID,
                 'typeName' => $file->typeName,
+                'mimeType' => $file->mimeType,
                 'data' => $processor->getUploadResponse($file),
             ]);
         }

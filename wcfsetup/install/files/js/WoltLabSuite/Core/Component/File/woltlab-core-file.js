@@ -20,6 +20,7 @@ define(["require", "exports"], function (require, exports) {
     class WoltlabCoreFileElement extends HTMLElement {
         #filename = "";
         #fileId = undefined;
+        #mimeType = undefined;
         #state = 0 /* State.Initial */;
         #thumbnails = [];
         #readyReject;
@@ -42,8 +43,10 @@ define(["require", "exports"], function (require, exports) {
             // Files that exist at page load have a valid file id, otherwise a new
             // file element can only be the result of an upload attempt.
             if (this.#fileId === undefined) {
-                this.#filename = this.dataset.filename || "";
+                this.#filename = this.dataset.filename || "bogus.bin";
                 delete this.dataset.filename;
+                this.#mimeType = this.dataset.mimeType || "application/octet-stream";
+                delete this.dataset.mimeType;
                 const fileId = parseInt(this.getAttribute("file-id") || "0");
                 if (fileId) {
                     this.#fileId = fileId;
@@ -146,6 +149,23 @@ define(["require", "exports"], function (require, exports) {
         get filename() {
             return this.#filename;
         }
+        get mimeType() {
+            return this.#mimeType;
+        }
+        isImage() {
+            if (this.mimeType === undefined) {
+                return false;
+            }
+            switch (this.mimeType) {
+                case "image/gif":
+                case "image/jpeg":
+                case "image/png":
+                case "image/webp":
+                    return true;
+                default:
+                    return false;
+            }
+        }
         uploadFailed() {
             if (this.#state !== 1 /* State.Uploading */) {
                 return;
@@ -154,9 +174,10 @@ define(["require", "exports"], function (require, exports) {
             this.#rebuildElement();
             this.#readyReject();
         }
-        uploadCompleted(fileId, hasThumbnails) {
+        uploadCompleted(fileId, mimeType, hasThumbnails) {
             if (this.#state === 1 /* State.Uploading */) {
                 this.#fileId = fileId;
+                this.#mimeType = mimeType;
                 this.setAttribute("file-id", fileId.toString());
                 if (hasThumbnails) {
                     this.#state = 2 /* State.GeneratingThumbnails */;
