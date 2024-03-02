@@ -8,11 +8,13 @@ define(["require", "exports"], function (require, exports) {
         element.append(file);
         fileList.append(element);
         void file.ready.then(() => {
-            const thumbnail = file.thumbnails.find((thumbnail) => {
-                return thumbnail.identifier === "tiny";
-            });
-            if (thumbnail !== undefined) {
-                file.thumbnail = thumbnail;
+            if (file.isImage()) {
+                const thumbnail = file.thumbnails.find((thumbnail) => {
+                    return thumbnail.identifier === "tiny";
+                });
+                if (thumbnail !== undefined) {
+                    file.thumbnail = thumbnail;
+                }
             }
         });
     }

@@ -18,6 +18,7 @@ export type UploadCompleted = {
   endpointThumbnails: string;
   fileID: number;
   typeName: string;
+  mimeType: string;
   data: Record<string, unknown>;
 };
 
@@ -110,17 +111,14 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, respons
   }
 
   const hasThumbnails = response.endpointThumbnails !== "";
-  fileElement.uploadCompleted(response.fileID, hasThumbnails);
+  fileElement.uploadCompleted(response.fileID, response.mimeType, hasThumbnails);
 
   if (hasThumbnails) {
     await generateThumbnails(fileElement, response.endpointThumbnails);
   }
 }
 
-async function generateThumbnails(
-  fileElement: WoltlabCoreFileElement,
-  endpoint: string,
-): Promise<void> {
+async function generateThumbnails(fileElement: WoltlabCoreFileElement, endpoint: string): Promise<void> {
   let response: GenerateThumbnailsResponse;
 
   try {
