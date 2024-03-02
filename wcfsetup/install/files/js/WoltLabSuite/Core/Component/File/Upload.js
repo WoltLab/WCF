@@ -69,6 +69,8 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             return;
         }
         const hasThumbnails = response.endpointThumbnails !== "";
+        // TODO: The response contains the `.data` property which holds important data
+        //       returned by the file processor that needs to be forwarded.
         fileElement.uploadCompleted(response.fileID, response.mimeType, hasThumbnails);
         if (hasThumbnails) {
             await generateThumbnails(fileElement, response.endpointThumbnails);

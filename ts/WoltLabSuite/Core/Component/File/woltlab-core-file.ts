@@ -220,6 +220,7 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyReject();
   }
 
+  // TODO: We need to forward the extra data from the file processor.
   uploadCompleted(fileId: number, mimeType: string, hasThumbnails: boolean): void {
     if (this.#state === State.Uploading) {
       this.#fileId = fileId;

@@ -174,6 +174,7 @@ define(["require", "exports"], function (require, exports) {
             this.#rebuildElement();
             this.#readyReject();
         }
+        // TODO: We need to forward the extra data from the file processor.
         uploadCompleted(fileId, mimeType, hasThumbnails) {
             if (this.#state === 1 /* State.Uploading */) {
                 this.#fileId = fileId;
