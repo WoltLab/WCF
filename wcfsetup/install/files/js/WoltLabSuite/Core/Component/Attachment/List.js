@@ -3,13 +3,17 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     function upload(fileList, file) {
-        // TODO: Any sort of upload indicator, meter, spinner, whatever?
         const element = document.createElement("li");
         element.classList.add("attachment__list__item");
         element.append(file);
         fileList.append(element);
         void file.ready.then(() => {
-            // TODO: Do something?
+            const thumbnail = file.thumbnails.find((thumbnail) => {
+                return thumbnail.identifier === "tiny";
+            });
+            if (thumbnail !== undefined) {
+                file.thumbnail = thumbnail;
+            }
         });
     }
     function setup(container) {
@@ -28,7 +32,6 @@ define(["require", "exports"], function (require, exports) {
             uploadButton.insertAdjacentElement("afterend", fileList);
         }
         uploadButton.addEventListener("uploadStart", (event) => {
-            // TODO: How do we keep track of the files being uploaded?
             upload(fileList, event.detail);
         });
     }

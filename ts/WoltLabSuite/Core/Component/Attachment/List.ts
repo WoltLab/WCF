@@ -1,14 +1,19 @@
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
 function upload(fileList: HTMLElement, file: WoltlabCoreFileElement): void {
-  // TODO: Any sort of upload indicator, meter, spinner, whatever?
   const element = document.createElement("li");
   element.classList.add("attachment__list__item");
   element.append(file);
   fileList.append(element);
 
   void file.ready.then(() => {
-    // TODO: Do something?
+    const thumbnail = file.thumbnails.find((thumbnail) => {
+      return thumbnail.identifier === "tiny";
+    });
+
+    if (thumbnail !== undefined) {
+      file.thumbnail = thumbnail;
+    }
   });
 }
 
@@ -30,7 +35,6 @@ export function setup(container: HTMLElement): void {
   }
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    // TODO: How do we keep track of the files being uploaded?
     upload(fileList!, event.detail);
   });
 }
