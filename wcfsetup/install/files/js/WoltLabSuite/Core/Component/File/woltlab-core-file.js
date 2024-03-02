@@ -180,6 +180,12 @@ define(["require", "exports"], function (require, exports) {
             this.#rebuildElement();
             this.#readyResolve();
         }
+        set thumbnail(thumbnail) {
+            if (!this.#thumbnails.includes(thumbnail)) {
+                return;
+            }
+            this.#replaceWithImage(thumbnail.link);
+        }
         get thumbnails() {
             return [...this.#thumbnails];
         }

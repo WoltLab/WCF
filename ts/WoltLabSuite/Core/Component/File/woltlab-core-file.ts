@@ -227,6 +227,14 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyResolve();
   }
 
+  set thumbnail(thumbnail: Thumbnail) {
+    if (!this.#thumbnails.includes(thumbnail)) {
+      return;
+    }
+
+    this.#replaceWithImage(thumbnail.link);
+  }
+
   get thumbnails(): Thumbnail[] {
     return [...this.#thumbnails];
   }
