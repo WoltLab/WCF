@@ -18,7 +18,13 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
       return;
     }
 
-    element.append(getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, editorId));
+    element.append(
+      getInsertAttachBbcodeButton(
+        (data as FileProcessorData).attachmentID,
+        file.isImage() && file.link ? file.link : "",
+        editorId,
+      ),
+    );
 
     if (file.isImage()) {
       const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
@@ -34,7 +40,7 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
   });
 }
 
-function getInsertAttachBbcodeButton(attachmentId: number, editorId: string): HTMLButtonElement {
+function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("button", "small");
@@ -47,10 +53,9 @@ function getInsertAttachBbcodeButton(attachmentId: number, editorId: string): HT
       return;
     }
 
-    // TODO: Insert the original image if it is available.
     dispatchToCkeditor(editor).insertAttachment({
       attachmentId,
-      url: "",
+      url,
     });
   });
 

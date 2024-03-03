@@ -21,6 +21,7 @@ define(["require", "exports"], function (require, exports) {
         #data = undefined;
         #filename = "";
         #fileId = undefined;
+        #link = undefined;
         #mimeType = undefined;
         #state = 0 /* State.Initial */;
         #thumbnails = [];
@@ -156,6 +157,9 @@ define(["require", "exports"], function (require, exports) {
         get data() {
             return this.#data;
         }
+        get link() {
+            return this.#link;
+        }
         isImage() {
             if (this.mimeType === undefined) {
                 return false;
@@ -178,10 +182,11 @@ define(["require", "exports"], function (require, exports) {
             this.#rebuildElement();
             this.#readyReject();
         }
-        uploadCompleted(fileId, mimeType, data, hasThumbnails) {
+        uploadCompleted(fileId, mimeType, link, data, hasThumbnails) {
             if (this.#state === 1 /* State.Uploading */) {
                 this.#data = data;
                 this.#fileId = fileId;
+                this.#link = link;
                 this.#mimeType = mimeType;
                 this.setAttribute("file-id", fileId.toString());
                 if (hasThumbnails) {
