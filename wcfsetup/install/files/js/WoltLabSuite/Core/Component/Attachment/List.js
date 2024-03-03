@@ -8,18 +8,25 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
         element.append(file);
         fileList.append(element);
         void file.ready.then(() => {
-            element.append(getInsertAttachBbcodeButton(file, editorId));
+            const data = file.data;
+            if (data === undefined) {
+                // TODO: error handling
+                return;
+            }
+            element.append(getInsertAttachBbcodeButton(data.attachmentID, editorId));
             if (file.isImage()) {
-                const thumbnail = file.thumbnails.find((thumbnail) => {
-                    return thumbnail.identifier === "tiny";
-                });
+                const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
                     file.thumbnail = thumbnail;
+                }
+                const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
+                if (url !== undefined) {
+                    element.append(getInsertThumbnailButton(data.attachmentID, url, editorId));
                 }
             }
         });
     }
-    function getInsertAttachBbcodeButton(file, editorId) {
+    function getInsertAttachBbcodeButton(attachmentId, editorId) {
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("button", "small");
@@ -30,9 +37,28 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
                 // TODO: error handling
                 return;
             }
+            // TODO: Insert the original image if it is available.
             (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
-                attachmentId: 123,
+                attachmentId,
                 url: "",
+            });
+        });
+        return button;
+    }
+    function getInsertThumbnailButton(attachmentId, url, editorId) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("button", "small");
+        button.textContent = "TODO: insert thumbnail";
+        button.addEventListener("click", () => {
+            const editor = document.getElementById(editorId);
+            if (editor === null) {
+                // TODO: error handling
+                return;
+            }
+            (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
+                attachmentId,
+                url,
             });
         });
         return button;
@@ -58,8 +84,6 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
             uploadButton.insertAdjacentElement("afterend", fileList);
         }
         uploadButton.addEventListener("uploadStart", (event) => {
-            // TODO: We need to forward the attachment data from the event once it
-            //       becoems available.
             upload(fileList, event.detail, editorId);
         });
     }
