@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler", "../../../../Notification/ServiceWorker"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1, ServiceWorker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -198,6 +198,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
                 const permission = await Notification.requestPermission();
                 if (permission === "granted") {
                     (0, Handler_1.enableNotifications)();
+                    (0, ServiceWorker_1.registerServiceWorker)();
                 }
                 element.remove();
             });

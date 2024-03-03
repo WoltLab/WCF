@@ -16,9 +16,11 @@ $requiredExtensions = [
     'ctype',
     'dom',
     'exif',
+    'gmp',
     'intl',
     'libxml',
     'mbstring',
+    'openssl',
     'pdo',
     'pdo_mysql',
     'zlib',
@@ -125,7 +127,7 @@ function getMemoryLimit()
     // no limit
     if ($memoryLimit == "-1") {
         return -1;
-    } else if (\function_exists('ini_parse_quantity')) {
+    } elseif (\function_exists('ini_parse_quantity')) {
         return \ini_parse_quantity($memoryLimit);
     } else {
         // completely numeric, PHP assumes byte

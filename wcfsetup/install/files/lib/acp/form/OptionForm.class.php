@@ -7,6 +7,7 @@ use wcf\data\option\OptionAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\service\worker\ServiceWorkerHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 
@@ -71,6 +72,8 @@ class OptionForm extends AbstractOptionListForm
         $this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
         $this->objectAction->executeAction();
         $this->saved();
+
+        ServiceWorkerHandler::getInstance()->updateKeys();
 
         // reset styles to make sure the updated option values are used
         StyleHandler::resetStylesheets();

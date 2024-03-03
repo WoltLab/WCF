@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend", "./Notification/ServiceWorker"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1, ServiceWorker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -77,6 +77,9 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         UiMessageShareDialog.setup();
         if (User_1.default.userId) {
             UiFeedDialog.setup();
+            if (options.serviceWorker) {
+                (0, ServiceWorker_1.setup)(options.serviceWorker.publicKey, options.serviceWorker.serviceWorkerJsUrl, options.serviceWorker.registerUrl);
+            }
         }
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-reaction-summary", () => {
             void new Promise((resolve_3, reject_3) => { require(["./Ui/Reaction/SummaryDetails"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());

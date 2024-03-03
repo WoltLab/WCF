@@ -1258,6 +1258,27 @@ CREATE TABLE wcf1_search_keyword (
 	KEY (searches, lastSearchTime)
 );
 
+DROP TABLE IF EXISTS wcf1_service_worker;
+CREATE TABLE wcf1_service_worker (
+	workerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	endpoint TEXT NOT NULL,
+	publicKey VARCHAR(88) NOT NULL,
+	authToken VARCHAR(24) NOT NULL,
+	contentEncoding VARCHAR(40) NOT NULL,
+	KEY userID (userID)
+);
+
+DROP TABLE IF EXISTS wcf1_service_worker_notification;
+CREATE TABLE wcf1_service_worker_notification
+(
+	notificationID INT(10) NOT NULL,
+	workerID INT(10) NOT NULL,
+	time INT(10) NOT NULL,
+	UNIQUE KEY job (notificationID, workerID),
+	KEY time (time)
+);
+
 DROP TABLE IF EXISTS wcf1_session;
 CREATE TABLE wcf1_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
@@ -2114,6 +2135,9 @@ ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_langu
 ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker_notification ADD FOREIGN KEY (workerID) REFERENCES wcf1_service_worker (workerID) ON DELETE CASCADE;
+ALTER TABLE wcf1_service_worker_notification ADD FOREIGN KEY (notificationID) REFERENCES wcf1_user_notification (notificationID) ON DELETE CASCADE;
 
 /* SQL_PARSER_OFFSET */
 
