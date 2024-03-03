@@ -13,7 +13,7 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
                 // TODO: error handling
                 return;
             }
-            element.append(getInsertAttachBbcodeButton(data.attachmentID, editorId));
+            element.append(getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
             if (file.isImage()) {
                 const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
@@ -26,7 +26,7 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
             }
         });
     }
-    function getInsertAttachBbcodeButton(attachmentId, editorId) {
+    function getInsertAttachBbcodeButton(attachmentId, url, editorId) {
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("button", "small");
@@ -37,10 +37,9 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
                 // TODO: error handling
                 return;
             }
-            // TODO: Insert the original image if it is available.
             (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
                 attachmentId,
-                url: "",
+                url,
             });
         });
         return button;

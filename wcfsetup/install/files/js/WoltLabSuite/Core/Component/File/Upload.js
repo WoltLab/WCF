@@ -69,7 +69,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             return;
         }
         const hasThumbnails = response.endpointThumbnails !== "";
-        fileElement.uploadCompleted(response.fileID, response.mimeType, response.data, hasThumbnails);
+        fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, hasThumbnails);
         if (hasThumbnails) {
             await generateThumbnails(fileElement, response.endpointThumbnails);
         }

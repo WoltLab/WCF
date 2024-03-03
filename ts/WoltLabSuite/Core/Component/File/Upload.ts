@@ -19,6 +19,7 @@ export type UploadCompleted = {
   fileID: number;
   typeName: string;
   mimeType: string;
+  link: string;
   data: Record<string, unknown>;
 };
 
@@ -111,7 +112,7 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, respons
   }
 
   const hasThumbnails = response.endpointThumbnails !== "";
-  fileElement.uploadCompleted(response.fileID, response.mimeType, response.data, hasThumbnails);
+  fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, hasThumbnails);
 
   if (hasThumbnails) {
     await generateThumbnails(fileElement, response.endpointThumbnails);

@@ -149,6 +149,7 @@ final class FileUploadAction implements RequestHandlerInterface
                 'fileID' => $file->fileID,
                 'typeName' => $file->typeName,
                 'mimeType' => $file->mimeType,
+                'link' => $file->getLink(),
                 'data' => $processor->getUploadResponse($file),
             ]);
         }

@@ -33,6 +33,7 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #data: Record<string, unknown> | undefined = undefined;
   #filename: string = "";
   #fileId: number | undefined = undefined;
+  #link: string | undefined = undefined;
   #mimeType: string | undefined = undefined;
   #state: State = State.Initial;
   readonly #thumbnails: Thumbnail[] = [];
@@ -197,6 +198,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.#data;
   }
 
+  get link(): string | undefined {
+    return this.#link;
+  }
+
   isImage(): boolean {
     if (this.mimeType === undefined) {
       return false;
@@ -225,10 +230,17 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyReject();
   }
 
-  uploadCompleted(fileId: number, mimeType: string, data: Record<string, unknown>, hasThumbnails: boolean): void {
+  uploadCompleted(
+    fileId: number,
+    mimeType: string,
+    link: string,
+    data: Record<string, unknown>,
+    hasThumbnails: boolean,
+  ): void {
     if (this.#state === State.Uploading) {
       this.#data = data;
       this.#fileId = fileId;
+      this.#link = link;
       this.#mimeType = mimeType;
       this.setAttribute("file-id", fileId.toString());
 
