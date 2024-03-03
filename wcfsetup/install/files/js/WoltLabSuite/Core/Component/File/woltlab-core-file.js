@@ -18,6 +18,7 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.Thumbnail = Thumbnail;
     class WoltlabCoreFileElement extends HTMLElement {
+        #data = undefined;
         #filename = "";
         #fileId = undefined;
         #mimeType = undefined;
@@ -152,6 +153,9 @@ define(["require", "exports"], function (require, exports) {
         get mimeType() {
             return this.#mimeType;
         }
+        get data() {
+            return this.#data;
+        }
         isImage() {
             if (this.mimeType === undefined) {
                 return false;
@@ -174,9 +178,9 @@ define(["require", "exports"], function (require, exports) {
             this.#rebuildElement();
             this.#readyReject();
         }
-        // TODO: We need to forward the extra data from the file processor.
-        uploadCompleted(fileId, mimeType, hasThumbnails) {
+        uploadCompleted(fileId, mimeType, data, hasThumbnails) {
             if (this.#state === 1 /* State.Uploading */) {
+                this.#data = data;
                 this.#fileId = fileId;
                 this.#mimeType = mimeType;
                 this.setAttribute("file-id", fileId.toString());

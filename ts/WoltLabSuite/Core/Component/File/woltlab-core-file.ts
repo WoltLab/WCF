@@ -30,6 +30,7 @@ export class Thumbnail {
 }
 
 export class WoltlabCoreFileElement extends HTMLElement {
+  #data: Record<string, unknown> | undefined = undefined;
   #filename: string = "";
   #fileId: number | undefined = undefined;
   #mimeType: string | undefined = undefined;
@@ -192,6 +193,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.#mimeType;
   }
 
+  get data(): Record<string, unknown> | undefined {
+    return this.#data;
+  }
+
   isImage(): boolean {
     if (this.mimeType === undefined) {
       return false;
@@ -220,9 +225,9 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyReject();
   }
 
-  // TODO: We need to forward the extra data from the file processor.
-  uploadCompleted(fileId: number, mimeType: string, hasThumbnails: boolean): void {
+  uploadCompleted(fileId: number, mimeType: string, data: Record<string, unknown>, hasThumbnails: boolean): void {
     if (this.#state === State.Uploading) {
+      this.#data = data;
       this.#fileId = fileId;
       this.#mimeType = mimeType;
       this.setAttribute("file-id", fileId.toString());

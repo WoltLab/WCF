@@ -111,9 +111,7 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, respons
   }
 
   const hasThumbnails = response.endpointThumbnails !== "";
-  // TODO: The response contains the `.data` property which holds important data
-  //       returned by the file processor that needs to be forwarded.
-  fileElement.uploadCompleted(response.fileID, response.mimeType, hasThumbnails);
+  fileElement.uploadCompleted(response.fileID, response.mimeType, response.data, hasThumbnails);
 
   if (hasThumbnails) {
     await generateThumbnails(fileElement, response.endpointThumbnails);
