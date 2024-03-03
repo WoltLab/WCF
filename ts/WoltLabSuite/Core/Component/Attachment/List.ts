@@ -1,6 +1,10 @@
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
+type FileProcessorData = {
+  attachmentID: number;
+};
+
 function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: string): void {
   const element = document.createElement("li");
   element.classList.add("attachment__list__item");
@@ -8,21 +12,29 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
   fileList.append(element);
 
   void file.ready.then(() => {
-    element.append(getInsertAttachBbcodeButton(file, editorId));
+    const data = file.data;
+    if (data === undefined) {
+      // TODO: error handling
+      return;
+    }
+
+    element.append(getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, editorId));
 
     if (file.isImage()) {
-      const thumbnail = file.thumbnails.find((thumbnail) => {
-        return thumbnail.identifier === "tiny";
-      });
-
+      const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
       if (thumbnail !== undefined) {
         file.thumbnail = thumbnail;
+      }
+
+      const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
+      if (url !== undefined) {
+        element.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
       }
     }
   });
 }
 
-function getInsertAttachBbcodeButton(file: WoltlabCoreFileElement, editorId: string): HTMLButtonElement {
+function getInsertAttachBbcodeButton(attachmentId: number, editorId: string): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("button", "small");
@@ -35,9 +47,32 @@ function getInsertAttachBbcodeButton(file: WoltlabCoreFileElement, editorId: str
       return;
     }
 
+    // TODO: Insert the original image if it is available.
     dispatchToCkeditor(editor).insertAttachment({
-      attachmentId: 123, // TODO: how do we get the id?
+      attachmentId,
       url: "",
+    });
+  });
+
+  return button;
+}
+
+function getInsertThumbnailButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("button", "small");
+  button.textContent = "TODO: insert thumbnail";
+
+  button.addEventListener("click", () => {
+    const editor = document.getElementById(editorId);
+    if (editor === null) {
+      // TODO: error handling
+      return;
+    }
+
+    dispatchToCkeditor(editor).insertAttachment({
+      attachmentId,
+      url,
     });
   });
 
@@ -68,8 +103,6 @@ export function setup(editorId: string): void {
   }
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    // TODO: We need to forward the attachment data from the event once it
-    //       becoems available.
     upload(fileList!, event.detail, editorId);
   });
 }
