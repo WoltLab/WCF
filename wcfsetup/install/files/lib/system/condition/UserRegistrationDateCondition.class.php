@@ -54,7 +54,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateEnd = \DateTime::createFromFormat(
                 'Y-m-d',
                 $conditionData['registrationDateEnd'],
-                TIMEZONE
+                new \DateTimeZone(TIMEZONE)
             );
             $registrationDateEnd->setTime(23, 59, 59);
             $objectList->getConditionBuilder()->add(
@@ -66,7 +66,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateStart = \DateTime::createFromFormat(
                 'Y-m-d',
                 $conditionData['registrationDateStart'],
-                TIMEZONE
+                new \DateTimeZone(TIMEZONE)
             );
             $registrationDateStart->setTime(0, 0, 0);
             $objectList->getConditionBuilder()->add(
@@ -82,7 +82,11 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
     public function checkUser(Condition $condition, User $user)
     {
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateStart = \DateTime::createFromFormat('Y-m-d', $condition->registrationDateStart, TIMEZONE);
+        $registrationDateStart = \DateTime::createFromFormat(
+            'Y-m-d',
+            $condition->registrationDateStart,
+            new \DateTimeZone(TIMEZONE)
+        );
         if ($registrationDateStart !== false) {
             $registrationDateStart->setTime(0, 0, 0);
             if ($user->registrationDate < $registrationDateStart->getTimestamp()) {
@@ -91,7 +95,11 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         }
 
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateEnd = \DateTime::createFromFormat('Y-m-d', $condition->registrationDateEnd, TIMEZONE);
+        $registrationDateEnd = \DateTime::createFromFormat(
+            'Y-m-d',
+            $condition->registrationDateEnd,
+            new \DateTimeZone(TIMEZONE)
+        );
         if ($registrationDateEnd !== false) {
             $registrationDateEnd->setTime(23, 59, 59);
             if ($user->registrationDate >= $registrationDateEnd->getTimestamp()) {
@@ -184,7 +192,11 @@ HTML;
     {
         $registrationDateEnd = $registrationDateStart = null;
         if (\strlen($this->registrationDateStart)) {
-            $registrationDateStart = \DateTime::createFromFormat('Y-m-d', $this->registrationDateStart, TIMEZONE);
+            $registrationDateStart = \DateTime::createFromFormat(
+                'Y-m-d',
+                $this->registrationDateStart,
+                new \DateTimeZone(TIMEZONE)
+            );
             if ($registrationDateStart === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
 
@@ -192,7 +204,11 @@ HTML;
             }
         }
         if (\strlen($this->registrationDateEnd)) {
-            $registrationDateEnd = \DateTime::createFromFormat('Y-m-d', $this->registrationDateEnd, TIMEZONE);
+            $registrationDateEnd = \DateTime::createFromFormat(
+                'Y-m-d',
+                $this->registrationDateEnd,
+                new \DateTimeZone(TIMEZONE)
+            );
             if ($registrationDateEnd === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';
 
