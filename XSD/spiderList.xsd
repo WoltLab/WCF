@@ -14,12 +14,10 @@
 
 	<!-- spider element type -->
 	<xs:complexType name="spider">
+		<xs:all>
+			<xs:element name="name" type="woltlab_varchar" minOccurs="1" />
+			<xs:element name="url" type="woltlab_varchar" minOccurs="0" />
+		</xs:all>
 		<xs:attribute name="ident" type="woltlab_varchar" />
-		<xs:complexContent>
-			<xs:all>
-				<xs:element name="name" type="woltlab_varchar" minOccurs="1" />
-				<xs:element name="url" type="woltlab_varchar" minOccurs="0" />
-			</xs:all>
-		</xs:complexContent>
 	</xs:complexType>
 </xs:schema>

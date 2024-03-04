@@ -7,13 +7,17 @@
 	<!-- data element -->
 	<xs:element name="language">
 		<xs:complexType>
-			<!-- deprecated since 5.5 -->
-			<xs:sequence>
-				<xs:element name="category" type="category" maxOccurs="unbounded" />
-			</xs:sequence>
-			<!-- /deprecated since 5.5 -->
-			<xs:element name="import" type="import" minOccurs="0" />
-			<xs:element name="delete" type="delete" minOccurs="0" />
+			<xs:choice>
+				<!-- deprecated since 5.5 -->
+				<xs:sequence>
+					<xs:element name="category" type="category" maxOccurs="unbounded" />
+				</xs:sequence>
+				<!-- /deprecated since 5.5 -->
+				<xs:sequence>
+					<xs:element name="import" type="import" minOccurs="0" />
+					<xs:element name="delete" type="delete" minOccurs="0" />
+				</xs:sequence>
+			</xs:choice>
 			<xs:attribute name="languagecode" type="woltlab_varchar" use="required" />
 			<xs:attribute name="languagename" type="woltlab_varchar" use="optional" />
 			<xs:attribute name="countrycode" type="woltlab_varchar" use="optional" />
