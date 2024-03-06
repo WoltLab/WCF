@@ -7,7 +7,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "WoltLabSuite/Core/Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Manager_1) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "../Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Manager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.poll = exports.enableNotifications = exports.setup = void 0;

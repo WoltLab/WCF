@@ -12,7 +12,7 @@ import * as Ajax from "../Ajax";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
-import { updateCounter } from "WoltLabSuite/Core/Ui/User/Menu/Manager";
+import { updateCounter } from "../Ui/User/Menu/Manager";
 
 interface NotificationHandlerOptions {
   icon: string;
