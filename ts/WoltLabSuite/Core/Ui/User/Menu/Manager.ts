@@ -7,7 +7,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import { UserMenuProvider } from "./Data/Provider";
+import { EventUpdateCounter, UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
@@ -97,6 +97,18 @@ function getView(provider: UserMenuProvider): UserMenuView {
 
 export function getUserMenuProviders(): ReadonlySet<UserMenuProvider> {
   return providers;
+}
+
+export function updateCounter(identifier: string, counter: number) {
+  Array.from(providers)
+    .filter((provider) => provider.getIdentifier() === identifier)
+    .forEach((provider) => {
+      provider.getPanelButton().dispatchEvent(
+        new CustomEvent<EventUpdateCounter>("updateCounter", {
+          detail: { counter: counter },
+        }),
+      );
+    });
 }
 
 export function getContainer(): HTMLElement {

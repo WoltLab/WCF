@@ -7,7 +7,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, EventHandler) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "WoltLabSuite/Core/Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Manager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.poll = exports.enableNotifications = exports.setup = void 0;
@@ -129,7 +129,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"]
             const keepAliveData = data.returnValues.keepAliveData;
             const pollData = data.returnValues.pollData;
             // forward keep alive data
-            window.WCF.System.PushNotification.executeCallbacks({ returnValues: keepAliveData });
+            (0, Manager_1.updateCounter)("com.woltlab.wcf.notifications", keepAliveData.userNotificationCount);
             // store response data in local storage
             let abort = false;
             try {
