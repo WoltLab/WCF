@@ -20,7 +20,7 @@
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language “PHP”]]></item>
-		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language “PHP” is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language “PHP” is not within the range of supported versions.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[PDO Support]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[The “pdo_mysql” PHP extension is required to install this software.]]></item>
