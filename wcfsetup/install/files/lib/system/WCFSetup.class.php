@@ -363,12 +363,15 @@ final class WCFSetup extends WCF
      */
     protected function showSystemRequirements(): ResponseInterface
     {
+        $phpVersionLowerBound = '8.1.2';
+        $phpVersionUpperBound = '8.3.x';
         $system = [];
 
         // php version
         $system['phpVersion']['value'] = \PHP_VERSION;
         $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-        $system['phpVersion']['result'] = (\version_compare($comparePhpVersion, '8.1.2') >= 0);
+        $system['phpVersion']['result'] = \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
+            && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=');
 
         $system['x64']['result'] = \PHP_INT_SIZE == 8;
 
@@ -429,6 +432,8 @@ final class WCFSetup extends WCF
                         [
                             'system' => $system,
                             'nextStep' => 'configureDB',
+                            'phpVersionLowerBound' => $phpVersionLowerBound,
+                            'phpVersionUpperBound' => $phpVersionUpperBound,
                         ]
                     )
                 );
