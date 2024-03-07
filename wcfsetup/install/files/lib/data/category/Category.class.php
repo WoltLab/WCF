@@ -100,6 +100,14 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
+    public function __isset($name)
+    {
+        return parent::__isset($name) || isset($this->data['additionalData'][$name]);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function checkPermissions(array $permissions)
     {
         foreach ($permissions as $permission) {
