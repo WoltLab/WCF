@@ -12,6 +12,7 @@ import * as Ajax from "../Ajax";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
+import { updateCounter } from "WoltLabSuite/Core/Ui/User/Menu/Manager";
 
 interface NotificationHandlerOptions {
   icon: string;
@@ -27,7 +28,9 @@ interface PollingResult {
 
 interface AjaxResponse {
   returnValues: {
-    keepAliveData: unknown;
+    keepAliveData: {
+      userNotificationCount: number;
+    };
     lastRequestTimestamp: number;
     pollData: PollingResult;
   };
@@ -174,7 +177,7 @@ class NotificationHandler {
     const pollData = data.returnValues.pollData;
 
     // forward keep alive data
-    window.WCF.System.PushNotification.executeCallbacks({ returnValues: keepAliveData });
+    updateCounter("com.woltlab.wcf.notifications", keepAliveData.userNotificationCount);
 
     // store response data in local storage
     let abort = false;

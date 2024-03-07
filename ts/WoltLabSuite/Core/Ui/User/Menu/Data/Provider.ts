@@ -59,3 +59,10 @@ export type UserMenuData = {
   time: number;
   usernames: string[];
 };
+
+/**
+ * @since 6.1
+ */
+export type EventUpdateCounter = {
+  counter: number;
+};
