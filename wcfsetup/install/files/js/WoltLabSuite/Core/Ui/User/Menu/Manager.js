@@ -79,6 +79,9 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         return providers;
     }
     exports.getUserMenuProviders = getUserMenuProviders;
+    /**
+     * @since 6.1
+     */
     function updateCounter(identifier, counter) {
         Array.from(providers)
             .filter((provider) => provider.getIdentifier() === identifier)

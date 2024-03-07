@@ -99,6 +99,9 @@ export function getUserMenuProviders(): ReadonlySet<UserMenuProvider> {
   return providers;
 }
 
+/**
+ * @since 6.1
+ */
 export function updateCounter(identifier: string, counter: number) {
   Array.from(providers)
     .filter((provider) => provider.getIdentifier() === identifier)
