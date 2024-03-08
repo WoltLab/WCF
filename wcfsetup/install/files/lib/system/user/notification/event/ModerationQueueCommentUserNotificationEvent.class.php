@@ -55,6 +55,9 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
         if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
             return false;
         }
+        if (!$this->moderationQueue->queueID) {
+            return false;
+        }
 
         return $this->moderationQueue->canEdit();
     }
@@ -143,6 +146,9 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
         $this->moderationQueue = new ViewableModerationQueue(
             new ModerationQueue($this->getUserNotificationObject()->objectID)
         );
+        if (!$this->moderationQueue->queueID) {
+            return;
+        }
 
         /** @var IModerationQueueHandler $moderationHandler */
         $moderationHandler = ObjectTypeCache::getInstance()
