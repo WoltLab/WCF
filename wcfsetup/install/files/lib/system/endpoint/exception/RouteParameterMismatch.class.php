@@ -10,5 +10,8 @@ final class RouteParameterMismatch extends \Exception
         public readonly RouteParameterError $type,
         public readonly string $name,
     ) {
+        parent::__construct(
+            \sprintf('The parameter "%s" is malformed', $name),
+        );
     }
 }

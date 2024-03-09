@@ -6,8 +6,10 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\system\endpoint\error\ControllerError;
 use wcf\system\endpoint\error\RouteParameterError;
 use wcf\system\endpoint\event\ControllerCollecting;
+use wcf\system\endpoint\exception\ControllerMalformed;
 use wcf\system\endpoint\exception\RouteParameterMismatch;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -42,6 +44,7 @@ final class ApiAction implements RequestHandlerInterface
         if ($method === null) {
             // TODO: debug response
             return new JsonResponse([
+                'type' => 'invalid_request_error',
                 'type' => $type,
                 'prefix' => $prefix,
                 'endpoint' => $endpoint,
@@ -50,11 +53,22 @@ final class ApiAction implements RequestHandlerInterface
 
         try {
             return $this->forwardRequest($request, $controller, $method, $matches);
+        } catch (ControllerMalformed $e) {
+            \wcf\functions\exception\logThrowable($e);
+
+            // TODO: proper wrapper?
+            return new JsonResponse([
+                'type' => 'api_error',
+                'code' => $e->type,
+                'message' => \ENABLE_DEBUG_MODE ? $e->getMessage() : '',
+                'param' => '',
+            ], 400);
         } catch (RouteParameterMismatch $e) {
             // TODO: proper wrapper?
             return new JsonResponse([
+                'type' => 'invalid_request_error',
                 'code' => $e->type,
-                'message' => '',
+                'message' => $e->getMessage(),
                 'param' => $e->name,
             ], 400);
         }
@@ -70,25 +84,25 @@ final class ApiAction implements RequestHandlerInterface
             static function (\ReflectionParameter $parameter) use ($matches, $request) {
                 $type = $parameter->getType();
                 if ($type === null) {
-                    throw new RouteParameterMismatch(
-                        RouteParameterError::ParameterWithoutType,
-                        $parameter->name
+                    throw new ControllerMalformed(
+                        ControllerError::ParameterWithoutType,
+                        $parameter,
                     );
                 }
 
                 if (!($type instanceof \ReflectionNamedType)) {
-                    throw new RouteParameterMismatch(
-                        RouteParameterError::ParameterTypeComplex,
-                        $parameter->name
+                    throw new ControllerMalformed(
+                        ControllerError::ParameterTypeComplex,
+                        $parameter,
                     );
                 }
 
                 if ($type->getName() === 'int' || $type->getName() === 'string') {
                     $value = $matches[$parameter->name] ?? null;
                     if ($value === null) {
-                        throw new RouteParameterMismatch(
-                            RouteParameterError::ParameterNotInUri,
-                            $parameter->name
+                        throw new ControllerMalformed(
+                            ControllerError::ParameterNotInUri,
+                            $parameter,
                         );
                     }
 
@@ -121,9 +135,9 @@ final class ApiAction implements RequestHandlerInterface
                     return $request;
                 }
 
-                throw new RouteParameterMismatch(
-                    RouteParameterError::ParameterTypeUnknown,
-                    $parameter->name
+                throw new ControllerMalformed(
+                    ControllerError::ParameterTypeUnknown,
+                    $parameter,
                 );
             },
             $method->getParameters(),
