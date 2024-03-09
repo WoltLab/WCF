@@ -2,6 +2,7 @@
 
 use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\endpoint\event\ControllerCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\event\listener\PackageUpdateListChangedLicenseListener;
 use wcf\system\event\listener\PhraseChangedPreloadListener;
@@ -81,6 +82,10 @@ return static function (): void {
         $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
         $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+    });
+
+    $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
+        $event->register(new \wcf\system\endpoint\moderationqueues\Assign);
     });
 
     try {

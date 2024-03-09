@@ -1,0 +1,231 @@
+<?php
+
+namespace wcf\action;
+
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use wcf\system\endpoint\error\RouteParameterError;
+use wcf\system\endpoint\event\ControllerCollecting;
+use wcf\system\endpoint\exception\RouteParameterMismatch;
+use wcf\system\endpoint\IController;
+use wcf\system\endpoint\PostRequest;
+use wcf\system\event\EventHandler;
+use wcf\system\request\RouteHandler;
+
+final class ApiAction implements RequestHandlerInterface
+{
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $result = $this->parsePathInfo(RouteHandler::getPathInfo());
+        if ($result === null) {
+            \wcfDebug(RouteHandler::getPathInfo());
+        }
+
+        [$type, $prefix, $endpoint] = $result;
+
+        $event = new ControllerCollecting($prefix);
+        EventHandler::getInstance()->fire($event);
+
+        $method = null;
+        $matches = [];
+        foreach ($event->getControllers() as $controller) {
+            $result = $this->findRequestedEndpoint($prefix, $endpoint, $controller);
+            if ($result !== null) {
+                [$method, $matches] = $result;
+
+                break;
+            }
+        }
+
+        if ($method === null) {
+            // TODO: debug response
+            return new JsonResponse([
+                'type' => $type,
+                'prefix' => $prefix,
+                'endpoint' => $endpoint,
+            ]);
+        }
+
+        try {
+            return $this->forwardRequest($request, $controller, $method, $matches);
+        } catch (RouteParameterMismatch $e) {
+            // TODO: proper wrapper?
+            return new JsonResponse([
+                'code' => $e->type,
+                'message' => '',
+                'param' => $e->name,
+            ], 400);
+        }
+    }
+
+    private function forwardRequest(
+        ServerRequestInterface $request,
+        IController $controller,
+        \ReflectionMethod $method,
+        array $matches
+    ): ResponseInterface {
+        $parameters = \array_map(
+            static function (\ReflectionParameter $parameter) use ($matches, $request) {
+                $type = $parameter->getType();
+                if ($type === null) {
+                    throw new RouteParameterMismatch(
+                        RouteParameterError::ParameterWithoutType,
+                        $parameter->name
+                    );
+                }
+
+                if (!($type instanceof \ReflectionNamedType)) {
+                    throw new RouteParameterMismatch(
+                        RouteParameterError::ParameterTypeComplex,
+                        $parameter->name
+                    );
+                }
+
+                if ($type->getName() === 'int' || $type->getName() === 'string') {
+                    $value = $matches[$parameter->name] ?? null;
+                    if ($value === null) {
+                        throw new RouteParameterMismatch(
+                            RouteParameterError::ParameterNotInUri,
+                            $parameter->name
+                        );
+                    }
+
+                    if ($type->getName() === 'int') {
+                        $value = (int)$value;
+                        if ($value <= 0) {
+                            throw new RouteParameterMismatch(
+                                RouteParameterError::ExpectedPositiveInteger,
+                                $parameter->name
+                            );
+                        }
+
+                        return $value;
+                    }
+
+                    if ($type->getName() === 'string') {
+                        $value = \trim($value);
+                        if ($value === '') {
+                            throw new RouteParameterMismatch(
+                                RouteParameterError::ExpectedNonEmptyString,
+                                $parameter->name
+                            );
+                        }
+
+                        return $value;
+                    }
+
+                    throw new \LogicException('Unreachable');
+                } else if ($type->getName() === ServerRequestInterface::class) {
+                    return $request;
+                }
+
+                throw new RouteParameterMismatch(
+                    RouteParameterError::ParameterTypeUnknown,
+                    $parameter->name
+                );
+            },
+            $method->getParameters(),
+        );
+
+        return $controller->{$method->name}(...$parameters);
+    }
+
+    /**
+     * @return array{\ReflectionMethod, array{string: string}}|null
+     */
+    private function findRequestedEndpoint(string $prefix, string $endpoint, IController $controller): array|null
+    {
+        $reflectionClass = new \ReflectionClass($controller);
+        $publicMethods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+        foreach ($publicMethods as $method) {
+            $reflectionAttribute = \current($method->getAttributes(PostRequest::class));
+            if ($reflectionAttribute === false) {
+                continue;
+            }
+
+            $attribute = $reflectionAttribute->newInstance();
+            if (!\str_starts_with($attribute->uri, $prefix)) {
+                continue;
+            }
+
+            $matches = $this->getMatchesFromUri($attribute, $endpoint);
+            if ($matches === null) {
+                continue;
+            }
+
+            return [
+                $method,
+                $matches,
+            ];
+        }
+
+        return null;
+    }
+
+    private function getMatchesFromUri(PostRequest $request, string $endpoint): array|null
+    {
+        $segments = \explode('/', $request->uri);
+
+        $keys = [];
+        foreach ($segments as &$segment) {
+            if ($segment === '') {
+                continue;
+            }
+
+            if (!\str_starts_with($segment, ':')) {
+                continue;
+            }
+
+            $key = \substr($segment, 1);
+            $keys[] = $key;
+
+            $segment = \sprintf(
+                '(?<%s>[^/]++)',
+                $key,
+            );
+        }
+        unset($segment);
+
+        $pattern = '~^' . \implode('/', $segments) . '$~';
+        if (\preg_match($pattern, $endpoint, $matches)) {
+            return \array_filter(
+                $matches,
+                static fn (string $key) => \in_array($key, $keys),
+                \ARRAY_FILTER_USE_KEY,
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array{string, string, string}|null
+     */
+    private function parsePathInfo(string $pathInfo): array|null
+    {
+        if (!\str_starts_with($pathInfo, 'api/rpc/')) {
+            return null;
+        }
+
+        $pathInfo = \mb_substr($pathInfo, \strlen('api/rpc/') - 1);
+
+        $segments = \explode('/', $pathInfo);
+        if (\count($segments) < 3) {
+            // The namespace and the primary object are always required.
+            return null;
+        }
+
+        return [
+            'rpc',
+            \sprintf(
+                '/%s/%s',
+                $segments[1],
+                $segments[2],
+            ),
+            $pathInfo
+        ];
+    }
+}
