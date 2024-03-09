@@ -11,8 +11,10 @@ use wcf\system\endpoint\error\RouteParameterError;
 use wcf\system\endpoint\event\ControllerCollecting;
 use wcf\system\endpoint\exception\ControllerMalformed;
 use wcf\system\endpoint\exception\RouteParameterMismatch;
+use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
+use wcf\system\endpoint\RequestType;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RouteHandler;
 
@@ -20,6 +22,22 @@ final class ApiAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $targetAttribute = match ($request->getMethod()) {
+            'GET' => GetRequest::class,
+            'POST' => PostRequest::class,
+            default => null,
+        };
+
+        if ($targetAttribute === null) {
+            // TODO: debug response
+            return new JsonResponse([
+                'type' => 'invalid_request_error',
+                'code' => 'method_not_allowed',
+                'message' => 'The only supported verbs are "GET", "POST" and "DELETE".',
+                'param' => '',
+            ], 405);
+        }
+
         $result = $this->parsePathInfo(RouteHandler::getPathInfo());
         if ($result === null) {
             \wcfDebug(RouteHandler::getPathInfo());
@@ -33,7 +51,7 @@ final class ApiAction implements RequestHandlerInterface
         $method = null;
         $matches = [];
         foreach ($event->getControllers() as $controller) {
-            $result = $this->findRequestedEndpoint($prefix, $endpoint, $controller);
+            $result = $this->findRequestedEndpoint($targetAttribute, $prefix, $endpoint, $controller);
             if ($result !== null) {
                 [$method, $matches] = $result;
 
@@ -147,15 +165,21 @@ final class ApiAction implements RequestHandlerInterface
     }
 
     /**
+     * @template T of RequestType
+     * @param class-string<T> $targetAttribute
      * @return array{\ReflectionMethod, array{string: string}}|null
      */
-    private function findRequestedEndpoint(string $prefix, string $endpoint, IController $controller): array|null
-    {
+    private function findRequestedEndpoint(
+        string $targetAttribute,
+        string $prefix,
+        string $endpoint,
+        IController $controller
+    ): array|null {
         $reflectionClass = new \ReflectionClass($controller);
         $publicMethods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($publicMethods as $method) {
-            $reflectionAttribute = \current($method->getAttributes(PostRequest::class));
+            $reflectionAttribute = \current($method->getAttributes($targetAttribute));
             if ($reflectionAttribute === false) {
                 continue;
             }
@@ -179,7 +203,7 @@ final class ApiAction implements RequestHandlerInterface
         return null;
     }
 
-    private function getMatchesFromUri(PostRequest $request, string $endpoint): array|null
+    private function getMatchesFromUri(RequestType $request, string $endpoint): array|null
     {
         $segments = \explode('/', $request->uri);
 
