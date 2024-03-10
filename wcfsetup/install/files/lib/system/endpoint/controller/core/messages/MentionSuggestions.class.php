@@ -15,16 +15,9 @@ final class MentionSuggestions implements IController
 {
     #[GetRequest('/core/messages/mentionsuggestions')]
     public function mentionSuggestions(
-        #[Parameters(
-            <<<'EOT'
-                array {
-                    query: non-empty-string
-                }
-                EOT,
-        )]
-        array $parameters
+        #[Parameters] MentionSuggestionsParameters $parameters
     ): ResponseInterface {
-        $query = \mb_strtolower($parameters['query']);
+        $query = \mb_strtolower($parameters->query);
         $matches = [];
 
         foreach ($this->getGroups($query) as $userGroup) {
@@ -90,5 +83,15 @@ final class MentionSuggestions implements IController
         );
 
         return $userGroups;
+    }
+}
+
+/** @internal */
+final class MentionSuggestionsParameters
+{
+    public function __construct(
+        /** @var non-empty-string */
+        public readonly string $query,
+    ) {
     }
 }

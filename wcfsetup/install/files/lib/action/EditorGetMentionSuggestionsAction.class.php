@@ -7,7 +7,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\Helper;
 use wcf\system\endpoint\controller\core\messages\MentionSuggestions;
-use wcf\system\endpoint\Parameters;
 
 /**
  * Suggests users that may be mentioned.
@@ -29,13 +28,13 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
         \assert(\count($parameters) === 1);
         \assert($parameters[0]->getName() === 'parameters');
 
-        $attribute = current($parameters[0]->getAttributes(Parameters::class));
+        $type = $parameters[0]->getType();
 
-        \assert($attribute !== false);
+        \assert($type instanceof \ReflectionNamedType);
 
         $parameters = Helper::mapQueryParameters(
             $request->getQueryParams(),
-            $attribute->newInstance()->arrayShape,
+            $type->getName(),
         );
 
         return (new MentionSuggestions())->mentionSuggestions($parameters);
