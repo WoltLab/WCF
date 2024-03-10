@@ -40,10 +40,10 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.5.0",
-        "laminas/laminas-diactoros": "^3.0.0",
-        "phpunit/phpunit": "^10.1.2",
+        "laminas/laminas-diactoros": "^3.3.0",
+        "phpunit/phpunit": "^10.5.5",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.11"
+        "vimeo/psalm": "^5.18"
     },
     "autoload": {
         "psr-4": {

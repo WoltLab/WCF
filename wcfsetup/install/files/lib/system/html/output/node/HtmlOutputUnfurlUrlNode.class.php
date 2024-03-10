@@ -5,6 +5,7 @@ namespace wcf\system\html\output\node;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\system\html\node\HtmlNodePlainLink;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -63,17 +64,10 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
                     'enableUgc' => $enableUgc,
                 ]);
 
-                $parentParagraph = null;
-                if ($this->getUnfurlUrl($attribute)->hasFetchedContent() && $element->parentNode->nodeName === 'p') {
-                    $parentParagraph = $element->parentNode;
-                    $parentParagraph->parentNode->insertBefore($element, $parentParagraph);
-                }
-
-                $htmlNodeProcessor->renameTag($element, $tagName);
-
-                if ($parentParagraph !== null && !$parentParagraph->hasChildNodes()) {
-                    /** @var \DOMElement $parentParagraph */
-                    $parentParagraph->remove();
+                if ($this->getUnfurlUrl($attribute)->isPlainUrl()) {
+                    $htmlNodeProcessor->renameTag($element, $tagName);
+                } else {
+                    $htmlNodeProcessor->renameTag(HtmlNodePlainLink::splitAtLink($element), $tagName);
                 }
             }
         }

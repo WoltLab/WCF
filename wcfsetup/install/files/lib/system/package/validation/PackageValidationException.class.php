@@ -223,6 +223,13 @@ class PackageValidationException extends SystemException
     const MISSING_PACKAGE_DATE = 30;
 
     /**
+     * the `package.xml` has syntax errors
+     * @var int
+     * @since 6.0
+     */
+    const INVALID_PACKAGE_XML = 31;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code

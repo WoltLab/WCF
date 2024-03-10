@@ -4,6 +4,7 @@ namespace wcf\system\worker;
 
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\clipboard\ClipboardHandler;
@@ -75,7 +76,10 @@ class UserContentRemoveWorker extends AbstractWorker
             }
 
             foreach ($userList as $user) {
-                if (!$user->canEdit()) {
+                if (
+                    !WCF::getSession()->getPermission('admin.user.canDeleteUser')
+                    || !UserGroup::isAccessibleGroup($user->getGroupIDs())
+                ) {
                     throw new PermissionDeniedException();
                 }
 

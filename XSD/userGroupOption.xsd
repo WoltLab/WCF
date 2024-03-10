@@ -71,7 +71,9 @@
 					<xs:element name="usersonly" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="wildcard" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="minvalue" type="xs:unsignedInt" minOccurs="0" />
+					<xs:element name="maxvalue" type="xs:unsignedInt" minOccurs="0" />
 					<xs:element name="excludedInTinyBuild" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="suffix" type="woltlab_varchar" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

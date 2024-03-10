@@ -66,7 +66,7 @@ return (new PhpCsFixer\Config())
         'return_type_declaration' => true,
         'static_lambda' => true,
 
-        'fully_qualified_strict_types' => true,
+        'fully_qualified_strict_types' => ['leading_backslash_in_global_namespace' => true],
         'no_leading_import_slash' => true,
         'no_unused_imports' => true,
         'ordered_imports' => true,

@@ -2391,7 +2391,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMod
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterCopyrightText', 'rgba(217, 220, 222, 1)', 'rgba(182, 184, 185, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterHeadlineLink', 'rgba(255, 255, 255, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterHeadlineLinkActive', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterHeadlineText', 'rgba(189, 195, 199, 1)', 'rgba(209, 210, 211, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterHeadlineText', 'rgba(233, 235, 236, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterLink', 'rgba(255, 255, 255, 1)', 'rgba(30, 163, 220, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterLinkActive', 'rgba(255, 255, 255, 1)', 'rgba(75, 184, 231, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfFooterText', 'rgba(217, 220, 222, 1)', 'rgba(158, 158, 158, 1)');

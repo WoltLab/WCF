@@ -411,6 +411,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                     }
                     else {
                         UiPageAction.add(actionName, editor);
+                        created = true;
                     }
                 }
                 if (created) {

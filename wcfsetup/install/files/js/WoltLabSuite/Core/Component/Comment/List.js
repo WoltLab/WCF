@@ -240,6 +240,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             comment
                 .querySelector(".commentResponseList")
                 .insertBefore(fragment, comment.querySelector(".commentLoadNextResponses"));
+            Listener_1.default.trigger();
             comment.dataset.lastResponseTime = response.lastResponseTime.toString();
             comment.dataset.lastResponseId = response.lastResponseID.toString();
             this.#initLoadNextResponses(comment);
@@ -280,6 +281,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             this.#container
                 .querySelector(".commentList")
                 .insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));
+            Listener_1.default.trigger();
             this.#container.dataset.lastCommentTime = response.lastCommentTime.toString();
             if (this.#displayedComments < this.#totalComments) {
                 button.disabled = false;

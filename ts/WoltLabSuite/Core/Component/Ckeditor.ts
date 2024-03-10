@@ -259,6 +259,12 @@ function hasToolbarButton(items: CKEditor5.Core.ToolbarConfigItem[], name: strin
   return false;
 }
 
+function notifyOfDataChanges(editor: CKEditor5.ClassicEditor.ClassicEditor, element: HTMLElement): void {
+  editor.model.document.on("change:data", () => {
+    dispatchToCkeditor(element).changeData();
+  });
+}
+
 export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
@@ -320,6 +326,7 @@ export async function setupCkeditor(
   }
 
   setupSubmitShortcut(ckeditor);
+  notifyOfDataChanges(cke, element);
 
   const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
   if (enableDebug && Devtools._internal_.editorInspector()) {

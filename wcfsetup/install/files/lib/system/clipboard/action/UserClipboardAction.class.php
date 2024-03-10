@@ -347,6 +347,10 @@ class UserClipboardAction extends AbstractClipboardAction
      */
     protected function validateDeleteUserContent()
     {
+        if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
+            return [];
+        }
+
         return $this->__validateAccessibleGroups(\array_keys($this->objects));
     }
 }

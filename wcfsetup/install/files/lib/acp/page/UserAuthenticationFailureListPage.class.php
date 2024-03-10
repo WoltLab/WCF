@@ -45,7 +45,7 @@ class UserAuthenticationFailureListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['failureID', 'environment', 'userID', 'username', 'time', 'ipAddress', 'userAgent'];
+    public $validSortFields = ['failureID', 'environment', 'userID', 'username', 'time', 'ipAddress', 'userAgent', 'validationError'];
 
     /**
      * @inheritDoc

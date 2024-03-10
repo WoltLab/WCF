@@ -5,12 +5,13 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler"], function (require, exports, tslib_1, DomTraverse, Util_1, Environment, EventHandler) {
+define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler", "WoltLabSuite/Core/Ui/CloseOverlay"], function (require, exports, tslib_1, DomTraverse, Util_1, Environment, EventHandler, CloseOverlay_1) {
     "use strict";
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
     Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     class TabMenuSimple {
         container;
         containers = new Map();
@@ -266,6 +267,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                 // update history
                 window.history.replaceState(undefined, "", location);
             }
+            CloseOverlay_1.default.execute();
             void new Promise((resolve_1, reject_1) => { require(["../TabMenu"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((UiTabMenu) => {
                 UiTabMenu.scrollToTab(tab);
             });

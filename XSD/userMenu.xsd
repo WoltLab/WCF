@@ -34,7 +34,11 @@
 	</xs:complexType>
 	
 	<xs:complexType name="usermenuitem_icon">
-		<xs:attribute name="solid" type="xs:boolean" />
+		<xs:simpleContent>
+			<xs:extension base="woltlab_varchar">
+				<xs:attribute name="solid" type="xs:boolean" />
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 
 	<!-- imported/updated page menu item element -->

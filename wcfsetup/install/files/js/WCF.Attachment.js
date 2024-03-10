@@ -118,6 +118,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				{ listenToCkeditor },
 			) => {
 				const discardAllAttachments = () => {
+					// Disable the implicit deletion of signature attachments.
+					if (objectType === "com.woltlab.wcf.user.signature") {
+						return;
+					}
+
 					this._fileListSelector[0]
 							.querySelectorAll('li:not(.uploadFailed) .jsObjectAction[data-object-action="delete"]')
 							.forEach((button) => {

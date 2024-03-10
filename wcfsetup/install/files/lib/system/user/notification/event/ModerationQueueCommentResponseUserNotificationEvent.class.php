@@ -2,6 +2,7 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
@@ -57,7 +58,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
      */
     public function checkAccess()
     {
-        if (!WCF::getSession()->getPermission('mod.general.canUseModeration') || $this->getModerationQueue() === null) {
+        if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
             return false;
         }
 
@@ -161,7 +162,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         if (!$this->moderationQueueLoaded) {
             $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
 
-            $this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($comment->objectID);
+            $this->moderationQueue = new ViewableModerationQueue(new ModerationQueue($comment->objectID));
             $this->moderationQueueLoaded = true;
         }
 

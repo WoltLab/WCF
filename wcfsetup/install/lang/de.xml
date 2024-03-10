@@ -431,7 +431,7 @@
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[Der Pfad enthält keine neuen Pakete.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[Es {if $count > 1}wurden {#$count} neue Projekte{else}wurde ein neues Projekt{/if} hinzugefügt.]]></item>
-		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtungstest]]></item>
+		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
 		<item name="wcf.acp.devtools.notificationTest.button.test"><![CDATA[Testen]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail"><![CDATA[Tägliche E-Mail]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail.exception"><![CDATA[Tägliche E-Mail-Fehlermeldung]]></item>
@@ -1953,6 +1953,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.28"><![CDATA[Die &lt;packageinformation&gt; enthalten das doppelte Element „{$tag}“.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.29"><![CDATA[Es wurde keine Paketversion angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.30"><![CDATA[Es wurde keine Paketdatum angegeben.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.31"><![CDATA[Die Datei „package.xml“ ist ungültig{if $libxmlOutput}: {$libxmlOutput}{/if}.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. {if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/de/kaufen/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
@@ -3436,6 +3437,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>
 		<item name="wcf.cli.worker.threads.windows"><![CDATA[Die parallele Verarbeitung mittels --threads steht unter Windows nicht zur Verfügung.]]></item>
+		<item name="wcf.cli.worker.threads.variables_order"><![CDATA[Für die parallele Verarbeitung mittels --threads wird in der php.ini für "variables_order" der Wert "EGPCS" benötigt.]]></item>
 		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
 		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist ungültig.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>

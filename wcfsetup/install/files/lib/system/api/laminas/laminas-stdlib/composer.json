@@ -31,10 +31,10 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.5",
-        "phpbench/phpbench": "^1.2.14",
-        "phpunit/phpunit": "^10.3.3",
+        "phpbench/phpbench": "^1.2.15",
+        "phpunit/phpunit": "^10.5.8",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.15.0"
+        "vimeo/psalm": "^5.20.0"
     },
     "autoload": {
         "psr-4": {

@@ -624,3 +624,17 @@ html.iOS {
 		font-size: 16px;
 	}
 }
+
+.ck-link-form {
+  .ck-labeled-field-view {
+    order: 0;
+  }
+
+  .ck-button-cancel {
+    order: 1;
+  }
+
+  .ck-button-save {
+    order: 2;
+  }
+}
