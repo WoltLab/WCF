@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '6.0.x-dev',
-        'version' => '6.0.9999999.9999999-dev',
-        'reference' => '06074fe9cfc6d00fc36fd1b72cafa582b73ac5d8',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '3aceed93171132fe7c33bf939a643ada14052ab1',
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '6.0.x-dev',
-            'version' => '6.0.9999999.9999999-dev',
-            'reference' => '06074fe9cfc6d00fc36fd1b72cafa582b73ac5d8',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '3aceed93171132fe7c33bf939a643ada14052ab1',
             'type' => 'project',
             'install_path' => __DIR__ . '/../',
             'aliases' => array(),
@@ -123,6 +123,15 @@
             'replaced' => array(
                 0 => '^1.0',
             ),
+        ),
+        'nikic/fast-route' => array(
+            'pretty_version' => '2.0.0-beta1',
+            'version' => '2.0.0.0-beta1',
+            'reference' => 'd3ada013d0f683ad2a8d0614fc97917a6ab72ce9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nikic/fast-route',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
             'pretty_version' => 'v2.6.3',
