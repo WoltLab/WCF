@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\Helper;
 use wcf\system\endpoint\error\ControllerError;
 use wcf\system\endpoint\error\RouteParameterError;
 use wcf\system\endpoint\event\ControllerCollecting;
@@ -13,6 +14,7 @@ use wcf\system\endpoint\exception\ControllerMalformed;
 use wcf\system\endpoint\exception\RouteParameterMismatch;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\endpoint\Parameters;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\endpoint\RequestType;
 use wcf\system\event\EventHandler;
@@ -151,6 +153,28 @@ final class ApiAction implements RequestHandlerInterface
                     throw new \LogicException('Unreachable');
                 } else if ($type->getName() === ServerRequestInterface::class) {
                     return $request;
+                }
+
+                // Support the mapping of parameters based on the request type.
+                $mappingAttribute = current($parameter->getAttributes(Parameters::class));
+                if ($mappingAttribute !== false) {
+                    if ($type->getName() === 'array') {
+                        $classStringOrShape = $mappingAttribute->newInstance()->arrayShape;
+                    } else {
+                        $classStringOrShape = $type->getName();
+                    }
+
+                    if ($request->getMethod() === 'GET' || $request->getMethod() === 'DELETE') {
+                        return Helper::mapQueryParameters(
+                            $request->getQueryParams(),
+                            $classStringOrShape,
+                        );
+                    } else {
+                        return Helper::mapRequestBody(
+                            $request->getParsedBody(),
+                            $classStringOrShape,
+                        );
+                    }
                 }
 
                 throw new ControllerMalformed(

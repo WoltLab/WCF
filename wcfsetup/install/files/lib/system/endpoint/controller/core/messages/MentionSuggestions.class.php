@@ -4,28 +4,26 @@ namespace wcf\system\endpoint\controller\core\messages;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfileList;
-use wcf\http\Helper;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\endpoint\Parameters;
 use wcf\system\WCF;
 
 final class MentionSuggestions implements IController
 {
     #[GetRequest('/core/messages/mentionsuggestions')]
-    public function mentionSuggestions(ServerRequestInterface $request): ResponseInterface
-    {
-        $parameters = Helper::mapQueryParameters(
-            $request->getQueryParams(),
+    public function mentionSuggestions(
+        #[Parameters(
             <<<'EOT'
                 array {
                     query: non-empty-string
                 }
                 EOT,
-        );
-
+        )]
+        array $parameters
+    ): ResponseInterface {
         $query = \mb_strtolower($parameters['query']);
         $matches = [];
 
