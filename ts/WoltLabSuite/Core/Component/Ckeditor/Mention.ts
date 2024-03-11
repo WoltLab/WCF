@@ -40,7 +40,7 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
   }
 
   // TODO: Provide the URL as a parameter.
-  const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
+  const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/messages/mentionsuggestions");
   url.searchParams.set("query", query);
 
   const result = (await prepareRequest(url.toString())

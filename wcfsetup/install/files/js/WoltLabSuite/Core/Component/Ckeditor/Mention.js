@@ -17,7 +17,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
             return [];
         }
         // TODO: Provide the URL as a parameter.
-        const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
+        const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/messages/mentionsuggestions");
         url.searchParams.set("query", query);
         const result = (await (0, Backend_1.prepareRequest)(url.toString())
             .get()
