@@ -5,7 +5,6 @@ namespace wcf\action;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\http\Helper;
 use wcf\system\endpoint\controller\core\messages\MentionSuggestions;
 
 /**
@@ -21,22 +20,8 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $reflectionClass = new \ReflectionClass(MentionSuggestions::class);
-        $relfectionMethod = $reflectionClass->getMethod('mentionSuggestions');
-        $parameters = $relfectionMethod->getParameters();
+        $controller = new MentionSuggestions();
 
-        \assert(\count($parameters) === 1);
-        \assert($parameters[0]->getName() === 'parameters');
-
-        $type = $parameters[0]->getType();
-
-        \assert($type instanceof \ReflectionNamedType);
-
-        $parameters = Helper::mapQueryParameters(
-            $request->getQueryParams(),
-            $type->getName(),
-        );
-
-        return (new MentionSuggestions())->mentionSuggestions($parameters);
+        return $controller($request, []);
     }
 }
