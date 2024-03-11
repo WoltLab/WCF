@@ -10,6 +10,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\attribute\AllowHttpMethod;
 use wcf\system\endpoint\event\ControllerCollecting;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\RequestFailure;
@@ -21,6 +22,7 @@ use wcf\system\request\RouteHandler;
 
 use function FastRoute\simpleDispatcher;
 
+#[AllowHttpMethod('DELETE')]
 final class ApiAction implements RequestHandlerInterface
 {
     #[\Override]
