@@ -2,8 +2,16 @@
 
 namespace wcf\system\endpoint;
 
-enum RequestMethod: string
+enum RequestMethod
 {
-    case GET = 'GET';
-    case POST = 'POST';
+    case GET;
+    case POST;
+
+    public function toString(): string
+    {
+        return match ($this) {
+            self::GET => 'GET',
+            self::POST => 'POST',
+        };
+    }
 }

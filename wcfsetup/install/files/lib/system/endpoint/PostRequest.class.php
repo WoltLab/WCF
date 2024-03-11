@@ -2,7 +2,7 @@
 
 namespace wcf\system\endpoint;
 
-#[\Attribute(\Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 final class PostRequest extends RequestType
 {
     public function __construct(string $uri)

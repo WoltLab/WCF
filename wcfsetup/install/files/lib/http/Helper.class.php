@@ -8,6 +8,7 @@ use CuyZ\Valinor\MapperBuilder;
 use Negotiation\Accept;
 use Negotiation\Negotiator;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use wcf\util\StringUtil;
 
@@ -138,6 +139,24 @@ final class Helper
             $schema,
             Source::array($bodyParameters)
         );
+    }
+
+    /**
+     * Validates the query string parameters for `GET` and `DELETE` requests
+     * based on the signature of the provided class name. For `POST` request
+     * the parsed body is validated instead.
+     *
+     * @template T
+     * @param class-string<T> $className
+     * @return T
+     * @throws MappingError
+     */
+    public static function mapApiParameters(ServerRequestInterface $request, string $className): object
+    {
+        return match ($request->getMethod()) {
+            'GET', 'DELETE' => self::mapQueryParameters($request->getQueryParams(), $className),
+            'POST' => self::mapRequestBody($request->getParsedBody(), $className)
+        };
     }
 
     /**

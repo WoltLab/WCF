@@ -2,7 +2,8 @@
 
 namespace wcf\system\endpoint;
 
-abstract class RequestType
+#[\Attribute(\Attribute::TARGET_CLASS)]
+class RequestType
 {
     public function __construct(
         public readonly RequestMethod $method,
