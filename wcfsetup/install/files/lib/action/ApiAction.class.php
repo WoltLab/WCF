@@ -11,45 +11,38 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\system\endpoint\event\ControllerCollecting;
-use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
-use wcf\system\endpoint\PostRequest;
+use wcf\system\endpoint\RequestFailure;
 use wcf\system\endpoint\RequestType;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\request\RouteHandler;
 
 use function FastRoute\simpleDispatcher;
 
 final class ApiAction implements RequestHandlerInterface
 {
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $targetAttribute = match ($request->getMethod()) {
-            'GET' => GetRequest::class,
-            'POST' => PostRequest::class,
-            default => null,
+        $isSupportedVerb = match ($request->getMethod()) {
+            'DELETE', 'GET', 'POST' => true,
+            default => false,
         };
 
-        if ($targetAttribute === null) {
-            // TODO: debug response
-            return new JsonResponse([
-                'type' => 'invalid_request_error',
-                'code' => 'method_not_allowed',
-                'message' => 'The only supported verbs are "GET", "POST" and "DELETE".',
-                'param' => '',
-            ], 405);
+        if (!$isSupportedVerb) {
+            return $this->toErrorResponse(RequestFailure::METHOD_NOT_ALLOWED, 'unacceptable_method');
         }
 
-        $result = $this->parsePathInfo(RouteHandler::getPathInfo());
-        if ($result === null) {
-            \wcfDebug(RouteHandler::getPathInfo());
+        $endpoint = $this->getEndpointFromPathInfo(RouteHandler::getPathInfo());
+        if ($endpoint === null) {
+            return $this->toErrorResponse(RequestFailure::UNKNOWN_ENDPOINT, 'missing_endpoint');
         }
-
-        [$type, $prefix, $endpoint] = $result;
 
         // TODO: This is currently very inefficient and should be cached in some
         //       way, maybe even use a combined cache for both?
-        $event = new ControllerCollecting($prefix);
+        $event = new ControllerCollecting();
         EventHandler::getInstance()->fire($event);
 
         $dispatcher = simpleDispatcher(
@@ -73,23 +66,11 @@ final class ApiAction implements RequestHandlerInterface
         $result = $dispatcher->dispatch($request->getMethod(), $endpoint);
 
         if ($result instanceof NotMatched) {
-            // TODO: debug response
-            return new JsonResponse([
-                'type' => 'invalid_request_error',
-                'type' => $type,
-                'prefix' => $prefix,
-                'endpoint' => $endpoint,
-            ], 404);
+            return $this->toErrorResponse(RequestFailure::UNKNOWN_ENDPOINT, 'unknown_endpoint');
         }
 
         if ($result instanceof MethodNotAllowed) {
-            // TODO: debug response
-            return new JsonResponse([
-                'type' => 'invalid_request_error',
-                'type' => $type,
-                'prefix' => $prefix,
-                'endpoint' => $endpoint,
-            ], 405);
+            return $this->toErrorResponse(RequestFailure::METHOD_NOT_ALLOWED, 'endpoint_does_not_allow_method');
         }
 
         /** @var IController */
@@ -98,40 +79,43 @@ final class ApiAction implements RequestHandlerInterface
         try {
             return $controller($request, $result->variables);
         } catch (MappingError $e) {
-            return new JsonResponse([
-                'type' => 'invalid_request_error',
-                'code' => 'mapping_error',
-                'message' => $e->getMessage(),
-                'param' => '',
-            ], 400);
+            return $this->toErrorResponse(RequestFailure::VALIDATION_FAILED, 'mapping_error', $e->getMessage());
+        } catch (PermissionDeniedException) {
+            return $this->toErrorResponse(RequestFailure::PERMISSION_DENIED, 'permission_denied');
+        } catch (UserInputException $e) {
+            return $this->toErrorResponse(RequestFailure::VALIDATION_FAILED, $e->getType(), $e->getMessage(), $e->getField());
+        } catch (\Throwable $e) {
+            return $this->toErrorResponse(RequestFailure::INTERNAL_ERROR, 'unknown_exception', $e->getMessage());
         }
     }
 
-    /**
-     * @return array{string, string, string}|null
-     */
-    private function parsePathInfo(string $pathInfo): array|null
+    private function getEndpointFromPathInfo(string $pathInfo): ?string
     {
         if (!\str_starts_with($pathInfo, 'api/rpc/')) {
             return null;
         }
 
-        $pathInfo = \mb_substr($pathInfo, \strlen('api/rpc/') - 1);
+        $endpoint = \mb_substr($pathInfo, \strlen('api/rpc/') - 1);
 
-        $segments = \explode('/', $pathInfo);
-        if (\count($segments) < 3) {
-            // The namespace and the primary object are always required.
+        // The namespace and the primary object are always required.
+        if (\substr_count($endpoint, '/') < 2 || \str_ends_with($endpoint, '/')) {
             return null;
         }
 
-        return [
-            'rpc',
-            \sprintf(
-                '/%s/%s',
-                $segments[1],
-                $segments[2],
-            ),
-            $pathInfo
-        ];
+        return $endpoint;
+    }
+
+    private function toErrorResponse(
+        RequestFailure $reason,
+        string $code,
+        string $message = '',
+        string $param = ''
+    ): ResponseInterface {
+        return new JsonResponse([
+            'type' => $reason->toString(),
+            'code' => $code,
+            'message' => $message,
+            'param' => $param,
+        ], $reason->toStatusCode());
     }
 }

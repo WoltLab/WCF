@@ -15,6 +15,7 @@ use wcf\system\WCF;
 #[GetRequest('/core/messages/mentionsuggestions')]
 final class MentionSuggestions implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $parameters = Helper::mapApiParameters($request, MentionSuggestionsParameters::class);
