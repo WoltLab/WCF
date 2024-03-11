@@ -86,7 +86,6 @@ return static function (): void {
 
     $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
         $event->register(new \wcf\system\endpoint\controller\core\messages\MentionSuggestions);
-        $event->register(new \wcf\system\endpoint\moderationqueues\Assign);
     });
 
     try {
