@@ -412,7 +412,7 @@ class ControllerClipboard {
     this.reloadPageOnSuccess.clear();
 
     // rebuild markings
-    const markings = Core.isPlainObject(data.returnValues.markedItems) ? data.returnValues.markedItems! : {};
+    const markings = Core.isPlainObject(data.returnValues.markedItems) ? data.returnValues.markedItems : {};
     this.containers.forEach((containerData) => {
       const typeName = containerData.element.dataset.type!;
 
