@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
-use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
@@ -20,7 +20,7 @@ final class DeleteSession implements IController
         $sessionID = $variables['id'];
 
         if (!$this->isOwnSessionID($sessionID)) {
-            throw new IllegalLinkException();
+            throw new UserInputException('sessionID');
         }
 
         SessionHandler::getInstance()->deleteUserSession($sessionID);

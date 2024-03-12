@@ -7,7 +7,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"], function (require, exports, Backend_1, Util_1, Event_1) {
+define(["require", "exports", "../../Dom/Util", "./Event", "WoltLabSuite/Core/Api/Messages/MentionSuggestions"], function (require, exports, Util_1, Event_1, MentionSuggestions_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -16,15 +16,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
         if (query.length > 24) {
             return [];
         }
-        // TODO: Provide the URL as a parameter.
-        const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/messages/mentionsuggestions");
-        url.searchParams.set("query", query);
-        const result = (await (0, Backend_1.prepareRequest)(url.toString())
-            .get()
-            .allowCaching()
-            .disableLoadingIndicator()
-            .fetchAsJson());
-        return result.map((item) => {
+        return (await (0, MentionSuggestions_1.mentionSuggestions)(query)).unwrap().map((item) => {
             if (item.type === "user") {
                 return {
                     id: `@${item.username}`,

@@ -15,6 +15,7 @@ use wcf\util\StringUtil;
  * @author  Joshua Ruesweg
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1
  */
 final class DeleteSessionAction extends AbstractSecureAction
 {
