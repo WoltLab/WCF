@@ -107,12 +107,10 @@
 </section>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Session/Delete'], function(Language, UserSessionDelete) {
-		Language.addObject({
-			'wcf.user.security.deleteSession.confirmMessage': '{jslang}wcf.user.security.deleteSession.confirmMessage{/jslang}',
-		});
+	require(['WoltLabSuite/Core/Ui/User/Session/Delete'], ({ setup }) => {
+		{jsphrase name='wcf.user.security.deleteSession.confirmMessage'}
 		
-		new (UserSessionDelete.default)();
+		setup();
 	});
 </script>
 

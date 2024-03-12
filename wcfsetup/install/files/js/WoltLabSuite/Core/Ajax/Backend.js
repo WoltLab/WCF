@@ -16,11 +16,14 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         constructor(url) {
             this.url = url;
         }
+        delete() {
+            return new BackendRequest(this.url, 0 /* RequestType.DELETE */);
+        }
         get() {
-            return new GetRequest(this.url, 0 /* RequestType.GET */);
+            return new GetRequest(this.url, 1 /* RequestType.GET */);
         }
         post(payload) {
-            return new BackendRequest(this.url, 1 /* RequestType.POST */, payload);
+            return new BackendRequest(this.url, 2 /* RequestType.POST */, payload);
         }
     }
     let ignoreConnectionErrors = false;
@@ -89,7 +92,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                 cache: this.#allowCaching ? "default" : "no-store",
                 redirect: "error",
             }, requestOptions);
-            if (this.#type === 1 /* RequestType.POST */) {
+            if (this.#type === 2 /* RequestType.POST */) {
                 init.method = "POST";
                 if (this.#payload) {
                     if (this.#payload instanceof FormData) {

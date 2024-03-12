@@ -19,6 +19,7 @@ import {
 import { extend, getXsrfToken } from "../Core";
 
 const enum RequestType {
+  DELETE,
   GET,
   POST,
 }
@@ -30,6 +31,10 @@ class SetupRequest {
 
   constructor(url: string) {
     this.url = url;
+  }
+
+  delete(): BackendRequest {
+    return new BackendRequest(this.url, RequestType.DELETE);
   }
 
   get(): GetRequest {
