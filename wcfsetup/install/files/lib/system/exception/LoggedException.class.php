@@ -15,6 +15,8 @@ namespace wcf\system\exception;
  */
 class LoggedException extends \Exception
 {
+    protected string $exceptionID;
+
     /**
      * Returns exception id
      *
