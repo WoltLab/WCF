@@ -97,6 +97,15 @@
 				label: '{jslang}wcf.editor.button.media{/jslang}',
 			});
 		}
+		{assign var=emojis value=$__wcf->getSmileyCache()->getEmojis()}
+		const smileys = [
+			{foreach from=$emojis key=__code item=__smiley}
+			{
+				code: '{@$__code|encodeJS}',
+				html: '{@$__smiley->getHtml()|encodeJS}',
+			},
+			{/foreach}
+		];
 
 		const codeBlockLanguages = [
 			{ language: "", label: '{jslang}wcf.editor.code.highlighter.detect{/jslang}' },
@@ -106,6 +115,6 @@
 			{/foreach}
 		];
 
-		void setupCkeditor(element, features, bbcodes, codeBlockLanguages, '{@$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
+		void setupCkeditor(element, features, bbcodes, smileys, codeBlockLanguages, '{@$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
 	});
 </script>
