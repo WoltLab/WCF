@@ -2,6 +2,8 @@
 
 namespace wcf\system\html\node;
 
+use Laminas\Diactoros\Exception\InvalidArgumentException;
+use Laminas\Diactoros\Uri;
 use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\util\DOMUtil;
 use wcf\util\Url;
@@ -27,19 +29,38 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
             return;
         }
 
-        if (!Url::is($link->href)) {
+        try {
+            $uri = new Uri($link->href);
+        } catch (InvalidArgumentException) {
             return;
         }
 
-        $parsedUrl = Url::parse($link->href);
+        $path = $uri->getPath();
+        if ($path !== '') {
+            // This is a simplified transformation that will only replace
+            // characters that are known to be always invalid in URIs and must
+            // be encoded at all times according to RFC 1738.
+            $path = \preg_replace_callback(
+                '~[^0-9a-zA-Z$-_.+!*\'(),;/?:@=&]~',
+                static fn (array $matches) => \rawurlencode($matches[0]),
+                $path
+            );
+            $uri = $uri->withPath($path);
+
+            // The above replacement excludes certain characters from the
+            // replacement that are conditionally unsafe.
+            if (!Url::is($uri->__toString())) {
+                return;
+            }
+        }
 
         // Ignore non-standard ports.
-        if ($parsedUrl['port']) {
+        if ($uri->getPort() !== null) {
             return;
         }
 
         // Ignore non-HTTP schemes.
-        if (!\in_array($parsedUrl['scheme'], ['http', 'https'])) {
+        if (!\in_array($uri->getScheme(), ['http', 'https'])) {
             return;
         }
 
@@ -47,7 +68,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
 
         $object = new UnfurlUrlAction([], 'findOrCreate', [
             'data' => [
-                'url' => $link->href,
+                'url' => $uri->__toString(),
             ],
         ]);
         $returnValues = $object->executeAction();
