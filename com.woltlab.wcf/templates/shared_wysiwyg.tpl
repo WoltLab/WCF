@@ -97,9 +97,8 @@
 				label: '{jslang}wcf.editor.button.media{/jslang}',
 			});
 		}
-		{assign var=emojis value=$__wcf->getSmileyCache()->getEmojis()}
 		const smileys = [
-			{foreach from=$emojis key=__code item=__smiley}
+			{foreach from=$__wcf->getSmileyCache()->getEmojis() key=__code item=__smiley}
 			{
 				code: '{@$__code|encodeJS}',
 				html: '{@$__smiley->getHtml()|encodeJS}',
