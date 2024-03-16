@@ -562,6 +562,10 @@
 		justify-content: center;
 		height: 100%;
 		width: 100%;
+
+		fa-icon {
+			color: var(--wcfHeaderText);
+		}
 	}
 
 	.userPanel.hideUserPanel::before {
