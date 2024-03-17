@@ -45,7 +45,7 @@ define(["require", "exports", "../Core", "./Error"], function (require, exports,
             typeof json.code === "string" &&
             typeof json.message === "string" &&
             typeof json.param === "string") {
-            return apiResultFromError(new Error_1.ApiError(json.type, json.code, json.message, json.param));
+            return apiResultFromError(new Error_1.ApiError(json.type, json.code, json.message, json.param, response.status));
         }
         throw e;
     }
