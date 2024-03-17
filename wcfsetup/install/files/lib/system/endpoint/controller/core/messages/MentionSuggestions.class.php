@@ -19,6 +19,9 @@ final class MentionSuggestions implements IController
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $parameters = Helper::mapApiParameters($request, MentionSuggestionsParameters::class);
+        if (\mb_strlen($parameters->query) < 3) {
+            throw new UserInputException('query', 'tooShort');
+        }
 
         $query = \mb_strtolower($parameters->query);
         $matches = [];
