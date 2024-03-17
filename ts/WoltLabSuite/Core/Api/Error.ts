@@ -1,3 +1,12 @@
+/**
+ * Represents an error from a failed request to an API endpoint.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
+
 type RequestFailureType = "api_error" | "invalid_request_error";
 
 export class ApiError {

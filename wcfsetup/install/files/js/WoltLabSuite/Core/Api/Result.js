@@ -1,3 +1,13 @@
+/**
+ * Represents the result of a request to an API endpoint and provides functions
+ * to create the result itself. Unwrapping the result through `.unwrap()` is
+ * useful in situations where there should formally never an error.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
 define(["require", "exports", "../Core", "./Error"], function (require, exports, Core_1, Error_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
