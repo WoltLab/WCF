@@ -34,12 +34,12 @@ final class ApiAction implements RequestHandlerInterface
         };
 
         if (!$isSupportedVerb) {
-            return $this->toErrorResponse(RequestFailure::METHOD_NOT_ALLOWED, 'unacceptable_method');
+            return $this->toErrorResponse(RequestFailure::MethodNotAllowed, 'unacceptable_method');
         }
 
         $endpoint = $this->getEndpointFromPathInfo(RouteHandler::getPathInfo());
         if ($endpoint === null) {
-            return $this->toErrorResponse(RequestFailure::UNKNOWN_ENDPOINT, 'missing_endpoint');
+            return $this->toErrorResponse(RequestFailure::UnknownEndpoint, 'missing_endpoint');
         }
 
         // TODO: This is currently very inefficient and should be cached in some
@@ -68,11 +68,11 @@ final class ApiAction implements RequestHandlerInterface
         $result = $dispatcher->dispatch($request->getMethod(), $endpoint);
 
         if ($result instanceof NotMatched) {
-            return $this->toErrorResponse(RequestFailure::UNKNOWN_ENDPOINT, 'unknown_endpoint');
+            return $this->toErrorResponse(RequestFailure::UnknownEndpoint, 'unknown_endpoint');
         }
 
         if ($result instanceof MethodNotAllowed) {
-            return $this->toErrorResponse(RequestFailure::METHOD_NOT_ALLOWED, 'endpoint_does_not_allow_method');
+            return $this->toErrorResponse(RequestFailure::MethodNotAllowed, 'endpoint_does_not_allow_method');
         }
 
         /** @var IController */
@@ -81,13 +81,13 @@ final class ApiAction implements RequestHandlerInterface
         try {
             return $controller($request, $result->variables);
         } catch (MappingError $e) {
-            return $this->toErrorResponse(RequestFailure::VALIDATION_FAILED, 'mapping_error', $e->getMessage());
+            return $this->toErrorResponse(RequestFailure::ValidationFailed, 'mapping_error', $e->getMessage());
         } catch (PermissionDeniedException) {
-            return $this->toErrorResponse(RequestFailure::PERMISSION_DENIED, 'permission_denied');
+            return $this->toErrorResponse(RequestFailure::PermissionDenied, 'permission_denied');
         } catch (UserInputException $e) {
-            return $this->toErrorResponse(RequestFailure::VALIDATION_FAILED, $e->getType(), $e->getMessage(), $e->getField());
+            return $this->toErrorResponse(RequestFailure::ValidationFailed, $e->getType(), $e->getMessage(), $e->getField());
         } catch (\Throwable $e) {
-            return $this->toErrorResponse(RequestFailure::INTERNAL_ERROR, 'unknown_exception', $e->getMessage());
+            return $this->toErrorResponse(RequestFailure::InternalError, 'unknown_exception', $e->getMessage());
         }
     }
 

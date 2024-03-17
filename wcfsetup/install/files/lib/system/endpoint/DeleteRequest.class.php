@@ -7,6 +7,6 @@ final class DeleteRequest extends RequestType
 {
     public function __construct(string $uri)
     {
-        parent::__construct(RequestMethod::GET, $uri);
+        parent::__construct(RequestMethod::DELETE, $uri);
     }
 }
