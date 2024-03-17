@@ -62,7 +62,7 @@ export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResul
     typeof json.message === "string" &&
     typeof json.param === "string"
   ) {
-    return apiResultFromError(new ApiError(json.type, json.code, json.message, json.param));
+    return apiResultFromError(new ApiError(json.type, json.code, json.message, json.param, response.status));
   }
 
   throw e;
