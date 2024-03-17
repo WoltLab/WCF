@@ -10,8 +10,17 @@ use wcf\data\user\UserProfileList;
 use wcf\http\Helper;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
+/**
+ * Retrieves the list of users and groups that can be mentioned.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
 #[GetRequest('/core/messages/mentionsuggestions')]
 final class MentionSuggestions implements IController
 {

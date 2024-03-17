@@ -22,6 +22,15 @@ use wcf\system\request\RouteHandler;
 
 use function FastRoute\simpleDispatcher;
 
+/**
+ * Resolves and forwards API requests to the responsible controllers, exposing
+ * a unified JSON-based response with a clearly defined behavior.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
 #[AllowHttpMethod('DELETE')]
 final class ApiAction implements RequestHandlerInterface
 {

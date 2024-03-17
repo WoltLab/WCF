@@ -11,6 +11,15 @@ use wcf\system\exception\UserInputException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
+/**
+ * Deletes one of the current user’s sessions, causing a device with that
+ * session id to be logged out.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.1
+ */
 #[DeleteRequest('/core/sessions/{id}')]
 final class DeleteSession implements IController
 {
