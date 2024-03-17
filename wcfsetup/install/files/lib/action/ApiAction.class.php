@@ -3,14 +3,15 @@
 namespace wcf\action;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use FastRoute\ConfigureRoutes;
 use FastRoute\Dispatcher\Result\MethodNotAllowed;
 use FastRoute\Dispatcher\Result\NotMatched;
-use FastRoute\RouteCollector;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\attribute\AllowHttpMethod;
+use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\endpoint\event\ControllerCollecting;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\RequestFailure;
@@ -20,7 +21,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RouteHandler;
 
-use function FastRoute\simpleDispatcher;
+use function FastRoute\cachedDispatcher;
 
 /**
  * Resolves and forwards API requests to the responsible controllers, exposing
@@ -51,13 +52,11 @@ final class ApiAction implements RequestHandlerInterface
             return $this->toErrorResponse(RequestFailure::UnknownEndpoint, 'missing_endpoint');
         }
 
-        // TODO: This is currently very inefficient and should be cached in some
-        //       way, maybe even use a combined cache for both?
-        $event = new ControllerCollecting();
-        EventHandler::getInstance()->fire($event);
+        $dispatcher = cachedDispatcher(
+            static function (ConfigureRoutes $r) {
+                $event = new ControllerCollecting();
+                EventHandler::getInstance()->fire($event);
 
-        $dispatcher = simpleDispatcher(
-            static function (RouteCollector $r) use ($event) {
                 foreach ($event->getControllers() as $controller) {
                     $reflectionClass = new \ReflectionClass($controller);
                     $attribute = current($reflectionClass->getAttributes(RequestType::class, \ReflectionAttribute::IS_INSTANCEOF));
@@ -69,8 +68,8 @@ final class ApiAction implements RequestHandlerInterface
                 }
             },
             [
-                // TODO: debug only
-                'cacheDisabled' => true,
+                'cacheKey' => self::class,
+                'cacheDriver' => ApiEndpointCacheBuilder::getInstance(),
             ]
         );
 
