@@ -51,7 +51,7 @@
 				<input type="datetime" tabindex="-1" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 				{if $errorField == 'pollEndTime'}
 					<small class="innerError">
-						{lang}wcf.poll.endTime.error.{@$errorType}{/lang}
+						{lang}{@$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -64,7 +64,7 @@
 				<input type="number" name="pollMaxVotes" id="pollMaxVotes" value="{$pollMaxVotes}" min="1" class="tiny">
 				{if $errorField == 'pollMaxVotes'}
 					<small class="innerError">
-						{lang}wcf.poll.maxVotes.error.{@$errorType}{/lang}
+						{lang}{@$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
