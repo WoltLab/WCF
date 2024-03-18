@@ -166,9 +166,10 @@ class SmileyCache extends SingletonFactory
     }
 
     /**
-     * Return all smileys that matching `:[a-z]+(?:_[a-z]+)*:`.
+     * Return all smileys that match `:[a-z]+(?:_[a-z]+)*:`.
      *
      * @return Smiley[]
+     * @since 6.1
      */
     public function getEmojis(): array
     {
