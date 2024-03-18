@@ -3,6 +3,7 @@
 namespace wcf\system\html\upcast\node;
 
 use wcf\data\bbcode\BBCodeCache;
+use wcf\system\html\metacode\upcast\EmptyMetacodeUpcast;
 use wcf\system\html\metacode\upcast\IMetacodeUpcast;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
@@ -28,6 +29,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
         /** @var IMetacodeUpcast[] $upcasters */
         $upcasters = [];
         $nodes = [];
+        $emptyMetacodeUpcast = new EmptyMetacodeUpcast();
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
@@ -45,6 +47,11 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
             $attributes = $htmlNodeProcessor->parseAttributes($element->getAttribute('data-attributes'));
             if ($attributes === []) {
                 $element->removeAttribute('data-attributes');
+            }
+            $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
+            if (!$bbcode->originIsSystem) {
+                $nodes[] = [$element, $name, $emptyMetacodeUpcast, $attributes];
+                continue;
             }
 
             // check for upcast
@@ -71,7 +78,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
             } else {
                 // Replace this with a text node
                 /** @see HtmlBBCodeParser::buildBBCodeTag() */
-                $attributes = \array_filter($attributes, fn($value) => $value !== null);
+                $attributes = \array_filter($attributes, static fn($value) => $value !== null);
 
                 if (!empty($attributes)) {
                     foreach ($attributes as &$attribute) {
@@ -83,16 +90,36 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 } else {
                     $attributes = '';
                 }
-                $text = \sprintf('[%s%s][/%s]', $name, $attributes, $name);
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
 
                 if ($bbcode === null || $bbcode->isBlockElement) {
                     $newElement = $element->ownerDocument->createElement('p');
-                    $newElement->textContent = $text;
-                    DOMUtil::replaceElement($element, $newElement);
+                    $newElement->appendChild($element->ownerDocument->createTextNode("[{$name}{$attributes}]"));
+                    if ($bbcode->isSourceCode) {
+                        $newElement->appendChild(
+                            $element->ownerDocument->createTextNode($element->textContent)
+                        );
+                        DomUtil::replaceElement($element, $newElement, false);
+                    } else {
+                        DomUtil::replaceElement($element, $newElement);
+                    }
+                    $newElement->appendChild($element->ownerDocument->createTextNode("[/{$name}]"));
                 } else {
-                    $element->parentNode->insertBefore($element->ownerDocument->createTextNode($text), $element);
-                    $element->parentNode->removeChild($element);
+                    $insertNode = $element->parentNode->insertBefore(
+                        $element->ownerDocument->createTextNode("[{$name}{$attributes}]"),
+                        $element
+                    );
+                    if ($bbcode->isSourceCode) {
+                        $insertNode->parentNode->appendChild(
+                            $element->ownerDocument->createTextNode($element->textContent)
+                        );
+                        DOMUtil::removeNode($element);
+                    } else {
+                        DOMUtil::removeNode($element, true);
+                    }
+                    $insertNode->parentNode->appendChild(
+                        $element->ownerDocument->createTextNode("[/{$name}]")
+                    );
                 }
             }
         }
