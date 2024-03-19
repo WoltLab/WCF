@@ -3,7 +3,7 @@
 namespace wcf\system\html\metacode\upcast;
 
 /**
- * An empty implementation for metacode upcast, that always let the metacdoe convert to his plain text representation.
+ * Always forces the passed BBCode to be converted into its plain text representation.
  *
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
