@@ -17,6 +17,7 @@ return array(
     'de95e0ac670b27c84ef8c5ac41fc1b34' => $vendorDir . '/laminas/laminas-diactoros/src/functions/normalize_server.php',
     'b6c2870932b0250c10334a86dcb33c7f' => $vendorDir . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php',
     'd02cf21124526632320d6f20b1bbf905' => $vendorDir . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.php',
+    '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
     '5897ea0ac4cccf14d323035e65887801' => $vendorDir . '/symfony/polyfill-php82/bootstrap.php',
     '662a729f963d39afe703c9d9b7ab4a8c' => $vendorDir . '/symfony/polyfill-php83/bootstrap.php',
 );
