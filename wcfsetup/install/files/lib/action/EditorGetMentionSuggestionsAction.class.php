@@ -5,7 +5,7 @@ namespace wcf\action;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\system\endpoint\controller\core\messages\MentionSuggestions;
+use wcf\system\endpoint\controller\core\messages\GetMentionSuggestions;
 
 /**
  * Suggests users that may be mentioned.
@@ -20,7 +20,7 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $controller = new MentionSuggestions();
+        $controller = new GetMentionSuggestions();
 
         return $controller($request, []);
     }

@@ -22,12 +22,12 @@ use wcf\system\WCF;
  * @since 6.1
  */
 #[GetRequest('/core/messages/mentionsuggestions')]
-final class MentionSuggestions implements IController
+final class GetMentionSuggestions implements IController
 {
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $parameters = Helper::mapApiParameters($request, MentionSuggestionsParameters::class);
+        $parameters = Helper::mapApiParameters($request, GetMentionSuggestionsParameters::class);
         if (\mb_strlen($parameters->query) < 3) {
             throw new UserInputException('query', 'tooShort');
         }
@@ -102,7 +102,7 @@ final class MentionSuggestions implements IController
 }
 
 /** @internal */
-final class MentionSuggestionsParameters
+final class GetMentionSuggestionsParameters
 {
     public function __construct(
         /** @var non-empty-string */
