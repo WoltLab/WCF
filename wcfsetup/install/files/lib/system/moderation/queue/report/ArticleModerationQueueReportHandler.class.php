@@ -2,10 +2,12 @@
 
 namespace wcf\system\moderation\queue\report;
 
+use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\article\ViewableArticle;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\moderation\queue\AbstractModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -178,5 +180,24 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         if ($this->isValid($queue->objectID)) {
             (new ArticleAction([$this->getArticle($queue->objectID)->getDecoratedObject()], 'trash'))->executeAction();
         }
+    }
+
+    #[\Override]
+    public function isAffectedUser(ModerationQueue $queue, $userID)
+    {
+        if (!parent::isAffectedUser($queue, $userID)) {
+            return false;
+        }
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
+        $article = $this->getArticle($queue->objectID);
+        if ($article === null) {
+            return false;
+        }
+        /** @see Article::canDelete() */
+        if ($userProfile->getPermission('admin.content.article.canManageArticle')) {
+            return true;
+        }
+        return $userProfile->getPermission('admin.content.article.canManageOwnArticles')
+            && $article->userID == $userProfile->userID;
     }
 }
