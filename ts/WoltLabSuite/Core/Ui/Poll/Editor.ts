@@ -14,6 +14,7 @@ import * as EventHandler from "../../Event/Handler";
 import * as DatePicker from "../../Date/Picker";
 import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { listenToCkeditor } from "../../Component/Ckeditor/Event";
+import DomUtil from "WoltLabSuite/Core/Dom/Util";
 
 interface UiPollEditorOptions {
   isAjax: boolean;
@@ -241,17 +242,16 @@ class UiPollEditor {
    */
   private handleError(data: AjaxResponse): void {
     switch (data.returnValues.fieldName) {
-      case this.wysiwygId + "pollEndTime":
-      case this.wysiwygId + "pollMaxVotes": {
-        const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "poll", "");
+      case "pollEndTime":
+      case "pollMaxVotes": {
+        let fieldName = data.returnValues.fieldName.replace("poll", "");
+        fieldName = fieldName.charAt(0).toLowerCase() + fieldName.slice(1);
 
-        const small = document.createElement("small");
-        small.classList.add("innerError");
-        small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);
-
-        const field = document.getElementById(data.returnValues.fieldName)!;
-        (field.nextSibling! as HTMLElement).insertAdjacentElement("afterbegin", small);
-
+        DomUtil.innerError(
+          document.getElementById(this.wysiwygId + data.returnValues.fieldName)!,
+          Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType),
+          true,
+        );
         data.cancel = true;
         break;
       }
