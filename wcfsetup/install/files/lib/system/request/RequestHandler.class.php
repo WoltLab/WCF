@@ -16,6 +16,7 @@ use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
 use wcf\http\middleware\CheckForExpiredAppEvaluation;
+use wcf\http\middleware\CheckForForceLogin;
 use wcf\http\middleware\CheckForMultifactorRequirement;
 use wcf\http\middleware\CheckForOfflineMode;
 use wcf\http\middleware\CheckHttpMethod;
@@ -144,6 +145,7 @@ final class RequestHandler extends SingletonFactory
                     new CheckForEnterpriseNonOwnerAccess(),
                     new CheckForExpiredAppEvaluation(),
                     new CheckForOfflineMode(),
+                    new CheckForForceLogin(),
                     new CheckForMultifactorRequirement(),
                     new JsonBody(),
                     new TriggerBackgroundQueue(),
