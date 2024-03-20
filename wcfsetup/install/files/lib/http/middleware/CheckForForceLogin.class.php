@@ -2,15 +2,18 @@
 
 namespace wcf\http\middleware;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\form\LoginForm;
+use wcf\http\Helper;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Checks whether the 'force login' option is enabled and the request must be intercepted.
@@ -22,6 +25,8 @@ use wcf\system\WCF;
  */
 final class CheckForForceLogin implements MiddlewareInterface
 {
+    private const STATUS_CODE = 503;
+
     private const ALLOWED_CONTROLLERS = [
         \wcf\form\EmailActivationForm::class,
         \wcf\form\EmailNewActivationCodeForm::class,
@@ -48,9 +53,26 @@ final class CheckForForceLogin implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        return new RedirectResponse(
-            LinkHandler::getInstance()->getControllerLink(LoginForm::class)
-        );
+        $preferredType = Helper::getPreferredContentType($request, [
+            'application/json',
+            'text/html',
+        ]);
+
+        return match ($preferredType) {
+            'application/json' => HeaderUtil::withNoCacheHeaders(
+                new JsonResponse(
+                    [
+                        'message' => WCF::getLanguage()->getDynamicVariable('wcf.user.login.forceLogin'),
+                    ],
+                    self::STATUS_CODE,
+                    [],
+                    \JSON_PRETTY_PRINT
+                )
+            ),
+            'text/html' => new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(LoginForm::class)
+            )
+        };
     }
 
     private function forceLoginEnabled(): bool
