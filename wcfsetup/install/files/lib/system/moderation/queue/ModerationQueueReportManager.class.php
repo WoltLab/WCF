@@ -240,12 +240,13 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
             $queue->queueID,
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        if ($userIDs === []) {
+        if (!$userIDs) {
             return;
         }
         UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
         $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
         $processor = $objectType->getProcessor();
+        \assert($processor instanceof IModerationQueueHandler);
 
         $userIDs = \array_filter($userIDs, function ($userID) use ($processor, $queue) {
             return $processor->isAffectedUser($queue, $userID);
