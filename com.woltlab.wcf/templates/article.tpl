@@ -33,7 +33,6 @@
 					{icon name='clock'}
 					<a href="{$article->getLink()}">{@$article->time|time}</a>
 					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
-					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
 
 				<li>
