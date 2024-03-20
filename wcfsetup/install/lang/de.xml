@@ -5378,6 +5378,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Neue Registrierung durch Benutzer]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[Neue Meldung]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>

@@ -362,6 +362,12 @@
 			<classname>wcf\system\comment\manager\ModerationQueueCommentManager</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.moderation.queue</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ModerationQueueUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.moderation</category>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.moderation.queue.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\ModerationQueueCommentUserNotificationObjectType</classname>
