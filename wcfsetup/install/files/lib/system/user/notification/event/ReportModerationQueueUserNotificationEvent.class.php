@@ -44,7 +44,21 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     #[\Override]
     public function getEmailMessage($notificationType = 'instant')
     {
-        // TODO
+        return [
+            'message-id' => 'com.woltlab.wcf.moderation.queue.notification/'
+                . $this->getUserNotificationObject()->queueID,
+            'template' => 'email_notification_moderationQueueReport',
+            'application' => 'wcf',
+            'references' => [
+                '<com.woltlab.wcf.moderation.queue/'
+                . $this->getUserNotificationObject()->queueID . '@' . Email::getHost() . '>',
+            ],
+            'variables' => [
+                'author' => $this->author,
+                'notification' => $this->notification,
+                'moderationQueue' => $this->getViewableModerationQueue(),
+            ],
+        ];
     }
 
     #[\Override]
@@ -77,16 +91,9 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     private function getViewableModerationQueue(): ViewableModerationQueue
     {
         if (!isset($this->viewableModerationQueue)) {
-            $this->viewableModerationQueue = new ViewableModerationQueue(
-                $this->getUserNotificationObject()->getDecoratedObject()
+            $this->viewableModerationQueue = ViewableModerationQueue::getViewableModerationQueue(
+                $this->getUserNotificationObject()->queueID
             );
-            $objectType = ObjectTypeCache::getInstance()->getObjectType(
-                $this->getUserNotificationObject()->objectTypeID
-            );
-            $processor = $objectType->getProcessor();
-            \assert($processor instanceof IModerationQueueHandler);
-
-            $processor->populate([$this->viewableModerationQueue]);
         }
         return $this->viewableModerationQueue;
     }
