@@ -4,7 +4,6 @@ namespace wcf\page;
 
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\page\PageCache;
-use wcf\form\DisclaimerForm;
 use wcf\form\EmailActivationForm;
 use wcf\form\EmailNewActivationCodeForm;
 use wcf\form\LoginForm;
@@ -13,6 +12,7 @@ use wcf\form\NewPasswordForm;
 use wcf\form\RegisterActivationForm;
 use wcf\form\RegisterForm;
 use wcf\form\RegisterNewActivationCodeForm;
+use wcf\page\DisclaimerPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -405,7 +405,7 @@ abstract class AbstractPage implements IPage
     protected function forceLogin()
     {
         $allowedControllers = [
-            DisclaimerForm::class,
+            DisclaimerPage::class,
             EmailActivationForm::class,
             EmailNewActivationCodeForm::class,
             LoginForm::class,
