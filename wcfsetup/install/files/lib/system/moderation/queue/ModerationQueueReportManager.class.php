@@ -247,11 +247,9 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
         $processor = $objectType->getProcessor();
 
-        foreach ($userIDs as $key => $userID) {
-            if (!$processor->isAffectedUser($queue, $userID)) {
-                unset($userIDs[$key]);
-            }
-        }
+        $userIDs = \array_filter($userIDs, function ($userID) use ($processor, $queue) {
+            return $processor->isAffectedUser($queue, $userID);
+        });
         if ($userIDs === []) {
             return;
         }
