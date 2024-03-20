@@ -4,6 +4,8 @@ namespace wcf\system\user\notification\event;
 
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\UserProfile;
+use wcf\system\email\Email;
 use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
@@ -19,8 +21,12 @@ use wcf\system\WCF;
  *
  * @method  ModerationQueueUserNotificationObject    getUserNotificationObject()
  */
-final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotificationEvent
+final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
+    use TTestableModerationQueueUserNotificationEvent;
+    use TTestableUserNotificationEvent;
+
     private ViewableModerationQueue $viewableModerationQueue;
     #[\Override]
     public function getTitle(): string
@@ -96,5 +102,17 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
             );
         }
         return $this->viewableModerationQueue;
+    }
+
+    #[\Override]
+    public static function canBeTriggeredByGuests()
+    {
+        return true;
+    }
+
+    #[\Override]
+    public static function getTestObjects(UserProfile $recipient, UserProfile $author)
+    {
+        return [new ModerationQueueUserNotificationObject(self::getTestUserModerationQueueEntry($recipient, $author))];
     }
 }
