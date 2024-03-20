@@ -256,6 +256,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         if ($userIDs === []) {
             return;
         }
+        foreach ($userIDs as $userID) {
+            $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
+            ModerationQueueManager::getInstance()->setAssignment([$queue->queueID => 1], $user->getDecoratedObject());
+        }
+
         UserNotificationHandler::getInstance()->fireEvent(
             'report',
             'com.woltlab.wcf.moderation.queue',

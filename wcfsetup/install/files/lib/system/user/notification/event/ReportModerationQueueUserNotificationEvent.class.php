@@ -27,7 +27,7 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     use TTestableModerationQueueUserNotificationEvent;
     use TTestableUserNotificationEvent;
 
-    private ViewableModerationQueue $viewableModerationQueue;
+    private ?ViewableModerationQueue $viewableModerationQueue;
     #[\Override]
     public function getTitle(): string
     {
@@ -84,6 +84,9 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     #[\Override]
     public function checkAccess()
     {
+        if ($this->getViewableModerationQueue() === null) {
+            return false;
+        }
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->getUserNotificationObject()->objectTypeID);
         $processor = $objectType->getProcessor();
         \assert($processor instanceof IModerationQueueHandler);
@@ -94,7 +97,7 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
         );
     }
 
-    private function getViewableModerationQueue(): ViewableModerationQueue
+    private function getViewableModerationQueue(): ?ViewableModerationQueue
     {
         if (!isset($this->viewableModerationQueue)) {
             $this->viewableModerationQueue = ViewableModerationQueue::getViewableModerationQueue(
