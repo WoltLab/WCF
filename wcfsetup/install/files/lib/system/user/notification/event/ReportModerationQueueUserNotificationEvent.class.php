@@ -17,35 +17,32 @@ use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
  */
 final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotificationEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
-        // TODO
-        return "";
+        return $this->getLanguage()->get('wcf.moderation.report.notification.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
-        // TODO
-        return "";
+        return $this->getLanguage()->getDynamicVariable(
+            'wcf.moderation.report.notification.message',
+            [
+                'author' => $this->author,
+                'notification' => $this->notification,
+                'userNotificationObject' => $this->getUserNotificationObject(),
+            ]
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage($notificationType = 'instant')
     {
         // TODO
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('ModerationReport', [
@@ -53,9 +50,7 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->queueID);

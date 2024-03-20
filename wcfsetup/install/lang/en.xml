@@ -4341,6 +4341,7 @@ Attachments:
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[Change “Justified” status]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[Do you really want to change the “Justified” status of this report?]]></item>
+		<item name="wcf.moderation.report.notification.title"><![CDATA[New report]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>

@@ -4389,6 +4389,7 @@ Dateianhänge:
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[„Berechtigt“-Status ändern]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Meldung als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
+		<item name="wcf.moderation.report.notification.title"><![CDATA[Neue Meldung]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>

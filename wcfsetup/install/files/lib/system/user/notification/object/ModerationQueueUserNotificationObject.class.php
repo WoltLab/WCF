@@ -23,25 +23,19 @@ final class ModerationQueueUserNotificationObject extends DatabaseObjectDecorato
      */
     protected static $baseClass = ModerationQueue::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return $this->userID;
