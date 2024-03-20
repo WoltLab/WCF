@@ -9,6 +9,7 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\CommentRuntimeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\WCF;
 
@@ -166,5 +167,23 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
         ]);
 
         return WCF::getTPL()->fetch('moderationComment');
+    }
+
+    #[\Override]
+    public function isAffectedUser(ModerationQueue $queue, $userID)
+    {
+        if (!parent::isAffectedUser($queue, $userID)) {
+            return false;
+        }
+        $comment = $this->getComment($queue->objectID);
+        if ($comment === null) {
+            return false;
+        }
+
+        return $this->getCommentManager($comment)->canModerate(
+            $comment->objectTypeID,
+            $comment->objectID,
+            UserProfileRuntimeCache::getInstance()->getObject($userID)
+        );
     }
 }
