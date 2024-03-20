@@ -4391,6 +4391,8 @@ Dateianhänge:
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
 		<item name="wcf.moderation.report.notification.title"><![CDATA[Neue Meldung]]></item>
 		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat <strong>{$moderationQueue->getTitle()}</strong>({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}) gemeldet.]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}Ein Gast{/if} hat {$moderationQueue->getTitle()} ({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}) gemeldet [URL:{$moderationQueue->getLink()}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}Ein Gast{/if} hat <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> ({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}) gemeldet.</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>
