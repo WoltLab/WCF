@@ -5,6 +5,7 @@ namespace wcf\system\comment\manager;
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\user\UserProfile;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -153,10 +154,14 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
     }
 
     /**
+     * @param UserProfile|null $user
      * @inheritDoc
      */
-    public function canModerate($objectTypeID, $objectID)
+    public function canModerate($objectTypeID, $objectID, ?UserProfile $user = null)
     {
+        if ($user !== null) {
+            return $user->getPermission($this->permissionCanModerate) ? true : false;
+        }
         return WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false;
     }
 

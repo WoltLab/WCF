@@ -4,6 +4,7 @@ namespace wcf\system\comment\manager;
 
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
+use wcf\data\user\UserProfile;
 
 /**
  * Default interface for comment managers.
@@ -62,14 +63,15 @@ interface ICommentManager
     public function canDeleteResponse(CommentResponse $response);
 
     /**
-     * Returns true if the current user may moderated content identified by
+     * Returns true if the current or given user may moderated content identified by
      * object type id and object id.
      *
      * @param int $objectTypeID
      * @param int $objectID
+     * @param UserProfile|null $user
      * @return  bool
      */
-    public function canModerate($objectTypeID, $objectID);
+    public function canModerate($objectTypeID, $objectID, ?UserProfile $user = null);
 
     /**
      * Returns the amount of comments per page.
