@@ -10,7 +10,9 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
 use wcf\system\user\notification\object\type\TMultiRecipientModerationQueueCommentUserNotificationObjectType;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
 /**
@@ -254,6 +256,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         if ($userIDs === []) {
             return;
         }
-        //TODO notify moderators
+        UserNotificationHandler::getInstance()->fireEvent(
+            'report',
+            'com.woltlab.wcf.moderation.queue',
+            new ModerationQueueUserNotificationObject($queue),
+            $userIDs
+        );
     }
 }
