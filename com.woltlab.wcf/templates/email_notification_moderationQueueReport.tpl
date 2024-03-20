@@ -1,7 +1,9 @@
 {assign var='count' value=$event->getAuthors()|count}{assign var='guestTimesTriggered' value=$event->getNotification()->guestTimesTriggered}{assign var='authors' value=$event->getAuthors()|array_values}
 {if $mimeType === 'text/plain'}
-	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
-	{lang}wcf.moderation.report.notification.mail.plaintext{/lang}
+{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
+{lang}wcf.moderation.report.notification.mail.plaintext{/lang}
+
+{@$moderationQueue->getMailText($mimeType)} {* this line ends with a space *}
 {else}
 	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.html{/lang}{/capture}
 	{lang}wcf.moderation.report.notification.mail.html{/lang}
