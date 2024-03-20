@@ -20,11 +20,6 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     /**
      * @inheritDoc
      */
-    protected $stackable = true;
-
-    /**
-     * @inheritDoc
-     */
     public function getTitle(): string
     {
         // TODO
