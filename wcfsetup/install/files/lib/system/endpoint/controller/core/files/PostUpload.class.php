@@ -1,0 +1,95 @@
+<?php
+
+namespace wcf\system\endpoint\controller\core\files;
+
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use wcf\data\file\temporary\FileTemporary;
+use wcf\data\file\temporary\FileTemporaryAction;
+use wcf\http\Helper;
+use wcf\system\endpoint\IController;
+use wcf\system\endpoint\PostRequest;
+use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\FileProcessor;
+use wcf\util\JSON;
+
+#[PostRequest('/core/files/upload')]
+final class PostUpload implements IController
+{
+    public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
+    {
+        $parameters = Helper::mapApiParameters($request, PostUploadParameters::class);
+
+        $fileProcessor = FileProcessor::getInstance()->forTypeName($parameters->typeName);
+        if ($fileProcessor === null) {
+            throw new UserInputException('typeName', 'unknown');
+        }
+
+        try {
+            $decodedContext = JSON::decode($parameters->context);
+        } catch (SystemException) {
+            throw new UserInputException('context', 'invalid');
+        }
+
+        $validationResult = $fileProcessor->acceptUpload($parameters->filename, $parameters->fileSize, $decodedContext);
+        if (!$validationResult->ok()) {
+            throw new UserInputException('filename', $validationResult->toString());
+        }
+
+        $numberOfChunks = FileTemporary::getNumberOfChunks($parameters->fileSize);
+        if ($numberOfChunks > FileTemporary::MAX_CHUNK_COUNT) {
+            throw new UserInputException('fileSize', 'tooLarge');
+        }
+
+        $fileTemporary = $this->createTemporaryFile($parameters, $numberOfChunks);
+
+        return new JsonResponse([
+            'identifier' => $fileTemporary->identifier,
+            'numberOfChunks' => $numberOfChunks,
+        ]);
+    }
+
+    private function createTemporaryFile(PostUploadParameters $parameters, int $numberOfChunks): FileTemporary
+    {
+        $identifier = \bin2hex(\random_bytes(20));
+
+        $action = new FileTemporaryAction([], 'create', [
+            'data' => [
+                'identifier' => $identifier,
+                'time' => \TIME_NOW,
+                'filename' => $parameters->filename,
+                'fileSize' => $parameters->fileSize,
+                'fileHash' => $parameters->fileHash,
+                'typeName' => $parameters->typeName,
+                'context' => $parameters->context,
+                'chunks' => \str_repeat('0', $numberOfChunks),
+            ],
+        ]);
+
+        return $action->executeAction()['returnValues'];
+    }
+}
+
+/** @internal */
+final class PostUploadParameters
+{
+    public function __construct(
+        /** @var non-empty-string */
+        public readonly string $filename,
+
+        /** @var positive-int **/
+        public readonly int $fileSize,
+
+        /** @var non-empty-string */
+        public readonly string $fileHash,
+
+        /** @var non-empty-string */
+        public readonly string $typeName,
+
+        /** @var non-empty-string */
+        public readonly string $context,
+    ) {
+    }
+}

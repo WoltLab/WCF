@@ -86,6 +86,7 @@ return static function (): void {
     });
 
     $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
+        $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
         $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
         $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
     });

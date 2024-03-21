@@ -2,11 +2,8 @@ import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
 import { isPlainObject } from "WoltLabSuite/Core/Core";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
+import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
-
-type PreflightResponse = {
-  endpoints: string[];
-};
 
 type UploadResponse =
   | { completed: false }
@@ -46,47 +43,33 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
   const event = new CustomEvent<WoltlabCoreFileElement>("uploadStart", { detail: fileElement });
   element.dispatchEvent(event);
 
-  let response: PreflightResponse | undefined = undefined;
-  try {
-    response = (await prepareRequest(element.dataset.endpoint!)
-      .post({
-        filename: file.name,
-        fileSize: file.size,
-        fileHash,
-        typeName,
-        context: element.dataset.context,
-      })
-      .fetchAsJson()) as PreflightResponse;
-  } catch (e) {
-    if (e instanceof StatusNotOk) {
-      const body = await e.response.clone().json();
-      if (isPlainObject(body) && isPlainObject(body.error)) {
-        console.log(body);
-        return;
-      } else {
-        throw e;
-      }
-    } else {
-      throw e;
-    }
-  } finally {
-    if (response === undefined) {
+  const response = await filesUpload(file.name, file.size, fileHash, typeName, element.dataset.context || "");
+  if (!response.ok) {
+    const validationError = response.error.getValidationError();
+    if (validationError === undefined) {
       fileElement.uploadFailed();
+
+      throw response.error;
     }
+
+    console.log(validationError);
+    return;
   }
 
-  const { endpoints } = response;
+  const { identifier, numberOfChunks } = response.value;
 
-  const chunkSize = Math.ceil(file.size / endpoints.length);
+  const chunkSize = Math.ceil(file.size / numberOfChunks);
 
   // TODO: Can we somehow report any meaningful upload progress?
 
-  for (let i = 0, length = endpoints.length; i < length; i++) {
+  for (let i = 0; i < numberOfChunks; i++) {
     const start = i * chunkSize;
     const end = start + chunkSize;
     const chunk = file.slice(start, end);
 
-    const endpoint = new URL(endpoints[i]);
+    // TODO fix the URL
+    throw new Error("TODO: fix the url");
+    const endpoint = new URL(String(i));
 
     const checksum = await getSha256Hash(await chunk.arrayBuffer());
     endpoint.searchParams.append("checksum", checksum);
