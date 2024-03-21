@@ -25,7 +25,7 @@ use wcf\util\HeaderUtil;
  */
 final class CheckForForceLogin implements MiddlewareInterface
 {
-    private const STATUS_CODE = 503;
+    private const STATUS_CODE = 403;
 
     private const ALLOWED_CONTROLLERS = [
         \wcf\form\EmailActivationForm::class,
