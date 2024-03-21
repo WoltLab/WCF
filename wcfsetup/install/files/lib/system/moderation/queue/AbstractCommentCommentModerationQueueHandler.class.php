@@ -180,7 +180,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
             return false;
         }
 
-        return $this->getCommentManager($comment)->canModerate(
+        return $this->getCommentManager($comment)->canModerateObject(
             $comment->objectTypeID,
             $comment->objectID,
             UserProfileRuntimeCache::getInstance()->getObject($userID)
