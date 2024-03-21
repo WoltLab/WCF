@@ -10,6 +10,7 @@ use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\user\User;
+use wcf\form\AccountManagementForm;
 use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
