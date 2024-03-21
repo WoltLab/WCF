@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Ajax/Error", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, Backend_1, Error_1, Core_1, Selector_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload"], function (require, exports, Backend_1, Selector_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -9,46 +9,26 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
         fileElement.dataset.filename = file.name;
         const event = new CustomEvent("uploadStart", { detail: fileElement });
         element.dispatchEvent(event);
-        let response = undefined;
-        try {
-            response = (await (0, Backend_1.prepareRequest)(element.dataset.endpoint)
-                .post({
-                filename: file.name,
-                fileSize: file.size,
-                fileHash,
-                typeName,
-                context: element.dataset.context,
-            })
-                .fetchAsJson());
-        }
-        catch (e) {
-            if (e instanceof Error_1.StatusNotOk) {
-                const body = await e.response.clone().json();
-                if ((0, Core_1.isPlainObject)(body) && (0, Core_1.isPlainObject)(body.error)) {
-                    console.log(body);
-                    return;
-                }
-                else {
-                    throw e;
-                }
-            }
-            else {
-                throw e;
-            }
-        }
-        finally {
-            if (response === undefined) {
+        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, typeName, element.dataset.context || "");
+        if (!response.ok) {
+            const validationError = response.error.getValidationError();
+            if (validationError === undefined) {
                 fileElement.uploadFailed();
+                throw response.error;
             }
+            console.log(validationError);
+            return;
         }
-        const { endpoints } = response;
-        const chunkSize = Math.ceil(file.size / endpoints.length);
+        const { identifier, numberOfChunks } = response.value;
+        const chunkSize = Math.ceil(file.size / numberOfChunks);
         // TODO: Can we somehow report any meaningful upload progress?
-        for (let i = 0, length = endpoints.length; i < length; i++) {
+        for (let i = 0; i < numberOfChunks; i++) {
             const start = i * chunkSize;
             const end = start + chunkSize;
             const chunk = file.slice(start, end);
-            const endpoint = new URL(endpoints[i]);
+            // TODO fix the URL
+            throw new Error("TODO: fix the url");
+            const endpoint = new URL(String(i));
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             endpoint.searchParams.append("checksum", checksum);
             let response;
