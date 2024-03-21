@@ -9,24 +9,18 @@ use wcf\system\WCF;
 /**
  * Shows the user login form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2020 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class LoginForm extends \wcf\acp\form\LoginForm
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
-
-        if (FORCE_LOGIN) {
-            WCF::getSession()->unregister('__wsc_forceLoginRedirect');
-        }
 
         // change user
         $needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
@@ -42,15 +36,13 @@ class LoginForm extends \wcf\acp\form\LoginForm
         $this->performRedirect($needsMultifactor);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null),
+            'forceLoginRedirect' => FORCE_LOGIN,
         ]);
     }
 }
