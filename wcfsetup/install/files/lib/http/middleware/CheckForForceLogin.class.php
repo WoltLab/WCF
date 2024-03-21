@@ -28,6 +28,11 @@ final class CheckForForceLogin implements MiddlewareInterface
     private const STATUS_CODE = 403;
 
     private const ALLOWED_CONTROLLERS = [
+        \wcf\action\BackgroundQueuePerformAction::class,
+        \wcf\action\CronjobPerformAction::class,
+        \wcf\action\EmailValidationAction::class,
+        \wcf\action\PaypalCallbackAction::class,
+        \wcf\action\UsernameValidationAction::class,
         \wcf\form\EmailActivationForm::class,
         \wcf\form\EmailNewActivationCodeForm::class,
         \wcf\form\LoginForm::class,
