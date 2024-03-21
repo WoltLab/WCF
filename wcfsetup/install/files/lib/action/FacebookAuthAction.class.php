@@ -26,6 +26,8 @@ use wcf\util\StringUtil;
  */
 final class FacebookAuthAction extends AbstractOauth2Action
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     /**
      * @inheritDoc
      */

@@ -33,6 +33,8 @@ use wcf\util\StringUtil;
  */
 final class TwitterAuthAction extends AbstractAction
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     /**
      * @inheritDoc
      */

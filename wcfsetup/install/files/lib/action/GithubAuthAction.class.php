@@ -27,6 +27,8 @@ use wcf\util\StringUtil;
  */
 final class GithubAuthAction extends AbstractOauth2Action
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     /**
      * @inheritDoc
      */

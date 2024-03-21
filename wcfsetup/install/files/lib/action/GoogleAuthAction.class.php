@@ -26,6 +26,8 @@ use wcf\util\StringUtil;
  */
 final class GoogleAuthAction extends AbstractOauth2Action
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     /**
      * @inheritDoc
      */
