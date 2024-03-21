@@ -2,6 +2,7 @@
 
 namespace wcf\http\middleware;
 
+use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -10,6 +11,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\form\LoginForm;
 use wcf\http\Helper;
+use wcf\system\box\BoxHandler;
+use wcf\system\notice\NoticeHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -58,6 +61,60 @@ final class CheckForForceLogin implements MiddlewareInterface
             return $handler->handle($request);
         }
 
+
+
+        if (WCF::getUser()->pendingActivation()) {
+            return $this->handlePendingActivation($request);
+        }
+
+        return $this->handleGuest($request);
+    }
+
+    private function handlePendingActivation(ServerRequestInterface $request): ResponseInterface
+    {
+        $preferredType = Helper::getPreferredContentType($request, [
+            'application/json',
+            'text/html',
+        ]);
+
+        BoxHandler::disablePageLayout();
+        NoticeHandler::disableNotices();
+
+        if (WCF::getUser()->requiresAdminActivation()) {
+            $phrase = 'wcf.user.register.needAdminActivation';
+        } else {
+            $phrase = 'wcf.user.register.needActivation';
+        }
+
+        return HeaderUtil::withNoCacheHeaders(match ($preferredType) {
+            'application/json' => new JsonResponse(
+                [
+                    'message' => WCF::getLanguage()->getDynamicVariable($phrase),
+                ],
+                self::STATUS_CODE,
+                [],
+                \JSON_PRETTY_PRINT
+            ),
+            'text/html' => new HtmlResponse(
+                HeaderUtil::parseOutputStream(WCF::getTPL()->fetchStream(
+                    'error',
+                    'wcf',
+                    [
+                        'title' => '',
+                        'message' => WCF::getLanguage()->getDynamicVariable($phrase),
+                        'exception' => null,
+                        'showLogin' => false,
+                        'templateName' => 'error',
+                        'templateNameApplication' => 'wcf',
+                    ]
+                )),
+                self::STATUS_CODE
+            ),
+        });
+    }
+
+    private function handleGuest(ServerRequestInterface $request): ResponseInterface
+    {
         $preferredType = Helper::getPreferredContentType($request, [
             'application/json',
             'text/html',
@@ -87,7 +144,8 @@ final class CheckForForceLogin implements MiddlewareInterface
 
     private function userCanBypassForceLogin(): bool
     {
-        return WCF::getUser()->userID ? true : false;
+        return WCF::getUser()->userID
+            && !WCF::getUser()->pendingActivation();
     }
 
     private function requestCanBypassForceLogin(): bool
