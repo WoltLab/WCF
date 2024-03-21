@@ -43,6 +43,11 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
                 'author' => $this->author,
                 'notification' => $this->notification,
                 'moderationQueue' => $this->getViewableModerationQueue(),
+                'title' => $this->getViewableModerationQueue()->getTitle(),
+                'objectLink' => $this->getViewableModerationQueue()->getLink(),
+                'typeName' => $this->getLanguage()->getDynamicVariable(
+                    "wcf.moderation.type." . $this->getViewableModerationQueue()->getObjectTypeName()
+                )
             ]
         );
     }
@@ -63,6 +68,11 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
                 'author' => $this->author,
                 'notification' => $this->notification,
                 'moderationQueue' => $this->getViewableModerationQueue(),
+                'title' => $this->getViewableModerationQueue()->getTitle(),
+                'objectLink' => $this->getViewableModerationQueue()->getLink(),
+                'typeName' => $this->getLanguage()->getDynamicVariable(
+                    "wcf.moderation.type." . $this->getViewableModerationQueue()->getObjectTypeName()
+                )
             ],
         ];
     }

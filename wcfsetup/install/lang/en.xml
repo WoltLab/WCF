@@ -4342,9 +4342,9 @@ Attachments:
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[Do you really want to change the “Justified” status of this report?]]></item>
 		<item name="wcf.moderation.report.notification.title"><![CDATA[New report]]></item>
-		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} has reported <strong>{$moderationQueue->getTitle()}</strong>({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}).]]></item>
-		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}A guest{/if} has reported {$moderationQueue->getTitle()} ({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}) [URL:{$moderationQueue->getLink()}].]]></item>
-		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}A guest{/if} has reported <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> ({lang}wcf.moderation.type.{@$moderationQueue->getObjectTypeName()}{/lang}):</p>]]></item>
+		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} has reported <strong>{$title}</strong>({$typeName}).]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}A guest{/if} has reported {$title} ({$typeName}) [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}A guest{/if} has reported <a href="{$objectLink}">{$title}</a> ({$typeName}):</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>
