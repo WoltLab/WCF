@@ -5,6 +5,7 @@ namespace wcf\system\comment\manager;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
@@ -69,6 +70,23 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 
         return true;
     }
+
+    #[\Override]
+    public function canViewObject(int $objectID, UserProfile $user): bool
+    {
+        $page = new Page($objectID);
+        if (!$page->pageID) {
+            return false;
+        }
+        return $page->isAccessible($user->getDecoratedObject());
+    }
+
+    #[\Override]
+    public function canWriteComments(int $objectID, UserProfile $user): bool
+    {
+        return $this->canViewObject($objectID, $user);
+    }
+
 
     /**
      * @inheritDoc

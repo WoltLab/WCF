@@ -164,6 +164,9 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
     #[\Override]
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
+        if (!$this->canViewObject($objectID, $user)) {
+            return false;
+        }
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 

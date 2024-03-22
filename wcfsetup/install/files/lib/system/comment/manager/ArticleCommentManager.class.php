@@ -6,6 +6,7 @@ use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
@@ -69,6 +70,16 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         }
 
         return true;
+    }
+
+    #[\Override]
+    public function canViewObject(int $objectID, UserProfile $user): bool
+    {
+        $articleContent = new ArticleContent($objectID);
+        if (!$articleContent->articleContentID) {
+            return false;
+        }
+        return $articleContent->getArticle()->canRead($user);
     }
 
     /**

@@ -69,7 +69,7 @@ interface ICommentManager
      * @param int $objectTypeID
      * @param int $objectID
      * @return  bool
-     * @deprecated 6.1
+     * @deprecated 6.1 use `canModerateObject` instead
      */
     public function canModerate($objectTypeID, $objectID);
 
@@ -130,6 +130,11 @@ interface ICommentManager
      * @return  bool
      */
     public function isAccessible($objectID, $validateWritePermission = false);
+
+    /**
+     * Returns true if the user may read content identified by object type id and object id.
+     */
+    public function canViewObject(int $objectID, UserProfile $user): bool;
 
     /**
      * Updates total count of comments (includes responses).
