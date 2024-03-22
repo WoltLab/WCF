@@ -9,6 +9,7 @@ use wcf\data\ITitledObject;
 use wcf\data\page\content\PageContent;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\data\user\User;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
@@ -263,9 +264,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      *
      * @return  bool
      */
-    public function isAccessible()
+    public function isAccessible(?User $user = null)
     {
-        $canAccess = SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);
+        $canAccess = SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID, $user);
 
         if ($this->invertPermissions) {
             $canAccess = !$canAccess;
