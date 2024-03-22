@@ -738,11 +738,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isAccessible(string $name, ?int $userID = null): bool
     {
-        /** @noinspection PhpVariableVariableInspection */
-        $data = ['result' => true, 'name' => $name];
         if ($userID === null) {
             $userID = WCF::getUser()->userID;
         }
+        $data = ['result' => true, 'name' => $name, 'userID' => $userID];
 
         switch ($this->{$name}) {
             case self::ACCESS_EVERYONE:
