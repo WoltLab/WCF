@@ -1,24 +1,8 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
-import { isPlainObject } from "WoltLabSuite/Core/Core";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
-
-type UploadResponse =
-  | { completed: false }
-  | ({
-      completed: true;
-    } & UploadCompleted);
-
-export type UploadCompleted = {
-  endpointThumbnails: string;
-  fileID: number;
-  typeName: string;
-  mimeType: string;
-  link: string;
-  data: Record<string, unknown>;
-};
+import { Response as UploadChunkResponse, uploadChunk } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
 
 export type ThumbnailsGenerated = {
   data: GenerateThumbnailsResponse;
@@ -67,38 +51,29 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     const end = start + chunkSize;
     const chunk = file.slice(start, end);
 
-    // TODO fix the URL
-    throw new Error("TODO: fix the url");
-    const endpoint = new URL(String(i));
-
     const checksum = await getSha256Hash(await chunk.arrayBuffer());
-    endpoint.searchParams.append("checksum", checksum);
 
-    let response: UploadResponse;
-    try {
-      response = (await prepareRequest(endpoint.toString()).post(chunk).fetchAsJson()) as UploadResponse;
-    } catch (e) {
-      // TODO: Handle errors
-      console.error(e);
-
+    const response = await uploadChunk(identifier, i, checksum, chunk);
+    if (!response.ok) {
       fileElement.uploadFailed();
-      throw e;
+
+      throw response.error;
     }
 
-    await chunkUploadCompleted(fileElement, response);
+    await chunkUploadCompleted(fileElement, response.value);
   }
 }
 
-async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, response: UploadResponse): Promise<void> {
+async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, response: UploadChunkResponse): Promise<void> {
   if (!response.completed) {
     return;
   }
 
-  const hasThumbnails = response.endpointThumbnails !== "";
-  fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, hasThumbnails);
+  fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, response.generateThumbnails);
 
-  if (hasThumbnails) {
-    await generateThumbnails(fileElement, response.endpointThumbnails);
+  if (response.generateThumbnails) {
+    throw new Error("TODO: endpoint to generate thumbnails");
+    await generateThumbnails(fileElement, "todo");
   }
 }
 

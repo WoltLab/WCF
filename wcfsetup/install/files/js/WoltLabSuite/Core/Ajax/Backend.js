@@ -29,6 +29,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
     let ignoreConnectionErrors = false;
     window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
     class BackendRequest {
+        #headers = new Map();
         #url;
         #type;
         #payload;
@@ -48,6 +49,10 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
         disableLoadingIndicator() {
             this.#showLoadingIndicator = false;
+            return this;
+        }
+        withHeader(key, value) {
+            this.#headers.set(key, value);
             return this;
         }
         allowCaching() {
@@ -82,11 +87,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
         async #fetch(requestOptions = {}) {
             (0, Error_1.registerGlobalRejectionHandler)();
+            this.#headers.set("X-Requested-With", "XMLHttpRequest");
+            this.#headers.set("X-XSRF-TOKEN", (0, Core_1.getXsrfToken)());
+            const headers = Object.fromEntries(this.#headers);
             const init = (0, Core_1.extend)({
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-XSRF-TOKEN": (0, Core_1.getXsrfToken)(),
-                },
+                headers,
                 mode: "same-origin",
                 credentials: "same-origin",
                 cache: this.#allowCaching ? "default" : "no-store",
