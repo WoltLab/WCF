@@ -10,6 +10,7 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\cache\runtime\CommentResponseRuntimeCache;
 use wcf\system\cache\runtime\CommentRuntimeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -162,5 +163,27 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
             $responseAction = new CommentResponseAction([$this->getResponse($queue->objectID)], 'delete');
             $responseAction->executeAction();
         }
+    }
+
+    #[\Override]
+    public function isAffectedUser(ModerationQueue $queue, $userID)
+    {
+        if (!parent::isAffectedUser($queue, $userID)) {
+            return false;
+        }
+        $response = $this->getResponse($queue->objectID);
+        if ($response === null) {
+            return false;
+        }
+        $comment = $this->getComment($response->commentID);
+        if ($comment === null) {
+            return false;
+        }
+
+        return $this->getCommentManager($comment)->canModerateObject(
+            $comment->objectTypeID,
+            $comment->objectID,
+            UserProfileRuntimeCache::getInstance()->getObject($userID)
+        );
     }
 }
