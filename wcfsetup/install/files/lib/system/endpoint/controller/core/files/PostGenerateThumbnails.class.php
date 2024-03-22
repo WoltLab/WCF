@@ -1,35 +1,25 @@
 <?php
 
-namespace wcf\action;
+namespace wcf\system\endpoint\controller\core\files;
 
-use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\File;
-use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\file\thumbnail\FileThumbnailList;
-use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
+use wcf\system\endpoint\IController;
+use wcf\system\endpoint\PostRequest;
+use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
 
-final class FileGenerateThumbnailsAction implements RequestHandlerInterface
+#[PostRequest('/core/files/{id:\d+}/generatethumbnails')]
+final class PostGenerateThumbnails implements IController
 {
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $parameters = Helper::mapQueryParameters(
-            $request->getQueryParams(),
-            <<<'EOT'
-                array {
-                    id: positive-int,
-                }
-                EOT,
-        );
-
-        $file = new File($parameters['id']);
+        $file = new File($variables['id']);
         if (!$file->fileID) {
-            throw new IllegalLinkException();
+            throw new UserInputException('id');
         }
 
         FileProcessor::getInstance()->generateThumbnails($file);

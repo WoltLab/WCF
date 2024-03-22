@@ -3,7 +3,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.upload = void 0;
     async function upload(filename, fileSize, fileHash, typeName, context) {
-        const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/files/upload");
+        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/files/upload`);
         const payload = {
             filename,
             fileSize,

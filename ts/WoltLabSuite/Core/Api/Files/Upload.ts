@@ -13,7 +13,7 @@ export async function upload(
   typeName: string,
   context: string,
 ): Promise<ApiResult<Response>> {
-  const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/files/upload");
+  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/files/upload`);
 
   const payload = {
     filename,

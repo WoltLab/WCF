@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk"], function (require, exports, Backend_1, Selector_1, Upload_1, Chunk_1) {
+define(["require", "exports", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails"], function (require, exports, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -35,27 +35,15 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             await chunkUploadCompleted(fileElement, response.value);
         }
     }
-    async function chunkUploadCompleted(fileElement, response) {
-        if (!response.completed) {
+    async function chunkUploadCompleted(fileElement, result) {
+        if (!result.completed) {
             return;
         }
-        fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, response.generateThumbnails);
-        if (response.generateThumbnails) {
-            throw new Error("TODO: endpoint to generate thumbnails");
-            await generateThumbnails(fileElement, "todo");
+        fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
+        if (result.generateThumbnails) {
+            const response = await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID);
+            fileElement.setThumbnails(response.unwrap());
         }
-    }
-    async function generateThumbnails(fileElement, endpoint) {
-        let response;
-        try {
-            response = (await (0, Backend_1.prepareRequest)(endpoint).get().fetchAsJson());
-        }
-        catch (e) {
-            // TODO: Handle errors
-            console.error(e);
-            throw e;
-        }
-        fileElement.setThumbnails(response);
     }
     async function getSha256Hash(data) {
         const buffer = await window.crypto.subtle.digest("SHA-256", data);

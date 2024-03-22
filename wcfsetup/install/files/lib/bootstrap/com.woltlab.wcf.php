@@ -116,6 +116,7 @@ return static function (): void {
     $eventHandler->register(
         \wcf\event\endpoint\ControllerCollecting::class,
         static function (\wcf\event\endpoint\ControllerCollecting $event) {
+            $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
             $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
             $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
