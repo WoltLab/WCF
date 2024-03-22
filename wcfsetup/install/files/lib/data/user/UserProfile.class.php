@@ -736,7 +736,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if current user fulfills the required permissions.
      */
-    public function isAccessible(string $name, int $userID = null): bool
+    public function isAccessible(string $name, ?int $userID = null): bool
     {
         /** @noinspection PhpVariableVariableInspection */
         $data = ['result' => true, 'name' => $name];
