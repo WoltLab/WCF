@@ -5,7 +5,6 @@ namespace wcf\system\comment\manager;
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\user\UserProfile;
-use wcf\system\session\SessionHandler;
 
 /**
  * Default interface for comment managers.
@@ -78,7 +77,7 @@ interface ICommentManager
      * Returns true if the user may moderate content identified by
      * object type id and object id.
      */
-    public function canModerateObject(int $objectTypeID, int $objectID, SessionHandler|UserProfile $user): bool;
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool;
 
     /**
      * Returns the amount of comments per page.
