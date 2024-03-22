@@ -100,9 +100,9 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
         }
 
         /** @see UserProfile::isProtected() */
-        return !$user->getPermission('admin.general.canViewPrivateUserOptions')
-            && !$userProfile->isAccessible('canViewProfile', $user->userID)
-            && $userProfile->userID != $user->userID;
+        return $user->getPermission('admin.general.canViewPrivateUserOptions')
+            || $userProfile->isAccessible('canViewProfile', $user->userID)
+            || $userProfile->userID === $user->userID;
     }
 
     /**
