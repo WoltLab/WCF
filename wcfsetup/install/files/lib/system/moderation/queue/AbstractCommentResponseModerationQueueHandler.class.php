@@ -168,7 +168,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
     #[\Override]
     public function isAffectedUser(ModerationQueue $queue, $userID)
     {
-        if (!parent::isAffectedUser($queue, $userID)) {
+        if (!AbstractModerationQueueHandler::isAffectedUser($queue, $userID)) {
             return false;
         }
         $response = $this->getResponse($queue->objectID);
