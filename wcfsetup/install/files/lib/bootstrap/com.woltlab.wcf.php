@@ -86,6 +86,7 @@ return static function (): void {
     });
 
     $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
+        $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
         $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
         $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
         $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);

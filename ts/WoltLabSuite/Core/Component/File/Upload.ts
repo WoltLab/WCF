@@ -3,6 +3,7 @@ import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
 import { Response as UploadChunkResponse, uploadChunk } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
+import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
 
 export type ThumbnailsGenerated = {
   data: GenerateThumbnailsResponse;
@@ -64,31 +65,17 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
   }
 }
 
-async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, response: UploadChunkResponse): Promise<void> {
-  if (!response.completed) {
+async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result: UploadChunkResponse): Promise<void> {
+  if (!result.completed) {
     return;
   }
 
-  fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, response.generateThumbnails);
+  fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
 
-  if (response.generateThumbnails) {
-    throw new Error("TODO: endpoint to generate thumbnails");
-    await generateThumbnails(fileElement, "todo");
+  if (result.generateThumbnails) {
+    const response = await generateThumbnails(result.fileID);
+    fileElement.setThumbnails(response.unwrap());
   }
-}
-
-async function generateThumbnails(fileElement: WoltlabCoreFileElement, endpoint: string): Promise<void> {
-  let response: GenerateThumbnailsResponse;
-
-  try {
-    response = (await prepareRequest(endpoint).get().fetchAsJson()) as GenerateThumbnailsResponse;
-  } catch (e) {
-    // TODO: Handle errors
-    console.error(e);
-    throw e;
-  }
-
-  fileElement.setThumbnails(response);
 }
 
 async function getSha256Hash(data: BufferSource): Promise<string> {
