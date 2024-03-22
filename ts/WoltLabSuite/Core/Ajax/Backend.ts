@@ -50,6 +50,7 @@ let ignoreConnectionErrors = false;
 window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
 
 class BackendRequest {
+  readonly #headers = new Map<string, string>();
   readonly #url: string;
   readonly #type: RequestType;
   readonly #payload?: Payload;
@@ -73,6 +74,12 @@ class BackendRequest {
 
   disableLoadingIndicator(): this {
     this.#showLoadingIndicator = false;
+
+    return this;
+  }
+
+  withHeader(key: string, value: string): this {
+    this.#headers.set(key, value);
 
     return this;
   }
@@ -117,12 +124,13 @@ class BackendRequest {
   async #fetch(requestOptions: RequestInit = {}): Promise<Response | undefined> {
     registerGlobalRejectionHandler();
 
+    this.#headers.set("X-Requested-With", "XMLHttpRequest");
+    this.#headers.set("X-XSRF-TOKEN", getXsrfToken());
+    const headers = Object.fromEntries(this.#headers);
+
     const init: RequestInit = extend(
       {
-        headers: {
-          "X-Requested-With": "XMLHttpRequest",
-          "X-XSRF-TOKEN": getXsrfToken(),
-        },
+        headers,
         mode: "same-origin",
         credentials: "same-origin",
         cache: this.#allowCaching ? "default" : "no-store",

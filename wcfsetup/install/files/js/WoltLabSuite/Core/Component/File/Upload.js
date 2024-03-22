@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload"], function (require, exports, Backend_1, Selector_1, Upload_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk"], function (require, exports, Backend_1, Selector_1, Upload_1, Chunk_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -26,32 +26,23 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             const start = i * chunkSize;
             const end = start + chunkSize;
             const chunk = file.slice(start, end);
-            // TODO fix the URL
-            throw new Error("TODO: fix the url");
-            const endpoint = new URL(String(i));
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
-            endpoint.searchParams.append("checksum", checksum);
-            let response;
-            try {
-                response = (await (0, Backend_1.prepareRequest)(endpoint.toString()).post(chunk).fetchAsJson());
-            }
-            catch (e) {
-                // TODO: Handle errors
-                console.error(e);
+            const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
+            if (!response.ok) {
                 fileElement.uploadFailed();
-                throw e;
+                throw response.error;
             }
-            await chunkUploadCompleted(fileElement, response);
+            await chunkUploadCompleted(fileElement, response.value);
         }
     }
     async function chunkUploadCompleted(fileElement, response) {
         if (!response.completed) {
             return;
         }
-        const hasThumbnails = response.endpointThumbnails !== "";
-        fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, hasThumbnails);
-        if (hasThumbnails) {
-            await generateThumbnails(fileElement, response.endpointThumbnails);
+        fileElement.uploadCompleted(response.fileID, response.mimeType, response.link, response.data, response.generateThumbnails);
+        if (response.generateThumbnails) {
+            throw new Error("TODO: endpoint to generate thumbnails");
+            await generateThumbnails(fileElement, "todo");
         }
     }
     async function generateThumbnails(fileElement, endpoint) {
