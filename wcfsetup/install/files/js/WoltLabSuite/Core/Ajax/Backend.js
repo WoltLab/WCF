@@ -114,6 +114,9 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                     }
                 }
             }
+            else if (this.#type === 0 /* RequestType.DELETE */) {
+                init.method = "DELETE";
+            }
             else {
                 init.method = "GET";
             }

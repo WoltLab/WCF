@@ -67,4 +67,14 @@ class File extends DatabaseObject
             default => false,
         };
     }
+
+    public function canDelete(): bool
+    {
+        $processor = $this->getProcessor();
+        if ($processor === null) {
+            return true;
+        }
+
+        return $processor->canDelete($this);
+    }
 }

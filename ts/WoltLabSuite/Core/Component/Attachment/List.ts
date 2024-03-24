@@ -1,3 +1,4 @@
+import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
@@ -18,7 +19,14 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
       return;
     }
 
+    const fileId = file.fileId;
+    if (fileId === undefined) {
+      // TODO: error handling
+      return;
+    }
+
     element.append(
+      getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element),
       getInsertAttachBbcodeButton(
         (data as FileProcessorData).attachmentID,
         file.isImage() && file.link ? file.link : "",
@@ -38,6 +46,38 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
       }
     }
   });
+}
+
+function getDeleteAttachButton(
+  fileId: number,
+  attachmentId: number,
+  editorId: string,
+  element: HTMLElement,
+): HTMLButtonElement {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("button", "small");
+  button.textContent = "TODO: delete";
+
+  button.addEventListener("click", () => {
+    const editor = document.getElementById(editorId);
+    if (editor === null) {
+      // TODO: error handling
+      return;
+    }
+
+    void deleteFile(fileId).then((result) => {
+      result.unwrap();
+
+      dispatchToCkeditor(editor).removeAttachment({
+        attachmentId,
+      });
+
+      element.remove();
+    });
+  });
+
+  return button;
 }
 
 function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {

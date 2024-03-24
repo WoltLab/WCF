@@ -1,4 +1,3 @@
-import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
