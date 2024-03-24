@@ -1,4 +1,4 @@
-define(["require", "exports", "../Ckeditor/Event"], function (require, exports, Event_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event"], function (require, exports, DeleteFile_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -13,7 +13,12 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
                 // TODO: error handling
                 return;
             }
-            element.append(getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
+            const fileId = file.fileId;
+            if (fileId === undefined) {
+                // TODO: error handling
+                return;
+            }
+            element.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element), getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
             if (file.isImage()) {
                 const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
@@ -25,6 +30,27 @@ define(["require", "exports", "../Ckeditor/Event"], function (require, exports, 
                 }
             }
         });
+    }
+    function getDeleteAttachButton(fileId, attachmentId, editorId, element) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("button", "small");
+        button.textContent = "TODO: delete";
+        button.addEventListener("click", () => {
+            const editor = document.getElementById(editorId);
+            if (editor === null) {
+                // TODO: error handling
+                return;
+            }
+            void (0, DeleteFile_1.deleteFile)(fileId).then((result) => {
+                result.unwrap();
+                (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
+                    attachmentId,
+                });
+                element.remove();
+            });
+        });
+        return button;
     }
     function getInsertAttachBbcodeButton(attachmentId, url, editorId) {
         const button = document.createElement("button");

@@ -19,6 +19,8 @@ interface IFileProcessor
 
     public function adoptThumbnail(FileThumbnail $thumbnail): void;
 
+    public function canDelete(File $file): bool;
+
     public function canDownload(File $file): bool;
 
     public function getAllowedFileExtensions(array $context): array;

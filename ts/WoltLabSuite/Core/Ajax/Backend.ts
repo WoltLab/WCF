@@ -154,6 +154,8 @@ class BackendRequest {
           init.body = JSON.stringify(this.#payload);
         }
       }
+    } else if (this.#type === RequestType.DELETE) {
+      init.method = "DELETE";
     } else {
       init.method = "GET";
     }
