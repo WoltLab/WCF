@@ -158,6 +158,10 @@ class UiPollEditor {
    * Creates a poll option with the given data or an empty poll option of no data is given.
    */
   private createOption(optionValue?: string, optionId?: string, insertAfter?: HTMLElement): void {
+    if (this.optionCount >= this.options.maxOptions) {
+      return;
+    }
+
     optionValue = optionValue || "";
     optionId = optionId || "0";
 
@@ -216,7 +220,7 @@ class UiPollEditor {
     }
 
     this.optionCount++;
-    if (this.optionCount === this.options.maxOptions) {
+    if (this.optionCount >= this.options.maxOptions) {
       this.optionList.querySelectorAll(".jsAddOption").forEach((icon: HTMLSpanElement) => {
         icon.classList.remove("pointer");
         icon.classList.add("disabled");

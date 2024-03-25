@@ -95,6 +95,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Creates a poll option with the given data or an empty poll option of no data is given.
          */
         createOption(optionValue, optionId, insertAfter) {
+            if (this.optionCount >= this.options.maxOptions) {
+                return;
+            }
             optionValue = optionValue || "";
             optionId = optionId || "0";
             const listItem = document.createElement("LI");
@@ -145,7 +148,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 optionInput.focus();
             }
             this.optionCount++;
-            if (this.optionCount === this.options.maxOptions) {
+            if (this.optionCount >= this.options.maxOptions) {
                 this.optionList.querySelectorAll(".jsAddOption").forEach((icon) => {
                     icon.classList.remove("pointer");
                     icon.classList.add("disabled");
