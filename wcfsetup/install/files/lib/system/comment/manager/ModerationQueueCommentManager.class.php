@@ -5,6 +5,7 @@ namespace wcf\system\comment\manager;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\data\user\UserProfile;
 
 /**
  * Moderation queue comment manager implementation.
@@ -13,7 +14,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ModerationQueueCommentManager extends AbstractCommentManager
+class ModerationQueueCommentManager extends AbstractCommentManager implements ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -23,6 +24,14 @@ class ModerationQueueCommentManager extends AbstractCommentManager
         $entry = new ModerationQueue($objectID);
 
         return $entry->canEdit();
+    }
+
+    #[\Override]
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
+    {
+        $entry = new ModerationQueue($objectID);
+
+        return $entry->canEdit($user->getDecoratedObject());
     }
 
     /**
