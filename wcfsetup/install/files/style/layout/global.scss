@@ -153,6 +153,12 @@ ol.nativeList {
 		font-weight: 600;
 	}
 
+	h4 {
+		@include wcfFontHeadline;
+
+		font-weight: 600;
+	}
+
 	h1,
 	h2,
 	h3,
