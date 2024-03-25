@@ -21,7 +21,9 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserProfileCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class UserProfileCommentManager extends AbstractCommentManager implements
+    IViewableLikeProvider,
+    ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -92,7 +94,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
     }
 
     #[\Override]
-    public function canViewObject(int $objectID, UserProfile $user): bool
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
         if ($userProfile === null) {
@@ -100,9 +102,15 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
         }
 
         /** @see UserProfile::isProtected() */
-        return $user->getPermission('admin.general.canViewPrivateUserOptions')
+        if (
+            !(
+            $user->getPermission('admin.general.canViewPrivateUserOptions')
             || $userProfile->isAccessible('canViewProfile', $user->userID)
-            || $userProfile->userID === $user->userID;
+            || $userProfile->userID === $user->userID)
+        ) {
+            return false;
+        }
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
     /**

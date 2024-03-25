@@ -14,7 +14,7 @@ use wcf\data\user\UserProfile;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ModerationQueueCommentManager extends AbstractCommentManager
+class ModerationQueueCommentManager extends AbstractCommentManager implements ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -27,11 +27,10 @@ class ModerationQueueCommentManager extends AbstractCommentManager
     }
 
     #[\Override]
-    public function canViewObject(int $objectID, UserProfile $user): bool
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $entry = new ModerationQueue($objectID);
-
-        return $entry->canEdit($user->getDecoratedObject());
+        return ($entry->canEdit($user->getDecoratedObject()));
     }
 
     /**

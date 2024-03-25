@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ArticleCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class ArticleCommentManager extends AbstractCommentManager implements IViewableLikeProvider, ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -73,13 +73,16 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     }
 
     #[\Override]
-    public function canViewObject(int $objectID, UserProfile $user): bool
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $articleContent = new ArticleContent($objectID);
         if (!$articleContent->articleContentID) {
             return false;
         }
-        return $articleContent->getArticle()->canRead($user);
+        if (!$articleContent->getArticle()->canRead($user)) {
+            return false;
+        }
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
     /**

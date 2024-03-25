@@ -20,7 +20,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class PageCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class PageCommentManager extends AbstractCommentManager implements IViewableLikeProvider, ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -72,21 +72,17 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     }
 
     #[\Override]
-    public function canViewObject(int $objectID, UserProfile $user): bool
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $page = new Page($objectID);
         if (!$page->pageID) {
             return false;
         }
-        return $page->isAccessible($user->getDecoratedObject());
+        if (!$page->isAccessible($user->getDecoratedObject())) {
+            return false;
+        }
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
-
-    #[\Override]
-    public function canWriteComments(int $objectID, UserProfile $user): bool
-    {
-        return $this->canViewObject($objectID, $user);
-    }
-
 
     /**
      * @inheritDoc

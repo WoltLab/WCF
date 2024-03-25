@@ -18,9 +18,4 @@ interface ICommentPermissionManager extends ICommentManager
      * object type id and object id.
      */
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool;
-
-    /**
-     * Returns true if the user may read content identified by object type id and object id.
-     */
-    public function canViewObject(int $objectID, UserProfile $user): bool;
 }
