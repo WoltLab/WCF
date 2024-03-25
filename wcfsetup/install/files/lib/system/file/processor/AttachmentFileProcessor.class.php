@@ -100,8 +100,12 @@ final class AttachmentFileProcessor implements IFileProcessor
     #[\Override]
     public function canDelete(File $file): bool
     {
-        // TODO
-        return true;
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment === null) {
+            return false;
+        }
+
+        return $attachment->canDelete();
     }
 
     #[\Override]
