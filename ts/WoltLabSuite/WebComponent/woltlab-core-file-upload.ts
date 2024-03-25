@@ -30,6 +30,9 @@
           });
           this.dispatchEvent(uploadEvent);
         }
+
+        // Reset the selected file.
+        this.#element.value = "";
       });
     }
 

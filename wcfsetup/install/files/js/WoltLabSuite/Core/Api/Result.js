@@ -8,7 +8,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-define(["require", "exports", "../Core", "./Error"], function (require, exports, Core_1, Error_1) {
+define(["require", "exports", "../Ajax/Error", "../Core", "./Error"], function (require, exports, Error_1, Core_1, Error_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.apiResultFromStatusNotOk = exports.apiResultFromError = exports.apiResultFromValue = void 0;
@@ -22,14 +22,11 @@ define(["require", "exports", "../Core", "./Error"], function (require, exports,
         };
     }
     exports.apiResultFromValue = apiResultFromValue;
-    function apiResultFromError(error) {
-        return {
-            ok: false,
-            error,
-            unwrap() {
-                throw error;
-            },
-        };
+    async function apiResultFromError(error) {
+        if (error instanceof Error_1.StatusNotOk) {
+            return apiResultFromStatusNotOk(error);
+        }
+        throw error;
     }
     exports.apiResultFromError = apiResultFromError;
     async function apiResultFromStatusNotOk(e) {
@@ -55,7 +52,14 @@ define(["require", "exports", "../Core", "./Error"], function (require, exports,
             typeof json.code === "string" &&
             typeof json.message === "string" &&
             typeof json.param === "string") {
-            return apiResultFromError(new Error_1.ApiError(json.type, json.code, json.message, json.param, response.status));
+            const apiError = new Error_2.ApiError(json.type, json.code, json.message, json.param, response.status);
+            return {
+                ok: false,
+                error: apiError,
+                unwrap() {
+                    throw apiError;
+                },
+            };
         }
         throw e;
     }
