@@ -68,7 +68,7 @@ interface ICommentManager
      * @param int $objectTypeID
      * @param int $objectID
      * @return  bool
-     * @deprecated 6.1 use `canModerateObject` instead
+     * @deprecated 6.1 use `ICommentPermissionManager::canModerateObject()` instead
      */
     public function canModerate($objectTypeID, $objectID);
 
