@@ -75,7 +75,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     #[\Override]
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
-        $articleContent = new ArticleContent($objectID);
+        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
         if (!$articleContent->articleContentID) {
             return false;
         }
