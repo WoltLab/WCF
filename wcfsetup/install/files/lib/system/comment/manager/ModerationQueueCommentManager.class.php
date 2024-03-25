@@ -30,7 +30,8 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $entry = new ModerationQueue($objectID);
-        return ($entry->canEdit($user->getDecoratedObject()));
+
+        return $entry->canEdit($user->getDecoratedObject());
     }
 
     /**

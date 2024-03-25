@@ -81,6 +81,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         if (!$page->isAccessible($user->getDecoratedObject())) {
             return false;
         }
+
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 

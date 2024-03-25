@@ -82,6 +82,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         if (!$articleContent->getArticle()->canRead($user)) {
             return false;
         }
+
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 

@@ -104,12 +104,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         /** @see UserProfile::isProtected() */
         if (
             !(
-            $user->getPermission('admin.general.canViewPrivateUserOptions')
+                $user->getPermission('admin.general.canViewPrivateUserOptions')
             || $userProfile->isAccessible('canViewProfile', $user->userID)
-            || $userProfile->userID === $user->userID)
+            || $userProfile->userID === $user->userID
+            )
         ) {
             return false;
         }
+
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
