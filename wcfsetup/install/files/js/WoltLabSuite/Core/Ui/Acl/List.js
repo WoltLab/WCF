@@ -58,10 +58,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             });
             // bind event listener for submit
             const form = this.#container.closest("form");
-            form.addEventListener("submit", this.submit.bind(this));
+            form.addEventListener("submit", () => {
+                this.submit();
+            });
             // reset ACL on click
             const resetButton = form.querySelector("input[type=reset]");
-            resetButton?.addEventListener("click", this.#reset.bind(this));
+            resetButton?.addEventListener("click", () => {
+                this.#reset();
+            });
             if (initialPermissions) {
                 this.#success(initialPermissions);
             }
@@ -76,7 +80,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const listItem = this.#createListItem(objectId, label, type);
             // toggle element
             this.#savePermissions();
-            this.#aclList.closest("li")?.classList.remove("active");
+            this.#aclList.querySelectorAll("li").forEach((element) => {
+                element.classList.remove("active");
+            });
             listItem.classList.add("active");
             this.#search.addExcludedSearchValues(label);
             // uncheck all option values
@@ -109,7 +115,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#searchInput.value = "";
             // deselect all input elements
             Util_1.default.hide(this.#permissionList);
-            this.#permissionList.querySelector("input[type=checkbox]").checked = false;
+            this.#permissionList.querySelectorAll("input[type=checkbox]").forEach((inputElement) => {
+                inputElement.checked = false;
+            });
         }
         #loadACL() {
             Ajax.apiOnce({
@@ -135,7 +143,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
         </button>`;
             const listItem = document.createElement("li");
             listItem.innerHTML = html;
-            this.#aclList.appendChild(listItem);
             listItem.dataset.objectId = objectID;
             listItem.dataset.type = type;
             listItem.dataset.label = label;
@@ -147,6 +154,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             });
             const deleteButton = listItem.querySelector(".aclItemDeleteButton");
             deleteButton.addEventListener("click", () => this.#removeItem(listItem));
+            this.#aclList.appendChild(listItem);
             return listItem;
         }
         #removeItem(listItem) {
@@ -163,7 +171,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#selectFirstEntry();
         }
         #selectFirstEntry() {
-            const listItem = this.#aclList.closest("li");
+            const listItem = this.#aclList.querySelector("li");
             if (listItem) {
                 this.#select(listItem, false);
             }
@@ -248,7 +256,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 this.#savePermissions();
             }
             // switch active item
-            this.#aclList.closest("li")?.classList.remove("active");
+            this.#aclList.querySelectorAll("li").forEach((li) => {
+                li.classList.remove("active");
+            });
             listItem.classList.add("active");
             // apply permissions for current item
             this.#setupPermissions(listItem.dataset.type, listItem.dataset.objectId);
@@ -273,16 +283,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             });
             // use stored permissions if applicable
             if (this.#values[type] && this.#values[type][objectID]) {
-                for (const $optionID in this.#values[type][objectID]) {
-                    if (this.#values[type][objectID][$optionID] == 1) {
-                        $("#grant" + $optionID)
-                            .prop("checked", true)
-                            .trigger("change");
+                for (const optionID in this.#values[type][objectID]) {
+                    if (this.#values[type][objectID][optionID] == 1) {
+                        const option = document.getElementById("grant" + optionID);
+                        option.checked = true;
+                        option.dispatchEvent(new Event("change"));
                     }
                     else {
-                        $("#deny" + $optionID)
-                            .prop("checked", true)
-                            .trigger("change");
+                        const option = document.getElementById("deny" + optionID);
+                        option.checked = true;
+                        option.dispatchEvent(new Event("change"));
                     }
                 }
             }
