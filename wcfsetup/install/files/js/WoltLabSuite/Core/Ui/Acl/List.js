@@ -86,7 +86,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             listItem.classList.add("active");
             this.#search.addExcludedSearchValues(label);
             // uncheck all option values
-            this.#permissionList.querySelectorAll("input[type=checkbox]").forEach((inputElement) => {
+            this.#permissionList.querySelectorAll("input[type=radio]").forEach((inputElement) => {
                 inputElement.checked = false;
             });
             // clear search input
@@ -115,7 +115,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#searchInput.value = "";
             // deselect all input elements
             Util_1.default.hide(this.#permissionList);
-            this.#permissionList.querySelectorAll("input[type=checkbox]").forEach((inputElement) => {
+            this.#permissionList.querySelectorAll("input[type=radio]").forEach((inputElement) => {
                 inputElement.checked = false;
             });
         }
@@ -189,10 +189,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 const listItem = document.createElement("li");
                 listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
         <label for="grant${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
-          <input type="checkbox" id="grant${optionID}" />
+          <input type="radio" id="grant${optionID}" />
         </label>
         <label for="deny${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.deny")}">
-          <input type="checkbox" id="deny${optionID}" />
+          <input type="radio" id="deny${optionID}" />
         </label>`;
                 listItem.dataset.optionId = optionID;
                 listItem.dataset.optionName = option.optionName;
@@ -278,7 +278,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
         }
         #setupPermissions(type, objectID) {
             // reset all checkboxes to unchecked
-            this.#permissionList.querySelectorAll("input[type='checkbox']").forEach((inputElement) => {
+            this.#permissionList.querySelectorAll("input[type='radio']").forEach((inputElement) => {
                 inputElement.checked = false;
             });
             // use stored permissions if applicable
@@ -309,7 +309,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const type = activeObject.dataset.type;
             // clear old values
             this.#values[type][objectID] = {};
-            this.#permissionList.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+            this.#permissionList.querySelectorAll("input[type='radio']").forEach((checkbox) => {
                 const optionValue = checkbox.dataset.type === "deny" ? 0 : 1;
                 const optionID = checkbox.dataset.optionId;
                 if (checkbox.checked) {
