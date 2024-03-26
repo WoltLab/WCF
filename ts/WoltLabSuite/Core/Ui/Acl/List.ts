@@ -153,10 +153,7 @@ export = class AclList {
 
     this.#search.addExcludedSearchValues(label);
 
-    // uncheck all option values
-    this.#permissionList.querySelectorAll("input[type=radio]").forEach((inputElement: HTMLInputElement) => {
-      inputElement.checked = false;
-    });
+    this.#select(listItem, false);
 
     // clear search input
     this.#searchInput.value = "";
