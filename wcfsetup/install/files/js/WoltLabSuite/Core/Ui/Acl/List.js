@@ -46,9 +46,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             elementContainer.appendChild(this.#searchInput);
             this.#permissionList = document.createElement("div");
             this.#permissionList.classList.add("aclPermissionList", "containerList");
-            /*this.#permissionList.dataset.grant = getPhrase("wcf.acl.option.grant");
-            this.#permissionList.dataset.deny = getPhrase("wcf.acl.option.deny");
-            this.#permissionList.dataset.inherited = getPhrase("wcf.acl.option.inherited");*/
             Util_1.default.hide(this.#permissionList);
             elementContainer.appendChild(this.#permissionList);
             // prepare search input

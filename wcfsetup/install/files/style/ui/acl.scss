@@ -53,11 +53,29 @@
 	position: relative;
 	display: grid;
 	column-gap: 1px;
-	grid-template-columns: 10px auto repeat(3, 75px);
+	grid-template-columns: 10px auto repeat(3, 60px);
 	grid-template-rows: auto;
 
 	> div {
 		grid-column: 1 / span 5;
+		transition: background-color 0.2s;
+
+		&:not(:last-child):not(:first-child) {
+			border-bottom: 1px solid var(--wcfContentBorderInner);
+		}
+
+		&:nth-child(2) {
+			border-top: 1px solid var(--wcfContentBorder);
+		}
+
+		&:last-child {
+			border-bottom: 1px solid var(--wcfContentBorder);
+		}
+
+		&:hover {
+			background-color: var(--wcfTabularBoxBackgroundActive);
+		}
+
 
 		&.aclCategory {
 			padding: 20px 10px 10px 0;
@@ -83,6 +101,7 @@
 
 			> span {
 				text-align: center;
+				@include wcfFontSmall;
 
 				&.inherited {
 					grid-column-start: 3;
@@ -95,6 +114,10 @@
 				&.deny {
 					grid-column-start: 5;
 				}
+			}
+
+			&:hover {
+				background-color: transparent;
 			}
 		}
 

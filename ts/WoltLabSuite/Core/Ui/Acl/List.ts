@@ -99,9 +99,6 @@ export = class AclList {
 
     this.#permissionList = document.createElement("div");
     this.#permissionList.classList.add("aclPermissionList", "containerList");
-    /*this.#permissionList.dataset.grant = getPhrase("wcf.acl.option.grant");
-    this.#permissionList.dataset.deny = getPhrase("wcf.acl.option.deny");
-    this.#permissionList.dataset.inherited = getPhrase("wcf.acl.option.inherited");*/
     DomUtil.hide(this.#permissionList);
     elementContainer.appendChild(this.#permissionList);
 
