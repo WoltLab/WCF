@@ -41,7 +41,7 @@
 	}
 
 	/* search input */
-	& + .dropdown {
+	& + .dropdown, & + input[type="text"] {
 		display: block;
 		margin-top: 20px;
 	}
