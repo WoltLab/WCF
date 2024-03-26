@@ -7,7 +7,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
     Util_1 = tslib_1.__importDefault(Util_1);
     StringUtil = tslib_1.__importStar(StringUtil);
     Ajax = tslib_1.__importStar(Ajax);
-    return class ACLList {
+    return class AclList {
         #categoryName;
         #container;
         #aclList;
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             Util_1.default.hide(this.#container);
             this.#container.classList.add("aclContainer");
             // insert container elements
-            const elementContainer = this.#container.closest("dd");
+            const elementContainer = this.#container.querySelector("dd");
             this.#aclList = document.createElement("ul");
             this.#aclList.classList.add("aclList", "containerList");
             elementContainer.appendChild(this.#aclList);
@@ -76,11 +76,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const listItem = this.#createListItem(objectId, label, type);
             // toggle element
             this.#savePermissions();
-            this.#aclList.closest("li").classList.remove("active");
+            this.#aclList.closest("li")?.classList.remove("active");
             listItem.classList.add("active");
             this.#search.addExcludedSearchValues(label);
             // uncheck all option values
-            this.#permissionList.closest("input[type=checkbox]").checked = false;
+            this.#permissionList.querySelectorAll("input[type=checkbox]").forEach((inputElement) => {
+                inputElement.checked = false;
+            });
             // clear search input
             this.#searchInput.value = "";
             // show permissions
@@ -175,20 +177,19 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             }
             // prepare options
             const structure = {};
-            for (const optionID in data.returnValues.options) {
-                const option = data.returnValues.options[optionID];
+            for (const [optionID, option] of Object.entries(data.returnValues.options)) {
                 const listItem = document.createElement("li");
                 listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
         <label for="grant${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
-          <input type="checkbox" id="grant' + optionID + '" />
+          <input type="checkbox" id="grant${optionID}" />
         </label>
         <label for="deny${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.deny")}">
           <input type="checkbox" id="deny${optionID}" />
         </label>`;
                 listItem.dataset.optionId = optionID;
                 listItem.dataset.optionName = option.optionName;
-                const grantPermission = listItem.querySelector(`#grant${optionID}}`);
-                const denyPermission = listItem.querySelector(`#deny${optionID}}`);
+                const grantPermission = listItem.querySelector(`#grant${optionID}`);
+                const denyPermission = listItem.querySelector(`#deny${optionID}`);
                 grantPermission.dataset.type = "grant";
                 grantPermission.dataset.optionId = optionID;
                 grantPermission.addEventListener("change", this.#change.bind(this));
@@ -206,14 +207,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 }
             }
             if (Object.keys(structure).length > 0) {
-                for (const categoryName in structure) {
-                    const $listItems = structure[categoryName];
+                for (const [categoryName, listItems] of Object.entries(structure)) {
                     if (data.returnValues.categories[categoryName]) {
-                        $('<li class="aclCategory">' + data.returnValues.categories[categoryName] + "</li>").appendTo(this.#permissionList);
+                        const category = document.createElement("li");
+                        category.innerText = StringUtil.escapeHTML(data.returnValues.categories[categoryName]);
+                        this.#permissionList.appendChild(category);
                     }
-                    for (let $i = 0, $length = $listItems.length; $i < $length; $i++) {
-                        $listItems[$i].appendTo(this.#permissionList);
-                    }
+                    listItems.forEach((listItem) => {
+                        this.#permissionList.appendChild(listItem);
+                    });
                 }
             }
             // set data
@@ -246,7 +248,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 this.#savePermissions();
             }
             // switch active item
-            this.#aclList.closest("li").classList.remove("active");
+            this.#aclList.closest("li")?.classList.remove("active");
             listItem.classList.add("active");
             // apply permissions for current item
             this.#setupPermissions(listItem.dataset.type, listItem.dataset.objectId);
@@ -257,10 +259,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const type = checkbox.dataset.type;
             if (checkbox.checked) {
                 if (type === "deny") {
-                    document.getElementById("#grant" + optionID).checked = false;
+                    document.getElementById("grant" + optionID).checked = false;
                 }
                 else {
-                    document.getElementById("#deny" + optionID).checked = false;
+                    document.getElementById("deny" + optionID).checked = false;
                 }
             }
         }

@@ -40,8 +40,8 @@ interface AjaxResponse extends DatabaseObjectActionResponse {
   };
 }
 
-export = class ACLList {
-  readonly #categoryName: string;
+export = class AclList {
+  readonly #categoryName: string | undefined;
   readonly #container: HTMLElement;
   readonly #aclList: HTMLUListElement;
   readonly #permissionList: HTMLUListElement;
@@ -50,16 +50,22 @@ export = class ACLList {
   readonly #objectTypeID: number;
   readonly #aclValuesFieldName: string;
   readonly #search: UiUserSearchInput;
-  #values;
+  #values: {
+    [key: string]: {
+      [key: string]: {
+        [key: string]: number;
+      };
+    };
+  };
 
   constructor(
     containerSelector: string,
     objectTypeID: number,
-    categoryName: string,
+    categoryName: string | undefined,
     objectID: number,
     includeUserGroups: boolean,
-    initialPermissions,
-    aclValuesFieldName,
+    initialPermissions: AjaxResponse | undefined,
+    aclValuesFieldName: string | undefined,
   ) {
     this.#objectID = objectID || 0;
     this.#objectTypeID = objectTypeID;
@@ -79,7 +85,7 @@ export = class ACLList {
     this.#container.classList.add("aclContainer");
 
     // insert container elements
-    const elementContainer = this.#container.closest("dd")!;
+    const elementContainer = this.#container.querySelector("dd")!;
     this.#aclList = document.createElement("ul");
     this.#aclList.classList.add("aclList", "containerList");
     elementContainer.appendChild(this.#aclList);
@@ -128,13 +134,15 @@ export = class ACLList {
 
     // toggle element
     this.#savePermissions();
-    this.#aclList.closest("li")!.classList.remove("active");
+    this.#aclList.closest("li")?.classList.remove("active");
     listItem.classList.add("active");
 
     this.#search.addExcludedSearchValues(label);
 
     // uncheck all option values
-    (this.#permissionList.closest("input[type=checkbox]") as HTMLInputElement).checked = false;
+    this.#permissionList.querySelectorAll("input[type=checkbox]").forEach((inputElement: HTMLInputElement) => {
+      inputElement.checked = false;
+    });
 
     // clear search input
     this.#searchInput.value = "";
@@ -250,14 +258,13 @@ export = class ACLList {
     }
 
     // prepare options
-    const structure = {};
-    for (const optionID in data.returnValues.options) {
-      const option = data.returnValues.options[optionID];
-
+    const structure: { [key: string]: HTMLLIElement[] } = {};
+    for (const [optionID, option] of Object.entries(data.returnValues.options)) {
       const listItem = document.createElement("li");
+
       listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
         <label for="grant${optionID}" class="jsTooltip" title="${getPhrase("wcf.acl.option.grant")}">
-          <input type="checkbox" id="grant' + optionID + '" />
+          <input type="checkbox" id="grant${optionID}" />
         </label>
         <label for="deny${optionID}" class="jsTooltip" title="${getPhrase("wcf.acl.option.deny")}">
           <input type="checkbox" id="deny${optionID}" />
@@ -265,8 +272,8 @@ export = class ACLList {
       listItem.dataset.optionId = optionID;
       listItem.dataset.optionName = option.optionName;
 
-      const grantPermission = listItem.querySelector(`#grant${optionID}}`) as HTMLInputElement;
-      const denyPermission = listItem.querySelector(`#deny${optionID}}`) as HTMLInputElement;
+      const grantPermission = listItem.querySelector(`#grant${optionID}`) as HTMLInputElement;
+      const denyPermission = listItem.querySelector(`#deny${optionID}`) as HTMLInputElement;
 
       grantPermission.dataset.type = "grant";
       grantPermission.dataset.optionId = optionID;
@@ -288,18 +295,16 @@ export = class ACLList {
     }
 
     if (Object.keys(structure).length > 0) {
-      for (const categoryName in structure) {
-        const $listItems = structure[categoryName];
-
+      for (const [categoryName, listItems] of Object.entries(structure)) {
         if (data.returnValues.categories[categoryName]) {
-          $('<li class="aclCategory">' + data.returnValues.categories[categoryName] + "</li>").appendTo(
-            this.#permissionList,
-          );
+          const category = document.createElement("li");
+          category.innerText = StringUtil.escapeHTML(data.returnValues.categories[categoryName]);
+          this.#permissionList.appendChild(category);
         }
 
-        for (let $i = 0, $length = $listItems.length; $i < $length; $i++) {
-          $listItems[$i].appendTo(this.#permissionList);
-        }
+        listItems.forEach((listItem) => {
+          this.#permissionList.appendChild(listItem);
+        });
       }
     }
 
@@ -342,7 +347,7 @@ export = class ACLList {
     }
 
     // switch active item
-    this.#aclList.closest("li")!.classList.remove("active");
+    this.#aclList.closest("li")?.classList.remove("active");
     listItem.classList.add("active");
 
     // apply permissions for current item
@@ -356,9 +361,9 @@ export = class ACLList {
 
     if (checkbox.checked) {
       if (type === "deny") {
-        (document.getElementById("#grant" + optionID)! as HTMLInputElement).checked = false;
+        (document.getElementById("grant" + optionID)! as HTMLInputElement).checked = false;
       } else {
-        (document.getElementById("#deny" + optionID)! as HTMLInputElement).checked = false;
+        (document.getElementById("deny" + optionID)! as HTMLInputElement).checked = false;
       }
     }
   }
