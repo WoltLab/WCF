@@ -130,7 +130,13 @@ export = class AclList {
     }
   }
 
-  addObject(selectedItem: HTMLLIElement): boolean {
+  public getData() {
+    this.#savePermissions();
+
+    return this.#values;
+  }
+
+  public addObject(selectedItem: HTMLLIElement): boolean {
     const type = selectedItem.dataset.type!;
     const label = selectedItem.dataset.label!;
     const objectId = selectedItem.dataset.objectId!;
@@ -160,17 +166,11 @@ export = class AclList {
     return false;
   }
 
-  submit() {
+  public submit() {
     this.#savePermissions();
 
     this.#save("group");
     this.#save("user");
-  }
-
-  getData() {
-    this.#savePermissions();
-
-    return this.#values;
   }
 
   #reset() {

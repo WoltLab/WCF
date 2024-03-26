@@ -73,6 +73,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 this.#loadACL();
             }
         }
+        getData() {
+            this.#savePermissions();
+            return this.#values;
+        }
         addObject(selectedItem) {
             const type = selectedItem.dataset.type;
             const label = selectedItem.dataset.label;
@@ -99,10 +103,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#savePermissions();
             this.#save("group");
             this.#save("user");
-        }
-        getData() {
-            this.#savePermissions();
-            return this.#values;
         }
         #reset() {
             // reset stored values
