@@ -43,6 +43,11 @@ class SmileyCache extends SingletonFactory
     protected $visibleCategories;
 
     /**
+     * @var Smiley[]
+     */
+    protected array $emojis;
+
+    /**
      * @inheritDoc
      */
     protected function init()
@@ -158,5 +163,29 @@ class SmileyCache extends SingletonFactory
             'defaultSmilies' => $defaultSmilies,
             'smileyCategories' => $smileyCategories,
         ]);
+    }
+
+    /**
+     * Return all smileys that match `:[a-z]+(?:_[a-z]+)*:`.
+     *
+     * @return Smiley[]
+     * @since 6.1
+     */
+    public function getEmojis(): array
+    {
+        if (!isset($this->emojis)) {
+            $this->emojis = [];
+            foreach ($this->getVisibleCategories() as $category) {
+                foreach ($category as $smiley) {
+                    foreach ($smiley->smileyCodes as $smileyCode) {
+                        if (\preg_match('~^:[a-z]+(?:_[a-z]+)*:$~', $smileyCode)) {
+                            $this->emojis[$smileyCode] = $smiley;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->emojis;
     }
 }
