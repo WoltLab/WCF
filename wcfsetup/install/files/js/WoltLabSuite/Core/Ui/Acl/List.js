@@ -37,7 +37,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             // insert container elements
             const elementContainer = this.#container.querySelector("dd");
             this.#aclList = document.createElement("ul");
-            this.#aclList.classList.add("aclList", "containerList");
+            this.#aclList.classList.add("aclList");
             elementContainer.appendChild(this.#aclList);
             this.#searchInput = document.createElement("input");
             this.#searchInput.type = "text";
