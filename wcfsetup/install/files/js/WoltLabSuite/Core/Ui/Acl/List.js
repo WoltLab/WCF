@@ -1,7 +1,7 @@
 /**
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input", "WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/StringUtil", "WoltLabSuite/Core/Ajax"], function (require, exports, tslib_1, Input_1, Manager_1, Language_1, Util_1, StringUtil, Ajax) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input", "WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/StringUtil", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Core"], function (require, exports, tslib_1, Input_1, Manager_1, Language_1, Util_1, StringUtil, Ajax, Core_1) {
     "use strict";
     Input_1 = tslib_1.__importDefault(Input_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -327,30 +327,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             });
         }
         #save(type) {
-            //TODO change to store as json value in one input
-            /*if ($.getLength(this.#values[$type])) {
-              const $form = this.#container.parents("form:eq(0)");
-        
-              for (const $objectID in this.#values[$type]) {
-                const $object = this.#values[$type][$objectID];
-        
-                for (const $optionID in $object) {
-                  $(
-                    '<input type="hidden" name="' +
-                      this.#aclValuesFieldName +
-                      "[" +
-                      $type +
-                      "][" +
-                      $objectID +
-                      "][" +
-                      $optionID +
-                      ']" value="' +
-                      $object[$optionID] +
-                      '" />',
-                  ).appendTo($form);
-                }
-              }
-            }*/
+            const form = this.#container.closest("form");
+            const name = this.#aclValuesFieldName + "[" + type + "]";
+            let input = form.querySelector("input[name='" + name + "']");
+            if (input) {
+                // combine json values
+                input.value = JSON.stringify((0, Core_1.extend)(JSON.parse(input.value), this.#values[type]));
+            }
+            else {
+                input = document.createElement("input");
+                input.type = "hidden";
+                input.name = name;
+                input.value = JSON.stringify(this.#values[type]);
+                form.appendChild(input);
+            }
         }
     };
 });

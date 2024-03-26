@@ -9,6 +9,7 @@ import DomUtil from "WoltLabSuite/Core/Dom/Util";
 import * as StringUtil from "WoltLabSuite/Core/StringUtil";
 import { DatabaseObjectActionResponse } from "WoltLabSuite/Core/Ajax/Data";
 import * as Ajax from "WoltLabSuite/Core/Ajax";
+import { extend } from "WoltLabSuite/Core/Core";
 
 interface AclOption {
   categoryName: string;
@@ -438,29 +439,18 @@ export = class AclList {
   }
 
   #save(type: string) {
-    //TODO change to store as json value in one input
-    /*if ($.getLength(this.#values[$type])) {
-      const $form = this.#container.parents("form:eq(0)");
-
-      for (const $objectID in this.#values[$type]) {
-        const $object = this.#values[$type][$objectID];
-
-        for (const $optionID in $object) {
-          $(
-            '<input type="hidden" name="' +
-              this.#aclValuesFieldName +
-              "[" +
-              $type +
-              "][" +
-              $objectID +
-              "][" +
-              $optionID +
-              ']" value="' +
-              $object[$optionID] +
-              '" />',
-          ).appendTo($form);
-        }
-      }
-    }*/
+    const form = this.#container.closest("form")!;
+    const name = this.#aclValuesFieldName + "[" + type + "]";
+    let input = form.querySelector<HTMLInputElement>("input[name='" + name + "']");
+    if (input) {
+      // combine json values
+      input.value = JSON.stringify(extend(JSON.parse(input.value), this.#values[type]));
+    } else {
+      input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = JSON.stringify(this.#values[type]);
+      form.appendChild(input);
+    }
   }
 };
