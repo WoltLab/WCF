@@ -12,6 +12,7 @@
 		<item name="wcf.acl.allowAll"><![CDATA[Inhalt ist für alle Benutzer sichtbar]]></item>
 		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
+		<item name="wcf.acl.option.inherited"><![CDATA[Standard]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[Benutzer- und Benutzergruppenrechte]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[Benutzerrechte]]></item>
 		<item name="wcf.acl.search.description"><![CDATA[Benutzer- oder Benutzergruppenname eingeben …]]></item>

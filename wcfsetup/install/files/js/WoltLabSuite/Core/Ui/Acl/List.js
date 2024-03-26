@@ -48,6 +48,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#permissionList.classList.add("aclPermissionList", "containerList");
             this.#permissionList.dataset.grant = (0, Language_1.getPhrase)("wcf.acl.option.grant");
             this.#permissionList.dataset.deny = (0, Language_1.getPhrase)("wcf.acl.option.deny");
+            this.#permissionList.dataset.inherited = (0, Language_1.getPhrase)("wcf.acl.option.inherited");
             Util_1.default.hide(this.#permissionList);
             elementContainer.appendChild(this.#permissionList);
             // prepare search input
@@ -188,6 +189,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             for (const [optionID, option] of Object.entries(data.returnValues.options)) {
                 const listItem = document.createElement("li");
                 listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
+        <label for="inherited${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}">
+          <input type="radio" id="inherited${optionID}" />
+        </label>
         <label for="grant${optionID}" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
           <input type="radio" id="grant${optionID}" />
         </label>
@@ -198,12 +202,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 listItem.dataset.optionName = option.optionName;
                 const grantPermission = listItem.querySelector(`#grant${optionID}`);
                 const denyPermission = listItem.querySelector(`#deny${optionID}`);
+                const inheritedPermission = listItem.querySelector(`#inherited${optionID}`);
                 grantPermission.dataset.type = "grant";
                 grantPermission.dataset.optionId = optionID;
                 grantPermission.addEventListener("change", this.#change.bind(this));
                 denyPermission.dataset.type = "deny";
                 denyPermission.dataset.optionId = optionID;
                 denyPermission.addEventListener("change", this.#change.bind(this));
+                inheritedPermission.dataset.type = "inherited";
+                inheritedPermission.dataset.optionId = optionID;
+                inheritedPermission.addEventListener("change", this.#change.bind(this));
                 if (!structure[option.categoryName]) {
                     structure[option.categoryName] = [];
                 }
@@ -268,18 +276,26 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const optionID = checkbox.dataset.optionId;
             const type = checkbox.dataset.type;
             if (checkbox.checked) {
-                if (type === "deny") {
-                    document.getElementById("grant" + optionID).checked = false;
-                }
-                else {
-                    document.getElementById("deny" + optionID).checked = false;
+                switch (type) {
+                    case "grant":
+                        document.getElementById("deny" + optionID).checked = false;
+                        document.getElementById("inherited" + optionID).checked = false;
+                        break;
+                    case "deny":
+                        document.getElementById("grant" + optionID).checked = false;
+                        document.getElementById("inherited" + optionID).checked = false;
+                        break;
+                    case "inherited":
+                        document.getElementById("deny" + optionID).checked = false;
+                        document.getElementById("grant" + optionID).checked = false;
+                        break;
                 }
             }
         }
         #setupPermissions(type, objectID) {
-            // reset all checkboxes to unchecked
+            // reset all checkboxes to default value
             this.#permissionList.querySelectorAll("input[type='radio']").forEach((inputElement) => {
-                inputElement.checked = false;
+                inputElement.checked = inputElement.dataset.type === "inherited";
             });
             // use stored permissions if applicable
             if (this.#values[type] && this.#values[type][objectID]) {
@@ -310,6 +326,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             // clear old values
             this.#values[type][objectID] = {};
             this.#permissionList.querySelectorAll("input[type='radio']").forEach((checkbox) => {
+                if (checkbox.dataset.type === "inherited") {
+                    return;
+                }
                 const optionValue = checkbox.dataset.type === "deny" ? 0 : 1;
                 const optionID = checkbox.dataset.optionId;
                 if (checkbox.checked) {
