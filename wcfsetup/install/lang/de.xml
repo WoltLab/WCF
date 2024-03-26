@@ -10,8 +10,8 @@
 		<item name="wcf.acl.access.invertPermissions"><![CDATA[Berechtigungen umkehren]]></item>
 		<item name="wcf.acl.access.invertPermissions.description"><![CDATA[Wenn ausgewählt, dürfen standardmäßig alle Benutzer, bis auf ausgewählte Benutzer und Benutzergruppen das Objekt sehen.]]></item>
 		<item name="wcf.acl.allowAll"><![CDATA[Inhalt ist für alle Benutzer sichtbar]]></item>
-		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
-		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
+		<item name="wcf.acl.option.deny"><![CDATA[Nein]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Ja]]></item>
 		<item name="wcf.acl.option.inherited"><![CDATA[Standard]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[Benutzer- und Benutzergruppenrechte]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[Benutzerrechte]]></item>

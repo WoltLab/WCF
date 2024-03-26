@@ -51,29 +51,14 @@
 .aclPermissionList {
 	margin-top: 40px;
 	position: relative;
+	display: grid;
+	column-gap: 1px;
+	grid-template-columns: 10px auto repeat(3, 75px);
+	grid-template-rows: auto;
 
-	&::after,
-	&::before {
-		min-width: 60px;
-		position: absolute;
-		text-align: center;
-		top: -5px;
-		transform: translateY(-100%);
+	> div {
+		grid-column: 1 / span 5;
 
-		@include wcfFontSmall;
-	}
-
-	&::after {
-		content: attr(data-deny);
-		right: 0;
-	}
-
-	&::before {
-		content: attr(data-grant);
-		right: 80px;
-	}
-
-	> li {
 		&.aclCategory {
 			padding: 20px 10px 10px 0;
 
@@ -85,22 +70,43 @@
 		}
 
 		&:not(.aclCategory) {
-			display: flex;
 			padding: 10px 0;
+			display: grid;
+			grid-template-columns: subgrid;
+			grid-template-rows: subgrid;
 		}
 
-		> span {
-			flex: 1 1 auto;
-			padding-left: 10px;
+		&.aclHeader {
+			display: grid;
+			grid-template-columns: subgrid;
+			grid-template-rows: subgrid;
+
+			> span {
+				text-align: center;
+
+				&.inherited {
+					grid-column-start: 3;
+				}
+
+				&.grant {
+					grid-column-start: 4;
+				}
+
+				&.deny {
+					grid-column-start: 5;
+				}
+			}
 		}
 
-		> label {
-			cursor: pointer;
-			flex: 0 0 auto;
-			padding: 0 20px;
+		&:not(.aclHeader) {
+			> span {
+				grid-column: span 2;
+				grid-column-start: 2;
+			}
 
-			& + label {
-				margin-left: 20px;
+			> label {
+				text-align: center;
+				cursor: pointer;
 			}
 		}
 	}

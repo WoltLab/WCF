@@ -45,7 +45,7 @@ export = class AclList {
   readonly #categoryName: string | undefined;
   readonly #container: HTMLElement;
   readonly #aclList: HTMLUListElement;
-  readonly #permissionList: HTMLUListElement;
+  readonly #permissionList: HTMLDivElement;
   readonly #searchInput: HTMLInputElement;
   readonly #objectID: number;
   readonly #objectTypeID: number;
@@ -97,11 +97,11 @@ export = class AclList {
     this.#searchInput.placeholder = getPhrase("wcf.acl.search." + (!includeUserGroups ? "user." : "") + "description");
     elementContainer.appendChild(this.#searchInput);
 
-    this.#permissionList = document.createElement("ul");
+    this.#permissionList = document.createElement("div");
     this.#permissionList.classList.add("aclPermissionList", "containerList");
-    this.#permissionList.dataset.grant = getPhrase("wcf.acl.option.grant");
+    /*this.#permissionList.dataset.grant = getPhrase("wcf.acl.option.grant");
     this.#permissionList.dataset.deny = getPhrase("wcf.acl.option.deny");
-    this.#permissionList.dataset.inherited = getPhrase("wcf.acl.option.inherited");
+    this.#permissionList.dataset.inherited = getPhrase("wcf.acl.option.inherited");*/
     DomUtil.hide(this.#permissionList);
     elementContainer.appendChild(this.#permissionList);
 
@@ -265,19 +265,27 @@ export = class AclList {
       return;
     }
 
+    const header = document.createElement("div");
+    header.classList.add("aclHeader");
+    header.innerHTML = `<span class="inherited">${getPhrase("wcf.acl.option.inherited")}</span>
+        <span class="grant">${getPhrase("wcf.acl.option.grant")}</span>
+        <span class="deny">${getPhrase("wcf.acl.option.deny")}</span>`;
+
+    this.#permissionList.appendChild(header);
+
     // prepare options
-    const structure: { [key: string]: HTMLLIElement[] } = {};
+    const structure: { [key: string]: HTMLDivElement[] } = {};
     for (const [optionID, option] of Object.entries(data.returnValues.options)) {
-      const listItem = document.createElement("li");
+      const listItem = document.createElement("div");
 
       listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
-        <label for="inherited${optionID}" class="jsTooltip" title="${getPhrase("wcf.acl.option.inherited")}">
+        <label for="inherited${optionID}" class="inherited jsTooltip" title="${getPhrase("wcf.acl.option.inherited")}">
           <input type="radio" id="inherited${optionID}" />
         </label>
-        <label for="grant${optionID}" class="jsTooltip" title="${getPhrase("wcf.acl.option.grant")}">
+        <label for="grant${optionID}" class="grant jsTooltip" title="${getPhrase("wcf.acl.option.grant")}">
           <input type="radio" id="grant${optionID}" />
         </label>
-        <label for="deny${optionID}" class="jsTooltip" title="${getPhrase("wcf.acl.option.deny")}">
+        <label for="deny${optionID}" class="deny jsTooltip" title="${getPhrase("wcf.acl.option.deny")}">
           <input type="radio" id="deny${optionID}" />
         </label>`;
       listItem.dataset.optionId = optionID;
@@ -313,7 +321,8 @@ export = class AclList {
     if (Object.keys(structure).length > 0) {
       for (const [categoryName, listItems] of Object.entries(structure)) {
         if (data.returnValues.categories[categoryName]) {
-          const category = document.createElement("li");
+          const category = document.createElement("div");
+          category.classList.add("aclCategory");
           category.innerText = StringUtil.escapeHTML(data.returnValues.categories[categoryName]);
           this.#permissionList.appendChild(category);
         }
