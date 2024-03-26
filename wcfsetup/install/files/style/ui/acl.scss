@@ -64,10 +64,6 @@
 			border-bottom: 1px solid var(--wcfContentBorderInner);
 		}
 
-		&:nth-child(2) {
-			border-top: 1px solid var(--wcfContentBorder);
-		}
-
 		&:last-child {
 			border-bottom: 1px solid var(--wcfContentBorder);
 		}
@@ -95,9 +91,10 @@
 		}
 
 		&.aclHeader {
-			display: grid;
-			grid-template-columns: subgrid;
-			grid-template-rows: subgrid;
+			position: sticky;
+			border-bottom: 1px solid var(--wcfContentBorder);
+			top: 50px;
+			background-color: var(--wcfContentContainerBackground);
 
 			> span {
 				text-align: center;
@@ -117,7 +114,7 @@
 			}
 
 			&:hover {
-				background-color: transparent;
+				background-color: var(--wcfContentContainerBackground);
 			}
 		}
 
