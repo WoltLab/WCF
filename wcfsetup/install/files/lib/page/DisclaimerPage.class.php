@@ -4,6 +4,7 @@ namespace wcf\page;
 
 use wcf\page\AbstractPage;
 use wcf\system\exception\NamedUserException;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\WCF;
 
 /**
@@ -29,7 +30,10 @@ final class DisclaimerPage extends AbstractPage
         parent::readParameters();
 
         // registration disabled
-        if (!WCF::getUser()->userID && REGISTER_DISABLED) {
+        if (
+            !WCF::getUser()->userID
+            && !UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canRegister
+        ) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
         }
     }
