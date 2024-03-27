@@ -198,6 +198,10 @@ class WCF
 
         $this->runBootstrappers();
 
+        self::getTPL()->assign([
+            '__userAuthConfig' => \wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory::getInstance()->getConfigration(),
+        ]);
+
         EventHandler::getInstance()->fireAction($this, 'initialized');
     }
 
@@ -747,7 +751,6 @@ class WCF
         self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
         self::getTPL()->assign([
             '__wcf' => $wcf,
-            '__userAuthConfig' => \wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory::getInstance()->getConfigration(),
         ]);
 
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
