@@ -92,6 +92,7 @@ export = class AclList {
     elementContainer.appendChild(this.#aclList);
 
     this.#searchInput = document.createElement("input");
+    this.#searchInput.classList.add("aclSearchInput");
     this.#searchInput.type = "text";
     this.#searchInput.classList.add("long");
     this.#searchInput.placeholder = getPhrase("wcf.acl.search." + (!includeUserGroups ? "user." : "") + "description");
@@ -207,9 +208,10 @@ export = class AclList {
     const html = `<fa-icon size="16" name="${type === "group" ? "users" : "user"}" solid></fa-icon>
         <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
         <button type="button" class="aclItemDeleteButton jsTooltip" title="${getPhrase("wcf.global.button.delete")}">
-          <fa-icon size="16" name="xmark" solid></fa-icon>
+          <fa-icon size="16" class="aclListItemIcon" name="xmark" solid></fa-icon>
         </button>`;
     const listItem = document.createElement("li");
+    listItem.classList.add("aclListItem");
     listItem.innerHTML = html;
     listItem.dataset.objectId = objectID;
     listItem.dataset.type = type;
