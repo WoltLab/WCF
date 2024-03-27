@@ -144,7 +144,7 @@ export = class AclList {
 
     // toggle element
     this.#savePermissions();
-    this.#aclList.querySelectorAll("li").forEach((element: HTMLLIElement) => {
+    this.#aclList.querySelectorAll(".aclListItem").forEach((element: HTMLLIElement) => {
       element.classList.remove("active");
     });
     listItem.classList.add("active");
@@ -208,7 +208,7 @@ export = class AclList {
     const html = `<fa-icon size="16" name="${type === "group" ? "users" : "user"}" solid></fa-icon>
         <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
         <button type="button" class="aclItemDeleteButton jsTooltip" title="${getPhrase("wcf.global.button.delete")}">
-          <fa-icon size="16" class="aclListItemIcon" name="xmark" solid></fa-icon>
+          <fa-icon size="16" name="xmark" solid></fa-icon>
         </button>`;
     const listItem = document.createElement("li");
     listItem.classList.add("aclListItem");
@@ -251,7 +251,7 @@ export = class AclList {
   }
 
   #selectFirstEntry() {
-    const listItem = this.#aclList.querySelector("li");
+    const listItem = this.#aclList.querySelector<HTMLElement>(".aclListItem:first-child");
     if (listItem) {
       this.#select(listItem, false);
     } else {
@@ -371,14 +371,14 @@ export = class AclList {
     this.#values[type] = data.returnValues[type].option;
   }
 
-  #select(listItem: HTMLLIElement, savePermissions: boolean) {
+  #select(listItem: HTMLElement, savePermissions: boolean) {
     // save previous permissions
     if (savePermissions) {
       this.#savePermissions();
     }
 
     // switch active item
-    this.#aclList.querySelectorAll("li").forEach((li: HTMLLIElement) => {
+    this.#aclList.querySelectorAll(".aclListItem").forEach((li: HTMLElement) => {
       li.classList.remove("active");
     });
     listItem.classList.add("active");
@@ -437,7 +437,7 @@ export = class AclList {
 
   #savePermissions() {
     // get active object
-    const activeObject = this.#aclList.querySelector("li.active") as HTMLLIElement;
+    const activeObject = this.#aclList.querySelector(".aclListItem.active") as HTMLElement;
     if (!activeObject) {
       return;
     }

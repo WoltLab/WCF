@@ -83,7 +83,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const listItem = this.#createListItem(objectId, label, type);
             // toggle element
             this.#savePermissions();
-            this.#aclList.querySelectorAll("li").forEach((element) => {
+            this.#aclList.querySelectorAll(".aclListItem").forEach((element) => {
                 element.classList.remove("active");
             });
             listItem.classList.add("active");
@@ -135,7 +135,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             const html = `<fa-icon size="16" name="${type === "group" ? "users" : "user"}" solid></fa-icon>
         <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
         <button type="button" class="aclItemDeleteButton jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.delete")}">
-          <fa-icon size="16" class="aclListItemIcon" name="xmark" solid></fa-icon>
+          <fa-icon size="16" name="xmark" solid></fa-icon>
         </button>`;
             const listItem = document.createElement("li");
             listItem.classList.add("aclListItem");
@@ -168,7 +168,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#selectFirstEntry();
         }
         #selectFirstEntry() {
-            const listItem = this.#aclList.querySelector("li");
+            const listItem = this.#aclList.querySelector(".aclListItem:first-child");
             if (listItem) {
                 this.#select(listItem, false);
             }
@@ -268,7 +268,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 this.#savePermissions();
             }
             // switch active item
-            this.#aclList.querySelectorAll("li").forEach((li) => {
+            this.#aclList.querySelectorAll(".aclListItem").forEach((li) => {
                 li.classList.remove("active");
             });
             listItem.classList.add("active");
@@ -321,7 +321,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
         }
         #savePermissions() {
             // get active object
-            const activeObject = this.#aclList.querySelector("li.active");
+            const activeObject = this.#aclList.querySelector(".aclListItem.active");
             if (!activeObject) {
                 return;
             }
