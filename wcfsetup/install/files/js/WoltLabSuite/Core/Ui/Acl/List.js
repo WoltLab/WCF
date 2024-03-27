@@ -45,7 +45,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#searchInput.placeholder = (0, Language_1.getPhrase)("wcf.acl.search." + (!includeUserGroups ? "user." : "") + "description");
             elementContainer.appendChild(this.#searchInput);
             this.#permissionList = document.createElement("div");
-            this.#permissionList.classList.add("aclPermissionList", "containerList");
+            this.#permissionList.classList.add("aclPermissionList");
             Util_1.default.hide(this.#permissionList);
             elementContainer.appendChild(this.#permissionList);
             // prepare search input
@@ -180,22 +180,23 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             }
             const header = document.createElement("div");
             header.classList.add("aclHeader");
-            header.innerHTML = `<span class="inherited">${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}</span>
-        <span class="grant">${(0, Language_1.getPhrase)("wcf.acl.option.grant")}</span>
-        <span class="deny">${(0, Language_1.getPhrase)("wcf.acl.option.deny")}</span>`;
+            header.innerHTML = `<span class="aclHeaderSpan aclHeaderInherited">${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}</span>
+        <span class="aclHeaderSpan aclHeaderGrant">${(0, Language_1.getPhrase)("wcf.acl.option.grant")}</span>
+        <span class="aclHeaderSpan aclHeaderDeny">${(0, Language_1.getPhrase)("wcf.acl.option.deny")}</span>`;
             this.#permissionList.appendChild(header);
             // prepare options
             const structure = {};
             for (const [optionID, option] of Object.entries(data.returnValues.options)) {
                 const listItem = document.createElement("div");
-                listItem.innerHTML = `<span>${StringUtil.escapeHTML(option.label)}</span>
-        <label for="inherited${optionID}" class="inherited jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}">
+                listItem.classList.add("aclOption", "aclPermissionListItem");
+                listItem.innerHTML = `<span class="aclOptionTitle">${StringUtil.escapeHTML(option.label)}</span>
+        <label for="inherited${optionID}" class="inherited aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}">
           <input type="radio" id="inherited${optionID}" />
         </label>
-        <label for="grant${optionID}" class="grant jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
+        <label for="grant${optionID}" class="grant aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
           <input type="radio" id="grant${optionID}" />
         </label>
-        <label for="deny${optionID}" class="deny jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.deny")}">
+        <label for="deny${optionID}" class="deny aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.deny")}">
           <input type="radio" id="deny${optionID}" />
         </label>`;
                 listItem.dataset.optionId = optionID;
@@ -226,7 +227,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 for (const [categoryName, listItems] of Object.entries(structure)) {
                     if (data.returnValues.categories[categoryName]) {
                         const category = document.createElement("div");
-                        category.classList.add("aclCategory");
+                        category.classList.add("aclCategory", "aclPermissionListItem");
                         category.innerText = StringUtil.escapeHTML(data.returnValues.categories[categoryName]);
                         this.#permissionList.appendChild(category);
                     }

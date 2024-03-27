@@ -55,79 +55,66 @@
 	column-gap: 1px;
 	grid-template-columns: 10px auto repeat(3, 60px);
 	grid-template-rows: auto;
+}
 
-	> div {
-		grid-column: 1 / span 5;
-		transition: background-color 0.2s;
+.aclPermissionListItem:not(:last-child):not(:first-child) {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+}
 
-		&:not(:last-child):not(:first-child) {
-			border-bottom: 1px solid var(--wcfContentBorderInner);
-		}
+.aclOption {
+	grid-column: 1 / span 5;
+	transition: background-color 0.2s;
+	padding: 10px 0;
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-template-rows: subgrid;
+}
 
-		&:last-child {
-			border-bottom: 1px solid var(--wcfContentBorder);
-		}
+.aclOptionTitle {
+	grid-column: span 2;
+	grid-column-start: 2;
+}
 
-		&:hover {
-			background-color: var(--wcfTabularBoxBackgroundActive);
-		}
+.aclOptionInputLabel {
+	text-align: center;
+	cursor: pointer;
+}
 
+.aclOption:hover {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
 
-		&.aclCategory {
-			padding: 20px 10px 10px 0;
+.aclCategory {
+	grid-column: 1 / span 5;
+	padding: 20px 10px 10px 0;
 
-			@include wcfFontHeadline;
+	@include wcfFontHeadline;
+}
 
-			&:hover {
-				background-color: transparent;
-			}
-		}
+.aclHeader {
+	grid-column: 1 / span 5;
+	position: sticky;
+	border-bottom: 1px solid var(--wcfContentBorder);
+	top: 50px;
+	background-color: var(--wcfContentContainerBackground);
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-template-rows: subgrid;
+}
 
-		&:not(.aclCategory) {
-			padding: 10px 0;
-			display: grid;
-			grid-template-columns: subgrid;
-			grid-template-rows: subgrid;
-		}
+.aclHeaderSpan {
+	text-align: center;
+	@include wcfFontSmall;
+}
 
-		&.aclHeader {
-			position: sticky;
-			border-bottom: 1px solid var(--wcfContentBorder);
-			top: 50px;
-			background-color: var(--wcfContentContainerBackground);
+.aclHeaderInherited {
+	grid-column-start: 3;
+}
 
-			> span {
-				text-align: center;
-				@include wcfFontSmall;
+.aclHeaderGrant {
+	grid-column-start: 4;
+}
 
-				&.inherited {
-					grid-column-start: 3;
-				}
-
-				&.grant {
-					grid-column-start: 4;
-				}
-
-				&.deny {
-					grid-column-start: 5;
-				}
-			}
-
-			&:hover {
-				background-color: var(--wcfContentContainerBackground);
-			}
-		}
-
-		&:not(.aclHeader) {
-			> span {
-				grid-column: span 2;
-				grid-column-start: 2;
-			}
-
-			> label {
-				text-align: center;
-				cursor: pointer;
-			}
-		}
-	}
+.aclHeaderDeny {
+	grid-column-start: 5;
 }
