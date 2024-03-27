@@ -225,7 +225,10 @@ export = class AclList {
     });
 
     const deleteButton = listItem.querySelector(".aclItemDeleteButton") as HTMLButtonElement;
-    deleteButton.addEventListener("click", () => this.#removeItem(listItem));
+    deleteButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.#removeItem(listItem);
+    });
 
     this.#aclList.appendChild(listItem);
 
@@ -251,7 +254,7 @@ export = class AclList {
   }
 
   #selectFirstEntry() {
-    const listItem = this.#aclList.querySelector<HTMLElement>(".aclListItem:first-child");
+    const listItem = this.#aclList.querySelector<HTMLElement>(".aclListItem");
     if (listItem) {
       this.#select(listItem, false);
     } else {

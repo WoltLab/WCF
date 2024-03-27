@@ -150,7 +150,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 this.#select(listItem, true);
             });
             const deleteButton = listItem.querySelector(".aclItemDeleteButton");
-            deleteButton.addEventListener("click", () => this.#removeItem(listItem));
+            deleteButton.addEventListener("click", (e) => {
+                e.stopPropagation();
+                this.#removeItem(listItem);
+            });
             this.#aclList.appendChild(listItem);
             return listItem;
         }
@@ -168,7 +171,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#selectFirstEntry();
         }
         #selectFirstEntry() {
-            const listItem = this.#aclList.querySelector(".aclListItem:first-child");
+            const listItem = this.#aclList.querySelector(".aclListItem");
             if (listItem) {
                 this.#select(listItem, false);
             }
