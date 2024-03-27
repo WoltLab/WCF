@@ -23,6 +23,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
@@ -125,7 +126,7 @@ class RegisterForm extends UserAddForm
         }
 
         // registration disabled
-        if (REGISTER_DISABLED) {
+        if (!UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canRegister) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
         }
 

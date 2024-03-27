@@ -747,6 +747,7 @@ class WCF
         self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
         self::getTPL()->assign([
             '__wcf' => $wcf,
+            '__userAuthConfig' => \wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory::getInstance()->getConfigration(),
         ]);
 
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');

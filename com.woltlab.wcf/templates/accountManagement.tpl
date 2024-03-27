@@ -35,7 +35,9 @@
 						</small>
 					{/if}
 					<small>{lang}wcf.user.accountManagement.password.description{/lang}</small>
-					<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
+					{if $__userAuthConfig->canChangePassword}
+						<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
+					{/if}
 				</dd>
 			</dl>
 			
@@ -43,7 +45,7 @@
 		</section>
 	{/if}
 	
-	{if $__wcf->getSession()->getPermission('user.profile.canRename')}
+	{if $__wcf->getSession()->getPermission('user.profile.canRename') && $__userAuthConfig->canChangeUsername}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.changeUsername{/lang}</h2>
 				
@@ -71,7 +73,7 @@
 		</section>
 	{/if}
 	
-	{if !$__authProvider}
+	{if !$__authProvider && $__userAuthConfig->canChangePassword}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.changePassword{/lang}</h2>
 			
@@ -114,7 +116,7 @@
 		</section>
 	{/if}
 	
-	{if $__wcf->getSession()->getPermission('user.profile.canChangeEmail')}
+	{if $__wcf->getSession()->getPermission('user.profile.canChangeEmail') && $__userAuthConfig->canChangeEmail}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.changeEmail{/lang}</h2>
 			
