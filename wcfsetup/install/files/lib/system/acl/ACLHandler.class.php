@@ -14,6 +14,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\JSON;
 
 /**
  * Handles ACL permissions.
@@ -73,6 +74,7 @@ class ACLHandler extends SingletonFactory
 
             $users = [];
             foreach ($values as $type => $optionData) {
+                $optionData = JSON::decode($optionData);
                 if ($type === 'user') {
                     $users = User::getUsers(\array_keys($optionData));
                 }
@@ -154,6 +156,8 @@ class ACLHandler extends SingletonFactory
                     $this->__readValues[$objectTypeID][$type] = [];
 
                     foreach ($valuesSource[$type] as $typeID => $optionData) {
+                        $optionData = JSON::decode($optionData);
+
                         $this->__readValues[$objectTypeID][$type][$typeID] = [];
 
                         foreach ($optionData as $optionID => $optionValue) {
@@ -260,9 +264,9 @@ class ACLHandler extends SingletonFactory
         // add new values if given
         $values = [];
         if (isset($this->__readValues[$objectTypeID]) && isset($this->__readValues[$objectTypeID][$type])) {
-            $values = $this->__readValues[$objectTypeID][$type];
+            $values = JSON::decode($this->__readValues[$objectTypeID][$type]);
         } elseif (isset($_POST['aclValues']) && isset($_POST['aclValues'][$type])) {
-            $values = $_POST['aclValues'][$type];
+            $values = JSON::decode($_POST['aclValues'][$type]);
         }
 
         $sql = "INSERT INTO wcf" . WCF_N . "_acl_option_to_" . $type . "

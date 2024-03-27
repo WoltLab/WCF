@@ -2,7 +2,7 @@
 	{assign var='__categoryNameStart' value=$categoryName|mb_substr:0:-1}
 {/if}
 <script data-relocate="true">
-	$(function() {
+	require(["WoltLabSuite/Core/Ui/Acl/List"], (AclList) => {
 		{if $aclValues[$objectTypeID]|isset}
 			var initialPermissions = {
 				returnValues: {
@@ -87,9 +87,9 @@
 				{/foreach}
 			{/if}
 		{/if}
-		
-		var aclList = new {if $aclListClassName|isset}{@$aclListClassName}{else}WCF.ACL.List{/if}(
-			$('#{@$containerID}'),
+
+		var aclList = new AclList(
+			'#{@$containerID}',
 			{@$objectTypeID},
 			{if $categoryName|isset}'{@$categoryName}'{else}null{/if},
 			{if $objectID|isset}{@$objectID}{else}0{/if},

@@ -45,16 +45,16 @@
 	<dl>
 		<dt><label for="{@$__aclSimplePrefix}aclSearchInput" id="{@$__aclSimplePrefix}aclSearchInputLabel">{lang}wcf.acl.access.grant{/lang}</label></dt>
 		<dd>
-			<input type="text" id="{@$__aclSimplePrefix}aclSearchInput" class="long" placeholder="{lang}wcf.acl.search.description{/lang}">
+			<input type="text" id="{@$__aclSimplePrefix}aclSearchInput" class="aclSearchInput long" placeholder="{lang}wcf.acl.search.description{/lang}">
 		</dd>
 	</dl>
 
 	<dl id="{@$__aclSimplePrefix}aclListContainer"{if $aclValues[allowAll]} style="display: none;"{/if}>
 		<dt id="{@$__aclSimplePrefix}aclListContainerDt">{lang}wcf.acl.access.granted{/lang}</dt>
 		<dd>
-			<ul id="{@$__aclSimplePrefix}aclAccessList" class="aclList containerList">
+			<ul id="{@$__aclSimplePrefix}aclAccessList" class="aclList">
 				{foreach from=$aclValues[group] item=aclGroup}
-					<li>
+					<li class="aclListItem">
 						{icon name='users'}
 						<span class="aclLabel">{$aclGroup}</span>
 						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
@@ -64,7 +64,7 @@
 					</li>
 				{/foreach}
 				{foreach from=$aclValues[user] item=aclUser}
-					<li>
+					<li class="aclListItem">
 						{icon name='user'}
 						<span class="aclLabel">{$aclUser}</span>
 						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
