@@ -235,17 +235,21 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function getThumbnailLink($size = '')
     {
-        $parameters = [
-            'object' => $this,
-        ];
-
-        if ($size == 'tiny') {
-            $parameters['tiny'] = 1;
-        } elseif ($size == 'thumbnail') {
-            $parameters['thumbnail'] = 1;
+        $file = $this->getFile();
+        if ($file === null) {
+            return '';
         }
 
-        return LinkHandler::getInstance()->getLink('Attachment', $parameters);
+        if ($size === '') {
+            return $file->getLink();
+        }
+
+        $thumbnail = $file->getThumbnail($size !== 'tiny' ? '' : $size);
+        if ($this === null) {
+            return '';
+        }
+
+        return $thumbnail->getLink();
     }
 
     /**
@@ -373,15 +377,33 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function __get($name)
     {
         $file = $this->getFile();
-        if ($file !== null) {
-            return match ($name) {
-                'filename' => $file->filename,
-                'filesize' => $file->fileSize,
-                default => parent::__get($name),
-            };
+        if ($file === null) {
+            return parent::__get($name);
         }
 
-        return parent::__get($name);
+        return match ($name) {
+            'filename' => $file->filename,
+            'filesize' => $file->fileSize,
+            'fileType' => $file->mimeType,
+            'isImage' => $file->isImage(),
+
+            // TODO: Do we want to cache this data?
+            'height' => \getimagesize($file->getPath() . $file->getSourceFilename())[1],
+            // TODO: Do we want to cache this data?
+            'width' => \getimagesize($file->getPath() . $file->getSourceFilename())[0],
+
+            // TODO: This is awful.
+            'thumbnailType' => $file->getThumbnail('') ? $file->mimeType : '',
+            'thumbnailWidth' => $file->getThumbnail('') ? \getimagesize($file->getThumbnail('')->getPath() . $file->getThumbnail('')->getSourceFilename())[0] : 0,
+            'thumbnailHeight' => $file->getThumbnail('') ? \getimagesize($file->getThumbnail('')->getPath() . $file->getThumbnail('')->getSourceFilename())[1] : 0,
+
+            // TODO: This is awful.
+            'tinyThumbnailType' => $file->getThumbnail('tiny') ? $file->mimeType : '',
+            'tinyThumbnailWidth' => $file->getThumbnail('tiny') ? \getimagesize($file->getThumbnail('tiny')->getPath() . $file->getThumbnail('tiny')->getSourceFilename())[0] : 0,
+            'tinyThumbnailHeight' => $file->getThumbnail('tiny') ? \getimagesize($file->getThumbnail('tiny')->getPath() . $file->getThumbnail('tiny')->getSourceFilename())[1] : 0,
+
+            default => parent::__get($name),
+        };
     }
 
     public static function findByFileID(int $fileID): ?Attachment

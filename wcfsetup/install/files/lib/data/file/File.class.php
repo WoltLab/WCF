@@ -4,6 +4,7 @@ namespace wcf\data\file;
 
 use wcf\action\FileDownloadAction;
 use wcf\data\DatabaseObject;
+use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\request\LinkHandler;
@@ -23,6 +24,9 @@ use wcf\system\request\LinkHandler;
  */
 class File extends DatabaseObject
 {
+    /** @var array<string, FileThumbnail> */
+    private array $thumbnails = [];
+
     public function getPath(): string
     {
         $folderA = \substr($this->fileHash, 0, 2);
@@ -76,5 +80,15 @@ class File extends DatabaseObject
         }
 
         return $processor->canDelete($this);
+    }
+
+    public function addThumbnail(FileThumbnail $thumbnail): void
+    {
+        $this->thumbnails[$thumbnail->identifier] = $thumbnail;
+    }
+
+    public function getThumbnail(string $identifier): ?FileThumbnail
+    {
+        return $this->thumbnails[$identifier] ?? null;
     }
 }

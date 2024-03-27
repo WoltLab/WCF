@@ -2,7 +2,10 @@
 
 namespace wcf\system\message\embedded\object;
 
+use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentList;
+use wcf\data\file\FileList;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 
@@ -71,6 +74,46 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
             }
         }
 
-        return $attachmentList->getObjects();
+        $attachments = $attachmentList->getObjects();
+
+        $this->loadFiles($attachments);
+
+        return $attachments;
+    }
+
+    /**
+     * @param Attachment[] $attachments
+     */
+    private function loadFiles(array $attachments): void
+    {
+        $fileIDs = [];
+        foreach ($attachments as $attachment) {
+            if ($attachment->fileID) {
+                $fileIDs[] = $attachment->fileID;
+            }
+        }
+
+        if ($fileIDs === []) {
+            return;
+        }
+
+        $fileList = new FileList();
+        $fileList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
+        $fileList->readObjects();
+        $files = $fileList->getObjects();
+
+        $thumbnailList = new FileThumbnailList();
+        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
+        $thumbnailList->readObjects();
+        foreach ($thumbnailList as $thumbnail) {
+            $files[$thumbnail->fileID]->addThumbnail($thumbnail);
+        }
+
+        foreach ($attachments as $attachment) {
+            $file = $files[$attachment->fileID] ?? null;
+            if ($file !== null) {
+                $attachment->setFile($file);
+            }
+        }
     }
 }
