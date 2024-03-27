@@ -1303,6 +1303,7 @@
 		<file>js/WCF.Tagging.min.js</file>
 		<file>js/WCF.User.min.js</file>
 		<file>js/WCF.min.js</file>
+		<file>js/WCF.ACL.js</file>
 		<file>js/WoltLab/WCF/ACP/Bootstrap.js</file>
 		<file>js/WoltLab/WCF/Acp/Bootstrap.js</file>
 		<file>js/WoltLab/WCF/Acp/Ui/Article/Add.js</file>
