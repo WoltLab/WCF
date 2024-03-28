@@ -74,46 +74,6 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
             }
         }
 
-        $attachments = $attachmentList->getObjects();
-
-        $this->loadFiles($attachments);
-
-        return $attachments;
-    }
-
-    /**
-     * @param Attachment[] $attachments
-     */
-    private function loadFiles(array $attachments): void
-    {
-        $fileIDs = [];
-        foreach ($attachments as $attachment) {
-            if ($attachment->fileID) {
-                $fileIDs[] = $attachment->fileID;
-            }
-        }
-
-        if ($fileIDs === []) {
-            return;
-        }
-
-        $fileList = new FileList();
-        $fileList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
-        $fileList->readObjects();
-        $files = $fileList->getObjects();
-
-        $thumbnailList = new FileThumbnailList();
-        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
-        $thumbnailList->readObjects();
-        foreach ($thumbnailList as $thumbnail) {
-            $files[$thumbnail->fileID]->addThumbnail($thumbnail);
-        }
-
-        foreach ($attachments as $attachment) {
-            $file = $files[$attachment->fileID] ?? null;
-            if ($file !== null) {
-                $attachment->setFile($file);
-            }
-        }
+        return $attachmentList->getObjects();
     }
 }
