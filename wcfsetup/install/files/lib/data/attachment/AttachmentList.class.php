@@ -26,11 +26,20 @@ class AttachmentList extends DatabaseObjectList
      */
     public $className = Attachment::class;
 
+    public $enableFileLoading = true;
+
     #[\Override]
     public function readObjects()
     {
         parent::readObjects();
 
+        if ($this->enableFileLoading) {
+            $this->loadFiles();
+        }
+    }
+
+    private function loadFiles(): void
+    {
         $fileIDs = [];
         foreach ($this->objects as $attachment) {
             if ($attachment->fileID) {
