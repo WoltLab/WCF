@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
 use wcf\data\file\File;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -361,6 +362,13 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
         if (!isset($this->file)) {
             $this->file = new File($fileID);
+
+            $thumbnailList = new FileThumbnailList();
+            $thumbnailList->getConditionBuilder()->add("fileID = ?", [$this->file->fileID]);
+            $thumbnailList->readObjects();
+            foreach ($thumbnailList as $thumbnail) {
+                $this->file->addThumbnail($thumbnail);
+            }
         }
 
         return $this->file;
@@ -404,6 +412,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
             default => parent::__get($name),
         };
+    }
+
+    public function toHtmlElement(): ?string
+    {
+        return $this->getFile()?->toHtmlElement();
     }
 
     public static function findByFileID(int $fileID): ?Attachment

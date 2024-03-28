@@ -8,6 +8,7 @@ use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\util\StringUtil;
 
 /**
  * @author Alexander Ebert
@@ -90,5 +91,32 @@ class File extends DatabaseObject
     public function getThumbnail(string $identifier): ?FileThumbnail
     {
         return $this->thumbnails[$identifier] ?? null;
+    }
+
+    public function toHtmlElement(): string
+    {
+        $thumbnails = [];
+        foreach ($this->thumbnails as $thumbnail) {
+            $thumbnails[] = [
+                'identifier' => $thumbnail->identifier,
+                'link' => $thumbnail->getLink(),
+            ];
+        }
+
+        // TODO: Icon and preview url is missing.
+        return \sprintf(
+            <<<'EOT'
+                <woltlab-core-file
+                    file-id="%d"
+                    data-filename="%s"
+                    data-mime-type="%s"
+                    data-thumbnails="%s"
+                ></woltlab-core-file>
+                EOT,
+            $this->fileID,
+            StringUtil::encodeHTML($this->filename),
+            StringUtil::encodeHTML($this->mimeType),
+            StringUtil::encodeHTML(\json_encode($thumbnails)),
+        );
     }
 }
