@@ -254,16 +254,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
             this.#selectFirstEntry();
         }
         #parseData(data, type) {
-            if (Object.keys(data.returnValues[type].option).length === 0) {
+            const values = data.returnValues[type];
+            if (Array.isArray(values) || Object.keys(values.option).length === 0) {
                 return;
             }
             // add list items
-            for (const typeID in data.returnValues[type].label) {
-                this.#createListItem(typeID, data.returnValues[type].label[typeID], type);
-                this.#search.addExcludedSearchValues(data.returnValues[type].label[typeID]);
+            for (const typeID in values.label) {
+                this.#createListItem(typeID, values.label[typeID], type);
+                this.#search.addExcludedSearchValues(values.label[typeID]);
             }
             // add options
-            this.#values[type] = data.returnValues[type].option;
+            this.#values[type] = values.option;
         }
         #select(listItem, savePermissions) {
             // save previous permissions
