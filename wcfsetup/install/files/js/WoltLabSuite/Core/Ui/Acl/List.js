@@ -195,13 +195,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 const listItem = document.createElement("div");
                 listItem.classList.add("aclOption", "aclPermissionListItem");
                 listItem.innerHTML = `<span class="aclOptionTitle">${StringUtil.escapeHTML(option.label)}</span>
-        <label for="inherited${optionID}" class="inherited aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.inherited")}">
+        <label for="inherited${optionID}" class="inherited aclOptionInputLabel">
           <input type="radio" id="inherited${optionID}" />
         </label>
-        <label for="grant${optionID}" class="grant aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.grant")}">
+        <label for="grant${optionID}" class="grant aclOptionInputLabel">
           <input type="radio" id="grant${optionID}" />
         </label>
-        <label for="deny${optionID}" class="deny aclOptionInputLabel jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acl.option.deny")}">
+        <label for="deny${optionID}" class="deny aclOptionInputLabel">
           <input type="radio" id="deny${optionID}" />
         </label>`;
                 listItem.dataset.optionId = optionID;
