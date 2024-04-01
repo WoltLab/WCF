@@ -3102,13 +3102,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
-		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die E-Mail-Adresse des Absenders definieren.<br>
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration » Optionen » Allgemein » E-Mails“ alles ausgefüllt {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, wird dieses Feld automatisch ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} E-Mails per SMTP senden, so {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.]]></item>
-		<item name="wcf.acp.user.sendMail.fromName"><![CDATA[Absender-Name]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder senden]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
-		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-Mail]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>

@@ -3031,13 +3031,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Email All Users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
-		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.<br>
-You can define the default sender in “Configuration » Options » General » Emails”. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
-		<item name="wcf.acp.user.sendMail.fromName"><![CDATA[Sender’s Name]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email User Group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
-		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Email Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Email Message]]></item>
