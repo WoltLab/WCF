@@ -8,7 +8,6 @@ use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
-use wcf\util\UserUtil;
 
 /**
  * Bulk processing action implementation for sending mails to users.
@@ -25,18 +24,6 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
      * @var int
      */
     public $enableHTML = 0;
-
-    /**
-     * sender
-     * @var string
-     */
-    public $from = '';
-
-    /**
-     * sender name
-     * @var string
-     */
-    public $fromName = '';
 
     /**
      * identifier for the mail worker
@@ -75,8 +62,8 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
             $userMailData[$this->mailID] = [
                 'action' => '',
                 'enableHTML' => $this->enableHTML,
-                'from' => $this->from,
-                'fromName' => $this->fromName,
+                'from' => \MAIL_FROM_ADDRESS,
+                'fromName' => \MAIL_FROM_NAME,
                 'groupIDs' => '',
                 'subject' => $this->subject,
                 'text' => $this->text,
@@ -91,18 +78,11 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
      */
     public function getHTML()
     {
-        if (!\count($_POST)) {
-            $this->from = MAIL_FROM_ADDRESS;
-            $this->fromName = MAIL_FROM_NAME;
-        }
-
         return WCF::getTPL()->fetch('sendMailUserBulkProcessing', 'wcf', [
             'enableHTML' => $this->enableHTML,
-            'from' => $this->from,
             'mailID' => $this->mailID,
             'subject' => $this->subject,
             'text' => $this->text,
-            'fromName' => $this->fromName,
         ]);
     }
 
@@ -114,17 +94,11 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
         if (isset($_POST['enableHTML'])) {
             $this->enableHTML = \intval($_POST['enableHTML']);
         }
-        if (isset($_POST['from'])) {
-            $this->from = StringUtil::trim($_POST['from']);
-        }
         if (isset($_POST['subject'])) {
             $this->subject = StringUtil::trim($_POST['subject']);
         }
         if (isset($_POST['text'])) {
             $this->text = StringUtil::trim($_POST['text']);
-        }
-        if (isset($_POST['fromName'])) {
-            $this->fromName = StringUtil::trim($_POST['fromName']);
         }
     }
 
@@ -139,12 +113,6 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
 
         if (empty($this->text)) {
             throw new UserInputException('text');
-        }
-
-        if (empty($this->from)) {
-            throw new UserInputException('from');
-        } elseif (!UserUtil::isValidEmail($this->from)) {
-            throw new UserInputException('from', 'invalid');
         }
     }
 }
