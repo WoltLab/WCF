@@ -196,13 +196,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 listItem.classList.add("aclOption", "aclPermissionListItem");
                 listItem.innerHTML = `<span class="aclOptionTitle">${StringUtil.escapeHTML(option.label)}</span>
         <label for="inherited${optionID}" class="inherited aclOptionInputLabel">
-          <input type="radio" id="inherited${optionID}" />
+          <input type="radio" id="inherited${optionID}">
         </label>
         <label for="grant${optionID}" class="grant aclOptionInputLabel">
-          <input type="radio" id="grant${optionID}" />
+          <input type="radio" id="grant${optionID}">
         </label>
         <label for="deny${optionID}" class="deny aclOptionInputLabel">
-          <input type="radio" id="deny${optionID}" />
+          <input type="radio" id="deny${optionID}">
         </label>`;
                 listItem.dataset.optionId = optionID;
                 listItem.dataset.optionName = option.optionName;
