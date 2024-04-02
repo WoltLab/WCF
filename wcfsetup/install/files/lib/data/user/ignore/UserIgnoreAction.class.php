@@ -145,6 +145,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
             $ignoreEditor->delete();
 
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
+            UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
         }
 
         return ['isIgnoredUser' => 0];
