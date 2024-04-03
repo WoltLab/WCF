@@ -60,7 +60,7 @@ class FloatOptionType extends TextOptionType
             return false;
         }
 
-        $value = StringUtil::trim($value);
+        $value = StringUtil::trim($value ?: '0');
         $value = $this->toFloat($value);
 
         $conditions->add("option_value.userOption" . $option->optionID . " LIKE ?", [$value]);

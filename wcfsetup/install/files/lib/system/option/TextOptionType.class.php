@@ -77,7 +77,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
             return false;
         }
 
-        $value = StringUtil::trim($value);
+        $value = StringUtil::trim($value ?: '');
         if ($value == '') {
             $conditions->add("option_value.userOption" . $option->optionID . " = ?", ['']);
         } else {
