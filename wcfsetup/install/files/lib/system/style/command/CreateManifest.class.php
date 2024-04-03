@@ -2,8 +2,8 @@
 
 namespace wcf\system\style\command;
 
+use wcf\data\page\PageCache;
 use wcf\data\style\Style;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\io\AtomicWriter;
 use wcf\system\language\LanguageFactory;
 use wcf\util\JSON;
@@ -30,7 +30,7 @@ final class CreateManifest
         $this->style->loadVariables();
         $headerColor = $this->style->getVariable('wcfHeaderBackground', true);
         $backgroundColor = $this->style->getVariable('wcfContentBackground', true);
-        $homeLocation = JSON::encode(ApplicationHandler::getInstance()->getWCF()->getPageURL());
+        $homeLocation = JSON::encode(PageCache::getInstance()->getLandingPage()->getLink());
 
         $icons = [];
         // If no favicon is set, use the default favicon,
