@@ -294,7 +294,9 @@ class Style extends DatabaseObject
      */
     public function getFaviconManifest()
     {
-        return $this->getFaviconPath('manifest.json');
+        return WCF::getPath() .
+            FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()) .
+            'manifest-' . WCF::getLanguage()->languageID . '.json';
     }
 
     /**
