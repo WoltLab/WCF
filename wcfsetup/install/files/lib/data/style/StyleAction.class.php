@@ -388,11 +388,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 $hasFavicon = false;
             }
         }
+        $command = new CreateManifest($style);
+        $command();
 
         if ($hasFavicon) {
-            $command = new CreateManifest($style);
-            $command();
-
             $tileColor = $style->getVariable('wcfHeaderBackground', true);
 
             // update browserconfig.xml
