@@ -14,6 +14,7 @@ use wcf\system\image\ImageHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\command\CreateManifest;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -371,8 +372,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 if (\file_exists($style->getAssetPath() . "favicon.ico")) {
                     \unlink($style->getAssetPath() . "favicon.ico");
                 }
-
-                \unlink($style->getAssetPath() . "manifest.json");
+                foreach (\glob($style->getAssetPath() . "manifest*.json") as $filename) {
+                    \unlink($filename);
+                }
                 \unlink($style->getAssetPath() . "browserconfig.xml");
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     if (\file_exists($style->getAssetPath() . "favicon-template." . $extension)) {
@@ -388,37 +390,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         if ($hasFavicon) {
-            $style->loadVariables();
-            $headerColor = $style->getVariable('wcfHeaderBackground', true);
-            $backgroundColor = $style->getVariable('wcfContentBackground', true);
+            $command = new CreateManifest($style);
+            $command();
 
-            // update manifest.json
-            $manifest = <<<MANIFEST
-{
-    "name": "",
-    "icons": [
-        {
-            "src": "android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "android-chrome-256x256.png",
-            "sizes": "256x256",
-            "type": "image/png"
-        },
-        {
-            "src": "android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "{$headerColor}",
-    "background_color": "{$backgroundColor}",
-    "display": "standalone"
-}
-MANIFEST;
-            \file_put_contents($style->getAssetPath() . "manifest.json", $manifest);
+            $tileColor = $style->getVariable('wcfHeaderBackground', true);
 
             // update browserconfig.xml
             $browserconfig = <<<BROWSERCONFIG
@@ -427,7 +402,7 @@ MANIFEST;
     <msapplication>
         <tile>
             <square150x150logo src="mstile-150x150.png"/>
-            <TileColor>{$headerColor}</TileColor>
+            <TileColor>{$tileColor}</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
