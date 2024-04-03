@@ -388,8 +388,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         if ($hasFavicon) {
+            $style->loadVariables();
+            $headerColor = $style->getVariable('wcfHeaderBackground', true);
+            $backgroundColor = $style->getVariable('wcfContentBackground', true);
+
             // update manifest.json
-            $manifest = <<<'MANIFEST'
+            $manifest = <<<MANIFEST
 {
     "name": "",
     "icons": [
@@ -409,15 +413,14 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "{$headerColor}",
+    "background_color": "{$backgroundColor}",
     "display": "standalone"
 }
 MANIFEST;
             \file_put_contents($style->getAssetPath() . "manifest.json", $manifest);
 
-            $style->loadVariables();
-            $tileColor = $style->getVariable('wcfHeaderBackground', true);
+
 
             // update browserconfig.xml
             $browserconfig = <<<BROWSERCONFIG
@@ -426,7 +429,7 @@ MANIFEST;
     <msapplication>
         <tile>
             <square150x150logo src="mstile-150x150.png"/>
-            <TileColor>{$tileColor}</TileColor>
+            <TileColor>{$headerColor}</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
