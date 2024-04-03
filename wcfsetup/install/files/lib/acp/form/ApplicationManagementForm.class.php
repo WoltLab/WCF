@@ -13,6 +13,7 @@ use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
@@ -189,6 +190,7 @@ final class ApplicationManagementForm extends AbstractForm
         ApplicationCacheBuilder::getInstance()->reset();
         PageCacheBuilder::getInstance()->reset();
         RoutingCacheBuilder::getInstance()->reset();
+        StyleHandler::resetStylesheets();
 
         // Reload the applications to update the selected landing page id.
         $this->applicationList = new ViewableApplicationList();
