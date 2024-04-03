@@ -6,6 +6,7 @@ use wcf\data\page\PageCache;
 use wcf\data\style\Style;
 use wcf\system\io\AtomicWriter;
 use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 use wcf\util\JSON;
 
 /**
@@ -30,7 +31,7 @@ final class CreateManifest
         $this->style->loadVariables();
         $headerColor = $this->style->getVariable('wcfHeaderBackground', true);
         $backgroundColor = $this->style->getVariable('wcfContentBackground', true);
-        $homeLocation = JSON::encode(PageCache::getInstance()->getLandingPage()->getLink());
+        $landingPage = PageCache::getInstance()->getLandingPage();
 
         $icons = [];
         // If no favicon is set, use the default favicon,
@@ -50,28 +51,37 @@ final class CreateManifest
         }
         $icons = JSON::encode($icons);
 
-        foreach (LanguageFactory::getInstance()->getLanguages() as $langauge) {
-            $title = JSON::encode($langauge->get(PAGE_TITLE));
+        $originalLanguage = WCF::getLanguage();
+        try {
+            foreach (LanguageFactory::getInstance()->getLanguages() as $langauge) {
+                // To get the correct landing page url, we need to change the language.
+                WCF::setLanguage($langauge->languageID);
 
-            // update manifest.json
-            $manifest = <<<MANIFEST
+                $title = JSON::encode($langauge->get(PAGE_TITLE));
+                $startUrl = JSON::encode($landingPage->getLink());
+
+                // update manifest.json
+                $manifest = <<<MANIFEST
 {
     "name": {$title},
-    "start_url": {$homeLocation},
+    "start_url": {$startUrl},
     "icons": {$icons},
     "theme_color": "{$headerColor}",
     "background_color": "{$backgroundColor}",
     "display": "standalone"
 }
 MANIFEST;
-            $manifestPath = $this->style->getAssetPath() . "manifest-{$langauge->languageID}.json";
-            if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
-                continue;
+                $manifestPath = $this->style->getAssetPath() . "manifest-{$langauge->languageID}.json";
+                if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
+                    continue;
+                }
+                $writer = new AtomicWriter($manifestPath);
+                $writer->write($manifest);
+                $writer->flush();
+                $writer->close();
             }
-            $writer = new AtomicWriter($manifestPath);
-            $writer->write($manifest);
-            $writer->flush();
-            $writer->close();
+        } finally {
+            WCF::setLanguage($originalLanguage->languageID);
         }
     }
 }
