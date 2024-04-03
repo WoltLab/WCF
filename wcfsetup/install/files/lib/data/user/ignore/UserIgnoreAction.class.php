@@ -297,6 +297,10 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      */
     public function delete()
     {
+        UserStorageHandler::getInstance()->reset(\array_map(function ($ignore) {
+            return $ignore->ignoreUserID;
+        }, $this->getObjects()), 'ignoredByUserIDs');
+
         $returnValues = parent::delete();
 
         // reset storage
