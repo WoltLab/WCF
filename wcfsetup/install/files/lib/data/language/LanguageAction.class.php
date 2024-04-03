@@ -7,6 +7,7 @@ use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 
 /**
@@ -72,6 +73,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
             LanguageFactory::getInstance()->clearCache();
             LanguageFactory::getInstance()->deleteLanguageCache();
         }
+        StyleHandler::resetStylesheets();
 
         return $object;
     }
