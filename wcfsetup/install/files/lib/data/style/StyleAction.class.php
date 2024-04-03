@@ -420,8 +420,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 MANIFEST;
             \file_put_contents($style->getAssetPath() . "manifest.json", $manifest);
 
-
-
             // update browserconfig.xml
             $browserconfig = <<<BROWSERCONFIG
 <?xml version="1.0" encoding="utf-8"?>
