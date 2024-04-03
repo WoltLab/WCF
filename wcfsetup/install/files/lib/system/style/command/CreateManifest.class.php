@@ -33,6 +33,9 @@ final class CreateManifest
         $homeLocation = JSON::encode(ApplicationHandler::getInstance()->getWCF()->getPageURL());
 
         $icons = [];
+        // If no favicon is set, use the default favicon,
+        // which comes in 192x192px and 256x256px and starts with `default.`.
+        // These images are located in the `images/favicon/` directory.
         foreach ($this->style->hasFavicon ? [192, 256, 512] : [192, 256] as $iconSize) {
             $icons [] = [
                 "src" => \sprintf(
