@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectType;
@@ -17,11 +16,11 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * Compares two templates.
+ * Compares two entries of the edit history.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Tim Duesterhus, Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class EditHistoryPage extends AbstractPage
 {
@@ -31,63 +30,52 @@ class EditHistoryPage extends AbstractPage
     public $neededModules = ['MODULE_EDIT_HISTORY'];
 
     /**
-     * DatabaseObjectList object
-     * @var DatabaseObjectList
+     * List of edit history entries.
      */
-    public $objectList;
+    public ?EditHistoryEntryList $objectList = null;
 
     /**
      * left / old version id
-     * @var int
      */
-    public $oldID = 0;
+    public int $oldID = 0;
 
     /**
      * left / old version
-     * @var EditHistoryEntry
      */
-    public $old;
+    public ?EditHistoryEntry $old = null;
 
     /**
      * right / new version id
-     * @var int
      */
-    public $newID = 0;
+    public int|string $newID = 0;
 
     /**
      * right / new version
-     * @var EditHistoryEntry
      */
-    public $new;
+    public EditHistoryEntry|IHistorySavingObject|null $new = null;
 
     /**
      * differences between both versions
-     * @var array
      */
-    public $diff;
+    public ?array $diff = null;
 
     /**
      * object type of the requested object
-     * @var ObjectType
      */
-    public $objectType;
+    public ?ObjectType $objectType = null;
 
     /**
      * id of the requested object
-     * @var int
      */
-    public $objectID = 0;
+    public int $objectID = 0;
 
     /**
      * requested object
-     * @var IHistorySavingObject
      */
-    public $object;
+    public ?IHistorySavingObject $object = null;
 
-    /**
-     * @inheritDoc
-     */
-    public function readParameters()
+    #[\Override]
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -137,7 +125,6 @@ class EditHistoryPage extends AbstractPage
         /** @var IHistorySavingObjectTypeProvider $processor */
         $processor = $this->objectType->getProcessor();
 
-        /** @var IHistorySavingObject object */
         $this->object = $processor->getObjectByID($this->objectID);
         if (!$this->object->getObjectID()) {
             throw new IllegalLinkException();
@@ -162,10 +149,8 @@ class EditHistoryPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readData()
+    #[\Override]
+    public function readData(): void
     {
         parent::readData();
 
@@ -245,10 +230,8 @@ class EditHistoryPage extends AbstractPage
         return \preg_replace("/(<(?:{$openingTag})>|<\\/(?:{$closingTag})>)/", "\\0\n", $html);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
+    #[\Override]
+    public function assignVariables(): void
     {
         parent::assignVariables();
 
