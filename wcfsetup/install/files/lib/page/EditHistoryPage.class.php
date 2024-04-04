@@ -74,6 +74,11 @@ class EditHistoryPage extends AbstractPage
      */
     public ?IHistorySavingObject $object = null;
 
+    /**
+     * Rendering mode (html or raw).
+     */
+    public string $mode = 'html';
+
     #[\Override]
     public function readParameters(): void
     {
@@ -137,12 +142,17 @@ class EditHistoryPage extends AbstractPage
             $this->newID = 'current';
         }
 
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'raw') {
+            $this->mode = 'raw';
+        }
+
         if (!empty($_POST)) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getLink('EditHistory', [
                 'objectID' => $this->objectID,
                 'objectType' => $this->objectType->objectType,
                 'newID' => $this->newID,
                 'oldID' => $this->oldID,
+                'mode' => $this->mode,
             ]));
 
             exit;
@@ -245,6 +255,7 @@ class EditHistoryPage extends AbstractPage
             'objects' => $this->objectList,
             'objectID' => $this->objectID,
             'objectType' => $this->objectType,
+            'mode' => $this->mode,
         ]);
     }
 }
