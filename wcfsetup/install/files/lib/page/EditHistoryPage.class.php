@@ -170,10 +170,21 @@ class EditHistoryPage extends AbstractPage
         $this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
         $this->objectList->readObjects();
 
-        $differ = Diff::getDefaultDiffer();
+        // set default values
+        if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
+            foreach ($this->objectList as $object) {
+                $this->oldID = $object->entryID;
+                $this->old = $object;
+                break;
+            }
+            $this->newID = 'current';
+            $this->new = $this->object;
+        }
 
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
+            $differ = Diff::getDefaultDiffer();
+
             $a = \explode("\n", $this->prepareMessage($this->old->getMessage()));
             $b = \explode("\n", $this->prepareMessage($this->new->getMessage()));
             $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
@@ -210,15 +221,6 @@ class EditHistoryPage extends AbstractPage
                     $i++;
                 }
             }
-        }
-
-        // set default values
-        if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
-            foreach ($this->objectList as $object) {
-                $this->oldID = $object->entryID;
-                break;
-            }
-            $this->newID = 'current';
         }
     }
 
