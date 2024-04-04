@@ -19,29 +19,30 @@ use wcf\util\JSON;
  */
 final class CreateManifest
 {
-    private readonly Style $style;
+    private readonly int $styleID;
 
     public function __construct(Style $style)
     {
-        $this->style = $style;
+        $this->styleID = $style->styleID;
     }
 
     public function __invoke(): void
     {
-        $this->style->loadVariables();
-        $headerColor = $this->style->getVariable('wcfHeaderBackground', true);
-        $backgroundColor = $this->style->getVariable('wcfContentBackground', true);
+        $style = new Style($this->styleID);
+        $style->loadVariables();
+        $headerColor = $style->getVariable('wcfHeaderBackground', true);
+        $backgroundColor = $style->getVariable('wcfContentBackground', true);
         $landingPage = PageCache::getInstance()->getLandingPage();
 
         $icons = [];
         // If no favicon is set, use the default favicon,
         // which comes in 192x192px and 256x256px and starts with `default.`.
         // These images are located in the `images/favicon/` directory.
-        foreach ($this->style->hasFavicon ? [192, 256, 512] : [192, 256] as $iconSize) {
+        foreach ($style->hasFavicon ? [192, 256, 512] : [192, 256] as $iconSize) {
             $icons [] = [
                 "src" => \sprintf(
                     "%sandroid-chrome-%dx%d.png",
-                    $this->style->hasFavicon ? "" : "../favicon/default.",
+                    $style->hasFavicon ? "" : "../favicon/default.",
                     $iconSize,
                     $iconSize
                 ),
@@ -71,7 +72,7 @@ final class CreateManifest
     "display": "standalone"
 }
 MANIFEST;
-                $manifestPath = $this->style->getAssetPath() . "manifest-{$langauge->languageID}.json";
+                $manifestPath = $style->getAssetPath() . "manifest-{$langauge->languageID}.json";
                 if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
                     continue;
                 }
