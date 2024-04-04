@@ -297,14 +297,15 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      */
     public function delete()
     {
-        UserStorageHandler::getInstance()->reset(\array_map(function ($ignore) {
+        $userIDs = \array_map(function ($ignore) {
             return $ignore->ignoreUserID;
-        }, $this->getObjects()), 'ignoredByUserIDs');
+        }, $this->getObjects());
 
         $returnValues = parent::delete();
 
         // reset storage
         UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
+        UserStorageHandler::getInstance()->reset($userIDs, 'ignoredByUserIDs');
 
         return $returnValues;
     }
