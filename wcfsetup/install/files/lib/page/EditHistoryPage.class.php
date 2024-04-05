@@ -210,9 +210,9 @@ class EditHistoryPage extends AbstractPage
                             $this->diff[$i][1] .= $entry[1];
                             $this->diff[$i + 1][1] .= $entry[1];
                         } elseif ($entry[0] === Diff::REMOVED) {
-                            $this->diff[$i][1] .= '<strong>' . $entry[1] . '</strong>';
+                            $this->diff[$i][1] .= '<del>' . $entry[1] . '</del>';
                         } elseif ($entry[0] === Diff::ADDED) {
-                            $this->diff[$i + 1][1] .= '<strong>' . $entry[1] . '</strong>';
+                            $this->diff[$i + 1][1] .= '<ins>' . $entry[1] . '</ins>';
                         }
                     }
                     $i += 2;

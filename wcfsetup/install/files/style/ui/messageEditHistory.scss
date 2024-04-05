@@ -6,6 +6,10 @@
 	--diffRemoved-color: #a94442;
 	--diffSection-background: #eceff1;
 	--diffSection-color: #2c3e50;
+	--diffDel-background: #800000;
+	--diffDel-color: #333;
+	--diffIns-background: #008000;
+	--diffIns-color: #333;
 
 	@include screen-md-down {
 		overflow: auto;
@@ -78,6 +82,18 @@
 		column-gap: 20px;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+	}
+
+	del {
+		background-color: var(--diffDel-background);
+		color: var(--diffDel-color);
+		text-decoration: line-through;
+	}
+
+	ins {
+		background-color: var(--diffIns-background);
+		color: var(--diffIns-color);
+		text-decoration: none;
 	}
 }
 
