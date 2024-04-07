@@ -15,6 +15,7 @@ enum FileProcessorPreflightResult
     case FileExtensionNotPermitted;
     case FileSizeTooLarge;
     case InsufficientPermissions;
+    case InvalidContext;
     case Passed;
 
     public function ok(): bool
@@ -31,6 +32,7 @@ enum FileProcessorPreflightResult
             self::FileExtensionNotPermitted => 'fileExtensionNotPermitted',
             self::FileSizeTooLarge => 'fileSizeTooLarge',
             self::InsufficientPermissions => 'insufficientPermissions',
+            self::InvalidContext => 'invalidContext',
             self::Passed => 'passed',
         };
     }

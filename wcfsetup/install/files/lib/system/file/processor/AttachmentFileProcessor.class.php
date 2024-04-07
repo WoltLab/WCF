@@ -2,10 +2,12 @@
 
 namespace wcf\system\file\processor;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
+use wcf\http\Helper;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\exception\NotImplementedException;
 
@@ -26,13 +28,10 @@ final class AttachmentFileProcessor implements IFileProcessor
     #[\Override]
     public function getAllowedFileExtensions(array $context): array
     {
-        // TODO: Properly validate the shape of `$context`.
-        $objectType = $context['objectType'] ?? '';
-        $objectID = \intval($context['objectID'] ?? 0);
-        $parentObjectID = \intval($context['parentObjectID'] ?? 0);
-        $tmpHash = $context['tmpHash'] ?? '';
-
-        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        if ($attachmentHandler === null) {
+            return FileProcessorPreflightResult::InvalidContext;
+        }
 
         return $attachmentHandler->getAllowedExtensions();
     }
@@ -40,20 +39,15 @@ final class AttachmentFileProcessor implements IFileProcessor
     #[\Override]
     public function adopt(File $file, array $context): void
     {
-        // TODO: Properly validate the shape of `$context`.
-        $objectType = $context['objectType'] ?? '';
-        $objectID = \intval($context['objectID'] ?? 0);
-        $parentObjectID = \intval($context['parentObjectID'] ?? 0);
-        $tmpHash = $context['tmpHash'] ?? '';
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        if ($attachmentHandler === null) {
+            return FileProcessorPreflightResult::InvalidContext;
+        }
 
-        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
-
-        // TODO: How do we want to create the attachments? Do we really want to
-        //       keep using the existing attachment table though?
         AttachmentEditor::fastCreate([
             'objectTypeID' => $attachmentHandler->getObjectType()->objectTypeID,
             'objectID' => $attachmentHandler->getObjectID(),
-            'tmpHash' => $tmpHash,
+            'tmpHash' => $attachmentHandler->getTmpHashes()[0] ?? '',
             'fileID' => $file->fileID,
         ]);
     }
@@ -61,13 +55,11 @@ final class AttachmentFileProcessor implements IFileProcessor
     #[\Override]
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
-        // TODO: Properly validate the shape of `$context`.
-        $objectType = $context['objectType'] ?? '';
-        $objectID = \intval($context['objectID'] ?? 0);
-        $parentObjectID = \intval($context['parentObjectID'] ?? 0);
-        $tmpHash = $context['tmpHash'] ?? '';
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        if ($attachmentHandler === null) {
+            return FileProcessorPreflightResult::InvalidContext;
+        }
 
-        $attachmentHandler = new AttachmentHandler($objectType, $objectID, $tmpHash, $parentObjectID);
         if (!$attachmentHandler->canUpload()) {
             return FileProcessorPreflightResult::InsufficientPermissions;
         }
@@ -175,13 +167,49 @@ final class AttachmentFileProcessor implements IFileProcessor
 
         $columnName = match ($thumbnail->identifier) {
             '' => 'thumbnailID',
-            'tiny'=>'tinyThumbnailID',
-            'default'=>throw new \RuntimeException('TODO'), // TODO
+            'tiny' => 'tinyThumbnailID',
+            'default' => throw new \RuntimeException('TODO'), // TODO
         };
 
         $attachmentEditor = new AttachmentEditor($attachment);
         $attachmentEditor->update([
             $columnName => $thumbnail->thumbnailID,
         ]);
+    }
+
+    private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler
+    {
+        try {
+            $parameters = Helper::mapQueryParameters($context, AttachmentFileProcessorContext::class);
+        } catch (MappingError) {
+            return null;
+        }
+
+        \assert($parameters instanceof AttachmentFileProcessorContext);
+
+        return new AttachmentHandler(
+            $parameters->objectType,
+            $parameters->objectID,
+            $parameters->tmpHash,
+            $parameters->parentObjectID,
+        );
+    }
+}
+
+/** @internal */
+final class AttachmentFileProcessorContext
+{
+    public function __construct(
+        /** @var non-empty-string */
+        public readonly string $objectType,
+
+        /** @var positive-int */
+        public readonly int $objectID,
+
+        /** @var non-negative-int */
+        public readonly int $parentObjectID,
+
+        public readonly string $tmpHash,
+    ) {
     }
 }

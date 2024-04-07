@@ -88,6 +88,12 @@ async function getSha256Hash(data: BufferSource): Promise<string> {
 export function setup(): void {
   wheneverFirstSeen("woltlab-core-file-upload", (element) => {
     element.addEventListener("upload", (event: CustomEvent<File>) => {
+      // TODO: Add some pipeline logic here.
+
+      // TODO: Add a canvas based resize to the pipeline.
+
+      // TODO: We need to pass around the file using some dedicated type of
+      //       data structure because it can be modified somehow.
       void upload(element, event.detail);
     });
   });
