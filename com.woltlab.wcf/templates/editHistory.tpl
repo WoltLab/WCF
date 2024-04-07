@@ -11,7 +11,20 @@
 
 {include file='header'}
 
-{if $diff}
+{if $mode == 'html'}
+<template id="oldMessage"><div>{unsafe:$old->getMessage()}<div></template>
+<template id="newMessage"><div>{unsafe:$new->getMessage()}<div></template>
+<div class="section editHistoryDiff">
+	<div class="htmlContent" id="results"></div>
+</div>
+<script src="{$__wcf->getPath()}js/3rdParty/diff_match_patch.js" data-relocate="true"></script>
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Component/DomDocumentDiff/diff'], ({ visualDomDiff }) => {
+		const fragment = visualDomDiff(document.getElementById('oldMessage').content.cloneNode(true).firstChild, document.getElementById('newMessage').content.cloneNode(true).firstChild);
+		document.getElementById('results').append(fragment);
+	});
+</script>
+{elseif $diff}
 <div class="section editHistoryDiff">
 	<table class="table">
 		<thead>
@@ -124,6 +137,7 @@
 	<div class="formSubmit">
 		<input type="hidden" name="objectID" value="{$objectID}">
 		<input type="hidden" name="objectType" value="{$objectType->objectType}">
+		<input type="hidden" name="mode" value="{$mode}">
 		<button type="submit" class="button buttonPrimary">{lang}wcf.edit.button.compare{/lang}</button>
 	</div>
 </form>
