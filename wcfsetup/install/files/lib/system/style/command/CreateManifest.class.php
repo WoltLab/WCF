@@ -63,15 +63,15 @@ final class CreateManifest
 
                 // update manifest.json
                 $manifest = <<<MANIFEST
-{
-    "name": {$title},
-    "start_url": {$startUrl},
-    "icons": {$icons},
-    "theme_color": "{$headerColor}",
-    "background_color": "{$backgroundColor}",
-    "display": "standalone"
-}
-MANIFEST;
+                {
+                    "name": {$title},
+                    "start_url": {$startUrl},
+                    "icons": {$icons},
+                    "theme_color": "{$headerColor}",
+                    "background_color": "{$backgroundColor}",
+                    "display": "standalone"
+                }
+                MANIFEST;
                 $manifestPath = $style->getAssetPath() . "manifest-{$language->languageID}.json";
                 if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
                     continue;
