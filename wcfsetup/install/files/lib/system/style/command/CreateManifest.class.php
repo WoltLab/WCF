@@ -72,7 +72,7 @@ final class CreateManifest
     "display": "standalone"
 }
 MANIFEST;
-                $manifestPath = $style->getAssetPath() . "manifest-{$langauge->languageID}.json";
+                $manifestPath = $style->getAssetPath() . "manifest-{$language->languageID}.json";
                 if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
                     continue;
                 }
