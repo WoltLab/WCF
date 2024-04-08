@@ -19,30 +19,29 @@ use wcf\util\JSON;
  */
 final class CreateManifest
 {
-    private readonly int $styleID;
+    private readonly Style $style;
 
     public function __construct(Style $style)
     {
-        $this->styleID = $style->styleID;
+        $this->style = $style;
     }
 
     public function __invoke(): void
     {
-        $style = new Style($this->styleID);
-        $style->loadVariables();
-        $headerColor = $style->getVariable('wcfHeaderBackground', true);
-        $backgroundColor = $style->getVariable('wcfContentBackground', true);
+        $this->style->loadVariables();
+        $headerColor = $this->style->getVariable('wcfHeaderBackground', true);
+        $backgroundColor = $this->style->getVariable('wcfContentBackground', true);
         $landingPage = PageCache::getInstance()->getLandingPage();
 
         $icons = [];
         // If no favicon is set, use the default favicon,
         // which comes in 192x192px and 256x256px and starts with `default.`.
         // These images are located in the `images/favicon/` directory.
-        foreach ($style->hasFavicon ? [192, 256, 512] : [192, 256] as $iconSize) {
+        foreach ($this->style->hasFavicon ? [192, 256, 512] : [192, 256] as $iconSize) {
             $icons [] = [
                 "src" => \sprintf(
                     "%sandroid-chrome-%dx%d.png",
-                    $style->hasFavicon ? "" : "../favicon/default.",
+                    $this->style->hasFavicon ? "" : "../favicon/default.",
                     $iconSize,
                     $iconSize
                 ),
@@ -72,7 +71,7 @@ final class CreateManifest
                     "display": "standalone"
                 }
                 MANIFEST;
-                $manifestPath = $style->getAssetPath() . "manifest-{$language->languageID}.json";
+                $manifestPath = $this->style->getAssetPath() . "manifest-{$language->languageID}.json";
                 if (\file_exists($manifestPath) && \hash_equals(\sha1_file($manifestPath), \sha1($manifest))) {
                     continue;
                 }

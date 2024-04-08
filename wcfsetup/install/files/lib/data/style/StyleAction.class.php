@@ -325,7 +325,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             'mstile-150x150.png' => 150,
         ];
 
-        $hasFavicon = $style->hasFavicon;
         if (\array_key_exists('favicon', $this->parameters['uploads'])) {
             /** @var \wcf\system\file\upload\UploadFile $file */
             $file = $this->parameters['uploads']['favicon'];
@@ -360,8 +359,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     (new StyleEditor($style))->update([
                         'hasFavicon' => 1,
                     ]);
-
-                    $hasFavicon = true;
                 }
             } else {
                 foreach ($images as $filename => $length) {
@@ -389,14 +386,14 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 (new StyleEditor($style))->update([
                     'hasFavicon' => 0,
                 ]);
-
-                $hasFavicon = false;
             }
         }
+        // need to reload the style object to get the updated hasFavicon value
+        $style = new Style($style->styleID);
         $command = new CreateManifest($style);
         $command();
 
-        if ($hasFavicon) {
+        if ($style->hasFavicon) {
             $style->loadVariables();
             $tileColor = $style->getVariable('wcfHeaderBackground', true);
 
