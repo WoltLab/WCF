@@ -372,7 +372,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 if (\file_exists($style->getAssetPath() . "favicon.ico")) {
                     \unlink($style->getAssetPath() . "favicon.ico");
                 }
-                foreach (\glob($style->getAssetPath() . "manifest*.json") as $filename) {
+                foreach (\glob($style->getAssetPath() . "manifest-*.json") as $filename) {
                     \unlink($filename);
                 }
                 \unlink($style->getAssetPath() . "browserconfig.xml");
