@@ -376,7 +376,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     \unlink($filename);
                 }
                 // delete the manifest.json generated before WSC 6.1
-                \unlink($style->getAssetPath() . "manifest.json");
+                if (\file_exists($style->getAssetPath() . "manifest.json")) {
+                    \unlink($style->getAssetPath() . "manifest.json");
+                }
 
                 \unlink($style->getAssetPath() . "browserconfig.xml");
                 foreach (['png', 'jpg', 'gif'] as $extension) {
