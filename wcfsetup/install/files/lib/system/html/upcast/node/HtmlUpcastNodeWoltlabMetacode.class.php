@@ -101,9 +101,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
 
                     if ($bbcode->isSourceCode) {
                         $content = $element->ownerDocument->createElement('p');
-                        $content->append(
-                            $element->ownerDocument->createTextNode($element->textContent)
-                        );
+                        $content->append($element->textContent);
                         DomUtil::replaceElement($element, $startParagraph, false);
                         DOMUtil::insertAfter($content, $startParagraph);
                         DomUtil::insertAfter($endParagraph, $content);
