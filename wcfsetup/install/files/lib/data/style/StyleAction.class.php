@@ -375,6 +375,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 foreach (\glob($style->getAssetPath() . "manifest-*.json") as $filename) {
                     \unlink($filename);
                 }
+                // delete the manifest.json generated before WSC 6.1
+                \unlink($style->getAssetPath() . "manifest.json");
+
                 \unlink($style->getAssetPath() . "browserconfig.xml");
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     if (\file_exists($style->getAssetPath() . "favicon-template." . $extension)) {
