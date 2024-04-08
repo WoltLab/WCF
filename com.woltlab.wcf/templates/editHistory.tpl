@@ -17,9 +17,8 @@
 <div class="section editHistoryDiff">
 	<div class="htmlContent" id="results"></div>
 </div>
-<script src="{$__wcf->getPath()}js/3rdParty/diff_match_patch.js" data-relocate="true"></script>
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Component/DomDocumentDiff/diff'], ({ visualDomDiff }) => {
+	require(['@woltlab/visual-dom-diff'], ({ visualDomDiff }) => {
 		const fragment = visualDomDiff(document.getElementById('oldMessage').content.cloneNode(true).firstChild, document.getElementById('newMessage').content.cloneNode(true).firstChild);
 		document.getElementById('results').append(fragment);
 	});
