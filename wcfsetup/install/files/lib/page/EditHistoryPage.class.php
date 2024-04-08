@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectType;
@@ -17,11 +16,11 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * Compares two templates.
+ * Compares two entries of the edit history.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Tim Duesterhus, Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class EditHistoryPage extends AbstractPage
 {
@@ -31,63 +30,57 @@ class EditHistoryPage extends AbstractPage
     public $neededModules = ['MODULE_EDIT_HISTORY'];
 
     /**
-     * DatabaseObjectList object
-     * @var DatabaseObjectList
+     * List of edit history entries.
      */
-    public $objectList;
+    public ?EditHistoryEntryList $objectList = null;
 
     /**
      * left / old version id
-     * @var int
      */
-    public $oldID = 0;
+    public int $oldID = 0;
 
     /**
      * left / old version
-     * @var EditHistoryEntry
      */
-    public $old;
+    public ?EditHistoryEntry $old = null;
 
     /**
      * right / new version id
-     * @var int
      */
-    public $newID = 0;
+    public int|string $newID = 0;
 
     /**
      * right / new version
-     * @var EditHistoryEntry
      */
-    public $new;
+    public EditHistoryEntry|IHistorySavingObject|null $new = null;
 
     /**
      * differences between both versions
-     * @var array
      */
-    public $diff;
+    public ?array $diff = null;
 
     /**
      * object type of the requested object
-     * @var ObjectType
      */
-    public $objectType;
+    public ?ObjectType $objectType = null;
 
     /**
      * id of the requested object
-     * @var int
      */
-    public $objectID = 0;
+    public int $objectID = 0;
 
     /**
      * requested object
-     * @var IHistorySavingObject
      */
-    public $object;
+    public ?IHistorySavingObject $object = null;
 
     /**
-     * @inheritDoc
+     * Rendering mode (html or raw).
      */
-    public function readParameters()
+    public string $mode = 'html';
+
+    #[\Override]
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -137,7 +130,6 @@ class EditHistoryPage extends AbstractPage
         /** @var IHistorySavingObjectTypeProvider $processor */
         $processor = $this->objectType->getProcessor();
 
-        /** @var IHistorySavingObject object */
         $this->object = $processor->getObjectByID($this->objectID);
         if (!$this->object->getObjectID()) {
             throw new IllegalLinkException();
@@ -150,22 +142,25 @@ class EditHistoryPage extends AbstractPage
             $this->newID = 'current';
         }
 
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'raw') {
+            $this->mode = 'raw';
+        }
+
         if (!empty($_POST)) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getLink('EditHistory', [
                 'objectID' => $this->objectID,
                 'objectType' => $this->objectType->objectType,
                 'newID' => $this->newID,
                 'oldID' => $this->oldID,
+                'mode' => $this->mode,
             ]));
 
             exit;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readData()
+    #[\Override]
+    public function readData(): void
     {
         parent::readData();
 
@@ -175,10 +170,21 @@ class EditHistoryPage extends AbstractPage
         $this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
         $this->objectList->readObjects();
 
-        $differ = Diff::getDefaultDiffer();
+        // set default values
+        if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
+            foreach ($this->objectList as $object) {
+                $this->oldID = $object->entryID;
+                $this->old = $object;
+                break;
+            }
+            $this->newID = 'current';
+            $this->new = $this->object;
+        }
 
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
+            $differ = Diff::getDefaultDiffer();
+
             $a = \explode("\n", $this->prepareMessage($this->old->getMessage()));
             $b = \explode("\n", $this->prepareMessage($this->new->getMessage()));
             $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
@@ -204,9 +210,9 @@ class EditHistoryPage extends AbstractPage
                             $this->diff[$i][1] .= $entry[1];
                             $this->diff[$i + 1][1] .= $entry[1];
                         } elseif ($entry[0] === Diff::REMOVED) {
-                            $this->diff[$i][1] .= '<strong>' . $entry[1] . '</strong>';
+                            $this->diff[$i][1] .= '<del>' . $entry[1] . '</del>';
                         } elseif ($entry[0] === Diff::ADDED) {
-                            $this->diff[$i + 1][1] .= '<strong>' . $entry[1] . '</strong>';
+                            $this->diff[$i + 1][1] .= '<ins>' . $entry[1] . '</ins>';
                         }
                     }
                     $i += 2;
@@ -215,15 +221,6 @@ class EditHistoryPage extends AbstractPage
                     $i++;
                 }
             }
-        }
-
-        // set default values
-        if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
-            foreach ($this->objectList as $object) {
-                $this->oldID = $object->entryID;
-                break;
-            }
-            $this->newID = 'current';
         }
     }
 
@@ -245,10 +242,8 @@ class EditHistoryPage extends AbstractPage
         return \preg_replace("/(<(?:{$openingTag})>|<\\/(?:{$closingTag})>)/", "\\0\n", $html);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
+    #[\Override]
+    public function assignVariables(): void
     {
         parent::assignVariables();
 
@@ -262,6 +257,7 @@ class EditHistoryPage extends AbstractPage
             'objects' => $this->objectList,
             'objectID' => $this->objectID,
             'objectType' => $this->objectType,
+            'mode' => $this->mode,
         ]);
     }
 }

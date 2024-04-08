@@ -3800,6 +3800,8 @@ Dateianhänge:
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
 		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Aktuelle Version{else}Version vom {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
+		<item name="wcf.edit.mode.html"><![CDATA[HTML]]></item>
+		<item name="wcf.edit.mode.raw"><![CDATA[Quellcode]]></item>
 	</category>
 	<category name="wcf.editor">
 		<item name="wcf.editor.alignment.center"><![CDATA[Zentrieren]]></item>

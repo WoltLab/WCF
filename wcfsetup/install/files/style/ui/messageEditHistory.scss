@@ -6,6 +6,10 @@
 	--diffRemoved-color: #a94442;
 	--diffSection-background: #eceff1;
 	--diffSection-color: #2c3e50;
+	--diffDel-background: #d71111;
+	--diffDel-color: rgb(255 255 255 / 91%);
+	--diffIns-background: #008000;
+	--diffIns-color: rgb(255 255 255 / 91%);
 
 	@include screen-md-down {
 		overflow: auto;
@@ -79,6 +83,18 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 	}
+
+	del {
+		background-color: var(--diffDel-background);
+		color: var(--diffDel-color);
+		text-decoration: line-through;
+	}
+
+	ins {
+		background-color: var(--diffIns-background);
+		color: var(--diffIns-color);
+		text-decoration: none;
+	}
 }
 
 html[data-color-scheme="dark"] {
@@ -89,6 +105,10 @@ html[data-color-scheme="dark"] {
 		--diffRemoved-color: #d95654;
 		--diffSection-background: #252e3d;
 		--diffSection-color: #959595;
+		--diffDel-background: #800000;
+		--diffDel-color: rgb(255 255 255 / 67%);
+		--diffIns-background: #008000;
+		--diffIns-color: rgb(255 255 255 / 91%);
 	}
 }
 

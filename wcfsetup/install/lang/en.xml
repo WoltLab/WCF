@@ -3746,6 +3746,8 @@ Attachments:
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Current version{else}Version{/if} as of {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
 		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
+		<item name="wcf.edit.mode.html"><![CDATA[HTML]]></item>
+		<item name="wcf.edit.mode.raw"><![CDATA[Raw]]></item>
 	</category>
 	<category name="wcf.editor">
 		<item name="wcf.editor.alignment.center"><![CDATA[Align center]]></item>
