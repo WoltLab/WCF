@@ -54,7 +54,7 @@ final class CreateManifest
 
         $originalLanguage = WCF::getLanguage();
         try {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $langauge) {
+            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 // To get the correct landing page url, we need to change the language.
                 WCF::setLanguage($language->languageID);
 
