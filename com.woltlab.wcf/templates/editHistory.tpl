@@ -5,8 +5,8 @@
 {capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button buttonPrimary">{icon name='arrow-right'} <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>{/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a href="{link controller='EditHistory'}objectType={$objectType->objectType}&objectID={$objectID}&newID={$newID}&oldID={$oldID}&mode=html{/link}" class="contentInteractionButton button small{if $mode == 'html'} active{/if}">{icon name='align-left' type='solid'} <span>{lang}wcf.edit.mode.html{/lang}</span></a>
-	<a href="{link controller='EditHistory'}objectType={$objectType->objectType}&objectID={$objectID}&newID={$newID}&oldID={$oldID}&mode=raw{/link}" class="contentInteractionButton button small{if $mode == 'raw'} active{/if}">{icon name='code' type='solid'} <span>{lang}wcf.edit.mode.raw{/lang}</span></a>
+	<a href="{link controller='EditHistory' objectType=$objectType->objectType objectID=$objectID newID=$newID oldID=$oldID mode='html'}{/link}" class="contentInteractionButton button small{if $mode == 'html'} active{/if}">{icon name='align-left' type='solid'} <span>{lang}wcf.edit.mode.html{/lang}</span></a>
+	<a href="{link controller='EditHistory' objectType=$objectType->objectType objectID=$objectID newID=$newID oldID=$oldID mode='raw'}{/link}" class="contentInteractionButton button small{if $mode == 'raw'} active{/if}">{icon name='code' type='solid'} <span>{lang}wcf.edit.mode.raw{/lang}</span></a>
 {/capture}
 
 {include file='header'}
