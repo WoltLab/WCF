@@ -93,17 +93,23 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
 
                 if ($bbcode === null || $bbcode->isBlockElement) {
-                    $newElement = $element->ownerDocument->createElement('p');
-                    $newElement->appendChild($element->ownerDocument->createTextNode("[{$name}{$attributes}]"));
+                    $startParagraph = $element->ownerDocument->createElement('p');
+                    $startParagraph->append("[{$name}{$attributes}]");
+
+                    $endParagraph = $element->ownerDocument->createElement('p');
+                    $endParagraph->append("[/{$name}]");
+
                     if ($bbcode->isSourceCode) {
-                        $newElement->appendChild(
-                            $element->ownerDocument->createTextNode($element->textContent)
-                        );
-                        DomUtil::replaceElement($element, $newElement, false);
+                        $content = $element->ownerDocument->createElement('p');
+                        $content->append($element->textContent);
+                        DomUtil::replaceElement($element, $startParagraph, false);
+                        DOMUtil::insertAfter($content, $startParagraph);
+                        DomUtil::insertAfter($endParagraph, $content);
                     } else {
-                        DomUtil::replaceElement($element, $newElement);
+                        DOMUtil::insertBefore($startParagraph, $element);
+                        DOMUtil::insertAfter($endParagraph, $element);
+                        DOMUtil::removeNode($element, true);
                     }
-                    $newElement->appendChild($element->ownerDocument->createTextNode("[/{$name}]"));
                 } else {
                     $insertNode = $element->parentNode->insertBefore(
                         $element->ownerDocument->createTextNode("[{$name}{$attributes}]"),
