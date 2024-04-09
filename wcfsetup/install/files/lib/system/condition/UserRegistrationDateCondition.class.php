@@ -82,28 +82,34 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
     public function checkUser(Condition $condition, User $user)
     {
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateStart = \DateTime::createFromFormat(
-            'Y-m-d',
-            $condition->registrationDateStart,
-            new \DateTimeZone(TIMEZONE)
-        );
-        if ($registrationDateStart !== false) {
-            $registrationDateStart->setTime(0, 0, 0);
-            if ($user->registrationDate < $registrationDateStart->getTimestamp()) {
-                return false;
+        $dateStart = $condition->registrationDateStart;
+        if ($dateStart !== null) {
+            $registrationDateStart = \DateTime::createFromFormat(
+                'Y-m-d',
+                $dateStart,
+                new \DateTimeZone(TIMEZONE)
+            );
+            if ($registrationDateStart !== false) {
+                $registrationDateStart->setTime(0, 0, 0);
+                if ($user->registrationDate < $registrationDateStart->getTimestamp()) {
+                    return false;
+                }
             }
         }
 
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateEnd = \DateTime::createFromFormat(
-            'Y-m-d',
-            $condition->registrationDateEnd,
-            new \DateTimeZone(TIMEZONE)
-        );
-        if ($registrationDateEnd !== false) {
-            $registrationDateEnd->setTime(23, 59, 59);
-            if ($user->registrationDate >= $registrationDateEnd->getTimestamp()) {
-                return false;
+        $dateEnd = $condition->registrationDateEnd;
+        if ($dateEnd !== null) {
+            $registrationDateEnd = \DateTime::createFromFormat(
+                'Y-m-d',
+                $dateEnd,
+                new \DateTimeZone(TIMEZONE)
+            );
+            if ($registrationDateEnd !== false) {
+                $registrationDateEnd->setTime(23, 59, 59);
+                if ($user->registrationDate >= $registrationDateEnd->getTimestamp()) {
+                    return false;
+                }
             }
         }
 
