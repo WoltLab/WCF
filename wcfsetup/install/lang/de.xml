@@ -387,6 +387,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.userTrophy"><![CDATA[Vergebene Trophäen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS-Seiten]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} <a href="#" role="button" id="deleteMapping" data-confirm-message="{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?">diese Zuordnungen löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}. Diese Zuordnungen können nicht genutzt werden, um einzelne Inhalte inkrementell zu übernehmen. Sie sind dazu gedacht, um weitere Arten von Inhalten in separaten Vorgängen zu übernehmen, beispielsweise unter Zuhilfenahme von Importern aus installierten Plugins.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
@@ -5662,7 +5663,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"/>
-	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
 	<item name="wcf.acp.dataImport.selectExporter.error.notValid"/>
 	<item name="wcf.acp.devtools.project.action"/>
 	<item name="wcf.acp.devtools.project.apiVersions"/>
