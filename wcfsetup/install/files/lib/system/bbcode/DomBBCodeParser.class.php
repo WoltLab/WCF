@@ -35,6 +35,11 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function convertBBCodeToMetacodeMarker(\DOMNode $node): void
     {
+        if (\in_array($node->nodeName, HtmlBBCodeParser::$codeTagNames)) {
+            // don't parse bbcode inside code tags
+            return;
+        }
+
         if ($node->nodeType === \XML_TEXT_NODE) {
             \assert($node instanceof \DOMText);
             $this->parseNode($node);
@@ -47,15 +52,6 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function parseNode(\DOMText $node): void
     {
-        $parentNode = $node->parentNode;
-        while ($parentNode->nodeName !== 'body') {
-            if (\in_array($parentNode->nodeName, HtmlBBCodeParser::$codeTagNames)) {
-                // don't parse bbcode inside code tags
-                return;
-            }
-
-            $parentNode = $parentNode->parentNode;
-        }
         // build tag pattern
         $validTags = \implode('|', \array_keys(BBCodeCache::getInstance()->getBBCodes()));
         $pattern = '~\[(?:/(?:' . $validTags . ')|(?:' . $validTags . ')
@@ -99,6 +95,7 @@ final class DomBBCodeParser extends SingletonFactory
             }
             $isClosingTag = false;
         }
+
         $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
         if ($bbcode === null) {
             return null;
@@ -115,6 +112,7 @@ final class DomBBCodeParser extends SingletonFactory
             if ($openTagIdentifier['name'] !== $name) {
                 return null;
             }
+
             $uuid = $openTagIdentifier['uuid'];
         } else {
             $uuid = StringUtil::getUUID();
@@ -136,6 +134,7 @@ final class DomBBCodeParser extends SingletonFactory
                     }, $attributes)))
                 );
             }
+
             foreach ($bbcode->getAttributes() as $attribute) {
                 if ($attribute->useText && !isset($attributes[$attribute->attributeNo])) {
                     $metacodeMarker->setAttribute('data-use-text', 'true');
