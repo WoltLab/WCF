@@ -20,12 +20,17 @@ final class MediaBBCode extends AbstractBBCode
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = StringUtil::trim($openingTag['attributes'][0]);
+        $alignment = $openingTag['attributes'][1] ?? 'none';
 
         /** @var HtmlBBCodeParser $parser */
         if ($parser->getOutputType() == 'text/html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
-                    return $provider->getOutput($content);
+                    return \sprintf(
+                        '<div class="mediaBBCodeContainer%s">%s</div>',
+                        \ucfirst($alignment),
+                        $provider->getOutput($content)
+                    );
                 }
             }
         } elseif ($parser->getOutputType() == 'text/simplified-html') {

@@ -37,3 +37,18 @@ iframe.instagram-media {
 	/* Workaround for ugly border in embedded tweets. */
 	border-radius: 13px;
 }
+
+.mediaBBCodeContainerLeft {
+	display: flex;
+	justify-content: start;
+}
+
+.mediaBBCodeContainerRight {
+	display: flex;
+	justify-content: end;
+}
+
+.mediaBBCodeContainerCenter {
+	display: flex;
+	justify-content: center;
+}
