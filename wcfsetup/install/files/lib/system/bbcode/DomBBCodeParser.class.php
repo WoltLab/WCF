@@ -18,7 +18,15 @@ use wcf\util\StringUtil;
  */
 final class DomBBCodeParser extends SingletonFactory
 {
-    protected array $openTagIdentifiers = [];
+    /**
+     * @var string[][]
+     */
+    private array $openTagIdentifiers = [];
+    /**
+     * @var \DOMElement[]
+     */
+    private array $closingTags = [];
+
     private \DOMDocument $document;
     /**
      * @var array{uuid: string, metacodemarker: \DOMElement, attributeNo: int}
@@ -34,6 +42,17 @@ final class DomBBCodeParser extends SingletonFactory
         $this->document = $document;
         foreach ($document->getElementsByTagName('body')->item(0)->childNodes as $node) {
             $this->convertBBCodeToMetacodeMarker($node);
+        }
+
+        // find correct closing tags
+        foreach ($this->closingTags as $node) {
+            $name = $node->getAttribute('data-name');
+            $node->removeAttribute('data-name');
+
+            if (!isset($this->openTagIdentifiers[$name]) || empty($this->openTagIdentifiers[$name])) {
+                continue;
+            }
+            $node->setAttribute('data-uuid', \array_pop($this->openTagIdentifiers[$name]));
         }
 
         // get text between opening and closing tags
@@ -154,25 +173,18 @@ final class DomBBCodeParser extends SingletonFactory
 
         $metacodeMarker = $this->document->createElement('woltlab-metacode-marker');
         $metacodeMarker->setAttribute('data-source', \base64_encode($bbcodeTag));
+        $metacodeMarker->setAttribute('data-name', $name);
+
         if ($isClosingTag) {
-            if (empty($this->openTagIdentifiers)) {
-                return null;
-            }
-
-            $openTagIdentifier = \array_pop($this->openTagIdentifiers);
-            if ($openTagIdentifier['name'] !== $name) {
-                return null;
-            }
-
-            $uuid = $openTagIdentifier['uuid'];
+            $this->closingTags[] = $metacodeMarker;
         } else {
+            if (!isset($this->openTagIdentifiers[$name])) {
+                $this->openTagIdentifiers[$name] = [];
+            }
             $uuid = StringUtil::getUUID();
-            $this->openTagIdentifiers[] = [
-                'name' => $name,
-                'uuid' => $uuid,
-            ];
+            $this->openTagIdentifiers[$name][] = $uuid;
 
-            $metacodeMarker->setAttribute('data-name', $name);
+            $metacodeMarker->setAttribute('data-uuid', $uuid);
 
             foreach ($bbcode->getAttributes() as $attribute) {
                 if ($attribute->useText && !isset($attributes[$attribute->attributeNo])) {
@@ -199,7 +211,6 @@ final class DomBBCodeParser extends SingletonFactory
                 );
             }
         }
-        $metacodeMarker->setAttribute('data-uuid', $uuid);
 
         return $metacodeMarker;
     }
