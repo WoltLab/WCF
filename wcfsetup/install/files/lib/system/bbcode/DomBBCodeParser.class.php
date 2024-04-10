@@ -20,16 +20,67 @@ final class DomBBCodeParser extends SingletonFactory
 {
     protected array $openTagIdentifiers = [];
     private \DOMDocument $document;
+    /**
+     * @var array{uuid: string, metacodemarker: \DOMElement, attributeNo: int}
+     */
+    private array $useTextNodes = [];
 
     /**
      * Parses bbcodes in the given DOM document.
      */
     public function parse(\DOMDocument $document): void
     {
-        $this->openTagIdentifiers = [];
+        $this->openTagIdentifiers = $this->useTextNodes = [];
         $this->document = $document;
         foreach ($document->getElementsByTagName('body')->item(0)->childNodes as $node) {
             $this->convertBBCodeToMetacodeMarker($node);
+        }
+
+        // get text between opening and closing tags
+        foreach ($this->useTextNodes as ['uuid' => $uuid, 'metacodemarker' => $node, 'attributeNo' => $attributeNo]) {
+            \assert($node instanceof \DOMElement);
+
+            $nextNode = $node->nextSibling;
+            while ($nextNode !== null) {
+                if ($nextNode->nodeType === \XML_TEXT_NODE) {
+                    $nextNode = $nextNode->nextSibling;
+                    continue;
+                }
+                \assert($nextNode instanceof \DOMElement);
+
+                if (
+                    $nextNode->nodeName === 'woltlab-metacode-marker'
+                    && $nextNode->getAttribute('data-uuid') === $uuid
+                ) {
+                    break;
+                }
+
+                if ($nextNode->nodeName === 'woltlab-metacode-marker') {
+                    $nextNode = $nextNode->nextSibling;
+                    continue;
+                }
+
+                $nextNode = $nextNode->nextSibling;
+            }
+
+            if ($nextNode === null) {
+                continue;
+            }
+
+            $text = '';
+            $currentNode = $node->nextSibling;
+            while ($currentNode !== $nextNode) {
+                $text .= $currentNode->textContent;
+                $currentNode = $currentNode->nextSibling;
+            }
+
+            if ($node->hasAttribute('data-attributes')) {
+                $attributes = JSON::decode(\base64_decode($node->getAttribute('data-attributes')));
+            } else {
+                $attributes = [];
+            }
+            $attributes[$attributeNo] = $text;
+            $node->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
         }
     }
 
@@ -122,6 +173,19 @@ final class DomBBCodeParser extends SingletonFactory
             ];
 
             $metacodeMarker->setAttribute('data-name', $name);
+
+            foreach ($bbcode->getAttributes() as $attribute) {
+                if ($attribute->useText && !isset($attributes[$attribute->attributeNo])) {
+                    $metacodeMarker->setAttribute('data-use-text', 'true');
+                    $this->useTextNodes[] = [
+                        'uuid' => $uuid,
+                        'metacodemarker' => $metacodeMarker,
+                        'attributeNo' => $attribute->attributeNo,
+                    ];
+                    break;
+                }
+            }
+
             if ($attributes !== []) {
                 $metacodeMarker->setAttribute(
                     'data-attributes',
@@ -133,13 +197,6 @@ final class DomBBCodeParser extends SingletonFactory
                         return $attribute;
                     }, $attributes)))
                 );
-            }
-
-            foreach ($bbcode->getAttributes() as $attribute) {
-                if ($attribute->useText && !isset($attributes[$attribute->attributeNo])) {
-                    $metacodeMarker->setAttribute('data-use-text', 'true');
-                    break;
-                }
             }
         }
         $metacodeMarker->setAttribute('data-uuid', $uuid);
