@@ -2,6 +2,8 @@
 
 namespace wcf\system\bbcode;
 
+use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 use wcf\util\DOMUtil;
@@ -29,7 +31,7 @@ final class DomBBCodeParser extends SingletonFactory
 
     private \DOMDocument $document;
     /**
-     * @var array{uuid: string, metacodemarker: \DOMElement, attributeNo: int}
+     * @var array{uuid: string, metacodeMarker: \DOMElement, attributeNo: int}
      */
     private array $useTextNodes = [];
 
@@ -56,7 +58,7 @@ final class DomBBCodeParser extends SingletonFactory
         }
 
         // get text between opening and closing tags
-        foreach ($this->useTextNodes as ['uuid' => $uuid, 'metacodemarker' => $node, 'attributeNo' => $attributeNo]) {
+        foreach ($this->useTextNodes as ['uuid' => $uuid, 'metacodeMarker' => $node, 'attributeNo' => $attributeNo]) {
             \assert($node instanceof \DOMElement);
 
             $nextNode = $node->nextSibling;
@@ -178,6 +180,10 @@ final class DomBBCodeParser extends SingletonFactory
         if ($isClosingTag) {
             $this->closingTags[] = $metacodeMarker;
         } else {
+            if (!$this->isValidTag($bbcode, $attributes)) {
+                return null;
+            }
+
             if (!isset($this->openTagIdentifiers[$name])) {
                 $this->openTagIdentifiers[$name] = [];
             }
@@ -191,7 +197,7 @@ final class DomBBCodeParser extends SingletonFactory
                     $metacodeMarker->setAttribute('data-use-text', 'true');
                     $this->useTextNodes[] = [
                         'uuid' => $uuid,
-                        'metacodemarker' => $metacodeMarker,
+                        'metacodeMarker' => $metacodeMarker,
                         'attributeNo' => $attribute->attributeNo,
                     ];
                     break;
@@ -233,5 +239,94 @@ final class DomBBCodeParser extends SingletonFactory
         }
 
         return $matches[1];
+    }
+
+    /**
+     * @see BBCodeParser::isValidTag()
+     */
+    private function isValidTag(BBCode $bbcode, array $attributes): bool
+    {
+        if (\count($attributes) > \count($bbcode->getAttributes())) {
+            return false;
+        }
+
+        // right trim any attributes that are truly empty (= zero-length string) and are defined to be optional
+        $bbcodeAttributes = $bbcode->getAttributes();
+        // reverse sort the bbcode attributes to start with the last attribute
+        \usort($bbcodeAttributes, static function (BBCodeAttribute $a, BBCodeAttribute $b) {
+            if ($a->attributeNo == $b->attributeNo) {
+                return 0;
+            }
+
+            return ($a->attributeNo < $b->attributeNo) ? 1 : -1;
+        });
+        foreach ($bbcodeAttributes as $attribute) {
+            if ($attribute->required) {
+                break;
+            }
+
+            $i = $attribute->attributeNo;
+            if (isset($tagAttributes[$i]) && $tagAttributes[$i] === '' && !isset($tagAttributes[$i + 1])) {
+                unset($tagAttributes[$i]);
+            } else {
+                break;
+            }
+        }
+
+        foreach ($bbcode->getAttributes() as $attribute) {
+            if (!$this->isValidTagAttribute($attributes, $attribute)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @see HtmlBBCodeParser::isValidTagAttribute()
+     */
+    protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute): bool
+    {
+        // work-around for the broken `[wsm]` conversion in earlier versions
+        static $targetAttribute;
+        if ($targetAttribute === null) {
+            $bbcodes = BBCodeHandler::getInstance()->getBBCodes();
+            foreach ($bbcodes as $bbcode) {
+                if ($bbcode->bbcodeTag === 'wsm') {
+                    $targetAttribute = false;
+                    foreach ($bbcode->getAttributes() as $attribute) {
+                        if ($attribute->attributeNo == 1) {
+                            $targetAttribute = $attribute;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+        if ($targetAttribute && $definedTagAttribute === $targetAttribute) {
+            if (isset($tagAttributes[1]) && $tagAttributes[1] === '') {
+                // allow the 2nd attribute of `[wsm]` to be empty for compatibility reasons
+                return true;
+            }
+        }
+
+        if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
+            // validate attribute
+            if (
+                !\preg_match(
+                    '~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i',
+                    $tagAttributes[$definedTagAttribute->attributeNo]
+                )
+            ) {
+                return false;
+            }
+        }
+
+        if ($definedTagAttribute->required && !$definedTagAttribute->useText && !isset($tagAttributes[$definedTagAttribute->attributeNo])) {
+            return false;
+        }
+
+        return true;
     }
 }
