@@ -19,6 +19,7 @@ use wcf\util\StringUtil;
 final class DomBBCodeParser extends SingletonFactory
 {
     protected array $openTagIdentifiers = [];
+    private \DOMDocument $document;
 
     /**
      * Parses bbcodes in the given DOM document.
@@ -26,6 +27,7 @@ final class DomBBCodeParser extends SingletonFactory
     public function parse(\DOMDocument $document): void
     {
         $this->openTagIdentifiers = [];
+        $this->document = $document;
         foreach ($document->getElementsByTagName('body')->item(0)->childNodes as $node) {
             $this->convertBBCodeToMetacodeMarker($node);
         }
@@ -65,7 +67,7 @@ final class DomBBCodeParser extends SingletonFactory
         // get bbcode tags
         \preg_match_all($pattern, $node->textContent, $matches);
         foreach ($matches[0] as $bbcodeTag) {
-            $metaCodeMarker = $this->createMetacodeMarker($node->ownerDocument, $bbcodeTag);
+            $metaCodeMarker = $this->createMetacodeMarker($bbcodeTag);
             if ($metaCodeMarker === null) {
                 continue;
             }
@@ -78,7 +80,7 @@ final class DomBBCodeParser extends SingletonFactory
         }
     }
 
-    private function createMetacodeMarker(\DOMDocument $document, string $bbcodeTag): ?\DOMElement
+    private function createMetacodeMarker(string $bbcodeTag): ?\DOMElement
     {
         $attributes = [];
         if (\mb_substr($bbcodeTag, 1, 1) == '/') {
@@ -102,7 +104,7 @@ final class DomBBCodeParser extends SingletonFactory
             return null;
         }
 
-        $metacodeMarker = $document->createElement('woltlab-metacode-marker');
+        $metacodeMarker = $this->document->createElement('woltlab-metacode-marker');
         $metacodeMarker->setAttribute('data-source', \base64_encode($bbcodeTag));
         if ($isClosingTag) {
             if (empty($this->openTagIdentifiers)) {
