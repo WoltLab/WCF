@@ -2,7 +2,6 @@
 
 namespace wcf\system\html\input;
 
-use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
@@ -63,9 +62,6 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
         if ($convertFromBBCode) {
             $html = $this->convertToHtml($html);
         }
-
-        // transform bbcodes into metacode markers
-        $html = HtmlBBCodeParser::getInstance()->parse($html);
 
         // filter HTML
         if (!$this->skipFilter) {
