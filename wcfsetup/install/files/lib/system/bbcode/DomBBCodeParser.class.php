@@ -70,7 +70,9 @@ final class DomBBCodeParser extends SingletonFactory
             }
         }
 
-        // get text between opening and closing tags
+        // Get the text between the opening and closing tags
+        // and remove it from the DOM.
+        $nodes = [];
         foreach ($this->useTextNodes as ['uuid' => $uuid, 'metacodeMarker' => $node, 'attributeNo' => $attributeNo]) {
             $nextNode = $node->nextSibling;
             while ($nextNode !== null) {
@@ -102,6 +104,8 @@ final class DomBBCodeParser extends SingletonFactory
             $text = '';
             $currentNode = $node->nextSibling;
             while ($currentNode !== $nextNode) {
+                $nodes[] = $currentNode;
+
                 $text .= $currentNode->textContent;
                 $currentNode = $currentNode->nextSibling;
             }
@@ -113,6 +117,9 @@ final class DomBBCodeParser extends SingletonFactory
             }
             $attributes[$attributeNo] = $text;
             $node->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
+        }
+        foreach ($nodes as $node) {
+            $node->parentNode->removeChild($node);
         }
     }
 
