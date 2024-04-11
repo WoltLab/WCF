@@ -1966,7 +1966,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} die <strong>Lizenz für die jeweilige App bereits erworben</strong> haben, so reicht es aus, alle kommenden Updates zu installieren. <strong>Die Testversion wird in diesem Fall automatisch in die Vollversion umgewandelt.</strong>]]></item>
 		<item name="wcf.acp.package.search.input"><![CDATA[Suchbegriff eingeben]]></item>
 		<item name="wcf.acp.package.search.input.description"><![CDATA[Es wird nach Teilübereinstimmungen des Paketnamens, dessen Beschreibung sowie dem internen Bezeichner gesucht.]]></item>
-		<item name="wcf.acp.package.search.status.idle"><![CDATA[Geben Sie mehr als drei Buchstaben ein, um die Suche zu starten.]]></item>
+		<item name="wcf.acp.package.search.status.idle"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} mindestens drei Buchstaben ein, um die Suche zu starten.]]></item>
 		<item name="wcf.acp.package.search.status.loading"><![CDATA[Suche läuft …]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[Die Suche ergab keine Treffer.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Die Paketlisten werden aktualisiert …]]></item>
