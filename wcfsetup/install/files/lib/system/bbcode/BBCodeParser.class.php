@@ -234,7 +234,7 @@ class BBCodeParser extends SingletonFactory
      * @param array $tag
      * @return  bool
      */
-    protected function isValidTag(array $tag)
+    public function isValidTag(array $tag)
     {
         if (isset($tag['attributes']) && \count($tag['attributes']) > \count($this->bbcodes[$tag['name']]->getAttributes())) {
             return false;
@@ -555,7 +555,7 @@ class BBCodeParser extends SingletonFactory
      * @param string $string
      * @return  array       bbcode attributes
      */
-    protected function buildTagAttributes($string)
+    public function buildTagAttributes($string)
     {
         \preg_match_all("~(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)~", $string, $matches);
 

@@ -2,8 +2,6 @@
 
 namespace wcf\system\bbcode;
 
-use wcf\data\bbcode\attribute\BBCodeAttribute;
-use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 use wcf\util\DOMUtil;
@@ -170,7 +168,7 @@ final class DomBBCodeParser extends SingletonFactory
 
             // build attributes
             if (!empty($match[2])) {
-                $attributes = $this->buildTagAttributes($match[2]);
+                $attributes = BBCodeParser::getInstance()->buildTagAttributes($match[2]);
             }
             $isClosingTag = false;
         }
@@ -187,7 +185,7 @@ final class DomBBCodeParser extends SingletonFactory
         if ($isClosingTag) {
             $this->closingTags[] = $metacodeMarker;
         } else {
-            if (!$this->isValidTag($bbcode, $attributes)) {
+            if (!HtmlBBCodeParser::getInstance()->isValidTag(['name' => $name, 'attributes' => $attributes])) {
                 return null;
             }
 
@@ -229,115 +227,6 @@ final class DomBBCodeParser extends SingletonFactory
         }
 
         return $metacodeMarker;
-    }
-
-    /**
-     * @see BBCodeParser::buildTagAttributes()
-     */
-    private function buildTagAttributes(string $string): array
-    {
-        \preg_match_all("~(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)~", $string, $matches);
-
-        // remove quotes
-        for ($i = 0, $j = \count($matches[1]); $i < $j; $i++) {
-            if (\mb_substr($matches[1][$i], 0, 1) == "'" && \mb_substr($matches[1][$i], -1) == "'") {
-                $matches[1][$i] = \str_replace("\\'", "'", $matches[1][$i]);
-                $matches[1][$i] = \str_replace("\\\\", "\\", $matches[1][$i]);
-
-                $matches[1][$i] = \mb_substr($matches[1][$i], 1, -1);
-            }
-        }
-
-        return $matches[1];
-    }
-
-    /**
-     * @see BBCodeParser::isValidTag()
-     */
-    private function isValidTag(BBCode $bbcode, array $attributes): bool
-    {
-        if (\count($attributes) > \count($bbcode->getAttributes())) {
-            return false;
-        }
-
-        // right trim any attributes that are truly empty (= zero-length string) and are defined to be optional
-        $bbcodeAttributes = $bbcode->getAttributes();
-        // reverse sort the bbcode attributes to start with the last attribute
-        \usort($bbcodeAttributes, static function (BBCodeAttribute $a, BBCodeAttribute $b) {
-            if ($a->attributeNo == $b->attributeNo) {
-                return 0;
-            }
-
-            return ($a->attributeNo < $b->attributeNo) ? 1 : -1;
-        });
-        foreach ($bbcodeAttributes as $attribute) {
-            if ($attribute->required) {
-                break;
-            }
-
-            $i = $attribute->attributeNo;
-            if (isset($tagAttributes[$i]) && $tagAttributes[$i] === '' && !isset($tagAttributes[$i + 1])) {
-                unset($tagAttributes[$i]);
-            } else {
-                break;
-            }
-        }
-
-        foreach ($bbcode->getAttributes() as $attribute) {
-            if (!$this->isValidTagAttribute($attributes, $attribute)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @see HtmlBBCodeParser::isValidTagAttribute()
-     */
-    protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute): bool
-    {
-        // work-around for the broken `[wsm]` conversion in earlier versions
-        static $targetAttribute;
-        if ($targetAttribute === null) {
-            $bbcodes = BBCodeHandler::getInstance()->getBBCodes();
-            foreach ($bbcodes as $bbcode) {
-                if ($bbcode->bbcodeTag === 'wsm') {
-                    $targetAttribute = false;
-                    foreach ($bbcode->getAttributes() as $attribute) {
-                        if ($attribute->attributeNo == 1) {
-                            $targetAttribute = $attribute;
-                        }
-                    }
-
-                    break;
-                }
-            }
-        }
-        if ($targetAttribute && $definedTagAttribute === $targetAttribute) {
-            if (isset($tagAttributes[1]) && $tagAttributes[1] === '') {
-                // allow the 2nd attribute of `[wsm]` to be empty for compatibility reasons
-                return true;
-            }
-        }
-
-        if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
-            // validate attribute
-            if (
-                !\preg_match(
-                    '~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i',
-                    $tagAttributes[$definedTagAttribute->attributeNo]
-                )
-            ) {
-                return false;
-            }
-        }
-
-        if ($definedTagAttribute->required && !$definedTagAttribute->useText && !isset($tagAttributes[$definedTagAttribute->attributeNo])) {
-            return false;
-        }
-
-        return true;
     }
 
     private function insertBBCode(\DOMElement $node): void
