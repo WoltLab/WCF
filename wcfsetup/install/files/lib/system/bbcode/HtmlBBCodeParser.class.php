@@ -378,40 +378,6 @@ class HtmlBBCodeParser extends BBCodeParser
     }
 
     /**
-     * Returns the list of bbcodes that represent block elements.
-     *
-     * @return  string[]    list of bbcode block elements
-     */
-    public function getBlockBBCodes()
-    {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isBlockElement) {
-                $bbcodes[] = $name;
-            }
-        }
-
-        return $bbcodes;
-    }
-
-    /**
-     * Returns the list of bbcodes that represent source code elements.
-     *
-     * @return  string[]    list of bbcode source code elements
-     */
-    public function getSourceBBCodes()
-    {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isSourceCode) {
-                $bbcodes[] = $name;
-            }
-        }
-
-        return $bbcodes;
-    }
-
-    /**
      * Compiles tag fragments into the custom HTML element.
      *
      * @param array $openingTag opening tag data

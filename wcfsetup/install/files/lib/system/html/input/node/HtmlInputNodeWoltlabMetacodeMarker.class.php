@@ -3,6 +3,7 @@
 namespace wcf\system\html\input\node;
 
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\event\EventHandler;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -48,8 +49,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      */
     public function __construct()
     {
-        $this->blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
-        $this->sourceElements = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+        $this->blockElements = BBCodeParser::getInstance()->getBlockBBCodes();
+        $this->sourceElements = BBCodeParser::getInstance()->getSourceBBCodes();
     }
 
     /**

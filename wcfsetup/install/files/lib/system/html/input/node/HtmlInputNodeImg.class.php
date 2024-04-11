@@ -5,7 +5,7 @@ namespace wcf\system\html\input\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -212,7 +212,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         // The media bbcode is a block element that may not be placed inside inline elements.
         $parent = $newElement;
         $blockLevelParent = null;
-        $blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
+        $blockElements = BBCodeParser::getInstance()->getBlockBBCodes();
         while ($parent = $parent->parentNode) {
             \assert($parent instanceof \DOMElement);
 

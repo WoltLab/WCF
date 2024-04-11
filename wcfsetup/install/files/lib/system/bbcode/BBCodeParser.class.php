@@ -592,4 +592,38 @@ class BBCodeParser extends SingletonFactory
 
         return $message;
     }
+
+    /**
+     * Returns the list of bbcodes that represent block elements.
+     *
+     * @return  string[]    list of bbcode block elements
+     */
+    public function getBlockBBCodes(): array
+    {
+        $bbcodes = [];
+        foreach ($this->bbcodes as $name => $bbcode) {
+            if ($bbcode->isBlockElement) {
+                $bbcodes[] = $name;
+            }
+        }
+
+        return $bbcodes;
+    }
+
+    /**
+     * Returns the list of bbcodes that represent source code elements.
+     *
+     * @return  string[]    list of bbcode source code elements
+     */
+    public function getSourceBBCodes(): array
+    {
+        $bbcodes = [];
+        foreach ($this->bbcodes as $name => $bbcode) {
+            if ($bbcode->isSourceCode) {
+                $bbcodes[] = $name;
+            }
+        }
+
+        return $bbcodes;
+    }
 }
