@@ -320,6 +320,8 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     protected function invokeNodeHandlers($classNamePattern, array $skipTags = [], ?callable $callback = null)
     {
+        static $handlerClassExists = [];
+
         $skipTags = \array_merge($skipTags, ['html', 'head', 'title', 'meta', 'body', 'link']);
 
         $tags = [];
@@ -343,7 +345,15 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                 return \ucfirst($matches[1]);
             }, $tagName);
             $className = $classNamePattern . \ucfirst($tagName);
-            if (\class_exists($className)) {
+
+            // The `\class_exists()` call has to go through the autoloader which
+            // can become quite expensive when dealing with a lot of tags and
+            // messages within one request.
+            if (!isset($handlerClassExists[$className])) {
+                $handlerClassExists[$className] = \class_exists($className);
+            }
+
+            if ($handlerClassExists[$className]) {
                 if ($callback === null) {
                     $this->invokeHtmlNode(new $className());
                 } else {
