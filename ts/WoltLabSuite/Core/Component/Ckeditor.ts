@@ -28,6 +28,7 @@ import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
 import { browser, touch } from "../Environment";
+import { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
