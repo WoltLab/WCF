@@ -59,7 +59,7 @@ final class DomBBCodeParser extends SingletonFactory
                 $this->insertBBCode($node);
                 continue;
             }
-            ['uuid' => $uuid] = \array_pop($this->openTagIdentifiers[$name]);
+            ['uuid' => $uuid] = \array_shift($this->openTagIdentifiers[$name]);
             $node->setAttribute('data-uuid', $uuid);
         }
 
