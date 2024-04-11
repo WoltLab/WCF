@@ -77,13 +77,15 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         // We're also injecting a bogus meta tag that magically enables DOMDocument
         // to handle UTF-8 properly. This avoids encoding non-ASCII characters as it
         // would conflict with already existing entities when reverting them.
-        @$this->document->loadHTML(
+        $useInternalErrors = \libxml_use_internal_errors(true);
+        $this->document->loadHTML(
             '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>'
         );
 
         // flush libxml's error buffer, after all we don't care for any errors caused
         // by the `loadHTML()` call above anyway
         \libxml_clear_errors();
+        \libxml_use_internal_errors($useInternalErrors);
 
         // fix the `<pre>` linebreaks again
         $pres = $this->document->getElementsByTagName('pre');
