@@ -34,6 +34,12 @@ final class DomBBCodeParser extends SingletonFactory
     private array $useTextNodes = [];
 
     /**
+     * tag names used to isolate bbcodes contained in source code elements
+     * @var string[]
+     */
+    public static array $codeTagNames = ['kbd', 'pre'];
+
+    /**
      * Parses bbcodes in the given DOM document.
      */
     public function parse(\DOMDocument $document): void
@@ -112,7 +118,7 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function convertBBCodeToMetacodeMarker(\DOMNode $node): void
     {
-        if (\in_array($node->nodeName, HtmlBBCodeParser::$codeTagNames)) {
+        if (\in_array($node->nodeName, DomBBCodeParser::$codeTagNames)) {
             // don't parse bbcode inside code tags
             return;
         }
