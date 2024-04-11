@@ -57,9 +57,10 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
             }
 
             if ($parser->getOutputType() == 'text/html') {
+                $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
+
                 if ($media->isImage) {
                     $thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
-                    $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
@@ -78,7 +79,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
-                        'float' => 'none',
+                        'float' => $float,
                         'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
                         'width' => 'auto',
                     ]);
