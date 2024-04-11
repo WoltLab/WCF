@@ -31,7 +31,7 @@ final class DomBBCodeParser extends SingletonFactory
 
     private \DOMDocument $document;
     /**
-     * @var array{uuid: string, metacodeMarker: \DOMElement, attributeNo: int}
+     * @var array{uuid: string, metacodeMarker: \DOMElement, attributeNo: int}[]
      */
     private array $useTextNodes = [];
 
@@ -40,7 +40,7 @@ final class DomBBCodeParser extends SingletonFactory
      */
     public function parse(\DOMDocument $document): void
     {
-        $this->openTagIdentifiers = $this->useTextNodes = [];
+        $this->openTagIdentifiers = $this->closingTags = $this->useTextNodes = [];
         $this->document = $document;
         foreach ($document->getElementsByTagName('body')->item(0)->childNodes as $node) {
             $this->convertBBCodeToMetacodeMarker($node);
@@ -59,8 +59,6 @@ final class DomBBCodeParser extends SingletonFactory
 
         // get text between opening and closing tags
         foreach ($this->useTextNodes as ['uuid' => $uuid, 'metacodeMarker' => $node, 'attributeNo' => $attributeNo]) {
-            \assert($node instanceof \DOMElement);
-
             $nextNode = $node->nextSibling;
             while ($nextNode !== null) {
                 if ($nextNode->nodeType === \XML_TEXT_NODE) {
