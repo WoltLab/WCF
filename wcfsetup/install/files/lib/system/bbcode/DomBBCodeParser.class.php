@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 final class DomBBCodeParser extends SingletonFactory
 {
     /**
-     * @var string[][]
+     * @var array{uuid: string, metacodeMarker: \DOMElement}[]
      */
     private array $openTagIdentifiers = [];
     /**
@@ -52,9 +52,18 @@ final class DomBBCodeParser extends SingletonFactory
             $node->removeAttribute('data-name');
 
             if (!isset($this->openTagIdentifiers[$name]) || empty($this->openTagIdentifiers[$name])) {
+                $this->insertBBCode($node);
                 continue;
             }
-            $node->setAttribute('data-uuid', \array_pop($this->openTagIdentifiers[$name]));
+            ['uuid' => $uuid] = \array_pop($this->openTagIdentifiers[$name]);
+            $node->setAttribute('data-uuid', $uuid);
+        }
+
+        // Insert raw BB-code text for each opening tag without a corresponding closing tag.
+        foreach ($this->openTagIdentifiers as $entries) {
+            foreach ($entries as ['metacodeMarker' => $node]) {
+                $this->insertBBCode($node);
+            }
         }
 
         // get text between opening and closing tags
@@ -186,13 +195,16 @@ final class DomBBCodeParser extends SingletonFactory
                 $this->openTagIdentifiers[$name] = [];
             }
             $uuid = StringUtil::getUUID();
-            $this->openTagIdentifiers[$name][] = $uuid;
+            $this->openTagIdentifiers[$name][] = [
+                'uuid' => $uuid,
+                'metacodeMarker' => $metacodeMarker
+            ];
 
             $metacodeMarker->setAttribute('data-uuid', $uuid);
 
             foreach ($bbcode->getAttributes() as $attribute) {
                 if ($attribute->useText && !isset($attributes[$attribute->attributeNo])) {
-                    $metacodeMarker->setAttribute('data-use-text', 'true');
+                    $metacodeMarker->setAttribute('data-use-text', $attribute->attributeNo);
                     $this->useTextNodes[] = [
                         'uuid' => $uuid,
                         'metacodeMarker' => $metacodeMarker,
@@ -326,5 +338,14 @@ final class DomBBCodeParser extends SingletonFactory
         }
 
         return true;
+    }
+
+    private function insertBBCode(\DOMElement $node): void
+    {
+        DOMUtil::insertBefore(
+            $this->document->createTextNode(\base64_decode($node->getAttribute('data-source'))),
+            $node
+        );
+        $node->parentNode->removeChild($node);
     }
 }
