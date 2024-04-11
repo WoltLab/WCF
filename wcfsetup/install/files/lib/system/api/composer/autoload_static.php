@@ -18,6 +18,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'de95e0ac670b27c84ef8c5ac41fc1b34' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.php',
         'b6c2870932b0250c10334a86dcb33c7f' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php',
         'd02cf21124526632320d6f20b1bbf905' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '5897ea0ac4cccf14d323035e65887801' => __DIR__ . '/..' . '/symfony/polyfill-php82/bootstrap.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
     );
@@ -63,6 +64,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+        ),
+        'F' => 
+        array (
+            'FastRoute\\' => 10,
         ),
         'C' => 
         array (
@@ -165,6 +170,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
         'CuyZ\\Valinor\\' => 
         array (
@@ -555,6 +564,35 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'DateMalformedStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php',
         'DateObjectError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
         'DateRangeError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
+        'FastRoute\\BadRouteException' => __DIR__ . '/..' . '/nikic/fast-route/src/BadRouteException.php',
+        'FastRoute\\Cache' => __DIR__ . '/..' . '/nikic/fast-route/src/Cache.php',
+        'FastRoute\\Cache\\FileCache' => __DIR__ . '/..' . '/nikic/fast-route/src/Cache/FileCache.php',
+        'FastRoute\\Cache\\Psr16Cache' => __DIR__ . '/..' . '/nikic/fast-route/src/Cache/Psr16Cache.php',
+        'FastRoute\\ConfigureRoutes' => __DIR__ . '/..' . '/nikic/fast-route/src/ConfigureRoutes.php',
+        'FastRoute\\DataGenerator' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator.php',
+        'FastRoute\\DataGenerator\\CharCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/CharCountBased.php',
+        'FastRoute\\DataGenerator\\GroupCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/GroupCountBased.php',
+        'FastRoute\\DataGenerator\\GroupPosBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/GroupPosBased.php',
+        'FastRoute\\DataGenerator\\MarkBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/MarkBased.php',
+        'FastRoute\\DataGenerator\\RegexBasedAbstract' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/RegexBasedAbstract.php',
+        'FastRoute\\Dispatcher' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher.php',
+        'FastRoute\\Dispatcher\\CharCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/CharCountBased.php',
+        'FastRoute\\Dispatcher\\GroupCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/GroupCountBased.php',
+        'FastRoute\\Dispatcher\\GroupPosBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/GroupPosBased.php',
+        'FastRoute\\Dispatcher\\MarkBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/MarkBased.php',
+        'FastRoute\\Dispatcher\\RegexBasedAbstract' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/RegexBasedAbstract.php',
+        'FastRoute\\Dispatcher\\Result\\Matched' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/Result/Matched.php',
+        'FastRoute\\Dispatcher\\Result\\MethodNotAllowed' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/Result/MethodNotAllowed.php',
+        'FastRoute\\Dispatcher\\Result\\NotMatched' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/Result/NotMatched.php',
+        'FastRoute\\Exception' => __DIR__ . '/..' . '/nikic/fast-route/src/Exception.php',
+        'FastRoute\\FastRoute' => __DIR__ . '/..' . '/nikic/fast-route/src/FastRoute.php',
+        'FastRoute\\GenerateUri' => __DIR__ . '/..' . '/nikic/fast-route/src/GenerateUri.php',
+        'FastRoute\\GenerateUri\\FromProcessedConfiguration' => __DIR__ . '/..' . '/nikic/fast-route/src/GenerateUri/FromProcessedConfiguration.php',
+        'FastRoute\\GenerateUri\\UriCouldNotBeGenerated' => __DIR__ . '/..' . '/nikic/fast-route/src/GenerateUri/UriCouldNotBeGenerated.php',
+        'FastRoute\\Route' => __DIR__ . '/..' . '/nikic/fast-route/src/Route.php',
+        'FastRoute\\RouteCollector' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteCollector.php',
+        'FastRoute\\RouteParser' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser.php',
+        'FastRoute\\RouteParser\\Std' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser/Std.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
         'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',

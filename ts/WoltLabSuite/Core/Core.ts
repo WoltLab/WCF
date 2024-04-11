@@ -143,7 +143,7 @@ export function inherit(constructor: new () => any, superConstructor: new () => 
 /**
  * Returns true if `obj` is an object literal.
  */
-export function isPlainObject(obj: unknown): boolean {
+export function isPlainObject(obj: unknown): obj is Record<string, unknown> {
   if (typeof obj !== "object" || obj === null) {
     return false;
   }

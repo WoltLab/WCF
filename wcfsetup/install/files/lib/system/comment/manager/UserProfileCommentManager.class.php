@@ -6,6 +6,7 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\ignore\UserIgnore;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
@@ -20,7 +21,9 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserProfileCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class UserProfileCommentManager extends AbstractCommentManager implements
+    IViewableLikeProvider,
+    ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -88,6 +91,28 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
         }
 
         return true;
+    }
+
+    #[\Override]
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
+    {
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
+        if ($userProfile === null) {
+            return false;
+        }
+
+        /** @see UserProfile::isProtected() */
+        if (
+            !(
+                $user->getPermission('admin.general.canViewPrivateUserOptions')
+                || $userProfile->isAccessible('canViewProfile', $user->userID)
+                || $userProfile->userID === $user->userID
+            )
+        ) {
+            return false;
+        }
+
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
     /**

@@ -1,6 +1,4 @@
-{if !REGISTER_DISABLED}
-	{capture assign='contentDescription'}{lang}wcf.user.register.existingUser{/lang}{/capture}
-{/if}
+{capture assign='contentDescription'}{lang}wcf.user.register.existingUser{/lang}{/capture}
 
 {include file='authFlowHeader'}
 

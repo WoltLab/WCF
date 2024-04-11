@@ -2,6 +2,7 @@
 
 namespace wcf\system\box;
 
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +25,10 @@ class RegisterButtonBoxController extends AbstractBoxController
      */
     protected function loadContent()
     {
-        if (!WCF::getUser()->userID && !REGISTER_DISABLED) {
+        if (
+            !WCF::getUser()->userID
+            && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canRegister
+        ) {
             $this->content = WCF::getTPL()->fetch('boxRegisterButton', 'wcf', ['box' => $this->box], true);
         }
     }

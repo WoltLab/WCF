@@ -1,4 +1,4 @@
-{if !REGISTER_DISABLED}
+{if $__userAuthConfig->canRegister}
 	{capture assign='contentDescription'}{lang}wcf.user.login.noAccount{/lang}{/capture}
 {/if}
 
@@ -48,7 +48,9 @@
 					{/if}
 				</small>
 			{/if}
-			<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
+			{if $__userAuthConfig->canChangePassword}
+				<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
+			{/if}
 		</dd>
 	</dl>
 	

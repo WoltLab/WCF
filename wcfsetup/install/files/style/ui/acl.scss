@@ -2,106 +2,120 @@
 .aclList {
 	max-height: 400px;
 	overflow: auto;
+}
 
-	&:not(:empty) {
-		border-bottom: 1px solid var(--wcfContentBorder);
-		border-top: 1px solid var(--wcfContentBorder);
-	}
+.aclList:not(:empty) {
+	border-bottom: 1px solid var(--wcfContentBorder);
+	border-top: 1px solid var(--wcfContentBorder);
+}
 
-	> li {
-		align-items: center;
-		display: flex;
-		padding: 10px 0;
+.aclListItem {
+	align-items: center;
+	display: flex;
+	padding: 10px 0;
+}
 
-		&:not(.active) {
-			cursor: pointer;
-		}
+.aclListItem:not(.active) {
+	cursor: pointer;
+}
 
-		&.active {
-			background-color: var(--wcfTabularBoxBackgroundActive);
-		}
+.aclListItem.active {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
 
-		> .icon {
-			flex: 0 0 36px;
-			padding: 0 5px;
-		}
+.aclItemDeleteButton {
+	flex: 0 0 36px;
+	padding: 0 5px;
+}
 
-		> .aclLabel {
-			flex: 1 1 auto;
-			margin: 0 5px;
-		}
+.aclLabel {
+	flex: 1 1 auto;
+	margin: 0 5px;
+}
 
-		&:first-child {
-			border-top: none;
-		}
+.aclListItem:first-child {
+	border-top: none;
+}
 
-		&:last-child {
-			border-bottom: none;
-		}
-	}
+.aclListItem:last-child {
+	border-bottom: none;
+}
 
-	/* search input */
-	& + .dropdown {
-		display: block;
-		margin-top: 20px;
-	}
+/* search input */
+.aclSearchInput {
+	margin-top: 20px !important;
 }
 
 /* permissions per object */
 .aclPermissionList {
 	margin-top: 40px;
 	position: relative;
+	display: grid;
+	column-gap: 1px;
+	grid-template-columns: 10px auto repeat(3, 60px);
+	grid-template-rows: auto;
+}
 
-	&::after,
-	&::before {
-		min-width: 60px;
-		position: absolute;
-		text-align: center;
-		top: -5px;
-		transform: translateY(-100%);
+.aclPermissionListItem:not(:last-child):not(:first-child) {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+}
 
-		@include wcfFontSmall;
-	}
+.aclOption {
+	grid-column: 1 / span 5;
+	transition: background-color 0.2s;
+	padding: 10px 0;
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-template-rows: subgrid;
+}
 
-	&::after {
-		content: attr(data-deny);
-		right: 0;
-	}
+.aclOptionTitle {
+	grid-column: span 2;
+	grid-column-start: 2;
+}
 
-	&::before {
-		content: attr(data-grant);
-		right: 80px;
-	}
+.aclOptionInputLabel {
+	text-align: center;
+	cursor: pointer;
+}
 
-	> li {
-		&.aclCategory {
-			padding: 20px 10px 10px 0;
+.aclOption:hover {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
 
-			@include wcfFontHeadline;
+.aclCategory {
+	grid-column: 1 / span 5;
+	padding: 20px 10px 10px 0;
 
-			&:hover {
-				background-color: transparent;
-			}
-		}
+	@include wcfFontHeadline;
+}
 
-		&:not(.aclCategory) {
-			display: flex;
-			padding: 10px 0;
-		}
+.aclHeader {
+	grid-column: 1 / span 5;
+	position: sticky;
+	border-bottom: 1px solid var(--wcfContentBorder);
+	top: 50px;
+	background-color: var(--wcfContentContainerBackground);
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-template-rows: subgrid;
+}
 
-		> span {
-			flex: 1 1 auto;
-			padding-left: 10px;
-		}
+.aclHeaderSpan {
+	padding: 10px 0;
+	text-align: center;
 
-		> label {
-			cursor: pointer;
-			flex: 0 0 auto;
-			padding: 0 20px;
+	@include wcfFontSmall;
+}
 
-			& + label {
-				margin-left: 20px;
-			}
-		}
-	}
+.aclHeaderInherited {
+	grid-column-start: 3;
+}
+
+.aclHeaderGrant {
+	grid-column-start: 4;
+}
+
+.aclHeaderDeny {
+	grid-column-start: 5;
 }

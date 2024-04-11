@@ -12,6 +12,7 @@ use wcf\system\email\UserMailbox;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\WCF;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -216,7 +217,11 @@ class AccountManagementForm extends AbstractForm
         }
 
         // user name
-        if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
+        if (
+            WCF::getSession()->getPermission('user.profile.canRename')
+            && $this->username != WCF::getUser()->username
+            && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeUsername
+        ) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
                 if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > TIME_NOW) {
                     throw new UserInputException('username', 'alreadyRenamed');
@@ -236,7 +241,10 @@ class AccountManagementForm extends AbstractForm
         }
 
         // password
-        if (!WCF::getUser()->authData) {
+        if (
+            !WCF::getUser()->authData
+            && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
+        ) {
             if (!empty($this->newPassword)) {
                 if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
                     throw new UserInputException('newPassword', 'notSecure');
@@ -249,6 +257,7 @@ class AccountManagementForm extends AbstractForm
             WCF::getSession()->getPermission('user.profile.canChangeEmail')
             && $this->email != WCF::getUser()->email
             && $this->email != WCF::getUser()->newEmail
+            && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeEmail
         ) {
             if (empty($this->email)) {
                 throw new UserInputException('email');

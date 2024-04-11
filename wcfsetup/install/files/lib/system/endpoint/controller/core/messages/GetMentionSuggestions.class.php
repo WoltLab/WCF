@@ -1,39 +1,38 @@
 <?php
 
-namespace wcf\action;
+namespace wcf\system\endpoint\controller\core\messages;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\http\Helper;
+use wcf\system\endpoint\GetRequest;
+use wcf\system\endpoint\IController;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
- * Suggests users that may be mentioned.
+ * Retrieves the list of users and groups that can be mentioned.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2023 WoltLab GmbH
+ * @author Alexander Ebert
+ * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   6.0
+ * @since 6.1
  */
-final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
+#[GetRequest('/core/messages/mentionsuggestions')]
+final class GetMentionSuggestions implements IController
 {
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    #[\Override]
+    public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $parameters = Helper::mapQueryParameters(
-            $request->getQueryParams(),
-            <<<'EOT'
-                    array {
-                        query: non-empty-string
-                    }
-                    EOT,
-        );
+        $parameters = Helper::mapApiParameters($request, GetMentionSuggestionsParameters::class);
+        if (\mb_strlen($parameters->query) < 3) {
+            throw new UserInputException('query', 'tooShort');
+        }
 
-        $query = \mb_strtolower($parameters['query']);
+        $query = \mb_strtolower($parameters->query);
         $matches = [];
 
         foreach ($this->getGroups($query) as $userGroup) {
@@ -99,5 +98,15 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
         );
 
         return $userGroups;
+    }
+}
+
+/** @internal */
+final class GetMentionSuggestionsParameters
+{
+    public function __construct(
+        /** @var non-empty-string */
+        public readonly string $query,
+    ) {
     }
 }

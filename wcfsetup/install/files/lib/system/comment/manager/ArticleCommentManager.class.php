@@ -6,6 +6,7 @@ use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
@@ -20,7 +21,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ArticleCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class ArticleCommentManager extends AbstractCommentManager implements IViewableLikeProvider, ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -69,6 +70,20 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         }
 
         return true;
+    }
+
+    #[\Override]
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
+    {
+        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
+        if (!$articleContent->articleContentID) {
+            return false;
+        }
+        if (!$articleContent->getArticle()->canRead($user)) {
+            return false;
+        }
+
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
     /**

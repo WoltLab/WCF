@@ -146,6 +146,11 @@
 		<bbcode name="media">
 			<classname>wcf\system\bbcode\MediaBBCode</classname>
 			<sourcecode>1</sourcecode>
+			<attributes>
+				<attribute name="0">
+					<validationpattern><![CDATA[^(left|right|center|none)$]]></validationpattern>
+				</attribute>
+			</attributes>
 		</bbcode>
 		<bbcode name="spoiler">
 			<isBlockElement>1</isBlockElement>

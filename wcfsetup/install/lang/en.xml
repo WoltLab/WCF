@@ -10,8 +10,9 @@
 		<item name="wcf.acl.access.invertPermissions"><![CDATA[Invert Permissions]]></item>
 		<item name="wcf.acl.access.invertPermissions.description"><![CDATA[If selected, all users except selected users and user groups are allowed to see the object by default.]]></item>
 		<item name="wcf.acl.allowAll"><![CDATA[Content Can be Accessed by Everyone]]></item>
-		<item name="wcf.acl.option.deny"><![CDATA[Deny]]></item>
-		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
+		<item name="wcf.acl.option.deny"><![CDATA[No]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Yes]]></item>
+		<item name="wcf.acl.option.inherited"><![CDATA[Default]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[User and User Group Permissions]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[User Permissions]]></item>
 		<item name="wcf.acl.search.description"><![CDATA[Enter username or user group …]]></item>
@@ -3031,13 +3032,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Email All Users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
-		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.<br>
-You can define the default sender in “Configuration » Options » General » Emails”. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
-		<item name="wcf.acp.user.sendMail.fromName"><![CDATA[Sender’s Name]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email User Group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
-		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Email Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Email Message]]></item>
@@ -3750,6 +3746,8 @@ Attachments:
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Current version{else}Version{/if} as of {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
 		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
+		<item name="wcf.edit.mode.html"><![CDATA[HTML]]></item>
+		<item name="wcf.edit.mode.raw"><![CDATA[Raw]]></item>
 	</category>
 	<category name="wcf.editor">
 		<item name="wcf.editor.alignment.center"><![CDATA[Align center]]></item>
@@ -4341,6 +4339,10 @@ Attachments:
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[Change “Justified” status]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[Do you really want to change the “Justified” status of this report?]]></item>
+		<item name="wcf.moderation.report.notification.title"><![CDATA[New report]]></item>
+		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} has reported <strong>{$title}</strong>({$typeName}).]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}A guest{/if} has reported {$title} ({$typeName}) [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}A guest{/if} has reported <a href="{$objectLink}">{$title}</a> ({$typeName}):</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>
@@ -5379,6 +5381,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Notify me of new user registrations]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[New report]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written in moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Pages]]></item>

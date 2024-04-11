@@ -198,6 +198,10 @@ class WCF
 
         $this->runBootstrappers();
 
+        self::getTPL()->assign([
+            '__userAuthConfig' => \wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory::getInstance()->getConfigration(),
+        ]);
+
         EventHandler::getInstance()->fireAction($this, 'initialized');
     }
 

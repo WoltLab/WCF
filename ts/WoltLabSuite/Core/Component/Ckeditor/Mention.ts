@@ -9,23 +9,9 @@
  */
 
 import type { CKEditor5 } from "@woltlab/editor";
-import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 import { listenToCkeditor } from "./Event";
-
-type SearchResultItem =
-  | {
-      avatarTag: string;
-      username: string;
-      userID: number;
-      type: "user";
-    }
-  | {
-      name: string;
-      groupID: string;
-      type: "group";
-    };
-type ResultGetSearchResultList = SearchResultItem[];
+import { mentionSuggestions } from "WoltLabSuite/Core/Api/Messages/MentionSuggestions";
 
 type Mention = {
   id: string;
@@ -39,17 +25,7 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
     return [];
   }
 
-  // TODO: Provide the URL as a parameter.
-  const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
-  url.searchParams.set("query", query);
-
-  const result = (await prepareRequest(url.toString())
-    .get()
-    .allowCaching()
-    .disableLoadingIndicator()
-    .fetchAsJson()) as ResultGetSearchResultList;
-
-  return result.map((item) => {
+  return (await mentionSuggestions(query)).unwrap().map((item) => {
     if (item.type === "user") {
       return {
         id: `@${item.username}`,

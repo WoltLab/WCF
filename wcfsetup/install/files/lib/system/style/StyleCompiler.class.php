@@ -12,6 +12,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\style\command\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
@@ -321,6 +322,9 @@ final class StyleCompiler extends SingletonFactory
         );
 
         $this->writeCss($this->getFilenameForStyle($style), $css, $preloadManifest);
+
+        $command = new CreateManifest($style);
+        $command();
     }
 
     /**

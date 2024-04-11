@@ -6,62 +6,27 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", "../../Confirmation", "../../../Language", "../../../Core"], function (require, exports, tslib_1, Ajax, UiNotification, UiConfirmation, Language, Core) {
+define(["require", "exports", "tslib", "../../Notification", "../../Confirmation", "../../../Language", "WoltLabSuite/Core/Api/Sessions/DeleteSession"], function (require, exports, tslib_1, UiNotification, UiConfirmation, Language, DeleteSession_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.UiUserSessionDelete = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
+    exports.setup = void 0;
     UiNotification = tslib_1.__importStar(UiNotification);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Language = tslib_1.__importStar(Language);
-    Core = tslib_1.__importStar(Core);
-    class UiUserSessionDelete {
-        knownElements = new Map();
-        /**
-         * Initializes the session delete buttons.
-         */
-        constructor() {
-            document.querySelectorAll(".sessionDeleteButton").forEach((element) => {
-                if (!element.dataset.sessionId) {
-                    throw new Error(`No sessionId for session delete button given.`);
-                }
-                if (!this.knownElements.has(element.dataset.sessionId)) {
-                    element.addEventListener("click", (ev) => this.delete(element, ev));
-                    this.knownElements.set(element.dataset.sessionId, element);
-                }
-            });
-        }
-        /**
-         * Opens the user trophy list for a specific user.
-         */
-        delete(element, event) {
-            event.preventDefault();
-            UiConfirmation.show({
-                message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
-                confirm: (_parameters) => {
-                    Ajax.api(this, {
-                        t: Core.getXsrfToken(),
-                        sessionID: element.dataset.sessionId,
-                    });
-                },
-            });
-        }
-        _ajaxSuccess(data) {
-            const element = this.knownElements.get(data.sessionID);
-            if (element !== undefined) {
-                const sessionItem = element.closest("li");
-                if (sessionItem !== null) {
-                    sessionItem.remove();
-                }
-            }
-            UiNotification.show();
-        }
-        _ajaxSetup() {
-            return {
-                url: "index.php?delete-session/",
-            };
-        }
+    function onClick(button) {
+        UiConfirmation.show({
+            message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
+            confirm: async (_parameters) => {
+                (await (0, DeleteSession_1.deleteSession)(button.dataset.sessionId)).unwrap();
+                button.closest("li")?.remove();
+                UiNotification.show();
+            },
+        });
     }
-    exports.UiUserSessionDelete = UiUserSessionDelete;
-    exports.default = UiUserSessionDelete;
+    function setup() {
+        document.querySelectorAll(".sessionDeleteButton").forEach((element) => {
+            element.addEventListener("click", () => onClick(element));
+        });
+    }
+    exports.setup = setup;
 });
