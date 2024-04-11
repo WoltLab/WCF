@@ -600,10 +600,15 @@ class BBCodeParser extends SingletonFactory
      */
     public function getBlockBBCodes(): array
     {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isBlockElement) {
-                $bbcodes[] = $name;
+        static $bbcodes;
+
+        if ($bbcodes === null) {
+            $bbcodes = [];
+
+            foreach ($this->bbcodes as $name => $bbcode) {
+                if ($bbcode->isBlockElement) {
+                    $bbcodes[] = $name;
+                }
             }
         }
 
@@ -617,10 +622,15 @@ class BBCodeParser extends SingletonFactory
      */
     public function getSourceBBCodes(): array
     {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isSourceCode) {
-                $bbcodes[] = $name;
+        static $bbcodes;
+
+        if ($bbcodes === null) {
+            $bbcodes = [];
+
+            foreach ($this->bbcodes as $name => $bbcode) {
+                if ($bbcode->isSourceCode) {
+                    $bbcodes[] = $name;
+                }
             }
         }
 
