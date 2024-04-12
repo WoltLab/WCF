@@ -1,6 +1,6 @@
 {hascontent}
 	<div class="authOtherOptionButtons">
-		<div class="thirdPartySsoButtons__separator">
+		<div class="authOtherOptionButtons__separator">
 			{lang}wcf.user.login.thirdPartySeparator{/lang}
 		</div>
 
