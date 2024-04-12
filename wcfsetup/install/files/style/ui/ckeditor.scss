@@ -92,6 +92,12 @@
 		/* The editor does not support a separate text color on hover. */
 		color: var(--wcfEditorButtonText);
 	}
+
+	.ck-button:not(.ck-disabled):active,
+	.ck-splitbutton:active .ck-button:not(.ck-disabled):not(:active) {
+		/* The editor does not support a separate text color on hover. */
+		color: var(--wcfEditorButtonText);
+	}
 }
 
 @media (hover: hover) {
@@ -627,15 +633,15 @@ html.iOS {
 }
 
 .ck-link-form {
-  .ck-labeled-field-view {
-    order: 0;
-  }
+	.ck-labeled-field-view {
+		order: 0;
+	}
 
-  .ck-button-cancel {
-    order: 1;
-  }
+	.ck-button-cancel {
+		order: 1;
+	}
 
-  .ck-button-save {
-    order: 2;
-  }
+	.ck-button-save {
+		order: 2;
+	}
 }
