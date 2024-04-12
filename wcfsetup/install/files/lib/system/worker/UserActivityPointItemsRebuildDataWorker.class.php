@@ -52,8 +52,7 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
     #[\Override]
     protected function initObjectList()
     {
-        $className = $this->objectListClassName;
-        $this->objectList = new $className();
+        $this->objectList = new $this->objectListClassName();
         $this->objectList->sqlOrderBy = 'user_table.userID';
     }
 
