@@ -4,7 +4,6 @@ namespace wcf\system\bbcode;
 
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
-use wcf\util\DOMUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -142,6 +141,7 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function parseNode(\DOMText $node): void
     {
+        /** @see BBCodeParser::buildTagArray() */
         // build tag pattern
         $validTags = \implode('|', \array_keys(BBCodeCache::getInstance()->getBBCodes()));
         $pattern = '~\[(?:/(?:' . $validTags . ')|(?:' . $validTags . ')
@@ -161,8 +161,7 @@ final class DomBBCodeParser extends SingletonFactory
             $bbcodeNode = $node->splitText(\mb_strpos($node->textContent, $bbcodeTag));
             $node = $bbcodeNode->splitText(\mb_strlen($bbcodeTag));
 
-            DOMUtil::insertBefore($metaCodeMarker, $bbcodeNode);
-            $bbcodeNode->parentNode->removeChild($bbcodeNode);
+            $bbcodeNode->parentNode->replaceChild($metaCodeMarker, $bbcodeNode);
         }
     }
 
@@ -244,10 +243,9 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function insertBBCode(\DOMElement $node): void
     {
-        DOMUtil::insertBefore(
+        $node->parentNode->replaceChild(
             $this->document->createTextNode(\base64_decode($node->getAttribute('data-source'))),
             $node
         );
-        $node->parentNode->removeChild($node);
     }
 }
