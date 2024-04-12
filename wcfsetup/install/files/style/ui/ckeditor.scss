@@ -363,6 +363,7 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 .ck.ck-sticky-panel__content,
 .ck.ck-balloon-panel {
 	--ck-z-modal: 90;
+	--ck-z-panel: 91;
 }
 
 html[data-color-scheme="dark"] {
