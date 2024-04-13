@@ -9,7 +9,6 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\http\Helper;
 use wcf\system\attachment\AttachmentHandler;
-use wcf\system\exception\NotImplementedException;
 
 /**
  * @author Alexander Ebert
@@ -30,7 +29,7 @@ final class AttachmentFileProcessor implements IFileProcessor
     {
         $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
         if ($attachmentHandler === null) {
-            return FileProcessorPreflightResult::InvalidContext;
+            return [];
         }
 
         return $attachmentHandler->getAllowedExtensions();
@@ -41,7 +40,10 @@ final class AttachmentFileProcessor implements IFileProcessor
     {
         $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
         if ($attachmentHandler === null) {
-            return FileProcessorPreflightResult::InvalidContext;
+            // This can only happen whent he associated object has vanished
+            // while the file was being processed. There is nothing we can
+            // meaningfully do here.
+            return;
         }
 
         AttachmentEditor::fastCreate([
@@ -203,7 +205,7 @@ final class AttachmentFileProcessorContext
         /** @var non-empty-string */
         public readonly string $objectType,
 
-        /** @var positive-int */
+        /** @var non-negative-int */
         public readonly int $objectID,
 
         /** @var non-negative-int */
