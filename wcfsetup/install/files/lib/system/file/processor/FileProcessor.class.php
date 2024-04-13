@@ -103,14 +103,11 @@ final class FileProcessor extends SingletonFactory
                 $imageAdapter->loadFile($file->getPath() . $file->getSourceFilename());
             }
 
-            // TODO: Thumbnails are currently created using the exact same file
-            //       type as the source file. It may make more sense to always
-            //       use an efficient format, like WebP, exclusively.
-            assert($imageAdapter instanceof ImageAdapter);
+            \assert($imageAdapter instanceof ImageAdapter);
             $image = $imageAdapter->createThumbnail($format->width, $format->height, $format->retainDimensions);
 
-            $filename = FileUtil::getTemporaryFilename();
-            $imageAdapter->writeImage($image, $filename);
+            $filename = FileUtil::getTemporaryFilename(extension: 'webp');
+            $imageAdapter->saveImageAs($image, $filename, 'webp', 80);
 
             $fileThumbnail = FileThumbnailEditor::createFromTemporaryFile($file, $format, $filename);
             $processor->adoptThumbnail($fileThumbnail);
