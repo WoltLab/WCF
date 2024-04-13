@@ -18,6 +18,8 @@ use wcf\system\request\LinkHandler;
  * @property-read string $identifier
  * @property-read string $fileHash
  * @property-read string $fileExtension
+ * @property-read int $width
+ * @property-read int $height
  */
 class FileThumbnail extends DatabaseObject implements ILinkableObject
 {
@@ -44,6 +46,11 @@ class FileThumbnail extends DatabaseObject implements ILinkableObject
             $this->getRelativePath(),
             $this->getSourceFilename(),
         );
+    }
+
+    public function getMimeType(): string
+    {
+        return 'image/webp';
     }
 
     private function getRelativePath(): string

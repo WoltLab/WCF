@@ -606,6 +606,8 @@ CREATE TABLE wcf1_file (
 	fileHash CHAR(64) NOT NULL,
 	typeName VARCHAR(255) NOT NULL,
 	mimeType VARCHAR(255) NOT NULL,
+	width INT,
+	height INT
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;
@@ -626,7 +628,9 @@ CREATE TABLE wcf1_file_thumbnail (
 	fileID INT NOT NULL,
 	identifier VARCHAR(50) NOT NULL,
 	fileHash CHAR(64) NOT NULL,
-	fileExtension VARCHAR(10) NOT NULL
+	fileExtension VARCHAR(10) NOT NULL,
+	width INT NOT NULL,
+	height INT NOT NULL
 );
 
 /* As the flood control table can be a high traffic table and as it is periodically emptied,

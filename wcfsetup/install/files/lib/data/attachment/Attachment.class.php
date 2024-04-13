@@ -394,22 +394,14 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             'filesize' => $file->fileSize,
             'fileType' => $file->mimeType,
             'isImage' => $file->isImage(),
-
-            // TODO: Do we want to cache this data?
-            'height' => \getimagesize($file->getPath() . $file->getSourceFilename())[1],
-            // TODO: Do we want to cache this data?
-            'width' => \getimagesize($file->getPath() . $file->getSourceFilename())[0],
-
-            // TODO: This is awful.
-            'thumbnailType' => $file->getThumbnail('') ? $file->mimeType : '',
-            'thumbnailWidth' => $file->getThumbnail('') ? \getimagesize($file->getThumbnail('')->getPath() . $file->getThumbnail('')->getSourceFilename())[0] : 0,
-            'thumbnailHeight' => $file->getThumbnail('') ? \getimagesize($file->getThumbnail('')->getPath() . $file->getThumbnail('')->getSourceFilename())[1] : 0,
-
-            // TODO: This is awful.
-            'tinyThumbnailType' => $file->getThumbnail('tiny') ? $file->mimeType : '',
-            'tinyThumbnailWidth' => $file->getThumbnail('tiny') ? \getimagesize($file->getThumbnail('tiny')->getPath() . $file->getThumbnail('tiny')->getSourceFilename())[0] : 0,
-            'tinyThumbnailHeight' => $file->getThumbnail('tiny') ? \getimagesize($file->getThumbnail('tiny')->getPath() . $file->getThumbnail('tiny')->getSourceFilename())[1] : 0,
-
+            'height' => $file->height,
+            'width' => $file->width,
+            'thumbnailType' => $file->getThumbnail('')?->getMimeType() ?: '',
+            'thumbnailWidth' => $file->getThumbnail('')?->width ?: 0,
+            'thumbnailHeight' => $file->getThumbnail('')?->height ?: 0,
+            'tinyThumbnailType' => $file->getThumbnail('tiny')?->getMimeType() ?: '',
+            'tinyThumbnailWidth' => $file->getThumbnail('tiny')?->width ?: 0,
+            'tinyThumbnailHeight' => $file->getThumbnail('tiny')?->height ?: 0,
             default => parent::__get($name),
         };
     }

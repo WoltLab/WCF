@@ -29,20 +29,16 @@ class FileThumbnailEditor extends DatabaseObjectEditor
         ThumbnailFormat $format,
         string $filename
     ): FileThumbnail {
-        $mimeType = FileUtil::getMimeType($filename);
-        $fileExtension = match ($mimeType) {
-            'image/gif' => 'gif',
-            'image/jpg', 'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-            'image/webp' => 'webp',
-        };
+        [$width, $height] = \getimagesize($filename);
 
         $action = new FileThumbnailAction([], 'create', [
             'data' => [
                 'fileID' => $file->fileID,
                 'identifier' => $format->identifier,
                 'fileHash' => hash_file('sha256', $filename),
-                'fileExtension' => $fileExtension,
+                'fileExtension' => 'webp',
+                'width' => $width,
+                'height' => $height,
             ],
         ]);
         $fileThumbnail = $action->executeAction()['returnValues'];

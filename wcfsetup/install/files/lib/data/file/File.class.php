@@ -22,6 +22,8 @@ use wcf\util\StringUtil;
  * @property-read string $fileHash
  * @property-read string $typeName
  * @property-read string $mimeType
+ * @property-read int|null $width
+ * @property-read int|null $height
  */
 class File extends DatabaseObject
 {

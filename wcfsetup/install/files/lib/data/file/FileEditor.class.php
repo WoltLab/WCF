@@ -26,6 +26,18 @@ class FileEditor extends DatabaseObjectEditor
     public static function createFromTemporary(FileTemporary $fileTemporary): File
     {
         $mimeType = FileUtil::getMimeType($fileTemporary->getPath() . $fileTemporary->getFilename());
+        $isImage = match ($mimeType) {
+            'image/gif' => true,
+            'image/jpeg' => true,
+            'image/png' => true,
+            'image/webp' => true,
+            default => false,
+        };
+
+        $width = $height = null;
+        if ($isImage) {
+            [$width, $height] = \getimagesize($fileTemporary->getPath() . $fileTemporary->getFilename());
+        }
 
         $fileAction = new FileAction([], 'create', ['data' => [
             'filename' => $fileTemporary->filename,
@@ -33,6 +45,8 @@ class FileEditor extends DatabaseObjectEditor
             'fileHash' => $fileTemporary->fileHash,
             'typeName' => $fileTemporary->typeName,
             'mimeType' => $mimeType,
+            'width' => $width,
+            'height' => $height,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
