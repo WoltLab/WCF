@@ -9,6 +9,8 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\http\Helper;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\file\processor\exception\UnexpectedThumbnailIdentifier;
+use wcf\util\FileUtil;
 
 /**
  * @author Alexander Ebert
@@ -70,21 +72,7 @@ final class AttachmentFileProcessor implements IFileProcessor
             return FileProcessorPreflightResult::FileSizeTooLarge;
         }
 
-        // TODO: This is a typical use case and should be provided through a helper function.
-        $extensions = \implode(
-            "|",
-            \array_map(
-                static function (string $extension) {
-                    $extension = \preg_quote($extension, '/');
-                    $extension = \str_replace('\*', '.*', $extension);
-
-                    return $extension;
-                },
-                $attachmentHandler->getAllowedExtensions()
-            )
-        );
-        $extensionsPattern = '/(' . $extensions . ')$/i';
-        if (!\preg_match($extensionsPattern, \mb_strtolower($filename))) {
+        if (!FileUtil::endsWithAllowedExtension($filename, $attachmentHandler->getAllowedExtensions())) {
             return FileProcessorPreflightResult::FileExtensionNotPermitted;
         }
 
@@ -163,14 +151,16 @@ final class AttachmentFileProcessor implements IFileProcessor
     {
         $attachment = Attachment::findByFileID($thumbnail->fileID);
         if ($attachment === null) {
-            // TODO: How to handle this case?
+            // The associated attachment (or file) has vanished while the
+            // thumbnail was being created. There is nothing to do here, it will
+            // cleaned up eventually.
             return;
         }
 
         $columnName = match ($thumbnail->identifier) {
             '' => 'thumbnailID',
             'tiny' => 'tinyThumbnailID',
-            'default' => throw new \RuntimeException('TODO'), // TODO
+            'default' => throw new UnexpectedThumbnailIdentifier($thumbnail->identifier),
         };
 
         $attachmentEditor = new AttachmentEditor($attachment);
