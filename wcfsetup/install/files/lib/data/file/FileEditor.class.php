@@ -59,7 +59,7 @@ class FileEditor extends DatabaseObjectEditor
 
         \rename(
             $pathname,
-            $filePath . $file->getFilename()
+            $filePath . $file->getSourceFilename()
         );
 
         return $file;

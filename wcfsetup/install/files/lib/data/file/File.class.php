@@ -30,7 +30,7 @@ class File extends DatabaseObject
     /** @var array<string, FileThumbnail> */
     private array $thumbnails = [];
 
-    public function getFilename(): string
+    public function getSourceFilename(): string
     {
         return \sprintf(
             '%d-%s.bin',
@@ -53,7 +53,7 @@ class File extends DatabaseObject
 
     public function getPathname(): string
     {
-        return $this->getPath() . $this->getFilename();
+        return $this->getPath() . $this->getSourceFilename();
     }
 
     public function getLink(): string
