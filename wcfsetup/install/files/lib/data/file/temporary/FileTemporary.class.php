@@ -60,6 +60,11 @@ class FileTemporary extends DatabaseObject
         );
     }
 
+    public function getPathname(): string
+    {
+        return $this->getPath() . $this->getFilename();
+    }
+
     public function getContext(): array
     {
         return JSON::decode($this->context);

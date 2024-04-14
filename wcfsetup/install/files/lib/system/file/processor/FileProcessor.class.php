@@ -100,7 +100,7 @@ final class FileProcessor extends SingletonFactory
 
             if ($imageAdapter === null) {
                 $imageAdapter = ImageHandler::getInstance()->getAdapter();
-                $imageAdapter->loadFile($file->getPath() . $file->getSourceFilename());
+                $imageAdapter->loadFile($file->getPathname());
             }
 
             \assert($imageAdapter instanceof ImageAdapter);

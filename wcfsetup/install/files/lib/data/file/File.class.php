@@ -30,6 +30,15 @@ class File extends DatabaseObject
     /** @var array<string, FileThumbnail> */
     private array $thumbnails = [];
 
+    public function getFilename(): string
+    {
+        return \sprintf(
+            '%d-%s.bin',
+            $this->fileID,
+            $this->fileHash,
+        );
+    }
+
     public function getPath(): string
     {
         $folderA = \substr($this->fileHash, 0, 2);
@@ -42,13 +51,9 @@ class File extends DatabaseObject
         );
     }
 
-    public function getSourceFilename(): string
+    public function getPathname(): string
     {
-        return \sprintf(
-            '%d-%s.bin',
-            $this->fileID,
-            $this->fileHash,
-        );
+        return $this->getPath() . $this->getFilename();
     }
 
     public function getLink(): string
