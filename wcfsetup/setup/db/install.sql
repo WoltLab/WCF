@@ -605,6 +605,7 @@ CREATE TABLE wcf1_file (
 	fileSize BIGINT NOT NULL,
 	fileHash CHAR(64) NOT NULL,
 	fileExtension VARCHAR(10) NOT NULL,
+	secret CHAR(20) NOT NULL,
 	typeName VARCHAR(255) NOT NULL,
 	mimeType VARCHAR(255) NOT NULL,
 	width INT,

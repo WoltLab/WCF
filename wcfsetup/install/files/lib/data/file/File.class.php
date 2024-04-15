@@ -21,6 +21,7 @@ use wcf\util\StringUtil;
  * @property-read int $fileSize
  * @property-read string $fileHash
  * @property-read string $fileExtension
+ * @property-read string $secret
  * @property-read string $typeName
  * @property-read string $mimeType
  * @property-read int|null $width
@@ -61,8 +62,9 @@ class File extends DatabaseObject
     public function getSourceFilename(): string
     {
         return \sprintf(
-            '%d-%s.%s',
+            '%d-%s-%s.%s',
             $this->fileID,
+            $this->secret,
             $this->fileHash,
             $this->fileExtension,
         );
@@ -74,7 +76,8 @@ class File extends DatabaseObject
         $folderB = \substr($this->fileHash, 2, 2);
 
         return \sprintf(
-            \WCF_DIR . '_data/private/fileUpload/%s/%s/',
+            \WCF_DIR . '_data/%s/files/%s/%s/',
+            $this->fileExtension === 'bin' ? 'private' : 'public',
             $folderA,
             $folderB,
         );

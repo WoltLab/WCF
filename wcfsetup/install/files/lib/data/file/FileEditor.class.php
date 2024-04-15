@@ -45,6 +45,7 @@ class FileEditor extends DatabaseObjectEditor
             'fileSize' => $fileTemporary->fileSize,
             'fileHash' => $fileTemporary->fileHash,
             'fileExtension' => File::getSafeFileExtension($mimeType, $fileTemporary->filename),
+            'secret' => \bin2hex(\random_bytes(10)),
             'typeName' => $fileTemporary->typeName,
             'mimeType' => $mimeType,
             'width' => $width,
