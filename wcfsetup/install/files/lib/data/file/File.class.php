@@ -20,6 +20,7 @@ use wcf\util\StringUtil;
  * @property-read string $filename
  * @property-read int $fileSize
  * @property-read string $fileHash
+ * @property-read string $fileExtension
  * @property-read string $typeName
  * @property-read string $mimeType
  * @property-read int|null $width
@@ -27,15 +28,43 @@ use wcf\util\StringUtil;
  */
 class File extends DatabaseObject
 {
+    /**
+     * List of common file extensions that are always safe to be served directly
+     * by the webserver.
+     *
+     * @var array<string, string>
+     */
+    public const SAFE_FILE_EXTENSIONS = [
+        'avif' => 'image/avif',
+        'bz2' => 'application/x-bzip2',
+        'gif' => 'image/gif',
+        'gz' => 'application/gzip',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'mp3' => 'audio/mpeg',
+        'mp4' => 'video/mp4',
+        'pdf' => 'application/pdf',
+        'png' => 'image/png',
+        'rar' => 'application/vnd.rar',
+        'svg' => 'image/svg+xml',
+        'tar' => 'application/x-tar',
+        'tiff' => 'image/tiff',
+        'txt' => 'text/plain',
+        'webm' => 'video/webm',
+        'webp' => 'image/webp',
+        'zip' => 'application/zip',
+    ];
+
     /** @var array<string, FileThumbnail> */
     private array $thumbnails = [];
 
     public function getSourceFilename(): string
     {
         return \sprintf(
-            '%d-%s.bin',
+            '%d-%s.%s',
             $this->fileID,
             $this->fileHash,
+            $this->fileExtension,
         );
     }
 
@@ -110,7 +139,7 @@ class File extends DatabaseObject
             ];
         }
 
-        // TODO: Icon and preview url is missing.
+        // TODO: Icon and preview url are missing.
         return \sprintf(
             <<<'EOT'
                 <woltlab-core-file
@@ -125,5 +154,31 @@ class File extends DatabaseObject
             StringUtil::encodeHTML($this->mimeType),
             StringUtil::encodeHTML(\json_encode($thumbnails)),
         );
+    }
+
+    /**
+     * Returns the file extension that is always safe for the delivery by the
+     * webserver. If the file extension cannot be detected or is not among the
+     * list of allowed file extension then 'bin' is returned.
+     */
+    public static function getSafeFileExtension(string $mimeType, string $filename): string
+    {
+        $fileExtension = \array_search($mimeType, self::SAFE_FILE_EXTENSIONS, true);
+        if (\is_string($fileExtension)) {
+            return $fileExtension;
+        }
+
+        if (\str_contains($filename, '.')) {
+            $fileExtension = \mb_substr(
+                $filename,
+                \mb_strrpos($filename, '.') + 1
+            );
+
+            if (isset(self::SAFE_FILE_EXTENSIONS[$fileExtension])) {
+                return $fileExtension;
+            }
+        }
+
+        return 'bin';
     }
 }
