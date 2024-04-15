@@ -20,6 +20,9 @@ use wcf\system\WCF;
  */
 class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
 {
+    /** @var array<string, \IntlDateFormatter> */
+    private array $dateFormatter = [];
+
     /**
      * @inheritDoc
      */
@@ -34,12 +37,23 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
 
         $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
 
-        $dateAndTime = \IntlDateFormatter::create(
-            WCF::getLanguage()->getLocale(),
-            \IntlDateFormatter::LONG,
-            \IntlDateFormatter::SHORT,
-            WCF::getUser()->getTimeZone()
-        )->format($dateTime);
+        $locale = WCF::getLanguage()->getLocale();
+        $timeZone = WCF::getUser()->getTimeZone();
+
+        $key = $locale . '::' . $timeZone->getName();
+        $dateFormatter = $this->dateFormatter[$key] ?? null;
+        if ($dateFormatter === null) {
+            $dateFormatter = \IntlDateFormatter::create(
+                WCF::getLanguage()->getLocale(),
+                \IntlDateFormatter::LONG,
+                \IntlDateFormatter::SHORT,
+                WCF::getUser()->getTimeZone()
+            );
+
+            $this->dateFormatter[$key] = $dateFormatter;
+        }
+
+        $dateAndTime = $dateFormatter->format($dateTime);
 
         return \sprintf(
             '<woltlab-core-date-time date="%s"%s>%s</woltlab-core-date-time>',
