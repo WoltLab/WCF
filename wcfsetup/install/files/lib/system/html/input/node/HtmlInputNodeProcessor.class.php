@@ -3,6 +3,7 @@
 namespace wcf\system\html\input\node;
 
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\bbcode\DomBBCodeParser;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodePlainLink;
@@ -197,6 +198,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         $this->plainLinks = [];
 
         EventHandler::getInstance()->fireAction($this, 'beforeProcess');
+
+        // convert bbcodes to `<woltlab-metacode-marker>`
+        DomBBCodeParser::getInstance()->parse($this->getDocument());
 
         // fix invalid html such as metacode markers outside of block elements
         $this->fixDom();

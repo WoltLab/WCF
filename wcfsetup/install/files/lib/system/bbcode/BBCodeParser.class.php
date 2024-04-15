@@ -234,7 +234,7 @@ class BBCodeParser extends SingletonFactory
      * @param array $tag
      * @return  bool
      */
-    protected function isValidTag(array $tag)
+    public function isValidTag(array $tag)
     {
         if (isset($tag['attributes']) && \count($tag['attributes']) > \count($this->bbcodes[$tag['name']]->getAttributes())) {
             return false;
@@ -555,7 +555,7 @@ class BBCodeParser extends SingletonFactory
      * @param string $string
      * @return  array       bbcode attributes
      */
-    protected function buildTagAttributes($string)
+    public function buildTagAttributes($string)
     {
         \preg_match_all("~(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)~", $string, $matches);
 
@@ -591,5 +591,39 @@ class BBCodeParser extends SingletonFactory
         }
 
         return $message;
+    }
+
+    /**
+     * Returns the list of bbcodes that represent block elements.
+     *
+     * @return  string[]    list of bbcode block elements
+     */
+    public function getBlockBBCodes(): array
+    {
+        $bbcodes = [];
+        foreach ($this->bbcodes as $name => $bbcode) {
+            if ($bbcode->isBlockElement) {
+                $bbcodes[] = $name;
+            }
+        }
+
+        return $bbcodes;
+    }
+
+    /**
+     * Returns the list of bbcodes that represent source code elements.
+     *
+     * @return  string[]    list of bbcode source code elements
+     */
+    public function getSourceBBCodes(): array
+    {
+        $bbcodes = [];
+        foreach ($this->bbcodes as $name => $bbcode) {
+            if ($bbcode->isSourceCode) {
+                $bbcodes[] = $name;
+            }
+        }
+
+        return $bbcodes;
     }
 }

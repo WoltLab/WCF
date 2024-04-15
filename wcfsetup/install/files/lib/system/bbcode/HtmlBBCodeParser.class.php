@@ -21,6 +21,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
+ * @deprecated 6.1 use `DomBBCodeParser` instead
  */
 class HtmlBBCodeParser extends BBCodeParser
 {
@@ -375,40 +376,6 @@ class HtmlBBCodeParser extends BBCodeParser
         }
 
         return $openingTag . '<!-- META_CODE_INNER_CONTENT -->' . $closingTag;
-    }
-
-    /**
-     * Returns the list of bbcodes that represent block elements.
-     *
-     * @return  string[]    list of bbcode block elements
-     */
-    public function getBlockBBCodes()
-    {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isBlockElement) {
-                $bbcodes[] = $name;
-            }
-        }
-
-        return $bbcodes;
-    }
-
-    /**
-     * Returns the list of bbcodes that represent source code elements.
-     *
-     * @return  string[]    list of bbcode source code elements
-     */
-    public function getSourceBBCodes()
-    {
-        $bbcodes = [];
-        foreach ($this->bbcodes as $name => $bbcode) {
-            if ($bbcode->isSourceCode) {
-                $bbcodes[] = $name;
-            }
-        }
-
-        return $bbcodes;
     }
 
     /**

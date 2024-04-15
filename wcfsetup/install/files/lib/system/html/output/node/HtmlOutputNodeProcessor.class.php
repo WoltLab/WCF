@@ -2,7 +2,7 @@
 
 namespace wcf\system\html\output\node;
 
-use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\KeywordHighlighter;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
@@ -57,7 +57,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
      */
     public function __construct()
     {
-        $this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+        $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
     }
 
     /**
