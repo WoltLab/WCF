@@ -35,7 +35,7 @@ class FileThumbnailEditor extends DatabaseObjectEditor
             'data' => [
                 'fileID' => $file->fileID,
                 'identifier' => $format->identifier,
-                'fileHash' => hash_file('sha256', $filename),
+                'fileHash' => \hash_file('sha256', $filename),
                 'fileExtension' => 'webp',
                 'width' => $width,
                 'height' => $height,

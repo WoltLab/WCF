@@ -72,6 +72,10 @@ final class FileProcessor extends SingletonFactory
 
     public function generateThumbnails(File $file): void
     {
+        if (!$file->isImage()) {
+            return;
+        }
+
         $processor = $file->getProcessor();
         if ($processor === null) {
             return;
