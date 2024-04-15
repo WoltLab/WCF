@@ -109,6 +109,10 @@ final class LicenseApi
 
     public function getUpToDateLicenseData(): ?LicenseData
     {
+        if (!LicenseApi::hasLicenseCredentials()) {
+            return null;
+        }
+
         $licenseData = $this->readFromFile();
         if (
             $licenseData === null
