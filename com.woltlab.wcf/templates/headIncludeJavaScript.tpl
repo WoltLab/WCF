@@ -127,7 +127,6 @@ window.addEventListener('pageshow', function(event) {
 	);
 </script>
 
-{js application='wcf' file='WCF.ACL' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Attachment' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined' hasTiny=true}
