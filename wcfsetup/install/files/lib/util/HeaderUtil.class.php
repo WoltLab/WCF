@@ -168,7 +168,7 @@ final class HeaderUtil
         // move script tags to the bottom of the page
         $javascript = [];
         self::$output = \preg_replace_callback(
-            '~<script data-relocate="true"(?<attributes>[^>]*)>(?P<script>.*?)</script>\s*~s',
+            '~<script data-relocate="true"(?<attributes>[^>]*+)>(?P<script>.*?)</script>\s*~s',
             static function ($matches) use (&$javascript) {
                 // Add an attribute to disable Cloudflare's Rocket Loader
                 if (!\str_contains($matches['attributes'], 'data-cfasync="false"')) {
