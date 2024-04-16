@@ -153,7 +153,7 @@ final class HeaderUtil
                 if (\str_starts_with($attributes, $eagerFlag)) {
                     $attributes = \substr($attributes, \strlen($eagerFlag));
 
-                    return '<script' . $attributes . '>';
+                    return '<script data-cfasync="false"' . $attributes . '>';
                 }
 
                 return '<script data-relocate="true"' . $attributes . '>';
@@ -165,7 +165,7 @@ final class HeaderUtil
         self::$output = \preg_replace_callback(
             '~<script data-relocate="true"(?P<script>.*?</script>)\s*~s',
             static function ($matches) use (&$javascript) {
-                $javascript[] = '<script' . $matches['script'];
+                $javascript[] = '<script data-cfasync="false"' . $matches['script'];
 
                 return '';
             },

@@ -30,8 +30,8 @@
 	{/if}
 </script>
 
-<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
+<script data-cfasync="false" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-cfasync="false" src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
