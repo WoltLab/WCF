@@ -153,7 +153,12 @@ final class HeaderUtil
                 if (\str_starts_with($attributes, $eagerFlag)) {
                     $attributes = \substr($attributes, \strlen($eagerFlag));
 
-                    return '<script data-cfasync="false"' . $attributes . '>';
+                    // Add an attribute to disable Cloudflare's Rocket Loader
+                    if (!\str_contains($attributes, 'data-cfasync="false"')) {
+                        $attributes = ' data-cfasync="false"' . $attributes;
+                    }
+
+                    return '<script' . $attributes . '>';
                 }
 
                 return '<script data-relocate="true"' . $attributes . '>';
@@ -165,8 +170,12 @@ final class HeaderUtil
         self::$output = \preg_replace_callback(
             '~<script data-relocate="true"(?P<script>.*?</script>)\s*~s',
             static function ($matches) use (&$javascript) {
-                $javascript[] = '<script data-cfasync="false"' . $matches['script'];
+                // Add an attribute to disable Cloudflare's Rocket Loader
+                if (!\str_contains($matches['script'], 'data-cfasync="false"')) {
+                    $matches['script'] = ' data-cfasync="false"' . $matches['script'];
+                }
 
+                $javascript[] = '<script' . $matches['script'];
                 return '';
             },
             self::$output
