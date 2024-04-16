@@ -110,7 +110,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $src .= '.js?v=' . LAST_UPDATE_TIME;
 
         $relocate = !RequestHandler::getInstance()->isACPRequest() && (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true');
-        $html = '<script data-cfasync="false"' . ($relocate ? ' data-relocate="true"' : '') . ' src="' . $src . '"></script>' . "\n";
+        $html = '<script' . ($relocate ? ' data-relocate="true"' : '') . ' data-cfasync="false" src="' . $src . '"></script>' . "\n";
 
         if (isset($tagArgs['encodeJs']) && $tagArgs['encodeJs'] === 'true') {
             $html = StringUtil::encodeJS($html);
