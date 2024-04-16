@@ -333,9 +333,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function __get($name)
     {
-        $value = parent::__get($name);
-
-        return $value ?? $this->getUserOption($name);
+        return $this->data[$name] ?? $this->getUserOption($name);
     }
 
     /**
