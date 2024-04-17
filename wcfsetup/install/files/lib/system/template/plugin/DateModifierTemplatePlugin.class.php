@@ -21,6 +21,9 @@ use wcf\util\DateUtil;
  */
 class DateModifierTemplatePlugin implements IModifierTemplatePlugin
 {
+    /** @var array<string, \IntlDateFormatter> */
+    private array $dateFormatter = [];
+
     /**
      * @inheritDoc
      */
@@ -39,12 +42,23 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
                 $tagArgs[1]
             );
         } else {
-            return \IntlDateFormatter::create(
-                WCF::getLanguage()->getLocale(),
-                \IntlDateFormatter::LONG,
-                \IntlDateFormatter::NONE,
-                WCF::getUser()->getTimeZone()
-            )->format($dateTime);
+            $locale = WCF::getLanguage()->getLocale();
+            $timeZone = WCF::getUser()->getTimeZone();
+
+            $key = $locale . '::' . $timeZone->getName();
+            $dateFormatter = $this->dateFormatter[$key] ?? null;
+            if ($dateFormatter === null) {
+                $dateFormatter = \IntlDateFormatter::create(
+                    $locale,
+                    \IntlDateFormatter::LONG,
+                    \IntlDateFormatter::NONE,
+                    $timeZone
+                );
+
+                $this->dateFormatter[$key] = $dateFormatter;
+            }
+
+            return $dateFormatter->format($dateTime);
         }
     }
 }

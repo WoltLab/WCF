@@ -44,10 +44,10 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
         $dateFormatter = $this->dateFormatter[$key] ?? null;
         if ($dateFormatter === null) {
             $dateFormatter = \IntlDateFormatter::create(
-                WCF::getLanguage()->getLocale(),
+                $locale,
                 \IntlDateFormatter::LONG,
                 \IntlDateFormatter::SHORT,
-                WCF::getUser()->getTimeZone()
+                $timeZone
             );
 
             $this->dateFormatter[$key] = $dateFormatter;
