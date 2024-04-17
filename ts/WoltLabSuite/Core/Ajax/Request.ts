@@ -108,16 +108,16 @@ class AjaxRequest {
    * Dispatches a request, optionally aborting a currently active request.
    */
   sendRequest(abortPrevious?: boolean): void {
+    if (this._xhr instanceof XMLHttpRequest) {
+      this._previousXhr = this._xhr;
+    }
+
     if (abortPrevious || this._options.autoAbort) {
       this.abortPrevious();
     }
 
     if (!this._options.silent) {
       AjaxStatus.show();
-    }
-
-    if (this._xhr instanceof XMLHttpRequest) {
-      this._previousXhr = this._xhr;
     }
 
     this._xhr = new XMLHttpRequest();
