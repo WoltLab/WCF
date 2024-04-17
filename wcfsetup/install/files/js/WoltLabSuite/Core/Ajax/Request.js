@@ -86,14 +86,14 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * Dispatches a request, optionally aborting a currently active request.
          */
         sendRequest(abortPrevious) {
+            if (this._xhr instanceof XMLHttpRequest) {
+                this._previousXhr = this._xhr;
+            }
             if (abortPrevious || this._options.autoAbort) {
                 this.abortPrevious();
             }
             if (!this._options.silent) {
                 AjaxStatus.show();
-            }
-            if (this._xhr instanceof XMLHttpRequest) {
-                this._previousXhr = this._xhr;
             }
             this._xhr = new XMLHttpRequest();
             this._xhr.open(this._options.type, this._options.url, true);
