@@ -317,7 +317,8 @@ class UserOptionHandler extends OptionHandler
         }
 
         // search mode
-        if ($this->searchMode && !$option->searchable) {
+        // Ignore searchable flag in ACP
+        if (!\class_exists('wcf\system\WCFACP', false) && $this->searchMode && !$option->searchable) {
             return false;
         }
 
