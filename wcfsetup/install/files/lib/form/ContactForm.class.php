@@ -70,12 +70,6 @@ class ContactForm extends AbstractCaptchaForm
     public $recipientList;
 
     /**
-     * user has confirmed the privacy policy
-     * @var bool
-     */
-    public $privacyPolicyConfirmed = 0;
-
-    /**
      * @var string
      */
     public $tmpHash = '';
@@ -123,9 +117,6 @@ class ContactForm extends AbstractCaptchaForm
         }
         if (isset($_POST['recipientID'])) {
             $this->recipientID = \intval($_POST['recipientID']);
-        }
-        if (!empty($_POST['privacyPolicyConfirmed'])) {
-            $this->privacyPolicyConfirmed = 1;
         }
     }
 
@@ -176,10 +167,6 @@ class ContactForm extends AbstractCaptchaForm
             if (!$isValid) {
                 throw new UserInputException('recipientID', 'invalid');
             }
-        }
-
-        if (!$this->privacyPolicyConfirmed) {
-            throw new UserInputException('privacyPolicyConfirmed');
         }
 
         if (BLACKLIST_SFS_ENABLE) {
@@ -255,7 +242,6 @@ class ContactForm extends AbstractCaptchaForm
             'options' => $this->optionHandler->getOptions(),
             'recipientList' => $this->recipientList,
             'recipientID' => $this->recipientID,
-            'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed,
             'attachmentHandler' => $this->attachmentHandler,
             'attachmentObjectID' => 0,
             'attachmentObjectType' => $this->attachmentObjectType,
