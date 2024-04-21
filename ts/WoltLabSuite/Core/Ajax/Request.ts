@@ -25,7 +25,6 @@ let _ignoreAllErrors = false;
 class AjaxRequest {
   private readonly _options: RequestOptions;
   private readonly _data: RequestData;
-  private _previousXhr?: XMLHttpRequest;
   private _xhr?: XMLHttpRequest;
 
   constructor(options: RequestOptions) {
@@ -107,10 +106,6 @@ class AjaxRequest {
    * Dispatches a request, optionally aborting a currently active request.
    */
   sendRequest(abortPrevious?: boolean): void {
-    if (this._xhr instanceof XMLHttpRequest) {
-      this._previousXhr = this._xhr;
-    }
-
     if (abortPrevious || this._options.autoAbort) {
       this.abortPrevious();
     }
@@ -185,12 +180,12 @@ class AjaxRequest {
    * Aborts a previous request.
    */
   abortPrevious(): void {
-    if (!this._previousXhr) {
+    if (this._xhr === undefined) {
       return;
     }
 
-    this._previousXhr.abort();
-    this._previousXhr = undefined;
+    this._xhr.abort();
+    this._xhr = undefined;
 
     if (!this._options.silent) {
       AjaxStatus.hide();
@@ -261,7 +256,7 @@ class AjaxRequest {
       options.success(data || {}, xhr.responseText, xhr, options.data!);
     }
 
-    this._finalize(options);
+    this._finalize(xhr, options);
   }
 
   /**
@@ -306,7 +301,7 @@ class AjaxRequest {
       }
     }
 
-    this._finalize(options);
+    this._finalize(xhr, options);
   }
 
   /**
@@ -375,15 +370,15 @@ class AjaxRequest {
 
   /**
    * Finalizes a request.
-   *
-   * @param  {Object}  options    request options
    */
-  _finalize(options: RequestOptions): void {
+  _finalize(xhr: XMLHttpRequest, options: RequestOptions): void {
     if (typeof options.finalize === "function") {
-      options.finalize(this._xhr!);
+      options.finalize(xhr);
     }
 
-    this._previousXhr = undefined;
+    if (this._xhr === xhr) {
+      this._xhr = undefined;
+    }
 
     DomChangeListener.trigger();
 
