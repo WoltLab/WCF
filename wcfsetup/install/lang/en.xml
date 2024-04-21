@@ -4357,7 +4357,7 @@ Attachments:
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Powered by <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Article <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Article category <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-object-id="{$user->userID}">{$user->username}</a>]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
