@@ -90,11 +90,11 @@
 		{if $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
-				<dd title="{$user->getFormattedIPAddress()}">{@$user->getFormattedIPAddress()|ipSearch}</dd>
+				<dd class="ipAddress" title="{$user->getFormattedIPAddress()}">{@$user->getFormattedIPAddress()|ipSearch}</dd>
 				
 				{if !$user->spiderID}
 					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
-					<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
+					<dd class="userAgent" title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
 				{/if}
 			</dl>
 		{/if}

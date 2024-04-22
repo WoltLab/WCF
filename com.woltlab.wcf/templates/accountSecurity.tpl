@@ -71,7 +71,7 @@
 		{foreach from=$activeSessions item=session}
 			<li class="box64 sessionItem">
 				<div>
-					<span class="icon icon64 fa-{$session->getUserAgent()->getDeviceIcon()}"></span>
+					<span class="userAgent icon icon64 fa-{$session->getUserAgent()->getDeviceIcon()}"></span>
 				</div>
 				
 				<div class="accountSecurityContainer">
@@ -83,7 +83,7 @@
 							<dd>{if $session->isCurrentSession()}{lang}wcf.user.security.currentSession{/lang}{else}{@$session->getLastActivityTime()|time}{/if}</dd>
 							
 							<dt>{lang}wcf.user.security.ipAddress{/lang}</dt>
-							<dd title="{$session->getIpAddress()}">{$session->getIpAddress()->toBulletMasked(16, 48)}</dd>
+							<dd class="ipAddress" title="{$session->getIpAddress()}">{$session->getIpAddress()->toBulletMasked(16, 48)}</dd>
 						</dl>
 					</div>
 					
