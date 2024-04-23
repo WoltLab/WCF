@@ -3,18 +3,8 @@
 namespace wcf\action;
 
 use GuzzleHttp\Psr7\Request;
-use Laminas\Diactoros\Response\RedirectResponse;
-use Psr\Http\Message\ResponseInterface;
-use wcf\data\user\User;
-use wcf\form\AccountManagementForm;
-use wcf\form\RegisterForm;
-use wcf\system\event\EventHandler;
-use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\event\UserLoggedIn;
-use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\authentication\oauth\User as OauthUser;
-use wcf\system\WCF;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -25,56 +15,45 @@ use wcf\util\StringUtil;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class FacebookAuthAction extends AbstractOauth2Action
+final class FacebookAuthAction extends AbstractOauth2AuthAction
 {
-    /**
-     * @inheritDoc
-     */
-    public $neededModules = ['FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY'];
+    #[\Override]
+    protected function isEnabled(): bool
+    {
+        return !empty(FACEBOOK_PUBLIC_KEY) && !empty(FACEBOOK_PRIVATE_KEY);
+    }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTokenEndpoint(): string
     {
         return 'https://graph.facebook.com/oauth/access_token';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getClientId(): string
     {
         return StringUtil::trim(FACEBOOK_PUBLIC_KEY);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getClientSecret(): string
     {
         return StringUtil::trim(FACEBOOK_PRIVATE_KEY);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getScope(): string
     {
         return 'email';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getAuthorizeUrl(): string
     {
         return 'https://www.facebook.com/dialog/oauth';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getCallbackUrl(): string
     {
         $callbackURL = LinkHandler::getInstance()->getControllerLink(self::class);
@@ -86,17 +65,13 @@ final class FacebookAuthAction extends AbstractOauth2Action
         }, $callbackURL);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function supportsState(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getUser(array $accessToken): OauthUser
     {
         $request = new Request('GET', 'https://graph.facebook.com/me?fields=email,id,name', [
@@ -116,69 +91,9 @@ final class FacebookAuthAction extends AbstractOauth2Action
         return new OauthUser($parsed);
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function processUser(OauthUser $oauthUser): ResponseInterface
+    #[\Override]
+    protected function getProviderName(): string
     {
-        $user = User::getUserByAuthData('facebook:' . $oauthUser->getId());
-
-        if ($user->userID) {
-            if (WCF::getUser()->userID) {
-                // This account belongs to an existing user, but we are already logged in.
-                // This can't be handled.
-
-                throw new NamedUserException(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.facebook.connect.error.inuse')
-                );
-            } else {
-                // This account belongs to an existing user, we are not logged in.
-                // Perform the login.
-
-                WCF::getSession()->changeUser($user);
-                WCF::getSession()->update();
-                EventHandler::getInstance()->fire(
-                    new UserLoggedIn($user)
-                );
-
-                return new RedirectResponse(
-                    LoginRedirect::getUrl()
-                );
-            }
-        } else {
-            WCF::getSession()->register('__3rdPartyProvider', 'facebook');
-
-            if (WCF::getUser()->userID) {
-                // This account does not belong to anyone and we are already logged in.
-                // Thus we want to connect this account.
-
-                WCF::getSession()->register('__oauthUser', $oauthUser);
-
-                return new RedirectResponse(
-                    LinkHandler::getInstance()->getControllerLink(
-                        AccountManagementForm::class,
-                        [],
-                        '#3rdParty'
-                    )
-                );
-            } else {
-                // This account does not belong to anyone and we are not logged in.
-                // Thus we want to connect this account to a newly registered user.
-
-                WCF::getSession()->register('__oauthUser', $oauthUser);
-                WCF::getSession()->register('__username', $oauthUser->getUsername());
-                WCF::getSession()->register('__email', $oauthUser->getEmail());
-
-                // We assume that bots won't register an external account first, so
-                // we skip the captcha.
-                WCF::getSession()->register('noRegistrationCaptcha', true);
-
-                WCF::getSession()->update();
-
-                return new RedirectResponse(
-                    LinkHandler::getInstance()->getControllerLink(RegisterForm::class)
-                );
-            }
-        }
+        return 'facebook';
     }
 }
