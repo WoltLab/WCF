@@ -293,7 +293,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
             } else {
                 // This account does not belong to anyone and we are not logged in.
                 // Thus we want to connect this account to a newly registered user.
-                return $this->performeRegister($oauthUser);
+                return $this->redirectToRegistration($oauthUser);
             }
         }
     }
@@ -321,7 +321,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
         );
     }
 
-    protected function performeRegister(OauthUser $oauthUser): ResponseInterface
+    protected function redirectToRegistration(OauthUser $oauthUser): ResponseInterface
     {
         WCF::getSession()->register('__oauthUser', $oauthUser);
         WCF::getSession()->register('__username', $oauthUser->getUsername());

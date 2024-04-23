@@ -98,7 +98,7 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
     }
 
     #[\Override]
-    protected function performeRegister(OauthUser $oauthUser): ResponseInterface
+    protected function redirectToRegistration(OauthUser $oauthUser): ResponseInterface
     {
         try {
             $request = new Request('GET', 'https://api.github.com/user/emails', [
@@ -120,6 +120,6 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
         } catch (ClientExceptionInterface $e) {
         }
 
-        return parent::performeRegister($oauthUser);
+        return parent::redirectToRegistration($oauthUser);
     }
 }
