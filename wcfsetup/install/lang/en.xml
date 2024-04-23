@@ -3491,7 +3491,7 @@ Attachments:
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[Your Data]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
-		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I have read the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a> and expressly accept it. <span class="customOptionRequired">*</span>]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I agree to the processing of the data entered. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.acp.contact">
 		<item name="wcf.acp.contact.options"><![CDATA[Input Fields]]></item>

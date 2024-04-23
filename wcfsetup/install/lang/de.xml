@@ -3566,7 +3566,7 @@ Dateianhänge:
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
 		<item name="wcf.contact.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht wurde erfolgreich versandt.]]></item>
-		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich erkläre mich mit der Verarbeitung der eingegebenen Daten einverstanden. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[j. F Y]]></item>
