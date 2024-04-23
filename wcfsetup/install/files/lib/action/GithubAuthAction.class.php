@@ -5,7 +5,6 @@ namespace wcf\action;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use wcf\data\user\User;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\util\JSON;
@@ -77,12 +76,6 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
         $parsed['accessToken'] = $accessToken;
 
         return new OauthUser($parsed);
-    }
-
-    #[\Override]
-    protected function getInternalUser(OauthUser $oauthUser): User
-    {
-        return User::getUserByAuthData('github:' . $oauthUser->getId());
     }
 
     #[\Override]
