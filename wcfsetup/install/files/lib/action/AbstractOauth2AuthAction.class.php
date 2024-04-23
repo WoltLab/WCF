@@ -100,7 +100,10 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
     /**
      * Returns whether this OAuth provider is enabled.
      */
-    abstract protected function isEnabled(): bool;
+    protected function isEnabled(): bool
+    {
+        return !empty($this->getClientId()) && !empty($this->getClientSecret());
+    }
 
     protected function mapParameters(ServerRequestInterface $request): OAuth2Success | OAuth2Failure | null
     {

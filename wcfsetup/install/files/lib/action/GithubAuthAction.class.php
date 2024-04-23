@@ -27,12 +27,6 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
     }
 
     #[\Override]
-    public function isEnabled(): bool
-    {
-        return !empty(GITHUB_PUBLIC_KEY) && !empty(GITHUB_PRIVATE_KEY);
-    }
-
-    #[\Override]
     protected function getClientId(): string
     {
         return StringUtil::trim(GITHUB_PUBLIC_KEY);

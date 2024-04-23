@@ -18,12 +18,6 @@ use wcf\util\StringUtil;
 final class FacebookAuthAction extends AbstractOauth2AuthAction
 {
     #[\Override]
-    protected function isEnabled(): bool
-    {
-        return !empty(FACEBOOK_PUBLIC_KEY) && !empty(FACEBOOK_PRIVATE_KEY);
-    }
-
-    #[\Override]
     protected function getTokenEndpoint(): string
     {
         return 'https://graph.facebook.com/oauth/access_token';

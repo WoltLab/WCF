@@ -35,12 +35,6 @@ final class GoogleAuthAction extends AbstractOauth2AuthAction
     }
 
     #[\Override]
-    protected function isEnabled(): bool
-    {
-        return !empty(GOOGLE_PUBLIC_KEY) && !empty(GOOGLE_PRIVATE_KEY);
-    }
-
-    #[\Override]
     protected function getTokenEndpoint(): string
     {
         return $this->getConfiguration()['token_endpoint'];

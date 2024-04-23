@@ -30,12 +30,6 @@ use wcf\util\StringUtil;
 final class TwitterAuthAction extends AbstractOauth2AuthAction
 {
     #[\Override]
-    protected function isEnabled(): bool
-    {
-        return !empty(TWITTER_PUBLIC_KEY) && !empty(TWITTER_PRIVATE_KEY);
-    }
-
-    #[\Override]
     protected function getClientId(): string
     {
         return StringUtil::trim(TWITTER_PUBLIC_KEY);
