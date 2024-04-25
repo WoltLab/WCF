@@ -114,5 +114,6 @@
 		<template>__videoAttachmentBBCode</template>
 		<template>__audioAttachmentBBCode</template>
 		<template>__multiPageCondition</template>
+		<template>__multilineItemListFormField</template>
 	</delete>
 </data>

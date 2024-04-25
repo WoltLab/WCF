@@ -17,7 +17,7 @@ class MultilineItemListFormField extends ItemListFormField implements INullableF
     /**
      * @inheritDoc
      */
-    protected $templateName = '__multilineItemListFormField';
+    protected $templateName = 'shared_multilineItemListFormField';
 
     /**
      * @inheritDoc
