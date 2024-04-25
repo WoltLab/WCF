@@ -16,7 +16,7 @@
 </ul>
 
 <script data-relocate="true">
-	require(["WoltLabSuite/Core/Form/Builder/Field/Controller/MultilineItemList"], ({ MultilineItemList }) => {
+	require(["WoltLabSuite/Core/Form/Builder/Field/Controller/MultilineItemList"], ({ MultilineItemListFormField }) => {
 		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.placeholder'}
 		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage'}
 		{jsphrase name='wcf.global.button.save'}
@@ -24,7 +24,7 @@
 		{jsphrase name='wcf.global.button.edit'}
 		WoltLabLanguage.registerPhrase("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}');
 
-		new MultilineItemList(document.getElementById('lineBreakSeparatedTextOption_{@$field->getPrefixedId()|encodeJS}'), {
+		new MultilineItemListFormField(document.getElementById('lineBreakSeparatedTextOption_{@$field->getPrefixedId()|encodeJS}'), {
 			submitFieldName: '{@$field->getPrefixedId()|encodeJS}[]',
 		});
 	});
