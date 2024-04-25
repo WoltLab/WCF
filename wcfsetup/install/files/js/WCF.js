@@ -6243,7 +6243,7 @@ $.widget('ui.wcfSlideshow', {
 		for (var $i = 0; $i < this._count; $i++) {
 			var $link = $('<li><a><fa-icon size="16" name="circle"></fa-icon></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
 			if ($i == 0) {
-				$link.find('.icon').addClass('active');
+				$link.find('fa-icon')[0].setIcon('circle', true);
 			}
 		}
 		
@@ -6335,8 +6335,9 @@ $.widget('ui.wcfSlideshow', {
 		if (this._index == this._count) {
 			this._index = 0;
 		}
-		
-		$(this._buttonList.find('.icon').removeClass('active').get(this._index)).addClass('active');
+
+		this._buttonList[0].querySelectorAll('fa-icon').forEach((icon) => icon.setIcon('circle', false));
+		$(this._buttonList.find('fa-icon').get(this._index))[0].setIcon('circle', true);
 		this._itemList.css('left', this._index * (this._width + this.options.itemGap) * -1);
 		
 		this._trigger('moveTo', null, { index: this._index });

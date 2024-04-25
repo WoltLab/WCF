@@ -19,6 +19,8 @@ use wcf\util\StringUtil;
  */
 final class GithubAuthAction extends AbstractOauth2AuthAction
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     #[\Override]
     protected function getTokenEndpoint(): string
     {

@@ -17,6 +17,8 @@ use wcf\util\StringUtil;
  */
 final class GoogleAuthAction extends AbstractOauth2AuthAction
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     private array $configuration;
 
     /**

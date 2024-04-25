@@ -29,6 +29,8 @@ use wcf\util\StringUtil;
  */
 final class TwitterAuthAction extends AbstractOauth2AuthAction
 {
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
+
     #[\Override]
     protected function getClientId(): string
     {

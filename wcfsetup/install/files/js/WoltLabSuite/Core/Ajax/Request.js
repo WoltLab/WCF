@@ -21,7 +21,6 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
     class AjaxRequest {
         _options;
         _data;
-        _previousXhr;
         _xhr;
         constructor(options) {
             this._options = Core.extend({
@@ -92,9 +91,6 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (!this._options.silent) {
                 AjaxStatus.show();
             }
-            if (this._xhr instanceof XMLHttpRequest) {
-                this._previousXhr = this._xhr;
-            }
             this._xhr = new XMLHttpRequest();
             this._xhr.open(this._options.type, this._options.url, true);
             if (this._options.contentType) {
@@ -159,11 +155,11 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * Aborts a previous request.
          */
         abortPrevious() {
-            if (!this._previousXhr) {
+            if (this._xhr === undefined) {
                 return;
             }
-            this._previousXhr.abort();
-            this._previousXhr = undefined;
+            this._xhr.abort();
+            this._xhr = undefined;
             if (!this._options.silent) {
                 AjaxStatus.hide();
             }
@@ -222,7 +218,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 }
                 options.success(data || {}, xhr.responseText, xhr, options.data);
             }
-            this._finalize(options);
+            this._finalize(xhr, options);
         }
         /**
          * Handles failed requests, this can be both a successful request with
@@ -262,7 +258,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     dialog.show(Language.get("wcf.global.error.title"));
                 }
             }
-            this._finalize(options);
+            this._finalize(xhr, options);
         }
         /**
          * Returns the inner HTML for an error/exception display.
@@ -322,14 +318,14 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
         }
         /**
          * Finalizes a request.
-         *
-         * @param  {Object}  options    request options
          */
-        _finalize(options) {
+        _finalize(xhr, options) {
             if (typeof options.finalize === "function") {
-                options.finalize(this._xhr);
+                options.finalize(xhr);
             }
-            this._previousXhr = undefined;
+            if (this._xhr === xhr) {
+                this._xhr = undefined;
+            }
             Listener_1.default.trigger();
             // fix anchor tags generated through WCF::getAnchor()
             document.querySelectorAll('a[href*="#"]').forEach((link) => {

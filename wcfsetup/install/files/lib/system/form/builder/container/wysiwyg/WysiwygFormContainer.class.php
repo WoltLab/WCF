@@ -475,7 +475,6 @@ class WysiwygFormContainer extends FormContainer
             ->minimumLength($this->getMinimumLength())
             ->maximumLength($this->getMaximumLength())
             ->required($this->isRequired())
-            ->supportAttachments($this->attachmentData !== null)
             ->supportMentions($this->supportMentions)
             ->supportQuotes($this->supportQuotes);
         if ($this->quoteData !== null) {
@@ -529,6 +528,7 @@ class WysiwygFormContainer extends FormContainer
         if ($this->attachmentData !== null) {
             $this->setAttachmentHandler();
         }
+        $this->wysiwygField->supportAttachments($this->attachmentField->isAvailable());
 
         if ($this->enablePreviewButton) {
             $this->getDocument()->addButton(

@@ -365,6 +365,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.userTrophy"><![CDATA[Assigned trophies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaction Types]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS pages]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Do you really want to delete the existing import mappings?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[There are import mappings created by a previous import process, these mappings are used to properly handle connections between data from the imported forum and this one. In case you have imported all the desired data, you can <a href="#" role="button" id="deleteMapping" data-confirm-message="Do you really want to delete the existing import mappings?">delete the mappings</a>. It is strongly recommended to keep these mappings as long as there is still data to be imported now or in the future. These mappings cannot be used to perform incremental imports of the same type of data. Instead their purpose is to import different types of data using multiple import processes, possibly using importers provided by a plugin.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Select Data Source]]></item>
@@ -3482,6 +3483,7 @@ Attachments:
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[Your Data]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I agree to the processing of the data entered. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.acp.contact">
 		<item name="wcf.acp.contact.options"><![CDATA[Input Fields]]></item>
@@ -5635,7 +5637,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"/>
-	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
 	<item name="wcf.acp.dataImport.selectExporter.error.notValid"/>
 	<item name="wcf.acp.devtools.project.action"/>
 	<item name="wcf.acp.devtools.project.apiVersions"/>
