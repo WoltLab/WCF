@@ -25,6 +25,7 @@ use wcf\util\JSON;
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.4
+ * @deprecated 6.1 use `AbstractOauth2AuthAction` instead
  */
 abstract class AbstractOauth2Action extends AbstractAction
 {
