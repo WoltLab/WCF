@@ -102,6 +102,12 @@ final class FileProcessor extends SingletonFactory
                 continue;
             }
 
+            // Check if we the source image is larger than the dimensions of the
+            // requested thumbnails.
+            if ($format->width > $file->width && $format->height > $file->height) {
+                continue;
+            }
+
             if ($imageAdapter === null) {
                 $imageAdapter = ImageHandler::getInstance()->getAdapter();
                 $imageAdapter->loadFile($file->getPathname());
