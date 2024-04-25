@@ -8,6 +8,8 @@
  */
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Form/Builder/Field/Field", "./Controller/MultilineItemList"], function (require, exports, tslib_1, Field_1, MultilineItemList_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MultilineItemList = void 0;
     Field_1 = tslib_1.__importDefault(Field_1);
     class MultilineItemList extends Field_1.default {
         _getData() {
@@ -16,5 +18,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Form/Builder/Field/Fie
             };
         }
     }
-    return MultilineItemList;
+    exports.MultilineItemList = MultilineItemList;
+    exports.default = MultilineItemList;
 });

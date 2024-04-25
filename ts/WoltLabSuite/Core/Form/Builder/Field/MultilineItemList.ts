@@ -11,12 +11,11 @@ import Field from "WoltLabSuite/Core/Form/Builder/Field/Field";
 import { FormBuilderData } from "WoltLabSuite/Core/Form/Builder/Data";
 import { getValues } from "./Controller/MultilineItemList";
 
-class MultilineItemList extends Field {
+export class MultilineItemList extends Field {
   protected _getData(): FormBuilderData {
     return {
       [this._fieldId]: getValues(this._fieldId),
     };
   }
 }
-
-export = MultilineItemList;
+export default MultilineItemList;
