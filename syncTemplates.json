@@ -4,6 +4,7 @@
     "wcfsetup/install/files/acp/templates"
   ],
   "templates": [
+    "__multilineItemListFormField",
     "__aclFormField",
     "__booleanFormField",
     "__buttonFormField",
