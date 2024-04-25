@@ -12,7 +12,9 @@ namespace wcf\system\user\authentication\oauth;
  */
 class Success
 {
-    public function __construct(public readonly string $code, public readonly string $state = '')
-    {
+    public function __construct(
+        public readonly string $code,
+        public readonly string $state = ''
+    ) {
     }
 }

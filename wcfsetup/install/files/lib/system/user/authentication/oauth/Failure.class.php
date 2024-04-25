@@ -12,7 +12,8 @@ namespace wcf\system\user\authentication\oauth;
  */
 class Failure
 {
-    public function __construct(public readonly string $error)
-    {
+    public function __construct(
+        public readonly string $error
+    ) {
     }
 }

@@ -14,10 +14,8 @@ use wcf\system\user\authentication\oauth\Success as BaseSuccess;
  */
 final class Success extends BaseSuccess
 {
-    public function __construct(
-        string $oauth_token,
-        string $oauth_verifier,
-    ) {
+    public function __construct(string $oauth_token, string $oauth_verifier)
+    {
         parent::__construct($oauth_token, $oauth_verifier);
     }
 }
