@@ -25,6 +25,8 @@ interface IFileProcessor
 
     public function getAllowedFileExtensions(array $context): array;
 
+    public function getResizeConfiguration(): ResizeConfiguration;
+
     public function getTypeName(): string;
 
     public function getUploadResponse(File $file): array;

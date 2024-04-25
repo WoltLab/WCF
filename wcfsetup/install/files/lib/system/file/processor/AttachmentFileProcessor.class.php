@@ -128,6 +128,21 @@ final class AttachmentFileProcessor implements IFileProcessor
     }
 
     #[\Override]
+    public function getResizeConfiguration(): ResizeConfiguration
+    {
+        if (!\ATTACHMENT_IMAGE_AUTOSCALE) {
+            return ResizeConfiguration::unbounded();
+        }
+
+        return new ResizeConfiguration(
+            \ATTACHMENT_IMAGE_AUTOSCALE_MAX_WIDTH,
+            \ATTACHMENT_IMAGE_AUTOSCALE_MAX_HEIGHT,
+            ResizeFileType::fromString(\ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE),
+            \ATTACHMENT_IMAGE_AUTOSCALE_QUALITY
+        );
+    }
+
+    #[\Override]
     public function getThumbnailFormats(): array
     {
         return [

@@ -62,11 +62,13 @@ final class FileProcessor extends SingletonFactory
                     data-type-name="%s"
                     data-context="%s"
                     data-file-extensions="%s"
+                    data-resize-configuration="%s"
                 ></woltlab-core-file-upload>
                 HTML,
             StringUtil::encodeHTML($fileProcessor->getTypeName()),
             StringUtil::encodeHTML(JSON::encode($context)),
             StringUtil::encodeHTML($allowedFileExtensions),
+            StringUtil::encodeHTML(JSON::encode($fileProcessor->getResizeConfiguration())),
         );
     }
 

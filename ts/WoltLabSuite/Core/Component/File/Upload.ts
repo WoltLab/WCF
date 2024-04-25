@@ -3,6 +3,7 @@ import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
 import { Response as UploadChunkResponse, uploadChunk } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
 import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
+import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 
 export type ThumbnailsGenerated = {
   data: GenerateThumbnailsResponse;
@@ -15,6 +16,13 @@ type ThumbnailData = {
 };
 
 type GenerateThumbnailsResponse = ThumbnailData[];
+
+type ResizeConfiguration = {
+  maxWidth: number;
+  maxHeight: number;
+  fileType: "image/jpeg" | "image/webp" | "keep";
+  quality: number;
+};
 
 async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<void> {
   const typeName = element.dataset.typeName!;
@@ -85,16 +93,82 @@ async function getSha256Hash(data: BufferSource): Promise<string> {
     .join("");
 }
 
+function clearPreviousErrors(element: WoltlabCoreFileUploadElement): void {
+  element.parentElement?.querySelectorAll(".innerError").forEach((x) => x.remove());
+}
+
+async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): Promise<File> {
+  switch (file.type) {
+    case "image/jpeg":
+    case "image/png":
+    case "image/webp":
+      // Potential candidate for a resize operation.
+      break;
+
+    default:
+      // Not an image or an unsupported file type.
+      return file;
+  }
+
+  const timeout = new Promise<File>((resolve) => {
+    window.setTimeout(() => resolve(file), 10_000);
+  });
+
+  const resizeConfiguration = JSON.parse(element.dataset.resizeConfiguration!) as ResizeConfiguration;
+
+  const resizer = new ImageResizer();
+  const { image, exif } = await resizer.loadFile(file);
+
+  const maxHeight = resizeConfiguration.maxHeight;
+  let maxWidth = resizeConfiguration.maxWidth;
+  if (window.devicePixelRatio >= 2) {
+    const actualWidth = window.screen.width * window.devicePixelRatio;
+    const actualHeight = window.screen.height * window.devicePixelRatio;
+
+    // If the dimensions are equal then this is a screenshot from a HiDPI
+    // device, thus we downscale this to the “natural” dimensions.
+    if (actualWidth === image.width && actualHeight === image.height) {
+      maxWidth = Math.min(maxWidth, window.screen.width);
+    }
+  }
+
+  const canvas = await resizer.resize(image, maxWidth, maxHeight, resizeConfiguration.quality, true, timeout);
+  if (canvas === undefined) {
+    // The resize operation failed, timed out or there was no need to perform
+    // any scaling whatsoever.
+    return file;
+  }
+
+  let fileType: string = resizeConfiguration.fileType;
+  if (fileType === "image/jpeg" || fileType === "image/webp") {
+    fileType = "image/webp";
+  } else {
+    fileType = file.type;
+  }
+
+  const resizedFile = await resizer.saveFile(
+    {
+      exif,
+      image: canvas,
+    },
+    file.name,
+    fileType,
+    resizeConfiguration.quality,
+  );
+
+  return resizedFile;
+}
+
 export function setup(): void {
-  wheneverFirstSeen("woltlab-core-file-upload", (element) => {
+  wheneverFirstSeen("woltlab-core-file-upload", (element: WoltlabCoreFileUploadElement) => {
     element.addEventListener("upload", (event: CustomEvent<File>) => {
-      // TODO: Add some pipeline logic here.
+      const file = event.detail;
 
-      // TODO: Add a canvas based resize to the pipeline.
+      clearPreviousErrors(element);
 
-      // TODO: We need to pass around the file using some dedicated type of
-      //       data structure because it can be modified somehow.
-      void upload(element, event.detail);
+      void resizeImage(element, file).then((resizedFile) => {
+        void upload(element, resizedFile);
+      });
     });
   });
 }
