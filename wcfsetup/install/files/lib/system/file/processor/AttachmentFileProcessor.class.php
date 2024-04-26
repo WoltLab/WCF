@@ -10,6 +10,7 @@ use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\http\Helper;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\file\processor\exception\UnexpectedThumbnailIdentifier;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
@@ -53,6 +54,7 @@ final class AttachmentFileProcessor implements IFileProcessor
             'objectID' => $attachmentHandler->getObjectID(),
             'tmpHash' => $attachmentHandler->getTmpHashes()[0] ?? '',
             'fileID' => $file->fileID,
+            'userID' => WCF::getUser()->userID ?: null,
         ]);
     }
 
