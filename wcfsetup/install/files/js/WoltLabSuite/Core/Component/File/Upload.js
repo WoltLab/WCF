@@ -102,11 +102,27 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }, file.name, fileType, resizeConfiguration.quality);
         return resizedFile;
     }
+    function validateFile(element, file) {
+        const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
+        for (const fileExtension of fileExtensions) {
+            if (fileExtension === "*") {
+                return true;
+            }
+            else if (file.name.endsWith(fileExtension)) {
+                return true;
+            }
+        }
+        // TODO: show an error message
+        return false;
+    }
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("woltlab-core-file-upload", (element) => {
             element.addEventListener("upload", (event) => {
                 const file = event.detail;
                 clearPreviousErrors(element);
+                if (!validateFile(element, file)) {
+                    return;
+                }
                 void resizeImage(element, file).then((resizedFile) => {
                     void upload(element, resizedFile);
                 });

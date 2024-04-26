@@ -159,12 +159,31 @@ async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): P
   return resizedFile;
 }
 
+function validateFile(element: WoltlabCoreFileUploadElement, file: File): boolean {
+  const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
+  for (const fileExtension of fileExtensions) {
+    if (fileExtension === "*") {
+      return true;
+    } else if (file.name.endsWith(fileExtension)) {
+      return true;
+    }
+  }
+
+  // TODO: show an error message
+
+  return false;
+}
+
 export function setup(): void {
   wheneverFirstSeen("woltlab-core-file-upload", (element: WoltlabCoreFileUploadElement) => {
     element.addEventListener("upload", (event: CustomEvent<File>) => {
       const file = event.detail;
 
       clearPreviousErrors(element);
+
+      if (!validateFile(element, file)) {
+        return;
+      }
 
       void resizeImage(element, file).then((resizedFile) => {
         void upload(element, resizedFile);

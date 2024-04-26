@@ -156,7 +156,7 @@ export function setup(editorId: string): void {
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {
     existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-      upload(fileList, file, editorId);
+      upload(fileList!, file, editorId);
     });
 
     existingFiles.remove();
