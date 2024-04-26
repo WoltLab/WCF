@@ -144,8 +144,30 @@ final class SearchHandler
 
     private function buildDateCondition(): void
     {
-        $startDate = !empty($this->parameters['startDate']) ? @\strtotime($this->parameters['startDate']) : 0;
-        $endDate = !empty($this->parameters['endDate']) ? @\strtotime($this->parameters['endDate']) : 0;
+        if (!empty($this->parameters['startDate'])) {
+            $startDateTime = \DateTime::createFromFormat(
+                "Y-m-d",
+                $this->parameters['startDate'],
+                WCF::getUser()->getTimezone()
+            );
+            $startDateTime->setTime(0, 0, 0);
+            $startDate = $startDateTime->getTimestamp();
+        } else {
+            $startDate = 0;
+        }
+
+        if (!empty($this->parameters['endDate'])) {
+            $endDateTime = \DateTime::createFromFormat(
+                "Y-m-d",
+                $this->parameters['endDate'],
+                WCF::getUser()->getTimezone()
+            );
+            $endDateTime->setTime(23, 59, 59);
+            $endDate = $endDateTime->getTimestamp();
+        } else {
+            $endDate = 0;
+        }
+
         if ($startDate && $endDate) {
             $this->conditionBuilder->add('time BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($startDate) {
