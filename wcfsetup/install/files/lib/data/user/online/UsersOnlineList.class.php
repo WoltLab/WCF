@@ -165,7 +165,7 @@ class UsersOnlineList extends SessionList
      */
     public function checkRecord()
     {
-        $usersOnlineTotal = (USERS_ONLINE_RECORD_NO_GUESTS ? $this->stats['members'] : $this->stats['total']);
+        $usersOnlineTotal = $this->stats['members'];
         if ($usersOnlineTotal > USERS_ONLINE_RECORD) {
             // save new record
             $optionAction = new OptionAction([], 'import', [

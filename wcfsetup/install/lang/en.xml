@@ -1507,7 +1507,6 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.users_online_default_sort_order.description"><![CDATA[Choose default sort order of “Users Online” list.]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Refreshes “Users Online” in the following seconds. Use 0 to disable.]]></item>
-		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most users online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notifications]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>

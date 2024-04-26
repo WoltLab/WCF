@@ -495,6 +495,10 @@ class WCF
         \define('GOOGLE_MAPS_ENABLE_SCROLL_WHEEL_ZOOM', 0);
         \define('GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM', 1);
         \define('GOOGLE_MAPS_ACCESS_USER_LOCATION', 1);
+
+        // The option to count guests in the online record was removed with version 6.1.
+        // https://github.com/WoltLab/WCF/issues/5888
+        \define('USERS_ONLINE_RECORD_NO_GUESTS', 1);
     }
 
     /**
