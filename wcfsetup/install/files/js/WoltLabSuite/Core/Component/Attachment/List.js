@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event"], function (require, exports, DeleteFile_1, Event_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "../File/woltlab-core-file"], function (require, exports, DeleteFile_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -111,6 +111,13 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
         uploadButton.addEventListener("uploadStart", (event) => {
             upload(fileList, event.detail, editorId);
         });
+        const existingFiles = container.querySelector(".attachment__list__existingFiles");
+        if (existingFiles !== null) {
+            existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
+                upload(fileList, file, editorId);
+            });
+            existingFiles.remove();
+        }
     }
     exports.setup = setup;
 });

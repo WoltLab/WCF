@@ -36,10 +36,14 @@ define(["require", "exports"], function (require, exports) {
             });
         }
         connectedCallback() {
+            let wasAlreadyReady = false;
             if (this.#state === 0 /* State.Initial */) {
-                this.#initializeState();
+                wasAlreadyReady = this.#initializeState();
             }
             this.#rebuildElement();
+            if (wasAlreadyReady) {
+                this.#readyResolve();
+            }
         }
         #initializeState() {
             // Files that exist at page load have a valid file id, otherwise a new
@@ -55,7 +59,7 @@ define(["require", "exports"], function (require, exports) {
                 }
                 else {
                     this.#state = 1 /* State.Uploading */;
-                    return;
+                    return false;
                 }
             }
             // Initialize the list of thumbnails from the data attribute.
@@ -65,7 +69,11 @@ define(["require", "exports"], function (require, exports) {
                     this.#thumbnails.push(new Thumbnail(thumbnail.identifier, thumbnail.link));
                 }
             }
+            if (this.dataset.metaData) {
+                this.#data = JSON.parse(this.dataset.metaData);
+            }
             this.#state = 3 /* State.Ready */;
+            return true;
         }
         #rebuildElement() {
             switch (this.#state) {

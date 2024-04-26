@@ -2,6 +2,8 @@ import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
+import "../File/woltlab-core-file";
+
 type FileProcessorData = {
   attachmentID: number;
 };
@@ -150,4 +152,13 @@ export function setup(editorId: string): void {
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
     upload(fileList!, event.detail, editorId);
   });
+
+  const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
+  if (existingFiles !== null) {
+    existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
+      upload(fileList, file, editorId);
+    });
+
+    existingFiles.remove();
+  }
 }

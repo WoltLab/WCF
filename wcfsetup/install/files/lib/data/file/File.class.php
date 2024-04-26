@@ -132,7 +132,7 @@ class File extends DatabaseObject
         return $this->thumbnails[$identifier] ?? null;
     }
 
-    public function toHtmlElement(): string
+    public function toHtmlElement(array $metaData): string
     {
         $thumbnails = [];
         foreach ($this->thumbnails as $thumbnail) {
@@ -150,12 +150,14 @@ class File extends DatabaseObject
                     data-filename="%s"
                     data-mime-type="%s"
                     data-thumbnails="%s"
+                    data-meta-data="%s"
                 ></woltlab-core-file>
                 EOT,
             $this->fileID,
             StringUtil::encodeHTML($this->filename),
             StringUtil::encodeHTML($this->mimeType),
             StringUtil::encodeHTML(\json_encode($thumbnails)),
+            StringUtil::encodeHTML(\json_encode($metaData)),
         );
     }
 

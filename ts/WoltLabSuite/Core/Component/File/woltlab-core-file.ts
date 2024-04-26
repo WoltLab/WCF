@@ -52,14 +52,19 @@ export class WoltlabCoreFileElement extends HTMLElement {
   }
 
   connectedCallback() {
+    let wasAlreadyReady = false;
     if (this.#state === State.Initial) {
-      this.#initializeState();
+      wasAlreadyReady = this.#initializeState();
     }
 
     this.#rebuildElement();
+
+    if (wasAlreadyReady) {
+      this.#readyResolve();
+    }
   }
 
-  #initializeState(): void {
+  #initializeState(): boolean {
     // Files that exist at page load have a valid file id, otherwise a new
     // file element can only be the result of an upload attempt.
     if (this.#fileId === undefined) {
@@ -75,7 +80,7 @@ export class WoltlabCoreFileElement extends HTMLElement {
       } else {
         this.#state = State.Uploading;
 
-        return;
+        return false;
       }
     }
 
@@ -87,7 +92,13 @@ export class WoltlabCoreFileElement extends HTMLElement {
       }
     }
 
+    if (this.dataset.metaData) {
+      this.#data = JSON.parse(this.dataset.metaData);
+    }
+
     this.#state = State.Ready;
+
+    return true;
   }
 
   #rebuildElement(): void {

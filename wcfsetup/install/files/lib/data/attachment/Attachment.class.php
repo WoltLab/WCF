@@ -408,7 +408,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     public function toHtmlElement(): ?string
     {
-        return $this->getFile()?->toHtmlElement();
+        return $this->getFile()?->toHtmlElement([
+            'attachmentID' => $this->attachmentID,
+        ]);
     }
 
     public static function findByFileID(int $fileID): ?Attachment
