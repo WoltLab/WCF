@@ -68,10 +68,14 @@ define(["require", "exports"], function (require, exports) {
                 for (const thumbnail of thumbnails) {
                     this.#thumbnails.push(new Thumbnail(thumbnail.identifier, thumbnail.link));
                 }
+                delete this.dataset.thumbnails;
             }
             if (this.dataset.metaData) {
                 this.#data = JSON.parse(this.dataset.metaData);
+                delete this.dataset.metaData;
             }
+            this.#link = this.dataset.link;
+            delete this.dataset.link;
             this.#state = 3 /* State.Ready */;
             return true;
         }

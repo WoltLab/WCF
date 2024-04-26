@@ -151,6 +151,7 @@ class File extends DatabaseObject
                     data-mime-type="%s"
                     data-thumbnails="%s"
                     data-meta-data="%s"
+                    data-link="%s"
                 ></woltlab-core-file>
                 EOT,
             $this->fileID,
@@ -158,6 +159,7 @@ class File extends DatabaseObject
             StringUtil::encodeHTML($this->mimeType),
             StringUtil::encodeHTML(\json_encode($thumbnails)),
             StringUtil::encodeHTML(\json_encode($metaData)),
+            StringUtil::encodeHTML($this->getLink()),
         );
     }
 
