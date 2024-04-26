@@ -19,12 +19,14 @@ class MultipleSelectionFormField extends AbstractFormField implements
     IAttributeFormField,
     ICssClassFormField,
     IFilterableSelectionFormField,
-    IImmutableFormField
+    IImmutableFormField,
+    INullableFormField
 {
     use TInputAttributeFormField;
     use TCssClassFormField;
     use TFilterableSelectionFormField;
     use TImmutableFormField;
+    use TNullableFormField;
 
     /**
      * @inheritDoc
@@ -62,6 +64,10 @@ class MultipleSelectionFormField extends AbstractFormField implements
                 function (IFormDocument $document, array $parameters) {
                     if ($this->checkDependencies() && !empty($this->getValue())) {
                         $parameters[$this->getObjectProperty()] = $this->getValue();
+                    }
+
+                    if ($this->isNullable() && (!$this->checkDependencies() || empty($this->getValue()))) {
+                        $parameters['data'][$this->getObjectProperty()] = null;
                     }
 
                     return $parameters;
