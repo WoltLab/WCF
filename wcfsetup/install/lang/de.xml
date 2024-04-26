@@ -1569,7 +1569,6 @@ Die Beschränkung auf ASCII-Zeichen erlaubt in Benutzernamen lediglich lateinisc
 Beispiele:<br>
 WBB=WoltLab Burning Board<br>
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
-		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Nur registrierte Benutzer im Benutzer-Online-Rekord zählen]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Legende der Benutzergruppen anzeigen]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Karten-Zoom]]></item>
