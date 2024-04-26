@@ -127,6 +127,7 @@ $templates = [
     'mediaBBCodeTag' => 'shared_bbcode_wsm',
     'articleBBCodeTag' => 'shared_bbcode_wsa',
     '__multiPageCondition' => 'shared_multiPageCondition',
+    '__multilineItemListFormField' => 'shared_multilineItemListFormField',
 ];
 if ($argc !== 2) {
     echo "ERROR: Expected a single argument to the directory that should be used to recursively replace template includes.\n";
