@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 throw response.error;
             }
             console.log(validationError);
-            return;
+            return undefined;
         }
         const { identifier, numberOfChunks } = response.value;
         const chunkSize = Math.ceil(file.size / numberOfChunks);
@@ -34,6 +34,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 throw response.error;
             }
             await chunkUploadCompleted(fileElement, response.value);
+            if (response.value.completed) {
+                return response.value;
+            }
         }
     }
     async function chunkUploadCompleted(fileElement, result) {
@@ -125,6 +128,39 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 }
                 void resizeImage(element, file).then((resizedFile) => {
                     void upload(element, resizedFile);
+                });
+            });
+            element.addEventListener("ckeditorDrop", (event) => {
+                const { file } = event.detail;
+                let promiseResolve;
+                let promiseReject;
+                event.detail.promise = new Promise((resolve, reject) => {
+                    promiseResolve = resolve;
+                    promiseReject = reject;
+                });
+                clearPreviousErrors(element);
+                if (!validateFile(element, file)) {
+                    promiseReject();
+                    return;
+                }
+                void resizeImage(element, file).then(async (resizeFile) => {
+                    try {
+                        const data = await upload(element, resizeFile);
+                        if (data === undefined || typeof data.data.attachmentID !== "number") {
+                            promiseReject();
+                        }
+                        else {
+                            const attachmentData = {
+                                attachmentId: data.data.attachmentID,
+                                url: data.link,
+                            };
+                            promiseResolve(attachmentData);
+                        }
+                    }
+                    catch (e) {
+                        promiseReject();
+                        throw e;
+                    }
                 });
             });
         });

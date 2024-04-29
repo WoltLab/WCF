@@ -94,6 +94,11 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
             // TODO: error handling
             return;
         }
+        const editor = document.getElementById(editorId);
+        if (editor === null) {
+            // TODO: error handling
+            return;
+        }
         const uploadButton = container.querySelector("woltlab-core-file-upload");
         if (uploadButton === null) {
             throw new Error("Expected the container to contain an upload button", {
@@ -110,6 +115,12 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
         }
         uploadButton.addEventListener("uploadStart", (event) => {
             upload(fileList, event.detail, editorId);
+        });
+        (0, Event_1.listenToCkeditor)(editor).uploadAttachment((payload) => {
+            const event = new CustomEvent("ckeditorDrop", {
+                detail: payload,
+            });
+            uploadButton.dispatchEvent(event);
         });
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {

@@ -1,8 +1,9 @@
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
-import { dispatchToCkeditor } from "../Ckeditor/Event";
+import { dispatchToCkeditor, listenToCkeditor } from "../Ckeditor/Event";
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
 import "../File/woltlab-core-file";
+import { CkeditorDropEvent } from "../File/Upload";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -133,6 +134,12 @@ export function setup(editorId: string): void {
     return;
   }
 
+  const editor = document.getElementById(editorId);
+  if (editor === null) {
+    // TODO: error handling
+    return;
+  }
+
   const uploadButton = container.querySelector("woltlab-core-file-upload");
   if (uploadButton === null) {
     throw new Error("Expected the container to contain an upload button", {
@@ -151,6 +158,13 @@ export function setup(editorId: string): void {
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
     upload(fileList!, event.detail, editorId);
+  });
+
+  listenToCkeditor(editor).uploadAttachment((payload) => {
+    const event = new CustomEvent<CkeditorDropEvent>("ckeditorDrop", {
+      detail: payload,
+    });
+    uploadButton.dispatchEvent(event);
   });
 
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");

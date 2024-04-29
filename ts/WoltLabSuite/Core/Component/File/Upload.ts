@@ -1,9 +1,19 @@
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { upload as filesUpload } from "WoltLabSuite/Core/Api/Files/Upload";
 import WoltlabCoreFileElement from "./woltlab-core-file";
-import { Response as UploadChunkResponse, uploadChunk } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
+import {
+  ResponseCompleted,
+  Response as UploadChunkResponse,
+  uploadChunk,
+} from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
 import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
 import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
+import { AttachmentData } from "../Ckeditor/Attachment";
+
+export type CkeditorDropEvent = {
+  file: File;
+  promise?: Promise<unknown>;
+};
 
 export type ThumbnailsGenerated = {
   data: GenerateThumbnailsResponse;
@@ -24,7 +34,7 @@ type ResizeConfiguration = {
   quality: number;
 };
 
-async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<void> {
+async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<ResponseCompleted | undefined> {
   const typeName = element.dataset.typeName!;
 
   const fileHash = await getSha256Hash(await file.arrayBuffer());
@@ -45,7 +55,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     }
 
     console.log(validationError);
-    return;
+    return undefined;
   }
 
   const { identifier, numberOfChunks } = response.value;
@@ -69,6 +79,10 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     }
 
     await chunkUploadCompleted(fileElement, response.value);
+
+    if (response.value.completed) {
+      return response.value;
+    }
   }
 }
 
@@ -187,6 +201,45 @@ export function setup(): void {
 
       void resizeImage(element, file).then((resizedFile) => {
         void upload(element, resizedFile);
+      });
+    });
+
+    element.addEventListener("ckeditorDrop", (event: CustomEvent<CkeditorDropEvent>) => {
+      const { file } = event.detail;
+
+      let promiseResolve: (data: AttachmentData) => void;
+      let promiseReject: () => void;
+      event.detail.promise = new Promise<AttachmentData>((resolve, reject) => {
+        promiseResolve = resolve;
+        promiseReject = reject;
+      });
+
+      clearPreviousErrors(element);
+
+      if (!validateFile(element, file)) {
+        promiseReject!();
+
+        return;
+      }
+
+      void resizeImage(element, file).then(async (resizeFile) => {
+        try {
+          const data = await upload(element, resizeFile);
+          if (data === undefined || typeof data.data.attachmentID !== "number") {
+            promiseReject();
+          } else {
+            const attachmentData: AttachmentData = {
+              attachmentId: data.data.attachmentID,
+              url: data.link,
+            };
+
+            promiseResolve(attachmentData);
+          }
+        } catch (e) {
+          promiseReject();
+
+          throw e;
+        }
       });
     });
   });
