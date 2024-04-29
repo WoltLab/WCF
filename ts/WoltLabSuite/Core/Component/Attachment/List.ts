@@ -11,8 +11,17 @@ type FileProcessorData = {
 
 function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: string): void {
   const element = document.createElement("li");
-  element.classList.add("attachment__list__item");
-  element.append(file);
+  element.classList.add("attachment__item");
+
+  const fileWrapper = document.createElement("div");
+  fileWrapper.classList.add("attachment__item__file");
+  fileWrapper.append(file);
+
+  const filename = document.createElement("div");
+  filename.classList.add("attachment__item__filename");
+  filename.textContent = file.filename!;
+
+  element.append(fileWrapper, filename);
   fileList.append(element);
 
   void file.ready.then(() => {
@@ -28,7 +37,9 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
       return;
     }
 
-    element.append(
+    const buttonList = document.createElement("div");
+    buttonList.classList.add("attachment__item__buttons");
+    buttonList.append(
       getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element),
       getInsertAttachBbcodeButton(
         (data as FileProcessorData).attachmentID,
@@ -45,9 +56,11 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
 
       const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
       if (url !== undefined) {
-        element.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
+        buttonList.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
       }
     }
+
+    element.append(buttonList);
   });
 }
 

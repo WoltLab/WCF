@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, exports, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreFileElement = exports.Thumbnail = void 0;
@@ -143,7 +143,18 @@ define(["require", "exports"], function (require, exports) {
             return this.#fileId;
         }
         get iconName() {
-            return this.dataset.iconName;
+            if (this.mimeType === undefined) {
+                return undefined;
+            }
+            const fileExtension = (0, FileUtil_1.getExtensionByMimeType)(this.mimeType);
+            if (fileExtension === "") {
+                return undefined;
+            }
+            const iconName = (0, FileUtil_1.getIconNameByFilename)(fileExtension);
+            if (iconName === "") {
+                return undefined;
+            }
+            return `file-${iconName}`;
         }
         get previewUrl() {
             return this.dataset.previewUrl;

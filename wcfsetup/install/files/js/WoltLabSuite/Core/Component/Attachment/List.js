@@ -4,8 +4,14 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
     exports.setup = void 0;
     function upload(fileList, file, editorId) {
         const element = document.createElement("li");
-        element.classList.add("attachment__list__item");
-        element.append(file);
+        element.classList.add("attachment__item");
+        const fileWrapper = document.createElement("div");
+        fileWrapper.classList.add("attachment__item__file");
+        fileWrapper.append(file);
+        const filename = document.createElement("div");
+        filename.classList.add("attachment__item__filename");
+        filename.textContent = file.filename;
+        element.append(fileWrapper, filename);
         fileList.append(element);
         void file.ready.then(() => {
             const data = file.data;
@@ -18,7 +24,9 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
                 // TODO: error handling
                 return;
             }
-            element.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element), getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
+            const buttonList = document.createElement("div");
+            buttonList.classList.add("attachment__item__buttons");
+            buttonList.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element), getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
             if (file.isImage()) {
                 const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
@@ -26,9 +34,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
                 }
                 const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
                 if (url !== undefined) {
-                    element.append(getInsertThumbnailButton(data.attachmentID, url, editorId));
+                    buttonList.append(getInsertThumbnailButton(data.attachmentID, url, editorId));
                 }
             }
+            element.append(buttonList);
         });
     }
     function getDeleteAttachButton(fileId, attachmentId, editorId, element) {

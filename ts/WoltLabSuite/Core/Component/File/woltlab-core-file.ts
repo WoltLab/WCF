@@ -1,3 +1,5 @@
+import { getExtensionByMimeType, getIconNameByFilename } from "WoltLabSuite/Core/FileUtil";
+
 const enum State {
   Initial,
   Uploading,
@@ -182,7 +184,21 @@ export class WoltlabCoreFileElement extends HTMLElement {
   }
 
   get iconName(): string | undefined {
-    return this.dataset.iconName;
+    if (this.mimeType === undefined) {
+      return undefined;
+    }
+
+    const fileExtension = getExtensionByMimeType(this.mimeType);
+    if (fileExtension === "") {
+      return undefined;
+    }
+
+    const iconName = getIconNameByFilename(fileExtension);
+    if (iconName === "") {
+      return undefined;
+    }
+
+    return `file-${iconName}`;
   }
 
   get previewUrl(): string | undefined {
