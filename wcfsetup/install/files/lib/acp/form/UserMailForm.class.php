@@ -55,6 +55,7 @@ class UserMailForm extends AbstractFormBuilderForm
                 ->required(),
             MultilineTextFormField::create('text')
                 ->label('wcf.acp.user.sendMail.text')
+                ->description('wcf.acp.user.sendMail.description')
                 ->required(),
             BooleanFormField::create('enableHTML')
                 ->label('wcf.acp.user.sendMail.enableHTML'),

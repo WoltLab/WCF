@@ -3108,6 +3108,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
+		<item name="wcf.acp.user.sendMail.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> sowie <kbd>{literal}{$email}{/literal}</kbd> können als Platzhalter verwendet werden, um den Benutzernamen bzw. die E-Mail-Adresse des jeweiligen Empfängers einzufügen.]]></item>
 		<item name="wcf.acp.user.quickSearch"><![CDATA[Schnellsuche]]></item>
 		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Gesperrte Benutzer]]></item>
 		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Neueste Benutzer]]></item>
@@ -6565,7 +6566,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.user.search.matches"/>
 	<item name="wcf.acp.user.search.withinResults"/>
 	<item name="wcf.acp.user.sendMail.subject.description"/>
-	<item name="wcf.acp.user.sendMail.text.description"/>
 	<item name="wcf.acp.user.sendNewPassword.mail"/>
 	<item name="wcf.acp.user.userNote"/>
 	<item name="wcf.acp.worker.currentStep"/>
