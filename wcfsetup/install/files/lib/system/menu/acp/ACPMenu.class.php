@@ -7,6 +7,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\menu\acp\event\AcpMenuCollecting;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -77,12 +78,23 @@ class ACPMenu extends TreeMenu
                     continue;
                 }
 
+                $icon = null;
+                if ($item->icon) {
+                    if (FontAwesomeIcon::isValidString($item->icon)) {
+                        $icon = FontAwesomeIcon::fromString($item->icon);
+                    } elseif (\str_starts_with($item->icon, 'fa-')) {
+                        // Safeguard to prevent legacy icons from breaking
+                        // the admin panel during the upgrade to 6.0.
+                        $icon = FontAwesomeIcon::fromString("question;true");
+                    }
+                }
+
                 $this->menuItems[$parentMenuItem][] = new AcpMenuItem(
                     $item->menuItem,
                     $item->__toString(),
                     $item->parentMenuItem,
                     $item->getLink(),
-                    $item->icon ?? ''
+                    $icon
                 );
             }
         }
