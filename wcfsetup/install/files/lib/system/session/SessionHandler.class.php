@@ -1066,7 +1066,7 @@ final class SessionHandler extends SingletonFactory
         // is exceeded ...
         if ($lastAuthentication < (TIME_NOW - $softLimit)) {
             // ... and the grace period since the last check is also exceeded.
-            if ($lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
+            if ($_POST === [] || $lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
                 return true;
             }
         }
