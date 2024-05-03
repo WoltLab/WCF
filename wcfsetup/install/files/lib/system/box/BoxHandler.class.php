@@ -57,7 +57,7 @@ class BoxHandler extends SingletonFactory
             }
         }
 
-        $this->boxesByPosition = self::loadBoxes($pageID, true);
+        $this->boxesByPosition = self::loadBoxes($pageID, !RequestHandler::getInstance()->isACPRequest());
         foreach ($this->boxesByPosition as $boxes) {
             foreach ($boxes as $box) {
                 $this->boxes[$box->boxID] = $box;
