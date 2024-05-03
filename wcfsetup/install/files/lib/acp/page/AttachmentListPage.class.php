@@ -43,7 +43,7 @@ class AttachmentListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime'];
+    public $validSortFields = ['attachmentID', 'filename', 'filesize', 'uploadTime'];
 
     /**
      * @inheritDoc

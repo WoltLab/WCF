@@ -3276,8 +3276,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
 		<item name="wcf.attachment.filesize"><![CDATA[File Size]]></item>
-		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
-		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Last Download]]></item>
 		<item name="wcf.attachment.fileType"><![CDATA[Type]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Drag and Drop here to upload]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Drop now to upload]]></item>

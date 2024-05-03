@@ -9,6 +9,7 @@ import {
 import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
 import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 import { AttachmentData } from "../Ckeditor/Attachment";
+import { innerError } from "WoltLabSuite/Core/Dom/Util";
 
 export type CkeditorDropEvent = {
   file: File;
@@ -184,7 +185,7 @@ function validateFile(element: WoltlabCoreFileUploadElement, file: File): boolea
     }
   }
 
-  // TODO: show an error message
+  innerError(element, `TODO: the file extension of '${file.name}' is not allowed`);
 
   return false;
 }

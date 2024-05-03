@@ -40,8 +40,6 @@ use wcf\util\FileUtil;
  * @property-read   int $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $downloads      number of times the attachment has been downloaded
- * @property-read   int $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
  * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
  * @property-read   int $showOrder      position of the attachment in relation to the other attachment to the same message
  * @property-read int|null $fileID
@@ -384,6 +382,16 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     #[\Override]
     public function __get($name)
     {
+        // Deprecated attributes that are no longer supported.
+        $value = match ($name) {
+            'downloads' => 0,
+            'lastDownloadTime' => 0,
+            default => null,
+        };
+        if ($value !== null) {
+            return $value;
+        }
+
         $file = $this->getFile();
         if ($file === null) {
             return parent::__get($name);

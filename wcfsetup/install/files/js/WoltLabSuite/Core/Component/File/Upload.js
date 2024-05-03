@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -116,7 +116,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 return true;
             }
         }
-        // TODO: show an error message
+        (0, Util_1.innerError)(element, `TODO: the file extension of '${file.name}' is not allowed`);
         return false;
     }
     function setup() {
