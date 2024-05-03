@@ -4,6 +4,7 @@ import WoltlabCoreFileElement from "../File/woltlab-core-file";
 
 import "../File/woltlab-core-file";
 import { CkeditorDropEvent } from "../File/Upload";
+import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -19,49 +20,63 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
 
   const filename = document.createElement("div");
   filename.classList.add("attachment__item__filename");
-  filename.textContent = file.filename!;
+  filename.textContent = file.filename || file.dataset.filename!;
 
-  element.append(fileWrapper, filename);
+  const fileSize = document.createElement("div");
+  fileSize.classList.add("attachment__item__fileSize");
+  fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
+
+  element.append(fileWrapper, filename, fileSize);
   fileList.append(element);
 
-  void file.ready.then(() => {
-    const data = file.data;
-    if (data === undefined) {
-      // TODO: error handling
-      return;
-    }
-
-    const fileId = file.fileId;
-    if (fileId === undefined) {
-      // TODO: error handling
-      return;
-    }
-
-    const buttonList = document.createElement("div");
-    buttonList.classList.add("attachment__item__buttons");
-    buttonList.append(
-      getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element),
-      getInsertAttachBbcodeButton(
-        (data as FileProcessorData).attachmentID,
-        file.isImage() && file.link ? file.link : "",
-        editorId,
-      ),
-    );
-
-    if (file.isImage()) {
-      const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
-      if (thumbnail !== undefined) {
-        file.thumbnail = thumbnail;
+  void file.ready
+    .then(() => {
+      const data = file.data;
+      if (data === undefined) {
+        // TODO: error handling
+        return;
       }
 
-      const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
-      if (url !== undefined) {
-        buttonList.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
+      const fileId = file.fileId;
+      if (fileId === undefined) {
+        // TODO: error handling
+        return;
       }
-    }
 
-    element.append(buttonList);
-  });
+      const buttonList = document.createElement("div");
+      buttonList.classList.add("attachment__item__buttons");
+      buttonList.append(
+        getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element),
+        getInsertAttachBbcodeButton(
+          (data as FileProcessorData).attachmentID,
+          file.isImage() && file.link ? file.link : "",
+          editorId,
+        ),
+      );
+
+      if (file.isImage()) {
+        const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
+        if (thumbnail !== undefined) {
+          file.thumbnail = thumbnail;
+        }
+
+        const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
+        if (url !== undefined) {
+          buttonList.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
+        }
+      }
+
+      element.append(buttonList);
+    })
+    .catch(() => {
+      if (file.validationError === undefined) {
+        return;
+      }
+
+      // TODO: Add a proper error message, this is for development purposes only.
+      element.append(JSON.stringify(file.validationError));
+      element.classList.add("attachment__item--error");
+    });
 }
 
 function getDeleteAttachButton(

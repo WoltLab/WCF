@@ -21,9 +21,11 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         #data = undefined;
         #filename = "";
         #fileId = undefined;
+        #fileSize = undefined;
         #link = undefined;
         #mimeType = undefined;
         #state = 0 /* State.Initial */;
+        #validationError = undefined;
         #thumbnails = [];
         #readyReject;
         #readyResolve;
@@ -49,8 +51,10 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
             // Files that exist at page load have a valid file id, otherwise a new
             // file element can only be the result of an upload attempt.
             if (this.#fileId === undefined) {
-                this.#filename = this.dataset.filename || "bogus.bin";
+                this.#filename = this.dataset.filename || "unknown.bin";
                 delete this.dataset.filename;
+                this.#fileSize = parseInt(this.dataset.fileSize || "0");
+                delete this.dataset.fileSize;
                 this.#mimeType = this.dataset.mimeType || "application/octet-stream";
                 delete this.dataset.mimeType;
                 const fileId = parseInt(this.getAttribute("file-id") || "0");
@@ -97,7 +101,7 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
                     }
                     break;
                 case 4 /* State.Failed */:
-                    this.#replaceWithIcon("times");
+                    this.#replaceWithIcon("triangle-exclamation");
                     break;
                 default:
                     throw new Error("Unreachable", {
@@ -174,6 +178,9 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         get filename() {
             return this.#filename;
         }
+        get fileSize() {
+            return this.#fileSize;
+        }
         get mimeType() {
             return this.#mimeType;
         }
@@ -197,11 +204,12 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
                     return false;
             }
         }
-        uploadFailed() {
+        uploadFailed(validationError) {
             if (this.#state !== 1 /* State.Uploading */) {
                 return;
             }
             this.#state = 4 /* State.Failed */;
+            this.#validationError = validationError;
             this.#rebuildElement();
             this.#readyReject();
         }
@@ -245,6 +253,9 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         }
         get ready() {
             return this.#readyPromise;
+        }
+        get validationError() {
+            return this.#validationError;
         }
     }
     exports.WoltlabCoreFileElement = WoltlabCoreFileElement;

@@ -41,6 +41,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
 
   const fileElement = document.createElement("woltlab-core-file");
   fileElement.dataset.filename = file.name;
+  fileElement.dataset.fileSize = file.size.toString();
 
   const event = new CustomEvent<WoltlabCoreFileElement>("uploadStart", { detail: fileElement });
   element.dispatchEvent(event);
@@ -49,12 +50,12 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
   if (!response.ok) {
     const validationError = response.error.getValidationError();
     if (validationError === undefined) {
-      fileElement.uploadFailed();
+      fileElement.uploadFailed(undefined);
 
       throw response.error;
     }
 
-    console.log(validationError);
+    fileElement.uploadFailed(validationError);
     return undefined;
   }
 
@@ -73,7 +74,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
 
     const response = await uploadChunk(identifier, i, checksum, chunk);
     if (!response.ok) {
-      fileElement.uploadFailed();
+      fileElement.uploadFailed(undefined);
 
       throw response.error;
     }

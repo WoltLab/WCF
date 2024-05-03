@@ -9,7 +9,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ApiError = void 0;
+    exports.ValidationError = exports.ApiError = void 0;
     class ApiError {
         type;
         code;
@@ -41,4 +41,5 @@ define(["require", "exports"], function (require, exports) {
             this.param = param;
         }
     }
+    exports.ValidationError = ValidationError;
 });

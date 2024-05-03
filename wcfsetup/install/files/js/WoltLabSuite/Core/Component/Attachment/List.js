@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "../File/woltlab-core-file"], function (require, exports, DeleteFile_1, Event_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "WoltLabSuite/Core/FileUtil", "../File/woltlab-core-file"], function (require, exports, DeleteFile_1, Event_1, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -10,10 +10,14 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
         fileWrapper.append(file);
         const filename = document.createElement("div");
         filename.classList.add("attachment__item__filename");
-        filename.textContent = file.filename;
-        element.append(fileWrapper, filename);
+        filename.textContent = file.filename || file.dataset.filename;
+        const fileSize = document.createElement("div");
+        fileSize.classList.add("attachment__item__fileSize");
+        fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
+        element.append(fileWrapper, filename, fileSize);
         fileList.append(element);
-        void file.ready.then(() => {
+        void file.ready
+            .then(() => {
             const data = file.data;
             if (data === undefined) {
                 // TODO: error handling
@@ -38,6 +42,14 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
                 }
             }
             element.append(buttonList);
+        })
+            .catch(() => {
+            if (file.validationError === undefined) {
+                return;
+            }
+            // TODO: Add a proper error message, this is for development purposes only.
+            element.append(JSON.stringify(file.validationError));
+            element.classList.add("attachment__item--error");
         });
     }
     function getDeleteAttachButton(fileId, attachmentId, editorId, element) {

@@ -1,3 +1,4 @@
+import type { ValidationError } from "WoltLabSuite/Core/Api/Error";
 import { getExtensionByMimeType, getIconNameByFilename } from "WoltLabSuite/Core/FileUtil";
 
 const enum State {
@@ -35,9 +36,11 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #data: Record<string, unknown> | undefined = undefined;
   #filename: string = "";
   #fileId: number | undefined = undefined;
+  #fileSize: number | undefined = undefined;
   #link: string | undefined = undefined;
   #mimeType: string | undefined = undefined;
   #state: State = State.Initial;
+  #validationError: ValidationError | undefined = undefined;
   readonly #thumbnails: Thumbnail[] = [];
 
   #readyReject!: () => void;
@@ -70,8 +73,11 @@ export class WoltlabCoreFileElement extends HTMLElement {
     // Files that exist at page load have a valid file id, otherwise a new
     // file element can only be the result of an upload attempt.
     if (this.#fileId === undefined) {
-      this.#filename = this.dataset.filename || "bogus.bin";
+      this.#filename = this.dataset.filename || "unknown.bin";
       delete this.dataset.filename;
+
+      this.#fileSize = parseInt(this.dataset.fileSize || "0");
+      delete this.dataset.fileSize;
 
       this.#mimeType = this.dataset.mimeType || "application/octet-stream";
       delete this.dataset.mimeType;
@@ -129,7 +135,7 @@ export class WoltlabCoreFileElement extends HTMLElement {
         break;
 
       case State.Failed:
-        this.#replaceWithIcon("times");
+        this.#replaceWithIcon("triangle-exclamation");
         break;
 
       default:
@@ -223,6 +229,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.#filename;
   }
 
+  get fileSize(): number | undefined {
+    return this.#fileSize;
+  }
+
   get mimeType(): string | undefined {
     return this.#mimeType;
   }
@@ -252,12 +262,13 @@ export class WoltlabCoreFileElement extends HTMLElement {
     }
   }
 
-  uploadFailed(): void {
+  uploadFailed(validationError: ValidationError | undefined): void {
     if (this.#state !== State.Uploading) {
       return;
     }
 
     this.#state = State.Failed;
+    this.#validationError = validationError;
     this.#rebuildElement();
 
     this.#readyReject();
@@ -318,6 +329,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
 
   get ready(): Promise<void> {
     return this.#readyPromise;
+  }
+
+  get validationError(): ValidationError | undefined {
+    return this.#validationError;
   }
 }
 

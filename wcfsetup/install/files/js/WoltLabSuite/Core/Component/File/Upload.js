@@ -8,16 +8,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         const fileHash = await getSha256Hash(await file.arrayBuffer());
         const fileElement = document.createElement("woltlab-core-file");
         fileElement.dataset.filename = file.name;
+        fileElement.dataset.fileSize = file.size.toString();
         const event = new CustomEvent("uploadStart", { detail: fileElement });
         element.dispatchEvent(event);
         const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, typeName, element.dataset.context || "");
         if (!response.ok) {
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
-                fileElement.uploadFailed();
+                fileElement.uploadFailed(undefined);
                 throw response.error;
             }
-            console.log(validationError);
+            fileElement.uploadFailed(validationError);
             return undefined;
         }
         const { identifier, numberOfChunks } = response.value;
@@ -30,7 +31,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
             if (!response.ok) {
-                fileElement.uploadFailed();
+                fileElement.uploadFailed(undefined);
                 throw response.error;
             }
             await chunkUploadCompleted(fileElement, response.value);

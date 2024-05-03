@@ -139,7 +139,7 @@ html[data-color-scheme="dark"] {
 .attachment__list {
 	display: grid;
 	gap: 10px;
-	grid-auto-flow: column;
+	grid-auto-flow: row;
 	// TODO: use container queries to make this more dynamic?
 	grid-template-columns: repeat(3, 1fr);
 }
@@ -153,16 +153,27 @@ html[data-color-scheme="dark"] {
 	border-radius: var(--wcfBorderRadius);
 	box-shadow: var(--wcfBoxShadowCard);
 	display: grid;
-	gap: 10px;
 	grid-template-areas:
 		"file filename"
+		"file fileSize"
 		"file buttons";
-	grid-template-columns: 64px auto;
+	grid-template-columns: 80px auto;
 	padding: 10px;
 }
 
+.attachment__item--error {
+	border-color: var(--wcfStatusErrorBorder);
+}
+
+.attachment__item--error .attachment__item__file {
+	color: var(--wcfStatusErrorText);
+}
+
 .attachment__item__file {
+	display: flex;
 	grid-area: file;
+	justify-content: center;
+	margin-right: 10px;
 }
 
 .attachment__item__filename {
@@ -173,7 +184,17 @@ html[data-color-scheme="dark"] {
 	white-space: nowrap;
 }
 
+.attachment__item__fileSize {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+	grid-area: fileSize;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .attachment__item__buttons {
+	align-items: end;
 	column-gap: 5px;
 	display: flex;
 	grid-area: buttons;
