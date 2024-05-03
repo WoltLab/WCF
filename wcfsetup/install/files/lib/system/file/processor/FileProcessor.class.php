@@ -6,11 +6,13 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\file\processor\event\FileProcessorCollecting;
 use wcf\system\image\adapter\ImageAdapter;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -123,6 +125,25 @@ final class FileProcessor extends SingletonFactory
 
             $fileThumbnail = FileThumbnailEditor::createFromTemporaryFile($file, $format, $filename);
             $processor->adoptThumbnail($fileThumbnail);
+        }
+    }
+
+    public function delete(array $files): void
+    {
+        $fileIDs = \array_column($files, 'fileID');
+
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add('fileID IN (?)', [$fileIDs]);
+
+        $sql = "SELECT  thumbnailID
+                FROM    wcf1_file_thumbnail
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $thumbnailIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        foreach ($this->processors as $processor) {
+            $processor->delete($fileIDs, $thumbnailIDs);
         }
     }
 }

@@ -108,8 +108,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $float = 'none';
         $thumbnail = false;
-
-        if (\strpos($element->getAttribute('src'), 'thumbnail=1') !== false) {
+        $src = $element->getAttribute('src');
+        if (\str_contains($src, 'thumbnail=1') || \str_ends_with($src, '.webp')) {
             $thumbnail = true;
         }
 

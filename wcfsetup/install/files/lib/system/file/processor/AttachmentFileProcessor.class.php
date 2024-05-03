@@ -4,6 +4,7 @@ namespace wcf\system\file\processor;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\attachment\Attachment;
+use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
@@ -184,6 +185,12 @@ final class AttachmentFileProcessor implements IFileProcessor
         $attachmentEditor->update([
             $columnName => $thumbnail->thumbnailID,
         ]);
+    }
+
+    #[\Override]
+    public function delete(array $fileIDs, array $thumbnailIDs): void
+    {
+        (new AttachmentAction($fileIDs, 'delete'))->executeAction();
     }
 
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler

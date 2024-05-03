@@ -23,6 +23,12 @@ interface IFileProcessor
 
     public function canDownload(File $file): bool;
 
+    /**
+     * @param list<int> $files
+     * @param list<int> $thumbnails
+     */
+    public function delete(array $fileIDs, array $thumbnailIDs): void;
+
     public function getAllowedFileExtensions(array $context): array;
 
     public function getResizeConfiguration(): ResizeConfiguration;
