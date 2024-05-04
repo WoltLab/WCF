@@ -28,12 +28,12 @@ final class FileProcessor extends SingletonFactory
     /**
      * @var array<string, ObjectType>
      */
-    private array $processors;
+    private array $objectTypes;
 
     #[\Override]
     public function init(): void
     {
-        $this->processors = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.file');
+        $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.file');
     }
 
     public function getProcessorByName(string $objectType): ?IFileProcessor
@@ -47,7 +47,7 @@ final class FileProcessor extends SingletonFactory
             return null;
         }
 
-        foreach ($this->processors as $objectType) {
+        foreach ($this->objectTypes as $objectType) {
             if ($objectType->objectTypeID === $objectTypeID) {
                 return $objectType->getProcessor();
             }
@@ -58,7 +58,7 @@ final class FileProcessor extends SingletonFactory
 
     public function getObjectType(string $objectType): ?ObjectType
     {
-        return $this->processors[$objectType] ?? null;
+        return $this->objectTypes[$objectType] ?? null;
     }
 
     public function getHtmlElement(IFileProcessor $fileProcessor, array $context): string
@@ -160,8 +160,8 @@ final class FileProcessor extends SingletonFactory
         $statement->execute($conditions->getParameters());
         $thumbnailIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        foreach ($this->processors as $processor) {
-            $processor->delete($fileIDs, $thumbnailIDs);
+        foreach ($this->objectTypes as $objectType) {
+            $objectType->getProcessor()->delete($fileIDs, $thumbnailIDs);
         }
     }
 }

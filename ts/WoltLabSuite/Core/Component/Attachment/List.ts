@@ -6,6 +6,7 @@ import "../File/woltlab-core-file";
 import { CkeditorDropEvent } from "../File/Upload";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
+import { initFragment, toggleDropdown } from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -44,17 +45,9 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
         return;
       }
 
-      const buttonList = document.createElement("div");
-      buttonList.classList.add("attachment__item__buttons");
-      buttonList.append(
-        getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element),
-        getInsertAttachBbcodeButton(
-          (data as FileProcessorData).attachmentID,
-          file.isImage() && file.link ? file.link : "",
-          editorId,
-        ),
-      );
+      const extraButtons: HTMLButtonElement[] = [];
 
+      let insertButton: HTMLButtonElement;
       if (file.isImage()) {
         const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
         if (thumbnail !== undefined) {
@@ -63,7 +56,17 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
 
         const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
         if (url !== undefined) {
-          buttonList.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
+          insertButton = getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId);
+
+          extraButtons.push(
+            getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, file.link ? file.link : "", editorId),
+          );
+        } else {
+          insertButton = getInsertAttachBbcodeButton(
+            (data as FileProcessorData).attachmentID,
+            file.link ? file.link : "",
+            editorId,
+          );
         }
 
         if (file.link !== undefined && file.filename !== undefined) {
@@ -78,11 +81,57 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
 
           DomChangeListener.trigger();
         }
+      } else {
+        insertButton = getInsertAttachBbcodeButton(
+          (data as FileProcessorData).attachmentID,
+          file.isImage() && file.link ? file.link : "",
+          editorId,
+        );
       }
 
+      const dropdownMenu = document.createElement("ul");
+      dropdownMenu.classList.add("dropdownMenu");
+      for (const button of extraButtons) {
+        const listItem = document.createElement("li");
+        listItem.append(button);
+        dropdownMenu.append(listItem);
+      }
+
+      if (dropdownMenu.childElementCount !== 0) {
+        const listItem = document.createElement("li");
+        listItem.classList.add("dropdownDivider");
+        dropdownMenu.append(listItem);
+      }
+
+      const listItem = document.createElement("li");
+      listItem.append(getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element));
+      dropdownMenu.append(listItem);
+
+      const moreOptions = document.createElement("button");
+      moreOptions.classList.add("button", "small", "jsTooltip");
+      moreOptions.type = "button";
+      moreOptions.title = "TODO: more options";
+      moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
+
+      const buttonList = document.createElement("div");
+      buttonList.classList.add("attachment__item__buttons");
+      insertButton.classList.add("button", "small");
+      buttonList.append(insertButton, moreOptions);
+
       element.append(buttonList);
+
+      initFragment(moreOptions, dropdownMenu);
+      moreOptions.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        toggleDropdown(moreOptions.id);
+      });
     })
-    .catch(() => {
+    .catch((e) => {
+      if (e instanceof Error) {
+        throw e;
+      }
+
       if (file.validationError === undefined) {
         return;
       }
@@ -101,7 +150,6 @@ function getDeleteAttachButton(
 ): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.classList.add("button", "small");
   button.textContent = "TODO: delete";
 
   button.addEventListener("click", () => {
@@ -128,7 +176,6 @@ function getDeleteAttachButton(
 function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.classList.add("button", "small");
   button.textContent = "TODO: insert";
 
   button.addEventListener("click", () => {
@@ -150,7 +197,6 @@ function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId
 function getInsertThumbnailButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.classList.add("button", "small");
   button.textContent = "TODO: insert thumbnail";
 
   button.addEventListener("click", () => {

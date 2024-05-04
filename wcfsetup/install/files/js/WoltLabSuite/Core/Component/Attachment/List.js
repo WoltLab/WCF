@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener", "../File/woltlab-core-file"], function (require, exports, tslib_1, DeleteFile_1, Event_1, FileUtil_1, Listener_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/Dropdown/Simple", "../File/woltlab-core-file"], function (require, exports, tslib_1, DeleteFile_1, Event_1, FileUtil_1, Listener_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -29,9 +29,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
                 // TODO: error handling
                 return;
             }
-            const buttonList = document.createElement("div");
-            buttonList.classList.add("attachment__item__buttons");
-            buttonList.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element), getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId));
+            const extraButtons = [];
+            let insertButton;
             if (file.isImage()) {
                 const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
@@ -39,7 +38,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
                 }
                 const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
                 if (url !== undefined) {
-                    buttonList.append(getInsertThumbnailButton(data.attachmentID, url, editorId));
+                    insertButton = getInsertThumbnailButton(data.attachmentID, url, editorId);
+                    extraButtons.push(getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editorId));
+                }
+                else {
+                    insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editorId);
                 }
                 if (file.link !== undefined && file.filename !== undefined) {
                     const link = document.createElement("a");
@@ -52,9 +55,44 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
                     Listener_1.default.trigger();
                 }
             }
+            else {
+                insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId);
+            }
+            const dropdownMenu = document.createElement("ul");
+            dropdownMenu.classList.add("dropdownMenu");
+            for (const button of extraButtons) {
+                const listItem = document.createElement("li");
+                listItem.append(button);
+                dropdownMenu.append(listItem);
+            }
+            if (dropdownMenu.childElementCount !== 0) {
+                const listItem = document.createElement("li");
+                listItem.classList.add("dropdownDivider");
+                dropdownMenu.append(listItem);
+            }
+            const listItem = document.createElement("li");
+            listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element));
+            dropdownMenu.append(listItem);
+            const moreOptions = document.createElement("button");
+            moreOptions.classList.add("button", "small", "jsTooltip");
+            moreOptions.type = "button";
+            moreOptions.title = "TODO: more options";
+            moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
+            const buttonList = document.createElement("div");
+            buttonList.classList.add("attachment__item__buttons");
+            insertButton.classList.add("button", "small");
+            buttonList.append(insertButton, moreOptions);
             element.append(buttonList);
+            (0, Simple_1.initFragment)(moreOptions, dropdownMenu);
+            moreOptions.addEventListener("click", (event) => {
+                event.stopPropagation();
+                (0, Simple_1.toggleDropdown)(moreOptions.id);
+            });
         })
-            .catch(() => {
+            .catch((e) => {
+            if (e instanceof Error) {
+                throw e;
+            }
             if (file.validationError === undefined) {
                 return;
             }
@@ -66,7 +104,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
     function getDeleteAttachButton(fileId, attachmentId, editorId, element) {
         const button = document.createElement("button");
         button.type = "button";
-        button.classList.add("button", "small");
         button.textContent = "TODO: delete";
         button.addEventListener("click", () => {
             const editor = document.getElementById(editorId);
@@ -87,7 +124,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
     function getInsertAttachBbcodeButton(attachmentId, url, editorId) {
         const button = document.createElement("button");
         button.type = "button";
-        button.classList.add("button", "small");
         button.textContent = "TODO: insert";
         button.addEventListener("click", () => {
             const editor = document.getElementById(editorId);
@@ -105,7 +141,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile",
     function getInsertThumbnailButton(attachmentId, url, editorId) {
         const button = document.createElement("button");
         button.type = "button";
-        button.classList.add("button", "small");
         button.textContent = "TODO: insert thumbnail";
         button.addEventListener("click", () => {
             const editor = document.getElementById(editorId);
