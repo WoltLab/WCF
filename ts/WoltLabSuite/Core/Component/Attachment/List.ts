@@ -64,6 +64,17 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
         if (url !== undefined) {
           buttonList.append(getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId));
         }
+
+        if (file.link !== undefined && file.filename !== undefined) {
+          const link = document.createElement("a");
+          link.href = file.link!;
+          link.classList.add("jsImageViewer");
+          link.title = file.filename;
+          link.textContent = file.filename;
+
+          filename.innerHTML = "";
+          filename.append(link);
+        }
       }
 
       element.append(buttonList);

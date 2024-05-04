@@ -1315,6 +1315,19 @@ $.widget('ui.wcfImageViewer', {
 			if (!$thumbnail.length) {
 				$thumbnail = $link.parentsUntil('.formAttachmentList').last().find('.attachmentTinyThumbnail');
 			}
+
+			let thumbnailSrc = '';
+			if ($thumbnail.length === 0) {
+				const attachmentItem = $link[0].closest(".attachment__item");
+				if (attachmentItem !== null) {
+					const file = attachmentItem.querySelector("woltlab-core-file");
+					const thumbnail = file?.thumbnails.find((x) => x.identifier === "tiny");
+					thumbnailSrc = thumbnail.link;
+				}
+			} else {
+				thumbnailSrc = $thumbnail.prop("src");
+			}
+
 			
 			$images.push({
 				image: {
@@ -1325,7 +1338,7 @@ $.widget('ui.wcfImageViewer', {
 				},
 				series: null,
 				thumbnail: {
-					url: $thumbnail.prop('src')
+					url: thumbnailSrc
 				},
 				user: null
 			});
