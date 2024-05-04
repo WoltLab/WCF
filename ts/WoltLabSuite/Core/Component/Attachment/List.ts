@@ -5,6 +5,7 @@ import WoltlabCoreFileElement from "../File/woltlab-core-file";
 import "../File/woltlab-core-file";
 import { CkeditorDropEvent } from "../File/Upload";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
+import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -74,6 +75,8 @@ function upload(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: s
 
           filename.innerHTML = "";
           filename.append(link);
+
+          DomChangeListener.trigger();
         }
       }
 

@@ -1,7 +1,8 @@
-define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "WoltLabSuite/Core/FileUtil", "../File/woltlab-core-file"], function (require, exports, DeleteFile_1, Event_1, FileUtil_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Ckeditor/Event", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener", "../File/woltlab-core-file"], function (require, exports, tslib_1, DeleteFile_1, Event_1, FileUtil_1, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     function upload(fileList, file, editorId) {
         const element = document.createElement("li");
         element.classList.add("attachment__item");
@@ -48,6 +49,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Files/DeleteFile", "../Cked
                     link.textContent = file.filename;
                     filename.innerHTML = "";
                     filename.append(link);
+                    Listener_1.default.trigger();
                 }
             }
             element.append(buttonList);
