@@ -340,7 +340,7 @@ class AttachmentHandler implements \Countable
     private function getFileProcessor(): AttachmentFileProcessor
     {
         if (!isset($this->fileProcessor)) {
-            $this->fileProcessor = FileProcessor::getInstance()->forTypeName('com.woltlab.wcf.attachment');
+            $this->fileProcessor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.attachment');
         }
 
         return $this->fileProcessor;

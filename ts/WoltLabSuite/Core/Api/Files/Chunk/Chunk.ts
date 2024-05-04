@@ -8,7 +8,7 @@ export type ResponseCompleted = {
   completed: true;
   generateThumbnails: boolean;
   fileID: number;
-  typeName: string;
+  objectTypeID: number | null;
   mimeType: string;
   link: string;
   data: Record<string, unknown>;

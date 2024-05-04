@@ -4,14 +4,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
     exports.setup = void 0;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
     async function upload(element, file) {
-        const typeName = element.dataset.typeName;
+        const objectType = element.dataset.objectType;
         const fileHash = await getSha256Hash(await file.arrayBuffer());
         const fileElement = document.createElement("woltlab-core-file");
         fileElement.dataset.filename = file.name;
         fileElement.dataset.fileSize = file.size.toString();
         const event = new CustomEvent("uploadStart", { detail: fileElement });
         element.dispatchEvent(event);
-        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, typeName, element.dataset.context || "");
+        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, objectType, element.dataset.context || "");
         if (!response.ok) {
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {

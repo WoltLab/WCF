@@ -16,7 +16,7 @@ use wcf\util\JSON;
  * @property-read string $filename
  * @property-read int $fileSize
  * @property-read string $fileHash
- * @property-read string $typeName
+ * @property-read int|null $objectTypeID
  * @property-read string $context
  * @property-read string $chunks
  */

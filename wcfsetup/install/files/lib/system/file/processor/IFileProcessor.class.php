@@ -33,7 +33,7 @@ interface IFileProcessor
 
     public function getResizeConfiguration(): ResizeConfiguration;
 
-    public function getTypeName(): string;
+    public function getObjectTypeName(): string;
 
     public function getUploadResponse(File $file): array;
 

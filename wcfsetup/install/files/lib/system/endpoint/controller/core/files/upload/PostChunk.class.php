@@ -111,30 +111,29 @@ final class PostChunk implements IController
             unset($fileTemporary);
 
             $processor = $file->getProcessor();
-            if ($processor === null) {
-                // TODO: Mark the file as orphaned.
-                \assert($processor !== null);
-            }
-
-            $processor->adopt($file, $context);
+            $processor?->adopt($file, $context);
 
             $generateThumbnails = false;
-            if ($file->isImage()) {
+            if ($processor !== null && $file->isImage()) {
                 $thumbnailFormats = $processor->getThumbnailFormats();
                 if ($thumbnailFormats !== []) {
                     $generateThumbnails = true;
                 }
             }
 
-            // TODO: This is just debug code.
+            $data = [];
+            if ($processor !== null) {
+                $data = $processor->getUploadResponse($file);
+            }
+
             return new JsonResponse([
                 'completed' => true,
                 'generateThumbnails' => $generateThumbnails,
                 'fileID' => $file->fileID,
-                'typeName' => $file->typeName,
+                'objectTypeID' => $file->objectTypeID,
                 'mimeType' => $file->mimeType,
                 'link' => $file->getLink(),
-                'data' => $processor->getUploadResponse($file),
+                'data' => $data,
             ]);
         }
 

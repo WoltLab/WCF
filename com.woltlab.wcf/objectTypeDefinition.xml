@@ -225,5 +225,9 @@
 			<name>com.woltlab.wcf.multifactor</name>
 			<interfacename>wcf\system\user\multifactor\IMultifactorMethod</interfacename>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.file</name>
+			<interfacename>wcf\system\file\processor\IFileProcessor</interfacename>
+		</definition>
 	</import>
 </data>

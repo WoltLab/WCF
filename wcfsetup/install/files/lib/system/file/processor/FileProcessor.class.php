@@ -6,9 +6,9 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
+use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\event\EventHandler;
-use wcf\system\file\processor\event\FileProcessorCollecting;
 use wcf\system\image\adapter\ImageAdapter;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
@@ -26,21 +26,39 @@ use wcf\util\StringUtil;
 final class FileProcessor extends SingletonFactory
 {
     /**
-     * @var array<string, IFileProcessor>
+     * @var array<string, ObjectType>
      */
     private array $processors;
 
     #[\Override]
     public function init(): void
     {
-        $event = new FileProcessorCollecting();
-        EventHandler::getInstance()->fire($event);
-        $this->processors = $event->getProcessors();
+        $this->processors = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.file');
     }
 
-    public function forTypeName(string $typeName): ?IFileProcessor
+    public function getProcessorByName(string $objectType): ?IFileProcessor
     {
-        return $this->processors[$typeName] ?? null;
+        return $this->getObjectType($objectType)?->getProcessor();
+    }
+
+    public function getProcessorById(?int $objectTypeID): ?IFileProcessor
+    {
+        if ($objectTypeID === null) {
+            return null;
+        }
+
+        foreach ($this->processors as $objectType) {
+            if ($objectType->objectTypeID === $objectTypeID) {
+                return $objectType->getProcessor();
+            }
+        }
+
+        return null;
+    }
+
+    public function getObjectType(string $objectType): ?ObjectType
+    {
+        return $this->processors[$objectType] ?? null;
     }
 
     public function getHtmlElement(IFileProcessor $fileProcessor, array $context): string
@@ -61,13 +79,13 @@ final class FileProcessor extends SingletonFactory
         return \sprintf(
             <<<'HTML'
                 <woltlab-core-file-upload
-                    data-type-name="%s"
+                    data-object-type="%s"
                     data-context="%s"
                     data-file-extensions="%s"
                     data-resize-configuration="%s"
                 ></woltlab-core-file-upload>
                 HTML,
-            StringUtil::encodeHTML($fileProcessor->getTypeName()),
+            StringUtil::encodeHTML($fileProcessor->getObjectTypeName()),
             StringUtil::encodeHTML(JSON::encode($context)),
             StringUtil::encodeHTML($allowedFileExtensions),
             StringUtil::encodeHTML(JSON::encode($fileProcessor->getResizeConfiguration())),

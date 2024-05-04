@@ -22,9 +22,9 @@ final class PostUpload implements IController
     {
         $parameters = Helper::mapApiParameters($request, PostUploadParameters::class);
 
-        $fileProcessor = FileProcessor::getInstance()->forTypeName($parameters->typeName);
+        $fileProcessor = FileProcessor::getInstance()->getProcessorByName($parameters->objectType);
         if ($fileProcessor === null) {
-            throw new UserInputException('typeName', 'unknown');
+            throw new UserInputException('objectType', 'unknown');
         }
 
         try {
@@ -54,6 +54,7 @@ final class PostUpload implements IController
     private function createTemporaryFile(PostUploadParameters $parameters, int $numberOfChunks): FileTemporary
     {
         $identifier = \bin2hex(\random_bytes(20));
+        $objectType = FileProcessor::getInstance()->getObjectType($parameters->objectType);
 
         $action = new FileTemporaryAction([], 'create', [
             'data' => [
@@ -62,7 +63,7 @@ final class PostUpload implements IController
                 'filename' => $parameters->filename,
                 'fileSize' => $parameters->fileSize,
                 'fileHash' => $parameters->fileHash,
-                'typeName' => $parameters->typeName,
+                'objectTypeID' => $objectType?->objectTypeID,
                 'context' => $parameters->context,
                 'chunks' => \str_repeat('0', $numberOfChunks),
             ],
@@ -86,7 +87,7 @@ final class PostUploadParameters
         public readonly string $fileHash,
 
         /** @var non-empty-string */
-        public readonly string $typeName,
+        public readonly string $objectType,
 
         /** @var non-empty-string */
         public readonly string $context,

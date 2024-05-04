@@ -36,7 +36,7 @@ type ResizeConfiguration = {
 };
 
 async function upload(element: WoltlabCoreFileUploadElement, file: File): Promise<ResponseCompleted | undefined> {
-  const typeName = element.dataset.typeName!;
+  const objectType = element.dataset.objectType!;
 
   const fileHash = await getSha256Hash(await file.arrayBuffer());
 
@@ -47,7 +47,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
   const event = new CustomEvent<WoltlabCoreFileElement>("uploadStart", { detail: fileElement });
   element.dispatchEvent(event);
 
-  const response = await filesUpload(file.name, file.size, fileHash, typeName, element.dataset.context || "");
+  const response = await filesUpload(file.name, file.size, fileHash, objectType, element.dataset.context || "");
   if (!response.ok) {
     const validationError = response.error.getValidationError();
     if (validationError === undefined) {

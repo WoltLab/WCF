@@ -23,7 +23,7 @@ use wcf\util\FileUtil;
 final class AttachmentFileProcessor implements IFileProcessor
 {
     #[\Override]
-    public function getTypeName(): string
+    public function getObjectTypeName(): string
     {
         return 'com.woltlab.wcf.attachment';
     }

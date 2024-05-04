@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @property-read string $fileHash
  * @property-read string $fileExtension
  * @property-read string $secret
- * @property-read string $typeName
+ * @property-read int|null $objectTypeID
  * @property-read string $mimeType
  * @property-read int|null $width
  * @property-read int|null $height
@@ -98,7 +98,7 @@ class File extends DatabaseObject
 
     public function getProcessor(): ?IFileProcessor
     {
-        return FileProcessor::getInstance()->forTypeName($this->typeName);
+        return FileProcessor::getInstance()->getProcessorById($this->objectTypeID);
     }
 
     public function isImage(): bool
@@ -142,7 +142,6 @@ class File extends DatabaseObject
             ];
         }
 
-        // TODO: Icon and preview url are missing.
         return \sprintf(
             <<<'EOT'
                 <woltlab-core-file

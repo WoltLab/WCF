@@ -606,7 +606,7 @@ CREATE TABLE wcf1_file (
 	fileHash CHAR(64) NOT NULL,
 	fileExtension VARCHAR(10) NOT NULL,
 	secret CHAR(20) NOT NULL,
-	typeName VARCHAR(255) NOT NULL,
+	objectTypeID INT,
 	mimeType VARCHAR(255) NOT NULL,
 	width INT,
 	height INT
@@ -619,7 +619,7 @@ CREATE TABLE wcf1_file_temporary (
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
 	fileHash CHAR(64) NOT NULL,
-	typeName VARCHAR(255) NOT NULL,
+	objectTypeID INT,
 	context TEXT,
 	chunks VARBINARY(255) NOT NULL
 );
@@ -2074,6 +2074,10 @@ ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENC
 ALTER TABLE wcf1_email_log_entry ADD FOREIGN KEY (recipientID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_file ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_file_temporary ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_file_thumbnail ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE CASCADE;
 
