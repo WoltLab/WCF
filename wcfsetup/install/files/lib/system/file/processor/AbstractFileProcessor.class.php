@@ -6,6 +6,9 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 
 /**
+ * Default implementation for file processors that provide meaningful defaults
+ * for most types of file uploads.
+ *
  * @author Alexander Ebert
  * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
