@@ -20,7 +20,7 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-final class AttachmentFileProcessor implements IFileProcessor
+final class AttachmentFileProcessor extends AbstractFileProcessor
 {
     #[\Override]
     public function getObjectTypeName(): string
