@@ -5545,6 +5545,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateien ausgewählt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} nur noch {#$maxFiles} weitere Datei{if $maxFiles != 1}en{/if} hochladen.]]></item>
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
+		
+		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
+		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 	</category>
 </import>
 <delete>

@@ -158,8 +158,18 @@ function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileEle
     return;
   }
 
-  // TODO: Add a proper error message, this is for development purposes only.
-  markElementAsErroneous(element, JSON.stringify(file.validationError));
+  let errorMessage: string;
+  switch (file.validationError.param) {
+    case "preflight":
+      errorMessage = getPhrase(`wcf.upload.error.${file.validationError.code}`);
+      break;
+
+    default:
+      errorMessage = "Unrecognized error type: " + JSON.stringify(file.validationError);
+      break;
+  }
+
+  markElementAsErroneous(element, errorMessage);
 }
 
 function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {

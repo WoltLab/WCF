@@ -10,9 +10,11 @@ use wcf\data\file\temporary\FileTemporaryAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
+use wcf\system\file\processor\FileProcessorPreflightResult;
 use wcf\util\JSON;
 
 #[PostRequest('/core/files/upload')]
@@ -35,7 +37,11 @@ final class PostUpload implements IController
 
         $validationResult = $fileProcessor->acceptUpload($parameters->filename, $parameters->fileSize, $decodedContext);
         if (!$validationResult->ok()) {
-            throw new UserInputException('filename', $validationResult->toString());
+            match ($validationResult) {
+                FileProcessorPreflightResult::InsufficientPermissions => throw new PermissionDeniedException(),
+                FileProcessorPreflightResult::InvalidContext => throw new UserInputException('context', 'invalid'),
+                default => throw new UserInputException('preflight', $validationResult->toString()),
+            };
         }
 
         $numberOfChunks = FileTemporary::getNumberOfChunks($parameters->fileSize);

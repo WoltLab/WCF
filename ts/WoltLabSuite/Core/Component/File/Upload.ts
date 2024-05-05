@@ -10,6 +10,7 @@ import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnai
 import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 import { AttachmentData } from "../Ckeditor/Attachment";
 import { innerError } from "WoltLabSuite/Core/Dom/Util";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export type CkeditorDropEvent = {
   file: File;
@@ -185,7 +186,7 @@ function validateFile(element: WoltlabCoreFileUploadElement, file: File): boolea
     }
   }
 
-  innerError(element, `TODO: the file extension of '${file.name}' is not allowed`);
+  innerError(element, getPhrase("wcf.upload.error.fileExtensionNotPermitted", { filename: file.name }));
 
   return false;
 }

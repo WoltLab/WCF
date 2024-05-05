@@ -117,8 +117,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         if (file.validationError === undefined) {
             return;
         }
-        // TODO: Add a proper error message, this is for development purposes only.
-        markElementAsErroneous(element, JSON.stringify(file.validationError));
+        let errorMessage;
+        switch (file.validationError.param) {
+            case "preflight":
+                errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${file.validationError.code}`);
+                break;
+            default:
+                errorMessage = "Unrecognized error type: " + JSON.stringify(file.validationError);
+                break;
+        }
+        markElementAsErroneous(element, errorMessage);
     }
     function markElementAsErroneous(element, errorMessage) {
         element.classList.add("attachment__item--error");

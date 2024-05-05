@@ -36,15 +36,4 @@ enum FileProcessorPreflightResult
             self::Passed => 'passed',
         };
     }
-
-    public function toErrorMessage(): string
-    {
-        if ($this->ok()) {
-            throw new \RuntimeException("Cannot invoke `toErrorMessage()` on a successful result.");
-        }
-
-        $phraseSuffix = $this->toString();
-
-        return WCF::getLanguage()->get("wcf.file.preflight.error.{$phraseSuffix}");
-    }
 }
