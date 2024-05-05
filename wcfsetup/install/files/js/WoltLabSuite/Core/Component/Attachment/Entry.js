@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile"], function (require, exports, tslib_1, FileUtil_1, Simple_1, Listener_1, Event_1, DeleteFile_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, FileUtil_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = void 0;
@@ -29,11 +29,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             }
             const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
             if (url !== undefined) {
-                insertButton = getInsertThumbnailButton(data.attachmentID, url, editor);
-                extraButtons.push(getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editor));
+                insertButton = getInsertButton(data.attachmentID, url, editor);
+                const insertOriginalImage = getInsertButton(data.attachmentID, file.link, editor);
+                insertOriginalImage.textContent = (0, Language_1.getPhrase)("wcf.attachment.insertFull");
+                extraButtons.push(insertOriginalImage);
             }
             else {
-                insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editor);
+                insertButton = getInsertButton(data.attachmentID, file.link ? file.link : "", editor);
             }
             if (file.link !== undefined && file.filename !== undefined) {
                 const link = document.createElement("a");
@@ -48,7 +50,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             }
         }
         else {
-            insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editor);
+            insertButton = getInsertButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editor);
         }
         const dropdownMenu = document.createElement("ul");
         dropdownMenu.classList.add("dropdownMenu");
@@ -66,9 +68,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element));
         dropdownMenu.append(listItem);
         const moreOptions = document.createElement("button");
-        moreOptions.classList.add("button", "small", "jsTooltip");
+        moreOptions.classList.add("button", "small");
         moreOptions.type = "button";
-        moreOptions.title = "TODO: more options";
+        moreOptions.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.global.button.more"));
         moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
         const buttonList = document.createElement("div");
         buttonList.classList.add("attachment__item__buttons");
@@ -84,7 +86,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
     function getDeleteAttachButton(fileId, attachmentId, editor, element) {
         const button = document.createElement("button");
         button.type = "button";
-        button.textContent = "TODO: delete";
+        button.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
         button.addEventListener("click", () => {
             void (0, DeleteFile_1.deleteFile)(fileId).then((result) => {
                 result.unwrap();
@@ -96,22 +98,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         });
         return button;
     }
-    function getInsertAttachBbcodeButton(attachmentId, url, editor) {
+    function getInsertButton(attachmentId, url, editor) {
         const button = document.createElement("button");
         button.type = "button";
-        button.textContent = "TODO: insert";
-        button.addEventListener("click", () => {
-            (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
-                attachmentId,
-                url,
-            });
-        });
-        return button;
-    }
-    function getInsertThumbnailButton(attachmentId, url, editor) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.textContent = "TODO: insert thumbnail";
+        button.textContent = (0, Language_1.getPhrase)("wcf.attachment.insert");
         button.addEventListener("click", () => {
             (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
                 attachmentId,

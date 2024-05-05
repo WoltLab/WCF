@@ -16,6 +16,10 @@
 	</dl>
 
 	<script data-relocate="true">
+		{jsphrase name='wcf.attachment.insert'}
+		{jsphrase name='wcf.attachment.insertFull'}
+		{jsphrase name='wcf.attachment.moreOptions'}
+
 		require(["WoltLabSuite/Core/Component/Attachment/List"], ({ setup }) => {
 			setup("{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}");
 		});

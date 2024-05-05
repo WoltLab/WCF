@@ -4,6 +4,7 @@ import { initFragment, toggleDropdown } from "WoltLabSuite/Core/Ui/Dropdown/Simp
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -39,17 +40,13 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
 
     const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
     if (url !== undefined) {
-      insertButton = getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editor);
+      insertButton = getInsertButton((data as FileProcessorData).attachmentID, url, editor);
 
-      extraButtons.push(
-        getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, file.link ? file.link : "", editor),
-      );
+      const insertOriginalImage = getInsertButton((data as FileProcessorData).attachmentID, file.link!, editor);
+      insertOriginalImage.textContent = getPhrase("wcf.attachment.insertFull");
+      extraButtons.push(insertOriginalImage);
     } else {
-      insertButton = getInsertAttachBbcodeButton(
-        (data as FileProcessorData).attachmentID,
-        file.link ? file.link : "",
-        editor,
-      );
+      insertButton = getInsertButton((data as FileProcessorData).attachmentID, file.link ? file.link : "", editor);
     }
 
     if (file.link !== undefined && file.filename !== undefined) {
@@ -66,7 +63,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
       DomChangeListener.trigger();
     }
   } else {
-    insertButton = getInsertAttachBbcodeButton(
+    insertButton = getInsertButton(
       (data as FileProcessorData).attachmentID,
       file.isImage() && file.link ? file.link : "",
       editor,
@@ -92,9 +89,9 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
   dropdownMenu.append(listItem);
 
   const moreOptions = document.createElement("button");
-  moreOptions.classList.add("button", "small", "jsTooltip");
+  moreOptions.classList.add("button", "small");
   moreOptions.type = "button";
-  moreOptions.title = "TODO: more options";
+  moreOptions.setAttribute("aria-label", getPhrase("wcf.global.button.more"));
   moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
 
   const buttonList = document.createElement("div");
@@ -120,7 +117,7 @@ function getDeleteAttachButton(
 ): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.textContent = "TODO: delete";
+  button.textContent = getPhrase("wcf.global.button.delete");
 
   button.addEventListener("click", () => {
     void deleteFile(fileId).then((result) => {
@@ -137,25 +134,10 @@ function getDeleteAttachButton(
   return button;
 }
 
-function getInsertAttachBbcodeButton(attachmentId: number, url: string, editor: HTMLElement): HTMLButtonElement {
+function getInsertButton(attachmentId: number, url: string, editor: HTMLElement): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.textContent = "TODO: insert";
-
-  button.addEventListener("click", () => {
-    dispatchToCkeditor(editor).insertAttachment({
-      attachmentId,
-      url,
-    });
-  });
-
-  return button;
-}
-
-function getInsertThumbnailButton(attachmentId: number, url: string, editor: HTMLElement): HTMLButtonElement {
-  const button = document.createElement("button");
-  button.type = "button";
-  button.textContent = "TODO: insert thumbnail";
+  button.textContent = getPhrase("wcf.attachment.insert");
 
   button.addEventListener("click", () => {
     dispatchToCkeditor(editor).insertAttachment({
