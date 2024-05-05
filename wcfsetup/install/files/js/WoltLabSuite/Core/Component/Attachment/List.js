@@ -2,19 +2,17 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-c
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    function fileToAttachment(fileList, file, editorId) {
-        fileList.append((0, Entry_1.createAttachmentFromFile)(file, editorId));
+    function fileToAttachment(fileList, file, editor) {
+        fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor));
     }
     function setup(editorId) {
         const container = document.getElementById(`attachments_${editorId}`);
         if (container === null) {
-            // TODO: error handling
-            return;
+            throw new Error(`The attachments container for '${editorId}' does not exist.`);
         }
         const editor = document.getElementById(editorId);
         if (editor === null) {
-            // TODO: error handling
-            return;
+            throw new Error(`The editor element for '${editorId}' does not exist.`);
         }
         const uploadButton = container.querySelector("woltlab-core-file-upload");
         if (uploadButton === null) {
@@ -31,7 +29,7 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-c
             uploadButton.insertAdjacentElement("afterend", fileList);
         }
         uploadButton.addEventListener("uploadStart", (event) => {
-            fileToAttachment(fileList, event.detail, editorId);
+            fileToAttachment(fileList, event.detail, editor);
         });
         (0, Event_1.listenToCkeditor)(editor).uploadAttachment((payload) => {
             const event = new CustomEvent("ckeditorDrop", {
@@ -42,7 +40,7 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-c
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {
             existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-                fileToAttachment(fileList, file, editorId);
+                fileToAttachment(fileList, file, editor);
             });
             existingFiles.remove();
         }

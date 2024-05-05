@@ -9,17 +9,23 @@ type FileProcessorData = {
   attachmentID: number;
 };
 
-function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFileElement, editorId: string): void {
+function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
   const data = file.data;
   if (data === undefined) {
-    // TODO: error handling
-    return;
+    throw new Error("No meta data was returned from the server.", {
+      cause: {
+        file,
+      },
+    });
   }
 
   const fileId = file.fileId;
   if (fileId === undefined) {
-    // TODO: error handling
-    return;
+    throw new Error("The file id is not set.", {
+      cause: {
+        file,
+      },
+    });
   }
 
   const extraButtons: HTMLButtonElement[] = [];
@@ -33,16 +39,16 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
 
     const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
     if (url !== undefined) {
-      insertButton = getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editorId);
+      insertButton = getInsertThumbnailButton((data as FileProcessorData).attachmentID, url, editor);
 
       extraButtons.push(
-        getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, file.link ? file.link : "", editorId),
+        getInsertAttachBbcodeButton((data as FileProcessorData).attachmentID, file.link ? file.link : "", editor),
       );
     } else {
       insertButton = getInsertAttachBbcodeButton(
         (data as FileProcessorData).attachmentID,
         file.link ? file.link : "",
-        editorId,
+        editor,
       );
     }
 
@@ -63,7 +69,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
     insertButton = getInsertAttachBbcodeButton(
       (data as FileProcessorData).attachmentID,
       file.isImage() && file.link ? file.link : "",
-      editorId,
+      editor,
     );
   }
 
@@ -82,7 +88,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
   }
 
   const listItem = document.createElement("li");
-  listItem.append(getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editorId, element));
+  listItem.append(getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editor, element));
   dropdownMenu.append(listItem);
 
   const moreOptions = document.createElement("button");
@@ -109,7 +115,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
 function getDeleteAttachButton(
   fileId: number,
   attachmentId: number,
-  editorId: string,
+  editor: HTMLElement,
   element: HTMLElement,
 ): HTMLButtonElement {
   const button = document.createElement("button");
@@ -117,12 +123,6 @@ function getDeleteAttachButton(
   button.textContent = "TODO: delete";
 
   button.addEventListener("click", () => {
-    const editor = document.getElementById(editorId);
-    if (editor === null) {
-      // TODO: error handling
-      return;
-    }
-
     void deleteFile(fileId).then((result) => {
       result.unwrap();
 
@@ -137,18 +137,12 @@ function getDeleteAttachButton(
   return button;
 }
 
-function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
+function getInsertAttachBbcodeButton(attachmentId: number, url: string, editor: HTMLElement): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.textContent = "TODO: insert";
 
   button.addEventListener("click", () => {
-    const editor = document.getElementById(editorId);
-    if (editor === null) {
-      // TODO: error handling
-      return;
-    }
-
     dispatchToCkeditor(editor).insertAttachment({
       attachmentId,
       url,
@@ -158,18 +152,12 @@ function getInsertAttachBbcodeButton(attachmentId: number, url: string, editorId
   return button;
 }
 
-function getInsertThumbnailButton(attachmentId: number, url: string, editorId: string): HTMLButtonElement {
+function getInsertThumbnailButton(attachmentId: number, url: string, editor: HTMLElement): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.textContent = "TODO: insert thumbnail";
 
   button.addEventListener("click", () => {
-    const editor = document.getElementById(editorId);
-    if (editor === null) {
-      // TODO: error handling
-      return;
-    }
-
     dispatchToCkeditor(editor).insertAttachment({
       attachmentId,
       url,
@@ -189,11 +177,20 @@ function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileEle
   }
 
   // TODO: Add a proper error message, this is for development purposes only.
-  element.append(JSON.stringify(file.validationError));
-  element.classList.add("attachment__item--error");
+  markElementAsErroneous(element, JSON.stringify(file.validationError));
 }
 
-export function createAttachmentFromFile(file: WoltlabCoreFileElement, editorId: string) {
+function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {
+  element.classList.add("attachment__item--error");
+
+  const errorElement = document.createElement("div");
+  errorElement.classList.add("attachemnt__item__errorMessage");
+  errorElement.textContent = errorMessage;
+
+  element.append(errorElement);
+}
+
+export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {
   const element = document.createElement("li");
   element.classList.add("attachment__item");
 
@@ -213,7 +210,7 @@ export function createAttachmentFromFile(file: WoltlabCoreFileElement, editorId:
 
   void file.ready
     .then(() => {
-      fileInitializationCompleted(element, file, editorId);
+      fileInitializationCompleted(element, file, editor);
     })
     .catch((reason) => {
       fileInitializationFailed(element, file, reason);

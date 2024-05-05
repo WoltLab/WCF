@@ -3,16 +3,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = void 0;
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    function fileInitializationCompleted(element, file, editorId) {
+    function fileInitializationCompleted(element, file, editor) {
         const data = file.data;
         if (data === undefined) {
-            // TODO: error handling
-            return;
+            throw new Error("No meta data was returned from the server.", {
+                cause: {
+                    file,
+                },
+            });
         }
         const fileId = file.fileId;
         if (fileId === undefined) {
-            // TODO: error handling
-            return;
+            throw new Error("The file id is not set.", {
+                cause: {
+                    file,
+                },
+            });
         }
         const extraButtons = [];
         let insertButton;
@@ -23,11 +29,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             }
             const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
             if (url !== undefined) {
-                insertButton = getInsertThumbnailButton(data.attachmentID, url, editorId);
-                extraButtons.push(getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editorId));
+                insertButton = getInsertThumbnailButton(data.attachmentID, url, editor);
+                extraButtons.push(getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editor));
             }
             else {
-                insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editorId);
+                insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.link ? file.link : "", editor);
             }
             if (file.link !== undefined && file.filename !== undefined) {
                 const link = document.createElement("a");
@@ -42,7 +48,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             }
         }
         else {
-            insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editorId);
+            insertButton = getInsertAttachBbcodeButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editor);
         }
         const dropdownMenu = document.createElement("ul");
         dropdownMenu.classList.add("dropdownMenu");
@@ -57,7 +63,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             dropdownMenu.append(listItem);
         }
         const listItem = document.createElement("li");
-        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editorId, element));
+        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element));
         dropdownMenu.append(listItem);
         const moreOptions = document.createElement("button");
         moreOptions.classList.add("button", "small", "jsTooltip");
@@ -75,16 +81,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             (0, Simple_1.toggleDropdown)(moreOptions.id);
         });
     }
-    function getDeleteAttachButton(fileId, attachmentId, editorId, element) {
+    function getDeleteAttachButton(fileId, attachmentId, editor, element) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = "TODO: delete";
         button.addEventListener("click", () => {
-            const editor = document.getElementById(editorId);
-            if (editor === null) {
-                // TODO: error handling
-                return;
-            }
             void (0, DeleteFile_1.deleteFile)(fileId).then((result) => {
                 result.unwrap();
                 (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
@@ -95,16 +96,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         });
         return button;
     }
-    function getInsertAttachBbcodeButton(attachmentId, url, editorId) {
+    function getInsertAttachBbcodeButton(attachmentId, url, editor) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = "TODO: insert";
         button.addEventListener("click", () => {
-            const editor = document.getElementById(editorId);
-            if (editor === null) {
-                // TODO: error handling
-                return;
-            }
             (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
                 attachmentId,
                 url,
@@ -112,16 +108,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         });
         return button;
     }
-    function getInsertThumbnailButton(attachmentId, url, editorId) {
+    function getInsertThumbnailButton(attachmentId, url, editor) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = "TODO: insert thumbnail";
         button.addEventListener("click", () => {
-            const editor = document.getElementById(editorId);
-            if (editor === null) {
-                // TODO: error handling
-                return;
-            }
             (0, Event_1.dispatchToCkeditor)(editor).insertAttachment({
                 attachmentId,
                 url,
@@ -137,10 +128,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             return;
         }
         // TODO: Add a proper error message, this is for development purposes only.
-        element.append(JSON.stringify(file.validationError));
-        element.classList.add("attachment__item--error");
+        markElementAsErroneous(element, JSON.stringify(file.validationError));
     }
-    function createAttachmentFromFile(file, editorId) {
+    function markElementAsErroneous(element, errorMessage) {
+        element.classList.add("attachment__item--error");
+        const errorElement = document.createElement("div");
+        errorElement.classList.add("attachemnt__item__errorMessage");
+        errorElement.textContent = errorMessage;
+        element.append(errorElement);
+    }
+    function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("attachment__item");
         const fileWrapper = document.createElement("div");
@@ -155,7 +152,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         element.append(fileWrapper, filename, fileSize);
         void file.ready
             .then(() => {
-            fileInitializationCompleted(element, file, editorId);
+            fileInitializationCompleted(element, file, editor);
         })
             .catch((reason) => {
             fileInitializationFailed(element, file, reason);

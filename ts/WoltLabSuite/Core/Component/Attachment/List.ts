@@ -7,21 +7,19 @@ import { listenToCkeditor } from "../Ckeditor/Event";
 // element. Do not remove!
 import "../File/woltlab-core-file";
 
-function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editorId: string): void {
-  fileList.append(createAttachmentFromFile(file, editorId));
+function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
+  fileList.append(createAttachmentFromFile(file, editor));
 }
 
 export function setup(editorId: string): void {
   const container = document.getElementById(`attachments_${editorId}`);
   if (container === null) {
-    // TODO: error handling
-    return;
+    throw new Error(`The attachments container for '${editorId}' does not exist.`);
   }
 
   const editor = document.getElementById(editorId);
   if (editor === null) {
-    // TODO: error handling
-    return;
+    throw new Error(`The editor element for '${editorId}' does not exist.`);
   }
 
   const uploadButton = container.querySelector("woltlab-core-file-upload");
@@ -41,7 +39,7 @@ export function setup(editorId: string): void {
   }
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    fileToAttachment(fileList!, event.detail, editorId);
+    fileToAttachment(fileList!, event.detail, editor);
   });
 
   listenToCkeditor(editor).uploadAttachment((payload) => {
@@ -54,7 +52,7 @@ export function setup(editorId: string): void {
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {
     existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-      fileToAttachment(fileList!, file, editorId);
+      fileToAttachment(fileList!, file, editor);
     });
 
     existingFiles.remove();
