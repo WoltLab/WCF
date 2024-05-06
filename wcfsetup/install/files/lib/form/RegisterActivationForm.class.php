@@ -147,7 +147,8 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }
 
-        $command = new RegistrationNotification($this->user);
+        // User must be reloaded to get the correct activation status.
+        $command = new RegistrationNotification(new User($this->user->userID));
         $command();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
