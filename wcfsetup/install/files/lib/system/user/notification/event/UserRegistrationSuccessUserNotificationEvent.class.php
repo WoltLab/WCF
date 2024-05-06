@@ -7,7 +7,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
 
 /**
- * Notification event for users that need activation by an admin.
+ * Notification event for users that completed the registration process.
  *
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
  *
  * @method  UserRegistrationUserNotificationObject  getUserNotificationObject()
  */
-class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEvent implements
+class UserRegistrationSuccessUserNotificationEvent extends AbstractUserNotificationEvent implements
     ITestableUserNotificationEvent
 {
     use TTestableUserNotificationEvent;
@@ -30,14 +30,14 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
     #[\Override]
     public function getTitle(): string
     {
-        return $this->getLanguage()->get('wcf.user.notification.userNeedActivation.title');
+        return $this->getLanguage()->get('wcf.user.notification.registrationSuccess.title');
     }
 
     #[\Override]
     public function getMessage()
     {
         return $this->getLanguage()->getDynamicVariable(
-            'wcf.user.notification.userNeedActivation.message',
+            'wcf.user.notification.registrationSuccess.message',
             [
                 'author' => $this->author,
                 'notification' => $this->notification,
@@ -50,7 +50,7 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
     public function getEmailMessage($notificationType = 'instant')
     {
         return [
-            'template' => 'email_notification_userNeedActivation',
+            'template' => 'email_notification_userRegistrationSuccess',
             'application' => 'wcf',
             'variables' => [
                 'notification' => $this->notification,

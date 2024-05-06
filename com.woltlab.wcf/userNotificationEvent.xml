@@ -144,7 +144,14 @@
 			<name>needActivation</name>
 			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserNeedActivationUserNotificationEvent</classname>
-			<permissions>admin.user.canEnableUser</permissions>
+			<permissions>admin.user.canSearchUser</permissions>
+			<preset>0</preset>
+		</event>
+		<event>
+			<name>success</name>
+			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserRegistrationSuccessUserNotificationEvent</classname>
+			<permissions>admin.user.canSearchUser</permissions>
 			<preset>0</preset>
 		</event>
 	</import>

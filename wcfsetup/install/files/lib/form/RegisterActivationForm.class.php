@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\command\RegistrationNotification;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -145,6 +146,9 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         } else {
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }
+
+        $command = new RegistrationNotification($this->user);
+        $command();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
 

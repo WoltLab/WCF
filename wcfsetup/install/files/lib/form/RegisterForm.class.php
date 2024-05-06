@@ -25,6 +25,7 @@ use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
+use wcf\system\user\command\RegistrationNotification;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -445,8 +446,6 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
-
-            $this->fireNotificationEvent($user);
         } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
             // registering via 3rdParty leads to instant activation
             if ($registerVia3rdParty) {
@@ -467,6 +466,9 @@ class RegisterForm extends UserAddForm
         } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || !empty($this->blacklistMatches)) {
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
+
+        $command = new RegistrationNotification($user);
+        $command();
 
         if ($this->captchaObjectType) {
             $this->captchaObjectType->getProcessor()->reset();
@@ -491,41 +493,5 @@ class RegisterForm extends UserAddForm
         );
 
         exit;
-    }
-
-    /**
-     * @param User $user
-     * @since       5.2
-     */
-    protected function fireNotificationEvent(User $user)
-    {
-        // TODO fire notification if registration don't require activation per email or manuell from an admin
-    }
-
-    /**
-     * @return      int[]
-     * @since       5.2
-     */
-    protected function getRecipientsForNotificationEvent()
-    {
-        $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_user_to_group
-                WHERE   groupID IN (
-                        SELECT  groupID
-                        FROM    wcf" . WCF_N . "_user_group_option_value
-                        WHERE   optionID IN (
-                                    SELECT  optionID
-                                    FROM    wcf" . WCF_N . "_user_group_option
-                                    WHERE   optionName = ?
-                                )
-                            AND optionValue = ?
-                    )";
-        $statement = WCF::getDB()->prepareStatement($sql, 100);
-        $statement->execute([
-            'admin.user.canSearchUser',
-            1,
-        ]);
-
-        return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 }
