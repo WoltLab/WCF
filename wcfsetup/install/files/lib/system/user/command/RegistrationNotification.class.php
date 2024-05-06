@@ -23,7 +23,7 @@ final class RegistrationNotification
 
     public function __invoke(): void
     {
-        if ($this->user->pendingActivation() && !$this->user->requiresAdminActivation()) {
+        if ($this->user->requiresEmailActivation()) {
             return;
         }
 
