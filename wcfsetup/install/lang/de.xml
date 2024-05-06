@@ -5442,6 +5442,11 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Präferenz festlegen]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.needActivation"><![CDATA[Benutzer benötigt Freischaltung]]></item>
+		<item name="wcf.user.notification.userNeedActivation.title"><![CDATA[Benutzer benötigt Freischaltung]]></item>
+		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[Der Benutzer <strong>{$userNotificationObject->username}</strong> hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[Der Benutzer „{$userNotificationObject->username}“ hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>Der Benutzer <strong>{$userNotificationObject->username}</strong> sich registriert und wartet auf die Freischaltung durch den Administrator.</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}Sie{/if} sichtbaren Informationen hinterlegt.{/if}]]></item>

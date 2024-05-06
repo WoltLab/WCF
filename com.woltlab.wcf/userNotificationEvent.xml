@@ -140,6 +140,13 @@
 			<preset>1</preset>
 			<options>module_like,module_article</options>
 		</event>
+		<event>
+			<name>needActivation</name>
+			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserNeedActivationUserNotificationEvent</classname>
+			<permissions>admin.user.canEnableUser</permissions>
+			<preset>0</preset>
+		</event>
 	</import>
 
 	<delete>
@@ -149,7 +156,6 @@
 			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>registration</name>
 			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
