@@ -26,8 +26,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
-use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
@@ -447,6 +445,8 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
+
+            $this->fireNotificationEvent($user);
         } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
             // registering via 3rdParty leads to instant activation
             if ($registerVia3rdParty) {
@@ -467,8 +467,6 @@ class RegisterForm extends UserAddForm
         } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || !empty($this->blacklistMatches)) {
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
-
-        $this->fireNotificationEvent($user);
 
         if ($this->captchaObjectType) {
             $this->captchaObjectType->getProcessor()->reset();
@@ -501,15 +499,7 @@ class RegisterForm extends UserAddForm
      */
     protected function fireNotificationEvent(User $user)
     {
-        $recipientIDs = $this->getRecipientsForNotificationEvent();
-        if (!empty($recipientIDs)) {
-            UserNotificationHandler::getInstance()->fireEvent(
-                'registration',
-                'com.woltlab.wcf.user.registration.notification',
-                new UserRegistrationUserNotificationObject($user),
-                $recipientIDs
-            );
-        }
+        // TODO fire notification if registration don't require activation per email or manuell from an admin
     }
 
     /**

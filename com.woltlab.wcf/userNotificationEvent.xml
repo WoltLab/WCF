@@ -140,14 +140,6 @@
 			<preset>1</preset>
 			<options>module_like,module_article</options>
 		</event>
-		
-		<event>
-			<name>registration</name>
-			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
-			<classname>wcf\system\user\notification\event\UserRegistrationUserNotificationEvent</classname>
-			<permissions>admin.user.canSearchUser</permissions>
-			<preset>0</preset>
-		</event>
 	</import>
 
 	<delete>
@@ -156,6 +148,14 @@
 			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
 			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
+		</event>
+		
+		<event>
+			<name>registration</name>
+			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserRegistrationUserNotificationEvent</classname>
+			<permissions>admin.user.canSearchUser</permissions>
+			<preset>0</preset>
 		</event>
 	</delete>
 </data>

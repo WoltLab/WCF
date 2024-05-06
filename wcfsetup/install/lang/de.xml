@@ -5379,7 +5379,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <strong>{$userTrophy->getTrophy()}</strong> erhalten.]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Neue Registrierung durch Benutzer]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[Neue Meldung]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
@@ -5439,12 +5438,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel und Artikeln aus abonnierten Kategorien]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel-Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Artikel-Kommentar]]></item>
-		<item name="wcf.user.notification.userRegistration.title"><![CDATA[Neue Benutzer-Registrierung]]></item>
-		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} neue Benutzer-Registrierungen]]></item>
-		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> hat sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert:</p>]]></item>
 		<item name="wcf.user.notification.status.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
@@ -7546,5 +7539,12 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.editor.button.group.block"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting.description"/>
+	<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"/>
+	<item name="wcf.user.notification.userRegistration.title"/>
+	<item name="wcf.user.notification.userRegistration.title.stacked"/>
+	<item name="wcf.user.notification.userRegistration.message"/>
+	<item name="wcf.user.notification.userRegistration.message.stacked"/>
+	<item name="wcf.user.notification.userRegistration.mail.plaintext"/>
+	<item name="wcf.user.notification.userRegistration.mail.html"/>
 </delete>
 </language>
