@@ -1,5 +1,5 @@
 {if $mimeType === 'text/plain'}
-	{lang}wcf.user.notification.registrationSuccess.mail.plaintext{/lang}
+{lang}wcf.user.notification.registrationSuccess.mail.plaintext{/lang}
 {else}
 	{lang}wcf.user.notification.registrationSuccess.mail.html{/lang}
 	{assign var='user' value=$event->getAuthor()}
