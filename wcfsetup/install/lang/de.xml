@@ -5445,8 +5445,8 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.needActivation"><![CDATA[Benutzer benötigt Freischaltung]]></item>
 		<item name="wcf.user.notification.userNeedActivation.title"><![CDATA[Benutzer benötigt Freischaltung]]></item>
 		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[Der Benutzer <strong>{$userNotificationObject->username}</strong> hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
-		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[Der Benutzer „{$userNotificationObject->username}“ hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
-		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>Der Benutzer <strong>{$userNotificationObject->username}</strong> sich registriert und wartet auf die Freischaltung durch den Administrator.</p>]]></item>
+		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[Der Benutzer „{unsafe:$userNotificationObject->username}“ hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>Der Benutzer <strong>{$userNotificationObject->username}</strong> hat sich registriert und wartet auf die Freischaltung durch den Administrator.</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.success"><![CDATA[Benutzer hat Registrierung abgeschlossen]]></item>
 		<item name="wcf.user.notification.registrationSuccess.title"><![CDATA[Benutzer hat Registrierung abgeschlossen]]></item>
 		<item name="wcf.user.notification.registrationSuccess.message"><![CDATA[Der Benutzer <strong>{$userNotificationObject->username}</strong> hat die Registrierung abgeschlossen und sein Benutzerkonto ist freigeschaltet.]]></item>
