@@ -41,6 +41,7 @@ class UserRegistrationSuccessUserNotificationEvent extends AbstractUserNotificat
             [
                 'author' => $this->author,
                 'notification' => $this->notification,
+                'username' => $this->getUserNotificationObject()->username,
                 'userNotificationObject' => $this->getUserNotificationObject(),
             ]
         );
@@ -54,6 +55,7 @@ class UserRegistrationSuccessUserNotificationEvent extends AbstractUserNotificat
             'application' => 'wcf',
             'variables' => [
                 'notification' => $this->notification,
+	            'username' => $this->getUserNotificationObject()->username,
                 'userNotificationObject' => $this->getUserNotificationObject(),
             ],
         ];

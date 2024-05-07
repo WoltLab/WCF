@@ -41,6 +41,7 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
             [
                 'author' => $this->author,
                 'notification' => $this->notification,
+                'username' => $this->getUserNotificationObject()->username,
                 'userNotificationObject' => $this->getUserNotificationObject(),
             ]
         );
@@ -54,6 +55,7 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
             'application' => 'wcf',
             'variables' => [
                 'notification' => $this->notification,
+                'username' => $this->getUserNotificationObject()->username,
                 'userNotificationObject' => $this->getUserNotificationObject(),
             ],
         ];

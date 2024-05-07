@@ -5446,14 +5446,14 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Change Preference]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.needActivation"><![CDATA[User requires activation]]></item>
 		<item name="wcf.user.notification.userNeedActivation.title"><![CDATA[User requires activation]]></item>
-		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[The user <strong>{$userNotificationObject->username}</strong> has registered and is waiting to be activated by the administrator.]]></item>
-		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[The user {$userNotificationObject->username} has registered and is waiting to be activated by the administrator.]]></item>
-		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>The user <strong>{$userNotificationObject->username}</strong> has registered and is waiting to be activated by the administrator.</p>]]></item>
+		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[The user <strong>{$username}</strong> has registered and is waiting to be activated by the administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[The user {$username} has registered and is waiting to be activated by the administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>The user <strong>{$username}</strong> has registered and is waiting to be activated by the administrator.</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.success"><![CDATA[User has completed registration]]></item>
 		<item name="wcf.user.notification.registrationSuccess.title"><![CDATA[User has completed registration]]></item>
-		<item name="wcf.user.notification.registrationSuccess.message"><![CDATA[The user <strong>{$userNotificationObject->username}</strong> has completed the registration and their account has been activated.]]></item>
-		<item name="wcf.user.notification.registrationSuccess.mail.plaintext"><![CDATA[The user “{$userNotificationObject->username}” has completed the registration and their account has been  activated.]]></item>
-		<item name="wcf.user.notification.registrationSuccess.mail.html"><![CDATA[<p>The user <strong>{$userNotificationObject->username}</strong> has completed the registration and their account has been activated.</p>]]></item>
+		<item name="wcf.user.notification.registrationSuccess.message"><![CDATA[The user <strong>{$username}</strong> has completed the registration and their account has been activated.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.plaintext"><![CDATA[The user “{$username}” has completed the registration and their account has been  activated.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.html"><![CDATA[<p>The user <strong>{$username}</strong> has completed the registration and their account has been activated.</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
