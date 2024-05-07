@@ -5380,7 +5380,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophy received]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You received the trophy <strong>{$userTrophy->getTrophy()}</strong>.]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Notify me of new user registrations]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[New report]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
@@ -5441,16 +5440,20 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.like.notification.like"><![CDATA[Notify me when someone reacted to my article comments]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.like.notification.like"><![CDATA[Notify me when someone reacted to my replies to article comments]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[New Reply (Page)]]></item>
-		<item name="wcf.user.notification.userRegistration.title"><![CDATA[New user registration]]></item>
-		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} new user registrations]]></item>
-		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> has registered.]]></item>
-		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} have registered.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}has{else}have{/if} registered.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}has{else}have{/if} registered:</p>]]></item>
 		<item name="wcf.user.notification.status.active"><![CDATA[Active]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[Email]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[Enable desktop notifications to receive alerts for new notifications.]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Change Preference]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.needActivation"><![CDATA[User requires activation]]></item>
+		<item name="wcf.user.notification.userNeedActivation.title"><![CDATA[User requires activation]]></item>
+		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[The user <strong>{$username}</strong> has registered and is waiting to be activated by the administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[The user {unsafe:$username} has registered and is waiting to be activated by the administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>The user <strong>{$username}</strong> has registered and is waiting to be activated by the administrator.</p>]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.success"><![CDATA[User has completed registration]]></item>
+		<item name="wcf.user.notification.registrationSuccess.title"><![CDATA[User has completed registration]]></item>
+		<item name="wcf.user.notification.registrationSuccess.message"><![CDATA[The user <strong>{$username}</strong> has completed the registration and their account has been activated.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.plaintext"><![CDATA[The user “{unsafe:$username}” has completed the registration and their account has been  activated.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.html"><![CDATA[<p>The user <strong>{$username}</strong> has completed the registration and their account has been activated.</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
@@ -7437,5 +7440,12 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.editor.button.group.block"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting.description"/>
+	<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"/>
+	<item name="wcf.user.notification.userRegistration.title"/>
+	<item name="wcf.user.notification.userRegistration.title.stacked"/>
+	<item name="wcf.user.notification.userRegistration.message"/>
+	<item name="wcf.user.notification.userRegistration.message.stacked"/>
+	<item name="wcf.user.notification.userRegistration.mail.plaintext"/>
+	<item name="wcf.user.notification.userRegistration.mail.html"/>
 </delete>
 </language>
