@@ -12,7 +12,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\command\RegistrationNotification;
+use wcf\system\user\command\CreateRegistrationNotification;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -148,7 +148,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         }
 
         // User must be reloaded to get the correct activation status.
-        $command = new RegistrationNotification(new User($this->user->userID));
+        $command = new CreateRegistrationNotification(new User($this->user->userID));
         $command();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);

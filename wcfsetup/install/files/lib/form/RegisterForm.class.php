@@ -25,7 +25,7 @@ use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
-use wcf\system\user\command\RegistrationNotification;
+use wcf\system\user\command\CreateRegistrationNotification;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -467,7 +467,7 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 
-        $command = new RegistrationNotification($user);
+        $command = new CreateRegistrationNotification($user);
         $command();
 
         if ($this->captchaObjectType) {

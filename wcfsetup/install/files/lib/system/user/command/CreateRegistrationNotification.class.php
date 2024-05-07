@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class RegistrationNotification
+final class CreateRegistrationNotification
 {
     public function __construct(private readonly User $user)
     {
