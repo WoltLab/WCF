@@ -31,7 +31,6 @@ use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\HandleValinorMappingErrors;
 use wcf\http\middleware\JsonBody;
 use wcf\http\middleware\PreventMimeSniffing;
-use wcf\http\middleware\RedirectMediaToFrontend;
 use wcf\http\middleware\TriggerBackgroundQueue;
 use wcf\http\middleware\VaryAcceptLanguage;
 use wcf\http\middleware\Xsrf;
@@ -142,7 +141,6 @@ final class RequestHandler extends SingletonFactory
                     new Xsrf(),
                     new CheckSystemEnvironment(),
                     new CheckUserBan(),
-                    new RedirectMediaToFrontend(),
                     new EnforceAcpAuthentication(),
                     new CheckForEnterpriseNonOwnerAccess(),
                     new CheckForExpiredAppEvaluation(),
