@@ -8,6 +8,7 @@ use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -158,8 +159,8 @@ class File extends DatabaseObject
             StringUtil::encodeHTML($this->filename),
             $this->fileSize,
             StringUtil::encodeHTML($this->mimeType),
-            StringUtil::encodeHTML(\json_encode($thumbnails)),
-            StringUtil::encodeHTML(\json_encode($metaData)),
+            StringUtil::encodeHTML(JSON::encode($thumbnails)),
+            StringUtil::encodeHTML(JSON::encode($metaData)),
             StringUtil::encodeHTML($this->getLink()),
         );
     }
@@ -177,11 +178,7 @@ class File extends DatabaseObject
         }
 
         if (\str_contains($filename, '.')) {
-            $fileExtension = \mb_substr(
-                $filename,
-                \mb_strrpos($filename, '.') + 1
-            );
-
+            $fileExtension = \pathinfo($filename, \PATHINFO_EXTENSION);
             if (isset(self::SAFE_FILE_EXTENSIONS[$fileExtension])) {
                 return $fileExtension;
             }

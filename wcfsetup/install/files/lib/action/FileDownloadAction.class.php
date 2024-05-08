@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\file\File;
+use wcf\http\ContentDisposition;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -54,29 +55,21 @@ final class FileDownloadAction implements RequestHandlerInterface
         );
 
         $mimeType = FileUtil::getMimeType($filename);
-
-        // TODO: This should use `FileReader` instead.
-
-        $inlineMimeTypes = [
+        $contentDisposition = match ($mimeType) {
             'image/gif',
             'image/jpeg',
             'image/png',
             'image/x-png',
             'application/pdf',
             'image/pjpeg',
-            'image/webp',
-        ];
-
-        $dispositionType = \in_array($mimeType, $inlineMimeTypes) ? 'inline' : 'attachment';
+            'image/webp' => ContentDisposition::Inline,
+            default => ContentDisposition::Attachment,
+        };
 
         return $response->withHeader('content-type', $mimeType)
             ->withHeader(
                 'content-disposition',
-                \sprintf(
-                    '%s; filename="%s"',
-                    $dispositionType,
-                    $file->filename,
-                ),
+                $contentDisposition->forFilename($file->filename),
             );
     }
 }

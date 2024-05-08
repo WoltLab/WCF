@@ -200,7 +200,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function migrateStorage()
     {
-        foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny'),] as $location) {
+        foreach ([
+            $this->getLocation(),
+            $this->getThumbnailLocation(),
+            $this->getThumbnailLocation('tiny'),
+        ] as $location) {
             if (!\str_ends_with($location, '.bin')) {
                 \rename($location, $location . '.bin');
             }

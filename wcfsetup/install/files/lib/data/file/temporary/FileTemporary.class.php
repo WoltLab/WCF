@@ -40,6 +40,16 @@ class FileTemporary extends DatabaseObject
 
     public function hasChunk(int $sequenceNo): bool
     {
+        if ($sequenceNo > \strlen($this->chunks)) {
+            throw new \OutOfRangeException(
+                \sprintf(
+                    "Cannot access chunk #%d of %d",
+                    $sequenceNo,
+                    \strlen($this->chunks),
+                ),
+            );
+        }
+
         return $this->chunks[$sequenceNo] === '1';
     }
 

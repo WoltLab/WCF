@@ -24,8 +24,9 @@ final class PostChunk implements IController
 
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $checksum = \current($request->getHeader('chunk-checksum-sha256'));
-        if ($checksum === false) {
+        $checksum = $request->getHeaderLine('chunk-checksum-sha256');
+        if ($checksum === '' || \str_contains($checksum, ',')) {
+            // Reject a missing header of multiple values provided by the client.
             throw new UserInputException('chunk-checksum-sha256');
         }
 
