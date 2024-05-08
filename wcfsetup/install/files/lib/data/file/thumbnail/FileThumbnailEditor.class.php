@@ -5,7 +5,6 @@ namespace wcf\data\file\thumbnail;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\file\File;
 use wcf\system\file\processor\ThumbnailFormat;
-use wcf\util\FileUtil;
 
 /**
  * @author Alexander Ebert
@@ -23,6 +22,28 @@ class FileThumbnailEditor extends DatabaseObjectEditor
      * @inheritDoc
      */
     protected static $baseClass = FileThumbnail::class;
+
+    public function deleteFiles(): void
+    {
+        @\unlink($this->getPath() . $this->getSourceFilename());
+    }
+
+    public static function deleteAll(array $objectIDs = [])
+    {
+        $thumbnailList = new FileThumbnailList();
+        $thumbnailList->getConditionBuilder()->add("thumbnailID IN (?)", [$objectIDs]);
+        $thumbnailList->readObjects();
+
+        if (\count($thumbnailList) === 0) {
+            return 0;
+        }
+
+        foreach ($thumbnailList as $thumbnail) {
+            (new FileThumbnailEditor($thumbnail))->deleteFiles();
+        }
+
+        return parent::deleteAll($objectIDs);
+    }
 
     public static function createFromTemporaryFile(
         File $file,

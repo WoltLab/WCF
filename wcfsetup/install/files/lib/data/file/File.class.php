@@ -138,6 +138,14 @@ class File extends DatabaseObject
         return $this->thumbnails[$identifier] ?? null;
     }
 
+    /**
+     * @return array<string, FileThumbnail>
+     */
+    public function getThumbnails(): array
+    {
+        return $this->thumbnails;
+    }
+
     public function toHtmlElement(array $metaData): string
     {
         $thumbnails = [];
