@@ -49,4 +49,10 @@ abstract class AbstractFileProcessor implements IFileProcessor
         // There is usually no need for meta data to be sent to the client.
         return [];
     }
+
+    #[\Override]
+    public function trackDownload(File $file): void
+    {
+        // Do not track downloads.
+    }
 }

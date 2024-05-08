@@ -49,6 +49,8 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
+        $processor->trackDownload($file);
+
         $filename = $file->getPathname();
         $response = new Response(
             new Stream($filename),

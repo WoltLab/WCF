@@ -38,6 +38,8 @@ use wcf\util\FileUtil;
  * @property-read   int $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   string $thumbnailType  type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
  * @property-read   int $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $downloads      number of times the attachment has been downloaded
+ * @property-read   int $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
  * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
@@ -386,19 +388,21 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     #[\Override]
     public function __get($name)
     {
-        // Deprecated attributes that are no longer supported.
-        $value = match ($name) {
-            'downloads' => 0,
-            'lastDownloadTime' => 0,
-            default => null,
-        };
-        if ($value !== null) {
-            return $value;
-        }
-
         $file = $this->getFile();
         if ($file === null) {
             return parent::__get($name);
+        }
+
+        if ($name === 'downloads' || $name === 'lastDownloadTime') {
+            // Static files are no longer served through PHP but the web server
+            // instead, therefore we can no longer report any meaningful numbers.
+            //
+            // For existing files the stored value is suppressed because it is
+            // not going to be increased ever, possibly creating a false
+            // impression when the historic stored value is being reported.
+            if ($file->isStaticFile()) {
+                return 0;
+            }
         }
 
         return match ($name) {

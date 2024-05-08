@@ -3351,6 +3351,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.attachment.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Hochgeladen]]></item>
 		<item name="wcf.attachment.filesize"><![CDATA[Größe]]></item>
+		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
+		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Letzter Download]]></item>
 		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Hierhin ziehen und loslassen, um Dateien hochzuladen]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Jetzt loslassen, um Dateien hochzuladen]]></item>

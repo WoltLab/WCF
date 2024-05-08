@@ -98,4 +98,10 @@ interface IFileProcessor
      * the client.
      */
     public function getUploadResponse(File $file): array;
+
+    /**
+     * Invoked whenever a file is being downloaded. This does not work for some
+     * file types that are served by the web server itself.
+     */
+    public function trackDownload(File $file): void;
 }

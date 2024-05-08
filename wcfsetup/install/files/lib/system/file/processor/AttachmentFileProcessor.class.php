@@ -193,6 +193,20 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         (new AttachmentAction($fileIDs, 'delete'))->executeAction();
     }
 
+    #[\Override]
+    public function trackDownload(File $file): void
+    {
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment === null) {
+            return;
+        }
+
+        (new AttachmentEditor($attachment))->update([
+            'downloads' => $attachment->downloads,
+            'lastDownloadTime' => \TIME_NOW,
+        ]);
+    }
+
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler
     {
         try {

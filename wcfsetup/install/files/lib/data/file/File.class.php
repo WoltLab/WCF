@@ -78,7 +78,7 @@ class File extends DatabaseObject
 
         return \sprintf(
             \WCF_DIR . '_data/%s/files/%s/%s/',
-            $this->fileExtension === 'bin' ? 'private' : 'public',
+            $this->isStaticFile() ? 'public' : 'private',
             $folderA,
             $folderB,
         );
@@ -111,6 +111,11 @@ class File extends DatabaseObject
             'image/webp' => true,
             default => false,
         };
+    }
+
+    public function isStaticFile(): bool
+    {
+        return $this->fileExtension !== 'bin';
     }
 
     public function canDelete(): bool
