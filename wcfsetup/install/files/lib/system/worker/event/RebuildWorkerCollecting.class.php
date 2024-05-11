@@ -14,8 +14,9 @@ use wcf\system\worker\RegisteredWorker;
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @deprecated use `wcf\event\worker\RebuildWorkerCollecting` instead
  */
-final class RebuildWorkerCollecting implements IEvent
+class RebuildWorkerCollecting implements IEvent
 {
     private \SplPriorityQueue $queue;
 

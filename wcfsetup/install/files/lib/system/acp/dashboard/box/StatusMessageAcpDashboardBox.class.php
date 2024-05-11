@@ -3,8 +3,8 @@
 namespace wcf\system\acp\dashboard\box;
 
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
-use wcf\system\acp\dashboard\box\event\PHPExtensionCollecting;
-use wcf\system\acp\dashboard\box\event\StatusMessageCollecting;
+use wcf\event\acp\dashboard\box\PHPExtensionCollecting;
+use wcf\event\acp\dashboard\box\StatusMessageCollecting;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cache\CacheHandler;

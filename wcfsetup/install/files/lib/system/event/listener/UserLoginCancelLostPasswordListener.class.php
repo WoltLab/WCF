@@ -3,7 +3,7 @@
 namespace wcf\system\event\listener;
 
 use wcf\data\user\UserAction;
-use wcf\system\user\authentication\event\UserLoggedIn;
+use wcf\event\user\authentication\UserLoggedIn;
 
 /**
  * Cancels lost password requests if the user successfully logs in.

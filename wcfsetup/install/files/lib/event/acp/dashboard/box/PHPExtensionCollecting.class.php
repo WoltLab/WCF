@@ -1,8 +1,8 @@
 <?php
 
-namespace wcf\system\acp\dashboard\box\event;
+namespace wcf\event\acp\dashboard\box;
 
-use wcf\system\event\IEvent;
+use wcf\event\IPsr14Event;
 
 /**
  * @author Olaf Braun
@@ -10,7 +10,7 @@ use wcf\system\event\IEvent;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-final class PHPExtensionCollecting implements IEvent
+final class PHPExtensionCollecting implements IPsr14Event
 {
     /**
      * @var string[]

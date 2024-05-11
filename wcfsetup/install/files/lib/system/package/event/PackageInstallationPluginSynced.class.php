@@ -12,8 +12,9 @@ use wcf\system\event\IEvent;
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @deprecated use `wcf\event\package\PackageInstallationPluginSynced` instead
  */
-final class PackageInstallationPluginSynced implements IEvent
+class PackageInstallationPluginSynced implements IEvent
 {
     public function __construct(
         public readonly string $pluginName,

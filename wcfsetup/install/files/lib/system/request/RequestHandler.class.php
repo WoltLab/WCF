@@ -11,6 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
+use wcf\event\request\ActivePageResolving;
 use wcf\http\error\NotFoundHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
@@ -44,7 +45,6 @@ use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\request\event\ActivePageResolving;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 

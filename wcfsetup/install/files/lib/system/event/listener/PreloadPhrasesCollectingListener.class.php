@@ -2,7 +2,7 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\system\language\preload\event\PreloadPhrasesCollecting;
+use wcf\event\language\PreloadPhrasesCollecting;
 
 /**
  * Registers a set of default phrases for preloading.

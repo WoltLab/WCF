@@ -2,10 +2,10 @@
 
 namespace wcf\acp\page;
 
+use wcf\event\worker\RebuildWorkerCollecting;
 use wcf\page\AbstractPage;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
-use wcf\system\worker\event\RebuildWorkerCollecting;
 
 /**
  * Show the list of available rebuild data options.

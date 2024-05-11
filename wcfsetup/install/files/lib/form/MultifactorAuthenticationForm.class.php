@@ -4,12 +4,12 @@ namespace wcf\form;
 
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
+use wcf\event\user\authentication\UserLoggedIn;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\user\multifactor\Setup;

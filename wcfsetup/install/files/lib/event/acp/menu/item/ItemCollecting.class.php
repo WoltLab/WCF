@@ -1,8 +1,8 @@
 <?php
 
-namespace wcf\system\menu\acp\event;
+namespace wcf\event\acp\menu\item;
 
-use wcf\system\event\IEvent;
+use wcf\event\IPsr14Event;
 use wcf\system\menu\acp\AcpMenuItem;
 
 /**
@@ -13,7 +13,7 @@ use wcf\system\menu\acp\AcpMenuItem;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class AcpMenuCollecting implements IEvent
+final class ItemCollecting implements IPsr14Event
 {
     /**
      * @var AcpMenuItem[]
