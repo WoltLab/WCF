@@ -30,6 +30,12 @@ abstract class AbstractFileProcessor implements IFileProcessor
     }
 
     #[\Override]
+    public function getFileCacheDuration(File $file): FileCacheDuration
+    {
+        return FileCacheDuration::oneYear();
+    }
+
+    #[\Override]
     public function getResizeConfiguration(): ResizeConfiguration
     {
         // Disable client-side resizing.

@@ -201,10 +201,33 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             return;
         }
 
+        // Side effect: Renew the lifetime of a temporary attachment in case
+        //              the user is still writing their message, preventing it
+        //              from vanishing prematurely.
+        if ($attachment->tmpHash) {
+            (new AttachmentEditor($attachment))->update([
+                'uploadTime' => \TIME_NOW,
+            ]);
+
+            // Do not update the download counter for temporary attachments.
+            return;
+        }
+
         (new AttachmentEditor($attachment))->update([
             'downloads' => $attachment->downloads,
             'lastDownloadTime' => \TIME_NOW,
         ]);
+    }
+
+    #[\Override]
+    public function getFileCacheDuration(File $file): FileCacheDuration
+    {
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment?->tmpHash === '') {
+            return FileCacheDuration::oneYear();
+        }
+
+        return FileCacheDuration::shortLived();
     }
 
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler

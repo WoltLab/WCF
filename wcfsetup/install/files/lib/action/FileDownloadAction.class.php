@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,6 +50,17 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
+        $eTag = \sprintf(
+            '"%d-%s"',
+            $file->fileID,
+            \substr($file->fileHash, 0, 8),
+        );
+
+        $httpIfNoneMatch = $_SERVER['HTTP_IF_NONE_MATCH'] ?? '';
+        if ($httpIfNoneMatch === $eTag) {
+            return new EmptyResponse(304);
+        }
+
         $processor->trackDownload($file);
 
         $filename = $file->getPathname();
@@ -68,10 +80,39 @@ final class FileDownloadAction implements RequestHandlerInterface
             default => ContentDisposition::Attachment,
         };
 
-        return $response->withHeader('content-type', $mimeType)
+        // Prevent <script> execution in the context of the community's domain if
+        // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
+        // MIME-Types. One possibility might be a package extending $inlineMimeTypes
+        // in an unsafe fashion.
+        //
+        // Allow style-src 'unsafe-inline', because otherwise the integrated PDF viewer
+        // of Safari will fail to apply its own trusted stylesheet.
+        $response = $response
+            ->withHeader('content-security-policy', "default-src 'none'; style-src 'unsafe-inline';")
+            ->withHeader('x-content-type-options', 'nosniff');
+
+        $lifetimeInSeconds = $processor->getFileCacheDuration($file)->lifetimeInSeconds;
+        if ($lifetimeInSeconds !== null) {
+            $expiresAt = \sprintf(
+                '%s GMT',
+                \gmdate('D, d M Y H:i:s', $lifetimeInSeconds)
+            );
+            $maxAge = \sprintf(
+                'max-age=%d, private',
+                $lifetimeInSeconds ?: 0,
+            );
+
+            $response = $response
+                ->withHeader('Expires', $expiresAt)
+                ->withHeader('Cache-control', $maxAge);
+        }
+
+        return $response
+            ->withHeader('content-type', $mimeType)
             ->withHeader(
                 'content-disposition',
                 $contentDisposition->forFilename($file->filename),
-            );
+            )
+            ->withHeader('ETag', $eTag);
     }
 }

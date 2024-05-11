@@ -76,6 +76,12 @@ interface IFileProcessor
     public function getAllowedFileExtensions(array $context): array;
 
     /**
+     * Limits how long a file may be cached by the browser. Should use a low
+     * value for files that are not persisted yet.
+     */
+    public function getFileCacheDuration(File $file): FileCacheDuration;
+
+    /**
      * Controls the client-side resizing of some types of images before they are
      * being uploaded to the server.
      */
