@@ -35,6 +35,12 @@
 			<description language="de">Löscht verwaiste Dateianhänge</description>
 			<expression>0 2 * * *</expression>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.fileCleanUp">
+			<classname>wcf\system\cronjob\FileCleanUpCronjob</classname>
+			<description>Deletes orphaned files</description>
+			<description language="de">Löscht verwaiste Dateien</description>
+			<expression>0 3 * * *</expression>
+		</cronjob>
 		<cronjob name="com.woltlab.wcf.backgroundQueueCleanUp">
 			<classname>wcf\system\cronjob\BackgroundQueueCleanUpCronjob</classname>
 			<description>Requeues stuck queue items</description>
