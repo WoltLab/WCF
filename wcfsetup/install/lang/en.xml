@@ -2589,6 +2589,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_LikeRebuildDataWorker.description"><![CDATA[Recalculates the reactions.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker.description"><![CDATA[Rebuilds the attachment preview images.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Rebuild Files]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Rebuilds the file preview images.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Rebuild Media]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Rebuilds the media preview images.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Rebuild Statistics]]></item>

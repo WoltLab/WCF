@@ -632,7 +632,8 @@ CREATE TABLE wcf1_file_thumbnail (
 	fileHash CHAR(64) NOT NULL,
 	fileExtension VARCHAR(10) NOT NULL,
 	width INT NOT NULL,
-	height INT NOT NULL
+	height INT NOT NULL,
+	formatChecksum CHAR(12),
 );
 
 /* As the flood control table can be a high traffic table and as it is periodically emptied,

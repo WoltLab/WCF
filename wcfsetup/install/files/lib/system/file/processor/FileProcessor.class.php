@@ -120,14 +120,28 @@ final class FileProcessor extends SingletonFactory
 
         $imageAdapter = null;
         foreach ($formats as $format) {
-            if (isset($existingThumbnails[$format->identifier])) {
-                continue;
-            }
+            $existingThumbnail = $existingThumbnails[$format->identifier] ?? null;
 
             // Check if we the source image is larger than the dimensions of the
             // requested thumbnails.
             if ($format->width > $file->width && $format->height > $file->height) {
+                // There currently is a thumbnail for this format but the
+                // conditions for its existence are no longer met.
+                if ($existingThumbnail !== null) {
+                    FileThumbnailEditor::deleteAll([$existingThumbnail->thumbnailID]);
+                }
+
                 continue;
+            }
+
+            if ($existingThumbnail !== null) {
+                if ($existingThumbnail->needsRebuild($format)) {
+                    // There currently is a thumbnail but it is no longer valid.
+                    FileThumbnailEditor::deleteAll([$existingThumbnail->thumbnailID]);
+                } else {
+                    // This thumbnail is still fine.
+                    continue;
+                }
             }
 
             if ($imageAdapter === null) {

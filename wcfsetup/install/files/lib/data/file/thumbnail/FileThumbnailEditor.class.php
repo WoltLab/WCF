@@ -60,6 +60,7 @@ class FileThumbnailEditor extends DatabaseObjectEditor
                 'fileExtension' => 'webp',
                 'width' => $width,
                 'height' => $height,
+                'formatChecksum' => $format->toChecksum(),
             ],
         ]);
         $fileThumbnail = $action->executeAction()['returnValues'];

@@ -2,7 +2,6 @@
 
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
-use wcf\system\file\processor\event\FileProcessorCollecting;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
 use wcf\system\language\preload\PhrasePreloader;
@@ -91,6 +90,7 @@ return static function (): void {
             $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
             $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
             $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+            $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
             $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
             $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
         }
@@ -124,10 +124,6 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
         }
     );
-
-    $eventHandler->register(FileProcessorCollecting::class, static function (FileProcessorCollecting $event) {
-        $event->register(new \wcf\system\file\processor\AttachmentFileProcessor());
-    });
 
     try {
         $licenseApi = new LicenseApi();

@@ -2660,6 +2660,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_LikeRebuildDataWorker.description"><![CDATA[Berechnet die Reaktionen neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker"><![CDATA[Dateianhänge aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Dateien aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Medien aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Statistiken aktualisieren]]></item>

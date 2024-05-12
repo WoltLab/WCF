@@ -5,6 +5,7 @@ namespace wcf\data\file\thumbnail;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\file\processor\ThumbnailFormat;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -20,6 +21,7 @@ use wcf\system\request\LinkHandler;
  * @property-read string $fileExtension
  * @property-read int $width
  * @property-read int $height
+ * @property-read ?string $formatChecksum
  */
 class FileThumbnail extends DatabaseObject implements ILinkableObject
 {
@@ -51,6 +53,20 @@ class FileThumbnail extends DatabaseObject implements ILinkableObject
     public function getMimeType(): string
     {
         return 'image/webp';
+    }
+
+    public function needsRebuild(ThumbnailFormat $format): bool
+    {
+        if ($this->formatChecksum !== $format->toChecksum()) {
+            return true;
+        }
+
+        $fileHash = \hash_file('sha256', $this->getPath() . $this->getSourceFilename());
+        if ($this->fileHash !== $fileHash) {
+            return true;
+        }
+
+        return false;
     }
 
     private function getRelativePath(): string
