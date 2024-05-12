@@ -2,7 +2,7 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\system\package\event\PackageUpdateListChanged;
+use wcf\event\package\PackageUpdateListChanged;
 use wcf\system\package\license\LicenseApi;
 
 /**

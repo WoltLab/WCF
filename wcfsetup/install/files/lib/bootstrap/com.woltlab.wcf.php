@@ -1,31 +1,13 @@
 <?php
 
-use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\cronjob\CronjobScheduler;
-use wcf\system\endpoint\event\ControllerCollecting;
 use wcf\system\event\EventHandler;
-use wcf\system\event\listener\PackageUpdateListChangedLicenseListener;
-use wcf\system\event\listener\PhraseChangedPreloadListener;
-use wcf\system\event\listener\PipSyncedPhrasePreloadListener;
-use wcf\system\event\listener\PreloadPhrasesCollectingListener;
-use wcf\system\event\listener\UserLoginCancelLostPasswordListener;
-use wcf\system\event\listener\UsernameValidatingCheckCharactersListener;
-use wcf\system\language\event\LanguageImported;
-use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\system\language\preload\PhrasePreloader;
-use wcf\system\package\event\PackageInstallationPluginSynced;
-use wcf\system\package\event\PackageListChanged;
-use wcf\system\package\event\PackageUpdateListChanged;
 use wcf\system\package\license\LicenseApi;
-use wcf\system\session\event\PreserveVariablesCollecting;
-use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\LoginRedirect;
-use wcf\system\user\event\UsernameValidating;
 use wcf\system\WCF;
-use wcf\system\worker\event\RebuildWorkerCollecting;
 
 return static function (): void {
     $eventHandler = EventHandler::getInstance();
@@ -35,59 +17,95 @@ return static function (): void {
         CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE
     );
 
-    $eventHandler->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
-    $eventHandler->register(PreserveVariablesCollecting::class, static function (PreserveVariablesCollecting $event) {
-        $event->keys[] = LoginRedirect::SESSION_VAR_KEY;
-    });
+    $eventHandler->register(
+        \wcf\event\user\authentication\UserLoggedIn::class,
+        \wcf\system\event\listener\UserLoginCancelLostPasswordListener::class
+    );
+    $eventHandler->register(
+        \wcf\event\session\PreserveVariablesCollecting::class,
+        static function (\wcf\event\session\PreserveVariablesCollecting $event) {
+            $event->keys[] = LoginRedirect::SESSION_VAR_KEY;
+        }
+    );
 
-    $eventHandler->register(UsernameValidating::class, UsernameValidatingCheckCharactersListener::class);
+    $eventHandler->register(
+        \wcf\event\user\UsernameValidating::class,
+        \wcf\system\event\listener\UsernameValidatingCheckCharactersListener::class
+    );
 
-    $eventHandler->register(PackageListChanged::class, static function () {
-        foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            $command = new ResetPreloadCache($language);
+    $eventHandler->register(
+        \wcf\event\package\PackageListChanged::class,
+        static function () {
+            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                $command = new ResetPreloadCache($language);
+                $command();
+            }
+        }
+    );
+    $eventHandler->register(
+        \wcf\event\language\LanguageImported::class,
+        static function (\wcf\event\language\LanguageImported $event) {
+            $command = new ResetPreloadCache($event->language);
             $command();
         }
-    });
-    $eventHandler->register(LanguageImported::class, static function (LanguageImported $event) {
-        $command = new ResetPreloadCache($event->language);
-        $command();
-    });
-    $eventHandler->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
-    $eventHandler->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
+    );
+    $eventHandler->register(
+        \wcf\event\language\PhraseChanged::class,
+        \wcf\system\event\listener\PhraseChangedPreloadListener::class
+    );
+    $eventHandler->register(
+        \wcf\event\package\PackageInstallationPluginSynced::class,
+        \wcf\system\event\listener\PipSyncedPhrasePreloadListener::class
+    );
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
-    $eventHandler->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
+    $eventHandler->register(
+        \wcf\event\language\PreloadPhrasesCollecting::class,
+        \wcf\system\event\listener\PreloadPhrasesCollectingListener::class
+    );
 
-    $eventHandler->register(RebuildWorkerCollecting::class, static function (RebuildWorkerCollecting $event) {
-        $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
-        $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
-        $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
-        $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
-        $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
-        $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
-        $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
-        $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
-        $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
-        $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
-        $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
-        $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
-        $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
-    });
+    $eventHandler->register(
+        \wcf\event\worker\RebuildWorkerCollecting::class,
+        static function (\wcf\event\worker\RebuildWorkerCollecting $event) {
+            $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
+            $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
+            $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
+            $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
+            $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
+            $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
+            $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
+            $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
+            $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
+            $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
+            $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+            $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
+            $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
+        }
+    );
 
-    $eventHandler->register(PackageUpdateListChanged::class, PackageUpdateListChangedLicenseListener::class);
+    $eventHandler->register(
+        \wcf\event\package\PackageUpdateListChanged::class,
+        \wcf\system\event\listener\PackageUpdateListChangedLicenseListener::class
+    );
 
-    $eventHandler->register(AcpDashboardCollecting::class, static function (AcpDashboardCollecting $event) {
-        $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
-        $event->register(new \wcf\system\acp\dashboard\box\StatusMessageAcpDashboardBox());
-        $event->register(new \wcf\system\acp\dashboard\box\ExpiringLicensesAcpDashboardBox());
-        $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
-        $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
-        $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
-    });
+    $eventHandler->register(
+        \wcf\event\acp\dashboard\box\BoxCollecting::class,
+        static function (\wcf\event\acp\dashboard\box\BoxCollecting $event) {
+            $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
+            $event->register(new \wcf\system\acp\dashboard\box\StatusMessageAcpDashboardBox());
+            $event->register(new \wcf\system\acp\dashboard\box\ExpiringLicensesAcpDashboardBox());
+            $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
+            $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
+            $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+        }
+    );
 
-    $eventHandler->register(ControllerCollecting::class, static function (ControllerCollecting $event) {
-        $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
-        $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
-    });
+    $eventHandler->register(
+        \wcf\event\endpoint\ControllerCollecting::class,
+        static function (\wcf\event\endpoint\ControllerCollecting $event) {
+            $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
+            $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
+        }
+    );
 
     try {
         $licenseApi = new LicenseApi();

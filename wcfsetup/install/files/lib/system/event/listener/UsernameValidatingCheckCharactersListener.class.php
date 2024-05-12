@@ -3,7 +3,7 @@
 namespace wcf\system\event\listener;
 
 use Spoofchecker;
-use wcf\system\user\event\UsernameValidating;
+use wcf\event\user\UsernameValidating;
 
 /**
  * Checks the username against the REGISTER_USERNAME_FORCE_ASCII option.

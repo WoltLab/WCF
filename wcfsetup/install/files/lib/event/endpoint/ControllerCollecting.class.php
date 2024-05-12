@@ -1,9 +1,9 @@
 <?php
 
-namespace wcf\system\endpoint\event;
+namespace wcf\event\endpoint;
 
+use wcf\event\IPsr14Event;
 use wcf\system\endpoint\IController;
-use wcf\system\event\IEvent;
 
 /**
  * Collects the list of API controllers.
@@ -13,7 +13,7 @@ use wcf\system\event\IEvent;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-final class ControllerCollecting implements IEvent
+final class ControllerCollecting implements IPsr14Event
 {
     /**
      * @var IController[]

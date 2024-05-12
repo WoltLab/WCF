@@ -1,9 +1,9 @@
 <?php
 
-namespace wcf\system\acp\dashboard\box\event;
+namespace wcf\event\acp\dashboard\box;
 
+use wcf\event\IPsr14Event;
 use wcf\system\acp\dashboard\box\StatusMessage;
-use wcf\system\event\IEvent;
 
 /**
  * Requests the collection of status messages for the status message dashboard box.
@@ -13,7 +13,7 @@ use wcf\system\event\IEvent;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-final class StatusMessageCollecting implements IEvent
+final class StatusMessageCollecting implements IPsr14Event
 {
     /**
      * @var StatusMessage[]

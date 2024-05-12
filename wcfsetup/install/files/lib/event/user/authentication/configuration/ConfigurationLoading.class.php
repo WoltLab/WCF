@@ -1,19 +1,19 @@
 <?php
 
-namespace wcf\system\user\authentication\configuration\event;
+namespace wcf\event\user\authentication\configuration;
 
-use wcf\system\event\IEvent;
+use wcf\event\IPsr14Event;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfiguration;
 
 /**
- * Indicates the loading of the configuration.
+ * Indicates the loading of the user auth configuration.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class ConfigurationLoading implements IEvent
+final class ConfigurationLoading implements IPsr14Event
 {
     private UserAuthenticationConfiguration $configuration;
 

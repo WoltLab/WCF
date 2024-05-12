@@ -2,8 +2,8 @@
 
 namespace wcf\system\acp\dashboard;
 
+use wcf\event\acp\dashboard\box\BoxCollecting;
 use wcf\system\acp\dashboard\box\IAcpDashboardBox;
-use wcf\system\acp\dashboard\event\AcpDashboardCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
@@ -24,7 +24,7 @@ final class AcpDashboard
 
     public function __construct()
     {
-        $event = new AcpDashboardCollecting();
+        $event = new BoxCollecting();
         EventHandler::getInstance()->fire($event);
 
         $this->boxes = $event->getBoxes();

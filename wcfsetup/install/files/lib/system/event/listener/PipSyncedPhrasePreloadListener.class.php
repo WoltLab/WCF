@@ -2,9 +2,9 @@
 
 namespace wcf\system\event\listener;
 
+use wcf\event\package\PackageInstallationPluginSynced;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\package\event\PackageInstallationPluginSynced;
 
 /**
  * Resets the preload cache when certain PIPs have been synced.

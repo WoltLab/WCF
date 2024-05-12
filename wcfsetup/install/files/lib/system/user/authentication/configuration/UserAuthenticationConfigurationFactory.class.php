@@ -2,9 +2,9 @@
 
 namespace wcf\system\user\authentication\configuration;
 
+use wcf\event\user\authentication\configuration\ConfigurationLoading;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\user\authentication\configuration\event\ConfigurationLoading;
 
 /**
  * Provides the instance of the active configuration of the user authentication process.

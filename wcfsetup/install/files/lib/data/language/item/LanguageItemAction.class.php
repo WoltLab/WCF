@@ -3,10 +3,10 @@
 namespace wcf\data\language\item;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\event\language\PhraseChanged;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 

@@ -2,9 +2,9 @@
 
 namespace wcf\system\menu\acp;
 
+use wcf\event\acp\menu\item\ItemCollecting;
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\menu\acp\event\AcpMenuCollecting;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 use wcf\system\style\FontAwesomeIcon;
@@ -59,7 +59,7 @@ class ACPMenu extends TreeMenu
 
         $this->loadLegacyMenuItems();
 
-        $event = new AcpMenuCollecting();
+        $event = new ItemCollecting();
         EventHandler::getInstance()->fire($event);
         foreach ($event->getItems() as $item) {
             $this->menuItems[$item->parentMenuItem][] = $item;

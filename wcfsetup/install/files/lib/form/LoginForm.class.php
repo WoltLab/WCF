@@ -2,8 +2,8 @@
 
 namespace wcf\form;
 
+use wcf\event\user\authentication\UserLoggedIn;
 use wcf\system\event\EventHandler;
-use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
 
 /**

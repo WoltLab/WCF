@@ -4,12 +4,12 @@ namespace wcf\system\package;
 
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\PackageEditor;
+use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\command\ClearCache;
 use wcf\system\event\EventHandler;
 use wcf\system\package\command\RebuildBootstrapper;
-use wcf\system\package\event\PackageListChanged;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;

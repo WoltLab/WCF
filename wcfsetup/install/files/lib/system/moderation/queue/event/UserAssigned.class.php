@@ -13,8 +13,9 @@ use wcf\system\event\IEvent;
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   6.0
+ * @deprecated 6.1 use `wcf\event\moderation\queue\UserAssigned` instead
  */
-final class UserAssigned implements IEvent
+class UserAssigned implements IEvent
 {
     private int $moderationQueueId;
 

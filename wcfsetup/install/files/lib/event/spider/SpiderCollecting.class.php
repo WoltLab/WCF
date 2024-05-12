@@ -1,8 +1,8 @@
 <?php
 
-namespace wcf\system\spider\event;
+namespace wcf\event\spider;
 
-use wcf\system\event\IEvent;
+use wcf\event\IPsr14Event;
 use wcf\system\spider\Spider;
 
 /**
@@ -13,7 +13,7 @@ use wcf\system\spider\Spider;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class SpiderCollecting implements IEvent
+final class SpiderCollecting implements IPsr14Event
 {
     /**
      * @var Spider[]

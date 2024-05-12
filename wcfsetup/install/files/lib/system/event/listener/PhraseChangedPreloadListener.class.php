@@ -3,10 +3,10 @@
 namespace wcf\system\event\listener;
 
 use wcf\data\language\Language;
+use wcf\event\language\PhraseChanged;
+use wcf\event\language\PreloadPhrasesCollecting;
 use wcf\system\event\EventHandler;
-use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 
 /**
  * Resets the preload cache if the modified phrase is

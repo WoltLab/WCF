@@ -2,9 +2,9 @@
 
 namespace wcf\system\spider;
 
+use wcf\event\spider\SpiderCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\spider\event\SpiderCollecting;
 
 /**
  * Handles spider related operations.

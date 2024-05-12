@@ -5,8 +5,8 @@ namespace wcf\system\moderation\queue\command;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;
 use wcf\data\user\User;
+use wcf\event\moderation\queue\UserAssigned;
 use wcf\system\event\EventHandler;
-use wcf\system\moderation\queue\event\UserAssigned;
 
 /**
  * Assigns a user to a moderation queue entry.
