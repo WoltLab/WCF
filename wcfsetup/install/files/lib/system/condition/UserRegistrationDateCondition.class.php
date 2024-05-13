@@ -51,15 +51,27 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         }
 
         if (isset($conditionData['registrationDateEnd'])) {
+            $registrationDateEnd = \DateTime::createFromFormat(
+                'Y-m-d',
+                $conditionData['registrationDateEnd'],
+                new \DateTimeZone(TIMEZONE)
+            );
+            $registrationDateEnd->setTime(23, 59, 59);
             $objectList->getConditionBuilder()->add(
                 'user_table.registrationDate < ?',
-                [\strtotime($conditionData['registrationDateEnd']) + 86400]
+                [$registrationDateEnd->getTimestamp()]
             );
         }
         if (isset($conditionData['registrationDateStart'])) {
+            $registrationDateStart = \DateTime::createFromFormat(
+                'Y-m-d',
+                $conditionData['registrationDateStart'],
+                new \DateTimeZone(TIMEZONE)
+            );
+            $registrationDateStart->setTime(0, 0, 0);
             $objectList->getConditionBuilder()->add(
                 'user_table.registrationDate >= ?',
-                [\strtotime($conditionData['registrationDateStart'])]
+                [$registrationDateStart->getTimestamp()]
             );
         }
     }
@@ -70,15 +82,35 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
     public function checkUser(Condition $condition, User $user)
     {
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateStart = $condition->registrationDateStart;
-        if ($registrationDateStart !== null && $user->registrationDate < \strtotime($registrationDateStart)) {
-            return false;
+        $dateStart = $condition->registrationDateStart;
+        if ($dateStart !== null) {
+            $registrationDateStart = \DateTime::createFromFormat(
+                'Y-m-d',
+                $dateStart,
+                new \DateTimeZone(TIMEZONE)
+            );
+            if ($registrationDateStart !== false) {
+                $registrationDateStart->setTime(0, 0, 0);
+                if ($user->registrationDate < $registrationDateStart->getTimestamp()) {
+                    return false;
+                }
+            }
         }
 
         /** @noinspection PhpUndefinedFieldInspection */
-        $registrationDateEnd = $condition->registrationDateEnd;
-        if ($registrationDateEnd !== null && $user->registrationDate >= \strtotime($registrationDateEnd) + 86400) {
-            return false;
+        $dateEnd = $condition->registrationDateEnd;
+        if ($dateEnd !== null) {
+            $registrationDateEnd = \DateTime::createFromFormat(
+                'Y-m-d',
+                $dateEnd,
+                new \DateTimeZone(TIMEZONE)
+            );
+            if ($registrationDateEnd !== false) {
+                $registrationDateEnd->setTime(23, 59, 59);
+                if ($user->registrationDate >= $registrationDateEnd->getTimestamp()) {
+                    return false;
+                }
+            }
         }
 
         return true;
@@ -166,7 +198,11 @@ HTML;
     {
         $registrationDateEnd = $registrationDateStart = null;
         if (\strlen($this->registrationDateStart)) {
-            $registrationDateStart = @\strtotime($this->registrationDateStart);
+            $registrationDateStart = \DateTime::createFromFormat(
+                'Y-m-d',
+                $this->registrationDateStart,
+                new \DateTimeZone(TIMEZONE)
+            );
             if ($registrationDateStart === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
 
@@ -174,7 +210,11 @@ HTML;
             }
         }
         if (\strlen($this->registrationDateEnd)) {
-            $registrationDateEnd = @\strtotime($this->registrationDateEnd);
+            $registrationDateEnd = \DateTime::createFromFormat(
+                'Y-m-d',
+                $this->registrationDateEnd,
+                new \DateTimeZone(TIMEZONE)
+            );
             if ($registrationDateEnd === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';
 

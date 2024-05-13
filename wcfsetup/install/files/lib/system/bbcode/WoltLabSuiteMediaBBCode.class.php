@@ -4,7 +4,6 @@ namespace wcf\system\bbcode;
 
 use wcf\data\media\ViewableMedia;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -22,6 +21,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
      * forces media links to be linked to the frontend
      * after it has been set to `true`, it should be set to `false` again as soon as possible
      * @var bool
+     * @deprecated 6.1 media links are always linked to the frontend
      */
     public static $forceFrontendLinks = false;
 
@@ -57,20 +57,20 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     return StringUtil::encodeHTML($media->getTitle());
                 }
 
-                return StringUtil::encodeHTML($this->getLink($media));
+                return StringUtil::encodeHTML($media->getLink());
             }
 
             if ($parser->getOutputType() == 'text/html') {
+                $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
+
                 if ($media->isImage) {
                     $thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
-                    $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
                     return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
-                        'mediaLink' => $this->getLink($media),
+                        'mediaLink' => $media->getLink(),
                         'removeLinks' => $removeLinks,
-                        'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink(
-                            $media,
+                        'thumbnailLink' => $thumbnailSize !== 'original' ? $media->getThumbnailLink(
                             $thumbnailSize
                         ) : '',
                         'float' => $float,
@@ -80,69 +80,24 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     ]);
                 } elseif ($media->isVideo() || $media->isAudio()) {
                     return WCF::getTPL()->fetch('shared_bbcode_wsm', 'wcf', [
-                        'mediaLink' => $this->getLink($media),
+                        'mediaLink' => $media->getLink(),
                         'removeLinks' => $removeLinks,
-                        'float' => 'none',
+                        'float' => $float,
                         'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
                         'width' => 'auto',
                     ]);
                 }
 
-                return StringUtil::getAnchorTag($this->getLink($media), $media->getTitle());
+                return StringUtil::getAnchorTag($media->getLink(), $media->getTitle());
             } elseif ($parser->getOutputType() == 'text/simplified-html') {
-                return StringUtil::getAnchorTag($this->getLink($media), $media->getTitle());
+                return StringUtil::getAnchorTag($media->getLink(), $media->getTitle());
             }
 
-            return StringUtil::encodeHTML($this->getLink($media));
+            return StringUtil::encodeHTML($media->getLink());
         } else {
             return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
                 'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
             ], true);
         }
-    }
-
-    /**
-     * Returns the link to the given media file (while considering the value of `$forceFrontendLinks`).
-     *
-     * @param ViewableMedia $media linked media file
-     * @return  string              link to media file
-     */
-    protected function getLink(ViewableMedia $media)
-    {
-        if (self::$forceFrontendLinks) {
-            return LinkHandler::getInstance()->getLink('Media', [
-                'forceFrontend' => 'true',
-                'object' => $media,
-            ]);
-        }
-
-        return $media->getLink();
-    }
-
-    /**
-     * Returns the thumbnail link to the given media file (while considering the value of `$forceFrontendLinks`).
-     *
-     * @param ViewableMedia $media linked media file
-     * @param string $thumbnailSize thumbnail size
-     * @return  string              link to media thumbnail
-     */
-    protected function getThumbnailLink(ViewableMedia $media, $thumbnailSize)
-    {
-        // use `Media::getThumbnailLink()` to validate thumbnail size
-        $thumbnailLink = $media->getThumbnailLink($thumbnailSize);
-
-        if (self::$forceFrontendLinks) {
-            if (!$this->{$thumbnailSize . 'ThumbnailType'}) {
-                return $this->getLink($media);
-            }
-
-            return LinkHandler::getInstance()->getLink('Media', [
-                'forceFrontend' => 'true',
-                'object' => $media,
-                'thumbnail' => $thumbnailSize,
-            ]);
-        }
-
-        return $thumbnailLink;
     }
 }

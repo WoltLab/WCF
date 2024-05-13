@@ -645,7 +645,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
 </language>
 XML;
     }

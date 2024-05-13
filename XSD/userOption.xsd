@@ -88,6 +88,8 @@
 					<xs:element name="options" type="xs:string" minOccurs="0" />
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="messageObjectType" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="contentpattern" type="xs:string" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

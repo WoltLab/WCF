@@ -135,6 +135,7 @@ class TemplateEngine extends SingletonFactory
         'mediaBBCodeTag' => 'shared_bbcode_wsm',
         'articleBBCodeTag' => 'shared_bbcode_wsa',
         '__multiPageCondition' => 'shared_multiPageCondition',
+        '__multilineItemListFormField' => 'shared_multilineItemListFormField',
     ];
 
     /**

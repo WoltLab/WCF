@@ -735,14 +735,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
     /**
      * Returns true if current user fulfills the required permissions.
-     *
-     * @param string $name
-     * @return  bool
      */
-    public function isAccessible($name)
+    public function isAccessible(string $name, ?int $userID = null): bool
     {
-        /** @noinspection PhpVariableVariableInspection */
-        $data = ['result' => true, 'name' => $name];
+        if ($userID === null) {
+            $userID = WCF::getUser()->userID;
+        }
+        $data = ['result' => true, 'name' => $name, 'userID' => $userID];
 
         switch ($this->{$name}) {
             case self::ACCESS_EVERYONE:
@@ -750,15 +749,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                 break;
 
             case self::ACCESS_REGISTERED:
-                $data['result'] = (WCF::getUser()->userID ? true : false);
+                $data['result'] = ($userID ? true : false);
                 break;
 
             case self::ACCESS_FOLLOWING:
                 $result = false;
-                if (WCF::getUser()->userID) {
-                    if (WCF::getUser()->userID == $this->userID) {
+                if ($userID) {
+                    if ($userID == $this->userID) {
                         $result = true;
-                    } elseif ($this->isFollowing(WCF::getUser()->userID)) {
+                    } elseif ($this->isFollowing($userID)) {
                         $result = true;
                     }
                 }

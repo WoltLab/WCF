@@ -9,7 +9,7 @@
 
 import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
-import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
+import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
 import * as Language from "../../../../Language";
 import { enableNotifications } from "../../../../Notification/Handler";
@@ -147,8 +147,8 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
       setFaviconCounter(this.counter);
     }
 
-    window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) => {
-      this.updateCounter(count);
+    this.button.addEventListener("updateCounter", (event: CustomEvent<EventUpdateCounter>) => {
+      this.updateCounter(event.detail.counter);
 
       this.stale = true;
     });

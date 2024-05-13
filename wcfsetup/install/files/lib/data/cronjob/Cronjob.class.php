@@ -4,6 +4,8 @@ namespace wcf\data\cronjob;
 
 use Cron\CronExpression;
 use wcf\data\DatabaseObject;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\system\WCF;
 
@@ -138,5 +140,13 @@ class Cronjob extends DatabaseObject
     public function getDescription()
     {
         return WCF::getLanguage()->get($this->description);
+    }
+
+    /**
+     * @since   6.1
+     */
+    public function getPackage(): Package
+    {
+        return PackageCache::getInstance()->getPackage($this->packageID);
     }
 }

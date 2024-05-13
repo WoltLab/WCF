@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 <import>
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Zugangsbeschränkung]]></item>
@@ -10,8 +10,9 @@
 		<item name="wcf.acl.access.invertPermissions"><![CDATA[Berechtigungen umkehren]]></item>
 		<item name="wcf.acl.access.invertPermissions.description"><![CDATA[Wenn ausgewählt, dürfen standardmäßig alle Benutzer, bis auf ausgewählte Benutzer und Benutzergruppen das Objekt sehen.]]></item>
 		<item name="wcf.acl.allowAll"><![CDATA[Inhalt ist für alle Benutzer sichtbar]]></item>
-		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
-		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
+		<item name="wcf.acl.option.deny"><![CDATA[Nein]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Ja]]></item>
+		<item name="wcf.acl.option.inherited"><![CDATA[Standard]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[Benutzer- und Benutzergruppenrechte]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[Benutzerrechte]]></item>
 		<item name="wcf.acl.search.description"><![CDATA[Benutzer- oder Benutzergruppenname eingeben …]]></item>
@@ -386,6 +387,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.userTrophy"><![CDATA[Vergebene Trophäen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS-Seiten]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} <a href="#" role="button" id="deleteMapping" data-confirm-message="{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?">diese Zuordnungen löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}. Diese Zuordnungen können nicht genutzt werden, um einzelne Inhalte inkrementell zu übernehmen. Sie sind dazu gedacht, um weitere Arten von Inhalten in separaten Vorgängen zu übernehmen, beispielsweise unter Zuhilfenahme von Importern aus installierten Plugins.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
@@ -431,7 +433,7 @@
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[Der Pfad enthält keine neuen Pakete.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[Es {if $count > 1}wurden {#$count} neue Projekte{else}wurde ein neues Projekt{/if} hinzugefügt.]]></item>
-		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtungstest]]></item>
+		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
 		<item name="wcf.acp.devtools.notificationTest.button.test"><![CDATA[Testen]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail"><![CDATA[Tägliche E-Mail]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmail.exception"><![CDATA[Tägliche E-Mail-Fehlermeldung]]></item>
@@ -1567,7 +1569,6 @@ Die Beschränkung auf ASCII-Zeichen erlaubt in Benutzernamen lediglich lateinisc
 Beispiele:<br>
 WBB=WoltLab Burning Board<br>
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
-		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Nur registrierte Benutzer im Benutzer-Online-Rekord zählen]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Legende der Benutzergruppen anzeigen]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Karten-Zoom]]></item>
@@ -1953,6 +1954,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.28"><![CDATA[Die &lt;packageinformation&gt; enthalten das doppelte Element „{$tag}“.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.29"><![CDATA[Es wurde keine Paketversion angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.30"><![CDATA[Es wurde keine Paketdatum angegeben.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.31"><![CDATA[Die Datei „package.xml“ ist ungültig{if $libxmlOutput}: {$libxmlOutput}{/if}.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. {if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/de/kaufen/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
@@ -1964,7 +1966,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} die <strong>Lizenz für die jeweilige App bereits erworben</strong> haben, so reicht es aus, alle kommenden Updates zu installieren. <strong>Die Testversion wird in diesem Fall automatisch in die Vollversion umgewandelt.</strong>]]></item>
 		<item name="wcf.acp.package.search.input"><![CDATA[Suchbegriff eingeben]]></item>
 		<item name="wcf.acp.package.search.input.description"><![CDATA[Es wird nach Teilübereinstimmungen des Paketnamens, dessen Beschreibung sowie dem internen Bezeichner gesucht.]]></item>
-		<item name="wcf.acp.package.search.status.idle"><![CDATA[Geben Sie mehr als drei Buchstaben ein, um die Suche zu starten.]]></item>
+		<item name="wcf.acp.package.search.status.idle"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} mindestens drei Buchstaben ein, um die Suche zu starten.]]></item>
 		<item name="wcf.acp.package.search.status.loading"><![CDATA[Suche läuft …]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[Die Suche ergab keine Treffer.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Die Paketlisten werden aktualisiert …]]></item>
@@ -3101,16 +3103,12 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
-		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die E-Mail-Adresse des Absenders definieren.<br>
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration » Optionen » Allgemein » E-Mails“ alles ausgefüllt {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, wird dieses Feld automatisch ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} E-Mails per SMTP senden, so {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.]]></item>
-		<item name="wcf.acp.user.sendMail.fromName"><![CDATA[Absender-Name]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder senden]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
-		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-Mail]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
+		<item name="wcf.acp.user.sendMail.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> sowie <kbd>{literal}{$email}{/literal}</kbd> können als Platzhalter verwendet werden, um den Benutzernamen bzw. die E-Mail-Adresse des jeweiligen Empfängers einzufügen.]]></item>
 		<item name="wcf.acp.user.quickSearch"><![CDATA[Schnellsuche]]></item>
 		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Gesperrte Benutzer]]></item>
 		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Neueste Benutzer]]></item>
@@ -3436,6 +3434,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>
 		<item name="wcf.cli.worker.threads.windows"><![CDATA[Die parallele Verarbeitung mittels --threads steht unter Windows nicht zur Verfügung.]]></item>
+		<item name="wcf.cli.worker.threads.variables_order"><![CDATA[Für die parallele Verarbeitung mittels --threads wird in der php.ini für "variables_order" der Wert "EGPCS" benötigt.]]></item>
 		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
 		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist ungültig.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>
@@ -3559,7 +3558,7 @@ Dateianhänge:
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
 		<item name="wcf.contact.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht wurde erfolgreich versandt.]]></item>
-		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich erkläre mich mit der Verarbeitung der eingegebenen Daten einverstanden. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[j. F Y]]></item>
@@ -3802,6 +3801,8 @@ Dateianhänge:
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
 		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Aktuelle Version{else}Version vom {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
+		<item name="wcf.edit.mode.html"><![CDATA[HTML]]></item>
+		<item name="wcf.edit.mode.raw"><![CDATA[Quellcode]]></item>
 	</category>
 	<category name="wcf.editor">
 		<item name="wcf.editor.alignment.center"><![CDATA[Zentrieren]]></item>
@@ -4387,6 +4388,10 @@ Dateianhänge:
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[„Berechtigt“-Status ändern]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Meldung als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
+		<item name="wcf.moderation.report.notification.title"><![CDATA[Neue Meldung]]></item>
+		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat <strong>{$title}</strong>({$typeName}) gemeldet.]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}Ein Gast{/if} hat {$title} ({$typeName}) gemeldet [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}Ein Gast{/if} hat <a href="{$objectLink}">{$title}</a> ({$typeName}) gemeldet.</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>
@@ -4402,7 +4407,7 @@ Dateianhänge:
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategorie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-object-id="{$user->userID}">{$user->username}</a>]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[Es sind <a href="{link controller='PackageUpdate' isACP=true}{/link}">Aktualisierungen für installierte Pakete</a> verfügbar.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} leider verwehrt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du besitzt{else}Sie besitzen{/if} nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Zugriff verweigert]]></item>
@@ -5374,8 +5379,8 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <strong>{$userTrophy->getTrophy()}</strong> erhalten.]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Neue Registrierung durch Benutzer]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[Neue Meldung]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
@@ -5433,16 +5438,20 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel und Artikeln aus abonnierten Kategorien]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel-Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Artikel-Kommentar]]></item>
-		<item name="wcf.user.notification.userRegistration.title"><![CDATA[Neue Benutzer-Registrierung]]></item>
-		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} neue Benutzer-Registrierungen]]></item>
-		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> hat sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert:</p>]]></item>
 		<item name="wcf.user.notification.status.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Präferenz festlegen]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.needActivation"><![CDATA[Benutzer benötigt Freischaltung]]></item>
+		<item name="wcf.user.notification.userNeedActivation.title"><![CDATA[Benutzer benötigt Freischaltung]]></item>
+		<item name="wcf.user.notification.userNeedActivation.message"><![CDATA[Der Benutzer <strong>{$username}</strong> hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.plaintext"><![CDATA[Der Benutzer „{unsafe:$username}“ hat sich registriert und wartet auf die Freischaltung durch den Administrator.]]></item>
+		<item name="wcf.user.notification.needActivation.mail.html"><![CDATA[<p>Der Benutzer <strong>{$username}</strong> hat sich registriert und wartet auf die Freischaltung durch den Administrator.</p>]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.success"><![CDATA[Benutzer hat Registrierung abgeschlossen]]></item>
+		<item name="wcf.user.notification.registrationSuccess.title"><![CDATA[Benutzer hat Registrierung abgeschlossen]]></item>
+		<item name="wcf.user.notification.registrationSuccess.message"><![CDATA[Der Benutzer <strong>{$username}</strong> hat die Registrierung abgeschlossen und sein Benutzerkonto ist freigeschaltet.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.plaintext"><![CDATA[Der Benutzer „{unsafe:$username}“ hat die Registrierung abgeschlossen und sein Benutzerkonto ist freigeschaltet.]]></item>
+		<item name="wcf.user.notification.registrationSuccess.mail.html"><![CDATA[<p>Der Benutzer <strong>{$username}</strong> hat die Registrierung abgeschlossen und sein Benutzerkonto ist freigeschaltet.</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}Sie{/if} sichtbaren Informationen hinterlegt.{/if}]]></item>
@@ -5648,7 +5657,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"/>
 	<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"/>
-	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
 	<item name="wcf.acp.dataImport.selectExporter.error.notValid"/>
 	<item name="wcf.acp.devtools.project.action"/>
 	<item name="wcf.acp.devtools.project.apiVersions"/>
@@ -6561,7 +6569,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.user.search.matches"/>
 	<item name="wcf.acp.user.search.withinResults"/>
 	<item name="wcf.acp.user.sendMail.subject.description"/>
-	<item name="wcf.acp.user.sendMail.text.description"/>
 	<item name="wcf.acp.user.sendNewPassword.mail"/>
 	<item name="wcf.acp.user.userNote"/>
 	<item name="wcf.acp.worker.currentStep"/>
@@ -7542,5 +7549,12 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.editor.button.group.block"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting"/>
 	<item name="wcf.user.option.editorPastePreserveFormatting.description"/>
+	<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"/>
+	<item name="wcf.user.notification.userRegistration.title"/>
+	<item name="wcf.user.notification.userRegistration.title.stacked"/>
+	<item name="wcf.user.notification.userRegistration.message"/>
+	<item name="wcf.user.notification.userRegistration.message.stacked"/>
+	<item name="wcf.user.notification.userRegistration.mail.plaintext"/>
+	<item name="wcf.user.notification.userRegistration.mail.html"/>
 </delete>
 </language>

@@ -6,13 +6,14 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker, Event_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker, Event_1, Util_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     List_1 = tslib_1.__importDefault(List_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     DatePicker = tslib_1.__importStar(DatePicker);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class UiPollEditor {
         container;
         endTimeField;
@@ -94,6 +95,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Creates a poll option with the given data or an empty poll option of no data is given.
          */
         createOption(optionValue, optionId, insertAfter) {
+            if (this.optionCount >= this.options.maxOptions) {
+                return;
+            }
             optionValue = optionValue || "";
             optionId = optionId || "0";
             const listItem = document.createElement("LI");
@@ -144,7 +148,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 optionInput.focus();
             }
             this.optionCount++;
-            if (this.optionCount === this.options.maxOptions) {
+            if (this.optionCount >= this.options.maxOptions) {
                 this.optionList.querySelectorAll(".jsAddOption").forEach((icon) => {
                     icon.classList.remove("pointer");
                     icon.classList.add("disabled");
@@ -167,14 +171,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          */
         handleError(data) {
             switch (data.returnValues.fieldName) {
-                case this.wysiwygId + "pollEndTime":
-                case this.wysiwygId + "pollMaxVotes": {
-                    const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "poll", "");
-                    const small = document.createElement("small");
-                    small.classList.add("innerError");
-                    small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);
-                    const field = document.getElementById(data.returnValues.fieldName);
-                    field.nextSibling.insertAdjacentElement("afterbegin", small);
+                case "pollEndTime":
+                case "pollMaxVotes": {
+                    let fieldName = data.returnValues.fieldName.replace("poll", "");
+                    fieldName = fieldName.charAt(0).toLowerCase() + fieldName.slice(1);
+                    Util_1.default.innerError(document.getElementById(this.wysiwygId + data.returnValues.fieldName), Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType), true);
                     data.cancel = true;
                     break;
                 }

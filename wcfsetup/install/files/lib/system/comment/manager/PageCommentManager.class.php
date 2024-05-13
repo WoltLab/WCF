@@ -5,6 +5,7 @@ namespace wcf\system\comment\manager;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
@@ -19,7 +20,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class PageCommentManager extends AbstractCommentManager implements IViewableLikeProvider
+class PageCommentManager extends AbstractCommentManager implements IViewableLikeProvider, ICommentPermissionManager
 {
     /**
      * @inheritDoc
@@ -68,6 +69,20 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         }
 
         return true;
+    }
+
+    #[\Override]
+    public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
+    {
+        $page = new Page($objectID);
+        if (!$page->pageID) {
+            return false;
+        }
+        if (!$page->isAccessible($user->getDecoratedObject())) {
+            return false;
+        }
+
+        return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
     /**

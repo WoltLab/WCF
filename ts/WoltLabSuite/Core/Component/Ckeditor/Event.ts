@@ -13,10 +13,13 @@ import type { Features } from "./Configuration";
 import type { InsertAttachmentPayload, RemoveAttachmentPayload, UploadAttachmentEventPayload } from "./Attachment";
 import type { UploadMediaEventPayload } from "./Media";
 import type { InsertQuoteEventPayload } from "./Quote";
+import type { AutosavePayload } from "./Autosave";
 import type { CKEditor5 } from "@woltlab/editor";
 
 const enum EventNames {
+  Autosave = "ckeditor5:autosave",
   Bbcode = "ckeditor5:bbcode",
+  ChangeData = "ckeditor5:change-data",
   CollectMetaData = "ckeditor5:collect-meta-data",
   Destroy = "ckeditor5:destroy",
   DiscardRecoveredData = "ckeditor5:discard-recovered-data",
@@ -71,12 +74,24 @@ class EventDispatcher {
     );
   }
 
+  changeData(): void {
+    this.#element.dispatchEvent(new CustomEvent<void>(EventNames.ChangeData));
+  }
+
   destroy(): void {
     this.#element.dispatchEvent(new CustomEvent<void>(EventNames.Destroy));
   }
 
   discardRecoveredData(): void {
     this.#element.dispatchEvent(new CustomEvent<void>(EventNames.DiscardRecoveredData));
+  }
+
+  autosave(payload: AutosavePayload): void {
+    this.#element.dispatchEvent(
+      new CustomEvent<AutosavePayload>(EventNames.Autosave, {
+        detail: payload,
+      }),
+    );
   }
 
   insertAttachment(payload: InsertAttachmentPayload): void {
@@ -177,6 +192,14 @@ class EventListener {
           "An event listener for the bbcode event did not return a boolean to indicate if the BBCode is handled.",
         );
       }
+    });
+
+    return this;
+  }
+
+  changeData(callback: () => void): this {
+    this.#element.addEventListener(EventNames.ChangeData, () => {
+      callback();
     });
 
     return this;
@@ -296,6 +319,14 @@ class EventListener {
 
   uploadMedia(callback: (payload: UploadMediaEventPayload) => void): this {
     this.#element.addEventListener(EventNames.UploadMedia, (event: CustomEvent<UploadMediaEventPayload>) => {
+      callback(event.detail);
+    });
+
+    return this;
+  }
+
+  autosave(callback: (payload: AutosavePayload) => void): this {
+    this.#element.addEventListener(EventNames.Autosave, (event: CustomEvent<AutosavePayload>) => {
       callback(event.detail);
     });
 

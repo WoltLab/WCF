@@ -9,7 +9,7 @@
 
 import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
-import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
+import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
 
 type Options = {
@@ -49,6 +49,11 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
         this.counter = counter;
       }
     }
+    this.button.addEventListener("updateCounter", (event: CustomEvent<EventUpdateCounter>) => {
+      this.updateCounter(event.detail.counter);
+
+      this.stale = true;
+    });
   }
 
   getPanelButton(): HTMLElement {

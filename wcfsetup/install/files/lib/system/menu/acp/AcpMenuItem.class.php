@@ -21,7 +21,7 @@ final class AcpMenuItem implements ITreeMenuItem
         public readonly string $title = '',
         public readonly string $parentMenuItem = '',
         public readonly string $link = '',
-        public readonly string $icon = ''
+        public readonly ?FontAwesomeIcon $icon = null
     ) {
     }
 
@@ -32,17 +32,7 @@ final class AcpMenuItem implements ITreeMenuItem
 
     public function getIcon(): ?FontAwesomeIcon
     {
-        if ($this->icon) {
-            if (FontAwesomeIcon::isValidString($this->icon)) {
-                return FontAwesomeIcon::fromString($this->icon);
-            } elseif (\str_starts_with($this->icon, 'fa-')) {
-                // Safeguard to prevent legacy icons from breaking
-                // the admin panel during the upgrade to 6.0.
-                return FontAwesomeIcon::fromString("question;true");
-            }
-        }
-
-        return null;
+        return $this->icon;
     }
 
     public function __toString()

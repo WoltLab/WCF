@@ -2,7 +2,7 @@
 
 namespace wcf\system\html\output\node;
 
-use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\KeywordHighlighter;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
@@ -57,7 +57,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
      */
     public function __construct()
     {
-        $this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+        $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
     }
 
     /**
@@ -133,6 +133,22 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
 
                 DOMUtil::removeNode($paragraph, true);
+            }
+            // Add a whitespace before and after each `<wcfNode-*>`.
+            // This is necessary to avoid concatenation with neighbouring text.
+            foreach ($this->getXPath()->query('//*') as $childNode) {
+                if (!\str_starts_with($childNode->nodeName, 'wcfNode-')) {
+                    continue;
+                }
+
+                $childNode->parentNode->insertBefore(
+                    $this->getDocument()->createTextNode(" "),
+                    $childNode
+                );
+                $childNode->parentNode->insertBefore(
+                    $this->getDocument()->createTextNode(" "),
+                    $childNode->nextSibling
+                );
             }
 
             if ($this->outputType === 'text/plain') {

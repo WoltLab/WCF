@@ -171,7 +171,7 @@
 					rel="nofollow"
 				>{lang}wcf.user.button.login{/lang}</a>
 			</li>
-			{if !REGISTER_DISABLED}
+			{if $__userAuthConfig->canRegister}
 				<li id="userRegistration">
 					<a
 						class="registrationLink"

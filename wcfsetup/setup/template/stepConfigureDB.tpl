@@ -1,11 +1,11 @@
 {include file='header'}
 
 {if $exception|isset}
-	<woltlab-core-notice type="error">{lang}wcf.global.configureDB.error{/lang}</woltlab-core-notice>
+	<p class="error">{lang}wcf.global.configureDB.error{/lang}</p>
 {/if}
 
 {if $conflictedTables|isset}
-	<woltlab-core-notice type="error">{lang}wcf.global.configureDB.conflictedTables{/lang}</woltlab-core-notice>
+	<p class="error">{lang}wcf.global.configureDB.conflictedTables{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">

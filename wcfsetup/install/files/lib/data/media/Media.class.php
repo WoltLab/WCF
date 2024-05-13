@@ -93,7 +93,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      */
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('Media', ['object' => $this]);
+        return LinkHandler::getInstance()->getLink('Media', [
+            'object' => $this,
+            'forceFrontend' => true,
+        ]);
     }
 
     /**
@@ -119,6 +122,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 
         return LinkHandler::getInstance()->getLink('Media', [
             'object' => $this,
+            'forceFrontend' => true,
             'thumbnail' => $size,
         ]);
     }

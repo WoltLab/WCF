@@ -23,10 +23,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
+use wcf\system\user\command\CreateRegistrationNotification;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
-use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
@@ -125,7 +125,7 @@ class RegisterForm extends UserAddForm
         }
 
         // registration disabled
-        if (REGISTER_DISABLED) {
+        if (!UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canRegister) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
         }
 
@@ -467,7 +467,8 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 
-        $this->fireNotificationEvent($user);
+        $command = new CreateRegistrationNotification($user);
+        $command();
 
         if ($this->captchaObjectType) {
             $this->captchaObjectType->getProcessor()->reset();
@@ -492,49 +493,5 @@ class RegisterForm extends UserAddForm
         );
 
         exit;
-    }
-
-    /**
-     * @param User $user
-     * @since       5.2
-     */
-    protected function fireNotificationEvent(User $user)
-    {
-        $recipientIDs = $this->getRecipientsForNotificationEvent();
-        if (!empty($recipientIDs)) {
-            UserNotificationHandler::getInstance()->fireEvent(
-                'registration',
-                'com.woltlab.wcf.user.registration.notification',
-                new UserRegistrationUserNotificationObject($user),
-                $recipientIDs
-            );
-        }
-    }
-
-    /**
-     * @return      int[]
-     * @since       5.2
-     */
-    protected function getRecipientsForNotificationEvent()
-    {
-        $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_user_to_group
-                WHERE   groupID IN (
-                        SELECT  groupID
-                        FROM    wcf" . WCF_N . "_user_group_option_value
-                        WHERE   optionID IN (
-                                    SELECT  optionID
-                                    FROM    wcf" . WCF_N . "_user_group_option
-                                    WHERE   optionName = ?
-                                )
-                            AND optionValue = ?
-                    )";
-        $statement = WCF::getDB()->prepareStatement($sql, 100);
-        $statement->execute([
-            'admin.user.canSearchUser',
-            1,
-        ]);
-
-        return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 }

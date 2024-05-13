@@ -106,6 +106,9 @@ class UserNotificationHandler extends SingletonFactory
         if (!isset($this->availableEvents[$objectType][$eventName])) {
             throw new SystemException("Unknown event " . $objectType . "-" . $eventName . " given");
         }
+        if ($recipientIDs === []) {
+            return;
+        }
 
         // get objects
         $objectTypeObject = $this->availableObjectTypes[$objectType];

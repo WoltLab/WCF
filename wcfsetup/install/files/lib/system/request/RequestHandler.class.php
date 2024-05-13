@@ -11,11 +11,13 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
+use wcf\event\request\ActivePageResolving;
 use wcf\http\error\NotFoundHandler;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
 use wcf\http\middleware\CheckForExpiredAppEvaluation;
+use wcf\http\middleware\CheckForForceLogin;
 use wcf\http\middleware\CheckForMultifactorRequirement;
 use wcf\http\middleware\CheckForOfflineMode;
 use wcf\http\middleware\CheckHttpMethod;
@@ -43,7 +45,6 @@ use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\request\event\ActivePageResolving;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -144,6 +145,7 @@ final class RequestHandler extends SingletonFactory
                     new CheckForEnterpriseNonOwnerAccess(),
                     new CheckForExpiredAppEvaluation(),
                     new CheckForOfflineMode(),
+                    new CheckForForceLogin(),
                     new CheckForMultifactorRequirement(),
                     new JsonBody(),
                     new TriggerBackgroundQueue(),

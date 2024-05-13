@@ -450,8 +450,8 @@
 							if (!img) return;
 							
 							function updateSizes() {
-								elById('pageLogoWidth').value = img.width;
-								elById('pageLogoHeight').value = img.height;
+								elById('pageLogoWidth').value = img.naturalWidth;
+								elById('pageLogoHeight').value = img.naturalHeight;
 							}
 							img.addEventListener('load', updateSizes);
 							if (img.complete) {

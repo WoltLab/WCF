@@ -105,8 +105,8 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             if (this.counter > 0) {
                 setFaviconCounter(this.counter);
             }
-            window.WCF.System.PushNotification.addCallback("userNotificationCount", (count) => {
-                this.updateCounter(count);
+            this.button.addEventListener("updateCounter", (event) => {
+                this.updateCounter(event.detail.counter);
                 this.stale = true;
             });
         }

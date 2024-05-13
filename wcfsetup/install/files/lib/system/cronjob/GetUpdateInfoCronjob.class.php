@@ -27,18 +27,6 @@ class GetUpdateInfoCronjob extends AbstractCronjob
             return;
         }
 
-        try {
-            $currentLanguage = WCF::getLanguage();
-            // Always fetch package information using the default language.
-            if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
-                WCF::setLanguage(LanguageFactory::getInstance()->getDefaultLanguage());
-            }
-
-            PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
-        } finally {
-            if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
-                WCF::setLanguage($currentLanguage);
-            }
-        }
+        PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
     }
 }

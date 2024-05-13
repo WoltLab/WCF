@@ -9,6 +9,7 @@ use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
@@ -17,6 +18,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
@@ -35,6 +37,16 @@ final class LostPasswordForm extends AbstractFormBuilderForm
     private const ALLOWED_RESETS_PER_24H = 5;
 
     public User $user;
+
+    #[\Override]
+    public function checkPermissions()
+    {
+        parent::checkPermissions();
+
+        if (!UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword) {
+            return new IllegalLinkException();
+        }
+    }
 
     /**
      * @inheritDoc

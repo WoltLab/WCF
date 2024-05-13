@@ -137,6 +137,12 @@ class WorkerCLICommand implements ICLICommand
 
                 return;
             }
+            if (!\str_contains(\ini_get('variables_order'), 'E')) {
+                CLIWCF::getReader()->println(CLIWCF::getLanguage()->get('wcf.cli.worker.threads.variables_order'));
+
+                return;
+            }
+
             $this->spawnController($worker, $threads);
 
             return;
@@ -233,6 +239,7 @@ class WorkerCLICommand implements ICLICommand
             'WCF_SESSION_ID' => CLIWCF::getSession()->sessionID,
         ]);
 
+        $cursorOffset = 0;
         try {
             // 1) Spawn the processes.
             $processes = [];

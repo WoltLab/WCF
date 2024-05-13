@@ -2,8 +2,8 @@
 
 namespace wcf\util;
 
+use wcf\event\user\UsernameValidating;
 use wcf\system\event\EventHandler;
-use wcf\system\user\event\UsernameValidating;
 
 /**
  * Contains user registration related functions.

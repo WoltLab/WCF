@@ -72,6 +72,11 @@
 					<xs:element name="suffix" type="xs:string" minOccurs="0" />
 					<xs:element name="minvalue" type="xs:int" minOccurs="0" />
 					<xs:element name="maxvalue" type="xs:int" minOccurs="0" />
+					<xs:element name="minlength" type="xs:int" minOccurs="0" />
+					<xs:element name="maxlength" type="xs:int" minOccurs="0" />
+					<xs:element name="allowemptyvalue" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="disableAutocomplete" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="issortable" type="woltlab_boolean" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

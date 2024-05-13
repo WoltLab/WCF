@@ -78,6 +78,7 @@ define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "..
       </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
             const item = document.createElement("li");
+            item.classList.add("aclListItem");
             item.innerHTML = html;
             const firstUser = this.list.querySelector('fa-icon[name="user"]');
             if (firstUser === null) {

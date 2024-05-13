@@ -10,6 +10,7 @@ import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import * as Environment from "../../Environment";
 import * as EventHandler from "../../Event/Handler";
+import CloseOverlay from "WoltLabSuite/Core/Ui/CloseOverlay";
 
 class TabMenuSimple {
   private readonly container: HTMLElement;
@@ -319,6 +320,7 @@ class TabMenuSimple {
       // update history
       window.history.replaceState(undefined, "", location);
     }
+    CloseOverlay.execute();
 
     void import("../TabMenu").then((UiTabMenu) => {
       UiTabMenu.scrollToTab(tab!);

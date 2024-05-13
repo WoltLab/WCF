@@ -3,6 +3,7 @@
 namespace wcf\system\html\input\node;
 
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\bbcode\DomBBCodeParser;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodePlainLink;
@@ -197,6 +198,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         $this->plainLinks = [];
 
         EventHandler::getInstance()->fireAction($this, 'beforeProcess');
+
+        // convert bbcodes to `<woltlab-metacode-marker>`
+        DomBBCodeParser::getInstance()->parse($this->getDocument());
 
         // fix invalid html such as metacode markers outside of block elements
         $this->fixDom();
@@ -778,46 +782,58 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 /** @var \DOMElement $parent */
                 $parent = $parent->parentNode;
             }
+            $mayContainOtherContent = false;
+            $linebreaks = 0;
 
             if ($parent->nodeName === 'p' && $parent->textContent === $link->textContent) {
                 // The line may contain nothing but the link, exceptions include basic formatting
                 // and up to a single `<br>` element.
-                $mayContainOtherContent = false;
-                $linebreaks = 0;
                 /** @var \DOMElement $element */
                 foreach ($parent->getElementsByTagName('*') as $element) {
-                    switch ($element->nodeName) {
-                        case 'br':
-                            $linebreaks++;
-                            break;
-
-                        case 'span':
-                            if ($element->getAttribute('class')) {
-                                $mayContainOtherContent = true;
-                                break 2;
-                            }
-
-                            // `<span>` is used to hold text formatting.
-                            break;
-
-                        case 'a':
-                        case 'b':
-                        case 'em':
-                        case 'i':
-                        case 'strong':
-                        case 'u':
-                            // These elements are perfectly fine.
-                            break;
-
-                        default:
-                            $mayContainOtherContent = true;
-                            break 2;
+                    if ($this->mayContainOtherContent($element, $linebreaks)) {
+                        $mayContainOtherContent = true;
+                        break;
                     }
                 }
 
                 if (!$mayContainOtherContent || $linebreaks <= 1) {
                     $this->plainLinks[] = $plainLink->setIsStandalone($parent);
                     continue;
+                }
+            } elseif ($parent->nodeName === 'p') {
+                $parentLinkElement = $link;
+                while ($parentLinkElement->parentNode !== $parent) {
+                    $parentLinkElement = $parentLinkElement->parentNode;
+                    \assert($parentLinkElement instanceof \DOMElement);
+                    if ($this->mayContainOtherContent($parentLinkElement, $linebreaks)) {
+                        $mayContainOtherContent = true;
+                        break;
+                    }
+                }
+
+                if (!$mayContainOtherContent) {
+                    $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
+                    $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
+
+                    // Check whether the link is the only content in the line.
+                    // To do this, we need to check whether the next/previous sibling is a `<br>' element or
+                    // is the start/end of the paragraph.
+                    // <p><a href="https://example.com">https://example.com</a><br>…</p>
+                    // <p>…<br><a href="https://example.com">https://example.com</a></p>
+                    // <p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
+                    // <p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
+
+                    if ($nextSibling !== null && $nextSibling->nodeName === 'br') {
+                        $nextSibling = null;
+                    }
+                    if ($previousSibling !== null && $previousSibling->nodeName === 'br') {
+                        $previousSibling = null;
+                    }
+
+                    if ($nextSibling === null && $previousSibling === null) {
+                        $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
+                        continue;
+                    }
                 }
             }
 
@@ -834,5 +850,47 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             }
         }
+    }
+
+    private function getNonEmptyNode(\DOMNode $element, string $property): ?\DOMNode
+    {
+        while ($element = $element->{$property}) {
+            if (!DOMUtil::isEmpty($element)) {
+                return $element;
+            }
+        }
+
+        return null;
+    }
+
+    private function mayContainOtherContent(\DOMElement $element, int &$linebreaks): bool
+    {
+        switch ($element->nodeName) {
+            case 'br':
+                $linebreaks++;
+                break;
+
+            case 'span':
+                if ($element->getAttribute('class')) {
+                    return true;
+                }
+
+                // `<span>` is used to hold text formatting.
+                break;
+
+            case 'a':
+            case 'b':
+            case 'em':
+            case 'i':
+            case 'strong':
+            case 'u':
+                // These elements are perfectly fine.
+                break;
+
+            default:
+                return true;
+        }
+
+        return false;
     }
 }

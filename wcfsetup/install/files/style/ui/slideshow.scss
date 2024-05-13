@@ -29,18 +29,6 @@
 
 		> li {
 			display: inline-block;
-
-			> a > .icon {
-				color: var(--wcfButtonBackground);
-
-				&.active {
-					color: var(--wcfButtonPrimaryBackground);
-				}
-			}
-
-			&:hover > a > .icon {
-				color: var(--wcfButtonPrimaryBackgroundActive);
-			}
 		}
 	}
 }

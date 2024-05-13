@@ -79,7 +79,7 @@ if (\function_exists('mb_regex_encoding')) {
 \mb_language('uni');
 
 // define current woltlab suite version
-\define('WCF_VERSION', '6.0.6');
+\define('WCF_VERSION', '6.1.0 dev 1');
 
 // define current unix timestamp
 \define('TIME_NOW', \time());
@@ -197,6 +197,10 @@ class WCF
         $this->initApplications();
 
         $this->runBootstrappers();
+
+        self::getTPL()->assign([
+            '__userAuthConfig' => \wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory::getInstance()->getConfigration(),
+        ]);
 
         EventHandler::getInstance()->fireAction($this, 'initialized');
     }
@@ -491,6 +495,10 @@ class WCF
         \define('GOOGLE_MAPS_ENABLE_SCROLL_WHEEL_ZOOM', 0);
         \define('GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM', 1);
         \define('GOOGLE_MAPS_ACCESS_USER_LOCATION', 1);
+
+        // The option to count guests in the online record was removed with version 6.1.
+        // https://github.com/WoltLab/WCF/issues/5888
+        \define('USERS_ONLINE_RECORD_NO_GUESTS', 1);
     }
 
     /**

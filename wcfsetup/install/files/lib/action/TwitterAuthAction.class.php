@@ -2,23 +2,19 @@
 
 namespace wcf\action;
 
-use GuzzleHttp\ClientInterface;
+use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Hex;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use wcf\data\user\User;
-use wcf\form\RegisterForm;
-use wcf\system\event\EventHandler;
-use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\io\HttpFactory;
+use Psr\Http\Message\ServerRequestInterface;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\event\UserLoggedIn;
-use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
+use wcf\system\user\authentication\oauth\Failure as OAuth2Failure;
+use wcf\system\user\authentication\oauth\Success as OAuth2Success;
+use wcf\system\user\authentication\oauth\twitter\Failure as OAuth2TwitterFailure;
+use wcf\system\user\authentication\oauth\twitter\Success as OAuth2TwitterSuccess;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -31,146 +27,79 @@ use wcf\util\StringUtil;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class TwitterAuthAction extends AbstractAction
+final class TwitterAuthAction extends AbstractOauth2AuthAction
 {
-    /**
-     * @inheritDoc
-     */
-    public $neededModules = ['TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY'];
+    const AVAILABLE_DURING_OFFLINE_MODE = true;
 
-    private ClientInterface $httpClient;
-
-    /**
-     * @inheritDoc
-     */
-    public function readParameters()
+    #[\Override]
+    protected function getClientId(): string
     {
-        parent::readParameters();
-
-        if (WCF::getSession()->spiderID) {
-            throw new PermissionDeniedException();
-        }
+        return StringUtil::trim(TWITTER_PUBLIC_KEY);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(): ResponseInterface
+    #[\Override]
+    protected function getClientSecret(): string
     {
-        parent::execute();
+        return StringUtil::trim(TWITTER_PRIVATE_KEY);
+    }
 
+    #[\Override]
+    protected function getCallbackUrl(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(self::class);
+    }
+
+    #[\Override]
+    protected function getTokenEndpoint(): string
+    {
+        return 'https://api.twitter.com/oauth/access_token';
+    }
+
+    #[\Override]
+    protected function supportsState(): bool
+    {
+        return false;
+    }
+
+    #[\Override]
+    protected function getProviderName(): string
+    {
+        return 'twitter';
+    }
+
+    #[\Override]
+    protected function getScope(): string
+    {
+        // Twitter OAuth 1.0a does not support scopes
+        return '';
+    }
+
+    #[\Override]
+    protected function getAuthorizeUrl(): string
+    {
+        return 'https://api.twitter.com/oauth/authenticate';
+    }
+
+    #[\Override]
+    protected function mapParameters(ServerRequestInterface $request): OAuth2Success | OAuth2Failure | null
+    {
         try {
-            if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])) {
-                $token = $this->verifierToAccessToken(
-                    $_GET['oauth_token'],
-                    $_GET['oauth_verifier']
-                );
+            $mapper = (new MapperBuilder())
+                ->allowSuperfluousKeys()
+                ->enableFlexibleCasting()
+                ->mapper();
 
-                $oauthUser = $this->getUser($token);
-
-                return $this->processUser($oauthUser);
-            } elseif (isset($_GET['denied'])) {
-                throw new NamedUserException(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.denied')
-                );
-            } else {
-                return $this->initiate();
-            }
-        } catch (NamedUserException | PermissionDeniedException $e) {
-            throw $e;
-        } catch (StateValidationException $e) {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                'wcf.user.3rdparty.login.error.stateValidation'
-            ));
-        } catch (\Exception $e) {
-            $exceptionID = \wcf\functions\exception\logThrowable($e);
-
-            $type = 'genericException';
-            if ($e instanceof ClientExceptionInterface) {
-                $type = 'httpError';
-            }
-
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                'wcf.user.3rdparty.login.error.' . $type,
-                [
-                    'exceptionID' => $exceptionID,
-                ]
-            ));
-        }
-
-        throw new \LogicException("Unreachable");
-    }
-
-    /**
-     * Processes the user (e.g. by registering session variables and redirecting somewhere).
-     */
-    protected function processUser(OauthUser $oauthUser): ResponseInterface
-    {
-        $user = User::getUserByAuthData('twitter:' . $oauthUser->getId());
-
-        if ($user->userID) {
-            if (WCF::getUser()->userID) {
-                // This account belongs to an existing user, but we are already logged in.
-                // This can't be handled.
-
-                throw new NamedUserException(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.twitter.connect.error.inuse')
-                );
-            } else {
-                // This account belongs to an existing user, we are not logged in.
-                // Perform the login.
-
-                WCF::getSession()->changeUser($user);
-                WCF::getSession()->update();
-                EventHandler::getInstance()->fire(
-                    new UserLoggedIn($user)
-                );
-
-                return new RedirectResponse(
-                    LoginRedirect::getUrl()
-                );
-            }
-        } else {
-            WCF::getSession()->register('__3rdPartyProvider', 'twitter');
-
-            if (WCF::getUser()->userID) {
-                // This account does not belong to anyone and we are already logged in.
-                // Thus we want to connect this account.
-
-                WCF::getSession()->register('__oauthUser', $oauthUser);
-
-                return new RedirectResponse(
-                    LinkHandler::getInstance()->getControllerLink(
-                        AccountManagementForm::class,
-                        [],
-                        '#3rdParty'
-                    )
-                );
-            } else {
-                // This account does not belong to anyone and we are not logged in.
-                // Thus we want to connect this account to a newly registered user.
-
-                WCF::getSession()->register('__oauthUser', $oauthUser);
-                WCF::getSession()->register('__username', $oauthUser->getUsername());
-                WCF::getSession()->register('__email', $oauthUser->getEmail());
-
-                // We assume that bots won't register an external account first, so
-                // we skip the captcha.
-                WCF::getSession()->register('noRegistrationCaptcha', true);
-
-                WCF::getSession()->update();
-
-                return new RedirectResponse(
-                    LinkHandler::getInstance()->getControllerLink(RegisterForm::class)
-                );
-            }
+            return $mapper->map(
+                \sprintf("%s|%s", OAuth2TwitterSuccess::class, OAuth2TwitterFailure::class),
+                $request->getQueryParams()
+            );
+        } catch (\Throwable) {
+            return null;
         }
     }
 
-    /**
-     * Turns the access token response into an oauth user.
-     */
-    private function getUser(array $accessToken): OauthUser
+    #[\Override]
+    protected function getUser(array $accessToken): OauthUser
     {
         $uri = 'https://api.twitter.com/1.1/account/verify_credentials.json';
         $oauthHeader = [
@@ -216,10 +145,8 @@ final class TwitterAuthAction extends AbstractAction
         return new OauthUser($parsed);
     }
 
-    /**
-     * Turns the verifier provided by Twitter into an access token.
-     */
-    private function verifierToAccessToken(string $oauthToken, string $oauthVerifier)
+    #[\Override]
+    protected function getAccessToken(OAuth2Success $auth2Success): array
     {
         $initData = WCF::getSession()->getVar('__twitterInit');
         WCF::getSession()->unregister('__twitterInit');
@@ -227,32 +154,31 @@ final class TwitterAuthAction extends AbstractAction
             throw new StateValidationException('Missing state in session');
         }
 
-        if (!\hash_equals((string)$initData['oauth_token'], $oauthToken)) {
+        if (!\hash_equals((string)$initData['oauth_token'], $auth2Success->code)) {
             throw new StateValidationException('oauth_token mismatch');
         }
 
-        $uri = 'https://api.twitter.com/oauth/access_token';
         $oauthHeader = [
-            'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
+            'oauth_consumer_key' => $this->getClientId(),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => TIME_NOW,
             'oauth_version' => '1.0',
-            'oauth_token' => $oauthToken,
+            'oauth_token' => $auth2Success->code,
         ];
         $postData = [
-            'oauth_verifier' => $oauthVerifier,
+            'oauth_verifier' => $auth2Success->state,
         ];
 
         $signature = $this->createSignature(
-            $uri,
+            $this->getTokenEndpoint(),
             \array_merge($oauthHeader, $postData)
         );
         $oauthHeader['oauth_signature'] = $signature;
 
         $request = new Request(
             'POST',
-            $uri,
+            $this->getTokenEndpoint(),
             [
                 'authorization' => \sprintf('OAuth %s', $this->buildOAuthHeader($oauthHeader)),
                 'content-type' => 'application/x-www-form-urlencoded',
@@ -277,13 +203,12 @@ final class TwitterAuthAction extends AbstractAction
     /**
      * Requests an request_token to initiate the OAuth flow.
      */
-    private function getRequestToken()
+    private function getRequestToken(): array
     {
-        $callbackURL = LinkHandler::getInstance()->getControllerLink(static::class);
         $uri = 'https://api.twitter.com/oauth/request_token';
         $oauthHeader = [
-            'oauth_callback' => $callbackURL,
-            'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
+            'oauth_callback' => $this->getCallbackUrl(),
+            'oauth_consumer_key' => $this->getClientId(),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => TIME_NOW,
@@ -318,10 +243,8 @@ final class TwitterAuthAction extends AbstractAction
         return $data;
     }
 
-    /**
-     * Initiates the OAuth flow by redirecting to the '/authenticate' URL.
-     */
-    private function initiate(): ResponseInterface
+    #[\Override]
+    protected function initiate(): ResponseInterface
     {
         $data = $this->getRequestToken();
 
@@ -329,7 +252,8 @@ final class TwitterAuthAction extends AbstractAction
 
         return new RedirectResponse(
             \sprintf(
-                'https://api.twitter.com/oauth/authenticate?%s',
+                '%s?%s',
+                $this->getAuthorizeUrl(),
                 \http_build_query([
                     'oauth_token' => $data['oauth_token'],
                 ], '', '&')
@@ -385,21 +309,8 @@ final class TwitterAuthAction extends AbstractAction
         }
 
         $base = $method . "&" . \rawurlencode($url) . "&" . \rawurlencode($parameterString);
-        $key = \rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)) . '&' . \rawurlencode($tokenSecret);
+        $key = \rawurlencode($this->getClientSecret()) . '&' . \rawurlencode($tokenSecret);
 
         return Base64::encode(\hash_hmac('sha1', $base, $key, true));
-    }
-
-    /**
-     * Returns a "static" instance of the HTTP client to use to allow
-     * for TCP connection reuse.
-     */
-    protected function getHttpClient(): ClientInterface
-    {
-        if (!isset($this->httpClient)) {
-            $this->httpClient = HttpFactory::makeClientWithTimeout(5);
-        }
-
-        return $this->httpClient;
     }
 }

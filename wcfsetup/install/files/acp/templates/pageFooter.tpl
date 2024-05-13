@@ -14,7 +14,7 @@
 		<div class="layoutBoundary">
 			{event name='footerContents'}
 
-			{if ENABLE_BENCHMARK}{include file='shared_benchmark'}{/if}
+			{if ENABLE_BENCHMARK}{include file='shared_benchmark' sandbox=true}{/if}
 			
 			{event name='copyright'}
 			

@@ -7,7 +7,7 @@ use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -91,7 +91,7 @@ class HtmlInputNodeTextParser
     public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, $smileyCount = 0)
     {
         $this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
-        $this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+        $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
 
         if (MODULE_SMILEY) {
             $this->smileyCount = $smileyCount;

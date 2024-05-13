@@ -313,9 +313,43 @@ EXPLANATION;
 			<?php } ?>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<style>
+				:root {
+					--body-background-color: rgb(250, 250, 250);
+					--body-color: rgb(44, 62, 80);
+					--header-background-color: rgb(58, 109, 156);
+					--title-color: #fff;
+					--error-code-color: #fff;
+					--inline-code-background-color: rgb(43, 79, 113);
+					--inline-code-color: #fff;
+					--inline-code-wrapper-border-color: rgb(169, 169, 169);
+					--field-title-color: rgb(59, 109, 169);
+					--exception-details-color: rgb(115 115 115);
+					--middleware-border-color: #ccc;
+					--sensitive-parameter-value-border-color: #d81b60;
+					--stacktrace-counter-color: rgb(115 115 115);
+				}
+
+				@media (prefers-color-scheme: dark) {
+					:root {
+						--body-background-color: rgb(34 37 41);
+						--body-color: rgb(209 210 211);
+						--header-background-color: rgb(36 46 61);
+						--title-color: rgb(209 210 211);
+						--error-code-color: rgb(209 210 211);
+						--inline-code-background-color: rgb(12 81 92);
+						--inline-code-color: rgb(171 191 196);
+						--inline-code-wrapper-border-color: var(14 97 110);
+						--field-title-color: rgb(5 166 148);
+						--exception-details-color: rgb(139 140 143);
+						--middleware-border-color: rgb(209 210 211);
+						--sensitive-parameter-value-border-color: #d81b60;
+						--stacktrace-counter-color: rgb(139 140 143);
+					}
+				}
+
 				.exceptionBody {
-					background-color: rgb(250, 250, 250);
-					color: rgb(44, 62, 80);
+					background-color: var(--body-background-color);
+					color: var(--body-color);
 					margin: 0;
 					padding: 0;
 				}
@@ -337,25 +371,25 @@ EXPLANATION;
 				}
 
 				.exceptionHeader {
-					background-color: rgb(58, 109, 156);
+					background-color: var(--header-background-color);
 					padding: 30px 0;
 				}
 
 				.exceptionTitle {
-					color: #fff;
+					color: var(--title-color);
 					font-size: 28px;
 					font-weight: 600;
 				}
 
 				.exceptionErrorCode {
-					color: #fff;
+					color: var(--error-code-color);
 					margin-top: .5em;
 				}
 
 				.exceptionErrorCode .exceptionInlineCode {
-					background-color: rgb(43, 79, 113);
+					background-color: var(--inline-code-background-color);
 					border-radius: 3px;
-					color: #fff;
+					color: var(--inline-code-color);
 					font-family: monospace;
 					padding: 3px 10px;
 					white-space: nowrap;
@@ -372,7 +406,7 @@ EXPLANATION;
 				}
 
 				.exceptionText .exceptionInlineCodeWrapper {
-					border: 1px solid rgb(169, 169, 169);
+					border: 1px solid var(--inline-code-wrapper-border-color);
 					border-radius: 3px;
 					padding: 2px 5px;
 				}
@@ -386,7 +420,7 @@ EXPLANATION;
 				}
 
 				.exceptionFieldTitle {
-					color: rgb(59, 109, 169);
+					color: var(--field-title-color);
 				}
 
 				.exceptionFieldTitle .exceptionColon {
@@ -448,7 +482,7 @@ EXPLANATION;
 
 				.exceptionFieldDetails,
 				.exceptionStacktraceFile {
-					color: rgb(115 115 115) !important;
+					color: var(--exception-details-color) !important;
 					font-size: 13px !important;
 				}
 
@@ -463,21 +497,21 @@ EXPLANATION;
 				}
 
 				.exceptionStacktraceMiddleware ul {
-					border-left: 5px solid #ccc;
+					border-left: 5px solid var(--middleware-border-color);
 					list-style: none;
 					margin-top: 20px;
 					padding-left: 15px;
 				}
 
 				.exceptionStacktraceSensitiveParameterValue {
-					border: 1px dashed #d81b60;
+					border: 1px dashed var(--sensitive-parameter-value-border-color);
 					padding: 2px 5px;
 					font-size: 12px !important;
 				}
 
 				.exceptionStacktraceCounter,
 				.exceptionStacktraceType {
-					color: rgb(115 115 115);
+					color: var(--stacktrace-counter-color);
 				}
 
 				/* mobile */
@@ -502,8 +536,8 @@ EXPLANATION;
 				@media (min-width: 768px) {
 					.exceptionBoundary {
 						margin: 0 auto;
-						max-width: 1400px;
-						min-width: 1200px;
+						max-width: 1200px;
+						min-width: 800px;
 						padding: 0 10px;
 					}
 

@@ -9,12 +9,12 @@ use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\page\PageEditor;
+use wcf\event\language\LanguageContentCopying;
 use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
-use wcf\system\language\event\LanguageContentCopying;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -133,7 +133,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions->add("language_item.packageID = ?", [$packageID]);
 
         // header
-        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd\" languagecode=\"" . $this->languageCode . "\" languagename=\"" . $this->languageName . "\" countrycode=\"" . $this->countryCode . "\">\n";
+        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd\" languagecode=\"" . $this->languageCode . "\" languagename=\"" . $this->languageName . "\" countrycode=\"" . $this->countryCode . "\">\n";
 
         // get items
         $sql = "SELECT      languageItem,

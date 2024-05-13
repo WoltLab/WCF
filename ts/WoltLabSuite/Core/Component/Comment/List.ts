@@ -320,6 +320,7 @@ class CommentList {
     comment
       .querySelector(".commentResponseList")!
       .insertBefore(fragment, comment.querySelector(".commentLoadNextResponses"));
+    DomChangeListener.trigger();
 
     comment.dataset.lastResponseTime = response.lastResponseTime.toString();
     comment.dataset.lastResponseId = response.lastResponseID.toString();
@@ -370,6 +371,7 @@ class CommentList {
     this.#container
       .querySelector(".commentList")!
       .insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));
+    DomChangeListener.trigger();
 
     this.#container.dataset.lastCommentTime = response.lastCommentTime.toString();
 

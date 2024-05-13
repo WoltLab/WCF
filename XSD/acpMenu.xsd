@@ -34,7 +34,11 @@
 	</xs:complexType>
 
 	<xs:complexType name="acpmenuitem_icon">
-		<xs:attribute name="solid" type="xs:boolean" />
+		<xs:simpleContent>
+			<xs:extension base="woltlab_varchar">
+				<xs:attribute name="solid" type="xs:boolean" />
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 	
 	<!-- imported/updated acp menu item element type -->

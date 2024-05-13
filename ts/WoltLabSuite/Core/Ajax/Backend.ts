@@ -19,6 +19,7 @@ import {
 import { extend, getXsrfToken } from "../Core";
 
 const enum RequestType {
+  DELETE,
   GET,
   POST,
 }
@@ -32,6 +33,10 @@ class SetupRequest {
     this.url = url;
   }
 
+  delete(): BackendRequest {
+    return new BackendRequest(this.url, RequestType.DELETE);
+  }
+
   get(): GetRequest {
     return new GetRequest(this.url, RequestType.GET);
   }
@@ -42,7 +47,7 @@ class SetupRequest {
 }
 
 let ignoreConnectionErrors = false;
-window.addEventListener("unload", () => (ignoreConnectionErrors = true));
+window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
 
 class BackendRequest {
   readonly #url: string;

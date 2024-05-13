@@ -43,11 +43,13 @@ class PruneIpAddressesCronjob extends AbstractCronjob
             foreach ($columnData as $ipAddressColumn => $timestampColumn) {
                 $sql = "UPDATE  {$tableName}
                         SET     {$ipAddressColumn} = ?
-                        WHERE   {$timestampColumn} <= ?";
+                        WHERE   {$timestampColumn} <= ?
+                            AND {$ipAddressColumn} <> ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     '',
                     TIME_NOW - 86400 * PRUNE_IP_ADDRESS, // 86400 = 1 day
+                    '',
                 ]);
             }
         }

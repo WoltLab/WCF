@@ -224,10 +224,10 @@ class VersionTrackerListPage extends AbstractPage
                                     $rawDiff[$i + 1][1] .= $entry[1];
                                 } else {
                                     if ($entry[0] === Diff::REMOVED) {
-                                        $rawDiff[$i][1] .= '<strong>' . $entry[1] . '</strong>';
+                                        $rawDiff[$i][1] .= '<del>' . $entry[1] . '</del>';
                                     } else {
                                         if ($entry[0] === Diff::ADDED) {
-                                            $rawDiff[$i + 1][1] .= '<strong>' . $entry[1] . '</strong>';
+                                            $rawDiff[$i + 1][1] .= '<ins>' . $entry[1] . '</ins>';
                                         }
                                     }
                                 }

@@ -4,8 +4,8 @@ namespace wcf\system\box;
 
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
-use wcf\data\condition\ConditionAction;
-use wcf\data\page\Page;
+use wcf\system\box\command\CreateBoxCondition;
+use wcf\system\box\command\CreateBoxToPageAssignments;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -73,36 +73,12 @@ class BoxHandler extends SingletonFactory
      * @param string $conditionObjectType
      * @param array $conditionData
      * @throws  \InvalidArgumentException
+     * @deprecated 6.1 use `CreateBoxCondition` instead
      */
     public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData)
     {
-        // do not rely on caches during package installation
-        $sql = "SELECT      objectTypeID
-                FROM        wcf" . WCF_N . "_object_type object_type
-                INNER JOIN  wcf" . WCF_N . "_object_type_definition object_type_definition
-                ON          object_type.definitionID = object_type_definition.definitionID
-                WHERE       objectType = ?
-                        AND definitionName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$conditionObjectType, $conditionDefinition]);
-        $objectTypeID = $statement->fetchSingleColumn();
-
-        if (!$objectTypeID) {
-            throw new \InvalidArgumentException("Unknown box condition '{$conditionObjectType}' of condition definition '{$conditionDefinition}'");
-        }
-
-        $box = Box::getBoxByIdentifier($boxIdentifier);
-        if ($box === null) {
-            throw new \InvalidArgumentException("Unknown box with identifier '{$boxIdentifier}'");
-        }
-
-        (new ConditionAction([], 'create', [
-            'data' => [
-                'conditionData' => \serialize($conditionData),
-                'objectID' => $box->boxID,
-                'objectTypeID' => $objectTypeID,
-            ],
-        ]))->executeAction();
+        $command = new CreateBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, $conditionData);
+        $command();
     }
 
     /**
@@ -147,40 +123,12 @@ class BoxHandler extends SingletonFactory
      * @param string[] $pageIdentifiers
      * @param bool $visible
      * @throws  \InvalidArgumentException
+     * @deprecated 6.1 use `CreateBoxCondition` instead
      */
     public function addBoxToPageAssignments($boxIdentifier, array $pageIdentifiers, $visible = true)
     {
-        $box = Box::getBoxByIdentifier($boxIdentifier);
-        if ($box === null) {
-            throw new \InvalidArgumentException("Unknown box with identifier '{$boxIdentifier}'");
-        }
-
-        $pages = [];
-        foreach ($pageIdentifiers as $pageIdentifier) {
-            $page = Page::getPageByIdentifier($pageIdentifier);
-            if ($page === null) {
-                throw new \InvalidArgumentException("Unknown page with identifier '{$pageIdentifier}'");
-            }
-            $pages[] = $page;
-        }
-
-        if (($visible && $box->visibleEverywhere) || (!$visible && !$box->visibleEverywhere)) {
-            $sql = "DELETE FROM     wcf" . WCF_N . "_box_to_page
-                    WHERE           boxID = ?
-                            AND pageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            foreach ($pages as $page) {
-                $statement->execute([$box->boxID, $page->pageID]);
-            }
-        } else {
-            $sql = "REPLACE INTO    wcf" . WCF_N . "_box_to_page
-                                    (boxID, pageID, visible)
-                    VALUES          (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            foreach ($pages as $page) {
-                $statement->execute([$box->boxID, $page->pageID, $visible ? 1 : 0]);
-            }
-        }
+        $command = new CreateBoxToPageAssignments($boxIdentifier, $pageIdentifiers, $visible);
+        $command();
     }
 
     /**

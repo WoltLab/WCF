@@ -15,8 +15,9 @@ use wcf\system\event\TInterruptableEvent;
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @deprecated use `wcf\event\user\UsernameValidating` instead
  */
-final class UsernameValidating implements IInterruptableEvent
+class UsernameValidating implements IInterruptableEvent
 {
     use TInterruptableEvent;
 

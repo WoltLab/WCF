@@ -2,11 +2,12 @@
 
 namespace wcf\system\menu\acp;
 
+use wcf\event\acp\menu\item\ItemCollecting;
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\menu\acp\event\AcpMenuCollecting;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -58,7 +59,7 @@ class ACPMenu extends TreeMenu
 
         $this->loadLegacyMenuItems();
 
-        $event = new AcpMenuCollecting();
+        $event = new ItemCollecting();
         EventHandler::getInstance()->fire($event);
         foreach ($event->getItems() as $item) {
             $this->menuItems[$item->parentMenuItem][] = $item;
@@ -77,12 +78,23 @@ class ACPMenu extends TreeMenu
                     continue;
                 }
 
+                $icon = null;
+                if ($item->icon) {
+                    if (FontAwesomeIcon::isValidString($item->icon)) {
+                        $icon = FontAwesomeIcon::fromString($item->icon);
+                    } elseif (\str_starts_with($item->icon, 'fa-')) {
+                        // Safeguard to prevent legacy icons from breaking
+                        // the admin panel during the upgrade to 6.0.
+                        $icon = FontAwesomeIcon::fromString("question;true");
+                    }
+                }
+
                 $this->menuItems[$parentMenuItem][] = new AcpMenuItem(
                     $item->menuItem,
                     $item->__toString(),
                     $item->parentMenuItem,
                     $item->getLink(),
-                    $item->icon ?? ''
+                    $icon
                 );
             }
         }

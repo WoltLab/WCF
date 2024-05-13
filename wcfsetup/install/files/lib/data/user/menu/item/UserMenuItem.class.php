@@ -4,7 +4,6 @@ namespace wcf\data\user\menu\item;
 
 use wcf\data\ITitledObject;
 use wcf\data\ProcessibleDatabaseObject;
-use wcf\data\user\menu\item\event\UserMenuItemIconResolving;
 use wcf\system\event\EventHandler;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;
@@ -161,7 +160,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
             $icon = FontAwesomeIcon::fromValues('bars');
         }
 
-        $event = new UserMenuItemIconResolving($this, $icon);
+        $event = new \wcf\event\user\menu\item\IconResolving($this, $icon);
         EventHandler::getInstance()->fire($event);
 
         return $event->icon;

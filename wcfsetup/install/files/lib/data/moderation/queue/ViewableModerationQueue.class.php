@@ -17,6 +17,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a viewable moderation queue entry.
@@ -184,6 +185,14 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     public function getFormattedMessage()
     {
         return SimpleMessageParser::getInstance()->parse($this->message, true, false);
+    }
+
+    public function getMailText(string $mimeType = 'text/html'): string
+    {
+        if ($mimeType === 'text/plain') {
+            return StringUtil::stripHTML($this->getFormattedMessage());
+        }
+        return $this->getFormattedMessage();
     }
 
     /**

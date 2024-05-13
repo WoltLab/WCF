@@ -9,6 +9,7 @@ use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Type\Types\ArrayKeyType;
 use CuyZ\Valinor\Type\Types\ArrayType;
 use CuyZ\Valinor\Type\Types\BooleanValueType;
+use CuyZ\Valinor\Type\Types\CallableType;
 use CuyZ\Valinor\Type\Types\ClassStringType;
 use CuyZ\Valinor\Type\Types\NativeClassType;
 use CuyZ\Valinor\Type\Types\FloatValueType;
@@ -28,6 +29,8 @@ use CuyZ\Valinor\Type\Types\NegativeIntegerType;
 use CuyZ\Valinor\Type\Types\NonEmptyArrayType;
 use CuyZ\Valinor\Type\Types\NonEmptyListType;
 use CuyZ\Valinor\Type\Types\NonEmptyStringType;
+use CuyZ\Valinor\Type\Types\NonNegativeIntegerType;
+use CuyZ\Valinor\Type\Types\NonPositiveIntegerType;
 use CuyZ\Valinor\Type\Types\NullType;
 use CuyZ\Valinor\Type\Types\NumericStringType;
 use CuyZ\Valinor\Type\Types\PositiveIntegerType;
@@ -58,10 +61,13 @@ final class TypeCompiler
             case $type instanceof NativeIntegerType:
             case $type instanceof PositiveIntegerType:
             case $type instanceof NegativeIntegerType:
+            case $type instanceof NonPositiveIntegerType:
+            case $type instanceof NonNegativeIntegerType:
             case $type instanceof NativeStringType:
             case $type instanceof NonEmptyStringType:
             case $type instanceof NumericStringType:
             case $type instanceof UndefinedObjectType:
+            case $type instanceof CallableType:
             case $type instanceof MixedType:
                 return "$class::get()";
             case $type instanceof BooleanValueType:

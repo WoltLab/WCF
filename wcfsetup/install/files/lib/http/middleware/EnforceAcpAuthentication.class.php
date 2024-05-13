@@ -12,6 +12,7 @@ use wcf\acp\action\FullLogoutAction;
 use wcf\acp\form\LoginForm;
 use wcf\acp\form\MultifactorAuthenticationForm;
 use wcf\acp\form\ReauthenticationForm;
+use wcf\acp\page\MediaPage;
 use wcf\action\AJAXInvokeAction;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
@@ -41,6 +42,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         ReauthenticationForm::class,
         FullLogoutAction::class,
         MultifactorAuthenticationForm::class,
+        MediaPage::class,
     ];
 
     /**

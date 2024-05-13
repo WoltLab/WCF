@@ -4,6 +4,7 @@ namespace wcf\system\package;
 
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\package\validation\PackageValidationException;
@@ -154,7 +155,14 @@ class PackageArchive
         try {
             $xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
         } catch (\Exception $e) { // bugfix to avoid file caching problems
-            $xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
+            try {
+                $xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
+            } catch (SystemException $e) {
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_PACKAGE_XML,
+                    ['libxmlOutput' => $e->getDescription()],
+                );
+            }
         }
 
         // parse xml

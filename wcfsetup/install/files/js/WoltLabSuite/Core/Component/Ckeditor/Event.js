@@ -21,11 +21,19 @@ define(["require", "exports"], function (require, exports) {
                 detail: payload,
             }));
         }
+        changeData() {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:change-data" /* EventNames.ChangeData */));
+        }
         destroy() {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:destroy" /* EventNames.Destroy */));
         }
         discardRecoveredData() {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:discard-recovered-data" /* EventNames.DiscardRecoveredData */));
+        }
+        autosave(payload) {
+            this.#element.dispatchEvent(new CustomEvent("ckeditor5:autosave" /* EventNames.Autosave */, {
+                detail: payload,
+            }));
         }
         insertAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:insert-attachment" /* EventNames.InsertAttachment */, {
@@ -92,6 +100,12 @@ define(["require", "exports"], function (require, exports) {
                 else if (result !== false) {
                     throw new Error("An event listener for the bbcode event did not return a boolean to indicate if the BBCode is handled.");
                 }
+            });
+            return this;
+        }
+        changeData(callback) {
+            this.#element.addEventListener("ckeditor5:change-data" /* EventNames.ChangeData */, () => {
+                callback();
             });
             return this;
         }
@@ -169,6 +183,12 @@ define(["require", "exports"], function (require, exports) {
         }
         uploadMedia(callback) {
             this.#element.addEventListener("ckeditor5:upload-media" /* EventNames.UploadMedia */, (event) => {
+                callback(event.detail);
+            });
+            return this;
+        }
+        autosave(callback) {
+            this.#element.addEventListener("ckeditor5:autosave" /* EventNames.Autosave */, (event) => {
                 callback(event.detail);
             });
             return this;

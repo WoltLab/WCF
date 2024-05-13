@@ -3,9 +3,9 @@
 namespace wcf\system\language\preload\command;
 
 use wcf\data\language\Language;
+use wcf\event\language\PreloadPhrasesCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\io\AtomicWriter;
-use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\util\StringUtil;
 
 /**

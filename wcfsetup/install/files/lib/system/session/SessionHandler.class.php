@@ -7,7 +7,7 @@ use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\event\session\PreserveVariablesCollecting;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
@@ -16,8 +16,8 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RouteHandler;
-use wcf\system\session\event\PreserveVariablesCollecting;
 use wcf\system\SingletonFactory;
+use wcf\system\spider\SpiderHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
  * @property-read   int|null $parentPageID       id of the parent page of latest page visited
  * @property-read   int|null $parentPageObjectID id of the object the parent page of latest page visited belongs to
- * @property-read   int $spiderID       id of the spider the session belongs to
+ * @property-read   ?string $spiderIdentifier       identifier of the spider
  */
 final class SessionHandler extends SingletonFactory
 {
@@ -135,7 +135,7 @@ final class SessionHandler extends SingletonFactory
                 return $this->sessionID;
             case 'userID':
                 return $this->user->userID;
-            case 'spiderID':
+            case 'spiderIdentifier':
                 if ($this->userID) {
                     return null;
                 }
@@ -144,7 +144,7 @@ final class SessionHandler extends SingletonFactory
                     return null;
                 }
 
-                return $this->legacySession->spiderID;
+                return $this->legacySession->spiderIdentifier;
             case 'pageID':
             case 'pageObjectID':
             case 'parentPageID':
@@ -584,9 +584,9 @@ final class SessionHandler extends SingletonFactory
                 $condition->add('userID = ?', [$row['userID']]);
             } else {
                 $condition->add('userID IS NULL');
-                $condition->add('(sessionID = ? OR spiderID = ?)', [
+                $condition->add('(sessionID = ? OR spiderIdentifier = ?)', [
                     $row['sessionID'],
-                    $this->getSpiderID(UserUtil::getUserAgent()),
+                    SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()),
                 ]);
             }
 
@@ -662,15 +662,15 @@ final class SessionHandler extends SingletonFactory
         if (!$this->isACP) {
             // Try to find an existing spider session. Order by lastActivityTime to maintain a
             // stable selection in case duplicates exist for some reason.
-            $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
-            if ($spiderID) {
+            $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
+            if ($spiderIdentifier) {
                 $sql = "SELECT      *
                         FROM        wcf1_session
-                        WHERE       spiderID = ?
+                        WHERE       spiderIdentifier = ?
                                 AND userID IS NULL
                         ORDER BY    lastActivityTime DESC";
                 $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([$spiderID]);
+                $statement->execute([$spiderIdentifier]);
                 $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
             }
 
@@ -682,9 +682,9 @@ final class SessionHandler extends SingletonFactory
 
     private function createLegacySession(): LegacySession
     {
-        $spiderID = null;
+        $spiderIdentifier = null;
         if (!$this->user->userID) {
-            $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+            $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
         }
 
         // save session
@@ -696,7 +696,7 @@ final class SessionHandler extends SingletonFactory
             'lastActivityTime' => TIME_NOW,
             'requestURI' => UserUtil::getRequestURI(),
             'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
-            'spiderID' => $spiderID,
+            'spiderIdentifier' => $spiderIdentifier,
         ];
 
         return SessionEditor::create($sessionData);
@@ -1066,7 +1066,7 @@ final class SessionHandler extends SingletonFactory
         // is exceeded ...
         if ($lastAuthentication < (TIME_NOW - $softLimit)) {
             // ... and the grace period since the last check is also exceeded.
-            if ($lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
+            if ($_POST === [] || $lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
                 return true;
             }
         }
@@ -1288,21 +1288,6 @@ final class SessionHandler extends SingletonFactory
             UserStorageHandler::getInstance()->resetAll('groupIDs');
             UserStorageHandler::getInstance()->resetAll('languageIDs');
         }
-    }
-
-    /**
-     * Returns the spider id for given user agent.
-     */
-    private function getSpiderID(string $userAgent): ?int
-    {
-        $data = SpiderCacheBuilder::getInstance()->getData(['fastLookup' => true]);
-        $userAgent = \strtolower($userAgent);
-
-        if (!\preg_match($data['regex'], $userAgent, $matches)) {
-            return null;
-        }
-
-        return $data['mapping'][$matches[0]];
     }
 
     /**

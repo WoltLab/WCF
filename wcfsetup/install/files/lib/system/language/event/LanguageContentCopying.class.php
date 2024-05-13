@@ -12,8 +12,9 @@ use wcf\system\event\IEvent;
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @deprecated 6.1 use `wcf\event\language\LanguageContentCopying` instead
  */
-final class LanguageContentCopying implements IEvent
+class LanguageContentCopying implements IEvent
 {
     public function __construct(
         public readonly Language $sourceLanguage,

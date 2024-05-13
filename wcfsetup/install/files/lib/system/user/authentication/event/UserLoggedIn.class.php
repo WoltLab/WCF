@@ -18,8 +18,9 @@ use wcf\system\event\IEvent;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.5
+ * @deprecated use `wcf\event\user\authentication\UserLoggedIn` instead
  */
-final class UserLoggedIn implements IEvent
+class UserLoggedIn implements IEvent
 {
     private int $userID;
 

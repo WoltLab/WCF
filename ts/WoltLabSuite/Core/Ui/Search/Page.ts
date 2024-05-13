@@ -24,7 +24,7 @@ function click(event: MouseEvent): void {
     const data = JSON.parse(target.dataset.parameters || "");
     if (Core.isPlainObject(data)) {
       Object.keys(data).forEach((key) => {
-        parameters.set(key, data[key]);
+        parameters.set(key, data[key] as string);
       });
     }
   } catch (e) {

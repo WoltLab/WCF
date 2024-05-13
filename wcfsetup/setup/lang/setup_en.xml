@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="en" languagename="English">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd" languagecode="en" languagename="English">
 	<category name="wcf.global">
 		<item name="wcf.global.title"><![CDATA[WoltLab Suite&trade; Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
@@ -20,7 +20,7 @@
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language “PHP”]]></item>
-		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language “PHP” is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language “PHP” is not within the range of supported versions.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[PDO Support]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[The “pdo_mysql” PHP extension is required to install this software.]]></item>

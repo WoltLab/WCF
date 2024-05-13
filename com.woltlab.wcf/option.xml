@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/option.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/option.xsd">
 	<import>
 		<categories>
 			<!-- modules -->
@@ -1275,12 +1275,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>0</minvalue>
 				<suffix>seconds</suffix>
 			</option>
-			<option name="users_online_record_no_guests">
-				<categoryname>user.list.online</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>module_users_online</options>
-			</option>
 			<option name="users_online_enable_legend">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1630,5 +1624,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="module_amp"/>
 		<option name="article_enable_visit_tracking"/>
 		<option name="enable_woltlab_news"/>
+		<option name="users_online_record_no_guests"/>
 	</delete>
 </data>

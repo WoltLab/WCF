@@ -8,6 +8,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -434,6 +435,8 @@ class ModerationQueueManager extends SingletonFactory
                     " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
+
+            CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.moderation.queue', $queueIDs);
 
             $this->resetModerationCount();
         }
