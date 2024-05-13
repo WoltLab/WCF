@@ -7,7 +7,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "WoltLabSuite/Core/Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Manager_1) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "./ServiceWorker", "WoltLabSuite/Core/Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, ServiceWorker_1, Manager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.poll = exports.enableNotifications = exports.setup = void 0;
@@ -34,6 +34,14 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             this.onVisibilityChange();
             if ("Notification" in window && Notification.permission === "granted") {
                 this.allowNotification = true;
+            }
+            if ((0, ServiceWorker_1.serviceWorkerSupported)()) {
+                window.navigator.serviceWorker.addEventListener("message", (event) => {
+                    const payload = event.data;
+                    if (payload.time > this.lastRequestTimestamp) {
+                        this.lastRequestTimestamp = payload.time;
+                    }
+                });
             }
         }
         enableNotifications() {
