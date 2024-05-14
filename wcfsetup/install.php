@@ -22,6 +22,7 @@ $neededFilesPattern = [
 	'!^install/files/acp/images/woltlabSuite.*!',
 	'!^install/files/acp/style/setup/.*!',
 	'!^install/files/lib/data/.*!',
+	'!^install/files/lib/event/.*!',
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
