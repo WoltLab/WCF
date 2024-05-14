@@ -4,7 +4,6 @@ namespace wcf\event\language;
 
 use wcf\data\language\Language;
 use wcf\event\IPsr14Event;
-use wcf\system\event\IEvent;
 
 /**
  * Indicates that a language was created or updated through a manual import.
