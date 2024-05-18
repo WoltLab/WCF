@@ -23,6 +23,15 @@ abstract class AbstractFileProcessor implements IFileProcessor
     }
 
     #[\Override]
+    public function countExistingFiles(array $context): ?int
+    {
+        // Counting of existing files is only required for files that want to
+        // enforce a limit to the concurrent amount of files. This is only ever
+        // relevant for UGC that needs to limit things like attachments.
+        return null;
+    }
+
+    #[\Override]
     public function getAllowedFileExtensions(array $context): array
     {
         // Allow all file types to be uploaded.
@@ -33,6 +42,13 @@ abstract class AbstractFileProcessor implements IFileProcessor
     public function getFileCacheDuration(File $file): FileCacheDuration
     {
         return FileCacheDuration::oneYear();
+    }
+
+    #[\Override]
+    public function getMaximumCount(array $context): ?int
+    {
+        // Allow only a single file to be uploaded.
+        return 1;
     }
 
     #[\Override]

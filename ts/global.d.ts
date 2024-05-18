@@ -92,7 +92,11 @@ declare global {
     set date(date: Date);
   }
 
-  interface WoltlabCoreFileUploadElement extends HTMLElement {}
+  interface WoltlabCoreFileUploadElement extends HTMLElement {
+    get disabled(): boolean;
+    set disabled(disabled: boolean);
+    get maximumCount(): number;
+  }
 
   interface WoltlabCoreLoadingIndicatorElement extends HTMLElement {
     get size(): LoadingIndicatorIconSize;

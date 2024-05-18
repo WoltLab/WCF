@@ -42,6 +42,11 @@
         this.#element.accept = allowedFileExtensions;
       }
 
+      const maximumCount = this.maximumCount;
+      if (maximumCount > 1 || maximumCount === -1) {
+        this.#element.multiple = true;
+      }
+
       const shadow = this.attachShadow({ mode: "open" });
       shadow.append(this.#element);
 
@@ -57,6 +62,18 @@
             visibility: hidden;
         }
       `;
+    }
+
+    get maximumCount(): number {
+      return parseInt(this.dataset.maximumCount || "1");
+    }
+
+    get disabled(): boolean {
+      return this.#element.disabled;
+    }
+
+    set disabled(disabled: boolean) {
+      this.#element.disabled = Boolean(disabled);
     }
   }
 

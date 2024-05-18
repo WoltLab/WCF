@@ -106,6 +106,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }, file.name, fileType, resizeConfiguration.quality);
         return resizedFile;
     }
+    function validateFileLimit(element) {
+        const maximumCount = element.maximumCount;
+        if (maximumCount === -1) {
+            return true;
+        }
+        else if (maximumCount > 0) {
+            return true;
+        }
+        const files = Array.from(element.parentElement.querySelectorAll("woltlab-core-file"));
+        const numberOfUploadedFiles = files.filter((file) => !file.isFailedUpload()).length;
+        if (numberOfUploadedFiles + 1 <= maximumCount) {
+            return true;
+        }
+        (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.maximumCountReached", { maximumCount }));
+        return false;
+    }
     function validateFile(element, file) {
         const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
         for (const fileExtension of fileExtensions) {
@@ -124,7 +140,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             element.addEventListener("upload", (event) => {
                 const file = event.detail;
                 clearPreviousErrors(element);
-                if (!validateFile(element, file)) {
+                if (!validateFileLimit(element)) {
+                    return;
+                }
+                else if (!validateFile(element, file)) {
                     return;
                 }
                 void resizeImage(element, file).then((resizedFile) => {

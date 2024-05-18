@@ -315,6 +315,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyResolve();
   }
 
+  isFailedUpload(): boolean {
+    return this.#state === State.Failed;
+  }
+
   set thumbnail(thumbnail: Thumbnail) {
     if (!this.#thumbnails.includes(thumbnail)) {
       return;

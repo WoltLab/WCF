@@ -58,6 +58,18 @@ interface IFileProcessor
     public function canDownload(File $file): bool;
 
     /**
+     * Counts the numbers of existing files for the provided context.
+     *
+     * The purpose of this method is to enforce upload limits for UGC, but an
+     * implementation may opt out of this by returning `null` which means that
+     * it does not track this for whatever reason.
+     *
+     * @param array<string,string> $context
+     * @return null|int number of existing files or `null` if this should not be enforced
+     */
+    public function countExistingFiles(array $context): ?int;
+
+    /**
      * Notifies the file processor that the list of provided file and thumbnail
      * ids have been deleted.
      *
@@ -80,6 +92,14 @@ interface IFileProcessor
      * value for files that are not persisted yet.
      */
     public function getFileCacheDuration(File $file): FileCacheDuration;
+
+    /**
+     * Limits the maximum number of files that can be uploaded for the provided
+     * context.
+     *
+     * @return null|int Maximum number of files or `null` for an indefinite amount.
+     */
+    public function getMaximumCount(array $context): ?int;
 
     /**
      * Controls the client-side resizing of some types of images before they are

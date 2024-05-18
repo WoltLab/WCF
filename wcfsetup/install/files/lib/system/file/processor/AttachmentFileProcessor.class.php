@@ -105,6 +105,17 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
     }
 
     #[\Override]
+    public function getMaximumCount(array $context): ?int
+    {
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        if ($attachmentHandler === null) {
+            return 0;
+        }
+
+        return $attachmentHandler->getMaxCount();
+    }
+
+    #[\Override]
     public function getUploadResponse(File $file): array
     {
         $attachment = Attachment::findByFileID($file->fileID);
@@ -228,6 +239,13 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         }
 
         return FileCacheDuration::shortLived();
+    }
+
+    #[\Override]
+    public function countExistingFiles(array $context): ?int
+    {
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        return $attachmentHandler?->count();
     }
 
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler

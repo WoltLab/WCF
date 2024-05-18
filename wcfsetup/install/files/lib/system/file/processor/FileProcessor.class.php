@@ -76,6 +76,11 @@ final class FileProcessor extends SingletonFactory
             );
         }
 
+        $maximumCount = $fileProcessor->getMaximumCount($context);
+        if ($maximumCount === null) {
+            $maximumCount = -1;
+        }
+
         return \sprintf(
             <<<'HTML'
                 <woltlab-core-file-upload
@@ -83,12 +88,14 @@ final class FileProcessor extends SingletonFactory
                     data-context="%s"
                     data-file-extensions="%s"
                     data-resize-configuration="%s"
+                    data-maximum-count="%d"
                 ></woltlab-core-file-upload>
                 HTML,
             StringUtil::encodeHTML($fileProcessor->getObjectTypeName()),
             StringUtil::encodeHTML(JSON::encode($context)),
             StringUtil::encodeHTML($allowedFileExtensions),
             StringUtil::encodeHTML(JSON::encode($fileProcessor->getResizeConfiguration())),
+            $maximumCount,
         );
     }
 
@@ -177,5 +184,31 @@ final class FileProcessor extends SingletonFactory
         foreach ($this->objectTypes as $objectType) {
             $objectType->getProcessor()->delete($fileIDs, $thumbnailIDs);
         }
+    }
+
+    public function hasReachedUploadLimit(IFileProcessor $fileProcessor, array $context): bool
+    {
+        $existingFiles = $fileProcessor->countExistingFiles($context);
+        if ($existingFiles === null) {
+            return false;
+        }
+
+        $maximumCount = $fileProcessor->getMaximumCount($context);
+
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf1_file_temporary
+                WHERE   objectTypeID = ?
+                    AND context = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->getObjectType($fileProcessor->getObjectTypeName())->objectTypeID,
+            JSON::encode($context),
+        ]);
+        $numberOfTemporaryFiles = $statement->fetchSingleColumn();
+        if ($existingFiles + $numberOfTemporaryFiles >= $maximumCount) {
+            return true;
+        }
+
+        return false;
     }
 }

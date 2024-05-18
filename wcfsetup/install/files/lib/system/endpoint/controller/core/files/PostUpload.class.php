@@ -35,6 +35,11 @@ final class PostUpload implements IController
             throw new UserInputException('context', 'invalid');
         }
 
+        // Check if the maximum number of accepted files has already been uploaded.
+        if (FileProcessor::getInstance()->hasReachedUploadLimit($fileProcessor, $decodedContext)) {
+            throw new UserInputException('preflight', 'tooManyFiles');
+        }
+
         $validationResult = $fileProcessor->acceptUpload($parameters->filename, $parameters->fileSize, $decodedContext);
         if (!$validationResult->ok()) {
             match ($validationResult) {

@@ -242,6 +242,9 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
             this.#rebuildElement();
             this.#readyResolve();
         }
+        isFailedUpload() {
+            return this.#state === 4 /* State.Failed */;
+        }
         set thumbnail(thumbnail) {
             if (!this.#thumbnails.includes(thumbnail)) {
                 return;
