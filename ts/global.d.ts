@@ -96,6 +96,7 @@ declare global {
     get disabled(): boolean;
     set disabled(disabled: boolean);
     get maximumCount(): number;
+    get maximumSize(): number;
   }
 
   interface WoltlabCoreLoadingIndicatorElement extends HTMLElement {

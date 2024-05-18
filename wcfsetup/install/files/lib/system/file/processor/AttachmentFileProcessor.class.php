@@ -248,6 +248,13 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         return $attachmentHandler?->count();
     }
 
+    #[\Override]
+    public function getMaximumSize(array $context): ?int
+    {
+        $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
+        return $attachmentHandler?->getMaxSize();
+    }
+
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler
     {
         try {

@@ -68,6 +68,10 @@
       return parseInt(this.dataset.maximumCount || "1");
     }
 
+    get maximumSize(): number {
+      return parseInt(this.dataset.maximumSize || "-1");
+    }
+
     get disabled(): boolean {
       return this.#element.disabled;
     }

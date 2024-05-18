@@ -81,6 +81,11 @@ final class FileProcessor extends SingletonFactory
             $maximumCount = -1;
         }
 
+        $maximumSize = $fileProcessor->getMaximumSize($context);
+        if ($maximumSize === null) {
+            $maximumSize = -1;
+        }
+
         return \sprintf(
             <<<'HTML'
                 <woltlab-core-file-upload
@@ -89,6 +94,7 @@ final class FileProcessor extends SingletonFactory
                     data-file-extensions="%s"
                     data-resize-configuration="%s"
                     data-maximum-count="%d"
+                    data-maximum-size="%d"
                 ></woltlab-core-file-upload>
                 HTML,
             StringUtil::encodeHTML($fileProcessor->getObjectTypeName()),
@@ -96,6 +102,7 @@ final class FileProcessor extends SingletonFactory
             StringUtil::encodeHTML($allowedFileExtensions),
             StringUtil::encodeHTML(JSON::encode($fileProcessor->getResizeConfiguration())),
             $maximumCount,
+            $maximumSize,
         );
     }
 

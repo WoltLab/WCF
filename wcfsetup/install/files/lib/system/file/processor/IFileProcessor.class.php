@@ -65,7 +65,7 @@ interface IFileProcessor
      * it does not track this for whatever reason.
      *
      * @param array<string,string> $context
-     * @return null|int number of existing files or `null` if this should not be enforced
+     * @return null|int Number of existing files or `null` if this should not be enforced
      */
     public function countExistingFiles(array $context): ?int;
 
@@ -100,6 +100,14 @@ interface IFileProcessor
      * @return null|int Maximum number of files or `null` for an indefinite amount.
      */
     public function getMaximumCount(array $context): ?int;
+
+    /**
+     * Limits the maximum size of an uploade file.
+     *
+     * @param array<string,string> $context
+     * @return null|int Maximum size in bytes or null to disable the limit.
+     */
+    public function getMaximumSize(array $context): ?int;
 
     /**
      * Controls the client-side resizing of some types of images before they are

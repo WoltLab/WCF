@@ -122,7 +122,31 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.maximumCountReached", { maximumCount }));
         return false;
     }
-    function validateFile(element, file) {
+    function validateFileSize(element, file) {
+        let isImage = false;
+        switch (file.type) {
+            case "image/gif":
+            case "image/jpeg":
+            case "image/png":
+            case "image/webp":
+                isImage = true;
+                break;
+        }
+        // Skip the file size validation for images, they can potentially be resized.
+        if (isImage) {
+            return true;
+        }
+        const maximumSize = element.maximumSize;
+        if (maximumSize === -1) {
+            return true;
+        }
+        if (file.size <= maximumSize) {
+            return true;
+        }
+        (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.fileSizeTooLarge", { filename: file.name }));
+        return false;
+    }
+    function validateFileExtension(element, file) {
         const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
         for (const fileExtension of fileExtensions) {
             if (fileExtension === "*") {
@@ -143,7 +167,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 if (!validateFileLimit(element)) {
                     return;
                 }
-                else if (!validateFile(element, file)) {
+                else if (!validateFileExtension(element, file)) {
+                    return;
+                }
+                else if (!validateFileSize(element, file)) {
                     return;
                 }
                 void resizeImage(element, file).then((resizedFile) => {
@@ -159,7 +186,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     promiseReject = reject;
                 });
                 clearPreviousErrors(element);
-                if (!validateFile(element, file)) {
+                if (!validateFileExtension(element, file)) {
                     promiseReject();
                     return;
                 }

@@ -52,6 +52,13 @@ abstract class AbstractFileProcessor implements IFileProcessor
     }
 
     #[\Override]
+    public function getMaximumSize(array $context): ?int
+    {
+        // Do not limit the maximum size of an uploaded file.
+        return null;
+    }
+
+    #[\Override]
     public function getResizeConfiguration(): ResizeConfiguration
     {
         // Disable client-side resizing.
