@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use GuzzleHttp\Psr7\Header;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Stream;
@@ -50,17 +51,6 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        $eTag = \sprintf(
-            '"%d-%s"',
-            $file->fileID,
-            \substr($file->fileHash, 0, 8),
-        );
-
-        $httpIfNoneMatch = $_SERVER['HTTP_IF_NONE_MATCH'] ?? '';
-        if ($httpIfNoneMatch === $eTag) {
-            return new EmptyResponse(304);
-        }
-
         $processor->trackDownload($file);
 
         $filename = $file->getPathname();
@@ -105,6 +95,25 @@ final class FileDownloadAction implements RequestHandlerInterface
             $response = $response
                 ->withHeader('Expires', $expiresAt)
                 ->withHeader('Cache-control', $maxAge);
+        }
+
+        $eTag = \sprintf(
+            '"W/%d-%s"',
+            $file->fileID,
+            \substr($file->fileHash, 0, 8),
+        );
+        $nonWeakETag =  \sprintf(
+            '"%d-%s"',
+            $file->fileID,
+            \substr($file->fileHash, 0, 8),
+        );
+
+        $httpIfNoneMatch = \array_map(
+            static fn ($tag) => \preg_replace('^"W/', '"', $tag),
+            Header::splitList($request->getHeaderLine('HTTP_IF_NONE_MATCH'))
+        );
+        if (\in_array($nonWeakETag, $httpIfNoneMatch, true)) {
+            return new EmptyResponse(304);
         }
 
         return $response
