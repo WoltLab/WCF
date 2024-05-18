@@ -108,11 +108,19 @@ final class FileDownloadAction implements RequestHandlerInterface
         );
 
         $httpIfNoneMatch = \array_map(
-            static fn ($tag) => \preg_replace('^"W/', '"', $tag),
-            Header::splitList($request->getHeaderLine('HTTP_IF_NONE_MATCH'))
+            static fn ($tag) => \preg_replace('~^"W/~', '"', $tag),
+            Header::splitList($request->getHeaderLine('if-none-match'))
         );
         if (\in_array($nonWeakETag, $httpIfNoneMatch, true)) {
-            return new EmptyResponse(304);
+            $emptyResponse = new EmptyResponse(304);
+            if ($response->getHeader('expires')) {
+                $emptyResponse = $emptyResponse->withHeader('expires', $response->getHeader('expires'));
+            }
+            if ($response->getHeader('cache-control')) {
+                $emptyResponse = $emptyResponse->withHeader('cache-control', $response->getHeader('cache-control'));
+            }
+
+            return $emptyResponse;
         }
 
         return $response
