@@ -83,18 +83,17 @@ final class FileDownloadAction implements RequestHandlerInterface
 
         $lifetimeInSeconds = $processor->getFileCacheDuration($file)->lifetimeInSeconds;
         if ($lifetimeInSeconds !== null) {
-            $expiresAt = \sprintf(
-                '%s GMT',
-                \gmdate('D, d M Y H:i:s', $lifetimeInSeconds)
-            );
+            $expiresAt = (new \DateTimeImmutable('@' . \TIME_NOW))
+                ->modify("+{$lifetimeInSeconds} seconds")
+                ->format(\DateTimeImmutable::RFC7231);
             $maxAge = \sprintf(
                 'max-age=%d, private',
                 $lifetimeInSeconds ?: 0,
             );
 
             $response = $response
-                ->withHeader('Expires', $expiresAt)
-                ->withHeader('Cache-control', $maxAge);
+                ->withHeader('expires', $expiresAt)
+                ->withHeader('cache-control', $maxAge);
         }
 
         $eTag = \sprintf(
@@ -122,6 +121,6 @@ final class FileDownloadAction implements RequestHandlerInterface
                 'content-disposition',
                 $contentDisposition->forFilename($file->filename),
             )
-            ->withHeader('ETag', $eTag);
+            ->withHeader('etag', $eTag);
     }
 }
