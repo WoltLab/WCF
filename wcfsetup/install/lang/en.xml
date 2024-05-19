@@ -736,6 +736,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[You cannot grant user group permissions exceeding your own permissions.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The set value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The set value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.maximumUploadLimit"><![CDATA[The set value is too large, the maximum value is {$option->maximumUploadLimit|filesize}.]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Display Members]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Can access page during maintenance mode]]></item>
 		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Can ban users]]></item>

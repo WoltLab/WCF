@@ -35,6 +35,10 @@ final class PostUpload implements IController
             throw new UserInputException('context', 'invalid');
         }
 
+        if ($parameters->fileSize > FileProcessor::getInstance()->getMaximumFileSize()) {
+            throw new UserInputException('fileSize', 'tooLarge');
+        }
+
         // Check if the maximum number of accepted files has already been uploaded.
         if (FileProcessor::getInstance()->hasReachedUploadLimit($fileProcessor, $decodedContext)) {
             throw new UserInputException('preflight', 'tooManyFiles');
@@ -50,10 +54,6 @@ final class PostUpload implements IController
         }
 
         $numberOfChunks = FileTemporary::getNumberOfChunks($parameters->fileSize);
-        if ($numberOfChunks > FileTemporary::MAX_CHUNK_COUNT) {
-            throw new UserInputException('fileSize', 'tooLarge');
-        }
-
         $fileTemporary = $this->createTemporaryFile($parameters, $numberOfChunks);
 
         return new JsonResponse([

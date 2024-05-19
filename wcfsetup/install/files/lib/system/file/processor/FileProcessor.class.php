@@ -25,6 +25,8 @@ use wcf\util\StringUtil;
  */
 final class FileProcessor extends SingletonFactory
 {
+    public const MAXIMUM_NUMBER_OF_CHUNKS = 255;
+
     /**
      * @var array<string, ObjectType>
      */
@@ -217,5 +219,26 @@ final class FileProcessor extends SingletonFactory
         }
 
         return false;
+    }
+
+    public function getOptimalChunkSize(): int
+    {
+        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
+        if ($postMaxSize === 0) {
+            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
+            $postMaxSize = 100_000_000;
+        }
+
+        return $postMaxSize;
+    }
+
+    public function getMaximumFileSize(): int
+    {
+        $maximumFileSize = $this->getOptimalChunkSize() * self::MAXIMUM_NUMBER_OF_CHUNKS;
+        if (\defined('ENTERPRISE_MODE_MAXIMUM_FILE_SIZE')) {
+            $maximumFileSize = \min($maximumFileSize, \constant('ENTERPRISE_MODE_MAXIMUM_FILE_SIZE'));
+        }
+
+        return $maximumFileSize;
     }
 }

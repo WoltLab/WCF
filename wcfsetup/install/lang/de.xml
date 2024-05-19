@@ -758,6 +758,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.maximumUploadLimit"><![CDATA[Der angegebene Wert ist zu hoch, der maximale Wert ist {$option->maximumUploadLimit|filesize}.]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Kann Seite im Wartungsmodus aufrufen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Kann Benutzer sperren]]></item>

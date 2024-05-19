@@ -3,6 +3,7 @@
 namespace wcf\data\file\temporary;
 
 use wcf\data\DatabaseObject;
+use wcf\system\file\processor\FileProcessor;
 use wcf\util\JSON;
 
 /**
@@ -25,8 +26,6 @@ class FileTemporary extends DatabaseObject
     protected static $databaseTableIndexIsIdentity = false;
 
     protected static $databaseTableIndexName = 'identifier';
-
-    public const MAX_CHUNK_COUNT = 255;
 
     public function getChunkCount(): int
     {
@@ -82,17 +81,6 @@ class FileTemporary extends DatabaseObject
 
     public static function getNumberOfChunks(int $fileSize): int
     {
-        return \ceil($fileSize / self::getOptimalChunkSize());
-    }
-
-    private static function getOptimalChunkSize(): int
-    {
-        $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
-        if ($postMaxSize === 0) {
-            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
-            $postMaxSize = 100 * 1_024 * 1_024;
-        }
-
-        return $postMaxSize;
+        return \ceil($fileSize / FileProcessor::getInstance()->getOptimalChunkSize());
     }
 }
