@@ -14,7 +14,7 @@ trait TMinimumFormField
 {
     /**
      * minimum of the field value
-     * @var null|int
+     * @var null|int|float
      */
     protected $minimum;
 
@@ -22,7 +22,7 @@ trait TMinimumFormField
      * Returns the minimum of the values of this field or `null` if no minimum
      * has been set.
      *
-     * @return  null|number
+     * @return  null|int|float
      */
     public function getMinimum()
     {
@@ -33,7 +33,7 @@ trait TMinimumFormField
      * Sets the minimum of the values of this field. If `null` is passed, the
      * minimum is removed.
      *
-     * @param null|number $minimum minimum field value
+     * @param null|int|float $minimum minimum field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum is no number or otherwise invalid
