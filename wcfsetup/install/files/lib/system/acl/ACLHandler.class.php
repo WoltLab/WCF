@@ -155,9 +155,7 @@ class ACLHandler extends SingletonFactory
                 if (isset($valuesSource[$type])) {
                     $this->__readValues[$objectTypeID][$type] = [];
 
-                    foreach ($valuesSource[$type] as $typeID => $optionData) {
-                        $optionData = JSON::decode($optionData);
-
+                    foreach (JSON::decode($valuesSource[$type]) as $typeID => $optionData) {
                         $this->__readValues[$objectTypeID][$type][$typeID] = [];
 
                         foreach ($optionData as $optionID => $optionValue) {
@@ -166,6 +164,8 @@ class ACLHandler extends SingletonFactory
                             }
                         }
                     }
+
+                    $this->__readValues[$objectTypeID][$type] = JSON::encode($this->__readValues[$objectTypeID][$type]);
                 }
             }
         }
