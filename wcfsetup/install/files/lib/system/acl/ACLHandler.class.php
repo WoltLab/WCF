@@ -248,6 +248,9 @@ class ACLHandler extends SingletonFactory
     protected function replaceValues(ACLOptionList $optionList, $type, $objectID)
     {
         $options = $optionList->getObjects();
+        if ($options === []) {
+            return;
+        }
 
         // remove previous values
         $conditions = new PreparedStatementConditionBuilder();
