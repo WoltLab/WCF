@@ -562,10 +562,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $pageIDs[$row['identifier']] = $row['pageID'];
             }
 
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_page_content
-                                        (pageID, languageID)
-                    VALUES              (?, ?)";
-            $createLanguageVersionStatement = WCF::getDB()->prepareStatement($sql);
+            $sql = "INSERT IGNORE INTO  wcf1_page_content
+                                        (pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
+                    SELECT              pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+                    FROM                wcf1_page_content
+                    WHERE               pageID = ?
+                                    AND languageID = ?";
+            $createLanguageVersionStatement = WCF::getDB()->prepare($sql);
             $sql = "UPDATE  wcf" . WCF_N . "_page_content
                     SET     title = ?
                     WHERE   pageID = ?
@@ -582,7 +585,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     continue; // unknown page
                 }
 
-                $createLanguageVersionStatement->execute([$pageIDs[$identifier], $this->languageID]);
+                $createLanguageVersionStatement->execute([
+                    $this->languageID,
+                    $this->languageID,
+                    $pageIDs[$identifier],
+                    LanguageFactory::getInstance()->getDefaultLanguageID(),
+                ]);
                 if (isset($pageContent['title'])) {
                     $updateTitleStatement->execute([$pageContent['title'], $pageIDs[$identifier], $this->languageID]);
                 }
