@@ -808,8 +808,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
 
                 if (!$mayContainOtherContent) {
-                    $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
-                    $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
+                    $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling') ??
+                        $this->getNonEmptyNode($link, 'nextSibling');
+                    $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling') ??
+                        $this->getNonEmptyNode($link, 'previousSibling');
 
                     // Check whether the link is the only content in the line.
                     // To do this, we need to check whether the next/previous sibling is a `<br>' element or
