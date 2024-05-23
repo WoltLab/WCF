@@ -318,6 +318,10 @@
 		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.expression"><![CDATA[Definition (m h DoM M DoW)]]></item>
+		<item name="wcf.acp.cronjob.expressionType"><![CDATA[Definitionstyp]]></item>
+		<item name="wcf.acp.cronjob.expressionType.default"><![CDATA[Gezielte Definition]]></item>
+		<item name="wcf.acp.cronjob.expressionType.random"><![CDATA[Zufällige Definition]]></item>
+		<item name="wcf.acp.cronjob.expressionRandom"><![CDATA[Zufällige Zeit]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>

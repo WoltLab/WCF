@@ -14,7 +14,9 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -261,6 +263,28 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                 ->implementedInterface(ICronjob::class)
                 ->required(),
 
+            SingleSelectionFormField::create('expressionType')
+                ->label('wcf.acp.cronjob.expressionType')
+                ->required()
+                ->options([
+                    '' => 'wcf.acp.cronjob.expressionType.default',
+                    'random' => 'wcf.acp.cronjob.expressionType.random',
+                ]),
+            SingleSelectionFormField::create('expression')
+                ->label('wcf.acp.cronjob.expressionRandom')
+                ->required()
+                ->options([
+                    '@hourly' => '@hourly',
+                    '@daily' => '@daily',
+                    '@weekly' => '@weekly',
+                    '@monthly' => '@monthly',
+                ])
+                ->addDependency(
+                    (new ValueFormFieldDependency())
+                        ->fieldId('expressionType')
+                        ->values(['random'])
+                ),
+
             OptionFormField::create()
                 ->description('wcf.acp.pip.cronjob.options.description'),
 
@@ -290,13 +314,18 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->label('wcf.acp.cronjob.' . $timeProperty)
                     ->description("wcf.acp.cronjob.{$timeProperty}.description")
                     ->required()
+                    ->addDependency(
+                        (new ValueFormFieldDependency())
+                            ->fieldId('expressionType')
+                            ->values([''])
+                    )
                     ->addValidator(new FormFieldValidator(
                         'format',
                         static function (TextFormField $formField) use ($timeProperty, $fieldFactory) {
                             $position = match ($timeProperty) {
                                 'startMinute' => CronExpression::MINUTE,
                                 'startHour' => CronExpression::HOUR,
-                                'startDom' => CronExpression::MONTH,
+                                'startDom' => CronExpression::DAY,
                                 'startMonth' => CronExpression::MONTH,
                                 'startDow' => CronExpression::WEEKDAY,
                             };
@@ -311,7 +340,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                             }
                         }
                     )),
-                'options'
+                'expression'
             );
         }
     }
@@ -327,12 +356,38 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             'cronjobName' => $element->getAttribute('name'),
             'description' => [],
             'packageID' => $this->installation->getPackage()->packageID,
-            'startDom' => $element->getElementsByTagName('startdom')->item(0)->nodeValue,
-            'startDow' => $element->getElementsByTagName('startdow')->item(0)->nodeValue,
-            'startHour' => $element->getElementsByTagName('starthour')->item(0)->nodeValue,
-            'startMinute' => $element->getElementsByTagName('startminute')->item(0)->nodeValue,
-            'startMonth' => $element->getElementsByTagName('startmonth')->item(0)->nodeValue,
         ];
+
+        $expressionItem = $element->getElementsByTagName('expression')->item(0);
+        if ($expressionItem instanceof \DOMElement) {
+            $expression = $expressionItem->nodeValue;
+            $expressionType = $expressionItem->getAttribute('type');
+            $cronExpression = match ($expressionType) {
+                '' => new CronExpression($expression),
+                'random' => $this->getRandomExpression(
+                    $data['cronjobName'],
+                    $expression
+                ),
+            };
+
+            $data['startMinute'] = $cronExpression->getExpression(CronExpression::MINUTE);
+            $data['startHour'] = $cronExpression->getExpression(CronExpression::HOUR);
+            $data['startDom'] = $cronExpression->getExpression(CronExpression::DAY);
+            $data['startMonth'] = $cronExpression->getExpression(CronExpression::MONTH);
+            $data['startDow'] = $cronExpression->getExpression(CronExpression::WEEKDAY);
+            $data['expressionType'] = $expressionType;
+
+            if ($expressionType === 'random') {
+                $data['expression'] = $expression;
+            }
+        } else {
+            // Legacy cronjob definition, pre 6.0
+            $data['startMinute'] = $element->getElementsByTagName('startminute')->item(0)->nodeValue;
+            $data['startHour'] = $element->getElementsByTagName('starthour')->item(0)->nodeValue;
+            $data['startDom'] = $element->getElementsByTagName('startdom')->item(0)->nodeValue;
+            $data['startMonth'] = $element->getElementsByTagName('startmonth')->item(0)->nodeValue;
+            $data['startDow'] = $element->getElementsByTagName('startdow')->item(0)->nodeValue;
+        }
 
         $canBeDisabled = $element->getElementsByTagName('canbedisabled')->item(0);
         if ($canBeDisabled !== null) {
@@ -401,6 +456,9 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             foreach ($descriptions as $languageID => $description) {
                 $data['description'][LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $description;
             }
+
+            unset($data['expressionType']);
+            unset($data['expression']);
         }
 
         return $data;
@@ -468,14 +526,26 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             }
         }
 
+        $expression = $document->createElement(
+            'expression',
+            $formData['expression'] ??
+            \sprintf(
+                '%s %s %s %s %s',
+                $formData['startminute'],
+                $formData['starthour'],
+                $formData['startdom'],
+                $formData['startmonth'],
+                $formData['startdow']
+            )
+        );
+        if ($formData['expressionType'] !== '') {
+            $expression->setAttribute('type', $formData['expressionType']);
+        }
+        $cronjob->appendChild($expression);
+
         $this->appendElementChildren(
             $cronjob,
             [
-                'startminute',
-                'starthour',
-                'startdom',
-                'startmonth',
-                'startdow',
                 'options' => '',
                 'canbeedited' => 1,
                 'canbedisabled' => 1,
