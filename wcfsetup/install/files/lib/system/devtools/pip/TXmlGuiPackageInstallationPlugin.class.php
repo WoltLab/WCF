@@ -600,7 +600,7 @@ XML;
                 $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
                 $statement->execute($sqlData['parameters']);
 
-                $existingRow = $statement->fetchArray();
+                $existingRow = $statement->fetchArray() ?: [];
             }
         }
 
