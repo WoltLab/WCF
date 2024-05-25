@@ -44,7 +44,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
     {
         $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
         if ($attachmentHandler === null) {
-            // This can only happen whent he associated object has vanished
+            // This can only happen when the associated object has vanished
             // while the file was being processed. There is nothing we can
             // meaningfully do here.
             return;

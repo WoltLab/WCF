@@ -97,26 +97,21 @@ final class FileDownloadAction implements RequestHandlerInterface
         }
 
         $eTag = \sprintf(
-            '"W/%d-%s"',
-            $file->fileID,
-            \substr($file->fileHash, 0, 8),
-        );
-        $nonWeakETag =  \sprintf(
             '"%d-%s"',
             $file->fileID,
             \substr($file->fileHash, 0, 8),
         );
 
         $httpIfNoneMatch = \array_map(
-            static fn ($tag) => \preg_replace('~^"W/~', '"', $tag),
+            static fn ($tag) => \preg_replace('~^W/~', '', $tag),
             Header::splitList($request->getHeaderLine('if-none-match'))
         );
-        if (\in_array($nonWeakETag, $httpIfNoneMatch, true)) {
+        if (\in_array($eTag, $httpIfNoneMatch, true)) {
             $emptyResponse = new EmptyResponse(304);
-            if ($response->getHeader('expires')) {
+            if ($response->hasHeader('expires')) {
                 $emptyResponse = $emptyResponse->withHeader('expires', $response->getHeader('expires'));
             }
-            if ($response->getHeader('cache-control')) {
+            if ($response->hasHeader('cache-control')) {
                 $emptyResponse = $emptyResponse->withHeader('cache-control', $response->getHeader('cache-control'));
             }
 
