@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
+use wcf\system\file\processor\FileProcessor;
 use wcf\util\FileUtil;
 
 /**
@@ -83,6 +84,61 @@ class FileEditor extends DatabaseObjectEditor
             'fileExtension' => File::getSafeFileExtension($mimeType, $fileTemporary->filename),
             'secret' => \bin2hex(\random_bytes(16)),
             'objectTypeID' => $fileTemporary->objectTypeID,
+            'mimeType' => $mimeType,
+            'width' => $width,
+            'height' => $height,
+        ]]);
+        $file = $fileAction->executeAction()['returnValues'];
+        \assert($file instanceof File);
+
+        $filePath = $file->getPath();
+        if (!\is_dir($filePath)) {
+            \mkdir($filePath, recursive: true);
+        }
+
+        \rename(
+            $pathname,
+            $filePath . $file->getSourceFilename()
+        );
+
+        return $file;
+    }
+
+    public static function createFromExistingFile(
+        string $pathname,
+        string $originalFilename,
+        string $objectTypeName
+    ): ?File {
+        if (!\is_readable($pathname)) {
+            return null;
+        }
+
+        $objectType = FileProcessor::getInstance()->getObjectType($objectTypeName);
+        if ($objectType === null) {
+            return new \RuntimeException("The object type '{$objectTypeName}' is not valid.");
+        }
+
+        $mimeType = FileUtil::getMimeType($pathname);
+        $isImage = match ($mimeType) {
+            'image/gif' => true,
+            'image/jpeg' => true,
+            'image/png' => true,
+            'image/webp' => true,
+            default => false,
+        };
+
+        $width = $height = null;
+        if ($isImage) {
+            [$width, $height] = \getimagesize($pathname);
+        }
+
+        $fileAction = new FileAction([], 'create', ['data' => [
+            'filename' => $originalFilename,
+            'fileSize' => \filesize($pathname),
+            'fileHash' => \hash_file('sha256', $pathname),
+            'fileExtension' => File::getSafeFileExtension($mimeType, $originalFilename),
+            'secret' => \bin2hex(\random_bytes(16)),
+            'objectTypeID' => $objectType->objectTypeID,
             'mimeType' => $mimeType,
             'width' => $width,
             'height' => $height,
