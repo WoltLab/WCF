@@ -34,6 +34,11 @@ return static function (): void {
     );
 
     $eventHandler->register(
+        \wcf\event\user\RegistrationSpamChecking::class,
+        \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
+    );
+
+    $eventHandler->register(
         \wcf\event\package\PackageListChanged::class,
         static function () {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
