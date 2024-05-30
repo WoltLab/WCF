@@ -41,6 +41,10 @@ return static function (): void {
         \wcf\event\page\ContactFormSpamChecking::class,
         \wcf\system\event\listener\ContactFormSpamCheckingSfsListener::class
     );
+    $eventHandler->register(
+        \wcf\event\message\MessageSpamChecking::class,
+        \wcf\system\event\listener\MessageSpamCheckingSfsListener::class
+    );
 
     $eventHandler->register(
         \wcf\event\package\PackageListChanged::class,
