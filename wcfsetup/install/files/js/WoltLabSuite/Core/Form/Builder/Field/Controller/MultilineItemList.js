@@ -112,6 +112,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
                 if (event.key === "Enter") {
                     saveCallback(event);
                 }
+                else if (event.key === "Escape") {
+                    endCallback();
+                }
             });
             saveButton.addEventListener("click", (ev) => {
                 saveCallback(ev);
@@ -119,9 +122,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
             cancelButton.addEventListener("click", () => {
                 endCallback();
             });
-            li.append(cancelButton);
-            li.append(saveButton);
-            li.append(input);
+            li.append(saveButton, cancelButton, input);
             input.focus();
         }
         /**
@@ -141,7 +142,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
             let icon = document.createElement("fa-icon");
             icon.setIcon("trash");
             deleteButton.append(icon);
-            itemElement.append(deleteButton);
             const editButton = document.createElement("button");
             editButton.type = "button";
             editButton.classList.add("jsEditItem", "jsTooltip");
@@ -150,13 +150,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
                 this.editItem(ev);
             });
             icon = document.createElement("fa-icon");
-            icon.setIcon("edit");
+            icon.setIcon("pencil");
             editButton.append(icon);
-            itemElement.append(editButton);
-            itemElement.append(" ");
             const label = document.createElement("span");
             label.innerText = item;
-            itemElement.append(label);
+            itemElement.append(editButton, deleteButton, " ", label);
             const nextElement = Array.from(this.itemList.children).find((el) => el.dataset.value > item);
             if (nextElement) {
                 this.itemList.insertBefore(itemElement, nextElement);

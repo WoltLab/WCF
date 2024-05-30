@@ -4,11 +4,11 @@
 *}>
 	{foreach from=$field->getValue() item=value}
 		<li data-value="{$value}">
+			<button class="jsEditItem jsTooltip" type="button" title="{lang}wcf.global.button.edit{/lang}">
+				{icon name='pencil'}
+			</button>
 			<button class="jsDeleteItem jsTooltip" type="button" title="{lang}wcf.global.button.delete{/lang}">
 				{icon name='trash'}
-			</button>
-			<button class="jsEditItem jsTooltip" type="button" title="{lang}wcf.global.button.edit{/lang}">
-				{icon name='edit'}
 			</button>
 			<span>{$value}</span>
 		</li>
