@@ -1720,10 +1720,10 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or cellular connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Action in Case of a Match]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
+		<item name="wcf.acp.option.register_antispam_action"><![CDATA[Action in Case of Spam Detection]]></item>
+		<item name="wcf.acp.option.register_antispam_action.block"><![CDATA[Block]]></item>
+		<item name="wcf.acp.option.register_antispam_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
+		<item name="wcf.acp.option.register_antispam_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be removed after the following days. Use 0 to disable.]]></item>

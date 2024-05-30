@@ -499,6 +499,9 @@ class WCF
         // The option to count guests in the online record was removed with version 6.1.
         // https://github.com/WoltLab/WCF/issues/5888
         \define('USERS_ONLINE_RECORD_NO_GUESTS', 1);
+
+        // The option for the SFS action has been converted into a general option with version 6.1.
+        \define('BLACKLIST_SFS_ACTION', 'disable');
     }
 
     /**

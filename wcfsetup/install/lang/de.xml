@@ -1737,10 +1737,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[E-Mail-Adressen sind einzigartig und stellen eine solide Basis dar. Empfohlene Einstellung: <strong>Mehrfach gemeldet</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP-Adressen sind insbesondere durch die dynamische Vergabe (z. B. Privatanschlüsse oder Mobilfunk) nur bedingt verlässlich. Empfohlene Einstellung: <strong>Top 10%</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Aktion bei Übereinstimmung]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Blockieren]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
+		<item name="wcf.acp.option.register_antispam_action"><![CDATA[Aktion bei Spam-Erkennung]]></item>
+		<item name="wcf.acp.option.register_antispam_action.block"><![CDATA[Registrierung blockieren]]></item>
+		<item name="wcf.acp.option.register_antispam_action.description"><![CDATA[Es besteht immer das Risiko einer fehlerhaften Spam-Erkennung, daher wird die Einstellung <strong>Registrierung erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
+		<item name="wcf.acp.option.register_antispam_action.disable"><![CDATA[Registrierung erfordert manuelle Freischaltung]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzeigen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>

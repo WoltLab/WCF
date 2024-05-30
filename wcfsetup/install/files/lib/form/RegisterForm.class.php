@@ -218,7 +218,7 @@ class RegisterForm extends UserAddForm
 
         $this->spamCheckEvent = new RegistrationSpamChecking($this->username, $this->email, UserUtil::getIpAddress());
         EventHandler::getInstance()->fire($this->spamCheckEvent);
-        if ($this->spamCheckEvent->defaultPrevented() && BLACKLIST_SFS_ACTION === 'block') {
+        if ($this->spamCheckEvent->defaultPrevented() && \REGISTER_ANTISPAM_ACTION === 'block') {
             throw new NamedUserException(
                 WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
             );
