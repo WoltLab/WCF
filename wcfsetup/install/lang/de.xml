@@ -1324,7 +1324,6 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.option.category.module.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Sicherheit]]></item>
-		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.option.category.security.general.secrets"><![CDATA[Geheimschlüssel]]></item>
@@ -1717,7 +1716,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Datenschutzkonforme Überprüfung auf Basis einer lokalen Kopie der StopForumSpam.com-Datenbestände.]]></item>
-		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Eigene Sperrlisten]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Abgleich mit Stop Forum Spam aktivieren]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[Die lokale Datenbank enthält Informationen zur Häufigkeit, mit der ein Eintrag als Spammer gemeldet wurde.<br>
 <strong>Hinweis: Es werden zu keinem Zeitpunkt Daten an Drittseiten übertragen.</strong><br>

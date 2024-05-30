@@ -166,17 +166,6 @@
 				<parent>security.general</parent>
 				<showorder>15</showorder>
 			</category>
-			<category name="security.blacklist">
-				<parent>security</parent>
-			</category>
-			<category name="security.blacklist.sfs">
-				<parent>security.blacklist</parent>
-				<showorder>1</showorder>
-			</category>
-			<category name="security.blacklist.custom">
-				<parent>security.blacklist</parent>
-				<showorder>2</showorder>
-			</category>
 			<category name="security.antispam">
 				<parent>security</parent>
 			</category>
@@ -184,6 +173,9 @@
 				<parent>security.antispam</parent>
 			</category>
 			<category name="security.antispam.recaptcha">
+				<parent>security.antispam</parent>
+			</category>
+			<category name="security.blacklist.sfs">
 				<parent>security.antispam</parent>
 			</category>
 			<category name="security.censorship">
@@ -1613,5 +1605,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="article_enable_visit_tracking"/>
 		<option name="enable_woltlab_news"/>
 		<option name="users_online_record_no_guests"/>
+		<category name="security.blacklist"/>
+		<category name="security.blacklist.custom"/>
 	</delete>
 </data>

@@ -1302,7 +1302,6 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.option.category.module.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
-		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.option.category.security.general.secrets"><![CDATA[Secret Keys]]></item>
@@ -1700,7 +1699,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
-		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Enable the verification using Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times an entry was reported as a spammer.<br>
 <strong>Notice: No data is transferred to a third party service at any point in the process.</strong><br>
