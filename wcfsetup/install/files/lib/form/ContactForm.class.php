@@ -2,11 +2,12 @@
 
 namespace wcf\form;
 
-use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;
+use wcf\event\page\ContactFormSpamChecking;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\email\Mailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -169,15 +170,13 @@ class ContactForm extends AbstractCaptchaForm
             }
         }
 
-        if (BLACKLIST_SFS_ENABLE) {
-            $matches = BlacklistEntry::getMatches(
-                '',
-                $this->email,
-                UserUtil::getIpAddress()
-            );
-            if ($matches !== [] && BLACKLIST_SFS_ACTION === 'block') {
-                throw new PermissionDeniedException();
-            }
+        $spamCheckEvent = new ContactFormSpamChecking(
+            $this->email,
+            UserUtil::getIpAddress(),
+        );
+        EventHandler::getInstance()->fire($spamCheckEvent);
+        if ($spamCheckEvent->defaultPrevented()) {
+            throw new PermissionDeniedException();
         }
     }
 
