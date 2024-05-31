@@ -109,6 +109,15 @@
 			color: var(--wcfEditorButtonText);
 		}
 	}
+
+	/* Extra fix for the handling of buttons that act as a toggle for a
+	   collapsible container. */
+	.ck.ck.ck-toolbar__items .ck.ck-collapsible > .ck.ck-button:hover {
+		background: var(--ck-color-button-default-hover-background);
+
+		/* The editor does not support a separate text color on hover. */
+		color: var(--wcfEditorButtonText);
+	}
 }
 
 .ck.ck-toolbar__items,
