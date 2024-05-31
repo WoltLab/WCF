@@ -12,10 +12,12 @@ use wcf\data\IMessageInlineEditorAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\event\message\MessageSpamChecking;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -36,6 +38,7 @@ use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
 use wcf\util\UserRegistrationUtil;
+use wcf\util\UserUtil;
 
 /**
  * Executes comment-related actions.
@@ -403,6 +406,16 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (!$this->commentProcessor->canAdd($this->parameters['data']['objectID'])) {
             throw new PermissionDeniedException();
         }
+
+        $event = new MessageSpamChecking(
+            $this->parameters['htmlInputProcessor'],
+            WCF::getUser()->userID ? WCF::getUser() : null,
+            UserUtil::getIpAddress(),
+        );
+        EventHandler::getInstance()->fire($event);
+        if ($event->defaultPrevented()) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
@@ -564,6 +577,16 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $this->validateGetGuestDialog();
         $this->validateMessage(true);
+
+        $event = new MessageSpamChecking(
+            $this->parameters['htmlInputProcessor'],
+            WCF::getUser()->userID ? WCF::getUser() : null,
+            UserUtil::getIpAddress(),
+        );
+        EventHandler::getInstance()->fire($event);
+        if ($event->defaultPrevented()) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
