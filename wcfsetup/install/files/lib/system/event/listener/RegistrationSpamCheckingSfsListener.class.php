@@ -21,8 +21,8 @@ final class RegistrationSpamCheckingSfsListener
             return;
         }
 
-        if (BlacklistEntry::getMatches($event->username, $event->email, $event->ipAddress) !== []) {
-            $event->preventDefault();
+        foreach (BlacklistEntry::getMatches($event->username, $event->email, $event->ipAddress) as $match) {
+            $event->addMatch($match);
         }
     }
 }
