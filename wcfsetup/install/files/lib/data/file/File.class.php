@@ -5,6 +5,7 @@ namespace wcf\data\file;
 use wcf\action\FileDownloadAction;
 use wcf\data\DatabaseObject;
 use wcf\data\file\thumbnail\FileThumbnail;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\request\LinkHandler;
@@ -27,6 +28,7 @@ use wcf\util\StringUtil;
  * @property-read string $mimeType
  * @property-read int|null $width
  * @property-read int|null $height
+ * @property-read string|null $fileHashWebp
  */
 class File extends DatabaseObject
 {
@@ -65,28 +67,66 @@ class File extends DatabaseObject
         return \sprintf(
             '%d-%s-%s.%s',
             $this->fileID,
-            $this->secret,
             $this->fileHash,
+            $this->secret,
             $this->fileExtension,
         );
     }
 
-    public function getPath(): string
+    public function getSourceFilenameWebp(): ?string
+    {
+        if ($this->fileHashWebp === null) {
+            return null;
+        }
+
+        // The filename uses the hash of the source file in order to keep the
+        // source and the variant next to each. At the same time we do not
+        // include the hash of the WebP variant in the filename because it would
+        // yield an excessive filename, just the two hashes are 128 characters
+        // in total.
+        //
+        // These variants are also a bit different because they are volatile and
+        // can be regenerated from the source file at any time. The database is
+        // the source of truth anyway thus we can safely discard files if they
+        // do not match our expectations.
+        return \sprintf(
+            '%d-%s-variant.webp',
+            $this->fileID,
+            $this->fileHash,
+        );
+    }
+
+    private function getRelativePath(): string
     {
         $folderA = \substr($this->fileHash, 0, 2);
         $folderB = \substr($this->fileHash, 2, 2);
 
         return \sprintf(
-            \WCF_DIR . '_data/%s/files/%s/%s/',
+            '_data/%s/files/%s/%s/',
             $this->isStaticFile() ? 'public' : 'private',
             $folderA,
             $folderB,
         );
     }
 
+    public function getPath(): string
+    {
+        return \WCF_DIR . $this->getRelativePath();
+    }
+
     public function getPathname(): string
     {
         return $this->getPath() . $this->getSourceFilename();
+    }
+
+    public function getPathnameWebp(): ?string
+    {
+        $filename = $this->getSourceFilenameWebp();
+        if ($filename === null) {
+            return null;
+        }
+
+        return $this->getPath() . $filename;
     }
 
     public function getLink(): string
@@ -95,6 +135,17 @@ class File extends DatabaseObject
             FileDownloadAction::class,
             ['id' => $this->fileID]
         );
+    }
+
+    public function getFullSizeImageSource(): ?string
+    {
+        if (!$this->isImage() || !$this->isStaticFile()) {
+            return null;
+        }
+
+        $filename = $this->getSourceFilenameWebp() ?: $this->getSourceFilename();
+
+        return ApplicationHandler::getInstance()->getWCF()->getPageURL() . $this->getRelativePath() . $filename;
     }
 
     public function getProcessor(): ?IFileProcessor

@@ -22,6 +22,7 @@ final class PostGenerateThumbnails implements IController
             throw new UserInputException('id');
         }
 
+        FileProcessor::getInstance()->generateWebpVariant($file);
         FileProcessor::getInstance()->generateThumbnails($file);
 
         $thumbnails = [];

@@ -3,6 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
+use wcf\data\file\FileEditor;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
@@ -106,6 +107,48 @@ final class FileProcessor extends SingletonFactory
             $maximumCount,
             $maximumSize,
         );
+    }
+
+    public function generateWebpVariant(File $file): void
+    {
+        $canGenerateThumbnail = match ($file->mimeType) {
+            'image/jpeg', 'image/png' => true,
+            default => false,
+        };
+
+        if (!$canGenerateThumbnail) {
+            if ($file->fileHashWebp !== null) {
+                (new FileEditor($file))->update([
+                    'fileHashWebp' => null,
+                ]);
+            }
+
+            return;
+        }
+
+        if ($file->fileHashWebp !== null) {
+            $pathname = $file->getPathnameWebp();
+            if (\file_exists($pathname) && \hash_file('sha256', $pathname) === $file->fileHashWebp) {
+                return;
+            }
+        }
+
+        $imageAdapter = ImageHandler::getInstance()->getAdapter();
+        $imageAdapter->loadFile($file->getPathname());
+
+        $filename = FileUtil::getTemporaryFilename(extension: 'webp');
+        $imageAdapter->saveImageAs($imageAdapter->getImage(), $filename, 'webp', 80);
+
+        (new FileEditor($file))->update([
+            'fileHashWebp' => \hash_file('sha256', $filename),
+        ]);
+
+        $file = new File($file->fileID);
+
+        $pathname = $file->getPathnameWebp();
+        \assert($pathname !== null);
+
+        \rename($filename, $pathname);
     }
 
     public function generateThumbnails(File $file): void

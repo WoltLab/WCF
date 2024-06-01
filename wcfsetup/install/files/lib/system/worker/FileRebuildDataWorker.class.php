@@ -2,9 +2,7 @@
 
 namespace wcf\system\worker;
 
-use wcf\data\attachment\AttachmentAction;
 use wcf\data\file\FileList;
-use wcf\system\exception\SystemException;
 use wcf\system\file\processor\FileProcessor;
 
 /**
@@ -18,7 +16,7 @@ use wcf\system\file\processor\FileProcessor;
  * @method FileList getObjectList()
  * @property-read FileList $objectList
  */
-final class FileRebuildDataWorker extends AbstractRebuildDataWorker
+final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -44,6 +42,7 @@ final class FileRebuildDataWorker extends AbstractRebuildDataWorker
         parent::execute();
 
         foreach ($this->objectList as $file) {
+            FileProcessor::getInstance()->generateWebpVariant($file);
             FileProcessor::getInstance()->generateThumbnails($file);
         }
     }

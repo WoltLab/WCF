@@ -87,7 +87,7 @@ final class AttachmentBBCode extends AbstractBBCode
         $title = StringUtil::encodeHTML($attachment->filename);
         $imageElement = \sprintf(
             '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
-            $source,
+            $attachment->getFullSizeImageSource(),
             $attachment->width,
             $attachment->height,
         );

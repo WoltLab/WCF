@@ -609,7 +609,8 @@ CREATE TABLE wcf1_file (
 	objectTypeID INT,
 	mimeType VARCHAR(255) NOT NULL,
 	width INT,
-	height INT
+	height INT,
+	fileHashWebp CHAR(64),
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;

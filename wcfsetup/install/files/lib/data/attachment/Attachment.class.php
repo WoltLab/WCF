@@ -81,6 +81,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         ]);
     }
 
+    public function getFullSizeImageSource(): string
+    {
+        return $this->getFile()?->getFullSizeImageSource() ?: $this->getLink();
+    }
+
     /**
      * Returns true if a user has the permission to download this attachment.
      *
