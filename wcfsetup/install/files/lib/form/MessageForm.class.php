@@ -6,8 +6,10 @@ use wcf\data\language\Language;
 use wcf\data\smiley\category\SmileyCategory;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
+use wcf\event\message\MessageSpamChecking;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
@@ -16,6 +18,7 @@ use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * MessageForm is an abstract form implementation for a message with optional captcha support.
@@ -346,5 +349,23 @@ abstract class MessageForm extends AbstractCaptchaForm
             'text' => $upcastProcessor->getHtml(),
             'tmpHash' => $this->tmpHash,
         ]);
+    }
+
+    /**
+     * This method triggers the event for the spam check and returns the result.
+     *
+     * @since 6.1
+     */
+    protected function messageIsProbablySpam(): bool
+    {
+        $event = new MessageSpamChecking(
+            $this->htmlInputProcessor,
+            WCF::getUser()->userID ? WCF::getUser() : null,
+            UserUtil::getIpAddress(),
+            $this->subject,
+        );
+        EventHandler::getInstance()->fire($event);
+
+        return $event->defaultPrevented();
     }
 }

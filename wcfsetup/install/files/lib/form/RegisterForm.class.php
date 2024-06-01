@@ -6,11 +6,11 @@ use ParagonIE\ConstantTime\Hex;
 use wcf\acp\form\UserAddForm;
 use wcf\action\EmailValidationAction;
 use wcf\action\UsernameValidationAction;
-use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\event\user\RegistrationSpamChecking;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
@@ -89,6 +89,7 @@ class RegisterForm extends UserAddForm
      * list of fields that have matches in the blacklist
      * @var string[]
      * @since 5.2
+     * @deprecated 6.1
      */
     public $blacklistMatches = [];
 
@@ -107,6 +108,11 @@ class RegisterForm extends UserAddForm
      * @since 6.1
      */
     public bool $termsConfirmed = false;
+
+    /**
+     * @since 6.1
+     */
+    private RegistrationSpamChecking $spamCheckEvent;
 
     /**
      * @inheritDoc
@@ -210,17 +216,12 @@ class RegisterForm extends UserAddForm
             throw new UserInputException('registrationStartTime', []);
         }
 
-        if (BLACKLIST_SFS_ENABLE) {
-            $this->blacklistMatches = BlacklistEntry::getMatches(
-                $this->username,
-                $this->email,
-                UserUtil::getIpAddress()
+        $this->spamCheckEvent = new RegistrationSpamChecking($this->username, $this->email, UserUtil::getIpAddress());
+        EventHandler::getInstance()->fire($this->spamCheckEvent);
+        if ($this->spamCheckEvent->hasMatches() && \REGISTER_ANTISPAM_ACTION === 'block') {
+            throw new NamedUserException(
+                WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
             );
-            if (!empty($this->blacklistMatches) && BLACKLIST_SFS_ACTION === 'block') {
-                throw new NamedUserException(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
-                );
-            }
         }
 
         if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
@@ -407,7 +408,7 @@ class RegisterForm extends UserAddForm
         // generate activation code
         $addDefaultGroups = true;
         if (
-            !empty($this->blacklistMatches)
+            $this->spamCheckEvent->hasMatches()
             || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty)
             || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
         ) {
@@ -425,7 +426,7 @@ class RegisterForm extends UserAddForm
                 'username' => $this->username,
                 'email' => $this->email,
                 'password' => $this->password,
-                'blacklistMatches' => (!empty($this->blacklistMatches)) ? JSON::encode($this->blacklistMatches) : '',
+                'blacklistMatches' => $this->spamCheckEvent->hasMatches() ? JSON::encode($this->spamCheckEvent->getMatches()) : '',
                 'signatureEnableHtml' => 1,
             ]),
             'groups' => $this->groupIDs,
@@ -442,11 +443,11 @@ class RegisterForm extends UserAddForm
         WCF::getSession()->changeUser($user);
 
         // activation management
-        if (REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && empty($this->blacklistMatches)) {
+        if (REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
-        } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
+        } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$this->spamCheckEvent->hasMatches()) {
             // registering via 3rdParty leads to instant activation
             if ($registerVia3rdParty) {
                 $this->message = 'wcf.user.register.success';
@@ -463,7 +464,7 @@ class RegisterForm extends UserAddForm
                 $email->send();
                 $this->message = 'wcf.user.register.success.needActivation';
             }
-        } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || !empty($this->blacklistMatches)) {
+        } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || $this->spamCheckEvent->hasMatches()) {
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 

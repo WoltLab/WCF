@@ -1302,7 +1302,6 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.option.category.module.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
-		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.option.category.security.general.secrets"><![CDATA[Secret Keys]]></item>
@@ -1700,7 +1699,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
-		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Enable the verification using Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times an entry was reported as a spammer.<br>
 <strong>Notice: No data is transferred to a third party service at any point in the process.</strong><br>
@@ -1722,10 +1720,10 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or cellular connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Action in Case of a Match]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
+		<item name="wcf.acp.option.register_antispam_action"><![CDATA[Action in Case of Spam Detection]]></item>
+		<item name="wcf.acp.option.register_antispam_action.block"><![CDATA[Block]]></item>
+		<item name="wcf.acp.option.register_antispam_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
+		<item name="wcf.acp.option.register_antispam_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be removed after the following days. Use 0 to disable.]]></item>
