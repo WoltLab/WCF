@@ -21,6 +21,7 @@ final class ContactFormSpamChecking implements IInterruptableEvent
     public function __construct(
         public readonly string $email,
         public readonly string $ipAddress,
+        public readonly array $messages,
     ) {
     }
 }

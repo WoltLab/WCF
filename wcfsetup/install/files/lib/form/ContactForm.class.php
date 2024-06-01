@@ -2,6 +2,7 @@
 
 namespace wcf\form;
 
+use wcf\data\contact\option\ContactOption;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\event\page\ContactFormSpamChecking;
@@ -170,9 +171,29 @@ class ContactForm extends AbstractCaptchaForm
             }
         }
 
+        $this->handleSpamCheck();
+    }
+
+    private function handleSpamCheck(): void
+    {
+        $messages = [];
+        foreach ($this->optionHandler->getOptions() as $option) {
+            $object = $option['object'];
+            \assert($object instanceof ContactOption);
+            if (!$object->isMessage || !$object->getOptionValue()) {
+                continue;
+            }
+
+            $messages[] = $object->getOptionValue();
+            if ($object->optionType === 'date' && !$object->getOptionValue()) {
+                continue;
+            }
+        }
+
         $spamCheckEvent = new ContactFormSpamChecking(
             $this->email,
             UserUtil::getIpAddress(),
+            $messages,
         );
         EventHandler::getInstance()->fire($spamCheckEvent);
         if ($spamCheckEvent->defaultPrevented()) {
