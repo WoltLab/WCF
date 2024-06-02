@@ -13,7 +13,7 @@ use wcf\util\JSON;
  * @since 6.1
  *
  * @property-read string $identifier
- * @property-read int|null $time
+ * @property-read int $time
  * @property-read string $filename
  * @property-read int $fileSize
  * @property-read string $fileHash

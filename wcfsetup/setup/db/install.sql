@@ -610,13 +610,13 @@ CREATE TABLE wcf1_file (
 	mimeType VARCHAR(255) NOT NULL,
 	width INT,
 	height INT,
-	fileHashWebp CHAR(64),
+	fileHashWebp CHAR(64)
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;
 CREATE TABLE wcf1_file_temporary (
 	identifier CHAR(40) NOT NULL PRIMARY KEY,
-	time INT,
+	time INT NOT NULL,
 	filename VARCHAR(255) NOT NULL,
 	fileSize BIGINT NOT NULL,
 	fileHash CHAR(64) NOT NULL,
