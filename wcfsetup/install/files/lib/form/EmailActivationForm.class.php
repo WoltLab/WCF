@@ -75,7 +75,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
 
         if ($this->user->reactivationCode == 0) {
             throw new NamedUserException(
-                WCF::getLanguage()->get('wcf.user.emailActivation.error.emailAlreadyEnabled')
+                WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
             );
         }
 
