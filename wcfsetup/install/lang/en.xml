@@ -4842,9 +4842,9 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
-		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
-		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
-		<item name="wcf.user.status.blacklistMatches"><![CDATA[The user has been automatically disabled because of matches in the “Stop Forum Spam” database (Matches: {implode glue=', ' from=$user->getBlacklistMatchesTitle() item=matchLabel}{$matchLabel}{/implode}).]]></item>
+		<item name="wcf.user.status.banned"><![CDATA[This user has been banned.]]></item>
+		<item name="wcf.user.status.isDisabled"><![CDATA[This user has not been approved yet.]]></item>
+		<item name="wcf.user.status.blacklistMatches"><![CDATA[This user has been automatically disabled because of matches in the “Stop Forum Spam” database (Matches: {implode glue=', ' from=$user->getBlacklistMatchesTitle() item=matchLabel}{$matchLabel}{/implode}).]]></item>
 		<item name="wcf.user.reauthentication"><![CDATA[Re-authentication]]></item>
 		<item name="wcf.user.reauthentication.explanation"><![CDATA[You are entering a security-sensitive area. For security reasons it is required that you re-authenticate yourself by entering your password.]]></item>
 		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Logged in as]]></item>
