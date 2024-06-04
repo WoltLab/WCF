@@ -72,7 +72,6 @@ export class CommentAdd {
 
     listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
       features.heading = false;
-      features.quoteBlock = false;
       features.spoiler = false;
       features.table = false;
     });

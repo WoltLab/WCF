@@ -38,7 +38,6 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             });
             (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
                 features.heading = false;
-                features.quoteBlock = false;
                 features.spoiler = false;
                 features.table = false;
             });

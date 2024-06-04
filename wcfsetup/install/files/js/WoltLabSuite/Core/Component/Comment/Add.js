@@ -54,7 +54,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
             });
             (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
                 features.heading = false;
-                features.quoteBlock = false;
                 features.spoiler = false;
                 features.table = false;
             });
