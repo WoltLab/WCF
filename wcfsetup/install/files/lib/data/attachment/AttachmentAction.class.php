@@ -3,9 +3,11 @@
 namespace wcf\data\attachment;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
 
 /**
@@ -91,6 +93,30 @@ class AttachmentAction extends AbstractDatabaseObjectAction
 
         $newAttachmentIDs = [];
         foreach ($attachmentList as $attachment) {
+            $file = $attachment->getFile();
+            if ($file !== null) {
+                $file = FileProcessor::getInstance()->copy($file, 'com.woltlab.wcf.attachment');
+
+                $thumbnailID = $tinyThumbnailID = null;
+                if ($attachment->thumbnailID !== null || $attachment->tinyThumbnailID !== null) {
+                    $thumbnailList = new FileThumbnailList();
+                    $thumbnailList->getConditionBuilder()->add('fileID = ?', [$file->fileID]);
+                    $thumbnailList->readObjects();
+
+                    foreach ($thumbnailList as $thumbnail) {
+                        switch ($thumbnail->identifier) {
+                            case '':
+                                $thumbnailID = $thumbnail->thumbnailID;
+                                break;
+
+                            case 'tiny':
+                                $tinyThumbnailID = $thumbnail->thumbnailID;
+                                break;
+                        }
+                    }
+                }
+            }
+
             $newAttachment = AttachmentEditor::create([
                 'objectTypeID' => $targetObjectType->objectTypeID,
                 'objectID' => $this->parameters['targetObjectID'],
@@ -114,17 +140,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction
                 'lastDownloadTime' => $attachment->lastDownloadTime,
                 'uploadTime' => $attachment->uploadTime,
                 'showOrder' => $attachment->showOrder,
+                'fileID' => $file?->fileID,
+                'thumbnailID' => $thumbnailID,
+                'tinyThumbnailID' => $tinyThumbnailID,
             ]);
-
-            // copy attachment
-            @\copy($attachment->getLocation(), $newAttachment->getLocation());
-
-            if ($attachment->tinyThumbnailSize) {
-                @\copy($attachment->getTinyThumbnailLocation(), $newAttachment->getTinyThumbnailLocation());
-            }
-            if ($attachment->thumbnailSize) {
-                @\copy($attachment->getThumbnailLocation(), $newAttachment->getThumbnailLocation());
-            }
 
             $newAttachmentIDs[$attachment->attachmentID] = $newAttachment->attachmentID;
         }

@@ -284,4 +284,59 @@ final class FileProcessor extends SingletonFactory
 
         return $maximumFileSize;
     }
+
+    public function copy(File $oldFile, string $objectType): File
+    {
+        $objectTypeObj = $this->getObjectType($objectType);
+        if ($objectTypeObj === null) {
+            throw new \InvalidArgumentException("The object type '{$objectType}' is invalid.");
+        }
+
+        $newFile = FileEditor::create([
+            'filename' => $oldFile->filename,
+            'fileSize' => $oldFile->fileSize,
+            'fileHash' => $oldFile->fileHash,
+            'fileExtension' => $oldFile->fileExtension,
+            'secret' => \hex2bin(\random_bytes(10)),
+            'objectTypeID' => $objectTypeObj->objectTypeID,
+            'mimeType' => $oldFile->mimeType,
+            'width' => $oldFile->width,
+            'height' => $oldFile->height,
+            'fileHashWebp' => $oldFile->fileHashWebp,
+        ]);
+
+        \copy($oldFile->getPathname(), $newFile->getPathname());
+
+        if ($oldFile->fileHashWebp !== null) {
+            \copy($oldFile->getPathnameWebp(), $newFile->getPathnameWebp());
+        }
+
+        $this->copyThumbnails($oldFile->fileID, $newFile->fileID);
+
+        return $newFile;
+    }
+
+    private function copyThumbnails(int $oldFileID, int $newFileID): void
+    {
+        $thumbnailList = new FileThumbnailList();
+        $thumbnailList->getConditionBuilder()->add("fileID = ?", [$oldFileID]);
+        $thumbnailList->readObjects();
+
+        foreach ($thumbnailList as $oldThumbnail) {
+            $newThumbnail = FileThumbnailEditor::create([
+                'fileID' => $newFileID,
+                'identifier' => $oldThumbnail->identifier,
+                'fileHash' => $oldThumbnail->fileHash,
+                'fileExtension' => $oldThumbnail->fileExtension,
+                'width' => $oldThumbnail->width,
+                'height' => $oldThumbnail->height,
+                'formatChecksum' => $oldThumbnail->formatChecksum,
+            ]);
+
+            \copy(
+                $oldThumbnail->getPath() . $oldThumbnail->getSourceFilename(),
+                $newThumbnail->getPath() . $newThumbnail->getSourceFilename(),
+            );
+        }
+    }
 }
