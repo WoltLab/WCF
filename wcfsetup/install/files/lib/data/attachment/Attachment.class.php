@@ -157,6 +157,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getLocation()
     {
@@ -171,6 +172,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * Returns the physical location of the tiny thumbnail.
      *
      * @return  string
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getTinyThumbnailLocation()
     {
@@ -179,6 +181,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getThumbnailLocation($size = '')
     {
@@ -204,6 +207,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * include the `.bin` suffix.
      *
      * @since   5.2
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function migrateStorage()
     {
@@ -227,6 +231,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * @param string $location
      * @return  string
      * @since   5.2
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     final protected function getLocationHelper($location)
     {
@@ -447,6 +452,8 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * Returns the storage path.
+     *
+     * @deprecated 6.1 This method is no longer in use.
      */
     public static function getStorage(): string
     {
