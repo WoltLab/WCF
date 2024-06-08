@@ -67,7 +67,8 @@ window.addEventListener('pageshow', function(event) {
 		User.init(
 			{@$__wcf->user->userID},
 			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
-			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if}
+			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
+			'{link controller='GuestTokenDialog'}{/link}'
 		);
 		
 		BootstrapFrontend.setup({

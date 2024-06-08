@@ -11,6 +11,7 @@ class User {
     readonly userId: number,
     readonly username: string,
     readonly link: string,
+    readonly guestTokenDialogEndpoint: string,
   ) {}
 }
 
@@ -28,12 +29,12 @@ export = {
   /**
    * Initializes the user object.
    */
-  init(userId: number, username: string, link: string): void {
+  init(userId: number, username: string, link: string, guestTokenDialogEndpoint: string = ""): void {
     if (user) {
       throw new Error("User has already been initialized.");
     }
 
-    user = new User(userId, username, link);
+    user = new User(userId, username, link, guestTokenDialogEndpoint);
   },
 
   get userId(): number {
@@ -42,5 +43,9 @@ export = {
 
   get username(): string {
     return user.username;
+  },
+
+  get guestTokenDialogEndpoint(): string {
+    return user.guestTokenDialogEndpoint;
   },
 };

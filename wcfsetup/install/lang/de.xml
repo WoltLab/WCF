@@ -4454,6 +4454,7 @@ Dateianhänge:
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[Wenn ausgewählt, darf die aufgerufene Seite <strong>keine</strong> der unter „Aufgerufene Seite“ ausgewählten Seiten sein.]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Box bearbeiten]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}neuer Eintrag{else}neue Einträge{/if})]]></item>
+		<item name="wcf.page.guestTokenDialog.title"><![CDATA[Verifizierung erforderlich]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Verfügbare Mitgliedschaften]]></item>
