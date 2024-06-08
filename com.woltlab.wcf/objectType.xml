@@ -1739,6 +1739,11 @@
 			<name>com.woltlab.wcf.rescueMode</name>
 			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.attachment</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\AttachmentFileProcessor</classname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

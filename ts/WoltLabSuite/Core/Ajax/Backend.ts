@@ -24,7 +24,7 @@ const enum RequestType {
   POST,
 }
 
-type Payload = FormData | Record<string, unknown>;
+type Payload = Blob | FormData | Record<string, unknown>;
 
 class SetupRequest {
   private readonly url: string;
@@ -50,6 +50,7 @@ let ignoreConnectionErrors = false;
 window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
 
 class BackendRequest {
+  readonly #headers = new Map<string, string>();
   readonly #url: string;
   readonly #type: RequestType;
   readonly #payload?: Payload;
@@ -73,6 +74,12 @@ class BackendRequest {
 
   disableLoadingIndicator(): this {
     this.#showLoadingIndicator = false;
+
+    return this;
+  }
+
+  withHeader(key: string, value: string): this {
+    this.#headers.set(key, value);
 
     return this;
   }
@@ -117,12 +124,13 @@ class BackendRequest {
   async #fetch(requestOptions: RequestInit = {}): Promise<Response | undefined> {
     registerGlobalRejectionHandler();
 
+    this.#headers.set("X-Requested-With", "XMLHttpRequest");
+    this.#headers.set("X-XSRF-TOKEN", getXsrfToken());
+    const headers = Object.fromEntries(this.#headers);
+
     const init: RequestInit = extend(
       {
-        headers: {
-          "X-Requested-With": "XMLHttpRequest",
-          "X-XSRF-TOKEN": getXsrfToken(),
-        },
+        headers,
         mode: "same-origin",
         credentials: "same-origin",
         cache: this.#allowCaching ? "default" : "no-store",
@@ -135,7 +143,10 @@ class BackendRequest {
       init.method = "POST";
 
       if (this.#payload) {
-        if (this.#payload instanceof FormData) {
+        if (this.#payload instanceof Blob) {
+          init.headers!["Content-Type"] = "application/octet-stream";
+          init.body = this.#payload;
+        } else if (this.#payload instanceof FormData) {
           init.headers!["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
           init.body = this.#payload;
         } else {
@@ -143,6 +154,8 @@ class BackendRequest {
           init.body = JSON.stringify(this.#payload);
         }
       }
+    } else if (this.#type === RequestType.DELETE) {
+      init.method = "DELETE";
     } else {
       init.method = "GET";
     }

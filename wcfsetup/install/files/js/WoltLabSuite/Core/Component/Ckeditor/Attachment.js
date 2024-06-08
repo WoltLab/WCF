@@ -15,14 +15,16 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         const payload = { abortController, file };
         (0, Event_1.dispatchToCkeditor)(element).uploadAttachment(payload);
         return new Promise((resolve) => {
-            void payload.promise.then(({ attachmentId, url }) => {
+            void payload
+                .promise.then(({ attachmentId, url }) => {
                 resolve({
                     "data-attachment-id": attachmentId.toString(),
                     urls: {
                         default: url,
                     },
                 });
-            });
+            })
+                .catch(() => { });
         });
     }
     function setupInsertAttachment(ckeditor) {

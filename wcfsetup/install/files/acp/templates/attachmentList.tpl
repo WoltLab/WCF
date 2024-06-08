@@ -130,7 +130,7 @@
 						</td>
 						<td class="columnDate columnUploadTime">{@$attachment->uploadTime|time}</td>
 						<td class="columnDigits columnFilesize">{@$attachment->filesize|filesize}</td>
-						<td class="columnDigits columnDownloads">{#$attachment->downloads}</td>
+						<td class="columnDigits columnDownloads">{if $attachment->downloads}{#$attachment->downloads}{/if}</td>
 						<td class="columnDate columnLastDownloadTime">{if $attachment->lastDownloadTime}{@$attachment->lastDownloadTime|time}{/if}</td>
 						
 						{event name='columns'}

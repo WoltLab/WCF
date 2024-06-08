@@ -634,6 +634,33 @@ final class FileUtil
     }
 
     /**
+     * @param list<string> $allowedExtensions
+     * @since 6.1
+     */
+    public static function endsWithAllowedExtension(string $filename, array $allowedExtensions): bool
+    {
+        $extensions = \implode(
+            "|",
+            \array_map(
+                static function (string $extension) {
+                    $extension = \preg_quote($extension, '/');
+                    $extension = \str_replace('\*', '.*', $extension);
+
+                    return $extension;
+                },
+                $allowedExtensions
+            )
+        );
+
+        $extensionsPattern = '/(' . $extensions . ')$/i';
+        if (!\preg_match($extensionsPattern, $filename)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Forbid creation of FileUtil objects.
      */
     private function __construct()

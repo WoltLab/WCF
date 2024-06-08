@@ -223,6 +223,11 @@ CREATE TABLE wcf1_attachment (
 	lastDownloadTime INT(10) NOT NULL DEFAULT 0,
 	uploadTime INT(10) NOT NULL DEFAULT 0,
 	showOrder SMALLINT(5) NOT NULL DEFAULT 0,
+
+	fileID INT,
+	thumbnailID INT,
+	tinyThumbnailID INT,
+
 	KEY (objectTypeID, objectID),
 	KEY (objectTypeID, tmpHash),
 	KEY (objectID, uploadTime)
@@ -591,6 +596,45 @@ CREATE TABLE wcf1_event_listener (
 	options TEXT,
 
 	UNIQUE KEY listenerName (listenerName, packageID)
+);
+
+DROP TABLE IF EXISTS wcf1_file;
+CREATE TABLE wcf1_file (
+	fileID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	filename VARCHAR(255) NOT NULL,
+	fileSize BIGINT NOT NULL,
+	fileHash CHAR(64) NOT NULL,
+	fileExtension VARCHAR(10) NOT NULL,
+	secret CHAR(32) NOT NULL,
+	objectTypeID INT,
+	mimeType VARCHAR(255) NOT NULL,
+	width INT,
+	height INT,
+	fileHashWebp CHAR(64)
+);
+
+DROP TABLE IF EXISTS wcf1_file_temporary;
+CREATE TABLE wcf1_file_temporary (
+	identifier CHAR(40) NOT NULL PRIMARY KEY,
+	time INT NOT NULL,
+	filename VARCHAR(255) NOT NULL,
+	fileSize BIGINT NOT NULL,
+	fileHash CHAR(64) NOT NULL,
+	objectTypeID INT,
+	context TEXT,
+	chunks VARBINARY(255) NOT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_file_thumbnail;
+CREATE TABLE wcf1_file_thumbnail (
+	thumbnailID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	fileID INT NOT NULL,
+	identifier VARCHAR(50) NOT NULL,
+	fileHash CHAR(64) NOT NULL,
+	fileExtension VARCHAR(10) NOT NULL,
+	width INT NOT NULL,
+	height INT NOT NULL,
+	formatChecksum CHAR(12)
 );
 
 /* As the flood control table can be a high traffic table and as it is periodically emptied,
@@ -1980,6 +2024,9 @@ ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (thumbnailID) REFERENCES wcf1_file_thumbnail (thumbnailID) ON DELETE SET NULL;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (tinyThumbnailID) REFERENCES wcf1_file_thumbnail (thumbnailID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -2029,6 +2076,12 @@ ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENC
 ALTER TABLE wcf1_email_log_entry ADD FOREIGN KEY (recipientID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_file ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_file_temporary ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_file_thumbnail ADD FOREIGN KEY (fileID) REFERENCES wcf1_file (fileID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;

@@ -5,6 +5,8 @@ namespace wcf\data\attachment;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
+use wcf\data\file\File;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -36,12 +38,15 @@ use wcf\util\FileUtil;
  * @property-read   int $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   string $thumbnailType  type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
  * @property-read   int $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $downloads      number of times the attachment has been downloaded
  * @property-read   int $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
+ * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
  * @property-read   int $showOrder      position of the attachment in relation to the other attachment to the same message
+ * @property-read int|null $fileID
+ * @property-read int|null $thumbnailID
+ * @property-read int|null $tinyThumbnailID
  */
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile
 {
@@ -57,16 +62,28 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     protected $permissions = [];
 
+    protected File $file;
+
     /**
      * @inheritDoc
      */
     public function getLink(): string
     {
+        $file = $this->getFile();
+        if ($file !== null) {
+            return $file->getLink();
+        }
+
         // Do not use `LinkHandler::getControllerLink()` or `forceFrontend` as attachment
         // links can be opened in the frontend and in the ACP.
         return LinkHandler::getInstance()->getLink('Attachment', [
             'object' => $this,
         ]);
+    }
+
+    public function getFullSizeImageSource(): string
+    {
+        return $this->getFile()?->getFullSizeImageSource() ?: $this->getLink();
     }
 
     /**
@@ -140,6 +157,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getLocation()
     {
@@ -154,6 +172,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * Returns the physical location of the tiny thumbnail.
      *
      * @return  string
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getTinyThumbnailLocation()
     {
@@ -162,6 +181,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function getThumbnailLocation($size = '')
     {
@@ -187,6 +207,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * include the `.bin` suffix.
      *
      * @since   5.2
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     public function migrateStorage()
     {
@@ -210,6 +231,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * @param string $location
      * @return  string
      * @since   5.2
+     * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
     final protected function getLocationHelper($location)
     {
@@ -228,17 +250,21 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function getThumbnailLink($size = '')
     {
-        $parameters = [
-            'object' => $this,
-        ];
-
-        if ($size == 'tiny') {
-            $parameters['tiny'] = 1;
-        } elseif ($size == 'thumbnail') {
-            $parameters['thumbnail'] = 1;
+        $file = $this->getFile();
+        if ($file === null) {
+            return '';
         }
 
-        return LinkHandler::getInstance()->getLink('Attachment', $parameters);
+        if ($size === '') {
+            return $file->getLink();
+        }
+
+        $thumbnail = $file->getThumbnail($size !== 'tiny' ? '' : $size);
+        if ($this === null) {
+            return '';
+        }
+
+        return $thumbnail->getLink();
     }
 
     /**
@@ -338,8 +364,96 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         return 'paperclip';
     }
 
+    public function getFile(): ?File
+    {
+        // This method is called within `__get()`, therefore we must dereference
+        // the data array directly to avoid recursion.
+        $fileID = $this->data['fileID'] ?? null;
+
+        if (!$fileID) {
+            return null;
+        }
+
+        if (!isset($this->file)) {
+            $this->file = new File($fileID);
+
+            $thumbnailList = new FileThumbnailList();
+            $thumbnailList->getConditionBuilder()->add("fileID = ?", [$this->file->fileID]);
+            $thumbnailList->readObjects();
+            foreach ($thumbnailList as $thumbnail) {
+                $this->file->addThumbnail($thumbnail);
+            }
+        }
+
+        return $this->file;
+    }
+
+    public function setFile(File $file): void
+    {
+        if ($this->file->fileID === $file->fileID) {
+            $this->file = $file;
+        }
+    }
+
+    #[\Override]
+    public function __get($name)
+    {
+        $file = $this->getFile();
+        if ($file === null) {
+            return parent::__get($name);
+        }
+
+        if ($name === 'downloads' || $name === 'lastDownloadTime') {
+            // Static files are no longer served through PHP but the web server
+            // instead, therefore we can no longer report any meaningful numbers.
+            //
+            // For existing files the stored value is suppressed because it is
+            // not going to be increased ever, possibly creating a false
+            // impression when the historic stored value is being reported.
+            if ($file->isStaticFile()) {
+                return 0;
+            }
+        }
+
+        return match ($name) {
+            'filename' => $file->filename,
+            'filesize' => $file->fileSize,
+            'fileType' => $file->mimeType,
+            'isImage' => $file->isImage(),
+            'height' => $file->height,
+            'width' => $file->width,
+            'thumbnailType' => $file->getThumbnail('')?->getMimeType() ?: '',
+            'thumbnailWidth' => $file->getThumbnail('')?->width ?: 0,
+            'thumbnailHeight' => $file->getThumbnail('')?->height ?: 0,
+            'tinyThumbnailType' => $file->getThumbnail('tiny')?->getMimeType() ?: '',
+            'tinyThumbnailWidth' => $file->getThumbnail('tiny')?->width ?: 0,
+            'tinyThumbnailHeight' => $file->getThumbnail('tiny')?->height ?: 0,
+            default => parent::__get($name),
+        };
+    }
+
+    public function toHtmlElement(): ?string
+    {
+        return $this->getFile()?->toHtmlElement([
+            'attachmentID' => $this->attachmentID,
+        ]);
+    }
+
+    public static function findByFileID(int $fileID): ?Attachment
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_attachment
+                WHERE   fileID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$fileID]);
+
+        return $statement->fetchObject(Attachment::class);
+    }
+
     /**
      * Returns the storage path.
+     *
+     * @deprecated 6.1 This method is no longer in use.
      */
     public static function getStorage(): string
     {
