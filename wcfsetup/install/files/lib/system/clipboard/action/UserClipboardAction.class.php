@@ -353,4 +353,30 @@ class UserClipboardAction extends AbstractClipboardAction
 
         return $this->__validateAccessibleGroups(\array_keys($this->objects));
     }
+
+    /**
+     * @return      int[]
+     * @since       6.0
+     */
+    protected function validateSendMail(): array
+    {
+        if (!WCF::getSession()->getPermission('admin.user.canMailUser')) {
+            return [];
+        }
+
+        return \array_keys($this->objects);
+    }
+
+    /**
+     * @return      int[]
+     * @since       6.0
+     */
+    protected function validateExportMailAddress(): array
+    {
+        if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+            return [];
+        }
+
+        return \array_keys($this->objects);
+    }
 }

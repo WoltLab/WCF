@@ -123,6 +123,9 @@ class UserActivityPointHandler extends SingletonFactory
             return;
         }
 
+        // Sort by user id to reduce the chance of lock contentions.
+        \ksort($itemsToUser, \SORT_NUMERIC);
+
         // update user_activity_point
         $values = '';
         $parameters = $userIDs = [];

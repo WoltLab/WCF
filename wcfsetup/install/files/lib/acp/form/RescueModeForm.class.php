@@ -192,6 +192,10 @@ final class RescueModeForm extends AbstractForm
         if (!WCF::getSession()->getPermission('admin.configuration.canManageApplication')) {
             throw new UserInputException('username', 'notAuthorized');
         }
+
+        if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+            throw new UserInputException('username', 'notAuthorized');
+        }
     }
 
     private function validateDomainName(): void
