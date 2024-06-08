@@ -23,11 +23,11 @@
 		
 	{if !$ajaxCaptcha|empty}
 		<script data-relocate="true">
-			$(function() {
-				WCF.System.Captcha.addCallback('{$captchaID}', function() {
+			require(['WoltLabSuite/Core/Controller/Captcha'], (ControllerCaptcha) => {
+				ControllerCaptcha.add('{unsafe:$captchaID|encodeJS}', () => {
 					return {
-						captchaAnswer: $('#captchaAnswer').val(),
-						captchaQuestion: '{$captchaQuestion}'
+						captchaAnswer: document.getElementById('captchaAnswer').value,
+						captchaQuestion: '{unsafe:$captchaQuestion|encodeJS}'
 					};
 				});
 			});
