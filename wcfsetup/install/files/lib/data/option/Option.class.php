@@ -43,7 +43,7 @@ class Option extends DatabaseObject
      */
     public function __get($name)
     {
-        $value = parent::__get($name);
+        $value = $this->data[$name] ?? null;
 
         // treat additional data as data variables if it is an array
         if ($value === null) {

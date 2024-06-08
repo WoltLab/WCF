@@ -4,6 +4,8 @@ namespace wcf\system\worker;
 
 use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -33,16 +35,49 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 50;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
+    public function countObjects()
+    {
+        if ($this->count === null) {
+            $sql = "SELECT  MAX(userID) AS userID
+                    FROM    wcf1_user";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute();
+
+            $count = $statement->fetchSingleColumn();
+            $this->count = $count ?: 0;
+        }
+    }
+
+    #[\Override]
+    protected function initObjectList()
+    {
+        $this->objectList = new $this->objectListClassName();
+        $this->objectList->sqlOrderBy = 'user_table.userID';
+    }
+
+    #[\Override]
     public function execute()
     {
-        parent::execute();
+        $this->objectList->getConditionBuilder()->add(
+            'user_table.userID BETWEEN ? AND ?',
+            [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]
+        );
+
+        $this->objectList->readObjects();
 
         if (\count($this->getObjectList()) === 0) {
             return;
         }
+
+        // The next two lines are copied from `AbstractRebuildDataWorker::execute()`
+        // to prevent event listeners from failing because the object list
+        // sometimes no longer contains objects.
+        //
+        // The return condition above is used to avoid the invocation of the
+        // event listeners. Do not call `parent::execute()`!
+        SearchIndexManager::getInstance()->beginBulkOperation();
+        EventHandler::getInstance()->fireAction($this, 'execute');
 
         // update activity points for positive reactions
         $reactionObjectType = UserActivityPointHandler::getInstance()

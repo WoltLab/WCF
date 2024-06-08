@@ -15,9 +15,11 @@ use wcf\data\user\UserProfileAction;
 use wcf\data\user\UserProfileList;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -42,13 +44,24 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 50;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
+    public function countObjects()
+    {
+        if ($this->count === null) {
+            $sql = "SELECT  MAX(userID) AS userID
+                    FROM    wcf1_user";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute();
+
+            $count = $statement->fetchSingleColumn();
+            $this->count = $count ?: 0;
+        }
+    }
+
+    #[\Override]
     protected function initObjectList()
     {
-        parent::initObjectList();
-
+        $this->objectList = new $this->objectListClassName();
         $this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
         $this->objectList->sqlJoins = "
             LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
@@ -56,12 +69,28 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->sqlOrderBy = 'user_table.userID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
-        parent::execute();
+        $this->objectList->getConditionBuilder()->add(
+            'user_table.userID BETWEEN ? AND ?',
+            [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]
+        );
+
+        $this->objectList->readObjects();
+
+        if (\count($this->getObjectList()) === 0) {
+            return;
+        }
+
+        // The next two lines are copied from `AbstractRebuildDataWorker::execute()`
+        // to prevent event listeners from failing because the object list
+        // sometimes no longer contains objects.
+        //
+        // The return condition above is used to avoid the invocation of the
+        // event listeners. Do not call `parent::execute()`!
+        SearchIndexManager::getInstance()->beginBulkOperation();
+        EventHandler::getInstance()->fireAction($this, 'execute');
 
         $users = $userIDs = [];
         foreach ($this->getObjectList() as $user) {
