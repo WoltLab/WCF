@@ -64,6 +64,10 @@ class AttachmentEditor extends DatabaseObjectEditor
      */
     public function deleteFiles()
     {
+        if ($this->fileID !== null) {
+            return;
+        }
+
         @\unlink($this->getLocation());
         if ($this->tinyThumbnailType) {
             @\unlink($this->getTinyThumbnailLocation());

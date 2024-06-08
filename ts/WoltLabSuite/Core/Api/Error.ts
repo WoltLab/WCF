@@ -27,7 +27,7 @@ export class ApiError {
   }
 }
 
-class ValidationError {
+export class ValidationError {
   constructor(
     public readonly code: string,
     public readonly message: string,

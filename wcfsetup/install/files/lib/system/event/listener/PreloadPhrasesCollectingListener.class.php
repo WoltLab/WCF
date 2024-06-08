@@ -149,6 +149,10 @@ final class PreloadPhrasesCollectingListener
 
         $event->preload('wcf.style.changeStyle');
 
+        $event->preload('wcf.upload.error.fileExtensionNotPermitted');
+        $event->preload('wcf.upload.error.fileSizeTooLarge');
+        $event->preload('wcf.upload.error.maximumCountReached');
+
         $event->preload('wcf.user.activityPoint');
         $event->preload('wcf.user.language');
         $event->preload('wcf.user.panel.settings');

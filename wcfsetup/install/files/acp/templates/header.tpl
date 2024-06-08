@@ -129,7 +129,6 @@
 			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}
 		);
 	</script>
-	{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
 	<script>

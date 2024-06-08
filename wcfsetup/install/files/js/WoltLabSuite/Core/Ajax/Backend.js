@@ -29,6 +29,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
     let ignoreConnectionErrors = false;
     window.addEventListener("beforeunload", () => (ignoreConnectionErrors = true));
     class BackendRequest {
+        #headers = new Map();
         #url;
         #type;
         #payload;
@@ -48,6 +49,10 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
         disableLoadingIndicator() {
             this.#showLoadingIndicator = false;
+            return this;
+        }
+        withHeader(key, value) {
+            this.#headers.set(key, value);
             return this;
         }
         allowCaching() {
@@ -82,11 +87,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
         async #fetch(requestOptions = {}) {
             (0, Error_1.registerGlobalRejectionHandler)();
+            this.#headers.set("X-Requested-With", "XMLHttpRequest");
+            this.#headers.set("X-XSRF-TOKEN", (0, Core_1.getXsrfToken)());
+            const headers = Object.fromEntries(this.#headers);
             const init = (0, Core_1.extend)({
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-XSRF-TOKEN": (0, Core_1.getXsrfToken)(),
-                },
+                headers,
                 mode: "same-origin",
                 credentials: "same-origin",
                 cache: this.#allowCaching ? "default" : "no-store",
@@ -95,7 +100,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             if (this.#type === 2 /* RequestType.POST */) {
                 init.method = "POST";
                 if (this.#payload) {
-                    if (this.#payload instanceof FormData) {
+                    if (this.#payload instanceof Blob) {
+                        init.headers["Content-Type"] = "application/octet-stream";
+                        init.body = this.#payload;
+                    }
+                    else if (this.#payload instanceof FormData) {
                         init.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
                         init.body = this.#payload;
                     }
@@ -104,6 +113,9 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                         init.body = JSON.stringify(this.#payload);
                     }
                 }
+            }
+            else if (this.#type === 0 /* RequestType.DELETE */) {
+                init.method = "DELETE";
             }
             else {
                 init.method = "GET";

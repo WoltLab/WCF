@@ -22,6 +22,14 @@ class UserGroupOption extends Option
     protected static $databaseTableName = 'user_group_option';
 
     /**
+     * @since 6.1
+     */
+    public function addAdditionalData(string $key, mixed $value): void
+    {
+        $this->data['additionalData'][$key] = $value;
+    }
+
+    /**
      * List of permission names that may not be altered when the enterprise mode is active.
      * @var string[]
      */

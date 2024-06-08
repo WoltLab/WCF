@@ -736,6 +736,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[You cannot grant user group permissions exceeding your own permissions.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The set value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The set value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.maximumUploadLimit"><![CDATA[The set value is too large, the maximum value is {$option->maximumUploadLimit|filesize}.]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Display Members]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Can access page during maintenance mode]]></item>
 		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Can ban users]]></item>
@@ -2589,6 +2590,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_LikeRebuildDataWorker.description"><![CDATA[Recalculates the reactions.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker.description"><![CDATA[Rebuilds the attachment preview images.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Rebuild Files]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Rebuilds the file preview images.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Rebuild Media]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Rebuilds the media preview images.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Rebuild Statistics]]></item>
@@ -5549,6 +5552,10 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many files. You can only upload {#$maxFiles} more file{if $maxFiles != 1}s{/if}.]]></item>
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+
+		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[The file type of “{$filename}” is not permitted.]]></item>
+		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[The file is too large.]]></item>
+		<item name="wcf.upload.error.maximumCountReached"><![CDATA[{plural value=$maximumCount 1='Only one file' other='Only up to # files'} may be uploaded.]]></item>
 	</category>
 </import>
 <delete>

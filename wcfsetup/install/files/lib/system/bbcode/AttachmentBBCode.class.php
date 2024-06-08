@@ -87,7 +87,7 @@ final class AttachmentBBCode extends AbstractBBCode
         $title = StringUtil::encodeHTML($attachment->filename);
         $imageElement = \sprintf(
             '<img src="%s" width="%d" height="%d" alt="" loading="lazy">',
-            $source,
+            $attachment->getFullSizeImageSource(),
             $attachment->width,
             $attachment->height,
         );
@@ -134,13 +134,6 @@ final class AttachmentBBCode extends AbstractBBCode
             FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24),
         );
 
-        $linkParameters = [
-            'object' => $attachment,
-        ];
-        if ($attachment->hasThumbnail()) {
-            $linkParameters['thumbnail'] = 1;
-        }
-
         $class = match ($alignment) {
             "left" => "messageFloatObjectLeft",
             "right" => "messageFloatObjectRight",
@@ -156,9 +149,11 @@ final class AttachmentBBCode extends AbstractBBCode
             $imageClasses .= ' ' . $class;
         }
 
+        $src = $attachment->hasThumbnail() ? $attachment->getThumbnailLink('thumbnail') : $attachment->getLink();
+
         $imageElement = \sprintf(
             '<img src="%s" class="%s" width="%d" height="%d" alt="" loading="lazy">',
-            StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)),
+            StringUtil::encodeHTML($src),
             $imageClasses,
             $attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width,
             $attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height,

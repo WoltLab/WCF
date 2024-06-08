@@ -561,7 +561,7 @@
 			<!-- /admin.management -->
 			<option name="user.attachment.maxSize">
 				<categoryname>user.message.attachment</categoryname>
-				<optiontype>fileSize</optiontype>
+				<optiontype>uploadLimit</optiontype>
 				<defaultvalue>2000000</defaultvalue>
 				<minvalue>10000</minvalue>
 			</option>

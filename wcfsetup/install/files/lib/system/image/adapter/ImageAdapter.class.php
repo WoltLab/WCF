@@ -80,7 +80,15 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
     public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true)
     {
         if ($maxWidth > $this->getWidth() && $maxHeight > $this->getHeight()) {
-            throw new SystemException("Dimensions for thumbnail can not exceed image dimensions.");
+            throw new SystemException(
+                \sprintf(
+                    "Dimensions for thumbnail can not exceed image dimensions (requested: %d × %d, actual: %d × %d).",
+                    $maxWidth,
+                    $maxHeight,
+                    $this->getWidth(),
+                    $this->getHeight(),
+                )
+            );
         }
 
         $maxHeight = \min($maxHeight, $this->getHeight());

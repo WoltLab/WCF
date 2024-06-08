@@ -90,6 +90,7 @@ return static function (): void {
             $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
             $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
             $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+            $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
             $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
             $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
         }
@@ -115,6 +116,10 @@ return static function (): void {
     $eventHandler->register(
         \wcf\event\endpoint\ControllerCollecting::class,
         static function (\wcf\event\endpoint\ControllerCollecting $event) {
+            $event->register(new \wcf\system\endpoint\controller\core\files\DeleteFile);
+            $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
+            $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
+            $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
         }
