@@ -29,21 +29,23 @@ abstract class AbstractLinearRebuildDataWorker extends AbstractRebuildDataWorker
     #[\Override]
     public function countObjects()
     {
-        if ($this->count === null) {
-            if ($this->objectList === null) {
-                $this->initObjectList();
-            }
-
-            $sql = \sprintf(
-                "SELECT MAX(%s) FROM %s",
-                $this->objectList->getDatabaseTableIndexName(),
-                $this->objectList->getDatabaseTableName(),
-            );
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([]);
-
-            $this->count = $statement->fetchSingleColumn();
+        if ($this->count !== null) {
+            return;
         }
+
+        if ($this->objectList === null) {
+            $this->initObjectList();
+        }
+
+        $sql = \sprintf(
+            "SELECT MAX(%s) FROM %s",
+            $this->objectList->getDatabaseTableIndexName(),
+            $this->objectList->getDatabaseTableName(),
+        );
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+
+        $this->count = $statement->fetchSingleColumn();
     }
 
     #[\Override]
@@ -72,17 +74,21 @@ abstract class AbstractLinearRebuildDataWorker extends AbstractRebuildDataWorker
         }
 
         $this->objectList = new $this->objectListClassName();
+
+        $indexName = \sprintf(
+            '%s.%s',
+            $this->objectList->getDatabaseTableAlias(),
+            $this->objectList->getDatabaseTableIndexName(),
+        );
+
         $this->objectList->getConditionBuilder()->add(
-            \sprintf(
-                "%s.%s BETWEEN ? AND ?",
-                $this->objectList->getDatabaseTableAlias(),
-                $this->objectList->getDatabaseTableIndexName(),
-            ),
+            "{$indexName} BETWEEN ? AND ?",
             [
                 $this->limit * $this->loopCount + 1,
                 $this->limit * $this->loopCount + $this->limit,
             ]
         );
+        $this->objectList->sqlOrderBy = $indexName;
     }
 
     #[\Override]
