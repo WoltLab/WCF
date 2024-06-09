@@ -106,12 +106,6 @@ return [
             CharDatabaseTableColumn::create('fileHash')
                 ->length(64)
                 ->notNull(),
-            VarcharDatabaseTableColumn::create('fileExtension')
-                ->length(10)
-                ->notNull(),
-            CharDatabaseTableColumn::create('secret')
-                ->length(32)
-                ->notNull(),
             IntDatabaseTableColumn::create('objectTypeID'),
             TextDatabaseTableColumn::create('context'),
             VarbinaryDatabaseTableColumn::create('chunks')
