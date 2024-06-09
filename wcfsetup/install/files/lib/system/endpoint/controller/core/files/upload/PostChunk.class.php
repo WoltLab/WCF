@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\FileEditor;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\temporary\FileTemporaryEditor;
-use wcf\system\endpoint\HydrateFromRequestParameter;
+use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\UserInputException;
@@ -17,9 +17,6 @@ use wcf\system\io\File;
 #[PostRequest('/core/files/upload/{identifier}/chunk/{sequenceNo:\d+}')]
 final class PostChunk implements IController
 {
-    #[HydrateFromRequestParameter('identifier')]
-    public FileTemporary $fileTemporary;
-
     /**
      * Read data in chunks to avoid hitting the memory limit.
      * See https://stackoverflow.com/a/61997147
@@ -28,6 +25,8 @@ final class PostChunk implements IController
 
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
+        $fileTemporary = Helper::fetchObjectFromRequestParameter($variables, 'identifier', FileTemporary::class);
+
         $checksum = $request->getHeaderLine('chunk-checksum-sha256');
         if ($checksum === '' || \str_contains($checksum, ',')) {
             // Reject a missing header of multiple values provided by the client.
@@ -37,29 +36,29 @@ final class PostChunk implements IController
         $sequenceNo = $variables['sequenceNo'];
 
         // Check if this is a valid sequence no.
-        if ($sequenceNo >= $this->fileTemporary->getChunkCount()) {
+        if ($sequenceNo >= $fileTemporary->getChunkCount()) {
             throw new UserInputException('sequenceNo', 'outOfRange');
         }
 
         // Check if this chunk has already been written.
-        if ($this->fileTemporary->hasChunk($sequenceNo)) {
+        if ($fileTemporary->hasChunk($sequenceNo)) {
             throw new UserInputException('sequenceNo', 'alreadyExists');
         }
 
         // Validate the chunk size.
-        $chunkSize = $this->fileTemporary->getChunkSize();
+        $chunkSize = $fileTemporary->getChunkSize();
         $stream = $request->getBody();
         $receivedSize = $stream->getSize();
         if ($receivedSize !== null && $receivedSize > $chunkSize) {
             throw new UserInputException('payload', 'tooLarge');
         }
 
-        $tmpPath = $this->fileTemporary->getPath();
+        $tmpPath = $fileTemporary->getPath();
         if (!\is_dir($tmpPath)) {
             \mkdir($tmpPath, recursive: true);
         }
 
-        $file = new File($tmpPath . $this->fileTemporary->getFilename(), 'cb+');
+        $file = new File($tmpPath . $fileTemporary->getFilename(), 'cb+');
         $file->lock(\LOCK_EX);
         $file->seek($sequenceNo * $chunkSize);
 
@@ -89,25 +88,25 @@ final class PostChunk implements IController
         }
 
         // Mark the chunk as written.
-        $chunks = $this->fileTemporary->chunks;
+        $chunks = $fileTemporary->chunks;
         $chunks[$sequenceNo] = '1';
-        (new FileTemporaryEditor($this->fileTemporary))->update([
+        (new FileTemporaryEditor($fileTemporary))->update([
             'chunks' => $chunks,
         ]);
 
         // Check if we have all chunks.
-        if ($chunks === \str_repeat('1', $this->fileTemporary->getChunkCount())) {
+        if ($chunks === \str_repeat('1', $fileTemporary->getChunkCount())) {
             // Check if the final result matches the expected checksum.
-            $checksum = \hash_file('sha256', $tmpPath . $this->fileTemporary->getFilename());
-            if ($checksum !== $this->fileTemporary->fileHash) {
+            $checksum = \hash_file('sha256', $tmpPath . $fileTemporary->getFilename());
+            if ($checksum !== $fileTemporary->fileHash) {
                 throw new UserInputException('file', 'checksum');
             }
 
-            $file = FileEditor::createFromTemporary($this->fileTemporary);
+            $file = FileEditor::createFromTemporary($fileTemporary);
 
-            $context = $this->fileTemporary->getContext();
-            (new FileTemporaryEditor($this->fileTemporary))->delete();
-            unset($this->fileTemporary);
+            $context = $fileTemporary->getContext();
+            (new FileTemporaryEditor($fileTemporary))->delete();
+            unset($fileTemporary);
 
             $processor = $file->getProcessor();
             $processor?->adopt($file, $context);

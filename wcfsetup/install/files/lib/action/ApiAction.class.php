@@ -10,11 +10,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\data\DatabaseObject;
 use wcf\event\endpoint\ControllerCollecting;
 use wcf\http\attribute\AllowHttpMethod;
 use wcf\system\cache\builder\ApiEndpointCacheBuilder;
-use wcf\system\endpoint\HydrateFromRequestParameter;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\RequestFailure;
 use wcf\system\endpoint\RequestType;
@@ -90,8 +88,6 @@ final class ApiAction implements RequestHandlerInterface
         $controller = $result->handler;
 
         try {
-            $this->hydrateFromRequestParameters($controller, $result->variables);
-
             return $controller($request, $result->variables);
         } catch (MappingError $e) {
             return $this->toErrorResponse(RequestFailure::ValidationFailed, 'mapping_error', $e->getMessage());
@@ -120,72 +116,6 @@ final class ApiAction implements RequestHandlerInterface
         }
 
         return $endpoint;
-    }
-
-    private function hydrateFromRequestParameters(
-        IController $controller,
-        /** @var array<string, string> */
-        array $variables
-    ): void {
-        $reflectionClass = new \ReflectionClass($controller);
-        $properties = $reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC);
-        foreach ($properties as $property) {
-            $attribute = $property->getAttributes(HydrateFromRequestParameter::class)[0] ?? false;
-            if ($attribute === false) {
-                continue;
-            }
-
-            $propertyName = \sprintf(
-                '%s::$%s',
-                $reflectionClass->getName(),
-                $property->getName(),
-            );
-
-            $propertyType = $property->getType();
-            if ($propertyType === null) {
-                throw new \RuntimeException("Cannot determine the type of {$propertyName}.");
-            }
-
-            if (
-                !($propertyType instanceof \ReflectionNamedType)
-                || !\is_subclass_of($propertyType->getName(), DatabaseObject::class)
-            ) {
-                throw new \RuntimeException(
-                    \sprintf(
-                        "Only types deriving from %s are permitted for %s.",
-                        DatabaseObject::class,
-                        $propertyName,
-                    ),
-                );
-            }
-
-            $variableName = $attribute->newInstance()->parameterName;
-            if (!isset($variables[$variableName])) {
-                throw new \RuntimeException(
-                    \sprintf(
-                        "The variable '%s' for %s does not appear in the request variables, please check its spelling and if it appears in the route definition.",
-                        $variableName,
-                        $propertyName,
-                    ),
-                );
-            }
-
-            if ($property->isReadOnly()) {
-                throw new \RuntimeException("{$propertyName} must not be declared as readonly.");
-            }
-
-            $className = $propertyType->getName();
-            $dbo = new $className($variables[$variableName]);
-            \assert($dbo instanceof DatabaseObject);
-
-            if (!$dbo->getObjectID()) {
-                throw new UserInputException(
-                    $dbo->getDatabaseTableIndexName(),
-                );
-            }
-
-            $controller->{$property->getName()} = $dbo;
-        }
     }
 
     private function toErrorResponse(
