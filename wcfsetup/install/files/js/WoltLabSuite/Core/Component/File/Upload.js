@@ -15,10 +15,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         if (!response.ok) {
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
-                fileElement.uploadFailed(undefined);
+                fileElement.uploadFailed(response.error);
                 throw response.error;
             }
-            fileElement.uploadFailed(validationError);
+            fileElement.uploadFailed(response.error);
             return undefined;
         }
         const { identifier, numberOfChunks } = response.value;
@@ -31,7 +31,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const checksum = await getSha256Hash(await chunk.arrayBuffer());
             const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
             if (!response.ok) {
-                fileElement.uploadFailed(undefined);
+                fileElement.uploadFailed(response.error);
                 throw response.error;
             }
             await chunkUploadCompleted(fileElement, response.value);

@@ -1,4 +1,4 @@
-import type { ValidationError } from "WoltLabSuite/Core/Api/Error";
+import type { ApiError } from "WoltLabSuite/Core/Api/Error";
 import { getExtensionByMimeType, getIconNameByFilename } from "WoltLabSuite/Core/FileUtil";
 
 const enum State {
@@ -40,7 +40,7 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #link: string | undefined = undefined;
   #mimeType: string | undefined = undefined;
   #state: State = State.Initial;
-  #validationError: ValidationError | undefined = undefined;
+  #apiError: ApiError | undefined = undefined;
   readonly #thumbnails: Thumbnail[] = [];
 
   #readyReject!: () => void;
@@ -262,13 +262,13 @@ export class WoltlabCoreFileElement extends HTMLElement {
     }
   }
 
-  uploadFailed(validationError: ValidationError | undefined): void {
+  uploadFailed(apiError: ApiError): void {
     if (this.#state !== State.Uploading) {
       return;
     }
 
     this.#state = State.Failed;
-    this.#validationError = validationError;
+    this.#apiError = apiError;
     this.#rebuildElement();
 
     this.#readyReject();
@@ -335,8 +335,8 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.#readyPromise;
   }
 
-  get validationError(): ValidationError | undefined {
-    return this.#validationError;
+  get apiError(): ApiError | undefined {
+    return this.#apiError;
   }
 }
 

@@ -154,19 +154,25 @@ function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileEle
     throw reason;
   }
 
-  if (file.validationError === undefined) {
+  if (file.apiError === undefined) {
     return;
   }
 
   let errorMessage: string;
-  switch (file.validationError.param) {
-    case "preflight":
-      errorMessage = getPhrase(`wcf.upload.error.${file.validationError.code}`);
-      break;
 
-    default:
-      errorMessage = "Unrecognized error type: " + JSON.stringify(file.validationError);
-      break;
+  const validationError = file.apiError.getValidationError();
+  if (validationError !== undefined) {
+    switch (validationError.param) {
+      case "preflight":
+        errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
+        break;
+
+      default:
+        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
+        break;
+    }
+  } else {
+    errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
   }
 
   markElementAsErroneous(element, errorMessage);

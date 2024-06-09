@@ -25,7 +25,7 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         #link = undefined;
         #mimeType = undefined;
         #state = 0 /* State.Initial */;
-        #validationError = undefined;
+        #apiError = undefined;
         #thumbnails = [];
         #readyReject;
         #readyResolve;
@@ -204,12 +204,12 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
                     return false;
             }
         }
-        uploadFailed(validationError) {
+        uploadFailed(apiError) {
             if (this.#state !== 1 /* State.Uploading */) {
                 return;
             }
             this.#state = 4 /* State.Failed */;
-            this.#validationError = validationError;
+            this.#apiError = apiError;
             this.#rebuildElement();
             this.#readyReject();
         }
@@ -257,8 +257,8 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         get ready() {
             return this.#readyPromise;
         }
-        get validationError() {
-            return this.#validationError;
+        get apiError() {
+            return this.#apiError;
         }
     }
     exports.WoltlabCoreFileElement = WoltlabCoreFileElement;
