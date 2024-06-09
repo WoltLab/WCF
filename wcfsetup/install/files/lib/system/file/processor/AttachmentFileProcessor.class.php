@@ -6,6 +6,7 @@ use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentList;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\http\Helper;
@@ -201,7 +202,11 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function delete(array $fileIDs, array $thumbnailIDs): void
     {
-        (new AttachmentAction($fileIDs, 'delete'))->executeAction();
+        $attachmentList = new AttachmentList();
+        $attachmentList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
+        $attachmentList->readObjects();
+
+        (new AttachmentAction($attachmentList->getObjects(), 'delete'))->executeAction();
     }
 
     #[\Override]
