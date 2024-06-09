@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class CommentRebuildDataWorker extends AbstractRebuildDataWorker
+final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -25,50 +25,18 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker
     protected $limit = 500;
 
     /**
-     * @var HtmlInputProcessor
-     */
-    protected $htmlInputProcessor;
-
-    /**
      * @inheritDoc
      */
-    public function countObjects()
-    {
-        if ($this->count === null) {
-            $this->count = 0;
-            $sql = "SELECT  MAX(commentID) AS commentID
-                    FROM    wcf" . WCF_N . "_comment";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute();
-            $row = $statement->fetchArray();
-            if ($row !== false) {
-                $this->count = $row['commentID'];
-            }
-        }
-    }
+    protected $objectListClassName = CommentList::class;
 
-    /**
-     * @inheritDoc
-     */
-    protected function initObjectList()
-    {
-        $this->objectList = new CommentList();
-        $this->objectList->sqlOrderBy = 'comment.commentID';
-    }
+    private HtmlInputProcessor $htmlInputProcessor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
-        $this->objectList->getConditionBuilder()->add(
-            'comment.commentID BETWEEN ? AND ?',
-            [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]
-        );
-
         parent::execute();
 
-        if (!\count($this->objectList)) {
+        if (\count($this->getObjectList()) === 0) {
             return;
         }
 
@@ -124,12 +92,9 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker
         WCF::getDB()->commitTransaction();
     }
 
-    /**
-     * @return HtmlInputProcessor
-     */
-    protected function getHtmlInputProcessor()
+    private function getHtmlInputProcessor(): HtmlInputProcessor
     {
-        if ($this->htmlInputProcessor === null) {
+        if (!isset($this->htmlInputProcessor)) {
             $this->htmlInputProcessor = new HtmlInputProcessor();
         }
 

@@ -45,7 +45,7 @@ abstract class AbstractLinearRebuildDataWorker extends AbstractRebuildDataWorker
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
-        $this->count = $statement->fetchSingleColumn();
+        $this->count = $statement->fetchSingleColumn() ?: 0;
     }
 
     #[\Override]
