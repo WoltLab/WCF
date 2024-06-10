@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnailList;
+use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\UserInputException;
@@ -17,10 +18,7 @@ final class PostGenerateThumbnails implements IController
 {
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $file = new File($variables['id']);
-        if (!$file->fileID) {
-            throw new UserInputException('id');
-        }
+        $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
 
         FileProcessor::getInstance()->generateWebpVariant($file);
         FileProcessor::getInstance()->generateThumbnails($file);

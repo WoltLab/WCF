@@ -25,7 +25,7 @@ final class PostChunk implements IController
 
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $fileTemporary = Helper::fetchObjectFromRequestParameter($variables, 'identifier', FileTemporary::class);
+        $fileTemporary = Helper::fetchObjectFromRequestParameter($variables['identifier'], FileTemporary::class);
 
         $checksum = $request->getHeaderLine('chunk-checksum-sha256');
         if ($checksum === '' || \str_contains($checksum, ',')) {

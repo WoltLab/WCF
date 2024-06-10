@@ -171,25 +171,18 @@ final class Helper
      * field name.
      *
      * @template T
-     * @param array<string, string> $variables
      * @param string-string<T> $className
      * @return T
      * @throws UserInputException
      * @since 6.1
      */
-    public static function fetchObjectFromRequestParameter(array $variables, string $key, string $className): object
+    public static function fetchObjectFromRequestParameter(int|string $objectID, string $className): object
     {
         if (!\is_subclass_of($className, DatabaseObject::class)) {
             throw new ParentClassException($className, DatabaseObject::class);
         }
 
-        if (!isset($variables[$key])) {
-            throw new \RuntimeException(
-                "The variable '{$key}' does not appear in the request variables, please check its spelling and if it appears in the route definition.",
-            );
-        }
-
-        $dbo = new $className($variables[$key]);
+        $dbo = new $className($objectID);
         \assert($dbo instanceof DatabaseObject);
 
         if (!$dbo->getObjectID()) {
