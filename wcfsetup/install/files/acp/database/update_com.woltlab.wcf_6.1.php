@@ -154,4 +154,27 @@ return [
                 ->referencedColumns(['fileID'])
                 ->onDelete('CASCADE'),
         ]),
+    PartialDatabaseTable::create('wcf1_attachment')
+        ->columns([
+            IntDatabaseTableColumn::create('fileID'),
+            IntDatabaseTableColumn::create('thumbnailID'),
+            IntDatabaseTableColumn::create('tinyThumbnailID'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL'),
+            DatabaseTableForeignKey::create()
+                ->columns(['thumbnailID'])
+                ->referencedTable('wcf1_file_thumbnail')
+                ->referencedColumns(['thumbnailID'])
+                ->onDelete('SET NULL'),
+            DatabaseTableForeignKey::create()
+                ->columns(['tinyThumbnailID'])
+                ->referencedTable('wcf1_file_thumbnail')
+                ->referencedColumns(['thumbnailID'])
+                ->onDelete('SET NULL'),
+        ])
 ];
