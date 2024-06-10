@@ -11,7 +11,7 @@
 		<dt></dt>
 		<dd>
 			<div data-max-size="{$field->getAttachmentHandler()->getMaxSize()}"></div>
-			<small>{lang}wcf.attachment.upload.limits{/lang}</small>
+			<small>{lang attachmentHandler=$field->getAttachmentHandler()}wcf.attachment.upload.limits{/lang}</small>
 		</dd>
 	</dl>
 
