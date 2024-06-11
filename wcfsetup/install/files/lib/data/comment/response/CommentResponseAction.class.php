@@ -196,7 +196,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             );
 
             MessageEmbeddedObjectManager::getInstance()->removeObjects(
-                'com.woltlab.wcf.comment',
+                'com.woltlab.wcf.comment.response',
                 $deletedResponseIDs
             );
         }
