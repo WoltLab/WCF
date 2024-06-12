@@ -136,8 +136,8 @@ async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): P
   const resizer = new ImageResizer();
   const { image, exif } = await resizer.loadFile(file);
 
-  const maxHeight = resizeConfiguration.maxHeight;
-  let maxWidth = resizeConfiguration.maxWidth;
+  const maxHeight = resizeConfiguration.maxHeight === -1 ? image.height : resizeConfiguration.maxHeight;
+  let maxWidth = resizeConfiguration.maxWidth === -1 ? image.width : resizeConfiguration.maxWidth;
   if (window.devicePixelRatio >= 2) {
     const actualWidth = window.screen.width * window.devicePixelRatio;
     const actualHeight = window.screen.height * window.devicePixelRatio;
