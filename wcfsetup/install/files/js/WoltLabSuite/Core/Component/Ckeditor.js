@@ -77,7 +77,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         isVisible() {
             return this.#editor.ui.element.clientWidth !== 0;
         }
-        setHtml(html) {
+        setHtml(html, focusEditor = true) {
             html = (0, Normalizer_1.normalizeLegacyHtml)(html);
             this.#editor.model.change((writer) => {
                 let range = this.#editor.model.createRangeIn(this.#editor.model.document.getRoot());
@@ -85,7 +85,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
                 const modelFragment = this.#editor.data.toModel(viewFragment);
                 range = this.#editor.model.insertContent(modelFragment, range);
                 writer.setSelection(range.end);
-                this.focus();
+                if (focusEditor) {
+                    this.focus();
+                }
             });
         }
         removeAll(model, attributes) {
@@ -97,7 +99,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             });
         }
         reset() {
-            this.setHtml("");
+            this.setHtml("", false);
             (0, Event_1.dispatchToCkeditor)(this.sourceElement).reset({
                 ckeditor: this,
             });
