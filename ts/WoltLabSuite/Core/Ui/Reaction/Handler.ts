@@ -505,6 +505,7 @@ class UiReactionHandler {
 
           return false;
         },
+        preventScroll: true,
       });
     }
 

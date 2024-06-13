@@ -385,6 +385,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                         this._closePopover();
                         return false;
                     },
+                    preventScroll: true,
                 });
             }
             return this.focusTrap;
