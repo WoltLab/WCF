@@ -5,6 +5,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\TObjectTypeFormNode;
+use wcf\util\ImageUtil;
 
 /**
  * Form field for file processors.
@@ -42,6 +43,10 @@ final class FileProcessorFormField extends AbstractFormField
                 $this->context
             ),
             'maxUploads' => $this->getFileProcessor()->getMaximumCount($this->context),
+            'imageOnly' => \array_diff(
+                $this->getFileProcessor()->getAllowedFileExtensions($this->context),
+                ImageUtil::IMAGE_EXTENSIONS
+            ) === []
         ];
     }
 

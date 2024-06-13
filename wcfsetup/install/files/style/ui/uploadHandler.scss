@@ -61,3 +61,26 @@
 		}
 	}
 }
+
+//file processor form field
+
+.fileUpload__preview {
+	display: flex;
+	flex-direction: column;
+
+	woltlab-core-file {
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+	}
+}
+
+.fileUpload__preview__buttons {
+	margin-top: 5px;
+}
+
+.fileUpload__fileList {
+
+}
