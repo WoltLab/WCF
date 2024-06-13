@@ -1,6 +1,6 @@
 {if $maxUploads === 1 && $imageOnly}
 	<div class="fileUpload__preview">
-		{if $field->value()}
+		{if $field->getValue()}
 		{*<woltlab-core-file>…</woltlab-core-file>*}
 			<ul class="fileUpload__preview__buttons buttonList">
 				<li>
