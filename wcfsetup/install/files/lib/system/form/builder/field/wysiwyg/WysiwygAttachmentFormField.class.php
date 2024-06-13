@@ -84,14 +84,6 @@ final class WysiwygAttachmentFormField extends AbstractFormField
 
         $this->attachmentHandler = $attachmentHandler;
 
-        if ($this->attachmentHandler !== null) {
-            $this->description('wcf.attachment.upload.limits', [
-                'attachmentHandler' => $this->attachmentHandler,
-            ]);
-        } else {
-            $this->description();
-        }
-
         return $this;
     }
 
