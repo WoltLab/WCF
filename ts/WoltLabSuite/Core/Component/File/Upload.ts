@@ -180,8 +180,6 @@ function validateFileLimit(element: WoltlabCoreFileUploadElement): boolean {
   const maximumCount = element.maximumCount;
   if (maximumCount === -1) {
     return true;
-  } else if (maximumCount > 0) {
-    return true;
   }
 
   const files = Array.from(element.parentElement!.querySelectorAll("woltlab-core-file"));

@@ -111,9 +111,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         if (maximumCount === -1) {
             return true;
         }
-        else if (maximumCount > 0) {
-            return true;
-        }
         const files = Array.from(element.parentElement.querySelectorAll("woltlab-core-file"));
         const numberOfUploadedFiles = files.filter((file) => !file.isFailedUpload()).length;
         if (numberOfUploadedFiles + 1 <= maximumCount) {
