@@ -171,7 +171,7 @@ final class Helper
      * field name.
      *
      * @template T
-     * @param string-string<T> $className
+     * @param class-string<T> $className
      * @return T
      * @throws UserInputException
      * @since 6.1
