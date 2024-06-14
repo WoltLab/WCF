@@ -206,6 +206,10 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         $attachmentList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
         $attachmentList->readObjects();
 
+        if ($attachmentList->count() === 0) {
+            return;
+        }
+
         (new AttachmentAction($attachmentList->getObjects(), 'delete'))->executeAction();
     }
 
