@@ -7,7 +7,6 @@
  * @since 6.0
  */
 
-import { dboAction, handleValidationErrors } from "../../../Ajax";
 import DomUtil from "../../../Dom/Util";
 import UiDropdownSimple from "../../../Ui/Dropdown/Simple";
 import * as UiNotification from "../../../Ui/Notification";
@@ -16,14 +15,11 @@ import * as EventHandler from "../../../Event/Handler";
 import * as UiScroll from "../../../Ui/Scroll";
 import { getPhrase } from "../../../Language";
 import { getCkeditorById } from "../../Ckeditor";
-
-type ResponseBeginEdit = {
-  template: string;
-};
-
-type ResponseSave = {
-  message: string;
-};
+import { enableResponse } from "WoltLabSuite/Core/Api/Comments/Responses/EnableResponse";
+import { deleteResponse } from "WoltLabSuite/Core/Api/Comments/Responses/DeleteResponse";
+import { editResponse } from "WoltLabSuite/Core/Api/Comments/Responses/EditResponse";
+import { renderResponse } from "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse";
+import { updateResponse } from "WoltLabSuite/Core/Api/Comments/Responses/UpdateResponse";
 
 export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   parsedCallback() {
@@ -49,9 +45,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   }
 
   async #enable(): Promise<void> {
-    await dboAction("enable", "wcf\\data\\comment\\response\\CommentResponseAction")
-      .objectIds([this.responseId])
-      .dispatch();
+    (await enableResponse(this.responseId)).unwrap();
 
     this.querySelector<HTMLElement>(".commentResponse__status--disabled")!.hidden = true;
     if (this.menu) {
@@ -62,9 +56,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   async #delete(): Promise<void> {
     const result = await confirmationFactory().delete();
     if (result) {
-      await dboAction("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
-        .objectIds([this.responseId])
-        .dispatch();
+      (await deleteResponse(this.responseId)).unwrap();
 
       UiNotification.show();
 
@@ -74,11 +66,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
 
   async #startEdit(): Promise<void> {
     this.menu!.querySelector<HTMLElement>(".commentResponse__option--edit")!.hidden = true;
-
-    const { template } = (await dboAction("beginEdit", "wcf\\data\\comment\\response\\CommentResponseAction")
-      .objectIds([this.responseId])
-      .dispatch()) as ResponseBeginEdit;
-
+    const { template } = (await editResponse(this.responseId)).unwrap();
     this.#showEditor(template);
   }
 
@@ -123,25 +111,20 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
 
     this.#showLoadingIndicator();
 
-    let response: ResponseSave;
-
-    try {
-      response = (await dboAction("save", "wcf\\data\\comment\\response\\CommentResponseAction")
-        .objectIds([this.responseId])
-        .payload(parameters)
-        .dispatch()) as ResponseSave;
-    } catch (error) {
-      await handleValidationErrors(error, ({ errorType }) => {
-        DomUtil.innerError(document.getElementById(this.#editorId)!, errorType);
-
-        return true;
-      });
-
+    const response = await updateResponse(this.responseId, ckeditor.getHtml());
+    if (!response.ok) {
+      const validationError = response.error.getValidationError();
+      if (validationError === undefined) {
+        throw response.error;
+      }
+      DomUtil.innerError(document.getElementById(this.#editorId)!, validationError.code);
       this.#hideLoadingIndicator();
+
       return;
     }
 
-    DomUtil.setInnerHtml(this.querySelector<HTMLElement>(".htmlContent")!, response!.message);
+    const { template } = (await renderResponse(this.responseId, true)).unwrap();
+    DomUtil.setInnerHtml(this.querySelector<HTMLElement>(".htmlContent")!, template);
     this.#hideLoadingIndicator();
     this.#cancelEdit();
     UiNotification.show();

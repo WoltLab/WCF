@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ui/Reaction/Handler"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Handler_1) {
+define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ui/Reaction/Handler", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Handler_1, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -78,25 +78,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             permaLinkComment.innerHTML =
                 '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
             this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
-            let ajaxResponse;
-            try {
-                ajaxResponse = (await (0, Ajax_1.dboAction)("loadComment", "wcf\\data\\comment\\CommentAction")
-                    .objectIds([commentId])
-                    .payload({
-                    responseID: responseId,
-                    objectTypeID: this.#container.dataset.objectTypeId,
-                })
-                    .dispatch());
-            }
-            catch (error) {
-                await (0, Ajax_1.handleValidationErrors)(error, () => {
-                    // The comment id is invalid or there is a mismatch, silently ignore it.
-                    permaLinkComment.remove();
-                    return true;
-                });
+            const ajaxResponse = await (0, RenderComment_1.renderComment)(commentId, responseId ? responseId : undefined, false, parseInt(this.#container.dataset.objectTypeId));
+            if (!ajaxResponse.ok) {
+                // The comment id is invalid or there is a mismatch, silently ignore it.
+                permaLinkComment.remove();
                 return;
             }
-            const { template, response } = ajaxResponse;
+            const { template, response } = ajaxResponse.unwrap();
             Util_1.default.insertHtml(template, permaLinkComment, "before");
             permaLinkComment.remove();
             const comment = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`);
@@ -131,24 +119,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             permalinkResponse.innerHTML =
                 '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
             comment.querySelector(".commentResponseList").prepend(permalinkResponse);
-            let response;
-            try {
-                response = (await (0, Ajax_1.dboAction)("loadResponse", "wcf\\data\\comment\\CommentAction")
-                    .payload({
-                    responseID: responseId,
-                    objectTypeID: this.#container.dataset.objectTypeId,
-                })
-                    .dispatch());
-            }
-            catch (error) {
-                await (0, Ajax_1.handleValidationErrors)(error, () => {
-                    // The response id is invalid or there is a mismatch, silently ignore it.
-                    permalinkResponse.remove();
-                    return true;
-                });
+            const response = await (0, RenderResponse_1.renderResponse)(responseId, false, parseInt(this.#container.dataset.objectTypeId));
+            if (!response.ok) {
+                // The response id is invalid or there is a mismatch, silently ignore it.
+                permalinkResponse.remove();
                 return;
             }
-            this.#insertResponseSegment(response.template);
+            this.#insertResponseSegment(response.value.template);
         }
         #scrollTo(element, highlight = false) {
             UiScroll.element(element, () => {
@@ -162,11 +139,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         }
         #initCommentAdd() {
             if (this.#container.dataset.canAdd === "true") {
-                new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"), parseInt(this.#container.dataset.objectTypeId), parseInt(this.#container.dataset.objectId), (template) => {
-                    this.#insertComment(template);
+                new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"), parseInt(this.#container.dataset.objectTypeId), parseInt(this.#container.dataset.objectId), (commentId) => {
+                    void this.#loadCreatedComment(commentId);
                 });
-                this.#commentResponseAdd = new Add_2.CommentResponseAdd(this.#container.querySelector(".commentResponseAdd"), (commentId, template) => {
-                    this.#insertResponse(commentId, template);
+                this.#commentResponseAdd = new Add_2.CommentResponseAdd(this.#container.querySelector(".commentResponseAdd"), (commentId, responseId) => {
+                    void this.#loadCreatedResponse(commentId, responseId);
                 });
             }
         }
@@ -223,16 +200,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         async #loadNextResponses(comment, loadAllResponses = false) {
             const button = comment.querySelector(".commentLoadNextResponses__button");
             button.disabled = true;
-            const response = (await (0, Ajax_1.dboAction)("loadResponses", "wcf\\data\\comment\\response\\CommentResponseAction")
-                .payload({
-                data: {
-                    commentID: comment.dataset.commentId,
-                    lastResponseTime: comment.dataset.lastResponseTime,
-                    lastResponseID: comment.dataset.lastResponseId,
-                    loadAllResponses: loadAllResponses ? 1 : 0,
-                },
-            })
-                .dispatch());
+            const response = (await (0, RenderResponses_1.renderResponses)(parseInt(comment.dataset.commentId), parseInt(comment.dataset.lastResponseTime), parseInt(comment.dataset.lastResponseId), loadAllResponses)).unwrap();
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
             fragment.querySelectorAll(".commentResponseList__item").forEach((element) => {
                 comment.querySelector(`.commentResponseList__item[data-response-id="${element.dataset.responseId}"]`)?.remove();
@@ -265,15 +233,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         async #loadNextComments() {
             const button = this.#container.querySelector(".commentLoadNext__button");
             button.disabled = true;
-            const response = (await (0, Ajax_1.dboAction)("loadComments", "wcf\\data\\comment\\CommentAction")
-                .payload({
-                data: {
-                    objectID: this.#container.dataset.objectId,
-                    objectTypeID: this.#container.dataset.objectTypeId,
-                    lastCommentTime: this.#container.dataset.lastCommentTime,
-                },
-            })
-                .dispatch());
+            const response = (await (0, RenderComments_1.renderComments)(parseInt(this.#container.dataset.objectTypeId), parseInt(this.#container.dataset.objectId), parseInt(this.#container.dataset.lastCommentTime))).unwrap();
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
             fragment.querySelectorAll(".commentList__item").forEach((element) => {
                 this.#container.querySelector(`.commentList__item[data-comment-id="${element.dataset.commentId}"]`)?.remove();
@@ -294,16 +254,32 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             comment.parentElement.append(this.#commentResponseAdd.container);
             this.#commentResponseAdd.show(commentId);
         }
-        #insertComment(template) {
+        async #loadCreatedComment(commentId) {
+            const response = await (0, RenderComment_1.renderComment)(commentId);
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
+                }
+                return;
+            }
             const referenceElement = this.#container.querySelector(".commentAdd").parentElement;
-            Util_1.default.insertHtml(template, referenceElement, "after");
+            Util_1.default.insertHtml(response.value.template, referenceElement, "after");
             Listener_1.default.trigger();
             const scrollTarget = referenceElement.nextElementSibling;
             window.setTimeout(() => {
                 UiScroll.element(scrollTarget);
             }, 100);
         }
-        #insertResponse(commentId, template) {
+        async #loadCreatedResponse(commentId, responseId) {
+            const response = await (0, RenderResponse_1.renderResponse)(responseId);
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
+                }
+                return;
+            }
             const item = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`);
             let commentResponseList = item.querySelector(".commentResponseList");
             if (!commentResponseList) {
@@ -315,7 +291,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                 commentResponseList.dataset.responses = "1";
                 div.append(commentResponseList);
             }
-            Util_1.default.insertHtml(template, commentResponseList, "append");
+            Util_1.default.insertHtml(response.value.template, commentResponseList, "append");
             Listener_1.default.trigger();
             const scrollTarget = commentResponseList.firstElementChild;
             window.setTimeout(() => {
