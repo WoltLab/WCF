@@ -3498,7 +3498,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.comment.moderation.disabledComment"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Kommentar muss zunächst von einem Moderator geprüft und freigeschaltet werden, damit er für alle Benutzer sichtbar wird.]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
-		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.comment.objectAuthor"><![CDATA[Autor]]></item>
