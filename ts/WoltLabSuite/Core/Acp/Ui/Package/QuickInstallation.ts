@@ -13,6 +13,7 @@ import { isPlainObject } from "../../../Core";
 import * as Language from "../../../Language";
 import { innerError } from "../../../Dom/Util";
 import UiDialog from "../../../Ui/Dialog";
+import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
 
 let codeInput: HTMLInputElement;
 
@@ -32,7 +33,7 @@ type Response =
       type: string;
     };
 
-function detectCode(): void {
+function detectCode(versionNumber: string): void {
   const value = codeInput.value.trim();
   if (value === "") {
     innerError(codeInput, false);
@@ -55,7 +56,7 @@ function detectCode(): void {
       if (json.package && json.password && json.username) {
         isValid = true;
 
-        void prepareInstallation(json);
+        void prepareInstallation(json, versionNumber);
       }
     }
   }
@@ -78,7 +79,7 @@ function refreshPackageDatabase() {
   return refreshedPackageDatabase;
 }
 
-async function prepareInstallation(data: InstallationCode): Promise<void> {
+async function prepareInstallation(data: InstallationCode, versionNumber: string): Promise<void> {
   try {
     AjaxStatus.show();
     await refreshPackageDatabase();
@@ -86,19 +87,41 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
     AjaxStatus.hide();
   }
 
-  const response = (await dboAction("prepareInstallation", "wcf\\data\\package\\update\\PackageUpdateAction")
-    .payload({
-      packages: {
-        [data.package]: "",
-      },
-      authData: {
-        username: data.username,
-        password: data.password,
-        saveCredentials: false,
-        isStoreCode: true,
-      },
-    })
-    .dispatch()) as Response;
+  let response: Response;
+  try {
+    response = (await dboAction("prepareInstallation", "wcf\\data\\package\\update\\PackageUpdateAction")
+      .payload({
+        packages: {
+          [data.package]: "",
+        },
+        authData: {
+          username: data.username,
+          password: data.password,
+          saveCredentials: false,
+          isStoreCode: true,
+        },
+      })
+      .dispatch()) as Response;
+  } catch (e) {
+    if (e instanceof StatusNotOk) {
+      try {
+        const json = await e.response.clone().json();
+        if (typeof json.message === "string" && json.message.startsWith("Cannot find the package '")) {
+          codeInput.value = "";
+          innerError(
+            codeInput,
+            Language.getPhrase("wcf.acp.package.error.incompatibleStoreProduct", { versionNumber }),
+          );
+
+          return;
+        }
+      } catch {
+        throw e;
+      }
+    }
+
+    throw e;
+  }
 
   if ("queueID" in response) {
     if (response.queueID === null) {
@@ -129,7 +152,7 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
   }
 }
 
-export function setup(): void {
+export function setup(versionNumber: string): void {
   codeInput = document.getElementById("quickInstallationCode") as HTMLInputElement;
 
   codeInput.addEventListener("focus", () => {
@@ -140,6 +163,6 @@ export function setup(): void {
   });
 
   codeInput.addEventListener("input", () => {
-    detectCode();
+    detectCode(versionNumber);
   });
 }

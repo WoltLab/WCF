@@ -9,6 +9,7 @@
 	require([
 		"WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation", "WoltLabSuite/Core/Acp/Ui/Package/Search"],
 		(AcpUiPackageQuickInstallation, AcpUiPackageSearch) => {
+		{jsphrase name='wcf.acp.package.error.incompatibleStoreProduct'}
 		{jsphrase name='wcf.acp.package.error.uniqueAlreadyInstalled'}
 		{jsphrase name='wcf.acp.package.install.title'}
 		{jsphrase name='wcf.acp.package.quickInstallation.code.error.invalid'}
@@ -16,7 +17,7 @@
 		{jsphrase name='wcf.acp.package.update.title'}
 		{jsphrase name='wcf.acp.package.update.unauthorized'}
 		
-		AcpUiPackageQuickInstallation.setup();
+		AcpUiPackageQuickInstallation.setup('{$majorMinorVersion}');
 		new AcpUiPackageSearch();
 		
 		{if $errorField === 'uploadPackage'}
