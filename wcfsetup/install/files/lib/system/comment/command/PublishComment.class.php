@@ -5,8 +5,9 @@ namespace wcf\system\comment\command;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentEditor;
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\comment\CommentPublished;
+use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -25,11 +26,13 @@ use wcf\system\user\notification\UserNotificationHandler;
 final class PublishComment
 {
     private readonly ObjectType $objectType;
+    private readonly ICommentManager $commentManager;
 
     public function __construct(
         private readonly Comment $comment,
     ) {
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
+        $this->objectType = CommentHandler::getInstance()->getObjectType($this->comment->objectTypeID);
+        $this->commentManager = CommentHandler::getInstance()->getCommentManagerByID($this->comment->objectTypeID);
     }
 
     public function __invoke(): void
@@ -39,7 +42,7 @@ final class PublishComment
                 'isDisabled' => 0
             ]);
         }
-        $this->objectType->getProcessor()->updateCounter($this->comment->objectID, 1);
+        $this->commentManager->updateCounter($this->comment->objectID, 1);
 
         $this->fireActivityEvent();
         $this->fireNotificationEvent();

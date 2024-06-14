@@ -6,8 +6,8 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\Comment;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\http\Helper;
+use wcf\system\comment\CommentHandler;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
@@ -37,8 +37,8 @@ final class DeleteComment implements IController
 
     private function assertCommentIsDeletable(Comment $comment): void
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
-        if (!$objectType->getProcessor()->canDeleteComment($comment)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->canDeleteComment($comment)) {
             throw new PermissionDeniedException();
         }
     }

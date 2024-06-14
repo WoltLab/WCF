@@ -34,7 +34,8 @@ final class RenderComments implements IController
             throw new UserInputException('objectTypeID');
         }
 
-        if (!$objectType->getProcessor()->isAccessible($parameters->objectID)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($parameters->objectTypeID);
+        if (!$commentManager->isAccessible($parameters->objectID)) {
             throw new PermissionDeniedException();
         }
 
@@ -61,7 +62,7 @@ final class RenderComments implements IController
     private function getCommentList(int $objectTypeID, int $objectID, int $lastCommentTime): StructuredCommentList
     {
         $commentList = CommentHandler::getInstance()->getCommentList(
-            CommentHandler::getInstance()->getObjectType($objectTypeID)->getProcessor(),
+            CommentHandler::getInstance()->getCommentManagerByID($objectTypeID),
             $objectTypeID,
             $objectID,
             false

@@ -6,11 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\Comment;
-use wcf\data\object\type\ObjectType;
 use wcf\event\message\MessageSpamChecking;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\endpoint\controller\core\comments\TCommentMessageValidator;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -46,9 +44,9 @@ final class CreateResponse implements IController
 
         $parameters = Helper::mapApiParameters($request, CreateResponseParameters::class);
         $comment = Helper::fetchObjectFromRequestParameter($parameters->commentID, Comment::class);
-        $objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
 
-        $this->assertResponseIsPossible($objectType, $comment);
+        $this->assertResponseIsPossible($comment);
 
         $username = '';
         if (!WCF::getUser()->userID) {
@@ -58,7 +56,7 @@ final class CreateResponse implements IController
             }
         }
 
-        $isDisabled = !$objectType->getProcessor()->canAddWithoutApproval($comment->objectID);
+        $isDisabled = !$commentManager->canAddWithoutApproval($comment->objectID);
 
         $htmlInputProcessor = $this->validateMessage($parameters->message, true);
 
@@ -87,15 +85,14 @@ final class CreateResponse implements IController
         ]);
     }
 
-    private function assertResponseIsPossible(ObjectType $objectType, Comment $comment): void
+    private function assertResponseIsPossible(Comment $comment): void
     {
-        $processor = $objectType->getProcessor();
-        assert($processor instanceof ICommentManager);
-        if (!$processor->canAdd($comment->objectID)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->canAdd($comment->objectID)) {
             throw new PermissionDeniedException();
         }
 
-        if ($comment->isDisabled && !$processor->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($comment->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }

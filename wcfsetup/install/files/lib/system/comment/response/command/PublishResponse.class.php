@@ -9,6 +9,7 @@ use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\response\ResponsePublished;
 use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
@@ -27,6 +28,7 @@ use wcf\system\user\notification\UserNotificationHandler;
 final class PublishResponse
 {
     private readonly ObjectType $objectType;
+    private readonly ICommentManager $commentManager;
     private readonly Comment $comment;
 
     public function __construct(
@@ -34,6 +36,7 @@ final class PublishResponse
     ) {
         $this->comment = $response->getComment();
         $this->objectType = CommentHandler::getInstance()->getObjectType($this->comment->objectTypeID);
+        $this->commentManager = CommentHandler::getInstance()->getCommentManagerByID($this->comment->objectTypeID);
     }
 
     public function __invoke(): void
@@ -49,7 +52,7 @@ final class PublishResponse
         // do not prepend the response id as the approved response can appear anywhere
         $commentEditor->updateResponseIDs();
 
-        $this->objectType->getProcessor()->updateCounter($this->comment->objectID, 1);
+        $this->commentManager->updateCounter($this->comment->objectID, 1);
 
         $this->fireActivityEvent();
         $this->fireNotificationEvent();

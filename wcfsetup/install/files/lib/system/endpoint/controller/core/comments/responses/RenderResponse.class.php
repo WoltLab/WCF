@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
 use wcf\system\endpoint\GetRequest;
@@ -36,13 +35,13 @@ final class RenderResponse implements IController
             $request->getQueryParams(),
             <<<'EOT'
                 array {
-                    messageOnly: null|bool,
-                    objectTypeID: null|positive-int,
+                    messageOnly?: bool,
+                    objectTypeID?: positive-int,
                 }
                 EOT,
         );
 
-        $this->assertResponseIsAccessible($response, $parameters['objectTypeID']);
+        $this->assertResponseIsAccessible($response, $parameters['objectTypeID'] ?? null);
         $this->markNotificationsAsRead($response);
 
         return new JsonResponse([
@@ -53,21 +52,21 @@ final class RenderResponse implements IController
     private function assertResponseIsAccessible(CommentResponse $response, ?int $objectTypeID = null): void
     {
         $comment = $response->getComment();
-        $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+        $objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
         if ($objectTypeID !== null) {
             if ($objectType->objectTypeID !== $objectTypeID) {
                 throw new IllegalLinkException();
             }
         }
-        $commentProcessor = $objectType->getProcessor();
 
-        if (!$commentProcessor->isAccessible($comment->objectID)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->isAccessible($comment->objectID)) {
             throw new PermissionDeniedException();
         }
         if ($response->commentID != $comment->commentID) {
             throw new PermissionDeniedException();
         }
-        if ($response->isDisabled && !$commentProcessor->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($response->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }
@@ -94,19 +93,19 @@ final class RenderResponse implements IController
             return $response->getFormattedMessage();
         }
 
-        $commentProcessor = ObjectTypeCache::getInstance()->getObjectType($response->getComment()->objectTypeID)->getProcessor();
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($response->getComment()->objectTypeID);
 
         $structedResponse = new StructuredCommentResponse($response);
-        $structedResponse->setIsDeletable($commentProcessor->canDeleteResponse($response));
-        $structedResponse->setIsEditable($commentProcessor->canEditResponse($response));
+        $structedResponse->setIsDeletable($commentManager->canDeleteResponse($response));
+        $structedResponse->setIsEditable($commentManager->canEditResponse($response));
 
         return WCF::getTPL()->fetch('commentResponseList', 'wcf', [
             'responseList' => [$structedResponse],
-            'commentCanModerate' => $commentProcessor->canModerate(
+            'commentCanModerate' => $commentManager->canModerate(
                 $response->getComment()->objectTypeID,
                 $response->getComment()->objectID
             ),
-            'commentManager' => $commentProcessor,
+            'commentManager' => $commentManager,
         ]);
     }
 }

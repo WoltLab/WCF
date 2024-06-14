@@ -8,10 +8,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\Comment;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -32,20 +30,17 @@ final class EnableComment implements IController
 
         $this->assertCommentCanBeEnabled($comment);
 
-        (new \wcf\system\comment\command\PublishComment($comment))();
+        if (!$comment->isDisabled) {
+            (new \wcf\system\comment\command\PublishComment($comment))();
+        }
 
         return new JsonResponse([]);
     }
 
     private function assertCommentCanBeEnabled(Comment $comment): void
     {
-        if (!$comment->isDisabled) {
-            throw new IllegalLinkException();
-        }
-
-        $processor = CommentHandler::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
-        \assert($processor instanceof ICommentManager);
-        if (!$processor->canModerate($comment->objectTypeID, $comment->objectID)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }

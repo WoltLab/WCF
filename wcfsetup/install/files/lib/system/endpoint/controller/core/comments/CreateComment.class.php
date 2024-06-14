@@ -46,7 +46,8 @@ final class CreateComment implements IController
             throw new UserInputException('objectTypeID');
         }
 
-        if (!$objectType->getProcessor()->canAdd($parameters->objectID)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($parameters->objectTypeID);
+        if (!$commentManager->canAdd($parameters->objectID)) {
             throw new PermissionDeniedException();
         }
 
@@ -58,7 +59,7 @@ final class CreateComment implements IController
             }
         }
 
-        $isDisabled = !$objectType->getProcessor()->canAddWithoutApproval($parameters->objectID);
+        $isDisabled = !$commentManager->canAddWithoutApproval($parameters->objectID);
 
         $htmlInputProcessor = $this->validateMessage($parameters->message);
 

@@ -46,10 +46,18 @@ final class CreateResponse
                 'isDisabled' => $this->isDisabled ? 1 : 0,
             ]
         ]);
-        /** @var CommentResponse $response */
         $response = $action->executeAction()['returnValues'];
+        \assert($response instanceof CommentResponse);
 
         $this->updateResponseData($response);
+
+        $this->htmlInputProcessor->setObjectID($response->getObjectID());
+        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
+            (new CommentResponseEditor($response))->update([
+                'hasEmbeddedObjects' => 1,
+            ]);
+            $response = new CommentResponse($response->getObjectID());
+        }
 
         if (!$response->isDisabled) {
             (new PublishResponse($response))();
@@ -58,14 +66,6 @@ final class CreateResponse
                 'com.woltlab.wcf.comment.response',
                 $response->responseID
             );
-        }
-
-        $this->htmlInputProcessor->setObjectID($response->getObjectID());
-        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
-            (new CommentResponseEditor($response))->update([
-                'hasEmbeddedObjects' => 1,
-            ]);
-            $response = new CommentResponse($response->getObjectID());
         }
 
         $event = new ResponseCreated($response);

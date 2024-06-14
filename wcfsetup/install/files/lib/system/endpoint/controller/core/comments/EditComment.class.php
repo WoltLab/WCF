@@ -9,7 +9,6 @@ use wcf\data\comment\Comment;
 use wcf\http\Helper;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
@@ -53,9 +52,8 @@ final class EditComment implements IController
 
     private function assertCommentIsEditable(Comment $comment): void
     {
-        $processor = CommentHandler::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
-        \assert($processor instanceof ICommentManager);
-        if (!$processor->canEditComment($comment)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->canEditComment($comment)) {
             throw new PermissionDeniedException();
         }
     }

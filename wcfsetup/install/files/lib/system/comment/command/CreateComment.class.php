@@ -49,8 +49,16 @@ final class CreateComment
                 'isDisabled' => $this->isDisabled ? 1 : 0,
             ]
         ]);
-        /** @var Comment $comment */
         $comment = $action->executeAction()['returnValues'];
+        \assert($comment instanceof Comment);
+
+        $this->htmlInputProcessor->setObjectID($comment->getObjectID());
+        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
+            (new CommentEditor($comment))->update([
+                'hasEmbeddedObjects' => 1,
+            ]);
+            $comment = new Comment($comment->getObjectID());
+        }
 
         if (!$comment->isDisabled) {
             (new PublishComment($comment))();
@@ -59,14 +67,6 @@ final class CreateComment
                 'com.woltlab.wcf.comment.comment',
                 $comment->commentID
             );
-        }
-
-        $this->htmlInputProcessor->setObjectID($comment->getObjectID());
-        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
-            (new CommentEditor($comment))->update([
-                'hasEmbeddedObjects' => 1,
-            ]);
-            $comment = new Comment($comment->getObjectID());
         }
 
         $event = new CommentCreated($comment);

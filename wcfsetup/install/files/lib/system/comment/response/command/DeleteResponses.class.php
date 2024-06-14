@@ -7,8 +7,9 @@ use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\comment\response\ResponsesDeleted;
+use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -30,16 +31,19 @@ use wcf\system\user\notification\UserNotificationHandler;
 final class DeleteResponses
 {
     private readonly ObjectType $objectType;
+    private readonly ICommentManager $commentManager;
+
     private readonly array $responseIDs;
 
     public function __construct(
         private readonly array $responses,
         private readonly bool $updateCounters = true,
     ) {
-        $this->responseIDs = \array_map(fn (CommentResponse $response): int => $response->responseID, $this->responses);
+        $this->responseIDs = \array_column($this->responses, 'responseID');
         foreach ($this->responses as $response) {
             if (!isset($this->objectType)) {
-                $this->objectType = ObjectTypeCache::getInstance()->getObjectType($response->getComment()->objectTypeID);
+                $this->objectType = CommentHandler::getInstance()->getObjectType($response->getComment()->objectTypeID);
+                $this->commentManager = CommentHandler::getInstance()->getCommentManagerByID($response->getComment()->objectTypeID);
             }
         }
     }
@@ -133,7 +137,7 @@ final class DeleteResponses
 
         foreach ($this->responses as $response) {
             if (!$response->isDisabled) {
-                $this->objectType->getProcessor()->updateCounter($comments[$response->commentID]->objectID, -1);
+                $this->commentManager->updateCounter($comments[$response->commentID]->objectID, -1);
             }
         }
     }

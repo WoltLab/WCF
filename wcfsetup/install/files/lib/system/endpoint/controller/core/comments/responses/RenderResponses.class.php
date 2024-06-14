@@ -9,7 +9,6 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\response\StructuredCommentResponseList;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
@@ -31,8 +30,7 @@ final class RenderResponses implements IController
     {
         $parameters = Helper::mapApiParameters($request, RenderReponsesParameters::class);
         $comment = Helper::fetchObjectFromRequestParameter($parameters->commentID, Comment::class);
-        $commentManager = CommentHandler::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
-        assert($commentManager instanceof ICommentManager);
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
 
         if (!$commentManager->isAccessible($comment->objectID)) {
             throw new PermissionDeniedException();

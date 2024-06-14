@@ -61,9 +61,8 @@ final class UpdateComment implements IController
 
     private function assertCommentIsEditable(Comment $comment): void
     {
-        $processor = CommentHandler::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
-        \assert($processor instanceof ICommentManager);
-        if (!$processor->canEditComment($comment)) {
+        $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
+        if (!$commentManager->canEditComment($comment)) {
             throw new PermissionDeniedException();
         }
     }

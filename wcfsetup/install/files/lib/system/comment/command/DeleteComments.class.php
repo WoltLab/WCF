@@ -6,8 +6,9 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\CommentAction;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\comment\CommentsDeleted;
+use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\response\command\DeleteResponses;
 use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -30,18 +31,18 @@ use wcf\system\user\notification\UserNotificationHandler;
 final class DeleteComments
 {
     private readonly ObjectType $objectType;
+    private readonly ICommentManager $commentManager;
     private readonly array $commentIDs;
 
     public function __construct(
         private readonly array $comments,
         private readonly bool $updateCounters = true,
     ) {
-        $this->commentIDs = \array_map(fn (Comment $comment): int => $comment->commentID, $this->comments);
+        $this->commentIDs = \array_column($this->comments, 'commentID');
         foreach ($this->comments as $comment) {
             if (!isset($this->objectType)) {
-                $this->objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
-            } else if ($this->objectType->objectTypeID !== $comment->objectTypeID) {
-                throw new \InvalidArgumentException('Given comments do not belong to the same object type.');
+                $this->objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
+                $this->commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
             }
         }
     }
@@ -131,7 +132,7 @@ final class DeleteComments
 
         foreach ($this->comments as $comment) {
             if (!$comment->isDisabled) {
-                $this->objectType->getProcessor()->updateCounter($comment->objectID, -1);
+                $this->commentManager->updateCounter($comment->objectID, -1);
             }
         }
     }
