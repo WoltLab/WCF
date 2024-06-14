@@ -6,7 +6,6 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\response\CommentResponseEditor;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\IMessageInlineEditorAction;
 use wcf\data\object\type\ObjectType;
@@ -27,7 +26,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
-use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
@@ -67,6 +65,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * captcha object type used for comments
      * @var ObjectType
+     * @deprecated 6.1
      */
     public $captchaObjectType;
 
@@ -78,160 +77,56 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * comment object
      * @var Comment
+     * @deprecated 6.1
      */
     protected $comment;
 
     /**
      * comment processor
      * @var ICommentManager
+     * @deprecated 6.1
      */
     protected $commentProcessor;
 
     /**
      * @var HtmlInputProcessor
+     * @deprecated 6.1
      */
     protected $htmlInputProcessor;
 
     /**
      * response object
      * @var CommentResponse
+     * @deprecated 6.1
      */
     protected $response;
 
     /**
      * comment object created by addComment()
      * @var Comment
+     * @deprecated 6.1
      */
     public $createdComment;
 
     /**
      * response object created by addResponse()
      * @var CommentResponse
+     * @deprecated 6.1
      */
     public $createdResponse;
 
     /**
      * errors occurring through the validation of addComment or addResponse
      * @var array
+     * @deprecated 6.1
      */
     public $validationErrors = [];
-
-    /**
-     * @inheritDoc
-     */
-    public function validateDelete()
-    {
-        $this->readObjects();
-
-        if ($this->getObjects() === []) {
-            throw new UserInputException('objectIDs');
-        }
-
-        foreach ($this->getObjects() as $comment) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
-            $processor = $objectType->getProcessor();
-            if (!$processor->canDeleteComment($comment->getDecoratedObject())) {
-                throw new PermissionDeniedException();
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function delete()
-    {
-        if (empty($this->objects)) {
-            $this->readObjects();
-        }
-
-        // update counters
-        /** @var ICommentManager[] $processors */
-        $processors = [];
-        $groupCommentIDs = $commentIDs = [];
-        foreach ($this->getObjects() as $comment) {
-            if (!isset($processors[$comment->objectTypeID])) {
-                $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
-                $processors[$comment->objectTypeID] = $objectType->getProcessor();
-
-                $groupCommentIDs[$comment->objectTypeID] = [];
-            }
-
-            if (!$comment->isDisabled) {
-                $processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
-            }
-
-            $groupCommentIDs[$comment->objectTypeID][] = $comment->commentID;
-            $commentIDs[] = $comment->commentID;
-        }
-
-        if (!empty($groupCommentIDs)) {
-            $likeObjectIDs = [];
-            $notificationObjectTypes = [];
-            foreach ($groupCommentIDs as $objectTypeID => $objectIDs) {
-                // remove activity events
-                $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-                if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
-                    UserActivityEventHandler::getInstance()->removeEvents(
-                        $objectType->objectType . '.recentActivityEvent',
-                        $objectIDs
-                    );
-                }
-
-                $likeObjectIDs = \array_merge($likeObjectIDs, $objectIDs);
-
-                // delete notifications
-                $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-                if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
-                    UserNotificationHandler::getInstance()->removeNotifications(
-                        $objectType->objectType . '.notification',
-                        $objectIDs
-                    );
-                }
-
-                if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.like.notification')) {
-                    $notificationObjectTypes[] = $objectType->objectType . '.like.notification';
-                }
-            }
-
-            // remove likes
-            ReactionHandler::getInstance()->removeReactions(
-                'com.woltlab.wcf.comment',
-                $likeObjectIDs,
-                $notificationObjectTypes
-            );
-        }
-
-        if (!empty($commentIDs)) {
-            // delete responses
-            $commentResponseList = new CommentResponseList();
-            $commentResponseList->getConditionBuilder()->add('comment_response.commentID IN (?)', [$commentIDs]);
-            $commentResponseList->readObjectIDs();
-            if (\count($commentResponseList->getObjectIDs())) {
-                $action = new CommentResponseAction($commentResponseList->getObjectIDs(), 'delete', [
-                    'ignoreCounters' => true,
-                ]);
-                $action->executeAction();
-            }
-
-            ModerationQueueManager::getInstance()->removeQueues(
-                'com.woltlab.wcf.comment.comment',
-                $commentIDs
-            );
-
-            MessageEmbeddedObjectManager::getInstance()->removeObjects(
-                'com.woltlab.wcf.comment',
-                $commentIDs
-            );
-        }
-
-        return parent::delete();
-    }
 
     /**
      * Validates parameters to load comments.
      *
      * @throws  PermissionDeniedException
+     * @deprecated 6.1
      */
     public function validateLoadComments()
     {
@@ -249,6 +144,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns parsed comments.
      *
      * @return  array
+     * @deprecated 6.1
      */
     public function loadComments()
     {
@@ -283,6 +179,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @since   3.1
+     * @deprecated 6.1
      */
     public function validateLoadComment()
     {
@@ -321,6 +218,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @return  string[]
      * @since   3.1
+     * @deprecated 6.1
      */
     public function loadComment()
     {
@@ -347,6 +245,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the `loadResponse` action.
      *
      * @since   3.1
+     * @deprecated 6.1
      */
     public function validateLoadResponse()
     {
@@ -374,6 +273,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @return  string[]
      * @since   3.1
+     * @deprecated 6.1
      */
     public function loadResponse()
     {
@@ -386,6 +286,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates parameters to add a comment.
      *
      * @throws  PermissionDeniedException
+     * @deprecated 6.1
      */
     public function validateAddComment()
     {
@@ -422,6 +323,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Adds a comment.
      *
      * @return  string[]
+     * @deprecated 6.1
      */
     public function addComment()
     {
@@ -490,6 +392,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         ];
     }
 
+    /**
+     * @deprecated 6.1
+     */
     public function triggerPublication()
     {
         if (!empty($this->parameters['commentProcessor'])) {
@@ -555,6 +460,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates parameters to add a response.
      *
      * @throws  PermissionDeniedException
+     * @deprecated 6.1
      */
     public function validateAddResponse()
     {
@@ -593,6 +499,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Adds a response.
      *
      * @return  array
+     * @deprecated 6.1
      */
     public function addResponse()
     {
@@ -689,6 +596,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Publishes a response.
+     * @deprecated 6.1
      */
     public function triggerPublicationResponse()
     {
@@ -799,6 +707,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the `enable` action.
      *
      * @throws  PermissionDeniedException
+     * @deprecated 6.1
      */
     public function validateEnable()
     {
@@ -815,6 +724,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Enables a comment.
      *
      * @return  int[]
+     * @deprecated 6.1
      */
     public function enable()
     {
@@ -843,7 +753,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
-     * @deprecated 6.0 use `CommentResponseAction::validateEnable()` instead
+     * @deprecated 6.0
      */
     public function validateEnableResponse()
     {
@@ -866,7 +776,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Enables a response.
      *
      * @return  int[]
-     * @deprecated 6.0 use `CommentResponseAction::enable()` instead
+     * @deprecated 6.0
      */
     public function enableResponse()
     {
@@ -896,6 +806,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
+     * @deprecated 6.1
      */
     public function validateBeginEdit()
     {
@@ -912,6 +823,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
+     * @deprecated 6.1
      */
     public function beginEdit()
     {
@@ -931,6 +843,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
+     * @deprecated 6.1
      */
     public function validateSave()
     {
@@ -941,6 +854,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
+     * @deprecated 6.1
      */
     public function save()
     {
@@ -982,7 +896,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
-     * @deprecated 6.0 use `delete()` instead
+     * @deprecated 6.0
      */
     public function validateRemove()
     {
@@ -1017,7 +931,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Removes a comment or response.
      *
      * @return  int[]
-     * @deprecated 6.0 use `delete()` instead
+     * @deprecated 6.0
      */
     public function remove()
     {
@@ -1036,6 +950,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @since 6.0
+     * @deprecated 6.1
      */
     private function validateGetGuestDialog(): void
     {
@@ -1052,6 +967,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * them enter a username and solving a captcha.
      *
      * @throws  SystemException
+     * @deprecated 6.1
      */
     private function getGuestDialog(): ?string
     {
@@ -1098,6 +1014,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param Comment $comment
      * @param CommentResponse $response
      * @return  string|string[]
+     * @deprecated 6.1
      */
     protected function renderComment(Comment $comment, ?CommentResponse $response = null)
     {
@@ -1189,6 +1106,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @param CommentResponse $response
      * @return  string
+     * @deprecated 6.1
      */
     protected function renderResponse(CommentResponse $response)
     {
@@ -1220,6 +1138,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates message parameters.
      *
      * @throws      UserInputException
+     * @deprecated 6.1
      */
     protected function validateMessage(bool $isResponse = false)
     {
@@ -1284,6 +1203,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
+     * @deprecated 6.1
      */
     protected function validateObjectType($objectTypeID = null)
     {
@@ -1307,7 +1227,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates comment id parameter.
      *
      * @throws  UserInputException
-     * @deprecated 6.0 obsolete
+     * @deprecated 6.0
      */
     protected function validateCommentID()
     {
@@ -1323,7 +1243,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates response id parameter.
      *
      * @throws  UserInputException
-     * @deprecated 6.0 obsolete
+     * @deprecated 6.0
      */
     protected function validateResponseID()
     {
@@ -1337,6 +1257,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Validates the username parameter.
+     * @deprecated 6.1
      */
     protected function validateUsername()
     {
@@ -1362,6 +1283,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the captcha challenge.
      *
      * @throws  SystemException
+     * @deprecated 6.1
      */
     protected function validateCaptcha()
     {
@@ -1394,6 +1316,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Sets the list of disallowed bbcodes for comments.
+     * @deprecated 6.1
      */
     protected function setDisallowedBBCodes()
     {
@@ -1409,6 +1332,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param string|null $message source message
      * @param int $objectID object id
      * @return      HtmlInputProcessor
+     * @deprecated 6.1
      */
     public function getHtmlInputProcessor($message = null, $objectID = 0)
     {
@@ -1426,6 +1350,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment object.
      *
      * @return  Comment
+     * @deprecated 6.1
      */
     public function getComment()
     {
@@ -1436,6 +1361,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment response object.
      *
      * @return  CommentResponse
+     * @deprecated 6.1
      */
     public function getResponse()
     {
@@ -1446,6 +1372,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment manager.
      *
      * @return  ICommentManager
+     * @deprecated 6.1
      */
     public function getCommentManager()
     {
