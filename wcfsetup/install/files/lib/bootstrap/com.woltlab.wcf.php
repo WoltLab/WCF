@@ -120,6 +120,20 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
             $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
             $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\CreateComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\DeleteComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\EditComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\EnableComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComments);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\UpdateComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\CreateResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\DeleteResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EditResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EnableResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
         }
