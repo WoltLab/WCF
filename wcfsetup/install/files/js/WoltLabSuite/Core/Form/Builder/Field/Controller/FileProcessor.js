@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile"], function (require, exports, Language_1, DeleteFile_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.FileProcessor = void 0;
@@ -24,18 +24,53 @@ define(["require", "exports"], function (require, exports) {
             });
         }
         async #registerFile(element) {
-            this.#uploadButton.insertAdjacentElement("beforebegin", element);
+            const singleFileUpload = this.#uploadButton.maximumCount === 1;
+            let elementContainer;
+            if (singleFileUpload) {
+                elementContainer = this.#container.querySelector(".fileUpload__preview");
+            }
+            else {
+                elementContainer = document.createElement("li");
+                elementContainer.classList.add("fileUpload__fileList__item");
+                this.#container.querySelector(".fileUpload__fileList").append(elementContainer);
+            }
+            elementContainer.append(element);
             await element.ready;
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = this.#fieldId + (this.#uploadButton.maximumCount === 1 ? "" : "[]");
-            input.value = element.fileId.toString();
-            element.insertAdjacentElement("afterend", input);
-            if (this.#uploadButton.maximumCount === 1) {
-                // single file upload
+            if (singleFileUpload) {
                 element.dataset.previewUrl = element.link;
                 element.unbounded = true;
             }
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
+            input.value = element.fileId.toString();
+            elementContainer.append(input);
+            this.#addButtons(element, singleFileUpload);
+        }
+        #addButtons(element, singleFileUpload) {
+            const buttons = document.createElement("ul");
+            buttons.classList.add("buttonList");
+            if (singleFileUpload) {
+                buttons.classList.add("fileUpload__preview__buttons");
+            }
+            else {
+                buttons.classList.add("fileUpload__fileList__buttons");
+            }
+            this.#addDeleteButton(element, buttons);
+            element.parentElement.append(buttons);
+        }
+        #addDeleteButton(element, buttons) {
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.classList.add("button", "small");
+            deleteButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
+            deleteButton.addEventListener("click", async () => {
+                await (0, DeleteFile_1.deleteFile)(element.fileId);
+                //TODO remove element from DOM
+            });
+            const listItem = document.createElement("li");
+            listItem.append(deleteButton);
+            buttons.append(listItem);
         }
     }
     exports.FileProcessor = FileProcessor;
