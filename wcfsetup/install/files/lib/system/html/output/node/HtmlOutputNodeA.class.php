@@ -160,8 +160,36 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
      */
     private function isSuspiciousValue(string $value, UriInterface $href): bool
     {
-        if (!\preg_match(FileUtil::LINK_REGEX, $value)) {
+        $regexMatches = \preg_match(FileUtil::LINK_REGEX, $value, $matches);
+        if (!$regexMatches) {
             return false;
+        }
+
+        // The match can occur somewhere inside the value, therefore we need to
+        // verify that the value contains substantially more than just the link.
+        $testValue = StringUtil::trim($value);
+        $position = \mb_strpos($testValue, $matches[0]);
+        if ($position !== false) {
+            $testValue = \mb_substr($testValue, 0, $position) . \mb_substr($testValue, $position + \mb_strlen($matches[0]));
+            if ($testValue !== '') {
+                // Allow the value if the remaining string contains characters
+                // equal or greather than 10% of the length of the URL itself.
+                //
+                // The motivation behind this is to prevent a bad actor from
+                // sneaking in a few padding characters to masquerade the URL
+                // which could still look like part of the URL to the untrained
+                // eye.
+                //
+                // The minimum required characters is set to 10 to avoid short
+                // URLs being used to bypass this check.
+                $threshold = \max(
+                    \mb_strlen($matches[0]) * 0.1,
+                    10,
+                );
+                if (\mb_strlen($testValue) >= $threshold) {
+                    return false;
+                }
+            }
         }
 
         try {

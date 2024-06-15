@@ -63,12 +63,9 @@
 			}
 		}
 
-		.icon {
+		.toggleButton,
+		button {
 			flex: 0 0 auto;
-
-			&:not(:last-child) {
-				margin-right: 10px;
-			}
 		}
 	}
 
