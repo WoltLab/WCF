@@ -23,7 +23,6 @@ use wcf\util\StringUtil;
  * @property-read int $fileSize
  * @property-read string $fileHash
  * @property-read string $fileExtension
- * @property-read string $secret
  * @property-read int|null $objectTypeID
  * @property-read string $mimeType
  * @property-read int|null $width
@@ -65,10 +64,9 @@ class File extends DatabaseObject
     public function getSourceFilename(): string
     {
         return \sprintf(
-            '%d-%s-%s.%s',
+            '%d-%s.%s',
             $this->fileID,
             $this->fileHash,
-            $this->secret,
             $this->fileExtension,
         );
     }

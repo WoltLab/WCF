@@ -297,7 +297,6 @@ final class FileProcessor extends SingletonFactory
             'fileSize' => $oldFile->fileSize,
             'fileHash' => $oldFile->fileHash,
             'fileExtension' => $oldFile->fileExtension,
-            'secret' => \hex2bin(\random_bytes(10)),
             'objectTypeID' => $objectTypeObj->objectTypeID,
             'mimeType' => $oldFile->mimeType,
             'width' => $oldFile->width,
