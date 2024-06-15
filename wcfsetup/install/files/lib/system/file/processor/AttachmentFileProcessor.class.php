@@ -57,6 +57,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             'tmpHash' => $attachmentHandler->getTmpHashes()[0] ?? '',
             'fileID' => $file->fileID,
             'userID' => WCF::getUser()->userID ?: null,
+            'uploadTime' => \TIME_NOW,
         ]);
     }
 
