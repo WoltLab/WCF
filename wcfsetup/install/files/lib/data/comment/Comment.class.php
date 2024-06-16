@@ -17,20 +17,20 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $commentID      unique id of the comment
- * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.comment.commentableContent` object type
- * @property-read   int $objectID       id of the commented object of the object type represented by `$objectTypeID`
- * @property-read   int $time           timestamp at which the comment has been written
- * @property-read   int|null $userID         id of the user who wrote the comment or `null` if the user does not exist anymore or if the comment has been written by a guest
- * @property-read   string $username       name of the user or guest who wrote the comment
- * @property-read   string $message        comment message
- * @property-read   int $responses      number of responses on the comment
- * @property-read   string $responseIDs        serialized array with the ids of the five latest comment responses
- * @property-read   int $unfilteredResponses    number of all responses on the comment, including disabled ones
- * @property-read   string $unfilteredResponseIDs  serialized array with the ids of the five latest comment responses, including disabled ones
- * @property-read       int $enableHtml             is 1 if HTML will rendered in the comment, otherwise 0
- * @property-read   int $isDisabled     is 1 if the comment is disabled, otherwise 0
- * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the comment, otherwise `0`
+ * @property-read   int $commentID                  unique id of the comment
+ * @property-read   int $objectTypeID               id of the `com.woltlab.wcf.comment.commentableContent` object type
+ * @property-read   int $objectID                   id of the commented object of the object type represented by `$objectTypeID`
+ * @property-read   int $time                       timestamp at which the comment has been written
+ * @property-read   int|null $userID                id of the user who wrote the comment or `null` if the user does not exist anymore or if the comment has been written by a guest
+ * @property-read   string $username                name of the user or guest who wrote the comment
+ * @property-read   string $message                 comment message
+ * @property-read   int $responses                  number of responses on the comment
+ * @property-read   string $responseIDs             serialized array with the ids of the five latest comment responses
+ * @property-read   int $unfilteredResponses        number of all responses on the comment, including disabled ones
+ * @property-read   string $unfilteredResponseIDs   serialized array with the ids of the five latest comment responses, including disabled ones
+ * @property-read   int $enableHtml                 is 1 if HTML will rendered in the comment, otherwise 0
+ * @property-read   int $isDisabled                 is 1 if the comment is disabled, otherwise 0
+ * @property-read   int $hasEmbeddedObjects         is `1` if there are embedded objects in the comment, otherwise `0`
  */
 class Comment extends DatabaseObject implements IMessage
 {
