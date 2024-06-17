@@ -126,7 +126,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates parameters to load comments.
      *
      * @throws  PermissionDeniedException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateLoadComments()
     {
@@ -144,7 +144,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns parsed comments.
      *
      * @return  array
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function loadComments()
     {
@@ -179,7 +179,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @since   3.1
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateLoadComment()
     {
@@ -218,7 +218,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @return  string[]
      * @since   3.1
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function loadComment()
     {
@@ -245,7 +245,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the `loadResponse` action.
      *
      * @since   3.1
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateLoadResponse()
     {
@@ -273,7 +273,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @return  string[]
      * @since   3.1
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function loadResponse()
     {
@@ -286,7 +286,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates parameters to add a comment.
      *
      * @throws  PermissionDeniedException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateAddComment()
     {
@@ -323,7 +323,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Adds a comment.
      *
      * @return  string[]
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function addComment()
     {
@@ -393,7 +393,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function triggerPublication()
     {
@@ -460,7 +460,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates parameters to add a response.
      *
      * @throws  PermissionDeniedException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateAddResponse()
     {
@@ -499,7 +499,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Adds a response.
      *
      * @return  array
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function addResponse()
     {
@@ -596,7 +596,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Publishes a response.
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function triggerPublicationResponse()
     {
@@ -707,7 +707,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the `enable` action.
      *
      * @throws  PermissionDeniedException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateEnable()
     {
@@ -724,7 +724,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Enables a comment.
      *
      * @return  int[]
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function enable()
     {
@@ -753,7 +753,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateEnableResponse()
     {
@@ -776,7 +776,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Enables a response.
      *
      * @return  int[]
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function enableResponse()
     {
@@ -806,7 +806,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateBeginEdit()
     {
@@ -823,7 +823,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function beginEdit()
     {
@@ -843,7 +843,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateSave()
     {
@@ -854,7 +854,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @inheritDoc
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function save()
     {
@@ -896,7 +896,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateRemove()
     {
@@ -931,7 +931,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Removes a comment or response.
      *
      * @return  int[]
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function remove()
     {
@@ -950,7 +950,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * @since 6.0
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     private function validateGetGuestDialog(): void
     {
@@ -967,7 +967,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * them enter a username and solving a captcha.
      *
      * @throws  SystemException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     private function getGuestDialog(): ?string
     {
@@ -1014,7 +1014,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param Comment $comment
      * @param CommentResponse $response
      * @return  string|string[]
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function renderComment(Comment $comment, ?CommentResponse $response = null)
     {
@@ -1106,7 +1106,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @param CommentResponse $response
      * @return  string
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function renderResponse(CommentResponse $response)
     {
@@ -1138,7 +1138,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates message parameters.
      *
      * @throws      UserInputException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateMessage(bool $isResponse = false)
     {
@@ -1203,7 +1203,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateObjectType($objectTypeID = null)
     {
@@ -1227,7 +1227,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates comment id parameter.
      *
      * @throws  UserInputException
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateCommentID()
     {
@@ -1243,7 +1243,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates response id parameter.
      *
      * @throws  UserInputException
-     * @deprecated 6.0
+     * @deprecated 6.0 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateResponseID()
     {
@@ -1257,7 +1257,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Validates the username parameter.
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateUsername()
     {
@@ -1283,7 +1283,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates the captcha challenge.
      *
      * @throws  SystemException
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateCaptcha()
     {
@@ -1316,7 +1316,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * Sets the list of disallowed bbcodes for comments.
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function setDisallowedBBCodes()
     {
@@ -1332,7 +1332,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * @param string|null $message source message
      * @param int $objectID object id
      * @return      HtmlInputProcessor
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function getHtmlInputProcessor($message = null, $objectID = 0)
     {
@@ -1350,7 +1350,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment object.
      *
      * @return  Comment
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function getComment()
     {
@@ -1361,7 +1361,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment response object.
      *
      * @return  CommentResponse
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function getResponse()
     {
@@ -1372,7 +1372,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Returns the comment manager.
      *
      * @return  ICommentManager
-     * @deprecated 6.1
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function getCommentManager()
     {
