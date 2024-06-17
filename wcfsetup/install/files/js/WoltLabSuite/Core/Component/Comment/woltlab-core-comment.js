@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui/Dropdown/Simple", "../../Ui/Notification", "../Confirmation", "../../Ui/Scroll", "../../Event/Handler", "../../Language", "../Ckeditor"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, UiScroll, EventHandler, Language_1, Ckeditor_1) {
+define(["require", "exports", "tslib", "../../Dom/Util", "../../Ui/Dropdown/Simple", "../../Ui/Notification", "../Confirmation", "../../Ui/Scroll", "../../Event/Handler", "../../Language", "../Ckeditor", "WoltLabSuite/Core/Api/Comments/DeleteComment", "WoltLabSuite/Core/Api/Comments/EnableComment", "WoltLabSuite/Core/Api/Comments/EditComment", "WoltLabSuite/Core/Api/Comments/UpdateComment", "WoltLabSuite/Core/Api/Comments/RenderComment"], function (require, exports, tslib_1, Util_1, Simple_1, UiNotification, Confirmation_1, UiScroll, EventHandler, Language_1, Ckeditor_1, DeleteComment_1, EnableComment_1, EditComment_1, UpdateComment_1, RenderComment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreCommentElement = void 0;
@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             });
         }
         async #enable() {
-            await (0, Ajax_1.dboAction)("enable", "wcf\\data\\comment\\CommentAction").objectIds([this.commentId]).dispatch();
+            (await (0, EnableComment_1.enableComment)(this.commentId)).unwrap();
             this.querySelector(".comment__status--disabled").hidden = true;
             if (this.menu) {
                 this.menu.querySelector(".comment__option--enable").hidden = true;
@@ -49,16 +49,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
         async #delete() {
             const result = await (0, Confirmation_1.confirmationFactory)().delete();
             if (result) {
-                await (0, Ajax_1.dboAction)("delete", "wcf\\data\\comment\\CommentAction").objectIds([this.commentId]).dispatch();
+                (await (0, DeleteComment_1.deleteComment)(this.commentId)).unwrap();
                 UiNotification.show();
                 this.dispatchEvent(new CustomEvent("delete"));
             }
         }
         async #startEdit() {
             this.menu.querySelector(".comment__option--edit").hidden = true;
-            const { template } = (await (0, Ajax_1.dboAction)("beginEdit", "wcf\\data\\comment\\CommentAction")
-                .objectIds([this.commentId])
-                .dispatch());
+            const { template } = (await (0, EditComment_1.editComment)(this.commentId)).unwrap();
             this.#showEditor(template);
         }
         #showEditor(template) {
@@ -92,22 +90,18 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             }
             EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
             this.#showLoadingIndicator();
-            let response;
-            try {
-                response = (await (0, Ajax_1.dboAction)("save", "wcf\\data\\comment\\CommentAction")
-                    .objectIds([this.commentId])
-                    .payload(parameters)
-                    .dispatch());
-            }
-            catch (error) {
-                await (0, Ajax_1.handleValidationErrors)(error, ({ errorType }) => {
-                    Util_1.default.innerError(document.getElementById(this.#editorId), errorType);
-                    return true;
-                });
+            const response = await (0, UpdateComment_1.updateComment)(this.commentId, ckeditor.getHtml());
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
+                }
+                Util_1.default.innerError(document.getElementById(this.#editorId), validationError.code);
                 this.#hideLoadingIndicator();
                 return;
             }
-            Util_1.default.setInnerHtml(this.querySelector(".htmlContent"), response.message);
+            const { template } = (await (0, RenderComment_1.renderComment)(this.commentId, undefined, true)).unwrap();
+            Util_1.default.setInnerHtml(this.querySelector(".htmlContent"), template);
             this.#hideLoadingIndicator();
             this.#cancelEdit();
             UiNotification.show();

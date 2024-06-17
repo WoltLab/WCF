@@ -6,15 +6,15 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog", "../../Ckeditor", "../../Ckeditor/Event"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1, Ckeditor_1, Event_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ui/Notification", "../../Ckeditor", "../../Ckeditor/Event", "WoltLabSuite/Core/User", "../../GuestTokenDialog", "WoltLabSuite/Core/Api/Comments/Responses/CreateResponse"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, UiNotification, Ckeditor_1, Event_1, User_1, GuestTokenDialog_1, CreateResponse_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentResponseAdd = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiScroll = tslib_1.__importStar(UiScroll);
-    Core = tslib_1.__importStar(Core);
     UiNotification = tslib_1.__importStar(UiNotification);
+    User_1 = tslib_1.__importDefault(User_1);
     class CommentResponseAdd {
         container;
         #content;
@@ -73,45 +73,30 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         /**
          * Validates the message and submits it to the server.
          */
-        async #submit(additionalParameters = {}) {
+        async #submit() {
             if (!this.#validate()) {
                 return;
             }
             this.#showLoadingOverlay();
-            const parameters = this.#getParameters();
-            EventHandler.fire("com.woltlab.wcf.ckeditor", "submit_text", parameters.data);
-            let response;
-            try {
-                response = (await (0, Ajax_1.dboAction)("addResponse", "wcf\\data\\comment\\CommentAction")
-                    .objectIds([this.#commentId])
-                    .payload(Core.extend(parameters, additionalParameters))
-                    .disableLoadingIndicator()
-                    .dispatch());
+            let token = "";
+            if (!User_1.default.userId) {
+                token = await (0, GuestTokenDialog_1.getGuestToken)();
+                if (token === undefined) {
+                    this.#hideLoadingOverlay();
+                    return;
+                }
             }
-            catch (error) {
-                if (error instanceof Error_1.StatusNotOk) {
-                    const json = await error.response.clone().json();
-                    if (json.code === 412 && json.returnValues) {
-                        this.#throwError(this.#getEditor().element, json.returnValues.errorType);
-                    }
+            const response = await (0, CreateResponse_1.createResponse)(this.#commentId, this.#getEditor().getHtml(), token);
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
                 }
-                else {
-                    throw error;
-                }
+                this.#throwError(this.#getEditor().element, validationError.code);
                 this.#hideLoadingOverlay();
                 return;
             }
-            if (response.guestDialog) {
-                const additionalParameters = await (0, GuestDialog_1.showGuestDialog)(response.guestDialog);
-                if (additionalParameters === undefined) {
-                    this.#hideLoadingOverlay();
-                }
-                else {
-                    void this.#submit(additionalParameters);
-                }
-                return;
-            }
-            this.#callback(this.#commentId, response.template);
+            this.#callback(this.#commentId, response.value.responseID);
             UiNotification.show((0, Language_1.getPhrase)("wcf.global.success.add"));
             this.#reset();
             this.#hideLoadingOverlay();
@@ -169,16 +154,6 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
                     this.#getEditor().focus();
                 });
             }, 0);
-        }
-        /**
-         * Returns the request parameters to add a response.
-         */
-        #getParameters() {
-            return {
-                data: {
-                    message: this.#getContent(),
-                },
-            };
         }
         /**
          * Displays a loading spinner while the request is processed by the server.
