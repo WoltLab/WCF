@@ -173,6 +173,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     private function canEditUser(UserProfile $userProfile): bool
     {
         return WCF::getSession()->getPermission('admin.user.canEditUser')
-            && UserGroup::isAccessibleGroup($userProfile->getGroupIDs());
+            && UserGroup::isAccessibleGroup($userProfile->getGroupIDs())
+            && WCF::getSession()->getPermission('user.signature.attachment.canUpload');
     }
 }
