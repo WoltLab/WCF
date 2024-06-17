@@ -3,6 +3,8 @@
 namespace wcf\data\attachment;
 
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\file\File;
+use wcf\data\file\FileEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -65,6 +67,8 @@ class AttachmentEditor extends DatabaseObjectEditor
     public function deleteFiles()
     {
         if ($this->fileID !== null) {
+            $fileEditor = new FileEditor(new File($this->fileID));
+            $fileEditor->delete();
             return;
         }
 
