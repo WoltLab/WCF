@@ -57,6 +57,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 buttons.classList.add("fileUpload__fileList__buttons");
             }
             this.#addDeleteButton(element, buttons);
+            this.#addReplaceButton(element, buttons);
             element.parentElement.append(buttons);
         }
         #addDeleteButton(element, buttons) {
@@ -70,6 +71,26 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             });
             const listItem = document.createElement("li");
             listItem.append(deleteButton);
+            buttons.append(listItem);
+        }
+        #addReplaceButton(element, buttons) {
+            const replaceButton = document.createElement("button");
+            replaceButton.type = "button";
+            replaceButton.classList.add("button", "small");
+            replaceButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.replace");
+            replaceButton.addEventListener("click", () => {
+                // TODO show dialog if the user really wants to replace the file the old will be deleted
+                // remove the element and all buttons from the dom, but keep them stored in a variable.
+                // if the user cancels the dialog or the upload fails, reinsert the old elements or show an error message.
+                // if the upload is successful, delete the old file.
+                element.remove();
+                // TODO add to context an extra attribute that the replace button ist clicked
+                //  after the upload is finished or failed set the context to the old value
+                //  this is required for the server side validation
+                this.#uploadButton.shadowRoot.querySelector('input[type="file"]').click();
+            });
+            const listItem = document.createElement("li");
+            listItem.append(replaceButton);
             buttons.append(listItem);
         }
     }
