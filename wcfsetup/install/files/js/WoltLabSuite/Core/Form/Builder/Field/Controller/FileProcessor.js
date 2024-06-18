@@ -34,6 +34,11 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             let elementContainer;
             if (this.isSingleFileUpload) {
                 elementContainer = this.#container.querySelector(".fileUpload__preview");
+                if (elementContainer === null) {
+                    elementContainer = document.createElement("div");
+                    elementContainer.classList.add("fileUpload__preview");
+                    this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+                }
             }
             else {
                 elementContainer = document.createElement("li");
@@ -48,14 +53,14 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                     this.#replaceElement = undefined;
                 }
             }
-            catch (e) {
+            catch (reason) {
                 // reinsert the element and show an error message
                 if (this.#replaceElement !== undefined) {
-                    // TODO show an error message
                     await this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
-                    return;
                 }
+                this.#markElementUploadHasFailed(elementContainer, element, reason);
+                return;
             }
             if (this.isSingleFileUpload) {
                 element.dataset.previewUrl = element.link;
@@ -67,6 +72,34 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             input.value = element.fileId.toString();
             elementContainer.append(input);
             this.#addButtons(element);
+        }
+        #markElementUploadHasFailed(container, element, reason) {
+            if (reason instanceof Error) {
+                throw reason;
+            }
+            if (element.apiError === undefined) {
+                return;
+            }
+            let errorMessage;
+            const validationError = element.apiError.getValidationError();
+            if (validationError !== undefined) {
+                switch (validationError.param) {
+                    case "preflight":
+                        errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
+                        break;
+                    default:
+                        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
+                        break;
+                }
+            }
+            else {
+                errorMessage = `Unexpected server error: [${element.apiError.type}] ${element.apiError.message}`;
+            }
+            container.classList.add("innerError");
+            const errorElement = document.createElement("div");
+            errorElement.classList.add("fileUpload__fileList__item__errorMessage");
+            errorElement.textContent = errorMessage;
+            element.append(errorElement);
         }
         #addButtons(element) {
             const buttons = document.createElement("ul");

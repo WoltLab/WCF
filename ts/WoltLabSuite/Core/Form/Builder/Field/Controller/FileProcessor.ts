@@ -37,10 +37,15 @@ export class FileProcessor {
   }
 
   async #registerFile(element: WoltlabCoreFileElement): Promise<void> {
-    let elementContainer: HTMLElement;
+    let elementContainer: HTMLElement | null;
 
     if (this.isSingleFileUpload) {
-      elementContainer = this.#container.querySelector(".fileUpload__preview")!;
+      elementContainer = this.#container.querySelector(".fileUpload__preview");
+      if (elementContainer === null) {
+        elementContainer = document.createElement("div");
+        elementContainer.classList.add("fileUpload__preview");
+        this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+      }
     } else {
       elementContainer = document.createElement("li");
       elementContainer.classList.add("fileUpload__fileList__item");
@@ -56,14 +61,14 @@ export class FileProcessor {
         await deleteFile(this.#replaceElement.fileId!);
         this.#replaceElement = undefined;
       }
-    } catch (e) {
+    } catch (reason) {
       // reinsert the element and show an error message
       if (this.#replaceElement !== undefined) {
-        // TODO show an error message
         await this.#registerFile(this.#replaceElement);
         this.#replaceElement = undefined;
-        return;
       }
+      this.#markElementUploadHasFailed(elementContainer, element, reason);
+      return;
     }
 
     if (this.isSingleFileUpload) {
@@ -78,6 +83,39 @@ export class FileProcessor {
     elementContainer.append(input);
 
     this.#addButtons(element);
+  }
+
+  #markElementUploadHasFailed(container: HTMLElement, element: WoltlabCoreFileElement, reason: unknown): void {
+    if (reason instanceof Error) {
+      throw reason;
+    }
+    if (element.apiError === undefined) {
+      return;
+    }
+    let errorMessage: string;
+
+    const validationError = element.apiError.getValidationError();
+    if (validationError !== undefined) {
+      switch (validationError.param) {
+        case "preflight":
+          errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
+          break;
+
+        default:
+          errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
+          break;
+      }
+    } else {
+      errorMessage = `Unexpected server error: [${element.apiError.type}] ${element.apiError.message}`;
+    }
+
+    container.classList.add("innerError");
+
+    const errorElement = document.createElement("div");
+    errorElement.classList.add("fileUpload__fileList__item__errorMessage");
+    errorElement.textContent = errorMessage;
+
+    element.append(errorElement);
   }
 
   #addButtons(element: WoltlabCoreFileElement): void {
