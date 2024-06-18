@@ -12,6 +12,8 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
         #container;
         #uploadButton;
         #fieldId;
+        #replaceElement = undefined;
+        #fileInput;
         constructor(fieldId) {
             this.#fieldId = fieldId;
             this.#container = document.getElementById(fieldId + "Container");
@@ -22,11 +24,15 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             this.#uploadButton.addEventListener("uploadStart", (event) => {
                 void this.#registerFile(event.detail);
             });
+            this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
+        }
+        get isSingleFileUpload() {
+            // TODO check if only images are allowed
+            return this.#uploadButton.maximumCount === 1;
         }
         async #registerFile(element) {
-            const singleFileUpload = this.#uploadButton.maximumCount === 1;
             let elementContainer;
-            if (singleFileUpload) {
+            if (this.isSingleFileUpload) {
                 elementContainer = this.#container.querySelector(".fileUpload__preview");
             }
             else {
@@ -35,22 +41,37 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 this.#container.querySelector(".fileUpload__fileList").append(elementContainer);
             }
             elementContainer.append(element);
-            await element.ready;
-            if (singleFileUpload) {
+            try {
+                await element.ready;
+                if (this.#replaceElement !== undefined) {
+                    await (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId);
+                    this.#replaceElement = undefined;
+                }
+            }
+            catch (e) {
+                // reinsert the element and show an error message
+                if (this.#replaceElement !== undefined) {
+                    // TODO show an error message
+                    await this.#registerFile(this.#replaceElement);
+                    this.#replaceElement = undefined;
+                    return;
+                }
+            }
+            if (this.isSingleFileUpload) {
                 element.dataset.previewUrl = element.link;
                 element.unbounded = true;
             }
             const input = document.createElement("input");
             input.type = "hidden";
-            input.name = singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
+            input.name = this.isSingleFileUpload ? this.#fieldId : this.#fieldId + "[]";
             input.value = element.fileId.toString();
             elementContainer.append(input);
-            this.#addButtons(element, singleFileUpload);
+            this.#addButtons(element);
         }
-        #addButtons(element, singleFileUpload) {
+        #addButtons(element) {
             const buttons = document.createElement("ul");
             buttons.classList.add("buttonList");
-            if (singleFileUpload) {
+            if (this.isSingleFileUpload) {
                 buttons.classList.add("fileUpload__preview__buttons");
             }
             else {
@@ -67,11 +88,19 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             deleteButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
             deleteButton.addEventListener("click", async () => {
                 await (0, DeleteFile_1.deleteFile)(element.fileId);
-                //TODO remove element from DOM
+                this.#unregisterFile(element);
             });
             const listItem = document.createElement("li");
             listItem.append(deleteButton);
             buttons.append(listItem);
+        }
+        #unregisterFile(element) {
+            if (this.isSingleFileUpload) {
+                element.parentElement.innerHTML = "";
+            }
+            else {
+                element.parentElement.remove();
+            }
         }
         #addReplaceButton(element, buttons) {
             const replaceButton = document.createElement("button");
@@ -79,15 +108,29 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             replaceButton.classList.add("button", "small");
             replaceButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.replace");
             replaceButton.addEventListener("click", () => {
-                // TODO show dialog if the user really wants to replace the file the old will be deleted
+                // TODO show dialog if the user really wants to replace the file.
+                //  the old will be deleted
+                this.#replaceElement = element;
+                // add to context an extra attribute that the replace button is clicked.
+                // after the dialog is closed or the file is selected, the context will be reset to his old value.
+                // this is necessary as the serverside validation will otherwise fail.
+                const oldContext = this.#uploadButton.dataset.context;
+                const context = JSON.parse(oldContext);
+                context.__replace = true;
+                this.#uploadButton.dataset.context = JSON.stringify(context);
                 // remove the element and all buttons from the dom, but keep them stored in a variable.
-                // if the user cancels the dialog or the upload fails, reinsert the old elements or show an error message.
+                // if the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
                 // if the upload is successful, delete the old file.
-                element.remove();
-                // TODO add to context an extra attribute that the replace button ist clicked
-                //  after the upload is finished or failed set the context to the old value
-                //  this is required for the server side validation
-                this.#uploadButton.shadowRoot.querySelector('input[type="file"]').click();
+                this.#unregisterFile(element);
+                this.#fileInput.addEventListener("cancel", () => {
+                    this.#uploadButton.dataset.context = oldContext;
+                    void this.#registerFile(this.#replaceElement);
+                    this.#replaceElement = undefined;
+                }, { once: true });
+                this.#fileInput.addEventListener("change", () => {
+                    this.#uploadButton.dataset.context = oldContext;
+                }, { once: true });
+                this.#fileInput.click();
             });
             const listItem = document.createElement("li");
             listItem.append(replaceButton);
