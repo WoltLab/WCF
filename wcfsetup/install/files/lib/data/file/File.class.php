@@ -49,7 +49,6 @@ class File extends DatabaseObject
         'pdf' => 'application/pdf',
         'png' => 'image/png',
         'rar' => 'application/vnd.rar',
-        'svg' => 'image/svg+xml',
         'tar' => 'application/x-tar',
         'tiff' => 'image/tiff',
         'txt' => 'text/plain',
