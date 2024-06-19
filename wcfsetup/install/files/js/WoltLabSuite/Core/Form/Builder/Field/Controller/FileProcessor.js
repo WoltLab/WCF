@@ -71,7 +71,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             }
             container.classList.add("innerError");
             const errorElement = document.createElement("div");
-            errorElement.classList.add("fileUpload__fileList__item__errorMessage");
+            errorElement.classList.add(this.classPrefix + "item__errorMessage");
             errorElement.textContent = errorMessage;
             element.append(errorElement);
         }

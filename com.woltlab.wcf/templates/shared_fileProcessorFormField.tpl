@@ -19,6 +19,8 @@
 {unsafe:$fileProcessorHtmlElement}
 
 <script data-relocate="true">
+	{jsphrase name='wcf.global.button.replace'}
+
 	require(["WoltLabSuite/Core/Form/Builder/Field/Controller/FileProcessor"], ({ FileProcessor }) => {
 		new FileProcessor(
 			'{@$field->getPrefixedId()|encodeJS}',
