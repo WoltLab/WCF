@@ -1,5 +1,5 @@
 {assign var="files" value=$field->getFiles()}
-{if $field->isSingleFileUpload() === 1 && $imageOnly}
+{if $field->isSingleFileUpload() && $imageOnly}
 	<div class="fileUpload__preview">
 		{if $field->getValue()}
 			{assign var="file" value=$files|reset}
