@@ -7,6 +7,7 @@ use wcf\data\file\FileList;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\util\ArrayUtil;
 use wcf\util\ImageUtil;
@@ -115,6 +116,8 @@ final class FileProcessorFormField extends AbstractFormField
             if ($file->fileID === $value) {
                 $this->files = [$file];
                 $fileIDs[] = $value;
+            } else {
+                $value = null;
             }
         } else {
             if (!\is_array($value)) {
@@ -126,7 +129,8 @@ final class FileProcessorFormField extends AbstractFormField
             $fileList->readObjects();
             $this->files = $fileList->getObjects();
 
-            $fileIDs = $fileList->getObjectIDs();
+            // remove obsolete file IDs from $value
+            $fileIDs = $value = $fileList->getObjectIDs();
         }
 
         if ($fileIDs !== []) {
@@ -140,6 +144,32 @@ final class FileProcessorFormField extends AbstractFormField
 
         return parent::value($value);
     }
+
+    #[\Override]
+    public function validate()
+    {
+        if ($this->isRequired() && $this->files === []) {
+            $this->addValidationError(new FormFieldValidationError('empty'));
+        }
+
+        $fileProcessor = $this->getFileProcessor();
+
+        if (\count($this->files) > $fileProcessor->getMaximumCount($this->context)) {
+            $this->addValidationError(
+                new FormFieldValidationError(
+                    'maximumFiles',
+                    'wcf.form.field.fileProcessor.error.maximumFiles',
+                    [
+                        'maximumCount' => $fileProcessor->getMaximumCount($this->context),
+                        'count' => \count($this->files),
+                    ]
+                )
+            );
+        }
+
+        parent::validate();
+    }
+
 
     /**
      * Returns the context for the file processor.
