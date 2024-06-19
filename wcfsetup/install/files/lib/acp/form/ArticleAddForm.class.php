@@ -14,6 +14,7 @@ use wcf\data\smiley\SmileyCache;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -425,6 +426,8 @@ class ArticleAddForm extends AbstractForm
             }
         }
 
+        $this->setDisallowedBBCodes();
+
         if ($this->isMultilingual) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 // title
@@ -442,6 +445,12 @@ class ArticleAddForm extends AbstractForm
                     'com.woltlab.wcf.article.content',
                     0
                 );
+
+                $disallowedBBCodes = $this->htmlInputProcessors[$language->languageID]->validate();
+                if (!empty($disallowedBBCodes)) {
+                    WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+                    throw new UserInputException('content', 'disallowedBBCodes');
+                }
             }
         } else {
             // title
@@ -455,6 +464,12 @@ class ArticleAddForm extends AbstractForm
 
             $this->htmlInputProcessors[0] = new HtmlInputProcessor();
             $this->htmlInputProcessors[0]->process($this->content[0], 'com.woltlab.wcf.article.content', 0);
+
+            $disallowedBBCodes = $this->htmlInputProcessors[0]->validate();
+            if (!empty($disallowedBBCodes)) {
+                WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+                throw new UserInputException('content', 'disallowedBBCodes');
+            }
         }
 
         $this->validateLabelIDs();
@@ -617,6 +632,8 @@ class ArticleAddForm extends AbstractForm
                 }
             }
         }
+
+        $this->setDisallowedBBCodes();
     }
 
     /**
@@ -693,5 +710,15 @@ class ArticleAddForm extends AbstractForm
             'attachmentParentObjectID' => 0,
             'tmpHash' => $this->tmpHash,
         ]);
+    }
+
+    protected function setDisallowedBBCodes(): void
+    {
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(
+            \explode(
+                ',',
+                WCF::getSession()->getPermission('user.message.disallowedBBCodes')
+            )
+        );
     }
 }
