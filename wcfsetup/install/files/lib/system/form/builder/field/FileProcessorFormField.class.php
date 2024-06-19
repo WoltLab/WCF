@@ -88,7 +88,7 @@ final class FileProcessorFormField extends AbstractFormField
      * If set to true, the value of the field will be an integer.
      * Otherwise, the value will be an array of integers.
      */
-    public function setSingleFileUpload(bool $singleFileUpload): self
+    public function singleFileUpload(bool $singleFileUpload = true): self
     {
         $this->singleFileUpload = $singleFileUpload;
 
@@ -129,11 +129,13 @@ final class FileProcessorFormField extends AbstractFormField
             $fileIDs = $fileList->getObjectIDs();
         }
 
-        $thumbnailList = new FileThumbnailList();
-        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
-        $thumbnailList->readObjects();
-        foreach ($thumbnailList as $thumbnail) {
-            $this->files[$thumbnail->fileID]->addThumbnail($thumbnail);
+        if ($fileIDs !== []) {
+            $thumbnailList = new FileThumbnailList();
+            $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
+            $thumbnailList->readObjects();
+            foreach ($thumbnailList as $thumbnail) {
+                $this->files[$thumbnail->fileID]->addThumbnail($thumbnail);
+            }
         }
 
         return parent::value($value);
