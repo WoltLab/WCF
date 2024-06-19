@@ -3888,6 +3888,7 @@ Attachments:
 		<item name="wcf.global.button.upload"><![CDATA[Upload]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Read More]]></item>
 		<item name="wcf.global.button.resetFilter"><![CDATA[Reset Filter]]></item>
+		<item name="wcf.global.button.replace"><![CDATA[Replace]]></item>
 		<item name="wcf.global.category"><![CDATA[Category]]></item>
 		<item name="wcf.global.categories"><![CDATA[Categories]]></item>
 		<item name="wcf.global.comments"><![CDATA[Comments]]></item>
