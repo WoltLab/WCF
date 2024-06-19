@@ -416,6 +416,8 @@
 						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
+							{elseif $errorType == 'disallowedBBCodes'}
+								{lang}wcf.message.error.disallowedBBCodes{/lang}
 							{else}
 								{lang}wcf.acp.article.content.error.{@$errorType}{/lang}
 							{/if}
