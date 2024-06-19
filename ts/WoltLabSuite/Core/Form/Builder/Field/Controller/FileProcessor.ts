@@ -15,9 +15,13 @@ export class FileProcessor {
   readonly #fieldId: string;
   #replaceElement: WoltlabCoreFileElement | undefined = undefined;
   readonly #fileInput: HTMLInputElement;
+  readonly #imageOnly: boolean;
+  readonly #singleFileUpload: boolean;
 
-  constructor(fieldId: string) {
+  constructor(fieldId: string, singleFileUpload: boolean = false, imageOnly: boolean = false) {
     this.#fieldId = fieldId;
+    this.#imageOnly = imageOnly;
+    this.#singleFileUpload = singleFileUpload;
 
     this.#container = document.getElementById(fieldId + "Container")!;
     if (this.#container === null) {
@@ -31,32 +35,34 @@ export class FileProcessor {
     this.#fileInput = this.#uploadButton.shadowRoot!.querySelector<HTMLInputElement>('input[type="file"]')!;
 
     this.#container.querySelectorAll<WoltlabCoreFileElement>("woltlab-core-file").forEach((element) => {
-      void this.#registerFile(element);
+      void this.#registerFile(element, element.parentElement);
     });
   }
 
-  get isSingleFileUpload(): boolean {
-    // TODO check if only images are allowed
-    return this.#uploadButton.maximumCount === 1;
+  get classPrefix(): string {
+    return this.showBigPreview ? "fileUpload__preview__" : "fileUpload__fileList__";
   }
 
-  async #registerFile(element: WoltlabCoreFileElement): Promise<void> {
-    let elementContainer: HTMLElement | null;
+  get showBigPreview(): boolean {
+    return this.#singleFileUpload && this.#imageOnly;
+  }
 
-    if (this.isSingleFileUpload) {
-      elementContainer = this.#container.querySelector(".fileUpload__preview");
-      if (elementContainer === null) {
-        elementContainer = document.createElement("div");
-        elementContainer.classList.add("fileUpload__preview");
-        this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+  async #registerFile(element: WoltlabCoreFileElement, elementContainer: HTMLElement | null = null): Promise<void> {
+    if (elementContainer === null) {
+      if (this.showBigPreview) {
+        elementContainer = this.#container.querySelector(".fileUpload__preview");
+        if (elementContainer === null) {
+          elementContainer = document.createElement("div");
+          elementContainer.classList.add("fileUpload__preview");
+          this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+        }
+      } else {
+        elementContainer = document.createElement("li");
+        elementContainer.classList.add("fileUpload__fileList__item");
+        this.#container.querySelector(".fileUpload__fileList")!.append(elementContainer);
       }
-    } else {
-      elementContainer = document.createElement("li");
-      elementContainer.classList.add("fileUpload__fileList__item");
-      this.#container.querySelector(".fileUpload__fileList")!.append(elementContainer);
+      elementContainer.append(element);
     }
-
-    elementContainer.append(element);
 
     try {
       await element.ready;
@@ -75,14 +81,22 @@ export class FileProcessor {
       return;
     }
 
-    if (this.isSingleFileUpload) {
+    if (this.showBigPreview) {
       element.dataset.previewUrl = element.link!;
       element.unbounded = true;
+    } else if (element.isImage()) {
+      const thumbnail = element.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
+      if (thumbnail !== undefined) {
+        element.thumbnail = thumbnail;
+      } else {
+        element.dataset.previewUrl = element.link!;
+        element.unbounded = false;
+      }
     }
 
     const input = document.createElement("input");
     input.type = "hidden";
-    input.name = this.isSingleFileUpload ? this.#fieldId : this.#fieldId + "[]";
+    input.name = this.#singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
     input.value = element.fileId!.toString();
     elementContainer.append(input);
 
@@ -125,11 +139,7 @@ export class FileProcessor {
   #addButtons(element: WoltlabCoreFileElement): void {
     const buttons = document.createElement("ul");
     buttons.classList.add("buttonList");
-    if (this.isSingleFileUpload) {
-      buttons.classList.add("fileUpload__preview__buttons");
-    } else {
-      buttons.classList.add("fileUpload__fileList__buttons");
-    }
+    buttons.classList.add(this.classPrefix + "buttons");
 
     this.#addDeleteButton(element, buttons);
     this.#addReplaceButton(element, buttons);
@@ -154,7 +164,7 @@ export class FileProcessor {
   }
 
   #unregisterFile(element: WoltlabCoreFileElement): void {
-    if (this.isSingleFileUpload) {
+    if (this.showBigPreview) {
       element.parentElement!.innerHTML = "";
     } else {
       element.parentElement!.remove();

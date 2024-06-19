@@ -14,8 +14,12 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
         #fieldId;
         #replaceElement = undefined;
         #fileInput;
-        constructor(fieldId) {
+        #imageOnly;
+        #singleFileUpload;
+        constructor(fieldId, singleFileUpload = false, imageOnly = false) {
             this.#fieldId = fieldId;
+            this.#imageOnly = imageOnly;
+            this.#singleFileUpload = singleFileUpload;
             this.#container = document.getElementById(fieldId + "Container");
             if (this.#container === null) {
                 throw new Error("Unknown field with id '" + fieldId + "'");
@@ -26,29 +30,32 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             });
             this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
             this.#container.querySelectorAll("woltlab-core-file").forEach((element) => {
-                void this.#registerFile(element);
+                void this.#registerFile(element, element.parentElement);
             });
         }
-        get isSingleFileUpload() {
-            // TODO check if only images are allowed
-            return this.#uploadButton.maximumCount === 1;
+        get classPrefix() {
+            return this.showBigPreview ? "fileUpload__preview__" : "fileUpload__fileList__";
         }
-        async #registerFile(element) {
-            let elementContainer;
-            if (this.isSingleFileUpload) {
-                elementContainer = this.#container.querySelector(".fileUpload__preview");
-                if (elementContainer === null) {
-                    elementContainer = document.createElement("div");
-                    elementContainer.classList.add("fileUpload__preview");
-                    this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+        get showBigPreview() {
+            return this.#singleFileUpload && this.#imageOnly;
+        }
+        async #registerFile(element, elementContainer = null) {
+            if (elementContainer === null) {
+                if (this.showBigPreview) {
+                    elementContainer = this.#container.querySelector(".fileUpload__preview");
+                    if (elementContainer === null) {
+                        elementContainer = document.createElement("div");
+                        elementContainer.classList.add("fileUpload__preview");
+                        this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+                    }
                 }
+                else {
+                    elementContainer = document.createElement("li");
+                    elementContainer.classList.add("fileUpload__fileList__item");
+                    this.#container.querySelector(".fileUpload__fileList").append(elementContainer);
+                }
+                elementContainer.append(element);
             }
-            else {
-                elementContainer = document.createElement("li");
-                elementContainer.classList.add("fileUpload__fileList__item");
-                this.#container.querySelector(".fileUpload__fileList").append(elementContainer);
-            }
-            elementContainer.append(element);
             try {
                 await element.ready;
                 if (this.#replaceElement !== undefined) {
@@ -65,13 +72,23 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 this.#markElementUploadHasFailed(elementContainer, element, reason);
                 return;
             }
-            if (this.isSingleFileUpload) {
+            if (this.showBigPreview) {
                 element.dataset.previewUrl = element.link;
                 element.unbounded = true;
             }
+            else if (element.isImage()) {
+                const thumbnail = element.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
+                if (thumbnail !== undefined) {
+                    element.thumbnail = thumbnail;
+                }
+                else {
+                    element.dataset.previewUrl = element.link;
+                    element.unbounded = false;
+                }
+            }
             const input = document.createElement("input");
             input.type = "hidden";
-            input.name = this.isSingleFileUpload ? this.#fieldId : this.#fieldId + "[]";
+            input.name = this.#singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
             input.value = element.fileId.toString();
             elementContainer.append(input);
             this.#addButtons(element);
@@ -107,12 +124,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
         #addButtons(element) {
             const buttons = document.createElement("ul");
             buttons.classList.add("buttonList");
-            if (this.isSingleFileUpload) {
-                buttons.classList.add("fileUpload__preview__buttons");
-            }
-            else {
-                buttons.classList.add("fileUpload__fileList__buttons");
-            }
+            buttons.classList.add(this.classPrefix + "buttons");
             this.#addDeleteButton(element, buttons);
             this.#addReplaceButton(element, buttons);
             element.parentElement.append(buttons);
@@ -131,7 +143,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             buttons.append(listItem);
         }
         #unregisterFile(element) {
-            if (this.isSingleFileUpload) {
+            if (this.showBigPreview) {
                 element.parentElement.innerHTML = "";
             }
             else {

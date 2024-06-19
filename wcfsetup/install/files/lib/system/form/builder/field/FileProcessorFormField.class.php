@@ -4,6 +4,7 @@ namespace wcf\system\form\builder\field;
 
 use wcf\data\file\File;
 use wcf\data\file\FileList;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\TObjectTypeFormNode;
@@ -32,6 +33,7 @@ final class FileProcessorFormField extends AbstractFormField
      * @var File[]
      */
     private array $files = [];
+    private bool $singleFileUpload = false;
 
     #[\Override]
     public function readValue()
@@ -76,9 +78,21 @@ final class FileProcessorFormField extends AbstractFormField
         return $this->getObjectType()->getProcessor();
     }
 
-    private function isSingleFileUpload(): bool
+    public function isSingleFileUpload(): bool
     {
-        return $this->getFileProcessor()->getMaximumCount($this->context) === 1;
+        return $this->singleFileUpload;
+    }
+
+    /**
+     * Sets whether only a single file can be uploaded.
+     * If set to true, the value of the field will be an integer.
+     * Otherwise, the value will be an array of integers.
+     */
+    public function setSingleFileUpload(bool $singleFileUpload): self
+    {
+        $this->singleFileUpload = $singleFileUpload;
+
+        return $this;
     }
 
     #[\Override]
@@ -95,13 +109,13 @@ final class FileProcessorFormField extends AbstractFormField
     #[\Override]
     public function value($value)
     {
+        $fileIDs = [];
         if ($this->isSingleFileUpload()) {
             $file = new File($value);
             if ($file->fileID === $value) {
                 $this->files = [$file];
+                $fileIDs[] = $value;
             }
-
-            return parent::value($value);
         } else {
             if (!\is_array($value)) {
                 $value = [$value];
@@ -112,8 +126,17 @@ final class FileProcessorFormField extends AbstractFormField
             $fileList->readObjects();
             $this->files = $fileList->getObjects();
 
-            return parent::value($value);
+            $fileIDs = $fileList->getObjectIDs();
         }
+
+        $thumbnailList = new FileThumbnailList();
+        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileIDs]);
+        $thumbnailList->readObjects();
+        foreach ($thumbnailList as $thumbnail) {
+            $this->files[$thumbnail->fileID]->addThumbnail($thumbnail);
+        }
+
+        return parent::value($value);
     }
 
     /**
