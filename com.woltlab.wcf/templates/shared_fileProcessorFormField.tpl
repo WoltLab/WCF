@@ -1,14 +1,9 @@
+{assign var="files" value=$field->getFiles()}
 {if $maxUploads === 1 && $imageOnly}
 	<div class="fileUpload__preview">
 		{if $field->getValue()}
-		{*<woltlab-core-file>…</woltlab-core-file>*}
-			<ul class="fileUpload__preview__buttons buttonList">
-				<li>
-					<button class="button small" type="button">
-						{lang}wcf.global.button.delete{/lang}
-					</button>
-				</li>
-			</ul>
+			{assign var="file" value=$files|reset}
+			{unsafe:$file->toHtmlElement()}
 		{/if}
 	</div>
 {else}

@@ -25,6 +25,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 void this.#registerFile(event.detail);
             });
             this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
+            this.#container.querySelectorAll("woltlab-core-file").forEach((element) => {
+                void this.#registerFile(element);
+            });
         }
         get isSingleFileUpload() {
             // TODO check if only images are allowed

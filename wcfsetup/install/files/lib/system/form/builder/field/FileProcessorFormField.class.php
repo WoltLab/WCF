@@ -2,9 +2,12 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\file\File;
+use wcf\data\file\FileList;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\TObjectTypeFormNode;
+use wcf\util\ArrayUtil;
 use wcf\util\ImageUtil;
 
 /**
@@ -25,13 +28,31 @@ final class FileProcessorFormField extends AbstractFormField
 
     private array $context = [];
 
+    /**
+     * @var File[]
+     */
+    private array $files = [];
+
     #[\Override]
     public function readValue()
     {
-        \wcfDebug($this->getDocument()->getRequestData());
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->context = $this->getDocument()->getRequestData($this->getPrefixedId());
+            $value = $this->getDocument()->getRequestData($this->getPrefixedId());
+
+            if ($this->isSingleFileUpload()) {
+                $this->value(\intval($value));
+            } else {
+                $this->value(ArrayUtil::toIntegerArray($value));
+            }
         }
+
+        return $this;
+    }
+
+    #[\Override]
+    public function hasSaveValue()
+    {
+        return $this->isSingleFileUpload();
     }
 
     #[\Override]
@@ -55,10 +76,44 @@ final class FileProcessorFormField extends AbstractFormField
         return $this->getObjectType()->getProcessor();
     }
 
+    private function isSingleFileUpload(): bool
+    {
+        return $this->getFileProcessor()->getMaximumCount($this->context) === 1;
+    }
+
     #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.file';
+    }
+
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    #[\Override]
+    public function value($value)
+    {
+        if ($this->isSingleFileUpload()) {
+            $file = new File($value);
+            if ($file->fileID === $value) {
+                $this->files = [$file];
+            }
+
+            return parent::value($value);
+        } else {
+            if (!\is_array($value)) {
+                $value = [$value];
+            }
+
+            $fileList = new FileList();
+            $fileList->setObjectIDs($value);
+            $fileList->readObjects();
+            $this->files = $fileList->getObjects();
+
+            return parent::value($value);
+        }
     }
 
     /**

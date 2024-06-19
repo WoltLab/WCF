@@ -29,6 +29,10 @@ export class FileProcessor {
       void this.#registerFile(event.detail);
     });
     this.#fileInput = this.#uploadButton.shadowRoot!.querySelector<HTMLInputElement>('input[type="file"]')!;
+
+    this.#container.querySelectorAll<WoltlabCoreFileElement>("woltlab-core-file").forEach((element) => {
+      void this.#registerFile(element);
+    });
   }
 
   get isSingleFileUpload(): boolean {
