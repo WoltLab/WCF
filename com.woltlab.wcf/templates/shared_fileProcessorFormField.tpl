@@ -1,3 +1,5 @@
+{unsafe:$fileProcessorHtmlElement}
+
 {assign var="files" value=$field->getFiles()}
 {if $field->isSingleFileUpload() && $imageOnly}
 	<div class="fileUpload__preview">
@@ -15,8 +17,6 @@
 		{/foreach}
 	</ul>
 {/if}
-
-{unsafe:$fileProcessorHtmlElement}
 
 <script data-relocate="true">
 	{jsphrase name='wcf.global.button.replace'}
