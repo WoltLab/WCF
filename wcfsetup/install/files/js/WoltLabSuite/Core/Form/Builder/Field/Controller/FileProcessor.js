@@ -108,14 +108,18 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 // if the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
                 // if the upload is successful, delete the old file.
                 this.#unregisterFile(element);
-                this.#fileInput.addEventListener("cancel", () => {
+                const changeEventListener = () => {
+                    this.#uploadButton.dataset.context = oldContext;
+                    this.#fileInput.removeEventListener("cancel", cancelEventListener);
+                };
+                const cancelEventListener = () => {
                     this.#uploadButton.dataset.context = oldContext;
                     void this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
-                }, { once: true });
-                this.#fileInput.addEventListener("change", () => {
-                    this.#uploadButton.dataset.context = oldContext;
-                }, { once: true });
+                    this.#fileInput.removeEventListener("change", changeEventListener);
+                };
+                this.#fileInput.addEventListener("cancel", cancelEventListener, { once: true });
+                this.#fileInput.addEventListener("change", changeEventListener, { once: true });
                 this.#fileInput.click();
             });
             const listItem = document.createElement("li");
@@ -159,6 +163,14 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
                 if (this.#replaceElement !== undefined) {
                     await this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
+                    if (this.showBigPreview) {
+                        // move the new uploaded file to his own container
+                        // otherwise the file under `this.#replaceElement` will be marked as failed, too
+                        const tmpContainer = document.createElement("div");
+                        tmpContainer.append(element);
+                        this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
+                        elementContainer = tmpContainer;
+                    }
                 }
                 this.#markElementUploadHasFailed(elementContainer, element, reason);
                 return;
