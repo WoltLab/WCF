@@ -23,6 +23,16 @@
 	font-weight: 600;
 }
 
+.sidebar {
+	select {
+		width: 100%;
+	}
+
+	select + select {
+		margin-top: 10px;
+	}
+}
+
 /* legacy styling for sidebars (deprecated) */
 .sidebar {
 	fieldset {
