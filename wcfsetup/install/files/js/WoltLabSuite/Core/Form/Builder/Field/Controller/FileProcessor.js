@@ -44,7 +44,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             buttons.classList.add("buttonList");
             buttons.classList.add(this.classPrefix + "buttons");
             this.addDeleteButton(element, buttons);
-            this.addReplaceButton(element, buttons);
+            if (this.#singleFileUpload) {
+                this.addReplaceButton(element, buttons);
+            }
             element.parentElement.append(buttons);
         }
         #markElementUploadHasFailed(container, element, reason) {

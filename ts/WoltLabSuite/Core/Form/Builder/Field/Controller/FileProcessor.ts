@@ -53,7 +53,10 @@ export class FileProcessor {
     buttons.classList.add(this.classPrefix + "buttons");
 
     this.addDeleteButton(element, buttons);
-    this.addReplaceButton(element, buttons);
+
+    if (this.#singleFileUpload) {
+      this.addReplaceButton(element, buttons);
+    }
 
     element.parentElement!.append(buttons);
   }
