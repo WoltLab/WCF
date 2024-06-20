@@ -8,6 +8,8 @@
 import WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
+import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
+import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 
 export class FileProcessor {
   readonly #container: HTMLElement;
@@ -176,6 +178,21 @@ export class FileProcessor {
       elementContainer.append(element);
     }
 
+    // add filename and filesize information
+    if (!this.showBigPreview) {
+      const filename = document.createElement("div");
+      filename.classList.add(this.classPrefix + "item__filename");
+      filename.textContent = element.filename || element.dataset.filename!;
+
+      elementContainer.append(filename);
+
+      const fileSize = document.createElement("div");
+      fileSize.classList.add(this.classPrefix + "item__fileSize");
+      fileSize.textContent = formatFilesize(element.fileSize || parseInt(element.dataset.fileSize!));
+
+      elementContainer.append(fileSize);
+    }
+
     try {
       await element.ready;
 
@@ -206,13 +223,37 @@ export class FileProcessor {
     if (this.showBigPreview) {
       element.dataset.previewUrl = element.link!;
       element.unbounded = true;
-    } else if (element.isImage()) {
-      const thumbnail = element.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
-      if (thumbnail !== undefined) {
-        element.thumbnail = thumbnail;
-      } else {
-        element.dataset.previewUrl = element.link!;
-        element.unbounded = false;
+    } else {
+      if (element.isImage()) {
+        const thumbnail = element.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
+        if (thumbnail !== undefined) {
+          element.thumbnail = thumbnail;
+        } else {
+          element.dataset.previewUrl = element.link!;
+          element.unbounded = false;
+        }
+
+        if (element.link !== undefined && element.filename !== undefined) {
+          const filenameLink = document.createElement("a");
+          filenameLink.href = element.link;
+          filenameLink.title = element.filename;
+          filenameLink.textContent = element.filename;
+          filenameLink.classList.add("jsImageViewer");
+
+          // insert a hidden image element that will be used by the image viewer as the preview image
+          const previewImage = document.createElement("img");
+          previewImage.src = thumbnail !== undefined ? thumbnail.link : element.link;
+          previewImage.alt = element.filename;
+          previewImage.style.display = "none";
+          previewImage.classList.add(this.classPrefix + "item__previewImage");
+          filenameLink.append(previewImage);
+
+          const filenameContainer = elementContainer.querySelector("." + this.classPrefix + "item__filename")!;
+          filenameContainer.innerHTML = "";
+          filenameContainer.append(filenameLink);
+
+          DomChangeListener.trigger();
+        }
       }
     }
 

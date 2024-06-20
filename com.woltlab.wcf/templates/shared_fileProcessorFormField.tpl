@@ -9,7 +9,7 @@
 {else}
 	<ul class="fileUpload__fileList">
 		{foreach from=$files item=file}
-			<li>
+			<li class="fileUpload__fileList__item">
 				{unsafe:$file->toHtmlElement()}
 			</li>
 		{/foreach}
