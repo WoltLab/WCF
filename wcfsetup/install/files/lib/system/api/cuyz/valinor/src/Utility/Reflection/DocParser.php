@@ -3,14 +3,21 @@
 namespace CuyZ\Valinor\Utility\Reflection;
 
 use CuyZ\Valinor\Type\Parser\Exception\Template\DuplicatedTemplateName;
+use CuyZ\Valinor\Type\Parser\Lexer\TokensExtractor;
 use ReflectionClass;
 use ReflectionFunctionAbstract;
 use ReflectionParameter;
 use ReflectionProperty;
 
+use function array_key_exists;
 use function array_merge;
+use function array_search;
+use function array_shift;
+use function array_splice;
+use function assert;
 use function end;
 use function explode;
+use function in_array;
 use function preg_match;
 use function preg_match_all;
 use function str_replace;
@@ -41,11 +48,25 @@ final class DocParser
             return null;
         }
 
-        if (! preg_match("/(?<type>.*)\\$$reflection->name(\s|\z)/s", $doc, $matches)) {
-            return null;
+        $parameters = [];
+
+        $tokens = (new TokensExtractor($doc))->all();
+
+        while (($token = array_shift($tokens)) !== null) {
+            if (! in_array($token, ['@param', '@phpstan-param', '@psalm-param'], true)) {
+                continue;
+            }
+
+            $dollarSignKey = (int)array_search('$', $tokens, true);
+            $name = $tokens[$dollarSignKey + 1] ?? null;
+
+            $parameters[$name][$token] = implode('', array_splice($tokens, 0, $dollarSignKey));
         }
 
-        return self::annotationType($matches['type'], 'param');
+        return $parameters[$reflection->name]['@phpstan-param']
+            ?? $parameters[$reflection->name]['@psalm-param']
+            ?? $parameters[$reflection->name]['@param']
+            ?? null;
     }
 
     public static function functionReturnType(ReflectionFunctionAbstract $reflection): ?string
@@ -132,7 +153,7 @@ final class DocParser
 
     /**
      * @param ReflectionClass<object> $reflection
-     * @return array<string, string>
+     * @return array<non-empty-string, non-empty-string|null>
      */
     public static function classTemplates(ReflectionClass $reflection): array
     {
@@ -147,12 +168,18 @@ final class DocParser
         preg_match_all("/@(phpstan-|psalm-)?template\s+(?<name>\w+)(\s+of\s+(?<type>.+))?/", $doc, $matches);
 
         foreach ($matches['name'] as $key => $name) {
-            /** @var string $name */
-            if (isset($templates[$name])) {
+            /** @var non-empty-string $name */
+            if (array_key_exists($name, $templates)) {
                 throw new DuplicatedTemplateName($reflection->name, $name);
             }
 
-            $templates[$name] = self::findType($matches['type'][$key]);
+            $template = $matches['type'][$key];
+
+            if ($template === '') {
+                $templates[$name] = null;
+            } else {
+                $templates[$name] = self::findType($template);
+            }
         }
 
         return $templates;
@@ -171,6 +198,9 @@ final class DocParser
         return null;
     }
 
+    /**
+     * @return non-empty-string
+     */
     private static function findType(string $string): string
     {
         $operatorsMatrix = [
@@ -207,7 +237,11 @@ final class DocParser
             $type .= $char;
         }
 
-        return trim($type);
+        $type = trim($type);
+
+        assert($type !== '');
+
+        return $type;
     }
 
     private static function sanitizeDocComment(string|false $doc): ?string
@@ -219,7 +253,7 @@ final class DocParser
 
         $doc = preg_replace('#^\s*/\*\*([^/]+)\*/\s*$#', '$1', $doc);
 
-        return preg_replace('/^\s*\*\s*(\S*)/m', '$1', $doc); // @phpstan-ignore-line
+        return preg_replace('/^\s*\*\s*(\S*)/m', '$1', (string)$doc);
     }
 
     /**

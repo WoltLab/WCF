@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Utility\Reflection;
 
+use Attribute;
 use Closure;
+use Error;
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionFunction;
+use ReflectionFunctionAbstract;
 use ReflectionIntersectionType;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -15,11 +19,15 @@ use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
 use Reflector;
-use RuntimeException;
+use UnitEnum;
 
+use function array_filter;
+use function array_map;
 use function class_exists;
+use function enum_exists;
 use function implode;
 use function interface_exists;
+use function ltrim;
 use function spl_object_hash;
 use function str_contains;
 
@@ -32,16 +40,31 @@ final class Reflection
     /** @var array<string, ReflectionFunction> */
     private static array $functionReflection = [];
 
+    /** @var array<string, bool> */
+    private static array $classOrInterfaceExists = [];
+
+    /** @var array<string, bool> */
+    private static array $enumExists = [];
+
     /**
      * Case-sensitive implementation of `class_exists` and `interface_exists`.
+     *
+     * @phpstan-assert-if-true class-string $name
      */
     public static function classOrInterfaceExists(string $name): bool
     {
-        if (! class_exists($name) && ! interface_exists($name)) {
-            return false;
-        }
+        // @infection-ignore-all / We don't need to test the cache
+        return self::$classOrInterfaceExists[$name] ??= (class_exists($name) || interface_exists($name))
+            && self::class($name)->name === ltrim($name, '\\');
+    }
 
-        return self::class($name)->name === ltrim($name, '\\');
+    /**
+     * @phpstan-assert-if-true class-string<UnitEnum> $name
+     */
+    public static function enumExists(string $name): bool
+    {
+        // @infection-ignore-all / We don't need to test the cache
+        return self::$enumExists[$name] ??= enum_exists($name);
     }
 
     /**
@@ -60,12 +83,45 @@ final class Reflection
         return self::$functionReflection[spl_object_hash($closure)] ??= new ReflectionFunction($closure);
     }
 
-    public static function signature(Reflector $reflection): string
+    /**
+     * @param ReflectionClass<object>|ReflectionProperty|ReflectionMethod|ReflectionFunction|ReflectionParameter $reflection
+     * @return array<ReflectionAttribute<object>>
+     */
+    public static function attributes(Reflector $reflection): array
     {
-        if ($reflection instanceof ReflectionClass) {
-            return $reflection->name;
-        }
+        $attributes = array_filter(
+            $reflection->getAttributes(),
+            static fn (ReflectionAttribute $attribute) => $attribute->getName() !== Attribute::class,
+        );
 
+        return array_filter(
+            array_map(
+                static function (ReflectionAttribute $attribute) {
+                    try {
+                        $attribute->newInstance();
+
+                        return $attribute;
+                    } catch (Error) {
+                        // Race condition when the attribute is affected to a property/parameter
+                        // that was PROMOTED, in this case the attribute will be applied to both
+                        // ParameterReflection AND PropertyReflection, BUT the target arg inside the attribute
+                        // class is configured to support only ONE of them (parameter OR property)
+                        // https://wiki.php.net/rfc/constructor_promotion#attributes for more details.
+                        // Ignore attribute if the instantiation failed.
+                        return null;
+                    }
+                },
+                $attributes,
+            ),
+        );
+    }
+
+    /**
+     * @param ReflectionClass<object>|ReflectionProperty|ReflectionMethod|ReflectionFunctionAbstract|ReflectionParameter $reflection
+     * @return non-empty-string
+     */
+    public static function signature(ReflectionClass|ReflectionProperty|ReflectionMethod|ReflectionFunctionAbstract|ReflectionParameter $reflection): string
+    {
         if ($reflection instanceof ReflectionProperty) {
             return "{$reflection->getDeclaringClass()->name}::\$$reflection->name";
         }
@@ -74,7 +130,7 @@ final class Reflection
             return "{$reflection->getDeclaringClass()->name}::$reflection->name()";
         }
 
-        if ($reflection instanceof ReflectionFunction) {
+        if ($reflection instanceof ReflectionFunctionAbstract) {
             if (str_contains($reflection->name, '{closure}')) {
                 $startLine = $reflection->getStartLine();
                 $endLine = $reflection->getEndLine();
@@ -100,7 +156,7 @@ final class Reflection
             return $signature;
         }
 
-        throw new RuntimeException('Invalid reflection type `' . $reflection::class . '`.');
+        return $reflection->name;
     }
 
     public static function flattenType(ReflectionType $type): string

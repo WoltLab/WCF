@@ -7,6 +7,10 @@ use Sabberworm\CSS\Parsing\ParserState;
 use Sabberworm\CSS\Parsing\UnexpectedEOFException;
 use Sabberworm\CSS\Parsing\UnexpectedTokenException;
 
+/**
+ * `Color's can be input in the form #rrggbb, #rgb or schema(val1, val2, …) but are always stored as an array of
+ * ('s' => val1, 'c' => val2, 'h' => val3, …) and output in the second form.
+ */
 class Color extends CSSFunction
 {
     /**
@@ -19,12 +23,15 @@ class Color extends CSSFunction
     }
 
     /**
+     * @param ParserState $oParserState
+     * @param bool $bIgnoreCase
+     *
      * @return Color|CSSFunction
      *
      * @throws UnexpectedEOFException
      * @throws UnexpectedTokenException
      */
-    public static function parse(ParserState $oParserState)
+    public static function parse(ParserState $oParserState, $bIgnoreCase = false)
     {
         $aColor = [];
         if ($oParserState->comes('#')) {

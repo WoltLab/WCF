@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Mapper\Object;
 
 use CuyZ\Valinor\Definition\Attributes;
-use CuyZ\Valinor\Definition\AttributesContainer;
 use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\PropertyDefinition;
 use CuyZ\Valinor\Type\Type;
@@ -31,11 +30,11 @@ final class Argument
 
     public static function fromParameter(ParameterDefinition $parameter): self
     {
-        $instance = new self($parameter->name(), $parameter->type());
-        $instance->attributes = $parameter->attributes();
+        $instance = new self($parameter->name, $parameter->type);
+        $instance->attributes = $parameter->attributes;
 
-        if ($parameter->isOptional()) {
-            $instance->defaultValue = $parameter->defaultValue();
+        if ($parameter->isOptional) {
+            $instance->defaultValue = $parameter->defaultValue;
             $instance->isRequired = false;
         }
 
@@ -44,11 +43,11 @@ final class Argument
 
     public static function fromProperty(PropertyDefinition $property): self
     {
-        $instance = new self($property->name(), $property->type());
-        $instance->attributes = $property->attributes();
+        $instance = new self($property->name, $property->type);
+        $instance->attributes = $property->attributes;
 
-        if ($property->hasDefaultValue()) {
-            $instance->defaultValue = $property->defaultValue();
+        if ($property->hasDefaultValue) {
+            $instance->defaultValue = $property->defaultValue;
             $instance->isRequired = false;
         }
 
@@ -77,6 +76,6 @@ final class Argument
 
     public function attributes(): Attributes
     {
-        return $this->attributes ??= AttributesContainer::empty();
+        return $this->attributes ??= Attributes::empty();
     }
 }

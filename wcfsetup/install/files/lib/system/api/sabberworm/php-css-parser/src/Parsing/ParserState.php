@@ -33,6 +33,8 @@ class ParserState
     private $iCurrentPosition;
 
     /**
+     * will only be used if the CSS does not contain an `@charset` declaration
+     *
      * @var string
      */
     private $sCharset;
@@ -48,7 +50,7 @@ class ParserState
     private $iLineNo;
 
     /**
-     * @param string $sText
+     * @param string $sText the complete CSS as text (i.e., usually the contents of a CSS file)
      * @param int $iLineNo
      */
     public function __construct($sText, Settings $oParserSettings, $iLineNo = 1)
@@ -61,6 +63,8 @@ class ParserState
     }
 
     /**
+     * Sets the charset to be used if the CSS does not contain an `@charset` declaration.
+     *
      * @param string $sCharset
      *
      * @return void
@@ -75,6 +79,8 @@ class ParserState
     }
 
     /**
+     * Returns the charset that is used if the CSS does not contain an `@charset` declaration.
+     *
      * @return string
      */
     public function getCharset()
@@ -107,6 +113,24 @@ class ParserState
     }
 
     /**
+     * @return \Sabberworm\CSS\Parsing\Anchor
+     */
+    public function anchor()
+    {
+        return new Anchor($this->iCurrentPosition, $this);
+    }
+
+    /**
+     * @param int $iPosition
+     *
+     * @return void
+     */
+    public function setPosition($iPosition)
+    {
+        $this->iCurrentPosition = $iPosition;
+    }
+
+    /**
      * @param bool $bIgnoreCase
      *
      * @return string
@@ -115,12 +139,15 @@ class ParserState
      */
     public function parseIdentifier($bIgnoreCase = true)
     {
+        if ($this->isEnd()) {
+            throw new UnexpectedEOFException('', '', 'identifier', $this->iLineNo);
+        }
         $sResult = $this->parseCharacter(true);
         if ($sResult === null) {
             throw new UnexpectedTokenException($sResult, $this->peek(5), 'identifier', $this->iLineNo);
         }
         $sCharacter = null;
-        while (($sCharacter = $this->parseCharacter(true)) !== null) {
+        while (!$this->isEnd() && ($sCharacter = $this->parseCharacter(true)) !== null) {
             if (preg_match('/[a-zA-Z0-9\x{00A0}-\x{FFFF}_-]/Sux', $sCharacter)) {
                 $sResult .= $sCharacter;
             } else {
@@ -204,7 +231,7 @@ class ParserState
      */
     public function consumeWhiteSpace()
     {
-        $comments = [];
+        $aComments = [];
         do {
             while (preg_match('/\\s/isSu', $this->peek()) === 1) {
                 $this->consume(1);
@@ -214,16 +241,16 @@ class ParserState
                     $oComment = $this->consumeComment();
                 } catch (UnexpectedEOFException $e) {
                     $this->iCurrentPosition = $this->iLength;
-                    return;
+                    return $aComments;
                 }
             } else {
                 $oComment = $this->consumeComment();
             }
             if ($oComment !== false) {
-                $comments[] = $oComment;
+                $aComments[] = $oComment;
             }
         } while ($oComment !== false);
-        return $comments;
+        return $aComments;
     }
 
     /**

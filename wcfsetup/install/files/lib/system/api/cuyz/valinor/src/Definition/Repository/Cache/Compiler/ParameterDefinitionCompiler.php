@@ -16,17 +16,19 @@ final class ParameterDefinitionCompiler
 
     public function compile(ParameterDefinition $parameter): string
     {
-        $isOptional = var_export($parameter->isOptional(), true);
-        $isVariadic = var_export($parameter->isVariadic(), true);
+        $isOptional = var_export($parameter->isOptional, true);
+        $isVariadic = var_export($parameter->isVariadic, true);
         $defaultValue = $this->defaultValue($parameter);
-        $type = $this->typeCompiler->compile($parameter->type());
-        $attributes = $this->attributesCompiler->compile($parameter->attributes());
+        $type = $this->typeCompiler->compile($parameter->type);
+        $nativeType = $this->typeCompiler->compile($parameter->nativeType);
+        $attributes = $this->attributesCompiler->compile($parameter->attributes);
 
         return <<<PHP
             new \CuyZ\Valinor\Definition\ParameterDefinition(
-                '{$parameter->name()}',
-                '{$parameter->signature()}',
+                '{$parameter->name}',
+                '{$parameter->signature}',
                 $type,
+                $nativeType,
                 $isOptional,
                 $isVariadic,
                 $defaultValue,
@@ -37,7 +39,7 @@ final class ParameterDefinitionCompiler
 
     private function defaultValue(ParameterDefinition $parameter): string
     {
-        $defaultValue = $parameter->defaultValue();
+        $defaultValue = $parameter->defaultValue;
 
         return is_object($defaultValue)
             ? 'unserialize(' . var_export(serialize($defaultValue), true) . ')'

@@ -6,6 +6,7 @@ namespace CuyZ\Valinor\Mapper\Object;
 
 use CuyZ\Valinor\Mapper\Object\Exception\InvalidSource;
 use CuyZ\Valinor\Type\CompositeTraversableType;
+use CuyZ\Valinor\Type\Types\ArrayKeyType;
 use IteratorAggregate;
 use Traversable;
 
@@ -35,22 +36,22 @@ final class ArgumentsValues implements IteratorAggregate
         $this->arguments = $arguments;
     }
 
-    public static function forInterface(Arguments $arguments, mixed $value): self
+    public static function forInterface(Arguments $arguments, mixed $value, bool $allowSuperfluousKeys): self
     {
         $self = new self($arguments);
         $self->forInterface = true;
 
         if (count($arguments) > 0) {
-            $self = $self->transform($value);
+            $self = $self->transform($value, $allowSuperfluousKeys);
         }
 
         return $self;
     }
 
-    public static function forClass(Arguments $arguments, mixed $value): self
+    public static function forClass(Arguments $arguments, mixed $value, bool $allowSuperfluousKeys): self
     {
         $self = new self($arguments);
-        $self = $self->transform($value);
+        $self = $self->transform($value, $allowSuperfluousKeys);
 
         return $self;
     }
@@ -81,11 +82,11 @@ final class ArgumentsValues implements IteratorAggregate
         return $this->hadSingleArgument;
     }
 
-    private function transform(mixed $value): self
+    private function transform(mixed $value, bool $allowSuperfluousKeys): self
     {
         $clone = clone $this;
 
-        $transformedValue = $this->transformValueForSingleArgument($value);
+        $transformedValue = $this->transformValueForSingleArgument($value, $allowSuperfluousKeys);
 
         if (! is_array($transformedValue)) {
             throw new InvalidSource($transformedValue, $this->arguments);
@@ -108,7 +109,7 @@ final class ArgumentsValues implements IteratorAggregate
         return $clone;
     }
 
-    private function transformValueForSingleArgument(mixed $value): mixed
+    private function transformValueForSingleArgument(mixed $value, bool $allowSuperfluousKeys): mixed
     {
         if (count($this->arguments) !== 1) {
             return $value;
@@ -116,15 +117,17 @@ final class ArgumentsValues implements IteratorAggregate
 
         $argument = $this->arguments->at(0);
         $name = $argument->name();
-        $isTraversable = $argument-> type() instanceof CompositeTraversableType;
+        $type = $argument->type();
+        $isTraversableAndAllowsStringKeys = $type instanceof CompositeTraversableType
+            && $type->keyType() !== ArrayKeyType::integer();
 
         if (is_array($value) && array_key_exists($name, $value)) {
-            if ($this->forInterface || ! $isTraversable || count($value) === 1) {
+            if ($this->forInterface || ! $isTraversableAndAllowsStringKeys || $allowSuperfluousKeys || count($value) === 1) {
                 return $value;
             }
         }
 
-        if ($value === [] && ! $isTraversable) {
+        if ($value === [] && ! $isTraversableAndAllowsStringKeys) {
             return $value;
         }
 
