@@ -94,8 +94,6 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
             replaceButton.classList.add("button", "small");
             replaceButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.replace");
             replaceButton.addEventListener("click", () => {
-                // TODO show dialog if the user really wants to replace the file.
-                //  the old will be deleted
                 this.#replaceElement = element;
                 // add to context an extra attribute that the replace button is clicked.
                 // after the dialog is closed or the file is selected, the context will be reset to his old value.
