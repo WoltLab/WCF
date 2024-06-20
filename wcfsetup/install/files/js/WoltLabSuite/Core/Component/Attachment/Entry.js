@@ -43,7 +43,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
                 link.classList.add("jsImageViewer");
                 link.title = file.filename;
                 link.textContent = file.filename;
-                const filename = element.querySelector(".attachment__item__filename");
+                const filename = element.querySelector(".fileList__item__filename");
                 filename.innerHTML = "";
                 filename.append(link);
                 Listener_1.default.trigger();
@@ -73,7 +73,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         moreOptions.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.global.button.more"));
         moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
         const buttonList = document.createElement("div");
-        buttonList.classList.add("attachment__item__buttons");
+        buttonList.classList.add("fileList__item__buttons");
         insertButton.classList.add("button", "small");
         buttonList.append(insertButton, moreOptions);
         element.append(buttonList);
@@ -135,7 +135,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         markElementAsErroneous(element, errorMessage);
     }
     function markElementAsErroneous(element, errorMessage) {
-        element.classList.add("attachment__item--error");
+        element.classList.add("fileList__item--error");
         const errorElement = document.createElement("div");
         errorElement.classList.add("attachemnt__item__errorMessage");
         errorElement.textContent = errorMessage;
@@ -143,15 +143,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
     }
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
-        element.classList.add("attachment__item");
+        element.classList.add("fileList__item", "attachment__item");
         const fileWrapper = document.createElement("div");
-        fileWrapper.classList.add("attachment__item__file");
+        fileWrapper.classList.add("fileList__item__file");
         fileWrapper.append(file);
         const filename = document.createElement("div");
-        filename.classList.add("attachment__item__filename");
+        filename.classList.add("fileList__item__filename");
         filename.textContent = file.filename || file.dataset.filename;
         const fileSize = document.createElement("div");
-        fileSize.classList.add("attachment__item__fileSize");
+        fileSize.classList.add("fileList__item__fileSize");
         fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
         element.append(fileWrapper, filename, fileSize);
         void file.ready

@@ -7,9 +7,9 @@
 		{/if}
 	</div>
 {else}
-	<ul class="fileUpload__fileList">
+	<ul class="fileList">
 		{foreach from=$files item=file}
-			<li class="fileUpload__fileList__item">
+			<li class="fileList__item">
 				{unsafe:$file->toHtmlElement()}
 			</li>
 		{/foreach}

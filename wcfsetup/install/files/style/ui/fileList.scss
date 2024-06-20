@@ -1,0 +1,63 @@
+.fileList {
+	display: grid;
+	gap: 10px;
+	grid-auto-flow: row;
+	// TODO: use container queries to make this more dynamic?
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.fileList:not(:empty) {
+	margin-top: 20px;
+}
+
+.fileList__item {
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadowCard);
+	display: grid;
+	grid-template-areas:
+		"file filename"
+		"file fileSize"
+		"file buttons";
+	grid-template-columns: 80px auto;
+	padding: 10px;
+}
+
+.fileList__item--error {
+	border-color: var(--wcfStatusErrorBorder);
+}
+
+.fileList__item--error .fileList__item__file {
+	color: var(--wcfStatusErrorText);
+}
+
+.fileList__item__file {
+	display: flex;
+	grid-area: file;
+	justify-content: center;
+	margin-right: 10px;
+}
+
+.fileList__item__filename {
+	font-size: 12px;
+	grid-area: filename;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.fileList__item__fileSize {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+	grid-area: fileSize;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.fileList__item__buttons {
+	column-gap: 5px;
+	display: flex;
+	grid-area: buttons;
+	justify-content: end;
+}

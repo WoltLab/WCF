@@ -42,14 +42,14 @@ export class FileProcessor {
   }
 
   get classPrefix(): string {
-    return this.showBigPreview ? "fileUpload__preview__" : "fileUpload__fileList__";
+    return this.showBigPreview ? "fileUpload__preview__" : "fileList__";
   }
 
   get showBigPreview(): boolean {
     return this.#singleFileUpload && this.#imageOnly;
   }
 
-  protected addButtons(element: WoltlabCoreFileElement): void {
+  protected addButtons(container: HTMLElement, element: WoltlabCoreFileElement): void {
     const buttons = document.createElement("ul");
     buttons.classList.add("buttonList");
     buttons.classList.add(this.classPrefix + "item__buttons");
@@ -60,7 +60,7 @@ export class FileProcessor {
       this.addReplaceButton(element, buttons);
     }
 
-    element.parentElement!.append(buttons);
+    container.append(buttons);
   }
 
   #markElementUploadHasFailed(container: HTMLElement, element: WoltlabCoreFileElement, reason: unknown): void {
@@ -161,36 +161,42 @@ export class FileProcessor {
     }
   }
 
-  async #registerFile(element: WoltlabCoreFileElement, elementContainer: HTMLElement | null = null): Promise<void> {
-    if (elementContainer === null) {
+  async #registerFile(element: WoltlabCoreFileElement, container: HTMLElement | null = null): Promise<void> {
+    if (container === null) {
       if (this.showBigPreview) {
-        elementContainer = this.#container.querySelector(".fileUpload__preview");
-        if (elementContainer === null) {
-          elementContainer = document.createElement("div");
-          elementContainer.classList.add("fileUpload__preview");
-          this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+        container = this.#container.querySelector(".fileUpload__preview");
+        if (container === null) {
+          container = document.createElement("div");
+          container.classList.add("fileUpload__preview");
+          this.#uploadButton.insertAdjacentElement("beforebegin", container);
         }
+        container.append(element);
       } else {
-        elementContainer = document.createElement("li");
-        elementContainer.classList.add("fileUpload__fileList__item");
-        this.#container.querySelector(".fileUpload__fileList")!.append(elementContainer);
+        container = document.createElement("li");
+        container.classList.add("fileList__item");
+        this.#container.querySelector(".fileList")!.append(container);
       }
-      elementContainer.append(element);
     }
 
-    // add filename and filesize information
     if (!this.showBigPreview) {
+      // create a new container for the file element
+      const fileContainer = document.createElement("div");
+      fileContainer.classList.add(this.classPrefix + "item__file");
+      fileContainer.append(element);
+      container.append(fileContainer);
+
+      // add filename and filesize information
       const filename = document.createElement("div");
       filename.classList.add(this.classPrefix + "item__filename");
       filename.textContent = element.filename || element.dataset.filename!;
 
-      elementContainer.append(filename);
+      container.append(filename);
 
       const fileSize = document.createElement("div");
       fileSize.classList.add(this.classPrefix + "item__fileSize");
       fileSize.textContent = formatFilesize(element.fileSize || parseInt(element.dataset.fileSize!));
 
-      elementContainer.append(fileSize);
+      container.append(fileSize);
     }
 
     try {
@@ -213,10 +219,10 @@ export class FileProcessor {
           tmpContainer.append(element);
           this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
 
-          elementContainer = tmpContainer;
+          container = tmpContainer;
         }
       }
-      this.#markElementUploadHasFailed(elementContainer, element, reason);
+      this.#markElementUploadHasFailed(container, element, reason);
       return;
     }
 
@@ -249,7 +255,7 @@ export class FileProcessor {
           previewImage.classList.add(this.classPrefix + "item__previewImage");
           filenameLink.append(previewImage);
 
-          const filenameContainer = elementContainer.querySelector("." + this.classPrefix + "item__filename")!;
+          const filenameContainer = container.querySelector("." + this.classPrefix + "item__filename")!;
           filenameContainer.innerHTML = "";
           filenameContainer.append(filenameLink);
 
@@ -262,8 +268,8 @@ export class FileProcessor {
     input.type = "hidden";
     input.name = this.#singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
     input.value = element.fileId!.toString();
-    elementContainer.append(input);
+    container.append(input);
 
-    this.addButtons(element);
+    this.addButtons(container, element);
   }
 }

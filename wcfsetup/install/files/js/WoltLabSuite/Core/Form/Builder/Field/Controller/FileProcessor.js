@@ -35,12 +35,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             });
         }
         get classPrefix() {
-            return this.showBigPreview ? "fileUpload__preview__" : "fileUpload__fileList__";
+            return this.showBigPreview ? "fileUpload__preview__" : "fileList__";
         }
         get showBigPreview() {
             return this.#singleFileUpload && this.#imageOnly;
         }
-        addButtons(element) {
+        addButtons(container, element) {
             const buttons = document.createElement("ul");
             buttons.classList.add("buttonList");
             buttons.classList.add(this.classPrefix + "item__buttons");
@@ -48,7 +48,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             if (this.#singleFileUpload) {
                 this.addReplaceButton(element, buttons);
             }
-            element.parentElement.append(buttons);
+            container.append(buttons);
         }
         #markElementUploadHasFailed(container, element, reason) {
             if (reason instanceof Error) {
@@ -135,33 +135,38 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 element.parentElement.remove();
             }
         }
-        async #registerFile(element, elementContainer = null) {
-            if (elementContainer === null) {
+        async #registerFile(element, container = null) {
+            if (container === null) {
                 if (this.showBigPreview) {
-                    elementContainer = this.#container.querySelector(".fileUpload__preview");
-                    if (elementContainer === null) {
-                        elementContainer = document.createElement("div");
-                        elementContainer.classList.add("fileUpload__preview");
-                        this.#uploadButton.insertAdjacentElement("beforebegin", elementContainer);
+                    container = this.#container.querySelector(".fileUpload__preview");
+                    if (container === null) {
+                        container = document.createElement("div");
+                        container.classList.add("fileUpload__preview");
+                        this.#uploadButton.insertAdjacentElement("beforebegin", container);
                     }
+                    container.append(element);
                 }
                 else {
-                    elementContainer = document.createElement("li");
-                    elementContainer.classList.add("fileUpload__fileList__item");
-                    this.#container.querySelector(".fileUpload__fileList").append(elementContainer);
+                    container = document.createElement("li");
+                    container.classList.add("fileList__item");
+                    this.#container.querySelector(".fileList").append(container);
                 }
-                elementContainer.append(element);
             }
-            // add filename and filesize information
             if (!this.showBigPreview) {
+                // create a new container for the file element
+                const fileContainer = document.createElement("div");
+                fileContainer.classList.add(this.classPrefix + "item__file");
+                fileContainer.append(element);
+                container.append(fileContainer);
+                // add filename and filesize information
                 const filename = document.createElement("div");
                 filename.classList.add(this.classPrefix + "item__filename");
                 filename.textContent = element.filename || element.dataset.filename;
-                elementContainer.append(filename);
+                container.append(filename);
                 const fileSize = document.createElement("div");
                 fileSize.classList.add(this.classPrefix + "item__fileSize");
                 fileSize.textContent = (0, FileUtil_1.formatFilesize)(element.fileSize || parseInt(element.dataset.fileSize));
-                elementContainer.append(fileSize);
+                container.append(fileSize);
             }
             try {
                 await element.ready;
@@ -181,10 +186,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         const tmpContainer = document.createElement("div");
                         tmpContainer.append(element);
                         this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
-                        elementContainer = tmpContainer;
+                        container = tmpContainer;
                     }
                 }
-                this.#markElementUploadHasFailed(elementContainer, element, reason);
+                this.#markElementUploadHasFailed(container, element, reason);
                 return;
             }
             if (this.showBigPreview) {
@@ -215,7 +220,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         previewImage.loading = "lazy";
                         previewImage.classList.add(this.classPrefix + "item__previewImage");
                         filenameLink.append(previewImage);
-                        const filenameContainer = elementContainer.querySelector("." + this.classPrefix + "item__filename");
+                        const filenameContainer = container.querySelector("." + this.classPrefix + "item__filename");
                         filenameContainer.innerHTML = "";
                         filenameContainer.append(filenameLink);
                         Listener_1.default.trigger();
@@ -226,8 +231,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             input.type = "hidden";
             input.name = this.#singleFileUpload ? this.#fieldId : this.#fieldId + "[]";
             input.value = element.fileId.toString();
-            elementContainer.append(input);
-            this.addButtons(element);
+            container.append(input);
+            this.addButtons(container, element);
         }
     }
     exports.FileProcessor = FileProcessor;
