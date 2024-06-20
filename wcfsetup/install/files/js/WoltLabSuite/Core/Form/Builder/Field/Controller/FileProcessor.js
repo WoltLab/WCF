@@ -43,7 +43,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         addButtons(element) {
             const buttons = document.createElement("ul");
             buttons.classList.add("buttonList");
-            buttons.classList.add(this.classPrefix + "buttons");
+            buttons.classList.add(this.classPrefix + "item__buttons");
             this.addDeleteButton(element, buttons);
             if (this.#singleFileUpload) {
                 this.addReplaceButton(element, buttons);

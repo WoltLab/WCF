@@ -52,7 +52,7 @@ export class FileProcessor {
   protected addButtons(element: WoltlabCoreFileElement): void {
     const buttons = document.createElement("ul");
     buttons.classList.add("buttonList");
-    buttons.classList.add(this.classPrefix + "buttons");
+    buttons.classList.add(this.classPrefix + "item__buttons");
 
     this.addDeleteButton(element, buttons);
 
