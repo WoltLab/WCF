@@ -245,6 +245,7 @@ export class FileProcessor {
           previewImage.src = thumbnail !== undefined ? thumbnail.link : element.link;
           previewImage.alt = element.filename;
           previewImage.style.display = "none";
+          previewImage.loading = "lazy";
           previewImage.classList.add(this.classPrefix + "item__previewImage");
           filenameLink.append(previewImage);
 

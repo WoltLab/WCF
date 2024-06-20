@@ -212,6 +212,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         previewImage.src = thumbnail !== undefined ? thumbnail.link : element.link;
                         previewImage.alt = element.filename;
                         previewImage.style.display = "none";
+                        previewImage.loading = "lazy";
                         previewImage.classList.add(this.classPrefix + "item__previewImage");
                         filenameLink.append(previewImage);
                         const filenameContainer = elementContainer.querySelector("." + this.classPrefix + "item__filename");
