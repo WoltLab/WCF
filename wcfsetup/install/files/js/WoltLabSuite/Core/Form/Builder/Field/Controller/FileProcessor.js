@@ -17,10 +17,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         #fileInput;
         #imageOnly;
         #singleFileUpload;
-        constructor(fieldId, singleFileUpload = false, imageOnly = false) {
+        #extraButtons;
+        constructor(fieldId, singleFileUpload = false, imageOnly = false, extraButtons = []) {
             this.#fieldId = fieldId;
             this.#imageOnly = imageOnly;
             this.#singleFileUpload = singleFileUpload;
+            this.#extraButtons = extraButtons;
             this.#container = document.getElementById(fieldId + "Container");
             if (this.#container === null) {
                 throw new Error("Unknown field with id '" + fieldId + "'");
@@ -48,6 +50,25 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             if (this.#singleFileUpload) {
                 this.addReplaceButton(element, buttons);
             }
+            this.#extraButtons.forEach((button) => {
+                const extraButton = document.createElement("button");
+                extraButton.type = "button";
+                extraButton.classList.add("button", "small");
+                if (button.icon === undefined) {
+                    extraButton.textContent = button.title;
+                }
+                else {
+                    extraButton.classList.add("jsTooltip");
+                    extraButton.title = button.title;
+                    extraButton.innerHTML = button.icon;
+                }
+                extraButton.addEventListener("click", () => {
+                    element.dispatchEvent(new CustomEvent("fileProcessorCustomAction", { detail: button.actionName }));
+                });
+                const listItem = document.createElement("li");
+                listItem.append(extraButton);
+                buttons.append(listItem);
+            });
             container.append(buttons);
         }
         #markElementUploadHasFailed(container, element, reason) {

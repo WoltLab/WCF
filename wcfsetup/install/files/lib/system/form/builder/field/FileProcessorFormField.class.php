@@ -9,6 +9,8 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\TObjectTypeFormNode;
+use wcf\system\style\FontAwesomeIcon;
+use wcf\system\style\IFontAwesomeIcon;
 use wcf\util\ArrayUtil;
 use wcf\util\ImageUtil;
 
@@ -35,6 +37,7 @@ final class FileProcessorFormField extends AbstractFormField
      */
     private array $files = [];
     private bool $singleFileUpload = false;
+    private array $actionButtons = [];
 
     #[\Override]
     public function readValue()
@@ -61,6 +64,11 @@ final class FileProcessorFormField extends AbstractFormField
     #[\Override]
     public function getHtmlVariables()
     {
+        $this->addActionButton(
+            'delete',
+            'wcf.form.field.fileProcessor.action.delete',
+            FontAwesomeIcon::fromValues('trash')
+        );
         return [
             'fileProcessorHtmlElement' => FileProcessor::getInstance()->getHtmlElement(
                 $this->getFileProcessor(),
@@ -70,7 +78,8 @@ final class FileProcessorFormField extends AbstractFormField
             'imageOnly' => \array_diff(
                 $this->getFileProcessor()->getAllowedFileExtensions($this->context),
                 ImageUtil::IMAGE_EXTENSIONS
-            ) === []
+            ) === [],
+            'actionButtons' => $this->actionButtons,
         ];
     }
 
@@ -170,6 +179,20 @@ final class FileProcessorFormField extends AbstractFormField
         parent::validate();
     }
 
+    /**
+     * Adds an action button to the file processor.
+     * If the button is clicked, the event `fileProcessorCustomAction` will be triggered.
+     */
+    public function addActionButton(string $actionName, string $title, ?IFontAwesomeIcon $icon = null): self
+    {
+        $this->actionButtons[] = [
+            'actionName' => $actionName,
+            'title' => $title,
+            'icon' => $icon
+        ];
+
+        return $this;
+    }
 
     /**
      * Returns the context for the file processor.

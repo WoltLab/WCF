@@ -11,6 +11,12 @@ import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 
+export interface ExtraButton {
+  title: string;
+  icon?: string;
+  actionName: string;
+}
+
 export class FileProcessor {
   readonly #container: HTMLElement;
   readonly #uploadButton: WoltlabCoreFileUploadElement;
@@ -19,11 +25,18 @@ export class FileProcessor {
   readonly #fileInput: HTMLInputElement;
   readonly #imageOnly: boolean;
   readonly #singleFileUpload: boolean;
+  readonly #extraButtons: ExtraButton[];
 
-  constructor(fieldId: string, singleFileUpload: boolean = false, imageOnly: boolean = false) {
+  constructor(
+    fieldId: string,
+    singleFileUpload: boolean = false,
+    imageOnly: boolean = false,
+    extraButtons: ExtraButton[] = [],
+  ) {
     this.#fieldId = fieldId;
     this.#imageOnly = imageOnly;
     this.#singleFileUpload = singleFileUpload;
+    this.#extraButtons = extraButtons;
 
     this.#container = document.getElementById(fieldId + "Container")!;
     if (this.#container === null) {
@@ -59,6 +72,26 @@ export class FileProcessor {
     if (this.#singleFileUpload) {
       this.addReplaceButton(element, buttons);
     }
+
+    this.#extraButtons.forEach((button) => {
+      const extraButton = document.createElement("button");
+      extraButton.type = "button";
+      extraButton.classList.add("button", "small");
+      if (button.icon === undefined) {
+        extraButton.textContent = button.title;
+      } else {
+        extraButton.classList.add("jsTooltip");
+        extraButton.title = button.title;
+        extraButton.innerHTML = button.icon;
+      }
+      extraButton.addEventListener("click", () => {
+        element.dispatchEvent(new CustomEvent("fileProcessorCustomAction", { detail: button.actionName }));
+      });
+
+      const listItem = document.createElement("li");
+      listItem.append(extraButton);
+      buttons.append(listItem);
+    });
 
     container.append(buttons);
   }
