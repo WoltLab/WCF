@@ -200,6 +200,17 @@ html[data-color-scheme="dark"] {
 	justify-content: end;
 }
 
+.attachment__item__progress {
+	align-items: center;
+	column-gap: 10px;
+	display: flex;
+	grid-area: buttons;
+}
+
+.attachment__item__progress__readout {
+	@include wcfFontSmall;
+}
+
 .formAttachmentContent {
 	.formAttachmentList {
 		display: flex;

@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         const { identifier, numberOfChunks } = response.value;
         const chunkSize = Math.ceil(file.size / numberOfChunks);
-        // TODO: Can we somehow report any meaningful upload progress?
+        notifyChunkProgress(fileElement, 0, numberOfChunks);
         for (let i = 0; i < numberOfChunks; i++) {
             const start = i * chunkSize;
             const end = start + chunkSize;
@@ -34,11 +34,23 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 fileElement.uploadFailed(response.error);
                 throw response.error;
             }
+            notifyChunkProgress(fileElement, i + 1, numberOfChunks);
             await chunkUploadCompleted(fileElement, response.value);
             if (response.value.completed) {
                 return response.value;
             }
         }
+    }
+    function notifyChunkProgress(element, currentChunk, numberOfChunks) {
+        // Suppress the progress bar for uploads that are processed in a single
+        // request, because we cannot track the upload progress within a chunk.
+        if (numberOfChunks === 1) {
+            return;
+        }
+        const event = new CustomEvent("uploadProgress", {
+            detail: Math.floor((currentChunk / numberOfChunks) * 100),
+        });
+        element.dispatchEvent(event);
     }
     async function chunkUploadCompleted(fileElement, result) {
         if (!result.completed) {

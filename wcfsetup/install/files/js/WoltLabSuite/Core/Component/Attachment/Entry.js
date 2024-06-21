@@ -141,6 +141,31 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         errorElement.textContent = errorMessage;
         element.append(errorElement);
     }
+    function trackUploadProgress(element, file) {
+        const progress = document.createElement("progress");
+        progress.classList.add("attachment__item__progress__bar");
+        progress.max = 100;
+        const readout = document.createElement("span");
+        readout.classList.add("attachment__item__progress__readout");
+        file.addEventListener("uploadProgress", (event) => {
+            progress.value = event.detail;
+            readout.textContent = `${event.detail}%`;
+            if (progress.parentNode === null) {
+                element.classList.add("attachment__item--uploading");
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("attachment__item__progress");
+                wrapper.append(progress, readout);
+                element.append(wrapper);
+            }
+        });
+    }
+    function removeUploadProgress(element) {
+        if (!element.classList.contains("attachment__item--uploading")) {
+            return;
+        }
+        element.classList.remove("attachment__item--uploading");
+        element.querySelector(".attachment__item__progress")?.remove();
+    }
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("attachment__item");
@@ -160,7 +185,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         })
             .catch((reason) => {
             fileInitializationFailed(element, file, reason);
+        })
+            .finally(() => {
+            removeUploadProgress(element);
         });
+        trackUploadProgress(element, file);
         return element;
     }
     exports.createAttachmentFromFile = createAttachmentFromFile;

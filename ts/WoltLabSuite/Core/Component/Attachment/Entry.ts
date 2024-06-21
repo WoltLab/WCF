@@ -188,6 +188,38 @@ function markElementAsErroneous(element: HTMLElement, errorMessage: string): voi
   element.append(errorElement);
 }
 
+function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
+  const progress = document.createElement("progress");
+  progress.classList.add("attachment__item__progress__bar");
+  progress.max = 100;
+  const readout = document.createElement("span");
+  readout.classList.add("attachment__item__progress__readout");
+
+  file.addEventListener("uploadProgress", (event: CustomEvent<number>) => {
+    progress.value = event.detail;
+    readout.textContent = `${event.detail}%`;
+
+    if (progress.parentNode === null) {
+      element.classList.add("attachment__item--uploading");
+
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("attachment__item__progress");
+      wrapper.append(progress, readout);
+
+      element.append(wrapper);
+    }
+  });
+}
+
+function removeUploadProgress(element: HTMLElement): void {
+  if (!element.classList.contains("attachment__item--uploading")) {
+    return;
+  }
+
+  element.classList.remove("attachment__item--uploading");
+  element.querySelector(".attachment__item__progress")?.remove();
+}
+
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {
   const element = document.createElement("li");
   element.classList.add("attachment__item");
@@ -212,7 +244,12 @@ export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: H
     })
     .catch((reason) => {
       fileInitializationFailed(element, file, reason);
+    })
+    .finally(() => {
+      removeUploadProgress(element);
     });
+
+  trackUploadProgress(element, file);
 
   return element;
 }
