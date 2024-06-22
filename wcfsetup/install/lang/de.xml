@@ -984,7 +984,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[Die Systemumgebung hat sich verändert. Es wird empfohlen, eine <a href="{link controller='SystemCheck'}{/link}">Systemüberprüfung</a> durchzuführen.]]></item>
 		<item name="wcf.acp.index.cacheSanityCheckFailed"><![CDATA[Die eingestellte Cache-Methode („{CACHE_SOURCE_TYPE}“) funktioniert nicht richtig.]]></item>
-		<item name="wcf.acp.index.insecureContext"><![CDATA[Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software wichtig sind.]]></item>
+		<item name="wcf.acp.index.insecureContext"><![CDATA[Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software erforderlich sind.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>

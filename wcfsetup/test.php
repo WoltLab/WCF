@@ -11,7 +11,7 @@ if (isset($_GET['language']) && \in_array($_GET['language'], ['de', 'en'])) {
     $language = $_GET['language'];
 }
 
-const WSC_SRT_VERSION = '6.0.0';
+const WSC_SRT_VERSION = '6.1.0';
 $requiredExtensions = [
     'ctype',
     'dom',
@@ -81,6 +81,10 @@ $phrases = [
     'mysql_version' => [
         'de' => 'Bitte stellen Sie sicher, dass MySQL 8.0.30+  oder MariaDB 10.5.15+ mit InnoDB-Unterstützung vorhanden ist.',
         'en' => 'Please make sure that MySQL 8.0.30+ or MariaDB 10.5.15+, with InnoDB support is available.',
+    ],
+    'tls_failure' => [
+        'de' => 'Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software erforderlich sind.',
+        'en' => 'The page is not accessed via HTTPS. Important features that are required for the proper operation of the software are therefore not available.',
     ],
     'result' => [
         'de' => 'Ergebnis',
@@ -185,7 +189,7 @@ function checkResult()
 {
     global $requiredExtensions;
 
-    if (!checkPHPVersion() || !checkX64() || !checkMemoryLimit() || !checkOpcache()) {
+    if (!checkPHPVersion() || !checkX64() || !checkMemoryLimit() || !checkOpcache() || !checkTls()) {
         return false;
     }
 
@@ -223,6 +227,25 @@ function checkOpcache()
     }
 
     return true;
+}
+function checkTls(): bool
+{
+    // @see \wcf\system\request\RouteHandler::secureConnection()
+    if (
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+        || $_SERVER['SERVER_PORT'] == 443
+        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+    ) {
+        return true;
+    }
+
+    // @see \wcf\system\request\RouteHandler::secureContext()
+    $host = $_SERVER['HTTP_HOST'];
+    if ($host === '127.0.0.1' || $host === 'localhost' || \str_ends_with($host, '.localhost')) {
+        return true;
+    }
+
+    return false;
 }
 
 ?>
@@ -481,6 +504,10 @@ function checkOpcache()
 
                     <?php if (!checkOpcache()) { ?>
                         <li class="failure"><?= getPhrase('php_opcache_failure') ?></li>
+                    <?php } ?>
+
+                    <?php if (!checkTls()) { ?>
+                        <li class="failure"><?= getPhrase('tls_failure') ?></li>
                     <?php } ?>
                 <?php } else { ?>
                     <li class="failure"><?= getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersionUpperBound]) ?></li>

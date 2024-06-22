@@ -962,7 +962,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[The system environment has changed. It is recommended to perform a <a href="{link controller='SystemCheck'}{/link}">System Check</a>.]]></item>
 		<item name="wcf.acp.index.cacheSanityCheckFailed"><![CDATA[The configured caching method (“{CACHE_SOURCE_TYPE}”) is not working correctly.]]></item>
-		<item name="wcf.acp.index.insecureContext"><![CDATA[The page is not accessed via HTTPS. Important features that are important for the proper operation of the software are therefore not available.]]></item>
+		<item name="wcf.acp.index.insecureContext"><![CDATA[The page is not accessed via HTTPS. Important features that are required for the proper operation of the software are therefore not available.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
