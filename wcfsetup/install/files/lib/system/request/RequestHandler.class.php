@@ -20,6 +20,7 @@ use wcf\http\middleware\CheckForExpiredAppEvaluation;
 use wcf\http\middleware\CheckForForceLogin;
 use wcf\http\middleware\CheckForMultifactorRequirement;
 use wcf\http\middleware\CheckForOfflineMode;
+use wcf\http\middleware\CheckForTls;
 use wcf\http\middleware\CheckHttpMethod;
 use wcf\http\middleware\CheckSystemEnvironment;
 use wcf\http\middleware\CheckUserBan;
@@ -144,6 +145,7 @@ final class RequestHandler extends SingletonFactory
                     new EnforceAcpAuthentication(),
                     new CheckForEnterpriseNonOwnerAccess(),
                     new CheckForExpiredAppEvaluation(),
+                    new CheckForTls(),
                     new CheckForOfflineMode(),
                     new CheckForForceLogin(),
                     new CheckForMultifactorRequirement(),
