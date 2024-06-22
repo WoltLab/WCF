@@ -11,6 +11,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
 use wcf\system\registry\RegistryHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
 /**
@@ -144,6 +145,13 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             $messages[] = new StatusMessage(
                 StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.index.cacheSanityCheckFailed')
+            );
+        }
+
+        if (!RouteHandler::secureContext()) {
+            $messages[] = new StatusMessage(
+                StatusMessageType::Error,
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.index.insecureContext')
             );
         }
 
