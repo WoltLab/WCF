@@ -10,11 +10,10 @@ use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
 
 #[PostRequest('/core/files/{id:\d+}/generatethumbnails')]
-final class PostGenerateThumbnails implements IController
+final class GenerateThumbnails implements IController
 {
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
