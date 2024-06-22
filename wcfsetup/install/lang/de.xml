@@ -2815,6 +2815,9 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.systemCheck.php.opcache"><![CDATA[OPcache]]></item>
 		<item name="wcf.acp.systemCheck.php.opcache.description"><![CDATA[PHPs OPcache beschleunigt die Bearbeitung von Anfragen, indem der vorverarbeitete Programmcode gecached wird. Bei aktiviertem OPcache müssen die Verwaltungsfunktionen <kbd>opcache_reset()</kbd> und <kbd>opcache_invalidate()</kbd> zur Verfügung stehen, damit der Cache nach einer Aktualisierung des Programmcodes zuverlässig neu aufgebaut werden kann.]]></item>
 		<item name="wcf.acp.systemCheck.php.opcache.broken"><![CDATA[Fehlerhaft – die Verwaltungsfunktionen sind nicht verfügbar]]></item>
+		<item name="wcf.acp.systemCheck.web"><![CDATA[Webserver]]></item>
+		<item name="wcf.acp.systemCheck.web.https"><![CDATA[Aufruf per HTTPS/TLS]]></item>
+		<item name="wcf.acp.systemCheck.web.https.description"><![CDATA[Neue Funktionen in Webbrowsern werden nur beim Aufruf über HTTPS/TLS unterstützt, bei unverschlüsselten Verbindungen fehlen wichtige Funktionen.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>

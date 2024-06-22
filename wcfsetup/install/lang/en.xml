@@ -2744,6 +2744,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.opcache"><![CDATA[OPcache]]></item>
 		<item name="wcf.acp.systemCheck.php.opcache.description"><![CDATA[PHP’s OPcache improves request processing performance by caching the preprocessed application code. If OPcache is enabled the management functions <kbd>opcache_reset()</kbd> and <kbd>opcache_invalidate()</kbd> need to be available to be able to reliably reset the cache when the application code is updated.]]></item>
 		<item name="wcf.acp.systemCheck.php.opcache.broken"><![CDATA[Broken – the management functions are unavailable]]></item>
+		<item name="wcf.acp.systemCheck.web"><![CDATA[Web Server]]></item>
+		<item name="wcf.acp.systemCheck.web.https"><![CDATA[Access via HTTPS/TLS]]></item>
+		<item name="wcf.acp.systemCheck.web.https.description"><![CDATA[New functions in web browsers are only supported when accessed via HTTPS/TLS; important features are missing for unencrypted connections.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
