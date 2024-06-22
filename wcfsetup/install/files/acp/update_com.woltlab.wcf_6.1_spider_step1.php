@@ -10,11 +10,20 @@
  */
 
 use wcf\system\database\table\column\IntDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
+use wcf\system\WCF;
 
-return [
+$tableNames = WCF::getDB()->getEditor()->getTableNames();
+if (!\in_array('wcf' . WCF_N . '_spider', $tableNames)) {
+    // The table `wcf1_spider` will be removed by a database PIP that is
+    // executed after this script.
+    return;
+}
+
+$tables = [
     PartialDatabaseTable::create('wcf1_session')
         ->columns([
             IntDatabaseTableColumn::create('spiderID')
@@ -27,6 +36,9 @@ return [
                 ->drop(),
         ])
         ->foreignKeys([
+            // This foreign key definition fails to validate when the table
+            // `wcf1_spider` no longer exists, despite it being scheduled for
+            // removal.
             DatabaseTableForeignKey::create()
                 ->columns(['spiderID'])
                 ->referencedTable('wcf1_spider')
@@ -35,3 +47,11 @@ return [
                 ->drop(),
         ]),
 ];
+
+(new DatabaseTableChangeProcessor(
+    /** @var ScriptPackageInstallationPlugin $this */
+    $this->installation->getPackage(),
+    $tables,
+    WCF::getDB()->getEditor()
+)
+)->process();
