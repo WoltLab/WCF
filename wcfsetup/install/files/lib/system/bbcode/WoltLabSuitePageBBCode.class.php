@@ -35,6 +35,6 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
         }
 
-        return WCF::getTPL()->fetch('shared_contentNotVisible');
+        return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
     }
 }

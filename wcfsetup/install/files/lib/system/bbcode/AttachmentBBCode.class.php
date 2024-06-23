@@ -27,7 +27,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         $attachment = $this->getAttachment($attachmentID);
         if ($attachment === null) {
-            return WCF::getTPL()->fetch('shared_contentNotVisible');
+            return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
         }
 
         $outputType = $parser->getOutputType();
@@ -251,7 +251,7 @@ final class AttachmentBBCode extends AbstractBBCode
         return WCF::getTPL()->fetch('shared_bbcode_attach_video', 'wcf', [
             'attachment' => $attachment,
             'attachmentIdentifier' => StringUtil::getRandomID(),
-        ]);
+        ], true);
     }
 
     private function showAudioPlayer(Attachment $attachment): string
@@ -259,7 +259,7 @@ final class AttachmentBBCode extends AbstractBBCode
         return WCF::getTPL()->fetch('shared_bbcode_attach_audio', 'wcf', [
             'attachment' => $attachment,
             'attachmentIdentifier' => StringUtil::getRandomID(),
-        ]);
+        ], true);
     }
 
     private function getAttachment(int $attachmentID): ?Attachment
