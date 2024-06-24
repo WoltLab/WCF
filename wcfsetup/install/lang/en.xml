@@ -1806,6 +1806,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[The selected package does not support an installation.]]></item>
 		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Package “{$package->getName()}” cannot be updated using the selected archive.]]></item>
 		<item name="wcf.acp.package.error.majorUpgrade"><![CDATA[The package updates your community to a new major version. For stability reasons major upgrades may only be performed via the update servers. Detailed information regarding the upgrade process can be found <a href="https://manual.woltlab.com/en/updates/" class="externalURL">in our manual</a>.]]></item>
+		<item name="wcf.acp.package.error.incompatibleStoreProduct"><![CDATA[The package is incompatible and cannot be installed. You can only install packages that are listed as compatible with WoltLab Suite {literal}{$versionNumber}{/literal}.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Details]]></item>
@@ -3423,7 +3424,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.comment.more"><![CDATA[More Comments]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}One more reply{else}{#$count} more replies{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Reply]]></item>
-		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reactions]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.comment.objectAuthor"><![CDATA[Author]]></item>

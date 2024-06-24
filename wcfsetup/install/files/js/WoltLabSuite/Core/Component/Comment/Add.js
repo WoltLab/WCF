@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core", "../Ckeditor", "../Ckeditor/Event"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core, Ckeditor_1, Event_1) {
+define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "../Ckeditor", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Comments/CreateComment", "../GuestTokenDialog", "WoltLabSuite/Core/User"], function (require, exports, tslib_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, Ckeditor_1, Event_1, CreateComment_1, GuestTokenDialog_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentAdd = void 0;
@@ -14,7 +14,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Core = tslib_1.__importStar(Core);
+    User_1 = tslib_1.__importDefault(User_1);
     class CommentAdd {
         #container;
         #content;
@@ -91,39 +91,30 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
         /**
          * Validates the message and submits it to the server.
          */
-        async #submit(additionalParameters = {}) {
+        async #submit() {
             if (!this.#validate()) {
                 return;
             }
             this.#showLoadingOverlay();
-            const parameters = this.#getParameters();
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data);
-            let response;
-            try {
-                response = (await (0, Ajax_1.dboAction)("addComment", "wcf\\data\\comment\\CommentAction")
-                    .payload(Core.extend(parameters, additionalParameters))
-                    .disableLoadingIndicator()
-                    .dispatch());
-            }
-            catch (error) {
-                await (0, Ajax_1.handleValidationErrors)(error, (returnValues) => {
-                    this.#throwError(this.#getEditor().element, returnValues.errorType);
+            let token = "";
+            if (!User_1.default.userId) {
+                token = await (0, GuestTokenDialog_1.getGuestToken)();
+                if (token === undefined) {
                     this.#hideLoadingOverlay();
-                    return true;
-                });
+                    return;
+                }
+            }
+            const response = await (0, CreateComment_1.createComment)(this.#objectTypeId, this.#objectId, this.#getEditor().getHtml(), token);
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
+                }
+                this.#throwError(this.#getEditor().element, validationError.code);
+                this.#hideLoadingOverlay();
                 return;
             }
-            if (response.guestDialog) {
-                const additionalParameters = await (0, GuestDialog_1.showGuestDialog)(response.guestDialog);
-                if (additionalParameters === undefined) {
-                    this.#hideLoadingOverlay();
-                }
-                else {
-                    void this.#submit(additionalParameters);
-                }
-                return;
-            }
-            this.#callback(response.template);
+            this.#callback(response.value.commentID);
             UiNotification.show((0, Language_1.getPhrase)("wcf.global.success.add"));
             this.#reset();
             this.#hideLoadingOverlay();
@@ -155,18 +146,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
          */
         #throwError(element, message) {
             Util_1.default.innerError(element, message === "empty" ? (0, Language_1.getPhrase)("wcf.global.form.error.empty") : message);
-        }
-        /**
-         * Returns the request parameters to add a comment.
-         */
-        #getParameters() {
-            return {
-                data: {
-                    message: this.#getEditor().getHtml(),
-                    objectID: this.#objectId,
-                    objectTypeID: this.#objectTypeId,
-                },
-            };
         }
         /**
          * Resets the editor contents and notifies event listeners.

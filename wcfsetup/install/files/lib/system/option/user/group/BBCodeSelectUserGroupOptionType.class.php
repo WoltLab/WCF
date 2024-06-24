@@ -74,7 +74,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         WCF::getTPL()->assign([
             'bbCodes' => $this->bbCodes,
             'option' => $option,
-            'selectedBBCodes' => \explode(',', $value),
+            'selectedBBCodes' => \explode(',', $value ?: ''),
         ]);
 
         return WCF::getTPL()->fetch('bbCodeSelectOptionType');

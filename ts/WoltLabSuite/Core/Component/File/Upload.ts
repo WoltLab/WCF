@@ -65,7 +65,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
 
   const chunkSize = Math.ceil(file.size / numberOfChunks);
 
-  // TODO: Can we somehow report any meaningful upload progress?
+  notifyChunkProgress(fileElement, 0, numberOfChunks);
 
   for (let i = 0; i < numberOfChunks; i++) {
     const start = i * chunkSize;
@@ -81,12 +81,27 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
       throw response.error;
     }
 
+    notifyChunkProgress(fileElement, i + 1, numberOfChunks);
+
     await chunkUploadCompleted(fileElement, response.value);
 
     if (response.value.completed) {
       return response.value;
     }
   }
+}
+
+function notifyChunkProgress(element: WoltlabCoreFileElement, currentChunk: number, numberOfChunks: number): void {
+  // Suppress the progress bar for uploads that are processed in a single
+  // request, because we cannot track the upload progress within a chunk.
+  if (numberOfChunks === 1) {
+    return;
+  }
+
+  const event = new CustomEvent<number>("uploadProgress", {
+    detail: Math.floor((currentChunk / numberOfChunks) * 100),
+  });
+  element.dispatchEvent(event);
 }
 
 async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result: UploadChunkResponse): Promise<void> {

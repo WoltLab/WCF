@@ -370,18 +370,17 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     public function getWcfNodeIdentifer(): array
     {
-        static $engine = null;
+        static $counter = 0;
+        static $prefix = null;
 
-        if ($engine === null) {
-            if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
-                $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar());
-                $engine = static fn () => \bin2hex($randomizer->getBytes(16));
-            } else {
-                $engine = static fn () => \bin2hex(\random_bytes(16));
-            }
+        if ($prefix === null) {
+            // The `x` is appended to visually separate the prefix and the
+            // counter to aid in debugging in case the random prefix ends with
+            // one or more numeric characters.
+            $prefix = \bin2hex(\random_bytes(16)) . 'x';
         }
 
-        $identifier = $engine();
+        $identifier = $prefix . $counter++;
 
         return [$identifier, "wcfNode-{$identifier}"];
     }

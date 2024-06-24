@@ -73,9 +73,6 @@ return [
             VarcharDatabaseTableColumn::create('fileExtension')
                 ->length(10)
                 ->notNull(),
-            CharDatabaseTableColumn::create('secret')
-                ->length(32)
-                ->notNull(),
             IntDatabaseTableColumn::create('objectTypeID'),
             NotNullVarchar255DatabaseTableColumn::create('mimeType'),
             IntDatabaseTableColumn::create('width'),

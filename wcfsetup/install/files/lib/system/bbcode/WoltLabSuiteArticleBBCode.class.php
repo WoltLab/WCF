@@ -32,7 +32,7 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 
         $article = $this->getArticle($articleID);
         if ($article === null) {
-            return WCF::getTPL()->fetch('shared_contentNotVisible');
+            return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
         }
 
         if (!$article->canRead()) {

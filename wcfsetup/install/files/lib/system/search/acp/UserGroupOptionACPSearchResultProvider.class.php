@@ -24,6 +24,15 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
      */
     protected $listClassName = UserGroupOptionCategoryList::class;
 
+    private array $restrictedOptionNames = [
+        'admin.configuration.package.canUpdatePackage',
+        'admin.configuration.package.canEditServer',
+        'admin.user.canMailUser',
+        'admin.management.canManageCronjob',
+        'admin.management.canRebuildData',
+        'admin.management.canImportData',
+    ];
+
     /**
      * @inheritDoc
      */
@@ -89,6 +98,10 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
                 continue;
             }
 
+            if ($this->isUnavailableOption($userGroupOption)) {
+                continue;
+            }
+
             $link = LinkHandler::getInstance()->getLink('UserGroupOption', ['id' => $userGroupOption->optionID]);
             $categoryName = $userGroupOption->categoryName;
             $parentCategories = [];
@@ -118,5 +131,30 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         }
 
         return $results;
+    }
+
+    /**
+     * @since 6.0
+     */
+    private function isUnavailableOption(UserGroupOption $userGroupOption): bool
+    {
+        if (!\defined('ENABLE_ENTERPRISE_MODE') || !\ENABLE_ENTERPRISE_MODE) {
+            return false;
+        }
+
+        if (!\in_array($userGroupOption->optionName, $this->restrictedOptionNames, true)) {
+            return false;
+        }
+
+        if (WCF::getUser()->hasOwnerAccess()) {
+            return false;
+        }
+
+        // Allow the option to appear if the user has this permission.
+        if (WCF::getSession()->getPermission($userGroupOption->optionName)) {
+            return false;
+        }
+
+        return true;
     }
 }
