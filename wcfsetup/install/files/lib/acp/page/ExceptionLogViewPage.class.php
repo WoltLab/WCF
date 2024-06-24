@@ -102,7 +102,11 @@ class ExceptionLogViewPage extends MultipleLinkPage
         RegistryHandler::getInstance()->set('com.woltlab.wcf', 'exceptionMailerTimestamp', TIME_NOW);
 
         $fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
-        $this->logFiles = DirectoryUtil::getInstance(WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
+        $logFiles = DirectoryUtil::getInstance(WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
+        foreach ($logFiles as $logFile) {
+            $pathname = WCF_DIR . 'log/' . $logFile;
+            $this->logFiles[$pathname] = $pathname;
+        }
 
         if ($this->exceptionID) {
             // search the appropriate file
