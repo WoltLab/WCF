@@ -117,9 +117,9 @@ return static function (): void {
         \wcf\event\endpoint\ControllerCollecting::class,
         static function (\wcf\event\endpoint\ControllerCollecting $event) {
             $event->register(new \wcf\system\endpoint\controller\core\files\DeleteFile);
-            $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
-            $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
-            $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
+            $event->register(new \wcf\system\endpoint\controller\core\files\GenerateThumbnails);
+            $event->register(new \wcf\system\endpoint\controller\core\files\PrepareUpload);
+            $event->register(new \wcf\system\endpoint\controller\core\files\upload\SaveChunk);
             $event->register(new \wcf\system\endpoint\controller\core\comments\CreateComment);
             $event->register(new \wcf\system\endpoint\controller\core\comments\DeleteComment);
             $event->register(new \wcf\system\endpoint\controller\core\comments\EditComment);

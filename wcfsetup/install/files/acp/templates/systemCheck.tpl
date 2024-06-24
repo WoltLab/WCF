@@ -13,6 +13,17 @@
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.systemCheck.result{/lang}</h2>
 	
+	<dl{if !$results[status][web]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.web{/lang}</dt>
+		<dd>
+			{if $results[status][web]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
+			{/if}
+		</dd>
+	</dl>
+	
 	<dl{if !$results[status][php]} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php{/lang}</dt>
 		<dd>
@@ -47,6 +58,22 @@
 			{else}
 				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
 			{/if}
+		</dd>
+	</dl>
+</section>
+
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.acp.systemCheck.web{/lang}</h2>
+	
+	<dl{if !$results[web][https]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.web.https{/lang}</dt>
+		<dd>
+			{if $results[web][https]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.web.https.description{/lang}</small>
 		</dd>
 	</dl>
 </section>

@@ -18,7 +18,7 @@ use wcf\system\file\processor\FileProcessorPreflightResult;
 use wcf\util\JSON;
 
 #[PostRequest('/core/files/upload')]
-final class PostUpload implements IController
+final class PrepareUpload implements IController
 {
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {

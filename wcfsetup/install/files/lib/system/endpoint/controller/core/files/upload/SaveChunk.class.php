@@ -15,7 +15,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
 
 #[PostRequest('/core/files/upload/{identifier}/chunk/{sequenceNo:\d+}')]
-final class PostChunk implements IController
+final class SaveChunk implements IController
 {
     /**
      * Read data in chunks to avoid hitting the memory limit.

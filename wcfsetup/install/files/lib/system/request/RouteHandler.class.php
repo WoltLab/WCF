@@ -264,6 +264,34 @@ final class RouteHandler extends SingletonFactory
     }
 
     /**
+     * Returns true if the current environment is treated as a secure context by
+     * browsers.
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts#when_is_a_context_considered_secure
+     * @since 6.1
+     */
+    public static function secureContext(): bool
+    {
+        static $secureContext = null;
+        if ($secureContext === null) {
+            $secureContext = self::secureConnection();
+
+            // The connection is considered as secure if it is encrypted with
+            // TLS, or if the target host is a local address.
+            if (!$secureContext) {
+                $host = $_SERVER['HTTP_HOST'];
+
+                // @see https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-let-localhost-be-localhost-02
+                if ($host === '127.0.0.1' || $host === 'localhost' || \str_ends_with($host, '.localhost')) {
+                    $secureContext = true;
+                }
+            }
+        }
+
+        return $secureContext;
+    }
+
+    /**
      * Returns HTTP protocol, either 'http://' or 'https://'.
      */
     public static function getProtocol(): string

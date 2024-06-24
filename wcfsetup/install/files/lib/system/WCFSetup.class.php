@@ -421,7 +421,7 @@ final class WCFSetup extends WCF
 
         $system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == TMP_FILE_PREFIX;
 
-        $system['tls']['result'] = RouteHandler::secureConnection() || $system['hostname']['value'] == 'localhost';
+        $system['tls']['result'] = RouteHandler::secureContext();
 
         foreach ($system as $result) {
             if (!$result['result']) {
