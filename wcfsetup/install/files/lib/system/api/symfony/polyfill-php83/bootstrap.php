@@ -27,12 +27,20 @@ if (!function_exists('stream_context_set_options')) {
     function stream_context_set_options($context, array $options): bool { return stream_context_set_option($context, $options); }
 }
 
+if (!function_exists('str_increment')) {
+    function str_increment(string $string): string { return p\Php83::str_increment($string); }
+}
+
+if (!function_exists('str_decrement')) {
+    function str_decrement(string $string): string { return p\Php83::str_decrement($string); }
+}
+
 if (\PHP_VERSION_ID >= 80100) {
     return require __DIR__.'/bootstrap81.php';
 }
 
 if (!function_exists('ldap_exop_sync') && function_exists('ldap_exop')) {
-    function ldap_exop_sync($ldap, string $request_oid, string $request_data = null, array $controls = null, &$response_data = null, &$response_oid = null): bool { return ldap_exop($ldap, $request_oid, $request_data, $controls, $response_data, $response_oid); }
+    function ldap_exop_sync($ldap, string $request_oid, ?string $request_data = null, ?array $controls = null, &$response_data = null, &$response_oid = null): bool { return ldap_exop($ldap, $request_oid, $request_data, $controls, $response_data, $response_oid); }
 }
 
 if (!function_exists('ldap_connect_wallet') && function_exists('ldap_connect')) {

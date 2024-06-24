@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Normalizer\Transformer;
 
+use ArrayObject;
 use BackedEnum;
 use Closure;
+use CuyZ\Valinor\Definition\AttributeDefinition;
 use CuyZ\Valinor\Definition\Attributes;
 use CuyZ\Valinor\Definition\Repository\ClassDefinitionRepository;
+use CuyZ\Valinor\Normalizer\AsTransformer;
 use CuyZ\Valinor\Normalizer\Exception\CircularReferenceFoundDuringNormalization;
 use CuyZ\Valinor\Normalizer\Exception\TypeUnhandledByNormalizer;
 use CuyZ\Valinor\Type\Types\NativeClassType;
 use DateTimeInterface;
+use DateTimeZone;
 use Generator;
-use ReflectionClass;
 use stdClass;
 use UnitEnum;
 use WeakMap;
 
 use function array_map;
-use function array_reverse;
 use function get_object_vars;
+use function is_a;
 use function is_array;
 use function is_iterable;
 
@@ -47,7 +50,7 @@ final class RecursiveTransformer
 
     /**
      * @param WeakMap<object, true> $references
-     * @param list<object> $attributes
+     * @param list<AttributeDefinition> $attributes
      * @return iterable<mixed>|scalar|null
      */
     private function doTransform(mixed $value, WeakMap $references, array $attributes = []): mixed
@@ -57,18 +60,21 @@ final class RecursiveTransformer
                 throw new CircularReferenceFoundDuringNormalization($value);
             }
 
+            $references = clone $references;
+
             // @infection-ignore-all
             $references[$value] = true;
         }
 
-        if ($this->transformers === [] && $this->transformerAttributes === []) {
-            return $this->defaultTransformer($value, $references);
-        }
-
-        if ($this->transformerAttributes !== [] && is_object($value)) {
-            $classAttributes = $this->classDefinitionRepository->for(NativeClassType::for($value::class))->attributes();
+        if (is_object($value)) {
+            $classAttributes = $this->classDefinitionRepository->for(new NativeClassType($value::class))->attributes;
+            $classAttributes = $this->filterAttributes($classAttributes);
 
             $attributes = [...$attributes, ...$classAttributes];
+        }
+
+        if ($this->transformers === [] && $attributes === []) {
+            return $this->defaultTransformer($value, $references);
         }
 
         return $this->valueTransformers->transform(
@@ -102,7 +108,11 @@ final class RecursiveTransformer
                 return $value->format('Y-m-d\\TH:i:s.uP'); // RFC 3339
             }
 
-            if ($value::class === stdClass::class) {
+            if ($value instanceof DateTimeZone) {
+                return $value->getName();
+            }
+
+            if ($value::class === stdClass::class || $value instanceof ArrayObject) {
                 return array_map(
                     fn (mixed $value) => $this->doTransform($value, $references),
                     (array)$value
@@ -111,37 +121,12 @@ final class RecursiveTransformer
 
             $values = (fn () => get_object_vars($this))->call($value);
 
-            // @infection-ignore-all
-            if (PHP_VERSION_ID < 8_01_00) {
-                // In PHP 8.1, behavior changed for `get_object_vars` function:
-                // the sorting order was taking children properties first, now
-                // it takes parents properties first. This code is a temporary
-                // workaround to keep the same behavior in PHP 8.0 and later
-                // versions.
-                $sorted = [];
-
-                $parents = array_reverse(class_parents($value));
-                $parents[] = $value::class;
-
-                foreach ($parents as $parent) {
-                    foreach ((new ReflectionClass($parent))->getProperties() as $property) {
-                        if (! isset($values[$property->name])) {
-                            continue;
-                        }
-
-                        $sorted[$property->name] = $values[$property->name];
-                    }
-                }
-
-                $values = $sorted;
-            }
-
             $transformed = [];
 
-            $class = $this->classDefinitionRepository->for(NativeClassType::for($value::class));
+            $class = $this->classDefinitionRepository->for(new NativeClassType($value::class));
 
             foreach ($values as $key => $subValue) {
-                $attributes = $this->filterAttributes($class->properties()->get($key)->attributes());
+                $attributes = $this->filterAttributes($class->properties->get($key)->attributes)->toArray();
 
                 $key = $this->keyTransformers->transformKey($key, $attributes);
 
@@ -169,22 +154,20 @@ final class RecursiveTransformer
         throw new TypeUnhandledByNormalizer($value);
     }
 
-    /**
-     * @return list<object>
-     */
-    private function filterAttributes(Attributes $attributes): array
+    private function filterAttributes(Attributes $attributes): Attributes
     {
-        $filteredAttributes = [];
+        return $attributes->filter(function (AttributeDefinition $attribute) {
+            if ($attribute->class->attributes->has(AsTransformer::class)) {
+                return true;
+            }
 
-        foreach ($attributes as $attribute) {
             foreach ($this->transformerAttributes as $transformerAttribute) {
-                if ($attribute instanceof $transformerAttribute) {
-                    $filteredAttributes[] = $attribute;
-                    break;
+                if (is_a($attribute->class->type->className(), $transformerAttribute, true)) {
+                    return true;
                 }
             }
-        }
 
-        return $filteredAttributes;
+            return false;
+        });
     }
 }

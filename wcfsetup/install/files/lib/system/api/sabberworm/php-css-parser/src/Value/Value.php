@@ -8,6 +8,10 @@ use Sabberworm\CSS\Parsing\UnexpectedEOFException;
 use Sabberworm\CSS\Parsing\UnexpectedTokenException;
 use Sabberworm\CSS\Renderable;
 
+/**
+ * Abstract base class for specific classes of CSS values: `Size`, `Color`, `CSSString` and `URL`, and another
+ * abstract subclass `ValueList`.
+ */
 abstract class Value implements Renderable
 {
     /**
@@ -39,8 +43,9 @@ abstract class Value implements Renderable
         //Build a list of delimiters and parsed values
         while (
             !($oParserState->comes('}') || $oParserState->comes(';') || $oParserState->comes('!')
-            || $oParserState->comes(')')
-            || $oParserState->comes('\\'))
+                || $oParserState->comes(')')
+                || $oParserState->comes('\\')
+                || $oParserState->isEnd())
         ) {
             if (count($aStack) > 0) {
                 $bFoundDelimiter = false;
@@ -101,16 +106,25 @@ abstract class Value implements Renderable
      */
     public static function parseIdentifierOrFunction(ParserState $oParserState, $bIgnoreCase = false)
     {
-        $sResult = $oParserState->parseIdentifier($bIgnoreCase);
+        $oAnchor = $oParserState->anchor();
+        $mResult = $oParserState->parseIdentifier($bIgnoreCase);
 
         if ($oParserState->comes('(')) {
-            $oParserState->consume('(');
-            $aArguments = Value::parseValue($oParserState, ['=', ' ', ',']);
-            $sResult = new CSSFunction($sResult, $aArguments, ',', $oParserState->currentLine());
-            $oParserState->consume(')');
+            $oAnchor->backtrack();
+            if ($oParserState->streql('url', $mResult)) {
+                $mResult = URL::parse($oParserState);
+            } elseif (
+                $oParserState->streql('calc', $mResult)
+                || $oParserState->streql('-webkit-calc', $mResult)
+                || $oParserState->streql('-moz-calc', $mResult)
+            ) {
+                $mResult = CalcFunction::parse($oParserState);
+            } else {
+                $mResult = CSSFunction::parse($oParserState, $bIgnoreCase);
+            }
         }
 
-        return $sResult;
+        return $mResult;
     }
 
     /**
@@ -133,13 +147,6 @@ abstract class Value implements Renderable
             $oValue = Size::parse($oParserState);
         } elseif ($oParserState->comes('#') || $oParserState->comes('rgb', true) || $oParserState->comes('hsl', true)) {
             $oValue = Color::parse($oParserState);
-        } elseif ($oParserState->comes('url', true)) {
-            $oValue = URL::parse($oParserState);
-        } elseif (
-            $oParserState->comes('calc', true) || $oParserState->comes('-webkit-calc', true)
-            || $oParserState->comes('-moz-calc', true)
-        ) {
-            $oValue = CalcFunction::parse($oParserState);
         } elseif ($oParserState->comes("'") || $oParserState->comes('"')) {
             $oValue = CSSString::parse($oParserState);
         } elseif ($oParserState->comes("progid:") && $oParserState->getSettings()->bLenientParsing) {

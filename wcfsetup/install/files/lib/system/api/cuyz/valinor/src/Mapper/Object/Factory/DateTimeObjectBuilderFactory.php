@@ -12,7 +12,7 @@ use CuyZ\Valinor\Mapper\Object\DateTimeFormatConstructor;
 use CuyZ\Valinor\Mapper\Object\FunctionObjectBuilder;
 use CuyZ\Valinor\Mapper\Object\NativeConstructorObjectBuilder;
 use CuyZ\Valinor\Mapper\Object\ObjectBuilder;
-use CuyZ\Valinor\Type\ClassType;
+use CuyZ\Valinor\Type\ObjectType;
 use DateTime;
 use DateTimeImmutable;
 
@@ -31,7 +31,7 @@ final class DateTimeObjectBuilderFactory implements ObjectBuilderFactory
 
     public function for(ClassDefinition $class): array
     {
-        $className = $class->name();
+        $className = $class->name;
 
         $builders = $this->delegate->for($class);
 
@@ -45,13 +45,13 @@ final class DateTimeObjectBuilderFactory implements ObjectBuilderFactory
         $buildersWithOneArgument = array_filter($builders, fn (ObjectBuilder $builder) => count($builder->describeArguments()) === 1);
 
         if (count($buildersWithOneArgument) === 0 || $this->supportedDateFormats !== Settings::DEFAULT_SUPPORTED_DATETIME_FORMATS) {
-            $builders[] = $this->internalDateTimeBuilder($class->type());
+            $builders[] = $this->internalDateTimeBuilder($class->type);
         }
 
         return $builders;
     }
 
-    private function internalDateTimeBuilder(ClassType $type): FunctionObjectBuilder
+    private function internalDateTimeBuilder(ObjectType $type): FunctionObjectBuilder
     {
         $constructor = new DateTimeFormatConstructor(...$this->supportedDateFormats);
         $function = new FunctionObject($this->functionDefinitionRepository->for($constructor), $constructor);

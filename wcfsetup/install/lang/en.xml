@@ -914,7 +914,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
 		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[The owner group always has this permission, it cannot be revoked.]]></item>
-		<item name="wcf.acp.group.option.user.signature.attachment.canUpload"><![CDATA[Can Upload Attachments]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.canUpload"><![CDATA[Can upload attachments]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>

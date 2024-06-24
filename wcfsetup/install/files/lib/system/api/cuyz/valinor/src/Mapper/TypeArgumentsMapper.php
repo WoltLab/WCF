@@ -6,7 +6,9 @@ namespace CuyZ\Valinor\Mapper;
 
 use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\Repository\FunctionDefinitionRepository;
+use CuyZ\Valinor\Mapper\Exception\TypeErrorDuringArgumentsMapping;
 use CuyZ\Valinor\Mapper\Tree\Builder\RootNodeBuilder;
+use CuyZ\Valinor\Mapper\Tree\Exception\UnresolvableShellType;
 use CuyZ\Valinor\Mapper\Tree\Shell;
 use CuyZ\Valinor\Type\Types\ShapedArrayElement;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
@@ -32,17 +34,21 @@ final class TypeArgumentsMapper implements ArgumentsMapper
 
         $elements = array_map(
             fn (ParameterDefinition $parameter) => new ShapedArrayElement(
-                new StringValueType($parameter->name()),
-                $parameter->type(),
-                $parameter->isOptional()
+                new StringValueType($parameter->name),
+                $parameter->type,
+                $parameter->isOptional
             ),
-            iterator_to_array($function->parameters())
+            iterator_to_array($function->parameters)
         );
 
         $type = new ShapedArrayType(...$elements);
         $shell = Shell::root($type, $source);
 
-        $node = $this->nodeBuilder->build($shell);
+        try {
+            $node = $this->nodeBuilder->build($shell);
+        } catch (UnresolvableShellType $exception) {
+            throw new TypeErrorDuringArgumentsMapping($function, $exception);
+        }
 
         if (! $node->isValid()) {
             throw new ArgumentsMapperError($function, $node->node());
