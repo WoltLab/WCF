@@ -15,69 +15,53 @@ namespace Minishlink\WebPush;
 
 use Base64Url\Base64Url;
 use GuzzleHttp\Client;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
 class WebPush
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * @var array
-     */
-    protected $auth;
+    protected Client $client;
+    protected array $auth;
 
     /**
      * @var null|array Array of array of Notifications
      */
-    protected $notifications;
+    protected ?array $notifications = null;
 
     /**
-     * @var array Default options : TTL, urgency, topic, batchSize
+     * @var array Default options: TTL, urgency, topic, batchSize, requestConcurrency
      */
-    protected $defaultOptions;
+    protected array $defaultOptions;
 
     /**
      * @var int Automatic padding of payloads, if disabled, trade security for bandwidth
      */
-    protected $automaticPadding = Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH;
+    protected int $automaticPadding = Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH;
 
     /**
      * @var bool Reuse VAPID headers in the same flush session to improve performance
      */
-    protected $reuseVAPIDHeaders = false;
+    protected bool $reuseVAPIDHeaders = false;
 
     /**
      * @var array Dictionary for VAPID headers cache
      */
-    protected $vapidHeaders = [];
+    protected array $vapidHeaders = [];
 
     /**
      * WebPush constructor.
      *
-     * @param array    $auth           Some servers needs authentication
-     * @param array    $defaultOptions TTL, urgency, topic, batchSize
+     * @param array    $auth           Some servers need authentication
+     * @param array    $defaultOptions TTL, urgency, topic, batchSize, requestConcurrency
      * @param int|null $timeout        Timeout of POST request
      *
      * @throws \ErrorException
      */
     public function __construct(array $auth = [], array $defaultOptions = [], ?int $timeout = 30, array $clientOptions = [])
     {
-        $extensions = [
-            'curl' => '[WebPush] curl extension is not loaded but is required. You can fix this in your php.ini.',
-            'mbstring' => '[WebPush] mbstring extension is not loaded but is required for sending push notifications with payload or for VAPID authentication. You can fix this in your php.ini.',
-            'openssl' => '[WebPush] openssl extension is not loaded but is required for sending push notifications with payload or for VAPID authentication. You can fix this in your php.ini.',
-        ];
-
-        foreach ($extensions as $extension => $message) {
-            if (!extension_loaded($extension)) {
-                trigger_error($message, E_USER_WARNING);
-            }
-        }
+        Utils::checkRequirement();
 
         if (isset($auth['VAPID'])) {
             $auth['VAPID'] = VAPID::validate($auth['VAPID']);
@@ -140,7 +124,7 @@ class WebPush
      *
      * @param null|int $batchSize Defaults the value defined in defaultOptions during instantiation (which defaults to 1000).
      *
-     * @return \Generator|MessageSentReport[]
+     * @return \Generator
      * @throws \ErrorException
      */
     public function flush(?int $batchSize = null): \Generator
@@ -193,7 +177,59 @@ class WebPush
     }
 
     /**
-     * @throws \ErrorException
+     * Flush notifications. Triggers concurrent requests.
+     *
+     * @param callable(MessageSentReport): void $callback Callback for each notification
+     * @param null|int $batchSize Defaults the value defined in defaultOptions during instantiation (which defaults to 1000).
+     * @param null|int $requestConcurrency Defaults the value defined in defaultOptions during instantiation (which defaults to 100).
+     */
+    public function flushPooled($callback, ?int $batchSize = null, ?int $requestConcurrency = null): void
+    {
+        if (empty($this->notifications)) {
+            return;
+        }
+
+        if (null === $batchSize) {
+            $batchSize = $this->defaultOptions['batchSize'];
+        }
+
+        if (null === $requestConcurrency) {
+            $requestConcurrency = $this->defaultOptions['requestConcurrency'];
+        }
+
+        $batches = array_chunk($this->notifications, $batchSize);
+        $this->notifications = [];
+
+        foreach ($batches as $batch) {
+            $batch = $this->prepare($batch);
+            $pool = new Pool($this->client, $batch, [
+                'requestConcurrency' => $requestConcurrency,
+                'fulfilled' => function (ResponseInterface $response, int $index) use ($callback, $batch) {
+                    /** @var \Psr\Http\Message\RequestInterface $request **/
+                    $request = $batch[$index];
+                    $callback(new MessageSentReport($request, $response));
+                },
+                'rejected' => function (RequestException $reason) use ($callback) {
+                    if (method_exists($reason, 'getResponse')) {
+                        $response = $reason->getResponse();
+                    } else {
+                        $response = null;
+                    }
+                    $callback(new MessageSentReport($reason->getRequest(), $response, false, $reason->getMessage()));
+                },
+            ]);
+
+            $promise = $pool->promise();
+            $promise->wait();
+        }
+
+        if ($this->reuseVAPIDHeaders) {
+            $this->vapidHeaders = [];
+        }
+    }
+
+    /**
+     * @throws \ErrorException|\Random\RandomException
      */
     protected function prepare(array $notifications): array
     {
@@ -281,50 +317,45 @@ class WebPush
         return $this->automaticPadding !== 0;
     }
 
-    /**
-     * @return int
-     */
-    public function getAutomaticPadding()
+    public function getAutomaticPadding(): int
     {
         return $this->automaticPadding;
     }
 
     /**
-     * @param int|bool $automaticPadding Max padding length
+     * @param bool|int $automaticPadding Max padding length
      *
-     * @throws \Exception
+     * @throws \ValueError
      */
-    public function setAutomaticPadding($automaticPadding): WebPush
+    public function setAutomaticPadding(bool|int $automaticPadding): WebPush
     {
-        if ($automaticPadding > Encryption::MAX_PAYLOAD_LENGTH) {
-            throw new \Exception('Automatic padding is too large. Max is '.Encryption::MAX_PAYLOAD_LENGTH.'. Recommended max is '.Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH.' for compatibility reasons (see README).');
-        } elseif ($automaticPadding < 0) {
-            throw new \Exception('Padding length should be positive or zero.');
-        } elseif ($automaticPadding === true) {
-            $this->automaticPadding = Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH;
+        if ($automaticPadding === true) {
+            $automaticPadding = Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH;
         } elseif ($automaticPadding === false) {
-            $this->automaticPadding = 0;
-        } else {
-            $this->automaticPadding = $automaticPadding;
+            $automaticPadding = 0;
         }
+
+        if($automaticPadding > Encryption::MAX_PAYLOAD_LENGTH) {
+            throw new \ValueError('Automatic padding is too large. Max is '.Encryption::MAX_PAYLOAD_LENGTH.'. Recommended max is '.Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH.' for compatibility reasons (see README).');
+        }
+        if($automaticPadding < 0) {
+            throw new \ValueError('Padding length should be positive or zero.');
+        }
+
+        $this->automaticPadding = $automaticPadding;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getReuseVAPIDHeaders()
+    public function getReuseVAPIDHeaders(): bool
     {
         return $this->reuseVAPIDHeaders;
     }
 
     /**
      * Reuse VAPID headers in the same flush session to improve performance
-     *
-     * @return WebPush
      */
-    public function setReuseVAPIDHeaders(bool $enabled)
+    public function setReuseVAPIDHeaders(bool $enabled): WebPush
     {
         $this->reuseVAPIDHeaders = $enabled;
 
@@ -337,16 +368,16 @@ class WebPush
     }
 
     /**
-     * @param array $defaultOptions Keys 'TTL' (Time To Live, defaults 4 weeks), 'urgency', 'topic', 'batchSize'
-     *
-     * @return WebPush
+     * @param array $defaultOptions Keys 'TTL' (Time To Live, defaults 4 weeks), 'urgency', 'topic', 'batchSize', 'requestConcurrency'
      */
-    public function setDefaultOptions(array $defaultOptions)
+    public function setDefaultOptions(array $defaultOptions): WebPush
     {
         $this->defaultOptions['TTL'] = $defaultOptions['TTL'] ?? 2419200;
         $this->defaultOptions['urgency'] = $defaultOptions['urgency'] ?? null;
         $this->defaultOptions['topic'] = $defaultOptions['topic'] ?? null;
         $this->defaultOptions['batchSize'] = $defaultOptions['batchSize'] ?? 1000;
+        $this->defaultOptions['requestConcurrency'] = $defaultOptions['requestConcurrency'] ?? 100;
+
 
         return $this;
     }
@@ -357,10 +388,9 @@ class WebPush
     }
 
     /**
-     * @return array
      * @throws \ErrorException
      */
-    protected function getVAPIDHeaders(string $audience, string $contentEncoding, array $vapid)
+    protected function getVAPIDHeaders(string $audience, string $contentEncoding, array $vapid): ?array
     {
         $vapidHeaders = null;
 

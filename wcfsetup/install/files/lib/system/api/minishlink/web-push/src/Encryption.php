@@ -14,16 +14,14 @@ declare(strict_types=1);
 namespace Minishlink\WebPush;
 
 use Base64Url\Base64Url;
-use Brick\Math\BigInteger;
 use Jose\Component\Core\JWK;
-use Jose\Component\Core\Util\Ecc\NistCurve;
 use Jose\Component\Core\Util\Ecc\PrivateKey;
 use Jose\Component\Core\Util\ECKey;
 
 class Encryption
 {
     public const MAX_PAYLOAD_LENGTH = 4078;
-    public const MAX_COMPATIBILITY_PAYLOAD_LENGTH = 3052;
+    public const MAX_COMPATIBILITY_PAYLOAD_LENGTH = 2820;
 
     /**
      * @return string padded payload (plaintext)
@@ -36,11 +34,12 @@ class Encryption
 
         if ($contentEncoding === "aesgcm") {
             return pack('n*', $padLen).str_pad($payload, $padLen + $payloadLen, chr(0), STR_PAD_LEFT);
-        } elseif ($contentEncoding === "aes128gcm") {
-            return str_pad($payload.chr(2), $padLen + $payloadLen, chr(0), STR_PAD_RIGHT);
-        } else {
-            throw new \ErrorException("This content encoding is not supported");
         }
+        if ($contentEncoding === "aes128gcm") {
+            return str_pad($payload.chr(2), $padLen + $payloadLen, chr(0), STR_PAD_RIGHT);
+        }
+
+        throw new \ErrorException("This content encoding is not supported");
     }
 
     /**
@@ -63,7 +62,7 @@ class Encryption
     }
 
     /**
-     * @throws \ErrorException
+     * @throws \RuntimeException
      */
     public static function deterministicEncrypt(string $payload, string $userPublicKey, string $userAuthToken, string $contentEncoding, array $localKeyObject, string $salt): array
     {
@@ -88,7 +87,7 @@ class Encryption
             ]);
         }
         if (!$localPublicKey) {
-            throw new \ErrorException('Failed to convert local public key from hexadecimal to binary');
+            throw new \RuntimeException('Failed to convert local public key from hexadecimal to binary.');
         }
 
         // get user public key object
@@ -225,7 +224,9 @@ class Encryption
             }
 
             return 'Content-Encoding: '.$type.chr(0).'P-256'.$context;
-        } elseif ($contentEncoding === "aes128gcm") {
+        }
+
+        if ($contentEncoding === "aes128gcm") {
             return 'Content-Encoding: '.$type.chr(0);
         }
 
@@ -234,60 +235,17 @@ class Encryption
 
     private static function createLocalKeyObject(): array
     {
-        try {
-            return self::createLocalKeyObjectUsingOpenSSL();
-        } catch (\Exception $e) {
-            return self::createLocalKeyObjectUsingPurePhpMethod();
-        }
-    }
-
-    private static function createLocalKeyObjectUsingPurePhpMethod(): array
-    {
-        $curve = NistCurve::curve256();
-        $privateKey = $curve->createPrivateKey();
-        $publicKey = $curve->createPublicKey($privateKey);
-
-        if ($publicKey->getPoint()->getX() instanceof BigInteger) {
-            return [
-                new JWK([
-                    'kty' => 'EC',
-                    'crv' => 'P-256',
-                    'x' => Base64Url::encode(self::addNullPadding($publicKey->getPoint()->getX()->toBytes(false))),
-                    'y' => Base64Url::encode(self::addNullPadding($publicKey->getPoint()->getY()->toBytes(false))),
-                    'd' => Base64Url::encode(self::addNullPadding($privateKey->getSecret()->toBytes(false))),
-                ])
-            ];
-        }
-
-        return [
-            new JWK([
-                'kty' => 'EC',
-                'crv' => 'P-256',
-                'x' => Base64Url::encode(self::addNullPadding(hex2bin(gmp_strval($publicKey->getPoint()->getX(), 16)))),
-                'y' => Base64Url::encode(self::addNullPadding(hex2bin(gmp_strval($publicKey->getPoint()->getY(), 16)))),
-                'd' => Base64Url::encode(self::addNullPadding(hex2bin(gmp_strval($privateKey->getSecret(), 16)))),
-            ])
-        ];
-    }
-
-    private static function createLocalKeyObjectUsingOpenSSL(): array
-    {
         $keyResource = openssl_pkey_new([
             'curve_name'       => 'prime256v1',
             'private_key_type' => OPENSSL_KEYTYPE_EC,
         ]);
-
         if (!$keyResource) {
-            throw new \RuntimeException('Unable to create the key');
+            throw new \RuntimeException('Unable to create the local key.');
         }
 
         $details = openssl_pkey_get_details($keyResource);
-        if (PHP_MAJOR_VERSION < 8) {
-            openssl_pkey_free($keyResource);
-        }
-
         if (!$details) {
-            throw new \RuntimeException('Unable to get the key details');
+            throw new \RuntimeException('Unable to get the local key details.');
         }
 
         return [
@@ -297,94 +255,39 @@ class Encryption
                 'x' => Base64Url::encode(self::addNullPadding($details['ec']['x'])),
                 'y' => Base64Url::encode(self::addNullPadding($details['ec']['y'])),
                 'd' => Base64Url::encode(self::addNullPadding($details['ec']['d'])),
-            ])
+            ]),
         ];
     }
 
     /**
-     * @throws \ErrorException
+     * @throws \ValueError
      */
     private static function getIKM(string $userAuthToken, string $userPublicKey, string $localPublicKey, string $sharedSecret, string $contentEncoding): string
     {
-        if (!empty($userAuthToken)) {
-            if ($contentEncoding === "aesgcm") {
-                $info = 'Content-Encoding: auth'.chr(0);
-            } elseif ($contentEncoding === "aes128gcm") {
-                $info = "WebPush: info".chr(0).$userPublicKey.$localPublicKey;
-            } else {
-                throw new \ErrorException("This content encoding is not supported");
-            }
-
-            return self::hkdf($userAuthToken, $sharedSecret, $info, 32);
+        if (empty($userAuthToken)) {
+            return $sharedSecret;
+        }
+        if($contentEncoding === "aesgcm") {
+            $info = 'Content-Encoding: auth'.chr(0);
+        } elseif($contentEncoding === "aes128gcm") {
+            $info = "WebPush: info".chr(0).$userPublicKey.$localPublicKey;
+        } else {
+            throw new \ValueError("This content encoding is not supported.");
         }
 
-        return $sharedSecret;
+        return self::hkdf($userAuthToken, $sharedSecret, $info, 32);
     }
 
     private static function calculateAgreementKey(JWK $private_key, JWK $public_key): string
     {
-        if (function_exists('openssl_pkey_derive')) {
-            try {
-                $publicPem = ECKey::convertPublicKeyToPEM($public_key);
-                $privatePem = ECKey::convertPrivateKeyToPEM($private_key);
+        $publicPem = ECKey::convertPublicKeyToPEM($public_key);
+        $privatePem = ECKey::convertPrivateKeyToPEM($private_key);
 
-                $result = openssl_pkey_derive($publicPem, $privatePem, 256); // @phpstan-ignore-line
-                if ($result === false) {
-                    throw new \Exception('Unable to compute the agreement key');
-                }
-                return $result;
-            } catch (\Throwable $throwable) {
-                //Does nothing. Will fallback to the pure PHP function
-            }
+        $result = openssl_pkey_derive($publicPem, $privatePem, 256);
+        if ($result === false) {
+            throw new \RuntimeException('Unable to compute the agreement key.');
         }
-
-
-        $curve = NistCurve::curve256();
-        try {
-            $rec_x = self::convertBase64ToBigInteger($public_key->get('x'));
-            $rec_y = self::convertBase64ToBigInteger($public_key->get('y'));
-            $sen_d = self::convertBase64ToBigInteger($private_key->get('d'));
-            $priv_key = PrivateKey::create($sen_d);
-            $pub_key = $curve->getPublicKeyFrom($rec_x, $rec_y);
-
-            return hex2bin(str_pad($curve->mul($pub_key->getPoint(), $priv_key->getSecret())->getX()->toBase(16), 64, '0', STR_PAD_LEFT)); // @phpstan-ignore-line
-        } catch (\Throwable $e) {
-            $rec_x = self::convertBase64ToGMP($public_key->get('x'));
-            $rec_y = self::convertBase64ToGMP($public_key->get('y'));
-            $sen_d = self::convertBase64ToGMP($private_key->get('d'));
-            $priv_key = PrivateKey::create($sen_d); // @phpstan-ignore-line
-            $pub_key = $curve->getPublicKeyFrom($rec_x, $rec_y); // @phpstan-ignore-line
-
-            return hex2bin(gmp_strval($curve->mul($pub_key->getPoint(), $priv_key->getSecret())->getX(), 16)); // @phpstan-ignore-line
-        }
-    }
-
-    /**
-     * @throws \ErrorException
-     */
-    private static function convertBase64ToBigInteger(string $value): BigInteger
-    {
-        $value = unpack('H*', Base64Url::decode($value));
-
-        if ($value === false) {
-            throw new \ErrorException('Unable to unpack hex value from string');
-        }
-
-        return BigInteger::fromBase($value[1], 16);
-    }
-
-    /**
-     * @throws \ErrorException
-     */
-    private static function convertBase64ToGMP(string $value): \GMP
-    {
-        $value = unpack('H*', Base64Url::decode($value));
-
-        if ($value === false) {
-            throw new \ErrorException('Unable to unpack hex value from string');
-        }
-
-        return gmp_init($value[1], 16);
+        return $result;
     }
 
     private static function addNullPadding(string $data): string
