@@ -9,6 +9,7 @@ use CuyZ\Valinor\Mapper\Tree\Message\Message;
 use CuyZ\Valinor\Mapper\Tree\Node;
 use CuyZ\Valinor\Mapper\Tree\Shell;
 use CuyZ\Valinor\Type\FloatType;
+use CuyZ\Valinor\Type\Type;
 use Throwable;
 
 use function array_map;
@@ -77,11 +78,7 @@ final class TreeNode
         return $instance;
     }
 
-    /**
-     * PHP8.1 intersection
-     * @param Throwable&Message $message
-     */
-    public static function error(Shell $shell, Throwable $message): self
+    public static function error(Shell $shell, Throwable&Message $message): self
     {
         return (new self($shell, null))->withMessage($message);
     }
@@ -89,6 +86,19 @@ final class TreeNode
     public function name(): string
     {
         return $this->shell->name();
+    }
+
+    public function type(): Type
+    {
+        return $this->shell->type();
+    }
+
+    /**
+     * @return array<self>
+     */
+    public function children(): array
+    {
+        return $this->children;
     }
 
     public function isValid(): bool

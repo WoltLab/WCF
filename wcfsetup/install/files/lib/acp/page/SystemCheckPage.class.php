@@ -8,6 +8,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Environment;
 use wcf\system\exception\SystemException;
 use wcf\system\registry\RegistryHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -150,10 +151,14 @@ class SystemCheckPage extends AbstractPage
             ],
             'x64' => false,
         ],
+        'web' => [
+            'https' => false,
+        ],
         'status' => [
             'directories' => false,
             'mysql' => false,
             'php' => false,
+            'web' => false,
         ],
     ];
 
@@ -184,6 +189,7 @@ class SystemCheckPage extends AbstractPage
         $this->validatePhpVersion();
         $this->validatePhpGdSupport();
         $this->validateWritableDirectories();
+        $this->validateWebHttps();
 
         if (
             $this->results['status']['mysql']
@@ -448,5 +454,15 @@ class SystemCheckPage extends AbstractPage
         }
 
         return true;
+    }
+
+    /**
+     * @since 6.1
+     */
+    protected function validateWebHttps(): void
+    {
+        $this->results['web']['https'] = RouteHandler::secureContext();
+
+        $this->results['status']['web'] = $this->results['web']['https'];
     }
 }

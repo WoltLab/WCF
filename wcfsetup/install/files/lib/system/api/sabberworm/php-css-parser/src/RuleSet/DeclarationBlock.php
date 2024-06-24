@@ -19,7 +19,10 @@ use Sabberworm\CSS\Value\URL;
 use Sabberworm\CSS\Value\Value;
 
 /**
- * Declaration blocks are the parts of a CSS file which denote the rules belonging to a selector.
+ * This class represents a `RuleSet` constrained by a `Selector`.
+ *
+ * It contains an array of selector objects (comma-separated in the CSS) as well as the rules to be applied to the
+ * matching elements.
  *
  * Declaration blocks usually appear directly inside a `Document` or another `CSSList` (mostly a `MediaQuery`).
  */
@@ -562,6 +565,7 @@ class DeclarationBlock extends RuleSet
     public function createShorthandProperties(array $aProperties, $sShorthand)
     {
         $aRules = $this->getRulesAssoc();
+        $oRule = null;
         $aNewValues = [];
         foreach ($aProperties as $sProperty) {
             if (!isset($aRules[$sProperty])) {
@@ -582,7 +586,7 @@ class DeclarationBlock extends RuleSet
                 $this->removeRule($sProperty);
             }
         }
-        if (count($aNewValues)) {
+        if ($aNewValues !== [] && $oRule instanceof Rule) {
             $oNewRule = new Rule($sShorthand, $oRule->getLineNo(), $oRule->getColNo());
             foreach ($aNewValues as $mValue) {
                 $oNewRule->addValue($mValue);
@@ -812,18 +816,19 @@ class DeclarationBlock extends RuleSet
      */
     public function render(OutputFormat $oOutputFormat)
     {
+        $sResult = $oOutputFormat->comments($this);
         if (count($this->aSelectors) === 0) {
             // If all the selectors have been removed, this declaration block becomes invalid
             throw new OutputException("Attempt to print declaration block with missing selector", $this->iLineNo);
         }
-        $sResult = $oOutputFormat->sBeforeDeclarationBlock;
+        $sResult .= $oOutputFormat->sBeforeDeclarationBlock;
         $sResult .= $oOutputFormat->implode(
             $oOutputFormat->spaceBeforeSelectorSeparator() . ',' . $oOutputFormat->spaceAfterSelectorSeparator(),
             $this->aSelectors
         );
         $sResult .= $oOutputFormat->sAfterDeclarationBlockSelectors;
         $sResult .= $oOutputFormat->spaceBeforeOpeningBrace() . '{';
-        $sResult .= parent::render($oOutputFormat);
+        $sResult .= $this->renderRules($oOutputFormat);
         $sResult .= '}';
         $sResult .= $oOutputFormat->sAfterDeclarationBlock;
         return $sResult;

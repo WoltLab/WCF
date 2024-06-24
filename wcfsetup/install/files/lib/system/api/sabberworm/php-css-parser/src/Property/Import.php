@@ -83,7 +83,7 @@ class Import implements AtRule
      */
     public function render(OutputFormat $oOutputFormat)
     {
-        return "@import " . $this->oLocation->render($oOutputFormat)
+        return $oOutputFormat->comments($this) . "@import " . $this->oLocation->render($oOutputFormat)
             . ($this->sMediaQuery === null ? '' : ' ' . $this->sMediaQuery) . ';';
     }
 
@@ -133,5 +133,13 @@ class Import implements AtRule
     public function setComments(array $aComments)
     {
         $this->aComments = $aComments;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMediaQuery()
+    {
+        return $this->sMediaQuery;
     }
 }

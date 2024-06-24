@@ -6,8 +6,8 @@ namespace CuyZ\Valinor\Type\Parser\Factory;
 
 use CuyZ\Valinor\Type\Parser\CachedParser;
 use CuyZ\Valinor\Type\Parser\Factory\Specifications\TypeParserSpecification;
-use CuyZ\Valinor\Type\Parser\Lexer\AdvancedClassLexer;
 use CuyZ\Valinor\Type\Parser\Lexer\NativeLexer;
+use CuyZ\Valinor\Type\Parser\Lexer\SpecificationsLexer;
 use CuyZ\Valinor\Type\Parser\LexingParser;
 use CuyZ\Valinor\Type\Parser\TypeParser;
 
@@ -18,26 +18,24 @@ final class LexingTypeParserFactory implements TypeParserFactory
 
     public function get(TypeParserSpecification ...$specifications): TypeParser
     {
-        if (empty($specifications)) {
-            return $this->nativeParser ??= $this->nativeParser();
+        if ($specifications === []) {
+            return $this->nativeParser ??= new CachedParser($this->buildTypeParser());
         }
 
-        $lexer = new NativeLexer();
-        $lexer = new AdvancedClassLexer($lexer, $this);
-
-        foreach ($specifications as $specification) {
-            $lexer = $specification->transform($lexer);
-        }
-
-        return new LexingParser($lexer);
+        return $this->buildTypeParser(...$specifications);
     }
 
-    private function nativeParser(): TypeParser
+    private function buildTypeParser(TypeParserSpecification ...$specifications): TypeParser
     {
-        $lexer = new NativeLexer();
-        $lexer = new AdvancedClassLexer($lexer, $this);
+        $lexer = new SpecificationsLexer($specifications);
+        $lexer = new NativeLexer($lexer);
+
         $parser = new LexingParser($lexer);
 
-        return new CachedParser($parser);
+        foreach ($specifications as $specification) {
+            $parser = $specification->manipulateParser($parser, $this);
+        }
+
+        return $parser;
     }
 }

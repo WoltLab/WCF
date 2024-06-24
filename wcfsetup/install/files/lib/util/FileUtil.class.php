@@ -521,30 +521,8 @@ final class FileUtil
             // no limit
             if ($memoryLimit == "-1") {
                 self::$memoryLimit = -1;
-            } else if (\function_exists('ini_parse_quantity')) {
-                self::$memoryLimit = \ini_parse_quantity($memoryLimit);
             } else {
-                // completely numeric, PHP assumes byte
-                if (\is_numeric($memoryLimit)) {
-                    self::$memoryLimit = $memoryLimit;
-                }
-
-                // PHP supports 'K', 'M' and 'G' shorthand notation
-                if (\preg_match('~^(\d+)\s*([KMG])$~i', $memoryLimit, $matches)) {
-                    switch (\strtoupper($matches[2])) {
-                        case 'K':
-                            self::$memoryLimit = $matches[1] * 1024;
-                            break;
-
-                        case 'M':
-                            self::$memoryLimit = $matches[1] * 1024 * 1024;
-                            break;
-
-                        case 'G':
-                            self::$memoryLimit = $matches[1] * 1024 * 1024 * 1024;
-                            break;
-                    }
-                }
+                self::$memoryLimit = \ini_parse_quantity($memoryLimit);
             }
         }
 

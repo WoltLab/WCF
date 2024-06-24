@@ -1,51 +1,51 @@
 {
-    "config": {
-        "vendor-dir": "./",
-        "prepend-autoloader": false,
-        "optimize-autoloader": true,
-        "sort-packages": true,
-        "platform": {
-            "php": "8.1.2",
-            "ext-gd": "0"
-        }
-    },
-    "require": {
-        "cuyz/valinor": "^1.8.2",
-        "dragonmantank/cron-expression": "^3.3.3",
-        "erusev/parsedown": "^1.7.4",
-        "ezyang/htmlpurifier": "^4.17",
-        "guzzlehttp/guzzle": "^7.8.1",
-        "guzzlehttp/psr7": "^2.6.2",
-        "laminas/laminas-diactoros": "^3.3.0",
-        "laminas/laminas-httphandlerrunner": "^2.10.0",
-        "laminas/laminas-progressbar": "^2.13",
-        "minishlink/web-push": "^v9.0.0-rc2",
+  "config": {
+    "vendor-dir": "./",
+    "prepend-autoloader": false,
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1.2",
+      "ext-gd": "0"
+    }
+  },
+  "require": {
+    "cuyz/valinor": "^1.12.0",
+    "dragonmantank/cron-expression": "^3.3.3",
+    "erusev/parsedown": "^1.7.4",
+    "ezyang/htmlpurifier": "^4.17",
+    "guzzlehttp/guzzle": "^7.8.1",
+    "guzzlehttp/psr7": "^2.6.2",
+    "laminas/laminas-diactoros": "^3.3.1",
+    "laminas/laminas-httphandlerrunner": "^2.10.0",
+    "laminas/laminas-progressbar": "^2.13",
+    "minishlink/web-push": "^v9.0.0-rc2",
         "nikic/fast-route": "2.0.0-beta1",
-        "paragonie/constant_time_encoding": "^2.6.3",
-        "pelago/emogrifier": "^7.2.0",
-        "psr/clock": "^1.0",
-        "psr/event-dispatcher": "^1.0",
-        "psr/http-message": "^2.0",
-        "psr/http-server-handler": "^1.0.2",
-        "psr/http-server-middleware": "^1.0.2",
-        "psr/log": "^3.0",
-        "scssphp/scssphp": "^1.12.1",
-        "sebastian/diff": "^5.1.0",
-        "symfony/polyfill-php82": "^1.28.0",
-        "symfony/polyfill-php83": "^1.28",
+    "paragonie/constant_time_encoding": "^3.0",
+    "pelago/emogrifier": "^7.2.0",
+    "psr/clock": "^1.0",
+    "psr/event-dispatcher": "^1.0",
+    "psr/http-message": "^2.0",
+    "psr/http-server-handler": "^1.0.2",
+    "psr/http-server-middleware": "^1.0.2",
+    "psr/log": "^3.0",
+    "scssphp/scssphp": "^1.12.1",
+    "sebastian/diff": "^5.1.1",
+    "symfony/polyfill-php82": "^1.30.0",
+    "symfony/polyfill-php83": "^1.30",
         "web-token/jwt-library": "^3.3",
-        "willdurand/negotiation": "^3.1"
-    },
-    "replace": {
+    "willdurand/negotiation": "^3.1"
+  },
+  "replace": {
         "paragonie/random_compat": "*",
         "symfony/polyfill-mbstring": "*",
-        "symfony/polyfill-php80": "*",
+    "symfony/polyfill-php80": "*",
         "symfony/console": "*",
         "symfony/http-client": "*",
         "web-token/jwt-key-mgmt": "*",
         "web-token/jwt-signature": "*",
         "web-token/jwt-signature-algorithm-ecdsa": "*",
         "web-token/jwt-util-ecc": "*"
-    },
-    "type": "project"
+  },
+  "type": "project"
 }

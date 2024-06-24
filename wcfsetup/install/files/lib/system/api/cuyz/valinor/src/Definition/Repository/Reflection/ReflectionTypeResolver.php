@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Definition\Repository\Reflection;
 
-use CuyZ\Valinor\Definition\Exception\TypesDoNotMatch;
+use CuyZ\Valinor\Type\GenericType;
 use CuyZ\Valinor\Type\Parser\Exception\InvalidType;
 use CuyZ\Valinor\Type\Parser\TypeParser;
 use CuyZ\Valinor\Type\Type;
@@ -18,40 +18,58 @@ use ReflectionFunctionAbstract;
 use ReflectionParameter;
 use ReflectionProperty;
 
+use function trim;
+
 /** @internal */
 final class ReflectionTypeResolver
 {
     public function __construct(
         private TypeParser $nativeParser,
-        private TypeParser $advancedParser
+        private TypeParser $advancedParser,
     ) {}
 
     public function resolveType(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): Type
     {
-        $nativeType = $this->nativeType($reflection);
+        $nativeType = $this->resolveNativeType($reflection);
         $typeFromDocBlock = $this->typeFromDocBlock($reflection);
 
-        if (! $nativeType && ! $typeFromDocBlock) {
-            return MixedType::get();
-        }
-
-        if (! $nativeType) {
-            /** @var Type $typeFromDocBlock */
-            return $typeFromDocBlock;
-        }
-
         if (! $typeFromDocBlock) {
+            // When the type is a class, it may declare templates that must be
+            // filled with generics. PHP does not handle generics natively, so
+            // we need to make sure that no generics are left unassigned by
+            // parsing the type again using the advanced parser.
+            if ($nativeType instanceof GenericType) {
+                $nativeType = $this->parseType($nativeType->toString(), $reflection, $this->advancedParser);
+            }
+
             return $nativeType;
         }
 
-        if (! $typeFromDocBlock instanceof UnresolvableType
-            && ! $nativeType instanceof UnresolvableType
-            && ! $typeFromDocBlock->matches($nativeType)
-        ) {
-            throw new TypesDoNotMatch($reflection, $typeFromDocBlock, $nativeType);
+        if ($typeFromDocBlock instanceof UnresolvableType) {
+            return $typeFromDocBlock;
+        }
+
+        if (! $typeFromDocBlock->matches($nativeType)) {
+            return UnresolvableType::forDocBlockTypeNotMatchingNative($reflection, $typeFromDocBlock, $nativeType);
         }
 
         return $typeFromDocBlock;
+    }
+
+    public function resolveNativeType(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): Type
+    {
+        $reflectionType = $reflection instanceof ReflectionFunctionAbstract
+            ? $reflection->getReturnType()
+            : $reflection->getType();
+
+        if (! $reflectionType) {
+            return MixedType::get();
+        }
+
+        $type = Reflection::flattenType($reflectionType);
+        $type = $this->parseType($type, $reflection, $this->nativeParser);
+
+        return $this->handleVariadicType($reflection, $type);
     }
 
     private function typeFromDocBlock(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): ?Type
@@ -78,22 +96,6 @@ final class ReflectionTypeResolver
         }
 
         $type = $this->parseType($type, $reflection, $this->advancedParser);
-
-        return $this->handleVariadicType($reflection, $type);
-    }
-
-    private function nativeType(ReflectionProperty|ReflectionParameter|ReflectionFunctionAbstract $reflection): ?Type
-    {
-        $reflectionType = $reflection instanceof ReflectionFunctionAbstract
-            ? $reflection->getReturnType()
-            : $reflection->getType();
-
-        if (! $reflectionType) {
-            return null;
-        }
-
-        $type = Reflection::flattenType($reflectionType);
-        $type = $this->parseType($type, $reflection, $this->nativeParser);
 
         return $this->handleVariadicType($reflection, $type);
     }

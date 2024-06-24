@@ -18,7 +18,7 @@ final class InterfaceType implements ObjectType, GenericType
     public function __construct(
         /** @var class-string */
         private string $interfaceName,
-        /** @var array<string, Type> */
+        /** @var array<non-empty-string, Type> */
         private array $generics = []
     ) {}
 
@@ -51,7 +51,7 @@ final class InterfaceType implements ObjectType, GenericType
             return false;
         }
 
-        return is_a($other->className(), $this->interfaceName, true);
+        return is_a($this->interfaceName, $other->className(), true);
     }
 
     public function traverse(): array

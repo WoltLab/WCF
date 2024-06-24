@@ -9,23 +9,30 @@ use CuyZ\Valinor\Mapper\Object\Exception\SeveralObjectBuildersFound;
 
 use function count;
 use function is_array;
+use function reset;
 
 /** @internal */
 final class FilteredObjectBuilder implements ObjectBuilder
 {
     private ObjectBuilder $delegate;
 
-    private Arguments $arguments;
-
-    public function __construct(mixed $source, ObjectBuilder ...$builders)
+    private function __construct(mixed $source, ObjectBuilder ...$builders)
     {
         $this->delegate = $this->filterBuilder($source, ...$builders);
-        $this->arguments = $this->delegate->describeArguments();
+    }
+
+    public static function from(mixed $source, ObjectBuilder ...$builders): ObjectBuilder
+    {
+        if (count($builders) === 1) {
+            return $builders[0];
+        }
+
+        return new self($source, ...$builders);
     }
 
     public function describeArguments(): Arguments
     {
-        return $this->arguments;
+        return $this->delegate->describeArguments();
     }
 
     public function build(array $arguments): object
@@ -41,7 +48,7 @@ final class FilteredObjectBuilder implements ObjectBuilder
     private function filterBuilder(mixed $source, ObjectBuilder ...$builders): ObjectBuilder
     {
         if (count($builders) === 1) {
-            return $builders[0];
+            return reset($builders);
         }
 
         /** @var non-empty-list<ObjectBuilder> $builders */
