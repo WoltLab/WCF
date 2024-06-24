@@ -190,10 +190,10 @@ function markElementAsErroneous(element: HTMLElement, errorMessage: string): voi
 
 function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
   const progress = document.createElement("progress");
-  progress.classList.add("attachment__item__progress__bar");
+  progress.classList.add("fileList__item__progress__bar");
   progress.max = 100;
   const readout = document.createElement("span");
-  readout.classList.add("attachment__item__progress__readout");
+  readout.classList.add("fileList__item__progress__readout");
 
   file.addEventListener("uploadProgress", (event: CustomEvent<number>) => {
     progress.value = event.detail;
@@ -203,7 +203,7 @@ function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement)
       element.classList.add("attachment__item--uploading");
 
       const wrapper = document.createElement("div");
-      wrapper.classList.add("attachment__item__progress");
+      wrapper.classList.add("fileList__item__progress");
       wrapper.append(progress, readout);
 
       element.append(wrapper);
@@ -217,7 +217,7 @@ function removeUploadProgress(element: HTMLElement): void {
   }
 
   element.classList.remove("attachment__item--uploading");
-  element.querySelector(".attachment__item__progress")?.remove();
+  element.querySelector(".fileList__item__progress")?.remove();
 }
 
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {

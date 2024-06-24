@@ -136,17 +136,6 @@ html[data-color-scheme="dark"] {
 }
 
 /* attachments tab in editor */
-.attachment__item__progress {
-	align-items: center;
-	column-gap: 10px;
-	display: flex;
-	grid-area: buttons;
-}
-
-.attachment__item__progress__readout {
-	@include wcfFontSmall;
-}
-
 .formAttachmentContent {
 	.formAttachmentList {
 		display: flex;

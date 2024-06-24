@@ -61,3 +61,14 @@
 	grid-area: buttons;
 	justify-content: end;
 }
+
+.fileList__item__progress {
+	align-items: center;
+	column-gap: 10px;
+	display: flex;
+	grid-area: buttons;
+}
+
+.fileList__item__progress__readout {
+	@include wcfFontSmall;
+}

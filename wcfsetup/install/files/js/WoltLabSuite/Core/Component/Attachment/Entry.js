@@ -143,17 +143,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
     }
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
-        progress.classList.add("attachment__item__progress__bar");
+        progress.classList.add("fileList__item__progress__bar");
         progress.max = 100;
         const readout = document.createElement("span");
-        readout.classList.add("attachment__item__progress__readout");
+        readout.classList.add("fileList__item__progress__readout");
         file.addEventListener("uploadProgress", (event) => {
             progress.value = event.detail;
             readout.textContent = `${event.detail}%`;
             if (progress.parentNode === null) {
                 element.classList.add("attachment__item--uploading");
                 const wrapper = document.createElement("div");
-                wrapper.classList.add("attachment__item__progress");
+                wrapper.classList.add("fileList__item__progress");
                 wrapper.append(progress, readout);
                 element.append(wrapper);
             }
@@ -164,7 +164,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             return;
         }
         element.classList.remove("attachment__item--uploading");
-        element.querySelector(".attachment__item__progress")?.remove();
+        element.querySelector(".fileList__item__progress")?.remove();
     }
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
