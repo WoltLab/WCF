@@ -11,10 +11,12 @@ define(["require", "exports"], function (require, exports) {
         userId;
         username;
         link;
-        constructor(userId, username, link) {
+        guestTokenDialogEndpoint;
+        constructor(userId, username, link, guestTokenDialogEndpoint) {
             this.userId = userId;
             this.username = username;
             this.link = link;
+            this.guestTokenDialogEndpoint = guestTokenDialogEndpoint;
         }
     }
     let user;
@@ -29,17 +31,20 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Initializes the user object.
          */
-        init(userId, username, link) {
+        init(userId, username, link, guestTokenDialogEndpoint = "") {
             if (user) {
                 throw new Error("User has already been initialized.");
             }
-            user = new User(userId, username, link);
+            user = new User(userId, username, link, guestTokenDialogEndpoint);
         },
         get userId() {
             return user.userId;
         },
         get username() {
             return user.username;
+        },
+        get guestTokenDialogEndpoint() {
+            return user.guestTokenDialogEndpoint;
         },
     };
 });

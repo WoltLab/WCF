@@ -241,9 +241,12 @@ class PackageStartInstallForm extends AbstractForm
     {
         parent::assignVariables();
 
+        $majorMinorVersion = \preg_replace('/^(\d+\.\d+)\..*$/', '\\1', \WCF_VERSION);
+
         WCF::getTPL()->assign([
             'package' => $this->package,
             'installingImportedStyle' => $this->stylePackageImportLocation != '',
+            'majorMinorVersion' => $majorMinorVersion,
         ]);
     }
 

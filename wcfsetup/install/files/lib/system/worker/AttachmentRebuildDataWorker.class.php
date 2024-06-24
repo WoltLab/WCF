@@ -2,20 +2,27 @@
 
 namespace wcf\system\worker;
 
-use wcf\data\attachment\AttachmentAction;
+use wcf\data\attachment\Attachment;
+use wcf\data\attachment\AttachmentEditor;
 use wcf\data\attachment\AttachmentList;
+use wcf\data\file\FileEditor;
+use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\exception\SystemException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
+use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\WCF;
 
 /**
  * Worker implementation for updating attachments.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Marcel Werk
+ * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @method  AttachmentList  getObjectList()
+ * @deprecated 6.1 Should be removed in 6.2 as its only purpose is to migrate to the new upload API.
  */
-class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker
+class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -25,33 +32,79 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker
     /**
      * @inheritDoc
      */
-    protected $limit = 10;
+    protected $limit = 100;
 
-    /**
-     * @inheritDoc
-     */
-    protected function initObjectList()
-    {
-        parent::initObjectList();
-
-        $this->objectList->sqlOrderBy = 'attachment.attachmentID';
-    }
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();
 
-        /** @var \wcf\data\attachment\Attachment $attachment */
+        /** @var array<int,int> */
+        $attachmentToFileID = [];
+
+        /** @var list<int> */
+        $defunctAttachmentIDs = [];
+
         foreach ($this->objectList as $attachment) {
-            $attachment->migrateStorage();
-            try {
-                $action = new AttachmentAction([$attachment], 'generateThumbnails');
-                $action->executeAction();
-            } catch (SystemException $e) {
+            \assert($attachment instanceof Attachment);
+
+            if ($attachment->fileID !== null) {
+                continue;
             }
+
+            $attachment->migrateStorage();
+
+            $file = FileEditor::createFromExistingFile(
+                $attachment->getLocation(),
+                $attachment->filename,
+                'com.woltlab.wcf.attachment'
+            );
+
+            if ($file === null) {
+                $defunctAttachmentIDs[] = $attachment->attachmentID;
+                continue;
+            }
+
+            $attachmentToFileID[$attachment->attachmentID] = $file->fileID;
         }
+
+        $this->setFileIDs($attachmentToFileID);
+        $this->removeDefunctAttachments($defunctAttachmentIDs);
+    }
+
+    /**
+     * @param array<int,int> $attachmentToFileID
+     */
+    private function setFileIDs(array $attachmentToFileID): void
+    {
+        if ($attachmentToFileID === []) {
+            return;
+        }
+
+        $sql = "UPDATE  wcf1_attachment
+                SET     fileID = ?
+                WHERE   attachmentID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($attachmentToFileID as $attachmentID => $fileID) {
+            $statement->execute([
+                $fileID,
+                $attachmentID,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+    }
+
+    /**
+     * @param list<int> $attachmentIDs
+     */
+    private function removeDefunctAttachments(array $attachmentIDs): void
+    {
+        if ($attachmentIDs === []) {
+            return;
+        }
+
+        AttachmentEditor::deleteAll($attachmentIDs);
     }
 }

@@ -8,6 +8,8 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\file\processor\AttachmentFileProcessor;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
 
 /**
@@ -54,6 +56,8 @@ class AttachmentHandler implements \Countable
      * @var AttachmentList
      */
     protected $attachmentList;
+
+    private AttachmentFileProcessor $fileProcessor;
 
     /**
      * Creates a new AttachmentHandler object.
@@ -321,5 +325,24 @@ class AttachmentHandler implements \Countable
     public function getParentObjectID()
     {
         return $this->parentObjectID;
+    }
+
+    public function getHtmlElement(): string
+    {
+        return $this->getFileProcessor()->toHtmlElement(
+            $this->objectType->objectType,
+            $this->objectID ?? 0,
+            \implode(',', $this->tmpHash),
+            $this->parentObjectID
+        );
+    }
+
+    private function getFileProcessor(): AttachmentFileProcessor
+    {
+        if (!isset($this->fileProcessor)) {
+            $this->fileProcessor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.attachment');
+        }
+
+        return $this->fileProcessor;
     }
 }

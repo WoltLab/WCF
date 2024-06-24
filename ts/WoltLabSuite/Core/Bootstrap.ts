@@ -168,6 +168,13 @@ export function setup(options: BoostrapOptions): void {
   whenFirstSeen("[data-google-maps-geocoding]", () => {
     void import("./Component/GoogleMaps/Geocoding").then(({ setup }) => setup());
   });
+  whenFirstSeen("woltlab-core-file", () => {
+    void import("./Component/File/woltlab-core-file");
+  });
+  whenFirstSeen("woltlab-core-file-upload", () => {
+    void import("./Component/File/woltlab-core-file");
+    void import("./Component/File/Upload").then(({ setup }) => setup());
+  });
 
   // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
   // when widget form elements are placed in a dialog.

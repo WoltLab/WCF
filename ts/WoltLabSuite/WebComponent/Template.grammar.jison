@@ -131,7 +131,7 @@ COMMAND:
 		$$ = "h.selectPlural({"
 		var needsComma = false;
 		for (var key in $2) {
-			if (objOwns($2, key)) {
+			if (Object.hasOwn($2, key)) {
 				$$ += (needsComma ? ',' : '') + key + ': ' + $2[key];
 				needsComma = true;
 			}

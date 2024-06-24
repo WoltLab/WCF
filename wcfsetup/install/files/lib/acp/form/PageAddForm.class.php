@@ -468,8 +468,12 @@ class PageAddForm extends AbstractForm
             }
         }
 
-        foreach ($this->customURL as $languageID => $customURL) {
-            $this->validateCustomUrl($languageID, $customURL);
+        if ($this->isMultilingual) {
+            foreach ($this->availableLanguages as $language) {
+                $this->validateCustomUrl($language->languageID, $this->customURL[$language->languageID] ?? '');
+            }
+        } else {
+            $this->validateCustomUrl(0, $this->customURL[0] ?? '');
         }
     }
 
@@ -485,7 +489,7 @@ class PageAddForm extends AbstractForm
     {
         if (empty($customURL)) {
             if ($this->pageType != 'system') {
-                throw new UserInputException('customURL_' . $languageID, 'invalid');
+                throw new UserInputException('customURL_' . $languageID);
             }
         } elseif (!RouteHandler::isValidCustomUrl($customURL)) {
             throw new UserInputException('customURL_' . $languageID, 'invalid');

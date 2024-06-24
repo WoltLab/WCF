@@ -35,14 +35,12 @@ export function apiResultFromValue<T>(value: T): ApiResult<T> {
   };
 }
 
-export function apiResultFromError(error: ApiError): ApiResult<never> {
-  return {
-    ok: false,
-    error,
-    unwrap() {
-      throw error;
-    },
-  };
+export async function apiResultFromError(error: unknown): Promise<ApiResult<never>> {
+  if (error instanceof StatusNotOk) {
+    return apiResultFromStatusNotOk(error);
+  }
+
+  throw error;
 }
 
 export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResult<never>> {
@@ -73,7 +71,15 @@ export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResul
     typeof json.message === "string" &&
     typeof json.param === "string"
   ) {
-    return apiResultFromError(new ApiError(json.type, json.code, json.message, json.param, response.status));
+    const apiError = new ApiError(json.type, json.code, json.message, json.param, response.status);
+
+    return {
+      ok: false,
+      error: apiError,
+      unwrap() {
+        throw apiError;
+      },
+    };
   }
 
   throw e;

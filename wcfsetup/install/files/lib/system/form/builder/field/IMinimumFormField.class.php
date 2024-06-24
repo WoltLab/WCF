@@ -16,7 +16,7 @@ interface IMinimumFormField extends IFormField
      * Returns the minimum of the values of this field or `null` if no minimum
      * has been set.
      *
-     * @return  null|number
+     * @return  null|int|float
      */
     public function getMinimum();
 
@@ -24,7 +24,7 @@ interface IMinimumFormField extends IFormField
      * Sets the minimum of the values of this field. If `null` is passed, the
      * minimum is removed.
      *
-     * @param null|number $minimum minimum field value
+     * @param null|int|float $minimum minimum field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum is no number or otherwise invalid

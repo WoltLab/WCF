@@ -2,6 +2,8 @@
 
 namespace wcf\system\html\input\node;
 
+use Laminas\Diactoros\Exception\InvalidArgumentException;
+use Laminas\Diactoros\Uri;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
@@ -430,10 +432,33 @@ class HtmlInputNodeTextParser
                     $element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
                     $element->appendChild($element->ownerDocument->createTextNode($link));
                 } elseif ($allowURL) {
+                    $link = $matches[0];
+
                     // add protocol if necessary
                     if (!\preg_match('/[a-z]:\/\//si', $link)) {
                         $link = 'http://' . $link;
                     }
+
+                    try {
+                        $uri = new Uri($link);
+                    } catch (InvalidArgumentException) {
+                        return;
+                    }
+
+                    $path = $uri->getPath();
+                    if ($path !== '') {
+                        // This is a simplified transformation that will only replace
+                        // characters that are known to be always invalid in URIs and must
+                        // be encoded at all times according to RFC 1738.
+                        $path = \preg_replace_callback(
+                            '~[^0-9a-zA-Z$-_.+!*\'(),;/?:@=&]~',
+                            static fn (array $matches) => \rawurlencode($matches[0]),
+                            $path
+                        );
+                        $uri = $uri->withPath($path);
+                    }
+
+                    $link = $uri->__toString();
 
                     $element = $text->ownerDocument->createElement('a');
                     $element->setAttribute('href', $link);

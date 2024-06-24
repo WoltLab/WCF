@@ -97,6 +97,25 @@ class CommentHandler extends SingletonFactory
     }
 
     /**
+     * Returns comment manager object for given object type id.
+     *
+     * @throws  \InvalidArgumentException
+     * @since   6.1
+     */
+    public function getCommentManagerByID(int $objectTypeID): ICommentManager
+    {
+        $objectType = $this->getObjectType($objectTypeID);
+        if ($objectType === null) {
+            throw new \InvalidArgumentException('unknown object type id given');
+        }
+
+        $processor = $objectType->getProcessor();
+        assert($processor instanceof ICommentManager);
+
+        return $processor;
+    }
+
+    /**
      * Returns a comment list for a given object type and object id.
      *
      * @param ICommentManager $commentManager

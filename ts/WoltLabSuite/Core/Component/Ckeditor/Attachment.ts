@@ -19,7 +19,7 @@ type UploadResult = {
   };
 };
 
-type AttachmentData = {
+export type AttachmentData = {
   attachmentId: number;
   url: string;
 };
@@ -36,14 +36,16 @@ function uploadAttachment(element: HTMLElement, file: File, abortController?: Ab
   dispatchToCkeditor(element).uploadAttachment(payload);
 
   return new Promise<UploadResult>((resolve) => {
-    void payload.promise!.then(({ attachmentId, url }) => {
-      resolve({
-        "data-attachment-id": attachmentId.toString(),
-        urls: {
-          default: url,
-        },
-      });
-    });
+    void payload
+      .promise!.then(({ attachmentId, url }) => {
+        resolve({
+          "data-attachment-id": attachmentId.toString(),
+          urls: {
+            default: url,
+          },
+        });
+      })
+      .catch(() => {});
   });
 }
 

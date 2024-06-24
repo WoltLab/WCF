@@ -30,7 +30,7 @@ use wcf\system\WCF;
  *
  * @method  UserList    getObjectList()
  */
-class UserRebuildDataWorker extends AbstractRebuildDataWorker
+final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -42,9 +42,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 50;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -53,15 +51,16 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->sqlJoins = "
             LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID";
-        $this->objectList->sqlOrderBy = 'user_table.userID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();
+
+        if (\count($this->getObjectList()) === 0) {
+            return;
+        }
 
         $users = $userIDs = [];
         foreach ($this->getObjectList() as $user) {
@@ -79,19 +78,19 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             // update article counter
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
-            $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+            $sql = "UPDATE  wcf1_user user_table
                     SET     articles = (
                                 SELECT  COUNT(*)
-                                FROM    wcf" . WCF_N . "_article
+                                FROM    wcf1_article
                                 WHERE   userID = user_table.userID
                             )
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             // update like counter
             if (MODULE_LIKE) {
-                $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+                $sql = "UPDATE  wcf1_user user_table
                         SET";
 
                 $reactionTypeIDs = \array_keys(ReactionTypeCache::getInstance()->getReactionTypes());
@@ -99,7 +98,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     $sql .= "
                         likesReceived = (
                             SELECT  COUNT(*)
-                            FROM    wcf" . WCF_N . "_like
+                            FROM    wcf1_like
                             WHERE   objectUserID = user_table.userID
                                 AND reactionTypeID IN (" . \implode(',', $reactionTypeIDs) . ")
                         )";
@@ -108,34 +107,34 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 }
 
                 $sql .= " " . $conditionBuilder;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditionBuilder->getParameters());
             }
 
             // update trophy points
             if (MODULE_TROPHY) {
-                $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+                $sql = "UPDATE  wcf1_user user_table
                         SET     trophyPoints = (
                                     SELECT      COUNT(*)
-                                    FROM        wcf" . WCF_N . "_user_trophy user_trophy
-                                    LEFT JOIN   wcf" . WCF_N . "_trophy trophy
+                                    FROM        wcf1_user_trophy user_trophy
+                                    LEFT JOIN   wcf1_trophy trophy
                                     ON          user_trophy.trophyID = trophy.trophyID
-                                    LEFT JOIN   wcf" . WCF_N . "_category trophy_category
+                                    LEFT JOIN   wcf1_category trophy_category
                                     ON          trophy.categoryID = trophy_category.categoryID
                                     WHERE           user_trophy.userID = user_table.userID
                                                 AND trophy.isDisabled = 0
                                                 AND trophy_category.isDisabled = 0
                                 )
                         " . $conditionBuilder;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditionBuilder->getParameters());
             }
 
             // update signatures and about me
-            $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
+            $sql = "UPDATE  wcf1_user_option_value
                     SET     userOption" . User::getUserOptionID('aboutMe') . " = ?
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             // retrieve permissions
             $userIDs = [];

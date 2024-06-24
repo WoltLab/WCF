@@ -105,7 +105,7 @@ class Ckeditor {
     return this.#editor.ui.element!.clientWidth !== 0;
   }
 
-  setHtml(html: string): void {
+  setHtml(html: string, focusEditor = true): void {
     html = normalizeLegacyHtml(html);
 
     this.#editor.model.change((writer) => {
@@ -117,7 +117,10 @@ class Ckeditor {
       range = this.#editor.model.insertContent(modelFragment, range);
 
       writer.setSelection(range.end);
-      this.focus();
+
+      if (focusEditor) {
+        this.focus();
+      }
     });
   }
 
@@ -131,7 +134,7 @@ class Ckeditor {
   }
 
   reset(): void {
-    this.setHtml("");
+    this.setHtml("", false);
 
     dispatchToCkeditor(this.sourceElement).reset({
       ckeditor: this,

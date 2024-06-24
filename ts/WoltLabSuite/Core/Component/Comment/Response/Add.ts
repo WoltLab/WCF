@@ -11,20 +11,14 @@ import DomUtil from "../../../Dom/Util";
 import { getPhrase } from "../../../Language";
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScroll from "../../../Ui/Scroll";
-import { dboAction } from "../../../Ajax";
-import * as Core from "../../../Core";
 import * as UiNotification from "../../../Ui/Notification";
-import { StatusNotOk } from "../../../Ajax/Error";
-import { showGuestDialog } from "../GuestDialog";
 import { CKEditor, getCkeditor } from "../../Ckeditor";
 import { listenToCkeditor } from "../../Ckeditor/Event";
+import User from "WoltLabSuite/Core/User";
+import { getGuestToken } from "../../GuestTokenDialog";
+import { createResponse } from "WoltLabSuite/Core/Api/Comments/Responses/CreateResponse";
 
-type ResponseAddResponse = {
-  guestDialog?: string;
-  template?: string;
-};
-
-type CallbackInsertResponse = (commentId: number, template: string) => void;
+type CallbackInsertResponse = (commentId: number, responseId: number) => void;
 
 export class CommentResponseAdd {
   readonly container: HTMLElement;
@@ -54,7 +48,6 @@ export class CommentResponseAdd {
 
     listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
       features.heading = false;
-      features.quoteBlock = false;
       features.spoiler = false;
       features.table = false;
     });
@@ -99,50 +92,36 @@ export class CommentResponseAdd {
   /**
    * Validates the message and submits it to the server.
    */
-  async #submit(additionalParameters: Record<string, unknown> = {}): Promise<void> {
+  async #submit(): Promise<void> {
     if (!this.#validate()) {
       return;
     }
 
     this.#showLoadingOverlay();
 
-    const parameters = this.#getParameters();
-
-    EventHandler.fire("com.woltlab.wcf.ckeditor", "submit_text", parameters.data as any);
-
-    let response: ResponseAddResponse;
-
-    try {
-      response = (await dboAction("addResponse", "wcf\\data\\comment\\CommentAction")
-        .objectIds([this.#commentId])
-        .payload(Core.extend(parameters, additionalParameters) as ArbitraryObject)
-        .disableLoadingIndicator()
-        .dispatch()) as ResponseAddResponse;
-    } catch (error) {
-      if (error instanceof StatusNotOk) {
-        const json = await error.response.clone().json();
-        if (json.code === 412 && json.returnValues) {
-          this.#throwError(this.#getEditor().element, json.returnValues.errorType);
-        }
-      } else {
-        throw error;
-      }
-
-      this.#hideLoadingOverlay();
-      return;
-    }
-
-    if (response!.guestDialog) {
-      const additionalParameters = await showGuestDialog(response!.guestDialog);
-      if (additionalParameters === undefined) {
+    let token: string | undefined = "";
+    if (!User.userId) {
+      token = await getGuestToken();
+      if (token === undefined) {
         this.#hideLoadingOverlay();
-      } else {
-        void this.#submit(additionalParameters);
+
+        return;
       }
+    }
+
+    const response = await createResponse(this.#commentId, this.#getEditor().getHtml(), token);
+    if (!response.ok) {
+      const validationError = response.error.getValidationError();
+      if (validationError === undefined) {
+        throw response.error;
+      }
+      this.#throwError(this.#getEditor().element, validationError.code);
+      this.#hideLoadingOverlay();
+
       return;
     }
 
-    this.#callback(this.#commentId, response!.template!);
+    this.#callback(this.#commentId, response.value.responseID);
     UiNotification.show(getPhrase("wcf.global.success.add"));
     this.#reset();
     this.#hideLoadingOverlay();
@@ -211,17 +190,6 @@ export class CommentResponseAdd {
         this.#getEditor().focus();
       });
     }, 0);
-  }
-
-  /**
-   * Returns the request parameters to add a response.
-   */
-  #getParameters(): ArbitraryObject {
-    return {
-      data: {
-        message: this.#getContent(),
-      },
-    };
   }
 
   /**

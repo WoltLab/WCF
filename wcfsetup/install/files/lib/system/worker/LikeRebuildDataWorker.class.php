@@ -16,7 +16,7 @@ use wcf\system\WCF;
  *
  * @method  LikeList    getObjectList()
  */
-class LikeRebuildDataWorker extends AbstractRebuildDataWorker
+final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -28,9 +28,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 10000;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -38,9 +36,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->sqlOrderBy = 'like_table.objectTypeID, like_table.objectID, like_table.likeID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();
@@ -50,13 +46,17 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
             UserActivityPointHandler::getInstance()->reset('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
 
             // reset like object data
-            $sql = "UPDATE  wcf" . WCF_N . "_like_object
+            $sql = "UPDATE  wcf1_like_object
                     SET     likes = 0,
                             dislikes = 0,
-                            cumulativeLikes = 0, 
+                            cumulativeLikes = 0,
                             cachedReactions = NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute();
+        }
+
+        if (\count($this->getObjectList()) === 0) {
+            return;
         }
 
         $itemsToUser = [];
@@ -93,7 +93,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
         }
 
         // No objects are fetched. We can abort the execution.
-        if (empty($likeObjectData)) {
+        if ($likeObjectData === []) {
             return;
         }
 
@@ -114,29 +114,29 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
             $condition->add('objectTypeID = ?', [$objectTypeID]);
             $condition->add('objectID IN (?)', [\array_keys($objects)]);
             $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
-                    FROM    wcf" . WCF_N . "_like_object
+                    FROM    wcf1_like_object
                     " . $condition;
-            $objectStatement = WCF::getDB()->prepareStatement($sql);
+            $objectStatement = WCF::getDB()->prepare($sql);
             $objectStatement->execute($condition->getParameters());
             while ($row = $objectStatement->fetchArray()) {
                 $rows[$objectTypeID][$row['objectID']] = $row;
             }
         }
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_like_object
+        $sql = "INSERT INTO wcf1_like_object
                             (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
                 VALUES      (?, ?, ?, ?, ?, ?, ?)";
-        $insertStatement = WCF::getDB()->prepareStatement($sql);
+        $insertStatement = WCF::getDB()->prepare($sql);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_like_object
+        $sql = "UPDATE  wcf1_like_object
                 SET     objectUserID = ?,
                         likes = ?,
                         dislikes = 0,
-                        cumulativeLikes = ?, 
+                        cumulativeLikes = ?,
                         cachedReactions = ?
                 WHERE   objectTypeID = ?
                 AND     objectID = ?";
-        $updateStatement = WCF::getDB()->prepareStatement($sql);
+        $updateStatement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($likeObjectData as $objectTypeID => $objects) {

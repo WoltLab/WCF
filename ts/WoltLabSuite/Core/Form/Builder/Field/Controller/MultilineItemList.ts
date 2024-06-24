@@ -124,6 +124,8 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         saveCallback(event);
+      } else if (event.key === "Escape") {
+        endCallback();
       }
     });
 
@@ -135,9 +137,7 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
       endCallback();
     });
 
-    li.append(cancelButton);
-    li.append(saveButton);
-    li.append(input);
+    li.append(saveButton, cancelButton, input);
     input.focus();
   }
 
@@ -160,7 +160,6 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
     let icon = document.createElement("fa-icon");
     icon.setIcon("trash");
     deleteButton.append(icon);
-    itemElement.append(deleteButton);
 
     const editButton = document.createElement("button");
     editButton.type = "button";
@@ -170,15 +169,12 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
       this.editItem(ev);
     });
     icon = document.createElement("fa-icon");
-    icon.setIcon("edit");
+    icon.setIcon("pencil");
     editButton.append(icon);
-    itemElement.append(editButton);
-
-    itemElement.append(" ");
 
     const label = document.createElement("span");
     label.innerText = item;
-    itemElement.append(label);
+    itemElement.append(editButton, deleteButton, " ", label);
 
     const nextElement = Array.from(this.itemList.children).find((el: HTMLElement) => el.dataset.value! > item);
 

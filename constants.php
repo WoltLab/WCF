@@ -117,6 +117,7 @@
 \define('REGISTER_USERNAME_MAX_LENGTH', 25);
 \define('REGISTER_USERNAME_FORCE_ASCII', 2);
 \define('REGISTER_MIN_USER_AGE', 0);
+\define('REGISTER_ANTISPAM_ACTION', 0);
 \define('GITHUB_PUBLIC_KEY', '');
 \define('GITHUB_PRIVATE_KEY', '');
 \define('TWITTER_PUBLIC_KEY', '');
@@ -214,7 +215,6 @@
 \define('BLACKLIST_SFS_USERNAME', '90percentile');
 \define('BLACKLIST_SFS_EMAIL_ADDRESS', 'moreThanOnce');
 \define('BLACKLIST_SFS_IP_ADDRESS', '90percentile');
-\define('BLACKLIST_SFS_ACTION', 'disable');
 \define('ENABLE_ENTERPRISE_MODE', 0);
 \define('MESSAGE_ENABLE_USER_CONSENT', 1);
 \define('MODIFICATION_LOG_EXPIRATION', 0);

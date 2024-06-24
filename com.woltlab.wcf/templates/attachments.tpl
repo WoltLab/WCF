@@ -50,10 +50,6 @@
 											{icon name='up-right-and-down-left-from-center'}
 											{#$attachment->width} × {#$attachment->height}
 										</li>
-										<li>
-											{icon name='eye'}
-											{#$attachment->downloads}
-										</li>
 									</ul>
 								</a>
 							</li>

@@ -3,6 +3,7 @@
 namespace wcf\util;
 
 use wcf\system\email\Mailbox;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -242,6 +243,55 @@ final class UserUtil
         }
 
         return \mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
+    }
+
+    /**
+     * Creates a guest token for the given username.
+     *
+     * @since 6.1
+     */
+    public static function createGuestToken(string $username): string
+    {
+        return CryptoUtil::createSignedString(JSON::encode(
+            [
+                'username' => $username,
+                'time' => TIME_NOW,
+            ]
+        ));
+    }
+
+    /**
+     * Verifies the given guest token and returns the stored username if the token is valid,
+     * otherwise returns null.
+     *
+     * @since 6.1
+     */
+    public static function verifyGuestToken(string $token): ?string
+    {
+        if ($token === '') {
+            return null;
+        }
+
+        $json = CryptoUtil::getValueFromSignedString($token);
+        if ($json === null) {
+            return null;
+        }
+
+        try {
+            $data = JSON::decode($json);
+        } catch (SystemException $e) {
+            return null;
+        }
+
+        if (!\is_array($data) || !isset($data['username']) || !isset($data['time'])) {
+            return null;
+        }
+
+        if ($data['time'] < \TIME_NOW - 30) {
+            return null;
+        }
+
+        return $data['username'];
     }
 
     /**

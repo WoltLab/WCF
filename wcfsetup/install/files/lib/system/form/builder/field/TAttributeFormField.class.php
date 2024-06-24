@@ -15,7 +15,7 @@ use wcf\system\form\builder\IFormNode;
 trait TAttributeFormField
 {
     /**
-     * @var?string[]
+     * @var string[]
      */
     protected $fieldAttributes = [];
 

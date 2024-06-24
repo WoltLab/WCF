@@ -159,7 +159,7 @@ case 12:
 		this.$ = "h.selectPlural({"
 		var needsComma = false;
 		for (var key in $$[$0-1]) {
-			if (objOwns($$[$0-1], key)) {
+			if (Object.hasOwn($$[$0-1], key)) {
 				this.$ += (needsComma ? ',' : '') + key + ': ' + $$[$0-1][key];
 				needsComma = true;
 			}

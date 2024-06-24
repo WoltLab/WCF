@@ -67,7 +67,8 @@ window.addEventListener('pageshow', function(event) {
 		User.init(
 			{@$__wcf->user->userID},
 			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
-			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if}
+			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
+			'{link controller='GuestTokenDialog'}{/link}'
 		);
 		
 		BootstrapFrontend.setup({
@@ -134,7 +135,6 @@ window.addEventListener('pageshow', function(event) {
 	);
 </script>
 
-{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Label' bundle='WCF.Combined' hasTiny=true}

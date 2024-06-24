@@ -5,8 +5,6 @@ namespace wcf\data\comment\response;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentAction;
-use wcf\data\comment\CommentEditor;
-use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeHandler;
@@ -18,10 +16,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
-use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\reaction\ReactionHandler;
-use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
 
@@ -51,162 +45,40 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * comment object
      * @var Comment
+     * @deprecated 6.1
      */
     public $comment;
 
     /**
      * comment manager object
      * @var ICommentManager
+     * @deprecated 6.1
      */
     public $commentManager;
 
     /**
      * comment processor
      * @var ICommentManager
+     * @deprecated 6.1
      */
     protected $commentProcessor;
 
     /**
      * @var HtmlInputProcessor
+     * @deprecated 6.1
      */
     protected $htmlInputProcessor;
 
     /**
      * response object
      * @var CommentResponse
+     * @deprecated 6.1
      */
     protected $response;
 
     /**
-     * @inheritDoc
-     */
-    public function validateDelete()
-    {
-        $this->readObjects();
-
-        if ($this->getObjects() === []) {
-            throw new UserInputException('objectIDs');
-        }
-
-        foreach ($this->getObjects() as $response) {
-            $comment = $response->getComment();
-            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
-            $processor = $objectType->getProcessor();
-            if (!$processor->canDeleteResponse($response->getDecoratedObject())) {
-                throw new PermissionDeniedException();
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function delete()
-    {
-        if (empty($this->objects)) {
-            $this->readObjects();
-        }
-
-        if (empty($this->objects)) {
-            return 0;
-        }
-
-        $ignoreCounters = !empty($this->parameters['ignoreCounters']);
-
-        // read object type ids for comments
-        $commentIDs = [];
-        foreach ($this->getObjects() as $response) {
-            $commentIDs[] = $response->commentID;
-        }
-
-        $commentList = new CommentList();
-        $commentList->setObjectIDs($commentIDs);
-        $commentList->readObjects();
-        $comments = $commentList->getObjects();
-
-        // update counters
-        /** @var ICommentManager[] $processors */
-        $processors = $responseIDs = [];
-        foreach ($this->getObjects() as $response) {
-            $objectTypeID = $comments[$response->commentID]->objectTypeID;
-
-            if (!isset($processors[$objectTypeID])) {
-                $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-                $processors[$objectTypeID] = $objectType->getProcessor();
-                $responseIDs[$objectTypeID] = [];
-            }
-            $responseIDs[$objectTypeID][] = $response->responseID;
-
-            if (!$ignoreCounters && !$response->isDisabled) {
-                $processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
-            }
-        }
-
-        // remove responses
-        $count = parent::delete();
-
-        // update comment responses and cached response ids
-        if (!$ignoreCounters) {
-            foreach ($comments as $comment) {
-                $commentEditor = new CommentEditor($comment);
-                $commentEditor->updateResponseIDs();
-                $commentEditor->updateUnfilteredResponseIDs();
-                $commentEditor->updateResponses();
-                $commentEditor->updateUnfilteredResponses();
-            }
-        }
-
-        $deletedResponseIDs = [];
-        $notificationObjectTypes = [];
-        foreach ($responseIDs as $objectTypeID => $objectIDs) {
-            // remove activity events
-            $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->removeEvents(
-                    $objectType->objectType . '.response.recentActivityEvent',
-                    $objectIDs
-                );
-            }
-
-            // delete notifications
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.notification')) {
-                UserNotificationHandler::getInstance()->removeNotifications(
-                    $objectType->objectType . '.response.notification',
-                    $objectIDs
-                );
-            }
-
-            $deletedResponseIDs = \array_merge($deletedResponseIDs, $objectIDs);
-
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.like.notification')) {
-                $notificationObjectTypes[] = $objectType->objectType . '.response.like.notification';
-            }
-        }
-
-        if (!empty($deletedResponseIDs)) {
-            // remove likes
-            ReactionHandler::getInstance()->removeReactions(
-                'com.woltlab.wcf.comment.response',
-                $deletedResponseIDs,
-                $notificationObjectTypes
-            );
-
-            ModerationQueueManager::getInstance()->removeQueues(
-                'com.woltlab.wcf.comment.response',
-                $deletedResponseIDs
-            );
-
-            MessageEmbeddedObjectManager::getInstance()->removeObjects(
-                'com.woltlab.wcf.comment',
-                $deletedResponseIDs
-            );
-        }
-
-        return $count;
-    }
-
-    /**
      * Validates parameters to load responses for a given comment id.
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateLoadResponses()
     {
@@ -229,6 +101,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      * Returns parsed responses for given comment id.
      *
      * @return  array
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function loadResponses()
     {
@@ -295,6 +168,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateBeginEdit()
     {
@@ -311,6 +185,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function beginEdit()
     {
@@ -330,6 +205,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateSave()
     {
@@ -340,6 +216,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * @inheritDoc
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function save()
     {
@@ -379,6 +256,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      * Validates message parameter.
      *
      * @throws      UserInputException
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateMessage()
     {
@@ -422,6 +300,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function validateObjectType($objectTypeID = null)
     {
@@ -440,6 +319,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * Sets the list of disallowed bbcodes for comments.
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     protected function setDisallowedBBCodes()
     {
@@ -455,6 +335,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      * @param string|null $message source message
      * @param int $objectID object id
      * @return      HtmlInputProcessor
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function getHtmlInputProcessor($message = null, $objectID = 0)
     {
@@ -472,6 +353,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      * @throws  PermissionDeniedException
      * @throws  UserInputException
      * @since   6.0
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function validateEnable(): void
     {
@@ -497,6 +379,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * @since 6.0
+     * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
     public function enable(): void
     {

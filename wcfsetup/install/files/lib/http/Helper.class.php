@@ -10,6 +10,9 @@ use Negotiation\Negotiator;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use wcf\data\DatabaseObject;
+use wcf\system\exception\ParentClassException;
+use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
 
 /**
@@ -150,6 +153,7 @@ final class Helper
      * @param class-string<T> $className
      * @return T
      * @throws MappingError
+     * @since 6.1
      */
     public static function mapApiParameters(ServerRequestInterface $request, string $className): object
     {
@@ -157,6 +161,37 @@ final class Helper
             'GET', 'DELETE' => self::mapQueryParameters($request->getQueryParams(), $className),
             'POST' => self::mapRequestBody($request->getParsedBody(), $className)
         };
+    }
+
+    /**
+     * Fetch a database object using a parameter value in the URL.
+     *
+     * If the value does not resolve to an object, i.e. its object id is not
+     * truthy, a UserInputException is thrown using the tables index name as the
+     * field name.
+     *
+     * @template T
+     * @param class-string<T> $className
+     * @return T
+     * @throws UserInputException
+     * @since 6.1
+     */
+    public static function fetchObjectFromRequestParameter(int|string $objectID, string $className): object
+    {
+        if (!\is_subclass_of($className, DatabaseObject::class)) {
+            throw new ParentClassException($className, DatabaseObject::class);
+        }
+
+        $dbo = new $className($objectID);
+        \assert($dbo instanceof DatabaseObject);
+
+        if (!$dbo->getObjectID()) {
+            throw new UserInputException(
+                $dbo->getDatabaseTableIndexName(),
+            );
+        }
+
+        return $dbo;
     }
 
     /**

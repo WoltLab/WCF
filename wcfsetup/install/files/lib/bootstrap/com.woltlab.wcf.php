@@ -34,6 +34,19 @@ return static function (): void {
     );
 
     $eventHandler->register(
+        \wcf\event\user\RegistrationSpamChecking::class,
+        \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
+    );
+    $eventHandler->register(
+        \wcf\event\page\ContactFormSpamChecking::class,
+        \wcf\system\event\listener\ContactFormSpamCheckingSfsListener::class
+    );
+    $eventHandler->register(
+        \wcf\event\message\MessageSpamChecking::class,
+        \wcf\system\event\listener\MessageSpamCheckingSfsListener::class
+    );
+
+    $eventHandler->register(
         \wcf\event\package\PackageListChanged::class,
         static function () {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -77,6 +90,7 @@ return static function (): void {
             $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
             $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
             $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+            $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
             $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
             $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
         }
@@ -102,6 +116,24 @@ return static function (): void {
     $eventHandler->register(
         \wcf\event\endpoint\ControllerCollecting::class,
         static function (\wcf\event\endpoint\ControllerCollecting $event) {
+            $event->register(new \wcf\system\endpoint\controller\core\files\DeleteFile);
+            $event->register(new \wcf\system\endpoint\controller\core\files\PostGenerateThumbnails);
+            $event->register(new \wcf\system\endpoint\controller\core\files\PostUpload);
+            $event->register(new \wcf\system\endpoint\controller\core\files\upload\PostChunk);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\CreateComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\DeleteComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\EditComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\EnableComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComments);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\UpdateComment);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\CreateResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\DeleteResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EditResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EnableResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses);
+            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
         }

@@ -25,13 +25,23 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
 
         // delete orphaned attachments
         $sql = "SELECT  attachmentID
-                FROM    wcf" . WCF_N . "_attachment
+                FROM    wcf1_attachment
                 WHERE   objectID = ?
-                    AND uploadTime < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                    AND (
+                            (
+                                userID IS NULL
+                                AND uploadTime < ?
+                            )
+                            OR (
+                                userID IS NOT NULL
+                                AND uploadTime < ?
+                            )
+                        )";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             0,
             TIME_NOW - 86400,
+            TIME_NOW - (86400 * 3),
         ]);
         $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

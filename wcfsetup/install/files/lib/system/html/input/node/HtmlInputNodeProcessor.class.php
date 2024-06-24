@@ -802,38 +802,38 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             } elseif ($parent->nodeName === 'p') {
                 $parentLinkElement = $link;
-                while ($parentLinkElement->parentNode !== $parent) {
+                $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
+                $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
+
+                while (
+                    $parentLinkElement->parentNode !== $parent &&
+                    $nextSibling === null &&
+                    $previousSibling === null
+                ) {
                     $parentLinkElement = $parentLinkElement->parentNode;
                     \assert($parentLinkElement instanceof \DOMElement);
-                    if ($this->mayContainOtherContent($parentLinkElement, $linebreaks)) {
-                        $mayContainOtherContent = true;
-                        break;
-                    }
-                }
-
-                if (!$mayContainOtherContent) {
                     $nextSibling = $this->getNonEmptyNode($parentLinkElement, 'nextSibling');
                     $previousSibling = $this->getNonEmptyNode($parentLinkElement, 'previousSibling');
+                }
 
-                    // Check whether the link is the only content in the line.
-                    // To do this, we need to check whether the next/previous sibling is a `<br>' element or
-                    // is the start/end of the paragraph.
-                    // <p><a href="https://example.com">https://example.com</a><br>…</p>
-                    // <p>…<br><a href="https://example.com">https://example.com</a></p>
-                    // <p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
-                    // <p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
+                // Check whether the link is the only content in the line.
+                // To do this, we need to check whether the next/previous sibling is a `<br>' element or
+                // is the start/end of the paragraph.
+                // <p><a href="https://example.com">https://example.com</a><br>…</p>
+                // <p>…<br><a href="https://example.com">https://example.com</a></p>
+                // <p>…<br><a href="https://example.com">https://example.com</a><br>…</p>
+                // <p>…<br><u><b><a href="https://example.com">https://example.com</a></b></u><br>…</p>
 
-                    if ($nextSibling !== null && $nextSibling->nodeName === 'br') {
-                        $nextSibling = null;
-                    }
-                    if ($previousSibling !== null && $previousSibling->nodeName === 'br') {
-                        $previousSibling = null;
-                    }
+                if ($nextSibling !== null && $nextSibling->nodeName === 'br') {
+                    $nextSibling = null;
+                }
+                if ($previousSibling !== null && $previousSibling->nodeName === 'br') {
+                    $previousSibling = null;
+                }
 
-                    if ($nextSibling === null && $previousSibling === null) {
-                        $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
-                        continue;
-                    }
+                if ($nextSibling === null && $previousSibling === null) {
+                    $this->plainLinks[] = $plainLink->setIsStandalone($parent, false);
+                    continue;
                 }
             }
 

@@ -2,11 +2,13 @@
 
 namespace wcf\form;
 
-use wcf\data\blacklist\entry\BlacklistEntry;
+use wcf\data\contact\option\ContactOption;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;
+use wcf\event\page\ContactFormSpamChecking;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\email\Mailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -169,15 +171,33 @@ class ContactForm extends AbstractCaptchaForm
             }
         }
 
-        if (BLACKLIST_SFS_ENABLE) {
-            $matches = BlacklistEntry::getMatches(
-                '',
-                $this->email,
-                UserUtil::getIpAddress()
-            );
-            if ($matches !== [] && BLACKLIST_SFS_ACTION === 'block') {
-                throw new PermissionDeniedException();
+        $this->handleSpamCheck();
+    }
+
+    private function handleSpamCheck(): void
+    {
+        $messages = [];
+        foreach ($this->optionHandler->getOptions() as $option) {
+            $object = $option['object'];
+            \assert($object instanceof ContactOption);
+            if (!$object->isMessage || !$object->getOptionValue()) {
+                continue;
             }
+
+            $messages[] = $object->getOptionValue();
+            if ($object->optionType === 'date' && !$object->getOptionValue()) {
+                continue;
+            }
+        }
+
+        $spamCheckEvent = new ContactFormSpamChecking(
+            $this->email,
+            UserUtil::getIpAddress(),
+            $messages,
+        );
+        EventHandler::getInstance()->fire($spamCheckEvent);
+        if ($spamCheckEvent->defaultPrevented()) {
+            throw new PermissionDeniedException();
         }
     }
 

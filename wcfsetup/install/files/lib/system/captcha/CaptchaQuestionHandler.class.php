@@ -75,7 +75,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
             ]);
         }
 
-        return WCF::getTPL()->fetch('captchaQuestion', 'wcf', [
+        return WCF::getTPL()->fetch('shared_captchaQuestion', 'wcf', [
             'captchaQuestion' => $this->captchaQuestion,
             'captchaQuestionAnswered' => $isAnswered,
             'captchaQuestionObject' => $this->question,

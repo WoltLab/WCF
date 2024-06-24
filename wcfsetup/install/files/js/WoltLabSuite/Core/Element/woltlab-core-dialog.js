@@ -200,6 +200,8 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                 closeButton.title = Language.get("wcf.dialog.button.close");
                 closeButton.addEventListener("click", () => {
                     if (this.#shouldClose()) {
+                        const evt = new CustomEvent("cancel", { cancelable: false });
+                        this.dispatchEvent(evt);
                         this.close();
                     }
                 });

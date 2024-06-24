@@ -166,17 +166,6 @@
 				<parent>security.general</parent>
 				<showorder>15</showorder>
 			</category>
-			<category name="security.blacklist">
-				<parent>security</parent>
-			</category>
-			<category name="security.blacklist.sfs">
-				<parent>security.blacklist</parent>
-				<showorder>1</showorder>
-			</category>
-			<category name="security.blacklist.custom">
-				<parent>security.blacklist</parent>
-				<showorder>2</showorder>
-			</category>
 			<category name="security.antispam">
 				<parent>security</parent>
 			</category>
@@ -184,6 +173,9 @@
 				<parent>security.antispam</parent>
 			</category>
 			<category name="security.antispam.recaptcha">
+				<parent>security.antispam</parent>
+			</category>
+			<category name="security.blacklist.sfs">
 				<parent>security.antispam</parent>
 			</category>
 			<category name="security.censorship">
@@ -672,13 +664,6 @@ moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
 simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
 				<defaultvalue>90percentile</defaultvalue>
 			</option>
-			<option name="blacklist_sfs_action">
-				<categoryname>security.blacklist.sfs</categoryname>
-				<optiontype>select</optiontype>
-				<selectoptions><![CDATA[disable:wcf.acp.option.blacklist_sfs_action.disable
-block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
-				<defaultvalue>disable</defaultvalue>
-			</option>
 			<!-- /security.blacklist.stopforumspam -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
@@ -1101,6 +1086,13 @@ XING</selectoptions>
 1:wcf.acp.option.register_activation_method.byUser
 2:wcf.acp.option.register_activation_method.byAdmin
 3:wcf.acp.option.register_activation_method.byUserAndAdmin</selectoptions>
+			</option>
+			<option name="register_antispam_action">
+				<categoryname>user.register</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[disable:wcf.acp.option.register_antispam_action.disable
+block:wcf.acp.option.register_antispam_action.block]]></selectoptions>
+				<defaultvalue>disable</defaultvalue>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>
@@ -1625,5 +1617,8 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="article_enable_visit_tracking"/>
 		<option name="enable_woltlab_news"/>
 		<option name="users_online_record_no_guests"/>
+		<option name="blacklist_sfs_action"/>
+		<category name="security.blacklist"/>
+		<category name="security.blacklist.custom"/>
 	</delete>
 </data>

@@ -2,7 +2,10 @@
 
 namespace wcf\system\message\embedded\object;
 
+use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentList;
+use wcf\data\file\FileList;
+use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 

@@ -7,7 +7,6 @@
  * @since 6.0
  */
 
-import { dboAction, handleValidationErrors } from "../../Ajax";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
 import { wheneverFirstSeen } from "../../Helper/Selector";
@@ -19,26 +18,10 @@ import UiReactionHandler from "../../Ui/Reaction/Handler";
 
 import type WoltlabCoreCommentElement from "./woltlab-core-comment";
 import type WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
-
-type ResponseLoadComments = {
-  lastCommentTime: number;
-  template: string;
-};
-
-type ResponseLoadResponses = {
-  lastResponseTime: number;
-  lastResponseID: number;
-  template: string;
-};
-
-type ResponseLoadComment = {
-  template: string;
-  response?: string;
-};
-
-type ResponseLoadResponse = {
-  template: string;
-};
+import { renderComment } from "WoltLabSuite/Core/Api/Comments/RenderComment";
+import { renderComments } from "WoltLabSuite/Core/Api/Comments/RenderComments";
+import { renderResponse } from "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse";
+import { renderResponses } from "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses";
 
 class CommentList {
   readonly #container: HTMLElement;
@@ -114,27 +97,20 @@ class CommentList {
       '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
     this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
 
-    let ajaxResponse: ResponseLoadComment;
-    try {
-      ajaxResponse = (await dboAction("loadComment", "wcf\\data\\comment\\CommentAction")
-        .objectIds([commentId])
-        .payload({
-          responseID: responseId,
-          objectTypeID: this.#container.dataset.objectTypeId,
-        })
-        .dispatch()) as ResponseLoadComment;
-    } catch (error) {
-      await handleValidationErrors(error, () => {
-        // The comment id is invalid or there is a mismatch, silently ignore it.
-        permaLinkComment!.remove();
-
-        return true;
-      });
+    const ajaxResponse = await renderComment(
+      commentId,
+      responseId ? responseId : undefined,
+      false,
+      parseInt(this.#container.dataset.objectTypeId!),
+    );
+    if (!ajaxResponse.ok) {
+      // The comment id is invalid or there is a mismatch, silently ignore it.
+      permaLinkComment.remove();
 
       return;
     }
 
-    const { template, response } = ajaxResponse;
+    const { template, response } = ajaxResponse.unwrap();
 
     DomUtil.insertHtml(template, permaLinkComment, "before");
     permaLinkComment.remove();
@@ -184,26 +160,15 @@ class CommentList {
       '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
     comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
 
-    let response: ResponseLoadResponse;
-    try {
-      response = (await dboAction("loadResponse", "wcf\\data\\comment\\CommentAction")
-        .payload({
-          responseID: responseId,
-          objectTypeID: this.#container.dataset.objectTypeId,
-        })
-        .dispatch()) as ResponseLoadResponse;
-    } catch (error) {
-      await handleValidationErrors(error, () => {
-        // The response id is invalid or there is a mismatch, silently ignore it.
-        permalinkResponse!.remove();
-
-        return true;
-      });
+    const response = await renderResponse(responseId, false, parseInt(this.#container.dataset.objectTypeId!));
+    if (!response.ok) {
+      // The response id is invalid or there is a mismatch, silently ignore it.
+      permalinkResponse.remove();
 
       return;
     }
 
-    this.#insertResponseSegment(response.template);
+    this.#insertResponseSegment(response.value.template);
   }
 
   #scrollTo(element: HTMLElement, highlight = false): void {
@@ -224,14 +189,14 @@ class CommentList {
         this.#container.querySelector(".commentAdd")!,
         parseInt(this.#container.dataset.objectTypeId!),
         parseInt(this.#container.dataset.objectId!),
-        (template: string) => {
-          this.#insertComment(template);
+        (commentId: number) => {
+          void this.#loadCreatedComment(commentId);
         },
       );
       this.#commentResponseAdd = new CommentResponseAdd(
         this.#container.querySelector(".commentResponseAdd")!,
-        (commentId, template) => {
-          this.#insertResponse(commentId, template);
+        (commentId, responseId) => {
+          void this.#loadCreatedResponse(commentId, responseId);
         },
       );
     }
@@ -300,16 +265,14 @@ class CommentList {
     const button = comment.querySelector<HTMLButtonElement>(".commentLoadNextResponses__button")!;
     button.disabled = true;
 
-    const response = (await dboAction("loadResponses", "wcf\\data\\comment\\response\\CommentResponseAction")
-      .payload({
-        data: {
-          commentID: comment.dataset.commentId,
-          lastResponseTime: comment.dataset.lastResponseTime,
-          lastResponseID: comment.dataset.lastResponseId,
-          loadAllResponses: loadAllResponses ? 1 : 0,
-        },
-      })
-      .dispatch()) as ResponseLoadResponses;
+    const response = (
+      await renderResponses(
+        parseInt(comment.dataset.commentId!),
+        parseInt(comment.dataset.lastResponseTime!),
+        parseInt(comment.dataset.lastResponseId!),
+        loadAllResponses,
+      )
+    ).unwrap();
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
 
@@ -352,15 +315,13 @@ class CommentList {
     const button = this.#container.querySelector<HTMLButtonElement>(".commentLoadNext__button")!;
     button.disabled = true;
 
-    const response = (await dboAction("loadComments", "wcf\\data\\comment\\CommentAction")
-      .payload({
-        data: {
-          objectID: this.#container.dataset.objectId,
-          objectTypeID: this.#container.dataset.objectTypeId,
-          lastCommentTime: this.#container.dataset.lastCommentTime,
-        },
-      })
-      .dispatch()) as ResponseLoadComments;
+    const response = (
+      await renderComments(
+        parseInt(this.#container.dataset.objectTypeId!),
+        parseInt(this.#container.dataset.objectId!),
+        parseInt(this.#container.dataset.lastCommentTime!),
+      )
+    ).unwrap();
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
 
@@ -388,9 +349,19 @@ class CommentList {
     this.#commentResponseAdd.show(commentId);
   }
 
-  #insertComment(template: string): void {
+  async #loadCreatedComment(commentId: number): Promise<void> {
+    const response = await renderComment(commentId);
+    if (!response.ok) {
+      const validationError = response.error.getValidationError();
+      if (validationError === undefined) {
+        throw response.error;
+      }
+
+      return;
+    }
+
     const referenceElement = this.#container.querySelector(".commentAdd")!.parentElement!;
-    DomUtil.insertHtml(template, referenceElement, "after");
+    DomUtil.insertHtml(response.value.template, referenceElement, "after");
     DomChangeListener.trigger();
 
     const scrollTarget = referenceElement.nextElementSibling as HTMLElement;
@@ -400,7 +371,17 @@ class CommentList {
     }, 100);
   }
 
-  #insertResponse(commentId: number, template: string): void {
+  async #loadCreatedResponse(commentId: number, responseId: number): Promise<void> {
+    const response = await renderResponse(responseId);
+    if (!response.ok) {
+      const validationError = response.error.getValidationError();
+      if (validationError === undefined) {
+        throw response.error;
+      }
+
+      return;
+    }
+
     const item = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`)!;
     let commentResponseList = item.querySelector<HTMLElement>(".commentResponseList");
     if (!commentResponseList) {
@@ -414,7 +395,7 @@ class CommentList {
       div.append(commentResponseList);
     }
 
-    DomUtil.insertHtml(template, commentResponseList, "append");
+    DomUtil.insertHtml(response.value.template, commentResponseList, "append");
     DomChangeListener.trigger();
 
     const scrollTarget = commentResponseList.firstElementChild as HTMLElement;

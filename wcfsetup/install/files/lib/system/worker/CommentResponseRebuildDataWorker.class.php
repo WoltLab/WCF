@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
+final class CommentResponseRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -25,50 +25,18 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
     protected $limit = 500;
 
     /**
-     * @var HtmlInputProcessor
-     */
-    protected $htmlInputProcessor;
-
-    /**
      * @inheritDoc
      */
-    public function countObjects()
-    {
-        if ($this->count === null) {
-            $this->count = 0;
-            $sql = "SELECT  MAX(responseID) AS responseID
-                    FROM    wcf" . WCF_N . "_comment_response";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute();
-            $row = $statement->fetchArray();
-            if ($row !== false) {
-                $this->count = $row['responseID'];
-            }
-        }
-    }
+    protected $objectListClassName = CommentResponseList::class;
 
-    /**
-     * @inheritDoc
-     */
-    protected function initObjectList()
-    {
-        $this->objectList = new CommentResponseList();
-        $this->objectList->sqlOrderBy = 'comment_response.responseID';
-    }
+    private HtmlInputProcessor $htmlInputProcessor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
-        $this->objectList->getConditionBuilder()->add(
-            'comment_response.responseID BETWEEN ? AND ?',
-            [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]
-        );
-
         parent::execute();
 
-        if (!\count($this->objectList)) {
+        if (\count($this->getObjectList()) === 0) {
             return;
         }
 
@@ -121,12 +89,9 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
         WCF::getDB()->commitTransaction();
     }
 
-    /**
-     * @return HtmlInputProcessor
-     */
-    protected function getHtmlInputProcessor()
+    private function getHtmlInputProcessor(): HtmlInputProcessor
     {
-        if ($this->htmlInputProcessor === null) {
+        if (!isset($this->htmlInputProcessor)) {
             $this->htmlInputProcessor = new HtmlInputProcessor();
         }
 

@@ -28,7 +28,7 @@ class UserEmailAddressExportForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.user.canMailUser'];
+    public $neededPermissions = ['admin.user.canEditMailAddress'];
 
     /**
      * type of the file containing the exported email addresses

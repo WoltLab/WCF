@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Language", "../../Ckeditor"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, EventHandler, UiScroll, Language_1, Ckeditor_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Language", "../../Ckeditor", "WoltLabSuite/Core/Api/Comments/Responses/EnableResponse", "WoltLabSuite/Core/Api/Comments/Responses/DeleteResponse", "WoltLabSuite/Core/Api/Comments/Responses/EditResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/UpdateResponse"], function (require, exports, tslib_1, Util_1, Simple_1, UiNotification, Confirmation_1, EventHandler, UiScroll, Language_1, Ckeditor_1, EnableResponse_1, DeleteResponse_1, EditResponse_1, RenderResponse_1, UpdateResponse_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreCommentResponseElement = void 0;
@@ -36,9 +36,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             }
         }
         async #enable() {
-            await (0, Ajax_1.dboAction)("enable", "wcf\\data\\comment\\response\\CommentResponseAction")
-                .objectIds([this.responseId])
-                .dispatch();
+            (await (0, EnableResponse_1.enableResponse)(this.responseId)).unwrap();
             this.querySelector(".commentResponse__status--disabled").hidden = true;
             if (this.menu) {
                 this.menu.querySelector(".commentResponse__option--enable").hidden = true;
@@ -47,18 +45,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         async #delete() {
             const result = await (0, Confirmation_1.confirmationFactory)().delete();
             if (result) {
-                await (0, Ajax_1.dboAction)("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
-                    .objectIds([this.responseId])
-                    .dispatch();
+                (await (0, DeleteResponse_1.deleteResponse)(this.responseId)).unwrap();
                 UiNotification.show();
                 this.dispatchEvent(new CustomEvent("delete"));
             }
         }
         async #startEdit() {
             this.menu.querySelector(".commentResponse__option--edit").hidden = true;
-            const { template } = (await (0, Ajax_1.dboAction)("beginEdit", "wcf\\data\\comment\\response\\CommentResponseAction")
-                .objectIds([this.responseId])
-                .dispatch());
+            const { template } = (await (0, EditResponse_1.editResponse)(this.responseId)).unwrap();
             this.#showEditor(template);
         }
         #showEditor(template) {
@@ -92,22 +86,18 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             }
             EventHandler.fire("com.woltlab.wcf.ckeditor5", `submit_${this.#editorId}`, parameters);
             this.#showLoadingIndicator();
-            let response;
-            try {
-                response = (await (0, Ajax_1.dboAction)("save", "wcf\\data\\comment\\response\\CommentResponseAction")
-                    .objectIds([this.responseId])
-                    .payload(parameters)
-                    .dispatch());
-            }
-            catch (error) {
-                await (0, Ajax_1.handleValidationErrors)(error, ({ errorType }) => {
-                    Util_1.default.innerError(document.getElementById(this.#editorId), errorType);
-                    return true;
-                });
+            const response = await (0, UpdateResponse_1.updateResponse)(this.responseId, ckeditor.getHtml());
+            if (!response.ok) {
+                const validationError = response.error.getValidationError();
+                if (validationError === undefined) {
+                    throw response.error;
+                }
+                Util_1.default.innerError(document.getElementById(this.#editorId), validationError.code);
                 this.#hideLoadingIndicator();
                 return;
             }
-            Util_1.default.setInnerHtml(this.querySelector(".htmlContent"), response.message);
+            const { template } = (await (0, RenderResponse_1.renderResponse)(this.responseId, true)).unwrap();
+            Util_1.default.setInnerHtml(this.querySelector(".htmlContent"), template);
             this.#hideLoadingIndicator();
             this.#cancelEdit();
             UiNotification.show();

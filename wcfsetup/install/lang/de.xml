@@ -318,6 +318,10 @@
 		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.expression"><![CDATA[Definition (m h DoM M DoW)]]></item>
+		<item name="wcf.acp.cronjob.expressionType"><![CDATA[Ausführungszeitpunkt]]></item>
+		<item name="wcf.acp.cronjob.expressionType.default"><![CDATA[Präzise Vorgabe]]></item>
+		<item name="wcf.acp.cronjob.expressionType.random"><![CDATA[Ungefähre Zeitspanne]]></item>
+		<item name="wcf.acp.cronjob.expressionRandom"><![CDATA[Zeitspanne]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
@@ -758,6 +762,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.maximumUploadLimit"><![CDATA[Der angegebene Wert ist zu hoch, der maximale Wert ist {$option->maximumUploadLimit|filesize}.]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Kann Seite im Wartungsmodus aufrufen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Kann Benutzer sperren]]></item>
@@ -1324,7 +1329,6 @@ Die Entwickler-Lizenz gestattet ausschließlich den Einsatz während der Entwick
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.option.category.module.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Sicherheit]]></item>
-		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.option.category.security.general.secrets"><![CDATA[Geheimschlüssel]]></item>
@@ -1717,7 +1721,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Datenschutzkonforme Überprüfung auf Basis einer lokalen Kopie der StopForumSpam.com-Datenbestände.]]></item>
-		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Eigene Sperrlisten]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Abgleich mit Stop Forum Spam aktivieren]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[Die lokale Datenbank enthält Informationen zur Häufigkeit, mit der ein Eintrag als Spammer gemeldet wurde.<br>
 <strong>Hinweis: Es werden zu keinem Zeitpunkt Daten an Drittseiten übertragen.</strong><br>
@@ -1739,10 +1742,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[E-Mail-Adressen sind einzigartig und stellen eine solide Basis dar. Empfohlene Einstellung: <strong>Mehrfach gemeldet</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP-Adressen sind insbesondere durch die dynamische Vergabe (z. B. Privatanschlüsse oder Mobilfunk) nur bedingt verlässlich. Empfohlene Einstellung: <strong>Top 10%</strong>.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Aktion bei Übereinstimmung]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Blockieren]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
+		<item name="wcf.acp.option.register_antispam_action"><![CDATA[Aktion bei Spam-Erkennung]]></item>
+		<item name="wcf.acp.option.register_antispam_action.block"><![CDATA[Registrierung blockieren]]></item>
+		<item name="wcf.acp.option.register_antispam_action.description"><![CDATA[Es besteht immer das Risiko einer fehlerhaften Spam-Erkennung, daher wird die Einstellung <strong>Registrierung erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
+		<item name="wcf.acp.option.register_antispam_action.disable"><![CDATA[Registrierung erfordert manuelle Freischaltung]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzeigen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
@@ -1820,6 +1823,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
 		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->getName()}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
 		<item name="wcf.acp.package.error.majorUpgrade"><![CDATA[Das Paket aktualisiert die Installation auf eine neue Major-Version. Aus Stabilitätsgründen können Major-Upgrades ausschließlich über die Paketserver durchgeführt werden. Detaillierte Informationen zur Durchführung des Upgrades finden sich <a href="https://manual.woltlab.com/de/updates/" class="externalURL">in unserem Handbuch</a>.]]></item>
+		<item name="wcf.acp.package.error.incompatibleStoreProduct"><![CDATA[Das zu installierende Paket ist nicht kompatibel. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} nur Pakete installieren, die als kompatibel mit WoltLab Suite {literal}{$versionNumber}{/literal} angegeben werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informationen]]></item>
@@ -2662,6 +2666,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_LikeRebuildDataWorker.description"><![CDATA[Berechnet die Reaktionen neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker"><![CDATA[Dateianhänge aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_AttachmentRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Dateien aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Medien aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Statistiken aktualisieren]]></item>
@@ -3493,7 +3499,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.comment.moderation.disabledComment"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Kommentar muss zunächst von einem Moderator geprüft und freigeschaltet werden, damit er für alle Benutzer sichtbar wird.]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
-		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.comment.objectAuthor"><![CDATA[Autor]]></item>
@@ -4449,6 +4454,7 @@ Dateianhänge:
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[Wenn ausgewählt, darf die aufgerufene Seite <strong>keine</strong> der unter „Aufgerufene Seite“ ausgewählten Seiten sein.]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Box bearbeiten]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}neuer Eintrag{else}neue Einträge{/if})]]></item>
+		<item name="wcf.page.guestTokenDialog.title"><![CDATA[Verifizierung erforderlich]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Verfügbare Mitgliedschaften]]></item>
@@ -4768,7 +4774,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} hier eine neue E-Mail-Adresse eintragen, an die der neue Aktivierungscode gesendet werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Lasse{else}Lassen Sie{/if} dieses Feld frei, wenn der Aktivierungscode an die bestehende Adresse geschickt werden soll.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Eine E-Mail mit dem neuen Aktivierungscode wurde an {$email} versendet.]]></item>
-		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Die neue E-Mail-Adresse ist bereits aktiviert.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} neue E-Mail-Adresse wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.registerActivation.info"><![CDATA[Eine E-Mail mit dem Aktivierungscode wurde an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse {$__wcf->user->email} verschickt.]]></item>
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[Der Benutzername wurde innerhalb der letzten {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} Tage bereits einmal verändert.]]></item>
@@ -4918,7 +4923,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Haftungsbeschränkung für eigene Inhalte</h2>
 <p>Alle Inhalte unseres Internetauftritts wurden mit Sorgfalt und nach bestem Gewissen erstellt. Eine Gewähr für die Aktualität, Vollständigkeit und Richtigkeit sämtlicher Seiten kann jedoch nicht übernommen werden.</p>
-<p>Gemäß § 7 Abs. 1 TMG sind wir als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, nach den §§ 8 bis 10 TMG jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</p>
+<p>Wir sind als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</p>
 <h2>Haftungsbeschränkung für externe Links</h2>
 <p>Unsere Website enthält sog. „externe Links“ (Verknüpfungen zu Websites Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Websites verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</p>
 <h2>Urheberrecht</h2>
@@ -5550,6 +5555,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateien ausgewählt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} nur noch {#$maxFiles} weitere Datei{if $maxFiles != 1}en{/if} hochladen.]]></item>
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
+		
+		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
+		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
+		<item name="wcf.upload.error.maximumCountReached"><![CDATA[Es {plural value=$maximumCount 1='darf nur eine Datei' other='dürfen nur # Dateien'} hochgeladen werden.]]></item>
 	</category>
 </import>
 <delete>

@@ -22,6 +22,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\RouteHandler;
 
 use function FastRoute\cachedDispatcher;
+use function wcf\functions\exception\logThrowable;
 
 /**
  * Resolves and forwards API requests to the responsible controllers, exposing
@@ -95,6 +96,8 @@ final class ApiAction implements RequestHandlerInterface
         } catch (UserInputException $e) {
             return $this->toErrorResponse(RequestFailure::ValidationFailed, $e->getType(), $e->getMessage(), $e->getField());
         } catch (\Throwable $e) {
+            logThrowable($e);
+
             return $this->toErrorResponse(RequestFailure::InternalError, 'unknown_exception', $e->getMessage());
         }
     }

@@ -561,7 +561,7 @@
 			<!-- /admin.management -->
 			<option name="user.attachment.maxSize">
 				<categoryname>user.message.attachment</categoryname>
-				<optiontype>fileSize</optiontype>
+				<optiontype>uploadLimit</optiontype>
 				<defaultvalue>2000000</defaultvalue>
 				<minvalue>10000</minvalue>
 			</option>
@@ -653,8 +653,9 @@ pdf</defaultvalue>
 			<option name="user.signature.canEditSignature">
 				<categoryname>user.signature</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<usersonly>1</usersonly>
+				<userdefaultvalue>1</userdefaultvalue>
 				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.maxLength">
@@ -677,8 +678,9 @@ pdf</defaultvalue>
 			<option name="user.signature.attachment.canUpload">
 				<categoryname>user.signature</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<usersonly>1</usersonly>
+				<userdefaultvalue>1</userdefaultvalue>
 				<enableoptions>user.signature.attachment.maxSize,user.signature.attachment.allowedExtensions,user.signature.attachment.maxCount</enableoptions>
 				<options>module_user_signature</options>
 			</option>
@@ -806,9 +808,10 @@ bmp</defaultvalue>
 			<option name="user.profile.avatar.canUploadAvatar">
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>user.profile.avatar.allowedFileExtensions</enableoptions>
 				<usersonly>1</usersonly>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.profile.avatar.allowedFileExtensions">
 				<categoryname>user.profile.avatar</categoryname>
@@ -828,8 +831,9 @@ webp</defaultvalue>
 			<option name="user.profile.coverPhoto.canUploadCoverPhoto">
 				<categoryname>user.profile.coverPhoto</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<usersonly>1</usersonly>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.profile.coverPhoto.maxSize">
 				<categoryname>user.profile.coverPhoto</categoryname>
@@ -863,15 +867,17 @@ webp</defaultvalue>
 			<option name="user.page.canAddComment">
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>user.page.canAddCommentWithoutModeration</enableoptions>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.page.canAddCommentWithoutModeration">
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.page.canEditComment">
 				<categoryname>user.page</categoryname>
@@ -895,17 +901,19 @@ webp</defaultvalue>
 			<option name="user.article.canAddComment">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>user.article.canAddCommentWithoutModeration</enableoptions>
 				<options>module_article</options>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.article.canAddCommentWithoutModeration">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_article</options>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.article.canEditComment">
 				<categoryname>user.article</categoryname>
@@ -938,9 +946,10 @@ webp</defaultvalue>
 			<option name="user.like.canLike">
 				<categoryname>user.like</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 				<usersonly>1</usersonly>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<!-- mod.general -->
 			<option name="mod.profileComment.canEditComment">
@@ -1017,16 +1026,18 @@ webp</defaultvalue>
 			<option name="user.profileComment.canAddComment">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>user.profileComment.canAddCommentWithoutModeration</enableoptions>
 				<options>module_user_profile_wall</options>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.profileComment.canAddCommentWithoutModeration">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.profileComment.canEditComment">
 				<categoryname>user.profileComment</categoryname>

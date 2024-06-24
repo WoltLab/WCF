@@ -21,7 +21,7 @@ use wcf\system\WCF;
  *
  * @method  UserList    getObjectList()
  */
-class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
+final class UserActivityPointItemsRebuildDataWorker extends AbstractLinearRebuildDataWorker
 {
     /**
      * @inheritDoc
@@ -33,9 +33,7 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 50;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();
@@ -52,13 +50,13 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
         $conditionBuilder->add('user_activity_point.objectTypeID = ?', [$reactionObjectType->objectTypeID]);
         $conditionBuilder->add('user_activity_point.userID IN (?)', [$this->getObjectList()->getObjectIDs()]);
 
-        $sql = "UPDATE      wcf" . WCF_N . "_user_activity_point user_activity_point
-                LEFT JOIN   wcf" . WCF_N . "_user user_table
+        $sql = "UPDATE      wcf1_user_activity_point user_activity_point
+                LEFT JOIN   wcf1_user user_table
                 ON          user_table.userID = user_activity_point.userID
                 SET         user_activity_point.items = user_table.likesReceived,
                             user_activity_point.activityPoints = user_activity_point.items * ?
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge(
             [$reactionObjectType->points],
             $conditionBuilder->getParameters()
