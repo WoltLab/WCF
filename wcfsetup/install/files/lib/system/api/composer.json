@@ -20,7 +20,7 @@
     "laminas/laminas-httphandlerrunner": "^2.10.0",
     "laminas/laminas-progressbar": "^2.13",
     "minishlink/web-push": "^v9.0.0-rc2",
-        "nikic/fast-route": "2.0.0-beta1",
+    "nikic/fast-route": "2.0.0-beta1",
     "paragonie/constant_time_encoding": "^3.0",
     "pelago/emogrifier": "^7.2.0",
     "psr/clock": "^1.0",
@@ -33,19 +33,19 @@
     "sebastian/diff": "^5.1.1",
     "symfony/polyfill-php82": "^1.30.0",
     "symfony/polyfill-php83": "^1.30",
-        "web-token/jwt-library": "^3.3",
+    "web-token/jwt-library": "^3.3",
     "willdurand/negotiation": "^3.1"
   },
   "replace": {
-        "paragonie/random_compat": "*",
-        "symfony/polyfill-mbstring": "*",
+    "paragonie/random_compat": "*",
+    "symfony/polyfill-mbstring": "*",
     "symfony/polyfill-php80": "*",
-        "symfony/console": "*",
-        "symfony/http-client": "*",
-        "web-token/jwt-key-mgmt": "*",
-        "web-token/jwt-signature": "*",
-        "web-token/jwt-signature-algorithm-ecdsa": "*",
-        "web-token/jwt-util-ecc": "*"
+    "symfony/console": "*",
+    "symfony/http-client": "*",
+    "web-token/jwt-key-mgmt": "*",
+    "web-token/jwt-signature": "*",
+    "web-token/jwt-signature-algorithm-ecdsa": "*",
+    "web-token/jwt-util-ecc": "*"
   },
   "type": "project"
 }
