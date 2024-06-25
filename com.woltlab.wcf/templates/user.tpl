@@ -226,7 +226,7 @@
 								{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
 							{/if}
 							{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
-								<li>{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{@$user->getRegistrationIpAddress()|ipSearch}</span></li>
+								<li class="ipAddress">{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{@$user->getRegistrationIpAddress()|ipSearch}</span></li>
 							{/if}
 						{/content}
 					</ul>
