@@ -76,6 +76,13 @@ window.addEventListener('pageshow', function(event) {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
+			{if $__wcf->user->userID && SERVICE_WORKER_PUBLIC_KEY !== ''}
+			serviceWorker: {
+				publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
+				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}service-worker/',
+				registerUrl: '{link controller="RegisterServiceWorker"}{/link}',
+			},
+			{/if}
 			dynamicColorScheme: {if $__wcf->getStyleHandler()->getColorScheme() === 'system'}true{else}false{/if},
 			endpointUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}'{link controller='UserPopover'}{/link}'{else}''{/if},
 			executeCronjobs: {if $executeCronjobs}'{link controller="CronjobPerform"}{/link}'{else}undefined{/if},

@@ -12,6 +12,7 @@ import * as Ajax from "../Ajax";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
+import { serviceWorkerSupported } from "./ServiceWorker";
 import { updateCounter } from "WoltLabSuite/Core/Ui/User/Menu/Manager";
 
 interface NotificationHandlerOptions {
@@ -65,6 +66,14 @@ class NotificationHandler {
 
     if ("Notification" in window && Notification.permission === "granted") {
       this.allowNotification = true;
+    }
+    if (serviceWorkerSupported()) {
+      window.navigator.serviceWorker.addEventListener("message", (event) => {
+        const payload = event.data;
+        if (payload.time > this.lastRequestTimestamp) {
+          this.lastRequestTimestamp = payload.time;
+        }
+      });
     }
   }
 

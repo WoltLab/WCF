@@ -278,6 +278,18 @@
 				<defaultvalue>0</defaultvalue>
 				<hidden>1</hidden>
 			</option>
+			<option name="service_worker_public_key">
+				<categoryname>hidden</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<hidden>1</hidden>
+			</option>
+			<option name="service_worker_private_key">
+				<categoryname>hidden</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<hidden>1</hidden>
+			</option>
 			<option name="visitor_use_tiny_build">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>

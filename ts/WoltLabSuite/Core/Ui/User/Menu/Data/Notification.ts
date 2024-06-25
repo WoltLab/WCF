@@ -13,6 +13,7 @@ import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserM
 import { registerProvider } from "../Manager";
 import * as Language from "../../../../Language";
 import { enableNotifications } from "../../../../Notification/Handler";
+import { registerServiceWorker } from "../../../../Notification/ServiceWorker";
 
 let originalFavicon = "";
 function setFaviconCounter(counter: number): void {
@@ -265,6 +266,7 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         enableNotifications();
+        registerServiceWorker();
       }
 
       element.remove();
