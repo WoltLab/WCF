@@ -123,7 +123,7 @@ final class FileProcessorFormField extends AbstractFormField
         if ($this->isSingleFileUpload()) {
             $file = new File($value);
             if ($file->fileID === $value) {
-                $this->files = [$file];
+                $this->files = [$file->fileID => $file];
                 $fileIDs[] = $value;
             } else {
                 $value = null;
