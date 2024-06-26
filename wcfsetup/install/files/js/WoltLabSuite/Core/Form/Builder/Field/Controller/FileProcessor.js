@@ -63,7 +63,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                     extraButton.innerHTML = button.icon;
                 }
                 extraButton.addEventListener("click", () => {
-                    element.dispatchEvent(new CustomEvent("fileProcessorCustomAction", { detail: button.actionName }));
+                    element.dispatchEvent(new CustomEvent("fileProcessorCustomAction", {
+                        detail: button.actionName,
+                        bubbles: true,
+                    }));
                 });
                 const listItem = document.createElement("li");
                 listItem.append(extraButton);
