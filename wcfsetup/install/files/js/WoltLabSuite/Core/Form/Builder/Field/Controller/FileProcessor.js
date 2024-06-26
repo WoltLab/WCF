@@ -156,6 +156,31 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 element.parentElement.parentElement.remove();
             }
         }
+        #trackUploadProgress(element, file) {
+            const progress = document.createElement("progress");
+            progress.classList.add("fileList__item__progress__bar");
+            progress.max = 100;
+            const readout = document.createElement("span");
+            readout.classList.add("fileList__item__progress__readout");
+            file.addEventListener("uploadProgress", (event) => {
+                progress.value = event.detail;
+                readout.textContent = `${event.detail}%`;
+                if (progress.parentNode === null) {
+                    element.classList.add("fileProcessor__item--uploading");
+                    const wrapper = document.createElement("div");
+                    wrapper.classList.add("fileList__item__progress");
+                    wrapper.append(progress, readout);
+                    element.append(wrapper);
+                }
+            });
+        }
+        #removeUploadProgress(element) {
+            if (!element.classList.contains("fileProcessor__item--uploading")) {
+                return;
+            }
+            element.classList.remove("fileProcessor__item--uploading");
+            element.querySelector(".fileList__item__progress")?.remove();
+        }
         async #registerFile(element, container = null) {
             if (container === null) {
                 if (this.showBigPreview) {
@@ -190,6 +215,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 container.append(fileSize);
             }
             try {
+                this.#trackUploadProgress(container, element);
                 await element.ready;
                 if (this.#replaceElement !== undefined) {
                     await (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId);
@@ -212,6 +238,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 }
                 this.#markElementUploadHasFailed(container, element, reason);
                 return;
+            }
+            finally {
+                this.#removeUploadProgress(container);
             }
             if (this.showBigPreview) {
                 element.dataset.previewUrl = element.link;

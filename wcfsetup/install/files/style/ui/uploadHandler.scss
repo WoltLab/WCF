@@ -76,6 +76,10 @@
 	}
 }
 
-.fileUpload__preview__buttons {
+.fileUpload__preview:not(:empty) {
+	margin-top: 20px;
+}
+
+.fileUpload__preview__item__buttons {
 	margin-top: 5px;
 }
