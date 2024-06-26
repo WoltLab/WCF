@@ -190,7 +190,7 @@ export class FileProcessor {
     if (this.showBigPreview) {
       element.parentElement!.innerHTML = "";
     } else {
-      element.parentElement!.remove();
+      element.parentElement!.parentElement!.remove();
     }
   }
 

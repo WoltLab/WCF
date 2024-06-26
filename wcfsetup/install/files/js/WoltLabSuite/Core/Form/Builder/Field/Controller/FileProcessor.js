@@ -153,7 +153,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 element.parentElement.innerHTML = "";
             }
             else {
-                element.parentElement.remove();
+                element.parentElement.parentElement.remove();
             }
         }
         async #registerFile(element, container = null) {
