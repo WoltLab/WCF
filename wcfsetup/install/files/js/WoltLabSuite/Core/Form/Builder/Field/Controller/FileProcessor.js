@@ -29,11 +29,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             }
             this.#uploadButton = this.#container.querySelector("woltlab-core-file-upload");
             this.#uploadButton.addEventListener("uploadStart", (event) => {
-                void this.#registerFile(event.detail);
+                this.#registerFile(event.detail);
             });
             this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
             this.#container.querySelectorAll("woltlab-core-file").forEach((element) => {
-                void this.#registerFile(element, element.parentElement);
+                this.#registerFile(element, element.parentElement);
             });
         }
         get classPrefix() {
@@ -139,7 +139,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 };
                 const cancelEventListener = () => {
                     this.#uploadButton.dataset.context = oldContext;
-                    void this.#registerFile(this.#replaceElement);
+                    this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
                     this.#fileInput.removeEventListener("change", changeEventListener);
                 };
@@ -184,7 +184,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             element.classList.remove("fileProcessor__item--uploading");
             element.querySelector(".fileList__item__progress")?.remove();
         }
-        async #registerFile(element, container = null) {
+        #registerFile(element, container = null) {
             if (container === null) {
                 if (this.showBigPreview) {
                     container = this.#container.querySelector(".fileUpload__preview");
@@ -217,18 +217,19 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 fileSize.textContent = (0, FileUtil_1.formatFilesize)(element.fileSize || parseInt(element.dataset.fileSize));
                 container.append(fileSize);
             }
-            try {
-                this.#trackUploadProgress(container, element);
-                await element.ready;
+            this.#trackUploadProgress(container, element);
+            element.ready
+                .then(() => {
                 if (this.#replaceElement !== undefined) {
-                    await (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId);
+                    void (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId);
                     this.#replaceElement = undefined;
                 }
-            }
-            catch (reason) {
+                this.#fileInitializationCompleted(element, container);
+            })
+                .catch((reason) => {
                 // reinsert the element and show an error message
                 if (this.#replaceElement !== undefined) {
-                    await this.#registerFile(this.#replaceElement);
+                    this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
                     if (this.showBigPreview) {
                         // move the new uploaded file to his own container
@@ -240,11 +241,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                     }
                 }
                 this.#markElementUploadHasFailed(container, element, reason);
-                return;
-            }
-            finally {
+            })
+                .finally(() => {
                 this.#removeUploadProgress(container);
-            }
+            });
+        }
+        #fileInitializationCompleted(element, container) {
             if (this.showBigPreview) {
                 element.dataset.previewUrl = element.link;
                 element.unbounded = true;

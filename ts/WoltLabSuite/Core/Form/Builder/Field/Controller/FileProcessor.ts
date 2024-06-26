@@ -45,12 +45,12 @@ export class FileProcessor {
 
     this.#uploadButton = this.#container.querySelector("woltlab-core-file-upload") as WoltlabCoreFileUploadElement;
     this.#uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-      void this.#registerFile(event.detail);
+      this.#registerFile(event.detail);
     });
     this.#fileInput = this.#uploadButton.shadowRoot!.querySelector<HTMLInputElement>('input[type="file"]')!;
 
     this.#container.querySelectorAll<WoltlabCoreFileElement>("woltlab-core-file").forEach((element) => {
-      void this.#registerFile(element, element.parentElement);
+      this.#registerFile(element, element.parentElement);
     });
   }
 
@@ -176,7 +176,7 @@ export class FileProcessor {
       };
       const cancelEventListener = () => {
         this.#uploadButton.dataset.context = oldContext;
-        void this.#registerFile(this.#replaceElement!);
+        this.#registerFile(this.#replaceElement!);
         this.#replaceElement = undefined;
         this.#fileInput.removeEventListener("change", changeEventListener);
       };
@@ -231,7 +231,7 @@ export class FileProcessor {
     element.querySelector(".fileList__item__progress")?.remove();
   }
 
-  async #registerFile(element: WoltlabCoreFileElement, container: HTMLElement | null = null): Promise<void> {
+  #registerFile(element: WoltlabCoreFileElement, container: HTMLElement | null = null): void {
     if (container === null) {
       if (this.showBigPreview) {
         container = this.#container.querySelector(".fileUpload__preview");
@@ -269,36 +269,40 @@ export class FileProcessor {
       container.append(fileSize);
     }
 
-    try {
-      this.#trackUploadProgress(container, element);
-      await element.ready;
+    this.#trackUploadProgress(container, element);
 
-      if (this.#replaceElement !== undefined) {
-        await deleteFile(this.#replaceElement.fileId!);
-        this.#replaceElement = undefined;
-      }
-    } catch (reason) {
-      // reinsert the element and show an error message
-      if (this.#replaceElement !== undefined) {
-        await this.#registerFile(this.#replaceElement);
-        this.#replaceElement = undefined;
-
-        if (this.showBigPreview) {
-          // move the new uploaded file to his own container
-          // otherwise the file under `this.#replaceElement` will be marked as failed, too
-          const tmpContainer = document.createElement("div");
-          tmpContainer.append(element);
-          this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
-
-          container = tmpContainer;
+    element.ready
+      .then(() => {
+        if (this.#replaceElement !== undefined) {
+          void deleteFile(this.#replaceElement.fileId!);
+          this.#replaceElement = undefined;
         }
-      }
-      this.#markElementUploadHasFailed(container, element, reason);
-      return;
-    } finally {
-      this.#removeUploadProgress(container);
-    }
+        this.#fileInitializationCompleted(element, container!);
+      })
+      .catch((reason) => {
+        // reinsert the element and show an error message
+        if (this.#replaceElement !== undefined) {
+          this.#registerFile(this.#replaceElement);
+          this.#replaceElement = undefined;
 
+          if (this.showBigPreview) {
+            // move the new uploaded file to his own container
+            // otherwise the file under `this.#replaceElement` will be marked as failed, too
+            const tmpContainer = document.createElement("div");
+            tmpContainer.append(element);
+            this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
+
+            container = tmpContainer;
+          }
+        }
+        this.#markElementUploadHasFailed(container!, element, reason);
+      })
+      .finally(() => {
+        this.#removeUploadProgress(container!);
+      });
+  }
+
+  #fileInitializationCompleted(element: WoltlabCoreFileElement, container: HTMLElement): void {
     if (this.showBigPreview) {
       element.dataset.previewUrl = element.link!;
       element.unbounded = true;
