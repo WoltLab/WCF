@@ -2,8 +2,15 @@
 	display: grid;
 	gap: 10px;
 	grid-auto-flow: row;
-	// TODO: use container queries to make this more dynamic?
-	grid-template-columns: repeat(3, 1fr);
+	@include screen-sm-down {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	@include screen-md {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@include screen-lg {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
 .fileList:not(:empty) {
