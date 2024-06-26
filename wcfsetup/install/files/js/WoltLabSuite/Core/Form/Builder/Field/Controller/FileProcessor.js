@@ -121,7 +121,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             replaceButton.classList.add("button", "small");
             replaceButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.replace");
             replaceButton.addEventListener("click", () => {
-                this.#replaceElement = element;
                 // add to context an extra attribute that the replace button is clicked.
                 // after the dialog is closed or the file is selected, the context will be reset to his old value.
                 // this is necessary as the serverside validation will otherwise fail.
@@ -132,6 +131,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 // remove the element and all buttons from the dom, but keep them stored in a variable.
                 // if the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
                 // if the upload is successful, delete the old file.
+                this.#replaceElement = element;
                 this.#unregisterFile(element);
                 const changeEventListener = () => {
                     this.#uploadButton.dataset.context = oldContext;
