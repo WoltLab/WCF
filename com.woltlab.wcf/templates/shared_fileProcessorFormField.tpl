@@ -23,15 +23,18 @@
 
 	require(["WoltLabSuite/Core/Form/Builder/Field/Controller/FileProcessor"], ({ FileProcessor }) => {
 		new FileProcessor(
-			'{@$field->getPrefixedId()|encodeJS}',
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
 			{if $field->isSingleFileUpload()}true{else}false{/if},
 			{if $imageOnly}true{else}false{/if},
 			[{implode from=$actionButtons item=actionButton}{
-				title: '{@$actionButton['title']|encodeJS}',
-				icon: {if $actionButton['icon'] === null}undefined
-				{else}'{@$actionButton['icon']->toHtml()|encodeJS}'{/if},
-				actionName: '{@$actionButton['actionName']|encodeJS}',
+				title: '{unsafe:$actionButton['title']|encodeJS}',
+				icon: {if $actionButton['icon'] === null}undefined{else}'{unsafe:$actionButton['icon']->toHtml()|encodeJS}'{/if},
+				actionName: '{unsafe:$actionButton['actionName']|encodeJS}',
 			}{/implode} ],
 		);
 	});
+
+	{foreach from=$actionButtons item=actionButton}
+		{include application=$actionButton['application'] file=$actionButton['template']}
+	{/foreach}
 </script>

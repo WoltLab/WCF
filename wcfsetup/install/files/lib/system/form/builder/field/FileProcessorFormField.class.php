@@ -9,7 +9,6 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\TObjectTypeFormNode;
-use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\IFontAwesomeIcon;
 use wcf\util\ArrayUtil;
 use wcf\util\ImageUtil;
@@ -64,11 +63,6 @@ final class FileProcessorFormField extends AbstractFormField
     #[\Override]
     public function getHtmlVariables()
     {
-        $this->addActionButton(
-            'delete',
-            'wcf.form.field.fileProcessor.action.delete',
-            FontAwesomeIcon::fromValues('trash')
-        );
         return [
             'fileProcessorHtmlElement' => FileProcessor::getInstance()->getHtmlElement(
                 $this->getFileProcessor(),
@@ -183,12 +177,19 @@ final class FileProcessorFormField extends AbstractFormField
      * Adds an action button to the file processor.
      * If the button is clicked, the event `fileProcessorCustomAction` will be triggered.
      */
-    public function addActionButton(string $actionName, string $title, ?IFontAwesomeIcon $icon = null): self
-    {
+    public function addActionButton(
+        string $actionName,
+        string $title,
+        string $application,
+        string $template,
+        ?IFontAwesomeIcon $icon = null
+    ): self {
         $this->actionButtons[] = [
             'actionName' => $actionName,
             'title' => $title,
-            'icon' => $icon
+            'icon' => $icon,
+            'application' => $application,
+            'template' => $template,
         ];
 
         return $this;
