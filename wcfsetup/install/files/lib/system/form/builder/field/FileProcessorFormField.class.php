@@ -180,8 +180,8 @@ final class FileProcessorFormField extends AbstractFormField
     public function addActionButton(
         string $actionName,
         string $title,
-        string $application,
         string $template,
+        string $application = 'wcf',
         ?IFontAwesomeIcon $icon = null
     ): self {
         $this->actionButtons[] = [
