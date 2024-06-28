@@ -66,12 +66,8 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
 
         self::removeStyling($link);
 
-        $object = new UnfurlUrlAction([], 'findOrCreate', [
-            'data' => [
-                'url' => $uri->__toString(),
-            ],
-        ]);
-        $returnValues = $object->executeAction();
+        $uri = self::lowercaseHostname($uri);
+        $urlID = self::findOrCreate($uri);
 
         $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, $urlID);
     }
@@ -88,19 +84,16 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
         $element->topLevelParent->appendChild($element->link);
     }
 
-    private static function lowercaseHostname(string $url): string
+    private static function lowercaseHostname(Uri $uri): Uri
     {
-        $uri = new Uri($url);
-        $uri = $uri->withHost(\mb_strtolower($uri->getHost()));
-
-        return $uri->__toString();
+        return $uri->withHost(\mb_strtolower($uri->getHost()));
     }
 
-    private static function findOrCreate(string $url): int
+    private static function findOrCreate(Uri $uri): int
     {
         $object = new UnfurlUrlAction([], 'findOrCreate', [
             'data' => [
-                'url' => $url,
+                'url' => $uri->__toString(),
             ],
         ]);
         $returnValues = $object->executeAction();
