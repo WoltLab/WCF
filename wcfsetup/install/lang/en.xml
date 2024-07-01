@@ -4866,6 +4866,7 @@ not register with us.]]></item>
 		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Block Direct Contact]]></item>
 		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Block Direct Contact and Hide Created Messages]]></item>
 		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[The user cannot be blocked.]]></item>
+		<item name="wcf.user.reactionsReceived"><![CDATA[Reactions]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

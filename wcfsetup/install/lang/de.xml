@@ -4864,6 +4864,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Direkten Kontakt blockieren]]></item>
 		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Direkten Kontakt blockieren und erstellte Inhalte ausblenden]]></item>
 		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[Der Benutzer kann nicht blockiert werden.]]></item>
+		<item name="wcf.user.reactionsReceived"><![CDATA[Reaktionen]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

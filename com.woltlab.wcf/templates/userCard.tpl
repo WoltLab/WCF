@@ -103,7 +103,7 @@
 					
 					{if MODULE_LIKE && $user->likesReceived}
 						<div class="userCard__footer__statsItem">
-							<span class="userCard__footer__statsItem__key">{lang}wcf.like.reactionsReceived{/lang}</span>
+							<span class="userCard__footer__statsItem__key">{lang}wcf.user.reactionsReceived{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->likesReceived}</span>
 						</div>
 					{/if}
