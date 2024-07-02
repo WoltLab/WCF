@@ -109,6 +109,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.success');
         $event->preload('wcf.global.success.add');
         $event->preload('wcf.global.success.edit');
+        $event->preload('wcf.global.button.replace');
 
         $event->preload('wcf.global.rss.accessToken.info');
         $event->preload('wcf.global.rss.copy');

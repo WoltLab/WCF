@@ -31,10 +31,10 @@ export function setup(editorId: string): void {
     });
   }
 
-  let fileList = container.querySelector<HTMLElement>(".attachment__list");
+  let fileList = container.querySelector<HTMLElement>(".fileList");
   if (fileList === null) {
     fileList = document.createElement("ol");
-    fileList.classList.add("attachment__list");
+    fileList.classList.add("fileList");
     uploadButton.insertAdjacentElement("afterend", fileList);
   }
 

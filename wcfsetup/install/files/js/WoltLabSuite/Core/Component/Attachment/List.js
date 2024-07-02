@@ -22,10 +22,10 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-c
                 },
             });
         }
-        let fileList = container.querySelector(".attachment__list");
+        let fileList = container.querySelector(".fileList");
         if (fileList === null) {
             fileList = document.createElement("ol");
-            fileList.classList.add("attachment__list");
+            fileList.classList.add("fileList");
             uploadButton.insertAdjacentElement("afterend", fileList);
         }
         uploadButton.addEventListener("uploadStart", (event) => {
