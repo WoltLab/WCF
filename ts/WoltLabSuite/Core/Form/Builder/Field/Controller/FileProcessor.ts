@@ -354,7 +354,16 @@ export class FileProcessor {
     this.addButtons(container, element);
   }
 
-  get values(): Set<number> {
+  get values(): undefined | number | Set<number> {
+    if (this.#singleFileUpload) {
+      const input = this.#container.querySelector<HTMLInputElement>('input[type="hidden"]');
+      if (input === null) {
+        return undefined;
+      }
+
+      return parseInt(input.value, 10);
+    }
+
     return new Set(
       Array.from(this.#container.querySelectorAll<HTMLInputElement>('input[type="hidden"]')).map((input) =>
         parseInt(input.value, 10),
@@ -363,7 +372,7 @@ export class FileProcessor {
   }
 }
 
-export function getValues(fieldId: string): Set<number> {
+export function getValues(fieldId: string): undefined | number | Set<number> {
   const field = _data.get(fieldId);
   if (field === undefined) {
     throw new Error("Unknown field with id '" + fieldId + "'");

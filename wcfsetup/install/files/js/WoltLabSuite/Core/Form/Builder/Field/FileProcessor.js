@@ -12,8 +12,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Form/Builder/Field/Fie
     Field_1 = tslib_1.__importDefault(Field_1);
     class FileProcessor extends Field_1.default {
         _getData() {
+            const value = (0, FileProcessor_1.getValues)(this._fieldId);
+            if (value === undefined) {
+                return {};
+            }
             return {
-                [this._fieldId]: (0, FileProcessor_1.getValues)(this._fieldId),
+                [this._fieldId]: value,
             };
         }
         _readField() {

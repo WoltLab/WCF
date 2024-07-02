@@ -292,6 +292,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             this.addButtons(container, element);
         }
         get values() {
+            if (this.#singleFileUpload) {
+                const input = this.#container.querySelector('input[type="hidden"]');
+                if (input === null) {
+                    return undefined;
+                }
+                return parseInt(input.value, 10);
+            }
             return new Set(Array.from(this.#container.querySelectorAll('input[type="hidden"]')).map((input) => parseInt(input.value, 10)));
         }
     }

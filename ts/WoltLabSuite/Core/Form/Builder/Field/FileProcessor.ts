@@ -13,8 +13,13 @@ import { getValues } from "WoltLabSuite/Core/Form/Builder/Field/Controller/FileP
 
 export default class FileProcessor extends Field {
   protected _getData(): FormBuilderData {
+    const value = getValues(this._fieldId);
+    if (value === undefined) {
+      return {};
+    }
+
     return {
-      [this._fieldId]: getValues(this._fieldId),
+      [this._fieldId]: value,
     };
   }
 
