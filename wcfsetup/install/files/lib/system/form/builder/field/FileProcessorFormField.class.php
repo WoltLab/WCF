@@ -29,6 +29,11 @@ final class FileProcessorFormField extends AbstractFormField
      */
     protected $templateName = 'shared_fileProcessorFormField';
 
+    /**
+     * @inheritDoc
+     */
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/FileProcessor';
+
     private array $context = [];
 
     /**

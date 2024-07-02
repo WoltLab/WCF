@@ -11,6 +11,8 @@ import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 
+const _data = new Map<string, FileProcessor>();
+
 export interface ExtraButton {
   title: string;
   icon?: string;
@@ -52,6 +54,8 @@ export class FileProcessor {
     this.#container.querySelectorAll<WoltlabCoreFileElement>("woltlab-core-file").forEach((element) => {
       this.#registerFile(element, element.parentElement);
     });
+
+    _data.set(fieldId, this);
   }
 
   get classPrefix(): string {
@@ -349,4 +353,21 @@ export class FileProcessor {
 
     this.addButtons(container, element);
   }
+
+  get values(): Set<number> {
+    return new Set(
+      Array.from(this.#container.querySelectorAll<HTMLInputElement>('input[type="hidden"]')).map((input) =>
+        parseInt(input.value, 10),
+      ),
+    );
+  }
+}
+
+export function getValues(fieldId: string): Set<number> {
+  const field = _data.get(fieldId);
+  if (field === undefined) {
+    throw new Error("Unknown field with id '" + fieldId + "'");
+  }
+
+  return field.values;
 }
