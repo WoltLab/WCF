@@ -123,16 +123,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             replaceButton.classList.add("button", "small");
             replaceButton.textContent = (0, Language_1.getPhrase)("wcf.global.button.replace");
             replaceButton.addEventListener("click", () => {
-                // add to context an extra attribute that the replace button is clicked.
-                // after the dialog is closed or the file is selected, the context will be reset to his old value.
-                // this is necessary as the serverside validation will otherwise fail.
+                // Add to context an extra attribute that the replace button is clicked.
+                // After the dialog is closed or the file is selected, the context will be reset to his old value.
+                // This is necessary as the serverside validation will otherwise fail.
                 const oldContext = this.#uploadButton.dataset.context;
                 const context = JSON.parse(oldContext);
                 context.__replace = true;
                 this.#uploadButton.dataset.context = JSON.stringify(context);
-                // remove the element and all buttons from the dom, but keep them stored in a variable.
-                // if the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
-                // if the upload is successful, delete the old file.
+                // Remove the element and all buttons from the dom, but keep them stored in a variable.
+                // If the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
+                // If the upload is successful, delete the old file.
                 this.#replaceElement = element;
                 this.#unregisterFile(element);
                 const changeEventListener = () => {
@@ -179,12 +179,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 }
             }
             if (!this.showBigPreview) {
-                // create a new container for the file element
                 const fileContainer = document.createElement("div");
                 fileContainer.classList.add(this.classPrefix + "item__file");
                 fileContainer.append(element);
                 container.append(fileContainer);
-                // add filename and filesize information
                 const filename = document.createElement("div");
                 filename.classList.add(this.classPrefix + "item__filename");
                 filename.textContent = element.filename || element.dataset.filename;
@@ -204,13 +202,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 this.#fileInitializationCompleted(element, container);
             })
                 .catch((reason) => {
-                // reinsert the element and show an error message
                 if (this.#replaceElement !== undefined) {
                     this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
                     if (this.showBigPreview) {
-                        // move the new uploaded file to his own container
-                        // otherwise the file under `this.#replaceElement` will be marked as failed, too
+                        // `this.#replaceElement` need a new container, otherwise the element will be marked as erroneous, too.
                         const tmpContainer = document.createElement("div");
                         tmpContainer.append(element);
                         this.#uploadButton.insertAdjacentElement("afterend", tmpContainer);
@@ -244,7 +240,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         filenameLink.title = element.filename;
                         filenameLink.textContent = element.filename;
                         filenameLink.classList.add("jsImageViewer");
-                        // insert a hidden image element that will be used by the image viewer as the preview image
+                        // Insert a hidden image element that will be used by the image viewer as the preview image
                         const previewImage = document.createElement("img");
                         previewImage.src = thumbnail !== undefined ? thumbnail.link : element.link;
                         previewImage.alt = element.filename;
