@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener"], function (require, exports, tslib_1, Language_1, DeleteFile_1, FileUtil_1, Listener_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Language_1, DeleteFile_1, FileUtil_1, Listener_1, File_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.FileProcessor = void 0;
@@ -161,31 +161,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 element.parentElement.parentElement.remove();
             }
         }
-        #trackUploadProgress(element, file) {
-            const progress = document.createElement("progress");
-            progress.classList.add("fileList__item__progress__bar");
-            progress.max = 100;
-            const readout = document.createElement("span");
-            readout.classList.add("fileList__item__progress__readout");
-            file.addEventListener("uploadProgress", (event) => {
-                progress.value = event.detail;
-                readout.textContent = `${event.detail}%`;
-                if (progress.parentNode === null) {
-                    element.classList.add("fileProcessor__item--uploading");
-                    const wrapper = document.createElement("div");
-                    wrapper.classList.add("fileList__item__progress");
-                    wrapper.append(progress, readout);
-                    element.append(wrapper);
-                }
-            });
-        }
-        #removeUploadProgress(element) {
-            if (!element.classList.contains("fileProcessor__item--uploading")) {
-                return;
-            }
-            element.classList.remove("fileProcessor__item--uploading");
-            element.querySelector(".fileList__item__progress")?.remove();
-        }
         #registerFile(element, container = null) {
             if (container === null) {
                 if (this.showBigPreview) {
@@ -219,7 +194,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 fileSize.textContent = (0, FileUtil_1.formatFilesize)(element.fileSize || parseInt(element.dataset.fileSize));
                 container.append(fileSize);
             }
-            this.#trackUploadProgress(container, element);
+            (0, File_1.trackUploadProgress)(container, element);
             element.ready
                 .then(() => {
                 if (this.#replaceElement !== undefined) {
@@ -245,7 +220,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 this.#markElementUploadHasFailed(container, element, reason);
             })
                 .finally(() => {
-                this.#removeUploadProgress(container);
+                (0, File_1.removeUploadProgress)(container);
             });
         }
         #fileInitializationCompleted(element, container) {

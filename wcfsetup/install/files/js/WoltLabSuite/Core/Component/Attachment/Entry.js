@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, FileUtil_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, FileUtil_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, File_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = void 0;
@@ -141,31 +141,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         errorElement.textContent = errorMessage;
         element.append(errorElement);
     }
-    function trackUploadProgress(element, file) {
-        const progress = document.createElement("progress");
-        progress.classList.add("fileList__item__progress__bar");
-        progress.max = 100;
-        const readout = document.createElement("span");
-        readout.classList.add("fileList__item__progress__readout");
-        file.addEventListener("uploadProgress", (event) => {
-            progress.value = event.detail;
-            readout.textContent = `${event.detail}%`;
-            if (progress.parentNode === null) {
-                element.classList.add("attachment__item--uploading");
-                const wrapper = document.createElement("div");
-                wrapper.classList.add("fileList__item__progress");
-                wrapper.append(progress, readout);
-                element.append(wrapper);
-            }
-        });
-    }
-    function removeUploadProgress(element) {
-        if (!element.classList.contains("attachment__item--uploading")) {
-            return;
-        }
-        element.classList.remove("attachment__item--uploading");
-        element.querySelector(".fileList__item__progress")?.remove();
-    }
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
@@ -187,9 +162,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             fileInitializationFailed(element, file, reason);
         })
             .finally(() => {
-            removeUploadProgress(element);
+            (0, File_1.removeUploadProgress)(element);
         });
-        trackUploadProgress(element, file);
+        (0, File_1.trackUploadProgress)(element, file);
         return element;
     }
     exports.createAttachmentFromFile = createAttachmentFromFile;

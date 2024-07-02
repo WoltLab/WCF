@@ -5,6 +5,7 @@ import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { removeUploadProgress, trackUploadProgress } from "WoltLabSuite/Core/Component/File/File";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -186,38 +187,6 @@ function markElementAsErroneous(element: HTMLElement, errorMessage: string): voi
   errorElement.textContent = errorMessage;
 
   element.append(errorElement);
-}
-
-function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
-  const progress = document.createElement("progress");
-  progress.classList.add("fileList__item__progress__bar");
-  progress.max = 100;
-  const readout = document.createElement("span");
-  readout.classList.add("fileList__item__progress__readout");
-
-  file.addEventListener("uploadProgress", (event: CustomEvent<number>) => {
-    progress.value = event.detail;
-    readout.textContent = `${event.detail}%`;
-
-    if (progress.parentNode === null) {
-      element.classList.add("attachment__item--uploading");
-
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("fileList__item__progress");
-      wrapper.append(progress, readout);
-
-      element.append(wrapper);
-    }
-  });
-}
-
-function removeUploadProgress(element: HTMLElement): void {
-  if (!element.classList.contains("attachment__item--uploading")) {
-    return;
-  }
-
-  element.classList.remove("attachment__item--uploading");
-  element.querySelector(".fileList__item__progress")?.remove();
 }
 
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {

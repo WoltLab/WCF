@@ -10,6 +10,7 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
+import { removeUploadProgress, trackUploadProgress } from "WoltLabSuite/Core/Component/File/File";
 
 const _data = new Map<string, FileProcessor>();
 
@@ -203,38 +204,6 @@ export class FileProcessor {
     }
   }
 
-  #trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
-    const progress = document.createElement("progress");
-    progress.classList.add("fileList__item__progress__bar");
-    progress.max = 100;
-    const readout = document.createElement("span");
-    readout.classList.add("fileList__item__progress__readout");
-
-    file.addEventListener("uploadProgress", (event: CustomEvent<number>) => {
-      progress.value = event.detail;
-      readout.textContent = `${event.detail}%`;
-
-      if (progress.parentNode === null) {
-        element.classList.add("fileProcessor__item--uploading");
-
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("fileList__item__progress");
-        wrapper.append(progress, readout);
-
-        element.append(wrapper);
-      }
-    });
-  }
-
-  #removeUploadProgress(element: HTMLElement): void {
-    if (!element.classList.contains("fileProcessor__item--uploading")) {
-      return;
-    }
-
-    element.classList.remove("fileProcessor__item--uploading");
-    element.querySelector(".fileList__item__progress")?.remove();
-  }
-
   #registerFile(element: WoltlabCoreFileElement, container: HTMLElement | null = null): void {
     if (container === null) {
       if (this.showBigPreview) {
@@ -273,7 +242,7 @@ export class FileProcessor {
       container.append(fileSize);
     }
 
-    this.#trackUploadProgress(container, element);
+    trackUploadProgress(container, element);
 
     element.ready
       .then(() => {
@@ -302,7 +271,7 @@ export class FileProcessor {
         this.#markElementUploadHasFailed(container!, element, reason);
       })
       .finally(() => {
-        this.#removeUploadProgress(container!);
+        removeUploadProgress(container!);
       });
   }
 
