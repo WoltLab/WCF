@@ -110,37 +110,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
         });
         return button;
     }
-    function fileInitializationFailed(element, file, reason) {
-        if (reason instanceof Error) {
-            throw reason;
-        }
-        if (file.apiError === undefined) {
-            return;
-        }
-        let errorMessage;
-        const validationError = file.apiError.getValidationError();
-        if (validationError !== undefined) {
-            switch (validationError.param) {
-                case "preflight":
-                    errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
-                    break;
-                default:
-                    errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
-                    break;
-            }
-        }
-        else {
-            errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
-        }
-        markElementAsErroneous(element, errorMessage);
-    }
-    function markElementAsErroneous(element, errorMessage) {
-        element.classList.add("fileList__item--error");
-        const errorElement = document.createElement("div");
-        errorElement.classList.add("attachemnt__item__errorMessage");
-        errorElement.textContent = errorMessage;
-        element.append(errorElement);
-    }
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
@@ -159,7 +128,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
             fileInitializationCompleted(element, file, editor);
         })
             .catch((reason) => {
-            fileInitializationFailed(element, file, reason);
+            (0, File_1.fileInitializationFailed)(element, file, reason);
         })
             .finally(() => {
             (0, File_1.removeUploadProgress)(element);

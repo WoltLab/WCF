@@ -1,7 +1,7 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.removeUploadProgress = exports.trackUploadProgress = void 0;
+    exports.fileInitializationFailed = exports.removeUploadProgress = exports.trackUploadProgress = void 0;
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
         progress.classList.add("fileList__item__progress__bar");
@@ -29,4 +29,36 @@ define(["require", "exports"], function (require, exports) {
         element.querySelector(".fileList__item__progress")?.remove();
     }
     exports.removeUploadProgress = removeUploadProgress;
+    function fileInitializationFailed(element, file, reason) {
+        if (reason instanceof Error) {
+            throw reason;
+        }
+        if (file.apiError === undefined) {
+            return;
+        }
+        let errorMessage;
+        const validationError = file.apiError.getValidationError();
+        if (validationError !== undefined) {
+            switch (validationError.param) {
+                case "preflight":
+                    errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
+                    break;
+                default:
+                    errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
+                    break;
+            }
+        }
+        else {
+            errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
+        }
+        markElementAsErroneous(element, errorMessage);
+    }
+    exports.fileInitializationFailed = fileInitializationFailed;
+    function markElementAsErroneous(element, errorMessage) {
+        element.classList.add("fileList__item--error");
+        const errorElement = document.createElement("div");
+        errorElement.classList.add("attachemnt__item__errorMessage");
+        errorElement.textContent = errorMessage;
+        element.append(errorElement);
+    }
 });

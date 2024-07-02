@@ -10,7 +10,11 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
-import { removeUploadProgress, trackUploadProgress } from "WoltLabSuite/Core/Component/File/File";
+import {
+  fileInitializationFailed,
+  removeUploadProgress,
+  trackUploadProgress,
+} from "WoltLabSuite/Core/Component/File/File";
 
 const _data = new Map<string, FileProcessor>();
 
@@ -107,36 +111,9 @@ export class FileProcessor {
   }
 
   #markElementUploadHasFailed(container: HTMLElement, element: WoltlabCoreFileElement, reason: unknown): void {
-    if (reason instanceof Error) {
-      throw reason;
-    }
-    if (element.apiError === undefined) {
-      return;
-    }
-    let errorMessage: string;
-
-    const validationError = element.apiError.getValidationError();
-    if (validationError !== undefined) {
-      switch (validationError.param) {
-        case "preflight":
-          errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
-          break;
-
-        default:
-          errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
-          break;
-      }
-    } else {
-      errorMessage = `Unexpected server error: [${element.apiError.type}] ${element.apiError.message}`;
-    }
+    fileInitializationFailed(container, element, reason);
 
     container.classList.add("innerError");
-
-    const errorElement = document.createElement("div");
-    errorElement.classList.add(this.classPrefix + "item__errorMessage");
-    errorElement.textContent = errorMessage;
-
-    element.append(errorElement);
   }
 
   protected addDeleteButton(element: WoltlabCoreFileElement, buttons: HTMLUListElement): void {

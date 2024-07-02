@@ -5,7 +5,11 @@ import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { getPhrase } from "WoltLabSuite/Core/Language";
-import { removeUploadProgress, trackUploadProgress } from "WoltLabSuite/Core/Component/File/File";
+import {
+  fileInitializationFailed,
+  removeUploadProgress,
+  trackUploadProgress,
+} from "WoltLabSuite/Core/Component/File/File";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -148,45 +152,6 @@ function getInsertButton(attachmentId: number, url: string, editor: HTMLElement)
   });
 
   return button;
-}
-
-function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
-  if (reason instanceof Error) {
-    throw reason;
-  }
-
-  if (file.apiError === undefined) {
-    return;
-  }
-
-  let errorMessage: string;
-
-  const validationError = file.apiError.getValidationError();
-  if (validationError !== undefined) {
-    switch (validationError.param) {
-      case "preflight":
-        errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
-        break;
-
-      default:
-        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
-        break;
-    }
-  } else {
-    errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
-  }
-
-  markElementAsErroneous(element, errorMessage);
-}
-
-function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {
-  element.classList.add("fileList__item--error");
-
-  const errorElement = document.createElement("div");
-  errorElement.classList.add("attachemnt__item__errorMessage");
-  errorElement.textContent = errorMessage;
-
-  element.append(errorElement);
 }
 
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {

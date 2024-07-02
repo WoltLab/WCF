@@ -77,32 +77,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             container.append(buttons);
         }
         #markElementUploadHasFailed(container, element, reason) {
-            if (reason instanceof Error) {
-                throw reason;
-            }
-            if (element.apiError === undefined) {
-                return;
-            }
-            let errorMessage;
-            const validationError = element.apiError.getValidationError();
-            if (validationError !== undefined) {
-                switch (validationError.param) {
-                    case "preflight":
-                        errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
-                        break;
-                    default:
-                        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
-                        break;
-                }
-            }
-            else {
-                errorMessage = `Unexpected server error: [${element.apiError.type}] ${element.apiError.message}`;
-            }
+            (0, File_1.fileInitializationFailed)(container, element, reason);
             container.classList.add("innerError");
-            const errorElement = document.createElement("div");
-            errorElement.classList.add(this.classPrefix + "item__errorMessage");
-            errorElement.textContent = errorMessage;
-            element.append(errorElement);
         }
         addDeleteButton(element, buttons) {
             const deleteButton = document.createElement("button");

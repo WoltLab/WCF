@@ -1,4 +1,5 @@
 import WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
   const progress = document.createElement("progress");
@@ -30,4 +31,43 @@ export function removeUploadProgress(element: HTMLElement): void {
 
   element.classList.remove("fileProcessor__item--uploading");
   element.querySelector(".fileList__item__progress")?.remove();
+}
+
+export function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
+  if (reason instanceof Error) {
+    throw reason;
+  }
+
+  if (file.apiError === undefined) {
+    return;
+  }
+
+  let errorMessage: string;
+
+  const validationError = file.apiError.getValidationError();
+  if (validationError !== undefined) {
+    switch (validationError.param) {
+      case "preflight":
+        errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
+        break;
+
+      default:
+        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
+        break;
+    }
+  } else {
+    errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
+  }
+
+  markElementAsErroneous(element, errorMessage);
+}
+
+function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {
+  element.classList.add("fileList__item--error");
+
+  const errorElement = document.createElement("div");
+  errorElement.classList.add("attachemnt__item__errorMessage");
+  errorElement.textContent = errorMessage;
+
+  element.append(errorElement);
 }
