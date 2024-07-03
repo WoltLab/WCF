@@ -76,10 +76,14 @@ export class FileProcessor {
     buttons.classList.add("buttonList");
     buttons.classList.add(this.classPrefix + "item__buttons");
 
-    this.addDeleteButton(element, buttons);
+    let listItem = document.createElement("li");
+    listItem.append(this.getDeleteButton(element));
+    buttons.append(listItem);
 
     if (this.#singleFileUpload) {
-      this.addReplaceButton(element, buttons);
+      listItem = document.createElement("li");
+      listItem.append(this.getReplaceButton(element));
+      buttons.append(listItem);
     }
 
     this.#extraButtons.forEach((button) => {
@@ -116,7 +120,7 @@ export class FileProcessor {
     container.classList.add("innerError");
   }
 
-  protected addDeleteButton(element: WoltlabCoreFileElement, buttons: HTMLUListElement): void {
+  protected getDeleteButton(element: WoltlabCoreFileElement): HTMLButtonElement {
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.classList.add("button", "small");
@@ -127,12 +131,10 @@ export class FileProcessor {
       this.#unregisterFile(element);
     });
 
-    const listItem = document.createElement("li");
-    listItem.append(deleteButton);
-    buttons.append(listItem);
+    return deleteButton;
   }
 
-  protected addReplaceButton(element: WoltlabCoreFileElement, buttons: HTMLUListElement): void {
+  protected getReplaceButton(element: WoltlabCoreFileElement): HTMLButtonElement {
     const replaceButton = document.createElement("button");
     replaceButton.type = "button";
     replaceButton.classList.add("button", "small");
@@ -168,9 +170,7 @@ export class FileProcessor {
       this.#fileInput.click();
     });
 
-    const listItem = document.createElement("li");
-    listItem.append(replaceButton);
-    buttons.append(listItem);
+    return replaceButton;
   }
 
   #unregisterFile(element: WoltlabCoreFileElement): void {

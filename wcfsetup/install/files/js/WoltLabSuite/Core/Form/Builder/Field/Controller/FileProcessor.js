@@ -48,9 +48,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             const buttons = document.createElement("ul");
             buttons.classList.add("buttonList");
             buttons.classList.add(this.classPrefix + "item__buttons");
-            this.addDeleteButton(element, buttons);
+            let listItem = document.createElement("li");
+            listItem.append(this.getDeleteButton(element));
+            buttons.append(listItem);
             if (this.#singleFileUpload) {
-                this.addReplaceButton(element, buttons);
+                listItem = document.createElement("li");
+                listItem.append(this.getReplaceButton(element));
+                buttons.append(listItem);
             }
             this.#extraButtons.forEach((button) => {
                 const extraButton = document.createElement("button");
@@ -80,7 +84,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             (0, File_1.fileInitializationFailed)(container, element, reason);
             container.classList.add("innerError");
         }
-        addDeleteButton(element, buttons) {
+        getDeleteButton(element) {
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
             deleteButton.classList.add("button", "small");
@@ -89,11 +93,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 await (0, DeleteFile_1.deleteFile)(element.fileId);
                 this.#unregisterFile(element);
             });
-            const listItem = document.createElement("li");
-            listItem.append(deleteButton);
-            buttons.append(listItem);
+            return deleteButton;
         }
-        addReplaceButton(element, buttons) {
+        getReplaceButton(element) {
             const replaceButton = document.createElement("button");
             replaceButton.type = "button";
             replaceButton.classList.add("button", "small");
@@ -125,9 +127,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 this.#fileInput.addEventListener("change", changeEventListener, { once: true });
                 this.#fileInput.click();
             });
-            const listItem = document.createElement("li");
-            listItem.append(replaceButton);
-            buttons.append(listItem);
+            return replaceButton;
         }
         #unregisterFile(element) {
             if (this.showBigPreview) {
