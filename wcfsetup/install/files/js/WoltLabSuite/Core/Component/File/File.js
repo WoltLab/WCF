@@ -57,7 +57,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
     function markElementAsErroneous(element, errorMessage) {
         element.classList.add("fileList__item--error");
         const errorElement = document.createElement("div");
-        errorElement.classList.add("attachemnt__item__errorMessage");
+        errorElement.classList.add("fileList__item__errorMessage");
         errorElement.textContent = errorMessage;
         element.append(errorElement);
     }

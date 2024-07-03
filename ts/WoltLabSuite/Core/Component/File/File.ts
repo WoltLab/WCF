@@ -67,7 +67,7 @@ function markElementAsErroneous(element: HTMLElement, errorMessage: string): voi
   element.classList.add("fileList__item--error");
 
   const errorElement = document.createElement("div");
-  errorElement.classList.add("attachemnt__item__errorMessage");
+  errorElement.classList.add("fileList__item__errorMessage");
   errorElement.textContent = errorMessage;
 
   element.append(errorElement);
