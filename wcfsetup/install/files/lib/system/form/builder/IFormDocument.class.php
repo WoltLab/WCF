@@ -5,6 +5,7 @@ namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\button\IFormButton;
 use wcf\system\form\builder\data\IFormDataHandler;
+use wcf\system\form\builder\field\IFormField;
 
 /**
  * Represents a "whole" form (document).
@@ -410,4 +411,11 @@ interface IFormDocument extends IFormParentNode
      * @throws  \InvalidArgumentException   if the given form mode is invalid
      */
     public function successMessage($languageItem = null, array $variables = []);
+
+    /**
+     * Returns the form field with the given id or `null` if no such field exists.
+     *
+     * @since 6.1
+     */
+    public function getFormField(string $nodeId): ?IFormField;
 }

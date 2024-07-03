@@ -783,4 +783,20 @@ class FormDocument implements IFormDocument
             $this->traitValidate();
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFormField(string $nodeId): ?IFormField
+    {
+        $node = $this->getNodeById($nodeId);
+        if ($node === null) {
+            return null;
+        }
+        if (!($node instanceof IFormField)) {
+            return null;
+        }
+
+        return $node;
+    }
 }
