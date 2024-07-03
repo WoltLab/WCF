@@ -240,8 +240,8 @@ final class FileProcessor extends SingletonFactory
 
     public function hasReachedUploadLimit(IFileProcessor $fileProcessor, array $context): bool
     {
-        // Replace button from `FileProcessorFormField` called
-        if (isset($context["__replace"]) && $context["__replace"] === true) {
+        // Replace button from `FileProcessorFormField` is clicked.
+        if (!empty($context["__replace"])) {
             return false;
         }
 

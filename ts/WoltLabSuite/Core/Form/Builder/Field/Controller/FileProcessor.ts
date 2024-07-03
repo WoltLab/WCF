@@ -15,6 +15,7 @@ import {
   removeUploadProgress,
   trackUploadProgress,
 } from "WoltLabSuite/Core/Component/File/File";
+import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
 
 const _data = new Map<string, FileProcessor>();
 
@@ -33,6 +34,7 @@ export class FileProcessor {
   readonly #imageOnly: boolean;
   readonly #singleFileUpload: boolean;
   readonly #extraButtons: ExtraButton[];
+  #uploadResolve: undefined | (() => void);
 
   constructor(
     fieldId: string,
@@ -52,6 +54,10 @@ export class FileProcessor {
 
     this.#uploadButton = this.#container.querySelector("woltlab-core-file-upload") as WoltlabCoreFileUploadElement;
     this.#uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
+      if (this.#uploadResolve !== undefined) {
+        this.#uploadResolve();
+      }
+
       this.#registerFile(event.detail);
     });
     this.#fileInput = this.#uploadButton.shadowRoot!.querySelector<HTMLInputElement>('input[type="file"]')!;
@@ -148,15 +154,23 @@ export class FileProcessor {
       context.__replace = true;
       this.#uploadButton.dataset.context = JSON.stringify(context);
 
-      // Remove the element and all buttons from the dom, but keep them stored in a variable.
-      // If the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
-      // If the upload is successful, delete the old file.
       this.#replaceElement = element;
       this.#unregisterFile(element);
 
+      clearPreviousErrors(this.#uploadButton);
+
       const changeEventListener = () => {
-        this.#uploadButton.dataset.context = oldContext;
         this.#fileInput.removeEventListener("cancel", cancelEventListener);
+
+        // Wait until the upload starts,
+        // the request to the server is not synchronized with the end of the `change` event.
+        // Otherwise, we would swap the context too soon.
+        void new Promise<void>((resolve) => {
+          this.#uploadResolve = resolve;
+        }).then(() => {
+          this.#uploadResolve = undefined;
+          this.#uploadButton.dataset.context = oldContext;
+        });
       };
       const cancelEventListener = () => {
         this.#uploadButton.dataset.context = oldContext;

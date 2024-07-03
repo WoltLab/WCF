@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, File_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File", "WoltLabSuite/Core/Component/File/Upload"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, File_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.FileProcessor = void 0;
@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         #imageOnly;
         #singleFileUpload;
         #extraButtons;
+        #uploadResolve;
         constructor(fieldId, singleFileUpload = false, imageOnly = false, extraButtons = []) {
             this.#fieldId = fieldId;
             this.#imageOnly = imageOnly;
@@ -30,6 +31,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             }
             this.#uploadButton = this.#container.querySelector("woltlab-core-file-upload");
             this.#uploadButton.addEventListener("uploadStart", (event) => {
+                if (this.#uploadResolve !== undefined) {
+                    this.#uploadResolve();
+                }
                 this.#registerFile(event.detail);
             });
             this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
@@ -108,14 +112,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 const context = JSON.parse(oldContext);
                 context.__replace = true;
                 this.#uploadButton.dataset.context = JSON.stringify(context);
-                // Remove the element and all buttons from the dom, but keep them stored in a variable.
-                // If the user cancels the dialog or the upload fails, reinsert the old elements and show an error message.
-                // If the upload is successful, delete the old file.
                 this.#replaceElement = element;
                 this.#unregisterFile(element);
+                (0, Upload_1.clearPreviousErrors)(this.#uploadButton);
                 const changeEventListener = () => {
-                    this.#uploadButton.dataset.context = oldContext;
                     this.#fileInput.removeEventListener("cancel", cancelEventListener);
+                    // Wait until the upload starts,
+                    // the request to the server is not synchronized with the end of the `change` event.
+                    // Otherwise, we would swap the context too soon.
+                    void new Promise((resolve) => {
+                        this.#uploadResolve = resolve;
+                    }).then(() => {
+                        this.#uploadResolve = undefined;
+                        this.#uploadButton.dataset.context = oldContext;
+                    });
                 };
                 const cancelEventListener = () => {
                     this.#uploadButton.dataset.context = oldContext;
