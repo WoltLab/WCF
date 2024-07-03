@@ -233,9 +233,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 if (input === null) {
                     return undefined;
                 }
-                return parseInt(input.value, 10);
+                return parseInt(input.value);
             }
-            return new Set(Array.from(this.#container.querySelectorAll('input[type="hidden"]')).map((input) => parseInt(input.value, 10)));
+            return new Set(Array.from(this.#container.querySelectorAll('input[type="hidden"]')).map((input) => parseInt(input.value)));
         }
     }
     exports.FileProcessor = FileProcessor;
