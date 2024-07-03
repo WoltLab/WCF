@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, FileUtil_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, File_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, File_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = void 0;
@@ -113,16 +113,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/FileUtil", "WoltLabSui
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
-        const fileWrapper = document.createElement("div");
-        fileWrapper.classList.add("fileList__item__file");
-        fileWrapper.append(file);
-        const filename = document.createElement("div");
-        filename.classList.add("fileList__item__filename");
-        filename.textContent = file.filename || file.dataset.filename;
-        const fileSize = document.createElement("div");
-        fileSize.classList.add("fileList__item__fileSize");
-        fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
-        element.append(fileWrapper, filename, fileSize);
+        (0, File_1.insertFileInformation)(element, file);
         void file.ready
             .then(() => {
             fileInitializationCompleted(element, file, editor);

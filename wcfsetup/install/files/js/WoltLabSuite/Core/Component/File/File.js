@@ -1,7 +1,7 @@
-define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, exports, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/FileUtil"], function (require, exports, Language_1, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.fileInitializationFailed = exports.removeUploadProgress = exports.trackUploadProgress = void 0;
+    exports.insertFileInformation = exports.fileInitializationFailed = exports.removeUploadProgress = exports.trackUploadProgress = void 0;
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
         progress.classList.add("fileList__item__progress__bar");
@@ -61,4 +61,17 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
         errorElement.textContent = errorMessage;
         element.append(errorElement);
     }
+    function insertFileInformation(container, file) {
+        const fileWrapper = document.createElement("div");
+        fileWrapper.classList.add("fileList__item__file");
+        fileWrapper.append(file);
+        const filename = document.createElement("div");
+        filename.classList.add("fileList__item__filename");
+        filename.textContent = file.filename || file.dataset.filename;
+        const fileSize = document.createElement("div");
+        fileSize.classList.add("fileList__item__fileSize");
+        fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
+        container.append(fileWrapper, filename, fileSize);
+    }
+    exports.insertFileInformation = insertFileInformation;
 });

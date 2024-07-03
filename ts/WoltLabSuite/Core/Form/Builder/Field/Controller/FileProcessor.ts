@@ -8,10 +8,10 @@
 import WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
-import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import {
   fileInitializationFailed,
+  insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
 } from "WoltLabSuite/Core/Component/File/File";
@@ -199,22 +199,7 @@ export class FileProcessor {
     }
 
     if (!this.showBigPreview) {
-      const fileContainer = document.createElement("div");
-      fileContainer.classList.add(this.classPrefix + "item__file");
-      fileContainer.append(element);
-      container.append(fileContainer);
-
-      const filename = document.createElement("div");
-      filename.classList.add(this.classPrefix + "item__filename");
-      filename.textContent = element.filename || element.dataset.filename!;
-
-      container.append(filename);
-
-      const fileSize = document.createElement("div");
-      fileSize.classList.add(this.classPrefix + "item__fileSize");
-      fileSize.textContent = formatFilesize(element.fileSize || parseInt(element.dataset.fileSize!));
-
-      container.append(fileSize);
+      insertFileInformation(container, element);
     }
 
     trackUploadProgress(container, element);

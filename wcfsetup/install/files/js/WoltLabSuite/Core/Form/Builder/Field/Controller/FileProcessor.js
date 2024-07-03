@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Language_1, DeleteFile_1, FileUtil_1, Listener_1, File_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, File_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.FileProcessor = void 0;
@@ -155,18 +155,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 }
             }
             if (!this.showBigPreview) {
-                const fileContainer = document.createElement("div");
-                fileContainer.classList.add(this.classPrefix + "item__file");
-                fileContainer.append(element);
-                container.append(fileContainer);
-                const filename = document.createElement("div");
-                filename.classList.add(this.classPrefix + "item__filename");
-                filename.textContent = element.filename || element.dataset.filename;
-                container.append(filename);
-                const fileSize = document.createElement("div");
-                fileSize.classList.add(this.classPrefix + "item__fileSize");
-                fileSize.textContent = (0, FileUtil_1.formatFilesize)(element.fileSize || parseInt(element.dataset.fileSize));
-                container.append(fileSize);
+                (0, File_1.insertFileInformation)(container, element);
             }
             (0, File_1.trackUploadProgress)(container, element);
             element.ready

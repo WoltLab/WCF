@@ -1,5 +1,6 @@
 import WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 
 export function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
   const progress = document.createElement("progress");
@@ -70,4 +71,20 @@ function markElementAsErroneous(element: HTMLElement, errorMessage: string): voi
   errorElement.textContent = errorMessage;
 
   element.append(errorElement);
+}
+
+export function insertFileInformation(container: HTMLElement, file: WoltlabCoreFileElement): void {
+  const fileWrapper = document.createElement("div");
+  fileWrapper.classList.add("fileList__item__file");
+  fileWrapper.append(file);
+
+  const filename = document.createElement("div");
+  filename.classList.add("fileList__item__filename");
+  filename.textContent = file.filename || file.dataset.filename!;
+
+  const fileSize = document.createElement("div");
+  fileSize.classList.add("fileList__item__fileSize");
+  fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
+
+  container.append(fileWrapper, filename, fileSize);
 }

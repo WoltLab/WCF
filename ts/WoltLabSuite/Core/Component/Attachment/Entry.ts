@@ -1,4 +1,3 @@
-import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import type WoltlabCoreFileElement from "../File/woltlab-core-file";
 import { initFragment, toggleDropdown } from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
@@ -7,6 +6,7 @@ import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import {
   fileInitializationFailed,
+  insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
 } from "WoltLabSuite/Core/Component/File/File";
@@ -158,19 +158,7 @@ export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: H
   const element = document.createElement("li");
   element.classList.add("fileList__item", "attachment__item");
 
-  const fileWrapper = document.createElement("div");
-  fileWrapper.classList.add("fileList__item__file");
-  fileWrapper.append(file);
-
-  const filename = document.createElement("div");
-  filename.classList.add("fileList__item__filename");
-  filename.textContent = file.filename || file.dataset.filename!;
-
-  const fileSize = document.createElement("div");
-  fileSize.classList.add("fileList__item__fileSize");
-  fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
-
-  element.append(fileWrapper, filename, fileSize);
+  insertFileInformation(element, file);
 
   void file.ready
     .then(() => {
