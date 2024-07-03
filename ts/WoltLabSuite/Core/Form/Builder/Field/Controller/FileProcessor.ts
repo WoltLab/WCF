@@ -17,7 +17,8 @@ import {
 } from "WoltLabSuite/Core/Component/File/File";
 import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
 
-const _data = new Map<string, FileProcessor>();
+type FileId = string;
+const fileProcessors = new Map<FieldId, FileProcessor>();
 
 export interface ExtraButton {
   title: string;
