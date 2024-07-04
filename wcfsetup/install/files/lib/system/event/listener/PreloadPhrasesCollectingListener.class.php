@@ -79,6 +79,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.button.showMenu');
         $event->preload('wcf.global.button.submit');
         $event->preload('wcf.global.button.upload');
+        $event->preload('wcf.global.button.replace');
 
         $event->preload('wcf.global.confirmation.cancel');
         $event->preload('wcf.global.confirmation.confirm');
@@ -109,7 +110,6 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.success');
         $event->preload('wcf.global.success.add');
         $event->preload('wcf.global.success.edit');
-        $event->preload('wcf.global.button.replace');
 
         $event->preload('wcf.global.rss.accessToken.info');
         $event->preload('wcf.global.rss.copy');
