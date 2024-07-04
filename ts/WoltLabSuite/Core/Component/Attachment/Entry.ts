@@ -9,7 +9,7 @@ import {
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
-} from "WoltLabSuite/Core/Component/File/File";
+} from "WoltLabSuite/Core/Component/File/Helper";
 
 type FileProcessorData = {
   attachmentID: number;

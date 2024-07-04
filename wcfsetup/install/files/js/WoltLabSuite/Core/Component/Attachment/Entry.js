@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/File"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, File_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/Helper"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, Helper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = void 0;
@@ -113,18 +113,18 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
     function createAttachmentFromFile(file, editor) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
-        (0, File_1.insertFileInformation)(element, file);
+        (0, Helper_1.insertFileInformation)(element, file);
         void file.ready
             .then(() => {
             fileInitializationCompleted(element, file, editor);
         })
             .catch((reason) => {
-            (0, File_1.fileInitializationFailed)(element, file, reason);
+            (0, Helper_1.fileInitializationFailed)(element, file, reason);
         })
             .finally(() => {
-            (0, File_1.removeUploadProgress)(element);
+            (0, Helper_1.removeUploadProgress)(element);
         });
-        (0, File_1.trackUploadProgress)(element, file);
+        (0, Helper_1.trackUploadProgress)(element, file);
         return element;
     }
     exports.createAttachmentFromFile = createAttachmentFromFile;

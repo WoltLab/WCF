@@ -14,7 +14,7 @@ import {
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
-} from "WoltLabSuite/Core/Component/File/File";
+} from "WoltLabSuite/Core/Component/File/Helper";
 import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
 
 const _data = new Map<string, FileProcessor>();

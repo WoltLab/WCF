@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/File", "WoltLabSuite/Core/Component/File/Upload"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, File_1, Upload_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/File/Upload"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, Helper_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.FileProcessor = void 0;
@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             container.append(buttons);
         }
         #markElementUploadHasFailed(container, element, reason) {
-            (0, File_1.fileInitializationFailed)(container, element, reason);
+            (0, Helper_1.fileInitializationFailed)(container, element, reason);
             container.classList.add("innerError");
         }
         getDeleteButton(element) {
@@ -165,9 +165,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 }
             }
             if (!this.showBigPreview) {
-                (0, File_1.insertFileInformation)(container, element);
+                (0, Helper_1.insertFileInformation)(container, element);
             }
-            (0, File_1.trackUploadProgress)(container, element);
+            (0, Helper_1.trackUploadProgress)(container, element);
             element.ready
                 .then(() => {
                 if (this.#replaceElement !== undefined) {
@@ -191,7 +191,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 this.#markElementUploadHasFailed(container, element, reason);
             })
                 .finally(() => {
-                (0, File_1.removeUploadProgress)(container);
+                (0, Helper_1.removeUploadProgress)(container);
             });
         }
         #fileInitializationCompleted(element, container) {
