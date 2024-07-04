@@ -9,7 +9,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.FileProcessor = void 0;
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    const _data = new Map();
+    const fileProcessors = new Map();
     class FileProcessor {
         #container;
         #uploadButton;
@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             this.#container.querySelectorAll("woltlab-core-file").forEach((element) => {
                 this.#registerFile(element, element.parentElement);
             });
-            _data.set(fieldId, this);
+            fileProcessors.set(fieldId, this);
         }
         get classPrefix() {
             return this.showBigPreview ? "fileUpload__preview__" : "fileList__";
@@ -250,7 +250,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
     }
     exports.FileProcessor = FileProcessor;
     function getValues(fieldId) {
-        const field = _data.get(fieldId);
+        const field = fileProcessors.get(fieldId);
         if (field === undefined) {
             throw new Error("Unknown field with id '" + fieldId + "'");
         }

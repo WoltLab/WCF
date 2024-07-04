@@ -18,7 +18,7 @@ import {
 import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
 
 type FileId = string;
-const fileProcessors = new Map<FieldId, FileProcessor>();
+const fileProcessors = new Map<FileId, FileProcessor>();
 
 export interface ExtraButton {
   title: string;
@@ -67,7 +67,7 @@ export class FileProcessor {
       this.#registerFile(element, element.parentElement);
     });
 
-    _data.set(fieldId, this);
+    fileProcessors.set(fieldId, this);
   }
 
   get classPrefix(): string {
@@ -315,7 +315,7 @@ export class FileProcessor {
 }
 
 export function getValues(fieldId: string): undefined | number | Set<number> {
-  const field = _data.get(fieldId);
+  const field = fileProcessors.get(fieldId);
   if (field === undefined) {
     throw new Error("Unknown field with id '" + fieldId + "'");
   }
