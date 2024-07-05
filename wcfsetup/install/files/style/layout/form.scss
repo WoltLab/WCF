@@ -168,6 +168,11 @@ select {
 	> textarea {
 		flex: 0 0 100%;
 	}
+
+	> .ck.ck-editor {
+		flex: 0 0 100%;
+		margin-top: 0 !important;
+	}
 }
 
 .inputAddon input,
