@@ -1,10 +1,15 @@
-import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 import type WoltlabCoreFileElement from "../File/woltlab-core-file";
 import { initFragment, toggleDropdown } from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import { dispatchToCkeditor } from "../Ckeditor/Event";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import {
+  fileInitializationFailed,
+  insertFileInformation,
+  removeUploadProgress,
+  trackUploadProgress,
+} from "WoltLabSuite/Core/Component/File/Helper";
 
 type FileProcessorData = {
   attachmentID: number;
@@ -56,7 +61,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
       link.title = file.filename;
       link.textContent = file.filename;
 
-      const filename = element.querySelector(".attachment__item__filename")!;
+      const filename = element.querySelector(".fileList__item__filename")!;
       filename.innerHTML = "";
       filename.append(link);
 
@@ -95,7 +100,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
   moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
 
   const buttonList = document.createElement("div");
-  buttonList.classList.add("attachment__item__buttons");
+  buttonList.classList.add("fileList__item__buttons");
   insertButton.classList.add("button", "small");
   buttonList.append(insertButton, moreOptions);
 
@@ -149,94 +154,11 @@ function getInsertButton(attachmentId: number, url: string, editor: HTMLElement)
   return button;
 }
 
-function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
-  if (reason instanceof Error) {
-    throw reason;
-  }
-
-  if (file.apiError === undefined) {
-    return;
-  }
-
-  let errorMessage: string;
-
-  const validationError = file.apiError.getValidationError();
-  if (validationError !== undefined) {
-    switch (validationError.param) {
-      case "preflight":
-        errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
-        break;
-
-      default:
-        errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
-        break;
-    }
-  } else {
-    errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
-  }
-
-  markElementAsErroneous(element, errorMessage);
-}
-
-function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {
-  element.classList.add("attachment__item--error");
-
-  const errorElement = document.createElement("div");
-  errorElement.classList.add("attachemnt__item__errorMessage");
-  errorElement.textContent = errorMessage;
-
-  element.append(errorElement);
-}
-
-function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
-  const progress = document.createElement("progress");
-  progress.classList.add("attachment__item__progress__bar");
-  progress.max = 100;
-  const readout = document.createElement("span");
-  readout.classList.add("attachment__item__progress__readout");
-
-  file.addEventListener("uploadProgress", (event: CustomEvent<number>) => {
-    progress.value = event.detail;
-    readout.textContent = `${event.detail}%`;
-
-    if (progress.parentNode === null) {
-      element.classList.add("attachment__item--uploading");
-
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("attachment__item__progress");
-      wrapper.append(progress, readout);
-
-      element.append(wrapper);
-    }
-  });
-}
-
-function removeUploadProgress(element: HTMLElement): void {
-  if (!element.classList.contains("attachment__item--uploading")) {
-    return;
-  }
-
-  element.classList.remove("attachment__item--uploading");
-  element.querySelector(".attachment__item__progress")?.remove();
-}
-
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {
   const element = document.createElement("li");
-  element.classList.add("attachment__item");
+  element.classList.add("fileList__item", "attachment__item");
 
-  const fileWrapper = document.createElement("div");
-  fileWrapper.classList.add("attachment__item__file");
-  fileWrapper.append(file);
-
-  const filename = document.createElement("div");
-  filename.classList.add("attachment__item__filename");
-  filename.textContent = file.filename || file.dataset.filename!;
-
-  const fileSize = document.createElement("div");
-  fileSize.classList.add("attachment__item__fileSize");
-  fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
-
-  element.append(fileWrapper, filename, fileSize);
+  insertFileInformation(element, file);
 
   void file.ready
     .then(() => {

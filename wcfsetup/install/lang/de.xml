@@ -3946,6 +3946,7 @@ Dateianhänge:
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Weiterlesen]]></item>
 		<item name="wcf.global.button.resetFilter"><![CDATA[Filter zurücksetzen]]></item>
+		<item name="wcf.global.button.replace"><![CDATA[Ersetzen]]></item>
 		<item name="wcf.global.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.global.categories"><![CDATA[Kategorien]]></item>
 		<item name="wcf.global.comments"><![CDATA[Kommentare]]></item>

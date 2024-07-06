@@ -125,7 +125,7 @@ async function getSha256Hash(data: BufferSource): Promise<string> {
     .join("");
 }
 
-function clearPreviousErrors(element: WoltlabCoreFileUploadElement): void {
+export function clearPreviousErrors(element: WoltlabCoreFileUploadElement): void {
   element.parentElement?.querySelectorAll(".innerError").forEach((x) => x.remove());
 }
 

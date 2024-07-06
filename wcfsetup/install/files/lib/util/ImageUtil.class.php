@@ -17,9 +17,10 @@ final class ImageUtil
 {
     /**
      * image extensions
-     * @var array
+     *
+     * @var string[]
      */
-    protected static $imageExtensions = ['jpeg', 'jpg', 'png', 'gif', "webp"];
+    public const IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
 
     /**
      * Checks the content of an image for bad sections, e.g. the use of javascript
@@ -66,7 +67,7 @@ final class ImageUtil
         if (@\getimagesize($location) !== false) {
             $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
 
-            if (\in_array(\mb_strtolower($extension), self::$imageExtensions)) {
+            if (\in_array(\mb_strtolower($extension), ImageUtil::IMAGE_EXTENSIONS)) {
                 return true;
             }
         } elseif ($handleSvgAsValidImage) {
