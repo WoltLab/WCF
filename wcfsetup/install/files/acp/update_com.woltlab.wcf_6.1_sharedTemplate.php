@@ -10,7 +10,7 @@
 
 use wcf\data\template\group\TemplateGroupAction;
 
-(new TemplateGroupAction([], ' create', [
+(new TemplateGroupAction([], 'create', [
     'data' => [
         'templateGroupName' => 'wcf.acp.template.group.shared',
         'templateGroupFolderName' => '_wcf_shared/',
