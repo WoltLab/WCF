@@ -7,9 +7,9 @@
 			<p class="sectionDescription">{$team->getDescription()}</p>
 		</header>
 			
-		<ol class="containerList userList">
+		<ol class="containerList userCardList">
 			{foreach from=$team->getMembers() item=user}
-				{include file='userListItem'}
+				{include file='userCard'}
 			{/foreach}
 		</ol>
 	</section>
@@ -24,16 +24,5 @@
 		</nav>
 	{/hascontent}
 </footer>
-
-<script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.user.button.follow': '{jslang}wcf.user.button.follow{/jslang}',
-			'wcf.user.button.unfollow': '{jslang}wcf.user.button.unfollow{/jslang}',
-		});
-		
-		new WCF.User.Action.Follow($('.userList > li'));
-	});
-</script>
 
 {include file='footer'}
