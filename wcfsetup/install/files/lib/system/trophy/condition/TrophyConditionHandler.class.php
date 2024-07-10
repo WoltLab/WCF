@@ -84,6 +84,7 @@ class TrophyConditionHandler extends SingletonFactory
                         'trophyID' => $trophy->trophyID,
                         'userID' => $userID,
                         'time' => TIME_NOW,
+                        'description' => '',
                     ],
                 ]))->executeAction();
 

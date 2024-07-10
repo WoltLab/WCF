@@ -115,7 +115,7 @@ abstract class AbstractAcpForm extends AbstractForm
                 I18nHandler::getInstance()->setOptions(
                     $fieldName,
                     $value->getPackageID(),
-                    $databaseObject->{$fieldName},
+                    $databaseObject->{$fieldName} ?? '',
                     "{$value->getLanguageItem()}\\d+"
                 );
             }
