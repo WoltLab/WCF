@@ -23,6 +23,12 @@ abstract class AbstractFileProcessor implements IFileProcessor
     }
 
     #[\Override]
+    public function validateUpload(File $file): void
+    {
+        // There is no need to validate the uploaded file.
+    }
+
+    #[\Override]
     public function countExistingFiles(array $context): ?int
     {
         // Counting of existing files is only required for files that want to

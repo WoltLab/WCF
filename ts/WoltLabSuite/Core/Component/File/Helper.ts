@@ -51,6 +51,9 @@ export function fileInitializationFailed(element: HTMLElement, file: WoltlabCore
       case "preflight":
         errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
         break;
+      case "validation":
+        errorMessage = getPhrase(`wcf.upload.validation.error.${validationError.code}`);
+        break;
 
       default:
         errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);

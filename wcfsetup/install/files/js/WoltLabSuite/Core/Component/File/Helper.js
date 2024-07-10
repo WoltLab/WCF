@@ -43,6 +43,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
                 case "preflight":
                     errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
                     break;
+                case "validation":
+                    errorMessage = (0, Language_1.getPhrase)(`wcf.upload.validation.error.${validationError.code}`);
+                    break;
                 default:
                     errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
                     break;
