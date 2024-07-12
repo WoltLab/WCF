@@ -75,34 +75,38 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($loadValues) {
-            $objectID = $object->{$object::getDatabaseTableIndexName()};
+            if (isset($data[$this->getObjectProperty()])) {
+                $this->value($data[$this->getObjectProperty()]);
+            } else {
+                $objectID = $object->{$object::getDatabaseTableIndexName()};
 
-            if ($objectID === null) {
-                throw new \UnexpectedValueException(
-                    "Cannot read object id from object of class '" . \get_class($object) . "' for field '{$this->getId()}'."
+                if ($objectID === null) {
+                    throw new \UnexpectedValueException(
+                        "Cannot read object id from object of class '" . \get_class($object) . "' for field '{$this->getId()}'."
+                    );
+                }
+
+                if ($this->getObjectType() === null) {
+                    throw new \UnexpectedValueException("Missing taggable object type for field '{$this->getId()}'.");
+                }
+
+                $languageIDs = [];
+
+                /** @noinspection PhpUndefinedFieldInspection */
+                if (isset($data['languageID'])) {
+                    $languageIDs[] = $data['languageID'];
+                }
+
+                $tags = TagEngine::getInstance()->getObjectTags(
+                    $this->getObjectType()->objectType,
+                    $objectID,
+                    $languageIDs
                 );
-            }
 
-            if ($this->getObjectType() === null) {
-                throw new \UnexpectedValueException("Missing taggable object type for field '{$this->getId()}'.");
-            }
-
-            $languageIDs = [];
-
-            /** @noinspection PhpUndefinedFieldInspection */
-            if (isset($data['languageID'])) {
-                $languageIDs[] = $data['languageID'];
-            }
-
-            $tags = TagEngine::getInstance()->getObjectTags(
-                $this->getObjectType()->objectType,
-                $objectID,
-                $languageIDs
-            );
-
-            $this->value = [];
-            foreach ($tags as $tag) {
-                $this->value[] = $tag->name;
+                $this->value = [];
+                foreach ($tags as $tag) {
+                    $this->value[] = $tag->name;
+                }
             }
         }
 
