@@ -4,6 +4,7 @@ namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
+use wcf\system\exception\UserInputException;
 
 /**
  * File processors are responsible to validate and process any file uploads
@@ -27,6 +28,13 @@ interface IFileProcessor
      * value is stored for use with the temporary file later.
      */
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult;
+
+    /**
+     * Validates the uploaded file.
+     *
+     * @throws UserInputException if the file is invalid.
+     */
+    public function validateUpload(File $file): void;
 
     /**
      * Notifies the file processor that the upload of a file has been completed
