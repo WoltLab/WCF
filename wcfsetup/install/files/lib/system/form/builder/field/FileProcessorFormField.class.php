@@ -41,6 +41,7 @@ final class FileProcessorFormField extends AbstractFormField
      */
     private array $files = [];
     private bool $singleFileUpload = false;
+    private bool $bigPreview = false;
     private array $actionButtons = [];
 
     #[\Override]
@@ -74,10 +75,6 @@ final class FileProcessorFormField extends AbstractFormField
                 $this->context
             ),
             'maxUploads' => $this->getFileProcessor()->getMaximumCount($this->context),
-            'imageOnly' => \array_diff(
-                $this->getFileProcessor()->getAllowedFileExtensions($this->context),
-                ImageUtil::IMAGE_EXTENSIONS
-            ) === [],
             'actionButtons' => $this->actionButtons,
         ];
     }
@@ -214,6 +211,35 @@ final class FileProcessorFormField extends AbstractFormField
     public function context(array $context): self
     {
         $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Returns whether the big preview is shown for images.
+     */
+    public function isBigPreview(): bool
+    {
+        return $this->bigPreview;
+    }
+
+    /**
+     * Sets whether the big preview is shown for images.
+     */
+    public function bigPreview(bool $bigPreview = true): self
+    {
+        if (
+            $this->bigPreview
+            && \array_diff(
+                $this->getFileProcessor()->getAllowedFileExtensions($this->context),
+                ImageUtil::IMAGE_EXTENSIONS
+            ) !== []
+        ) {
+            throw new \InvalidArgumentException(
+                "The big preview is only supported for images for the field '{$this->getId()}'."
+            );
+        }
+        $this->bigPreview = $bigPreview;
 
         return $this;
     }

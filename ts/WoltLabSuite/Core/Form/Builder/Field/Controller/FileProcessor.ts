@@ -32,7 +32,7 @@ export class FileProcessor {
   readonly #fieldId: string;
   #replaceElement: WoltlabCoreFileElement | undefined = undefined;
   readonly #fileInput: HTMLInputElement;
-  readonly #imageOnly: boolean;
+  readonly #useBigPreview: boolean;
   readonly #singleFileUpload: boolean;
   readonly #extraButtons: ExtraButton[];
   #uploadResolve: undefined | (() => void);
@@ -40,11 +40,11 @@ export class FileProcessor {
   constructor(
     fieldId: string,
     singleFileUpload: boolean = false,
-    imageOnly: boolean = false,
+    useBigPreview: boolean = false,
     extraButtons: ExtraButton[] = [],
   ) {
     this.#fieldId = fieldId;
-    this.#imageOnly = imageOnly;
+    this.#useBigPreview = useBigPreview;
     this.#singleFileUpload = singleFileUpload;
     this.#extraButtons = extraButtons;
 
@@ -71,11 +71,7 @@ export class FileProcessor {
   }
 
   get classPrefix(): string {
-    return this.showBigPreview ? "fileUpload__preview__" : "fileList__";
-  }
-
-  get showBigPreview(): boolean {
-    return this.#singleFileUpload && this.#imageOnly;
+    return this.#useBigPreview ? "fileUpload__preview__" : "fileList__";
   }
 
   protected addButtons(container: HTMLElement, element: WoltlabCoreFileElement): void {
@@ -189,7 +185,7 @@ export class FileProcessor {
   }
 
   #unregisterFile(element: WoltlabCoreFileElement): void {
-    if (this.showBigPreview) {
+    if (this.#useBigPreview) {
       element.parentElement!.innerHTML = "";
     } else {
       element.parentElement!.parentElement!.remove();
@@ -198,7 +194,7 @@ export class FileProcessor {
 
   #registerFile(element: WoltlabCoreFileElement, container: HTMLElement | null = null): void {
     if (container === null) {
-      if (this.showBigPreview) {
+      if (this.#useBigPreview) {
         container = this.#container.querySelector(".fileUpload__preview");
         if (container === null) {
           container = document.createElement("div");
@@ -213,7 +209,7 @@ export class FileProcessor {
       }
     }
 
-    if (!this.showBigPreview) {
+    if (!this.#useBigPreview) {
       insertFileInformation(container, element);
     }
 
@@ -232,7 +228,7 @@ export class FileProcessor {
           this.#registerFile(this.#replaceElement);
           this.#replaceElement = undefined;
 
-          if (this.showBigPreview) {
+          if (this.#useBigPreview) {
             // `this.#replaceElement` need a new container, otherwise the element will be marked as erroneous, too.
             const tmpContainer = document.createElement("div");
             tmpContainer.append(element);
@@ -249,7 +245,7 @@ export class FileProcessor {
   }
 
   #fileInitializationCompleted(element: WoltlabCoreFileElement, container: HTMLElement): void {
-    if (this.showBigPreview) {
+    if (this.#useBigPreview) {
       element.dataset.previewUrl = element.link!;
       element.unbounded = true;
     } else {

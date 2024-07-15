@@ -16,13 +16,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         #fieldId;
         #replaceElement = undefined;
         #fileInput;
-        #imageOnly;
+        #useBigPreview;
         #singleFileUpload;
         #extraButtons;
         #uploadResolve;
-        constructor(fieldId, singleFileUpload = false, imageOnly = false, extraButtons = []) {
+        constructor(fieldId, singleFileUpload = false, useBigPreview = false, extraButtons = []) {
             this.#fieldId = fieldId;
-            this.#imageOnly = imageOnly;
+            this.#useBigPreview = useBigPreview;
             this.#singleFileUpload = singleFileUpload;
             this.#extraButtons = extraButtons;
             this.#container = document.getElementById(fieldId + "Container");
@@ -43,10 +43,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             fileProcessors.set(fieldId, this);
         }
         get classPrefix() {
-            return this.showBigPreview ? "fileUpload__preview__" : "fileList__";
-        }
-        get showBigPreview() {
-            return this.#singleFileUpload && this.#imageOnly;
+            return this.#useBigPreview ? "fileUpload__preview__" : "fileList__";
         }
         addButtons(container, element) {
             const buttons = document.createElement("ul");
@@ -140,7 +137,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             return replaceButton;
         }
         #unregisterFile(element) {
-            if (this.showBigPreview) {
+            if (this.#useBigPreview) {
                 element.parentElement.innerHTML = "";
             }
             else {
@@ -149,7 +146,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         }
         #registerFile(element, container = null) {
             if (container === null) {
-                if (this.showBigPreview) {
+                if (this.#useBigPreview) {
                     container = this.#container.querySelector(".fileUpload__preview");
                     if (container === null) {
                         container = document.createElement("div");
@@ -164,7 +161,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                     this.#container.querySelector(".fileList").append(container);
                 }
             }
-            if (!this.showBigPreview) {
+            if (!this.#useBigPreview) {
                 (0, Helper_1.insertFileInformation)(container, element);
             }
             (0, Helper_1.trackUploadProgress)(container, element);
@@ -180,7 +177,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 if (this.#replaceElement !== undefined) {
                     this.#registerFile(this.#replaceElement);
                     this.#replaceElement = undefined;
-                    if (this.showBigPreview) {
+                    if (this.#useBigPreview) {
                         // `this.#replaceElement` need a new container, otherwise the element will be marked as erroneous, too.
                         const tmpContainer = document.createElement("div");
                         tmpContainer.append(element);
@@ -195,7 +192,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             });
         }
         #fileInitializationCompleted(element, container) {
-            if (this.showBigPreview) {
+            if (this.#useBigPreview) {
                 element.dataset.previewUrl = element.link;
                 element.unbounded = true;
             }
