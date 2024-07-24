@@ -410,9 +410,11 @@ class RegisterForm extends UserAddForm
             || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
         ) {
             $activationCode = UserRegistrationUtil::getActivationCode();
-            $emailConfirmCode = Hex::encode(\random_bytes(20));
             $this->additionalFields['activationCode'] = $activationCode;
-            $this->additionalFields['emailConfirmed'] = $emailConfirmCode;
+            if (!$registerVia3rdParty) {
+                $emailConfirmCode = Hex::encode(\random_bytes(20));
+                $this->additionalFields['emailConfirmed'] = $emailConfirmCode;
+            }
             $addDefaultGroups = false;
             $this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
         }
@@ -447,7 +449,11 @@ class RegisterForm extends UserAddForm
         } elseif (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
             // registering via 3rdParty leads to instant activation
             if ($registerVia3rdParty) {
-                $this->message = 'wcf.user.register.success';
+                if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+                    $this->message = 'wcf.user.register.success.awaitActivation';
+                } else {
+                    $this->message = 'wcf.user.register.success';
+                }
             } else {
                 $email = new Email();
                 $email->addRecipient(new UserMailbox(WCF::getUser()));
