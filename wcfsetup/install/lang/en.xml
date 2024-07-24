@@ -802,7 +802,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Users can change their username after the following days.]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be blocked]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
-		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Likes System]]></item>
+		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaction System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view reactions]]></item>
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can react to content]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
@@ -4809,7 +4809,7 @@ not register with us.]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[to]]></item>
 		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
-		<item name="wcf.user.newestMember"><![CDATA[Newest Member]]></item>
+		<item name="wcf.user.newestMember"><![CDATA[Latest Member]]></item>
 		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
