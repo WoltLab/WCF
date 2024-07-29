@@ -37,7 +37,19 @@ class PageLocationManager extends SingletonFactory
     public function init()
     {
         $pageID = $pageObjectID = 0;
-        $page = RequestHandler::getInstance()->getActivePage();
+
+        if (\str_starts_with(\WCF_VERSION, '6.0')) {
+            // `RequestHandler::getActivePage()` was added in 6.1, but is being
+            // indirectly accessed during the upgrade from 6.0 → 6.1 in the
+            // shutdown handler for the session.
+            //
+            // This branch should be removed in 6.2 because it only exist for
+            // the upgrade itself. DO NOT remove it in 6.1 in case later
+            // releases are being used for the upgrade.
+            $page = null;
+        } else {
+            $page = RequestHandler::getInstance()->getActivePage();
+        }
 
         if ($page !== null) {
             $pageID = $page->pageID;

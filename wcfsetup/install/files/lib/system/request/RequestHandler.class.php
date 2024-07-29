@@ -336,6 +336,9 @@ final class RequestHandler extends SingletonFactory
         return false;
     }
 
+    /**
+     * @since 6.1
+     */
     public function getActivePage(): ?Page
     {
         if (!isset($this->activePage)) {

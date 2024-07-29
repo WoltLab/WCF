@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.1.0 dev 1</version>
-		<date>2024-04-19</date>
+		<version>6.1.0 Alpha 1</version>
+		<date>2024-07-29</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -48,5 +48,67 @@
 		<instruction type="templateListener" />
 
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="6.0.*">
+		<!--
+tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
+	acp/update_com.woltlab.wcf_6.1_checkSystemRequirements.php \
+	acp/update_com.woltlab.wcf_6.1_messageEmbeddedObject.php \
+	acp/update_com.woltlab.wcf_6.1_sharedTemplate.php \
+	acp/database/update_com.woltlab.wcf_6.1.php
+		-->
+		<instruction type="file">files_pre_check.tar</instruction>
+
+		<!-- Checks that need to happen before the upgrade starts. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.1_checkSystemRequirements.php</instruction>
+
+		<!-- Required for the shared templates. -->
+		<instruction type="script">acp/update_com.woltlab.wcf_6.1_sharedTemplate.php</instruction>
+
+		<!-- Clean up any duplicate entries in the message embedded objects table. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.1_messageEmbeddedObject.php</instruction>
+
+		<!-- Migrate the database as early as possible. -->
+		<instruction type="database">acp/database/update_com.woltlab.wcf_6.1.php</instruction>
+
+		<!-- Deploy the new application code. -->
+		<instruction type="file"/>
+		<instruction type="acpTemplate"/>
+		<instruction type="template"/>
+
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.1_spider_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.1_spider_step2.php</instruction>
+
+		<instruction type="language"/>
+		<instruction type="objectTypeDefinition"/>
+		<instruction type="objectType"/>
+		<instruction type="packageInstallationPlugin"/>
+		<instruction type="page"/>
+		<instruction type="menuItem"/>
+		<instruction type="templateListener"/>
+		<instruction type="aclOption"/>
+		<instruction type="eventListener"/>
+		<instruction type="userGroupOption"/>
+		<instruction type="coreObject"/>
+		<instruction type="userProfileMenu"/>
+		<instruction type="box"/>
+		<instruction type="bbcode"/>
+		<instruction type="acpTemplateDelete"/>
+		<instruction type="acpSearchProvider"/>
+		<instruction type="acpMenu"/>
+		<instruction type="fileDelete"/>
+		<instruction type="userMenu"/>
+		<instruction type="mediaProvider"/>
+		<instruction type="menu"/>
+		<instruction type="option"/>
+		<instruction type="smiley"/>
+		<instruction type="templateDelete"/>
+		<instruction type="cronjob"/>
+		<instruction type="clipboardAction"/>
+		<instruction type="userOption"/>
+		<instruction type="userNotificationEvent"/>
+
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.1_serviceWorker.php</instruction>
 	</instructions>
 </package>
