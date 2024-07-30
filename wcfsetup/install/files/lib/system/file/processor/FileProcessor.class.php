@@ -10,6 +10,8 @@ use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
+use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\ImageAdapter;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
@@ -73,7 +75,7 @@ final class FileProcessor extends SingletonFactory
             $allowedFileExtensions = \implode(
                 ',',
                 \array_map(
-                    static fn (string $fileExtension) => ".{$fileExtension}",
+                    static fn(string $fileExtension) => ".{$fileExtension}",
                     $allowedFileExtensions
                 )
             );
@@ -134,7 +136,12 @@ final class FileProcessor extends SingletonFactory
         }
 
         $imageAdapter = ImageHandler::getInstance()->getAdapter();
-        $imageAdapter->loadFile($file->getPathname());
+
+        try {
+            $imageAdapter->loadFile($file->getPathname());
+        } catch (SystemException) {
+            throw new DamagedImage($file->fileID);
+        }
 
         $filename = FileUtil::getTemporaryFilename(extension: 'webp');
         $imageAdapter->saveImageAs($imageAdapter->getImage(), $filename, 'webp', 80);
@@ -205,7 +212,12 @@ final class FileProcessor extends SingletonFactory
 
             if ($imageAdapter === null) {
                 $imageAdapter = ImageHandler::getInstance()->getAdapter();
-                $imageAdapter->loadFile($file->getPathname());
+
+                try {
+                    $imageAdapter->loadFile($file->getPathname());
+                } catch (SystemException) {
+                    throw new DamagedImage($file->fileID);
+                }
             }
 
             \assert($imageAdapter instanceof ImageAdapter);

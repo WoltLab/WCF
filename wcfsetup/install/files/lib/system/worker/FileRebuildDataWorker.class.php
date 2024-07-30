@@ -2,8 +2,12 @@
 
 namespace wcf\system\worker;
 
+use wcf\data\file\FileEditor;
 use wcf\data\file\FileList;
+use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
+
+use function wcf\functions\exception\logThrowable;
 
 /**
  * Worker implementation for updating files.
@@ -41,9 +45,20 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
     {
         parent::execute();
 
+        $damagedFileIDs = [];
         foreach ($this->objectList as $file) {
-            FileProcessor::getInstance()->generateWebpVariant($file);
-            FileProcessor::getInstance()->generateThumbnails($file);
+            try {
+                FileProcessor::getInstance()->generateWebpVariant($file);
+                FileProcessor::getInstance()->generateThumbnails($file);
+            } catch (DamagedImage $e) {
+                logThrowable($e);
+
+                $damagedFileIDs[] = $e->fileID;
+            }
+        }
+
+        if ($damagedFileIDs !== []) {
+            FileEditor::deleteAll($damagedFileIDs);
         }
     }
 }
