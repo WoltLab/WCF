@@ -6,10 +6,6 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\file\FileEditor;
-use wcf\system\database\exception\DatabaseQueryException;
-use wcf\system\exception\SystemException;
-use wcf\system\database\exception\DatabaseQueryExecutionException;
-use wcf\system\database\exception\DatabaseTransactionException;
 use wcf\system\WCF;
 
 /**

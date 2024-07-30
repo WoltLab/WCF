@@ -128,7 +128,11 @@ class FileEditor extends DatabaseObjectEditor
 
         $width = $height = null;
         if ($isImage) {
-            [$width, $height] = \getimagesize($pathname);
+            try {
+                [$width, $height] = \getimagesize($pathname);
+            } catch (\Throwable) {
+                return null;
+            }
         }
 
         $fileAction = new FileAction([], 'create', ['data' => [
