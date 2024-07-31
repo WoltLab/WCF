@@ -5,6 +5,7 @@ namespace wcf\data\file;
 use wcf\action\FileDownloadAction;
 use wcf\data\DatabaseObject;
 use wcf\data\file\thumbnail\FileThumbnail;
+use wcf\data\ILinkableObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
@@ -29,7 +30,7 @@ use wcf\util\StringUtil;
  * @property-read int|null $height
  * @property-read string|null $fileHashWebp
  */
-class File extends DatabaseObject
+class File extends DatabaseObject implements ILinkableObject
 {
     /**
      * List of common file extensions that are always safe to be served directly
@@ -126,11 +127,15 @@ class File extends DatabaseObject
         return $this->getPath() . $filename;
     }
 
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getControllerLink(
             FileDownloadAction::class,
-            ['id' => $this->fileID]
+            [
+                'id' => $this->fileID,
+                'forceFrontend' => true,
+            ]
         );
     }
 

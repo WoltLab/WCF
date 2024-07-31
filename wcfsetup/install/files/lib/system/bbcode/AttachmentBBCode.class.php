@@ -4,7 +4,6 @@ namespace wcf\system\bbcode;
 
 use wcf\data\attachment\Attachment;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -162,7 +161,7 @@ final class AttachmentBBCode extends AbstractBBCode
         if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
             $result = \sprintf(
                 '<a href="%s" title="%s" class="embeddedAttachmentLink jsImageViewer %s" style="width: %s">%s%s</a>',
-                StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])),
+                StringUtil::encodeHTML($attachment->getLink()),
                 StringUtil::encodeHTML($attachment->filename),
                 $class,
                 $width,

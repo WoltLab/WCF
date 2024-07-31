@@ -3,6 +3,7 @@
 namespace wcf\page;
 
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -17,6 +18,7 @@ use wcf\util\FileReader;
  * @author  Joshua Ruesweg, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.1 Attachments are now served through the unified upload system
  */
 class AttachmentPage extends AbstractPage
 {
@@ -137,6 +139,20 @@ class AttachmentPage extends AbstractPage
     public function readData()
     {
         parent::readData();
+
+        // The redirect is placed here instead of inside the `readParameters()`
+        // method in order to take advantage of the previous access validation.
+        if ($this->attachment->getFile() !== null) {
+            if ($this->tiny) {
+                $url = $this->attachment->getThumbnailLink('tiny');
+            } elseif ($this->thumbnail) {
+                $url = $this->attachment->getThumbnailLink();
+            } else {
+                $url = $this->attachment->getLink();
+            }
+
+            return new RedirectResponse($url);
+        }
 
         // get file data
         if ($this->tiny) {
