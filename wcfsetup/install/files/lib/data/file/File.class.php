@@ -40,22 +40,17 @@ class File extends DatabaseObject implements ILinkableObject
      */
     public const SAFE_FILE_EXTENSIONS = [
         'avif' => 'image/avif',
-        'bz2' => 'application/x-bzip2',
         'gif' => 'image/gif',
-        'gz' => 'application/gzip',
         'jpg' => 'image/jpeg',
         'jpeg' => 'image/jpeg',
         'mp3' => 'audio/mpeg',
         'mp4' => 'video/mp4',
         'pdf' => 'application/pdf',
         'png' => 'image/png',
-        'rar' => 'application/vnd.rar',
-        'tar' => 'application/x-tar',
         'tiff' => 'image/tiff',
         'txt' => 'text/plain',
         'webm' => 'video/webm',
         'webp' => 'image/webp',
-        'zip' => 'application/zip',
     ];
 
     /** @var array<string, FileThumbnail> */
