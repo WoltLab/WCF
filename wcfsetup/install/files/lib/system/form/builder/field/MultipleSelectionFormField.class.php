@@ -89,6 +89,8 @@ class MultipleSelectionFormField extends AbstractFormField implements
             if (\is_array($value)) {
                 $this->value = $value;
             }
+        } else {
+            $this->value = [];
         }
 
         return $this;

@@ -2,9 +2,10 @@
 
 namespace wcf\system\form\builder\field;
 
+use Laminas\Diactoros\Exception\InvalidArgumentException;
+use Laminas\Diactoros\Uri;
 use wcf\data\language\Language;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\util\Url;
 
 /**
  * Implementation of a form field to enter a url.
@@ -52,15 +53,19 @@ class UrlFormField extends TextFormField
         if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         } elseif ($this->getValue() !== null && $this->getValue() !== '') {
-            if (!Url::is($text)) {
+            try {
+                new Uri($text);
+            } catch (InvalidArgumentException) {
                 $this->addValidationError(new FormFieldValidationError(
                     'invalid',
                     'wcf.form.field.url.error.invalid',
                     ['language' => $language]
                 ));
-            } else {
-                parent::validateText($text, $language);
+
+                return;
             }
+
+            parent::validateText($text, $language);
         }
     }
 
