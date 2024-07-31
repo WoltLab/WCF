@@ -96,6 +96,12 @@ final class FileProcessorFormField extends AbstractFormField
      */
     public function singleFileUpload(bool $singleFileUpload = true): self
     {
+        if (!$singleFileUpload && $this->bigPreview) {
+            throw new \InvalidArgumentException(
+                "Single file upload can't be disabled if the big preview is enabled for the field '{$this->getId()}'."
+            );
+        }
+
         $this->singleFileUpload = $singleFileUpload;
 
         return $this;
@@ -229,7 +235,7 @@ final class FileProcessorFormField extends AbstractFormField
     public function bigPreview(bool $bigPreview = true): self
     {
         if (
-            $this->bigPreview
+            $bigPreview
             && \array_diff(
                 $this->getFileProcessor()->getAllowedFileExtensions($this->context),
                 ImageUtil::IMAGE_EXTENSIONS
@@ -239,6 +245,13 @@ final class FileProcessorFormField extends AbstractFormField
                 "The big preview is only supported for images for the field '{$this->getId()}'."
             );
         }
+
+        if ($bigPreview && !$this->singleFileUpload) {
+            throw new \InvalidArgumentException(
+                "The big preview is only supported for single file uploads for the field '{$this->getId()}'."
+            );
+        }
+
         $this->bigPreview = $bigPreview;
 
         return $this;
