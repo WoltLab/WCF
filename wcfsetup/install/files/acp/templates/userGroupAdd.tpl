@@ -104,7 +104,7 @@
 		<dl{if $errorType.groupDescription|isset} class="formError"{/if}>
 			<dt><label for="groupDescription">{lang}wcf.acp.group.description{/lang}</label></dt>
 			<dd>
-				<textarea id="groupDescription" name="groupDescription" cols="40" rows="3">{$i18nPlainValues['groupDescription']}</textarea>
+				<textarea id="groupDescription" name="groupDescription" cols="40" rows="10">{$i18nPlainValues['groupDescription']}</textarea>
 				{if $errorType.groupDescription|isset}
 					<small class="innerError">
 						{lang}wcf.acp.group.description.error.{@$errorType.groupDescription}{/lang}

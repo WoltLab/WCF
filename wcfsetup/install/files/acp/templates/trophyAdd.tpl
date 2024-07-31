@@ -56,7 +56,7 @@
 			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.trophy.description{/lang}</label></dt>
 				<dd>
-					<input id="description" name="description" type="text" value="{$i18nPlainValues[description]}" class="long">
+					<textarea name="description" id="description" cols="40" rows="10">{$i18nPlainValues[description]}</textarea>
 					{if $errorField == 'description'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
