@@ -10,13 +10,16 @@ namespace wcf\system\file\processor\exception;
  */
 final class DamagedImage extends \Exception
 {
-    public function __construct(public readonly int $fileID)
-    {
+    public function __construct(
+        public readonly int $fileID,
+        ?\Throwable $previous = null
+    ) {
         parent::__construct(
             \sprintf(
                 "The file '%d' is a damaged image.",
                 $this->fileID,
             ),
+            previous: $previous,
         );
     }
 }

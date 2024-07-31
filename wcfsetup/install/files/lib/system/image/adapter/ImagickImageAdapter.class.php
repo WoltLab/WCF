@@ -4,6 +4,7 @@ namespace wcf\system\image\adapter;
 
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\image\adapter\exception\ImageNotProcessable;
 use wcf\util\StringUtil;
 
 /**
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
+class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IWebpImageAdapter
 {
     /**
      * active color
@@ -87,6 +88,19 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
             $this->imagick->readImage($file);
         } catch (\ImagickException $e) {
             throw new SystemException("Image '" . $file . "' is not readable or does not exist.", 0, '', $e);
+        }
+
+        $this->readImageDimensions();
+    }
+
+    #[\Override]
+    public function loadSingleFrameFromFile(string $filename): void
+    {
+        try {
+            $this->imagick->clear();
+            $this->imagick->readImage($filename . '[0]');
+        } catch (\ImagickException $e) {
+            throw new ImageNotProcessable($filename, $e);
         }
 
         $this->readImageDimensions();

@@ -3,6 +3,7 @@
 namespace wcf\system\image\adapter;
 
 use wcf\system\exception\SystemException;
+use wcf\system\image\adapter\exception\ImageNotReadable;
 use wcf\util\FileUtil;
 
 /**
@@ -12,7 +13,7 @@ use wcf\util\FileUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
+class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFrameImageAdapter
 {
     /**
      * IImageAdapter object
@@ -64,6 +65,22 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
         }
 
         $this->adapter->loadFile($file);
+    }
+
+    #[\Override]
+    public function loadSingleFrameFromFile(string $filename): void
+    {
+        if (!($this->adapter instanceof ISingleFrameImageAdapter)) {
+            $this->adapter->loadFile($filename);
+
+            return;
+        }
+
+        if (!\file_exists($filename) || !\is_readable($filename)) {
+            throw new ImageNotReadable($filename);
+        }
+
+        $this->adapter->loadSingleFrameFromFile($filename);
     }
 
     /**
