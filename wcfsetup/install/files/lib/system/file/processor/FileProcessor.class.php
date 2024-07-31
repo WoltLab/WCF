@@ -12,6 +12,8 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\file\processor\exception\DamagedImage;
+use wcf\system\image\adapter\exception\ImageNotProcessable;
+use wcf\system\image\adapter\exception\ImageNotReadable;
 use wcf\system\image\adapter\ImageAdapter;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
@@ -19,6 +21,8 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
+
+use function wcf\functions\exception\logThrowable;
 
 /**
  * @author Alexander Ebert
@@ -138,7 +142,7 @@ final class FileProcessor extends SingletonFactory
         $imageAdapter = ImageHandler::getInstance()->getAdapter();
 
         try {
-            $imageAdapter->loadFile($file->getPathname());
+            $imageAdapter->loadSingleFrameFromFile($file->getPathname());
         } catch (SystemException) {
             throw new DamagedImage($file->fileID);
         }
@@ -214,14 +218,21 @@ final class FileProcessor extends SingletonFactory
                 $imageAdapter = ImageHandler::getInstance()->getAdapter();
 
                 try {
-                    $imageAdapter->loadFile($file->getPathname());
-                } catch (SystemException) {
-                    throw new DamagedImage($file->fileID);
+                    $imageAdapter->loadSingleFrameFromFile($file->getPathname());
+                } catch (ImageNotReadable | ImageNotProcessable $e) {
+                    throw new DamagedImage($file->fileID, $e);
                 }
             }
 
             \assert($imageAdapter instanceof ImageAdapter);
-            $image = $imageAdapter->createThumbnail($format->width, $format->height, $format->retainDimensions);
+
+            try {
+                $image = $imageAdapter->createThumbnail($format->width, $format->height, $format->retainDimensions);
+            } catch (\Throwable $e) {
+                logThrowable($e);
+
+                continue;
+            }
 
             $filename = FileUtil::getTemporaryFilename(extension: 'webp');
             $imageAdapter->saveImageAs($image, $filename, 'webp', 80);
