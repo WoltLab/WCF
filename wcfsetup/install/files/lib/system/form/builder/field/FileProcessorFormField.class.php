@@ -7,7 +7,9 @@ use wcf\data\file\FileList;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\style\IFontAwesomeIcon;
 use wcf\util\ArrayUtil;
@@ -77,6 +79,29 @@ final class FileProcessorFormField extends AbstractFormField
             'maxUploads' => $this->getFileProcessor()->getMaximumCount($this->context),
             'actionButtons' => $this->actionButtons,
         ];
+    }
+
+    #[\Override]
+    public function populate()
+    {
+        parent::populate();
+
+        if ($this->isSingleFileUpload()) {
+            return $this;
+        }
+
+        $this->getDocument()->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'fileProcessor',
+                function (IFormDocument $document, array $parameters) {
+                    $parameters[$this->getObjectProperty()] = $this->getValue();
+
+                    return $parameters;
+                }
+            )
+        );
+
+        return $this;
     }
 
     public function getFileProcessor(): IFileProcessor
