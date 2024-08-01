@@ -125,13 +125,12 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
             self::$userOptionDefaultValues = [];
 
             $sql = "SELECT  optionID, defaultValue
-                    FROM    wcf" . WCF_N . "_user_option";
+                    FROM    wcf" . WCF_N . "_user_option
+                    WHERE   defaultValue IS NOT NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {
-                if (!empty($row['defaultValue'])) {
-                    self::$userOptionDefaultValues[$row['optionID']] = $row['defaultValue'];
-                }
+                self::$userOptionDefaultValues[$row['optionID']] = $row['defaultValue'];
             }
         }
 
