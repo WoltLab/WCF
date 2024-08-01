@@ -79,3 +79,7 @@
 .fileList__item__progress__readout {
 	@include wcfFontSmall;
 }
+
+woltlab-core-file img {
+	object-fit: contain;
+}
