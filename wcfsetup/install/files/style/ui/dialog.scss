@@ -84,9 +84,7 @@
 	}
 
 	&[aria-hidden="true"] {
-		/* Child elements with `visibility: visible` will not be visually rendered, but pointer events are recognized. */
-		pointer-events: none;
-		visibility: hidden;
+		display: none;
 	}
 
 	&[aria-hidden="false"] ~ .dialogContainer[aria-hidden="false"] {
