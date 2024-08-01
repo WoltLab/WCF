@@ -33,35 +33,22 @@ ol.nativeList {
 
 	.tag {
 		background-color: var(--wcfButtonBackground);
+		clip-path: polygon(0 50%, 1em 0%, 100% 0%, 100% 100%, 1em 100%);
 		color: var(--wcfButtonText);
 		display: inline-block;
 		margin-left: 11px;
 		padding: 3px 6px 2px 2px;
+		padding-left: calc(1em + 2px);
 		position: relative;
 		text-decoration: none;
 
 		@include wcfFontSmall;
 		@include wcfFontBold;
 
-		&::before {
-			border: 11px solid transparent;
-			border-left-width: 0;
-			border-right-color: var(--wcfButtonBackground);
-			content: "";
-			display: block;
-			left: -11px;
-			position: absolute;
-			top: 0;
-		}
-
 		&:hover {
 			background-color: var(--wcfButtonPrimaryBackgroundActive);
 			color: var(--wcfButtonPrimaryTextActive);
 			text-decoration: none;
-
-			&::before {
-				border-right-color: var(--wcfButtonPrimaryBackgroundActive);
-			}
 		}
 	}
 
