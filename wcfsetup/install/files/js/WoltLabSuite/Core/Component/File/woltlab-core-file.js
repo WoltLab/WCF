@@ -163,6 +163,10 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         get previewUrl() {
             return this.dataset.previewUrl;
         }
+        set previewUrl(previewUrl) {
+            this.dataset.previewUrl = previewUrl;
+            this.#rebuildElement();
+        }
         get unbounded() {
             return this.getAttribute("dimensions") === "unbounded";
         }

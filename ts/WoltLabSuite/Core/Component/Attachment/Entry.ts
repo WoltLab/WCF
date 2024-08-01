@@ -41,6 +41,8 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
     const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
     if (thumbnail !== undefined) {
       file.thumbnail = thumbnail;
+    } else if (file.link) {
+      file.previewUrl = file.link;
     }
 
     const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;

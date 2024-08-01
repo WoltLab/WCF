@@ -211,6 +211,12 @@ export class WoltlabCoreFileElement extends HTMLElement {
     return this.dataset.previewUrl;
   }
 
+  set previewUrl(previewUrl: string) {
+    this.dataset.previewUrl = previewUrl;
+
+    this.#rebuildElement();
+  }
+
   get unbounded(): boolean {
     return this.getAttribute("dimensions") === "unbounded";
   }

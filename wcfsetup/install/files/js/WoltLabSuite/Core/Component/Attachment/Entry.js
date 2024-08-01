@@ -27,6 +27,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             if (thumbnail !== undefined) {
                 file.thumbnail = thumbnail;
             }
+            else if (file.link) {
+                file.previewUrl = file.link;
+            }
             const url = file.thumbnails.find((thumbnail) => thumbnail.identifier === "")?.link;
             if (url !== undefined) {
                 insertButton = getInsertButton(data.attachmentID, url, editor);
