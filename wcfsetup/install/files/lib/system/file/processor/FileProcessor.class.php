@@ -143,8 +143,12 @@ final class FileProcessor extends SingletonFactory
 
         try {
             $imageAdapter->loadSingleFrameFromFile($file->getPathname());
-        } catch (SystemException) {
+        } catch (SystemException | ImageNotReadable) {
             throw new DamagedImage($file->fileID);
+        } catch (ImageNotProcessable $e) {
+            logThrowable($e);
+
+            return;
         }
 
         $filename = FileUtil::getTemporaryFilename(extension: 'webp');
@@ -219,8 +223,12 @@ final class FileProcessor extends SingletonFactory
 
                 try {
                     $imageAdapter->loadSingleFrameFromFile($file->getPathname());
-                } catch (ImageNotReadable | ImageNotProcessable $e) {
+                } catch (SystemException | ImageNotReadable $e) {
                     throw new DamagedImage($file->fileID, $e);
+                } catch (ImageNotProcessable $e) {
+                    logThrowable($e);
+
+                    return;
                 }
             }
 
