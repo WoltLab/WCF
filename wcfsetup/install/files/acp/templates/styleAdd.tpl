@@ -465,13 +465,19 @@
 				<dl>
 					<dt><label for="pageLogoWidth">{lang}wcf.acp.style.globals.pageLogo.width{/lang}</label></dt>
 					<dd>
-						<input type="number" name="pageLogoWidth" id="pageLogoWidth" value="{$variables[pageLogoWidth]}" class="tiny">
+						<div class="inputAddon">
+							<input type="number" name="pageLogoWidth" id="pageLogoWidth" value="{$variables[pageLogoWidth]}" class="tiny">
+							<span class="inputSuffix">{lang}wcf.acp.option.suffix.pixel{/lang}</span>
+						</div>
 					</dd>
 				</dl>
 				<dl>
 					<dt><label for="pageLogoHeight">{lang}wcf.acp.style.globals.pageLogo.height{/lang}</label></dt>
 					<dd>
-						<input type="number" name="pageLogoHeight" id="pageLogoHeight" value="{$variables[pageLogoHeight]}" class="tiny">
+						<div class="inputAddon">
+							<input type="number" name="pageLogoHeight" id="pageLogoHeight" value="{$variables[pageLogoHeight]}" class="tiny">
+							<span class="inputSuffix">{lang}wcf.acp.option.suffix.pixel{/lang}</span>
+						</div>
 					</dd>
 				</dl>
 				
