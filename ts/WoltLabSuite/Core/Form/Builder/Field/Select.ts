@@ -13,14 +13,8 @@ import { FormBuilderData } from "../Data";
 export default class Select extends Field {
   protected _getData(): FormBuilderData {
     const values = Array.from(this._field!.querySelectorAll<HTMLOptionElement>(`option`))
-      .map((input) => {
-        if (input.selected) {
-          return input.value;
-        }
-
-        return null;
-      })
-      .filter((v) => v !== null) as string[];
+      .filter((input) => input.selected)
+      .map((input) => input.value);
 
     return {
       [this._fieldId]: values,
