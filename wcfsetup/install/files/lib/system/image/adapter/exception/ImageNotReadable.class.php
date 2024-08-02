@@ -12,7 +12,6 @@ namespace wcf\system\image\adapter\exception;
  */
 final class ImageNotReadable extends \Exception
 {
-    #[\Override]
     public function __construct(string $filename, ?\Throwable $previous = null)
     {
         parent::__construct("The image '{$filename}' does not exist or cannot be accessed.", previous: $previous);

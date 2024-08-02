@@ -13,7 +13,6 @@ namespace wcf\system\image\adapter\exception;
  */
 final class ImageNotProcessable extends \Exception
 {
-    #[\Override]
     public function __construct(string $filename, ?\Throwable $previous = null)
     {
         parent::__construct("The image '{$filename}' cannot be processed.", previous: $previous);
