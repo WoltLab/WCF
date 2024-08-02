@@ -15,7 +15,7 @@ class MultipleSelectFormField extends MultipleSelectionFormField
     /**
      * @inheritDoc
      */
-    protected $javaScriptDataHandlerModule = '';
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Select';
 
     /**
      * @inheritDoc
