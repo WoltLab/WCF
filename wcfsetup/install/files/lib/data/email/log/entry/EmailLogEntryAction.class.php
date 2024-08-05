@@ -29,9 +29,9 @@ class EmailLogEntryAction extends AbstractDatabaseObjectAction
     public function prune()
     {
         $sql = "SELECT  entryID
-                FROM    wcf" . WCF_N . "_email_log_entry
+                FROM    wcf1_email_log_entry
                 WHERE   time < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql, 65_000);
         $statement->execute([
             (\TIME_NOW - EmailLogEntry::LIFETIME),
         ]);

@@ -315,7 +315,12 @@ abstract class Database
                         $requestInformation = \substr($requestInformation, 0, 70);
                         $requestInformation .= ' (' . $requestId . ')';
                     }
-                    if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+                    if (
+                        isset($_REQUEST['className'])
+                        && isset($_REQUEST['actionName'])
+                        && \is_string($_REQUEST['className'])
+                        && \is_string($_REQUEST['actionName'])
+                    ) {
                         $requestInformation = \substr($requestInformation, 0, 90);
                         $requestInformation .= ' (' . $_REQUEST['className'] . ':' . $_REQUEST['actionName'] . ')';
                     }
