@@ -940,17 +940,17 @@
         },
         {
             "name": "minishlink/web-push",
-            "version": "v9.0.0-rc2",
-            "version_normalized": "9.0.0.0-RC2",
+            "version": "v9.0.1",
+            "version_normalized": "9.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-push-libs/web-push-php.git",
-                "reference": "9d36211c435baecded11d7a227f5caa098f52f80"
+                "reference": "761adf330860aa6cd05e5f6945c427c76a07c420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-push-libs/web-push-php/zipball/9d36211c435baecded11d7a227f5caa098f52f80",
-                "reference": "9d36211c435baecded11d7a227f5caa098f52f80",
+                "url": "https://api.github.com/repos/web-push-libs/web-push-php/zipball/761adf330860aa6cd05e5f6945c427c76a07c420",
+                "reference": "761adf330860aa6cd05e5f6945c427c76a07c420",
                 "shasum": ""
             },
             "require": {
@@ -961,7 +961,7 @@
                 "guzzlehttp/guzzle": "^7.4.5",
                 "php": ">=8.1",
                 "spomky-labs/base64url": "^2.0.4",
-                "web-token/jwt-library": "^3.3.0"
+                "web-token/jwt-library": "^3.3.0|^4.0.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^v3.48.0",
@@ -972,7 +972,7 @@
                 "ext-bcmath": "Optional for performance.",
                 "ext-gmp": "Optional for performance."
             },
-            "time": "2024-06-18T16:26:43+00:00",
+            "time": "2024-07-30T12:24:56+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1002,7 +1002,7 @@
             ],
             "support": {
                 "issues": "https://github.com/web-push-libs/web-push-php/issues",
-                "source": "https://github.com/web-push-libs/web-push-php/tree/v9.0.0-rc2"
+                "source": "https://github.com/web-push-libs/web-push-php/tree/v9.0.1"
             },
             "install-path": "../minishlink/web-push"
         },
@@ -1144,17 +1144,17 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.20.0",
-            "version_normalized": "1.20.0.0",
+            "version": "v1.21.1",
+            "version_normalized": "1.21.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "e592a3e06d1fa0d43988c7c7d9948ca836f644b6"
+                "reference": "bb312875dcdd20680419564fe42ba1d9564b9e37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/e592a3e06d1fa0d43988c7c7d9948ca836f644b6",
-                "reference": "e592a3e06d1fa0d43988c7c7d9948ca836f644b6",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/bb312875dcdd20680419564fe42ba1d9564b9e37",
+                "reference": "bb312875dcdd20680419564fe42ba1d9564b9e37",
                 "shasum": ""
             },
             "require": {
@@ -1168,7 +1168,7 @@
                 "ext-libsodium": "PHP < 7.0: Better performance, password hashing (Argon2i), secure memory management (memzero), and better security.",
                 "ext-sodium": "PHP >= 7.0: Better performance, password hashing (Argon2i), secure memory management (memzero), and better security."
             },
-            "time": "2023-04-30T00:54:53+00:00",
+            "time": "2024-04-22T22:05:04+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1227,7 +1227,7 @@
             ],
             "support": {
                 "issues": "https://github.com/paragonie/sodium_compat/issues",
-                "source": "https://github.com/paragonie/sodium_compat/tree/v1.20.0"
+                "source": "https://github.com/paragonie/sodium_compat/tree/v1.21.1"
             },
             "install-path": "../paragonie/sodium_compat"
         },
@@ -2776,6 +2776,6 @@
             "install-path": "../willdurand/negotiation"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
