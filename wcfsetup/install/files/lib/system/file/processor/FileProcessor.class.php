@@ -76,6 +76,16 @@ final class FileProcessor extends SingletonFactory
         if (\in_array('*', $allowedFileExtensions)) {
             $allowedFileExtensions = '';
         } else {
+            // The `accept` attribute of `input[type="file"]` is a bit weird and
+            // only validates against the string to the right of the last
+            // period. This means an extension `.tar.gz` can never match.
+            $allowedFileExtensions = \array_unique(
+                \array_map(
+                    static fn(string $fileExtension) => \preg_replace('~.*?([^.]+)$~', '\\1', $fileExtension),
+                    $allowedFileExtensions,
+                ),
+            );
+
             $allowedFileExtensions = \implode(
                 ',',
                 \array_map(
