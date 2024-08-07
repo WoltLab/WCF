@@ -15,10 +15,32 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+## 8.6.0
+
+### Added
+- Support arithmetic operators in CSS function arguments (#607)
+- Add support for inserting an item in a CSS list (#545)
+- Add support for the `dvh`, `lvh` and `svh` length units (#415)
+
+### Changed
+
+- Improve performance of Value::parseValue with many delimiters by refactoring to remove array_search() (#413)
+
+## 8.5.2
+
+### Changed
+
+- Mark all class constants as `@internal` (#500)
+
+### Fixed
+
+- Fix undefined local variable in `CalcFunction::parse()` (#593)
+
 ## 8.5.1
 
 ### Fixed
 
+- Fix PHP notice caused by parsing invalid color values having less than 6 characters (#485)
 - Fix (regression) failure to parse at-rules with strict parsing (#456)
 
 ## 8.5.0
