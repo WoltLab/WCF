@@ -20,6 +20,7 @@
 
 .userCard {
 	background-color: var(--wcfContentBackground);
+	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
 	box-shadow: var(--wcfBoxShadowCard);
 	display: flex;
@@ -36,8 +37,10 @@
 .userCard__header__background {
 	height: 100px;
 	overflow: hidden;
-	border-top-right-radius: var(--wcfBorderRadius);
-	border-top-left-radius: var(--wcfBorderRadius);
+	/* Nesting the border radius requires the inner element to be one pixel
+	   shorter to prevent visual gaps. */
+	border-top-right-radius: calc(var(--wcfBorderRadius) - 1px);
+	border-top-left-radius: calc(var(--wcfBorderRadius) - 1px);
 }
 
 .userCard__header__background__image {
@@ -75,8 +78,8 @@
 	display: flex;
 	flex-direction: column;
 	flex: 1 auto;
-	row-gap: 10px;
-	padding: 20px;
+	row-gap: 5px;
+	padding: 10px 20px 20px 20px;
 }
 
 .userCard__username {
@@ -123,7 +126,7 @@
 	display: flex;
 	justify-content: center;
 	gap: 5px;
-	margin: 0 auto;
+	margin: 5px auto 0 auto;
 	padding: 5px 10px;
 }
 
