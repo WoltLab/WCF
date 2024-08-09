@@ -5,64 +5,37 @@ namespace wcf\system\package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\exception\UserException;
 use wcf\system\WCF;
-use wcf\util\HTTPRequest;
 
 /**
- * Credentials for update server are either missing or invalid.
+ * Handles the case that the credentials for update server are either missing or invalid.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class PackageUpdateUnauthorizedException extends UserException
+final class PackageUpdateUnauthorizedException extends UserException
 {
     /**
-     * package update version
-     * @var array
-     */
-    protected $packageUpdateVersion = [];
-
-    /**
-     * HTTP request object
-     * @var HTTPRequest
-     */
-    protected $request;
-
-    /**
-     * package update server object
-     * @var PackageUpdateServer
-     */
-    protected $updateServer;
-
-    /**
-     * Creates a new PackageUpdateUnauthorizedException object.
-     *
-     * @param HTTPRequest $request
-     * @param PackageUpdateServer $updateServer
-     * @param array $packageUpdateVersion
+     * @param string[] $responseHeaders
+     * @param mixed[] $packageUpdateVersion
      */
     public function __construct(
-        HTTPRequest $request,
-        PackageUpdateServer $updateServer,
-        array $packageUpdateVersion = []
+        private readonly int $responseStatusCode,
+        private readonly array $responseHeaders,
+        private readonly string $responseMessage,
+        private readonly PackageUpdateServer $updateServer,
+        private readonly array $packageUpdateVersion = []
     ) {
-        $this->request = $request;
-        $this->updateServer = $updateServer;
-        $this->packageUpdateVersion = $packageUpdateVersion;
     }
 
     /**
      * Returns the rendered template.
-     *
-     * @return  string
      */
-    public function getRenderedTemplate()
+    public function getRenderedTemplate(): string
     {
-        $serverReply = $this->request->getReply();
-
         $requiresPaidUpgrade = false;
         if ($this->updateServer->isWoltLabStoreServer() && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
-            $requiresPaidUpgrade = ($serverReply['httpHeaders']['wcf-update-server-requires-paid-upgrade'][0] ?? '') === 'true';
+            $requiresPaidUpgrade = ($this->responseHeaders['wcf-update-server-requires-paid-upgrade'][0] ?? '') === 'true';
         }
 
         if ($requiresPaidUpgrade) {
@@ -74,7 +47,7 @@ class PackageUpdateUnauthorizedException extends UserException
             return WCF::getTPL()->fetch('packageUpdateUnauthorizedPaidUpgrade');
         }
 
-        $authInsufficient = (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized');
+        $authInsufficient = (($this->responseHeaders['wcf-update-server-auth'][0] ?? '') === 'unauthorized');
         if ($authInsufficient && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
             $hasOnlyTrustedServers = true;
             foreach (PackageUpdateServer::getActiveUpdateServers() as $updateServer) {
@@ -97,43 +70,19 @@ class PackageUpdateUnauthorizedException extends UserException
         WCF::getTPL()->assign([
             'authInsufficient' => $authInsufficient,
             'packageUpdateVersion' => $this->packageUpdateVersion,
-            'request' => $this->request,
             'updateServer' => $this->updateServer,
             'serverAuthData' => $this->updateServer->getAuthData(),
-            'serverReply' => $serverReply,
             'requiresPaidUpgrade' => $requiresPaidUpgrade,
+            'responseStatusCode' => $this->responseStatusCode,
+            'responseHeaders' => $this->responseHeaders,
+            'responseMessage' => $this->responseMessage,
         ]);
 
         return WCF::getTPL()->fetch('packageUpdateUnauthorized');
     }
 
-    /**
-     * Returns package update version.
-     *
-     * @return  array
-     */
-    public function getPackageUpdateVersion()
+    public function getResponseMessage(): string
     {
-        return $this->packageUpdateVersion;
-    }
-
-    /**
-     * Returns the HTTP request object.
-     *
-     * @return  HTTPRequest
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Returns package update server object.
-     *
-     * @return  PackageUpdateServer
-     */
-    public function getUpdateServer()
-    {
-        return $this->updateServer;
+        return $this->responseMessage;
     }
 }
