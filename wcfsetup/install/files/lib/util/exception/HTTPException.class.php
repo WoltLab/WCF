@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
- * @deprecated  5.3 This exception is intimately tied to HTTPRequest which is deprecated.
+ * @deprecated  5.3 This exception is intimately tied to HTTPRequest which is deprecated. Will be removed with 7.0.
  */
 class HTTPException extends SystemException implements IExtraInformationException
 {

@@ -2,20 +2,21 @@
 
 namespace wcf\system\package;
 
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\update\PackageUpdate;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
-use wcf\system\io\File;
+use wcf\system\io\HttpFactory;
 use wcf\system\package\exception\IncoherentUpdatePath;
 use wcf\system\package\exception\UnknownUpdatePath;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\HTTPRequest;
 
 /**
  * Contains business logic related to preparation of package installations.
@@ -266,14 +267,26 @@ final class PackageInstallationScheduler
         foreach ($packageUpdateVersions as $packageUpdateVersion) {
             // get auth data
             $authData = $this->getAuthData($packageUpdateVersion);
+            $options = [];
+            if (!empty($authData)) {
+                $options[RequestOptions::AUTH] = [
+                    $authData['username'],
+                    $authData['password'],
+                ];
+            }
+            $client = HttpFactory::makeClient($options);
 
             if ($packageUpdateVersion['filename']) {
-                $request = new HTTPRequest(
+                $request = new Request(
+                    'POST',
                     $packageUpdateVersion['filename'],
-                    (!empty($authData) ? ['auth' => $authData] : []),
-                    [
-                        'apiVersion' => PackageUpdate::API_VERSION,
-                    ]
+                    ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    \http_build_query(
+                        ['apiVersion' => PackageUpdate::API_VERSION],
+                        '',
+                        '&',
+                        \PHP_QUERY_RFC1738
+                    )
                 );
             } else {
                 $parameters = [
@@ -285,37 +298,43 @@ final class PackageInstallationScheduler
                     $parameters['instanceId'] = \hash_hmac('sha256', 'api.woltlab.com', \WCF_UUID);
                 }
 
-                $request = new HTTPRequest(
+                $request = new Request(
+                    'POST',
                     $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->getDownloadURL(),
-                    (!empty($authData) ? ['auth' => $authData] : []),
-                    $parameters
+                    ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    \http_build_query(
+                        $parameters,
+                        '',
+                        '&',
+                        \PHP_QUERY_RFC1738
+                    )
                 );
             }
 
             try {
-                $request->execute();
-            } catch (HTTPUnauthorizedException $e) {
+                $response = $client->send($request);
+            } catch (ClientException $e) {
                 throw new PackageUpdateUnauthorizedException(
-                    $request,
+                    $e->getResponse()->getStatusCode(),
+                    $e->getResponse()->getHeaders(),
+                    $e->getResponse()->getBody(),
                     $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']],
                     $packageUpdateVersion
                 );
             }
 
-            $response = $request->getReply();
-
             // check response
-            if ($response['statusCode'] != 200) {
+            if ($response->getStatusCode() !== 200) {
                 throw new SystemException(WCF::getLanguage()->getDynamicVariable(
                     'wcf.acp.package.error.downloadFailed',
                     ['__downloadPackage' => $package]
-                ) . ' (' . $response['body'] . ')');
+                ) . ' (' . $response->getBody() . ')');
             }
 
             // write content to tmp file
             $filename = FileUtil::getTemporaryFilename('package_');
-            \file_put_contents($filename, $response['body']);
-            unset($response['body']);
+            \file_put_contents($filename, $response->getBody());
+            unset($response);
 
             // test package
             $archive = new PackageArchive($filename);

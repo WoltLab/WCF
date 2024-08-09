@@ -2,7 +2,9 @@
 
 namespace wcf\system\package;
 
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
@@ -11,13 +13,11 @@ use wcf\event\package\PackageUpdateListChanged;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\XML;
@@ -76,7 +76,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             } catch (SystemException $e) {
                 $errorMessage = $e->getMessage();
             } catch (PackageUpdateUnauthorizedException $e) {
-                $body = $e->getRequest()->getReply()['body'];
+                $body = $e->getResponseMessage();
 
                 // Try to find the page <title>.
                 if (\preg_match('~<title>(?<title>.*?)</title>~', $body, $matches)) {
@@ -147,23 +147,22 @@ final class PackageUpdateDispatcher extends SingletonFactory
      */
     private function getPackageUpdateXML(PackageUpdateServer $updateServer)
     {
-        $settings = [];
         $authData = $updateServer->getAuthData();
-        if ($authData) {
-            $settings['auth'] = $authData;
+        $options = [];
+        if (!empty($authData)) {
+            $options[RequestOptions::AUTH] = [
+                $authData['username'],
+                $authData['password'],
+            ];
         }
-
-        $request = new HTTPRequest($updateServer->getListURL(), $settings);
+        $client = HttpFactory::makeClient($options);
+        $headers = [];
 
         $requestedVersion = \wcf\getMinorVersion();
         if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
             $requestedVersion = WCF::AVAILABLE_UPGRADE_VERSION;
         }
-
-        $request->addHeader(
-            'requested-woltlab-suite-version',
-            $requestedVersion
-        );
+        $headers['requested-woltlab-suite-version'] = $requestedVersion;
 
         $apiVersion = $updateServer->apiVersion;
         if (\in_array($apiVersion, ['2.1', '3.1'])) {
@@ -174,26 +173,34 @@ final class PackageUpdateDispatcher extends SingletonFactory
             ) {
                 $metaData = $updateServer->getMetaData();
                 if (isset($metaData['list']['etag'])) {
-                    $request->addHeader('if-none-match', $metaData['list']['etag']);
+                    $headers['if-none-match'] = $metaData['list']['etag'];
                 }
                 if (isset($metaData['list']['lastModified'])) {
-                    $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+                    $headers['if-modified-since'] = $metaData['list']['lastModified'];
                 }
             }
         }
 
+        $request = new Request(
+            'GET',
+            $updateServer->getListURL(),
+            $headers
+        );
+
         try {
-            $request->execute();
-            $reply = $request->getReply();
-        } catch (HTTPUnauthorizedException $e) {
-            throw new PackageUpdateUnauthorizedException($request, $updateServer);
-        } catch (SystemException $e) {
-            $reply = $request->getReply();
+            $response = $client->send($request);
+        } catch (ClientException $e) {
+            throw new PackageUpdateUnauthorizedException(
+                $e->getResponse()->getStatusCode(),
+                $e->getResponse()->getHeaders(),
+                $e->getResponse()->getBody(),
+                $updateServer,
+            );
+        }
 
-            $statusCode = \is_array($reply['statusCode']) ? \reset($reply['statusCode']) : $reply['statusCode'];
-
+        if ($response->getStatusCode() !== 200 && $response->getStatusCode() !== 304) {
             throw new SystemException(
-                WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $statusCode . ')'
+                WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $response->getStatusCode() . ')'
             );
         }
 
@@ -204,8 +211,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
         ];
 
         // check if server indicates support for a newer API
-        if ($updateServer->apiVersion !== '3.1' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
-            $apiVersions = \explode(' ', \reset($reply['httpHeaders']['wcf-update-server-api']));
+        if ($updateServer->apiVersion !== '3.1' && !empty($response->getHeaders()['wcf-update-server-api'])) {
+            $apiVersions = \explode(' ', \reset($response->getHeaders()['wcf-update-server-api']));
             if (\in_array('3.1', $apiVersions)) {
                 $apiVersion = $data['apiVersion'] = '3.1';
             } elseif (\in_array('2.1', $apiVersions)) {
@@ -215,27 +222,27 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
         // parse given package update xml
         $allNewPackages = false;
-        if ($apiVersion === '2.0' || $reply['statusCode'] != 304) {
-            $allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body'], $apiVersion);
+        if ($apiVersion === '2.0' || $response->getStatusCode() != 304) {
+            $allNewPackages = $this->parsePackageUpdateXML($updateServer, $response->getBody(), $apiVersion);
         }
 
         $metaData = [];
         if (\in_array($apiVersion, ['2.1', '3.1'])) {
-            if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
+            if (empty($response->getHeaders()['etag']) && empty($response->getHeaders()['last-modified'])) {
                 throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
             }
 
             $metaData['list'] = [];
-            if (!empty($reply['httpHeaders']['etag'])) {
-                $metaData['list']['etag'] = \reset($reply['httpHeaders']['etag']);
+            if (!empty($response->getHeaders()['etag'])) {
+                $metaData['list']['etag'] = \reset($response->getHeaders()['etag']);
             }
-            if (!empty($reply['httpHeaders']['last-modified'])) {
-                $metaData['list']['lastModified'] = \reset($reply['httpHeaders']['last-modified']);
+            if (!empty($response->getHeaders()['last-modified'])) {
+                $metaData['list']['lastModified'] = \reset($response->getHeaders()['last-modified']);
             }
         }
         $data['metaData'] = \serialize($metaData);
 
-        unset($request, $reply);
+        unset($request, $response);
 
         if ($allNewPackages !== false) {
             // purge package list
