@@ -2,7 +2,7 @@
 	{if $authInsufficient}
 		<woltlab-core-notice type="warning">{lang}wcf.acp.package.update.authInsufficient{/lang}</woltlab-core-notice>
 	{else}
-		<woltlab-core-notice type="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</woltlab-core-notice>
+		<woltlab-core-notice type="{if $responseStatusCode == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{$responseStatusCode}{/lang}</woltlab-core-notice>
 	{/if}
 {/if}
 
@@ -17,12 +17,12 @@
 	{/if}
 	<dl>
 		<dt>{lang}wcf.acp.package.update.server.url{/lang}</dt>
-		<dd>{@$updateServer->getHighlightedURL()}</dd>
+		<dd>{unsafe:$updateServer->getHighlightedURL()}</dd>
 	</dl>
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.update.server.message{/lang}</dt>
-		<dd>{$serverReply[body]}</dd>
+		<dd>{$responseMessage}</dd>
 	</dl>
 </section>
 
@@ -51,5 +51,5 @@
 </section>
 
 <div class="formSubmit">
-	<button type="button" class="button buttonPrimary" data-type="submit" data-package-update-server-id="{@$updateServer->packageUpdateServerID}">{lang}wcf.global.button.submit{/lang}</button>
+	<button type="button" class="button buttonPrimary" data-type="submit" data-package-update-server-id="{$updateServer->packageUpdateServerID}">{lang}wcf.global.button.submit{/lang}</button>
 </div>

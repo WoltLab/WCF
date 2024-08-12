@@ -26,7 +26,7 @@ use wcf\util\exception\HTTPException;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated  5.3 - Use Guzzle via \wcf\system\io\HttpFactory.
+ * @deprecated  5.3 - Use Guzzle via \wcf\system\io\HttpFactory. Will be removed with 7.0.
  */
 final class HTTPRequest
 {
