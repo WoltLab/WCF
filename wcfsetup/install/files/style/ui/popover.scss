@@ -101,6 +101,7 @@
 	transition:
 		opacity 0.12s linear,
 		transform 0.12s linear;
+	z-index: 350;
 
 	&[aria-hidden="false"] {
 		opacity: 1;
