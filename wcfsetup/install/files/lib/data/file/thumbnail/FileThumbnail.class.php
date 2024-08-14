@@ -6,7 +6,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\file\processor\ThumbnailFormat;
-use wcf\system\request\LinkHandler;
 
 /**
  * @author Alexander Ebert
@@ -58,6 +57,10 @@ class FileThumbnail extends DatabaseObject implements ILinkableObject
     public function needsRebuild(ThumbnailFormat $format): bool
     {
         if ($this->formatChecksum !== $format->toChecksum()) {
+            return true;
+        }
+
+        if (!\is_readable($this->getPath() . $this->getSourceFilename())) {
             return true;
         }
 
