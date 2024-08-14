@@ -209,6 +209,10 @@ class AttachmentPage extends AbstractPage
     {
         parent::show();
 
+        if ($this->attachment->getFile() !== null) {
+            return;
+        }
+
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"' . $this->eTag . '"') {
             return new EmptyResponse(304);
