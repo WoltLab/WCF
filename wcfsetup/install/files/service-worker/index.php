@@ -24,7 +24,7 @@ self.addEventListener("push", (event) => {
 			self.registration.showNotification(payload.title, {
 				body: payload.message,
 				icon: payload.icon,
-				timestamp: payload.time,
+				timestamp: payload.time * 1000,
 				tag: payload.notificationID,
 				data: {
 					url: payload.url,
