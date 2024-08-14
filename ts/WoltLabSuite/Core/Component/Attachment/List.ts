@@ -11,6 +11,10 @@ function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, e
   fileList.append(createAttachmentFromFile(file, editor));
 }
 
+type Context = {
+  tmpHash: string;
+};
+
 export function setup(editorId: string): void {
   const container = document.getElementById(`attachments_${editorId}`);
   if (container === null) {
@@ -42,12 +46,29 @@ export function setup(editorId: string): void {
     fileToAttachment(fileList!, event.detail, editor);
   });
 
-  listenToCkeditor(editor).uploadAttachment((payload) => {
-    const event = new CustomEvent<CkeditorDropEvent>("ckeditorDrop", {
-      detail: payload,
+  listenToCkeditor(editor)
+    .uploadAttachment((payload) => {
+      const event = new CustomEvent<CkeditorDropEvent>("ckeditorDrop", {
+        detail: payload,
+      });
+      uploadButton.dispatchEvent(event);
+    })
+    .collectMetaData((payload) => {
+      let context: Context | undefined = undefined;
+      try {
+        if (uploadButton.dataset.context !== undefined) {
+          context = JSON.parse(uploadButton.dataset.context);
+        }
+      } catch (e) {
+        if (window.ENABLE_DEBUG_MODE) {
+          console.warn("Unable to parse the context.", e);
+        }
+      }
+
+      if (context !== undefined) {
+        payload.metaData.tmpHash = context.tmpHash;
+      }
     });
-    uploadButton.dispatchEvent(event);
-  });
 
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {

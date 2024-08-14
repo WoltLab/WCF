@@ -31,11 +31,28 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-c
         uploadButton.addEventListener("uploadStart", (event) => {
             fileToAttachment(fileList, event.detail, editor);
         });
-        (0, Event_1.listenToCkeditor)(editor).uploadAttachment((payload) => {
+        (0, Event_1.listenToCkeditor)(editor)
+            .uploadAttachment((payload) => {
             const event = new CustomEvent("ckeditorDrop", {
                 detail: payload,
             });
             uploadButton.dispatchEvent(event);
+        })
+            .collectMetaData((payload) => {
+            let context = undefined;
+            try {
+                if (uploadButton.dataset.context !== undefined) {
+                    context = JSON.parse(uploadButton.dataset.context);
+                }
+            }
+            catch (e) {
+                if (window.ENABLE_DEBUG_MODE) {
+                    console.warn("Unable to parse the context.", e);
+                }
+            }
+            if (context !== undefined) {
+                payload.metaData.tmpHash = context.tmpHash;
+            }
         });
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {
