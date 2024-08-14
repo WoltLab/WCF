@@ -211,8 +211,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
         ];
 
         // check if server indicates support for a newer API
-        if ($updateServer->apiVersion !== '3.1' && !empty($response->getHeaders()['wcf-update-server-api'])) {
-            $apiVersions = \explode(' ', \reset($response->getHeaders()['wcf-update-server-api']));
+        if ($updateServer->apiVersion !== '3.1' && !empty($response->getHeader('wcf-update-server-api'))) {
+            $apiVersions = \explode(' ', \reset($response->getHeader('wcf-update-server-api')));
             if (\in_array('3.1', $apiVersions)) {
                 $apiVersion = $data['apiVersion'] = '3.1';
             } elseif (\in_array('2.1', $apiVersions)) {
@@ -228,16 +228,16 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
         $metaData = [];
         if (\in_array($apiVersion, ['2.1', '3.1'])) {
-            if (empty($response->getHeaders()['etag']) && empty($response->getHeaders()['last-modified'])) {
+            if (empty($response->getHeader('etag')) && empty($response->getHeader('last-modified'))) {
                 throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
             }
 
             $metaData['list'] = [];
-            if (!empty($response->getHeaders()['etag'])) {
-                $metaData['list']['etag'] = \reset($response->getHeaders()['etag']);
+            if (!empty($response->getHeader('etag'))) {
+                $metaData['list']['etag'] = \reset($response->getHeader('etag'));
             }
-            if (!empty($response->getHeaders()['last-modified'])) {
-                $metaData['list']['lastModified'] = \reset($response->getHeaders()['last-modified']);
+            if (!empty($response->getHeader('last-modified'))) {
+                $metaData['list']['lastModified'] = \reset($response->getHeader('last-modified'));
             }
         }
         $data['metaData'] = \serialize($metaData);
