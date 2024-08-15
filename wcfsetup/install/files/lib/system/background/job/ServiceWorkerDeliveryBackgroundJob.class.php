@@ -58,6 +58,11 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
     {
         $serviceWorker = new ServiceWorker($serviceWorkerID);
         $user = UserProfileRuntimeCache::getInstance()->getObject($serviceWorker->userID);
+        if ($user === null) {
+            // The user does not exist anymore.
+            return;
+        }
+
         $style = new Style($user->styleID);
         if (!$style->styleID) {
             $style = StyleHandler::getInstance()->getStyle();
