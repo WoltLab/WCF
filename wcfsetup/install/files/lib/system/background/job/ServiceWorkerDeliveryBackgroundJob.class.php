@@ -98,7 +98,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
 
             $content = [
                 "title" => $event->getTitle(),
-                "message" => StringUtil::stripHTML($event->getMessage()),
+                "message" => StringUtil::stripHTML($this->replaceImagesWithAltText($event->getMessage())),
                 "url" => $event->getLink(),
                 "notificationID" => $notification->notificationID,
                 "time" => $notification->time,
@@ -123,5 +123,24 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
         $statement->execute();
 
         return $statement->fetchSingleColumn() > 0;
+    }
+
+    private function replaceImagesWithAltText(string $message): string
+    {
+        $document = new \DOMDocument('1.0', 'UTF-8');
+
+        $useInternalErrors = \libxml_use_internal_errors(true);
+        $document->loadHTML(
+            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $message . '</body></html>'
+        );
+        \libxml_clear_errors();
+        \libxml_use_internal_errors($useInternalErrors);
+
+        foreach ($document->getElementsByTagName('img') as $image) {
+            \assert($image instanceof \DOMElement);
+            $image->replaceWith($image->getAttribute('alt'));
+        }
+
+        return $document->textContent;
     }
 }
