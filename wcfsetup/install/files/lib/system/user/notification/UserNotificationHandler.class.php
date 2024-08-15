@@ -308,10 +308,11 @@ class UserNotificationHandler extends SingletonFactory
                 }
             }
 
-            $sql = "INSERT INTO wcf1_service_worker_notification (workerID, notificationID, time)
-                    SELECT                                        workerID, ?, ?
-                    FROM                                          wcf1_service_worker 
-                    WHERE                                         userID = ?";
+            $sql = "INSERT IGNORE INTO  wcf1_service_worker_notification
+                                        (workerID, notificationID, time)
+                    SELECT              workerID, ?, ?
+                    FROM                wcf1_service_worker
+                    WHERE               userID = ?";
             $statement = WCF::getDB()->prepare($sql);
 
             foreach ($notifications as $userID => $notification) {
