@@ -241,7 +241,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         }
 
         (new AttachmentEditor($attachment))->update([
-            'downloads' => $attachment->downloads,
+            'downloads' => $attachment->downloads + 1,
             'lastDownloadTime' => \TIME_NOW,
         ]);
     }
