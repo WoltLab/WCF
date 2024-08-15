@@ -141,7 +141,10 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
         \libxml_clear_errors();
         \libxml_use_internal_errors($useInternalErrors);
 
-        foreach ($document->getElementsByTagName('img') as $image) {
+        $images = $document->getElementsByTagName('img');
+        while ($images->length > 0) {
+            $image = $images->item(0);
+
             \assert($image instanceof \DOMElement);
             $image->replaceWith($image->getAttribute('alt'));
         }
