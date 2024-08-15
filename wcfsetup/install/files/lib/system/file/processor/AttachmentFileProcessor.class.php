@@ -51,10 +51,16 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             return;
         }
 
+        $objectID = $attachmentHandler->getObjectID();
+        $tmpHash = $attachmentHandler->getTmpHashes()[0] ?? '';
+        if ($objectID > 0) {
+            $tmpHash = '';
+        }
+
         AttachmentEditor::fastCreate([
             'objectTypeID' => $attachmentHandler->getObjectType()->objectTypeID,
-            'objectID' => $attachmentHandler->getObjectID(),
-            'tmpHash' => $attachmentHandler->getTmpHashes()[0] ?? '',
+            'objectID' => $objectID,
+            'tmpHash' => $tmpHash,
             'fileID' => $file->fileID,
             'userID' => WCF::getUser()->userID ?: null,
             'uploadTime' => \TIME_NOW,
@@ -298,6 +304,5 @@ final class AttachmentFileProcessorContext
         public readonly int $parentObjectID,
 
         public readonly string $tmpHash,
-    ) {
-    }
+    ) {}
 }
