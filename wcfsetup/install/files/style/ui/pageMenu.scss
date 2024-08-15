@@ -128,12 +128,12 @@
 		top: 10px;
 	}
 
-	.icon {
+	fa-icon {
 		color: var(--wcfUserMenuText);
 		transform: rotate(0);
 	}
 
-	&[aria-expanded="true"] .icon {
+	&[aria-expanded="true"] fa-icon {
 		transform: rotate(180deg);
 	}
 }
@@ -221,7 +221,7 @@
 	&[aria-selected="true"] {
 		background-color: var(--wcfUserMenuBackgroundActive);
 
-		.icon {
+		fa-icon {
 			color: var(--wcfUserMenuTextActive);
 		}
 	}
@@ -238,7 +238,7 @@
 		width: 10px;
 	}
 
-	.icon {
+	fa-icon {
 		color: var(--wcfUserMenuText);
 	}
 }
