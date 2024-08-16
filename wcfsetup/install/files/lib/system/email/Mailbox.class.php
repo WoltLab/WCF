@@ -161,7 +161,9 @@ class Mailbox
      */
     public function getLanguage(): Language
     {
-        return LanguageFactory::getInstance()->getLanguage($this->languageID);
+        return
+            LanguageFactory::getInstance()->getLanguage($this->languageID)
+            ?: LanguageFactory::getInstance()->getDefaultLanguage();
     }
 
     /**

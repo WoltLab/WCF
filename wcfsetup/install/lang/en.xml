@@ -5022,6 +5022,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 <p>Use the <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
+		<item name="wcf.user.security.multifactor.email.error.flood"><![CDATA[There have been too many failed attempts in a short period.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The entered code is invalid.]]></item>
 		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Enabling this method failed. Please try again.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
