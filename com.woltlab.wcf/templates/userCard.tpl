@@ -43,11 +43,11 @@
 			<div class="userCard__buttons">
 				{content}
 					{if $user->homepage && $user->homepage != 'http://'}
-						<a class="userCard__button jsTooltip" title="{lang}wcf.user.option.homepage{/lang}" {anchorAttributes url=$user->homepage appendClassname=false isUgc=true}>{icon name='house' size=24}</a>
+						<a class="userCard__button jsTooltip" title="{lang}wcf.user.option.homepage{/lang}" {anchorAttributes url=$user->homepage appendClassname=false isUgc=true}>{icon name='house' size=24 type='solid'}</a>
 					{/if}
 					{if $user->userID != $__wcf->user->userID}
 						{if $user->isAccessible('canViewEmailAddress')}
-							<a class="userCard__button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope' size=24}</a>
+							<a class="userCard__button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope' size=24 type='solid'}</a>
 						{/if}
 					{/if}
 					{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
@@ -59,7 +59,7 @@
 									data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 									class="userCard__button jsTooltip"
 									title="{lang}wcf.user.button.unfollow{/lang}"
-								>{icon name='circle-minus' size=24}</button>
+								>{icon name='circle-minus' size=24 type='solid'}</button>
 							{else}
 								<button
 									type="button"
@@ -67,7 +67,7 @@
 									data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 									class="userCard__button jsTooltip"
 									title="{lang}wcf.user.button.follow{/lang}"
-								>{icon name='circle-plus' size=24}</button>
+								>{icon name='circle-plus' size=24 type='solid'}</button>
 							{/if}
 						{/if}
 
