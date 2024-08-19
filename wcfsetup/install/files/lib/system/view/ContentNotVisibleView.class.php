@@ -14,16 +14,9 @@ use wcf\system\WCF;
  */
 final class ContentNotVisibleView
 {
-    private readonly string $message;
-
     public function __construct(
-        string $message = '',
+        private readonly string $message,
     ) {
-        if (!$message) {
-            $message = WCF::getLanguage()->get('wcf.message.content.not.available.title');
-        }
-
-        $this->message = $message;
     }
 
     public function __toString(): string
@@ -31,5 +24,15 @@ final class ContentNotVisibleView
         return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
             'message' => $this->message,
         ], true);
+    }
+
+    public static function forNotAvailable(): self
+    {
+        return new self(WCF::getLanguage()->getDynamicVariable('wcf.message.content.not.available.title'));
+    }
+
+    public static function forNoPermission(): self
+    {
+        return new self(WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title'));
     }
 }

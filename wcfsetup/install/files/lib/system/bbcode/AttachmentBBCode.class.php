@@ -27,7 +27,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         $attachment = $this->getAttachment($attachmentID);
         if ($attachment === null) {
-            return new ContentNotVisibleView();
+            return ContentNotVisibleView::forNotAvailable();
         }
 
         $outputType = $parser->getOutputType();
@@ -55,9 +55,7 @@ final class AttachmentBBCode extends AbstractBBCode
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
             return $this->showAudioPlayer($attachment);
         } elseif (!$attachment->canDownload()) {
-            return new ContentNotVisibleView(
-                WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
-            );
+            return ContentNotVisibleView::forNoPermission();
         }
 
         return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);

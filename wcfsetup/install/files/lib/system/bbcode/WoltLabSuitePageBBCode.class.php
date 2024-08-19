@@ -35,6 +35,6 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
         }
 
-        return new ContentNotVisibleView();
+        return ContentNotVisibleView::forNotAvailable();
     }
 }

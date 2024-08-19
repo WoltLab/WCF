@@ -49,7 +49,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
         /** @var ViewableMedia $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media === null) {
-            return new ContentNotVisibleView();
+            return ContentNotVisibleView::forNotAvailable();
         }
 
         if ($media->isAccessible()) {
@@ -96,9 +96,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             return StringUtil::encodeHTML($media->getLink());
         } else {
-            return new ContentNotVisibleView(
-                WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
-            );
+            return ContentNotVisibleView::forNoPermission();
         }
     }
 }
