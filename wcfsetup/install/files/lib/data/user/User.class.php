@@ -467,6 +467,17 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
+     * Applies the user's timezone to the given timestamp.
+     */
+    public function getLocalDate(int $timestamp): \DateTimeImmutable
+    {
+        $dateTime = (new \DateTimeImmutable('@' . $timestamp));
+        $dateTime = $dateTime->setTimezone($this->getTimeZone());
+
+        return $dateTime;
+    }
+
+    /**
      * Returns a list of users.
      *
      * @param array $userIDs

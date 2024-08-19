@@ -9,7 +9,6 @@ use wcf\system\bbcode\MessageParser;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\exception\NotImplementedException;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 use wcf\util\OptionUtil;
 use wcf\util\StringUtil;
 
@@ -153,9 +152,13 @@ abstract class CustomOption extends Option implements ITitledObject
                     $day = \intval($optionValue[2]);
                 }
 
-                return DateUtil::format(
-                    DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $month, $day, $year)),
-                    DateUtil::DATE_FORMAT
+                return \IntlDateFormatter::formatObject(
+                    WCF::getUser()->getLocalDate(\gmmktime(12, 1, 1, $month, $day, $year)),
+                    [
+                        \IntlDateFormatter::LONG,
+                        \IntlDateFormatter::NONE,
+                    ],
+                    WCF::getLanguage()->getLocale()
                 );
 
             case 'float':

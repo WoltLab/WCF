@@ -215,8 +215,8 @@
 									{if $user->isOnline()}
 										{lang}wcf.user.online{/lang}
 										<span class="userOnlineIndicator" aria-hidden="true"></span>
-									{else}
-										{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}
+									{elseif $user->lastActivityTime}
+										{time time=$user->lastActivityTime}
 									{/if}
 								</td>
 							{else}
