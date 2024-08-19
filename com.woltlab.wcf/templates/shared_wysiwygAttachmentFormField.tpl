@@ -15,6 +15,10 @@
 		</dd>
 	</dl>
 
+	{foreach from=$field->getAttachmentHandler()->getTmpHashes() item=tmpHash}
+		<input type="hidden" name="{$field->getPrefixedID()}_tmpHash[]" value="{$tmpHash}">
+	{/foreach}
+
 	<script data-relocate="true">
 		{jsphrase name='wcf.attachment.insert'}
 		{jsphrase name='wcf.attachment.insertFull'}
