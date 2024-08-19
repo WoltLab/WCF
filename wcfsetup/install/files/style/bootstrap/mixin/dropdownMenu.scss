@@ -85,6 +85,10 @@
 			}
 		}
 
+		> button {
+			width: 100%;
+		}
+
 		> :is(a, button) {
 			color: var(--wcfDropdownLink);
 		}

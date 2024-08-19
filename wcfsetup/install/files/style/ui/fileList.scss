@@ -83,3 +83,21 @@
 woltlab-core-file img {
 	object-fit: contain;
 }
+
+.woltlabCoreFileUpload__button {
+	position: relative;
+}
+
+.woltlabCoreFileUpload__input {
+	cursor: pointer;
+	height: 100%;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	transform: translateX(-50%) translateY(-50%);
+	top: 50%;
+}
+
+.woltlabCoreFileUpload__input::-webkit-file-upload-button {
+	cursor: pointer;
+}
