@@ -4,7 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\page\Page;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\WCF;
+use wcf\system\view\ContentNotVisibleView;
 use wcf\util\StringUtil;
 
 /**
@@ -35,6 +35,6 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
         }
 
-        return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
+        return new ContentNotVisibleView();
     }
 }
