@@ -162,7 +162,7 @@ abstract class CustomOption extends Option implements ITitledObject
                 return StringUtil::formatDouble(\doubleval($this->optionValue));
 
             case 'integer':
-                return StringUtil::formatInteger(\intval($this->optionValue));
+                return StringUtil::formatNumeric(\intval($this->optionValue));
 
             case 'radioButton':
             case 'select':

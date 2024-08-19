@@ -349,7 +349,7 @@ class UserListPage extends SortablePage
                         case 'profileHits':
                         case 'activityPoints':
                         case 'likesReceived':
-                            $this->columnValues[$user->userID][$column] = StringUtil::formatInteger($user->{$column});
+                            $this->columnValues[$user->userID][$column] = StringUtil::formatNumeric($user->{$column});
                             break;
 
                         default:
