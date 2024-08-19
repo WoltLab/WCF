@@ -7,6 +7,7 @@
 
       this.#element = document.createElement("input");
       this.#element.type = "file";
+      this.#element.classList.add("woltlabCoreFileUpload__input");
 
       this.#element.addEventListener("change", () => {
         const { files } = this.#element;
@@ -47,21 +48,23 @@
         this.#element.multiple = true;
       }
 
-      const shadow = this.attachShadow({ mode: "open" });
-      shadow.append(this.#element);
+      const icon = document.createElement("fa-icon");
+      icon.setIcon("upload");
 
-      const style = document.createElement("style");
-      style.textContent = `
-        :host {
-            position: relative;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.classList.add("button", "woltlabCoreFileUpload__button");
+      button.addEventListener("keydown", (event) => {
+        // The `click` event cannot be used here because it would trigger twice
+        // when the input element is at the same position. Instead we handle the
+        // keyboard event in case the user focuses the element manually.
+        if (event.key === "Enter" || event.key === " ") {
+          this.#element.click();
         }
+      });
+      button.append(icon, window.WoltLabLanguage.getPhrase("wcf.global.button.upload"), this.#element);
 
-        input {
-            inset: 0;
-            position: absolute;
-            visibility: hidden;
-        }
-      `;
+      this.append(button);
     }
 
     get maximumCount(): number {
