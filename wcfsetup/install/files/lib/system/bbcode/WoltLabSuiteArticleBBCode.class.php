@@ -4,6 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\article\ViewableArticle;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\view\ContentNotVisibleView;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -32,13 +33,13 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 
         $article = $this->getArticle($articleID);
         if ($article === null) {
-            return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
+            return new ContentNotVisibleView();
         }
 
         if (!$article->canRead()) {
-            return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
-                'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
-            ], true);
+            return new ContentNotVisibleView(
+                WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
+            );
         } elseif ($parser->getOutputType() == 'text/html') {
             return WCF::getTPL()->fetch('shared_bbcode_wsa', 'wcf', [
                 'article' => $article,

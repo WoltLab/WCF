@@ -4,6 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\media\ViewableMedia;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\view\ContentNotVisibleView;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -48,7 +49,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
         /** @var ViewableMedia $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media === null) {
-            return WCF::getTPL()->fetch('shared_contentNotVisible', sandbox: true);
+            return new ContentNotVisibleView();
         }
 
         if ($media->isAccessible()) {
@@ -95,9 +96,9 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             return StringUtil::encodeHTML($media->getLink());
         } else {
-            return WCF::getTPL()->fetch('shared_contentNotVisible', 'wcf', [
-                'message' => WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
-            ], true);
+            return new ContentNotVisibleView(
+                WCF::getLanguage()->getDynamicVariable('wcf.message.content.no.permission.title')
+            );
         }
     }
 }
