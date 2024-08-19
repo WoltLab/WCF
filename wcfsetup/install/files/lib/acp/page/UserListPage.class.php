@@ -16,7 +16,6 @@ use wcf\system\option\IOptionHandler;
 use wcf\system\option\user\IUserOptionOutput;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -320,30 +319,14 @@ class UserListPage extends SortablePage
                             break;
 
                         case 'registrationDate':
-                            $this->columnValues[$user->userID][$column] = DateUtil::format(
-                                DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                DateUtil::DATE_FORMAT
+                            $this->columnValues[$user->userID][$column] = \IntlDateFormatter::formatObject(
+                                WCF::getUser()->getLocalDate($user->{$column}),
+                                [
+                                    \IntlDateFormatter::LONG,
+                                    \IntlDateFormatter::NONE,
+                                ],
+                                WCF::getLanguage()->getLocale()
                             );
-                            break;
-
-                        case 'lastActivityTime':
-                            if ($user->{$column}) {
-                                $this->columnValues[$user->userID][$column] = \str_replace(
-                                    '%time%',
-                                    DateUtil::format(
-                                        DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                        DateUtil::TIME_FORMAT
-                                    ),
-                                    \str_replace(
-                                        '%date%',
-                                        DateUtil::format(
-                                            DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                            DateUtil::DATE_FORMAT
-                                        ),
-                                        WCF::getLanguage()->get('wcf.date.dateTimeFormat')
-                                    )
-                                );
-                            }
                             break;
 
                         case 'profileHits':
