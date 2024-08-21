@@ -148,28 +148,30 @@ final class SearchHandler
 
     private function buildDateCondition(): void
     {
+        $startDate = 0;
         if (!empty($this->parameters['startDate'])) {
             $startDateTime = \DateTime::createFromFormat(
                 "Y-m-d",
                 $this->parameters['startDate'],
                 WCF::getUser()->getTimezone()
             );
-            $startDateTime->setTime(0, 0, 0);
-            $startDate = $startDateTime->getTimestamp();
-        } else {
-            $startDate = 0;
+            if ($startDateTime !== false) {
+                $startDateTime->setTime(0, 0, 0);
+                $startDate = $startDateTime->getTimestamp();
+            }
         }
 
+        $endDate = 0;
         if (!empty($this->parameters['endDate'])) {
             $endDateTime = \DateTime::createFromFormat(
                 "Y-m-d",
                 $this->parameters['endDate'],
                 WCF::getUser()->getTimezone()
             );
-            $endDateTime->setTime(23, 59, 59);
-            $endDate = $endDateTime->getTimestamp();
-        } else {
-            $endDate = 0;
+            if ($endDateTime !== false) {
+                $endDateTime->setTime(23, 59, 59);
+                $endDate = $endDateTime->getTimestamp();
+            }
         }
 
         if ($startDate && $endDate) {
