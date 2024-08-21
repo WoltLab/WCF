@@ -110,7 +110,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                     return;
                 }
                 // Skip elements that are located inside a popover.
-                if (element.closest(".popover") !== null) {
+                if (element.closest(".popover, .popoverContainer") !== null) {
                     this.cache.set(id, {
                         content: null,
                         state: 0 /* State.None */,

@@ -120,7 +120,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         cacheByIdentifier.set(identifier, cache);
         (0, Selector_1.wheneverFirstSeen)(selector, (element) => {
             // Disregard elements nested inside a popover.
-            if (element.closest(".popoverContainer") !== null) {
+            if (element.closest(".popover, .popoverContainer") !== null) {
                 return;
             }
             element.addEventListener("mouseenter", () => {
