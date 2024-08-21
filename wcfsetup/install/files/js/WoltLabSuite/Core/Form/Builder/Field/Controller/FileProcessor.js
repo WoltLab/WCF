@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 }
                 this.#registerFile(event.detail);
             });
-            this.#fileInput = this.#uploadButton.shadowRoot.querySelector('input[type="file"]');
+            this.#fileInput = this.#uploadButton.querySelector('input[type="file"]');
             this.#container.querySelectorAll("woltlab-core-file").forEach((element) => {
                 this.#registerFile(element, element.parentElement);
             });

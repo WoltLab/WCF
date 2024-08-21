@@ -61,7 +61,7 @@ export class FileProcessor {
 
       this.#registerFile(event.detail);
     });
-    this.#fileInput = this.#uploadButton.shadowRoot!.querySelector<HTMLInputElement>('input[type="file"]')!;
+    this.#fileInput = this.#uploadButton.querySelector<HTMLInputElement>('input[type="file"]')!;
 
     this.#container.querySelectorAll<WoltlabCoreFileElement>("woltlab-core-file").forEach((element) => {
       this.#registerFile(element, element.parentElement);
