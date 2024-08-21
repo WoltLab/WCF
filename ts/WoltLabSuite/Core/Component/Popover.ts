@@ -158,7 +158,7 @@ export function setupFor(configuration: Configuration): void {
 
   wheneverFirstSeen(selector, (element) => {
     // Disregard elements nested inside a popover.
-    if (element.closest(".popoverContainer") !== null) {
+    if (element.closest(".popover, .popoverContainer") !== null) {
       return;
     }
 

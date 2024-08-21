@@ -167,7 +167,7 @@ class ControllerPopover implements AjaxCallbackObject {
       }
 
       // Skip elements that are located inside a popover.
-      if (element.closest(".popover") !== null) {
+      if (element.closest(".popover, .popoverContainer") !== null) {
         this.cache.set(id, {
           content: null,
           state: State.None,
@@ -475,7 +475,7 @@ function getControllerPopover(): ControllerPopover {
  * 		popover.setContent('com.example.bar.foo', objectId, htmlTemplateString);
  * 	}
  * });
- * 
+ *
  * @deprecated 6.1 Use `WoltLabSuite/Core/Component/Popover` instead
  */
 export function init(options: PopoverOptions): void {
