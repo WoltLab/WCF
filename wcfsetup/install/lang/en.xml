@@ -1895,8 +1895,8 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.update.purchaseRequired"><![CDATA[Paid Package]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired.button.purchase"><![CDATA[Show in the Plugin-Store]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[The paid package “{$packageName}” must be purchased in the Plugin-Store before you can install it.]]></item>
-		<item name="wcf.acp.package.update.purchaseRequired"><![CDATA[Paid Update]]></item>
-		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[The update for the package “{$packageName}” must be purchased in the Plugin-Store before you can install it.]]></item>
+		<item name="wcf.acp.package.update.paidUpgrade"><![CDATA[Paid Update]]></item>
+		<item name="wcf.acp.package.update.paidUpgrade.description"><![CDATA[The update for the package “{$packageName}” must be purchased in the Plugin-Store before you can install it.]]></item>
 		<item name="wcf.acp.package.update.installUpdate"><![CDATA[Install this update]]></item>
 		<item name="wcf.acp.package.update.upgrade"><![CDATA[This package will be upgraded.]]></item>
 		<item name="wcf.acp.package.update.newVersion"><![CDATA[{$currentVersion} → <span class="packageUpdateNewVersion">{$newVersion}</span>]]></item>
