@@ -111,7 +111,10 @@ class Mailbox
         $address = $localpart . '@' . $domain;
 
         if (
-            !\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $address)
+            // Dotless domains are semantically correct but in practice are a
+            // common typo because those domains are not routable on the internet.
+            !\str_contains($domain, '.')
+            || !\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $address)
             // The addr-spec within a RFC 5322 message accepts CFWS, but SMTP does not. Including
             // CFWS in an email address does not make sense, thus we reject email addresses that
             // include CFWS, even if they technically match the addr-spec.
