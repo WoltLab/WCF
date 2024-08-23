@@ -125,7 +125,7 @@ ol.nativeList {
 		margin-top: 0 !important;
 
 		&:is(.messageFloatObjectLeft, .image-style-side-left, .messageFloatObjectRight, .image-style-side) {
-			+ :is(p, ul ,ol, h1, h2, h3, h4, h4, h6) {
+			+ :is(p, ul, ol, h1, h2, h3, h4, h4, h6) {
 				margin-top: 0 !important;
 			}
 		}
@@ -137,6 +137,14 @@ ol.nativeList {
 
 	p {
 		margin: 1em 0;
+	}
+
+	li > :first-child {
+		margin-top: 0 !important;
+	}
+
+	li > :last-child {
+		margin-bottom: 0 !important;
 	}
 
 	h1 {
