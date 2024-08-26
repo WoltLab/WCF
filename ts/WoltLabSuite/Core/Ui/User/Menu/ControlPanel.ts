@@ -69,6 +69,18 @@ export function setup(): void {
 
     element.addEventListener("click", (event) => event.stopPropagation());
 
+    window.addEventListener(
+      "resize",
+      () => {
+        if (element.hidden) {
+          return;
+        }
+
+        setAlignment(element, button);
+      },
+      { passive: true },
+    );
+
     button.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
