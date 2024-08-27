@@ -22,13 +22,13 @@ final class MessageSpamCheckingSfsListener
             return;
         }
 
+        // Skip spam check for team members and trusted users.
         if ($event->user !== null) {
-            // Skip spam check for admins and moderators
-            $userProfile = UserProfileRuntimeCache::getInstance()->getObject($event->user->userID);
-            if (
-                $userProfile->getPermission('admin.general.canUseAcp')
-                || $userProfile->getPermission('mod.general.canUseModeration')
-            ) {
+            if ($this->isTeamMember($event->user->userID)) {
+                return;
+            }
+
+            if ($this->isTrustedUser($event->user->userID)) {
                 return;
             }
         }
@@ -40,5 +40,31 @@ final class MessageSpamCheckingSfsListener
         ) !== []) {
             $event->preventDefault();
         }
+    }
+
+    private function isTeamMember(int $userID): bool
+    {
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
+        if (
+            $userProfile->getPermission('admin.general.canUseAcp')
+            || $userProfile->getPermission('mod.general.canUseModeration')
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function isTrustedUser(int $userID): bool
+    {
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
+        if (
+            $userProfile->activityPoints >= 100 ||
+            $userProfile->registrationDate < \TIME_NOW - 86_400 * 180
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
