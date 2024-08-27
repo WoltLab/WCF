@@ -27,7 +27,7 @@ class LineBreakSeparatedTextOptionType extends TextareaOptionType
 
         static $identifiers = [];
         do {
-            $identifier = \substr(StringUtil::getRandomID(), 0, 8);
+            $identifier = \bin2hex(\random_bytes(4));
         } while (\in_array($identifier, $identifiers));
         $identifiers[] = $identifier;
 

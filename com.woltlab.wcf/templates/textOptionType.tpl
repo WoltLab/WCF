@@ -1,1 +1,1 @@
-<input type="{@$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $option->minlength > 0 || $option->required} required{/if}{if $option->maxlength} maxlength="{$option->maxlength}"{/if}{if $inputClass} class="{@$inputClass}"{/if}>
+<input type="{$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $option->minlength > 0 || $option->required} required{/if}{if $option->maxlength} maxlength="{$option->maxlength}"{/if}{if $inputClass} class="{$inputClass}"{/if}>

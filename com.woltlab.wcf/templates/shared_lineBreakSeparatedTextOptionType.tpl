@@ -1,5 +1,5 @@
 <ul class="scrollableCheckboxList" {*
-	*}id="lineBreakSeparatedTextOption_{@$identifier}"{*
+	*}id="lineBreakSeparatedTextOption_{$identifier}"{*
 	*}{if $values|empty} style="display: none"{/if}{*
 *}>
 	{foreach from=$values item=value}
@@ -22,7 +22,7 @@
 		});
 		
 		new UiItemListLineBreakSeparatedText(
-			document.getElementById("lineBreakSeparatedTextOption_{@$identifier}")
+			document.getElementById("lineBreakSeparatedTextOption_{@$identifier|encodeJS}")
 		);
 	});
 </script>

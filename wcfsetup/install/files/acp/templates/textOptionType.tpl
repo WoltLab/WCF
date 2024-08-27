@@ -1,1 +1,1 @@
-<input type="{@$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $inputClass} class="{@$inputClass}"{/if}{if $inputType == 'password'} autocomplete="new-password"{elseif $option->disableAutocomplete} autocomplete="off"{/if}>
+<input type="{$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $inputClass} class="{$inputClass}"{/if}{if $inputType == 'password'} autocomplete="new-password"{elseif $option->disableAutocomplete} autocomplete="off"{/if}>
