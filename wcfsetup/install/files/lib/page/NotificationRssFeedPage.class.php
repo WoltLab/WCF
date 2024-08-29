@@ -38,13 +38,15 @@ class NotificationRssFeedPage extends AbstractRssFeedPage
         $feed->channel($channel);
 
         $notifications = UserNotificationHandler::getInstance()->getNotifications(20);
-        if ($notifications['notifications'] !== []) {
-            $channel->lastBuildDateFromTimestamp($notifications['notifications'][0]['time']);
-        }
-
+        $isFirstEntry = true;
         foreach ($notifications['notifications'] as $notification) {
             $event = $notification['event'];
             \assert($event instanceof AbstractUserNotificationEvent);
+
+            if ($isFirstEntry) {
+                $channel->lastBuildDateFromTimestamp($event->getTime());
+                $isFirstEntry = false;
+            }
 
             $item = new RssFeedItem();
             $item
