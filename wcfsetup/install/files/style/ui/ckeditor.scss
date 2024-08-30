@@ -655,7 +655,7 @@ html.iOS {
 	}
 }
 
-@media (any-hover: none) {
+@media (pointer: coarse) {
 	/* The resize controls are not supported on touch devices.
 	   See https://github.com/ckeditor/ckeditor5/issues/5624 */
 	.ck .ck-widget__resizer {
