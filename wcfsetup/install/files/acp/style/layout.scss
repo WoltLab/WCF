@@ -889,7 +889,8 @@ html[data-color-scheme="dark"] {
 
 .woltlabNewsfeed {
 	border-radius: 0 0 var(--wcfBorderRadius) var(--wcfBorderRadius);
-	height: 400px;
+	min-height: 400px;
+	height: 100%;
 	max-width: 100%;
 	overflow: hidden;
 	text-align: center;
@@ -970,6 +971,7 @@ html[data-color-scheme="dark"] {
 
 .acpDashboardBox__content {
 	padding: 20px;
+	height: 100%;
 
 	> :first-child {
 		margin-top: 0 !important;
