@@ -223,6 +223,10 @@ final class PackageUpdateDispatcher extends SingletonFactory
         // parse given package update xml
         $allNewPackages = false;
         if ($apiVersion === '2.0' || $response->getStatusCode() != 304) {
+            if (!$response->getBody()->getSize()) {
+                throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound'));
+            }
+
             $allNewPackages = $this->parsePackageUpdateXML($updateServer, $response->getBody(), $apiVersion);
         }
 
