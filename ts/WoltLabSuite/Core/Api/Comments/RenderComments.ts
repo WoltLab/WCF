@@ -20,7 +20,7 @@ export async function renderComments(
   objectId: number,
   lastCommentTime: number = 0,
 ): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/render`);
+  const url = new URL(`${window.WSC_RPC_API_URL}core/comments/render`);
   url.searchParams.set("objectTypeID", objectTypeId.toString());
   url.searchParams.set("objectID", objectId.toString());
   url.searchParams.set("lastCommentTime", lastCommentTime.toString());

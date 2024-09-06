@@ -15,7 +15,7 @@ type Response = {
 };
 
 export async function editComment(commentId: number): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/${commentId}/edit`);
+  const url = new URL(`${window.WSC_RPC_API_URL}core/comments/${commentId}/edit`);
 
   let response: Response;
   try {

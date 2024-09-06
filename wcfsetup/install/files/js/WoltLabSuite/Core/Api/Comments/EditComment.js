@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.editComment = void 0;
     async function editComment(commentId) {
-        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/${commentId}/edit`);
+        const url = new URL(`${window.WSC_RPC_API_URL}core/comments/${commentId}/edit`);
         let response;
         try {
             response = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());

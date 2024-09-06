@@ -12,7 +12,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.mentionSuggestions = void 0;
     async function mentionSuggestions(query) {
-        const url = new URL(window.WSC_API_URL + "index.php?api/rpc/core/messages/mentionsuggestions");
+        const url = new URL(window.WSC_API_URL + "core/messages/mentionsuggestions");
         url.searchParams.set("query", query);
         let response;
         try {

@@ -12,7 +12,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createComment = void 0;
     async function createComment(objectTypeId, objectId, message, guestToken = "") {
-        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments`);
+        const url = new URL(`${window.WSC_RPC_API_URL}core/comments`);
         const payload = {
             objectTypeID: objectTypeId,
             objectID: objectId,

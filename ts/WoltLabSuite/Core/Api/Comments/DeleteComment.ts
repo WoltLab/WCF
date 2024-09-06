@@ -13,7 +13,7 @@ import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
 
 export async function deleteComment(commentId: number): Promise<ApiResult<[]>> {
   try {
-    await prepareRequest(`${window.WSC_API_URL}index.php?api/rpc/core/comments/${commentId}`).delete().fetchAsJson();
+    await prepareRequest(`${window.WSC_RPC_API_URL}core/comments/${commentId}`).delete().fetchAsJson();
   } catch (e) {
     return apiResultFromError(e);
   }

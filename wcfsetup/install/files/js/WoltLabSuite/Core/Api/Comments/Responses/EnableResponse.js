@@ -13,9 +13,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
     exports.enableResponse = void 0;
     async function enableResponse(responseId) {
         try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses/${responseId}/enable`)
-                .post()
-                .fetchAsJson();
+            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/comments/responses/${responseId}/enable`).post().fetchAsJson();
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);

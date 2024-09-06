@@ -20,7 +20,7 @@ export async function createResponse(
   message: string,
   guestToken: string = "",
 ): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses`);
+  const url = new URL(`${window.WSC_RPC_API_URL}core/comments/responses`);
 
   const payload = {
     commentID: commentId,

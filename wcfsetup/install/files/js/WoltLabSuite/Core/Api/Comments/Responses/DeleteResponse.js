@@ -13,9 +13,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
     exports.deleteResponse = void 0;
     async function deleteResponse(responseId) {
         try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses/${responseId}`)
-                .delete()
-                .fetchAsJson();
+            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/comments/responses/${responseId}`).delete().fetchAsJson();
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);

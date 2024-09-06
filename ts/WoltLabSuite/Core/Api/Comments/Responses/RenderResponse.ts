@@ -19,7 +19,7 @@ export async function renderResponse(
   messageOnly: boolean = false,
   objectTypeId: number | undefined = undefined,
 ): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses/${responseId}/render`);
+  const url = new URL(`${window.WSC_RPC_API_URL}core/comments/responses/${responseId}/render`);
   url.searchParams.set("messageOnly", messageOnly.toString());
   if (objectTypeId !== undefined) {
     url.searchParams.set("objectTypeID", objectTypeId.toString());
