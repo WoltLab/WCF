@@ -7,6 +7,8 @@ use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\system\file\processor\FileProcessor;
+use wcf\system\image\ImageHandler;
+use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 
 /**
@@ -77,10 +79,26 @@ class FileEditor extends DatabaseObjectEditor
             [$width, $height] = \getimagesize($pathname);
         }
 
+        $fileSize = $fileTemporary->fileSize;
+        $fileHash = $fileTemporary->fileHash;
+        if ($isImage) {
+            $imageWasModified = false;
+            try {
+                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+            } catch (\Throwable) {
+            }
+
+            if ($imageWasModified) {
+                $fileSize = \filesize($pathname);
+                $fileHash = \hash_file('sha256', $pathname);
+                [$width, $height] = \getimagesize($pathname);
+            }
+        }
+
         $fileAction = new FileAction([], 'create', ['data' => [
             'filename' => $fileTemporary->filename,
-            'fileSize' => $fileTemporary->fileSize,
-            'fileHash' => $fileTemporary->fileHash,
+            'fileSize' => $fileSize,
+            'fileHash' => $fileHash,
             'fileExtension' => File::getSafeFileExtension($mimeType, $fileTemporary->filename),
             'objectTypeID' => $fileTemporary->objectTypeID,
             'mimeType' => $mimeType,
@@ -133,6 +151,16 @@ class FileEditor extends DatabaseObjectEditor
             } catch (\Throwable) {
                 return null;
             }
+
+            $imageWasModified = false;
+            try {
+                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+            } catch (\Throwable) {
+            }
+
+            if ($imageWasModified) {
+                [$width, $height] = \getimagesize($pathname);
+            }
         }
 
         $fileAction = new FileAction([], 'create', ['data' => [
@@ -159,5 +187,61 @@ class FileEditor extends DatabaseObjectEditor
         );
 
         return $file;
+    }
+
+    /**
+     * Normalizes the image rotation by rotating images that been taken while
+     * the camera was tilted or upside down.
+     *
+     * Rotating the image can cause the dimensions to change, the image size to
+     * differ and the file hash to be different.
+     *
+     * @return bool true if the image was modified.
+     */
+    private static function normalizeImageRotation(
+        string $pathname,
+        int $width,
+        int $height,
+        string $mimeType
+    ): bool {
+        $adapter = ImageHandler::getInstance()->getAdapter();
+        if (!$adapter->checkMemoryLimit($width, $height, $mimeType)) {
+            return false;
+        }
+
+        $exifData = ExifUtil::getExifData($pathname);
+        if ($exifData === []) {
+            return false;
+        }
+
+        $orientation = ExifUtil::getOrientation($exifData);
+        if ($orientation === ExifUtil::ORIENTATION_ORIGINAL) {
+            return false;
+        }
+
+        $rotateByDegrees = match ($orientation) {
+            ExifUtil::ORIENTATION_180_ROTATE => 180,
+            ExifUtil::ORIENTATION_90_ROTATE => 90,
+            ExifUtil::ORIENTATION_270_ROTATE => 270,
+                // Any other rotation is unsupported.
+            default => null,
+        };
+
+        if ($rotateByDegrees === null) {
+            return false;
+        }
+
+        $adapter->loadFile($pathname);
+
+        $image = $adapter->rotate($rotateByDegrees);
+        if ($image instanceof \Imagick) {
+            $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+        }
+
+        $adapter->load($image, $adapter->getType());
+
+        $adapter->writeImage($pathname);
+
+        return true;
     }
 }
