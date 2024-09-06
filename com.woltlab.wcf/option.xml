@@ -669,7 +669,6 @@ simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>captchaSelect</optiontype>
-				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
 				<enableoptions>:!register_use_captcha,!lost_password_use_captcha</enableoptions>
 				<allowemptyvalue>1</allowemptyvalue>
 			</option>
