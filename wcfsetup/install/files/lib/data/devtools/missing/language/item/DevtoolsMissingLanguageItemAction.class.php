@@ -93,7 +93,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function validateDelete()
     {
-        if (!ENABLE_DEVELOPER_TOOLS || !LOG_MISSING_LANGUAGE_ITEMS) {
+        if (!ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
@@ -105,7 +105,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function validateClearLog()
     {
-        if (!ENABLE_DEVELOPER_TOOLS || !LOG_MISSING_LANGUAGE_ITEMS) {
+        if (!ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
@@ -129,7 +129,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function validateClearExistingLog(): void
     {
-        if (!ENABLE_DEVELOPER_TOOLS || !LOG_MISSING_LANGUAGE_ITEMS) {
+        if (!ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
