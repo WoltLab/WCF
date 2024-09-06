@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.renderComment = void 0;
     async function renderComment(commentId, responseId = undefined, messageOnly = false, objectTypeId = undefined) {
-        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/${commentId}/render`);
+        const url = new URL(`${window.WSC_RPC_API_URL}core/comments/${commentId}/render`);
         url.searchParams.set("messageOnly", messageOnly.toString());
         if (responseId !== undefined) {
             url.searchParams.set("responseID", responseId.toString());

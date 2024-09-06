@@ -22,7 +22,7 @@ export async function renderResponses(
   lastResponseId: number,
   loadAllResponses: boolean,
 ): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses/render`);
+  const url = new URL(`${window.WSC_RPC_API_URL}core/comments/responses/render`);
   url.searchParams.set("commentID", commentId.toString());
   url.searchParams.set("lastResponseTime", lastResponseTime.toString());
   url.searchParams.set("lastResponseID", lastResponseId.toString());

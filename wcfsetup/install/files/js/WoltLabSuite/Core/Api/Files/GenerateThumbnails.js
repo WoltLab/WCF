@@ -3,7 +3,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.generateThumbnails = void 0;
     async function generateThumbnails(fileID) {
-        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/files/${fileID}/generatethumbnails`);
+        const url = new URL(`${window.WSC_RPC_API_URL}core/files/${fileID}/generatethumbnails`);
         let response;
         try {
             response = (await (0, Backend_1.prepareRequest)(url).post().fetchAsJson());

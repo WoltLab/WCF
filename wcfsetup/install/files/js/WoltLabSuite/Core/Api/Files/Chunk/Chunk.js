@@ -3,7 +3,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.uploadChunk = void 0;
     async function uploadChunk(identifier, sequenceNo, checksum, payload) {
-        const url = new URL(`${window.WSC_API_URL}index.php?api/rpc/core/files/upload/${identifier}/chunk/${sequenceNo}`);
+        const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload/${identifier}/chunk/${sequenceNo}`);
         let response;
         try {
             response = (await (0, Backend_1.prepareRequest)(url)

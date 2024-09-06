@@ -13,7 +13,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
     exports.updateResponse = void 0;
     async function updateResponse(responseId, message) {
         try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_API_URL}index.php?api/rpc/core/comments/responses/${responseId}`)
+            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/comments/responses/${responseId}`)
                 .post({
                 message,
             })

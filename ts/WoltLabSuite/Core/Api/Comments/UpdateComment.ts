@@ -13,7 +13,7 @@ import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
 
 export async function updateComment(commentId: number, message: string): Promise<ApiResult<[]>> {
   try {
-    await prepareRequest(`${window.WSC_API_URL}index.php?api/rpc/core/comments/${commentId}`)
+    await prepareRequest(`${window.WSC_RPC_API_URL}core/comments/${commentId}`)
       .post({
         message,
       })
