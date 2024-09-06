@@ -4,8 +4,8 @@
 
 <script data-cfasync="false">
 	var WCF_PATH = '{@$__wcf->getPath()}';
-    var WSC_API_URL = '{@$__wcf->getPath()}';
-    var WSC_RPC_API_URL = '{link controller="Api" id="rpc"}{/link}';
+	var WSC_API_URL = '{@$__wcf->getPath()}';
+	var WSC_RPC_API_URL = '{link controller="Api" id="rpc"}{/link}';
 	{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
