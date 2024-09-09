@@ -22,9 +22,11 @@ final class UserRankGridView extends AbstractGridView
         $this->addColumns([
             GridViewColumn::for('rankID')
                 ->label('wcf.global.objectID')
-                ->renderer(new NumberColumnRenderer()),
+                ->renderer(new NumberColumnRenderer())
+                ->sortable(),
             GridViewColumn::for('rankTitle')
                 ->label('wcf.acp.user.rank.title')
+                ->sortable()
                 ->renderer([
                     new class extends TitleColumnRenderer {
                         public function render(mixed $value, mixed $context = null): string
@@ -40,6 +42,7 @@ final class UserRankGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('rankImage')
                 ->label('wcf.acp.user.rank.image')
+                ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, mixed $context = null): string
@@ -52,6 +55,7 @@ final class UserRankGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('groupID')
                 ->label('wcf.user.group')
+                ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, mixed $context = null): string
@@ -62,6 +66,7 @@ final class UserRankGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('requiredGender')
                 ->label('wcf.user.option.gender')
+                ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, mixed $context = null): string
@@ -80,8 +85,11 @@ final class UserRankGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('requiredPoints')
                 ->label('wcf.acp.user.rank.requiredPoints')
+                ->sortable()
                 ->renderer(new NumberColumnRenderer()),
         ]);
+
+        $this->setSortField('rankTitle');
     }
 
     public function getRows(int $limit, int $offset = 0): array
@@ -89,6 +97,9 @@ final class UserRankGridView extends AbstractGridView
         $list = new UserRankList();
         $list->sqlLimit = $limit;
         $list->sqlOffset = $offset;
+        if ($this->getSortField()) {
+            $list->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
+        }
         $list->readObjects();
 
         return $list->getObjects();

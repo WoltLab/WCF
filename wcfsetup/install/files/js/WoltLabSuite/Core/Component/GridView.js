@@ -10,28 +10,68 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
         #bottomPagination;
         #baseUrl;
         #pageNo;
-        constructor(gridId, gridClassName, pageNo, baseUrl = "") {
+        #sortField;
+        #sortOrder;
+        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC") {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
             this.#topPagination = document.getElementById(`${gridId}_topPagination`);
             this.#bottomPagination = document.getElementById(`${gridId}_bottomPagination`);
             this.#pageNo = pageNo;
             this.#baseUrl = baseUrl;
+            this.#sortField = sortField;
+            this.#sortOrder = sortOrder;
             this.#initPagination();
+            this.#initSorting();
         }
         #initPagination() {
             this.#topPagination.addEventListener("switchPage", (event) => {
-                this.#switchPage(event.detail);
+                void this.#switchPage(event.detail);
             });
             this.#bottomPagination.addEventListener("switchPage", (event) => {
-                this.#switchPage(event.detail);
+                void this.#switchPage(event.detail);
             });
         }
-        async #switchPage(pageNo) {
+        #initSorting() {
+            this.#table.querySelectorAll('th[data-sortable="1"]').forEach((element) => {
+                const link = document.createElement("a");
+                link.role = "button";
+                link.addEventListener("click", () => {
+                    this.#sort(element.dataset.id);
+                });
+                link.textContent = element.textContent;
+                element.innerHTML = "";
+                element.append(link);
+            });
+            this.#renderActiveSorting();
+        }
+        #sort(sortField) {
+            if (this.#sortField == sortField && this.#sortOrder == "ASC") {
+                this.#sortOrder = "DESC";
+            }
+            else {
+                this.#sortField = sortField;
+                this.#sortOrder = "ASC";
+            }
+            this.#loadRows();
+            this.#renderActiveSorting();
+        }
+        #renderActiveSorting() {
+            this.#table.querySelectorAll('th[data-sortable="1"]').forEach((element) => {
+                element.classList.remove("active", "ASC", "DESC");
+                if (element.dataset.id == this.#sortField) {
+                    element.classList.add("active", this.#sortOrder);
+                }
+            });
+        }
+        #switchPage(pageNo) {
             this.#topPagination.page = pageNo;
             this.#bottomPagination.page = pageNo;
-            const response = await (0, GetRows_1.getRows)(this.#gridClassName, pageNo);
             this.#pageNo = pageNo;
+            this.#loadRows();
+        }
+        async #loadRows() {
+            const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
             Util_1.default.setInnerHtml(this.#table.querySelector("tbody"), response.unwrap().template);
             this.#updateQueryString();
         }
@@ -44,11 +84,15 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
             if (this.#pageNo > 1) {
                 parameters.push(["pageNo", this.#pageNo.toString()]);
             }
+            if (this.#sortField) {
+                parameters.push(["sortField", this.#sortField]);
+                parameters.push(["sortOrder", this.#sortOrder]);
+            }
             if (parameters.length > 0) {
                 url.search += url.search !== "" ? "&" : "?";
                 url.search += new URLSearchParams(parameters).toString();
             }
-            window.history.pushState({ name: "gridView" }, document.title, url.toString());
+            window.history.pushState({}, document.title, url.toString());
         }
     }
     exports.GridView = GridView;

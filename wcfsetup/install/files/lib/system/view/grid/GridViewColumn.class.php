@@ -12,10 +12,9 @@ final class GridViewColumn
      * @var IColumnRenderer[]
      */
     private array $renderer = [];
-
     private string $label = '';
-
     private static DefaultColumnRenderer $defaultRenderer;
+    private bool $sortable = false;
 
     private function __construct(private readonly string $id) {}
 
@@ -72,6 +71,13 @@ final class GridViewColumn
         return $this;
     }
 
+    public function sortable(bool $sortable = true): static
+    {
+        $this->sortable = $sortable;
+
+        return $this;
+    }
+
     /**
      * @return IColumnRenderer[]
      */
@@ -88,6 +94,11 @@ final class GridViewColumn
     public function getLabel(): string
     {
         return $this->label;
+    }
+
+    public function isSortable(): bool
+    {
+        return $this->sortable;
     }
 
     private static function getDefaultRenderer(): DefaultColumnRenderer

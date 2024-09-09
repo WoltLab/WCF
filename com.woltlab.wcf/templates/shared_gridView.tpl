@@ -25,7 +25,9 @@
 			'{unsafe:$view->getID()|encodeJs}',
 			'{unsafe:$view->getClassName()|encodeJS}',
 			{$view->getPageNo()},
-			'{unsafe:$view->getBaseUrl()|encodeJS}'
+			'{unsafe:$view->getBaseUrl()|encodeJS}',
+			'{unsafe:$view->getSortField()|encodeJS}',
+			'{unsafe:$view->getSortOrder()|encodeJS}'
 		);
 	});
 </script>

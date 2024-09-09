@@ -21,7 +21,7 @@ final class GetRows implements IController
         $parameters = Helper::mapApiParameters($request, GetRowsParameters::class);
 
         if (!\is_subclass_of($parameters->gridView, AbstractGridView::class)) {
-            throw new UserInputException('gridView', $parameters->gridView);
+            throw new UserInputException('gridView', 'invalid');
         }
 
         $view = new $parameters->gridView($parameters->pageNo);
@@ -29,6 +29,13 @@ final class GetRows implements IController
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();
+        }
+
+        if ($parameters->sortField) {
+            $view->setSortField($parameters->sortField);
+        }
+        if ($parameters->sortOrder) {
+            $view->setSortOrder($parameters->sortOrder);
         }
 
         return new JsonResponse([
@@ -43,6 +50,8 @@ final class GetRowsParameters
     public function __construct(
         /** @var non-empty-string */
         public readonly string $gridView,
-        public readonly int $pageNo
+        public readonly int $pageNo,
+        public readonly string $sortField,
+        public readonly string $sortOrder
     ) {}
 }

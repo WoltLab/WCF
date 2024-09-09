@@ -9,6 +9,8 @@ abstract class AbstractGridView
     private array $columns = [];
     private int $rowsPerPage = 2;
     private string $baseUrl = '';
+    private string $sortField = '';
+    private string $sortOrder = 'ASC';
 
     public function __construct(private readonly int $pageNo = 1)
     {
@@ -51,7 +53,11 @@ abstract class AbstractGridView
 
         foreach ($this->getColumns() as $column) {
             $header .= <<<EOT
-                <th class="{$column->getClasses()}">{$column->getLabel()}</th>
+                <th
+                    class="{$column->getClasses()}"
+                    data-id="{$column->getID()}"
+                    data-sortable="{$column->isSortable()}"
+                >{$column->getLabel()}</th>
             EOT;
         }
 
@@ -126,5 +132,41 @@ abstract class AbstractGridView
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
+    }
+
+    /**
+     * @return GridViewColumn[]
+     */
+    public function getSortableColumns(): array
+    {
+        return \array_filter($this->getColumns(), fn($column) => $column->isSortable());
+    }
+
+    public function setSortField(string $sortField): void
+    {
+        if (!\in_array($sortField, \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
+            throw new \InvalidArgumentException("Invalid value '{$sortField}' as sort field given.");
+        }
+
+        $this->sortField = $sortField;
+    }
+
+    public function setSortOrder(string $sortOrder): void
+    {
+        if ($sortOrder !== 'ASC' && $sortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$sortOrder}' as sort order given.");
+        }
+
+        $this->sortOrder = $sortOrder;
+    }
+
+    public function getSortField(): string
+    {
+        return $this->sortField;
+    }
+
+    public function getSortOrder(): string
+    {
+        return $this->sortOrder;
     }
 }
