@@ -4,6 +4,9 @@ namespace wcf\acp\page;
 
 use wcf\data\user\rank\I18nUserRankList;
 use wcf\page\SortablePage;
+use wcf\system\request\LinkHandler;
+use wcf\system\view\grid\UserRankGridView;
+use wcf\system\WCF;
 
 /**
  * Lists available user ranks.
@@ -57,5 +60,17 @@ class UserRankListPage extends SortablePage
         $this->objectList->sqlJoins .= '
             LEFT JOIN   wcf' . WCF_N . '_user_group user_group
             ON          user_group.groupID = user_rank.groupID';
+    }
+
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        $view = new UserRankGridView(isset($_GET['pageNo']) ? \intval($_GET['pageNo']) : 1);
+        $view->setBaseUrl(LinkHandler::getInstance()->getControllerLink(self::class));
+
+        WCF::getTPL()->assign([
+            'view' => $view,
+        ]);
     }
 }

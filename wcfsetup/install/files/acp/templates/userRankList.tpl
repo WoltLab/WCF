@@ -39,7 +39,9 @@
 {/hascontent}
 
 {if $objects|count}
-	<div class="section tabularBox">
+	{unsafe:$view->render()}
+	
+	{*<div class="section tabularBox">
 		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\rank\UserRankAction">
 			<thead>
 				<tr>
@@ -85,7 +87,7 @@
 				{/foreach}
 			</tbody>
 		</table>
-	</div>
+	</div>*}
 	
 	<footer class="contentFooter">
 		{hascontent}
