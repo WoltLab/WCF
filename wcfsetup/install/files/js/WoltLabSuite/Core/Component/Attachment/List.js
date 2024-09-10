@@ -1,4 +1,4 @@
-define(["require", "exports", "./Entry", "../Ckeditor/Event", "../File/woltlab-core-file"], function (require, exports, Entry_1, Event_1) {
+define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require, exports, Entry_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;

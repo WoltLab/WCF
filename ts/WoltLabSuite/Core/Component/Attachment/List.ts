@@ -3,10 +3,6 @@ import { CkeditorDropEvent } from "../File/Upload";
 import { createAttachmentFromFile } from "./Entry";
 import { listenToCkeditor } from "../Ckeditor/Event";
 
-// This import has the side effect of registering the `<woltlab-core-file>`
-// element. Do not remove!
-import "../File/woltlab-core-file";
-
 function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
   fileList.append(createAttachmentFromFile(file, editor));
 }

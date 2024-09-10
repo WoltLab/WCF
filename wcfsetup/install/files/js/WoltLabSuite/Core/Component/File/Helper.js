@@ -1,4 +1,4 @@
-define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/FileUtil"], function (require, exports, Language_1, FileUtil_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Component/File/woltlab-core-file"], function (require, exports, Language_1, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.insertFileInformation = exports.fileInitializationFailed = exports.removeUploadProgress = exports.trackUploadProgress = void 0;

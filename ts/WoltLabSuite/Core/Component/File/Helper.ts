@@ -2,6 +2,10 @@ import WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-cor
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 
+// This import has the side effect of registering the `<woltlab-core-file>`
+// element. Do not remove!
+import "WoltLabSuite/Core/Component/File/woltlab-core-file";
+
 export function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
   const progress = document.createElement("progress");
   progress.classList.add("fileList__item__progress__bar");
