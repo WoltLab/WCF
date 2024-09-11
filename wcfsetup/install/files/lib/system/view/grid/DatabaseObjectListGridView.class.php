@@ -49,7 +49,6 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
         $this->objectList = new $this->objectListClassName;
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
-        //wcfDebug($this->objectList->sqlLimit, $this->objectList->sqlOffset);
         if ($this->getSortField()) {
             $this->objectList->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
         }
