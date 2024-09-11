@@ -24,13 +24,14 @@ final class GetRows implements IController
             throw new UserInputException('gridView', 'invalid');
         }
 
-        $view = new $parameters->gridView($parameters->pageNo);
+        $view = new $parameters->gridView();
         \assert($view instanceof AbstractGridView);
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();
         }
 
+        $view->setPageNo($parameters->pageNo);
         if ($parameters->sortField) {
             $view->setSortField($parameters->sortField);
         }

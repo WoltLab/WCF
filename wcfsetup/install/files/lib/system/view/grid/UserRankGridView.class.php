@@ -3,7 +3,6 @@
 namespace wcf\system\view\grid;
 
 use wcf\acp\form\UserRankEditForm;
-use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankList;
@@ -14,8 +13,10 @@ use wcf\system\view\grid\renderer\TitleColumnRenderer;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
-final class UserRankGridView extends AbstractGridView
+final class UserRankGridView extends DatabaseObjectListGridView
 {
+    protected string $objectListClassName = UserRankList::class;
+
     #[\Override]
     protected function init(): void
     {
@@ -90,26 +91,6 @@ final class UserRankGridView extends AbstractGridView
         ]);
 
         $this->setSortField('rankTitle');
-    }
-
-    public function getRows(int $limit, int $offset = 0): array
-    {
-        $list = new UserRankList();
-        $list->sqlLimit = $limit;
-        $list->sqlOffset = $offset;
-        if ($this->getSortField()) {
-            $list->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
-        }
-        $list->readObjects();
-
-        return $list->getObjects();
-    }
-
-    protected function getData(mixed $row, string $identifer): mixed
-    {
-        \assert($row instanceof DatabaseObject);
-
-        return $row->__get($identifer);
     }
 
     public function isAccessible(): bool

@@ -11,8 +11,9 @@ abstract class AbstractGridView
     private string $baseUrl = '';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
+    private int $pageNo = 1;
 
-    public function __construct(private readonly int $pageNo = 1)
+    public function __construct()
     {
         $this->init();
     }
@@ -68,7 +69,7 @@ abstract class AbstractGridView
     {
         $result = '';
 
-        foreach ($this->getRows($this->rowsPerPage, ($this->pageNo - 1) * $this->rowsPerPage) as $row) {
+        foreach ($this->getRows() as $row) {
             $result .= <<<EOT
                 <tr>
             EOT;
@@ -94,17 +95,13 @@ abstract class AbstractGridView
         return $row[$identifer] ?? '';
     }
 
-    public abstract function getRows(int $limit, int $offset = 0): array;
+    protected abstract function getRows(): array;
 
-
-    public function getPageNo(): int
-    {
-        return $this->pageNo;
-    }
+    public abstract function countRows(): int;
 
     public function countPages(): int
     {
-        return 3;
+        return \ceil($this->countRows() / $this->getRowsPerPage());
     }
 
     public function getClassName(): string
@@ -168,5 +165,25 @@ abstract class AbstractGridView
     public function getSortOrder(): string
     {
         return $this->sortOrder;
+    }
+
+    public function getPageNo(): int
+    {
+        return $this->pageNo;
+    }
+
+    public function setPageNo(int $pageNo): void
+    {
+        $this->pageNo = $pageNo;
+    }
+
+    public function getRowsPerPage(): int
+    {
+        return $this->rowsPerPage;
+    }
+
+    public function setRowsPerPage(int $rowsPerPage): void
+    {
+        $this->rowsPerPage = $rowsPerPage;
     }
 }
