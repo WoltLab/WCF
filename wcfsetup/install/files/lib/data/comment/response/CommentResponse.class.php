@@ -9,6 +9,7 @@ use wcf\data\TUserContent;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\util\StringUtil;
 
 /**
@@ -83,6 +84,13 @@ class CommentResponse extends DatabaseObject implements IMessage
      */
     public function getMailText($mimeType = 'text/plain')
     {
+        if ($this->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment.response',
+                [$this->responseID]
+            );
+        }
+
         switch ($mimeType) {
             case 'text/plain':
                 return $this->getPlainTextMessage();
