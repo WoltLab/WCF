@@ -15,6 +15,8 @@
 		</dd>
 	</dl>
 
+	<input type="hidden" name="tmpHash" value="{$tmpHash}">
+
 	<script data-relocate="true">
 		{jsphrase name='wcf.attachment.insert'}
 		{jsphrase name='wcf.attachment.insertFull'}
