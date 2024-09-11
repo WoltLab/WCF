@@ -92,11 +92,10 @@ final class FileDownloadAction implements RequestHandlerInterface
         if ($startByte > 0 || $endByte < $file->fileSize - 1) {
             $response = $response
                 ->withStatus(206)
-                ->withHeader('content-range', \sprintf('bytes %d-%d/%d', $startByte, $endByte, $file->fileSize));
-
-            $response = $response->withBody(
-                new LimitStream($response->getBody(), $endByte - $startByte + 1, $startByte)
-            );
+                ->withHeader('content-range', \sprintf('bytes %d-%d/%d', $startByte, $endByte, $file->fileSize))
+                ->withBody(
+                    new LimitStream($response->getBody(), $endByte - $startByte + 1, $startByte)
+                );
         }
 
         // Prevent <script> execution in the context of the community's domain if
