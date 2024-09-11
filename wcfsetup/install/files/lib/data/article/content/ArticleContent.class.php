@@ -8,6 +8,7 @@ use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -168,6 +169,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      */
     public function getMailText($mimeType = 'text/plain')
     {
+        if ($this->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.article.content',
+                [$this->articleContentID]
+            );
+        }
+
         switch ($mimeType) {
             case 'text/plain':
                 $processor = new HtmlOutputProcessor();
