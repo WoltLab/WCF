@@ -65,7 +65,7 @@ export class GridView {
       this.#sortOrder = "ASC";
     }
 
-    this.#loadRows();
+    this.#switchPage(1);
     this.#renderActiveSorting();
   }
 

@@ -53,7 +53,7 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
                 this.#sortField = sortField;
                 this.#sortOrder = "ASC";
             }
-            this.#loadRows();
+            this.#switchPage(1);
             this.#renderActiveSorting();
         }
         #renderActiveSorting() {
