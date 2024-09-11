@@ -160,12 +160,10 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
 
                 return;
             }
+
+            $this->job->perform();
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
         }
-
-        // If none of the checks failed we can send the notification after we switched
-        // back to the regular user (guest within the context of the queue).
-        $this->job->perform();
     }
 }
