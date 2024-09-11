@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use GuzzleHttp\Psr7\Header;
+use GuzzleHttp\Psr7\LimitStream;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Stream;
@@ -14,6 +15,7 @@ use wcf\http\ContentDisposition;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\Regex;
 use wcf\util\FileUtil;
 
 /**
@@ -70,6 +72,33 @@ final class FileDownloadAction implements RequestHandlerInterface
             default => ContentDisposition::Attachment,
         };
 
+        [$startByte, $endByte] = $this->parseRangeHeader($request, $file->fileSize);
+
+        // check if the range is valid
+        if (
+            $file->fileSize > 0
+            && (
+                $startByte < 0
+                || $startByte >= $file->fileSize
+                || $endByte < $startByte
+            )
+        ) {
+            return $response
+                ->withStatus(416)
+                ->withHeader('accept-ranges', 'bytes')
+                ->withHeader('content-range', "bytes */{$file->fileSize}");
+        }
+
+        if ($startByte > 0 || $endByte < $file->fileSize - 1) {
+            $response = $response
+                ->withStatus(206)
+                ->withHeader('content-range', \sprintf('bytes %d-%d/%d', $startByte, $endByte, $file->fileSize));
+
+            $response = $response->withBody(
+                new LimitStream($response->getBody(), $endByte - $startByte + 1, $startByte)
+            );
+        }
+
         // Prevent <script> execution in the context of the community's domain if
         // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
         // MIME-Types. One possibility might be a package extending $inlineMimeTypes
@@ -119,11 +148,47 @@ final class FileDownloadAction implements RequestHandlerInterface
         }
 
         return $response
+            ->withHeader('accept-ranges', 'bytes')
             ->withHeader('content-type', $mimeType)
             ->withHeader(
                 'content-disposition',
                 $contentDisposition->forFilename($file->filename),
             )
             ->withHeader('etag', $eTag);
+    }
+
+    private function parseRangeHeader(ServerRequestInterface $request, int $fileSize): array
+    {
+        $startByte = 0;
+        $endByte = $fileSize - 1;
+
+        if ($request->hasHeader('range')) {
+            $regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
+            if ($regex->match($request->getHeaderLine('range'))) {
+                $matches = $regex->getMatches();
+                $start = (isset($matches[1]) && $matches[1] !== '' ? \intval($matches[1]) : null);
+                $end = (isset($matches[2]) && $matches[2] !== '' ? \intval($matches[2]) : null);
+                $last = (isset($matches[3]) && $matches[3] !== '' ? \intval($matches[3]) : null);
+
+                if ($start !== null) {
+                    $startByte = $start;
+                }
+
+                if ($end !== null) {
+                    if ($end <= ($fileSize - 1)) {
+                        $endByte = $end;
+                    }
+                }
+
+                if ($start === null && $end === null && $last !== null) {
+                    if ($last <= $fileSize) {
+                        // negative value; subtract from filesize
+                        $startByte = $fileSize - $last;
+                    }
+                }
+            }
+        }
+
+        return [$startByte, $endByte];
     }
 }
