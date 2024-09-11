@@ -48,46 +48,14 @@ abstract class AbstractGridView
         return WCF::getTPL()->fetch('shared_gridView', 'wcf', ['view' => $this], true);
     }
 
-    public function renderHeader(): string
-    {
-        $header = '';
-
-        foreach ($this->getColumns() as $column) {
-            $header .= <<<EOT
-                <th
-                    class="{$column->getClasses()}"
-                    data-id="{$column->getID()}"
-                    data-sortable="{$column->isSortable()}"
-                >{$column->getLabel()}</th>
-            EOT;
-        }
-
-        return $header;
-    }
-
     public function renderRows(): string
     {
-        $result = '';
+        return WCF::getTPL()->fetch('shared_gridViewRows', 'wcf', ['view' => $this], true);
+    }
 
-        foreach ($this->getRows() as $row) {
-            $result .= <<<EOT
-                <tr>
-            EOT;
-
-            foreach ($this->getColumns() as $column) {
-                $result .= <<<EOT
-                    <td class="{$column->getClasses()}">
-                        {$column->render($this->getData($row,$column->getID()),$row)}
-                    </td>
-                EOT;
-            }
-
-            $result .= <<<EOT
-                </tr>
-            EOT;
-        }
-
-        return $result;
+    public function renderColumn(GridViewColumn $column, mixed $row): string
+    {
+        return $column->render($this->getData($row, $column->getID()), $row);
     }
 
     protected function getData(mixed $row, string $identifer): mixed
@@ -95,7 +63,7 @@ abstract class AbstractGridView
         return $row[$identifer] ?? '';
     }
 
-    protected abstract function getRows(): array;
+    public abstract function getRows(): array;
 
     public abstract function countRows(): int;
 

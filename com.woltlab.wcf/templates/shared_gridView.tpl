@@ -7,7 +7,15 @@
 		<table class="table" id="{$view->getID()}_table">
 			<thead>
 				<tr>
-					{unsafe:$view->renderHeader()}
+					{foreach from=$view->getColumns() item='column'}
+						<th
+							class="{$column->getClasses()}"
+							data-id="{$column->getID()}"
+							data-sortable="{$column->isSortable()}"
+						>
+							{unsafe:$column->getLabel()}
+						</th>
+					{/foreach}
 				</td>
 			</thead>
 			<tbody>

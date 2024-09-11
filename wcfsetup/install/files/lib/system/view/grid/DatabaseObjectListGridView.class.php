@@ -13,7 +13,7 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
     protected DatabaseObjectList $objectList;
     private int $objectCount;
 
-    protected function getRows(): array
+    public function getRows(): array
     {
         $this->getObjectList()->readObjects();
 
