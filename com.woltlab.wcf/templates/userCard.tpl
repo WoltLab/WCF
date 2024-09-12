@@ -15,7 +15,7 @@
 
 	<div class="userCard__content">
 		<h3 class="userCard__username">
-			<a href="{$user->getLink()}">{@$user->getFormattedUsername()}</a>
+			<a href="{$user->getLink()}">{unsafe:$user->getFormattedUsername()}</a>
 			
 			{if $user->banned}
 				<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
@@ -29,10 +29,10 @@
 				<div class="userCard__title">
 					{content}
 						{if $user->getUserTitle()}
-							<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+							<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
 						{/if}
 						{if $user->getRank() && $user->getRank()->rankImage}
-							<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+							<span class="userRankImage">{unsafe:$user->getRank()->getImage()}</span>
 						{/if}
 					{/content}
 				</div>
@@ -47,7 +47,7 @@
 					{/if}
 					{if $user->userID != $__wcf->user->userID}
 						{if $user->isAccessible('canViewEmailAddress')}
-							<a class="userCard__button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope' size=24 type='solid'}</a>
+							<a class="userCard__button jsTooltip" href="mailto:{unsafe:$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}">{icon name='envelope' size=24 type='solid'}</a>
 						{/if}
 					{/if}
 					{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
