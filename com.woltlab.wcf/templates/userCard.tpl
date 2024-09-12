@@ -24,6 +24,8 @@
 			{/if}
 		</h3>
 
+		{event name='afterUsername'}
+
 		{if MODULE_USER_RANK}
 			{hascontent}
 				<div class="userCard__title">
@@ -38,6 +40,8 @@
 				</div>
 			{/hascontent}
 		{/if}
+
+		{event name='afterUserTitle'}
 
 		{hascontent}
 			<div class="userCard__buttons">
@@ -89,10 +93,13 @@
 							>{icon name='eye-slash' size=24 type='solid'}</button>
 						{/if}
 					{/if}
+
 					{event name='buttons'}
 				{/content}
 			</div>
 		{/hascontent}
+
+		{event name='afterButtons'}
 	</div>
 
 	{hascontent}
