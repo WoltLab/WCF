@@ -74,6 +74,20 @@ function initSearchBar(): void {
 
     _pageHeaderSearchMobile?.setAttribute("aria-expanded", "false");
   });
+
+  window.addEventListener(
+    "resize",
+    () => {
+      if (_isMobile || !_pageHeader.classList.contains("searchBarOpen")) {
+        return;
+      }
+
+      UiAlignment.set(_pageHeaderSearch, _topMenu, {
+        horizontal: "right",
+      });
+    },
+    { passive: true },
+  );
 }
 
 function initMobileSearch(): void {
