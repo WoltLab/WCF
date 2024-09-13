@@ -48,12 +48,12 @@
 			<pageType>system</pageType>
 			<controller>wcf\page\TeamPage</controller>
 			<name language="de">Team</name>
-			<name language="en">Team</name>
+			<name language="en">Staff</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<options>module_team_page</options>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<content language="en">
-				<title>Team</title>
+				<title>Staff</title>
 			</content>
 			<content language="de">
 				<title>Team</title>

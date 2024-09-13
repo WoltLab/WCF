@@ -72,7 +72,7 @@
 		</box>
 		<box identifier="com.woltlab.wcf.StaffOnline">
 			<name language="de">Team-Mitglieder online</name>
-			<name language="en">Staff-Members Online</name>
+			<name language="en">Staff Online</name>
 			<boxType>system</boxType>
 			<position>sidebarRight</position>
 			<objectType>com.woltlab.wcf.staffOnlineList</objectType>
@@ -85,7 +85,7 @@
 				<title>Team-Mitglieder online</title>
 			</content>
 			<content language="en">
-				<title>Staff-Members Online</title>
+				<title>Staff Online</title>
 			</content>
 		</box>
 		<box identifier="com.woltlab.wcf.Statistics">

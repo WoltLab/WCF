@@ -46,7 +46,7 @@
 		<item identifier="com.woltlab.wcf.Team">
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<title language="de">Team</title>
-			<title language="en">Team</title>
+			<title language="en">Staff</title>
 			<page>com.woltlab.wcf.Team</page>
 		</item>
 		<item identifier="com.woltlab.wcf.UserSearch">

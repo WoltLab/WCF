@@ -793,11 +793,11 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes"><![CDATA[Disallowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used in the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and “Users Online” marking based on highest priority.]]></item>
+		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the staff page, user rank, and “Users Online” marking based on highest priority.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[User Marking]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this user group. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[There must be an occurrence of “%s”.]]></item>
-		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on team page]]></item>
+		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on staff page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Change Username]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Users can change their username after the following days.]]></item>
@@ -1459,7 +1459,7 @@ The developer license permits exclusively the use during the development as well
 		<item name="wcf.acp.option.module_users_online"><![CDATA[Users Online list]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
-		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff list]]></item>
+		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff page]]></item>
 		<item name="wcf.acp.option.password_min_score"><![CDATA[Security Level]]></item>
 		<item name="wcf.acp.option.password_min_score.description"><![CDATA[“Score” value of the <a href="https://github.com/dropbox/zxcvbn" class="externalURL">zxcvbn library</a> that passwords need to achive.]]></item>
 		<item name="wcf.acp.option.password_min_score.0"><![CDATA[0: Disabled]]></item>
