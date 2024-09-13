@@ -76,6 +76,19 @@ function onScroll() {
 }
 
 /**
+ * Recalculates drop-down positions on page resize.
+ */
+function onWindowResize() {
+  _dropdowns.forEach((dropdown, containerId) => {
+    if (!dropdown.classList.contains("dropdownOpen")) {
+      return;
+    }
+
+    UiDropdownSimple.setAlignment(dropdown, _menus.get(containerId)!);
+  });
+}
+
+/**
  * Notifies callbacks on status change.
  */
 function notifyCallbacks(containerId: string, action: NotificationAction): void {
@@ -367,6 +380,7 @@ const UiDropdownSimple = {
     wheneverFirstSeen(".dropdownToggle", (button) => UiDropdownSimple.init(button, false));
 
     document.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", () => onWindowResize(), { passive: true });
 
     // expose on window object for backward compatibility
     window.bc_wcfSimpleDropdown = this;
