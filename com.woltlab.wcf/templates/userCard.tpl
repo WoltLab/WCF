@@ -22,6 +22,8 @@
 					{icon name='lock'}
 				</span>
 			{/if}
+
+			{event name='icons'}
 		</h3>
 
 		{event name='afterUsername'}
