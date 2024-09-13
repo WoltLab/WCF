@@ -972,6 +972,8 @@ html[data-color-scheme="dark"] {
 .acpDashboardBox__content {
 	padding: 20px;
 	height: 100%;
+	max-height: 500px;
+	overflow: auto;
 
 	> :first-child {
 		margin-top: 0 !important;
