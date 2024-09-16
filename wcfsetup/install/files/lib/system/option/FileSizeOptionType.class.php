@@ -23,7 +23,7 @@ class FileSizeOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getContent(Option $option, $newValue)
     {
         $number = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
         $number = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $number);
