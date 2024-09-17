@@ -1,5 +1,5 @@
 {if !$__imageViewerLoaded|isset}
-	<script data-relocate="true">
+{*<script data-relocate="true">
 		var $imageViewer = null;
 		$(function() {
 			WCF.Language.addObject({
@@ -15,6 +15,20 @@
 			
 			$imageViewer = new WCF.ImageViewer();
 		});
+	</script>*}
+	<script data-eager="true">
+	  {
+		let stylesheet = document.getElementById("fancybox-stylesheet");
+		if (stylesheet === null) {
+		  stylesheet = document.createElement("link");
+		  stylesheet.rel = "stylesheet";
+		  stylesheet.type = "text/css";
+		  stylesheet.href = "{$__wcf->getPath()}js/3rdParty/fancybox/fancybox.css";
+		  stylesheet.id = "fancybox-stylesheet";
+
+		  document.querySelector("link[rel=\"stylesheet\"]").before(stylesheet);
+		}
+	  }
 	</script>
 	
 	{assign var=__imageViewerLoaded value=true}

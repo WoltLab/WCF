@@ -19,6 +19,7 @@ import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 import { whenFirstSeen } from "./LazyLoader";
 import { prepareRequest } from "./Ajax/Backend";
 import { setup as serviceWorkerSetup } from "./Notification/ServiceWorker";
+import * as ImageViewer from "./Component/Image/Viewer";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -117,6 +118,8 @@ export function setup(options: BootstrapOptions): void {
       );
     }
   }
+
+  ImageViewer.setup();
 
   whenFirstSeen("woltlab-core-reaction-summary", () => {
     void import("./Ui/Reaction/SummaryDetails").then(({ setup }) => setup());
