@@ -84,7 +84,7 @@ export class GridView {
     this.#bottomPagination.page = pageNo;
     this.#pageNo = pageNo;
 
-    this.#loadRows();
+    void this.#loadRows();
   }
 
   async #loadRows(): Promise<void> {
