@@ -3,6 +3,7 @@
 namespace wcf\acp\page;
 
 use wcf\page\AbstractGridViewPage;
+use wcf\system\view\grid\AbstractGridView;
 use wcf\system\view\grid\UserRankGridView;
 
 /**
@@ -31,8 +32,9 @@ class UserRankListPage extends AbstractGridViewPage
      */
     public $neededModules = ['MODULE_USER_RANK'];
 
-    /**
-     * @inheritDoc
-     */
-    protected string $gridViewClassName = UserRankGridView::class;
+    #[\Override]
+    protected function createGridViewController(): AbstractGridView
+    {
+        return new UserRankGridView();
+    }
 }

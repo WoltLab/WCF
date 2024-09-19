@@ -2,15 +2,12 @@
 
 namespace wcf\page;
 
-use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\grid\AbstractGridView;
 use wcf\system\WCF;
 
 abstract class AbstractGridViewPage extends AbstractPage
 {
-    protected string $gridViewClassName;
     protected AbstractGridView $gridView;
     protected int $pageNo = 1;
     protected string $sortField = '';
@@ -52,15 +49,7 @@ abstract class AbstractGridViewPage extends AbstractPage
 
     protected function initGridView(): void
     {
-        if (!isset($this->gridViewClassName)) {
-            throw new SystemException('Grid view class name not specified.');
-        }
-
-        if (!\is_subclass_of($this->gridViewClassName, AbstractGridView::class)) {
-            throw new ParentClassException($this->gridViewClassName, AbstractGridView::class);
-        }
-
-        $this->gridView = new $this->gridViewClassName;
+        $this->gridView = $this->createGridViewController();
 
         if ($this->sortField) {
             $this->gridView->setSortField($this->sortField);
@@ -69,4 +58,6 @@ abstract class AbstractGridViewPage extends AbstractPage
         $this->gridView->setPageNo($this->pageNo);
         $this->gridView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class));
     }
+
+    protected abstract function createGridViewController(): AbstractGridView;
 }
