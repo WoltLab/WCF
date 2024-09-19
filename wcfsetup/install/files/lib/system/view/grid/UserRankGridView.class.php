@@ -3,6 +3,7 @@
 namespace wcf\system\view\grid;
 
 use wcf\acp\form\UserRankEditForm;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankList;
@@ -15,8 +16,6 @@ use wcf\util\StringUtil;
 
 final class UserRankGridView extends DatabaseObjectListGridView
 {
-    protected string $objectListClassName = UserRankList::class;
-
     #[\Override]
     protected function init(): void
     {
@@ -93,8 +92,15 @@ final class UserRankGridView extends DatabaseObjectListGridView
         $this->setSortField('rankTitle');
     }
 
+    #[\Override]
     public function isAccessible(): bool
     {
         return \MODULE_USER_RANK && WCF::getSession()->getPermission('admin.user.rank.canManageRank');
+    }
+
+    #[\Override]
+    protected function createObjectList(): DatabaseObjectList
+    {
+        return new UserRankList();
     }
 }

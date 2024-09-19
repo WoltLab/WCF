@@ -4,12 +4,9 @@ namespace wcf\system\view\grid;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
-use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 
 abstract class DatabaseObjectListGridView extends AbstractGridView
 {
-    protected string $objectListClassName;
     protected DatabaseObjectList $objectList;
     private int $objectCount;
 
@@ -38,15 +35,7 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
 
     protected function initObjectList(): void
     {
-        if (!isset($this->objectListClassName)) {
-            throw new SystemException('Database object list class name not specified.');
-        }
-
-        if (!\is_subclass_of($this->objectListClassName, DatabaseObjectList::class)) {
-            throw new ParentClassException($this->objectListClassName, DatabaseObjectList::class);
-        }
-
-        $this->objectList = new $this->objectListClassName;
+        $this->objectList = $this->createObjectList();
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField()) {
@@ -62,4 +51,6 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
 
         return $this->objectList;
     }
+
+    protected abstract function createObjectList(): DatabaseObjectList;
 }
