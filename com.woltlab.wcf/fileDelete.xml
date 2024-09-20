@@ -15,6 +15,7 @@
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.5.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.6.php</file>
+		<file>acp/database/update_com.woltlab.wcf_6.0_reaction_fk_step1.php</file>
 		<file>acp/dereferrer.php</file>
 		<file>acp/images/acpLogo.png</file>
 		<file>acp/images/blueTemptation/blueTemptationHeader.png</file>
@@ -1736,17 +1737,26 @@
 		<file>lib/system/api/cuyz/valinor/docs/requirements.txt</file>
 		<file>lib/system/api/cuyz/valinor/src/Attribute/Identifier.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Attribute/StaticMethodConstructor.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/Compiled/CacheCompiler.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/Compiled/CompiledPhpFileCache.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/Compiled/HasArguments.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/Compiled/MixedValueCacheCompiler.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/Compiled/PhpCacheFile.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/AttributesContainer.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/CombinedAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/DoctrineAnnotations.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/EmptyAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/NativeAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidParameterIndex.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidReflectionParameter.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/MethodNotFound.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/ParameterNotFound.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/PropertyNotFound.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/TypesDoNotMatch.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Cache/Compiler/Exception/IncompatibleAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/CombinedAttributesRepository.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/DoctrineAnnotationsRepository.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/NativeAttributesRepository.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/BackwardCompatibilityDateTimeConstructor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/CannotParseToBackwardCompatibilityDateTime.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/MissingMethodArgument.php</file>
@@ -1758,6 +1768,7 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/JsonExtensionNotEnabled.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/SourceException.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ClassNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/NativeClassNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ProxyClassNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ShellVisitorNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/CannotGetParentOfRootShell.php</file>
@@ -1777,6 +1788,10 @@
 		<file>lib/system/api/cuyz/valinor/src/Type/EnumType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Constant/MissingClassConstantColon.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Enum/MissingEnumColon.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/ExtendTagTypeError.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/InvalidExtendTagClassName.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/InvalidExtendTagType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/SeveralExtendTagsFound.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToAccessOutboundToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToReadFinishedStream.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/WrongTokenType.php</file>
@@ -1784,8 +1799,15 @@
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/InvalidTemplateType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Factory/Specifications/HandleClassGenericSpecification.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/LazyParser.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/ParserSymbols.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/AdvancedClassLexer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/AliasLexer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/ClassContextLexer.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/ClassGenericLexer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/TypeAliasLexer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/AdvancedClassNameToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/GenericClassNameToken.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/UnknownSymbolToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Template/BasicTemplateParser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Template/TemplateParser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveObjectType.php</file>
@@ -1946,6 +1968,7 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
+		<file>lib/system/api/ezyang/htmlpurifier/CHANGELOG.md</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
