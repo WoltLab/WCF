@@ -43,6 +43,17 @@ abstract class AbstractGridView
         return $this->columns;
     }
 
+    public function getColumn(string $id): ?GridViewColumn
+    {
+        foreach ($this->getColumns() as $column) {
+            if ($column->getID() === $id) {
+                return $column;
+            }
+        }
+
+        return null;
+    }
+
     public function render(): string
     {
         return WCF::getTPL()->fetch('shared_gridView', 'wcf', ['view' => $this], true);

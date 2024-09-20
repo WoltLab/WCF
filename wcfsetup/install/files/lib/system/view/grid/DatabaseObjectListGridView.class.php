@@ -39,7 +39,12 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField()) {
-            $this->objectList->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
+            $column = $this->getColumn($this->getSortField());
+            if ($column && $column->getSortById()) {
+                $this->objectList->sqlOrderBy = $column->getSortById() . ' ' . $this->getSortOrder();
+            } else {
+                $this->objectList->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
+            }
         }
     }
 

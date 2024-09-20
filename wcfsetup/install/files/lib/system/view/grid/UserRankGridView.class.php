@@ -5,8 +5,8 @@ namespace wcf\system\view\grid;
 use wcf\acp\form\UserRankEditForm;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\rank\I18nUserRankList;
 use wcf\data\user\rank\UserRank;
-use wcf\data\user\rank\UserRankList;
 use wcf\system\view\grid\renderer\DefaultColumnRenderer;
 use wcf\system\view\grid\renderer\LinkColumnRenderer;
 use wcf\system\view\grid\renderer\NumberColumnRenderer;
@@ -27,6 +27,7 @@ final class UserRankGridView extends DatabaseObjectListGridView
             GridViewColumn::for('rankTitle')
                 ->label('wcf.acp.user.rank.title')
                 ->sortable()
+                ->sortById('rankTitleI18n')
                 ->renderer([
                     new class extends TitleColumnRenderer {
                         public function render(mixed $value, mixed $context = null): string
@@ -101,6 +102,6 @@ final class UserRankGridView extends DatabaseObjectListGridView
     #[\Override]
     protected function createObjectList(): DatabaseObjectList
     {
-        return new UserRankList();
+        return new I18nUserRankList();
     }
 }
