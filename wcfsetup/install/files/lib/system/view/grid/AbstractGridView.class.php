@@ -7,7 +7,7 @@ use wcf\system\WCF;
 abstract class AbstractGridView
 {
     private array $columns = [];
-    private int $rowsPerPage = 2;
+    private int $rowsPerPage = 20;
     private string $baseUrl = '';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
