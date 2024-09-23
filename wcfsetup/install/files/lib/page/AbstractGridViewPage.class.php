@@ -11,7 +11,7 @@ abstract class AbstractGridViewPage extends AbstractPage
     protected AbstractGridView $gridView;
     protected int $pageNo = 1;
     protected string $sortField = '';
-    protected string $sortOrder = 'ASC';
+    protected string $sortOrder = '';
 
     #[\Override]
     public function readParameters()
@@ -54,7 +54,9 @@ abstract class AbstractGridViewPage extends AbstractPage
         if ($this->sortField) {
             $this->gridView->setSortField($this->sortField);
         }
-        $this->gridView->setSortOrder($this->sortOrder);
+        if ($this->sortOrder) {
+            $this->gridView->setSortOrder($this->sortOrder);
+        }
         $this->gridView->setPageNo($this->pageNo);
         $this->gridView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class));
     }
