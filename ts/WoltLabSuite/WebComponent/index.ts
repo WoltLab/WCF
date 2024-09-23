@@ -17,4 +17,4 @@ import "./woltlab-core-loading-indicator.ts";
 import "./woltlab-core-notice.ts";
 import "./woltlab-core-pagination.ts";
 import "./woltlab-core-reaction-summary.ts";
-import "emoji-picker-element";
+import "./emoji-picker.ts";

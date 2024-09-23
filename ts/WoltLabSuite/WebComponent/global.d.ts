@@ -27,6 +27,7 @@ declare global {
       [key: string]: Reaction;
     };
     TIME_NOW: number;
+    LANGUAGE_CODE: string;
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
 
