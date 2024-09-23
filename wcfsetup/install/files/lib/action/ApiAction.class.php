@@ -17,6 +17,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\RequestFailure;
 use wcf\system\endpoint\RequestType;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RouteHandler;
@@ -95,6 +96,8 @@ final class ApiAction implements RequestHandlerInterface
             return $this->toErrorResponse(RequestFailure::PermissionDenied, 'permission_denied');
         } catch (UserInputException $e) {
             return $this->toErrorResponse(RequestFailure::ValidationFailed, $e->getType(), $e->getMessage(), $e->getField());
+        } catch (IllegalLinkException) {
+            return $this->toErrorResponse(RequestFailure::ValidationFailed, 'assertion_failed');
         } catch (\Throwable $e) {
             logThrowable($e);
 
