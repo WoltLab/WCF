@@ -11,6 +11,7 @@ import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-cor
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
 import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
+import { I18n } from "emoji-picker-element/shared";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -57,6 +58,9 @@ declare global {
     };
 
     WoltLabTemplate: new (template: string) => WoltLabTemplate;
+    EmojiPickerLocales: {
+      [key: string]: I18n;
+    };
   }
 
   interface String {
