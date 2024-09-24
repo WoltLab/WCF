@@ -5,7 +5,7 @@ wheneverFirstSeen("emoji-picker", (emojiPicker: Picker) => {
   emojiPicker.locale = window.LANGUAGE_CODE;
   emojiPicker.dataSource = `${window.WSC_API_URL}emoji/index.php?l=${window.LANGUAGE_CODE}`;
 
-  if (window.EmojiPickerLocales[window.LANGUAGE_CODE] !== undefined) {
+  if (Object.hasOwn(window.EmojiPickerLocales, window.LANGUAGE_CODE)) {
     emojiPicker.i18n = window.EmojiPickerLocales[window.LANGUAGE_CODE];
   }
 });
