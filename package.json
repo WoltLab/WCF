@@ -1,7 +1,8 @@
 {
   "name": "@woltlab/wcf",
   "scripts": {
-    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js"
+    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js",
+    "copy-emoji-data": "npx copyfiles -u 2 'node_modules/emoji-picker-element-data/**/data.json' 'wcfsetup/install/files/emoji/'"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.7.0",
@@ -24,6 +25,7 @@
     "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#efa5ffdc4a094c55ef015b29c9d5024649a8ea32",
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
+    "copyfiles": "^2.4.1",
     "emoji-picker-element": "^1.22.8",
     "emoji-picker-element-data": "^1.6.1",
     "focus-trap": "^7.6.0",
