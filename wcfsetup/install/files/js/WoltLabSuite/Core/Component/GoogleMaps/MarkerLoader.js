@@ -66,6 +66,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             this.#clusterer.addMarker(marker);
             if (data.infoWindow) {
                 const content = document.createElement("div");
+                content.classList.add("googleMapsInfoWindow");
                 Util_1.default.setInnerHtml(content, data.infoWindow);
                 const infoWindow = new google.maps.InfoWindow({
                     headerContent: data.title,

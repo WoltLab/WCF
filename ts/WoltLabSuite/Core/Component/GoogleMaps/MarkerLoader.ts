@@ -100,6 +100,7 @@ class MarkerLoader {
 
     if (data.infoWindow) {
       const content = document.createElement("div");
+      content.classList.add("googleMapsInfoWindow");
       DomUtil.setInnerHtml(content, data.infoWindow);
 
       const infoWindow = new google.maps.InfoWindow({
