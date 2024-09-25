@@ -666,8 +666,8 @@ html.iOS {
 /* Accessiblity Dialog */
 .ck.ck-dialog {
 	--ck-accessibility-help-dialog-border-color: var(--wcfContentBorderInner);
-	--ck-color-dialog-form-header-border: var(--wcfContentBorderInner);
 	--ck-accessibility-help-dialog-code-background-color: transparent;
+	--ck-color-dialog-form-header-border: var(--wcfContentBorderInner);
 
 	background-color: var(--wcfContentBackground);
 	border-radius: var(--wcfBorderRadiusContainer);
@@ -682,5 +682,12 @@ html.iOS {
 		> :is(dt:not(:empty), dd:not(:last-child)) {
 			margin-bottom: 0;
 		}
+	}
+}
+
+/* "Insert Image" Dialog */
+.ck.ck-dialog {
+	.ck.ck-labeled-field-view > .ck.ck-labeled-field-view__input-wrapper > .ck.ck-label {
+		--ck-color-labeled-field-label-background: transparent;
 	}
 }
