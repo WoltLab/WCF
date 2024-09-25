@@ -168,7 +168,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
         _wrapper.classList.remove("scrolledDown");
         _buttons.set(buttonName, button);
         // Query a layout related property to force a reflow, otherwise the transition is optimized away.
-        // noinspection BadExpressionStatementJS
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         wrapper.offsetParent;
         // Toggle the visibility to force the transition to be applied.
         wrapper.setAttribute("aria-hidden", "false");
@@ -201,7 +201,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
                     }
                     listItem.removeEventListener("transitionend", callback);
                 }
-                catch (e) {
+                catch {
                     // ignore errors if the element has already been removed
                 }
             };

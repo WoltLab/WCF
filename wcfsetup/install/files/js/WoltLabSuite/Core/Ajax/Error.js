@@ -46,7 +46,7 @@ define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Lan
                 try {
                     json = await error.response.clone().json();
                 }
-                catch (e) {
+                catch {
                     message = await error.response.clone().text();
                 }
                 if (json && Core.isPlainObject(json) && Object.keys(json).length > 0) {

@@ -259,7 +259,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 return;
             }
@@ -276,7 +276,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 return;
             }

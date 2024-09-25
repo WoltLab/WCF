@@ -235,7 +235,7 @@ class AjaxRequest {
       if (this.getContentType(xhr) === "application/json") {
         try {
           data = JSON.parse(xhr.responseText) as ResponseData;
-        } catch (e) {
+        } catch {
           // invalid JSON
           this._failure(xhr, options);
 
@@ -275,7 +275,7 @@ class AjaxRequest {
     let data: ResponseData | null = null;
     try {
       data = JSON.parse(xhr.responseText);
-    } catch (e) {
+    } catch {
       // Ignore JSON parsing failure.
     }
 

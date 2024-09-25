@@ -360,10 +360,10 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
 
       Object.entries(parameters).forEach(([key, value]) => {
         if (typeof value === "object") {
-          const newPrefix = prefix!.length === 0 ? key : `${prefix!}[${key}]`;
+          const newPrefix = prefix.length === 0 ? key : `${prefix}[${key}]`;
           appendFormData(value, newPrefix);
         } else {
-          const dataName = prefix!.length === 0 ? key : `${prefix!}[${key}]`;
+          const dataName = prefix.length === 0 ? key : `${prefix}[${key}]`;
           formData.append(dataName, value);
         }
       });

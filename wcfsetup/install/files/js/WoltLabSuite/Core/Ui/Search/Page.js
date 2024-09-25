@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../Dropd
                 });
             }
         }
-        catch (e) {
+        catch {
             // Ignore JSON parsing failure.
         }
         if (objectType && objectType !== "everywhere") {

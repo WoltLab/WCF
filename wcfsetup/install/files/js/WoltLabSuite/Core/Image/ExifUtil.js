@@ -53,7 +53,12 @@ define(["require", "exports"], function (require, exports) {
             const reader = new FileReader();
             reader.addEventListener("error", () => {
                 reader.abort();
-                reject(reader.error);
+                if (reader.error) {
+                    reject(reader.error);
+                }
+                else {
+                    reject();
+                }
             });
             reader.addEventListener("load", () => {
                 resolve(new Uint8Array(reader.result));

@@ -157,7 +157,7 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
         try {
             json = await response.json();
         }
-        catch (e) {
+        catch {
             throw new Error_1.InvalidJson(response);
         }
         return json;

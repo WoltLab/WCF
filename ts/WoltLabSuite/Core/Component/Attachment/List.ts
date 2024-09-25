@@ -39,7 +39,7 @@ export function setup(editorId: string): void {
   }
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    fileToAttachment(fileList!, event.detail, editor);
+    fileToAttachment(fileList, event.detail, editor);
   });
 
   listenToCkeditor(editor)
@@ -79,7 +79,7 @@ export function setup(editorId: string): void {
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {
     existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-      fileToAttachment(fileList!, file, editor);
+      fileToAttachment(fileList, file, editor);
     });
 
     existingFiles.remove();

@@ -21,7 +21,7 @@ class Checkboxes extends Field {
 
         return null;
       })
-      .filter((v) => v !== null) as string[];
+      .filter((v) => v !== null);
 
     return {
       [this._fieldId]: values,

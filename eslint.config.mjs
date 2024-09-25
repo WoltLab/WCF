@@ -15,7 +15,7 @@ const compat = new FlatCompat({
 
 export default [
 	{
-		ignores: ["**/*.js", "**/extra", "node_modules/**/*"],
+		ignores: ["**/*.js", "**/extra", "node_modules/**/*", "eslint.config.mjs"],
 	},
 	...compat.extends(
 		"eslint:recommended",
@@ -34,23 +34,12 @@ export default [
 			sourceType: "script",
 
 			parserOptions: {
-				tsconfigRootDir: "/opt/homebrew/var/www/wcf/WCF",
+				tsconfigRootDir: __dirname,
 				project: ["./tsconfig.json", "./ts/WoltLabSuite/WebComponent/tsconfig.json"],
 			},
 		},
 
 		rules: {
-			"@typescript-eslint/ban-types": [
-				"error",
-				{
-					types: {
-						object: false,
-					},
-
-					extendDefaults: true,
-				},
-			],
-
 			"@typescript-eslint/no-explicit-any": 0,
 			"@typescript-eslint/no-non-null-assertion": 0,
 			"@typescript-eslint/no-unsafe-argument": 0,
@@ -73,6 +62,7 @@ export default [
 					checksVoidReturn: false,
 				},
 			],
+			"@typescript-eslint/prefer-promise-reject-errors": ["error", { allowEmptyReject: true }],
 		},
 	},
 ];

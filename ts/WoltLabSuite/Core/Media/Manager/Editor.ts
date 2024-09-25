@@ -196,7 +196,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
 
         return null;
       })
-      .filter((s) => s !== null) as string[];
+      .filter((s) => s !== null);
   }
 
   /**

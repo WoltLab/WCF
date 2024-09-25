@@ -202,7 +202,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     try {
                         data = JSON.parse(xhr.responseText);
                     }
-                    catch (e) {
+                    catch {
                         // invalid JSON
                         this._failure(xhr, options);
                         return;
@@ -235,7 +235,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             try {
                 data = JSON.parse(xhr.responseText);
             }
-            catch (e) {
+            catch {
                 // Ignore JSON parsing failure.
             }
             let showError = true;

@@ -515,7 +515,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 UiDropdownSimple.close(containerId);
                 _menus.get(containerId)?.remove();
             }
-            catch (e) {
+            catch {
                 // the elements might not exist anymore thus ignore all errors while cleaning up
             }
             _menus.delete(containerId);

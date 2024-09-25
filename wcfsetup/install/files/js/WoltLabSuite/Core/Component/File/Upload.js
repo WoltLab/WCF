@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
                 fileElement.uploadFailed(response.error);
-                throw response.error;
+                throw new Error("Unexpected validation error", { cause: response.error });
             }
             fileElement.uploadFailed(response.error);
             return undefined;
@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
             if (!response.ok) {
                 fileElement.uploadFailed(response.error);
-                throw response.error;
+                throw new Error("Unexpected validation error", { cause: response.error });
             }
             notifyChunkProgress(fileElement, i + 1, numberOfChunks);
             await chunkUploadCompleted(fileElement, response.value);

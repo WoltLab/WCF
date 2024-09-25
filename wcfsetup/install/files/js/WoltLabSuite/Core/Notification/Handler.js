@@ -125,7 +125,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
                 pollData = JSON.parse(pollData);
                 keepAliveData = JSON.parse(keepAliveData);
             }
-            catch (e) {
+            catch {
                 abort = true;
             }
             if (!abort) {

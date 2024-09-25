@@ -54,7 +54,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     if (validationError === undefined) {
       fileElement.uploadFailed(response.error);
 
-      throw response.error;
+      throw new Error("Unexpected validation error", { cause: response.error });
     }
 
     fileElement.uploadFailed(response.error);
@@ -78,7 +78,7 @@ async function upload(element: WoltlabCoreFileUploadElement, file: File): Promis
     if (!response.ok) {
       fileElement.uploadFailed(response.error);
 
-      throw response.error;
+      throw new Error("Unexpected validation error", { cause: response.error });
     }
 
     notifyChunkProgress(fileElement, i + 1, numberOfChunks);

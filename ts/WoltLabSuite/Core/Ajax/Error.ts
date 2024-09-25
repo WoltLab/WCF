@@ -60,7 +60,7 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
       let json: ErrorResponse | undefined = undefined;
       try {
         json = await error.response.clone().json();
-      } catch (e) {
+      } catch {
         message = await error.response.clone().text();
       }
 

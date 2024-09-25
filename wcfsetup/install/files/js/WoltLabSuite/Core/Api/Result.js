@@ -57,7 +57,7 @@ define(["require", "exports", "../Ajax/Error", "../Core", "./Error"], function (
                 ok: false,
                 error: apiError,
                 unwrap() {
-                    throw apiError;
+                    throw new Error("Trying to unwrap an erroneous result.", { cause: apiError });
                 },
             };
         }

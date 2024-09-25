@@ -169,7 +169,7 @@ class NotificationHandler {
 
       pollData = JSON.parse(pollData as string);
       keepAliveData = JSON.parse(keepAliveData as string);
-    } catch (e) {
+    } catch {
       abort = true;
     }
 

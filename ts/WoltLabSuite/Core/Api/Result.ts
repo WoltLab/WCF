@@ -35,7 +35,7 @@ export function apiResultFromValue<T>(value: T): ApiResult<T> {
   };
 }
 
-export async function apiResultFromError(error: unknown): Promise<ApiResult<never>> {
+export async function apiResultFromError(error: Error): Promise<ApiResult<never>> {
   if (error instanceof StatusNotOk) {
     return apiResultFromStatusNotOk(error);
   }
@@ -77,7 +77,7 @@ export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResul
       ok: false,
       error: apiError,
       unwrap() {
-        throw apiError;
+        throw new Error("Trying to unwrap an erroneous result.", { cause: apiError });
       },
     };
   }

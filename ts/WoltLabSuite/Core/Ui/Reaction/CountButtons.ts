@@ -172,7 +172,7 @@ class CountButtons {
           countSpan.innerHTML = StringUtil.shortUnit(count);
           createdElement.appendChild(countSpan);
 
-          summaryList!.appendChild(createdElement);
+          summaryList.appendChild(createdElement);
 
           triggerChange = true;
         }

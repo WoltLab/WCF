@@ -44,7 +44,7 @@ function compile(value: string): Phrase {
   try {
     const template = new Template(value);
     return template.fetch.bind(template);
-  } catch (e) {
+  } catch {
     return function () {
       return value;
     };

@@ -115,7 +115,7 @@ class Code {
       const chunkEnd = Math.min(chunkStart + Code.chunkSize, max);
 
       for (let offset = chunkStart; offset < chunkEnd; offset++) {
-        const toReplace = originalLines[offset]!;
+        const toReplace = originalLines[offset];
         const replacement = highlightedLines.next().value as Element;
         toReplace.parentNode!.replaceChild(replacement, toReplace);
       }

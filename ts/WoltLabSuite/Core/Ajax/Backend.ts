@@ -110,7 +110,7 @@ class BackendRequest {
     let json: unknown;
     try {
       json = await response.json();
-    } catch (e) {
+    } catch {
       throw new InvalidJson(response);
     }
 

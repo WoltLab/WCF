@@ -72,7 +72,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
                     .disableLoadingIndicator()
                     .fetchAsResponse();
             }
-            catch (_) {
+            catch {
                 // ignore registration errors
             }
         }
