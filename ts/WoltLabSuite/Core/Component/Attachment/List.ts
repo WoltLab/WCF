@@ -48,6 +48,13 @@ export function setup(editorId: string): void {
         detail: payload,
       });
       uploadButton.dispatchEvent(event);
+
+      const messageTabMenu = document.querySelector(`.messageTabMenu[data-wysiwyg-container-id="${editorId}"]`);
+      if (messageTabMenu === null) {
+        return;
+      }
+
+      window.jQuery(messageTabMenu).messageTabMenu("showTab", "attachments");
     })
     .collectMetaData((payload) => {
       let context: Context | undefined = undefined;
