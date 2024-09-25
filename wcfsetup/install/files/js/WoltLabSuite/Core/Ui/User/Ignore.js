@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     const _availableMessages = document.getElementsByClassName("ignoredUserMessage");
     const _knownMessages = new Set();
@@ -46,5 +46,4 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener"], function (r
         rebuild();
         Listener_1.default.add("WoltLabSuite/Core/Ui/User/Ignore", rebuild);
     }
-    exports.init = init;
 });

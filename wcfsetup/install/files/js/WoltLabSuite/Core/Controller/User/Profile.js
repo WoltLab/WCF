@@ -8,7 +8,7 @@
 define(["require", "exports", "../../Component/User/List"], function (require, exports, List_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function setupUserList(userId, buttonId, className) {
         const button = document.getElementById(buttonId);
         if (button) {
@@ -40,5 +40,4 @@ define(["require", "exports", "../../Component/User/List"], function (require, e
         setupFollowerList(userId);
         setupVisitorList(userId);
     }
-    exports.setup = setup;
 });

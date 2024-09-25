@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../Language", "../../Clipboard", "../Notification"], function (require, exports, tslib_1, Dialog_1, StringUtil, Language, Clipboard, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     StringUtil = tslib_1.__importStar(StringUtil);
     Language = tslib_1.__importStar(Language);
@@ -70,5 +70,4 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
             link.addEventListener("click", (ev) => openDialog(ev));
         });
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../Notification"], function (require, exports, tslib_1, Ajax_1, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     UiNotification = tslib_1.__importStar(UiNotification);
     async function markAllAsRead() {
         await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\article\\ArticleAction").dispatch();
@@ -25,5 +25,4 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification"], functio
             });
         });
     }
-    exports.setup = setup;
 });

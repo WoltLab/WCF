@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", "../../../Core", "../../../Language", "../../../Dom/Util", "../../../Ui/Dialog", "WoltLabSuite/Core/Ajax/Error"], function (require, exports, tslib_1, Ajax_1, AjaxStatus, Core_1, Language, Util_1, Dialog_1, Error_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -133,5 +133,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", 
             detectCode(versionNumber);
         });
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemList/Filter"], function (require, exports, tslib_1, Language, Dialog_1, Filter_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.open = exports.setup = void 0;
+    exports.setup = setup;
+    exports.open = open;
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Filter_1 = tslib_1.__importDefault(Filter_1);
@@ -81,7 +82,6 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
             uiStyleFontAwesome = new UiStyleFontAwesome();
         }
     }
-    exports.setup = setup;
     /**
      * Shows the FontAwesome selection dialog, supplied callback will be
      * invoked with the selection icon's name as the only argument.
@@ -92,5 +92,4 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
         }
         uiStyleFontAwesome.open(callback);
     }
-    exports.open = open;
 });

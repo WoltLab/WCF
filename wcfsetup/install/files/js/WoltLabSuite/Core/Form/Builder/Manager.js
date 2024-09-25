@@ -10,7 +10,14 @@
 define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./Field/Field", "./Field/Dependency/Manager"], function (require, exports, tslib_1, Core, EventHandler, Field_1, DependencyManager) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.unregisterForm = exports.registerForm = exports.registerField = exports.hasForm = exports.hasField = exports.getForm = exports.getField = exports.getData = void 0;
+    exports.getData = getData;
+    exports.getField = getField;
+    exports.getForm = getForm;
+    exports.hasField = hasField;
+    exports.hasForm = hasForm;
+    exports.registerField = registerField;
+    exports.registerForm = registerForm;
+    exports.unregisterForm = unregisterForm;
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     Field_1 = tslib_1.__importDefault(Field_1);
@@ -36,7 +43,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             return promiseData.reduce((carry, current) => Core.extend(carry, current), {});
         });
     }
-    exports.getData = getData;
     /**
      * Returns the registered form field with given.
      *
@@ -48,7 +54,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
         }
         return _fields.get(formId).get(fieldId);
     }
-    exports.getField = getField;
     /**
      * Returns the registered form with given id.
      */
@@ -58,7 +63,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
         }
         return _forms.get(formId);
     }
-    exports.getForm = getForm;
     /**
      * Returns `true` if a field with the given id has been registered for the form with the given id
      * and `false` otherwise.
@@ -69,14 +73,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
         }
         return _fields.get(formId).has(fieldId);
     }
-    exports.hasField = hasField;
     /**
      * Returns `true` if a form with the given id has been registered and `false` otherwise.
      */
     function hasForm(formId) {
         return _forms.has(formId);
     }
-    exports.hasForm = hasForm;
     /**
      * Registers the given field for the form with the given id.
      */
@@ -97,7 +99,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             formId: formId,
         });
     }
-    exports.registerField = registerField;
     /**
      * Registers the form with the given id.
      */
@@ -115,7 +116,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             formId: formId,
         });
     }
-    exports.registerForm = registerForm;
     /**
      * Unregisters the form with the given id.
      */
@@ -136,5 +136,4 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             formId: formId,
         });
     }
-    exports.unregisterForm = unregisterForm;
 });

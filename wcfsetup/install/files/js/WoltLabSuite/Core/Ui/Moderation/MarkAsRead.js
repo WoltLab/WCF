@@ -9,7 +9,7 @@
 define(["require", "exports", "../../Ajax"], function (require, exports, Ajax_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     const unreadEntries = new WeakSet();
     async function markAsRead(entry) {
         const queueId = parseInt(entry.dataset.queueId, 10);
@@ -32,5 +32,4 @@ define(["require", "exports", "../../Ajax"], function (require, exports, Ajax_1)
             }
         });
     }
-    exports.setup = setup;
 });

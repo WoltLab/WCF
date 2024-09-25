@@ -19,9 +19,8 @@
 define(["require", "exports", "./Dialog/Setup", "../Element/woltlab-core-dialog", "../Element/woltlab-core-dialog-control"], function (require, exports, Setup_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dialogFactory = void 0;
+    exports.dialogFactory = dialogFactory;
     function dialogFactory() {
         return new Setup_1.DialogSetup();
     }
-    exports.dialogFactory = dialogFactory;
 });

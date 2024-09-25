@@ -8,7 +8,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.observe = void 0;
+    exports.observe = observe;
     function initContainer(container, toggleButtons, overflowContainer) {
         toggleButtons.forEach((toggleButton) => {
             toggleButton.classList.add("jsToggleButtonEnabled");
@@ -84,5 +84,4 @@ define(["require", "exports"], function (require, exports) {
             container.classList.remove("jsCollapsibleBbcode");
         });
     }
-    exports.observe = observe;
 });

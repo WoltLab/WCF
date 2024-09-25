@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"], function (require, exports, tslib_1, Listener_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
     const _knownElements = new WeakSet();
@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         initElements();
         Listener_1.default.add("WoltLabSuite/Core/Ui/Password", () => initElements());
     }
-    exports.setup = setup;
     function initElements() {
         document.querySelectorAll("input[type=password]").forEach((input) => {
             if (!_knownElements.has(input)) {

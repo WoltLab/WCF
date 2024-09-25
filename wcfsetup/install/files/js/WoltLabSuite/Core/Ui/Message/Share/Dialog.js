@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language", "../../../Event/Handler"], function (require, exports, tslib_1, DomTraverse, Clipboard, UiNotification, StringUtil, Listener_1, Providers_1, Dialog_1, Language_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
@@ -267,5 +267,4 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         registerButtons();
         Listener_1.default.add("WoltLabSuite/Core/Ui/Message/Share/Dialog", () => registerButtons());
     }
-    exports.setup = setup;
 });

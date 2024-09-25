@@ -15,7 +15,9 @@
 define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/Layer", "../Environment"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, Layer_1, Environment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
+    exports.setupCkeditor = setupCkeditor;
+    exports.getCkeditor = getCkeditor;
+    exports.getCkeditorById = getCkeditorById;
     Devtools_1 = tslib_1.__importDefault(Devtools_1);
     const instances = new WeakMap();
     class Ckeditor {
@@ -245,11 +247,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return ckeditor;
     }
-    exports.setupCkeditor = setupCkeditor;
     function getCkeditor(element) {
         return instances.get(element);
     }
-    exports.getCkeditor = getCkeditor;
     function getCkeditorById(id, throwIfNotExists = true) {
         const element = document.getElementById(id);
         if (element === null) {
@@ -262,5 +262,4 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         return getCkeditor(element);
     }
-    exports.getCkeditorById = getCkeditorById;
 });

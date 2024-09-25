@@ -8,7 +8,8 @@
 define(["require", "exports", "tslib", "../ItemList"], function (require, exports, tslib_1, UiItemList) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getValues = exports.init = void 0;
+    exports.init = init;
+    exports.getValues = getValues;
     UiItemList = tslib_1.__importStar(UiItemList);
     function syncShadow(data) {
         const values = getValues(data.element.id);
@@ -59,12 +60,10 @@ define(["require", "exports", "tslib", "../ItemList"], function (require, export
             restricted: true,
         });
     }
-    exports.init = init;
     /**
      * @see  WoltLabSuite/Core/Ui/ItemList::getValues()
      */
     function getValues(elementId) {
         return UiItemList.getValues(elementId);
     }
-    exports.getValues = getValues;
 });

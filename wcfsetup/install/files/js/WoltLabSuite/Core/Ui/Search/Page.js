@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../Dropdown/Simple", "../Screen", "./Input"], function (require, exports, tslib_1, Core, Util_1, Simple_1, UiScreen, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
@@ -81,7 +81,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../Dropd
             submit(form, searchInput);
         });
     }
-    exports.init = init;
     function submit(form, input) {
         const url = new URL(form.action);
         url.search += url.search !== "" ? "&" : "?";

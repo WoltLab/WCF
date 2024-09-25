@@ -11,7 +11,11 @@
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", "../Dom/Traverse", "./Dropdown/Simple"], function (require, exports, tslib_1, Listener_1, Util_1, DomTraverse, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.rebuild = exports.rebuildAll = exports.registerTabMenus = exports.register = exports.setup = void 0;
+    exports.setup = setup;
+    exports.register = register;
+    exports.registerTabMenus = registerTabMenus;
+    exports.rebuildAll = rebuildAll;
+    exports.rebuild = rebuild;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     DomTraverse = tslib_1.__importStar(DomTraverse);
@@ -34,7 +38,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         window.addEventListener("resize", rebuildAll);
         Listener_1.default.add("WoltLabSuite/Core/Ui/FlexibleMenu", registerTabMenus);
     }
-    exports.setup = setup;
     /**
      * Registers a menu by element id.
      */
@@ -54,7 +57,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         _itemLists.set(containerId, list);
         rebuild(containerId);
     }
-    exports.register = register;
     /**
      * Registers tab menus.
      */
@@ -69,7 +71,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             }
         });
     }
-    exports.registerTabMenus = registerTabMenus;
     /**
      * Rebuilds all menus, e.g. on window resize.
      */
@@ -78,7 +79,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             rebuild(containerId);
         });
     }
-    exports.rebuildAll = rebuildAll;
     /**
      * Rebuild the menu identified by given element id.
      */
@@ -171,5 +171,4 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             dropdown.remove();
         }
     }
-    exports.rebuild = rebuild;
 });

@@ -8,7 +8,9 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen", "./DarkMode"], function (require, exports, tslib_1, Ajax, Core, Util_1, EventHandler, UiScreen, DarkMode_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.showVisualEditor = exports.hideVisualEditor = exports.setup = void 0;
+    exports.setup = setup;
+    exports.hideVisualEditor = hideVisualEditor;
+    exports.showVisualEditor = showVisualEditor;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -246,14 +248,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             callbackRegionMarker();
         });
     }
-    exports.setup = setup;
     function hideVisualEditor() {
         Util_1.default.hide(_stylePreviewWindow);
         document.getElementById("spVariablesWrapper").style.removeProperty("transform");
         Util_1.default.hide(document.getElementById("stylePreviewRegionMarker"));
         _isSmartphone = true;
     }
-    exports.hideVisualEditor = hideVisualEditor;
     function showVisualEditor() {
         Util_1.default.show(_stylePreviewWindow);
         window.setTimeout(() => {
@@ -261,5 +261,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         }, 100);
         _isSmartphone = false;
     }
-    exports.showVisualEditor = showVisualEditor;
 });

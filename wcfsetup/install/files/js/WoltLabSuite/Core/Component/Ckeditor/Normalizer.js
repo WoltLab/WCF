@@ -14,7 +14,8 @@
 define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.normalizeLegacyMessage = exports.normalizeLegacyHtml = void 0;
+    exports.normalizeLegacyHtml = normalizeLegacyHtml;
+    exports.normalizeLegacyMessage = normalizeLegacyMessage;
     Util_1 = tslib_1.__importDefault(Util_1);
     function normalizeBr(div) {
         div.querySelectorAll("br").forEach((br) => {
@@ -140,12 +141,10 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
         convertFloatingImages(div);
         return div.innerHTML;
     }
-    exports.normalizeLegacyHtml = normalizeLegacyHtml;
     function normalizeLegacyMessage(element) {
         if (!(element instanceof HTMLTextAreaElement)) {
             throw new TypeError("Expected the element to be a <textarea>.");
         }
         element.value = normalizeLegacyHtml(element.value);
     }
-    exports.normalizeLegacyMessage = normalizeLegacyMessage;
 });

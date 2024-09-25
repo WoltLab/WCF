@@ -9,7 +9,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Notification", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, PromiseMutex_1, Selector_1, Language_1, Notification_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     async function toggleIgnore(button) {
         const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(button.dataset.ignoreUser);
         if (ok) {
@@ -31,5 +31,4 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
             button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => toggleIgnore(button)));
         });
     }
-    exports.setup = setup;
 });

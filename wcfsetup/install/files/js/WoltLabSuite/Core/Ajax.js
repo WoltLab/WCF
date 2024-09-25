@@ -8,7 +8,11 @@
 define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAction", "./Ajax/DboAction"], function (require, exports, tslib_1, Request_1, Core, DboAction_1, DboAction_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.handleValidationErrors = exports.dboAction = exports.getRequestObject = exports.apiOnce = exports.api = void 0;
+    exports.handleValidationErrors = void 0;
+    exports.api = api;
+    exports.apiOnce = apiOnce;
+    exports.getRequestObject = getRequestObject;
+    exports.dboAction = dboAction;
     Request_1 = tslib_1.__importDefault(Request_1);
     Core = tslib_1.__importStar(Core);
     DboAction_1 = tslib_1.__importDefault(DboAction_1);
@@ -54,7 +58,6 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
             request.setOption("failure", oldFailure);
         return request;
     }
-    exports.api = api;
     /**
      * Shorthand function to perform a single request against the WCF-API.
      *
@@ -71,7 +74,6 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
         const request = new Request_1.default(options);
         request.sendRequest(false);
     }
-    exports.apiOnce = apiOnce;
     /**
      * Returns the request object used for an earlier call to `api()`.
      */
@@ -81,7 +83,6 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
         }
         return _cache.get(callbackObject);
     }
-    exports.getRequestObject = getRequestObject;
     /**
      * Prepares a new requests to a `wcf\\data\\DatabaseObjectAction` action.
      *
@@ -90,6 +91,5 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
     function dboAction(actionName, className) {
         return DboAction_1.default.prepare(actionName, className);
     }
-    exports.dboAction = dboAction;
     Object.defineProperty(exports, "handleValidationErrors", { enumerable: true, get: function () { return DboAction_2.handleValidationErrors; } });
 });

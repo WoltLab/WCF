@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.element = void 0;
+    exports.element = element;
     Util_1 = tslib_1.__importDefault(Util_1);
     let _callbacks = [];
     let _offset = null;
@@ -89,5 +89,4 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             }
         }, 100);
     }
-    exports.element = element;
 });

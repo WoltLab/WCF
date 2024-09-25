@@ -1,7 +1,7 @@
 define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require, exports, Entry_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function fileToAttachment(fileList, file, editor) {
         fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor));
     }
@@ -70,5 +70,4 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require
             existingFiles.remove();
         }
     }
-    exports.setup = setup;
 });

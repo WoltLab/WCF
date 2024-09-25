@@ -12,7 +12,7 @@
 define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function setup(editor, ckeditor) {
         editor.editing.view.document.on("enter", (evt, data) => {
             // Shift+Enter is allowed to create line breaks.
@@ -30,5 +30,4 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             }
         }, { priority: "high" });
     }
-    exports.setup = setup;
 });

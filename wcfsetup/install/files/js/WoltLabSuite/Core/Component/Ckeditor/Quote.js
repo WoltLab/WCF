@@ -10,7 +10,7 @@
 define(["require", "exports", "../../StringUtil", "./Event"], function (require, exports, StringUtil_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function insertQuote(editor, payload) {
         let { author, content, link } = payload;
         if (payload.isText) {
@@ -40,5 +40,4 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
             });
         });
     }
-    exports.setup = setup;
 });

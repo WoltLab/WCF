@@ -9,7 +9,17 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Tab = exports.Space = exports.Home = exports.Escape = exports.Enter = exports.End = exports.Comma = exports.ArrowUp = exports.ArrowRight = exports.ArrowLeft = exports.ArrowDown = void 0;
+    exports.ArrowDown = ArrowDown;
+    exports.ArrowLeft = ArrowLeft;
+    exports.ArrowRight = ArrowRight;
+    exports.ArrowUp = ArrowUp;
+    exports.Comma = Comma;
+    exports.End = End;
+    exports.Enter = Enter;
+    exports.Escape = Escape;
+    exports.Home = Home;
+    exports.Space = Space;
+    exports.Tab = Tab;
     function _test(event, key, which) {
         if (!(event instanceof Event)) {
             throw new TypeError("Expected a valid event when testing for key '" + key + "'.");
@@ -24,7 +34,6 @@ define(["require", "exports"], function (require, exports) {
     function ArrowDown(event) {
         return _test(event, "ArrowDown", 40);
     }
-    exports.ArrowDown = ArrowDown;
     /**
      * Returns true if the pressed key equals 'ArrowLeft'.
      *
@@ -33,7 +42,6 @@ define(["require", "exports"], function (require, exports) {
     function ArrowLeft(event) {
         return _test(event, "ArrowLeft", 37);
     }
-    exports.ArrowLeft = ArrowLeft;
     /**
      * Returns true if the pressed key equals 'ArrowRight'.
      *
@@ -42,7 +50,6 @@ define(["require", "exports"], function (require, exports) {
     function ArrowRight(event) {
         return _test(event, "ArrowRight", 39);
     }
-    exports.ArrowRight = ArrowRight;
     /**
      * Returns true if the pressed key equals 'ArrowUp'.
      *
@@ -51,7 +58,6 @@ define(["require", "exports"], function (require, exports) {
     function ArrowUp(event) {
         return _test(event, "ArrowUp", 38);
     }
-    exports.ArrowUp = ArrowUp;
     /**
      * Returns true if the pressed key equals 'Comma'.
      *
@@ -60,7 +66,6 @@ define(["require", "exports"], function (require, exports) {
     function Comma(event) {
         return _test(event, ",", 44);
     }
-    exports.Comma = Comma;
     /**
      * Returns true if the pressed key equals 'End'.
      *
@@ -69,7 +74,6 @@ define(["require", "exports"], function (require, exports) {
     function End(event) {
         return _test(event, "End", 35);
     }
-    exports.End = End;
     /**
      * Returns true if the pressed key equals 'Enter'.
      *
@@ -78,7 +82,6 @@ define(["require", "exports"], function (require, exports) {
     function Enter(event) {
         return _test(event, "Enter", 13);
     }
-    exports.Enter = Enter;
     /**
      * Returns true if the pressed key equals 'Escape'.
      *
@@ -87,7 +90,6 @@ define(["require", "exports"], function (require, exports) {
     function Escape(event) {
         return _test(event, "Escape", 27);
     }
-    exports.Escape = Escape;
     /**
      * Returns true if the pressed key equals 'Home'.
      *
@@ -96,7 +98,6 @@ define(["require", "exports"], function (require, exports) {
     function Home(event) {
         return _test(event, "Home", 36);
     }
-    exports.Home = Home;
     /**
      * Returns true if the pressed key equals 'Space'.
      *
@@ -105,7 +106,6 @@ define(["require", "exports"], function (require, exports) {
     function Space(event) {
         return _test(event, "Space", 32);
     }
-    exports.Space = Space;
     /**
      * Returns true if the pressed key equals 'Tab'.
      *
@@ -114,5 +114,4 @@ define(["require", "exports"], function (require, exports) {
     function Tab(event) {
         return _test(event, "Tab", 9);
     }
-    exports.Tab = Tab;
 });

@@ -8,7 +8,20 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getXsrfToken = exports.enableLegacyInheritance = exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.clone = clone;
+    exports.convertLegacyUrl = convertLegacyUrl;
+    exports.extend = extend;
+    exports.inherit = inherit;
+    exports.isPlainObject = isPlainObject;
+    exports.getType = getType;
+    exports.getUuid = getUuid;
+    exports.serialize = serialize;
+    exports.triggerEvent = triggerEvent;
+    exports.getStoragePrefix = getStoragePrefix;
+    exports.stringToBool = stringToBool;
+    exports.debounce = debounce;
+    exports.enableLegacyInheritance = enableLegacyInheritance;
+    exports.getXsrfToken = getXsrfToken;
     const _clone = function (variable) {
         if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -33,7 +46,6 @@ define(["require", "exports"], function (require, exports) {
     function clone(obj) {
         return _clone(obj);
     }
-    exports.clone = clone;
     /**
      * Converts WCF 2.0-style URLs into the default URL layout.
      */
@@ -53,7 +65,6 @@ define(["require", "exports"], function (require, exports) {
             return `index.php?${controller}/&`;
         });
     }
-    exports.convertLegacyUrl = convertLegacyUrl;
     /**
      * Merges objects with the first argument.
      *
@@ -86,7 +97,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return newObj;
     }
-    exports.extend = extend;
     /**
      * Inherits the prototype methods from one constructor to another
      * constructor.
@@ -128,7 +138,6 @@ define(["require", "exports"], function (require, exports) {
             },
         }), propertiesObject || {});
     }
-    exports.inherit = inherit;
     /**
      * Returns true if `obj` is an object literal.
      */
@@ -138,14 +147,12 @@ define(["require", "exports"], function (require, exports) {
         }
         return Object.getPrototypeOf(obj) === Object.prototype;
     }
-    exports.isPlainObject = isPlainObject;
     /**
      * Returns the object's class name.
      */
     function getType(obj) {
         return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, "$1");
     }
-    exports.getType = getType;
     /**
      * Returns a RFC4122 version 4 compilant UUID.
      *
@@ -157,7 +164,6 @@ define(["require", "exports"], function (require, exports) {
             return v.toString(16);
         });
     }
-    exports.getUuid = getUuid;
     /**
      * Recursively serializes an object into an encoded URI parameter string.
      */
@@ -178,7 +184,6 @@ define(["require", "exports"], function (require, exports) {
         });
         return parameters.join("&");
     }
-    exports.serialize = serialize;
     /**
      * Triggers a custom or built-in event.
      */
@@ -193,14 +198,12 @@ define(["require", "exports"], function (require, exports) {
         });
         element.dispatchEvent(event);
     }
-    exports.triggerEvent = triggerEvent;
     /**
      * Returns the unique prefix for the localStorage.
      */
     function getStoragePrefix() {
         return _prefix;
     }
-    exports.getStoragePrefix = getStoragePrefix;
     /**
      * Interprets a string value as a boolean value similar to the behavior of the
      * legacy functions `elAttrBool()` and `elDataBool()`.
@@ -208,7 +211,6 @@ define(["require", "exports"], function (require, exports) {
     function stringToBool(value) {
         return value === "1" || value === "true";
     }
-    exports.stringToBool = stringToBool;
     /**
      * A function that emits a side effect and does not return anything.
      *
@@ -235,7 +237,6 @@ define(["require", "exports"], function (require, exports) {
             }
         };
     }
-    exports.debounce = debounce;
     /**
      * @deprecated 6.0
      */
@@ -243,7 +244,6 @@ define(["require", "exports"], function (require, exports) {
         // This MUST NOT be an error to prevent bricking installations during the upgrade.
         console.error("Relying on the legacy inheritance is no longer supported. Please migrate your code to use ES6 classes and inheritance.", legacyClass);
     }
-    exports.enableLegacyInheritance = enableLegacyInheritance;
     function getXsrfToken() {
         const cookies = document.cookie.split(";").map((c) => c.trim());
         const xsrfToken = cookies.find((c) => c.startsWith("XSRF-TOKEN="));
@@ -253,5 +253,4 @@ define(["require", "exports"], function (require, exports) {
         const [_key, value] = xsrfToken.split(/=/, 2);
         return decodeURIComponent(value.trim());
     }
-    exports.getXsrfToken = getXsrfToken;
 });

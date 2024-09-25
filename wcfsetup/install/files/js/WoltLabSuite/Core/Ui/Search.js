@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Simple", "./Screen", "../Environment", "../Dom/Util"], function (require, exports, tslib_1, EventHandler, UiAlignment, CloseOverlay_1, Simple_1, UiScreen, Environment, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     EventHandler = tslib_1.__importStar(EventHandler);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     CloseOverlay_1 = tslib_1.__importStar(CloseOverlay_1);
@@ -185,5 +185,4 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         });
         EventHandler.add("com.woltlab.wcf.Search", "close", () => closeSearch());
     }
-    exports.init = init;
 });

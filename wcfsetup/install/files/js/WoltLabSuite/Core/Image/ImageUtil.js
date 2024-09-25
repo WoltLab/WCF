@@ -9,7 +9,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.containsTransparentPixels = void 0;
+    exports.containsTransparentPixels = containsTransparentPixels;
     /**
      * Returns whether the given canvas contains transparent pixels.
      */
@@ -25,5 +25,4 @@ define(["require", "exports"], function (require, exports) {
         }
         return false;
     }
-    exports.containsTransparentPixels = containsTransparentPixels;
 });

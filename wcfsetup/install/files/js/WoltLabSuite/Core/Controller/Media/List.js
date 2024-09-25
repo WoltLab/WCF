@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/Clipboard", "../../Event/Handler", "../../Media/Editor", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Upload_1, MediaClipboard, EventHandler, Editor_1, DomChangeListener) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Upload_1 = tslib_1.__importDefault(Upload_1);
     MediaClipboard = tslib_1.__importStar(MediaClipboard);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -40,7 +40,6 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
         DomChangeListener.add("WoltLabSuite/Core/Controller/Media/List", () => addButtonEventListeners());
         EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => openEditorAfterUpload(data));
     }
-    exports.init = init;
     /**
      * Adds the `click` event listeners to the media edit icons in new media table rows.
      */

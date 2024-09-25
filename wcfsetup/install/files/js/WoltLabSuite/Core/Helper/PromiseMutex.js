@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.promiseMutex = void 0;
+    exports.promiseMutex = promiseMutex;
     function promiseMutex(promise) {
         let pending = false;
         return function (...args) {
@@ -24,5 +24,4 @@ define(["require", "exports"], function (require, exports) {
             return true;
         };
     }
-    exports.promiseMutex = promiseMutex;
 });

@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Language", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language, Environment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.set = void 0;
+    exports.set = set;
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -301,5 +301,4 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
             }
         }
     }
-    exports.set = set;
 });

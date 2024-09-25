@@ -8,7 +8,8 @@
 define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.openDialog = exports.init = void 0;
+    exports.init = init;
+    exports.openDialog = openDialog;
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ArticleAdd {
@@ -51,12 +52,10 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
             articleAdd = new ArticleAdd(link);
         }
     }
-    exports.init = init;
     /**
      * Opens the 'Add Article' dialog.
      */
     function openDialog() {
         articleAdd.openDialog();
     }
-    exports.openDialog = openDialog;
 });

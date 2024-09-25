@@ -8,7 +8,9 @@
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Language", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, DomTraverse, Language, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setValues = exports.getValues = exports.init = void 0;
+    exports.init = init;
+    exports.getValues = getValues;
+    exports.setValues = setValues;
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
@@ -309,7 +311,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
             });
         }
     }
-    exports.init = init;
     /**
      * Returns the list of current values.
      */
@@ -327,7 +328,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         });
         return values;
     }
-    exports.getValues = getValues;
     /**
      * Sets the list of current values.
      */
@@ -342,5 +342,4 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         // add new items
         values.forEach((v) => addItem(elementId, v));
     }
-    exports.setValues = setValues;
 });

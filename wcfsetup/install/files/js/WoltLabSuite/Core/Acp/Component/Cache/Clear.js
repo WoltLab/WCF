@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Backend_1, Confirmation_1, Language_1, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     UiNotification = tslib_1.__importStar(UiNotification);
     function initButton(button) {
         button.addEventListener("click", () => {
@@ -28,5 +28,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLa
             initButton(button);
         });
     }
-    exports.setup = setup;
 });

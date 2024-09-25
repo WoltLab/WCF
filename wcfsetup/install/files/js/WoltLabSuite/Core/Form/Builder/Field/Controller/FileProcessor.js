@@ -7,7 +7,8 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/File/Upload"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, Helper_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getValues = exports.FileProcessor = void 0;
+    exports.FileProcessor = void 0;
+    exports.getValues = getValues;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     const fileProcessors = new Map();
     class FileProcessor {
@@ -253,5 +254,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
         }
         return field.values;
     }
-    exports.getValues = getValues;
 });

@@ -8,7 +8,10 @@
 define(["require", "exports", "tslib", "../CallbackList"], function (require, exports, tslib_1, CallbackList_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.execute = exports.remove = exports.add = exports.Origin = void 0;
+    exports.Origin = void 0;
+    exports.add = add;
+    exports.remove = remove;
+    exports.execute = execute;
     CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     const _callbackList = new CallbackList_1.default();
     var Origin;
@@ -27,15 +30,12 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
             hasGlobalListener = true;
         }
     }
-    exports.add = add;
     function remove(identifier) {
         _callbackList.remove(identifier);
     }
-    exports.remove = remove;
     function execute(origin, identifier) {
         _callbackList.forEach(null, (callback) => callback(origin, identifier));
     }
-    exports.execute = execute;
     // This is required for the backwards compatibility with WSC <= 5.4.
     const UiCloseOverlay = {
         add,

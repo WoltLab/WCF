@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Ui/Search/Input"], function (require, exports, tslib_1, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Input_1 = tslib_1.__importDefault(Input_1);
     class Suggestion extends Input_1.default {
         #geocoder;
@@ -40,5 +40,4 @@ define(["require", "exports", "tslib", "../../../Ui/Search/Input"], function (re
             callbackSelect,
         }, geocoder);
     }
-    exports.setup = setup;
 });

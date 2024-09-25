@@ -9,7 +9,10 @@
 define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.resetCache = exports.ajaxApi = exports.setContent = exports.init = void 0;
+    exports.init = init;
+    exports.setContent = setContent;
+    exports.ajaxApi = ajaxApi;
+    exports.resetCache = resetCache;
     Ajax = tslib_1.__importStar(Ajax);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -365,26 +368,22 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
     function init(options) {
         getControllerPopover().init(options);
     }
-    exports.init = init;
     /**
      * Sets the content for given identifier and object id.
      */
     function setContent(identifier, objectId, content) {
         getControllerPopover().setContent(identifier, objectId, content);
     }
-    exports.setContent = setContent;
     /**
      * Sends an AJAX requests to the server, simple wrapper to reuse the request object.
      */
     function ajaxApi(data, success, failure) {
         getControllerPopover().ajaxApi(data, success, failure);
     }
-    exports.ajaxApi = ajaxApi;
     /**
      * Resets the cached data for an object.
      */
     function resetCache(identifier, objectId) {
         getControllerPopover().resetCache(identifier, objectId);
     }
-    exports.resetCache = resetCache;
 });

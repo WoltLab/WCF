@@ -9,7 +9,7 @@
 define(["require", "exports", "../../Ajax", "../../Component/Dialog", "../../Helper/Selector"], function (require, exports, Ajax_1, Dialog_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     async function showDetails(objectID, objectType) {
         const response = (await (0, Ajax_1.dboAction)("getReactionDetails", "wcf\\data\\reaction\\ReactionAction")
             .payload({
@@ -29,5 +29,4 @@ define(["require", "exports", "../../Ajax", "../../Component/Dialog", "../../Hel
             });
         });
     }
-    exports.setup = setup;
 });

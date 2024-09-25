@@ -20,7 +20,7 @@ define(["require", "exports"], function (require, exports) {
             if (typeof callback !== "function") {
                 throw new TypeError("Expected a valid callback as first argument.");
             }
-            if (delta < 0 || delta > 86400 * 1000) {
+            if (delta < 0 || delta > 86_400 * 1_000) {
                 throw new RangeError(`Invalid delta ${delta}. Delta must be in the interval [0, 86400000].`);
             }
             // curry callback with `this` as the first parameter

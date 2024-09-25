@@ -9,7 +9,7 @@
 define(["require", "exports", "../../Component/Dialog", "../../Helper/Selector", "../../Language"], function (require, exports, Dialog_1, Selector_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function jumpToPage(element) {
         const html = `
     <dl>
@@ -43,5 +43,4 @@ define(["require", "exports", "../../Component/Dialog", "../../Helper/Selector",
             });
         });
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function observeListItem(listItem) {
         const checkbox = listItem.querySelector('input[type="checkbox"]');
         checkbox.addEventListener("change", () => {
@@ -36,5 +36,4 @@ define(["require", "exports"], function (require, exports) {
             observeListItem(listItem);
         }
     }
-    exports.setup = setup;
 });

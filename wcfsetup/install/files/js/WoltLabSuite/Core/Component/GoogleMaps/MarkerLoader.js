@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "@googlemaps/markerclusterer", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, markerclusterer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Util_1 = tslib_1.__importDefault(Util_1);
     class MarkerLoader {
         #map;
@@ -115,5 +115,4 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
         const map = await googleMaps.getMap();
         new MarkerLoader(map, actionClassName, additionalParameters);
     }
-    exports.setup = setup;
 });

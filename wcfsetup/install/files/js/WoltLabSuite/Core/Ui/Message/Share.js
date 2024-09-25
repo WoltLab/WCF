@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"], function (require, exports, tslib_1, EventHandler, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     EventHandler = tslib_1.__importStar(EventHandler);
     StringUtil = tslib_1.__importStar(StringUtil);
     let _pageDescription = "";
@@ -101,5 +101,4 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"
             });
         });
     }
-    exports.init = init;
 });

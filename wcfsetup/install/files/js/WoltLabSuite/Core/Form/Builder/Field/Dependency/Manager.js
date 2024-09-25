@@ -9,7 +9,13 @@
 define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Event/Handler"], function (require, exports, tslib_1, Util_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.unregister = exports.register = exports.isHiddenByDependencies = exports.checkDependencies = exports.checkContainers = exports.addDependency = exports.addContainerCheckCallback = void 0;
+    exports.addContainerCheckCallback = addContainerCheckCallback;
+    exports.addDependency = addDependency;
+    exports.checkContainers = checkContainers;
+    exports.checkDependencies = checkDependencies;
+    exports.isHiddenByDependencies = isHiddenByDependencies;
+    exports.register = register;
+    exports.unregister = unregister;
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     const _dependencyHiddenNodes = new Set();
@@ -111,7 +117,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         }
         EventHandler.add("com.woltlab.wcf.form.builder.dependency", "checkContainers", callback);
     }
-    exports.addContainerCheckCallback = addContainerCheckCallback;
     /**
      * Registers a new form field dependency.
      */
@@ -139,7 +144,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
             }
         });
     }
-    exports.addDependency = addDependency;
     /**
      * Checks the containers for their availability.
      *
@@ -164,7 +168,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
             checkContainers();
         }
     }
-    exports.checkContainers = checkContainers;
     /**
      * Checks if all dependencies are met.
      */
@@ -190,7 +193,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         obsoleteNodeIds.forEach((id) => _nodeDependencies.delete(id));
         checkContainers();
     }
-    exports.checkDependencies = checkDependencies;
     /**
      * Returns `true` if the given node has been hidden because of its own dependencies.
      */
@@ -206,7 +208,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         });
         return returnValue;
     }
-    exports.isHiddenByDependencies = isHiddenByDependencies;
     /**
      * Registers the form with the given id with the dependency manager.
      */
@@ -220,7 +221,6 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         }
         _forms.add(form);
     }
-    exports.register = register;
     /**
      * Unregisters the form with the given id and all of its dependencies.
      */
@@ -250,5 +250,4 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
             });
         });
     }
-    exports.unregister = unregister;
 });

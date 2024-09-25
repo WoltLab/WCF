@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Util_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
@@ -122,5 +122,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             emailSmtpTest = new EmailSmtpTest();
         }
     }
-    exports.init = init;
 });

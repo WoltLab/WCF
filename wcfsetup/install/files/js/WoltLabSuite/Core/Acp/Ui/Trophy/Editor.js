@@ -9,7 +9,7 @@
 define(["require", "exports", "./Badge"], function (require, exports, Badge_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function setupTypeChange() {
         const badgeContainer = document.getElementById("badgeContainer");
         const imageContainer = document.getElementById("imageContainer");
@@ -54,5 +54,4 @@ define(["require", "exports", "./Badge"], function (require, exports, Badge_1) {
         setupAwardConditions();
         (0, Badge_1.setup)();
     }
-    exports.setup = setup;
 });

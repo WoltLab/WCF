@@ -24,7 +24,8 @@
 define(["require", "exports", "./View", "reflect-metadata"], function (require, exports, View_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DomElementList = exports.DomElement = void 0;
+    exports.DomElement = DomElement;
+    exports.DomElementList = DomElementList;
     function DomElement(selector, options) {
         return function (target, propertyKey) {
             if (!(target instanceof View_1.DomView)) {
@@ -52,7 +53,6 @@ define(["require", "exports", "./View", "reflect-metadata"], function (require, 
             });
         };
     }
-    exports.DomElement = DomElement;
     function DomElementList(selector, options) {
         return function (target, propertyKey) {
             if (!(target instanceof View_1.DomView)) {
@@ -77,5 +77,4 @@ define(["require", "exports", "./View", "reflect-metadata"], function (require, 
             });
         };
     }
-    exports.DomElementList = DomElementList;
 });

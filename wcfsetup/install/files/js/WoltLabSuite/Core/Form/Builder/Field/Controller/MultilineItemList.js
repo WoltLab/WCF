@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, UiItemList, Language_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getValues = exports.MultilineItemListFormField = void 0;
+    exports.MultilineItemListFormField = void 0;
+    exports.getValues = getValues;
     UiItemList = tslib_1.__importStar(UiItemList);
     Util_1 = tslib_1.__importDefault(Util_1);
     const _data = new Map();
@@ -189,5 +190,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
         }
         return _data.get(elementId).getItems();
     }
-    exports.getValues = getValues;
 });

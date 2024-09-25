@@ -8,7 +8,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.hide = exports.show = void 0;
+    exports.show = show;
+    exports.hide = hide;
     class AjaxStatus {
         _activeRequests = 0;
         _overlay;
@@ -56,12 +57,10 @@ define(["require", "exports"], function (require, exports) {
     function show() {
         getStatus().show();
     }
-    exports.show = show;
     /**
      * Hides the loading overlay.
      */
     function hide() {
         getStatus().hide();
     }
-    exports.hide = hide;
 });

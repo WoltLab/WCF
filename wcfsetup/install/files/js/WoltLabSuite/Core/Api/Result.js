@@ -11,7 +11,9 @@
 define(["require", "exports", "../Ajax/Error", "../Core", "./Error"], function (require, exports, Error_1, Core_1, Error_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.apiResultFromStatusNotOk = exports.apiResultFromError = exports.apiResultFromValue = void 0;
+    exports.apiResultFromValue = apiResultFromValue;
+    exports.apiResultFromError = apiResultFromError;
+    exports.apiResultFromStatusNotOk = apiResultFromStatusNotOk;
     function apiResultFromValue(value) {
         return {
             ok: true,
@@ -21,14 +23,12 @@ define(["require", "exports", "../Ajax/Error", "../Core", "./Error"], function (
             },
         };
     }
-    exports.apiResultFromValue = apiResultFromValue;
     async function apiResultFromError(error) {
         if (error instanceof Error_1.StatusNotOk) {
             return apiResultFromStatusNotOk(error);
         }
         throw error;
     }
-    exports.apiResultFromError = apiResultFromError;
     async function apiResultFromStatusNotOk(e) {
         const { response } = e;
         if (response === undefined) {
@@ -63,5 +63,4 @@ define(["require", "exports", "../Ajax/Error", "../Core", "./Error"], function (
         }
         throw e;
     }
-    exports.apiResultFromStatusNotOk = apiResultFromStatusNotOk;
 });

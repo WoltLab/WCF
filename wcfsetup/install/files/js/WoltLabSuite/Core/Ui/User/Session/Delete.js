@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Notification", "../../Confirmation", "../../../Language", "WoltLabSuite/Core/Api/Sessions/DeleteSession"], function (require, exports, tslib_1, UiNotification, UiConfirmation, Language, DeleteSession_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     UiNotification = tslib_1.__importStar(UiNotification);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Language = tslib_1.__importStar(Language);
@@ -28,5 +28,4 @@ define(["require", "exports", "tslib", "../../Notification", "../../Confirmation
             element.addEventListener("click", () => onClick(element));
         });
     }
-    exports.setup = setup;
 });

@@ -10,7 +10,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.listenToCkeditor = exports.dispatchToCkeditor = void 0;
+    exports.dispatchToCkeditor = dispatchToCkeditor;
+    exports.listenToCkeditor = listenToCkeditor;
     class EventDispatcher {
         #element;
         constructor(element) {
@@ -197,9 +198,7 @@ define(["require", "exports"], function (require, exports) {
     function dispatchToCkeditor(element) {
         return new EventDispatcher(element);
     }
-    exports.dispatchToCkeditor = dispatchToCkeditor;
     function listenToCkeditor(element) {
         return new EventListener(element);
     }
-    exports.listenToCkeditor = listenToCkeditor;
 });

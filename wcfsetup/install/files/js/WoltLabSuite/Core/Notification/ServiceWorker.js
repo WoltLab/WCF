@@ -8,7 +8,9 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerServiceWorker = exports.setup = exports.serviceWorkerSupported = void 0;
+    exports.serviceWorkerSupported = serviceWorkerSupported;
+    exports.setup = setup;
+    exports.registerServiceWorker = registerServiceWorker;
     let _serviceWorker = null;
     class ServiceWorker {
         #publicKey;
@@ -105,7 +107,6 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
         }
         return true;
     }
-    exports.serviceWorkerSupported = serviceWorkerSupported;
     function setup(publicKey, serviceWorkerJsUrl, registerUrl) {
         if (!serviceWorkerSupported()) {
             return;
@@ -115,9 +116,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             registerServiceWorker();
         }
     }
-    exports.setup = setup;
     function registerServiceWorker() {
         void _serviceWorker?.register();
     }
-    exports.registerServiceWorker = registerServiceWorker;
 });

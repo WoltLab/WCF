@@ -8,7 +8,13 @@
 define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen", "../Language"], function (require, exports, tslib_1, focus_trap_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
+    exports.setup = setup;
+    exports.enable = enable;
+    exports.enableShadow = enableShadow;
+    exports.disable = disable;
+    exports.disableShadow = disableShadow;
+    exports.rebuildShadow = rebuildShadow;
+    exports.removeShadow = removeShadow;
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -301,7 +307,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             });
         }
     }
-    exports.setup = setup;
     /**
      * Enables the mobile UI.
      */
@@ -313,7 +318,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             _pageMenuUser?.enable();
         }
     }
-    exports.enable = enable;
     /**
      * Enables shadow links for larger click areas on messages.
      */
@@ -322,7 +326,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             rebuildShadow(_messageGroups, ".messageGroupLink");
         }
     }
-    exports.enableShadow = enableShadow;
     /**
      * Disables the mobile UI.
      */
@@ -334,7 +337,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             _pageMenuUser?.disable();
         }
     }
-    exports.disable = disable;
     /**
      * Disables shadow links.
      */
@@ -346,7 +348,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             closeDropdown();
         }
     }
-    exports.disableShadow = disableShadow;
     function rebuildShadow(elements, linkSelector) {
         Array.from(elements).forEach((element) => {
             const parent = element.parentElement;
@@ -364,7 +365,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             }
         });
     }
-    exports.rebuildShadow = rebuildShadow;
     function removeShadow(elements) {
         Array.from(elements).forEach((element) => {
             const parent = element.parentElement;
@@ -377,5 +377,4 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             }
         });
     }
-    exports.removeShadow = removeShadow;
 });

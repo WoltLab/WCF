@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Menu", "./Ui/Page/Menu/Main/Backend"], function (require, exports, tslib_1, Core, Bootstrap_1, UiPageMenu, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Core = tslib_1.__importStar(Core);
     UiPageMenu = tslib_1.__importStar(UiPageMenu);
     Backend_1 = tslib_1.__importDefault(Backend_1);
@@ -27,5 +27,4 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
         (0, Bootstrap_1.setup)(options.bootstrap);
         UiPageMenu.init();
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.renderComment = void 0;
+    exports.renderComment = renderComment;
     async function renderComment(commentId, responseId = undefined, messageOnly = false, objectTypeId = undefined) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/comments/${commentId}/render`);
         url.searchParams.set("messageOnly", messageOnly.toString());
@@ -28,5 +28,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         }
         return (0, Result_1.apiResultFromValue)(response);
     }
-    exports.renderComment = renderComment;
 });

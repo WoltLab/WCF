@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Ajax_1, Core_1, Util_1, PromiseMutex_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Util_1 = tslib_1.__importDefault(Util_1);
     async function loadMore(container) {
         const response = (await (0, Ajax_1.dboAction)("load", "wcf\\data\\user\\activity\\event\\UserActivityEventAction")
@@ -68,5 +68,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         initShowMoreButton(container);
         initSwitchContextButtons(container);
     }
-    exports.setup = setup;
 });

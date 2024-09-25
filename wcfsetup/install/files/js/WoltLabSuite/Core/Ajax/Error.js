@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language", "../StringUtil"], function (require, exports, tslib_1, Dialog_1, Core, Language, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerGlobalRejectionHandler = exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
+    exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
+    exports.registerGlobalRejectionHandler = registerGlobalRejectionHandler;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     async function genericError(error) {
@@ -146,5 +147,4 @@ define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Lan
         });
         hasGlobalRejectionHandler = true;
     }
-    exports.registerGlobalRejectionHandler = registerGlobalRejectionHandler;
 });

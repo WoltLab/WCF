@@ -8,7 +8,8 @@
 define(["require", "exports", "tslib", "./Ajax"], function (require, exports, tslib_1, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.invoke = exports.setUrl = void 0;
+    exports.setUrl = setUrl;
+    exports.invoke = invoke;
     Ajax = tslib_1.__importStar(Ajax);
     class BackgroundQueue {
         _invocations = 0;
@@ -54,7 +55,6 @@ define(["require", "exports", "tslib", "./Ajax"], function (require, exports, ts
             queue = new BackgroundQueue(url);
         }
     }
-    exports.setUrl = setUrl;
     /**
      * Invokes the background queue.
      */
@@ -65,5 +65,4 @@ define(["require", "exports", "tslib", "./Ajax"], function (require, exports, ts
         }
         queue.invoke();
     }
-    exports.invoke = invoke;
 });

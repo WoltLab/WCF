@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../Language", "../Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiPageJumpTo {
@@ -118,5 +118,4 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
     function init(element, callback) {
         getUiPageJumpTo().init(element, callback);
     }
-    exports.init = init;
 });

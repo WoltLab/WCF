@@ -14,7 +14,7 @@
 define(["require", "exports", "../../Helper/PageOverlay"], function (require, exports, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     const targetClassNames = ["ck-body-wrapper", "ck-inspector-wrapper", "ck-inspector-portal"];
     function setupWatcher() {
         const observer = new MutationObserver((mutations) => {
@@ -44,5 +44,4 @@ define(["require", "exports", "../../Helper/PageOverlay"], function (require, ex
         hasWatcher = true;
         setupWatcher();
     }
-    exports.setup = setup;
 });

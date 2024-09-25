@@ -8,18 +8,17 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getShareProviders = exports.addShareProviders = exports.addShareProvider = void 0;
+    exports.addShareProvider = addShareProvider;
+    exports.addShareProviders = addShareProviders;
+    exports.getShareProviders = getShareProviders;
     const providers = new Set();
     function addShareProvider(shareProvider) {
         providers.add(shareProvider);
     }
-    exports.addShareProvider = addShareProvider;
     function addShareProviders(shareProviders) {
         shareProviders.forEach((shareProvider) => addShareProvider(shareProvider));
     }
-    exports.addShareProviders = addShareProviders;
     function getShareProviders() {
         return providers;
     }
-    exports.getShareProviders = getShareProviders;
 });

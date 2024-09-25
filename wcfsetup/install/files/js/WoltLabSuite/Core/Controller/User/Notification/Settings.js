@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdown/Reusable"], function (require, exports, tslib_1, Language, UiDropdownReusable) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Language = tslib_1.__importStar(Language);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
     let _dropDownMenu;
@@ -108,5 +108,4 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
             button.addEventListener("click", (ev) => click(ev));
         });
     }
-    exports.init = init;
 });

@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], function (require, exports, tslib_1, qr_creator_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.renderAll = exports.render = void 0;
+    exports.render = render;
+    exports.renderAll = renderAll;
     qr_creator_1 = tslib_1.__importDefault(qr_creator_1);
     Language = tslib_1.__importStar(Language);
     function render(container) {
@@ -37,7 +38,6 @@ define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], fu
         canvas.parentElement.insertAdjacentElement("afterbegin", a);
         a.appendChild(canvas);
     }
-    exports.render = render;
     function getUrl(issuer, label, secret) {
         return `otpauth://totp/${encodeURIComponent(label)}?secret=${encodeURIComponent(secret)}${issuer !== "" ? `&issuer=${encodeURIComponent(issuer)}` : ""}`;
     }
@@ -45,5 +45,4 @@ define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], fu
     function renderAll() {
         document.querySelectorAll(".totpSecretContainer").forEach((el) => render(el));
     }
-    exports.renderAll = renderAll;
 });

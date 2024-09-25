@@ -9,7 +9,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function setup() {
         const themeColor = document.querySelector('meta[name="theme-color"]');
         themeColor.content = window.getComputedStyle(document.body).getPropertyValue("--wcfPageThemeColor");
@@ -18,5 +18,4 @@ define(["require", "exports"], function (require, exports) {
             themeColor.content = window.getComputedStyle(document.body).getPropertyValue("--wcfPageThemeColor");
         });
     }
-    exports.setup = setup;
 });

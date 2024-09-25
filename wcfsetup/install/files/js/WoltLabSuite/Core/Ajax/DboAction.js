@@ -10,7 +10,8 @@
 define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], function (require, exports, tslib_1, Error_1, AjaxStatus, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.handleValidationErrors = exports.DboAction = void 0;
+    exports.DboAction = void 0;
+    exports.handleValidationErrors = handleValidationErrors;
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
     let ignoreConnectionErrors = undefined;
@@ -144,7 +145,6 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
         }
         throw error;
     }
-    exports.handleValidationErrors = handleValidationErrors;
     function isException(json) {
         return "code" in json && "returnValues" in json;
     }

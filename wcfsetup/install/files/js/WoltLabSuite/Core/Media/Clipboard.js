@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Ui/Dialog", "../Event/Handler", "../Language", "../Ajax"], function (require, exports, tslib_1, Clipboard, UiNotification, UiDialog, EventHandler, Language, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setMediaManager = exports.init = void 0;
+    exports.init = init;
+    exports.setMediaManager = setMediaManager;
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
     UiDialog = tslib_1.__importStar(UiDialog);
@@ -107,9 +108,7 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
         }
         _mediaManager = mediaManager;
     }
-    exports.init = init;
     function setMediaManager(mediaManager) {
         _mediaManager = mediaManager;
     }
-    exports.setMediaManager = setMediaManager;
 });

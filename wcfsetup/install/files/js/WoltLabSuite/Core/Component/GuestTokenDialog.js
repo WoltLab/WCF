@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/User"], function (require, exports, tslib_1, Dialog_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getGuestToken = void 0;
+    exports.getGuestToken = getGuestToken;
     User_1 = tslib_1.__importDefault(User_1);
     async function getGuestToken() {
         const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(User_1.default.guestTokenDialogEndpoint);
@@ -18,5 +18,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Dialog", "Wo
         }
         return undefined;
     }
-    exports.getGuestToken = getGuestToken;
 });

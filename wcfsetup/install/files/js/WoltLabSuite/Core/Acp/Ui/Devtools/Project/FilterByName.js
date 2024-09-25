@@ -9,7 +9,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Environment"], function (require, exports, Environment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     const filterByName = document.getElementById("filterByName");
     const projects = new Map();
     function filterProjects() {
@@ -124,5 +124,4 @@ define(["require", "exports", "WoltLabSuite/Core/Environment"], function (requir
             filterByName.focus();
         }
     }
-    exports.setup = setup;
 });

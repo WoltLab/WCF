@@ -8,7 +8,13 @@
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui/Screen"], function (require, exports, tslib_1, Core, Language, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.show = exports.hide = exports.remove = exports.get = exports.has = exports.add = exports.setup = void 0;
+    exports.setup = setup;
+    exports.add = add;
+    exports.has = has;
+    exports.get = get;
+    exports.remove = remove;
+    exports.hide = hide;
+    exports.show = show;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -129,7 +135,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
         });
         onScroll();
     }
-    exports.setup = setup;
     /**
      * Adds a button to the page action list. You can optionally provide a button name to
      * insert the button right before it. Unmatched button names or empty value will cause
@@ -169,21 +174,18 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
         wrapper.setAttribute("aria-hidden", "false");
         renderContainer();
     }
-    exports.add = add;
     /**
      * Returns true if there is a registered button with the provided name.
      */
     function has(buttonName) {
         return _buttons.has(buttonName);
     }
-    exports.has = has;
     /**
      * Returns the stored button by name or undefined.
      */
     function get(buttonName) {
         return _buttons.get(buttonName);
     }
-    exports.get = get;
     /**
      * Removes a button by its button name.
      */
@@ -207,7 +209,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
             hide(buttonName);
         }
     }
-    exports.remove = remove;
     /**
      * Hides a button by its button name.
      */
@@ -219,7 +220,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
             renderContainer();
         }
     }
-    exports.hide = hide;
     /**
      * Shows a button by its button name.
      */
@@ -235,5 +235,4 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
             renderContainer();
         }
     }
-    exports.show = show;
 });

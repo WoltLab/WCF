@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notification", "../../../User", "../../../StringUtil", "../../../Language", "../../User/Search/Input", "../../../Dom/Traverse", "../../../Ajax", "../../../Dom/Util", "../../Dialog"], function (require, exports, tslib_1, EventHandler, UiNotification, User_1, StringUtil, Language, Input_1, DomTraverse, Ajax, Util_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     EventHandler = tslib_1.__importStar(EventHandler);
     UiNotification = tslib_1.__importStar(UiNotification);
     User_1 = tslib_1.__importDefault(User_1);
@@ -149,5 +149,4 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notifica
         });
         isSetUp = true;
     }
-    exports.setup = setup;
 });
