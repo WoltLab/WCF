@@ -41,17 +41,20 @@ function getDataSource(locale: string): string {
   return `${window.WSC_API_URL}emoji/index.php?l=${locale}`;
 }
 
-void customElements.whenDefined("emoji-picker").then(() => {
-  class WoltlabCoreEmojiPicker extends Picker {
-    // Properties and methods from the base class
-    protected _ctx!: {
+declare module "emoji-picker-element" {
+  interface Picker {
+    _ctx: {
       locale: string;
       dataSource: string;
       customEmoji?: CustomEmoji[];
       i18n: I18n;
     };
-    protected _dbFlush!: () => void;
+    _dbFlush: () => void;
+  }
+}
 
+void customElements.whenDefined("emoji-picker").then(() => {
+  class WoltlabCoreEmojiPicker extends Picker {
     constructor(props: PickerConstructorOptions | null | undefined) {
       const locale = (props && props.locale) || window.LANGUAGE_CODE;
 
