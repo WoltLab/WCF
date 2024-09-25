@@ -65,10 +65,6 @@
 		<template>__nonEmptyFormFieldDependency</template>
 		<template>__valueFormFieldDependency</template>
 		<template>__valueIntervalFormFieldDependency</template>
-		<template>__devtoolsProjectExcludedPackagesFormField</template>
-		<template>__devtoolsProjectInstructionsFormField</template>
-		<template>__devtoolsProjectOptionalPackagesFormField</template>
-		<template>__devtoolsProjectRequiredPackagesFormField</template>
 		<template>__labelFormField</template>
 		<template>__contentLanguageFormField</template>
 		<template>__singleMediaSelectionFormField</template>
