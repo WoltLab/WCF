@@ -103,6 +103,7 @@ class MarkerLoader {
       DomUtil.setInnerHtml(content, data.infoWindow);
 
       const infoWindow = new google.maps.InfoWindow({
+        headerContent: data.title,
         content,
       });
 
