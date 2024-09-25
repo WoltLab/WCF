@@ -230,7 +230,7 @@
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Eigene Boxen]]></item>
-		<item name="wcf.acp.box.isDisabled"><![CDATA[Box ist deaktiviert]]></item>
+		<item name="wcf.acp.box.isDisabled"><![CDATA[Box deaktivieren]]></item>
 		<item name="wcf.acp.box.button.copyBox"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy.description"><![CDATA[Die eingegebenen Werte dieser Box werden als Vorlage zum Anlegen einer neuen Box verwendet. Es werden nur die in diesem Formular sichtbaren Einstellungen übernommen.<br><br>Sie müssen das folgende Formular absenden, damit die neue Box gespeichert wird. In diesem Formular können Sie zusätzliche Änderungen vornehmen, darüber hinaus beachten Sie bitte, dass die neue Box standardmäßig deaktiviert angelegt wird.]]></item>

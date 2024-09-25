@@ -39,7 +39,7 @@
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
-		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable Ad]]></item>
+		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.ad.location"><![CDATA[Position]]></item>
 		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.global"><![CDATA[Global]]></item>
@@ -229,7 +229,7 @@
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">previous versions</a> of this box, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Custom boxes only]]></item>
-		<item name="wcf.acp.box.isDisabled"><![CDATA[Box is disabled]]></item>
+		<item name="wcf.acp.box.isDisabled"><![CDATA[Disable box]]></item>
 		<item name="wcf.acp.box.button.copyBox"><![CDATA[Copy Box]]></item>
 		<item name="wcf.acp.box.copy"><![CDATA[Copy Box]]></item>
 		<item name="wcf.acp.box.copy.description"><![CDATA[The values entered for this box will be used as a preset to create a new box. Only values editable in this form are included.<br><br>You’ll need to submit the form to save the new box. You can make changes to the new box by editing the values in that form, please bear in mind that new boxes are disabled by default.]]></item>
@@ -269,7 +269,7 @@
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
-		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
+		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable captcha question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Question]]></item>
 		<item name="wcf.acp.captcha.question.views"><![CDATA[Views]]></item>
@@ -840,7 +840,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
-		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable Automatic Assignment]]></item>
+		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
@@ -5092,7 +5092,7 @@ You also received a list of backup codes to use when your second factor becomes 
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
-		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable Trophy]]></item>
+		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable trophy]]></item>
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Award trophy automatically]]></item>
 		<item name="wcf.acp.trophy.revokeAutomatically"><![CDATA[Revoke trophy automatically if the conditions are not longer fulfilled]]></item>
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
