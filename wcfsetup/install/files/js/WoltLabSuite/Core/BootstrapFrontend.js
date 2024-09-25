@@ -96,8 +96,5 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
             void new Promise((resolve_7, reject_7) => { require(["./Component/User/Ignore"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
-        (0, LazyLoader_1.whenFirstSeen)("emoji-picker", () => {
-            void new Promise((resolve_8, reject_8) => { require(["./Component/EmojiPicker/Setup"], resolve_8, reject_8); }).then(tslib_1.__importStar);
-        });
     }
 });

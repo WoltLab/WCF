@@ -1,5 +1,3 @@
-import "emoji-picker-element";
-
 import ar from "emoji-picker-element/i18n/ar";
 import de from "emoji-picker-element/i18n/de";
 import en from "emoji-picker-element/i18n/en";
@@ -16,8 +14,11 @@ import pt_PT from "emoji-picker-element/i18n/pt_PT";
 import ru_RU from "emoji-picker-element/i18n/ru_RU";
 import tr from "emoji-picker-element/i18n/tr";
 import zh_CN from "emoji-picker-element/i18n/zh_CN";
+import "emoji-picker-element";
+import { PickerConstructorOptions, I18n, CustomEmoji } from "emoji-picker-element/shared";
+import { Picker } from "emoji-picker-element";
 
-window.EmojiPickerLocales = {
+const EmojiPickerLocales: { [key: string]: I18n } = {
   ar,
   de,
   en,
@@ -35,3 +36,51 @@ window.EmojiPickerLocales = {
   tr,
   zh_CN,
 };
+
+function getDataSource(locale: string): string {
+  return `${window.WSC_API_URL}emoji/index.php?l=${locale}`;
+}
+
+void customElements.whenDefined("emoji-picker").then(() => {
+  class WoltlabCoreEmojiPicker extends Picker {
+    // Properties and methods from the base class
+    protected _ctx!: {
+      locale: string;
+      dataSource: string;
+      customEmoji?: CustomEmoji[];
+      i18n: I18n;
+    };
+    protected _dbFlush!: () => void;
+
+    constructor(props: PickerConstructorOptions | null | undefined) {
+      const locale = (props && props.locale) || window.LANGUAGE_CODE;
+
+      super({
+        locale: locale,
+        ...(props || {}),
+        dataSource: getDataSource(locale),
+        ...(Object.hasOwn(EmojiPickerLocales, locale) ? { i18n: EmojiPickerLocales[locale] } : {}),
+      });
+    }
+
+    static get observedAttributes(): string[] {
+      return ["locale"];
+    }
+
+    attributeChangedCallback(attrName: string, oldVal: string | null, newVal: string | null) {
+      if (attrName !== "locale") return;
+      if (!newVal) return;
+
+      if (oldVal !== newVal) {
+        this._ctx["locale"] = newVal;
+        this._ctx["dataSource"] = getDataSource(newVal);
+        if (Object.hasOwn(EmojiPickerLocales, newVal)) {
+          this._ctx["i18n"] = EmojiPickerLocales[newVal];
+        }
+        this._dbFlush();
+      }
+    }
+  }
+
+  customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker);
+});

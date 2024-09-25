@@ -133,7 +133,4 @@ export function setup(options: BootstrapOptions): void {
   whenFirstSeen("[data-ignore-user]", () => {
     void import("./Component/User/Ignore").then(({ setup }) => setup());
   });
-  whenFirstSeen("emoji-picker", () => {
-    void import("./Component/EmojiPicker/Setup");
-  });
 }
