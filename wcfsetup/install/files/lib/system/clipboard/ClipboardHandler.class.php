@@ -122,6 +122,10 @@ class ClipboardHandler extends SingletonFactory
      */
     public function unmark(array $objectIDs, $objectTypeID)
     {
+        if ($objectIDs === []) {
+            return;
+        }
+
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
