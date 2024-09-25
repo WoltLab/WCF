@@ -58,6 +58,9 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require
             if (context !== undefined) {
                 payload.metaData.tmpHash = context.tmpHash;
             }
+        })
+            .reset(() => {
+            fileList.querySelectorAll(".fileList__item").forEach((element) => element.remove());
         });
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {

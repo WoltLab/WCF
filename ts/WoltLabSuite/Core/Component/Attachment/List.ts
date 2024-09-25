@@ -71,6 +71,9 @@ export function setup(editorId: string): void {
       if (context !== undefined) {
         payload.metaData.tmpHash = context.tmpHash;
       }
+    })
+    .reset(() => {
+      fileList.querySelectorAll(".fileList__item").forEach((element) => element.remove());
     });
 
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
