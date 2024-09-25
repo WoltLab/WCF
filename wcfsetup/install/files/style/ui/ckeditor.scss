@@ -654,3 +654,33 @@ html.iOS {
 		order: 2;
 	}
 }
+
+@media (pointer: coarse) {
+	/* The resize controls are not supported on touch devices.
+	   See https://github.com/ckeditor/ckeditor5/issues/5624 */
+	.ck .ck-widget__resizer {
+		display: none !important;
+	}
+}
+
+/* Accessiblity Dialog */
+.ck.ck-dialog {
+	--ck-accessibility-help-dialog-border-color: var(--wcfContentBorderInner);
+	--ck-color-dialog-form-header-border: var(--wcfContentBorderInner);
+	--ck-accessibility-help-dialog-code-background-color: transparent;
+
+	background-color: var(--wcfContentBackground);
+	border-radius: var(--wcfBorderRadiusContainer);
+	box-shadow: var(--wcfBoxShadow);
+	color: var(--wcfContentText);
+
+	dl:not(.plain) {
+		&:not(:first-child) {
+			margin-top: 0;
+		}
+
+		> :is(dt:not(:empty), dd:not(:last-child)) {
+			margin-bottom: 0;
+		}
+	}
+}
