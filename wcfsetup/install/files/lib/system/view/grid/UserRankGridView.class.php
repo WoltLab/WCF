@@ -7,6 +7,8 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\I18nUserRankList;
 use wcf\data\user\rank\UserRank;
+use wcf\system\view\grid\action\DeleteAction;
+use wcf\system\view\grid\action\EditAction;
 use wcf\system\view\grid\renderer\DefaultColumnRenderer;
 use wcf\system\view\grid\renderer\LinkColumnRenderer;
 use wcf\system\view\grid\renderer\NumberColumnRenderer;
@@ -88,6 +90,11 @@ final class UserRankGridView extends DatabaseObjectListGridView
                 ->label('wcf.acp.user.rank.requiredPoints')
                 ->sortable()
                 ->renderer(new NumberColumnRenderer()),
+        ]);
+
+        $this->addActions([
+            new EditAction(UserRankEditForm::class),
+            new DeleteAction('core/users/ranks/%s'),
         ]);
 
         $this->setSortField('rankTitle');

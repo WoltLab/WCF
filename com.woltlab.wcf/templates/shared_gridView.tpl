@@ -16,6 +16,7 @@
 							{unsafe:$column->getLabel()}
 						</th>
 					{/foreach}
+					<th></th>
 				</td>
 			</thead>
 			<tbody>
@@ -40,6 +41,7 @@
 			);
 		});
 	</script>
+	{unsafe:$view->renderActionInitialization()}
 {else}
 	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}

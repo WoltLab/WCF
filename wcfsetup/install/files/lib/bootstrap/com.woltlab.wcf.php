@@ -137,6 +137,7 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
+            $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank);
         }
     );
 

@@ -1,8 +1,9 @@
-define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"], function (require, exports, tslib_1, GetRows_1, Util_1) {
+define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util", "../Ui/Dropdown/Simple"], function (require, exports, tslib_1, GetRows_1, Util_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.GridView = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     class GridView {
         #gridClassName;
         #table;
@@ -23,6 +24,7 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
             this.#sortOrder = sortOrder;
             this.#initPagination();
             this.#initSorting();
+            this.#initActions();
         }
         #initPagination() {
             this.#topPagination.addEventListener("switchPage", (event) => {
@@ -68,12 +70,13 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
             this.#topPagination.page = pageNo;
             this.#bottomPagination.page = pageNo;
             this.#pageNo = pageNo;
-            this.#loadRows();
+            void this.#loadRows();
         }
         async #loadRows() {
             const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
             Util_1.default.setInnerHtml(this.#table.querySelector("tbody"), response.unwrap().template);
             this.#updateQueryString();
+            this.#initActions();
         }
         #updateQueryString() {
             if (!this.#baseUrl) {
@@ -93,6 +96,21 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
                 url.search += new URLSearchParams(parameters).toString();
             }
             window.history.pushState({}, document.title, url.toString());
+        }
+        #initActions() {
+            this.#table.querySelectorAll("tbody tr").forEach((row) => {
+                row.querySelectorAll(".gridViewActions").forEach((element) => {
+                    const dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
+                    dropdown?.querySelectorAll("[data-action]").forEach((element) => {
+                        element.addEventListener("click", () => {
+                            row.dispatchEvent(new CustomEvent("action", {
+                                detail: element.dataset,
+                                bubbles: true,
+                            }));
+                        });
+                    });
+                });
+            });
         }
     }
     exports.GridView = GridView;

@@ -1,5 +1,6 @@
 import { getRows } from "../Api/GridViews/GetRows";
 import DomUtil from "../Dom/Util";
+import UiDropdownSimple from "../Ui/Dropdown/Simple";
 
 export class GridView {
   readonly #gridClassName: string;
@@ -30,6 +31,7 @@ export class GridView {
 
     this.#initPagination();
     this.#initSorting();
+    this.#initActions();
   }
 
   #initPagination(): void {
@@ -91,6 +93,7 @@ export class GridView {
     const response = await getRows(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
     DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.unwrap().template);
     this.#updateQueryString();
+    this.#initActions();
   }
 
   #updateQueryString(): void {
@@ -115,5 +118,23 @@ export class GridView {
     }
 
     window.history.pushState({}, document.title, url.toString());
+  }
+
+  #initActions(): void {
+    this.#table.querySelectorAll<HTMLTableRowElement>("tbody tr").forEach((row) => {
+      row.querySelectorAll<HTMLElement>(".gridViewActions").forEach((element) => {
+        const dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!)!;
+        dropdown?.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((element) => {
+          element.addEventListener("click", () => {
+            row.dispatchEvent(
+              new CustomEvent("action", {
+                detail: element.dataset,
+                bubbles: true,
+              }),
+            );
+          });
+        });
+      });
+    });
   }
 }

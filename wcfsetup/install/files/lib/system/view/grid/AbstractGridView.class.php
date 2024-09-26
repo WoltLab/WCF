@@ -2,11 +2,21 @@
 
 namespace wcf\system\view\grid;
 
+use wcf\system\view\grid\action\IGridViewAction;
 use wcf\system\WCF;
 
 abstract class AbstractGridView
 {
+    /**
+     * @var GridViewColumn[]
+     */
     private array $columns = [];
+
+    /**
+     * @var IGridViewAction[]
+     */
+    private array $actions = [];
+
     private int $rowsPerPage = 20;
     private string $baseUrl = '';
     private string $sortField = '';
@@ -54,6 +64,29 @@ abstract class AbstractGridView
         return null;
     }
 
+    /**
+     * @param IGridViewAction[] $columns
+     */
+    public function addActions(array $actions): void
+    {
+        foreach ($actions as $action) {
+            $this->addAction($action);
+        }
+    }
+
+    public function addAction(IGridViewAction $action): void
+    {
+        $this->actions[] = $action;
+    }
+
+    /**
+     * @return IGridViewAction[]
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
+    }
+
     public function render(): string
     {
         return WCF::getTPL()->fetch('shared_gridView', 'wcf', ['view' => $this], true);
@@ -67,6 +100,22 @@ abstract class AbstractGridView
     public function renderColumn(GridViewColumn $column, mixed $row): string
     {
         return $column->render($this->getData($row, $column->getID()), $row);
+    }
+
+    public function renderAction(IGridViewAction $action, mixed $row): string
+    {
+        return $action->render($row);
+    }
+
+    public function renderActionInitialization(): string
+    {
+        return implode(
+            "\n",
+            \array_map(
+                fn($action) => $action->renderInitialization($this),
+                $this->getActions()
+            )
+        );
     }
 
     protected function getData(mixed $row, string $identifer): mixed
