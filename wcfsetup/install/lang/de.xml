@@ -2958,7 +2958,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
 		<item name="wcf.acp.style.globalValues"><![CDATA[Stilunabhängiges CSS und SCSS]]></item>
-		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
+		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuellen Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
