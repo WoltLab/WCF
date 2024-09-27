@@ -11,6 +11,8 @@ export class GridView {
   #pageNo: number;
   #sortField: string;
   #sortOrder: string;
+  #defaultSortField: string;
+  #defaultSortOrder: string;
 
   constructor(
     gridId: string,
@@ -27,11 +29,17 @@ export class GridView {
     this.#pageNo = pageNo;
     this.#baseUrl = baseUrl;
     this.#sortField = sortField;
+    this.#defaultSortField = sortField;
     this.#sortOrder = sortOrder;
+    this.#defaultSortOrder = sortOrder;
 
     this.#initPagination();
     this.#initSorting();
     this.#initActions();
+
+    window.addEventListener("popstate", () => {
+      this.#handlePopState();
+    });
   }
 
   #initPagination(): void {
@@ -81,18 +89,20 @@ export class GridView {
     });
   }
 
-  #switchPage(pageNo: number): void {
+  #switchPage(pageNo: number, updateQueryString: boolean = true): void {
     this.#topPagination.page = pageNo;
     this.#bottomPagination.page = pageNo;
     this.#pageNo = pageNo;
 
-    void this.#loadRows();
+    void this.#loadRows(updateQueryString);
   }
 
-  async #loadRows(): Promise<void> {
+  async #loadRows(updateQueryString: boolean = true): Promise<void> {
     const response = await getRows(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
     DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.unwrap().template);
-    this.#updateQueryString();
+    if (updateQueryString) {
+      this.#updateQueryString();
+    }
     this.#initActions();
   }
 
@@ -136,5 +146,29 @@ export class GridView {
         });
       });
     });
+  }
+
+  #handlePopState(): void {
+    let pageNo = 1;
+    this.#sortField = this.#defaultSortField;
+    this.#sortOrder = this.#defaultSortOrder;
+
+    const url = new URL(window.location.href);
+    url.searchParams.forEach((value, key) => {
+      if (key === "pageNo") {
+        pageNo = parseInt(value, 10);
+        return;
+      }
+
+      if (key === "sortField") {
+        this.#sortField = value;
+      }
+
+      if (key === "sortOrder") {
+        this.#sortOrder = value;
+      }
+    });
+
+    this.#switchPage(pageNo, false);
   }
 }

@@ -13,6 +13,8 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
         #pageNo;
         #sortField;
         #sortOrder;
+        #defaultSortField;
+        #defaultSortOrder;
         constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC") {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
@@ -21,10 +23,15 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
             this.#pageNo = pageNo;
             this.#baseUrl = baseUrl;
             this.#sortField = sortField;
+            this.#defaultSortField = sortField;
             this.#sortOrder = sortOrder;
+            this.#defaultSortOrder = sortOrder;
             this.#initPagination();
             this.#initSorting();
             this.#initActions();
+            window.addEventListener("popstate", () => {
+                this.#handlePopState();
+            });
         }
         #initPagination() {
             this.#topPagination.addEventListener("switchPage", (event) => {
@@ -66,16 +73,18 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
                 }
             });
         }
-        #switchPage(pageNo) {
+        #switchPage(pageNo, updateQueryString = true) {
             this.#topPagination.page = pageNo;
             this.#bottomPagination.page = pageNo;
             this.#pageNo = pageNo;
-            void this.#loadRows();
+            void this.#loadRows(updateQueryString);
         }
-        async #loadRows() {
+        async #loadRows(updateQueryString = true) {
             const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
             Util_1.default.setInnerHtml(this.#table.querySelector("tbody"), response.unwrap().template);
-            this.#updateQueryString();
+            if (updateQueryString) {
+                this.#updateQueryString();
+            }
             this.#initActions();
         }
         #updateQueryString() {
@@ -111,6 +120,25 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRows", "../Dom/Util"
                     });
                 });
             });
+        }
+        #handlePopState() {
+            let pageNo = 1;
+            this.#sortField = this.#defaultSortField;
+            this.#sortOrder = this.#defaultSortOrder;
+            const url = new URL(window.location.href);
+            url.searchParams.forEach((value, key) => {
+                if (key === "pageNo") {
+                    pageNo = parseInt(value, 10);
+                    return;
+                }
+                if (key === "sortField") {
+                    this.#sortField = value;
+                }
+                if (key === "sortOrder") {
+                    this.#sortOrder = value;
+                }
+            });
+            this.#switchPage(pageNo, false);
         }
     }
     exports.GridView = GridView;
