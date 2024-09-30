@@ -157,12 +157,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         return false;
     }
     function validateFileExtension(element, file) {
-        const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
+        const fileExtensions = (element.dataset.fileExtensions || "*").toLowerCase().split(",");
         for (const fileExtension of fileExtensions) {
             if (fileExtension === "*") {
                 return true;
             }
-            else if (file.name.endsWith(fileExtension)) {
+            else if (file.name.toLowerCase().endsWith(fileExtension)) {
                 return true;
             }
         }

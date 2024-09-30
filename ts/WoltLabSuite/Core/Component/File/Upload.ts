@@ -239,11 +239,11 @@ function validateFileSize(element: WoltlabCoreFileUploadElement, file: File): bo
 }
 
 function validateFileExtension(element: WoltlabCoreFileUploadElement, file: File): boolean {
-  const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
+  const fileExtensions = (element.dataset.fileExtensions || "*").toLowerCase().split(",");
   for (const fileExtension of fileExtensions) {
     if (fileExtension === "*") {
       return true;
-    } else if (file.name.endsWith(fileExtension)) {
+    } else if (file.name.toLowerCase().endsWith(fileExtension)) {
       return true;
     }
   }
