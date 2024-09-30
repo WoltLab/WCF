@@ -19,6 +19,7 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
 {
     private ?LicenseData $licenseData;
     private array $expiredLicenses;
+    private bool $fetchLicenseDataFailed = false;
 
     #[\Override]
     public function isAccessible(): bool
@@ -29,7 +30,7 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
     #[\Override]
     public function hasContent(): bool
     {
-        return $this->getExpiredLicenses() !== [];
+        return $this->getExpiredLicenses() !== [] || $this->fetchLicenseDataFailed;
     }
 
     private function getExpiredLicenses(): array
@@ -61,7 +62,13 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
     {
         if (!isset($this->licenseData)) {
             $licenseApi = new LicenseApi();
-            $this->licenseData = $licenseApi->getUpToDateLicenseData();
+
+            try {
+                $this->licenseData = $licenseApi->getUpToDateLicenseData();
+            } catch (\Throwable) {
+                $this->licenseData = null;
+                $this->fetchLicenseDataFailed = true;
+            }
         }
 
         return $this->licenseData;
@@ -76,6 +83,15 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
     #[\Override]
     public function getContent(): string
     {
+        if ($this->fetchLicenseDataFailed) {
+            return \sprintf(
+                '<woltlab-core-notice type="error">%s</woltlab-core-notice>',
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.license.error.parsingFailed', [
+                    'licenseData' => null,
+                ])
+            );
+        }
+
         $packages = [];
         foreach (\array_keys($this->getExpiredLicenses()) as $packageName) {
             $packages[$packageName] = PackageCache::getInstance()->getPackageByIdentifier($packageName);
