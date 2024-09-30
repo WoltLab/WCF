@@ -83,7 +83,13 @@ void customElements.whenDefined("emoji-picker").then(() => {
         this._dbFlush();
       }
     }
+
+    focus() {
+      this.shadowRoot!.querySelector<HTMLInputElement>(".search")!.focus();
+    }
   }
 
-  customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker);
+  customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker, {
+    extends: "emoji-picker",
+  });
 });

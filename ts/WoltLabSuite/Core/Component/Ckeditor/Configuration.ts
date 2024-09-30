@@ -182,6 +182,7 @@ class ConfigurationBuilder {
     } else {
       this.#removePlugins.push("Table", "TableToolbar");
     }
+    this.#toolbar.push("WoltlabEmoji");
 
     if (this.#features.quoteBlock) {
       this.#toolbar.push("blockQuote");
