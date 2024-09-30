@@ -16,17 +16,17 @@
   }
 
   class WoltlabCoreNoticeElement extends HTMLElement {
-    #iconElement?: FaIcon;
-    #contentWrapper?: HTMLElement;
+    readonly #iconElement: FaIcon;
+    readonly #contentWrapper: HTMLElement;
 
-    connectedCallback() {
+    constructor() {
+      super();
+
       const shadow = this.attachShadow({ mode: "open" });
 
-      this.#iconElement = document.createElement("fa-icon");
+      this.#iconElement = this.querySelector<FaIcon>("fa-icon") ?? document.createElement("fa-icon");
       this.#iconElement.size = 24;
-      this.#iconElement.setIcon(this.icon, true);
       this.#iconElement.slot = "icon";
-      this.append(this.#iconElement);
 
       const style = document.createElement("style");
       style.textContent = `
@@ -46,13 +46,21 @@
       iconSlot.name = "icon";
 
       shadow.append(style, iconSlot, this.#contentWrapper);
+    }
+
+    connectedCallback() {
+      if (!this.contains(this.#iconElement)) {
+        this.append(this.#iconElement);
+      }
 
       this.#updateType();
     }
 
     #updateType(): void {
-      this.#iconElement!.setIcon(this.icon, true);
-      this.#contentWrapper!.setAttribute("role", this.type === Type.Error ? "alert" : "status");
+      void window.customElements.whenDefined("fa-icon").then(() => {
+        this.#iconElement.setIcon(this.icon, true);
+      });
+      this.#contentWrapper.setAttribute("role", this.type === Type.Error ? "alert" : "status");
       this.classList.remove(...Object.values(Type));
       this.classList.add(this.type);
     }
