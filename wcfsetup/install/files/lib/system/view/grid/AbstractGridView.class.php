@@ -2,6 +2,9 @@
 
 namespace wcf\system\view\grid;
 
+use LogicException;
+use wcf\action\GridViewFilterAction;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\grid\action\IGridViewAction;
 use wcf\system\WCF;
 
@@ -22,6 +25,7 @@ abstract class AbstractGridView
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private int $pageNo = 1;
+    private array $activeFilters = [];
 
     public function __construct()
     {
@@ -85,6 +89,11 @@ abstract class AbstractGridView
     public function getActions(): array
     {
         return $this->actions;
+    }
+
+    public function hasActions(): bool
+    {
+        return $this->actions !== [];
     }
 
     public function render(): string
@@ -167,6 +176,14 @@ abstract class AbstractGridView
         return \array_filter($this->getColumns(), fn($column) => $column->isSortable());
     }
 
+    /**
+     * @return GridViewColumn[]
+     */
+    public function getFilterableColumns(): array
+    {
+        return \array_filter($this->getColumns(), fn($column) => $column->getFilter() !== null);
+    }
+
     public function setSortField(string $sortField): void
     {
         if (!\in_array($sortField, \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
@@ -213,5 +230,46 @@ abstract class AbstractGridView
     public function setRowsPerPage(int $rowsPerPage): void
     {
         $this->rowsPerPage = $rowsPerPage;
+    }
+
+    public function isFilterable(): bool
+    {
+        return $this->getFilterableColumns() !== [];
+    }
+
+    public function getFilterActionEndpoint(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            GridViewFilterAction::class,
+            ['gridView' => \get_class($this)]
+        );
+    }
+
+    public function setActiveFilters(array $filters): void
+    {
+        $this->activeFilters = $filters;
+    }
+
+    public function getActiveFilters(): array
+    {
+        return $this->activeFilters;
+    }
+
+    public function getFilterLabel(string $id): string
+    {
+        $column = $this->getColumn($id);
+        if (!$column) {
+            throw new LogicException("Unknown column '" . $id . "'.");
+        }
+
+        if (!$column->getFilter()) {
+            throw new LogicException("Column '" . $id . "' has no filter.");
+        }
+
+        if (!isset($this->activeFilters[$id])) {
+            throw new LogicException("No value for filter '" . $id . "' found.");
+        }
+
+        return $column->getLabel() . ': ' . $column->getFilter()->renderValue($this->activeFilters[$id]);
     }
 }

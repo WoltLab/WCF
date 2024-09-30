@@ -10,7 +10,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "./Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.deleteObject = void 0;
+    exports.deleteObject = deleteObject;
     async function deleteObject(endpoint) {
         try {
             await (0, Backend_1.prepareRequest)(endpoint).delete().fetchAsJson();
@@ -20,5 +20,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "./Result"], fun
         }
         return (0, Result_1.apiResultFromValue)([]);
     }
-    exports.deleteObject = deleteObject;
 });

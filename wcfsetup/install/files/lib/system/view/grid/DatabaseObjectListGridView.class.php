@@ -2,6 +2,7 @@
 
 namespace wcf\system\view\grid;
 
+use LogicException;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 
@@ -46,6 +47,7 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
                 $this->objectList->sqlOrderBy = $this->getSortField() . ' ' . $this->getSortOrder();
             }
         }
+        $this->applyFilters();
     }
 
     public function getObjectList(): DatabaseObjectList
@@ -55,6 +57,18 @@ abstract class DatabaseObjectListGridView extends AbstractGridView
         }
 
         return $this->objectList;
+    }
+
+    private function applyFilters(): void
+    {
+        foreach ($this->getActiveFilters() as $key => $value) {
+            $column = $this->getColumn($key);
+            if (!$column) {
+                throw new LogicException("Unknown column '" . $key . "'");
+            }
+
+            $column->getFilter()->applyFilter($this->getObjectList(), $column->getID(), $value);
+        }
     }
 
     protected abstract function createObjectList(): DatabaseObjectList;

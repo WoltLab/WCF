@@ -1,3 +1,12 @@
+{if $view->isFilterable()}
+	<button type="button" class="button" id="{$view->getID()}_filterButton" data-endpoint="{$view->getFilterActionEndpoint()}">Filter</button>
+	<div id="{$view->getID()}_filters">
+		{foreach from=$view->getActiveFilters() item='value' key='key'}
+			<button type="button" class="button" data-filter="{$key}" data-filter-value="{$value}">{$view->getFilterLabel($key)}</button>
+		{/foreach}
+	</div>
+{/if}
+
 {if $view->countRows()}
 	<div class="paginationTop">
 		<woltlab-core-pagination id="{$view->getID()}_topPagination" page="{$view->getPageNo()}" count="{$view->countPages()}"></woltlab-core-pagination>
@@ -16,7 +25,9 @@
 							{unsafe:$column->getLabel()}
 						</th>
 					{/foreach}
-					<th></th>
+					{if $view->hasActions()}
+						<th></th>
+					{/if}
 				</td>
 			</thead>
 			<tbody>

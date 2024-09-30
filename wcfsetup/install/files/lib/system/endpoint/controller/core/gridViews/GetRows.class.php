@@ -39,8 +39,19 @@ final class GetRows implements IController
             $view->setSortOrder($parameters->sortOrder);
         }
 
+        if ($parameters->filters !== []) {
+            $view->setActiveFilters($parameters->filters);
+        }
+
+        $filterLabels = [];
+        foreach (\array_keys($parameters->filters) as $key) {
+            $filterLabels[$key] = $view->getFilterLabel($key);
+        }
+
         return new JsonResponse([
             'template' => $view->renderRows(),
+            'pages' => $view->countPages(),
+            'filterLabels' => $filterLabels,
         ]);
     }
 }
@@ -53,6 +64,8 @@ final class GetRowsParameters
         public readonly string $gridView,
         public readonly int $pageNo,
         public readonly string $sortField,
-        public readonly string $sortOrder
+        public readonly string $sortOrder,
+        /** @var string[] */
+        public readonly array $filters
     ) {}
 }

@@ -1,6 +1,8 @@
 import { getRows } from "../Api/GridViews/GetRows";
 import DomUtil from "../Dom/Util";
+import { promiseMutex } from "../Helper/PromiseMutex";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
+import { dialogFactory } from "./Dialog";
 
 export class GridView {
   readonly #gridClassName: string;
@@ -8,11 +10,14 @@ export class GridView {
   readonly #topPagination: WoltlabCorePaginationElement;
   readonly #bottomPagination: WoltlabCorePaginationElement;
   readonly #baseUrl: string;
+  readonly #filterButton: HTMLButtonElement;
+  readonly #filterPills: HTMLElement;
   #pageNo: number;
   #sortField: string;
   #sortOrder: string;
   #defaultSortField: string;
   #defaultSortOrder: string;
+  #filters: Map<string, string>;
 
   constructor(
     gridId: string,
@@ -26,6 +31,8 @@ export class GridView {
     this.#table = document.getElementById(`${gridId}_table`) as HTMLTableElement;
     this.#topPagination = document.getElementById(`${gridId}_topPagination`) as WoltlabCorePaginationElement;
     this.#bottomPagination = document.getElementById(`${gridId}_bottomPagination`) as WoltlabCorePaginationElement;
+    this.#filterButton = document.getElementById(`${gridId}_filterButton`) as HTMLButtonElement;
+    this.#filterPills = document.getElementById(`${gridId}_filters`) as HTMLElement;
     this.#pageNo = pageNo;
     this.#baseUrl = baseUrl;
     this.#sortField = sortField;
@@ -36,6 +43,7 @@ export class GridView {
     this.#initPagination();
     this.#initSorting();
     this.#initActions();
+    this.#initFilters();
 
     window.addEventListener("popstate", () => {
       this.#handlePopState();
@@ -98,11 +106,19 @@ export class GridView {
   }
 
   async #loadRows(updateQueryString: boolean = true): Promise<void> {
-    const response = await getRows(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder);
-    DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.unwrap().template);
+    const response = (
+      await getRows(this.#gridClassName, this.#pageNo, this.#sortField, this.#sortOrder, this.#filters)
+    ).unwrap();
+    DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.template);
+
+    this.#topPagination.count = response.pages;
+    this.#bottomPagination.count = response.pages;
+
     if (updateQueryString) {
       this.#updateQueryString();
     }
+
+    this.#renderFilters(response.filterLabels);
     this.#initActions();
   }
 
@@ -121,6 +137,9 @@ export class GridView {
       parameters.push(["sortField", this.#sortField]);
       parameters.push(["sortOrder", this.#sortOrder]);
     }
+    this.#filters.forEach((value, key) => {
+      parameters.push([`filters[${key}]`, value]);
+    });
 
     if (parameters.length > 0) {
       url.search += url.search !== "" ? "&" : "?";
@@ -148,10 +167,79 @@ export class GridView {
     });
   }
 
+  #initFilters(): void {
+    if (!this.#filterButton) {
+      return;
+    }
+
+    this.#filterButton.addEventListener(
+      "click",
+      promiseMutex(() => this.#showFilterDialog()),
+    );
+
+    if (!this.#filterPills) {
+      return;
+    }
+
+    const filterButtons = this.#filterPills.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    if (!filterButtons.length) {
+      return;
+    }
+
+    this.#filters = new Map<string, string>();
+    filterButtons.forEach((button) => {
+      this.#filters.set(button.dataset.filter!, button.dataset.filterValue!);
+      button.addEventListener("click", () => {
+        this.#removeFilter(button.dataset.filter!);
+      });
+    });
+  }
+
+  async #showFilterDialog(): Promise<void> {
+    const url = new URL(this.#filterButton.dataset.endpoint!);
+    if (this.#filters) {
+      this.#filters.forEach((value, key) => {
+        url.searchParams.set(`filters[${key}]`, value);
+      });
+    }
+
+    const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint(url.toString());
+
+    if (ok) {
+      this.#filters = new Map(Object.entries(result as ArrayLike<string>));
+      this.#switchPage(1);
+    }
+  }
+
+  #renderFilters(labels: ArrayLike<string>): void {
+    this.#filterPills.innerHTML = "";
+    if (!this.#filters) {
+      return;
+    }
+
+    this.#filters.forEach((value, key) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.classList.add("button");
+      button.innerText = labels[key];
+      button.addEventListener("click", () => {
+        this.#removeFilter(key);
+      });
+
+      this.#filterPills.append(button);
+    });
+  }
+
+  #removeFilter(filter: string): void {
+    this.#filters.delete(filter);
+    this.#switchPage(1);
+  }
+
   #handlePopState(): void {
     let pageNo = 1;
     this.#sortField = this.#defaultSortField;
     this.#sortOrder = this.#defaultSortOrder;
+    this.#filters = new Map<string, string>();
 
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
@@ -166,6 +254,11 @@ export class GridView {
 
       if (key === "sortOrder") {
         this.#sortOrder = value;
+      }
+
+      const matches = key.match(/^filters\[([a-z0-9_]+)\]$/i);
+      if (matches) {
+        this.#filters.set(matches[1], value);
       }
     });
 
