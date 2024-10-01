@@ -5568,7 +5568,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[The file type of “{$filename}” is not permitted.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[The file is too large.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[{plural value=$maximumCount 1='Only one file' other='Only up to # files'} may be uploaded.]]></item>
-		<item name="wcf.upload.error.adopt"><![CDATA[The file „{$file->filename}“ cannot be assigned.]]></item>
+		<item name="wcf.upload.error.adopt"><![CDATA[The file „{$filename}“ cannot be assigned.]]></item>
 	</category>
 </import>
 <delete>

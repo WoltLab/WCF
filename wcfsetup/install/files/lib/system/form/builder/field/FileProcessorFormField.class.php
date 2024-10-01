@@ -209,7 +209,7 @@ final class FileProcessorFormField extends AbstractFormField
                     new FormFieldValidationError(
                         'adopt',
                         'wcf.upload.error.adopt',
-                        ['file' => $file]
+                        ['filename' => $file->filename]
                     )
                 );
             }
