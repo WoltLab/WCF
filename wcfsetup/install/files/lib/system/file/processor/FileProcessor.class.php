@@ -125,6 +125,16 @@ final class FileProcessor extends SingletonFactory
         );
     }
 
+    public function canAdopt(IFileProcessor $fileProcessor, File $file, array $context): bool
+    {
+        $objectType = $this->getObjectType($fileProcessor->getObjectTypeName());
+        if ($objectType->objectTypeID !== $file->objectTypeID) {
+            return false;
+        }
+
+        return $fileProcessor->canAdopt($file, $context);
+    }
+
     public function generateWebpVariant(File $file): void
     {
         $canGenerateThumbnail = match ($file->mimeType) {
