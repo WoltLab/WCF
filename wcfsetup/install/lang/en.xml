@@ -4045,7 +4045,6 @@ Attachments:
 		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a maximum height of {#$maximumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[You must upload at least {if $minimum > 1}{#$minimum} files{else}one file{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[You can upload a maximum of {if $maximum > 1}{#$maximum} files{else}one file{/if}.]]></item>
-		<item name="wcf.form.field.fileProcessor.error.adopt"><![CDATA[The file „{$file->filename}“ cannot be assigned.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
@@ -5569,6 +5568,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[The file type of “{$filename}” is not permitted.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[The file is too large.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[{plural value=$maximumCount 1='Only one file' other='Only up to # files'} may be uploaded.]]></item>
+		<item name="wcf.upload.error.adopt"><![CDATA[The file „{$file->filename}“ cannot be assigned.]]></item>
 	</category>
 </import>
 <delete>

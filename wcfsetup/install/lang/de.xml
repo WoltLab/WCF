@@ -4099,7 +4099,6 @@ Dateianhänge:
 		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {#$maximumImageHeight} Pixel hoch sein.]]></item>
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} mindestens {if $minimum > 1}{#$minimum} Dateien{else}eine Datei{/if} hochladen.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} maximal {if $maximum > 1}{#$maximum} Dateien{else}eine Datei{/if} hochladen.]]></item>
-		<item name="wcf.form.field.fileProcessor.error.adopt"><![CDATA[Die Datei „{$file->filename}“ kann nicht zugewiesen werden.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
@@ -5567,6 +5566,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[Es {plural value=$maximumCount 1='darf nur eine Datei' other='dürfen nur # Dateien'} hochgeladen werden.]]></item>
+		<item name="wcf.upload.error.adopt"><![CDATA[Die Datei „{$file->filename}“ kann nicht zugewiesen werden.]]></item>
 	</category>
 </import>
 <delete>

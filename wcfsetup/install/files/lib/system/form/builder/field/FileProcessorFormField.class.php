@@ -208,7 +208,7 @@ final class FileProcessorFormField extends AbstractFormField
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'adopt',
-                        'wcf.form.field.fileProcessor.error.adopt',
+                        'wcf.upload.error.adopt',
                         ['file' => $file]
                     )
                 );
