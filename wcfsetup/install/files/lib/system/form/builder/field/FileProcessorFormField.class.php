@@ -194,13 +194,25 @@ final class FileProcessorFormField extends AbstractFormField
             $this->addValidationError(
                 new FormFieldValidationError(
                     'maximumFiles',
-                    'wcf.form.field.fileProcessor.error.maximumFiles',
+                    'wcf.upload.error.maximumCountReached',
                     [
                         'maximumCount' => $fileProcessor->getMaximumCount($this->context),
                         'count' => \count($this->files),
                     ]
                 )
             );
+        }
+
+        foreach ($this->files as $file) {
+            if (!FileProcessor::getInstance()->canAdopt($fileProcessor, $file, $this->context)) {
+                $this->addValidationError(
+                    new FormFieldValidationError(
+                        'adopt',
+                        'wcf.upload.error.adopt',
+                        ['filename' => $file->filename]
+                    )
+                );
+            }
         }
 
         parent::validate();

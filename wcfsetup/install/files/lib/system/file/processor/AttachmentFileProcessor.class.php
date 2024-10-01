@@ -41,6 +41,12 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
     }
 
     #[\Override]
+    public function canAdopt(File $file, array $context): bool
+    {
+        return Attachment::findByFileID($file->fileID) === null;
+    }
+
+    #[\Override]
     public function adopt(File $file, array $context): void
     {
         $attachmentHandler = $this->getAttachmentHandlerFromContext($context);
