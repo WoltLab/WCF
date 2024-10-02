@@ -191,6 +191,7 @@
 		<file>acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_db.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_fixSqlLog.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_migrate_multifactor.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_migrate_rank_images.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_removeFiles.php</file>
