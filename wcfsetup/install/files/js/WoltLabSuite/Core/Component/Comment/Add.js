@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "../Ckeditor", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Comments/CreateComment", "../GuestTokenDialog", "WoltLabSuite/Core/User"], function (require, exports, tslib_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, Ckeditor_1, Event_1, CreateComment_1, GuestTokenDialog_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setCommentEditorFeatures = exports.CommentAdd = void 0;
+    exports.CommentAdd = void 0;
+    exports.setCommentEditorFeatures = setCommentEditorFeatures;
     UiScroll = tslib_1.__importStar(UiScroll);
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -176,5 +177,4 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
             features.table = false;
         });
     }
-    exports.setCommentEditorFeatures = setCommentEditorFeatures;
 });
