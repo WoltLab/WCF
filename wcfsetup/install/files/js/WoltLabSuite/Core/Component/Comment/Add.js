@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "../Ckeditor", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Comments/CreateComment", "../GuestTokenDialog", "WoltLabSuite/Core/User"], function (require, exports, tslib_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, Ckeditor_1, Event_1, CreateComment_1, GuestTokenDialog_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.CommentAdd = void 0;
+    exports.setCommentEditorFeatures = exports.CommentAdd = void 0;
     UiScroll = tslib_1.__importStar(UiScroll);
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -52,11 +52,7 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
                 event.preventDefault();
                 void this.#submit();
             });
-            (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
-                features.heading = false;
-                features.spoiler = false;
-                features.table = false;
-            });
+            setCommentEditorFeatures(this.#textarea);
         }
         /**
          * Scrolls the editor into view and sets the caret to the end of the editor.
@@ -172,4 +168,13 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
         }
     }
     exports.CommentAdd = CommentAdd;
+    function setCommentEditorFeatures(textarea) {
+        (0, Event_1.listenToCkeditor)(textarea).setupFeatures(({ features }) => {
+            features.heading = false;
+            features.quoteBlock = false;
+            features.spoiler = false;
+            features.table = false;
+        });
+    }
+    exports.setCommentEditorFeatures = setCommentEditorFeatures;
 });

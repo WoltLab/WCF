@@ -3,7 +3,7 @@
           data-disable-attachments="true"
           data-support-mention="true"
 >{$text}</textarea>
-{include file='messageFormTabsInline'}
+{include file='messageFormTabsInline' wysiwygContainerID=$wysiwygSelector wysiwygSelector=$wysiwygSelector}
 
 <div class="formSubmit">
 	<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
@@ -12,5 +12,11 @@
 	
 	<button type="button" class="button" data-type="cancel">{lang}wcf.global.button.cancel{/lang}</button>
 </div>
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Component/Comment/Add'], ({ setCommentEditorFeatures }) => {
+		setCommentEditorFeatures(document.getElementById('{$wysiwygSelector}'));
+	});
+</script>
 
 {include file='shared_wysiwyg' wysiwygSelector=$wysiwygSelector}

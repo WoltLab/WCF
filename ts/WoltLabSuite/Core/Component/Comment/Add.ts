@@ -65,11 +65,7 @@ export class CommentAdd {
       void this.#submit();
     });
 
-    listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
-      features.heading = false;
-      features.spoiler = false;
-      features.table = false;
-    });
+    setCommentEditorFeatures(this.#textarea);
   }
 
   /**
@@ -206,4 +202,13 @@ export class CommentAdd {
       loadingOverlay.remove();
     }
   }
+}
+
+export function setCommentEditorFeatures(textarea: HTMLTextAreaElement): void {
+  listenToCkeditor(textarea).setupFeatures(({ features }) => {
+    features.heading = false;
+    features.quoteBlock = false;
+    features.spoiler = false;
+    features.table = false;
+  });
 }
