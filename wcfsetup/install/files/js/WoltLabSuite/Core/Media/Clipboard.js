@@ -6,19 +6,18 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Ui/Dialog", "../Event/Handler", "../Language", "../Ajax"], function (require, exports, tslib_1, Clipboard, UiNotification, UiDialog, EventHandler, Language, Ajax) {
+define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Event/Handler", "../Language", "../Ajax", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Clipboard, UiNotification, EventHandler, Language_1, Ajax, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setMediaManager = exports.init = void 0;
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
-    UiDialog = tslib_1.__importStar(UiDialog);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     let _mediaManager;
     let _didInit = false;
     class MediaClipboard {
+        #dialog;
         _ajaxSetup() {
             return {
                 data: {
@@ -29,32 +28,19 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
         _ajaxSuccess(data) {
             switch (data.actionName) {
                 case "getSetCategoryDialog":
-                    UiDialog.open(this, data.returnValues.template);
+                    this.#dialog = (0, Dialog_1.dialogFactory)().fromHtml(data.returnValues.template).asConfirmation();
+                    this.#dialog.show((0, Language_1.getPhrase)("wcf.media.setCategory"));
+                    this.#dialog.addEventListener("primary", () => {
+                        const category = this.#dialog.content.querySelector('select[name="categoryID"]');
+                        setCategory(~~category.value);
+                    });
                     break;
                 case "setCategory":
-                    UiDialog.close(this);
+                    this.#dialog?.close();
                     UiNotification.show();
                     Clipboard.reload();
                     break;
             }
-        }
-        _dialogSetup() {
-            return {
-                id: "mediaSetCategoryDialog",
-                options: {
-                    onSetup: (content) => {
-                        content.querySelector("button").addEventListener("click", (event) => {
-                            event.preventDefault();
-                            const category = content.querySelector('select[name="categoryID"]');
-                            setCategory(~~category.value);
-                            const target = event.currentTarget;
-                            target.disabled = true;
-                        });
-                    },
-                    title: Language.get("wcf.media.setCategory"),
-                },
-                source: null,
-            };
         }
     }
     const ajax = new MediaClipboard();

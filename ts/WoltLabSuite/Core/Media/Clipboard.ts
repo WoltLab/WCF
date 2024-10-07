@@ -11,17 +11,19 @@ import MediaManager from "./Manager/Base";
 import MediaManagerEditor from "./Manager/Editor";
 import * as Clipboard from "../Controller/Clipboard";
 import * as UiNotification from "../Ui/Notification";
-import * as UiDialog from "../Ui/Dialog";
 import * as EventHandler from "../Event/Handler";
-import * as Language from "../Language";
+import { getPhrase } from "../Language";
 import * as Ajax from "../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../Ajax/Data";
-import { DialogCallbackObject, DialogCallbackSetup } from "../Ui/Dialog/Data";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 
 let _mediaManager: MediaManager;
 let _didInit = false;
 
-class MediaClipboard implements AjaxCallbackObject, DialogCallbackObject {
+class MediaClipboard implements AjaxCallbackObject {
+  #dialog?: WoltlabCoreDialogElement;
+
   public _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
@@ -33,12 +35,17 @@ class MediaClipboard implements AjaxCallbackObject, DialogCallbackObject {
   public _ajaxSuccess(data): void {
     switch (data.actionName) {
       case "getSetCategoryDialog":
-        UiDialog.open(this, data.returnValues.template);
+        this.#dialog = dialogFactory().fromHtml(data.returnValues.template).asConfirmation();
+        this.#dialog.show(getPhrase("wcf.media.setCategory"));
+        this.#dialog.addEventListener("primary", () => {
+          const category = this.#dialog!.content.querySelector('select[name="categoryID"]') as HTMLSelectElement;
+          setCategory(~~category.value);
+        });
 
         break;
 
       case "setCategory":
-        UiDialog.close(this);
+        this.#dialog?.close();
 
         UiNotification.show();
 
@@ -46,27 +53,6 @@ class MediaClipboard implements AjaxCallbackObject, DialogCallbackObject {
 
         break;
     }
-  }
-
-  public _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: "mediaSetCategoryDialog",
-      options: {
-        onSetup: (content) => {
-          content.querySelector("button")!.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const category = content.querySelector('select[name="categoryID"]') as HTMLSelectElement;
-            setCategory(~~category.value);
-
-            const target = event.currentTarget as HTMLButtonElement;
-            target.disabled = true;
-          });
-        },
-        title: Language.get("wcf.media.setCategory"),
-      },
-      source: null,
-    };
   }
 }
 

@@ -22,7 +22,3 @@
 		</select>
 	</dl>
 </div>
-
-<div class="formSubmit">
-	<button type="button" data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
-</div>
