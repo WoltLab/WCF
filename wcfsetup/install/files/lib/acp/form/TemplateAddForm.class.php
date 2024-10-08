@@ -196,6 +196,16 @@ class TemplateAddForm extends AbstractFormBuilderForm
                     }
                 )
             )
+            ->addProcessor(
+                new CustomFormDataProcessor(
+                    'lastModificationTime',
+                    static function (IFormDocument $document, array $parameters) {
+                        $parameters['data']['lastModificationTime'] = TIME_NOW;
+
+                        return $parameters;
+                    }
+                )
+            )
             ->addProcessor(new VoidFormDataProcessor('copy'))
             ->addProcessor(new VoidFormDataProcessor('templateSource'));
 
