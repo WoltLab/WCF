@@ -239,6 +239,14 @@ class DevtoolsProject extends DatabaseObject
     }
 
     /**
+     * @since 6.1
+     */
+    public function hasFailedPackageXmlValidation(): bool
+    {
+        return $this->packageValidationException !== null;
+    }
+
+    /**
      * Validates the provided path and returns an error code
      * if the path does not exist (`notFound`) or if there is
      * no package.xml (`packageXml`).

@@ -149,7 +149,7 @@
 	<woltlab-core-notice type="error">{@$object->validate()}</woltlab-core-notice>
 {/if}
 
-{if $object->validate() === ''}
+{if $object->validate(true) === '' && !$object->hasFailedPackageXmlValidation()}
 	{include file='__devtoolsProjectInstallationJavaScript'}
 {/if}
 
