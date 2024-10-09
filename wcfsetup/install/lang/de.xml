@@ -3368,6 +3368,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Hierhin ziehen und loslassen, um Dateien hochzuladen]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Jetzt loslassen, um Dateien hochzuladen]]></item>
+		<item name="wcf.attachment.moreOptions"><![CDATA[Weitere Aktionen]]></item>
 	</category>
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Weniger anzeigen]]></item>

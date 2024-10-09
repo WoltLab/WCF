@@ -3293,6 +3293,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.attachment.fileType"><![CDATA[Type]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Drag and Drop here to upload]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Drop now to upload]]></item>
+		<item name="wcf.attachment.moreOptions"><![CDATA[More Options]]></item>
 	</category>
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Display Less]]></item>
