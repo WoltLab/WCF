@@ -5,6 +5,7 @@ namespace wcf\system\form\builder\field;
 use wcf\data\file\File;
 use wcf\data\file\FileList;
 use wcf\data\file\thumbnail\FileThumbnailList;
+use wcf\data\IStorableObject;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
@@ -102,6 +103,16 @@ final class FileProcessorFormField extends AbstractFormField
         );
 
         return $this;
+    }
+
+    #[\Override]
+    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    {
+        if ($loadValues) {
+            $this->context['objectID'] = $object->{$object::getDatabaseTableIndexName()};
+        }
+
+        return parent::updatedObject($data, $object, $loadValues);
     }
 
     public function getFileProcessor(): IFileProcessor
