@@ -299,6 +299,7 @@
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.reaction"><![CDATA[Reaktionen]]></item>
 	</category>
 	<category name="wcf.acp.cronjob">
+		<item name="wcf.acp.cronjob"><![CDATA[Cronjob]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[„Zeitgesteuerte Aufgaben“]]></item>

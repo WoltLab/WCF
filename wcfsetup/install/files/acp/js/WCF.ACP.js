@@ -97,12 +97,6 @@ WCF.ACP.Cronjob.ExecutionHandler = Class.extend({
  */
 WCF.ACP.Cronjob.LogList = Class.extend({
 	/**
-	 * error message dialog
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
 	 * Initializes WCF.ACP.Cronjob.LogList object.
 	 */
 	init: function() {
@@ -123,29 +117,6 @@ WCF.ACP.Cronjob.LogList = Class.extend({
 				}
 			});
 		});
-		
-		// bind event listeners to error badges
-		$('.jsCronjobError').click($.proxy(this._showError, this));
-	},
-	
-	/**
-	 * Shows certain error message
-	 * 
-	 * @param	object		event
-	 */
-	_showError: function(event) {
-		var $errorBadge = $(event.currentTarget);
-		
-		if (this._dialog === null) {
-			this._dialog = $('<div style="overflow: auto"><pre>' + $errorBadge.next().html() + '</pre></div>').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.acp.cronjob.log.error.details')
-			});
-		}
-		else {
-			this._dialog.html('<pre>' + $errorBadge.next().html() + '</pre>');
-			this._dialog.wcfDialog('open');
-		}
 	}
 });
 

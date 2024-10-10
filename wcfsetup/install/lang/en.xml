@@ -277,6 +277,7 @@
 		<item name="wcf.acp.captcha.question.incorrectSubmissions"><![CDATA[Incorrect Answers]]></item>
 	</category>
 	<category name="wcf.acp.cronjob">
+		<item name="wcf.acp.cronjob"><![CDATA[Cronjob]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.cronjob.subtitle"/>
