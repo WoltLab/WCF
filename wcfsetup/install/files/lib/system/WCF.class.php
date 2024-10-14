@@ -107,7 +107,7 @@ class WCF
      * @var ?string
      * @since 5.3
      */
-    public const AVAILABLE_UPGRADE_VERSION = null;
+    public const AVAILABLE_UPGRADE_VERSION = '6.1';
 
     /**
      * list of currently loaded applications
