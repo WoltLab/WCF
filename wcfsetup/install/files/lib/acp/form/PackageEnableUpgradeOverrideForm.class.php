@@ -279,8 +279,8 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         }
 
         // Clear the legacy override.
-        RegistryHandler::getInstance()->delete('com.woltlab.wcf', self::class . "\0upgradeOverride");
-        RegistryHandler::getInstance()->delete('com.woltlab.wcf', self::class . "\0upgradeOverride_6.0");
+        RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
+        RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride_6.0");
 
         PackageUpdateServer::resetAll();
 
