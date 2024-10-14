@@ -799,6 +799,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
             element = getElement(element);
             const data = _data.get(element);
             element.dataset.value = date.getTime().toString();
+            element.dataset.empty = "false";
             let format = "";
             let value;
             if (data.isDateTime) {
