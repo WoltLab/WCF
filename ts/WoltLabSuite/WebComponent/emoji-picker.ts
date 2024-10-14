@@ -15,7 +15,7 @@ import ru_RU from "emoji-picker-element/i18n/ru_RU";
 import tr from "emoji-picker-element/i18n/tr";
 import zh_CN from "emoji-picker-element/i18n/zh_CN";
 import "emoji-picker-element";
-import { PickerConstructorOptions, I18n, CustomEmoji } from "emoji-picker-element/shared";
+import { PickerConstructorOptions, I18n } from "emoji-picker-element/shared";
 import { Picker } from "emoji-picker-element";
 
 const EmojiPickerLocales: { [key: string]: I18n } = {
@@ -41,18 +41,6 @@ function getDataSource(locale: string): string {
   return `${window.WSC_API_URL}emoji/index.php?l=${locale}`;
 }
 
-declare module "emoji-picker-element" {
-  interface Picker {
-    _ctx: {
-      locale: string;
-      dataSource: string;
-      customEmoji?: CustomEmoji[];
-      i18n: I18n;
-    };
-    _dbFlush: () => void;
-  }
-}
-
 void customElements.whenDefined("emoji-picker").then(() => {
   class WoltlabCoreEmojiPicker extends Picker {
     constructor(props: PickerConstructorOptions | null | undefined) {
@@ -67,21 +55,7 @@ void customElements.whenDefined("emoji-picker").then(() => {
     }
 
     static get observedAttributes(): string[] {
-      return ["locale"];
-    }
-
-    attributeChangedCallback(attrName: string, oldVal: string | null, newVal: string | null) {
-      if (attrName !== "locale") return;
-      if (!newVal) return;
-
-      if (oldVal !== newVal) {
-        this._ctx["locale"] = newVal;
-        this._ctx["dataSource"] = getDataSource(newVal);
-        if (Object.hasOwn(EmojiPickerLocales, newVal)) {
-          this._ctx["i18n"] = EmojiPickerLocales[newVal];
-        }
-        this._dbFlush();
-      }
+      return [];
     }
 
     focus() {
