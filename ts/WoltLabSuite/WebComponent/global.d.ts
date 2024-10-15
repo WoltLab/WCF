@@ -7,7 +7,6 @@ type Codepoint = string;
 type HasRegularVariant = boolean;
 type IconMetadata = [Codepoint, HasRegularVariant];
 
-import { I18n } from "emoji-picker-element/shared";
 import type * as Language from "./Language";
 import { Template } from "./Template";
 
@@ -36,9 +35,6 @@ declare global {
     HTMLParsedElement: HTMLParsedElement;
     WoltLabLanguage: typeof Language;
     WoltLabTemplate: typeof Template;
-    EmojiPickerLocales: {
-      [key: string]: I18n;
-    };
   }
 
   class HTMLParsedElement extends HTMLElement {
