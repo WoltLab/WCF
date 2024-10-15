@@ -14,7 +14,7 @@ jobs:
       matrix:
         branch:
         - '6.0'
-        - 'master'
+        - '6.1'
     steps:
     - run: |
         sudo apt-get install -y \
