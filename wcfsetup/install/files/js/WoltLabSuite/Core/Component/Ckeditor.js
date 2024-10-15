@@ -154,13 +154,12 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         Object.freeze(features);
     }
-    function initializeConfiguration(element, features, bbcodes, smileys, codeBlockLanguages, modules) {
+    function initializeConfiguration(element, features, bbcodes, codeBlockLanguages, modules) {
         const configuration = (0, Configuration_1.createConfigurationFor)(features);
         configuration.codeBlock = {
             languages: codeBlockLanguages,
         };
         configuration.woltlabBbcode = bbcodes;
-        configuration.woltlabSmileys = smileys;
         if (features.autosave !== "") {
             (0, Autosave_1.initializeAutosave)(element, configuration, features.autosave);
         }
@@ -197,7 +196,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             (0, Event_1.dispatchToCkeditor)(element).changeData();
         });
     }
-    async function setupCkeditor(element, features, bbcodes, smileys, codeBlockLanguages, licenseKey) {
+    async function setupCkeditor(element, features, bbcodes, codeBlockLanguages, licenseKey) {
         if (instances.has(element)) {
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
@@ -217,7 +216,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (features.quoteBlock) {
             (0, Quote_1.setup)(element);
         }
-        const configuration = initializeConfiguration(element, features, bbcodes, smileys, codeBlockLanguages, CKEditor5);
+        const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
         if (licenseKey) {
             configuration.licenseKey = licenseKey;
         }
