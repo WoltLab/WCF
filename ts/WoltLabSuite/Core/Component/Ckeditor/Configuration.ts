@@ -35,7 +35,7 @@ class ConfigurationBuilder {
   }
 
   #setupBasicFormat(): void {
-    this.#toolbar.push("bold", "italic");
+    this.#toolbar.push("bold", "italic", "WoltlabEmoji");
   }
 
   #setupTextFormat(): void {
@@ -182,7 +182,6 @@ class ConfigurationBuilder {
     } else {
       this.#removePlugins.push("Table", "TableToolbar");
     }
-    this.#toolbar.push("WoltlabEmoji");
 
     if (this.#features.quoteBlock) {
       this.#toolbar.push("blockQuote");
