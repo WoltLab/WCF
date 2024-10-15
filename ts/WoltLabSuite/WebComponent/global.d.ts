@@ -1,8 +1,4 @@
 // This is a workaround for TS2669.
-import { I18n } from "emoji-picker-element/shared";
-import type * as Language from "./Language";
-import { Template } from "./Template";
-
 export {};
 
 // This is duplicated from the regular `global.ts` that we cannot
@@ -10,6 +6,10 @@ export {};
 type Codepoint = string;
 type HasRegularVariant = boolean;
 type IconMetadata = [Codepoint, HasRegularVariant];
+
+import { I18n } from "emoji-picker-element/shared";
+import type * as Language from "./Language";
+import { Template } from "./Template";
 
 interface Reaction {
   title: string;
