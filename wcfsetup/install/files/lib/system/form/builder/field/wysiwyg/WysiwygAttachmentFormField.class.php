@@ -68,6 +68,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
                     $this->getId(),
                     $attachmentHandler->getObjectType()->objectType,
                     $attachmentHandler->getParentObjectID(),
+                    $attachmentHandler->getObjectID(),
                     WCF::getUser()->userID ?: WCF::getSession()->sessionID,
                 ]));
 
