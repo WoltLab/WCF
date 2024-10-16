@@ -134,8 +134,10 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse);
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses);
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse);
+            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows);
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions);
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession);
+            $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank);
         }
     );
 
