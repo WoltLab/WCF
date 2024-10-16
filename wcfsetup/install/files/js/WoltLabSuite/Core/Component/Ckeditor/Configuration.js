@@ -29,7 +29,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
         }
         #setupBasicFormat() {
-            this.#toolbar.push("bold", "italic");
+            this.#toolbar.push("bold", "italic", "WoltlabEmoji");
         }
         #setupTextFormat() {
             const items = [];
@@ -168,7 +168,6 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             else {
                 this.#removePlugins.push("Table", "TableToolbar");
             }
-            this.#toolbar.push("WoltlabEmoji");
             if (this.#features.quoteBlock) {
                 this.#toolbar.push("blockQuote");
             }
