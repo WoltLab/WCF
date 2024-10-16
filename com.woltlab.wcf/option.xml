@@ -303,7 +303,7 @@
 			<option name="module_smiley">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="module_users_online">
 				<categoryname>module.user</categoryname>

@@ -11,6 +11,7 @@ import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-cor
 import type WoltlabCoreDialogControlElement from "WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 import type WoltlabCoreGoogleMapsElement from "WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
 import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
+import { Picker as EmojiPickerElement } from "emoji-picker-element";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -136,5 +137,6 @@ declare global {
     "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
+    "woltlab-core-emoji-picker": EmojiPickerElement;
   }
 }

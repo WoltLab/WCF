@@ -28,7 +28,6 @@ import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
 import { browser, touch } from "../Environment";
-import { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -215,7 +214,6 @@ function initializeConfiguration(
   element: HTMLElement,
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
-  smileys: WoltlabSmileyItem[],
   codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
   modules: typeof CKEditor5,
 ): CKEditor5.Core.EditorConfig {
@@ -225,7 +223,6 @@ function initializeConfiguration(
   };
 
   configuration.woltlabBbcode = bbcodes;
-  configuration.woltlabSmileys = smileys;
 
   if (features.autosave !== "") {
     initializeAutosave(element, configuration, features.autosave);
@@ -275,7 +272,6 @@ export async function setupCkeditor(
   element: HTMLElement,
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
-  smileys: WoltlabSmileyItem[],
   codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
   licenseKey: string,
 ): Promise<CKEditor> {
@@ -304,7 +300,7 @@ export async function setupCkeditor(
     setupQuote(element);
   }
 
-  const configuration = initializeConfiguration(element, features, bbcodes, smileys, codeBlockLanguages, CKEditor5);
+  const configuration = initializeConfiguration(element, features, bbcodes, codeBlockLanguages, CKEditor5);
   if (licenseKey) {
     configuration.licenseKey = licenseKey;
   }
