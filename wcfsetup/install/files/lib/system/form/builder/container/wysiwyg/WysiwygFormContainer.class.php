@@ -194,6 +194,7 @@ class WysiwygFormContainer extends FormContainer
      * @param int $parentObjectID id of the parent of the object the attachments belong to or `0` if no such parent exists
      * @param ?int $objectID id of the object the attachments belong to
      * @return  WysiwygFormContainer            this form container
+     * @throws  \BadMethodCallException         if the attachment form field has already been initialized
      */
     public function attachmentData(?string $objectType = null, int $parentObjectID = 0, ?int $objectID = null): static
     {
