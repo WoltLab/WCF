@@ -17,7 +17,7 @@ use GuzzleHttp\Psr7\Header;
 
 require(__DIR__ . '/../lib/system/api/autoload.php');
 
-if (!isset($_GET['l'])) {
+if (!isset($_GET['l']) || !\preg_match('~^[A-Za-z\-]+$~', $_GET['l'])) {
     @\http_response_code(404);
     exit;
 }
