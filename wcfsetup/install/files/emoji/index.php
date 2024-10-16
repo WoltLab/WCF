@@ -15,6 +15,20 @@ use GuzzleHttp\Psr7\Header;
     throw new \ErrorException($message, 0, $severity, $file, $line);
 });
 
+function getEmojiPath(string $lang): ?string
+{
+    $emojibase = __DIR__ . "/{$lang}/emojibase/data.json";
+    $default = __DIR__ . "/{$lang}/cldr/data.json";
+
+    if (\file_exists($emojibase)) {
+        return $emojibase;
+    } elseif (\file_exists($default)) {
+        return $default;
+    }
+
+    return null;
+}
+
 require(__DIR__ . '/../lib/system/api/autoload.php');
 
 if (!isset($_GET['l']) || !\preg_match('~^[A-Za-z\-]+$~', $_GET['l'])) {
@@ -23,14 +37,13 @@ if (!isset($_GET['l']) || !\preg_match('~^[A-Za-z\-]+$~', $_GET['l'])) {
 }
 $lang = $_GET['l'];
 
-$emojibase = __DIR__ . "/{$lang}/emojibase/data.json";
-$default = __DIR__ . "/{$lang}/cldr/data.json";
+$location = getEmojiPath($lang);
+if ($location === null && \str_contains($lang, '-')) {
+    // fallback to language without a region
+    $location = getEmojiPath(\explode('-', $lang)[0]);
+}
 
-if (\file_exists($emojibase)) {
-    $location = $emojibase;
-} elseif (\file_exists($default)) {
-    $location = $default;
-} else {
+if ($location === null) {
     @\http_response_code(404);
     exit;
 }

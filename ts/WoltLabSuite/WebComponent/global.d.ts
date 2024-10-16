@@ -27,7 +27,6 @@ declare global {
       [key: string]: Reaction;
     };
     TIME_NOW: number;
-    LANGUAGE_CODE: string;
     WSC_API_URL: string;
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;

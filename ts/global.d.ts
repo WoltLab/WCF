@@ -30,7 +30,6 @@ declare global {
     ENABLE_DEBUG_MODE: boolean;
     ENABLE_DEVELOPER_TOOLS: boolean;
     LANGUAGE_ID: number;
-    LANGUAGE_CODE: string;
     PAGE_TITLE: string;
     REACTION_TYPES: {
       [key: string]: Reaction;

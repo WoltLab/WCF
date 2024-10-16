@@ -27,14 +27,14 @@ const EmojiPickerLocales: { [key: string]: I18n } = {
   hi,
   id,
   it,
-  ms_MY,
+  "ms-my": ms_MY,
   nl,
   pl,
-  pt_BR,
-  pt_PT,
-  ru_RU,
+  "pt-br": pt_BR,
+  "pt-pt": pt_PT,
+  "ru-ru": ru_RU,
   tr,
-  zh_CN,
+  "zh-cn": zh_CN,
 };
 
 function getDataSource(locale: string): string {
@@ -44,7 +44,7 @@ function getDataSource(locale: string): string {
 void customElements.whenDefined("emoji-picker").then(() => {
   class WoltlabCoreEmojiPicker extends Picker {
     constructor(props: PickerConstructorOptions | null | undefined) {
-      const locale = (props && props.locale) || window.LANGUAGE_CODE;
+      const locale = (props && props.locale) || document.documentElement.lang;
 
       super({
         locale: locale,
