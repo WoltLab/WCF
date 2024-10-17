@@ -35,3 +35,29 @@ if (!$checkForTls()) {
 
     throw new \RuntimeException($message);
 }
+
+$requiredPhpExtensions = \array_filter(
+    [
+        'openssl' => \extension_loaded('openssl'),
+        'gmp' => !\extension_loaded('gmp'),
+    ],
+    static fn($value) => $value === false
+);
+
+if ($requiredPhpExtensions !== []) {
+    $missingPhpExtensions = \implode(
+        ", ",
+        \array_map(
+            static fn(string $extension) => "'{$extension}'",
+            \array_keys($requiredPhpExtensions)
+        )
+    );
+
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Die folgenden PHP-Erweiterungen werden für den Betrieb der Software benötigt: " . $missingPhpExtensions;
+    } else {
+        $message = "The following PHP extensions are required to run the software: " . $missingPhpExtensions;
+    }
+
+    throw new \RuntimeException($message);
+}
