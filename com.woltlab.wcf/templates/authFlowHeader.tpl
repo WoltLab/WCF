@@ -32,7 +32,7 @@
 
 <div id="pageContainer" class="pageContainer">
 	<div id="pageHeaderContainer" class="pageHeaderContainer">
-		<header id="pageHeader" class="pageHeader">
+		<header id="pageHeader" class="pageHeader pageHeader--authFlow">
 			<div id="pageHeaderPanel" class="pageHeaderPanel">
 				<div class="layoutBoundary">
 					{include file='pageHeaderMenu'}

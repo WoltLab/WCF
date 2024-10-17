@@ -458,6 +458,11 @@
 		top: 0;
 	}
 
+	.pageHeader.pageHeader--authFlow {
+		display: flex;
+		justify-content: center;
+	}
+
 	.pageHeaderPanel,
 	.pageHeaderFacade,
 	.pageHeaderPanel .layoutBoundary,
