@@ -1,29 +1,7 @@
-import de from "emoji-picker-element/i18n/de";
-import en from "emoji-picker-element/i18n/en";
-import es from "emoji-picker-element/i18n/es";
-import fr from "emoji-picker-element/i18n/fr";
-import it from "emoji-picker-element/i18n/it";
-import nl from "emoji-picker-element/i18n/nl";
-import pl from "emoji-picker-element/i18n/pl";
-import pt_BR from "emoji-picker-element/i18n/pt_BR";
-import pt_PT from "emoji-picker-element/i18n/pt_PT";
-import ru_RU from "emoji-picker-element/i18n/ru_RU";
 import "emoji-picker-element";
-import { PickerConstructorOptions, I18n } from "emoji-picker-element/shared";
+import { PickerConstructorOptions } from "emoji-picker-element/shared";
 import { Picker } from "emoji-picker-element";
-
-const EmojiPickerLocales: { [key: string]: I18n } = {
-  de,
-  en,
-  es,
-  fr,
-  it,
-  nl,
-  pl,
-  "pt-br": pt_BR,
-  "pt-pt": pt_PT,
-  "ru-ru": ru_RU,
-};
+import { getLocalizationData } from "WoltLabSuite/Core/Component/EmojiPicker/Localization";
 
 function getDataSource(locale: string): string {
   return `${window.WSC_API_URL}emoji/${locale}.json`;
@@ -37,7 +15,7 @@ export class WoltlabCoreEmojiPicker extends Picker {
       locale: locale,
       ...(props || {}),
       dataSource: getDataSource(locale),
-      ...(Object.hasOwn(EmojiPickerLocales, locale) ? { i18n: EmojiPickerLocales[locale] } : {}),
+      i18n: getLocalizationData(locale),
     });
   }
 
