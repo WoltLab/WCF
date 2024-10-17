@@ -127,6 +127,9 @@ export function setup(options: BootstrapOptions): void {
   whenFirstSeen("woltlab-core-comment-response", () => {
     void import("./Component/Comment/Response/woltlab-core-comment-response");
   });
+  whenFirstSeen("woltlab-core-emoji-picker", () => {
+    void import("./Component/EmojiPicker/woltlab-core-emoji-picker");
+  });
   whenFirstSeen("[data-follow-user]", () => {
     void import("./Component/User/Follow").then(({ setup }) => setup());
   });

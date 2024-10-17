@@ -2,6 +2,7 @@
   "dependencies": {
     "@woltlab/r.js": "git+https://github.com/WoltLab/r.js.git#ad2413df45fdf6164611243f9870943de3d2bce3",
     "deepmerge": "^4.3.0",
+    "emoji-picker-element": "^1.22.8",
     "emoji-picker-element-data": "^1.6.1",
     "terser": "^5.16.5",
     "ts-node": "^10.9.1"
