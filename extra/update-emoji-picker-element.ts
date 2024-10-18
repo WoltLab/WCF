@@ -14,6 +14,7 @@ import ru_RU from "emoji-picker-element/i18n/ru_RU";
 
 const copyFile = promisify(fs.copyFile);
 const writeFile = promisify(fs.writeFile);
+const rm = promisify(fs.rm);
 
 if (process.argv.length !== 4) {
   throw new Error(
@@ -78,6 +79,14 @@ export function getLocalizationData(localization: string): I18n {
   }
 }
 `;
+
+  fs.readdirSync(repository)
+    .filter((file) => {
+      return file.endsWith(".json");
+    })
+    .forEach((file) => {
+      rm(path.join(repository, file));
+    });
 
   for (const language of languages) {
     await copyFile(
