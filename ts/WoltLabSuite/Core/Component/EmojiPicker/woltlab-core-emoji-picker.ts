@@ -1,6 +1,6 @@
 import "emoji-picker-element";
 import { PickerConstructorOptions } from "emoji-picker-element/shared";
-import { Picker } from "emoji-picker-element";
+import { Picker, Database } from "emoji-picker-element";
 import { getLocalizationData } from "WoltLabSuite/Core/Component/EmojiPicker/Localization";
 
 function getDataSource(locale: string): string {
@@ -26,6 +26,13 @@ export class WoltlabCoreEmojiPicker extends Picker {
   focus() {
     this.shadowRoot!.querySelector<HTMLInputElement>(".search")!.focus();
   }
+}
+
+export function getDatabaseForAutoComplete(): Database {
+  return new Database({
+    dataSource: getDataSource("en"),
+    locale: "en",
+  });
 }
 
 void customElements.whenDefined("emoji-picker").then(() => {

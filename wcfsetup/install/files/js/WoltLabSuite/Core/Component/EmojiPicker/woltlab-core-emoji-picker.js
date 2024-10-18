@@ -2,6 +2,7 @@ define(["require", "exports", "emoji-picker-element", "WoltLabSuite/Core/Compone
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreEmojiPicker = void 0;
+    exports.getDatabaseForAutoComplete = getDatabaseForAutoComplete;
     function getDataSource(locale) {
         return `${window.WSC_API_URL}emoji/${locale}.json`;
     }
@@ -23,6 +24,12 @@ define(["require", "exports", "emoji-picker-element", "WoltLabSuite/Core/Compone
         }
     }
     exports.WoltlabCoreEmojiPicker = WoltlabCoreEmojiPicker;
+    function getDatabaseForAutoComplete() {
+        return new emoji_picker_element_1.Database({
+            dataSource: getDataSource("en"),
+            locale: "en",
+        });
+    }
     void customElements.whenDefined("emoji-picker").then(() => {
         customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker, {
             extends: "emoji-picker",

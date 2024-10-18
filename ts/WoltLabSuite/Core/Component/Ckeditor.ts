@@ -29,6 +29,7 @@ import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
 import { browser, touch } from "../Environment";
 import { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
+import { getDatabaseForAutoComplete } from "WoltLabSuite/Core/Component/EmojiPicker/woltlab-core-emoji-picker";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -308,6 +309,14 @@ export async function setupCkeditor(
   if (licenseKey) {
     configuration.licenseKey = licenseKey;
   }
+
+  const { getDatabaseForAutoComplete } = await import("./EmojiPicker/woltlab-core-emoji-picker");
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  // TODO remove eslint-disable
+  configuration.woltlabEmojis = {
+    getDatabase: getDatabaseForAutoComplete(),
+  };
 
   normalizeLegacyMessage(element);
 
