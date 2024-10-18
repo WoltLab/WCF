@@ -24,9 +24,5 @@ define(["require", "exports", "emoji-picker-element", "WoltLabSuite/Core/Compone
         }
     }
     exports.WoltlabCoreEmojiPicker = WoltlabCoreEmojiPicker;
-    void customElements.whenDefined("emoji-picker").then(() => {
-        customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker, {
-            extends: "emoji-picker",
-        });
-    });
+    customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker);
 });

@@ -29,8 +29,4 @@ export class WoltlabCoreEmojiPicker extends Picker {
   }
 }
 
-void customElements.whenDefined("emoji-picker").then(() => {
-  customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker, {
-    extends: "emoji-picker",
-  });
-});
+customElements.define("woltlab-core-emoji-picker", WoltlabCoreEmojiPicker);
