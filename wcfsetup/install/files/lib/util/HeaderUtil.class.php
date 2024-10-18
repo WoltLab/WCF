@@ -165,21 +165,42 @@ final class HeaderUtil
             }, self::$output);
         }
 
-        // move script tags to the bottom of the page
+        // Move script tags to the bottom of the page. This splits up the output
+        // into chunks that effectively end with `</script>`. This allows us to
+        // use a simple regex to find the start of the script tag and treating
+        // everything inbetween as the content of the script.
+        //
+        // The previous approach used a lazy match for the script content which
+        // could hit the backtracking limit for extremely large payloads.
         $javascript = [];
-        self::$output = \preg_replace_callback(
-            '~<script data-relocate="true"(?<attributes>[^>]*+)>(?P<script>.*?)</script>\s*~s',
-            static function ($matches) use (&$javascript) {
-                // Add an attribute to disable Cloudflare's Rocket Loader
-                if (!\str_contains($matches['attributes'], 'data-cfasync="false"')) {
-                    $matches['attributes'] = ' data-cfasync="false"' . $matches['attributes'];
-                }
+        $segments = \preg_split('~</script>~s', self::$output, flags: \PREG_SPLIT_NO_EMPTY);
 
-                $javascript[] = '<script' . $matches['attributes'] . '>' . $matches['script'] . '</script>';
-                return '';
-            },
-            self::$output
-        );
+        self::$output = '';
+        foreach ($segments as $segment) {
+            $hasMatch = false;
+
+            self::$output .= \preg_replace_callback(
+                '~<script data-relocate="true"(?<attributes>[^>]*+)>(?<script>.*+)$~s',
+                static function ($matches) use (&$javascript, &$hasMatch) {
+                    // Add an attribute to disable Cloudflare's Rocket Loader
+                    if (!\str_contains($matches['attributes'], 'data-cfasync="false"')) {
+                        $matches['attributes'] = ' data-cfasync="false"' . $matches['attributes'];
+                    }
+
+                    $javascript[] = '<script' . $matches['attributes'] . '>' . $matches['script'] . '</script>';
+
+                    $hasMatch = true;
+
+                    return '';
+                },
+                $segment,
+                limit: 1
+            );
+
+            if (!$hasMatch) {
+                self::$output .= '</script>';
+            }
+        }
 
         $placeholder = '<!-- ' . WCF::getRequestNonce('JAVASCRIPT_RELOCATE_POSITION') . ' -->';
         if (($placeholderPosition = \strrpos(self::$output, $placeholder)) !== false) {
