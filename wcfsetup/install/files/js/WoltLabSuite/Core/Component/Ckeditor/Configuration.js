@@ -29,7 +29,7 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
             }
         }
         #setupBasicFormat() {
-            this.#toolbar.push("bold", "italic");
+            this.#toolbar.push("bold", "italic", "WoltlabEmoji");
         }
         #setupTextFormat() {
             const items = [];

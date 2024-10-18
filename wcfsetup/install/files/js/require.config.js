@@ -17,6 +17,7 @@ requirejs.config({
 		"@woltlab/editor": "3rdParty/ckeditor/ckeditor5.bundle",
 		"ckeditor5-translation": "3rdParty/ckeditor/translations",
 		"diff-match-patch": "3rdParty/diff-match-patch/diff_match_patch.min",
+		"emoji-picker-element": "3rdParty/emoji-picker-element.min",
 	},
 	packages: [
 		{

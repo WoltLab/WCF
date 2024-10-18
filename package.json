@@ -1,7 +1,8 @@
 {
   "name": "@woltlab/wcf",
   "scripts": {
-    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js"
+    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js",
+    "bundle-emoji-picker": "npx webpack build --config emoji-picker-webpack.config.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.7.0",
@@ -24,12 +25,14 @@
     "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#efa5ffdc4a094c55ef015b29c9d5024649a8ea32",
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
+    "emoji-picker-element": "^1.22.8",
     "focus-trap": "^7.6.0",
     "html-parsed-element": "^0.4.1",
     "perfect-scrollbar": "^1.5.5",
     "qr-creator": "^1.0.0",
     "reflect-metadata": "^0.2.2",
     "tabbable": "^6.2.0",
-    "tslib": "^2.7.0"
+    "tslib": "^2.7.0",
+    "webpack-cli": "^5.1.4"
   }
 }

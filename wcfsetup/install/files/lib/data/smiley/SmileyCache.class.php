@@ -173,6 +173,10 @@ class SmileyCache extends SingletonFactory
      */
     public function getEmojis(): array
     {
+        if (!MODULE_SMILEY) {
+            return [];
+        }
+
         if (!isset($this->emojis)) {
             $this->emojis = [];
             foreach ($this->getVisibleCategories() as $category) {

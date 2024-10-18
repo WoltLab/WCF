@@ -90,11 +90,14 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment-response", () => {
             void new Promise((resolve_5, reject_5) => { require(["./Component/Comment/Response/woltlab-core-comment-response"], resolve_5, reject_5); }).then(tslib_1.__importStar);
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-emoji-picker", () => {
+            void new Promise((resolve_6, reject_6) => { require(["./Component/EmojiPicker/woltlab-core-emoji-picker"], resolve_6, reject_6); }).then(tslib_1.__importStar);
+        });
         (0, LazyLoader_1.whenFirstSeen)("[data-follow-user]", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/User/Follow"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_7, reject_7) => { require(["./Component/User/Follow"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
-            void new Promise((resolve_7, reject_7) => { require(["./Component/User/Ignore"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_8, reject_8) => { require(["./Component/User/Ignore"], resolve_8, reject_8); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
 });
