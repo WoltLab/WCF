@@ -99,7 +99,7 @@ class UserTrophyListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_user users ON (users.userID = user_trophy.userID)';
+        $this->objectList->sqlJoins .= ' LEFT JOIN wcf1_user users ON (users.userID = user_trophy.userID)';
         if ($this->trophyID) {
             $this->objectList->getConditionBuilder()->add('user_trophy.trophyID = ?', [$this->trophyID]);
         }
@@ -108,7 +108,7 @@ class UserTrophyListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'user_trophy.userID IN (
                     SELECT  userID
-                    FROM    wcf' . WCF_N . '_user
+                    FROM    wcf1_user
                     WHERE   username LIKE ?
                 )',
                 ['%' . $this->username . '%']

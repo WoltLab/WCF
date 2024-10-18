@@ -31,10 +31,10 @@ class StatDailyBuilderCronjob extends AbstractCronjob
         $date = $d->getTimestamp();
 
         // prepare insert statement
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_stat_daily
+        $sql = "INSERT IGNORE INTO  wcf1_stat_daily
                                     (objectTypeID, date, counter, total)
                 VALUES              (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         // get object types
         foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler') as $objectType) {

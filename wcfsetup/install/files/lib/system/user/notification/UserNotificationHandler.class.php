@@ -154,9 +154,9 @@ class UserNotificationHandler extends SingletonFactory
         $conditions->add("confirmTime = ?", [0]);
 
         $sql = "SELECT  notificationID, userID
-                FROM    wcf" . WCF_N . "_user_notification
+                FROM    wcf1_user_notification
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $notifications = $statement->fetchMap('userID', 'notificationID');
 
@@ -171,9 +171,9 @@ class UserNotificationHandler extends SingletonFactory
             }
 
             $sql = "SELECT  notificationID
-                    FROM    wcf" . WCF_N . "_user_notification_author
+                    FROM    wcf1_user_notification_author
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -187,11 +187,11 @@ class UserNotificationHandler extends SingletonFactory
 
             if (!empty($notificationIDs)) {
                 // update trigger count
-                $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+                $sql = "UPDATE  wcf1_user_notification
                         SET     timesTriggered = timesTriggered + ?,
                                 guestTimesTriggered = guestTimesTriggered + ?
                         WHERE   notificationID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
 
                 WCF::getDB()->beginTransaction();
                 foreach ($notificationIDs as $notificationID) {
@@ -225,9 +225,9 @@ class UserNotificationHandler extends SingletonFactory
             $conditions->add("ignoreUserID = ?", [$userProfile->getUserID()]);
 
             $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_user_ignore
+                    FROM    wcf1_user_ignore
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $userIDs = [];
             while ($userID = $statement->fetchColumn()) {
@@ -354,10 +354,10 @@ class UserNotificationHandler extends SingletonFactory
                 // cache does not exist or is outdated
                 if ($data === null || $skipCache) {
                     $sql = "SELECT  COUNT(*)
-                            FROM    wcf" . WCF_N . "_user_notification
+                            FROM    wcf1_user_notification
                             WHERE   userID = ?
                                 AND confirmTime = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([
                         WCF::getUser()->userID,
                         0,
@@ -388,9 +388,9 @@ class UserNotificationHandler extends SingletonFactory
     public function countAllNotifications()
     {
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_user_notification
+                FROM    wcf1_user_notification
                 WHERE   userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([WCF::getUser()->userID]);
 
         return $statement->fetchSingleColumn();
@@ -464,14 +464,14 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         $sql = "SELECT      notification.*, notification_event.eventID, object_type.objectType
-                FROM        wcf" . WCF_N . "_user_notification notification
-                LEFT JOIN   wcf" . WCF_N . "_user_notification_event notification_event
+                FROM        wcf1_user_notification notification
+                LEFT JOIN   wcf1_user_notification_event notification_event
                 ON          notification_event.eventID = notification.eventID
-                LEFT JOIN   wcf" . WCF_N . "_object_type object_type
+                LEFT JOIN   wcf1_object_type object_type
                 ON          object_type.objectTypeID = notification_event.objectTypeID
                 " . $conditions . "
                 ORDER BY    notification.time DESC";
-        $statement = WCF::getDB()->prepareStatement($sql, $limit, $offset);
+        $statement = WCF::getDB()->prepare($sql, $limit, $offset);
         $statement->execute($conditions->getParameters());
 
         return $statement->fetchObjects(UserNotification::class, 'notificationID');
@@ -513,10 +513,10 @@ class UserNotificationHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("notificationID IN (?)", [$notificationIDs]);
         $sql = "SELECT      notificationID, authorID
-                FROM        wcf" . WCF_N . "_user_notification_author
+                FROM        wcf1_user_notification_author
                 " . $conditions . "
                 ORDER BY    time ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $authorIDs = $authorToNotification = [];
         while ($row = $statement->fetchArray()) {
@@ -682,9 +682,9 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         $sql = "SELECT  notificationID
-                FROM    wcf" . WCF_N . "_user_notification
+                FROM    wcf1_user_notification
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         $row = $statement->fetchArray();
@@ -876,9 +876,9 @@ class UserNotificationHandler extends SingletonFactory
 
         // get event ids
         $sql = "SELECT  eventID
-                FROM    wcf" . WCF_N . "_user_notification_event
+                FROM    wcf1_user_notification_event
                 WHERE   objectTypeID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeObj->objectTypeID,
         ]);
@@ -890,9 +890,9 @@ class UserNotificationHandler extends SingletonFactory
             $conditions->add("objectID IN (?)", [$objectIDs]);
 
             $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_user_notification
+                    FROM    wcf1_user_notification
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -910,9 +910,9 @@ class UserNotificationHandler extends SingletonFactory
             EventHandler::getInstance()->fireAction($this, 'removeNotifications', $parameters);
 
             // delete notifications
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_notification
+            $sql = "DELETE FROM wcf1_user_notification
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
         }
     }
@@ -947,10 +947,10 @@ class UserNotificationHandler extends SingletonFactory
             $conditions->add("objectID IN (?)", [$objectIDs]);
         }
 
-        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+        $sql = "UPDATE  wcf1_user_notification
                 SET     confirmTime = ?
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, TIME_NOW);
         $statement->execute($parameters);
@@ -1002,10 +1002,10 @@ class UserNotificationHandler extends SingletonFactory
         $conditions->add("confirmTime = ?", [0]);
 
         // mark notifications as confirmed
-        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+        $sql = "UPDATE  wcf1_user_notification
                 SET     confirmTime = ?
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, TIME_NOW);
         $statement->execute($parameters);
@@ -1034,10 +1034,10 @@ class UserNotificationHandler extends SingletonFactory
 
         // get setting
         $sql = "SELECT  mailNotificationType
-                FROM    wcf" . WCF_N . "_user_notification_event_to_user
+                FROM    wcf1_user_notification_event_to_user
                 WHERE   eventID = ?
                     AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$event->eventID, WCF::getUser()->userID]);
         $row = $statement->fetchArray();
         if ($row === false) {

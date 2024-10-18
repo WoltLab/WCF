@@ -49,7 +49,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
         $this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
         $this->objectList->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID";
     }
 

@@ -140,10 +140,10 @@ class UserActivityEventHandler extends SingletonFactory
                 ]);
             }
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_activity_event
+            $sql = "INSERT INTO wcf1_user_activity_event
                                 (objectTypeID, objectID, languageID, userID, time, additionalData)
                     VALUES      (?, ?, ?, ?, ?, ?)" . \str_repeat(', (?, ?, ?, ?, ?, ?)', \count($batchEventData) - 1);
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($parameters);
         }
         WCF::getDB()->commitTransaction();
@@ -168,11 +168,11 @@ class UserActivityEventHandler extends SingletonFactory
             $userID = WCF::getUser()->userID;
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_activity_event
+        $sql = "DELETE FROM wcf1_user_activity_event
                 WHERE       objectTypeID = ?
                         AND objectID = ?
                         AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,
@@ -202,9 +202,9 @@ class UserActivityEventHandler extends SingletonFactory
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_activity_event
+        $sql = "DELETE FROM wcf1_user_activity_event
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
     }
 
@@ -219,9 +219,9 @@ class UserActivityEventHandler extends SingletonFactory
 
         // remove orphaned event ids
         if (!empty($eventIDs)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_activity_event
+            $sql = "DELETE FROM wcf1_user_activity_event
                     WHERE       eventID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($eventIDs as $eventID) {
                 $statement->execute([$eventID]);

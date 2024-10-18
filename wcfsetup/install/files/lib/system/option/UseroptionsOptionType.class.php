@@ -84,14 +84,14 @@ class UseroptionsOptionType extends AbstractOptionType
         if (self::$userOptions === null) {
             self::$userOptions = [];
             $sql = "SELECT  optionName
-                    FROM    wcf" . WCF_N . "_user_option
+                    FROM    wcf1_user_option
                     WHERE   categoryName IN (
                                 SELECT  categoryName
-                                FROM    wcf" . WCF_N . "_user_option_category
+                                FROM    wcf1_user_option_category
                                 WHERE   parentCategoryName = 'profile'
                             )
                         AND optionType <> 'boolean'";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute();
             self::$userOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
         }

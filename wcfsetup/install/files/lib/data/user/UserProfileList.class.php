@@ -39,13 +39,13 @@ class UserProfileList extends UserList
         }
         $this->sqlSelects .= "user_avatar.*";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
+            LEFT JOIN   wcf1_user_avatar user_avatar
             ON          user_avatar.avatarID = user_table.avatarID";
 
         // get current location
         $this->sqlSelects .= ", session.pageID, session.pageObjectID, session.lastActivityTime AS sessionLastActivityTime";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_session session
+            LEFT JOIN   wcf1_session session
             ON          session.userID = user_table.userID";
     }
 

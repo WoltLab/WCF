@@ -41,7 +41,7 @@ class ViewableMediaList extends MediaList
         // fetch content data
         $this->sqlSelects .= "media_content.*, COALESCE(media.languageID, " . $languageID . ") AS localizedLanguageID";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_media_content media_content
+            LEFT JOIN   wcf1_media_content media_content
             ON          media_content.mediaID = media.mediaID
                     AND media_content.languageID = COALESCE(media.languageID, " . $languageID . ")";
     }

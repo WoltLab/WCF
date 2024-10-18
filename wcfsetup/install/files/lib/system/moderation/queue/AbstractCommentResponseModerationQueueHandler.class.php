@@ -51,11 +51,11 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         $conditions->add("comment_response.responseID IN (?)", [$responseIDs]);
 
         $sql = "SELECT      comment_response.responseID, comment.commentID, comment.objectTypeID, comment.objectID
-                FROM        wcf" . WCF_N . "_comment_response comment_response
-                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                FROM        wcf1_comment_response comment_response
+                LEFT JOIN   wcf1_comment comment
                 ON          comment.commentID = comment_response.commentID
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $comments = $responses = [];
         while ($row = $statement->fetchArray()) {

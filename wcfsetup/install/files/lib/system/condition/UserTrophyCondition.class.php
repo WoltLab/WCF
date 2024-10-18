@@ -76,7 +76,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
             $objectList->getConditionBuilder()->add(
                 'user_table.userID IN (
                     SELECT      userID
-                    FROM        wcf' . WCF_N . '_user_trophy
+                    FROM        wcf1_user_trophy
                     WHERE       trophyID IN (?)
                     GROUP BY    userID
                     HAVING      COUNT(DISTINCT trophyID) = ?
@@ -88,7 +88,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
             $objectList->getConditionBuilder()->add(
                 'user_table.userID NOT IN (
                     SELECT  userID
-                    FROM    wcf' . WCF_N . '_user_trophy
+                    FROM    wcf1_user_trophy
                     WHERE   trophyID IN (?)
                 )',
                 [$conditionData['notUserTrophyIDs']]

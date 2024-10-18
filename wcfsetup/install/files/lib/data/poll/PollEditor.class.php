@@ -29,25 +29,25 @@ class PollEditor extends DatabaseObjectEditor
     public function calculateVotes()
     {
         // update option votes
-        $sql = "UPDATE  wcf" . WCF_N . "_poll_option poll_option
+        $sql = "UPDATE  wcf1_poll_option poll_option
                 SET     poll_option.votes = (
                             SELECT  COUNT(*)
-                            FROM    wcf" . WCF_N . "_poll_option_vote
+                            FROM    wcf1_poll_option_vote
                             WHERE   optionID = poll_option.optionID
                         )
                 WHERE   poll_option.pollID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pollID]);
 
         // update total count
-        $sql = "UPDATE  wcf" . WCF_N . "_poll poll
+        $sql = "UPDATE  wcf1_poll poll
                 SET     poll.votes = (
                             SELECT  COUNT(DISTINCT userID)
-                            FROM    wcf" . WCF_N . "_poll_option_vote
+                            FROM    wcf1_poll_option_vote
                             WHERE   pollID = poll.pollID
                         )
                 WHERE   poll.pollID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pollID]);
     }
 
@@ -56,10 +56,10 @@ class PollEditor extends DatabaseObjectEditor
      */
     public function increaseVotes()
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_poll
+        $sql = "UPDATE  wcf1_poll
                 SET     votes = votes + 1
                 WHERE   pollID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pollID]);
     }
 }

@@ -133,7 +133,7 @@ class ImportWorker extends AbstractWorker
 
         // disable mysql strict mode
         $sql = "SET SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY'";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         $this->getExporter()->exportData($this->parameters['objectType'], $this->loopCount);

@@ -20,9 +20,9 @@ class CronjobCacheBuilder extends AbstractCacheBuilder
     {
         $sql = "SELECT  MIN(nextExec) AS nextExec,
                         MIN(afterNextExec) AS afterNextExec
-                FROM    wcf" . WCF_N . "_cronjob
+                FROM    wcf1_cronjob
                 WHERE   isDisabled = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([0]);
         $row = $statement->fetchArray();
 

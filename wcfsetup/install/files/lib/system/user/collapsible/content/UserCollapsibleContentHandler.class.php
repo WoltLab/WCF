@@ -94,10 +94,10 @@ class UserCollapsibleContentHandler extends SingletonFactory
                 // cache does not exist or is outdated
                 if ($data === null) {
                     $sql = "SELECT  objectID
-                            FROM    wcf" . WCF_N . "_user_collapsible_content
+                            FROM    wcf1_user_collapsible_content
                             WHERE   objectTypeID = ?
                                 AND userID = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([
                         $objectTypeID,
                         WCF::getUser()->userID,
@@ -137,11 +137,11 @@ class UserCollapsibleContentHandler extends SingletonFactory
 
         if ($userID) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_user_collapsible_content
+                    FROM    wcf1_user_collapsible_content
                     WHERE   objectTypeID = ?
                         AND objectID = ?
                         AND userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $objectTypeID,
                 $objectID,
@@ -150,10 +150,10 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $row = $statement->fetchArray();
 
             if (!$row) {
-                $sql = "INSERT INTO wcf" . WCF_N . "_user_collapsible_content
+                $sql = "INSERT INTO wcf1_user_collapsible_content
                                     (objectTypeID, objectID, userID)
                         VALUES      (?, ?, ?)";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $objectTypeID,
                     $objectID,
@@ -188,11 +188,11 @@ class UserCollapsibleContentHandler extends SingletonFactory
         }
 
         if ($userID) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_collapsible_content
+            $sql = "DELETE FROM wcf1_user_collapsible_content
                     WHERE       objectTypeID = ?
                             AND objectID = ?
                             AND userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $objectTypeID,
                 $objectID,
@@ -227,10 +227,10 @@ class UserCollapsibleContentHandler extends SingletonFactory
     public function reset($objectTypeID)
     {
         if (WCF::getUser()->userID) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_collapsible_content
+            $sql = "DELETE FROM wcf1_user_collapsible_content
                     WHERE       objectTypeID = ?
                             AND userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $objectTypeID,
                 WCF::getUser()->userID,
@@ -273,9 +273,9 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $conditionBuilder->add('objectID = ?', [$objectID]);
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_collapsible_content
+        $sql = "DELETE FROM wcf1_user_collapsible_content
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         UserStorageHandler::getInstance()->resetAll('collapsedContent-' . $objectTypeID);

@@ -111,17 +111,17 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_page_content
+                    FROM    wcf1_page_content
                     WHERE   pageID = ?
                         AND languageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$pageID, $languageID]);
         } else {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_page_content
+                    FROM    wcf1_page_content
                     WHERE   pageID = ?
                         AND languageID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$pageID]);
         }
 

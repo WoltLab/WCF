@@ -29,8 +29,8 @@ class CronjobLogEditor extends DatabaseObjectEditor
     public static function clearLogs()
     {
         // delete logs
-        $sql = "DELETE FROM wcf" . WCF_N . "_cronjob_log";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_cronjob_log";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
     }
 }

@@ -71,10 +71,10 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
             // move child categories to parent category
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add("categoryID IN (?)", [$categoryIDs]);
-            $sql = "UPDATE  wcf" . WCF_N . "_category
+            $sql = "UPDATE  wcf1_category
                     SET     parentCategoryID = ?
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(\array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
         }
 

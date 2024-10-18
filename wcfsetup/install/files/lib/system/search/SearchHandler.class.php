@@ -326,9 +326,9 @@ final class SearchHandler
             }
 
             $sql = "SELECT  searchID
-                    FROM    wcf" . WCF_N . "_search
+                    FROM    wcf1_search
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             if ($searchID = $statement->fetchSingleColumn()) {
                 return new Search($searchID);

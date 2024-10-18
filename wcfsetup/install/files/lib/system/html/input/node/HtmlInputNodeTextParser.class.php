@@ -295,9 +295,9 @@ class HtmlInputNodeTextParser
         }
 
         $sql = "SELECT  userID, username
-                FROM    wcf" . WCF_N . "_user
+                FROM    wcf1_user
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $users = $statement->fetchMap('userID', 'username');
 

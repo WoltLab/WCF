@@ -69,9 +69,9 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction
 
         // validate name
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_template_group
+                FROM    wcf1_template_group
                 WHERE   templateGroupName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->parameters['templateGroupName']]);
 
         if ($statement->fetchSingleColumn()) {
@@ -84,9 +84,9 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_template_group
+                FROM    wcf1_template_group
                 WHERE   templateGroupFolderName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->parameters['templateGroupFolderName']]);
 
         if ($statement->fetchSingleColumn()) {

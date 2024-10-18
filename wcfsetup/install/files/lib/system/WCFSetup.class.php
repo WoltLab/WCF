@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
-use wcf\data\package\Package;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\builder\LanguageCacheBuilder;
@@ -21,7 +20,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImagickImageAdapter;
-use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
@@ -553,7 +551,7 @@ final class WCFSetup extends WCF
 
                 // check innodb support
                 $sql = "SHOW ENGINES";
-                $statement = $db->prepareStatement($sql);
+                $statement = $db->prepare($sql);
                 $statement->execute();
                 $hasInnoDB = false;
                 while ($row = $statement->fetchArray()) {
@@ -569,7 +567,7 @@ final class WCFSetup extends WCF
 
                 // check for PHP's MySQL native driver
                 $sql = "SELECT 1";
-                $statement = $db->prepareStatement($sql);
+                $statement = $db->prepare($sql);
                 $statement->execute();
                 // MySQL native driver understands data types, libmysqlclient does not
                 if ($statement->fetchSingleColumn() !== 1) {
@@ -685,7 +683,7 @@ final class WCFSetup extends WCF
         $sql = "INSERT INTO wcf1_package_installation_sql_log
                             (packageID, sqlTable)
                 VALUES      (?, ?)";
-        $statement = self::getDB()->prepareStatement($sql);
+        $statement = self::getDB()->prepare($sql);
         foreach ($matches[1] as $tableName) {
             $statement->execute([1, $tableName]);
         }
@@ -706,7 +704,7 @@ final class WCFSetup extends WCF
             $sql = "INSERT INTO wcf1_package_installation_plugin
                                 (packageID, pluginName, priority, className)
                     VALUES      (?, ?, ?, ?)";
-            $statement = self::getDB()->prepareStatement($sql);
+            $statement = self::getDB()->prepare($sql);
             $statement->execute([
                 1,
                 'packageInstallationPlugin',
@@ -861,7 +859,7 @@ final class WCFSetup extends WCF
                 $sql = "SELECT  languageID
                         FROM    wcf1_language
                         WHERE   languageCode = ?";
-                $statement = self::getDB()->prepareStatement($sql);
+                $statement = self::getDB()->prepare($sql);
                 $statement->execute([self::$selectedLanguageCode]);
                 $row = $statement->fetchArray();
                 if (isset($row['languageID'])) {

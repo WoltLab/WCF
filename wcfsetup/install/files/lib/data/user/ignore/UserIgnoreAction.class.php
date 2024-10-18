@@ -93,10 +93,10 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
 
             // check if target user is following the current user
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_user_follow
+                    FROM    wcf1_user_follow
                     WHERE   userID = ?
                         AND followUserID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->parameters['data']['userID'],
                 WCF::getUser()->userID,

@@ -29,10 +29,10 @@ class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxControll
         $objectList->getConditionBuilder()->add(
             'session.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_to_group
+                FROM    wcf1_user_to_group
                 WHERE   groupID IN (
                             SELECT  groupID
-                            FROM    wcf' . WCF_N . '_user_group
+                            FROM    wcf1_user_group
                             WHERE   showOnTeamPage = ?
                         )
             )',

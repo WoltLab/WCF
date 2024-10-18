@@ -61,9 +61,9 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
                 $conditions->add("languageID = ?", [$contentLanguageID]);
 
                 $sql = "SELECT  *
-                        FROM    wcf" . WCF_N . "_media_content
+                        FROM    wcf1_media_content
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 while ($row = $statement->fetchArray()) {
                     $viewableMedia[$row['mediaID']]->setLocalizedContent($row['languageID'], $row);

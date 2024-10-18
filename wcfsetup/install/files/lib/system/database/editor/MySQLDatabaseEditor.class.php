@@ -22,7 +22,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         $existingTables = [];
         $sql = "SHOW TABLES FROM `" . $this->dbObj->getDatabaseName() . "`";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray(\PDO::FETCH_NUM)) {
             $existingTables[] = $row[0];
@@ -40,7 +40,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $regex = new Regex('([a-z]+)\((.+)\)', Regex::CASE_INSENSITIVE);
 
         $sql = "SHOW COLUMNS FROM `" . $tableName . "`";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $regex->match($row['Type']);
@@ -110,7 +110,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
                 WHERE   CONSTRAINT_SCHEMA = ?
                     AND TABLE_NAME = ?";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute([
             $this->dbObj->getDatabaseName(),
             $tableName,
@@ -147,7 +147,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $sql = "SELECT  CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
                 FROM    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
                 " . $conditionBuilder;
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $keyColumnUsage = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -172,7 +172,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         $sql = "SHOW    INDEX
                 FROM    `" . $tableName . "`";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
         $indices = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -207,7 +207,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         $indices = [];
         $sql = "SHOW INDEX FROM `" . $tableName . "`";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $indices[] = $row['Key_name'];
@@ -245,7 +245,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 " . (!empty($indexDefinition) ? ',' : '') . "
                 " . $indexDefinition . "
             ) ENGINE=InnoDB ROW_FORMAT=dynamic DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -255,7 +255,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     public function dropTable($tableName)
     {
         $sql = "DROP TABLE IF EXISTS `" . $tableName . "`";
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -265,7 +265,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     public function addColumn($tableName, $columnName, $columnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD COLUMN " . $this->buildColumnDefinition($columnName, $columnData);
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -278,7 +278,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $newColumnName,
             $newColumnData
         );
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -315,7 +315,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             }
         }
 
-        $this->dbObj->prepareStatement("ALTER TABLE `{$tableName}` " . \rtrim($queries, ','))->execute();
+        $this->dbObj->prepare("ALTER TABLE `{$tableName}` " . \rtrim($queries, ','))->execute();
     }
 
     /**
@@ -325,7 +325,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP COLUMN `" . $columnName . "`";
-            $statement = $this->dbObj->prepareStatement($sql);
+            $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
             if ($e->getCode() != '42000') {
@@ -343,7 +343,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     public function addIndex($tableName, $indexName, $indexData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD " . $this->buildIndexDefinition($indexName, $indexData);
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -379,7 +379,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $sql .= " ON UPDATE " . $indexData['ON UPDATE'];
         }
 
-        $statement = $this->dbObj->prepareStatement($sql);
+        $statement = $this->dbObj->prepare($sql);
         $statement->execute();
     }
 
@@ -390,7 +390,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP INDEX `" . $indexName . "`";
-            $statement = $this->dbObj->prepareStatement($sql);
+            $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
             if ($e->getCode() != '42000') {
@@ -409,7 +409,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         try {
             $sql = "ALTER TABLE " . $tableName . " DROP PRIMARY KEY";
-            $statement = $this->dbObj->prepareStatement($sql);
+            $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
             if ($e->getCode() != '42000') {
@@ -428,7 +428,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP FOREIGN KEY `" . $indexName . "`";
-            $statement = $this->dbObj->prepareStatement($sql);
+            $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
             if ($e->getCode() != '42000') {

@@ -223,7 +223,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_menu_item
+                FROM    wcf1_menu_item
                 WHERE   identifier = ?
                     AND packageID = ?";
         $parameters = [

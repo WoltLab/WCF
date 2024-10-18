@@ -539,10 +539,10 @@ BROWSERCONFIG;
     {
         // get unique style name
         $sql = "SELECT  styleName
-                FROM    wcf" . WCF_N . "_style
+                FROM    wcf1_style
                 WHERE   styleName LIKE ?
                     AND styleID <> ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->styleEditor->styleName . '%',
             $this->styleEditor->styleID,
@@ -589,18 +589,18 @@ BROWSERCONFIG;
             $styleDescription = 'wcf.style.styleDescription' . $newStyle->styleID;
 
             // delete any phrases that were the result of an import
-            $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+            $sql = "DELETE FROM wcf1_language_item
                     WHERE       languageItem = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$styleDescription]);
 
             // copy language items
-            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+            $sql = "INSERT INTO wcf1_language_item
                                 (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
                     SELECT      languageID, '" . $styleDescription . "', languageItemValue, 0, languageCategoryID, packageID
-                    FROM        wcf" . WCF_N . "_language_item
+                    FROM        wcf1_language_item
                     WHERE       languageItem = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$newStyle->styleDescription]);
 
             // update style description

@@ -70,10 +70,10 @@ class EditHistoryManager extends SingletonFactory
         }
 
         // save new entry
-        $sql = "INSERT INTO wcf" . WCF_N . "_edit_history_entry
+        $sql = "INSERT INTO wcf1_edit_history_entry
                             (objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getObjectTypeID($objectType),
             $objectID,
@@ -108,9 +108,9 @@ class EditHistoryManager extends SingletonFactory
             $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
             $conditionBuilder->add('objectID IN (?)', [$batchObjectIDs]);
 
-            $sql = "DELETE FROM wcf" . WCF_N . "_edit_history_entry
+            $sql = "DELETE FROM wcf1_edit_history_entry
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
         }
         WCF::getDB()->commitTransaction();
@@ -135,14 +135,14 @@ class EditHistoryManager extends SingletonFactory
         //    b) by a non offending user
         $userIDPlaceholders = '?' . \str_repeat(',?', \count($userIDs) - 1);
         $sql = "SELECT      MAX(entryID)
-                FROM        wcf" . WCF_N . "_edit_history_entry revertTo
+                FROM        wcf1_edit_history_entry revertTo
                 INNER JOIN (
                     SELECT      vandalizedEntries.objectID,
                                 vandalizedEntries.objectTypeID
-                    FROM        wcf" . WCF_N . "_edit_history_entry vandalizedEntries
+                    FROM        wcf1_edit_history_entry vandalizedEntries
                     INNER JOIN (
                         SELECT      MAX(newestEntries.entryID) AS entryID
-                        FROM        wcf" . WCF_N . "_edit_history_entry newestEntries
+                        FROM        wcf1_edit_history_entry newestEntries
                         WHERE       newestEntries.obsoletedAt > ?
                         GROUP BY    newestEntries.objectTypeID, newestEntries.objectID
                     ) newestEntries2
@@ -157,7 +157,7 @@ class EditHistoryManager extends SingletonFactory
                                  OR revertTo.userID NOT IN(" . $userIDPlaceholders . ")
                             )
                 GROUP BY    revertTo.objectTypeID, revertTo.objectID";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge(
             [TIME_NOW - $timeframe],
             $userIDs,

@@ -34,18 +34,18 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
 
         $sql = "SELECT (
                     SELECT  COUNT(*)
-                    FROM    wcf" . WCF_N . "_comment
+                    FROM    wcf1_comment
                     WHERE   objectTypeID = ?
                         AND time BETWEEN ? AND ?
                 ) + (
                     SELECT      COUNT(*)
-                    FROM        wcf" . WCF_N . "_comment_response comment_response
-                    LEFT JOIN   wcf" . WCF_N . "_comment comment
+                    FROM        wcf1_comment_response comment_response
+                    LEFT JOIN   wcf1_comment comment
                     ON          comment.commentID = comment_response.commentID
                     WHERE       comment.objectTypeID = ?
                             AND comment_response.time BETWEEN ? AND ?
                 )";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $date,
@@ -58,18 +58,18 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
 
         $sql = "SELECT (
                     SELECT  COUNT(*)
-                    FROM    wcf" . WCF_N . "_comment
+                    FROM    wcf1_comment
                     WHERE   objectTypeID = ?
                         AND time < ?
                 ) + (
                     SELECT      COUNT(*)
-                    FROM        wcf" . WCF_N . "_comment_response comment_response
-                    LEFT JOIN   wcf" . WCF_N . "_comment comment
+                    FROM        wcf1_comment_response comment_response
+                    LEFT JOIN   wcf1_comment comment
                     ON          comment.commentID = comment_response.commentID
                     WHERE       comment.objectTypeID = ?
                             AND comment_response.time < ?
                 )";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $date + 86400,

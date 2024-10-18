@@ -17,8 +17,8 @@ class UserStatDailyHandler extends AbstractStatDailyHandler
     public function getData($date)
     {
         return [
-            'counter' => $this->getCounter($date, 'wcf' . WCF_N . '_user', 'registrationDate'),
-            'total' => $this->getTotal($date, 'wcf' . WCF_N . '_user', 'registrationDate'),
+            'counter' => $this->getCounter($date, 'wcf1_user', 'registrationDate'),
+            'total' => $this->getTotal($date, 'wcf1_user', 'registrationDate'),
         ];
     }
 }

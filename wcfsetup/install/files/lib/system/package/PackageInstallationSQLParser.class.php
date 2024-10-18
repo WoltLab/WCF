@@ -120,16 +120,16 @@ class PackageInstallationSQLParser extends SQLParser
     {
         // tables
         foreach ($this->tableLog as $logEntry) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "DELETE FROM wcf1_package_installation_sql_log
                     WHERE       sqlTable = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$logEntry['tableName']]);
 
             if ($logEntry['action'] == 'insert') {
-                $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+                $sql = "INSERT INTO wcf1_package_installation_sql_log
                                     (packageID, sqlTable)
                         VALUES      (?, ?)";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $logEntry['packageID'],
                     $logEntry['tableName'],
@@ -139,15 +139,15 @@ class PackageInstallationSQLParser extends SQLParser
 
         // columns
         if (!empty($this->columnLog)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "DELETE FROM wcf1_package_installation_sql_log
                     WHERE       sqlTable = ?
                             AND sqlColumn = ?";
-            $deleteStatement = WCF::getDB()->prepareStatement($sql);
+            $deleteStatement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "INSERT INTO wcf1_package_installation_sql_log
                                 (packageID, sqlTable, sqlColumn)
                     VALUES      (?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             foreach ($this->columnLog as $logEntry) {
                 $deleteStatement->execute([
@@ -167,15 +167,15 @@ class PackageInstallationSQLParser extends SQLParser
 
         // indices
         if (!empty($this->indexLog)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "DELETE FROM wcf1_package_installation_sql_log
                     WHERE       sqlTable = ?
                             AND sqlIndex = ?";
-            $deleteStatement = WCF::getDB()->prepareStatement($sql);
+            $deleteStatement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "INSERT INTO wcf1_package_installation_sql_log
                                 (packageID, sqlTable, sqlIndex)
                     VALUES      (?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             foreach ($this->indexLog as $logEntry) {
                 $deleteStatement->execute([
@@ -200,10 +200,10 @@ class PackageInstallationSQLParser extends SQLParser
     protected function getKnownTables()
     {
         $sql = "SELECT  packageID, sqlTable
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   sqlColumn = ''
                     AND sqlIndex = ''";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $this->knownTables = $statement->fetchMap('sqlTable', 'packageID');
     }
@@ -218,10 +218,10 @@ class PackageInstallationSQLParser extends SQLParser
     protected function getColumnOwnerID($tableName, $columnName)
     {
         $sql = "SELECT  packageID
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   sqlTable = ?
                     AND sqlColumn = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $tableName,
             $columnName,
@@ -246,10 +246,10 @@ class PackageInstallationSQLParser extends SQLParser
     protected function getIndexOwnerID($tableName, $indexName)
     {
         $sql = "SELECT  packageID
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   sqlTable = ?
                     AND sqlIndex = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $tableName,
             $indexName,

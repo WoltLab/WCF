@@ -32,7 +32,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
         $sql = "SELECT  COUNT(*)
                 FROM    " . $tableName . "
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchSingleColumn();
@@ -56,7 +56,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
         $sql = "SELECT  COUNT(*)
                 FROM    " . $tableName . "
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchSingleColumn();

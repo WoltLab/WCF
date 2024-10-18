@@ -44,9 +44,9 @@ class UserOptionImporter extends AbstractImporter
     {
         // get language category id
         $sql = "SELECT  languageCategoryID
-                FROM    wcf" . WCF_N . "_language_category
+                FROM    wcf1_language_category
                 WHERE   languageCategory = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['wcf.user.option']);
         $row = $statement->fetchArray();
         $this->languageCategoryID = $row['languageCategoryID'];
@@ -82,10 +82,10 @@ class UserOptionImporter extends AbstractImporter
         ]);
 
         // save name
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_language_item
+        $sql = "INSERT IGNORE INTO  wcf1_language_item
                                     (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
                 VALUES              (?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             LanguageFactory::getInstance()->getDefaultLanguageID(),
             'wcf.user.option.option' . $userOption->optionID,

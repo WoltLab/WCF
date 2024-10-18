@@ -63,7 +63,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
 
         $sql = "DELETE FROM " . \call_user_func([static::$baseClass, 'getDatabaseTableName']) . "
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
 

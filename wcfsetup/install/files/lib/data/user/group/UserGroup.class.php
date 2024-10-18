@@ -488,8 +488,8 @@ class UserGroup extends DatabaseObject implements ITitledObject
             $this->groupOptions = [];
 
             $sql = "SELECT  optionName, optionID
-                    FROM    wcf" . WCF_N . "_user_group_option";
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_user_group_option";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute();
             $groupOptionIDs = $statement->fetchMap('optionName', 'optionID');
 
@@ -499,11 +499,11 @@ class UserGroup extends DatabaseObject implements ITitledObject
                 $conditions->add("option_value.optionID IN (?)", [$groupOptionIDs]);
 
                 $sql = "SELECT      group_option.optionName, option_value.optionValue
-                        FROM        wcf" . WCF_N . "_user_group_option_value option_value
-                        LEFT JOIN   wcf" . WCF_N . "_user_group_option group_option
+                        FROM        wcf1_user_group_option_value option_value
+                        LEFT JOIN   wcf1_user_group_option group_option
                         ON          group_option.optionID = option_value.optionID
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $this->groupOptions = $statement->fetchMap('optionName', 'optionValue');
             }

@@ -35,9 +35,9 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public function setShowOrder($showOrder = 0)
     {
         $sql = "SELECT  MAX(showOrder)
-                FROM    wcf" . WCF_N . "_ad
+                FROM    wcf1_ad
                 WHERE   objectTypeID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->objectTypeID,
         ]);
@@ -50,11 +50,11 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $newShowOrder = $maxShowOrder + 1;
         } else {
             // shift other ads
-            $sql = "UPDATE  wcf" . WCF_N . "_ad
+            $sql = "UPDATE  wcf1_ad
                     SET     showOrder = showOrder + 1
                     WHERE   objectTypeID = ?
                             AND showOrder >= ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->objectTypeID,
                 $showOrder,

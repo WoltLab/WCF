@@ -17,8 +17,8 @@ class AttachmentDiskUsageStatDailyHandler extends AbstractDiskUsageStatDailyHand
     public function getData($date)
     {
         return [
-            'counter' => $this->getCounter($date, 'wcf' . WCF_N . '_attachment', 'uploadTime'),
-            'total' => $this->getTotal($date, 'wcf' . WCF_N . '_attachment', 'uploadTime'),
+            'counter' => $this->getCounter($date, 'wcf1_attachment', 'uploadTime'),
+            'total' => $this->getTotal($date, 'wcf1_attachment', 'uploadTime'),
         ];
     }
 }

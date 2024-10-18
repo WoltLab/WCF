@@ -127,9 +127,9 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         $conditions->add("userID IN (?)", [$userIDs]);
 
         $sql = "SELECT  userID, groupID
-                FROM    wcf" . WCF_N . "_user_to_group
+                FROM    wcf1_user_to_group
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         $groupData = [];

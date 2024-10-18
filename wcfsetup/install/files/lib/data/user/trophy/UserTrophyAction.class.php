@@ -155,9 +155,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
                 }
                 $conditionBuilder->add('userID = ?', [$userID]);
 
-                $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                $sql = "DELETE FROM wcf1_user_special_trophy
                         " . $conditionBuilder;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditionBuilder->getParameters());
 
                 UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
@@ -227,18 +227,18 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             $userTrophyList->sqlConditionJoins .= ' ';
         }
         $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID';
         $userTrophyList->sqlConditionJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID';
 
         // trophy category join
         $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
         $userTrophyList->sqlConditionJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
 
         $userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);

@@ -275,8 +275,8 @@ class ReactionHandler extends SingletonFactory
             $sql = "SELECT      like_object.*,
                                 COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
                                 COALESCE(like_table.likeValue, 0) AS liked
-                    FROM        wcf" . WCF_N . "_like_object like_object
-                    LEFT JOIN   wcf" . WCF_N . "_like like_table
+                    FROM        wcf1_like_object like_object
+                    LEFT JOIN   wcf1_like like_table
                     ON          like_table.objectTypeID = like_object.objectTypeID
                             AND like_table.objectID = like_object.objectID
                             AND like_table.userID = ?
@@ -285,11 +285,11 @@ class ReactionHandler extends SingletonFactory
             \array_unshift($parameters, WCF::getUser()->userID);
         } else {
             $sql = "SELECT  like_object.*, 0 AS liked
-                    FROM    wcf" . WCF_N . "_like_object like_object
+                    FROM    wcf1_like_object like_object
                     " . $conditions;
         }
 
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($parameters);
         while ($row = $statement->fetchArray()) {
             $this->likeObjectCache[$objectType->objectTypeID][$row['objectID']] = new LikeObject(null, $row);
@@ -770,13 +770,13 @@ class ReactionHandler extends SingletonFactory
         $sql = "SELECT      like_object.likes, like_object.dislikes, like_object.cumulativeLikes,
                             COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
                             COALESCE(like_table.likeValue, 0) AS liked
-                FROM        wcf" . WCF_N . "_like_object like_object
-                LEFT JOIN   wcf" . WCF_N . "_like like_table
+                FROM        wcf1_like_object like_object
+                LEFT JOIN   wcf1_like like_table
                 ON          like_table.objectTypeID = ?
                         AND like_table.objectID = like_object.objectID
                         AND like_table.userID = ?
                 WHERE   like_object.likeObjectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $likeObject->objectTypeID,
             $user->userID,

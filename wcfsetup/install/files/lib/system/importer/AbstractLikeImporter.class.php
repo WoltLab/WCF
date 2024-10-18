@@ -67,10 +67,10 @@ class AbstractLikeImporter extends AbstractImporter
             return 0;
         }
 
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_like
+        $sql = "INSERT IGNORE INTO  wcf1_like
                                     (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
                 VALUES              (?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $data['objectID'],
             $this->objectTypeID,
@@ -90,22 +90,22 @@ class AbstractLikeImporter extends AbstractImporter
     protected static function getDislikeReactionTypeID()
     {
         if (self::$dislikeReactionTypeID === null) {
-            $sql = "SELECT reactionTypeID FROM wcf" . WCF_N . "_reaction_type WHERE iconFile = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $sql = "SELECT reactionTypeID FROM wcf1_reaction_type WHERE iconFile = ?";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(['thumbsDown.svg']);
             $reaction = $statement->fetchObject(ReactionType::class);
             if ($reaction === null) {
-                $sql = "SELECT MAX(showOrder) FROM wcf" . WCF_N . "_reaction_type";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $sql = "SELECT MAX(showOrder) FROM wcf1_reaction_type";
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute();
                 $showOrder = $statement->fetchColumn();
 
                 $reaction = ReactionTypeEditor::create(['iconFile' => 'thumbsDown.svg', 'showOrder' => $showOrder + 1]);
 
                 $sql = "SELECT  languageCategoryID
-                        FROM    wcf" . WCF_N . "_language_category
+                        FROM    wcf1_language_category
                         WHERE   languageCategory = ?";
-                $statement = WCF::getDB()->prepareStatement($sql, 1);
+                $statement = WCF::getDB()->prepare($sql, 1);
                 $statement->execute(['wcf.reactionType']);
                 $languageCategoryID = $statement->fetchSingleColumn();
 

@@ -112,9 +112,9 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
                 $conditions->add("languageItem IN (?)", [$languageVariables]);
 
                 $sql = "SELECT  languageItemID
-                        FROM    wcf" . WCF_N . "_language_item
+                        FROM    wcf1_language_item
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -159,10 +159,10 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
      */
     public function updatePosition()
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_label
+        $sql = "UPDATE  wcf1_label
                 SET     showOrder = ?
                 WHERE   labelID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $showOrder = $this->parameters['data']['offset'];
 

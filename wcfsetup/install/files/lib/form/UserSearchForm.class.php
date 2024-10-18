@@ -187,11 +187,11 @@ class UserSearchForm extends UserOptionListForm
 
         // perform search
         $sql = "SELECT      user_table.userID
-                FROM        wcf" . WCF_N . "_user user_table
-                LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                FROM        wcf1_user user_table
+                LEFT JOIN   wcf1_user_option_value option_value
                 ON          option_value.userID = user_table.userID
                 {$this->conditions}";
-        $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
+        $statement = WCF::getDB()->prepare($sql, $this->maxResults);
         $statement->execute($this->conditions->getParameters());
         $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
     }

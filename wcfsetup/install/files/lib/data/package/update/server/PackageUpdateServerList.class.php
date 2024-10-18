@@ -34,7 +34,7 @@ class PackageUpdateServerList extends DatabaseObjectList
         }
         $this->sqlSelects .= "(
             SELECT  COUNT(*)
-            FROM    wcf" . WCF_N . "_package_update
+            FROM    wcf1_package_update
             WHERE   packageUpdateServerID = " . $this->getDatabaseTableAlias() . ".packageUpdateServerID
         ) AS packages";
 

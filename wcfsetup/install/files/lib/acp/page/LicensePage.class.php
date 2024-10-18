@@ -252,16 +252,16 @@ final class LicensePage extends AbstractPage
 
         // get installed packages
         $sql = "SELECT  package, packageVersion
-                FROM    wcf" . WCF_N . "_package";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_package";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $installedPackages = $statement->fetchMap('package', 'packageVersion');
 
         // get excluded packages (of installed packages)
         $excludedPackagesOfInstalledPackages = [];
         $sql = "SELECT  excludedPackage, excludedPackageVersion
-                FROM    wcf" . WCF_N . "_package_exclusion";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_package_exclusion";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             if (!isset($excludedPackagesOfInstalledPackages[$row['excludedPackage']])) {
@@ -300,9 +300,9 @@ final class LicensePage extends AbstractPage
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageUpdateID IN (?)", [\array_keys($packageUpdates)]);
         $sql = "SELECT  packageUpdateID, packageUpdateServerID, package
-                FROM    wcf" . WCF_N . "_package_update
+                FROM    wcf1_package_update
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $possiblePackages = [];
         while ($row = $statement->fetchArray()) {
@@ -349,9 +349,9 @@ final class LicensePage extends AbstractPage
                 $conditions->add("packageUpdateVersionID IN (?)", [$packageUpdateVersionIDs]);
 
                 $sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
-                        FROM    wcf" . WCF_N . "_package_update_version
+                        FROM    wcf1_package_update_version
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $packageVersions = [];
                 while ($row = $statement->fetchArray()) {
@@ -429,15 +429,15 @@ final class LicensePage extends AbstractPage
         $conditions->add(
             "packageUpdateVersionID IN (
                 SELECT  packageUpdateVersionID
-                FROM    wcf" . WCF_N . "_package_update_version
+                FROM    wcf1_package_update_version
                 WHERE   packageUpdateID = ?
             )",
             [$packageUpdateID]
         );
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package_update_exclusion
+                FROM    wcf1_package_update_exclusion
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $excludedPackages = [];
         while ($row = $statement->fetchArray()) {
@@ -469,11 +469,11 @@ final class LicensePage extends AbstractPage
         );
         $sql = "SELECT      pu.package, pu.packageUpdateServerID, puv.packageUpdateVersionID,
                             puv.packageUpdateID, puv.packageVersion, puv.isAccessible
-                FROM        wcf" . WCF_N . "_package_update_version puv
-                LEFT JOIN   wcf" . WCF_N . "_package_update pu
+                FROM        wcf1_package_update_version puv
+                LEFT JOIN   wcf1_package_update pu
                 ON          pu.packageUpdateID = puv.packageUpdateID
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $packageVersions = [];
         while ($row = $statement->fetchArray()) {
@@ -588,9 +588,9 @@ final class LicensePage extends AbstractPage
         // validate dependencies
         foreach ($packageUpdates as $packageUpdateData) {
             $sql = "SELECT  package, minversion
-                    FROM    wcf" . WCF_N . "_package_update_requirement
+                    FROM    wcf1_package_update_requirement
                     WHERE   packageUpdateVersionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$packageUpdateData['accessible']]);
             $requirements = [];
             while ($row = $statement->fetchArray()) {
@@ -616,9 +616,9 @@ final class LicensePage extends AbstractPage
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [\array_keys($requirements)]);
             $sql = "SELECT  packageUpdateID, package
-                    FROM    wcf" . WCF_N . "_package_update
+                    FROM    wcf1_package_update
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 if (!\in_array($row['package'], $openRequirements)) {

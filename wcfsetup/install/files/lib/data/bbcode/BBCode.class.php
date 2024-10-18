@@ -103,9 +103,9 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
     public static function getBBCodeByTag($tag)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_bbcode
+                FROM    wcf1_bbcode
                 WHERE   bbcodeTag = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$tag]);
         $row = $statement->fetchArray();
         if (!$row) {

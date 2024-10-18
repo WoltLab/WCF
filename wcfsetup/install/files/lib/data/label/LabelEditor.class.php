@@ -43,29 +43,29 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         // shift back labels in old label group with higher showOrder
         if ($this->showOrder) {
-            $sql = "UPDATE  wcf" . WCF_N . "_label
+            $sql = "UPDATE  wcf1_label
                     SET     showOrder = showOrder - 1
                     WHERE   groupID = ?
                         AND showOrder >= ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->groupID, $this->showOrder]);
         }
 
         // shift labels in new label group with higher showOrder
         if ($showOrder) {
-            $sql = "UPDATE  wcf" . WCF_N . "_label
+            $sql = "UPDATE  wcf1_label
                     SET     showOrder = showOrder + 1
                     WHERE   groupID = ?
                         AND showOrder >= ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$groupID, $showOrder]);
         }
 
         // get maximum existing show order
         $sql = "SELECT  MAX(showOrder)
-                FROM    wcf" . WCF_N . "_label
+                FROM    wcf1_label
                 WHERE   groupID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$groupID]);
         $maxShowOrder = $statement->fetchSingleColumn() ?: 0;
 

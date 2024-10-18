@@ -117,7 +117,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
         try {
             $messages = [];
-            $statement = WCF::getDB()->prepareStatement($sql, $limit);
+            $statement = WCF::getDB()->prepare($sql, $limit);
             $statement->execute($parameters);
             while ($row = $statement->fetchArray()) {
                 $messages[] = [
@@ -565,7 +565,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
         if (!isset($this->minTokenSize)) {
             try {
                 $sql = "SELECT @@innodb_ft_min_token_size";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute();
                 $this->minTokenSize = $statement->fetchSingleColumn();
             } catch (DatabaseQueryExecutionException $e) {

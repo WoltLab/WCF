@@ -62,7 +62,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             $sql = "SELECT  *
                     FROM    " . static::getDatabaseTableName() . "
                     WHERE   " . static::getDatabaseTableIndexName() . " = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();
 
@@ -135,20 +135,22 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         $classParts = \explode('\\', $className);
 
         if (static::$databaseTableName !== '') {
-            return $classParts[0] . WCF_N . '_' . static::$databaseTableName;
+            return $classParts[0] . '1_' . static::$databaseTableName;
         }
 
         static $databaseTableNames = [];
         if (!isset($databaseTableNames[$className])) {
-            $databaseTableNames[$className] = $classParts[0] . WCF_N . '_' . \strtolower(\implode(
-                '_',
-                \preg_split(
-                    '~(?=[A-Z](?=[a-z]))~',
-                    \array_pop($classParts),
-                    -1,
-                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
-                )
-            ));
+            $databaseTableNames[$className] = $classParts[0] . '1_' . \strtolower(
+                    \implode(
+                        '_',
+                        \preg_split(
+                            '~(?=[A-Z](?=[a-z]))~',
+                            \array_pop($classParts),
+                            -1,
+                            \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+                        )
+                    )
+                );
         }
 
         return $databaseTableNames[$className];

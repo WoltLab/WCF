@@ -88,9 +88,9 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                 $conditions->add('languageItem IN (?)', [$languageVariables]);
 
                 $sql = "SELECT  languageItemID
-                        FROM    wcf" . WCF_N . "_language_item
+                        FROM    wcf1_language_item
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

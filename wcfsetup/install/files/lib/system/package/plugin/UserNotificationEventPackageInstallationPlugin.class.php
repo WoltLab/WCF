@@ -62,11 +62,11 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM wcf1_" . $this->tableName . "
                 WHERE       packageID = ?
                         AND objectTypeID = ?
                         AND eventName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($items as $item) {
             $statement->execute([
                 $this->installation->getPackageID(),
@@ -139,7 +139,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   objectTypeID = ?
                     AND eventName = ?";
         $parameters = [

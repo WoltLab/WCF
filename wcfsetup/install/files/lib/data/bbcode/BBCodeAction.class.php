@@ -52,9 +52,9 @@ class BBCodeAction extends AbstractDatabaseObjectAction
 
         // add bbcode to BBCodeSelect user group options
         $sql = "SELECT  optionID
-                FROM    wcf" . WCF_N . "_user_group_option
+                FROM    wcf1_user_group_option
                 WHERE   optionType = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['BBCodeSelect']);
         $optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -65,16 +65,16 @@ class BBCodeAction extends AbstractDatabaseObjectAction
             $conditionBuilder->add("optionValue <> ?", ['all']);
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_user_group_option_value
+                    FROM    wcf1_user_group_option_value
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
-            $sql = "UPDATE  wcf" . WCF_N . "_user_group_option_value
+            $sql = "UPDATE  wcf1_user_group_option_value
                     SET     optionValue = ?
                     WHERE   optionID = ?
                         AND groupID = ?";
-            $updateStatement = WCF::getDB()->prepareStatement($sql);
+            $updateStatement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             while ($row = $statement->fetchArray()) {

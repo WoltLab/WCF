@@ -83,32 +83,32 @@ class StatDailyAction extends AbstractDatabaseObjectAction
         $limit = 0;
         if ($this->parameters['dateGrouping'] == 'yearly') {
             $sql = "SELECT      MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
-                    FROM        wcf" . WCF_N . "_stat_daily
+                    FROM        wcf1_stat_daily
                     " . $conditionBuilder . "
                     GROUP BY    EXTRACT(YEAR FROM date), objectTypeID
                     ORDER BY    date";
         } elseif ($this->parameters['dateGrouping'] == 'monthly') {
             $sql = "SELECT      MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
-                    FROM        wcf" . WCF_N . "_stat_daily
+                    FROM        wcf1_stat_daily
                     " . $conditionBuilder . "
                     GROUP BY    EXTRACT(YEAR_MONTH FROM date), objectTypeID
                     ORDER BY    date";
         } elseif ($this->parameters['dateGrouping'] == 'weekly') {
             $sql = "SELECT      MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
-                    FROM        wcf" . WCF_N . "_stat_daily
+                    FROM        wcf1_stat_daily
                     " . $conditionBuilder . "
                     GROUP BY    EXTRACT(YEAR FROM date), EXTRACT(WEEK FROM date), objectTypeID
                     ORDER BY    date";
             $limit = 260;
         } else {
             $sql = "SELECT      *
-                    FROM        wcf" . WCF_N . "_stat_daily
+                    FROM        wcf1_stat_daily
                     " . $conditionBuilder . "
                     ORDER BY    date";
             $limit = 365;
         }
 
-        $statement = WCF::getDB()->prepareStatement($sql, $limit);
+        $statement = WCF::getDB()->prepare($sql, $limit);
         $statement->execute($conditionBuilder->getParameters());
         while ($row = $statement->fetchArray()) {
             $value = $row['counter'];

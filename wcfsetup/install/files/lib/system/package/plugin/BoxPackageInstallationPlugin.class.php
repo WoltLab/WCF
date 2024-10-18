@@ -288,7 +288,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 WHERE   identifier = ?
                     AND packageID = ?";
         $parameters = [

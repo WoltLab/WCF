@@ -38,9 +38,9 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             foreach ($parameters as $groupID) {
                 if (UserGroup::getGroupByID($groupID)->groupType == UserGroup::GUESTS) {
                     $sql = "SELECT  optionName, additionalData
-                            FROM    wcf" . WCF_N . "_user_group_option
+                            FROM    wcf1_user_group_option
                             WHERE   optionType = 'boolean'";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute();
                     while ($option = $statement->fetchObject(UserGroupOption::class)) {
                         if ($option->excludedInTinyBuild) {
@@ -64,11 +64,11 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
                             option_value.groupID,
                             option_table.enableOptions,
                             option_table.usersOnly
-                FROM        wcf" . WCF_N . "_user_group_option_value option_value
-                LEFT JOIN   wcf" . WCF_N . "_user_group_option option_table
+                FROM        wcf1_user_group_option_value option_value
+                LEFT JOIN   wcf1_user_group_option option_table
                 ON          option_table.optionID = option_value.optionID
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (

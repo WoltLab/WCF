@@ -155,15 +155,15 @@ final class UserExportGdprAction extends AbstractAction
         parent::execute();
 
         $this->ipAddresses = [
-            'com.woltlab.blog' => ['blog' . WCF_N . '_entry '],
-            'com.woltlab.calendar' => ['calendar' . WCF_N . '_event'],
+            'com.woltlab.blog' => ['blog1_entry '],
+            'com.woltlab.calendar' => ['calendar1_event'],
             'com.woltlab.filebase' => [
-                'filebase' . WCF_N . '_file',
+                'filebase1_file',
             ],
             'com.woltlab.gallery' => [],
             // intentionally left empty, the image table is queried manually
-            'com.woltlab.wbb' => ['wbb' . WCF_N . '_post'],
-            'com.woltlab.wcf.conversation' => ['wcf' . WCF_N . '_conversation_message'],
+            'com.woltlab.wbb' => ['wbb1_post'],
+            'com.woltlab.wcf.conversation' => ['wcf1_conversation_message'],
         ];
 
         // content
@@ -173,7 +173,7 @@ final class UserExportGdprAction extends AbstractAction
                 'userOptions' => [],
                 'ipAddresses' => [],
                 'paidSubscriptionTransactionLog' => $this->dumpTable(
-                    'wcf' . WCF_N . '_paid_subscription_transaction_log',
+                    'wcf1_paid_subscription_transaction_log',
                     'userID'
                 ),
             ],
@@ -210,12 +210,12 @@ final class UserExportGdprAction extends AbstractAction
             if ($package === 'com.woltlab.filebase') {
                 $ipAddresses = \array_merge(
                     $ipAddresses,
-                    $this->exportIpAddresses('filebase' . WCF_N . '_file_version', 'ipAddress', 'uploadTime', 'userID')
+                    $this->exportIpAddresses('filebase1_file_version', 'ipAddress', 'uploadTime', 'userID')
                 );
             } elseif ($package === 'com.woltlab.gallery') {
                 $ipAddresses = \array_merge(
                     $ipAddresses,
-                    $this->exportIpAddresses('gallery' . WCF_N . '_image', 'ipAddress', 'uploadTime', 'userID')
+                    $this->exportIpAddresses('gallery1_image', 'ipAddress', 'uploadTime', 'userID')
                 );
             }
 
@@ -257,7 +257,7 @@ final class UserExportGdprAction extends AbstractAction
                 FROM    {$databaseTable}
                 WHERE   {$userIDColumn} = ?
                     AND {$ipAddressColumn} <> ''";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->user->userID]);
 
         return $this->fetchIpAddresses($statement, $ipAddressColumn, $timeColumn);
@@ -268,7 +268,7 @@ final class UserExportGdprAction extends AbstractAction
         $sql = "SELECT  *
                 FROM    {$tableName}
                 WHERE   {$userIDColumn} = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->user->userID]);
 
         $data = [];
@@ -305,7 +305,7 @@ final class UserExportGdprAction extends AbstractAction
         ];
 
         $data['session'] = $this->exportIpAddresses(
-            'wcf' . WCF_N . '_user_session',
+            'wcf1_user_session',
             'ipAddress',
             'lastActivityTime',
             'userID'
@@ -314,7 +314,7 @@ final class UserExportGdprAction extends AbstractAction
         // we can ignore the wcfN_acp_session_access_log table because it is directly related
         // to the wcfN_acp_session_log table and ACP sessions are bound to the ip address
         $data['acpSessionLog'] = $this->exportIpAddresses(
-            'wcf' . WCF_N . '_acp_session_log',
+            'wcf1_acp_session_log',
             'ipAddress',
             'lastActivityTime',
             'userID'

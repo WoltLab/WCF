@@ -83,10 +83,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
     public function dismiss()
     {
         if (WCF::getUser()->userID) {
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_notice_dismissed
+            $sql = "INSERT IGNORE INTO  wcf1_notice_dismissed
                                         (noticeID, userID)
                     VALUES              (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 \reset($this->objectIDs),
                 WCF::getUser()->userID,
@@ -162,10 +162,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
      */
     public function updatePosition()
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_notice
+        $sql = "UPDATE  wcf1_notice
                 SET     showOrder = ?
                 WHERE   noticeID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $showOrder = $this->parameters['data']['offset'];
         WCF::getDB()->beginTransaction();

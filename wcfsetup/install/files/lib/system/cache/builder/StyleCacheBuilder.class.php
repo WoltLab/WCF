@@ -26,9 +26,9 @@ class StyleCacheBuilder extends AbstractCacheBuilder
 
         // get all styles
         $sql = "SELECT      *
-                FROM        wcf" . WCF_N . "_style
+                FROM        wcf1_style
                 ORDER BY    styleName ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             if ($row['isDefault']) {

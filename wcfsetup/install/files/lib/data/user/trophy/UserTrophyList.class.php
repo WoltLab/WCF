@@ -44,18 +44,18 @@ class UserTrophyList extends DatabaseObjectList
                 $trophyList->sqlConditionJoins .= ' ';
             }
             $trophyList->sqlJoins .= '
-                LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+                LEFT JOIN   wcf1_trophy trophy
                 ON          user_trophy.trophyID = trophy.trophyID';
             $trophyList->sqlConditionJoins .= '
-                LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+                LEFT JOIN   wcf1_trophy trophy
                 ON          user_trophy.trophyID = trophy.trophyID';
 
             // trophy category join
             $trophyList->sqlJoins .= '
-                LEFT JOIN   wcf' . WCF_N . '_category category
+                LEFT JOIN   wcf1_category category
                 ON          trophy.categoryID = category.categoryID';
             $trophyList->sqlConditionJoins .= '
-                LEFT JOIN   wcf' . WCF_N . '_category category
+                LEFT JOIN   wcf1_category category
                 ON          trophy.categoryID = category.categoryID';
 
             $trophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);

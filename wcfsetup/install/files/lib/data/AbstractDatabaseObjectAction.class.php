@@ -415,7 +415,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         $sql = "SELECT  *
                 FROM    " . $tableName . "
                 WHERE   " . $indexName . " IN (" . \str_repeat('?,', \count($this->objectIDs) - 1) . "?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->objectIDs);
         while ($object = $statement->fetchObject($baseClass)) {
             $this->objects[] = new $this->className($object);

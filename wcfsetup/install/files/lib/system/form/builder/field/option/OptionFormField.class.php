@@ -61,9 +61,9 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
             }
 
             $sql = "SELECT  optionName
-                    FROM    wcf" . WCF_N . "_option
+                    FROM    wcf1_option
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             $availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

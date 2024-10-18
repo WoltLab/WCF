@@ -53,27 +53,27 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker
             // update poll options
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('poll_option.pollID IN (?)', [$pollIDs]);
-            $sql = "UPDATE  wcf" . WCF_N . "_poll_option poll_option
+            $sql = "UPDATE  wcf1_poll_option poll_option
                     SET     votes = (
                                 SELECT  COUNT(*)
-                                FROM    wcf" . WCF_N . "_poll_option_vote
+                                FROM    wcf1_poll_option_vote
                                 WHERE   optionID = poll_option.optionID
                             )
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             // update polls
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('poll.pollID IN (?)', [$pollIDs]);
-            $sql = "UPDATE  wcf" . WCF_N . "_poll poll
+            $sql = "UPDATE  wcf1_poll poll
                     SET     votes = (
                                 SELECT  COUNT(DISTINCT userID)
-                                FROM    wcf" . WCF_N . "_poll_option_vote
+                                FROM    wcf1_poll_option_vote
                                 WHERE   pollID = poll.pollID
                             )
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
         }
     }

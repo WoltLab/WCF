@@ -62,9 +62,9 @@ class UserObjectWatchHandler extends SingletonFactory
         $conditionsBuilder->add('objectTypeID = ?', [$objectTypeObj->objectTypeID]);
         $conditionsBuilder->add('objectID IN (?)', [$objectIDs]);
         $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_user_object_watch
+                FROM    wcf1_user_object_watch
                 " . $conditionsBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionsBuilder->getParameters());
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -95,9 +95,9 @@ class UserObjectWatchHandler extends SingletonFactory
             $conditionsBuilder->add('userID IN (?)', [$userIDs]);
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_object_watch
+        $sql = "DELETE FROM wcf1_user_object_watch
                 " . $conditionsBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionsBuilder->getParameters());
     }
 
@@ -162,10 +162,10 @@ class UserObjectWatchHandler extends SingletonFactory
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 
         $sql = "SELECT  userID, notification
-                FROM    wcf" . WCF_N . "_user_object_watch
+                FROM    wcf1_user_object_watch
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$objectTypeObj->objectTypeID, $objectID]);
 
         return $statement->fetchMap('userID', 'notification');

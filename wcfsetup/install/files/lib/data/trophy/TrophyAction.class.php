@@ -85,9 +85,9 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
             $userTrophyList->sqlJoins .= ' ';
         }
         $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
 
         $userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
@@ -152,19 +152,19 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         if (!empty($disabledTrophyIDs)) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+            $sql = "DELETE FROM wcf1_user_special_trophy
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             // update trophy points
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
             $sql = "SELECT      COUNT(*) as count, userID
-                    FROM        wcf" . WCF_N . "_user_trophy
+                    FROM        wcf1_user_trophy
                     " . $conditionBuilder . "
                     GROUP BY    userID";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             while ($row = $statement->fetchArray()) {
@@ -182,10 +182,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('trophyID IN (?)', [$enabledTrophyIDs]);
             $sql = "SELECT      COUNT(*) as count, userID
-                    FROM        wcf" . WCF_N . "_user_trophy
+                    FROM        wcf1_user_trophy
                     " . $conditionBuilder . "
                     GROUP BY    userID";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             while ($row = $statement->fetchArray()) {
@@ -340,10 +340,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     public function updatePosition()
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_trophy
+        $sql = "UPDATE  wcf1_trophy
                 SET     showOrder = ?
                 WHERE   trophyID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $showOrder = $this->parameters['data']['offset'];
         WCF::getDB()->beginTransaction();

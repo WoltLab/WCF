@@ -60,10 +60,10 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
     protected function getOldContactAttachmentIDs()
     {
         $sql = "SELECT  attachmentID
-                FROM    wcf" . WCF_N . "_attachment
+                FROM    wcf1_attachment
                 WHERE   objectTypeID = ?
                     AND uploadTime < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             ObjectTypeCache::getInstance()
                 ->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),

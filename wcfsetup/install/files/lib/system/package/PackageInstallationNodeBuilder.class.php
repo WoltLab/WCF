@@ -828,7 +828,7 @@ class PackageInstallationNodeBuilder
         );
         $queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (
             SELECT  queueID
-            FROM    wcf" . WCF_N . "_package_installation_node
+            FROM    wcf1_package_installation_node
         )");
         $queueList->readObjects();
 

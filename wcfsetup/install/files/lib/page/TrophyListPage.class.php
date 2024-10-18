@@ -93,7 +93,7 @@ class TrophyListPage extends MultipleLinkPage
 
         $this->objectList->sqlSelects = '(
             SELECT  COUNT(*)
-            FROM    wcf' . WCF_N . '_user_trophy
+            FROM    wcf1_user_trophy
             WHERE   trophyID = trophy.trophyID
         ) AS awarded';
         $this->objectList->getConditionBuilder()->add('isDisabled = ?', [0]);

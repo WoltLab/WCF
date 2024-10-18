@@ -85,7 +85,7 @@ class MailWorker extends AbstractWorker
                 $this->conditions->add(
                     "user.userID IN (
                         SELECT  userID
-                        FROM    wcf" . WCF_N . "_user_to_group
+                        FROM    wcf1_user_to_group
                         WHERE   groupID IN (?)
                     )",
                     [$this->mailData['groupIDs']]
@@ -94,9 +94,9 @@ class MailWorker extends AbstractWorker
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_user user
+                FROM    wcf1_user user
                 " . $this->conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->conditions->getParameters());
 
         $this->count = $statement->fetchSingleColumn();
@@ -152,12 +152,12 @@ class MailWorker extends AbstractWorker
 
         // get users
         $sql = "SELECT      user_option.*, user.*
-                FROM        wcf" . WCF_N . "_user user
-                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option
+                FROM        wcf1_user user
+                LEFT JOIN   wcf1_user_option_value user_option
                 ON          user_option.userID = user.userID
                 " . $this->conditions . "
                 ORDER BY    user.userID";
-        $statement = WCF::getDB()->prepareStatement($sql, $this->limit, $this->limit * $this->loopCount);
+        $statement = WCF::getDB()->prepare($sql, $this->limit, $this->limit * $this->loopCount);
         $statement->execute($this->conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             $user = new User(null, $row);

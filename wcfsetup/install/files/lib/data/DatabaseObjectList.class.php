@@ -149,7 +149,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
                 FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
                 " . $this->sqlConditionJoins . "
                 " . $this->getConditionBuilder();
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
 
         return $statement->fetchSingleColumn();
@@ -166,7 +166,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
                 " . $this->sqlConditionJoins . "
                 " . $this->getConditionBuilder() . "
                 " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
-        $statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
+        $statement = WCF::getDB()->prepare($sql, $this->sqlLimit, $this->sqlOffset);
         $statement->execute($this->getConditionBuilder()->getParameters());
         $this->objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
@@ -189,7 +189,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
                             " . $this->sqlJoins . "
                     WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN ({$objectIdPlaceholder})
                             " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($this->objectIDs);
             $this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
         } else {
@@ -199,7 +199,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
                     " . $this->sqlJoins . "
                     " . $this->getConditionBuilder() . "
                     " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
-            $statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
+            $statement = WCF::getDB()->prepare($sql, $this->sqlLimit, $this->sqlOffset);
             $statement->execute($this->getConditionBuilder()->getParameters());
             $this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
         }

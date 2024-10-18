@@ -127,9 +127,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
             $this->pageContents = [];
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_page_content
+                    FROM    wcf1_page_content
                     WHERE   pageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->pageID]);
             while ($row = $statement->fetchArray()) {
                 $this->pageContents[$row['languageID'] ?: 0] = new PageContent(null, $row);
@@ -157,9 +157,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         }
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_page_content
+                FROM    wcf1_page_content
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute($conditions->getParameters());
         $row = $statement->fetchSingleRow();
         if ($row !== false) {
@@ -285,10 +285,10 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         }
 
         WCF::getDB()->beginTransaction();
-        $sql = "UPDATE  wcf" . WCF_N . "_application
+        $sql = "UPDATE  wcf1_application
                 SET     landingPageID = ?
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->pageID,
             1,
@@ -317,9 +317,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     {
         if ($this->boxIDs === null) {
             $sql = "SELECT  boxID
-                    FROM    wcf" . WCF_N . "_box_to_page
+                    FROM    wcf1_box_to_page
                     WHERE   pageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->pageID]);
             $this->boxIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         }
@@ -368,9 +368,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
             $this->pageLanguages = [];
             if ($this->isMultilingual) {
                 $sql = "SELECT  languageID
-                        FROM    wcf" . WCF_N . "_page_content
+                        FROM    wcf1_page_content
                         WHERE   pageID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$this->pageID]);
                 while ($languageID = $statement->fetchColumn()) {
                     if (LanguageFactory::getInstance()->getLanguage($languageID) !== null) {
@@ -403,9 +403,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     public static function getPageByIdentifier($identifier)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_page
+                FROM    wcf1_page
                 WHERE   identifier = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$identifier]);
 
         return $statement->fetchObject(self::class);
@@ -420,9 +420,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     public static function getPageByName($name)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_page
+                FROM    wcf1_page
                 WHERE   name = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$name]);
 
         return $statement->fetchObject(self::class);

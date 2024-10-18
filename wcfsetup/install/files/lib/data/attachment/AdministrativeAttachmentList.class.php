@@ -34,7 +34,7 @@ class AdministrativeAttachmentList extends AttachmentList
 
         $this->sqlSelects = 'user_table.username';
         $this->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = attachment.userID";
     }
 
@@ -69,9 +69,9 @@ class AdministrativeAttachmentList extends AttachmentList
     {
         $fileTypes = [];
         $sql = "SELECT  DISTINCT attachment.fileType
-                FROM    wcf" . WCF_N . "_attachment attachment
+                FROM    wcf1_attachment attachment
                 " . $this->getConditionBuilder();
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
         while ($row = $statement->fetchArray()) {
             if ($row['fileType']) {
@@ -94,9 +94,9 @@ class AdministrativeAttachmentList extends AttachmentList
         $sql = "SELECT  COUNT(*) AS count,
                         COALESCE(SUM(attachment.filesize), 0) AS size,
                         COALESCE(SUM(downloads), 0) AS downloads
-                FROM    wcf" . WCF_N . "_attachment attachment
+                FROM    wcf1_attachment attachment
                 " . $this->getConditionBuilder();
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
 
         return $statement->fetchArray();

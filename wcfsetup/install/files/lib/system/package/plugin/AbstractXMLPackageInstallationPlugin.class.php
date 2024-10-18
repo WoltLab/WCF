@@ -176,7 +176,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
             if ($sqlData === null) {
                 $row = false;
             } else {
-                $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+                $statement = WCF::getDB()->prepare($sqlData['sql']);
                 $statement->execute($sqlData['parameters']);
                 $row = $statement->fetchArray();
             }
@@ -435,20 +435,20 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
             }
 
             $sql = "SELECT  MAX(showOrder) AS showOrder
-                    FROM    " . $this->application . WCF_N . "_" . $this->tableName . $tableNameExtension . "
+                    FROM    " . $this->application . "1_" . $this->tableName . $tableNameExtension . "
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $maxShowOrder = $statement->fetchArray();
 
             return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
         } else {
             // increase all showOrder values which are >= $showOrder
-            $sql = "UPDATE  " . $this->application . WCF_N . "_" . $this->tableName . $tableNameExtension . "
+            $sql = "UPDATE  " . $this->application . "1_" . $this->tableName . $tableNameExtension . "
                     SET     showOrder = showOrder + 1
                     WHERE   showOrder >= ?
                     " . ($columnName !== null ? "AND " . $columnName . " = ?" : "");
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             $data = [$showOrder];
             if ($columnName !== null) {

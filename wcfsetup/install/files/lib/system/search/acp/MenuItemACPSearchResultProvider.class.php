@@ -41,10 +41,10 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
         $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
 
         $sql = "SELECT      languageItem, languageItemValue
-                FROM        wcf" . WCF_N . "_language_item
+                FROM        wcf1_language_item
                 " . $conditions . "
                 ORDER BY    languageItemValue ASC";
-        $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
+        $statement = WCF::getDB()->prepare($sql); // don't use a limit here
         $statement->execute($conditions->getParameters());
         $languageItems = $statement->fetchMap('languageItem', 'languageItemValue');
 
@@ -57,9 +57,9 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
         $conditions->add("menuItemController <> ''");
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_acp_menu_item
+                FROM    wcf1_acp_menu_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
+        $statement = WCF::getDB()->prepare($sql); // don't use a limit here
         $statement->execute($conditions->getParameters());
 
         $menuItems = ACPMenu::getInstance()->menuItemList;

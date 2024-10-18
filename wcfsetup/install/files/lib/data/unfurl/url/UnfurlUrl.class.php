@@ -56,11 +56,11 @@ class UnfurlUrl extends DatabaseObject
     {
         if ($id !== null) {
             $sql = "SELECT      unfurl_url.*, unfurl_url_image.*
-                    FROM        wcf" . WCF_N . "_unfurl_url unfurl_url
-                    LEFT JOIN   wcf" . WCF_N . "_unfurl_url_image unfurl_url_image
+                    FROM        wcf1_unfurl_url unfurl_url
+                    LEFT JOIN   wcf1_unfurl_url_image unfurl_url_image
                     ON          unfurl_url_image.imageID = unfurl_url.imageID
                     WHERE       unfurl_url.urlID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();
 
@@ -171,11 +171,11 @@ class UnfurlUrl extends DatabaseObject
         }
 
         $sql = "SELECT      unfurl_url.*, unfurl_url_image.*
-                FROM        wcf" . WCF_N . "_unfurl_url unfurl_url
-                LEFT JOIN   wcf" . WCF_N . "_unfurl_url_image unfurl_url_image
+                FROM        wcf1_unfurl_url unfurl_url
+                LEFT JOIN   wcf1_unfurl_url_image unfurl_url_image
                 ON          unfurl_url_image.imageID = unfurl_url.imageID
                 WHERE       unfurl_url.urlHash = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([\sha1($url)]);
         $row = $statement->fetchArray();
         if (!$row) {

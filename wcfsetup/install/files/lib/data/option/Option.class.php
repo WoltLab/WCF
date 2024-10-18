@@ -75,7 +75,7 @@ class Option extends DatabaseObject
     {
         $sql = "SELECT  *
                 FROM    " . self::getDatabaseTableName();
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         $options = [];
@@ -95,7 +95,7 @@ class Option extends DatabaseObject
         $sql = "SELECT  *
                 FROM    " . self::getDatabaseTableName() . "
                 WHERE   optionName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$optionName]);
 
         return $statement->fetchObject(static::class);

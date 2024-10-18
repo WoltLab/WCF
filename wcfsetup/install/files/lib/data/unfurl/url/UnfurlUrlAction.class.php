@@ -69,13 +69,13 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
         }
 
         // save object
-        $sql = "INSERT INTO wcf" . WCF_N . "_unfurl_url_image
+        $sql = "INSERT INTO wcf1_unfurl_url_image
                             (" . $keys . ")
                 VALUES      (" . $values . ")";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
 
-        return WCF::getDB()->getInsertID("wcf" . WCF_N . "_unfurl_url_image", "imageID");
+        return WCF::getDB()->getInsertID("wcf1_unfurl_url_image", "imageID");
     }
 
     /**

@@ -50,7 +50,7 @@ class StyleListPage extends MultipleLinkPage
 
         $this->objectList->sqlSelects = "(
             SELECT  COUNT(*)
-            FROM    wcf" . WCF_N . "_user
+            FROM    wcf1_user
             WHERE   styleID = style.styleID
         ) AS users";
     }

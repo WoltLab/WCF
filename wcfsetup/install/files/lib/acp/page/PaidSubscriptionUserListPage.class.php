@@ -87,7 +87,7 @@ class PaidSubscriptionUserListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'paid_subscription_user.userID IN (
                     SELECT  userID
-                    FROM    wcf' . WCF_N . '_user
+                    FROM    wcf1_user
                     WHERE   username LIKE ?
                 )',
                 ['%' . $this->username . '%']
@@ -103,9 +103,9 @@ class PaidSubscriptionUserListPage extends SortablePage
         $this->objectList->getConditionBuilder()->add('paid_subscription_user.isActive = ?', [1]);
         $this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
         $this->objectList->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = paid_subscription_user.userID
-            LEFT JOIN   wcf" . WCF_N . "_paid_subscription paid_subscription
+            LEFT JOIN   wcf1_paid_subscription paid_subscription
             ON          paid_subscription.subscriptionID = paid_subscription_user.subscriptionID";
     }
 

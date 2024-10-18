@@ -80,9 +80,9 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         // fetch data directly from database during framework installation
         if (!PACKAGE_ID) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_language_category
+                    FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(['wcf.acp.cronjob']);
             $languageCategory = $statement->fetchObject(LanguageCategory::class);
 
@@ -94,12 +94,12 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         }
 
         // save new descriptions
-        $sql = "INSERT INTO             wcf" . WCF_N . "_language_item
+        $sql = "INSERT INTO             wcf1_language_item
                                         (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
                 VALUES                  (?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue),
                                         languageCategoryID = VALUES(languageCategoryID)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         foreach ($languages as $language) {
             $value = $defaultValue;
@@ -150,9 +150,9 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
     {
         // delete language items
         if (!empty($objectIDs)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+            $sql = "DELETE FROM wcf1_language_item
                     WHERE       languageItem = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($objectIDs as $cronjobID) {

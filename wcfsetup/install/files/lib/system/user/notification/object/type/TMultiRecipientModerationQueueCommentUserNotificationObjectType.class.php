@@ -42,9 +42,9 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         $conditionBuilder->add('queueID = ?', [$comment->objectID]);
         $conditionBuilder->add('isAffected = ?', [1]);
         $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_moderation_queue_to_user
+                FROM    wcf1_moderation_queue_to_user
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

@@ -103,10 +103,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         $statement = null;
         if (!$isBulk) {
             // prepare statement
-            $sql = "INSERT INTO wcf" . WCF_N . "_message_embedded_object
+            $sql = "INSERT INTO wcf1_message_embedded_object
                                 (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
                     VALUES      (?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
         }
@@ -153,10 +153,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         WCF::getDB()->commitTransaction();
 
         // prepare statement
-        $sql = "INSERT INTO wcf" . WCF_N . "_message_embedded_object
+        $sql = "INSERT INTO wcf1_message_embedded_object
                             (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
                 VALUES      (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($this->bulkData['insert'] as $parameters) {
@@ -192,10 +192,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         }
 
         // prepare statement
-        $sql = "INSERT INTO wcf" . WCF_N . "_message_embedded_object
+        $sql = "INSERT INTO wcf1_message_embedded_object
                             (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
                 VALUES      (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         // call embedded object handlers
         WCF::getDB()->beginTransaction();
@@ -224,9 +224,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         );
         $conditionBuilder->add('messageID IN (?)', [$messageIDs]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_message_embedded_object
+        $sql = "DELETE FROM wcf1_message_embedded_object
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
 
@@ -252,9 +252,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
 
         // get object ids
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_message_embedded_object
+                FROM    wcf1_message_embedded_object
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $embeddedObjects = [];
         while ($row = $statement->fetchArray()) {

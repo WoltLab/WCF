@@ -93,7 +93,7 @@ class CronjobLogListPage extends SortablePage
 
         $this->objectList->sqlSelects = "cronjob.*";
         $this->objectList->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_cronjob cronjob
+            LEFT JOIN   wcf1_cronjob cronjob
             ON          cronjob.cronjobID = cronjob_log.cronjobID";
 
         if ($this->cronjobID) {

@@ -208,9 +208,9 @@ class Box extends DatabaseObject
             $this->boxContents = [];
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_box_content
+                    FROM    wcf1_box_content
                     WHERE   boxID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->boxID]);
             while ($row = $statement->fetchArray()) {
                 $this->boxContents[$row['languageID'] ?: 0] = new BoxContent(null, $row);
@@ -518,9 +518,9 @@ class Box extends DatabaseObject
     {
         if ($this->pageIDs === null) {
             $sql = "SELECT  pageID
-                    FROM    wcf" . WCF_N . "_box_to_page
+                    FROM    wcf1_box_to_page
                     WHERE   boxID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->boxID]);
 
             $this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -641,9 +641,9 @@ class Box extends DatabaseObject
     public static function getBoxByIdentifier($identifier)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 WHERE   identifier = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$identifier]);
 
         return $statement->fetchObject(self::class);
@@ -658,9 +658,9 @@ class Box extends DatabaseObject
     public static function getBoxByName($name)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 WHERE   name = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$name]);
 
         return $statement->fetchObject(self::class);
@@ -675,9 +675,9 @@ class Box extends DatabaseObject
     public static function getBoxByMenuID($menuID)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 WHERE   menuID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$menuID]);
 
         return $statement->fetchObject(self::class);

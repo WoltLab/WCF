@@ -41,10 +41,10 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         $objectTypeID = $this->getObjectTypeID($objectType);
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,
@@ -66,11 +66,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         $objectTypeID = $this->getObjectTypeID($objectType);
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?
                     AND status IN (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,
@@ -157,11 +157,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = [])
     {
         $sql = "SELECT  queueID
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?
                     AND status <> ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,

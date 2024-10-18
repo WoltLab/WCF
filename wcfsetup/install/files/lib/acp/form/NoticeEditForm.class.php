@@ -183,9 +183,9 @@ class NoticeEditForm extends NoticeAddForm
         );
 
         if ($this->resetIsDismissed) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_notice_dismissed
+            $sql = "DELETE FROM wcf1_notice_dismissed
                     WHERE       noticeID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->notice->noticeID,
             ]);

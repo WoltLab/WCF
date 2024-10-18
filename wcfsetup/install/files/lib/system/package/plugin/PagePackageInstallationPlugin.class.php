@@ -172,9 +172,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $parentPageID = null;
         if (!empty($data['elements']['parent'])) {
             $sql = "SELECT  pageID
-                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                    FROM    wcf1_" . $this->tableName . "
                     WHERE   identifier = ?";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$data['elements']['parent']]);
             $row = $statement->fetchSingleRow();
             if ($row === false) {
@@ -287,7 +287,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   identifier = ?
                     AND packageID = ?";
         $parameters = [

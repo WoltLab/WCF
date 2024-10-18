@@ -177,13 +177,13 @@ class BoxHandler extends SingletonFactory
                     (box.visibleEverywhere = ?
                     AND boxID NOT IN (
                         SELECT  boxID
-                        FROM    wcf' . WCF_N . '_box_to_page
+                        FROM    wcf1_box_to_page
                         WHERE   pageID = ?
                             AND visible = ?
                     )) OR
                     boxID IN (
                         SELECT  boxID
-                        FROM    wcf' . WCF_N . '_box_to_page
+                        FROM    wcf1_box_to_page
                         WHERE   pageID = ?
                             AND visible = ?
                     )
@@ -203,9 +203,9 @@ class BoxHandler extends SingletonFactory
         $showOrders = [];
         if ($pageID) {
             $sql = "SELECT  boxID, showOrder
-                    FROM    wcf" . WCF_N . "_page_box_order
+                    FROM    wcf1_page_box_order
                     WHERE   pageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$pageID]);
             while ($row = $statement->fetchArray()) {
                 $showOrders[$row['boxID']] = $row['showOrder'];
@@ -262,9 +262,9 @@ class BoxHandler extends SingletonFactory
     public static function hasCustomShowOrder($pageID)
     {
         $sql = "SELECT  COUNT(*) AS count
-                FROM    wcf" . WCF_N . "_page_box_order
+                FROM    wcf1_page_box_order
                 WHERE   pageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$pageID]);
 
         return $statement->fetchSingleColumn() > 0;

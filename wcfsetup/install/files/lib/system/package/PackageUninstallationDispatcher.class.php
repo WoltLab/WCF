@@ -172,9 +172,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
         PackageEditor::deleteAll([$this->queue->packageID]);
 
         // remove localized package info
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem IN (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             'wcf.acp.package.packageName.package' . $this->queue->packageID,
             'wcf.acp.package.packageDescription.package' . $this->queue->packageID,

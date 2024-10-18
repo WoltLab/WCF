@@ -158,7 +158,7 @@ class PageListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'page.pageID IN (
                     SELECT  pageID
-                    FROM    wcf' . WCF_N . '_page_content
+                    FROM    wcf1_page_content
                     WHERE   title LIKE ?
                 )',
                 ['%' . $this->title . '%']
@@ -168,7 +168,7 @@ class PageListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'page.pageID IN (
                     SELECT  pageID
-                    FROM    wcf' . WCF_N . '_page_content
+                    FROM    wcf1_page_content
                     WHERE   content LIKE ?
                 )',
                 ['%' . $this->content . '%']

@@ -203,10 +203,10 @@ class LikeObject extends DatabaseObject
     public static function getLikeObject($objectTypeID, $objectID)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_like_object
+                FROM    wcf1_like_object
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,

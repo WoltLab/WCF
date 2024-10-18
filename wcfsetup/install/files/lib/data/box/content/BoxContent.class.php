@@ -53,17 +53,17 @@ class BoxContent extends DatabaseObject
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_box_content
+                    FROM    wcf1_box_content
                     WHERE   boxID = ?
                         AND languageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$boxID, $languageID]);
         } else {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_box_content
+                    FROM    wcf1_box_content
                     WHERE   boxID = ?
                         AND languageID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$boxID]);
         }
 

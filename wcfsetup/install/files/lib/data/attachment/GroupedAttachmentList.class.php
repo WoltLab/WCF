@@ -53,7 +53,7 @@ class GroupedAttachmentList extends AttachmentList
         $this->getConditionBuilder()->add(
             '(
                 SELECT  DISTINCT embeddedObjectID
-                FROM    wcf' . WCF_N . '_message_embedded_object
+                FROM    wcf1_message_embedded_object
                 WHERE   messageObjectTypeID = ?
                     AND messageID = attachment.objectID
                     AND embeddedObjectTypeID = ?

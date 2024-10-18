@@ -242,9 +242,9 @@ class UserListPage extends SortablePage
         EventHandler::getInstance()->fireAction($this, 'countItems');
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_user user_table
+                FROM    wcf1_user user_table
                 " . $this->conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->conditions->getParameters());
 
         return $statement->fetchSingleColumn();
@@ -257,14 +257,14 @@ class UserListPage extends SortablePage
     {
         // get user ids
         $sql = "SELECT      user_table.userID
-                FROM        wcf" . WCF_N . "_user user_table
+                FROM        wcf1_user user_table
                 " . (isset($this->options[$this->sortField]) ? "
-                    LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                    LEFT JOIN   wcf1_user_option_value user_option_value
                     ON          user_option_value.userID = user_table.userID
                     " : '') . "
                 " . $this->conditions . "
                 ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption' . $this->options[$this->sortField]->optionID : $this->sortField) . " " . $this->sortOrder;
-        $statement = WCF::getDB()->prepareStatement(
+        $statement = WCF::getDB()->prepare(
             $sql,
             $this->itemsPerPage,
             ($this->pageNo - 1) * $this->itemsPerPage
@@ -279,21 +279,21 @@ class UserListPage extends SortablePage
             $conditions->add("user_table.userID IN (?)", [$userIDs]);
 
             $sql = "SELECT  userID, groupID
-                    FROM    wcf" . WCF_N . "_user_to_group user_table
+                    FROM    wcf1_user_to_group user_table
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $userToGroups = $statement->fetchMap('userID', 'groupID', false);
 
             $sql = "SELECT      user_avatar.*, option_value.*, user_table.*
-                    FROM        wcf" . WCF_N . "_user user_table
-                    LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                    FROM        wcf1_user user_table
+                    LEFT JOIN   wcf1_user_option_value option_value
                     ON          option_value.userID = user_table.userID
-                    LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
+                    LEFT JOIN   wcf1_user_avatar user_avatar
                     ON          user_avatar.avatarID = user_table.avatarID
                     " . $conditions . "
                     ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption' . $this->options[$this->sortField]->optionID : 'user_table.' . $this->sortField) . " " . $this->sortOrder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 $groupIDs = ($userToGroups[$row['userID']] ?? []);
@@ -365,11 +365,11 @@ class UserListPage extends SortablePage
     {
         // get user search from database
         $sql = "SELECT  searchData
-                FROM    wcf" . WCF_N . "_search
+                FROM    wcf1_search
                 WHERE   searchID = ?
                     AND userID = ?
                     AND searchType = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->searchID,
             WCF::getUser()->userID,

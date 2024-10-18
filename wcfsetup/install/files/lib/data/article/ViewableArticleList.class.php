@@ -57,7 +57,7 @@ class ViewableArticleList extends ArticleList
             }
             $this->sqlSelects .= 'tracked_visit.visitTime';
             $this->sqlJoins .= "
-                LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                LEFT JOIN   wcf1_tracked_visit tracked_visit
                 ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
                         AND tracked_visit.objectID = article.articleID
                         AND tracked_visit.userID = " . WCF::getUser()->userID;
@@ -68,7 +68,7 @@ class ViewableArticleList extends ArticleList
         }
         $this->sqlSelects .= "like_object.cachedReactions";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_like_object like_object
+            LEFT JOIN   wcf1_like_object like_object
             ON          like_object.objectTypeID = " . ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle')->objectTypeID . "
                     AND like_object.objectID = article.articleID";
     }

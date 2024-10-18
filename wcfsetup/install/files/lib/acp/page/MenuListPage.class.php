@@ -56,15 +56,15 @@ class MenuListPage extends SortablePage
 
         $this->objectList->sqlSelects .= '(
             SELECT  COUNT(*)
-            FROM    wcf' . WCF_N . '_menu_item
+            FROM    wcf1_menu_item
             WHERE   menuID = menu.menuID
         ) AS items, (
             SELECT  position
-            FROM    wcf' . WCF_N . '_box
+            FROM    wcf1_box
             WHERE   menuID = menu.menuID
         ) AS position, (
             SELECT  showOrder
-            FROM    wcf' . WCF_N . '_box
+            FROM    wcf1_box
             WHERE   menuID = menu.menuID
         ) AS showOrder';
     }

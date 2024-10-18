@@ -277,7 +277,7 @@ final class ApplicationHandler extends SingletonFactory
 
             $string = \preg_replace(
                 $regex,
-                '${1}' . WCF_N . '_',
+                '${1}1_',
                 $string
             );
         } else {
@@ -296,7 +296,7 @@ final class ApplicationHandler extends SingletonFactory
 
             $string = \preg_replace(
                 $regex,
-                '${1}' . WCF_N . '_',
+                '${1}1_',
                 $string
             );
         }

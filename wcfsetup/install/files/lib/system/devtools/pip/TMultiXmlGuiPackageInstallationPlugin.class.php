@@ -257,10 +257,10 @@ trait TMultiXmlGuiPackageInstallationPlugin
      */
     protected function deleteObject(\DOMElement $element)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$element->getAttribute('name')]);
     }
 }

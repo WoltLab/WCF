@@ -40,7 +40,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $sql = "REPLACE INTO    " . SearchIndexManager::getTableName($objectType) . "
                                 (objectID, subject, message, time, userID, username, languageID, metaData)
                 VALUES          (?, ?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData]);
     }
 
@@ -62,7 +62,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
 
             $sql = "DELETE FROM " . $tableName . "
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
         }
         WCF::getDB()->commitTransaction();
@@ -76,7 +76,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $this->createSearchIndex(SearchIndexManager::getInstance()->getObjectType($objectType));
 
         $sql = "TRUNCATE TABLE " . SearchIndexManager::getTableName($objectType);
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
     }
 
@@ -89,9 +89,9 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
 
         // check if table already exists
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   sqlTable = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$tableName]);
 
         if ($statement->fetchSingleColumn()) {
@@ -133,14 +133,14 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         // add comment
         $sql = "ALTER TABLE " . $tableName . "
                 COMMENT     = 'Search index for " . $objectType->objectType . "'";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         // log table
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "INSERT INTO wcf1_package_installation_sql_log
                             (packageID, sqlTable)
                 VALUES      (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectType->packageID,
             $tableName,

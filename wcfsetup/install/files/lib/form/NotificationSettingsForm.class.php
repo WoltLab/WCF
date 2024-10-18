@@ -138,9 +138,9 @@ class NotificationSettingsForm extends AbstractForm
 
             // get activation state
             $sql = "SELECT  eventID, mailNotificationType
-                    FROM    wcf" . WCF_N . "_user_notification_event_to_user
+                    FROM    wcf1_user_notification_event_to_user
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([WCF::getUser()->userID]);
             while ($row = $statement->fetchArray()) {
                 $this->settings[$row['eventID']]['enabled'] = true;
@@ -209,10 +209,10 @@ class NotificationSettingsForm extends AbstractForm
      */
     protected function updateActivationStates()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_notification_event_to_user
+        $sql = "DELETE FROM wcf1_user_notification_event_to_user
                 WHERE       eventID = ?
                         AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         WCF::getDB()->beginTransaction();
         $newSettings = [];
         foreach ($this->settings as $eventID => $setting) {
@@ -230,10 +230,10 @@ class NotificationSettingsForm extends AbstractForm
         }
 
         if (!empty($newSettings)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_event_to_user
+            $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (eventID, userID, mailNotificationType)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($newSettings as $newSetting) {
                 $statement->execute([
                     $newSetting['eventID'],

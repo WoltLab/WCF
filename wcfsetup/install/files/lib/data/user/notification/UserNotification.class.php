@@ -68,11 +68,11 @@ class UserNotification extends DatabaseObject
     public static function getNotification($packageID, $eventID, $objectID)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_notification
+                FROM    wcf1_user_notification
                 WHERE   packageID = ?
                     AND eventID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$packageID, $eventID, $objectID]);
         $row = $statement->fetchArray();
         if ($row !== false) {

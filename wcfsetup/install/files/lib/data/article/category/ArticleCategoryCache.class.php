@@ -39,10 +39,10 @@ class ArticleCategoryCache extends SingletonFactory
         }
 
         $sql = "SELECT      COUNT(*) AS count, categoryID
-                FROM        wcf" . WCF_N . "_article
+                FROM        wcf1_article
                 " . $conditionBuilder . "
                 GROUP BY    categoryID";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $articles = $statement->fetchMap('categoryID', 'count');
 

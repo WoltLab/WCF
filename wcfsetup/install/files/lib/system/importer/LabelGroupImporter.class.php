@@ -30,10 +30,10 @@ class LabelGroupImporter extends AbstractImporter
 
         // save objects
         if (!empty($additionalData['objects'])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_label_group_to_object
+            $sql = "INSERT INTO wcf1_label_group_to_object
                                 (groupID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($additionalData['objects'] as $objectTypeID => $objectIDs) {
                 foreach ($objectIDs as $objectID) {

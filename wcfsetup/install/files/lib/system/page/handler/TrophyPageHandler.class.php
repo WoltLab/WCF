@@ -50,7 +50,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
             $trophyList->sqlJoins .= ', ';
         }
         $trophyList->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_language_item language_item
+            LEFT JOIN   wcf1_language_item language_item
             ON          language_item.languageItem = trophy.title";
         $trophyList->getConditionBuilder()->add(
             '(trophy.title LIKE ? OR language_item.languageItemValue LIKE ?)',

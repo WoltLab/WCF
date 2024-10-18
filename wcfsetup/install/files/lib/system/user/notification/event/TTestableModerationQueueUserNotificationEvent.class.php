@@ -43,10 +43,10 @@ trait TTestableModerationQueueUserNotificationEvent
         WCF::getSession()->changeUser($originalUser, true);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$objectTypeID, $reportedUser->userID]);
 
         $moderationQueue = $statement->fetchObject(ModerationQueue::class);

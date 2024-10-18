@@ -36,8 +36,8 @@ class PageCacheBuilder extends AbstractCacheBuilder
 
         // get page titles
         $sql = "SELECT  pageID, languageID, title, metaDescription
-                FROM    wcf" . WCF_N . "_page_content";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_page_content";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $pageID = $row['pageID'];

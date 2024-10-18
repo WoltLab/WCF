@@ -73,11 +73,11 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function getLikeDetails()
     {
         $sql = "SELECT      userID, likeValue
-                FROM        wcf" . WCF_N . "_like
+                FROM        wcf1_like
                 WHERE       objectID = ?
                         AND objectTypeID = ?
                 ORDER BY    time DESC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->parameters['data']['objectID'],
             $this->objectType->objectTypeID,
@@ -252,10 +252,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     {
         // fetch number of pages
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_like
+                FROM    wcf1_like
                 WHERE   objectID = ?
                     AND objectTypeID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->parameters['data']['objectID'],
             $this->objectType->objectTypeID,
@@ -263,11 +263,11 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $pageCount = \ceil($statement->fetchSingleColumn() / 20);
 
         $sql = "SELECT      userID, likeValue
-                FROM        wcf" . WCF_N . "_like
+                FROM        wcf1_like
                 WHERE       objectID = ?
                         AND objectTypeID = ?
                 ORDER BY    likeValue DESC, time DESC";
-        $statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
+        $statement = WCF::getDB()->prepare($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
         $statement->execute([
             $this->parameters['data']['objectID'],
             $this->objectType->objectTypeID,

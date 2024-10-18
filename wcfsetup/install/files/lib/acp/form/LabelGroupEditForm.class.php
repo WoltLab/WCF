@@ -145,9 +145,9 @@ class LabelGroupEditForm extends LabelGroupAddForm
         if (empty($_POST)) {
             // read database values
             $sql = "SELECT  objectTypeID, objectID
-                    FROM    wcf" . WCF_N . "_label_group_to_object
+                    FROM    wcf1_label_group_to_object
                     WHERE   groupID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->groupID]);
 
             $data = [];

@@ -46,18 +46,18 @@ final class CreateBoxToPageAssignments
         }
 
         if (($this->visible && $box->visibleEverywhere) || (!$this->visible && !$box->visibleEverywhere)) {
-            $sql = "DELETE FROM     wcf" . WCF_N . "_box_to_page
+            $sql = "DELETE FROM     wcf1_box_to_page
                     WHERE           boxID = ?
                             AND pageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($pages as $page) {
                 $statement->execute([$box->boxID, $page->pageID]);
             }
         } else {
-            $sql = "REPLACE INTO    wcf" . WCF_N . "_box_to_page
+            $sql = "REPLACE INTO    wcf1_box_to_page
                                     (boxID, pageID, visible)
                     VALUES          (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($pages as $page) {
                 $statement->execute([$box->boxID, $page->pageID, $this->visible ? 1 : 0]);
             }

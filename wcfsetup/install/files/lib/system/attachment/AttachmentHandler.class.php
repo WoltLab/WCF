@@ -131,11 +131,11 @@ class AttachmentHandler implements \Countable
         $conditions->add("tmpHash IN (?)", [$this->tmpHash]);
         $conditions->add("(objectID IS NULL OR objectID = 0)");
 
-        $sql = "UPDATE  wcf" . WCF_N . "_attachment
+        $sql = "UPDATE  wcf1_attachment
                 SET     objectID = ?,
                         tmpHash = ''
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, $objectID);
@@ -163,10 +163,10 @@ class AttachmentHandler implements \Countable
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, $newObjectID);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_attachment
+        $sql = "UPDATE  wcf1_attachment
                 SET     objectID = ?
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($parameters);
     }
 

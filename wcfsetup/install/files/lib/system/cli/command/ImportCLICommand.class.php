@@ -129,8 +129,8 @@ class ImportCLICommand implements ICLICommand
 
         // step 1) previous import
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_import_mapping";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_import_mapping";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         if ($statement->fetchSingleColumn()) {
             CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.notice')));

@@ -39,7 +39,7 @@ trait TFastCreate
         $sql = "INSERT INTO " . static::getDatabaseTableName() . "
                             (" . $keys . ")
                 VALUES      (" . $values . ")";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
 
         // return new object

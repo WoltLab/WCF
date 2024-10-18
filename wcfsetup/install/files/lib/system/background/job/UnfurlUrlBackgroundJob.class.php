@@ -169,9 +169,9 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     private static function getImageIdByUrl(string $url): ?int
     {
         $sql = "SELECT  imageID
-                FROM    wcf" . WCF_N . "_unfurl_url_image
+                FROM    wcf1_unfurl_url_image
                 WHERE   imageUrlHash = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([\sha1($url)]);
 
         $imageID = $statement->fetchSingleColumn();

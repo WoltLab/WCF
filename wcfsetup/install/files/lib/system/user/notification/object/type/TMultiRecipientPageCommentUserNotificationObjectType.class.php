@@ -23,14 +23,14 @@ trait TMultiRecipientPageCommentUserNotificationObjectType
     {
         // find all userIDs with the permission to manage pages
         $sql = "SELECT      userID 
-                FROM        wcf" . WCF_N . "_user_to_group
-                INNER JOIN  wcf" . WCF_N . "_user_group_option_value
-                ON          wcf" . WCF_N . "_user_to_group.groupID = wcf" . WCF_N . "_user_group_option_value.groupID  
-                        AND wcf" . WCF_N . "_user_group_option_value.optionValue = ? 
-                INNER JOIN  wcf" . WCF_N . "_user_group_option
-                ON          wcf" . WCF_N . "_user_group_option_value.optionID = wcf" . WCF_N . "_user_group_option.optionID 
-                        AND wcf" . WCF_N . "_user_group_option.optionName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM        wcf1_user_to_group
+                INNER JOIN  wcf1_user_group_option_value
+                ON          wcf1_user_to_group.groupID = wcf1_user_group_option_value.groupID  
+                        AND wcf1_user_group_option_value.optionValue = ? 
+                INNER JOIN  wcf1_user_group_option
+                ON          wcf1_user_group_option_value.optionID = wcf1_user_group_option.optionID 
+                        AND wcf1_user_group_option.optionName = ?";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             1,
             'admin.content.cms.canManagePage',

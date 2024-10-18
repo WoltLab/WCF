@@ -101,10 +101,10 @@ class ClipboardHandler extends SingletonFactory
         // remove existing entries first, prevents conflict with INSERT
         $this->unmark($objectIDs, $objectTypeID);
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_clipboard_item
+        $sql = "INSERT INTO wcf1_clipboard_item
                             (objectTypeID, userID, objectID)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($objectIDs as $objectID) {
             $statement->execute([
                 $objectTypeID,
@@ -131,9 +131,9 @@ class ClipboardHandler extends SingletonFactory
         $conditions->add("objectID IN (?)", [$objectIDs]);
         $conditions->add("userID = ?", [WCF::getUser()->userID]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_item
+        $sql = "DELETE FROM wcf1_clipboard_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
     }
 
@@ -144,10 +144,10 @@ class ClipboardHandler extends SingletonFactory
      */
     public function unmarkAll($objectTypeID)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_item
+        $sql = "DELETE FROM wcf1_clipboard_item
                 WHERE       objectTypeID = ?
                         AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             WCF::getUser()->userID,
@@ -227,9 +227,9 @@ class ClipboardHandler extends SingletonFactory
 
         // fetch object ids
         $sql = "SELECT  objectTypeID, objectID
-                FROM    wcf" . WCF_N . "_clipboard_item
+                FROM    wcf1_clipboard_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         // group object ids by type name
@@ -282,9 +282,9 @@ class ClipboardHandler extends SingletonFactory
                 $conditions->add("userID = ?", [WCF::getUser()->userID]);
                 $conditions->add("objectID IN (?)", [$objectData['objectIDs']]);
 
-                $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_item
+                $sql = "DELETE FROM wcf1_clipboard_item
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
             }
         }
@@ -432,9 +432,9 @@ class ClipboardHandler extends SingletonFactory
             $conditions->add("objectTypeID = ?", [$typeID]);
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_item
+        $sql = "DELETE FROM wcf1_clipboard_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
     }
 
@@ -457,9 +457,9 @@ class ClipboardHandler extends SingletonFactory
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_clipboard_item
+                FROM    wcf1_clipboard_item
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchSingleColumn() ? 1 : 0;

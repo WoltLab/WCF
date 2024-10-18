@@ -85,33 +85,33 @@ class SystemCheckPage extends AbstractPage
     ];
 
     public $foreignKeys = [
-        'wcf' . WCF_N . '_user' => [
+        'wcf1_user' => [
             'avatarID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_user_avatar',
+                'referenceTable' => 'wcf1_user_avatar',
                 'referenceColumn' => 'avatarID',
             ],
         ],
-        'wcf' . WCF_N . '_comment' => [
+        'wcf1_comment' => [
             'userID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_user',
+                'referenceTable' => 'wcf1_user',
                 'referenceColumn' => 'userID',
             ],
             'objectTypeID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_object_type',
+                'referenceTable' => 'wcf1_object_type',
                 'referenceColumn' => 'objectTypeID',
             ],
         ],
-        'wcf' . WCF_N . '_moderation_queue' => [
+        'wcf1_moderation_queue' => [
             'objectTypeID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_object_type',
+                'referenceTable' => 'wcf1_object_type',
                 'referenceColumn' => 'objectTypeID',
             ],
             'assignedUserID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_user',
+                'referenceTable' => 'wcf1_user',
                 'referenceColumn' => 'userID',
             ],
             'userID' => [
-                'referenceTable' => 'wcf' . WCF_N . '_user',
+                'referenceTable' => 'wcf1_user',
                 'referenceColumn' => 'userID',
             ],
         ],
@@ -243,13 +243,13 @@ class SystemCheckPage extends AbstractPage
 
         // check for MySQL Native driver
         $sql = "SELECT 1";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $this->results['mysql']['mysqlnd'] = ($statement->fetchSingleColumn() === 1);
 
         // check innodb support
         $sql = "SHOW ENGINES";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             if ($row['Engine'] == 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
@@ -279,13 +279,13 @@ class SystemCheckPage extends AbstractPage
         $sql = "SELECT  COUNT(*)
                 FROM    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         $this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
 
         $sql = "SELECT  @@innodb_buffer_pool_size";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $this->results['mysql']['bufferPool']['value'] = $statement->fetchSingleColumn();
         if ($this->results['mysql']['bufferPool']['value'] > 134217728) {

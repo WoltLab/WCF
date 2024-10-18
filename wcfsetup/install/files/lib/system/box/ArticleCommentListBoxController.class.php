@@ -30,9 +30,9 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
         if (!empty($accessibleCategoryIDs)) {
             $commentList->sqlJoins .= '
-                INNER JOIN  wcf' . WCF_N . '_article_content article_content
+                INNER JOIN  wcf1_article_content article_content
                 ON          article_content.articleContentID = comment.objectID
-                INNER JOIN  wcf' . WCF_N . '_article article
+                INNER JOIN  wcf1_article article
                 ON          article.articleID = article_content.articleID';
             $commentList->sqlSelects = 'article_content.title';
 

@@ -40,11 +40,11 @@ abstract class AbstractImporter implements IImporter
         // get package id
         $packageID = PackageCache::getInstance()->getPackageID($package);
 
-        $sql = "INSERT INTO             wcf" . WCF_N . "_language_item
+        $sql = "INSERT INTO             wcf1_language_item
                                         (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
                 VALUES                  (?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         WCF::getDB()->beginTransaction();
         foreach ($items as $itemData) {
             $statement->execute([
@@ -71,9 +71,9 @@ abstract class AbstractImporter implements IImporter
         if (!isset($languageCategoryIDs[$languageCategory])) {
             // get language category id
             $sql = "SELECT  languageCategoryID
-                    FROM    wcf" . WCF_N . "_language_category
+                    FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$languageCategory]);
 
             $languageCategoryIDs[$languageCategory] = $statement->fetchSingleColumn();

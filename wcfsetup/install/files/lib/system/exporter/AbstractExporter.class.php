@@ -219,7 +219,7 @@ abstract class AbstractExporter implements IExporter
     {
         $sql = "SELECT  MAX(" . $columnName . ") AS maxID
                 FROM    " . $tableName;
-        $statement = $this->database->prepareStatement($sql);
+        $statement = $this->database->prepare($sql);
         $statement->execute();
         $row = $statement->fetchArray();
         if ($row !== false) {

@@ -55,10 +55,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $poll = parent::create();
 
         // create options
-        $sql = "INSERT INTO wcf" . WCF_N . "_poll_option
+        $sql = "INSERT INTO wcf1_poll_option
                             (pollID, optionValue, showOrder)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($this->parameters['options'] as $showOrder => $option) {
@@ -117,10 +117,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
             // check if new options should be created
             if (!empty($newOptions)) {
-                $sql = "INSERT INTO wcf" . WCF_N . "_poll_option
+                $sql = "INSERT INTO wcf1_poll_option
                                     (pollID, optionValue, showOrder)
                         VALUES      (?, ?, ?)";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 foreach ($newOptions as $option) {
                     $statement->execute([
                         $pollEditor->pollID,
@@ -132,11 +132,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
             // check if existing options should be updated
             if (!empty($updateOptions)) {
-                $sql = "UPDATE  wcf" . WCF_N . "_poll_option
+                $sql = "UPDATE  wcf1_poll_option
                         SET     optionValue = ?,
                                 showOrder = ?
                         WHERE   optionID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 foreach ($updateOptions as $optionID => $option) {
                     $statement->execute([
                         $option['optionValue'],
@@ -148,9 +148,9 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
             // check if options should be removed
             if (!empty($options)) {
-                $sql = "DELETE FROM wcf" . WCF_N . "_poll_option
+                $sql = "DELETE FROM wcf1_poll_option
                         WHERE       optionID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 foreach ($options as $option) {
                     $statement->execute([$option->optionID]);
                 }
@@ -396,10 +396,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     {
         // get options
         $sql = "SELECT      optionID, optionValue
-                FROM        wcf" . WCF_N . "_poll_option
+                FROM        wcf1_poll_option
                 WHERE       pollID = ?
                 ORDER BY    " . ($this->poll->sortByVotes ? "votes DESC" : "showOrder ASC");
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->poll->pollID]);
         $options = [];
         while ($row = $statement->fetchArray()) {
@@ -408,9 +408,9 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // get votes
         $sql = "SELECT  userID, optionID
-                FROM    wcf" . WCF_N . "_poll_option_vote
+                FROM    wcf1_poll_option_vote
                 WHERE   pollID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->poll->pollID]);
         $voteData = $statement->fetchMap('optionID', 'userID', false);
 
@@ -452,10 +452,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // get poll
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_poll
+                FROM    wcf1_poll
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $sourceObjectType->objectTypeID,
             $this->parameters['sourceObjectID'],
@@ -501,12 +501,12 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         // copy votes
         WCF::getDB()->beginTransaction();
         foreach ($newOptionIDs as $oldOptionID => $newOptionID) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_poll_option_vote
+            $sql = "INSERT INTO wcf1_poll_option_vote
                                 (pollID, optionID, userID)
                     SELECT      " . $newPoll->pollID . ", " . $newOptionID . ", userID
-                    FROM        wcf" . WCF_N . "_poll_option_vote
+                    FROM        wcf1_poll_option_vote
                     WHERE       optionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$oldOptionID]);
         }
         WCF::getDB()->commitTransaction();
