@@ -285,13 +285,9 @@ abstract class Database
     /**
      * Prepares a statement for execution and returns a statement object.
      *
-     * @param string $statement
-     * @param int $limit
-     * @param int $offset
-     * @return  PreparedStatement
-     * @throws  DatabaseQueryException
+     * @throws DatabaseQueryException
      */
-    public function prepareStatement($statement, $limit = 0, $offset = 0)
+    public function prepareUnmanaged(string $statement, int $limit = 0, int $offset = 0): PreparedStatement
     {
         $statement = $this->handleLimitParameter($statement, $limit, $offset);
 
@@ -338,6 +334,24 @@ abstract class Database
         }
     }
 
+
+    /**
+     * Prepares a statement for execution and returns a statement object.
+     *
+     * @param string $statement
+     * @param int    $limit
+     * @param int    $offset
+     *
+     * @return  PreparedStatement
+     * @throws  DatabaseQueryException
+     *
+     * @deprecated 6.2 Use `prepareUnmanaged()` or `prepare()` instead.
+     */
+    public function prepareStatement($statement, $limit = 0, $offset = 0)
+    {
+        return $this->prepareUnmanaged($statement, $limit, $offset);
+    }
+
     /**
      * Prepares a statement for execution and returns a statement object.
      *
@@ -350,7 +364,7 @@ abstract class Database
     {
         $statement = ApplicationHandler::insertRealDatabaseTableNames($statement);
 
-        return $this->prepareStatement($statement, $limit, $offset);
+        return $this->prepareUnmanaged($statement, $limit, $offset);
     }
 
     /**
