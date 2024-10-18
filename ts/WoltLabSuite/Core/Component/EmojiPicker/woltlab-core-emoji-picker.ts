@@ -7,6 +7,11 @@ function getDataSource(locale: string): string {
   return `${window.WSC_API_URL}emoji/${locale}.json`;
 }
 
+export const DATABASE_FOR_AUTO_COMPLETE = new Database({
+  dataSource: getDataSource("en"),
+  locale: "en",
+});
+
 export class WoltlabCoreEmojiPicker extends Picker {
   constructor(props: PickerConstructorOptions | null | undefined) {
     const locale = (props && props.locale) || document.documentElement.lang;
@@ -26,13 +31,6 @@ export class WoltlabCoreEmojiPicker extends Picker {
   focus() {
     this.shadowRoot!.querySelector<HTMLInputElement>(".search")!.focus();
   }
-}
-
-export function getDatabaseForAutoComplete(): Database {
-  return new Database({
-    dataSource: getDataSource("en"),
-    locale: "en",
-  });
 }
 
 void customElements.whenDefined("emoji-picker").then(() => {
