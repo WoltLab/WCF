@@ -68,10 +68,12 @@ export function getLocalizationData(localization: string): I18n {
       .filter((language) => language.i18n)
       .map((item) => {
         return `case "${item.local}":
+      // prettier-ignore
       return ${JSON.stringify(item.i18n)};`;
       })
       .join("\n    ")}
     default:
+      // prettier-ignore
       return ${JSON.stringify(en)};
   }
 }
