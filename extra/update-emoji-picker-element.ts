@@ -15,6 +15,7 @@ import ru_RU from "emoji-picker-element/i18n/ru_RU";
 const copyFile = promisify(fs.copyFile);
 const writeFile = promisify(fs.writeFile);
 const rm = promisify(fs.rm);
+const readdir = promisify(fs.readdir);
 
 if (process.argv.length !== 4) {
   throw new Error(
@@ -56,6 +57,13 @@ const languages: LanguageItem[] = [
 (async () => {
   let localisationContent = `import { I18n } from "emoji-picker-element/shared";
 
+// prettier-ignore
+const locales = [
+  ${languages.map((item) => {
+    return `"${item.local}"`;
+  })}
+];
+
 export function getLocalizationData(localization: string): I18n {
   if (localization.includes("-")) {
     localization = localization.split("-")[0];
@@ -78,15 +86,23 @@ export function getLocalizationData(localization: string): I18n {
       return ${JSON.stringify(en)};
   }
 }
+
+export function getDataSource(locale: string): string {
+  if (!locales.includes(locale)) {
+    return \`\${window.WSC_API_URL}emoji/en.json\`;
+  }
+
+  return \`\${window.WSC_API_URL}emoji/\${locale}.json\`;
+}
 `;
 
-  fs.readdirSync(repository)
-    .filter((file) => {
-      return file.endsWith(".json");
-    })
-    .forEach((file) => {
-      rm(path.join(repository, file));
-    });
+  for (const file in await readdir(repository)) {
+    if (!file.endsWith(".json")) {
+      continue;
+    }
+
+    await rm(path.join(repository, file));
+  }
 
   for (const language of languages) {
     await copyFile(

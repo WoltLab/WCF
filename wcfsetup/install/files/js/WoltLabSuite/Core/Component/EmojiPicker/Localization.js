@@ -2,6 +2,11 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getLocalizationData = getLocalizationData;
+    exports.getDataSource = getDataSource;
+    // prettier-ignore
+    const locales = [
+        "da", "nl", "en", "en-gb", "et", "fi", "fr", "de", "hu", "it", "lt", "nb", "pl", "pt", "ru", "es", "sv", "uk"
+    ];
     function getLocalizationData(localization) {
         if (localization.includes("-")) {
             localization = localization.split("-")[0];
@@ -35,5 +40,11 @@ define(["require", "exports"], function (require, exports) {
                 // prettier-ignore
                 return { "categoriesLabel": "Categories", "emojiUnsupportedMessage": "Your browser does not support color emoji.", "favoritesLabel": "Favorites", "loadingMessage": "Loading…", "networkErrorMessage": "Could not load emoji.", "regionLabel": "Emoji picker", "searchDescription": "When search results are available, press up or down to select and enter to choose.", "searchLabel": "Search", "searchResultsLabel": "Search results", "skinToneDescription": "When expanded, press up or down to select and enter to choose.", "skinToneLabel": "Choose a skin tone (currently {skinTone})", "skinTonesLabel": "Skin tones", "skinTones": ["Default", "Light", "Medium-Light", "Medium", "Medium-Dark", "Dark"], "categories": { "custom": "Custom", "smileys-emotion": "Smileys and emoticons", "people-body": "People and body", "animals-nature": "Animals and nature", "food-drink": "Food and drink", "travel-places": "Travel and places", "activities": "Activities", "objects": "Objects", "symbols": "Symbols", "flags": "Flags" } };
         }
+    }
+    function getDataSource(locale) {
+        if (!locales.includes(locale)) {
+            return `${window.WSC_API_URL}emoji/en.json`;
+        }
+        return `${window.WSC_API_URL}emoji/${locale}.json`;
     }
 });

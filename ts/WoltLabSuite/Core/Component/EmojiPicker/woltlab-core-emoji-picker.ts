@@ -1,11 +1,7 @@
 import "emoji-picker-element";
 import { PickerConstructorOptions } from "emoji-picker-element/shared";
 import { Picker, Database } from "emoji-picker-element";
-import { getLocalizationData } from "WoltLabSuite/Core/Component/EmojiPicker/Localization";
-
-function getDataSource(locale: string): string {
-  return `${window.WSC_API_URL}emoji/${locale}.json`;
-}
+import { getLocalizationData, getDataSource } from "WoltLabSuite/Core/Component/EmojiPicker/Localization";
 
 export const DATABASE_FOR_AUTO_COMPLETE = new Database({
   dataSource: getDataSource("en"),

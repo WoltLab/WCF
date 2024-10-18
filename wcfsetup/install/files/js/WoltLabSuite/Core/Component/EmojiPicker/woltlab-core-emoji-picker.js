@@ -2,11 +2,8 @@ define(["require", "exports", "emoji-picker-element", "WoltLabSuite/Core/Compone
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreEmojiPicker = exports.DATABASE_FOR_AUTO_COMPLETE = void 0;
-    function getDataSource(locale) {
-        return `${window.WSC_API_URL}emoji/${locale}.json`;
-    }
     exports.DATABASE_FOR_AUTO_COMPLETE = new emoji_picker_element_1.Database({
-        dataSource: getDataSource("en"),
+        dataSource: (0, Localization_1.getDataSource)("en"),
         locale: "en",
     });
     class WoltlabCoreEmojiPicker extends emoji_picker_element_1.Picker {
@@ -15,7 +12,7 @@ define(["require", "exports", "emoji-picker-element", "WoltLabSuite/Core/Compone
             super({
                 locale: locale,
                 ...(props || {}),
-                dataSource: getDataSource(locale),
+                dataSource: (0, Localization_1.getDataSource)(locale),
                 i18n: (0, Localization_1.getLocalizationData)(locale),
             });
         }
