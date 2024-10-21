@@ -291,6 +291,7 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('havIndex', 'havIndex'));
         $this->register(new Spider('HeinrichderMiragoRobot', 'HeinrichderMiragoRobot'));
         $this->register(new Spider('HenryTheMiragoRobot', 'HenryTheMiragoRobot'));
+        $this->register(new Spider('HetrixTools Uptime Monitoring Bot', 'HetrixTools Uptime Monitoring Bot', 'https://hetrix.tools/uptime-monitoring-bot.html'));
         $this->register(new Spider('heritrix', 'Heritrix', 'https://github.com/internetarchive/heritrix3/wiki'));
         $this->register(new Spider('HKU WWW Robot', 'HKU WWW Octopus'));
         $this->register(new Spider('HolyCowDude', 'HolyCowDude', 'http://www.holycowdude.com/spider.htm'));
