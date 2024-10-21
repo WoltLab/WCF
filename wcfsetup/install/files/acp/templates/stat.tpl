@@ -10,7 +10,8 @@
 			'wcf.acp.stat.timeFormat.weekly': '{jslang}wcf.acp.stat.timeFormat.weekly{/jslang}',
 			'wcf.acp.stat.timeFormat.monthly': '{jslang}wcf.acp.stat.timeFormat.monthly{/jslang}',
 			'wcf.acp.stat.timeFormat.yearly': '{jslang}wcf.acp.stat.timeFormat.yearly{/jslang}',
-			'wcf.acp.stat.noData': '{jslang}wcf.acp.stat.noData{/jslang}'
+			'wcf.acp.stat.noData': '{jslang}wcf.acp.stat.noData{/jslang}',
+			'__monthsShort': [ '{jslang}wcf.date.month.short.jan{/jslang}', '{jslang}wcf.date.month.short.feb{/jslang}', '{jslang}wcf.date.month.short.mar{/jslang}', '{jslang}wcf.date.month.short.apr{/jslang}', '{jslang}wcf.date.month.short.may{/jslang}', '{jslang}wcf.date.month.short.jun{/jslang}', '{jslang}wcf.date.month.short.jul{/jslang}', '{jslang}wcf.date.month.short.aug{/jslang}', '{jslang}wcf.date.month.short.sep{/jslang}', '{jslang}wcf.date.month.short.oct{/jslang}', '{jslang}wcf.date.month.short.nov{/jslang}', '{jslang}wcf.date.month.short.dec{/jslang}' ],
 		});
 		
 		new WCF.ACP.Stat.Chart();
