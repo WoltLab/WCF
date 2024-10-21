@@ -790,13 +790,14 @@ if (COMPILER_TARGET_DEFAULT) {
 		 */
 		_beginEdit: function (event) {
 			if (event) event.preventDefault();
+
+			$("#profileContent").wcfTabs("select", "about");
 			
 			if (this._active) return;
 			this._active = true;
 			
 			this._actionName = 'beginEdit';
 			this._buttons.beginEdit.parent().addClass('active');
-			$('#profileContent').wcfTabs('select', 'about');
 			
 			// load form
 			this._proxy.setOption('data', {

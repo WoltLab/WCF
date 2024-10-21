@@ -44,6 +44,6 @@ class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandle
             }
         }
 
-        return $unfurlUrlIDs;
+        return \array_unique($unfurlUrlIDs);
     }
 }

@@ -365,14 +365,23 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
+        $overrideKey = \sprintf(
+            "%s\0upgradeOverride_%s",
+            PackageUpdateServer::class,
+            WCF::AVAILABLE_UPGRADE_VERSION,
+        );
+
         $formData = $this->form->getData();
         if ($formData['data']['enable']) {
             $this->isEnabled = true;
-            RegistryHandler::getInstance()->set('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride", \TIME_NOW);
+            RegistryHandler::getInstance()->set('com.woltlab.wcf', $overrideKey, \TIME_NOW);
         } else {
             $this->isEnabled = false;
-            RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
+            RegistryHandler::getInstance()->delete('com.woltlab.wcf', $overrideKey);
         }
+
+        // Clear the legacy override.
+        RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
 
         PackageUpdateServer::resetAll();
 

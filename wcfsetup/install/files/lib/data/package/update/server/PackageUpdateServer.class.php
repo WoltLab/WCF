@@ -420,14 +420,19 @@ class PackageUpdateServer extends DatabaseObject
             return false;
         }
 
-        $override = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::class . "\0upgradeOverride");
+        $overrideKey = \sprintf(
+            "%s\0upgradeOverride_%s",
+            self::class,
+            WCF::AVAILABLE_UPGRADE_VERSION,
+        );
+        $override = RegistryHandler::getInstance()->get('com.woltlab.wcf', $overrideKey);
 
         if (!$override) {
             return false;
         }
 
         if ($override < TIME_NOW - 86400) {
-            RegistryHandler::getInstance()->delete('com.woltlab.wcf', self::class . "\0upgradeOverride");
+            RegistryHandler::getInstance()->delete('com.woltlab.wcf', $overrideKey);
 
             // Clear package list cache to actually stop the upgrade from happening.
             self::resetAll();

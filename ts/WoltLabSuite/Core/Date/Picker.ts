@@ -911,6 +911,7 @@ const DatePicker = {
     const data = _data.get(element) as DatePickerData;
 
     element.dataset.value = date.getTime().toString();
+    element.dataset.empty = "false";
 
     let format = "";
     let value: string;
