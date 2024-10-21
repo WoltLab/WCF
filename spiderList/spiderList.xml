@@ -609,6 +609,10 @@
 	<spider ident="HenryTheMiragoRobot">
 		<name>HenryTheMiragoRobot</name>
 	</spider>
+	<spider ident="HetrixTools Uptime Monitoring Bot">
+		<name>HetrixTools Uptime Monitoring Bot</name>
+		<url>https://hetrix.tools/uptime-monitoring-bot.html</url>
+	</spider>
 	<spider ident="heritrix">
 		<name>Heritrix</name>
 		<url>https://github.com/internetarchive/heritrix3/wiki</url>
