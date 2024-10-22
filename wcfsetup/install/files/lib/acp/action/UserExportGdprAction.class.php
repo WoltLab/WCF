@@ -155,7 +155,7 @@ final class UserExportGdprAction extends AbstractAction
         parent::execute();
 
         $this->ipAddresses = [
-            'com.woltlab.blog' => ['blog1_entry '],
+            'com.woltlab.blog' => ['blog1_entry'],
             'com.woltlab.calendar' => ['calendar1_event'],
             'com.woltlab.filebase' => [
                 'filebase1_file',
