@@ -17,7 +17,7 @@ use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\WCF;
 
 $tableNames = WCF::getDB()->getEditor()->getTableNames();
-if (!\in_array('wcf1_spider', $tableNames)) {
+if (!\in_array('wcf' . WCF_N . '_spider', $tableNames)) {
     // The table `wcf1_spider` will be removed by a database PIP that is
     // executed after this script.
     return;
