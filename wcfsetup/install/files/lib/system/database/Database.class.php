@@ -334,7 +334,6 @@ abstract class Database
         }
     }
 
-
     /**
      * Prepares a statement for execution and returns a statement object.
      *

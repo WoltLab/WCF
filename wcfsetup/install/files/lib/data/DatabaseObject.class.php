@@ -141,16 +141,16 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         static $databaseTableNames = [];
         if (!isset($databaseTableNames[$className])) {
             $databaseTableNames[$className] = $classParts[0] . '1_' . \strtolower(
-                    \implode(
-                        '_',
-                        \preg_split(
-                            '~(?=[A-Z](?=[a-z]))~',
-                            \array_pop($classParts),
-                            -1,
-                            \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
-                        )
+                \implode(
+                    '_',
+                    \preg_split(
+                        '~(?=[A-Z](?=[a-z]))~',
+                        \array_pop($classParts),
+                        -1,
+                        \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
                     )
-                );
+                )
+            );
         }
 
         return $databaseTableNames[$className];

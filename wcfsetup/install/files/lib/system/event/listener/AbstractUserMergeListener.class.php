@@ -60,7 +60,7 @@ abstract class AbstractUserMergeListener implements IParameterizedEventListener
 
             $sql = "UPDATE" . (!empty($databaseTable['ignore']) ? " IGNORE" : "") . " " . \str_replace(
                 '{WCF_N}',
-                    1,
+                1,
                 $databaseTable['name']
             ) . "
                     SET " . $databaseTable['userID'] . " = ?
