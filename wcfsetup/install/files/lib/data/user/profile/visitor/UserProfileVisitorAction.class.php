@@ -11,10 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
-use wcf\system\exception\UserInputException;
-use wcf\system\user\GroupedUserList;
-use wcf\system\WCF;
-
 /**
  * Executes profile visitor-related actions.
  *
