@@ -17,7 +17,6 @@ requirejs.config({
 		"@woltlab/editor": "3rdParty/ckeditor/ckeditor5.bundle",
 		"ckeditor5-translation": "3rdParty/ckeditor/translations",
 		"diff-match-patch": "3rdParty/diff-match-patch/diff_match_patch.min",
-		"@fancyapps/ui": "3rdParty/fancybox/fancybox.umd",
 	},
 	packages: [
 		{
@@ -29,6 +28,11 @@ requirejs.config({
 			name: "@woltlab/visual-dom-diff",
 			location: "3rdParty/visual-dom-diff",
 			main: "index",
+		},
+		{
+			name: "@fancyapps/ui",
+			location: "3rdParty/fancybox",
+			main: "fancybox.umd",
 		},
 	],
 	shim: {
