@@ -31,10 +31,6 @@
 	});
 </script>
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
-
-{include file="imageViewer"}
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>

@@ -1,7 +1,5 @@
 {include file='header' pageTitle='wcf.acp.attachment.list'}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
-{include file='imageViewer'}
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('username'));
