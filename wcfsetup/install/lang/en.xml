@@ -4065,15 +4065,7 @@ Attachments:
 		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
-		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
-		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
 		<item name="wcf.imageViewer.button.openSlideshow"><![CDATA[Slideshow]]></item>
-		<item name="wcf.imageViewer.seriesIndex"><![CDATA[{literal}{x} of {y}{/literal}]]></item>
-		<item name="wcf.imageViewer.close"><![CDATA[Close]]></item>
-		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Image {x} of {y}{/literal}]]></item>
-		<item name="wcf.imageViewer.enlarge"><![CDATA[View Full Image]]></item>
-		<item name="wcf.imageViewer.next"><![CDATA[Next Image]]></item>
-		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
 	</category>
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[All]]></item>
@@ -7101,6 +7093,14 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.imageViewer.caption"/>
 	<item name="wcf.imageViewer.pause"/>
 	<item name="wcf.imageViewer.play"/>
+	<item name="wcf.imageViewer.button.enlarge"/>
+	<item name="wcf.imageViewer.button.full"/>
+	<item name="wcf.imageViewer.seriesIndex"/>
+	<item name="wcf.imageViewer.close"/>
+	<item name="wcf.imageViewer.counter"/>
+	<item name="wcf.imageViewer.enlarge"/>
+	<item name="wcf.imageViewer.next"/>
+	<item name="wcf.imageViewer.previous"/>
 	<item name="wcf.label.error.notValid"/>
 	<item name="wcf.like.likesReceived.showDetails"/>
 	<item name="wcf.like.reactionReputation"/>
