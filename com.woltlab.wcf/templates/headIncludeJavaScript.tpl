@@ -179,5 +179,5 @@ window.addEventListener('pageshow', function(event) {
 	});
 </script>
 
-{include file='imageViewer'}
+{include file='shared_imageViewer'}
 {include file='headIncludeJsonLd'}
