@@ -7,9 +7,6 @@ export function setup() {
     Fancybox.bind("[data-fancybox]", {
       l10n: l10n,
     });
-    Fancybox.bind('[data-fancybox="attachments"]', {
-      l10n: l10n,
-    });
   });
 }
 

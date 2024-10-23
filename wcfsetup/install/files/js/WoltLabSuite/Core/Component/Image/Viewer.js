@@ -32,9 +32,6 @@ define(["require", "exports", "@fancyapps/ui"], function (require, exports, ui_1
             ui_1.Fancybox.bind("[data-fancybox]", {
                 l10n: l10n,
             });
-            ui_1.Fancybox.bind('[data-fancybox="attachments"]', {
-                l10n: l10n,
-            });
         });
     }
     async function getLocalization() {
