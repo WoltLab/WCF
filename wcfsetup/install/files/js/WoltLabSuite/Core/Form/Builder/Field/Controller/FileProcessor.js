@@ -212,7 +212,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         filenameLink.href = element.link;
                         filenameLink.title = element.filename;
                         filenameLink.textContent = element.filename;
-                        filenameLink.classList.add("jsImageViewer");
+                        filenameLink.dataset.fancybox = "";
                         // Insert a hidden image element that will be used by the image viewer as the preview image
                         const previewImage = document.createElement("img");
                         previewImage.src = thumbnail !== undefined ? thumbnail.link : element.link;
