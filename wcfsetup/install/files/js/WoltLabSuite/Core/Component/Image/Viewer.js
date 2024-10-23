@@ -26,7 +26,7 @@ define(["require", "exports", "@fancyapps/ui"], function (require, exports, ui_1
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.getLocalization = getLocalization;
-    const LOCALES = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
+    const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
     function setup() {
         void getLocalization().then((l10n) => {
             ui_1.Fancybox.bind("[data-fancybox]", {

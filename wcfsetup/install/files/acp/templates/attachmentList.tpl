@@ -112,7 +112,7 @@
 						<td class="columnID columnAttachmentID">{@$attachment->attachmentID}</td>
 						<td class="columnTitle columnFilename">
 							<div class="box64">
-								<a href="{$attachment->getLink()}"{if $attachment->isImage} data-fancybox="attachments" title="{$attachment->filename}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->isImage} data-fancybox="attachments" data-caption="{$attachment->filename}"{/if}>
 									{if $attachment->tinyThumbnailType}
 										<img src="{$attachment->getThumbnailLink('tiny')}" class="attachmentTinyThumbnail" alt="">
 									{else}
