@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, UiDialog) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     class AcpUiBoxCopy {
@@ -29,5 +29,4 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
             acpUiBoxCopy = new AcpUiBoxCopy();
         }
     }
-    exports.init = init;
 });

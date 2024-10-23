@@ -96,6 +96,13 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     /**
      * @inheritDoc
      */
+    public $additionalFields = [
+        'title' => '',
+    ];
+
+    /**
+     * @inheritDoc
+     */
     public function __run()
     {
         $this->autosetControllers();

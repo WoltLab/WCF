@@ -1,7 +1,7 @@
 define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require, exports, Entry_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function fileToAttachment(fileList, file, editor) {
         fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor));
     }
@@ -37,6 +37,11 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require
                 detail: payload,
             });
             uploadButton.dispatchEvent(event);
+            const messageTabMenu = document.querySelector(`.messageTabMenu[data-wysiwyg-container-id="${editorId}"]`);
+            if (messageTabMenu === null) {
+                return;
+            }
+            window.jQuery(messageTabMenu).messageTabMenu("showTab", "attachments");
         })
             .collectMetaData((payload) => {
             let context = undefined;
@@ -53,6 +58,9 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require
             if (context !== undefined) {
                 payload.metaData.tmpHash = context.tmpHash;
             }
+        })
+            .reset(() => {
+            fileList.querySelectorAll(".fileList__item").forEach((element) => element.remove());
         });
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {
@@ -62,5 +70,4 @@ define(["require", "exports", "./Entry", "../Ckeditor/Event"], function (require
             existingFiles.remove();
         }
     }
-    exports.setup = setup;
 });

@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "./Handler"], function (require, exports, tslib_1, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Handler_1 = tslib_1.__importDefault(Handler_1);
     function deleteObject(data) {
         const actionElement = data.objectElement.querySelector('.jsObjectAction[data-object-action="delete"]');
@@ -26,5 +26,4 @@ define(["require", "exports", "tslib", "./Handler"], function (require, exports,
     function setup() {
         new Handler_1.default("delete", ["delete"], deleteObject);
     }
-    exports.setup = setup;
 });

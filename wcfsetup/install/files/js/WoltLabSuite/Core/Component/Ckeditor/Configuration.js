@@ -10,7 +10,7 @@
 define(["require", "exports", "../../Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createConfigurationFor = void 0;
+    exports.createConfigurationFor = createConfigurationFor;
     class ConfigurationBuilder {
         #features;
         #divider = "|";
@@ -329,5 +329,4 @@ define(["require", "exports", "../../Language"], function (require, exports, Lan
         configuration.build();
         return configuration.toConfig();
     }
-    exports.createConfigurationFor = createConfigurationFor;
 });

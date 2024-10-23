@@ -9,24 +9,26 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setExifData = exports.removeExifData = exports.getExifBytesFromJpeg = void 0;
+    exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
+    exports.removeExifData = removeExifData;
+    exports.setExifData = setExifData;
     const Tag = {
-        SOI: 0xd8,
-        APP0: 0xe0,
-        APP1: 0xe1,
-        APP2: 0xe2,
-        APP3: 0xe3,
-        APP4: 0xe4,
-        APP5: 0xe5,
-        APP6: 0xe6,
-        APP7: 0xe7,
-        APP8: 0xe8,
-        APP9: 0xe9,
-        APP10: 0xea,
-        APP11: 0xeb,
-        APP12: 0xec,
-        APP13: 0xed,
-        APP14: 0xee,
+        SOI: 0xd8, // Start of image
+        APP0: 0xe0, // JFIF tag
+        APP1: 0xe1, // EXIF / XMP
+        APP2: 0xe2, // General purpose tag
+        APP3: 0xe3, // General purpose tag
+        APP4: 0xe4, // General purpose tag
+        APP5: 0xe5, // General purpose tag
+        APP6: 0xe6, // General purpose tag
+        APP7: 0xe7, // General purpose tag
+        APP8: 0xe8, // General purpose tag
+        APP9: 0xe9, // General purpose tag
+        APP10: 0xea, // General purpose tag
+        APP11: 0xeb, // General purpose tag
+        APP12: 0xec, // General purpose tag
+        APP13: 0xed, // General purpose tag
+        APP14: 0xee, // Often used to store copyright information
         COM: 0xfe, // Comments
     };
     // Known sequence signatures
@@ -51,7 +53,12 @@ define(["require", "exports"], function (require, exports) {
             const reader = new FileReader();
             reader.addEventListener("error", () => {
                 reader.abort();
-                reject(reader.error);
+                if (reader.error) {
+                    reject(reader.error);
+                }
+                else {
+                    reject();
+                }
             });
             reader.addEventListener("load", () => {
                 resolve(new Uint8Array(reader.result));
@@ -93,7 +100,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return exif;
     }
-    exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
     /**
      * Removes all EXIF and XMP sections of a JPEG blob.
      */
@@ -133,7 +139,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return new Blob([result], { type: blob.type });
     }
-    exports.removeExifData = removeExifData;
     /**
      * Overrides the APP1 (EXIF / XMP) sections of a JPEG blob with the given data.
      */
@@ -150,5 +155,4 @@ define(["require", "exports"], function (require, exports) {
         const result = concatUint8Arrays(start, exif, end);
         return new Blob([result], { type: blob.type });
     }
-    exports.setExifData = setExifData;
 });

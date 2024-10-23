@@ -10,9 +10,9 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.mentionSuggestions = void 0;
+    exports.mentionSuggestions = mentionSuggestions;
     async function mentionSuggestions(query) {
-        const url = new URL(window.WSC_API_URL + "core/messages/mentionsuggestions");
+        const url = new URL(window.WSC_RPC_API_URL + "core/messages/mentionsuggestions");
         url.searchParams.set("query", query);
         let response;
         try {
@@ -23,5 +23,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         }
         return (0, Result_1.apiResultFromValue)(response);
     }
-    exports.mentionSuggestions = mentionSuggestions;
 });

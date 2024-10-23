@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Ui/Style/FontAwesome", "../../../Ui/Color/Picker", "../../../Dom/Util"], function (require, exports, tslib_1, FontAwesome_1, Picker_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Picker_1 = tslib_1.__importDefault(Picker_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     const badgeContainer = document.getElementById("badgeContainer");
@@ -50,5 +50,4 @@ define(["require", "exports", "tslib", "../../../Ui/Style/FontAwesome", "../../.
         setupChangeColor();
         setupChangeBackgroundColor();
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,10 @@
 define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util", "../../Screen", "../../../Helper/PageOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1, UiScreen, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerProvider = exports.getContainer = exports.updateCounter = exports.getUserMenuProviders = void 0;
+    exports.getUserMenuProviders = getUserMenuProviders;
+    exports.updateCounter = updateCounter;
+    exports.getContainer = getContainer;
+    exports.registerProvider = registerProvider;
     Alignment = tslib_1.__importStar(Alignment);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -78,7 +81,6 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
     function getUserMenuProviders() {
         return providers;
     }
-    exports.getUserMenuProviders = getUserMenuProviders;
     /**
      * @since 6.1
      */
@@ -91,7 +93,6 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
             }));
         });
     }
-    exports.updateCounter = updateCounter;
     function getContainer() {
         if (container === undefined) {
             container = document.createElement("div");
@@ -100,7 +101,6 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         }
         return container;
     }
-    exports.getContainer = getContainer;
     function registerProvider(provider) {
         if (providers.size === 0) {
             CloseOverlay_1.default.add("WoltLabSuite/Ui/User/Menu", () => closeAll());
@@ -143,5 +143,4 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         }
         initProvider(provider);
     }
-    exports.registerProvider = registerProvider;
 });

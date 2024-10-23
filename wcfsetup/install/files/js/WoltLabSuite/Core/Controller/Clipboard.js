@@ -9,7 +9,11 @@
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Event/Handler", "../Language", "../Ui/Confirmation", "../Ui/Dropdown/Simple", "../Ui/Page/Action", "../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, Language, UiConfirmation, Simple_1, UiPageAction, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.unmark = exports.showEditor = exports.hideEditor = exports.reload = exports.setup = void 0;
+    exports.setup = setup;
+    exports.reload = reload;
+    exports.hideEditor = hideEditor;
+    exports.showEditor = showEditor;
+    exports.unmark = unmark;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
@@ -496,33 +500,28 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
     function setup(options) {
         getControllerClipboard().setup(options);
     }
-    exports.setup = setup;
     /**
      * Reloads the clipboard data.
      */
     function reload() {
         getControllerClipboard().reload();
     }
-    exports.reload = reload;
     /**
      * Hides the clipboard editor for the given object type.
      */
     function hideEditor(objectType) {
         getControllerClipboard().hideEditor(objectType);
     }
-    exports.hideEditor = hideEditor;
     /**
      * Shows the clipboard editor.
      */
     function showEditor() {
         getControllerClipboard().showEditor();
     }
-    exports.showEditor = showEditor;
     /**
      * Unmarks the objects with given clipboard object type and ids.
      */
     function unmark(objectType, objectIds) {
         getControllerClipboard().unmark(objectType, objectIds);
     }
-    exports.unmark = unmark;
 });

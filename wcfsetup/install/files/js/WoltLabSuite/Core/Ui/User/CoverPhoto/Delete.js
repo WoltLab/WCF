@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../Confirmation", "../../Notification"], function (require, exports, tslib_1, Ajax, Util_1, EventHandler, Language, UiConfirmation, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -73,5 +73,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             uiUserCoverPhotoDelete = new UiUserCoverPhotoDelete(userId);
         }
     }
-    exports.init = init;
 });

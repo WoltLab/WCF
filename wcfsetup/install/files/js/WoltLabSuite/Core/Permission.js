@@ -8,7 +8,9 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.get = exports.addObject = exports.add = void 0;
+    exports.add = add;
+    exports.addObject = addObject;
+    exports.get = get;
     const _permissions = new Map();
     /**
      * Adds a single permission to the store.
@@ -19,14 +21,12 @@ define(["require", "exports"], function (require, exports) {
         }
         _permissions.set(permission, value);
     }
-    exports.add = add;
     /**
      * Adds all the permissions in the given object to the store.
      */
     function addObject(object) {
         Object.keys(object).forEach((key) => add(key, object[key]));
     }
-    exports.addObject = addObject;
     /**
      * Returns the value of a permission.
      *
@@ -38,5 +38,4 @@ define(["require", "exports"], function (require, exports) {
         }
         return false;
     }
-    exports.get = get;
 });

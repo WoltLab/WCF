@@ -9,7 +9,7 @@
 define(["require", "exports", "../../Language", "../../Ui/Article/Search", "../Ckeditor/Event"], function (require, exports, Language_1, Search_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function setupBbcode(ckeditor) {
         (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
             if (bbcode !== "wsa") {
@@ -33,5 +33,4 @@ define(["require", "exports", "../../Language", "../../Ui/Article/Search", "../C
             setupBbcode(ckeditor);
         });
     }
-    exports.setup = setup;
 });

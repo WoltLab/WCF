@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Core, UiConfirmation) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
@@ -34,5 +34,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             });
         });
     }
-    exports.setup = setup;
 });

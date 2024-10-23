@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay", "../Helper/Selector", "./Alignment"], function (require, exports, tslib_1, Environment, PageOverlay_1, Selector_1, UiAlignment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Environment = tslib_1.__importStar(Environment);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     let _text;
@@ -86,5 +86,4 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
         });
         window.addEventListener("scroll", mouseLeave);
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Ajax"], function (require, exports, tslib_1, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
     /**
      * Initializes dismiss buttons.
@@ -19,7 +19,6 @@ define(["require", "exports", "tslib", "../../Ajax"], function (require, exports
             button.addEventListener("click", (ev) => click(ev));
         });
     }
-    exports.setup = setup;
     /**
      * Sends a request to dismiss a notice and removes it afterwards.
      */

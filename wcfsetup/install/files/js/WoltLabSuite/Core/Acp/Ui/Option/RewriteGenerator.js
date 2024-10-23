@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -76,5 +76,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
             rewriteGenerator = new RewriteGenerator();
         }
     }
-    exports.init = init;
 });

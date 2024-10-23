@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Language", "./Handler"], function (require, exports, tslib_1, Language, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Language = tslib_1.__importStar(Language);
     Handler_1 = tslib_1.__importDefault(Handler_1);
     function toggleObject(data) {
@@ -33,5 +33,4 @@ define(["require", "exports", "tslib", "../../../Language", "./Handler"], functi
     function setup() {
         new Handler_1.default("toggle", ["enable", "disable"], toggleObject);
     }
-    exports.setup = setup;
 });

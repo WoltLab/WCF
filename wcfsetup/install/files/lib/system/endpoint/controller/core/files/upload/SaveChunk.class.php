@@ -12,6 +12,7 @@ use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\io\File;
 
 #[PostRequest('/core/files/upload/{identifier}/chunk/{sequenceNo:\d+}')]
@@ -118,9 +119,11 @@ final class SaveChunk implements IController
 
                     throw new UserInputException('validation', $exception->getType());
                 }
-            }
 
-            $processor?->adopt($file, $context);
+                if (FileProcessor::getInstance()->canAdopt($processor, $file, $context)) {
+                    $processor->adopt($file, $context);
+                }
+            }
 
             $generateThumbnails = false;
             if ($processor !== null && $file->isImage()) {

@@ -70,7 +70,7 @@ define(["require", "exports"], function (require, exports) {
                             _settings = JSON.parse(settings);
                         }
                     }
-                    catch (e) {
+                    catch {
                         // Ignore JSON parsing failure.
                     }
                     if (!_settings.editorAutosave) {

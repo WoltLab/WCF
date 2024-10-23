@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../Notification", "../../Language", "../../Event/Handler"], function (require, exports, tslib_1, Ajax, UiNotification, Language, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
     UiNotification = tslib_1.__importStar(UiNotification);
     Language = tslib_1.__importStar(Language);
@@ -81,5 +81,4 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification", "../../L
             });
         });
     }
-    exports.setup = setup;
 });

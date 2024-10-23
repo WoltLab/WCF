@@ -42,7 +42,7 @@ export function setup(): void {
 export function register(containerId: string): void {
   const container = document.getElementById(containerId);
   if (container === null) {
-    throw "Expected a valid element id, '" + containerId + "' does not exist.";
+    throw new Error("Expected a valid element id, '" + containerId + "' does not exist.");
   }
 
   if (_containers.has(containerId)) {
@@ -51,7 +51,7 @@ export function register(containerId: string): void {
 
   const list = DomTraverse.childByTag(container, "UL");
   if (list === null) {
-    throw "Expected an <ul> element as child of container '" + containerId + "'.";
+    throw new Error("Expected an <ul> element as child of container '" + containerId + "'.");
   }
 
   _containers.set(containerId, container);
@@ -90,7 +90,7 @@ export function rebuildAll(): void {
 export function rebuild(containerId: string): void {
   const container = _containers.get(containerId);
   if (container === undefined) {
-    throw "Expected a valid element id, '" + containerId + "' is unknown.";
+    throw new Error("Expected a valid element id, '" + containerId + "' is unknown.");
   }
 
   const styles = window.getComputedStyle(container);

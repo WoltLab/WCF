@@ -10,6 +10,7 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentAdd = void 0;
+    exports.setCommentEditorFeatures = setCommentEditorFeatures;
     UiScroll = tslib_1.__importStar(UiScroll);
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -52,11 +53,7 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
                 event.preventDefault();
                 void this.#submit();
             });
-            (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
-                features.heading = false;
-                features.spoiler = false;
-                features.table = false;
-            });
+            setCommentEditorFeatures(this.#textarea);
         }
         /**
          * Scrolls the editor into view and sets the caret to the end of the editor.
@@ -108,7 +105,7 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 this.#throwError(this.#getEditor().element, validationError.code);
                 this.#hideLoadingOverlay();
@@ -172,4 +169,12 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
         }
     }
     exports.CommentAdd = CommentAdd;
+    function setCommentEditorFeatures(textarea) {
+        (0, Event_1.listenToCkeditor)(textarea).setupFeatures(({ features }) => {
+            features.heading = false;
+            features.quoteBlock = false;
+            features.spoiler = false;
+            features.table = false;
+        });
+    }
 });

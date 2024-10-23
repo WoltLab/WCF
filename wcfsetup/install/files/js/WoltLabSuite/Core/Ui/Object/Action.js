@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Confirmation", "../../Language", "../../StringUtil", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Ajax, EventHandler, UiConfirmation, Language, StringUtil, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
@@ -102,5 +102,4 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
         registerElements();
         Listener_1.default.add("WoltLabSuite/Core/Ui/Action", () => registerElements());
     }
-    exports.setup = setup;
 });

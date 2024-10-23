@@ -9,7 +9,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Component/Dialog", "../../Language", "../../Ui/Notification"], function (require, exports, PromiseMutex_1, Dialog_1, Language_1, Notification_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     async function showDialog(url) {
         const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url);
         if (ok) {
@@ -39,5 +39,4 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Co
     function setup(button) {
         button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => showDialog(button.dataset.url)));
     }
-    exports.setup = setup;
 });

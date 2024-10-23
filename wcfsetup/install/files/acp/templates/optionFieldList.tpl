@@ -23,6 +23,8 @@
 					{/if}
 					
 					{$langPrefix|concat:$option->optionName|phrase}
+
+					{event name='afterOptionName'}
 				</label>
 			{/if}
 		</dt>

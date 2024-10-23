@@ -8,7 +8,8 @@
 define(["require", "exports", "https://platform.twitter.com/widgets.js"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.embedAll = exports.embedTweet = void 0;
+    exports.embedTweet = embedTweet;
+    exports.embedAll = embedAll;
     const twitterReady = new Promise((resolve) => {
         twttr.ready(resolve);
     });
@@ -36,7 +37,6 @@ define(["require", "exports", "https://platform.twitter.com/widgets.js"], functi
         }
         return tweet;
     }
-    exports.embedTweet = embedTweet;
     /**
      * Embeds tweets into all elements with a data-wsc-twitter-tweet attribute, removing
      * existing children.
@@ -50,5 +50,4 @@ define(["require", "exports", "https://platform.twitter.com/widgets.js"], functi
             }
         });
     }
-    exports.embedAll = embedAll;
 });

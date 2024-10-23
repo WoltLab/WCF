@@ -230,7 +230,7 @@
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Eigene Boxen]]></item>
-		<item name="wcf.acp.box.isDisabled"><![CDATA[Box ist deaktiviert]]></item>
+		<item name="wcf.acp.box.isDisabled"><![CDATA[Box deaktivieren]]></item>
 		<item name="wcf.acp.box.button.copyBox"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy.description"><![CDATA[Die eingegebenen Werte dieser Box werden als Vorlage zum Anlegen einer neuen Box verwendet. Es werden nur die in diesem Formular sichtbaren Einstellungen übernommen.<br><br>Sie müssen das folgende Formular absenden, damit die neue Box gespeichert wird. In diesem Formular können Sie zusätzliche Änderungen vornehmen, darüber hinaus beachten Sie bitte, dass die neue Box standardmäßig deaktiviert angelegt wird.]]></item>
@@ -2958,7 +2958,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
 		<item name="wcf.acp.style.globalValues"><![CDATA[Stilunabhängiges CSS und SCSS]]></item>
-		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
+		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuellen Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
@@ -3368,6 +3368,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Hierhin ziehen und loslassen, um Dateien hochzuladen]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Jetzt loslassen, um Dateien hochzuladen]]></item>
+		<item name="wcf.attachment.moreOptions"><![CDATA[Weitere Aktionen]]></item>
 	</category>
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Weniger anzeigen]]></item>
@@ -5566,6 +5567,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[Es {plural value=$maximumCount 1='darf nur eine Datei' other='dürfen nur # Dateien'} hochgeladen werden.]]></item>
+		<item name="wcf.upload.error.adopt"><![CDATA[Die Datei „{$filename}“ kann nicht zugewiesen werden.]]></item>
 	</category>
 </import>
 <delete>

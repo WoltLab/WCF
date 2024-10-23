@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Language", "../../Dom/Util"], function (require, exports, tslib_1, Backend_1, Language_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Util_1 = tslib_1.__importDefault(Util_1);
     async function validateUsername(username, options) {
         const value = username.value.trim();
@@ -78,5 +78,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLa
             void validatePassword(password);
         });
     }
-    exports.setup = setup;
 });

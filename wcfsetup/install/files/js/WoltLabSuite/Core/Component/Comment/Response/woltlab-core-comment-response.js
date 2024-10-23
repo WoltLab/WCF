@@ -90,7 +90,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Ui/Dropdow
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 Util_1.default.innerError(document.getElementById(this.#editorId), validationError.code);
                 this.#hideLoadingIndicator();

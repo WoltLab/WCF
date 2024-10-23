@@ -84,13 +84,16 @@
 		grid-template-columns: 1fr 1fr;
 	}
 
-	del {
+	del,
+	.vdd-removed {
 		background-color: var(--diffDel-background);
 		color: var(--diffDel-color);
 		text-decoration: line-through;
 	}
 
-	ins {
+	ins,
+	.vdd-added,
+	.vdd-modified {
 		background-color: var(--diffIns-background);
 		color: var(--diffIns-color);
 		text-decoration: none;

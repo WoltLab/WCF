@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/Helper"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, Helper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createAttachmentFromFile = void 0;
+    exports.createAttachmentFromFile = createAttachmentFromFile;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     function fileInitializationCompleted(element, file, editor) {
         const data = file.data;
@@ -54,6 +54,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         }
         else {
             insertButton = getInsertButton(data.attachmentID, file.isImage() && file.link ? file.link : "", editor);
+            if (file.link !== undefined && file.filename !== undefined) {
+                const link = document.createElement("a");
+                link.target = "_blank";
+                link.href = file.link;
+                link.textContent = file.filename;
+                const filename = element.querySelector(".fileList__item__filename");
+                filename.innerHTML = "";
+                filename.append(link);
+            }
         }
         const dropdownMenu = document.createElement("ul");
         dropdownMenu.classList.add("dropdownMenu");
@@ -130,5 +139,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         (0, Helper_1.trackUploadProgress)(element, file);
         return element;
     }
-    exports.createAttachmentFromFile = createAttachmentFromFile;
 });

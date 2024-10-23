@@ -9,7 +9,7 @@
 define(["require", "exports", "../Core", "../Helper/Selector"], function (require, exports, Core_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function isInput(node) {
         return node.nodeName === "INPUT";
     }
@@ -23,5 +23,4 @@ define(["require", "exports", "../Core", "../Helper/Selector"], function (requir
             node.classList.add("xsrfTokenInputHandled");
         });
     }
-    exports.setup = setup;
 });

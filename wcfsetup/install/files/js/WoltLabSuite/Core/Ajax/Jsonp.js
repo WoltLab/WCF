@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.send = void 0;
+    exports.send = send;
     Core = tslib_1.__importStar(Core);
     /**
      * Dispatch a JSONP request, the `url` must not contain a callback parameter.
@@ -34,7 +34,7 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             }
             window[callbackName] = undefined;
             script.remove();
-        }, (~~options.timeout || 10) * 1000);
+        }, (~~options.timeout || 10) * 1_000);
         window[callbackName] = (...args) => {
             window.clearTimeout(timeout);
             success(...args);
@@ -47,5 +47,4 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         script.src = url;
         document.head.appendChild(script);
     }
-    exports.send = send;
 });

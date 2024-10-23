@@ -55,7 +55,11 @@ async function blobToUint8(blob: Blob | File): Promise<Uint8Array> {
 
     reader.addEventListener("error", () => {
       reader.abort();
-      reject(reader.error);
+      if (reader.error) {
+        reject(reader.error);
+      } else {
+        reject();
+      }
     });
 
     reader.addEventListener("load", () => {

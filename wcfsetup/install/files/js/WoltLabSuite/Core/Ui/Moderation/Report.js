@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Util", "../../Helper/Selector", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, Selector_1, Language, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = exports.registerLegacyButton = void 0;
+    exports.registerLegacyButton = registerLegacyButton;
+    exports.setup = setup;
     Language = tslib_1.__importStar(Language);
     UiNotification = tslib_1.__importStar(UiNotification);
     async function openReportDialog(element) {
@@ -92,9 +93,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "
         element.dataset.isLegacyButton = "true";
         registerButton(element);
     }
-    exports.registerLegacyButton = registerLegacyButton;
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("[data-report-content]", (element) => registerButton(element));
     }
-    exports.setup = setup;
 });

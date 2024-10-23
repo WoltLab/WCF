@@ -39,7 +39,7 @@ export function setup(editorId: string): void {
   }
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    fileToAttachment(fileList!, event.detail, editor);
+    fileToAttachment(fileList, event.detail, editor);
   });
 
   listenToCkeditor(editor)
@@ -48,6 +48,13 @@ export function setup(editorId: string): void {
         detail: payload,
       });
       uploadButton.dispatchEvent(event);
+
+      const messageTabMenu = document.querySelector(`.messageTabMenu[data-wysiwyg-container-id="${editorId}"]`);
+      if (messageTabMenu === null) {
+        return;
+      }
+
+      window.jQuery(messageTabMenu).messageTabMenu("showTab", "attachments");
     })
     .collectMetaData((payload) => {
       let context: Context | undefined = undefined;
@@ -64,12 +71,15 @@ export function setup(editorId: string): void {
       if (context !== undefined) {
         payload.metaData.tmpHash = context.tmpHash;
       }
+    })
+    .reset(() => {
+      fileList.querySelectorAll(".fileList__item").forEach((element) => element.remove());
     });
 
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {
     existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-      fileToAttachment(fileList!, file, editor);
+      fileToAttachment(fileList, file, editor);
     });
 
     existingFiles.remove();

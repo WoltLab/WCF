@@ -87,7 +87,7 @@ const Devtools = {
           if (settings !== null) {
             _settings = JSON.parse(settings);
           }
-        } catch (e) {
+        } catch {
           // Ignore JSON parsing failure.
         }
 

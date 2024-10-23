@@ -9,7 +9,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.editComment = void 0;
+    exports.editComment = editComment;
     async function editComment(commentId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/comments/${commentId}/edit`);
         let response;
@@ -21,5 +21,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         }
         return (0, Result_1.apiResultFromValue)(response);
     }
-    exports.editComment = editComment;
 });

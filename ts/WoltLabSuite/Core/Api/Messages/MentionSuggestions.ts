@@ -26,7 +26,7 @@ type Item =
 type Response = Item[];
 
 export async function mentionSuggestions(query: string): Promise<ApiResult<Response>> {
-  const url = new URL(window.WSC_API_URL + "core/messages/mentionsuggestions");
+  const url = new URL(window.WSC_RPC_API_URL + "core/messages/mentionsuggestions");
   url.searchParams.set("query", query);
 
   let response: Response;

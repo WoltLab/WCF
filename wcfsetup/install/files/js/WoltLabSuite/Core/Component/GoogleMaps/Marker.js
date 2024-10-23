@@ -8,7 +8,8 @@
 define(["require", "exports", "./woltlab-core-google-maps"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.addDraggableMarker = exports.addMarker = void 0;
+    exports.addMarker = addMarker;
+    exports.addDraggableMarker = addDraggableMarker;
     async function addMarker(element, latitude, longitude, title, focus) {
         const map = await element.getMap();
         const marker = new google.maps.Marker({
@@ -20,7 +21,6 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
             map.setCenter(marker.getPosition());
         }
     }
-    exports.addMarker = addMarker;
     async function addDraggableMarker(element, latitude, longitude) {
         const map = await element.getMap();
         if (latitude === undefined) {
@@ -38,5 +38,4 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
         map.setCenter(marker.getPosition());
         return marker;
     }
-    exports.addDraggableMarker = addDraggableMarker;
 });

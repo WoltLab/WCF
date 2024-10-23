@@ -37,11 +37,21 @@ interface IFileProcessor
     public function validateUpload(File $file): void;
 
     /**
+     * Checks if the given `$file` can be assigned to the object referenced by the information
+     * contained in `$context`.
+     *
+     * The `$file` can be assigned if one of the following conditions is met:
+     * - The file has not yet been assigned to any object
+     * - The file is already assigned to the object referenced by `$context`
+     */
+    public function canAdopt(File $file, array $context): bool;
+
+    /**
      * Notifies the file processor that the upload of a file has been completed
      * that belongs to this type.
      *
      * `$context` are the exact same values that have previously been passed to
-     * `acceptUpload()` before.
+     * `canAdopt()` before.
      */
     public function adopt(File $file, array $context): void;
 

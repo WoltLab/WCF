@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Selector_1, Ajax, Core, Listener_1, Util_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
@@ -70,5 +70,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../
             userConsent = new UserConsent();
         }
     }
-    exports.init = init;
 });

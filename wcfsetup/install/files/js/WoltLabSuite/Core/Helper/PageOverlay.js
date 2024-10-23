@@ -1,7 +1,9 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getPageOverlayContainer = exports.releasePageOverlayContainer = exports.adoptPageOverlayContainer = void 0;
+    exports.adoptPageOverlayContainer = adoptPageOverlayContainer;
+    exports.releasePageOverlayContainer = releasePageOverlayContainer;
+    exports.getPageOverlayContainer = getPageOverlayContainer;
     const container = document.createElement("div");
     container.id = "pageOverlayContainer";
     const adoptiveParents = [];
@@ -15,7 +17,6 @@ define(["require", "exports"], function (require, exports) {
         adoptiveParents.push(element);
         element.append(container);
     }
-    exports.adoptPageOverlayContainer = adoptPageOverlayContainer;
     /**
      * Releases the page overlay container again, allowing
      * it to return to its previous position. Must be called
@@ -48,7 +49,6 @@ define(["require", "exports"], function (require, exports) {
         // is disposed while the new dialog is being shown.
         adoptiveParents.splice(index, 1);
     }
-    exports.releasePageOverlayContainer = releasePageOverlayContainer;
     /**
      * Returns the global page overlay container used for
      * elements that should be displayed out of context,
@@ -57,5 +57,4 @@ define(["require", "exports"], function (require, exports) {
     function getPageOverlayContainer() {
         return container;
     }
-    exports.getPageOverlayContainer = getPageOverlayContainer;
 });

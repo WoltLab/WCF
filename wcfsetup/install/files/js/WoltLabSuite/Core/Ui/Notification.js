@@ -8,7 +8,7 @@
 define(["require", "exports", "../Helper/PageOverlay", "../Language"], function (require, exports, PageOverlay_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.show = void 0;
+    exports.show = show;
     let _busy = false;
     let _callback = null;
     let _didInit = false;
@@ -53,5 +53,4 @@ define(["require", "exports", "../Helper/PageOverlay", "../Language"], function 
         _notificationElement.classList.add("active");
         _timeout = window.setTimeout(hide, 2000);
     }
-    exports.show = show;
 });

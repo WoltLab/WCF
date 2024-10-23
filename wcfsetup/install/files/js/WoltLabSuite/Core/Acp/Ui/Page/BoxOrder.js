@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Listener_1, Language, UiConfirmation, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
@@ -122,5 +122,4 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
             acpUiPageBoxOrder = new AcpUiPageBoxOrder(pageId, boxes);
         }
     }
-    exports.init = init;
 });

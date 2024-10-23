@@ -4,7 +4,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dialog"], function (require, exports, tslib_1, Ajax, Util_1, Language, StringUtil, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.open = void 0;
+    exports.open = open;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
@@ -131,5 +131,4 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
     function open(callbackSelect) {
         getUiArticleSearch().open(callbackSelect);
     }
-    exports.open = open;
 });

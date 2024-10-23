@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../Environment", "../../../Language", "../../Screen"], function (require, exports, tslib_1, Environment, Language, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Environment = tslib_1.__importStar(Environment);
     Language = tslib_1.__importStar(Language);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -187,5 +187,4 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             setup: setup,
         });
     }
-    exports.init = init;
 });

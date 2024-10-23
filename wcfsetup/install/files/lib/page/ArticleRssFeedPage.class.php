@@ -33,13 +33,14 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
 
         if ($this->objectIDs !== []) {
             $this->categoryID = \reset($this->objectIDs);
-            $this->category = ArticleCategory::getCategory($this->categoryID);
-            if ($this->category === null) {
+            $category = ArticleCategory::getCategory($this->categoryID);
+            if ($category === null) {
                 throw new IllegalLinkException();
             }
-            if (!$this->category->isAccessible()) {
+            if (!$category->isAccessible()) {
                 throw new PermissionDeniedException();
             }
+            $this->category = $category;
         }
     }
 

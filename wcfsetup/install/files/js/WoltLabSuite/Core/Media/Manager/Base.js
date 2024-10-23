@@ -365,7 +365,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 try {
                     this._listItems.get(mediaId).remove();
                 }
-                catch (e) {
+                catch {
                     // ignore errors if item has already been removed by other code
                 }
                 this._listItems.delete(mediaId);

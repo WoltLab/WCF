@@ -75,6 +75,17 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
       file.isImage() && file.link ? file.link : "",
       editor,
     );
+
+    if (file.link !== undefined && file.filename !== undefined) {
+      const link = document.createElement("a");
+      link.target = "_blank";
+      link.href = file.link;
+      link.textContent = file.filename;
+
+      const filename = element.querySelector(".fileList__item__filename")!;
+      filename.innerHTML = "";
+      filename.append(link);
+    }
   }
 
   const dropdownMenu = document.createElement("ul");

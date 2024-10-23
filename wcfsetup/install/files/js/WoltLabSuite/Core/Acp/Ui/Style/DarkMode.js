@@ -10,7 +10,7 @@
 define(["require", "exports", "../../../Ajax/Backend", "../../../Component/Confirmation", "../../../Language", "../../../Ui/Notification"], function (require, exports, Backend_1, Confirmation_1, Language_1, Notification_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     async function promptConfirmation(endpoint, question) {
         const ok = await (0, Confirmation_1.confirmationFactory)().custom(question).message((0, Language_1.getPhrase)("wcf.dialog.confirmation.cannotBeUndone"));
         if (ok) {
@@ -31,5 +31,4 @@ define(["require", "exports", "../../../Ajax/Backend", "../../../Component/Confi
     function setup() {
         setupAddDarkMode();
     }
-    exports.setup = setup;
 });

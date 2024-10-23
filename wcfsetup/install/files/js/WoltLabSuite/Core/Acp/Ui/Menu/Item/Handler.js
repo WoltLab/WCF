@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Page/Search/Handler"], function (require, exports, tslib_1, Util_1, Language, UiPageSearchHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
@@ -127,5 +127,4 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Lang
             acpUiMenuItemHandler = new AcpUiMenuItemHandler(map);
         }
     }
-    exports.init = init;
 });

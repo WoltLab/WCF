@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler", "../../Screen"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.hasValidUserMenu = exports.PageMenuUser = void 0;
+    exports.PageMenuUser = void 0;
+    exports.hasValidUserMenu = hasValidUserMenu;
     Container_1 = tslib_1.__importDefault(Container_1);
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -368,6 +369,5 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         const panel = document.getElementById("topMenu");
         return panel.classList.contains("userPanelLoggedIn");
     }
-    exports.hasValidUserMenu = hasValidUserMenu;
     exports.default = PageMenuUser;
 });

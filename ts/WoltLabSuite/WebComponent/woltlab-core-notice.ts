@@ -16,17 +16,27 @@
   }
 
   class WoltlabCoreNoticeElement extends HTMLElement {
-    #iconElement?: FaIcon;
+    readonly #iconElement: FaIcon;
     #contentWrapper?: HTMLElement;
 
-    connectedCallback() {
-      const shadow = this.attachShadow({ mode: "open" });
+    constructor() {
+      super();
 
       this.#iconElement = document.createElement("fa-icon");
       this.#iconElement.size = 24;
-      this.#iconElement.setIcon(this.icon, true);
       this.#iconElement.slot = "icon";
+    }
+
+    connectedCallback() {
+      this.#setupShadowRoot();
+      this.#updateType();
+
+      this.querySelector(':scope > fa-icon[slot="icon"]')?.remove();
       this.append(this.#iconElement);
+    }
+
+    #setupShadowRoot(): void {
+      const shadow = this.attachShadow({ mode: "open" });
 
       const style = document.createElement("style");
       style.textContent = `
@@ -46,12 +56,10 @@
       iconSlot.name = "icon";
 
       shadow.append(style, iconSlot, this.#contentWrapper);
-
-      this.#updateType();
     }
 
     #updateType(): void {
-      this.#iconElement!.setIcon(this.icon, true);
+      this.#iconElement.setIcon(this.icon, true);
       this.#contentWrapper!.setAttribute("role", this.type === Type.Error ? "alert" : "status");
       this.classList.remove(...Object.values(Type));
       this.classList.add(this.type);

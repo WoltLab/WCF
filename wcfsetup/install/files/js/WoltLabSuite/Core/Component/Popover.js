@@ -10,7 +10,8 @@
 define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment", "./Popover/SharedCache"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment, SharedCache_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.resetCache = exports.setupFor = void 0;
+    exports.setupFor = setupFor;
+    exports.resetCache = resetCache;
     Util_1 = tslib_1.__importDefault(Util_1);
     Repeating_1 = tslib_1.__importDefault(Repeating_1);
     UiAlignment = tslib_1.__importStar(UiAlignment);
@@ -128,9 +129,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             }, { once: true });
         });
     }
-    exports.setupFor = setupFor;
     function resetCache(identifier, objectId) {
         cacheByIdentifier.get(identifier).reset(objectId);
     }
-    exports.resetCache = resetCache;
 });

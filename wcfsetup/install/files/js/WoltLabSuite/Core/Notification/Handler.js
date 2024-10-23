@@ -10,7 +10,9 @@
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "./ServiceWorker", "WoltLabSuite/Core/Ui/User/Menu/Manager"], function (require, exports, tslib_1, Ajax, Core, EventHandler, ServiceWorker_1, Manager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.poll = exports.enableNotifications = exports.setup = void 0;
+    exports.setup = setup;
+    exports.enableNotifications = enableNotifications;
+    exports.poll = poll;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -53,7 +55,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
         onVisibilityChange(event) {
             // document was hidden before
             if (event && !document.hidden) {
-                const difference = (Date.now() - this.inactiveSince) / 60000;
+                const difference = (Date.now() - this.inactiveSince) / 60_000;
                 if (difference > 4) {
                     this.resetTimer();
                     this.dispatchRequest();
@@ -69,7 +71,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
                 return 5;
             }
             // milliseconds -> minutes
-            const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60000);
+            const inactiveMinutes = ~~((Date.now() - this.inactiveSince) / 60_000);
             if (inactiveMinutes < 15) {
                 return 5;
             }
@@ -92,7 +94,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
          */
         prepareNextRequest() {
             this.resetTimer();
-            this.requestTimer = window.setTimeout(() => this.dispatchRequest(), this.getNextDelay() * 60000);
+            this.requestTimer = window.setTimeout(() => this.dispatchRequest(), this.getNextDelay() * 60_000);
         }
         /**
          * Requests new data from the server.
@@ -123,7 +125,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
                 pollData = JSON.parse(pollData);
                 keepAliveData = JSON.parse(keepAliveData);
             }
-            catch (e) {
+            catch {
                 abort = true;
             }
             if (!abort) {
@@ -213,13 +215,10 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             notificationHandler = new NotificationHandler(options);
         }
     }
-    exports.setup = setup;
     function enableNotifications() {
         notificationHandler.enableNotifications();
     }
-    exports.enableNotifications = enableNotifications;
     function poll() {
         notificationHandler?.dispatchRequest();
     }
-    exports.poll = poll;
 });

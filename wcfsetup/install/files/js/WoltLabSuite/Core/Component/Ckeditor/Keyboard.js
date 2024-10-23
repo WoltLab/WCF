@@ -10,7 +10,7 @@
 define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupSubmitShortcut = void 0;
+    exports.setupSubmitShortcut = setupSubmitShortcut;
     function getSubmitShortcut(submitButton) {
         return (event) => {
             if (event.code !== "KeyS") {
@@ -51,5 +51,4 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             container.removeEventListener("keydown", submitShortcut);
         });
     }
-    exports.setupSubmitShortcut = setupSubmitShortcut;
 });

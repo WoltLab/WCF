@@ -8,7 +8,11 @@
 define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", "../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, Language, Util_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setLanguageId = exports.removeChooser = exports.getLanguageId = exports.getChooser = exports.init = void 0;
+    exports.init = init;
+    exports.getChooser = getChooser;
+    exports.getLanguageId = getLanguageId;
+    exports.removeChooser = removeChooser;
+    exports.setLanguageId = setLanguageId;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -198,7 +202,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         }
         initElement(chooserId, element, languageId, languages, callback, allowEmptyValue);
     }
-    exports.init = init;
     /**
      * Returns the chooser for an input field.
      */
@@ -209,21 +212,18 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         }
         return chooser;
     }
-    exports.getChooser = getChooser;
     /**
      * Returns the selected language for a certain chooser.
      */
     function getLanguageId(chooserId) {
         return ~~getChooser(chooserId).element.value;
     }
-    exports.getLanguageId = getLanguageId;
     /**
      * Removes the chooser with given id.
      */
     function removeChooser(chooserId) {
         _choosers.delete(chooserId);
     }
-    exports.removeChooser = removeChooser;
     /**
      * Sets the language for a certain chooser.
      */
@@ -233,5 +233,4 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         }
         select(chooserId, languageId);
     }
-    exports.setLanguageId = setLanguageId;
 });

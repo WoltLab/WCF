@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ui/Reaction/Handler", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Handler_1, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     UiScroll = tslib_1.__importStar(UiScroll);
@@ -259,7 +259,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 return;
             }
@@ -276,7 +276,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             if (!response.ok) {
                 const validationError = response.error.getValidationError();
                 if (validationError === undefined) {
-                    throw response.error;
+                    throw new Error("Unexpected validation error", { cause: response.error });
                 }
                 return;
             }
@@ -313,5 +313,4 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         }
         new CommentList(element);
     }
-    exports.setup = setup;
 });

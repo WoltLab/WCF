@@ -1,7 +1,10 @@
 define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Component/File/woltlab-core-file"], function (require, exports, Language_1, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.insertFileInformation = exports.fileInitializationFailed = exports.removeUploadProgress = exports.trackUploadProgress = void 0;
+    exports.trackUploadProgress = trackUploadProgress;
+    exports.removeUploadProgress = removeUploadProgress;
+    exports.fileInitializationFailed = fileInitializationFailed;
+    exports.insertFileInformation = insertFileInformation;
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
         progress.classList.add("fileList__item__progress__bar");
@@ -20,7 +23,6 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
             }
         });
     }
-    exports.trackUploadProgress = trackUploadProgress;
     function removeUploadProgress(element) {
         if (!element.classList.contains("fileProcessor__item--uploading")) {
             return;
@@ -28,7 +30,6 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         element.classList.remove("fileProcessor__item--uploading");
         element.querySelector(".fileList__item__progress")?.remove();
     }
-    exports.removeUploadProgress = removeUploadProgress;
     function fileInitializationFailed(element, file, reason) {
         if (reason instanceof Error) {
             throw reason;
@@ -56,7 +57,6 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         }
         markElementAsErroneous(element, errorMessage);
     }
-    exports.fileInitializationFailed = fileInitializationFailed;
     function markElementAsErroneous(element, errorMessage) {
         element.classList.add("fileList__item--error");
         const errorElement = document.createElement("div");
@@ -76,5 +76,4 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
         container.append(fileWrapper, filename, fileSize);
     }
-    exports.insertFileInformation = insertFileInformation;
 });

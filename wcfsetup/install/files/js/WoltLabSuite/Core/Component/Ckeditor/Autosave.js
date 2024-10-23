@@ -11,7 +11,9 @@
 define(["require", "exports", "../../Core", "../../Language", "../../StringUtil", "./Event"], function (require, exports, Core_1, Language_1, StringUtil_1, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.initializeAutosave = exports.setupRestoreDraft = exports.deleteDraft = void 0;
+    exports.deleteDraft = deleteDraft;
+    exports.setupRestoreDraft = setupRestoreDraft;
+    exports.initializeAutosave = initializeAutosave;
     function getLocalStorageKey(identifier) {
         return `${(0, Core_1.getStoragePrefix)()}ckeditor5-${identifier}`;
     }
@@ -56,7 +58,6 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             // We cannot do anything meaningful if this fails.
         }
     }
-    exports.deleteDraft = deleteDraft;
     function saveDraft(element, identifier, html) {
         if (html === "") {
             deleteDraft(identifier);
@@ -91,7 +92,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
         }
         // Check if the stored value is outdated.
         const lastEditTime = parseInt(editor.sourceElement.dataset.autosaveLastEditTime) || 0;
-        if (lastEditTime && lastEditTime * 1000 >= value.timestamp) {
+        if (lastEditTime && lastEditTime * 1_000 >= value.timestamp) {
             return;
         }
         const originalValue = editor.data.get();
@@ -149,9 +150,8 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             closeOverlayButton.focus();
         });
     }
-    exports.setupRestoreDraft = setupRestoreDraft;
     function removeExpiredDrafts() {
-        const oneWeekAgo = Date.now() - 7 * 86400;
+        const oneWeekAgo = Date.now() - 7 * 86_400;
         Object.keys(localStorage)
             .filter((key) => key.startsWith(`ckeditor5-`))
             .forEach((key) => {
@@ -191,12 +191,11 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
                 saveDraft(element, identifier, editor.data.get());
                 return Promise.resolve();
             },
-            waitingTime: 15000,
+            waitingTime: 15_000,
         };
         (0, Event_1.listenToCkeditor)(element).reset(() => deleteDraft(identifier));
         if (element instanceof HTMLTextAreaElement && element.form) {
             element.form.addEventListener("submit", () => deleteDraft(identifier));
         }
     }
-    exports.initializeAutosave = initializeAutosave;
 });

@@ -2,8 +2,6 @@
 
 namespace wcf\system\file\processor;
 
-use wcf\system\WCF;
-
 /**
  * @author Alexander Ebert
  * @copyright 2001-2024 WoltLab GmbH

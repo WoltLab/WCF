@@ -5,7 +5,6 @@ namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -13,6 +12,7 @@ use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
 /**
@@ -66,14 +66,10 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         $issues = $this->getIssuesPreventingUpgrade();
 
-        if (empty($issues) || $this->isEnabled()) {
+        if ($issues === [] || $this->isEnabled()) {
             $this->form->appendChildren([
                 TemplateFormNode::create('issues')
                     ->templateName('packageEnableUpgradeOverrideSuccess'),
-                MultilineTextFormField::create('ckeditor5-license')
-                    ->immutable()
-                    ->label('CKEditor 5 FREE FOR OPEN SOURCE LICENSE AGREEMENT')
-                    ->value('THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL CKSOURCE OR ITS LICENSORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'),
                 BooleanFormField::create('enable')
                     ->label('wcf.acp.package.enableUpgradeOverride.enable')
                     ->value(PackageUpdateServer::isUpgradeOverrideEnabled()),
@@ -109,12 +105,8 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $this->checkMinimumPhpVersion(),
             $this->checkMaximumPhpVersion(),
             $this->checkRequiredPhpExtensions(),
-            $this->checkPhpX64(),
             $this->checkMinimumDatabaseVersion(),
-            $this->checkMysqlNativeDriver(),
-            $this->checkForAppsWithDifferentDomains(),
-            $this->checkCacheSourceIsNotMemcached(),
-            $this->checkAttachmentStorage(),
+            $this->checkForTls(),
             ...$parameters['issues'],
         ];
 
@@ -202,25 +194,6 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         }
     }
 
-    private function checkPhpX64(): ?array
-    {
-        if (\PHP_INT_SIZE === 8) {
-            return null;
-        }
-
-        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-            return [
-                'title' => 'Fehlende Unterstützung für 64-Bit Werte',
-                'description' => 'Die eingesetzte PHP-Version wurde ohne die Unterstützung von 64-Bit Werten erstellt.',
-            ];
-        } else {
-            return [
-                'title' => 'Missing support for 64-bit values',
-                'description' => 'The PHP version being used was created without support for 64-bit values.',
-            ];
-        }
-    }
-
     private function checkMinimumDatabaseVersion(): ?array
     {
         $sqlVersion = WCF::getDB()->getVersion();
@@ -258,103 +231,27 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         }
     }
 
-    private function checkMysqlNativeDriver(): ?array
+    private function checkForTls(): ?array
     {
-        $sql = "SELECT 1";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute();
+        if (RouteHandler::secureConnection()) {
+            return null;
+        }
 
-        if ($statement->fetchSingleColumn() === 1) {
+        // @see RouteHandler::secureContext()
+        $host = $_SERVER['HTTP_HOST'];
+        if ($host === '127.0.0.1' || $host === 'localhost' || \str_ends_with($host, '.localhost')) {
             return null;
         }
 
         if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
             return [
-                'title' => 'Inkompatibler Treiber für den Datenbank-Zugriff',
-                'description' => 'Für den Zugriff auf die Datenbank wird der moderne „MySQL Native Driver“ benötigt.',
+                'title' => 'Aufruf über HTTPS',
+                'description' => 'Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software erforderlich sind.',
             ];
         } else {
             return [
-                'title' => 'Incompatible driver for the database access',
-                'description' => 'The access to the database requires the modern “MySQL Native Driver”.',
-            ];
-        }
-    }
-
-    private function checkForAppsWithDifferentDomains(): ?array
-    {
-        $usesDifferentDomains = false;
-        $domainName = '';
-        foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            if ($domainName === '') {
-                $domainName = $application->domainName;
-                continue;
-            }
-
-            if ($domainName !== $application->domainName) {
-                $usesDifferentDomains = true;
-                break;
-            }
-        }
-
-        if (!$usesDifferentDomains) {
-            return null;
-        }
-
-        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-            return [
-                'title' => 'Nutzung mehrerer Domains',
-                'description' => 'Der Betrieb von Apps auf unterschiedlichen (Sub-)Domains wird nicht mehr unterstützt.',
-            ];
-        } else {
-            return [
-                'title' => 'Using multiple domains',
-                'description' => 'The support for apps running on different (sub)domains has been discontinued.',
-            ];
-        }
-    }
-
-    private function checkCacheSourceIsNotMemcached(): ?array
-    {
-        if (\CACHE_SOURCE_TYPE !== 'memcached') {
-            return null;
-        }
-
-        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-            return [
-                'title' => 'Eingestellte Unterstützung für Memcached',
-                'description' => 'Memcached wird nicht mehr unterstützt, als Alternative bietet sich die Nutzung von „Redis“ an.',
-            ];
-        } else {
-            return [
-                'title' => 'Discountinued support for Memcached',
-                'description' => 'Memcached is no longer supported, it is recommended to switch to an alternative like “Redis”.',
-            ];
-        }
-    }
-
-    private function checkAttachmentStorage(): ?array
-    {
-
-        if (!\defined('ATTACHMENT_STORAGE') || !ATTACHMENT_STORAGE) {
-            return null;
-        }
-
-        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-            return [
-                'title' => 'Alternativer Speicherort für Dateianhänge',
-                'description' => \sprintf(
-                    "Die Unterst&uuml;tzung f&uuml;r einen alternativen Speicherort von Dateianh&auml;ngen wird mit dem Upgrade entfernt. Es ist notwendig die Dateianh&auml;nge in das Standardverzeichnis '%s' zu verschieben und anschlie&szlig;end die PHP-Konstante 'ATTACHMENT_STORAGE' zu entfernen.",
-                    WCF_DIR . 'attachments/',
-                ),
-            ];
-        } else {
-            return [
-                'title' => 'Alternative storage location for attachments',
-                'description' => \sprintf(
-                    "The support for an alternative attachment storage location will be removed during the upgrade. It is required to move the attachments into the default directory '%s' and then to remove the PHP constant 'ATTACHMENT_STORAGE'.",
-                    WCF_DIR . 'attachments/',
-                ),
+                'title' => 'Access using HTTPS',
+                'description' => 'The page is not accessed via HTTPS. Important features that are required for the proper operation of the software are therefore not available.',
             ];
         }
     }
@@ -366,14 +263,24 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
+        $overrideKey = \sprintf(
+            "%s\0upgradeOverride_%s",
+            PackageUpdateServer::class,
+            WCF::AVAILABLE_UPGRADE_VERSION,
+        );
+
         $formData = $this->form->getData();
         if ($formData['data']['enable']) {
             $this->isEnabled = true;
-            RegistryHandler::getInstance()->set('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride", \TIME_NOW);
+            RegistryHandler::getInstance()->set('com.woltlab.wcf', $overrideKey, \TIME_NOW);
         } else {
             $this->isEnabled = false;
-            RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
+            RegistryHandler::getInstance()->delete('com.woltlab.wcf', $overrideKey);
         }
+
+        // Clear the legacy override.
+        RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
+        RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride_6.0");
 
         PackageUpdateServer::resetAll();
 

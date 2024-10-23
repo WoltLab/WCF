@@ -8,7 +8,15 @@
 define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setDialogContainer = exports.pageOverlayIsActive = exports.pageOverlayClose = exports.pageOverlayOpen = exports.scrollEnable = exports.scrollDisable = exports.is = exports.remove = exports.on = void 0;
+    exports.on = on;
+    exports.remove = remove;
+    exports.is = is;
+    exports.scrollDisable = scrollDisable;
+    exports.scrollEnable = scrollEnable;
+    exports.pageOverlayOpen = pageOverlayOpen;
+    exports.pageOverlayClose = pageOverlayClose;
+    exports.pageOverlayIsActive = pageOverlayIsActive;
+    exports.setDialogContainer = setDialogContainer;
     Core = tslib_1.__importStar(Core);
     const _mql = new Map();
     let _scrollDisableCounter = 0;
@@ -61,7 +69,6 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         }
         return uuid;
     }
-    exports.on = on;
     /**
      * Removes all listeners identified by their common UUID.
      */
@@ -71,14 +78,12 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         queryObject.callbacksUnmatch.delete(uuid);
         queryObject.callbacksSetup.delete(uuid);
     }
-    exports.remove = remove;
     /**
      * Returns a boolean value if a media query expression currently matches.
      */
     function is(query) {
         return _getQueryObject(query).mql.matches;
     }
-    exports.is = is;
     /**
      * Disables scrolling of body element.
      */
@@ -99,7 +104,6 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         }
         _scrollDisableCounter++;
     }
-    exports.scrollDisable = scrollDisable;
     /**
      * Re-enables scrolling of body element.
      */
@@ -119,7 +123,6 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             }
         }
     }
-    exports.scrollEnable = scrollEnable;
     /**
      * Indicates that at least one page overlay is currently open.
      */
@@ -129,7 +132,6 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         }
         _pageOverlayCounter++;
     }
-    exports.pageOverlayOpen = pageOverlayOpen;
     /**
      * Marks one page overlay as closed.
      */
@@ -141,7 +143,6 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             }
         }
     }
-    exports.pageOverlayClose = pageOverlayClose;
     /**
      * Returns true if at least one page overlay is currently open.
      *
@@ -150,14 +151,12 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
     function pageOverlayIsActive() {
         return _pageOverlayCounter > 0;
     }
-    exports.pageOverlayIsActive = pageOverlayIsActive;
     /**
      * @deprecated 5.4 - This method is a noop.
      */
     function setDialogContainer(_container) {
         // Do nothing.
     }
-    exports.setDialogContainer = setDialogContainer;
     function _getQueryObject(query) {
         if (typeof query !== "string" || query.trim() === "") {
             throw new TypeError("Expected a non-empty string for parameter 'query'.");

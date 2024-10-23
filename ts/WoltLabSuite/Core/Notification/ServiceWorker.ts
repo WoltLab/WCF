@@ -27,12 +27,14 @@ class ServiceWorker {
   }
 
   async register(): Promise<void> {
-    const currentSubscription = await(await this.#serviceWorkerRegistration).pushManager.getSubscription();
+    const currentSubscription = await (await this.#serviceWorkerRegistration).pushManager.getSubscription();
     if (currentSubscription && this.#compareApplicationServerKey(currentSubscription)) {
       return;
     }
     await this.unsubscribe(currentSubscription);
-    const subscription = await(await this.#serviceWorkerRegistration).pushManager.subscribe({
+    const subscription = await (
+      await this.#serviceWorkerRegistration
+    ).pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
     });
@@ -75,7 +77,7 @@ class ServiceWorker {
         })
         .disableLoadingIndicator()
         .fetchAsResponse();
-    } catch (_) {
+    } catch {
       // ignore registration errors
     }
   }

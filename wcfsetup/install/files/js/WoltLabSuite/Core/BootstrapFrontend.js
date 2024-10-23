@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend", "./Notification/ServiceWorker", "./Component/Image/Viewer"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1, ServiceWorker_1, ImageViewer) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     BackgroundQueue = tslib_1.__importStar(BackgroundQueue);
     Bootstrap = tslib_1.__importStar(Bootstrap);
     UiUserIgnore = tslib_1.__importStar(UiUserIgnore);
@@ -99,5 +99,4 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
             void new Promise((resolve_7, reject_7) => { require(["./Component/User/Ignore"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
-    exports.setup = setup;
 });

@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../StringUtil", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Listener_1, Util_1, StringUtil_1, Participants_1, Results_1, Vote_1, Vote_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupAll = exports.Poll = exports.PollViews = void 0;
+    exports.Poll = exports.PollViews = void 0;
+    exports.setupAll = setupAll;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     Participants_1 = tslib_1.__importDefault(Participants_1);
@@ -165,6 +166,5 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         });
         setup();
     }
-    exports.setupAll = setupAll;
     exports.default = setupAll;
 });

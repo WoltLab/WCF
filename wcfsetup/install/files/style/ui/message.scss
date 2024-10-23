@@ -236,6 +236,12 @@
 	}
 }
 
+@include screen-sm-down {
+	.messageSidebar .badgeOnline::before {
+		border-color: #47cd54;
+	}
+}
+
 .messageAuthor + * {
 	margin-top: 20px;
 

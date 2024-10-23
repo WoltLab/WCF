@@ -8,7 +8,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.wheneverFirstSeen = exports.wheneverSeen = void 0;
+    exports.wheneverSeen = wheneverSeen;
+    exports.wheneverFirstSeen = wheneverFirstSeen;
     let observer;
     const selectors = new Map();
     function findElements(node) {
@@ -51,7 +52,6 @@ define(["require", "exports"], function (require, exports) {
             observer.observe(document, { subtree: true, childList: true });
         }
     }
-    exports.wheneverSeen = wheneverSeen;
     /**
      * Works identical to `wheneverSeen` wite the difference that all
      * previously matched elements are tracked and will not be reported
@@ -67,5 +67,4 @@ define(["require", "exports"], function (require, exports) {
             }
         });
     }
-    exports.wheneverFirstSeen = wheneverFirstSeen;
 });

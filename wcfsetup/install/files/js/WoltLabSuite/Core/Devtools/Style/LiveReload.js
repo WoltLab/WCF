@@ -9,7 +9,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.notify = exports.watch = void 0;
+    exports.watch = watch;
+    exports.notify = notify;
     const channelName = "com.woltlab.wcf#DevTools/Style/LiveReload";
     function watch() {
         if (!window.BroadcastChannel) {
@@ -22,7 +23,7 @@ define(["require", "exports"], function (require, exports) {
                 return;
             }
             const url = new URL(link.href);
-            url.searchParams.set("m", Math.trunc(Date.now() / 1000).toString());
+            url.searchParams.set("m", Math.trunc(Date.now() / 1_000).toString());
             const newLink = document.createElement("link");
             newLink.rel = "stylesheet";
             newLink.addEventListener("load", () => {
@@ -35,7 +36,6 @@ define(["require", "exports"], function (require, exports) {
             link.insertAdjacentElement("afterend", newLink);
         };
     }
-    exports.watch = watch;
     function notify() {
         if (!window.BroadcastChannel) {
             return;
@@ -43,5 +43,4 @@ define(["require", "exports"], function (require, exports) {
         const channel = new BroadcastChannel(channelName);
         channel.postMessage(undefined);
     }
-    exports.notify = notify;
 });

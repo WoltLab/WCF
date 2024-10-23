@@ -8,7 +8,16 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.stringToRgba = exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.rgbToHsl = exports.hsvToRgb = exports.hslToRgb = void 0;
+    exports.hslToRgb = hslToRgb;
+    exports.hsvToRgb = hsvToRgb;
+    exports.rgbToHsl = rgbToHsl;
+    exports.rgbToHsv = rgbToHsv;
+    exports.hexToRgb = hexToRgb;
+    exports.rgbToHex = rgbToHex;
+    exports.rgbaToHex = rgbaToHex;
+    exports.rgbaToString = rgbaToString;
+    exports.isValidColor = isValidColor;
+    exports.stringToRgba = stringToRgba;
     /**
      * Converts a HSL color into RGB.
      *
@@ -35,7 +44,6 @@ define(["require", "exports"], function (require, exports) {
             b: Math.round((B + m) * 255),
         };
     }
-    exports.hslToRgb = hslToRgb;
     /**
      * Converts a HSV color into RGB.
      *
@@ -94,7 +102,6 @@ define(["require", "exports"], function (require, exports) {
             b: Math.round(rgb.b * 255),
         };
     }
-    exports.hsvToRgb = hsvToRgb;
     /**
      * Converts a RGB color into HSL.
      *
@@ -138,7 +145,6 @@ define(["require", "exports"], function (require, exports) {
             l: Math.round(l * 100),
         };
     }
-    exports.rgbToHsl = rgbToHsl;
     /**
      * Converts a RGB color into HSV.
      *
@@ -181,7 +187,6 @@ define(["require", "exports"], function (require, exports) {
             v: Math.round(max * 100),
         };
     }
-    exports.rgbToHsv = rgbToHsv;
     /**
      * Converts HEX into RGB.
      */
@@ -211,7 +216,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return Number.NaN;
     }
-    exports.hexToRgb = hexToRgb;
     /**
      * @since 5.5
      */
@@ -235,7 +239,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
     }
-    exports.rgbToHex = rgbToHex;
     /**
      * @since 5.5
      */
@@ -255,7 +258,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return rgbToHex(r, g, b) + alphaToHex(a);
     }
-    exports.rgbaToHex = rgbaToHex;
     /**
      * Returns the textual representation of a RGBA value.
      *
@@ -264,7 +266,6 @@ define(["require", "exports"], function (require, exports) {
     function rgbaToString(rgba) {
         return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
     }
-    exports.rgbaToString = rgbaToString;
     /**
      * @since 5.5
      */
@@ -294,7 +295,6 @@ define(["require", "exports"], function (require, exports) {
         colorChecker.style.color = color;
         return colorChecker.style.color !== "";
     }
-    exports.isValidColor = isValidColor;
     /**
      * Converts the given CSS color value to an RGBA value.
      *
@@ -329,7 +329,6 @@ define(["require", "exports"], function (require, exports) {
         }
         throw new Error(`Cannot process color '${color}'.`);
     }
-    exports.stringToRgba = stringToRgba;
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,

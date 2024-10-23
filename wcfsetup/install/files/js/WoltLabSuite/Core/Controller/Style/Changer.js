@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.showDialog = exports.setup = void 0;
+    exports.setup = setup;
+    exports.showDialog = showDialog;
     Ajax = tslib_1.__importStar(Ajax);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -77,12 +78,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Ui
             new ControllerStyleChanger();
         }
     }
-    exports.setup = setup;
     /**
      * Loads and displays the style change dialog.
      */
     function showDialog(event) {
         controllerStyleChanger.showDialog(event);
     }
-    exports.showDialog = showDialog;
 });

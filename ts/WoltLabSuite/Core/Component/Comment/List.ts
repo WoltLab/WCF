@@ -354,7 +354,7 @@ class CommentList {
     if (!response.ok) {
       const validationError = response.error.getValidationError();
       if (validationError === undefined) {
-        throw response.error;
+        throw new Error("Unexpected validation error", { cause: response.error });
       }
 
       return;
@@ -376,7 +376,7 @@ class CommentList {
     if (!response.ok) {
       const validationError = response.error.getValidationError();
       if (validationError === undefined) {
-        throw response.error;
+        throw new Error("Unexpected validation error", { cause: response.error });
       }
 
       return;

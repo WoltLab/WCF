@@ -10,7 +10,7 @@
 define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     function uploadAttachment(element, file, abortController) {
         const payload = { abortController, file };
         (0, Event_1.dispatchToCkeditor)(element).uploadAttachment(payload);
@@ -58,5 +58,4 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
             });
         });
     }
-    exports.setup = setup;
 });

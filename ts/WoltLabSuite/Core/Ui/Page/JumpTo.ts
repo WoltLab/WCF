@@ -39,7 +39,7 @@ class UiPageJumpTo implements DialogCallbackObject {
     if (!this.elements.has(element)) {
       element.querySelectorAll(".jumpTo").forEach((jumpTo: HTMLElement) => {
         jumpTo.addEventListener("click", (ev) => this.click(element, ev));
-        this.elements.set(element, callback!);
+        this.elements.set(element, callback);
       });
     }
   }

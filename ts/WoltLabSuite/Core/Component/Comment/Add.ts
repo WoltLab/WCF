@@ -65,11 +65,7 @@ export class CommentAdd {
       void this.#submit();
     });
 
-    listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
-      features.heading = false;
-      features.spoiler = false;
-      features.table = false;
-    });
+    setCommentEditorFeatures(this.#textarea);
   }
 
   /**
@@ -132,7 +128,7 @@ export class CommentAdd {
     if (!response.ok) {
       const validationError = response.error.getValidationError();
       if (validationError === undefined) {
-        throw response.error;
+        throw new Error("Unexpected validation error", { cause: response.error });
       }
       this.#throwError(this.#getEditor().element, validationError.code);
       this.#hideLoadingOverlay();
@@ -206,4 +202,13 @@ export class CommentAdd {
       loadingOverlay.remove();
     }
   }
+}
+
+export function setCommentEditorFeatures(textarea: HTMLTextAreaElement): void {
+  listenToCkeditor(textarea).setupFeatures(({ features }) => {
+    features.heading = false;
+    features.quoteBlock = false;
+    features.spoiler = false;
+    features.table = false;
+  });
 }

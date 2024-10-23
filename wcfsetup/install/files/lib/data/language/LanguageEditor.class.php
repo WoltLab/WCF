@@ -797,7 +797,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $languageCode = self::readLanguageCodeFromXML($xml);
 
         // try to find an existing language with the given language code
-        $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+        $sql = "SELECT *
+                FROM   wcf1_language
+                WHERE  languageCode = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$languageCode]);
+        $language = $statement->fetchObject(Language::class);
 
         // create new language
         if ($language === null) {

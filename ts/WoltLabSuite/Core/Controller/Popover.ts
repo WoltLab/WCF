@@ -321,8 +321,8 @@ class ControllerPopover implements AjaxCallbackObject {
     if (forceHide) {
       this.popover.classList.add("forceHide");
 
-      // force layout
-      //noinspection BadExpressionStatementJS
+      // Query a layout related property to force a reflow, otherwise the transition is optimized away.
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       this.popover.offsetTop;
 
       this.clearContent();

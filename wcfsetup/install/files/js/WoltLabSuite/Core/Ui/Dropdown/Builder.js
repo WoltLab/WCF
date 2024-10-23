@@ -8,7 +8,13 @@
 define(["require", "exports", "tslib", "../../Core", "./Simple"], function (require, exports, tslib_1, Core, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.divider = exports.attach = exports.setItems = exports.appendItems = exports.appendItem = exports.buildItem = exports.create = void 0;
+    exports.create = create;
+    exports.buildItem = buildItem;
+    exports.appendItem = appendItem;
+    exports.appendItems = appendItems;
+    exports.setItems = setItems;
+    exports.attach = attach;
+    exports.divider = divider;
     Core = tslib_1.__importStar(Core);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     const _validIconSizes = [16, 24, 32, 48, 64, 96, 144];
@@ -97,14 +103,12 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
         }
         return list;
     }
-    exports.create = create;
     /**
      * Creates a new dropdown item that can be inserted into lists using regular DOM operations.
      */
     function buildItem(item) {
         return buildItemFromData(item);
     }
-    exports.buildItem = buildItem;
     /**
      * Appends a single item to the target list.
      */
@@ -112,7 +116,6 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
         validateList(list);
         list.appendChild(buildItemFromData(item));
     }
-    exports.appendItem = appendItem;
     /**
      * Appends a list of items to the target list.
      */
@@ -136,7 +139,6 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
             list.appendChild(fragment);
         }
     }
-    exports.appendItems = appendItems;
     /**
      * Replaces the existing list items with the provided list of new items.
      */
@@ -145,7 +147,6 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
         list.innerHTML = "";
         appendItems(list, items);
     }
-    exports.setItems = setItems;
     /**
      * Attaches the list to a button, visibility is from then on controlled through clicks
      * on the provided button element. Internally calls `Ui/SimpleDropdown.initFragment()`
@@ -160,7 +161,6 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
             Simple_1.default.toggleDropdown(button.id);
         });
     }
-    exports.attach = attach;
     /**
      * Helper method that returns the special string `"divider"` that causes a divider to
      * be created.
@@ -168,5 +168,4 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
     function divider() {
         return "divider";
     }
-    exports.divider = divider;
 });

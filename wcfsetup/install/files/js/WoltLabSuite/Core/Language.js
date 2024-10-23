@@ -8,29 +8,29 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.addObject = exports.add = exports.get = exports.registerPhrase = exports.getPhrase = void 0;
+    exports.getPhrase = getPhrase;
+    exports.registerPhrase = registerPhrase;
+    exports.get = get;
+    exports.add = add;
+    exports.addObject = addObject;
     function getPhrase(key, parameters = {}) {
         return window.WoltLabLanguage.getPhrase(key, parameters);
     }
-    exports.getPhrase = getPhrase;
     function registerPhrase(key, value) {
         window.WoltLabLanguage.registerPhrase(key, value);
     }
-    exports.registerPhrase = registerPhrase;
     /**
      * @deprecated 6.0 Use `getPhrase()` instead
      */
     function get(key, parameters = {}) {
         return getPhrase(key, parameters);
     }
-    exports.get = get;
     /**
      * @deprecated 6.0 Use `registerPhrase()` instead
      */
     function add(key, value) {
         registerPhrase(key, value);
     }
-    exports.add = add;
     /**
      * @deprecated 6.0 Use `registerPhrase()` instead
      */
@@ -39,5 +39,4 @@ define(["require", "exports"], function (require, exports) {
             registerPhrase(key, value);
         });
     }
-    exports.addObject = addObject;
 });

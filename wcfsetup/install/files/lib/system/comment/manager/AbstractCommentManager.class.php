@@ -6,7 +6,6 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +15,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-abstract class AbstractCommentManager extends SingletonFactory implements ICommentManager
+abstract class AbstractCommentManager implements ICommentManager
 {
     /**
      * display comments per page

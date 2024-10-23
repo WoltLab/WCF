@@ -1,7 +1,8 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = exports.clearPreviousErrors = void 0;
+    exports.clearPreviousErrors = clearPreviousErrors;
+    exports.setup = setup;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
     async function upload(element, file) {
         const objectType = element.dataset.objectType;
@@ -16,7 +17,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
                 fileElement.uploadFailed(response.error);
-                throw response.error;
+                throw new Error("Unexpected validation error", { cause: response.error });
             }
             fileElement.uploadFailed(response.error);
             return undefined;
@@ -32,7 +33,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
             if (!response.ok) {
                 fileElement.uploadFailed(response.error);
-                throw response.error;
+                throw new Error("Unexpected validation error", { cause: response.error });
             }
             notifyChunkProgress(fileElement, i + 1, numberOfChunks);
             await chunkUploadCompleted(fileElement, response.value);
@@ -71,7 +72,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
     function clearPreviousErrors(element) {
         element.parentElement?.querySelectorAll(".innerError").forEach((x) => x.remove());
     }
-    exports.clearPreviousErrors = clearPreviousErrors;
     async function resizeImage(element, file) {
         switch (file.type) {
             case "image/jpeg":
@@ -84,7 +84,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 return file;
         }
         const timeout = new Promise((resolve) => {
-            window.setTimeout(() => resolve(file), 10000);
+            window.setTimeout(() => resolve(file), 10_000);
         });
         const resizeConfiguration = JSON.parse(element.dataset.resizeConfiguration);
         const resizer = new Resizer_1.default();
@@ -157,12 +157,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         return false;
     }
     function validateFileExtension(element, file) {
-        const fileExtensions = (element.dataset.fileExtensions || "*").split(",");
+        const fileExtensions = (element.dataset.fileExtensions || "*").toLowerCase().split(",");
         for (const fileExtension of fileExtensions) {
             if (fileExtension === "*") {
                 return true;
             }
-            else if (file.name.endsWith(fileExtension)) {
+            else if (file.name.toLowerCase().endsWith(fileExtension)) {
                 return true;
             }
         }
@@ -222,5 +222,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             });
         });
     }
-    exports.setup = setup;
 });

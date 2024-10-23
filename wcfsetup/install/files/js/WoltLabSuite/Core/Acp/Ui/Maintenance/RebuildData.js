@@ -8,7 +8,8 @@
 define(["require", "exports", "tslib", "../Worker", "../../../Language"], function (require, exports, tslib_1, Worker_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.runAllWorkers = exports.register = void 0;
+    exports.register = register;
+    exports.runAllWorkers = runAllWorkers;
     Worker_1 = tslib_1.__importDefault(Worker_1);
     Language = tslib_1.__importStar(Language);
     const workers = new Map();
@@ -22,7 +23,6 @@ define(["require", "exports", "tslib", "../Worker", "../../../Language"], functi
             void runWorker(button);
         });
     }
-    exports.register = register;
     async function runAllWorkers() {
         const sorted = Array.from(workers)
             .sort(([, a], [, b]) => {
@@ -34,7 +34,6 @@ define(["require", "exports", "tslib", "../Worker", "../../../Language"], functi
             await runWorker(worker, `${worker.textContent} (${i++} / ${sorted.length})`, true);
         }
     }
-    exports.runAllWorkers = runAllWorkers;
     async function runWorker(button, dialogTitle = button.textContent, implicitContinue = false) {
         return new Promise((resolve, reject) => {
             new Worker_1.default({

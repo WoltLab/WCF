@@ -8,7 +8,13 @@
 define(["require", "exports", "tslib", "../Language"], function (require, exports, tslib_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getTimezoneDate = exports.getTimeElement = exports.gmdate = exports.format = exports.formatDateTime = exports.formatTime = exports.formatDate = void 0;
+    exports.formatDate = formatDate;
+    exports.formatTime = formatTime;
+    exports.formatDateTime = formatDateTime;
+    exports.format = format;
+    exports.gmdate = gmdate;
+    exports.getTimeElement = getTimeElement;
+    exports.getTimezoneDate = getTimezoneDate;
     Language = tslib_1.__importStar(Language);
     const locale = document.documentElement.lang;
     const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
@@ -29,21 +35,18 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     function formatDate(date) {
         return dateFormatter.format(date);
     }
-    exports.formatDate = formatDate;
     /**
      * Returns the formatted time.
      */
     function formatTime(date) {
         return timeFormatter.format(date);
     }
-    exports.formatTime = formatTime;
     /**
      * Returns the formatted date time.
      */
     function formatDateTime(date) {
         return dateTimeFormatter.format(date);
     }
-    exports.formatDateTime = formatDateTime;
     /**
      * Formats a date using PHP's `date()` modifiers.
      *
@@ -193,7 +196,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         }
         return out;
     }
-    exports.format = format;
     /**
      * Returns UTC timestamp, if date is not given, current time will be used.
      */
@@ -203,7 +205,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         }
         return Math.round(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDay(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()) / 1000);
     }
-    exports.gmdate = gmdate;
     /**
      * Returns a `<woltlab-core-date-time>` element based on the given date
      * just like a `<woltlab-core-date-time>` element created by
@@ -217,14 +218,12 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         }
         return time;
     }
-    exports.getTimeElement = getTimeElement;
     /**
      * Returns a Date object with precise offset (including timezone and local timezone).
      */
     function getTimezoneDate(timestamp, offset) {
         const date = new Date(timestamp);
-        const localOffset = date.getTimezoneOffset() * 60000;
+        const localOffset = date.getTimezoneOffset() * 60_000;
         return new Date(timestamp + localOffset + offset);
     }
-    exports.getTimezoneDate = getTimezoneDate;
 });

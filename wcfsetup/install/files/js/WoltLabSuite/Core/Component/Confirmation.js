@@ -24,7 +24,7 @@
 define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util", "./Confirmation/Custom"], function (require, exports, tslib_1, Dialog_1, Language_1, DomUtil, Custom_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.confirmationFactory = void 0;
+    exports.confirmationFactory = confirmationFactory;
     DomUtil = tslib_1.__importStar(DomUtil);
     class ConfirmationPrefab {
         custom(question) {
@@ -122,5 +122,4 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
     function confirmationFactory() {
         return new ConfirmationPrefab();
     }
-    exports.confirmationFactory = confirmationFactory;
 });

@@ -8,7 +8,10 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.touch = exports.platform = exports.browser = exports.setup = void 0;
+    exports.setup = setup;
+    exports.browser = browser;
+    exports.platform = platform;
+    exports.touch = touch;
     let _browser = "other";
     let _platform = "desktop";
     let _touch = false;
@@ -65,7 +68,6 @@ define(["require", "exports"], function (require, exports) {
             _platform = "ios";
         }
     }
-    exports.setup = setup;
     /**
      * Returns the lower-case browser identifier.
      *
@@ -78,7 +80,6 @@ define(["require", "exports"], function (require, exports) {
     function browser() {
         return _browser;
     }
-    exports.browser = browser;
     /**
      * Returns the browser platform.
      *
@@ -91,7 +92,6 @@ define(["require", "exports"], function (require, exports) {
     function platform() {
         return _platform;
     }
-    exports.platform = platform;
     /**
      * Returns true if browser is potentially used with a touchscreen.
      *
@@ -100,5 +100,4 @@ define(["require", "exports"], function (require, exports) {
     function touch() {
         return _touch;
     }
-    exports.touch = touch;
 });

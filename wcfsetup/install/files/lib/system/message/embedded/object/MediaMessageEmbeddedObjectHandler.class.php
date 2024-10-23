@@ -37,7 +37,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
             }
         }
 
-        return $mediaIDs;
+        return \array_unique($mediaIDs);
     }
 
     /**

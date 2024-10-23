@@ -10,7 +10,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.enableComment = void 0;
+    exports.enableComment = enableComment;
     async function enableComment(commentId) {
         try {
             await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/comments/${commentId}/enable`).post().fetchAsJson();
@@ -20,5 +20,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         }
         return (0, Result_1.apiResultFromValue)([]);
     }
-    exports.enableComment = enableComment;
 });

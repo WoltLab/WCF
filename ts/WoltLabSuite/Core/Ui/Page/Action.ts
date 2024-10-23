@@ -204,7 +204,7 @@ export function add(buttonName: string, button: HTMLElement, insertBeforeButton?
   _buttons.set(buttonName, button);
 
   // Query a layout related property to force a reflow, otherwise the transition is optimized away.
-  // noinspection BadExpressionStatementJS
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   wrapper.offsetParent;
 
   // Toggle the visibility to force the transition to be applied.
@@ -242,7 +242,7 @@ export function remove(buttonName: string): void {
         }
 
         listItem.removeEventListener("transitionend", callback);
-      } catch (e) {
+      } catch {
         // ignore errors if the element has already been removed
       }
     };

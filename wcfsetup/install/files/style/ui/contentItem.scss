@@ -118,7 +118,7 @@
 	object-position: center;
 
 	// The `100% + 20px` are the result of the negative margins.
-	max-width: calc(100% + 20px);
+	width: calc(100% + 20px);
 }
 
 .contentItemBadges,

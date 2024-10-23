@@ -3,7 +3,6 @@
 namespace wcf\data\template;
 
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\io\File;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -35,9 +34,6 @@ class TemplateEditor extends DatabaseObjectEditor
         // obtain default values
         if (!isset($parameters['packageID'])) {
             $parameters['packageID'] = PACKAGE_ID;
-        }
-        if (!isset($parameters['lastModificationTime'])) {
-            $parameters['lastModificationTime'] = TIME_NOW;
         }
 
         /** @noinspection PhpIncompatibleReturnTypeInspection */

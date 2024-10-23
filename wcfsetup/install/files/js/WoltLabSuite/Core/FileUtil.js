@@ -8,7 +8,10 @@
 define(["require", "exports", "tslib", "./StringUtil"], function (require, exports, tslib_1, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.blobToFile = exports.getExtensionByMimeType = exports.getIconNameByFilename = exports.formatFilesize = void 0;
+    exports.formatFilesize = formatFilesize;
+    exports.getIconNameByFilename = getIconNameByFilename;
+    exports.getExtensionByMimeType = getExtensionByMimeType;
+    exports.blobToFile = blobToFile;
     StringUtil = tslib_1.__importStar(StringUtil);
     const _fileExtensionIconMapping = new Map(Object.entries({
         // archive
@@ -134,7 +137,6 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         }
         return StringUtil.formatNumeric(byte, -precision) + " " + symbol;
     }
-    exports.formatFilesize = formatFilesize;
     /**
      * Returns the icon name for given filename.
      *
@@ -151,7 +153,6 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         }
         return "";
     }
-    exports.getIconNameByFilename = getIconNameByFilename;
     /**
      * Returns a known file extension including a leading dot or an empty string.
      */
@@ -161,7 +162,6 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         }
         return "";
     }
-    exports.getExtensionByMimeType = getExtensionByMimeType;
     /**
      * Constructs a File object from a Blob
      *
@@ -173,5 +173,4 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         const ext = getExtensionByMimeType(blob.type);
         return new File([blob], filename + ext, { type: blob.type });
     }
-    exports.blobToFile = blobToFile;
 });

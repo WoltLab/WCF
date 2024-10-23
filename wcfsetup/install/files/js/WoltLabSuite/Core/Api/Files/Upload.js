@@ -1,7 +1,7 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.upload = void 0;
+    exports.upload = upload;
     async function upload(filename, fileSize, fileHash, objectType, context) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload`);
         const payload = {
@@ -20,5 +20,4 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         }
         return (0, Result_1.apiResultFromValue)(response);
     }
-    exports.upload = upload;
 });

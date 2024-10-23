@@ -8,7 +8,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.splitIntoLines = void 0;
+    exports.splitIntoLines = splitIntoLines;
     function* splitIntoLines(container) {
         const it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT, {
             acceptNode() {
@@ -42,5 +42,4 @@ define(["require", "exports"], function (require, exports) {
         }
         yield line;
     }
-    exports.splitIntoLines = splitIntoLines;
 });

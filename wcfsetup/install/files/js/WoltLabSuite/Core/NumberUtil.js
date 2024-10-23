@@ -9,7 +9,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.round = void 0;
+    exports.round = round;
     /**
      * @deprecated 6.0 Use `Number.toLocaleString()` or `Number.toFixed()` as appropriate.
      */
@@ -33,5 +33,4 @@ define(["require", "exports"], function (require, exports) {
         exponent = tmp[1] ? +tmp[1] + exp : exp;
         return +`${tmp[0]}e${exponent}`;
     }
-    exports.round = round;
 });

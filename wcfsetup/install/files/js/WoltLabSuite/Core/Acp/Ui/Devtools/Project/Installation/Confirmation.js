@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Language, UiConfirmation) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
@@ -53,5 +53,4 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../La
             element.addEventListener("click", (ev) => showConfirmation(ev));
         });
     }
-    exports.init = init;
 });

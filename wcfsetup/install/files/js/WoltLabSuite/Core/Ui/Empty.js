@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "../Dom/Change/Listener"], function (require, exports, tslib_1, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -38,5 +38,4 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener"], function (requ
         observeElements();
         Listener_1.default.add("WoltLabSuite/Core/Ui/Empty", () => observeElements());
     }
-    exports.setup = setup;
 });

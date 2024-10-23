@@ -217,7 +217,7 @@ async function tryParseAsJson(response: Response): Promise<ResponseData> {
   let json: ResponseData;
   try {
     json = await response.json();
-  } catch (e) {
+  } catch {
     throw new InvalidJson(response);
   }
 

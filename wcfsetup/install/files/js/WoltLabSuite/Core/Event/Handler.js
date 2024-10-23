@@ -8,7 +8,11 @@
 define(["require", "exports", "tslib", "../Core", "../Devtools"], function (require, exports, tslib_1, Core, Devtools_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.removeAllBySuffix = exports.removeAll = exports.remove = exports.fire = exports.add = void 0;
+    exports.add = add;
+    exports.fire = fire;
+    exports.remove = remove;
+    exports.removeAll = removeAll;
+    exports.removeAllBySuffix = removeAllBySuffix;
     Core = tslib_1.__importStar(Core);
     Devtools_1 = tslib_1.__importDefault(Devtools_1);
     const _listeners = new Map();
@@ -33,7 +37,6 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
         callbacks.set(uuid, callback);
         return uuid;
     }
-    exports.add = add;
     /**
      * Fires an event and notifies all listeners.
      */
@@ -45,14 +48,12 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
             ?.get(action)
             ?.forEach((callback) => callback(data));
     }
-    exports.fire = fire;
     /**
      * Removes an event listener, requires the uuid returned by add().
      */
     function remove(identifier, action, uuid) {
         _listeners.get(identifier)?.get(action)?.delete(uuid);
     }
-    exports.remove = remove;
     /**
      * Removes all event listeners for given action. Omitting the second parameter will
      * remove all listeners for this identifier.
@@ -71,7 +72,6 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
             actions.delete(action);
         }
     }
-    exports.removeAll = removeAll;
     /**
      * Removes all listeners registered for an identifier and ending with a special suffix.
      * This is commonly used to unbound event handlers for the editor.
@@ -89,5 +89,4 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
             }
         });
     }
-    exports.removeAllBySuffix = removeAllBySuffix;
 });

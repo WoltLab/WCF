@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], function (require, exports, tslib_1, LoadingIndicator, Error_1, Core_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.prepareRequest = void 0;
+    exports.prepareRequest = prepareRequest;
     LoadingIndicator = tslib_1.__importStar(LoadingIndicator);
     class SetupRequest {
         url;
@@ -77,7 +77,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             try {
                 json = await response.json();
             }
-            catch (e) {
+            catch {
                 throw new Error_1.InvalidJson(response);
             }
             return json;
@@ -172,5 +172,4 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
     function prepareRequest(url) {
         return new SetupRequest(url.toString());
     }
-    exports.prepareRequest = prepareRequest;
 });

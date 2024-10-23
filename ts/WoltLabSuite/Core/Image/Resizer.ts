@@ -117,7 +117,11 @@ class ImageResizer {
 
       reader.addEventListener("error", () => {
         reader.abort();
-        reject(reader.error);
+        if (reader.error) {
+          reject(reader.error);
+        } else {
+          reject();
+        }
       });
 
       image.addEventListener("error", reject);

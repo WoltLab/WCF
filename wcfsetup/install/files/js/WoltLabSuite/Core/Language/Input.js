@@ -8,7 +8,15 @@
 define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Dropdown/Simple", "../StringUtil"], function (require, exports, tslib_1, Util_1, Language, Simple_1, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.validate = exports.isEnabled = exports.enable = exports.disable = exports.setValues = exports.getValues = exports.unregister = exports.registerCallback = exports.init = void 0;
+    exports.init = init;
+    exports.registerCallback = registerCallback;
+    exports.unregister = unregister;
+    exports.getValues = getValues;
+    exports.setValues = setValues;
+    exports.disable = disable;
+    exports.enable = enable;
+    exports.isEnabled = isEnabled;
+    exports.validate = validate;
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
@@ -253,7 +261,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         _values.set(elementId, unescapedValues);
         initElement(elementId, element, unescapedValues, availableLanguages, forceSelection);
     }
-    exports.init = init;
     /**
      * Registers a callback for an element.
      */
@@ -263,7 +270,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         }
         _elements.get(elementId).callbacks.set(eventName, callback);
     }
-    exports.registerCallback = registerCallback;
     /**
      * Unregisters the element with the given id.
      *
@@ -276,7 +282,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         _values.delete(elementId);
         _elements.delete(elementId);
     }
-    exports.unregister = unregister;
     /**
      * Returns the values of an input field.
      */
@@ -290,7 +295,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         values.set(element.languageId, element.element.value);
         return values;
     }
-    exports.getValues = getValues;
     /**
      * Sets the values of an input field.
      */
@@ -314,7 +318,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         element.languageId = 0;
         select(elementId, window.LANGUAGE_ID, true);
     }
-    exports.setValues = setValues;
     /**
      * Disables the i18n interface for an input field.
      */
@@ -333,7 +336,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         const dropdownContainer = buttonContainer.parentElement;
         dropdownContainer.classList.remove("inputAddon", "dropdown");
     }
-    exports.disable = disable;
     /**
      * Enables the i18n interface for an input field.
      */
@@ -352,7 +354,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         const dropdownContainer = buttonContainer.parentElement;
         dropdownContainer.classList.add("inputAddon", "dropdown");
     }
-    exports.enable = enable;
     /**
      * Returns true if i18n input is enabled for an input field.
      */
@@ -363,7 +364,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         }
         return element.isEnabled;
     }
-    exports.isEnabled = isEnabled;
     /**
      * Returns true if the value of an i18n input field is valid.
      *
@@ -405,5 +405,4 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         });
         return !hasEmptyValue || permitEmptyValue;
     }
-    exports.validate = validate;
 });

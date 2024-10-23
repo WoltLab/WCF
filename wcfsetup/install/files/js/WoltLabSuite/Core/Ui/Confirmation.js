@@ -9,7 +9,8 @@
 define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], function (require, exports, tslib_1, Core, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getContentElement = exports.show = void 0;
+    exports.show = show;
+    exports.getContentElement = getContentElement;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -154,12 +155,10 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
         }
         getConfirmation().open(options);
     }
-    exports.show = show;
     /**
      * Returns content container element.
      */
     function getContentElement() {
         return getConfirmation().content;
     }
-    exports.getContentElement = getContentElement;
 });

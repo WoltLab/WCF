@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "./Input", "../Component/Ckeditor"], function (require, exports, tslib_1, LanguageInput, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     LanguageInput = tslib_1.__importStar(LanguageInput);
     /**
      * Refreshes the editor content on language switch.
@@ -36,5 +36,4 @@ define(["require", "exports", "tslib", "./Input", "../Component/Ckeditor"], func
         // CKEditor does not permanently mirror the contents to the <textarea>.
         LanguageInput.registerCallback(elementId, "beforeSelect", callbackSubmit);
     }
-    exports.init = init;
 });

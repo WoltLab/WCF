@@ -143,7 +143,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         </button>
       </div>
     `;
-            const time = (0, Util_1.getTimeElement)(new Date(itemData.time * 1000));
+            const time = (0, Util_1.getTimeElement)(new Date(itemData.time * 1_000));
             element.querySelector(".userMenuItemMeta").append(time);
             const markAsRead = element.querySelector(".userMenuItemMarkAsRead");
             markAsRead.addEventListener("click", async () => {

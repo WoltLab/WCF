@@ -115,7 +115,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
     if (!response.ok) {
       const validationError = response.error.getValidationError();
       if (validationError === undefined) {
-        throw response.error;
+        throw new Error("Unexpected validation error", { cause: response.error });
       }
       DomUtil.innerError(document.getElementById(this.#editorId)!, validationError.code);
       this.#hideLoadingIndicator();

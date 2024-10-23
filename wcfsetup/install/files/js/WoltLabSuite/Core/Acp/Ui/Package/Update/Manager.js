@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, Language, UiDialog, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -149,5 +149,4 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             acpUiPackageUpdateManager = new AcpUiPackageUpdateManager();
         }
     }
-    exports.setup = setup;
 });

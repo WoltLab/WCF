@@ -8,7 +8,7 @@
 define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion", "./Marker", "./woltlab-core-google-maps"], function (require, exports, Selector_1, Suggestion_1, Marker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = setup;
     class Geocoding {
         #element;
         #map;
@@ -107,5 +107,4 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
             new Geocoding(element, map);
         });
     }
-    exports.setup = setup;
 });

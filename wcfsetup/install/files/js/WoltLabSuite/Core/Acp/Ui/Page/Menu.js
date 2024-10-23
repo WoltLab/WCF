@@ -8,7 +8,7 @@
 define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, perfect_scrollbar_1, EventHandler, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = init;
     perfect_scrollbar_1 = tslib_1.__importDefault(perfect_scrollbar_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -52,7 +52,6 @@ define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Hand
             }
         });
     }
-    exports.init = init;
     function enablePerfectScrollbar() {
         const options = {
             suppressScrollX: true,
