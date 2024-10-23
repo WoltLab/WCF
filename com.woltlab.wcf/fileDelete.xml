@@ -1291,6 +1291,7 @@
 		<file>js/WCF.Comment.min.js</file>
 		<file>js/WCF.Core.min.js</file>
 		<file>js/WCF.ImageViewer.min.js</file>
+		<file>js/WCF.ImageViewer.js</file>
 		<file>js/WCF.Label.min.js</file>
 		<file>js/WCF.Like.js</file>
 		<file>js/WCF.Like.min.js</file>

@@ -154,5 +154,6 @@
 		<template>__audioAttachmentBBCode</template>
 		<template>__multiPageCondition</template>
 		<template>__multilineItemListFormField</template>
+		<template>imageViewer</template>
 	</delete>
 </data>

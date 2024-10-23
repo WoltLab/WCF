@@ -1,5 +1,6 @@
 {include file='header' pageTitle='wcf.acp.attachment.list'}
 
+{include file='shared_imageViewer'}
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('username'));
@@ -111,7 +112,7 @@
 						<td class="columnID columnAttachmentID">{@$attachment->attachmentID}</td>
 						<td class="columnTitle columnFilename">
 							<div class="box64">
-								<a href="{$attachment->getLink()}"{if $attachment->isImage} class="jsImageViewer" title="{$attachment->filename}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->isImage} data-fancybox="attachments" title="{$attachment->filename}"{/if}>
 									{if $attachment->tinyThumbnailType}
 										<img src="{$attachment->getThumbnailLink('tiny')}" class="attachmentTinyThumbnail" alt="">
 									{else}

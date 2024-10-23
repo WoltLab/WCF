@@ -31,6 +31,8 @@
 	});
 </script>
 
+{include file='shared_imageViewer'}
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>
