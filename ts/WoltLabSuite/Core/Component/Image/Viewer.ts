@@ -1,6 +1,6 @@
 import { Fancybox } from "@fancyapps/ui";
 
-const LOCALES = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
+const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
 
 export function setup() {
   void getLocalization().then((l10n) => {
