@@ -1,13 +1,26 @@
 import { Fancybox } from "@fancyapps/ui";
+import { userSlideType } from "@fancyapps/ui/types/Carousel/types";
+import { OptionsType } from "@fancyapps/ui/types/Fancybox/options";
 
 const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
 
 export function setup() {
-  void getLocalization().then((l10n) => {
-    Fancybox.bind("[data-fancybox]", {
-      l10n: l10n,
-    });
+  void getDefaultConfig().then((config) => {
+    Fancybox.bind("[data-fancybox]", config);
   });
+}
+
+export async function createFancybox(userSlides?: Array<userSlideType>): Promise<Fancybox> {
+  return new Fancybox(userSlides, await getDefaultConfig());
+}
+
+async function getDefaultConfig(): Promise<Partial<OptionsType>> {
+  return {
+    l10n: await getLocalization(),
+    Html: {
+      videoAutoplay: false,
+    },
+  };
 }
 
 export async function getLocalization(): Promise<Record<string, string>> {

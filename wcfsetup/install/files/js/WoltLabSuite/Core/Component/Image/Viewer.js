@@ -25,14 +25,24 @@ define(["require", "exports", "@fancyapps/ui"], function (require, exports, ui_1
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
+    exports.createFancybox = createFancybox;
     exports.getLocalization = getLocalization;
     const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
     function setup() {
-        void getLocalization().then((l10n) => {
-            ui_1.Fancybox.bind("[data-fancybox]", {
-                l10n: l10n,
-            });
+        void getDefaultConfig().then((config) => {
+            ui_1.Fancybox.bind("[data-fancybox]", config);
         });
+    }
+    async function createFancybox(userSlides) {
+        return new ui_1.Fancybox(userSlides, await getDefaultConfig());
+    }
+    async function getDefaultConfig() {
+        return {
+            l10n: await getLocalization(),
+            Html: {
+                videoAutoplay: false,
+            },
+        };
     }
     async function getLocalization() {
         let locale = document.documentElement.lang;
