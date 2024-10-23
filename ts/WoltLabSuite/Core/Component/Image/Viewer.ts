@@ -1,6 +1,6 @@
 import { Fancybox } from "@fancyapps/ui";
 
-const LOCALS = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
+const LOCALES = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
 
 export function setup() {
   void getLocalization().then((l10n) => {
@@ -14,11 +14,11 @@ export function setup() {
 }
 
 export async function getLocalization(): Promise<Record<string, string>> {
-  let local = document.documentElement.lang;
+  let locale = document.documentElement.lang;
 
-  if (!LOCALS.includes(local)) {
-    local = "en";
+  if (!LOCALES.includes(locale)) {
+    locale = "en";
   }
 
-  return (await import(`@fancyapps/ui/l10n/${local}`))[local];
+  return (await import(`@fancyapps/ui/l10n/${locale}`))[locale];
 }

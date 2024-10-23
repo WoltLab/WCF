@@ -26,7 +26,7 @@ define(["require", "exports", "@fancyapps/ui"], function (require, exports, ui_1
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.getLocalization = getLocalization;
-    const LOCALS = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
+    const LOCALES = ["cs", "de", "en", "es", "fr", "it", "ja", "lv", "pl", "sk"];
     function setup() {
         void getLocalization().then((l10n) => {
             ui_1.Fancybox.bind("[data-fancybox]", {
@@ -38,10 +38,10 @@ define(["require", "exports", "@fancyapps/ui"], function (require, exports, ui_1
         });
     }
     async function getLocalization() {
-        let local = document.documentElement.lang;
-        if (!LOCALS.includes(local)) {
-            local = "en";
+        let locale = document.documentElement.lang;
+        if (!LOCALES.includes(locale)) {
+            locale = "en";
         }
-        return (await new Promise((resolve_1, reject_1) => { require([`@fancyapps/ui/l10n/${local}`], resolve_1, reject_1); }).then(__importStar))[local];
+        return (await new Promise((resolve_1, reject_1) => { require([`@fancyapps/ui/l10n/${locale}`], resolve_1, reject_1); }).then(__importStar))[locale];
     }
 });
