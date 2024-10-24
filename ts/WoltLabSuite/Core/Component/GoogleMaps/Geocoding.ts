@@ -27,7 +27,7 @@ export type ResolveEventPayload = {
 class Geocoding {
   readonly #element: HTMLInputElement;
   readonly #map: WoltlabCoreGoogleMapsElement;
-  #marker?: google.maps.Marker;
+  #marker?: google.maps.marker.AdvancedMarkerElement;
   #initialMarkerPosition?: google.maps.LatLng;
 
   constructor(element: HTMLInputElement, map: WoltlabCoreGoogleMapsElement) {
@@ -78,11 +78,11 @@ class Geocoding {
 
   async #setupMarker(): Promise<void> {
     this.#marker = await addDraggableMarker(this.#map);
-    this.#initialMarkerPosition = this.#marker.getPosition() as google.maps.LatLng;
+    this.#initialMarkerPosition = this.#marker?.position as google.maps.LatLng;
 
     this.#marker.addListener("dragend", () => {
       void this.#map.getGeocoder().then((geocoder) => {
-        void geocoder.geocode({ location: this.#marker!.getPosition() }, (results, status) => {
+        void geocoder.geocode({ location: this.#marker!.position! }, (results, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
             this.#element.value = results![0].formatted_address;
             this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());
@@ -94,7 +94,9 @@ class Geocoding {
 
   async #moveMarkerToLocation(latitude: number, longitude: number): Promise<void> {
     const location = new google.maps.LatLng(latitude, longitude);
-    this.#marker?.setPosition(location);
+    if (this.#marker) {
+      this.#marker.position = location;
+    }
     (await this.#map.getMap()).setCenter(location);
     this.#setLocation(latitude, longitude);
   }
@@ -103,7 +105,9 @@ class Geocoding {
     const geocoder = await this.#map.getGeocoder();
     void geocoder.geocode({ address }, async (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
-        this.#marker?.setPosition(results![0].geometry.location);
+        if (this.#marker) {
+          this.#marker.position = results![0].geometry.location;
+        }
 
         (await this.#map.getMap()).setCenter(results![0].geometry.location);
         this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());

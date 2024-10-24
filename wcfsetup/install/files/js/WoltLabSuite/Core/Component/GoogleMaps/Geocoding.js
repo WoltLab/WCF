@@ -53,10 +53,10 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         }
         async #setupMarker() {
             this.#marker = await (0, Marker_1.addDraggableMarker)(this.#map);
-            this.#initialMarkerPosition = this.#marker.getPosition();
+            this.#initialMarkerPosition = this.#marker?.position;
             this.#marker.addListener("dragend", () => {
                 void this.#map.getGeocoder().then((geocoder) => {
-                    void geocoder.geocode({ location: this.#marker.getPosition() }, (results, status) => {
+                    void geocoder.geocode({ location: this.#marker.position }, (results, status) => {
                         if (status === google.maps.GeocoderStatus.OK) {
                             this.#element.value = results[0].formatted_address;
                             this.#setLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng());
@@ -67,7 +67,9 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         }
         async #moveMarkerToLocation(latitude, longitude) {
             const location = new google.maps.LatLng(latitude, longitude);
-            this.#marker?.setPosition(location);
+            if (this.#marker) {
+                this.#marker.position = location;
+            }
             (await this.#map.getMap()).setCenter(location);
             this.#setLocation(latitude, longitude);
         }
@@ -75,7 +77,9 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
             const geocoder = await this.#map.getGeocoder();
             void geocoder.geocode({ address }, async (results, status) => {
                 if (status === google.maps.GeocoderStatus.OK) {
-                    this.#marker?.setPosition(results[0].geometry.location);
+                    if (this.#marker) {
+                        this.#marker.position = results[0].geometry.location;
+                    }
                     (await this.#map.getMap()).setCenter(results[0].geometry.location);
                     this.#setLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng());
                 }

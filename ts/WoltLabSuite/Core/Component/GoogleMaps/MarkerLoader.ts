@@ -90,7 +90,7 @@ class MarkerLoader {
   }
 
   #addMarker(data: MarkerData) {
-    const marker = new google.maps.Marker({
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       map: this.#map,
       position: new google.maps.LatLng(data.latitude, data.longitude),
       title: data.title,
