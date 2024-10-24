@@ -57,10 +57,12 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
       const mapContainer = dialog.querySelector(".googleMap") as HTMLElement;
       this.map = new google.maps.Map(mapContainer, {
         disableDoubleClickZoom: window.WCF.Location.GoogleMaps.Settings.get("disableDoubleClickZoom"),
-        draggable: window.WCF.Location.GoogleMaps.Settings.get("draggable"),
+        gestureHandling: window.WCF.Location.GoogleMaps.Settings.get("draggable") ? "auto" : "none",
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scaleControl: window.WCF.Location.GoogleMaps.Settings.get("scaleControl"),
         scrollwheel: window.WCF.Location.GoogleMaps.Settings.get("scrollwheel"),
+        // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+        mapId: "DEMO_MAP_ID",
       });
 
       this.directionsService = new google.maps.DirectionsService();

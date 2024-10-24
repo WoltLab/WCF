@@ -27,8 +27,8 @@ export type ResolveEventPayload = {
 class Geocoding {
   readonly #element: HTMLInputElement;
   readonly #map: WoltlabCoreGoogleMapsElement;
-  #marker?: google.maps.Marker;
-  #initialMarkerPosition?: google.maps.LatLng;
+  #marker?: google.maps.marker.AdvancedMarkerElement;
+  #initialMarkerPosition?: google.maps.LatLng | google.maps.LatLngLiteral | null;
 
   constructor(element: HTMLInputElement, map: WoltlabCoreGoogleMapsElement) {
     this.#element = element;
@@ -55,7 +55,7 @@ class Geocoding {
 
   #initEvents(): void {
     this.#element.addEventListener("geocoding:move-marker", (event: CustomEvent<MoveMarkerEventPayload>) => {
-      void this.#moveMarkerToLocation(event.detail.latitude, event.detail.longitude);
+      void this.#moveMarkerToLocation(new google.maps.LatLng(event.detail.latitude, event.detail.longitude));
     });
 
     this.#element.addEventListener("geocoding:resolve", (event: CustomEvent<ResolveEventPayload>) => {
@@ -71,18 +71,18 @@ class Geocoding {
 
     this.#element.addEventListener("geocoding:reset-marker", () => {
       if (this.#initialMarkerPosition) {
-        void this.#moveMarkerToLocation(this.#initialMarkerPosition.lat(), this.#initialMarkerPosition.lng());
+        void this.#moveMarkerToLocation(new google.maps.LatLng(this.#initialMarkerPosition));
       }
     });
   }
 
   async #setupMarker(): Promise<void> {
     this.#marker = await addDraggableMarker(this.#map);
-    this.#initialMarkerPosition = this.#marker.getPosition() as google.maps.LatLng;
+    this.#initialMarkerPosition = this.#marker?.position;
 
     this.#marker.addListener("dragend", () => {
       void this.#map.getGeocoder().then((geocoder) => {
-        void geocoder.geocode({ location: this.#marker!.getPosition() }, (results, status) => {
+        void geocoder.geocode({ location: this.#marker!.position! }, (results, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
             this.#element.value = results![0].formatted_address;
             this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());
@@ -92,18 +92,21 @@ class Geocoding {
     });
   }
 
-  async #moveMarkerToLocation(latitude: number, longitude: number): Promise<void> {
-    const location = new google.maps.LatLng(latitude, longitude);
-    this.#marker?.setPosition(location);
+  async #moveMarkerToLocation(location: google.maps.LatLng): Promise<void> {
+    if (this.#marker) {
+      this.#marker.position = location;
+    }
     (await this.#map.getMap()).setCenter(location);
-    this.#setLocation(latitude, longitude);
+    this.#setLocation(location.lat(), location.lng());
   }
 
   async #moveMarkerToAddress(address: string): Promise<void> {
     const geocoder = await this.#map.getGeocoder();
     void geocoder.geocode({ address }, async (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
-        this.#marker?.setPosition(results![0].geometry.location);
+        if (this.#marker) {
+          this.#marker.position = results![0].geometry.location;
+        }
 
         (await this.#map.getMap()).setCenter(results![0].geometry.location);
         this.#setLocation(results![0].geometry.location.lat(), results![0].geometry.location.lng());

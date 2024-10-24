@@ -19,28 +19,30 @@ export async function addMarker(
 ): Promise<void> {
   const map = await element.getMap();
 
-  const marker = new google.maps.Marker({
+  const marker = new google.maps.marker.AdvancedMarkerElement({
     map,
     position: new google.maps.LatLng(latitude, longitude),
     title,
   });
 
   if (focus) {
-    map.setCenter(marker.getPosition()!);
+    map.setCenter(marker.position!);
   }
 }
 
-export async function addDraggableMarker(element: WoltlabCoreGoogleMapsElement): Promise<google.maps.Marker>;
+export async function addDraggableMarker(
+  element: WoltlabCoreGoogleMapsElement,
+): Promise<google.maps.marker.AdvancedMarkerElement>;
 export async function addDraggableMarker(
   element: WoltlabCoreGoogleMapsElement,
   latitude: number,
   longitude: number,
-): Promise<google.maps.Marker>;
+): Promise<google.maps.marker.AdvancedMarkerElement>;
 export async function addDraggableMarker(
   element: WoltlabCoreGoogleMapsElement,
   latitude?: number,
   longitude?: number,
-): Promise<google.maps.Marker> {
+): Promise<google.maps.marker.AdvancedMarkerElement> {
   const map = await element.getMap();
 
   if (latitude === undefined) {
@@ -50,14 +52,14 @@ export async function addDraggableMarker(
     longitude = element.lng;
   }
 
-  const marker = new google.maps.Marker({
+  const marker = new google.maps.marker.AdvancedMarkerElement({
     map,
     position: new google.maps.LatLng(latitude, longitude),
-    draggable: true,
-    clickable: false,
+    gmpDraggable: true,
+    gmpClickable: false,
   });
 
-  map.setCenter(marker.getPosition()!);
+  map.setCenter(marker.position!);
 
   return marker;
 }

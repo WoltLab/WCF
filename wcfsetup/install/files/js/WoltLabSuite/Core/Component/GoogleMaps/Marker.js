@@ -12,13 +12,13 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
     exports.addDraggableMarker = addDraggableMarker;
     async function addMarker(element, latitude, longitude, title, focus) {
         const map = await element.getMap();
-        const marker = new google.maps.Marker({
+        const marker = new google.maps.marker.AdvancedMarkerElement({
             map,
             position: new google.maps.LatLng(latitude, longitude),
             title,
         });
         if (focus) {
-            map.setCenter(marker.getPosition());
+            map.setCenter(marker.position);
         }
     }
     async function addDraggableMarker(element, latitude, longitude) {
@@ -29,13 +29,13 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
         if (longitude === undefined) {
             longitude = element.lng;
         }
-        const marker = new google.maps.Marker({
+        const marker = new google.maps.marker.AdvancedMarkerElement({
             map,
             position: new google.maps.LatLng(latitude, longitude),
-            draggable: true,
-            clickable: false,
+            gmpDraggable: true,
+            gmpClickable: false,
         });
-        map.setCenter(marker.getPosition());
+        map.setCenter(marker.position);
         return marker;
     }
 });

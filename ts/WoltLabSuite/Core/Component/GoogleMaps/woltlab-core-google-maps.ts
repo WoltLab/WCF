@@ -18,7 +18,7 @@ const loadGoogleMaps = (apiKey: string): Promise<void> => {
     script.src =
       "https://maps.googleapis.com/maps/api/js?" +
       (apiKey ? `key=${apiKey}&` : "") +
-      "callback=woltlab_core_google_maps_callback";
+      "callback=woltlab_core_google_maps_callback&libraries=marker";
     document.head.appendChild(script);
     initCalled = true;
   }
@@ -102,6 +102,8 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
         lat: this.lat,
         lng: this.lng,
       },
+      // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+      mapId: "DEMO_MAP_ID",
     });
 
     void this.#setBounds();
