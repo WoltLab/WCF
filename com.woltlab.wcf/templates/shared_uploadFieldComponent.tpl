@@ -13,7 +13,7 @@
 			{foreach from=$uploadFieldFiles item=file}
 				<li class="box64 uploadedFile" data-unique-file-id="{$file->getUniqueFileId()}">
 					{if $file->isImage()}
-						<a href="{$file->getImage()}" class="jsImageViewer">
+						<a href="{$file->getImage()}" data-fancybox data-caption="{$file->getFilename()}">
 							<img src="{$file->getImage()}" width="{$file->getWidth()}" height="{$file->getHeight()}" loading="lazy" alt="" class="formUploadHandlerContentListImage">
 						</a>
 					{else}

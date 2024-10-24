@@ -8,7 +8,7 @@
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{@$attachment->attachmentID}">
-								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} class="jsImageViewer jsTooltip" title="{lang}wcf.attachment.image.title{/lang}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} data-fancybox="attachments" data-caption="{lang}wcf.attachment.image.title{/lang}"{/if}>
 									<div class="attachmentThumbnailContainer">
 										<span class="attachmentThumbnailImage">
 											{if $attachment->hasThumbnail()}

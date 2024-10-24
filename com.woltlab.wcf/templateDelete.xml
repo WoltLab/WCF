@@ -116,5 +116,6 @@
 		<template>__multiPageCondition</template>
 		<template>__multilineItemListFormField</template>
 		<template>email_notification_userRegistration</template>
+		<template>imageViewer</template>
 	</delete>
 </data>

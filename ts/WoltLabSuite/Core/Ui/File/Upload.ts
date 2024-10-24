@@ -177,7 +177,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
 
           if (fileData.image !== null) {
             const a = document.createElement("a");
-            a.classList.add("jsImageViewer");
+            a.dataset.fancybox = "";
             a.href = fileData.image;
             const image = document.createElement("img");
             image.classList.add("formUploadHandlerContentListImage");

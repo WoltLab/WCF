@@ -31,9 +31,7 @@
 	});
 </script>
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
-
-{include file="imageViewer"}
+{include file='shared_imageViewer'}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">

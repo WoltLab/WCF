@@ -137,6 +137,7 @@ class TemplateEngine extends SingletonFactory
         'articleBBCodeTag' => 'shared_bbcode_wsa',
         '__multiPageCondition' => 'shared_multiPageCondition',
         '__multilineItemListFormField' => 'shared_multilineItemListFormField',
+        'imageViewer' => 'shared_imageViewer',
     ];
 
     /**

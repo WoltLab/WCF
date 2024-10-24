@@ -140,6 +140,9 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
             void new Promise((resolve_7, reject_7) => { require(["./Component/File/woltlab-core-file"], resolve_7, reject_7); }).then(tslib_1.__importStar);
             void new Promise((resolve_8, reject_8) => { require(["./Component/File/Upload"], resolve_8, reject_8); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("[data-fancybox]", () => {
+            void new Promise((resolve_9, reject_9) => { require(["./Component/Image/Viewer"], resolve_9, reject_9); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
         // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
         // when widget form elements are placed in a dialog.
         const observer = new MutationObserver((mutations) => {

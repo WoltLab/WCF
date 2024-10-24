@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-inspector": "^4.1.0",
+    "@fancyapps/ui": "^5.0.36",
     "@googlemaps/markerclusterer": "2.0.15",
     "@types/facebook-js-sdk": "^3.3.12",
     "@types/google.maps": "^3.58.1",
