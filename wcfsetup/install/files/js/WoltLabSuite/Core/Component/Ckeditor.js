@@ -221,6 +221,13 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (licenseKey) {
             configuration.licenseKey = licenseKey;
         }
+        const { DATABASE_FOR_AUTO_COMPLETE } = await new Promise((resolve_2, reject_2) => { require(["./EmojiPicker/woltlab-core-emoji-picker"], resolve_2, reject_2); }).then(tslib_1.__importStar);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        // TODO remove eslint-disable
+        configuration.woltlabEmojis = {
+            database: DATABASE_FOR_AUTO_COMPLETE,
+        };
         (0, Normalizer_1.normalizeLegacyMessage)(element);
         const cke = await createEditor(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
@@ -241,7 +248,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         notifyOfDataChanges(cke, element);
         const enableDebug = window.ENABLE_DEBUG_MODE && window.ENABLE_DEVELOPER_TOOLS;
         if (enableDebug && Devtools_1.default._internal_.editorInspector()) {
-            void new Promise((resolve_2, reject_2) => { require(["@ckeditor/ckeditor5-inspector"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((inspector) => {
+            void new Promise((resolve_3, reject_3) => { require(["@ckeditor/ckeditor5-inspector"], resolve_3, reject_3); }).then(tslib_1.__importStar).then((inspector) => {
                 inspector.default.attach(cke);
             });
         }
