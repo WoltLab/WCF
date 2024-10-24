@@ -286,6 +286,7 @@ abstract class Database
      * Prepares a statement for execution and returns a statement object.
      *
      * @throws DatabaseQueryException
+     * @since 6.2
      */
     public function prepareUnmanaged(string $statement, int $limit = 0, int $offset = 0): PreparedStatement
     {
