@@ -96,9 +96,9 @@ class MessageUtil
             }
 
             $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_user_to_group
+                    FROM    wcf1_user_to_group
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($userID = $statement->fetchColumn()) {
                 $userIDs[] = $userID;
@@ -160,11 +160,11 @@ class MessageUtil
             }
 
             $sql = "SELECT      user_table.username
-                    FROM        wcf" . WCF_N . "_user_to_group user_to_group
-                    LEFT JOIN   wcf" . WCF_N . "_user user_table
+                    FROM        wcf1_user_to_group user_to_group
+                    LEFT JOIN   wcf1_user user_table
                     ON          user_table.userID = user_to_group.userID
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($username = $statement->fetchColumn()) {
                 $usernames[] = $username;

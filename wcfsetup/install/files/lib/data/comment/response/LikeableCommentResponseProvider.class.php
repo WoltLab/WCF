@@ -74,11 +74,11 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('comment_response.responseID IN (?)', [$responseIDs]);
         $sql = "SELECT      comment.objectTypeID, comment_response.responseID
-                FROM        wcf" . WCF_N . "_comment_response comment_response
-                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                FROM        wcf1_comment_response comment_response
+                LEFT JOIN   wcf1_comment comment
                 ON          comment.commentID = comment_response.commentID
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $responses = $statement->fetchMap('responseID', 'objectTypeID');
 

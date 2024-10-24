@@ -40,7 +40,7 @@ class MediaList extends DatabaseObjectList
         $searchString = '%' . \addcslashes($searchString, '_%') . '%';
 
         $this->sqlConditionJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_media_content media_content
+            LEFT JOIN   wcf1_media_content media_content
             ON          media_content.mediaID = media.mediaID';
 
         $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');

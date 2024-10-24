@@ -67,9 +67,9 @@ class TrophyCategoryType extends AbstractCategoryType
             $userTrophyList->sqlJoins .= ' ';
         }
         $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
 
         $userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);

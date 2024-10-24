@@ -272,9 +272,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $conditionBuilder->add('mediaID IN (?)', [$mediaList->getObjectIDs()]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_media_content
+                FROM    wcf1_media_content
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         $mediaData = [];
@@ -439,15 +439,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                 $isMultilingual = $this->parameters['data']['isMultilingual'];
             }
 
-            $sql = "DELETE FROM wcf" . WCF_N . "_media_content
+            $sql = "DELETE FROM wcf1_media_content
                     WHERE       mediaID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$media->mediaID]);
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_media_content
+            $sql = "INSERT INTO wcf1_media_content
                                 (mediaID, languageID, title, caption, altText)
                     VALUES      (?, ?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             if (!$isMultilingual) {
                 $languageID = $media->languageID;
@@ -726,10 +726,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('mediaID IN (?)', [$this->objectIDs]);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_media
+        $sql = "UPDATE  wcf1_media
                 SET     categoryID = ?
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge(
             [$this->parameters['categoryID'] ?: null],
             $conditionBuilder->getParameters()

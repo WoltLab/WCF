@@ -674,9 +674,9 @@ class PageAddForm extends AbstractForm
             }
 
             $sql = "SELECT  MAX(showOrder)
-                    FROM    wcf" . WCF_N . "_menu_item
+                    FROM    wcf1_menu_item
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             $maxShowOrder = $statement->fetchSingleColumn() ?? 0;
 

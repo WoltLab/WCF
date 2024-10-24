@@ -308,10 +308,10 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
         // get like object
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_like_object
+                FROM    wcf1_like_object
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $sourceObjectType->objectTypeID,
             $this->parameters['sourceObjectID'],
@@ -332,13 +332,13 @@ class ReactionAction extends AbstractDatabaseObjectAction
         // step 2) copy
         //
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_like
+        $sql = "INSERT INTO wcf1_like
                             (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
                 SELECT      " . $this->parameters['targetObjectID'] . ", " . $targetObjectType->objectTypeID . ", objectUserID, userID, time, likeValue, reactionTypeID
-                FROM        wcf" . WCF_N . "_like
+                FROM        wcf1_like
                 WHERE       objectTypeID = ?
                         AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $sourceObjectType->objectTypeID,
             $this->parameters['sourceObjectID'],
@@ -350,10 +350,10 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
         if ($newLikeObject->objectUserID) {
             $sql = "SELECT  COUNT(*) as count
-                    FROM    wcf" . WCF_N . "_like
+                    FROM    wcf1_like
                     WHERE   objectTypeID = ?
                         AND objectID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $targetObjectType->objectTypeID,
                 $this->parameters['targetObjectID'],

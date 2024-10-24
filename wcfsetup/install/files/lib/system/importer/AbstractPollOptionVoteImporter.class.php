@@ -45,10 +45,10 @@ class AbstractPollOptionVoteImporter extends AbstractImporter
             return 0;
         }
 
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_poll_option_vote
+        $sql = "INSERT IGNORE INTO  wcf1_poll_option_vote
                                     (pollID, optionID, userID)
                 VALUES              (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$data['pollID'], $data['optionID'], $data['userID']]);
 
         return 1;

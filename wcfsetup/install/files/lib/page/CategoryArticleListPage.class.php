@@ -95,7 +95,7 @@ class CategoryArticleListPage extends ArticleListPage
         if ($this->sortField === 'title') {
             $this->objectList->sqlSelects = "(
                 SELECT  title
-                FROM    wcf" . WCF_N . "_article_content
+                FROM    wcf1_article_content
                 WHERE   articleID = article.articleID
                     AND (
                             languageID IS NULL

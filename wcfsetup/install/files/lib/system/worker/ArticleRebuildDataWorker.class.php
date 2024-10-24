@@ -70,10 +70,10 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $commentObjectType = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
         $sql = "SELECT  COUNT(*) AS comments, SUM(responses) AS responses
-                FROM    wcf" . WCF_N . "_comment
+                FROM    wcf1_comment
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $commentStatement = WCF::getDB()->prepareStatement($sql);
+        $commentStatement = WCF::getDB()->prepare($sql);
         $comments = [];
 
         // update article content
@@ -133,9 +133,9 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $conditions->add("objectID IN (?)", [$this->objectList->getObjectIDs()]);
 
         $sql = "SELECT  objectID, cumulativeLikes
-                FROM    wcf" . WCF_N . "_like_object
+                FROM    wcf1_like_object
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $cumulativeLikes = $statement->fetchMap('objectID', 'cumulativeLikes');
 

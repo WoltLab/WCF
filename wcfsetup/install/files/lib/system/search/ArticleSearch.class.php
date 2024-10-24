@@ -57,7 +57,7 @@ class ArticleSearch extends AbstractSearchProvider
      */
     public function getTableName(): string
     {
-        return 'wcf' . WCF_N . '_article_content';
+        return 'wcf1_article_content';
     }
 
     /**
@@ -81,7 +81,7 @@ class ArticleSearch extends AbstractSearchProvider
      */
     public function getUsernameFieldName(): string
     {
-        return 'wcf' . WCF_N . '_article.username';
+        return 'wcf1_article.username';
     }
 
     /**
@@ -89,7 +89,7 @@ class ArticleSearch extends AbstractSearchProvider
      */
     public function getTimeFieldName(): string
     {
-        return 'wcf' . WCF_N . '_article.time';
+        return 'wcf1_article.time';
     }
 
     /**
@@ -114,7 +114,7 @@ class ArticleSearch extends AbstractSearchProvider
             $conditionBuilder->add('1=0');
         } else {
             $conditionBuilder->add(
-                'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ?',
+                'wcf1_article.categoryID IN (?) AND wcf1_article.publicationStatus = ?',
                 [$articleCategoryIDs, Article::PUBLISHED]
             );
         }
@@ -144,8 +144,8 @@ class ArticleSearch extends AbstractSearchProvider
     public function getJoins(): string
     {
         return '
-            INNER JOIN  wcf' . WCF_N . '_article
-            ON          wcf' . WCF_N . '_article.articleID = ' . $this->getTableName() . '.articleID';
+            INNER JOIN  wcf1_article
+            ON          wcf1_article.articleID = ' . $this->getTableName() . '.articleID';
     }
 
     /**

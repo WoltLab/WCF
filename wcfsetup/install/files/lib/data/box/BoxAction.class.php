@@ -113,10 +113,10 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         // save box to page
         if (!empty($this->parameters['pageIDs'])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+            $sql = "INSERT INTO wcf1_box_to_page
                                 (boxID, pageID, visible)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($this->parameters['pageIDs'] as $pageID) {
                 $statement->execute([
@@ -232,14 +232,14 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         // save box to page
         if (isset($this->parameters['pageIDs'])) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_box_to_page
+            $sql = "DELETE FROM wcf1_box_to_page
                     WHERE       boxID = ?";
-            $deleteStatement = WCF::getDB()->prepareStatement($sql);
+            $deleteStatement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+            $sql = "INSERT INTO wcf1_box_to_page
                                 (boxID, pageID, visible)
                     VALUES      (?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             foreach ($this->getObjects() as $box) {
                 $deleteStatement->execute([$box->boxID]);

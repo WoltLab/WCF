@@ -402,7 +402,7 @@ class SQLParser
      */
     protected function executeStandardStatement($query)
     {
-        $statement = WCF::getDB()->prepareStatement($query);
+        $statement = WCF::getDB()->prepare($query);
         $statement->execute();
     }
 

@@ -29,10 +29,10 @@ class UserFollow extends DatabaseObject
     public static function getFollow($userID, $followUserID)
     {
         $sql = "SELECT  followID
-                FROM    wcf" . WCF_N . "_user_follow
+                FROM    wcf1_user_follow
                 WHERE   userID = ?
                     AND followUserID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $userID,
             $followUserID,

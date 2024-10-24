@@ -63,18 +63,18 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
     {
         // resolve page count
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_user_profile_visitor
+                FROM    wcf1_user_profile_visitor
                 WHERE   ownerID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->parameters['userID']]);
         $pageCount = \ceil($statement->fetchSingleColumn() / 20);
 
         // get user ids
         $sql = "SELECT      userID
-                FROM        wcf" . WCF_N . "_user_profile_visitor
+                FROM        wcf1_user_profile_visitor
                 WHERE       ownerID = ?
                 ORDER BY    time DESC";
-        $statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
+        $statement = WCF::getDB()->prepare($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
         $statement->execute([$this->parameters['userID']]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -101,11 +101,11 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      */
     public function registerVisitor()
     {
-        $sql = "INSERT INTO             wcf" . WCF_N . "_user_profile_visitor
+        $sql = "INSERT INTO             wcf1_user_profile_visitor
                                         (ownerID, userID, time)
                 VALUES                  (?, ?, ?)
                 ON DUPLICATE KEY UPDATE time = VALUES(time)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->parameters['data']['ownerID'],
             $this->parameters['data']['userID'],

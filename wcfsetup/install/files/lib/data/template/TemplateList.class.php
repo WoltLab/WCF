@@ -33,9 +33,9 @@ class TemplateList extends DatabaseObjectList
 
         $this->sqlSelects = 'package.package, template_group.templateGroupFolderName';
         $this->sqlJoins = "
-            LEFT JOIN   wcf" . WCF_N . "_package package
+            LEFT JOIN   wcf1_package package
             ON          package.packageID = template.packageID
-            LEFT JOIN   wcf" . WCF_N . "_template_group template_group
+            LEFT JOIN   wcf1_template_group template_group
             ON          template_group.templateGroupID = template.templateGroupID";
     }
 }

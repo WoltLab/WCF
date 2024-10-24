@@ -597,7 +597,7 @@ XML;
             $sqlData = $this->findExistingItem($this->getElementData($oldElement, true));
 
             if ($sqlData !== null) {
-                $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+                $statement = WCF::getDB()->prepare($sqlData['sql']);
                 $statement->execute($sqlData['parameters']);
 
                 $existingRow = $statement->fetchArray() ?: [];

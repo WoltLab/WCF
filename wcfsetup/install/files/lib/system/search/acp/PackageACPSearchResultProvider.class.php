@@ -36,9 +36,9 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
         $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
 
         $sql = "SELECT  languageItem
-                FROM    wcf" . WCF_N . "_language_item
+                FROM    wcf1_language_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         $packageIDs = [];
@@ -52,11 +52,11 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
         }
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package
+                FROM    wcf1_package
                 WHERE   packageName LIKE ?
                      OR package LIKE ?
                     " . (\count($conditions->getParameters()) ? "OR " . $conditions : "");
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge([
             '%' . $query . '%',
             '%' . $query . '%',

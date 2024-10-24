@@ -33,8 +33,8 @@ class SmileyImporter extends AbstractImporter
     public function __construct()
     {
         $sql = "SELECT  smileyID, smileyCode, aliases
-                FROM    wcf" . WCF_N . "_smiley";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_smiley";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         while ($row = $statement->fetchArray()) {

@@ -306,12 +306,12 @@ class SearchForm extends AbstractCaptchaForm
             }
 
             $sql = "SELECT  searchID
-                    FROM    wcf" . WCF_N . "_search
+                    FROM    wcf1_search
                     WHERE   searchHash = ?
                         AND searchType = ?
                         AND searchTime > ?
                         " . (WCF::getUser()->userID ? 'AND userID = ?' : 'AND userID IS NULL');
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($parameters);
             $row = $statement->fetchArray();
             if ($row !== false) {

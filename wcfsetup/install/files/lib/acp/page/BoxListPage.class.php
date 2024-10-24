@@ -140,7 +140,7 @@ class BoxListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'box.boxID IN (
                     SELECT  boxID
-                    FROM    wcf' . WCF_N . '_box_content
+                    FROM    wcf1_box_content
                     WHERE   title LIKE ?
                 )',
                 ['%' . $this->title . '%']
@@ -150,7 +150,7 @@ class BoxListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'box.boxID IN (
                     SELECT  boxID
-                    FROM    wcf' . WCF_N . '_box_content
+                    FROM    wcf1_box_content
                     WHERE   content LIKE ?
                 )',
                 ['%' . $this->content . '%']

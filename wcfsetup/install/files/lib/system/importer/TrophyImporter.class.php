@@ -114,23 +114,23 @@ class TrophyImporter extends AbstractImporter
                 ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.trophy.category');
 
             $sql = "SELECT      categoryID
-                    FROM        wcf" . WCF_N . "_category
+                    FROM        wcf1_category
                     WHERE       objectTypeID = ?
                             AND parentCategoryID = ?
                             AND title = ?
                     ORDER BY    categoryID";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$objectTypeID, 0, 'Import']);
             $categoryID = $statement->fetchSingleColumn();
             if ($categoryID) {
                 $this->importCategoryID = $categoryID;
             } else {
-                $sql = "INSERT INTO wcf" . WCF_N . "_category
+                $sql = "INSERT INTO wcf1_category
                                     (objectTypeID, parentCategoryID, title, showOrder, time)
                         VALUES      (?, ?, ?, ?, ?)";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$objectTypeID, 0, 'Import', 0, TIME_NOW]);
-                $this->importCategoryID = WCF::getDB()->getInsertID("wcf" . WCF_N . "_category", 'categoryID');
+                $this->importCategoryID = WCF::getDB()->getInsertID("wcf1_category", 'categoryID');
             }
         }
 

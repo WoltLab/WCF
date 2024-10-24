@@ -95,10 +95,10 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = [])
     {
         $sql = "SELECT  queueID
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $objectID,
@@ -154,9 +154,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         $conditionBuilder->add('objectID IN (?)', [$objectIDs]);
 
         $sql = "SELECT  queueID, objectID
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $existingQueueIDs = $statement->fetchMap('objectID', 'queueID');
 
@@ -185,13 +185,13 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                 ]);
             }
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_moderation_queue
+            $sql = "INSERT INTO wcf1_moderation_queue
                                 (objectTypeID, objectID, containerID, userID, time, lastChangeTime, additionalData)
                     VALUES      (?, ?, ?, ?, ?, ?, ?)" . \str_repeat(
                 ', (?, ?, ?, ?, ?, ?, ?)',
                 \count($batchObjectIDs) - 1
             );
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($parameters);
         }
         WCF::getDB()->commitTransaction();
@@ -219,7 +219,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                 $conditionBuilder = new PreparedStatementConditionBuilder();
                 $conditionBuilder->add('queueID IN (?)', [$batchQueueIDs]);
 
-                $sql = "UPDATE  wcf" . WCF_N . "_moderation_queue
+                $sql = "UPDATE  wcf1_moderation_queue
                         SET     status = ?,
                                 containerID = ?,
                                 userID = ?,
@@ -227,7 +227,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                                 lastChangeTime = ?,
                                 additionalData = ?
                         " . $conditionBuilder;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute(\array_merge(
                     [
                         ModerationQueue::STATUS_OUTSTANDING,

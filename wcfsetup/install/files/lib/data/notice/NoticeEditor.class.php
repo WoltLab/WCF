@@ -35,8 +35,8 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public function setShowOrder($showOrder = 0)
     {
         $sql = "SELECT  MAX(showOrder)
-                FROM    wcf" . WCF_N . "_notice";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_notice";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $maxShowOrder = $statement->fetchSingleColumn();
         if (!$maxShowOrder) {
@@ -47,10 +47,10 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $newShowOrder = $maxShowOrder + 1;
         } else {
             // shift other notices
-            $sql = "UPDATE  wcf" . WCF_N . "_notice
+            $sql = "UPDATE  wcf1_notice
                     SET     showOrder = showOrder + 1
                     WHERE   showOrder >= ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $showOrder,
             ]);

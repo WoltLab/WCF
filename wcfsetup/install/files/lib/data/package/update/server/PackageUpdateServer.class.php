@@ -407,18 +407,18 @@ class PackageUpdateServer extends DatabaseObject
     public static function resetAll(): void
     {
         // purge package cache
-        WCF::getDB()->prepareStatement("DELETE FROM wcf" . WCF_N . "_package_update")->execute();
+        WCF::getDB()->prepare("DELETE FROM wcf1_package_update")->execute();
 
         PackageUpdateCacheBuilder::getInstance()->reset();
 
         // reset servers into their original state
-        $sql = "UPDATE  wcf" . WCF_N . "_package_update_server
+        $sql = "UPDATE  wcf1_package_update_server
                 SET     lastUpdateTime = ?,
                         status = ?,
                         errorMessage = ?,
                         apiVersion = ?,
                         metaData = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             0,
             'online',

@@ -38,9 +38,9 @@ class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificat
     public function getOwnerID($objectID)
     {
         $sql = "SELECT  objectID
-                FROM    wcf" . WCF_N . "_comment
+                FROM    wcf1_comment
                 WHERE   commentID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$objectID]);
         $row = $statement->fetchArray();
 

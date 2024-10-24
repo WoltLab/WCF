@@ -29,8 +29,8 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder
 
         // get definitions
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_object_type_definition";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_object_type_definition";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $data['definitions'][$row['definitionID']] = new ObjectTypeDefinition(null, $row);
@@ -46,8 +46,8 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder
 
         // get object types
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_object_type object_type";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_object_type object_type";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $data['objectTypes'][$row['objectTypeID']] = $objectType = new ObjectType(null, $row);

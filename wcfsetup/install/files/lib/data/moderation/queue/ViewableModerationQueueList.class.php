@@ -43,12 +43,12 @@ class ViewableModerationQueueList extends ModerationQueueList
         parent::__construct();
 
         $this->sqlSelects = "moderation_queue.*, assigned_user.username AS assignedUsername, user_table.username";
-        $this->sqlConditionJoins = ", wcf" . WCF_N . "_moderation_queue moderation_queue";
-        $this->sqlJoins = ", wcf" . WCF_N . "_moderation_queue moderation_queue";
+        $this->sqlConditionJoins = ", wcf1_moderation_queue moderation_queue";
+        $this->sqlJoins = ", wcf1_moderation_queue moderation_queue";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user assigned_user
+            LEFT JOIN   wcf1_user assigned_user
             ON          assigned_user.userID = moderation_queue.assignedUserID
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = moderation_queue.userID";
         $this->getConditionBuilder()->add("moderation_queue_to_user.queueID = moderation_queue.queueID");
         $this->getConditionBuilder()->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);

@@ -82,10 +82,10 @@ class ModerationQueue extends DatabaseObject
         }
 
         $sql = "SELECT  isAffected
-                FROM    wcf" . WCF_N . "_moderation_queue_to_user
+                FROM    wcf1_moderation_queue_to_user
                 WHERE   queueID = ?
                     AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->queueID,
             $user->userID,

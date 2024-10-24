@@ -176,9 +176,9 @@ class InstallPackageAction extends AbstractSecureAction
     {
         // get domain path
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_application
+                FROM    wcf1_application
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([1]);
 
         /** @var Application $application */

@@ -60,13 +60,13 @@ abstract class AbstractUserMergeListener implements IParameterizedEventListener
 
             $sql = "UPDATE" . (!empty($databaseTable['ignore']) ? " IGNORE" : "") . " " . \str_replace(
                 '{WCF_N}',
-                WCF_N,
+                1,
                 $databaseTable['name']
             ) . "
                     SET " . $databaseTable['userID'] . " = ?
                     " . (!empty($databaseTable['username']) ? ", " . $databaseTable['username'] . " = ? " : "")
                 . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(\array_merge($parameters, $conditionBuilder->getParameters()));
         }
     }

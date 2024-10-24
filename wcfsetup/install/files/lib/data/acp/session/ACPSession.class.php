@@ -51,7 +51,7 @@ class ACPSession extends DatabaseObject
         $sql = "SELECT  *
                 FROM    " . static::getDatabaseTableName() . "
                 WHERE   userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$userID]);
 
         return $statement->fetchObject(static::class);

@@ -111,7 +111,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
             }
 
             $sql = "SELECT  import_mapping.newID
-                    FROM    wcf" . WCF_N . "_import_mapping import_mapping
+                    FROM    wcf1_import_mapping import_mapping
                     " . ($tableName ? "
                         LEFT JOIN   " . $tableName . " object_table
                         ON          object_table." . $indexName . " = import_mapping.newID
@@ -120,7 +120,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
                         AND import_mapping.objectTypeID = ?
                         AND import_mapping.oldID = ?
                             " . ($tableName ? "AND object_table." . $indexName . " IS NOT NULL" : '');
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->importHash, $objectTypeID, $oldID]);
             $row = $statement->fetchArray();
             if ($row !== false) {
@@ -145,20 +145,20 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
         $objectTypeID = $this->objectTypes[$type]->objectTypeID;
 
         if ($statement === null) {
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_import_mapping
+            $sql = "INSERT IGNORE INTO  wcf1_import_mapping
                                         (importHash, objectTypeID, oldID, newID)
                     VALUES              (?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
         }
 
         try {
             $statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
         } catch (DatabaseException $e) {
             // Re-prepare the statement once.
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_import_mapping
+            $sql = "INSERT IGNORE INTO  wcf1_import_mapping
                                         (importHash, objectTypeID, oldID, newID)
                     VALUES              (?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
         }
 
@@ -182,8 +182,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
      */
     public function resetMapping()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_import_mapping";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_import_mapping";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         $this->idMappingCache = [];

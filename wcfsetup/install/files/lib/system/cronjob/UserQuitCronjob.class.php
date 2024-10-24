@@ -23,10 +23,10 @@ class UserQuitCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_user
+                FROM    wcf1_user
                 WHERE   quitStarted > ?
                     AND quitStarted < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             0,
             TIME_NOW - 7 * 24 * 3600,

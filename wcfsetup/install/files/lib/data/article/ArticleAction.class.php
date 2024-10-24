@@ -359,11 +359,11 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         // update author in recent activities
         if (isset($this->parameters['data']['userID'])) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user_activity_event
+            $sql = "UPDATE  wcf1_user_activity_event
                     SET     userID = ?
                     WHERE   objectTypeID = ?
                         AND objectID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($this->objects as $articleEditor) {
                 if ($articleEditor->userID != $this->parameters['data']['userID']) {
@@ -890,14 +890,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function search()
     {
         $sql = "SELECT      articleID
-                FROM        wcf" . WCF_N . "_article_content
+                FROM        wcf1_article_content
                 WHERE       title LIKE ?
                         AND (
                                 languageID = ?
                                 OR languageID IS NULL
                             )
                 ORDER BY    title";
-        $statement = WCF::getDB()->prepareStatement($sql, 5);
+        $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute([
             '%' . $this->parameters['searchString'] . '%',
             WCF::getLanguage()->languageID,

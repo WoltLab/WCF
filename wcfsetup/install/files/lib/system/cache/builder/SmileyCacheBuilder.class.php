@@ -23,9 +23,9 @@ class SmileyCacheBuilder extends AbstractCacheBuilder
 
         // get smilies
         $sql = "SELECT      *
-                FROM        wcf" . WCF_N . "_smiley
+                FROM        wcf1_smiley
                 ORDER BY    showOrder";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         /** @var Smiley $object */

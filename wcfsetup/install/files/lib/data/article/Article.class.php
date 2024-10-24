@@ -285,9 +285,9 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
             $this->articleContents = [];
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_article_content
+                    FROM    wcf1_article_content
                     WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->articleID]);
             while ($row = $statement->fetchArray()) {
                 $this->articleContents[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
@@ -307,9 +307,9 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
         if ($this->languageLinks === null) {
             $this->languageLinks = [];
             $sql = "SELECT  articleContentID, title, languageID
-                    FROM    wcf" . WCF_N . "_article_content
+                    FROM    wcf1_article_content
                     WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->articleID]);
             while ($row = $statement->fetchArray()) {
                 $this->languageLinks[$row['languageID'] ?: 0] = new ArticleContent(null, $row);

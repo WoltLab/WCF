@@ -237,6 +237,6 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
             }
         }
 
-        return 'wcf' . WCF_N . '_search_index_' . \substr(\sha1($objectType->objectType), 0, 8);
+        return 'wcf1_search_index_' . \substr(\sha1($objectType->objectType), 0, 8);
     }
 }

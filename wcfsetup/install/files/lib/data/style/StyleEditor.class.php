@@ -115,9 +115,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
 
         // delete language items
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['wcf.style.styleDescription' . $this->styleID]);
     }
 
@@ -168,10 +168,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     public function setAsDefault()
     {
         // remove old default
-        $sql = "UPDATE  wcf" . WCF_N . "_style
+        $sql = "UPDATE  wcf1_style
                 SET     isDefault = ?
                 WHERE   isDefault = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([0, 1]);
 
         // set new default
@@ -205,13 +205,13 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     public function getImplicitVariables()
     {
         $sql = "SELECT      variable.variableName
-                FROM        wcf" . WCF_N . "_style_variable variable
-                LEFT JOIN   wcf" . WCF_N . "_style_variable_value variable_value
+                FROM        wcf1_style_variable variable
+                LEFT JOIN   wcf1_style_variable_value variable_value
                 ON          variable_value.variableID = variable.variableID
                         AND variable_value.styleID = ?
                 WHERE       variable.variableName LIKE ?
                         AND variable_value.variableValue IS NULL";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->styleID,
             'wcf%',
@@ -497,9 +497,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $i = 1;
                 while (true) {
                     $sql = "SELECT  COUNT(*)
-                            FROM    wcf" . WCF_N . "_template_group
+                            FROM    wcf1_template_group
                             WHERE   templateGroupName = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([$templateGroupName]);
                     if (!$statement->fetchSingleColumn()) {
                         break;
@@ -512,9 +512,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $i = 1;
                 while (true) {
                     $sql = "SELECT  COUNT(*)
-                            FROM    wcf" . WCF_N . "_template_group
+                            FROM    wcf1_template_group
                             WHERE   templateGroupFolderName = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([
                         FileUtil::addTrailingSlash($templateGroupFolderName),
                     ]);
@@ -576,10 +576,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 foreach ($packageToTemplates as $package => $templates) {
                     // try to find package
                     $sql = "SELECT  *
-                            FROM    wcf" . WCF_N . "_package
+                            FROM    wcf1_package
                             WHERE   package = ?
                                 AND isApplication = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([
                         $package,
                         1,
@@ -838,10 +838,10 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     protected static function saveLocalizedDescriptions(self $styleEditor, array $descriptions)
     {
         // localize package information
-        $sql = "REPLACE INTO    wcf" . WCF_N . "_language_item
+        $sql = "REPLACE INTO    wcf1_language_item
                                 (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
                 VALUES          (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         // get language list
         $languageList = new LanguageList();
@@ -850,9 +850,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         // workaround for WCFSetup
         if (!PACKAGE_ID) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_language_category
+                    FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
-            $statement2 = WCF::getDB()->prepareStatement($sql);
+            $statement2 = WCF::getDB()->prepare($sql);
             $statement2->execute(['wcf.style']);
             $languageCategory = $statement2->fetchObject(LanguageCategory::class);
         } else {
@@ -941,11 +941,11 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         // fetch style description
         $sql = "SELECT      language.languageCode, language_item.languageItemValue
-                FROM        wcf" . WCF_N . "_language_item language_item
-                LEFT JOIN   wcf" . WCF_N . "_language language
+                FROM        wcf1_language_item language_item
+                LEFT JOIN   wcf1_language language
                 ON          language.languageID = language_item.languageID
                 WHERE       language_item.languageItem = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->styleDescription]);
         $styleDescriptions = $statement->fetchMap('languageCode', 'languageItemValue');
 
@@ -1071,11 +1071,11 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             // append templates to tar
             // get templates
             $sql = "SELECT      template.*, package.package
-                    FROM        wcf" . WCF_N . "_template template
-                    LEFT JOIN   wcf" . WCF_N . "_package package
+                    FROM        wcf1_template template
+                    LEFT JOIN   wcf1_package package
                     ON          package.packageID = template.packageID
                     WHERE       template.templateGroupID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->templateGroupID]);
             while ($row = $statement->fetchArray()) {
                 $packageDir = 'com.woltlab.wcf';
@@ -1308,9 +1308,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         // check if no default style is defined
         $sql = "SELECT  styleID
-                FROM    wcf" . WCF_N . "_style
+                FROM    wcf1_style
                 WHERE   isDefault = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([1]);
         $row = $statement->fetchArray();
 

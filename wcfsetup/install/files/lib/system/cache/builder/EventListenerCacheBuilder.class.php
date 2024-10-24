@@ -34,9 +34,9 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder
         ];
 
         $sql = "SELECT      *
-                FROM        wcf" . WCF_N . "_event_listener
+                FROM        wcf1_event_listener
                 ORDER BY    niceValue ASC, listenerClassName ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         /** @var EventListener $eventListener */

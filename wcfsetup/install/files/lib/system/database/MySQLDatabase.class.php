@@ -90,7 +90,7 @@ class MySQLDatabase extends Database
     public function getVersion()
     {
         try {
-            $statement = $this->prepareStatement('SELECT VERSION()');
+            $statement = $this->prepare('SELECT VERSION()');
             $statement->execute();
 
             return $statement->fetchSingleColumn();

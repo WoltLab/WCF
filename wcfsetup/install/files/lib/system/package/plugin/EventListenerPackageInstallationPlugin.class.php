@@ -57,19 +57,19 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM wcf1_" . $this->tableName . "
                 WHERE       packageID = ?
                         AND environment = ?
                         AND eventClassName = ?
                         AND eventName = ?
                         AND inherit = ?
                         AND listenerClassName = ?";
-        $legacyStatement = WCF::getDB()->prepareStatement($sql);
+        $legacyStatement = WCF::getDB()->prepare($sql);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM wcf1_" . $this->tableName . "
                 WHERE       packageID = ?
                         AND listenerName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         foreach ($items as $item) {
             if (!isset($item['attributes']['name'])) {
@@ -126,7 +126,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   packageID = ?
                     AND listenerName = ?";
         $parameters = [

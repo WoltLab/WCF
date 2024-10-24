@@ -26,10 +26,10 @@ class ModerationQueueCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         $sql = "SELECT  queueID
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 WHERE   status IN (?, ?, ?)
                     AND lastChangeTime < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             ModerationQueue::STATUS_DONE,
             ModerationQueue::STATUS_REJECTED,
@@ -42,9 +42,9 @@ class ModerationQueueCronjob extends AbstractCronjob
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("queueID IN (?)", [$queueIDs]);
 
-            $sql = "DELETE FROM wcf" . WCF_N . "_moderation_queue
+            $sql = "DELETE FROM wcf1_moderation_queue
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
 
             // reset moderation count for all users

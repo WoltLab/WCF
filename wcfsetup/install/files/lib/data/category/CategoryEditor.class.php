@@ -46,7 +46,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     WHERE   showOrder > ?
                         AND parentCategoryID = ?
                         AND objectTypeID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->showOrder,
                 $this->parentCategoryID,
@@ -62,7 +62,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                             AND showOrder < ?
                             AND parentCategoryID = ?
                             AND objectTypeID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $showOrder,
                     $this->showOrder,
@@ -74,7 +74,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                         FROM    " . static::getDatabaseTableName() . "
                         WHERE   objectTypeID = ?
                             AND parentCategoryID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $this->objectTypeID,
                     $this->parentCategoryID,
@@ -94,7 +94,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                         WHERE   showOrder <= ?
                             AND showOrder > ?
                             AND objectTypeID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $showOrder,
                     $this->showOrder,
@@ -143,7 +143,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 SET     showOrder = showOrder - 1
                 WHERE   parentCategoryID = ?
                     AND showOrder > ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         foreach ($objectIDs as $categoryID) {
             $category = CategoryHandler::getInstance()->getCategory($categoryID);
@@ -172,7 +172,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 FROM    " . static::getDatabaseTableName() . "
                 WHERE   objectTypeID = ?
                     AND parentCategoryID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $objectTypeID,
             $parentCategoryID,
@@ -189,7 +189,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     WHERE   objectTypeID = ?
                         AND showOrder >= ?
                         AND parentCategoryID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $objectTypeID,
                 $showOrder,

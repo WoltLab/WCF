@@ -89,9 +89,9 @@ class UserOptionSetDefaultsForm extends AbstractForm
 
             // get changed options
             $sql = "SELECT  optionID, defaultValue
-                    FROM    wcf" . WCF_N . "_user_option
+                    FROM    wcf1_user_option
                     WHERE   optionID IN (?" . \str_repeat(', ?', \count($optionIDs) - 1) . ")";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($optionIDs);
             $optionIDs = $optionValues = [];
             while ($row = $statement->fetchArray()) {
@@ -102,18 +102,18 @@ class UserOptionSetDefaultsForm extends AbstractForm
             }
 
             if (!empty($optionIDs)) {
-                $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
+                $sql = "UPDATE  wcf1_user_option_value
                         SET     userOption" . \implode(' = ?, userOption', $optionIDs) . " = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute(\array_merge($optionValues));
             }
         }
 
         // save values
-        $sql = "UPDATE  wcf" . WCF_N . "_user_option
+        $sql = "UPDATE  wcf1_user_option
                 SET     defaultValue = ?
                 WHERE   optionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($saveOptions as $optionID => $value) {
             $statement->execute([$value, $optionID]);
         }

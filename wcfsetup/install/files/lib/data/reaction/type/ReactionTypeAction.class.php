@@ -48,10 +48,10 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
     public function create()
     {
         if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
-            $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+            $sql = "UPDATE  wcf1_reaction_type
                     SET     showOrder = showOrder + 1
                     WHERE   showOrder >= ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->parameters['data']['showOrder'],
             ]);
@@ -155,20 +155,20 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 
             // update show order
             if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
-                $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+                $sql = "UPDATE  wcf1_reaction_type
                         SET     showOrder = showOrder + 1
                         WHERE   showOrder >= ?
                         AND     reactionTypeID <> ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $this->parameters['data']['showOrder'],
                     $object->reactionTypeID,
                 ]);
 
-                $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+                $sql = "UPDATE  wcf1_reaction_type
                         SET     showOrder = showOrder - 1
                         WHERE   showOrder > ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     $object->showOrder,
                 ]);
@@ -228,10 +228,10 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
     {
         $returnValues = parent::delete();
 
-        $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+        $sql = "UPDATE  wcf1_reaction_type
                 SET     showOrder = showOrder - 1
                 WHERE   showOrder > ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($this->getObjects() as $object) {
             $statement->execute([
                 $object->showOrder,

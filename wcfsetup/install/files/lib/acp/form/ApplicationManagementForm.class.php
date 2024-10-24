@@ -161,20 +161,20 @@ final class ApplicationManagementForm extends AbstractForm
         parent::save();
 
         if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
-            $sql = "UPDATE  wcf" . WCF_N . "_application
+            $sql = "UPDATE  wcf1_application
                     SET     domainName = ?,
                             cookieDomain = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->domainName,
                 $this->cookieDomain,
             ]);
         }
 
-        $sql = "UPDATE  wcf" . WCF_N . "_application
+        $sql = "UPDATE  wcf1_application
                 SET     landingPageID = ?
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($this->landingPageID as $packageID => $landingPageID) {
             $statement->execute([
                 $landingPageID ?: null,

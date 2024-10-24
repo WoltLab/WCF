@@ -98,9 +98,9 @@ class PollManager extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("pollID IN (?)", [$pollIDs]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_poll
+        $sql = "DELETE FROM wcf1_poll
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
     }
 
@@ -146,10 +146,10 @@ class PollManager extends SingletonFactory
 
             // load poll options
             $sql = "SELECT      optionID, optionValue
-                    FROM        wcf" . WCF_N . "_poll_option
+                    FROM        wcf1_poll_option
                     WHERE       pollID = ?
                     ORDER BY    showOrder ASC";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->poll->pollID]);
             while ($row = $statement->fetchArray()) {
                 $this->pollOptions[] = $row;
@@ -431,7 +431,7 @@ class PollManager extends SingletonFactory
         if (WCF::getUser()->userID) {
             $optionList->sqlSelects = "CASE WHEN poll_option_vote.optionID IS NULL THEN '0' ELSE '1' END AS voted";
             $optionList->sqlJoins = "
-                LEFT JOIN   wcf" . WCF_N . "_poll_option_vote poll_option_vote
+                LEFT JOIN   wcf1_poll_option_vote poll_option_vote
                 ON          poll_option_vote.optionID = poll_option.optionID
                         AND poll_option_vote.userID = " . WCF::getUser()->userID;
         } else {

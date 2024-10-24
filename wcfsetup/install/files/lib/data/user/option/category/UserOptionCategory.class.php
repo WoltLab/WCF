@@ -48,9 +48,9 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
     public static function getCategoryByName($categoryName)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_option_category
+                FROM    wcf1_user_option_category
                 WHERE   categoryName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$categoryName]);
         $row = $statement->fetchArray();
         if ($row === false) {

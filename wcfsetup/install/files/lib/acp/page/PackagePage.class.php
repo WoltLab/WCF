@@ -76,10 +76,10 @@ class PackagePage extends AbstractPage
         parent::readData();
 
         $sql = "SELECT  pluginStoreFileID
-                FROM    wcf" . WCF_N . "_package_update
+                FROM    wcf1_package_update
                 WHERE   package = ?
                     AND pluginStoreFileID <> 0";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->package->package]);
         $this->pluginStoreFileID = \intval($statement->fetchSingleColumn());
     }

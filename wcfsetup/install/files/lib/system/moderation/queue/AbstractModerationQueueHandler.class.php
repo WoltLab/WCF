@@ -68,7 +68,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         $sql = "SELECT  " . $indexName . "
                 FROM    " . $tableName . "
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             unset($queues[$row[$indexName]]);
@@ -93,9 +93,9 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         $conditions->add("objectID IN (?)", [$objectIDs]);
 
         $sql = "SELECT  queueID
-                FROM    wcf" . WCF_N . "_moderation_queue
+                FROM    wcf1_moderation_queue
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

@@ -47,9 +47,9 @@ class UserProfileVisitorList extends DatabaseObjectList
         $this->sqlSelects .= ", user_avatar.*";
 
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = user_profile_visitor.userID
-            LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
+            LEFT JOIN   wcf1_user_avatar user_avatar
             ON          user_avatar.avatarID = user_table.avatarID";
     }
 }

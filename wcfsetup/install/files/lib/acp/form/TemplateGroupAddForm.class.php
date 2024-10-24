@@ -100,9 +100,9 @@ class TemplateGroupAddForm extends AbstractForm
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_template_group
+                FROM    wcf1_template_group
                 WHERE   templateGroupName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->templateGroupName]);
 
         if ($statement->fetchSingleColumn()) {
@@ -124,9 +124,9 @@ class TemplateGroupAddForm extends AbstractForm
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_template_group
+                FROM    wcf1_template_group
                 WHERE   templateGroupFolderName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->templateGroupFolderName]);
 
         if ($statement->fetchSingleColumn()) {

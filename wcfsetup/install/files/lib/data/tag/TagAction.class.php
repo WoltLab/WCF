@@ -89,9 +89,9 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
 
         // find tags
         $sql = "SELECT  tagID, name
-                FROM    wcf" . WCF_N . "_tag
+                FROM    wcf1_tag
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql, 5);
+        $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute($conditionBuilder->getParameters());
         while ($row = $statement->fetchArray()) {
             $list[] = [

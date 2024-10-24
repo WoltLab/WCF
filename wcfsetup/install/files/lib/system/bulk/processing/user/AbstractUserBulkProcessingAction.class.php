@@ -41,9 +41,9 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
         $conditionBuilder->add('userID IN (?)', [$userList->getObjectIDs()]);
 
         $sql = "SELECT  userID, groupID
-                FROM    wcf" . WCF_N . "_user_to_group
+                FROM    wcf1_user_to_group
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $groupIDs = $statement->fetchMap('userID', 'groupID', false);
 

@@ -51,7 +51,7 @@ class PageSearch extends AbstractSearchProvider
      */
     public function getTableName(): string
     {
-        return 'wcf' . WCF_N . '_page_content';
+        return 'wcf1_page_content';
     }
 
     /**
@@ -83,7 +83,7 @@ class PageSearch extends AbstractSearchProvider
      */
     public function getTimeFieldName(): string
     {
-        return 'wcf' . WCF_N . '_page_content.pageContentID';
+        return 'wcf1_page_content.pageContentID';
     }
 
     /**
@@ -93,12 +93,12 @@ class PageSearch extends AbstractSearchProvider
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add(
-            'wcf' . WCF_N . '_page.pageType IN (?) AND wcf' . WCF_N . '_page.isDisabled = ?',
+            'wcf1_page.pageType IN (?) AND wcf1_page.isDisabled = ?',
             [['text', 'html'], 0]
         );
         // Exclude versions of disabled languages.
         $conditionBuilder->add(
-            '(wcf' . WCF_N . '_page_content.languageID IS NULL OR wcf' . WCF_N . '_page_content.languageID IN (?))',
+            '(wcf1_page_content.languageID IS NULL OR wcf1_page_content.languageID IN (?))',
             [\array_keys(LanguageFactory::getInstance()->getLanguages())]
         );
         $this->initAclCondition($conditionBuilder);
@@ -111,24 +111,24 @@ class PageSearch extends AbstractSearchProvider
         $objectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.acl.simple', 'com.woltlab.wcf.page');
         $conditionBuilder->add('(
-            wcf' . WCF_N . '_page_content.pageID NOT IN (
+            wcf1_page_content.pageID NOT IN (
                 SELECT  objectID
-                FROM    wcf' . WCF_N . '_acl_simple_to_group
+                FROM    wcf1_acl_simple_to_group
                 WHERE   objectTypeID = ?
                 UNION
                 SELECT  objectID
-                FROM    wcf' . WCF_N . '_acl_simple_to_user
+                FROM    wcf1_acl_simple_to_user
                 WHERE   objectTypeID = ?
             )
             OR
-            wcf' . WCF_N . '_page_content.pageID IN (
+            wcf1_page_content.pageID IN (
                 SELECT  objectID
-                FROM    wcf' . WCF_N . '_acl_simple_to_group
+                FROM    wcf1_acl_simple_to_group
                 WHERE   objectTypeID = ?
                     AND groupID IN (?)
                 UNION
                 SELECT  objectID
-                FROM    wcf' . WCF_N . '_acl_simple_to_user
+                FROM    wcf1_acl_simple_to_user
                 WHERE   objectTypeID = ?
                     AND userID = ?
             )
@@ -148,8 +148,8 @@ class PageSearch extends AbstractSearchProvider
     public function getJoins(): string
     {
         return '
-            INNER JOIN  wcf' . WCF_N . '_page
-            ON          wcf' . WCF_N . '_page.pageID = ' . $this->getTableName() . '.pageID';
+            INNER JOIN  wcf1_page
+            ON          wcf1_page.pageID = ' . $this->getTableName() . '.pageID';
     }
 
     /**

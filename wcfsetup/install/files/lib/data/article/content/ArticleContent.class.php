@@ -208,17 +208,17 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_article_content
+                    FROM    wcf1_article_content
                     WHERE   articleID = ?
                         AND languageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$articleID, $languageID]);
         } else {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_article_content
+                    FROM    wcf1_article_content
                     WHERE   articleID = ?
                         AND languageID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$articleID]);
         }
 

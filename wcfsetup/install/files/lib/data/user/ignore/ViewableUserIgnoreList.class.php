@@ -49,11 +49,11 @@ class ViewableUserIgnoreList extends UserIgnoreList
         $this->sqlSelects .= ", user_avatar.*";
 
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = user_ignore.ignoreUserID
-            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID
-            LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
+            LEFT JOIN   wcf1_user_avatar user_avatar
             ON          user_avatar.avatarID = user_table.avatarID";
 
         $this->sqlSelects .= ", user_table.*";

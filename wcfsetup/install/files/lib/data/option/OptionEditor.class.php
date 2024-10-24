@@ -45,8 +45,8 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         // get option ids
         $sql = "SELECT  optionName, optionID
-                FROM    wcf" . WCF_N . "_option";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_option";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $optionIDs = $statement->fetchMap('optionName', 'optionID');
 
@@ -68,19 +68,19 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public static function updateAll(array $options)
     {
         $sql = "SELECT  optionID, optionName, optionValue
-                FROM    wcf" . WCF_N . "_option
+                FROM    wcf1_option
                 WHERE   optionName IN (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['cache_source_type', 'visitor_use_tiny_build']);
         $oldValues = [];
         while ($row = $statement->fetchArray()) {
             $oldValues[$row['optionID']] = $row;
         }
 
-        $sql = "UPDATE  wcf" . WCF_N . "_option
+        $sql = "UPDATE  wcf1_option
                 SET     optionValue = ?
                 WHERE   optionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $flushCache = false;
         $flushPermissions = false;

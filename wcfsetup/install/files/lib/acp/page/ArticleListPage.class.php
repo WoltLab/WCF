@@ -161,7 +161,7 @@ class ArticleListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'article.articleID IN (
                     SELECT  articleID
-                    FROM    wcf' . WCF_N . '_article_content
+                    FROM    wcf1_article_content
                     WHERE   title LIKE ?
                 )',
                 ['%' . $this->title . '%']
@@ -171,7 +171,7 @@ class ArticleListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add(
                 'article.articleID IN (
                     SELECT  articleID
-                    FROM    wcf' . WCF_N . '_article_content
+                    FROM    wcf1_article_content
                     WHERE   content LIKE ?
                 )',
                 ['%' . $this->content . '%']
@@ -180,7 +180,7 @@ class ArticleListPage extends SortablePage
 
         $this->objectList->sqlSelects = "(
             SELECT  title
-            FROM    wcf" . WCF_N . "_article_content
+            FROM    wcf1_article_content
             WHERE   articleID = article.articleID
                 AND (
                         languageID IS NULL

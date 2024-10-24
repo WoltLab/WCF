@@ -35,10 +35,10 @@ class UserIgnore extends DatabaseObject
     public static function getIgnore($ignoreUserID)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_ignore
+                FROM    wcf1_user_ignore
                 WHERE   userID = ?
                     AND ignoreUserID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             WCF::getUser()->userID,
             $ignoreUserID,

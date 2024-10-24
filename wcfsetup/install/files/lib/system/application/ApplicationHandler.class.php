@@ -6,11 +6,11 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
-use wcf\data\package\PackageList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -263,15 +263,18 @@ final class ApplicationHandler extends SingletonFactory
         }
 
         if ($skipCache) {
-            $packageList = new PackageList();
-            $packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
-            $packageList->readObjects();
+            $sql = "SELECT package 
+                    FROM   wcf" . WCF_N . "_package
+                    WHERE  isApplication = ?";
+            $statement = WCF::getDB()->prepareUnmanaged($sql);
+            $statement->execute([1]);
+            $packages = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
             $abbreviations = \implode(
                 '|',
-                \array_map(static function (Package $package): string {
-                    return \preg_quote(Package::getAbbreviation($package->package), '~');
-                }, $packageList->getObjects())
+                \array_map(static function (string $package): string {
+                    return \preg_quote(Package::getAbbreviation($package), '~');
+                }, $packages)
             );
             $regex = "~(\\b(?:{$abbreviations}))1_~";
 

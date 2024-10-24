@@ -226,9 +226,9 @@ class UserAddForm extends UserOptionListForm
             $conditions->add("groupType NOT IN (?)", [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
 
             $sql = "SELECT  groupID
-                    FROM    wcf" . WCF_N . "_user_group
+                    FROM    wcf1_user_group
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $this->groupIDs = [];
             while ($row = $statement->fetchArray()) {

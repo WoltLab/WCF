@@ -74,14 +74,14 @@ trait TMultiCategoryObject
                 }
             } else {
                 $sql = "SELECT      categoryID
-                        FROM        wcf" . WCF_N . "_category
+                        FROM        wcf1_category
                         WHERE       categoryID IN (
                                         SELECT  categoryID
                                         FROM    " . static::getCategoryMappingDatabaseTableName() . "
                                         WHERE   " . static::getDatabaseTableIndexName() . " = ?
                                     )
                         ORDER BY    parentCategoryID, showOrder";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$this->getObjectID()]);
                 while ($categoryID = $statement->fetchColumn()) {
                     /** @noinspection PhpUndefinedMethodInspection */

@@ -288,7 +288,7 @@ class UserSearchForm extends UserOptionListForm
     {
         $this->userList = new UserList();
         $this->userList->sqlConditionJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID";
         $this->userList->sqlLimit = $this->maxResults;
 

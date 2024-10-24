@@ -2,9 +2,9 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\application\ApplicationList;
+use wcf\data\application\Application;
 use wcf\data\package\Package;
-use wcf\data\package\PackageList;
+use wcf\system\WCF;
 
 /**
  * Caches applications.
@@ -26,19 +26,25 @@ class ApplicationCacheBuilder extends AbstractCacheBuilder
         ];
 
         // fetch applications
-        $applicationList = new ApplicationList();
-        $applicationList->readObjects();
+        $sql = "SELECT *
+                FROM   wcf" . WCF_N . "_application";
+        $statement = WCF::getDB()->prepareUnmanaged($sql);
+        $statement->execute();
+        $applications = $statement->fetchObjects(Application::class);
 
-        foreach ($applicationList as $application) {
+        foreach ($applications as $application) {
             $data['application'][$application->packageID] = $application;
         }
 
         // fetch abbreviations
-        $packageList = new PackageList();
-        $packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
-        $packageList->readObjects();
-        foreach ($packageList as $package) {
-            $data['abbreviation'][Package::getAbbreviation($package->package)] = $package->packageID;
+        $sql = "SELECT packageID, package
+                FROM   wcf" . WCF_N . "_package
+                WHERE  isApplication = ?";
+        $statement = WCF::getDB()->prepareUnmanaged($sql);
+        $statement->execute([1]);
+        $packages = $statement->fetchMap('packageID', 'package');
+        foreach ($packages as $packageID => $package) {
+            $data['abbreviation'][Package::getAbbreviation($package)] = $packageID;
         }
 
         return $data;

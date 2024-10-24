@@ -113,11 +113,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM wcf1_" . $this->tableName . "
                 WHERE       objectType = ?
                         AND definitionID = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($items as $item) {
             $statement->execute([
                 $item['attributes']['name'],
@@ -174,7 +174,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   objectType = ?
                     AND definitionID = ?
                     AND packageID = ?";
@@ -1113,7 +1113,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 $className,
                 UserIntegerPropertyCondition::class,
                 $prefix . 'UserIntegerPropertyName',
-                'wcf' . WCF_N . '_user'
+                'wcf1_user'
             )->required()
         );
         $this->definitionElementChildren[$objectTypeDefinition]['propertyname'] = '';
@@ -1124,7 +1124,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 $className,
                 UserTimestampPropertyCondition::class,
                 $prefix . 'UserTimestampPropertyName',
-                'wcf' . WCF_N . '_user'
+                'wcf1_user'
             )->required()
         );
         // already added above:

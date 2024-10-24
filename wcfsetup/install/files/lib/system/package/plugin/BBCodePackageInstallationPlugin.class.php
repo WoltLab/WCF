@@ -69,10 +69,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM wcf1_" . $this->tableName . "
                 WHERE       bbcodeTag = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($items as $item) {
             $statement->execute([
                 $item['attributes']['name'],
@@ -155,7 +155,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     {
         // check if bbcode tag already exists
         $sqlData = $this->findExistingItem($data);
-        $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+        $statement = WCF::getDB()->prepare($sqlData['sql']);
         $statement->execute($sqlData['parameters']);
         $row = $statement->fetchArray();
         if ($row && $row['packageID'] != $this->installation->getPackageID()) {
@@ -170,7 +170,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   bbcodeTag = ?";
         $parameters = [$data['bbcodeTag']];
 

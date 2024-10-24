@@ -26,15 +26,15 @@ class WhoWasOnlineCacheBuilder extends AbstractCacheBuilder
         $userIDs = [];
         $sql = "(
                     SELECT  userID
-                    FROM    wcf" . WCF_N . "_user
+                    FROM    wcf1_user
                     WHERE   lastActivityTime > ?
                 ) UNION (
                     SELECT  userID
-                    FROM    wcf" . WCF_N . "_session
+                    FROM    wcf1_session
                     WHERE   userID IS NOT NULL
                         AND lastActivityTime > ?
                 )";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([TIME_NOW - 86400, TIME_NOW - USER_ONLINE_TIMEOUT]);
         while ($userID = $statement->fetchColumn()) {
             $userIDs[] = $userID;

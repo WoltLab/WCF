@@ -28,16 +28,16 @@ class UserStatsCacheBuilder extends AbstractCacheBuilder
 
         // number of members
         $sql = "SELECT  COUNT(*) AS amount
-                FROM    wcf" . WCF_N . "_user";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_user";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $data['members'] = $statement->fetchColumn();
 
         // newest member
         $sql = "SELECT      userID
-                FROM        wcf" . WCF_N . "_user
+                FROM        wcf1_user
                 ORDER BY    userID DESC";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute();
         $data['newestMember'] = UserProfileRuntimeCache::getInstance()->getObject($statement->fetchSingleColumn());
 

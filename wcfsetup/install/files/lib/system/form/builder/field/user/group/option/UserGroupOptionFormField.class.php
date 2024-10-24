@@ -51,9 +51,9 @@ final class UserGroupOptionFormField extends ItemListFormField implements IPacka
             }
 
             $sql = "SELECT  optionName
-                    FROM    wcf" . WCF_N . "_user_group_option
+                    FROM    wcf1_user_group_option
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             $availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

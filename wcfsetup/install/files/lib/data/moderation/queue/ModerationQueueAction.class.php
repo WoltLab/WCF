@@ -88,10 +88,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("queueID IN (?)", [$queueIDs]);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_moderation_queue
+        $sql = "UPDATE  wcf1_moderation_queue
                 SET     status = " . ModerationQueue::STATUS_DONE . "
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         // reset number of active moderation queue items
@@ -154,16 +154,16 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 
         $sql = "SELECT      moderation_queue.queueID
-                FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
-                LEFT JOIN   wcf" . WCF_N . "_moderation_queue moderation_queue
+                FROM        wcf1_moderation_queue_to_user moderation_queue_to_user
+                LEFT JOIN   wcf1_moderation_queue moderation_queue
                 ON          moderation_queue.queueID = moderation_queue_to_user.queueID
-                LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                LEFT JOIN   wcf1_tracked_visit tracked_visit
                 ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue') . "
                         AND tracked_visit.objectID = moderation_queue.queueID
                         AND tracked_visit.userID = " . WCF::getUser()->userID . "
                 " . $conditions . "
                 ORDER BY    moderation_queue.lastChangeTime DESC";
-        $statement = WCF::getDB()->prepareStatement($sql, $MAX_ITEMS);
+        $statement = WCF::getDB()->prepare($sql, $MAX_ITEMS);
         $statement->execute($conditions->getParameters());
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

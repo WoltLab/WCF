@@ -33,9 +33,9 @@ class UserBirthdayCacheBuilder extends AbstractCacheBuilder
         $data = [];
         $birthday = 'userOption' . $userOptionID;
         $sql = "SELECT  userID, " . $birthday . "
-                FROM    wcf" . WCF_N . "_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   " . $birthday . " LIKE ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['%-' . ($parameters['month'] < 10 ? '0' : '') . $parameters['month'] . '-%']);
         while ($row = $statement->fetchArray()) {
             [, $month, $day] = \explode('-', $row[$birthday]);

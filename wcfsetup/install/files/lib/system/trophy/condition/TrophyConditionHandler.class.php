@@ -134,7 +134,7 @@ class TrophyConditionHandler extends SingletonFactory
     {
         $userList = new UserList();
         $userList->sqlConditionJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID";
 
         $conditions = $trophy->getConditions();
@@ -146,7 +146,7 @@ class TrophyConditionHandler extends SingletonFactory
         $userList->getConditionBuilder()->add(
             'user_table.userID NOT IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_trophy
+                FROM    wcf1_user_trophy
                 WHERE   trophyID IN (?)
             )',
             [$trophy->trophyID]
@@ -199,7 +199,7 @@ class TrophyConditionHandler extends SingletonFactory
 
         // We joining the user_trophy table to receive the userTrophyID, which should be deleted.
         $userList->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user_trophy user_trophy
+            LEFT JOIN   wcf1_user_trophy user_trophy
             ON          user_table.userID = user_trophy.userID";
 
         // We do not need the complete user object, but only the userTrophyID.
@@ -221,7 +221,7 @@ class TrophyConditionHandler extends SingletonFactory
         $userList->getConditionBuilder()->add(
             'user_table.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_trophy
+                FROM    wcf1_user_trophy
                 WHERE   trophyID IN (?)
             )',
             [$trophy->trophyID]

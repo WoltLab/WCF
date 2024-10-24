@@ -34,8 +34,8 @@ class PackageInstallationQueue extends DatabaseObject
     public static function getNewProcessNo()
     {
         $sql = "SELECT  MAX(processNo) AS processNo
-                FROM    wcf" . WCF_N . "_package_installation_queue";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_package_installation_queue";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $row = $statement->fetchArray();
 

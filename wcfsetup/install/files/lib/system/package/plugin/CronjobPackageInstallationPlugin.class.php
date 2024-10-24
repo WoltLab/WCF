@@ -203,7 +203,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 WHERE   packageID = ?
                     AND cronjobName = ?";
         $parameters = [

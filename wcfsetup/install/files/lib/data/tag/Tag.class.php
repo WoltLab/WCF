@@ -31,10 +31,10 @@ class Tag extends DatabaseObject implements IRouteController
     public static function getTag($name, $languageID = 0)
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_tag
+                FROM    wcf1_tag
                 WHERE   languageID = ?
                     AND name = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$languageID, $name]);
 
         return $statement->fetchObject(self::class);

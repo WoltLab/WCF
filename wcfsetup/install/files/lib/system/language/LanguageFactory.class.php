@@ -98,9 +98,9 @@ class LanguageFactory extends SingletonFactory
         // called within WCFSetup
         if ($this->cache === false || empty($this->cache['codes'])) {
             $sql = "SELECT  languageID
-                    FROM    wcf" . WCF_N . "_language
+                    FROM    wcf1_language
                     WHERE   languageCode = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$languageCode]);
             $row = $statement->fetchArray();
             if (isset($row['languageID'])) {
@@ -329,17 +329,17 @@ class LanguageFactory extends SingletonFactory
     public function makeDefault($languageID)
     {
         // remove old default language
-        $sql = "UPDATE  wcf" . WCF_N . "_language
+        $sql = "UPDATE  wcf1_language
                 SET     isDefault = 0
                 WHERE   isDefault = 1";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
 
         // make this language to default
-        $sql = "UPDATE  wcf" . WCF_N . "_language
+        $sql = "UPDATE  wcf1_language
                 SET     isDefault = 1
                 WHERE   languageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$languageID]);
 
         // rebuild language cache
@@ -377,9 +377,9 @@ class LanguageFactory extends SingletonFactory
     public function countRecentlyDisabledCustomValues()
     {
         $sql = "SELECT  COUNT(*) AS count
-                FROM    wcf" . WCF_N . "_language_item
+                FROM    wcf1_language_item
                 WHERE   languageCustomItemDisableTime >= ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([TIME_NOW - 86400 * 7]);
 
         return $statement->fetchSingleColumn();

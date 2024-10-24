@@ -41,16 +41,16 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction
         }
 
         // remove old values
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_group_option_value
+        $sql = "DELETE FROM wcf1_user_group_option_value
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         if (!empty($this->parameters['values'])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_group_option_value
+            $sql = "INSERT INTO wcf1_user_group_option_value
                                 (optionID, groupID, optionValue)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($this->parameters['values'] as $groupID => $optionValue) {

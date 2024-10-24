@@ -84,9 +84,9 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
             self::$templateGroupStructure = [];
 
             $sql = "SELECT      *
-                    FROM        wcf" . WCF_N . "_template_group
+                    FROM        wcf1_template_group
                     ORDER BY    templateGroupName ASC";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {
                 self::$templateGroupStructure[$row['parentTemplateGroupID'] ?: 0][] = new self(null, $row);

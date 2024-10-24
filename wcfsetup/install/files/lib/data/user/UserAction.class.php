@@ -107,9 +107,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $conditions->add("userID IN (?)", [$this->objectIDs]);
 
         $sql = "SELECT  DISTINCT groupID
-                FROM    wcf" . WCF_N . "_user_to_group
+                FROM    wcf1_user_to_group
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -232,12 +232,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_user
+        $sql = "UPDATE  wcf1_user
                 SET     banned = ?,
                         banReason = ?,
                         banExpires = ?
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(
             \array_merge([
                 1,
@@ -261,11 +261,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_user
+        $sql = "UPDATE  wcf1_user
                 SET     banned = ?,
                         banExpires = ?
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(
             \array_merge([
                 0,
@@ -303,12 +303,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
         if (PACKAGE_ID) {
             // set default notifications
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_event_to_user
+            $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (userID, eventID, mailNotificationType)
                     SELECT      ?, eventID, presetMailNotificationType
-                    FROM        wcf" . WCF_N . "_user_notification_event
+                    FROM        wcf1_user_notification_event
                     WHERE       preset = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$user->userID, 1]);
 
             // update user rank
@@ -401,38 +401,38 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 WCF::getDB()->beginTransaction();
 
                 // update article
-                $sql = "UPDATE  wcf" . WCF_N . "_article
+                $sql = "UPDATE  wcf1_article
                         SET     username = ?
                         WHERE   userID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$username, $userID]);
 
                 // update comments
-                $sql = "UPDATE  wcf" . WCF_N . "_comment
+                $sql = "UPDATE  wcf1_comment
                         SET     username = ?
                         WHERE   userID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$username, $userID]);
 
                 // update comment responses
-                $sql = "UPDATE  wcf" . WCF_N . "_comment_response
+                $sql = "UPDATE  wcf1_comment_response
                         SET     username = ?
                         WHERE   userID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$username, $userID]);
 
                 // update media
-                $sql = "UPDATE  wcf" . WCF_N . "_media
+                $sql = "UPDATE  wcf1_media
                         SET     username = ?
                         WHERE   userID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$username, $userID]);
 
                 // update modification log
-                $sql = "UPDATE  wcf" . WCF_N . "_modification_log
+                $sql = "UPDATE  wcf1_modification_log
                         SET     username = ?
                         WHERE   userID = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$username, $userID]);
 
                 WCF::getDB()->commitTransaction();
@@ -836,11 +836,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
         // get objects
         $sql = "SELECT      user_option_value.*, user_table.*
-                FROM        wcf" . WCF_N . "_user user_table
-                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                FROM        wcf1_user user_table
+                LEFT JOIN   wcf1_user_option_value user_option_value
                 ON          user_option_value.userID = user_table.userID
                 WHERE       user_table.userID IN (" . \str_repeat('?,', \count($this->objectIDs) - 1) . "?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($this->objectIDs);
         while ($object = $statement->fetchObject($baseClass)) {
             $this->objects[] = new $this->className($object);

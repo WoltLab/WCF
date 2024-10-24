@@ -106,7 +106,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
         $userList->getConditionBuilder()->add(
             'user_table.userID NOT IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_to_group
+                FROM    wcf1_user_to_group
                 WHERE   groupID = ?
             )',
             [$assignment->groupID]

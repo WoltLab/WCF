@@ -44,10 +44,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+        $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
                 WHERE       menuItem = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         foreach ($items as $item) {
             $statement->execute([
                 $item['attributes']['name'],
@@ -88,9 +88,9 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         }
 
         $sql = "SELECT  COUNT(menuItemID)
-                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "
+                FROM    " . $this->application . "1_" . $this->tableName . "
                 WHERE   menuItem = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$data['parentMenuItem']]);
 
         if (!$statement->fetchSingleColumn()) {
@@ -104,7 +104,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
-                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "
+                FROM    " . $this->application . "1_" . $this->tableName . "
                 WHERE   menuItem = ?
                     AND packageID = ?";
         $parameters = [

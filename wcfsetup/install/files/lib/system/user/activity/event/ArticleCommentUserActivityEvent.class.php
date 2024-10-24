@@ -47,7 +47,7 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
             $articleList->getConditionBuilder()->add(
                 "article.articleID IN (
                     SELECT  articleID
-                    FROM    wcf" . WCF_N . "_article_content
+                    FROM    wcf1_article_content
                     WHERE   articleContentID IN (?)
                 )",
                 [$articleContentIDs]

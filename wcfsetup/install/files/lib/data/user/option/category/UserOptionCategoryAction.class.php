@@ -60,9 +60,9 @@ class UserOptionCategoryAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("categoryName IN (?)", [$categoryNames]);
         $sql = "SELECT  COUNT(*) AS count
-                FROM    wcf" . WCF_N . "_user_option
+                FROM    wcf1_user_option
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $count = $statement->fetchSingleColumn();
         if ($count > 0) {

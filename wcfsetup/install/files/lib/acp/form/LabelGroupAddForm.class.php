@@ -264,18 +264,18 @@ class LabelGroupAddForm extends AbstractForm
 
         // remove old relations
         if ($groupID !== null) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_label_group_to_object
+            $sql = "DELETE FROM wcf1_label_group_to_object
                     WHERE       groupID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$groupID]);
         }
 
         // insert new relations
         if (!empty($this->objectTypes)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_label_group_to_object
+            $sql = "INSERT INTO wcf1_label_group_to_object
                                 (groupID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($this->objectTypes as $objectTypeID => $data) {
                 foreach ($data as $objectID) {

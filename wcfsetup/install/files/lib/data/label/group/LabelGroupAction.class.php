@@ -58,9 +58,9 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
             $conditions->add('groupID IN (?)', [$this->objectIDs]);
 
             $sql = "SELECT  labelID
-                    FROM    wcf" . WCF_N . "_label
+                    FROM    wcf1_label
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -88,9 +88,9 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
                 $conditions->add('languageItem IN (?)', [$languageVariables]);
 
                 $sql = "SELECT  languageItemID
-                        FROM    wcf" . WCF_N . "_language_item
+                        FROM    wcf1_language_item
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

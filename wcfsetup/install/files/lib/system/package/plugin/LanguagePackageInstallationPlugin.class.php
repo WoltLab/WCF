@@ -199,10 +199,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
 
         if (!empty($itemIDs)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+            $sql = "DELETE FROM wcf1_" . $this->tableName . "
                     WHERE       languageItemID = ?
                             AND packageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($itemIDs as $itemID) {
                 $statement->execute([

@@ -32,16 +32,16 @@ class ArticleCategoryLabelCacheBuilder extends AbstractCacheBuilder
         $conditionBuilder->add(
             'objectID IN (
                 SELECT  categoryID
-                FROM    wcf' . WCF_N . '_category
+                FROM    wcf1_category
                 WHERE   objectTypeID = ?
             )',
             [CategoryHandler::getInstance()->getObjectTypeByName('com.woltlab.wcf.article.category')->objectTypeID]
         );
 
         $sql = "SELECT  groupID, objectID
-                FROM    wcf" . WCF_N . "_label_group_to_object
+                FROM    wcf1_label_group_to_object
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchMap('objectID', 'groupID', false);

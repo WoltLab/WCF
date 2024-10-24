@@ -50,7 +50,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         $sql = "UPDATE  " . static::getDatabaseTableName() . "
                 SET     " . $updateSQL . "
                 WHERE   " . static::getDatabaseTableIndexName() . " = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
     }
 
@@ -77,7 +77,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         $sql = "UPDATE  " . static::getDatabaseTableName() . "
                 SET     " . $updateSQL . "
                 WHERE   " . static::getDatabaseTableIndexName() . " = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
     }
 
@@ -108,7 +108,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 
             $sql = "DELETE FROM " . static::getDatabaseTableName() . "
                     " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             $affectedCount += $statement->getAffectedRows();
         }

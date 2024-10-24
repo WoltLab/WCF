@@ -55,7 +55,7 @@ final class CreateRegistrationNotification
                                 )
                             AND optionValue = ?
                     )";
-        $statement = WCF::getDB()->prepareStatement($sql, 100);
+        $statement = WCF::getDB()->prepare($sql, 100);
         $statement->execute([
             'admin.user.canSearchUser',
             1,

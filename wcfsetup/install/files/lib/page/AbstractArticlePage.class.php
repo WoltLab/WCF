@@ -153,16 +153,16 @@ abstract class AbstractArticlePage extends AbstractPage
                 $conditionBuilder->add('tag_to_object.tagID IN (?)', [\array_keys($this->tags)]);
                 $conditionBuilder->add('tag_to_object.objectID <> ?', [$this->articleContentID]);
                 $sql = "SELECT      MAX(article.articleID), COUNT(*) AS count
-                        FROM        wcf" . WCF_N . "_tag_to_object tag_to_object
-                        INNER JOIN  wcf" . WCF_N . "_article_content article_content
+                        FROM        wcf1_tag_to_object tag_to_object
+                        INNER JOIN  wcf1_article_content article_content
                         ON          tag_to_object.objectID = article_content.articleContentID
-                        INNER JOIN  wcf" . WCF_N . "_article article
+                        INNER JOIN  wcf1_article article
                         ON          article_content.articleID = article.articleID
                         " . $conditionBuilder . "
                         GROUP BY    tag_to_object.objectID
                         HAVING      COUNT(*) >= " . \round(\count($this->tags) * ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
                         ORDER BY    count DESC, MAX(article.time) DESC";
-                $statement = WCF::getDB()->prepareStatement($sql, ARTICLE_RELATED_ARTICLES * 4);
+                $statement = WCF::getDB()->prepare($sql, ARTICLE_RELATED_ARTICLES * 4);
                 $statement->execute($conditionBuilder->getParameters());
                 $articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

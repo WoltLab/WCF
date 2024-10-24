@@ -64,7 +64,7 @@ final class SystemInfoAcpDashboardBox extends AbstractAcpDashboardBox
     private function getInnodbFlushLogAtTrxCommit(): int
     {
         $sql = "SELECT @@innodb_flush_log_at_trx_commit";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         return $statement->fetchSingleColumn();
     }

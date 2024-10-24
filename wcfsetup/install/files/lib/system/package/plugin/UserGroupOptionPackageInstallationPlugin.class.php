@@ -207,10 +207,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
             }
 
             // save values
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_group_option_value
+            $sql = "INSERT INTO wcf1_user_group_option_value
                                 (groupID, optionID, optionValue)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             WCF::getDB()->beginTransaction();
             foreach ($values as $groupID => $value) {
                 $statement->execute([

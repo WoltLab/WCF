@@ -146,9 +146,9 @@ class UserProfileAction extends UserAction
         $conditionBuilder->add('objectTypeID IN (?)', [\array_keys($activityPointObjectTypes)]);
 
         $sql = "SELECT  objectTypeID, activityPoints, items
-                FROM    wcf" . WCF_N . "_user_activity_point
+                FROM    wcf1_user_activity_point
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
         $entries = [];
         while ($row = $statement->fetchArray()) {
@@ -350,12 +350,12 @@ class UserProfileAction extends UserAction
             }
 
             $sql = "SELECT      user_rank.rankID
-                    FROM        wcf" . WCF_N . "_user_rank user_rank
-                    LEFT JOIN   wcf" . WCF_N . "_user_group user_group
+                    FROM        wcf1_user_rank user_rank
+                    LEFT JOIN   wcf1_user_group user_group
                     ON          user_group.groupID = user_rank.groupID
                     " . $conditionBuilder . "
                     ORDER BY    user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
             if ($row === false) {
@@ -370,10 +370,10 @@ class UserProfileAction extends UserAction
         }
 
         if (!empty($userToRank)) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user
+            $sql = "UPDATE  wcf1_user
                     SET     rankID = ?
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($userToRank as $userID => $rankID) {
@@ -426,10 +426,10 @@ class UserProfileAction extends UserAction
             $conditionBuilder->add('groupID IN (?)', [$groupIDs]);
 
             $sql = "SELECT      groupID
-                    FROM        wcf" . WCF_N . "_user_group
+                    FROM        wcf1_user_group
                     " . $conditionBuilder . "
                     ORDER BY    priority DESC";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
             if ($row['groupID'] != $user->userOnlineGroupID) {
@@ -439,10 +439,10 @@ class UserProfileAction extends UserAction
 
         // add users to missing default user groups
         if (!empty($fixUserGroupIDs)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_user_to_group
+            $sql = "INSERT INTO wcf1_user_to_group
                                 (userID, groupID)
                     VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($fixUserGroupIDs as $userID => $groupIDs) {
@@ -456,10 +456,10 @@ class UserProfileAction extends UserAction
         }
 
         if (!empty($userToGroup)) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user
+            $sql = "UPDATE  wcf1_user
                     SET     userOnlineGroupID = ?
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($userToGroup as $userID => $groupID) {
@@ -481,14 +481,14 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+        $sql = "DELETE FROM wcf1_user_special_trophy
                 WHERE userID = ?";
-        $deleteStatement = WCF::getDB()->prepareStatement($sql);
+        $deleteStatement = WCF::getDB()->prepare($sql);
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_special_trophy
+        $sql = "INSERT INTO wcf1_user_special_trophy
                             (userID, trophyID)
                 VALUES      (?, ?)";
-        $insertStatement = WCF::getDB()->prepareStatement($sql);
+        $insertStatement = WCF::getDB()->prepare($sql);
 
         foreach ($this->getObjects() as $user) {
             WCF::getDB()->beginTransaction();

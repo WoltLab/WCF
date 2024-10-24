@@ -35,7 +35,7 @@ class PruneIpAddressesCronjob extends AbstractCronjob
             return;
         }
 
-        $this->columns['wcf' . WCF_N . '_user']['registrationIpAddress'] = 'registrationDate';
+        $this->columns['wcf1_user']['registrationIpAddress'] = 'registrationDate';
 
         parent::execute($cronjob);
 
@@ -45,7 +45,7 @@ class PruneIpAddressesCronjob extends AbstractCronjob
                         SET     {$ipAddressColumn} = ?
                         WHERE   {$timestampColumn} <= ?
                             AND {$ipAddressColumn} <> ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     '',
                     TIME_NOW - 86400 * PRUNE_IP_ADDRESS, // 86400 = 1 day

@@ -35,16 +35,16 @@ class TagEditor extends DatabaseObjectEditor
         }
 
         // assign all associations for the synonym with this tag
-        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_tag_to_object
+        $sql = "UPDATE IGNORE   wcf1_tag_to_object
                 SET             tagID = ?
                 WHERE           tagID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->tagID, $synonym->tagID]);
 
         // remove remaining associations (object was tagged with both tags => duplicate key previously ignored)
-        $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
+        $sql = "DELETE FROM wcf1_tag_to_object
                 WHERE       tagID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$synonym->tagID]);
 
         $editor = new self($synonym);

@@ -25,11 +25,11 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder
 
         // get attributes
         $sql = "SELECT      attribute.*, bbcode.bbcodeTag
-                FROM        wcf" . WCF_N . "_bbcode_attribute attribute
-                LEFT JOIN   wcf" . WCF_N . "_bbcode bbcode
+                FROM        wcf1_bbcode_attribute attribute
+                LEFT JOIN   wcf1_bbcode bbcode
                 ON          bbcode.bbcodeID = attribute.bbcodeID
                 ORDER BY    attribute.attributeNo";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             if (!isset($attributes[$row['bbcodeTag']])) {

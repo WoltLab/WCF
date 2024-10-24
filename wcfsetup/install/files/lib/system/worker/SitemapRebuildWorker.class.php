@@ -389,10 +389,10 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
     private function registerSitemapFiles()
     {
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_package_installation_file_log
+        $sql = "INSERT IGNORE INTO  wcf1_package_installation_file_log
                                     (packageID, filename, application)
                 VALUES              (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($this->workerData['filesToPackage'] as $packageID => $files) {

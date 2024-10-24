@@ -41,19 +41,19 @@ class AbstractCommentResponseImporter extends AbstractImporter
         $response = CommentResponseEditor::create($data);
 
         $sql = "SELECT      responseID
-                FROM        wcf" . WCF_N . "_comment_response
+                FROM        wcf1_comment_response
                 WHERE       commentID = ?
                 ORDER BY    time ASC, responseID ASC";
-        $statement = WCF::getDB()->prepareStatement($sql, 5);
+        $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute([$response->commentID]);
         $responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         // update parent comment
-        $sql = "UPDATE  wcf" . WCF_N . "_comment
+        $sql = "UPDATE  wcf1_comment
                 SET     responseIDs = ?,
                         responses = responses + 1
                 WHERE   commentID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             \serialize($responseIDs),
             $response->commentID,

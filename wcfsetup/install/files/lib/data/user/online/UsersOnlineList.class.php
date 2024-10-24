@@ -58,16 +58,16 @@ class UsersOnlineList extends SessionList
         $this->sqlSelects .= "user_avatar.*, user_option_value.*, user_group.userOnlineMarking, user_table.*";
 
         $this->sqlConditionJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = session.userID";
         $this->sqlJoins .= "
-            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = session.userID
-            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID
-            LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
+            LEFT JOIN   wcf1_user_avatar user_avatar
             ON          user_avatar.avatarID = user_table.avatarID
-            LEFT JOIN   wcf" . WCF_N . "_user_group user_group
+            LEFT JOIN   wcf1_user_group user_group
             ON          user_group.groupID = user_table.userOnlineGroupID";
 
         $this->getConditionBuilder()->add('session.lastActivityTime > ?', [TIME_NOW - USER_ONLINE_TIMEOUT]);
@@ -103,11 +103,11 @@ class UsersOnlineList extends SessionList
         $conditionBuilder->add('session.spiderIdentifier IS NULL');
 
         $sql = "SELECT      user_option_value.userOption" . User::getUserOptionID('canViewOnlineStatus') . " AS canViewOnlineStatus, session.userID
-                FROM        wcf" . WCF_N . "_session session
-                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                FROM        wcf1_session session
+                LEFT JOIN   wcf1_user_option_value user_option_value
                 ON          user_option_value.userID = session.userID
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         $users = $userIDs = [];

@@ -152,9 +152,9 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                 }
 
                                 $sql = "SELECT  COUNT(*)
-                                        FROM    wcf" . WCF_N . "_template
+                                        FROM    wcf1_template
                                         " . $conditionBuilder;
-                                $statement = WCF::getDB()->prepareStatement($sql);
+                                $statement = WCF::getDB()->prepare($sql);
                                 $statement->execute($conditionBuilder->getParameters());
 
                                 if ($statement->fetchSingleColumn()) {
@@ -219,10 +219,10 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                 $parameters['data']['application'] = $this->copiedTemplate->application;
                             } else {
                                 $sql = "SELECT  packageID
-                                    FROM    wcf" . WCF_N . "_template
+                                    FROM    wcf1_template
                                     WHERE   templateName = ?
                                         AND templateGroupID IS NULL";
-                                $statement = WCF::getDB()->prepareStatement($sql);
+                                $statement = WCF::getDB()->prepare($sql);
                                 $statement->execute([
                                     $parameters['data']['templateName']
                                 ]);

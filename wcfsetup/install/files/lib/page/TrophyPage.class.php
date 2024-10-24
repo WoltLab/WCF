@@ -177,13 +177,13 @@ class TrophyPage extends MultipleLinkPage
         if (!WCF::getUser()->userID) {
             $this->objectList->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 0)');
         } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
             $conditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   (
                             COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 0
                          OR COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 1
@@ -193,13 +193,13 @@ class TrophyPage extends MultipleLinkPage
             $friendshipConditionBuilder = new PreparedStatementConditionBuilder(false);
             $friendshipConditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 2
             )');
             $friendshipConditionBuilder->add(
                 'user_trophy.userID IN (
                     SELECT  userID
-                    FROM    wcf' . WCF_N . '_user_follow
+                    FROM    wcf1_user_follow
                     WHERE   followUserID = ?
                 )',
                 [WCF::getUser()->userID]

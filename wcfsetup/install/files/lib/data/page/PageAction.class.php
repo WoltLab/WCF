@@ -135,10 +135,10 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
         // save box to page assignments
         if (!empty($this->parameters['boxToPage'])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+            $sql = "INSERT INTO wcf1_box_to_page
                                 (boxID, pageID, visible)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($this->parameters['boxToPage'] as $boxData) {
                 $statement->execute([
@@ -265,14 +265,14 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
         // save box to page assignments
         if (isset($this->parameters['boxToPage'])) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_box_to_page
+            $sql = "DELETE FROM wcf1_box_to_page
                     WHERE       pageID = ?";
-            $deleteStatement = WCF::getDB()->prepareStatement($sql);
+            $deleteStatement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+            $sql = "INSERT INTO wcf1_box_to_page
                                 (boxID, pageID, visible)
                     VALUES      (?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             foreach ($this->getObjects() as $page) {
                 $deleteStatement->execute([$page->pageID]);
@@ -359,11 +359,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     public function search()
     {
         $sql = "SELECT      pageID
-                FROM        wcf" . WCF_N . "_page
+                FROM        wcf1_page
                 WHERE       name LIKE ?
                         AND requireObjectID = ?
                 ORDER BY    name";
-        $statement = WCF::getDB()->prepareStatement($sql, 5);
+        $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute([
             '%' . $this->parameters['searchString'] . '%',
             0,
@@ -453,9 +453,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         $conditions->add("boxID IN (?)", [$seenBoxIDs]);
 
         $sql = "SELECT  boxID
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $validBoxIDs = [];
         while ($boxID = $statement->fetchColumn()) {
@@ -476,15 +476,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     {
         $pageID = $this->pageEditor->getDecoratedObject()->pageID;
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_page_box_order
+        $sql = "DELETE FROM wcf1_page_box_order
                 WHERE       pageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$pageID]);
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_page_box_order
+        $sql = "INSERT INTO wcf1_page_box_order
                             (pageID, boxID, showOrder)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($this->parameters['position'] as $boxIDs) {
@@ -514,9 +514,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
      */
     public function resetPosition()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_page_box_order
+        $sql = "DELETE FROM wcf1_page_box_order
                 WHERE       pageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
     }
 }

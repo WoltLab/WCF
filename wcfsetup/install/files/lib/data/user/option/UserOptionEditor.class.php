@@ -33,18 +33,18 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         /** @var UserOption $userOption */
         $userOption = parent::create($parameters);
 
-        // alter the table "wcf".WCF_N."_user_option_value" with this new option
+        // alter the table "wcf1_user_option_value" with this new option
         WCF::getDB()->getEditor()->addColumn(
-            'wcf' . WCF_N . '_user_option_value',
+            'wcf1_user_option_value',
             'userOption' . $userOption->optionID,
             self::getColumnDefinition($parameters['optionType'])
         );
 
         // add the default value to this column
         if (isset($parameters['defaultValue']) && $parameters['defaultValue'] !== null) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
+            $sql = "UPDATE  wcf1_user_option_value
                     SET     userOption" . $userOption->optionID . " = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$parameters['defaultValue']]);
         }
 
@@ -58,10 +58,10 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     {
         parent::update($parameters);
 
-        // alter the table "wcf".WCF_N."_user_option_value" with this new option
+        // alter the table "wcf1_user_option_value" with this new option
         if (isset($parameters['optionType']) && $parameters['optionType'] != $this->optionType) {
             WCF::getDB()->getEditor()->alterColumn(
-                'wcf' . WCF_N . '_user_option_value',
+                'wcf1_user_option_value',
                 'userOption' . $this->optionID,
                 'userOption' . $this->optionID,
                 self::getColumnDefinition($parameters['optionType'])
@@ -74,12 +74,12 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     public function delete()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_option
+        $sql = "DELETE FROM wcf1_user_option
                 WHERE       optionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->optionID]);
 
-        WCF::getDB()->getEditor()->dropColumn('wcf' . WCF_N . '_user_option_value', 'userOption' . $this->optionID);
+        WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $this->optionID);
     }
 
     /**
@@ -90,7 +90,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         $returnValue = parent::deleteAll($objectIDs);
 
         foreach ($objectIDs as $objectID) {
-            WCF::getDB()->getEditor()->dropColumn('wcf' . WCF_N . '_user_option_value', 'userOption' . $objectID);
+            WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $objectID);
         }
 
         return $returnValue;
@@ -113,10 +113,10 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     {
         $value = \intval(!$enable);
 
-        $sql = "UPDATE  wcf" . WCF_N . "_user_option
+        $sql = "UPDATE  wcf1_user_option
                 SET     isDisabled = ?
                 WHERE   optionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$value, $this->optionID]);
     }
 

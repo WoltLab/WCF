@@ -89,9 +89,9 @@ final class StyleCompiler extends SingletonFactory
     public static function getDefaultVariables(): array
     {
         $sql = "SELECT      variable.variableName, variable.defaultValue
-                FROM        wcf" . WCF_N . "_style_variable variable
+                FROM        wcf1_style_variable variable
                 ORDER BY    variable.variableID ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $variables = $statement->fetchMap('variableName', 'defaultValue');
 
@@ -219,11 +219,11 @@ final class StyleCompiler extends SingletonFactory
 
             // read stylesheets in dependency order
             $sql = "SELECT      filename, application
-                    FROM        wcf" . WCF_N . "_package_installation_file_log
+                    FROM        wcf1_package_installation_file_log
                     WHERE       CONVERT(filename using utf8) REGEXP ?
                             AND packageID <> ?
                     ORDER BY    packageID";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 '^style/([a-zA-Z0-9\-\.]+)\.scss',
                 1,
@@ -425,9 +425,9 @@ final class StyleCompiler extends SingletonFactory
 
         // read default values
         $sql = "SELECT      variableName, defaultValue, defaultValueDarkMode
-                FROM        wcf" . WCF_N . "_style_variable
+                FROM        wcf1_style_variable
                 ORDER BY    variableID ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $variables = [];
         while ($row = $statement->fetchArray()) {

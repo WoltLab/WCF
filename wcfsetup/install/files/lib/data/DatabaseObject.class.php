@@ -62,7 +62,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             $sql = "SELECT  *
                     FROM    " . static::getDatabaseTableName() . "
                     WHERE   " . static::getDatabaseTableIndexName() . " = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();
 

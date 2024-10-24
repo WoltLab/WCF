@@ -116,11 +116,11 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
      */
     public function updatePosition()
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_menu_item
+        $sql = "UPDATE  wcf1_menu_item
                 SET     parentItemID = ?,
                         showOrder = ?
                 WHERE   itemID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($this->parameters['data']['structure'] as $parentItemID => $children) {

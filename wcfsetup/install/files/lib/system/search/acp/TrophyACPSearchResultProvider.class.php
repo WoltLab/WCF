@@ -34,9 +34,9 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
         $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
 
         $sql = "SELECT  languageItem
-                FROM    wcf" . WCF_N . "_language_item
+                FROM    wcf1_language_item
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         $trophyIDs = [];
@@ -50,10 +50,10 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
         }
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_trophy
+                FROM    wcf1_trophy
                 WHERE   title LIKE ?
                     " . (!empty($conditions->getParameters()) ? "OR " . $conditions : "");
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge([
             '%' . $query . '%',
         ], $conditions->getParameters()));

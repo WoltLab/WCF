@@ -21,10 +21,10 @@ class ContactFormPageHandler extends AbstractMenuPageHandler
     {
         $sql = "SELECT EXISTS(
                     SELECT  *
-                    FROM    wcf" . WCF_N . "_contact_recipient
+                    FROM    wcf1_contact_recipient
                     WHERE   isDisabled = ?
                 )";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([0]);
 
         return $statement->fetchSingleColumn();

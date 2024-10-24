@@ -76,18 +76,18 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
             $list->sqlConditionJoins .= ' ';
         }
         $list->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID';
         $list->sqlConditionJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            LEFT JOIN   wcf1_trophy trophy
             ON          user_trophy.trophyID = trophy.trophyID';
 
         // trophy category join
         $list->sqlJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
         $list->sqlConditionJoins .= '
-            LEFT JOIN   wcf' . WCF_N . '_category category
+            LEFT JOIN   wcf1_category category
             ON          trophy.categoryID = category.categoryID';
 
         $list->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
@@ -97,14 +97,14 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         if (!WCF::getUser()->userID) {
             $list->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   userOption' . $canViewTrophiesOptionID . ' = 0
             )');
         } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
             $conditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   (
                             userOption' . $canViewTrophiesOptionID . ' = 0
                          OR userOption' . $canViewTrophiesOptionID . ' = 1
@@ -114,13 +114,13 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
             $friendshipConditionBuilder = new PreparedStatementConditionBuilder(false);
             $friendshipConditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
-                FROM    wcf' . WCF_N . '_user_option_value
+                FROM    wcf1_user_option_value
                 WHERE   userOption' . $canViewTrophiesOptionID . ' = 2
             )');
             $friendshipConditionBuilder->add(
                 'user_trophy.userID IN (
                     SELECT  userID
-                    FROM    wcf' . WCF_N . '_user_follow
+                    FROM    wcf1_user_follow
                     WHERE   followUserID = ?
                 )',
                 [WCF::getUser()->userID]

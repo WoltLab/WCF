@@ -102,7 +102,7 @@ class LabelGroupListPage extends SortablePage
 
         $this->objectList->sqlSelects .= '(
             SELECT  COUNT(*)
-            FROM    wcf' . WCF_N . '_label
+            FROM    wcf1_label
             WHERE   groupID = label_group.groupID
         ) AS labels';
 

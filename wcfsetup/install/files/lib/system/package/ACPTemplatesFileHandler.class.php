@@ -57,9 +57,9 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
                 }
 
                 $sql = "SELECT  packageID, templateName
-                        FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                        FROM    wcf1_" . $this->tableName . "
                         " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $lockedFiles = $statement->fetchMap('templateName', 'packageID');
 
@@ -103,9 +103,9 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
         $conditions->add('application = ?', [$this->application]);
 
         $sql = "SELECT  templateName
-                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                FROM    wcf1_" . $this->tableName . "
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         while ($templateName = $statement->fetchColumn()) {
@@ -117,10 +117,10 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
         }
 
         if (!empty($files)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_" . $this->tableName . "
+            $sql = "INSERT INTO wcf1_" . $this->tableName . "
                                 (packageID, templateName, application)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($files as $file) {
                 $statement->execute([

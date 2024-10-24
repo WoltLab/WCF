@@ -257,9 +257,9 @@ class ACLHandler extends SingletonFactory
         $conditions->add("optionID IN (?)", [\array_keys($options)]);
         $conditions->add("objectID = ?", [$objectID]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_acl_option_to_" . $type . "
+        $sql = "DELETE FROM wcf1_acl_option_to_" . $type . "
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         $objectTypeID = \reset($options)->objectTypeID;
@@ -272,10 +272,10 @@ class ACLHandler extends SingletonFactory
             $values = JSON::decode($_POST['aclValues'][$type]);
         }
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_acl_option_to_" . $type . "
+        $sql = "INSERT INTO wcf1_acl_option_to_" . $type . "
                             (optionID, objectID, " . $type . "ID, optionValue)
                 VALUES      (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($values as $typeID => $optionData) {
@@ -383,9 +383,9 @@ class ACLHandler extends SingletonFactory
         $conditions->add("optionID IN (?)", [$optionsIDs]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_acl_option_to_" . $type . "
+                FROM    wcf1_acl_option_to_" . $type . "
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (!isset($data[$type][$row['objectID']])) {
@@ -419,9 +419,9 @@ class ACLHandler extends SingletonFactory
                 if ($type == 'group') {
                     $conditions->add("groupID IN (?)", [\array_keys($data[$type]['option'])]);
                     $sql = "SELECT  groupID, groupName
-                            FROM    wcf" . WCF_N . "_user_group
+                            FROM    wcf1_user_group
                             " . $conditions;
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute($conditions->getParameters());
 
                     while ($row = $statement->fetchArray()) {
@@ -430,9 +430,9 @@ class ACLHandler extends SingletonFactory
                 } else {
                     $conditions->add("userID IN (?)", [\array_keys($data[$type]['option'])]);
                     $sql = "SELECT  userID, username
-                            FROM    wcf" . WCF_N . "_user
+                            FROM    wcf1_user
                             " . $conditions;
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute($conditions->getParameters());
                     $data['user']['label'] = $statement->fetchMap('userID', 'username');
                 }
@@ -482,9 +482,9 @@ class ACLHandler extends SingletonFactory
 
         WCF::getDB()->beginTransaction();
         foreach (['group', 'user'] as $type) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_acl_option_to_" . $type . "
+            $sql = "DELETE FROM wcf1_acl_option_to_" . $type . "
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
         }
         WCF::getDB()->commitTransaction();

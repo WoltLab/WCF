@@ -190,18 +190,18 @@ class LabelHandler extends SingletonFactory
             $conditions->add("objectTypeID = ?", [$objectTypeID]);
             $conditions->add("objectID = ?", [$objectID]);
 
-            $sql = "DELETE FROM wcf" . WCF_N . "_label_object
+            $sql = "DELETE FROM wcf1_label_object
                     " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
         }
 
         // insert new labels
         if (!empty($labelIDs)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_label_object
+            $sql = "INSERT INTO wcf1_label_object
                                 (labelID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($labelIDs as $labelID) {
                 $statement->execute([
                     $labelID,
@@ -243,17 +243,17 @@ class LabelHandler extends SingletonFactory
         $conditionBuilder->add("objectTypeID = ?", [$objectTypeID]);
         $conditionBuilder->add("objectID = ?", [$objectID]);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_label_object
+        $sql = "DELETE FROM wcf1_label_object
                 " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         // assign new labels
         if (!empty($labelIDs)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_label_object
+            $sql = "INSERT INTO wcf1_label_object
                                 (labelID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($labelIDs as $labelID) {
                 $statement->execute([
                     $labelID,
@@ -278,9 +278,9 @@ class LabelHandler extends SingletonFactory
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
         $sql = "SELECT  objectID, labelID
-                FROM    wcf" . WCF_N . "_label_object
+                FROM    wcf1_label_object
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $labels = $statement->fetchMap('labelID', 'objectID', false);
 
@@ -420,9 +420,9 @@ class LabelHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
-        $sql = "DELETE FROM wcf" . WCF_N . "_label_object
+        $sql = "DELETE FROM wcf1_label_object
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
     }
 }

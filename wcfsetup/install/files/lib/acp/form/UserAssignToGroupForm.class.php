@@ -133,9 +133,9 @@ class UserAssignToGroupForm extends AbstractForm
         $conditions->add("userID IN (?)", [$this->userIDs]);
 
         $sql = "SELECT  userID, groupID
-                FROM    wcf" . WCF_N . "_user_to_group
+                FROM    wcf1_user_to_group
                 " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $groups = $statement->fetchMap('userID', 'groupID', false);
 
