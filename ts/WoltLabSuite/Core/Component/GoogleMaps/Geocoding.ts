@@ -28,7 +28,7 @@ class Geocoding {
   readonly #element: HTMLInputElement;
   readonly #map: WoltlabCoreGoogleMapsElement;
   #marker?: google.maps.marker.AdvancedMarkerElement;
-  #initialMarkerPosition?: google.maps.LatLng;
+  #initialMarkerPosition?: google.maps.LatLng | google.maps.LatLngLiteral | null;
 
   constructor(element: HTMLInputElement, map: WoltlabCoreGoogleMapsElement) {
     this.#element = element;
@@ -55,7 +55,7 @@ class Geocoding {
 
   #initEvents(): void {
     this.#element.addEventListener("geocoding:move-marker", (event: CustomEvent<MoveMarkerEventPayload>) => {
-      void this.#moveMarkerToLocation(event.detail.latitude, event.detail.longitude);
+      void this.#moveMarkerToLocation(new google.maps.LatLng(event.detail.latitude, event.detail.longitude));
     });
 
     this.#element.addEventListener("geocoding:resolve", (event: CustomEvent<ResolveEventPayload>) => {
@@ -71,14 +71,14 @@ class Geocoding {
 
     this.#element.addEventListener("geocoding:reset-marker", () => {
       if (this.#initialMarkerPosition) {
-        void this.#moveMarkerToLocation(this.#initialMarkerPosition.lat(), this.#initialMarkerPosition.lng());
+        void this.#moveMarkerToLocation(new google.maps.LatLng(this.#initialMarkerPosition));
       }
     });
   }
 
   async #setupMarker(): Promise<void> {
     this.#marker = await addDraggableMarker(this.#map);
-    this.#initialMarkerPosition = this.#marker?.position as google.maps.LatLng;
+    this.#initialMarkerPosition = this.#marker?.position;
 
     this.#marker.addListener("dragend", () => {
       void this.#map.getGeocoder().then((geocoder) => {
@@ -92,13 +92,12 @@ class Geocoding {
     });
   }
 
-  async #moveMarkerToLocation(latitude: number, longitude: number): Promise<void> {
-    const location = new google.maps.LatLng(latitude, longitude);
+  async #moveMarkerToLocation(location: google.maps.LatLng): Promise<void> {
     if (this.#marker) {
       this.#marker.position = location;
     }
     (await this.#map.getMap()).setCenter(location);
-    this.#setLocation(latitude, longitude);
+    this.#setLocation(location.lat(), location.lng());
   }
 
   async #moveMarkerToAddress(address: string): Promise<void> {

@@ -33,7 +33,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         }
         #initEvents() {
             this.#element.addEventListener("geocoding:move-marker", (event) => {
-                void this.#moveMarkerToLocation(event.detail.latitude, event.detail.longitude);
+                void this.#moveMarkerToLocation(new google.maps.LatLng(event.detail.latitude, event.detail.longitude));
             });
             this.#element.addEventListener("geocoding:resolve", (event) => {
                 void this.#map.getGeocoder().then((geocoder) => {
@@ -47,7 +47,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
             });
             this.#element.addEventListener("geocoding:reset-marker", () => {
                 if (this.#initialMarkerPosition) {
-                    void this.#moveMarkerToLocation(this.#initialMarkerPosition.lat(), this.#initialMarkerPosition.lng());
+                    void this.#moveMarkerToLocation(new google.maps.LatLng(this.#initialMarkerPosition));
                 }
             });
         }
@@ -65,13 +65,12 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
                 });
             });
         }
-        async #moveMarkerToLocation(latitude, longitude) {
-            const location = new google.maps.LatLng(latitude, longitude);
+        async #moveMarkerToLocation(location) {
             if (this.#marker) {
                 this.#marker.position = location;
             }
             (await this.#map.getMap()).setCenter(location);
-            this.#setLocation(latitude, longitude);
+            this.#setLocation(location.lat(), location.lng());
         }
         async #moveMarkerToAddress(address) {
             const geocoder = await this.#map.getGeocoder();
