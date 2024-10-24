@@ -68,3 +68,6 @@ jobs:
     - name: "Check '@ckeditor/ckeditor5-inspector'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/ckeditor/ckeditor5-inspector/inspector.js node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js
+    - name: "Check '@fancyapps/ui'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/fancybox/fancybox.umd.js node_modules/@fancyapps/ui/dist/fancybox/fancybox.umd.js
