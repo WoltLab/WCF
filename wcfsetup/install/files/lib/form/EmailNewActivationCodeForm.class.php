@@ -58,6 +58,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
                         ->removeFieldClass('medium')
                         ->addFieldClass('long')
                         ->autocomplete('current-password')
+                        ->addMeterRelatedFieldId('username')
                         ->addValidator(new FormFieldValidator(
                             'passwordValidator',
                             $this->validatePassword(...)
