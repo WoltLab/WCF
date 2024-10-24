@@ -117,14 +117,12 @@
 			</dd>
 		</dl>
 		
-		{if $action == 'add'}
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
-				</dd>
-			</dl>
-		{/if}
+		<dl>
+			<dt></dt>
+			<dd>
+				<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
+			</dd>
+		</dl>
 		
 		{event name='dataFields'}
 	</div>
