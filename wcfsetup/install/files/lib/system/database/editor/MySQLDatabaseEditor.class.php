@@ -110,7 +110,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
                 WHERE   CONSTRAINT_SCHEMA = ?
                     AND TABLE_NAME = ?";
-        $statement = $this->dbObj->prepare($sql);
+        $statement = $this->dbObj->prepareUnmanaged($sql);
         $statement->execute([
             $this->dbObj->getDatabaseName(),
             $tableName,
