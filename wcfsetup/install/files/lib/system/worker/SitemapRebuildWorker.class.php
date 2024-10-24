@@ -161,7 +161,15 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
             // check whether we should rebuild it
             if ((!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild']) && !$this->workerData['finished']) {
-                $this->checkCache();
+                // This condition is only true when rebuilding the sitemap through the
+                // button on the sitemap list. This causes the result to be inconsistent
+                // when using the rebuild data workflow, which does not set this parameter
+                // and thus causes the files to be not rebuild.
+                //
+                // It is unclear what the intention of this extra parameter is because
+                // there is no use case where a rebuild worker should not cause a full
+                // rebuild.
+                //$this->checkCache();
             }
 
             if ($this->workerData['finished']) {
