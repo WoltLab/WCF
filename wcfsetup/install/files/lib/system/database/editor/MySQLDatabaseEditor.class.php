@@ -22,7 +22,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     {
         $existingTables = [];
         $sql = "SHOW TABLES FROM `" . $this->dbObj->getDatabaseName() . "`";
-        $statement = $this->dbObj->prepare($sql);
+        $statement = $this->dbObj->prepareUnmanaged($sql);
         $statement->execute();
         while ($row = $statement->fetchArray(\PDO::FETCH_NUM)) {
             $existingTables[] = $row[0];
