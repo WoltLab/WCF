@@ -15,3 +15,19 @@
 	*}{if $field->getDocument()->isAjax()} data-dialog-submit-on-enter="true"{/if}{*
 	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>
+
+{if $field->getStrengthMeter()}
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Ui/User/PasswordStrength", "Language"], (PasswordStrength, Language) => {
+			{include file='shared_passwordStrengthLanguage'}
+
+			new PasswordStrength(document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}'), {
+				relatedInputs: [
+				{foreach from=$field->getRelatedFieldsIDs() item=fieldId}
+					document.getElementById('{unsafe:$fieldId|encodeJS}'),
+				{/foreach}
+				],
+			});
+		});
+	</script>
+{/if}
