@@ -18,7 +18,7 @@ const loadGoogleMaps = (apiKey: string): Promise<void> => {
     script.src =
       "https://maps.googleapis.com/maps/api/js?" +
       (apiKey ? `key=${apiKey}&` : "") +
-      "callback=woltlab_core_google_maps_callback";
+      "callback=woltlab_core_google_maps_callback&libraries=marker";
     document.head.appendChild(script);
     initCalled = true;
   }
