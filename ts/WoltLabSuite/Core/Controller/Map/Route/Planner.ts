@@ -61,6 +61,8 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scaleControl: window.WCF.Location.GoogleMaps.Settings.get("scaleControl"),
         scrollwheel: window.WCF.Location.GoogleMaps.Settings.get("scrollwheel"),
+        // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+        mapId: "DEMO_MAP_ID",
       });
 
       this.directionsService = new google.maps.DirectionsService();

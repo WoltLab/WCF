@@ -79,6 +79,8 @@ define(["require", "exports"], function (require, exports) {
                     lat: this.lat,
                     lng: this.lng,
                 },
+                // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+                mapId: "DEMO_MAP_ID",
             });
             void this.#setBounds();
             if (this.#mapLoadedResolve) {

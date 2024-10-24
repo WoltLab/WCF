@@ -49,6 +49,8 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Uti
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     scaleControl: window.WCF.Location.GoogleMaps.Settings.get("scaleControl"),
                     scrollwheel: window.WCF.Location.GoogleMaps.Settings.get("scrollwheel"),
+                    // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+                    mapId: "DEMO_MAP_ID",
                 });
                 this.directionsService = new google.maps.DirectionsService();
                 this.directionsRenderer = new google.maps.DirectionsRenderer();

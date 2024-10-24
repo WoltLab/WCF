@@ -102,6 +102,8 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
         lat: this.lat,
         lng: this.lng,
       },
+      // see https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+      mapId: "DEMO_MAP_ID",
     });
 
     void this.#setBounds();
