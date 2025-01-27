@@ -75,19 +75,6 @@ export class InlineEditor {
   }
 
   /**
-   * Parses the database response and converts it to a record of boolean values.
-   */
-  protected parseDboResponse(data: Record<string, string | number>): Record<string, boolean> {
-    const result: Record<string, boolean> = {};
-
-    Object.entries(data).forEach(([key, value]) => {
-      result[key] = stringToBool(value.toString());
-    });
-
-    return result;
-  }
-
-  /**
    * Sets the permissions for the inline editor.
    */
   public setPermissions(permissions: Record<string, boolean>): void {
