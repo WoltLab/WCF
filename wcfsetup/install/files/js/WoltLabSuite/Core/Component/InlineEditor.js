@@ -54,16 +54,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
             });
         }
         /**
-         * Parses the database response and converts it to a record of boolean values.
-         */
-        parseDboResponse(data) {
-            const result = {};
-            Object.entries(data).forEach(([key, value]) => {
-                result[key] = (0, Core_1.stringToBool)(value.toString());
-            });
-            return result;
-        }
-        /**
          * Sets the permissions for the inline editor.
          */
         setPermissions(permissions) {
