@@ -6,11 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Ui/Dropdown/Builder", "WoltLabSuite/Core/Core"], function (require, exports, Builder_1, Core_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", "WoltLabSuite/Core/Ui/Notification", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, Builder_1, Notification_1, Core_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.InlineEditor = void 0;
     exports.getInlineEditor = getInlineEditor;
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     const inlineEditors = new Map();
     class InlineEditor {
         element;
@@ -22,7 +23,16 @@ define(["require", "exports", "WoltLabSuite/Core/Ui/Dropdown/Builder", "WoltLabS
             this.element = element;
             this.dropdownToggle = this.element.querySelector(dropdownToggleSelector);
             this.dropdownMenu = (0, Builder_1.create)([]);
-            (0, Builder_1.attach)(this.dropdownMenu, this.dropdownToggle);
+            // @see WoltLabSuite/Core/Ui/Dropdown/Builder::attach()
+            Simple_1.default.initFragment(this.dropdownToggle, this.dropdownMenu);
+            this.dropdownToggle.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                // Rebuild the menu to ensure the menu items are displayed correctly,
+                // as states may change externally and cannot be detected automatically
+                this.#rebuildDropdownMenu();
+                Simple_1.default.toggleDropdown(this.dropdownToggle.id);
+            });
             inlineEditors.set(this.element, this);
         }
         /**
@@ -38,17 +48,26 @@ define(["require", "exports", "WoltLabSuite/Core/Ui/Dropdown/Builder", "WoltLabS
          * Updates the state of the element's dataset with the provided data.
          */
         updateState(data) {
+            (0, Notification_1.show)();
             Object.entries(data).forEach(([key, value]) => {
                 this.element.dataset[key] = value ? "1" : "0";
             });
-            this.rebuildDropdownMenu();
+        }
+        /**
+         * Parses the database response and converts it to a record of boolean values.
+         */
+        parseDboResponse(data) {
+            const result = {};
+            Object.entries(data).forEach(([key, value]) => {
+                result[key] = (0, Core_1.stringToBool)(value.toString());
+            });
+            return result;
         }
         /**
          * Sets the permissions for the inline editor.
          */
         setPermissions(permissions) {
             this.permissions = permissions;
-            this.rebuildDropdownMenu();
         }
         /**
          * Gets the permissions for the inline editor.
@@ -61,19 +80,17 @@ define(["require", "exports", "WoltLabSuite/Core/Ui/Dropdown/Builder", "WoltLabS
          */
         addMenuItem(menuItem) {
             this.menuItems.push(menuItem);
-            this.rebuildDropdownMenu();
         }
         /**
          * Adds multiple menu items to the dropdown menu and rebuilds the menu.
          */
         addMenuItems(menuItems) {
             this.menuItems.push(...menuItems);
-            this.rebuildDropdownMenu();
         }
         /**
          * Rebuilds the dropdown menu based on the current menu items and their visibility.
          */
-        rebuildDropdownMenu() {
+        #rebuildDropdownMenu() {
             const dropdownMenuItems = this.menuItems
                 .filter((item) => {
                 return item.visible === undefined || item.visible();

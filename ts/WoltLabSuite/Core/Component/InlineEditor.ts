@@ -10,10 +10,11 @@
 import {
   DropdownBuilderItemData,
   create as createDropdownMenu,
-  attach as attachDropdownMenu,
   setItems as setDropdownItems,
 } from "WoltLabSuite/Core/Ui/Dropdown/Builder";
+import { show as showNotification } from "WoltLabSuite/Core/Ui/Notification";
 import { stringToBool } from "WoltLabSuite/Core/Core";
+import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
 export interface DropdownMenuItem {
   visible?: () => boolean;
@@ -33,7 +34,20 @@ export class InlineEditor {
     this.element = element;
     this.dropdownToggle = this.element.querySelector(dropdownToggleSelector) as HTMLElement;
     this.dropdownMenu = createDropdownMenu([]);
-    attachDropdownMenu(this.dropdownMenu, this.dropdownToggle);
+
+    // @see WoltLabSuite/Core/Ui/Dropdown/Builder::attach()
+    UiDropdownSimple.initFragment(this.dropdownToggle, this.dropdownMenu);
+
+    this.dropdownToggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Rebuild the menu to ensure the menu items are displayed correctly,
+      // as states may change externally and cannot be detected automatically
+      this.#rebuildDropdownMenu();
+
+      UiDropdownSimple.toggleDropdown(this.dropdownToggle.id);
+    });
 
     inlineEditors.set(this.element, this);
   }
@@ -53,11 +67,24 @@ export class InlineEditor {
    * Updates the state of the element's dataset with the provided data.
    */
   public updateState(data: Record<string, boolean>): void {
+    showNotification();
+
     Object.entries(data).forEach(([key, value]) => {
       this.element.dataset[key] = value ? "1" : "0";
     });
+  }
 
-    this.rebuildDropdownMenu();
+  /**
+   * Parses the database response and converts it to a record of boolean values.
+   */
+  protected parseDboResponse(data: Record<string, string | number>): Record<string, boolean> {
+    const result: Record<string, boolean> = {};
+
+    Object.entries(data).forEach(([key, value]) => {
+      result[key] = stringToBool(value.toString());
+    });
+
+    return result;
   }
 
   /**
@@ -65,8 +92,6 @@ export class InlineEditor {
    */
   public setPermissions(permissions: Record<string, boolean>): void {
     this.permissions = permissions;
-
-    this.rebuildDropdownMenu();
   }
 
   /**
@@ -81,8 +106,6 @@ export class InlineEditor {
    */
   public addMenuItem(menuItem: DropdownMenuItem): void {
     this.menuItems.push(menuItem);
-
-    this.rebuildDropdownMenu();
   }
 
   /**
@@ -90,14 +113,12 @@ export class InlineEditor {
    */
   public addMenuItems(menuItems: DropdownMenuItem[]): void {
     this.menuItems.push(...menuItems);
-
-    this.rebuildDropdownMenu();
   }
 
   /**
    * Rebuilds the dropdown menu based on the current menu items and their visibility.
    */
-  public rebuildDropdownMenu(): void {
+  #rebuildDropdownMenu(): void {
     const dropdownMenuItems = this.menuItems
       .filter((item) => {
         return item.visible === undefined || item.visible();
