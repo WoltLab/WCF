@@ -15,23 +15,23 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
     const inlineEditors = new Map();
     class InlineEditor {
         element;
-        dropdownToggle;
+        #dropdownToggle;
         permissions = {};
-        dropdownMenu;
-        menuItems = [];
+        #dropdownMenu;
+        #actions = [];
         constructor(element, dropdownToggleSelector) {
             this.element = element;
-            this.dropdownToggle = this.element.querySelector(dropdownToggleSelector);
-            this.dropdownMenu = (0, Builder_1.create)([]);
+            this.#dropdownToggle = this.element.querySelector(dropdownToggleSelector);
+            this.#dropdownMenu = (0, Builder_1.create)([]);
             // @see WoltLabSuite/Core/Ui/Dropdown/Builder::attach()
-            Simple_1.default.initFragment(this.dropdownToggle, this.dropdownMenu);
-            this.dropdownToggle.addEventListener("click", (event) => {
+            Simple_1.default.initFragment(this.#dropdownToggle, this.#dropdownMenu);
+            this.#dropdownToggle.addEventListener("click", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 // Rebuild the menu to ensure the menu items are displayed correctly,
                 // as states may change externally and cannot be detected automatically
                 this.#rebuildDropdownMenu();
-                Simple_1.default.toggleDropdown(this.dropdownToggle.id);
+                Simple_1.default.toggleDropdown(this.#dropdownToggle.id);
             });
             inlineEditors.set(this.element, this);
         }
@@ -54,10 +54,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
             });
         }
         /**
-         * Sets the permissions for the inline editor.
+         * Merge the current permissions with the provided permissions.
          */
-        setPermissions(permissions) {
-            this.permissions = permissions;
+        addPermissions(permissions) {
+            this.permissions = { ...this.permissions, ...permissions };
         }
         /**
          * Gets the permissions for the inline editor.
@@ -66,31 +66,31 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
             return this.permissions;
         }
         /**
-         * Adds a menu item to the dropdown menu and rebuilds the menu.
+         * Adds an action to the inline editor.
          */
-        addMenuItem(menuItem) {
-            this.menuItems.push(menuItem);
+        addAction(action) {
+            this.#actions.push(action);
         }
         /**
-         * Adds multiple menu items to the dropdown menu and rebuilds the menu.
+         * Adds multiple actions to the inline editor.
          */
-        addMenuItems(menuItems) {
-            this.menuItems.push(...menuItems);
+        addActions(actions) {
+            this.#actions.push(...actions);
         }
         /**
          * Rebuilds the dropdown menu based on the current menu items and their visibility.
          */
         #rebuildDropdownMenu() {
-            const dropdownMenuItems = this.menuItems
+            const dropdownMenuItems = this.#actions
                 .filter((item) => {
                 return item.isVisible === undefined || item.isVisible();
             })
                 .map((item) => item.item);
             if (dropdownMenuItems.length === 0) {
-                this.dropdownMenu.innerHTML = "";
+                this.#dropdownMenu.innerHTML = "";
             }
             else {
-                (0, Builder_1.setItems)(this.dropdownMenu, dropdownMenuItems);
+                (0, Builder_1.setItems)(this.#dropdownMenu, dropdownMenuItems);
             }
         }
     }

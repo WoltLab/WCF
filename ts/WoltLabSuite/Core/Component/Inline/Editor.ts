@@ -16,29 +16,30 @@ import { show as showNotification } from "WoltLabSuite/Core/Ui/Notification";
 import { stringToBool } from "WoltLabSuite/Core/Core";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
-export interface DropdownMenuItem {
+export interface Action {
   isVisible?: () => boolean;
-  item: DropdownBuilderItemData;
+
+  get item(): DropdownBuilderItemData;
 }
 
 const inlineEditors = new Map<HTMLElement, InlineEditor>();
 
 export class InlineEditor {
   protected readonly element: HTMLElement;
-  protected readonly dropdownToggle: HTMLElement;
+  readonly #dropdownToggle: HTMLElement;
   protected permissions: Record<string, boolean> = {};
-  protected readonly dropdownMenu: HTMLUListElement;
-  protected readonly menuItems: DropdownMenuItem[] = [];
+  readonly #dropdownMenu: HTMLUListElement;
+  readonly #actions: Action[] = [];
 
   public constructor(element: HTMLElement, dropdownToggleSelector: string) {
     this.element = element;
-    this.dropdownToggle = this.element.querySelector(dropdownToggleSelector) as HTMLElement;
-    this.dropdownMenu = createDropdownMenu([]);
+    this.#dropdownToggle = this.element.querySelector(dropdownToggleSelector) as HTMLElement;
+    this.#dropdownMenu = createDropdownMenu([]);
 
     // @see WoltLabSuite/Core/Ui/Dropdown/Builder::attach()
-    UiDropdownSimple.initFragment(this.dropdownToggle, this.dropdownMenu);
+    UiDropdownSimple.initFragment(this.#dropdownToggle, this.#dropdownMenu);
 
-    this.dropdownToggle.addEventListener("click", (event) => {
+    this.#dropdownToggle.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
 
@@ -46,7 +47,7 @@ export class InlineEditor {
       // as states may change externally and cannot be detected automatically
       this.#rebuildDropdownMenu();
 
-      UiDropdownSimple.toggleDropdown(this.dropdownToggle.id);
+      UiDropdownSimple.toggleDropdown(this.#dropdownToggle.id);
     });
 
     inlineEditors.set(this.element, this);
@@ -75,10 +76,10 @@ export class InlineEditor {
   }
 
   /**
-   * Sets the permissions for the inline editor.
+   * Merge the current permissions with the provided permissions.
    */
-  public setPermissions(permissions: Record<string, boolean>): void {
-    this.permissions = permissions;
+  public addPermissions(permissions: Record<string, boolean>): void {
+    this.permissions = { ...this.permissions, ...permissions };
   }
 
   /**
@@ -89,33 +90,33 @@ export class InlineEditor {
   }
 
   /**
-   * Adds a menu item to the dropdown menu and rebuilds the menu.
+   * Adds an action to the inline editor.
    */
-  public addMenuItem(menuItem: DropdownMenuItem): void {
-    this.menuItems.push(menuItem);
+  public addAction(action: Action): void {
+    this.#actions.push(action);
   }
 
   /**
-   * Adds multiple menu items to the dropdown menu and rebuilds the menu.
+   * Adds multiple actions to the inline editor.
    */
-  public addMenuItems(menuItems: DropdownMenuItem[]): void {
-    this.menuItems.push(...menuItems);
+  public addActions(actions: Action[]): void {
+    this.#actions.push(...actions);
   }
 
   /**
    * Rebuilds the dropdown menu based on the current menu items and their visibility.
    */
   #rebuildDropdownMenu(): void {
-    const dropdownMenuItems = this.menuItems
+    const dropdownMenuItems = this.#actions
       .filter((item) => {
         return item.isVisible === undefined || item.isVisible();
       })
       .map((item) => item.item);
 
     if (dropdownMenuItems.length === 0) {
-      this.dropdownMenu.innerHTML = "";
+      this.#dropdownMenu.innerHTML = "";
     } else {
-      setDropdownItems(this.dropdownMenu, dropdownMenuItems);
+      setDropdownItems(this.#dropdownMenu, dropdownMenuItems);
     }
   }
 }
