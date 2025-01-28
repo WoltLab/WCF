@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core/Component/Confirmation"], function (require, exports, Backend_1, Result_1, Confirmation_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Language"], function (require, exports, Backend_1, Result_1, Confirmation_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Trash = void 0;
@@ -21,7 +21,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
         }
         get item() {
             return {
-                label: "wcf.global.button.trash",
+                label: (0, Language_1.getPhrase)("wcf.global.button.trash"),
                 callback: async () => {
                     const result = await (0, Confirmation_1.confirmationFactory)().softDelete(this.title, true);
                     if (!result.result) {

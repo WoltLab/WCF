@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, Result_1, Backend_1, Dialog_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, Result_1, Backend_1, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Enable = void 0;
@@ -21,7 +21,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core
         }
         get item() {
             return {
-                label: "wcf.global.button.enable",
+                label: (0, Language_1.getPhrase)("wcf.global.button.enable"),
                 callback: async () => {
                     if (this.useFormBuilder) {
                         const response = await (0, Dialog_1.dialogFactory)()

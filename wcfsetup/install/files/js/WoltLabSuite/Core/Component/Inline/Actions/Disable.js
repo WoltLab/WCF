@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Result"], function (require, exports, Backend_1, Result_1) {
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core/Language"], function (require, exports, Backend_1, Result_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Disable = void 0;
@@ -19,7 +19,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
         }
         get item() {
             return {
-                label: "wcf.global.button.disable",
+                label: (0, Language_1.getPhrase)("wcf.global.button.disable"),
                 callback: async () => {
                     const response = await disable(this.endpoint);
                     if (response.ok) {

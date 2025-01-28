@@ -12,6 +12,7 @@ import { DropdownBuilderItemData } from "WoltLabSuite/Core/Ui/Dropdown/Builder";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "WoltLabSuite/Core/Api/Result";
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export class Enable implements Action {
   protected readonly inlineEditor: InlineEditor;
@@ -26,7 +27,7 @@ export class Enable implements Action {
 
   get item(): DropdownBuilderItemData {
     return {
-      label: "wcf.global.button.enable",
+      label: getPhrase("wcf.global.button.enable"),
       callback: async () => {
         if (this.useFormBuilder) {
           const response = await dialogFactory()

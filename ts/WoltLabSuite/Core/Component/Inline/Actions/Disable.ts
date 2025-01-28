@@ -11,6 +11,7 @@ import { Action, InlineEditor } from "WoltLabSuite/Core/Component/Inline/Editor"
 import { DropdownBuilderItemData } from "WoltLabSuite/Core/Ui/Dropdown/Builder";
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { apiResultFromError, apiResultFromValue, ApiResult } from "WoltLabSuite/Core/Api/Result";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export class Disable implements Action {
   protected readonly inlineEditor: InlineEditor;
@@ -23,7 +24,7 @@ export class Disable implements Action {
 
   get item(): DropdownBuilderItemData {
     return {
-      label: "wcf.global.button.disable",
+      label: getPhrase("wcf.global.button.disable"),
       callback: async () => {
         const response = await disable(this.endpoint);
 

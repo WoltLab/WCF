@@ -12,6 +12,7 @@ import { DropdownBuilderItemData } from "WoltLabSuite/Core/Ui/Dropdown/Builder";
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { apiResultFromError, apiResultFromValue, ApiResult } from "WoltLabSuite/Core/Api/Result";
 import { confirmationFactory } from "WoltLabSuite/Core/Component/Confirmation";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export class Trash implements Action {
   protected readonly inlineEditor: InlineEditor;
@@ -26,7 +27,7 @@ export class Trash implements Action {
 
   get item(): DropdownBuilderItemData {
     return {
-      label: "wcf.global.button.trash",
+      label: getPhrase("wcf.global.button.trash"),
       callback: async () => {
         const result = await confirmationFactory().softDelete(this.title, true);
         if (!result.result) {
