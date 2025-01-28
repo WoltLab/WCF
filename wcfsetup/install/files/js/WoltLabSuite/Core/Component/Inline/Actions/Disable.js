@@ -10,7 +10,6 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Disable = void 0;
-    exports.disable = disable;
     class Disable {
         inlineEditor;
         endpoint;

@@ -45,7 +45,7 @@ export class Disable implements Action {
   }
 }
 
-export async function disable(endpoint: string | URL): Promise<ApiResult<[]>> {
+async function disable(endpoint: string | URL): Promise<ApiResult<[]>> {
   try {
     await prepareRequest(endpoint).post().fetchAsJson();
   } catch (e) {
