@@ -28,7 +28,7 @@ export class Disable implements Action {
         const response = await disable(this.endpoint);
 
         if (response.ok) {
-          this.inlineEditor.updateState({
+          this.inlineEditor.update({
             isDisabled: true,
           });
         }

@@ -45,12 +45,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
             return (0, Core_1.stringToBool)(this.element.dataset[propertyName]);
         }
         /**
-         * Updates the state of the element's dataset with the provided data.
+         * Updates the element's dataset with the provided data.
          */
-        updateState(data) {
+        update(data) {
             (0, Notification_1.show)();
             Object.entries(data).forEach(([key, value]) => {
-                this.element.dataset[key] = value ? "1" : "0";
+                this.element.dataset[key] = value.toString();
             });
         }
         /**

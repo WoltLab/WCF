@@ -22,6 +22,8 @@ export interface Action {
   get item(): DropdownBuilderItemData;
 }
 
+export type State = string | boolean | number;
+
 const inlineEditors = new Map<HTMLElement, InlineEditor>();
 
 export class InlineEditor {
@@ -65,13 +67,13 @@ export class InlineEditor {
   }
 
   /**
-   * Updates the state of the element's dataset with the provided data.
+   * Updates the element's dataset with the provided data.
    */
-  public updateState(data: Record<string, boolean>): void {
+  public update(data: Record<string, State>): void {
     showNotification();
 
     Object.entries(data).forEach(([key, value]) => {
-      this.element.dataset[key] = value ? "1" : "0";
+      this.element.dataset[key] = value.toString();
     });
   }
 

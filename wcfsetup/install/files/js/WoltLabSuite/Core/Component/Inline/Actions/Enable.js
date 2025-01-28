@@ -28,14 +28,14 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Result", "WoltLabSuite/Core
                             .usingFormBuilder()
                             .fromEndpoint(this.endpoint.toString());
                         if (response.ok) {
-                            this.inlineEditor.updateState({
+                            this.inlineEditor.update({
                                 isDisabled: response.result.isDisabled,
                             });
                         }
                     }
                     else {
                         if ((await enable(this.endpoint)).ok) {
-                            this.inlineEditor.updateState({
+                            this.inlineEditor.update({
                                 isDisabled: false,
                             });
                         }

@@ -23,7 +23,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 callback: async () => {
                     const response = await disable(this.endpoint);
                     if (response.ok) {
-                        this.inlineEditor.updateState({
+                        this.inlineEditor.update({
                             isDisabled: true,
                         });
                     }
