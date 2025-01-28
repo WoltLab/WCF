@@ -17,7 +17,7 @@ import { stringToBool } from "WoltLabSuite/Core/Core";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
 export interface DropdownMenuItem {
-  visible?: () => boolean;
+  isVisible?: () => boolean;
   item: DropdownBuilderItemData;
 }
 
@@ -108,7 +108,7 @@ export class InlineEditor {
   #rebuildDropdownMenu(): void {
     const dropdownMenuItems = this.menuItems
       .filter((item) => {
-        return item.visible === undefined || item.visible();
+        return item.isVisible === undefined || item.isVisible();
       })
       .map((item) => item.item);
 

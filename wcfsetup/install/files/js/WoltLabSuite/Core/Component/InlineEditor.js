@@ -83,7 +83,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
         #rebuildDropdownMenu() {
             const dropdownMenuItems = this.menuItems
                 .filter((item) => {
-                return item.visible === undefined || item.visible();
+                return item.isVisible === undefined || item.isVisible();
             })
                 .map((item) => item.item);
             if (dropdownMenuItems.length === 0) {
