@@ -1,0 +1,207 @@
+.gridView__tableContainer {
+	overflow: auto;
+}
+
+.gridView__table {
+	border-bottom: 1px solid var(--wcfContentBorder);
+	border-spacing: 0;
+	width: 100%;
+	overflow-wrap: break-word;
+}
+
+.gridView__column,
+.gridView__headerColumn {
+	padding: 10px;
+	text-align: left;
+	vertical-align: middle;
+	position: relative;
+}
+
+.gridView__headerColumn {
+	white-space: nowrap;
+}
+
+.gridView__headerColumn {
+	font-weight: 600;
+}
+
+.gridView__headerColumn__button::before {
+	position: absolute;
+	inset: 0;
+	content: "";
+}
+
+.gridView__headerColumn.ASC,
+.gridView__headerColumn.DESC {
+	.gridView__headerColumn__button::after {
+		display: inline-block;
+		margin-left: 5px;
+	}
+}
+
+.gridView__headerColumn.ASC {
+	.gridView__headerColumn__button::after {
+		// 2191 = UPWARDS ARROW
+		content: "\2191";
+	}
+}
+
+.gridView__headerColumn.DESC {
+	.gridView__headerColumn__button::after {
+		// 2193 = DOWNWARDS ARROW
+		content: "\2193";
+	}
+}
+
+.gridView__row:not(:last-child) .gridView__column {
+	box-shadow: inset 0 -1px 0 0 var(--wcfContentBorderInner);
+}
+
+.gridView__row:hover .gridView__column {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
+
+.gridView__rowLink,
+.gridView__rowLink:hover {
+	color: inherit;
+}
+
+.gridView__rowLink::before {
+	position: absolute;
+	inset: 0;
+	content: "";
+}
+
+.gridView__column {
+	background-color: var(--wcfContentContainerBackground);
+
+	&.gridView__column--title {
+		font-weight: 600;
+	}
+
+	&.gridView__column--text {
+		max-width: 20%;
+	}
+
+	&.gridView__column--digits,
+	&.gridView__column--id {
+		font-variant: tabular-nums;
+		text-align: right;
+		width: 1px;
+		white-space: nowrap;
+		word-wrap: normal;
+	}
+
+	&.gridView__column--date {
+		text-align: right;
+		width: 1px;
+		white-space: nowrap;
+		word-wrap: normal;
+	}
+
+	&.gridView__column-smallText {
+		@include wcfFontSmall;
+	}
+}
+
+.gridView__headerColumn {
+	background-color: var(--wcfContentContainerBackground);
+	box-shadow: inset 0 -1px 0 0 var(--wcfContentBorder);
+
+	&.gridView__column--digits,
+	&.gridView__column--id,
+	&.gridView__column--date {
+		text-align: right;
+	}
+}
+
+.gridView__actionColumn {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	word-wrap: normal;
+	position: sticky;
+	right: 0;
+	animation: auto linear 0s 1 normal none running gridView__actionColumn__dropShadow;
+	animation-timeline: scroll(inline);
+}
+
+.gridView__selectColumn {
+	position: sticky;
+	left: 0;
+	width: 1px;
+	z-index: 1;
+}
+
+.gridView__selectColumn::after {
+	content: "";
+	display: block;
+	inset: 0;
+	position: absolute;
+	animation: auto linear 0s 1 normal none running gridView__selectColumn__dropShadow;
+	animation-timeline: scroll(inline);
+	z-index: -1;
+}
+
+.gridView__filterBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--wcfContentBorder);
+	padding-bottom: 10px;
+	gap: 5px;
+}
+
+.gridView__filters {
+	display: flex;
+	gap: 5px;
+	flex-wrap: wrap;
+}
+
+.gridView__filterButton {
+	flex: 0 0 auto;
+}
+
+.gridView__pagination {
+	margin-top: 10px;
+}
+
+.gridView__actionColumn__buttons {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+}
+
+.gridView__selectAllRows,
+.gridView__selectRow {
+	height: 18px;
+	width: 18px;
+}
+
+.gridView__row:has(.gridView__selectRow:checked) .gridView__column {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
+
+@keyframes gridView__actionColumn__dropShadow {
+	0% {
+		filter: drop-shadow(rgba(0, 0, 0, 0.08) -2px 10px 6px);
+	}
+	75% {
+		filter: drop-shadow(rgba(0, 0, 0, 0.08) -2px 10px 6px);
+	}
+	99% {
+		filter: none;
+	}
+}
+
+@keyframes gridView__selectColumn__dropShadow {
+	0% {
+		box-shadow: none;
+	}
+	5% {
+		box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 16px 2px;
+	}
+	100% {
+		box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 16px 2px;
+	}
+}

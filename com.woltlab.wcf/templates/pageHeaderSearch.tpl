@@ -29,7 +29,7 @@
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect">
 					<span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span>
-					{icon name='caret-down' type='solid'}
+					{icon name='angle-down' type='solid'}
 				</a>
 				<ul class="dropdownMenu">
 					<li><a href="#" data-extended-link="{link controller='Search'}extended=1{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>

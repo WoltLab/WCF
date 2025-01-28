@@ -23,28 +23,4 @@ class ACPSessionLogList extends DatabaseObjectList
      * @inheritDoc
      */
     public $className = ACPSessionLog::class;
-
-    /**
-     * @inheritDoc
-     */
-    public function readObjects()
-    {
-        if (!empty($this->sqlSelects)) {
-            $this->sqlSelects .= ',';
-        }
-        $this->sqlSelects .= "
-            user_table.username,
-            0 AS active,
-            (
-                SELECT  COUNT(*)
-                FROM    wcf1_acp_session_access_log
-                WHERE   sessionLogID = " . $this->getDatabaseTableAlias() . ".sessionLogID
-            ) AS accesses";
-
-        $this->sqlJoins .= "
-            LEFT JOIN   wcf1_user user_table
-            ON          user_table.userID = " . $this->getDatabaseTableAlias() . ".userID";
-
-        parent::readObjects();
-    }
 }

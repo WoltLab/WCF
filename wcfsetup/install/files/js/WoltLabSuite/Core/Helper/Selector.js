@@ -53,7 +53,7 @@ define(["require", "exports"], function (require, exports) {
         }
     }
     /**
-     * Works identical to `wheneverSeen` wite the difference that all
+     * Works identical to `wheneverSeen` with the difference that all
      * previously matched elements are tracked and will not be reported
      * again. Useful for applying event listeners or transformations
      * that should be applied just once.

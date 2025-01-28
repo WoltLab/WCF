@@ -3,9 +3,6 @@
 namespace wcf\data\user\option;
 
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
-use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Executes user option-related actions.
@@ -18,10 +15,8 @@ use wcf\system\exception\PermissionDeniedException;
  * @method  UserOptionEditor[]  getObjects()
  * @method  UserOptionEditor    getSingleObject()
  */
-class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAction
+class UserOptionAction extends AbstractDatabaseObjectAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -35,29 +30,10 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
     /**
      * @inheritDoc
      */
-    protected $permissionsDelete = ['admin.user.canManageUserOption'];
-
-    /**
-     * @inheritDoc
-     */
     protected $permissionsUpdate = ['admin.user.canManageUserOption'];
 
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'toggle', 'update'];
-
-    /**
-     * @inheritDoc
-     */
-    public function validateDelete()
-    {
-        parent::validateDelete();
-
-        foreach ($this->getObjects() as $userOption) {
-            if (!$userOption->canDelete()) {
-                throw new PermissionDeniedException();
-            }
-        }
-    }
+    protected $requireACP = ['create', 'update'];
 }

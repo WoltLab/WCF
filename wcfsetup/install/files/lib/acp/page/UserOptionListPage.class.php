@@ -2,19 +2,20 @@
 
 namespace wcf\acp\page;
 
-use wcf\data\user\option\UserOptionList;
-use wcf\page\SortablePage;
+use wcf\page\AbstractGridViewPage;
+use wcf\system\gridView\AbstractGridView;
+use wcf\system\gridView\admin\UserOptionGridView;
 
 /**
- * Shows a list of installed user options.
+ * Shows a list of the installed user options.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property    UserOptionList $objectList
+ * @property    UserOptionGridView    $gridView
  */
-class UserOptionListPage extends SortablePage
+class UserOptionListPage extends AbstractGridViewPage
 {
     /**
      * @inheritDoc
@@ -26,35 +27,9 @@ class UserOptionListPage extends SortablePage
      */
     public $neededPermissions = ['admin.user.canManageUserOption'];
 
-    /**
-     * @inheritDoc
-     */
-    public $defaultSortField = 'showOrder';
-
-    /**
-     * @inheritDoc
-     */
-    public $objectListClassName = UserOptionList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public $validSortFields = ['optionID', 'optionName', 'categoryName', 'optionType', 'showOrder'];
-
-    /**
-     * @inheritDoc
-     */
-    protected function initObjectList()
+    #[\Override]
+    protected function createGridViewController(): AbstractGridView
     {
-        parent::initObjectList();
-
-        $this->objectList->getConditionBuilder()->add(
-            "option_table.categoryName IN (
-                SELECT  categoryName
-                FROM    wcf1_user_option_category
-                WHERE   parentCategoryName = ?
-            )",
-            ['profile']
-        );
+        return new UserOptionGridView();
     }
 }

@@ -54,11 +54,7 @@
 	<div class="userProfileHeader__content">
 		<div class="userProfileHeader__avatar">
 			<div class="userProfileHeader__avatarBorder">
-				{if $view->user->userID == $__wcf->user->userID}
-					<button type="button" data-edit-avatar="{link controller="UserAvatar" id=$view->user->userID}{/link}" class="userProfileHeader__avatarEditLink jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{unsafe:$view->user->getAvatar()->getImageTag(128)}</button>
-				{else}
-					{unsafe:$view->user->getAvatar()->getImageTag(128)}
-				{/if}
+				{unsafe:$view->user->getAvatar()->getImageTag(128)}
 				
 				{if $view->user->isOnline()}<span class="userProfileHeader__onlineIndicator jsTooltip" title="{lang username=$view->user->username}wcf.user.online.title{/lang}"></span>{/if}
 			</div>

@@ -136,6 +136,9 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse());
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses());
             $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse());
+            $event->register(new \wcf\system\endpoint\controller\core\exceptions\RenderException());
+            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows());
+            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRow());
             $event->register(new \wcf\system\endpoint\controller\core\cronjobs\logs\ClearLogs());
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions());
             $event->register(new \wcf\system\endpoint\controller\core\messages\RenderQuote());
@@ -147,6 +150,12 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\CloseReport());
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\DeleteContent());
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\EnableContent());
+            $event->register(new \wcf\system\endpoint\controller\core\users\options\DeleteOption());
+            $event->register(new \wcf\system\endpoint\controller\core\users\options\DisableOption());
+            $event->register(new \wcf\system\endpoint\controller\core\users\options\EnableOption());
+            $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank());
+            $event->register(new \wcf\system\endpoint\controller\core\interactions\GetBulkContextMenuOptions());
+            $event->register(new \wcf\system\endpoint\controller\core\interactions\GetContextMenuOptions());
         }
     );
 

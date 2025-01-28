@@ -315,9 +315,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
             }
             const menuItems = this.menuItemProvider.getMenuItems(this.mainMenu);
-            menuItems.forEach((menuItem) => this.refreshUnreadBage(menuItem));
+            menuItems.forEach((menuItem) => this.refreshUnreadBadge(menuItem));
         }
-        refreshUnreadBage(menuItem) {
+        refreshUnreadBadge(menuItem) {
             if (menuItem.identifier !== null) {
                 const counter = this.menuItemBadges.get(menuItem.identifier);
                 if (counter) {
@@ -333,7 +333,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     }
                 }
             }
-            menuItem.children.forEach((child) => this.refreshUnreadBage(child));
+            menuItem.children.forEach((child) => this.refreshUnreadBadge(child));
         }
         updateOverflowIndicator(container) {
             const hasOverflow = container.clientHeight < container.scrollHeight;

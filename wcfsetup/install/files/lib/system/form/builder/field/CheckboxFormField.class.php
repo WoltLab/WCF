@@ -12,16 +12,16 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.3
  */
-class CheckboxFormField extends BooleanFormField
+class CheckboxFormField extends BooleanFormField implements INullableFormField
 {
+    use TNullableFormField;
+
     /**
      * @inheritDoc
      */
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/CheckedVoid';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         $this->value = $this->getDocument()->hasRequestData($this->getPrefixedId());
@@ -29,9 +29,17 @@ class CheckboxFormField extends BooleanFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
+    public function getSaveValue()
+    {
+        if ($this->isNullable() && !$this->value) {
+            return null;
+        }
+
+        return parent::getSaveValue();
+    }
+
+    #[\Override]
     public function getHtml()
     {
         if ($this->requiresLabel() && $this->getLabel() === null) {
@@ -45,5 +53,15 @@ class CheckboxFormField extends BooleanFormField
                 'field' => $this,
             ]
         );
+    }
+
+    #[\Override]
+    public function value($value)
+    {
+        if ($this->isNullable() && $value === null) {
+            $value = 0;
+        }
+
+        return parent::value($value);
     }
 }

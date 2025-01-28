@@ -38,12 +38,10 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
          */
         createFragmentFromHtml(html) {
-            const tmp = document.createElement("div");
-            DomUtil.setInnerHtml(tmp, html);
+            const template = document.createElement("template");
+            DomUtil.setInnerHtml(template, html);
             const fragment = document.createDocumentFragment();
-            while (tmp.childNodes.length) {
-                fragment.appendChild(tmp.childNodes[0]);
-            }
+            fragment.append(template.content.cloneNode(true));
             return fragment;
         },
         /**

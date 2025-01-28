@@ -277,6 +277,7 @@
 		<item name="wcf.acp.captcha.question.incorrectSubmissions"><![CDATA[Incorrect Answers]]></item>
 	</category>
 	<category name="wcf.acp.cronjob">
+		<item name="wcf.acp.cronjob"><![CDATA[Cronjob]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.cronjob.subtitle"/>
@@ -1229,14 +1230,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Action]]></item>
-		<item name="wcf.acp.modificationLog.action.all"><![CDATA[All Actions]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Affected Object]]></item>
-		<item name="wcf.acp.modificationLog.affectedObject.id"><![CDATA[ID: {@$modificationLog->objectID}]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Does not exist anymore)]]></item>
-		<item name="wcf.acp.modificationLog.package.all"><![CDATA[All Sources]]></item>
-		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[After the date]]></item>
-		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Before the date]]></item>
-		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Some types are currently not supported and require changes to be made by the vendor.]]></item>
 		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[All Actions from “{$package->getName()}”]]></item>
 	</category>
 	<category name="wcf.acp.notice">
@@ -3387,6 +3382,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.markAll"><![CDATA[Mark All Objects]]></item>
 		<item name="wcf.clipboard.item.mark"><![CDATA[Mark Object]]></item>
+		<item name="wcf.clipboard.button.numberOfSelectedItems"><![CDATA[{#$numberOfSelectedItems} Selected]]></item>
+		<item name="wcf.clipboard.button.noInteractionsAvailable"><![CDATA[No Actions Available]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} article{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.publish"><![CDATA[Publish ({#$count})]]></item>

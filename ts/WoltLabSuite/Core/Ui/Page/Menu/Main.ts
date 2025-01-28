@@ -391,10 +391,10 @@ export class PageMenuMain implements PageMenuProvider {
     }
 
     const menuItems = this.menuItemProvider.getMenuItems(this.mainMenu);
-    menuItems.forEach((menuItem) => this.refreshUnreadBage(menuItem));
+    menuItems.forEach((menuItem) => this.refreshUnreadBadge(menuItem));
   }
 
-  private refreshUnreadBage(menuItem: MenuItem): void {
+  private refreshUnreadBadge(menuItem: MenuItem): void {
     if (menuItem.identifier !== null) {
       const counter = this.menuItemBadges.get(menuItem.identifier);
       if (counter) {
@@ -410,7 +410,7 @@ export class PageMenuMain implements PageMenuProvider {
       }
     }
 
-    menuItem.children.forEach((child) => this.refreshUnreadBage(child));
+    menuItem.children.forEach((child) => this.refreshUnreadBadge(child));
   }
 
   private updateOverflowIndicator(container: HTMLElement): void {

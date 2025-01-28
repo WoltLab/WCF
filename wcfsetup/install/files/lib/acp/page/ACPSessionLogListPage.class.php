@@ -2,19 +2,20 @@
 
 namespace wcf\acp\page;
 
-use wcf\data\acp\session\log\ACPSessionLogList;
-use wcf\page\SortablePage;
+use wcf\page\AbstractGridViewPage;
+use wcf\system\gridView\AbstractGridView;
+use wcf\system\gridView\admin\ACPSessionLogGridView;
 
 /**
- * Shows a list of log sessions.
+ * Shows a list of logged sessions.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property    ACPSessionLogList $objectList
+ * @property    ACPSessionLogGridView    $gridView
  */
-class ACPSessionLogListPage extends SortablePage
+class ACPSessionLogListPage extends AbstractGridViewPage
 {
     /**
      * @inheritDoc
@@ -31,41 +32,9 @@ class ACPSessionLogListPage extends SortablePage
      */
     public $neededPermissions = ['admin.management.canViewLog'];
 
-    /**
-     * @inheritDoc
-     */
-    public $defaultSortField = 'lastActivityTime';
-
-    /**
-     * @inheritDoc
-     */
-    public $defaultSortOrder = 'DESC';
-
-    /**
-     * @inheritDoc
-     */
-    public $validSortFields = [
-        'sessionLogID',
-        'username',
-        'ipAddress',
-        'userAgent',
-        'time',
-        'lastActivityTime',
-        'accesses',
-    ];
-
-    /**
-     * @inheritDoc
-     */
-    public $objectListClassName = ACPSessionLogList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public function readObjects()
+    #[\Override]
+    protected function createGridViewController(): AbstractGridView
     {
-        $this->sqlOrderBy = (($this->sortField != 'accesses' && $this->sortField != 'username') ? 'acp_session_log.' : '') . $this->sortField . " " . $this->sortOrder;
-
-        parent::readObjects();
+        return new ACPSessionLogGridView();
     }
 }

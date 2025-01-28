@@ -10,7 +10,7 @@
 						<span class="boxMenuLinkOutstandingItems badge badgeUpdate" aria-label="{lang}wcf.page.menu.outstandingItems{/lang}">{#$menuItemNode->getOutstandingItems()}</span>
 					{/if}
 					{if $menuIdentifier == 'com.woltlab.wcf.MainMenu' && $menuItemNode->hasChildren() && $menuItemNode->getDepth() == 1}
-						{icon name='caret-down' type='solid'}
+						{icon name='angle-down' type='solid'}
 					{/if}
 				</a>
 				

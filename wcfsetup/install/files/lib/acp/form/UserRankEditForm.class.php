@@ -2,10 +2,15 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserRankListPage;
 use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\user\rank\UserRank;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\UserRankInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuView;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the user rank edit form.
@@ -51,5 +56,21 @@ class UserRankEditForm extends UserRankAddForm
         if (!$this->formObject->getObjectID()) {
             throw new IllegalLinkException();
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => new StandaloneInteractionContextMenuView(
+                new UserRankInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(UserRankListPage::class)
+            ),
+        ]);
     }
 }

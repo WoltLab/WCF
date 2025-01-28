@@ -93,6 +93,34 @@ WCF.ACP.Cronjob.ExecutionHandler = Class.extend({
 });
 
 /**
+ * Handles the cronjob log list.
+ */
+WCF.ACP.Cronjob.LogList = Class.extend({
+	/**
+	 * Initializes WCF.ACP.Cronjob.LogList object.
+	 */
+	init: function() {
+		// bind event listener to delete cronjob log button
+		$('.jsCronjobLogDelete').click(function() {
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.cronjob.log.clear.confirm'), function(action) {
+				if (action == 'confirm') {
+					new WCF.Action.Proxy({
+						autoSend: true,
+						data: {
+							actionName: 'clearAll',
+							className: 'wcf\\data\\cronjob\\log\\CronjobLogAction'
+						},
+						success: function() {
+							window.location.reload();
+						}
+					});
+				}
+			});
+		});
+	}
+});
+
+/**
  * Namespace for ACP package management.
  */
 WCF.ACP.Package = { };
