@@ -1,5 +1,5 @@
 /**
- * Inline editor action to disable an object.
+ * Inline editor action to restore an object.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -10,22 +10,18 @@
 import { InlineEditor } from "WoltLabSuite/Core/Component/Inline/Editor";
 import { Simple } from "WoltLabSuite/Core/Component/Inline/Actions/Simple";
 
-export class Disable extends Simple {
+export class Restore extends Simple {
   constructor(inlineEditor: InlineEditor, endpoint: string | URL) {
-    super(inlineEditor, "wcf.global.button.disable", endpoint);
+    super(inlineEditor, "wcf.global.button.restore", endpoint);
   }
 
   responseOk(): void {
     this.inlineEditor.update({
-      isDisabled: 1,
+      isDeleted: 0,
     });
   }
 
   isVisible(): boolean {
-    return (
-      this.inlineEditor.getPermissions()["canEnable"] &&
-      !this.inlineEditor.getState("isDeleted") &&
-      !this.inlineEditor.getState("isDisabled")
-    );
+    return this.inlineEditor.getPermissions()["canRestore"] && this.inlineEditor.getState("isDeleted");
   }
 }

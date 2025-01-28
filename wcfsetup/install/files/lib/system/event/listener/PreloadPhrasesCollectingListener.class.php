@@ -80,6 +80,8 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.button.submit');
         $event->preload('wcf.global.button.upload');
         $event->preload('wcf.global.button.replace');
+        $event->preload('wcf.global.button.trash');
+        $event->preload('wcf.global.button.restore');
 
         $event->preload('wcf.global.confirmation.cancel');
         $event->preload('wcf.global.confirmation.confirm');

@@ -37,7 +37,7 @@ export class Trash implements Action {
         const response = await trash(this.endpoint, result.reason);
         if (response.ok) {
           this.inlineEditor.update({
-            isDeleted: true,
+            isDeleted: 1,
             deleteNote: response.value,
           });
         }

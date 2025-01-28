@@ -50,7 +50,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Builder", 
         update(data) {
             (0, Notification_1.show)();
             Object.entries(data).forEach(([key, value]) => {
-                this.element.dataset[key] = value.toString();
+                this.element.dataset[key] = typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
             });
         }
         /**

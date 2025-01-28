@@ -73,7 +73,7 @@ export class InlineEditor {
     showNotification();
 
     Object.entries(data).forEach(([key, value]) => {
-      this.element.dataset[key] = value.toString();
+      this.element.dataset[key] = typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
     });
   }
 
