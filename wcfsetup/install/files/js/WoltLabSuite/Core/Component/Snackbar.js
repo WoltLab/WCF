@@ -155,11 +155,38 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/H
             return parseInt(match[1]);
         }
     }
+    class SnackbarProgress {
+        #snackbar;
+        #label;
+        #length;
+        #iteration = 0;
+        constructor(label, length) {
+            this.#label = label;
+            this.#length = length;
+            this.#snackbar = new Snackbar(this.#getMessage(), SnackbarType.Progress);
+        }
+        setIteration(iteration) {
+            this.#iteration = iteration;
+        }
+        markAsDone() {
+            this.#snackbar.markAsDone();
+        }
+        get element() {
+            return this.#snackbar;
+        }
+        #getMessage() {
+            return (0, Language_1.getPhrase)("wcf.global.snackbar.progress", {
+                label: this.#label,
+                iteration: this.#iteration,
+                length: this.#length,
+            });
+        }
+    }
     function showSuccessSnackbar(message) {
         return new Snackbar(message, SnackbarType.Success);
     }
-    function showProgressSnackbar(message) {
-        return new Snackbar(message, SnackbarType.Progress);
+    function showProgressSnackbar(label, length) {
+        return new SnackbarProgress(label, length);
     }
     function showDefaultSuccessSnackbar() {
         return showSuccessSnackbar((0, Language_1.getPhrase)("wcf.global.success"));

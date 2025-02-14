@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuite/Core/Api/PostObject", "../Confirmation", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Language"], function (require, exports, DeleteObject_1, PostObject_1, Confirmation_1, Snackbar_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuite/Core/Api/PostObject", "../Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, DeleteObject_1, PostObject_1, Confirmation_1, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -15,11 +15,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
         if (!confirmationResult.result) {
             return;
         }
-        const snackbar = (0, Snackbar_1.showProgressSnackbar)((0, Language_1.getPhrase)("wcf.global.snackbar.progress", {
-            label,
-            iteration: 0,
-            length: objectIds.length,
-        }));
+        const snackbar = (0, Snackbar_1.showProgressSnackbar)(label, objectIds.length);
         for (let i = 0; i < objectIds.length; i++) {
             if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
                 await (0, DeleteObject_1.deleteObject)(endpoint.replace(/%s/, objectIds[i].toString()));
@@ -27,11 +23,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
             else {
                 await (0, PostObject_1.postObject)(endpoint.replace(/%s/, objectIds[i].toString()), confirmationResult.reason ? { reason: confirmationResult.reason } : undefined);
             }
-            snackbar.message = (0, Language_1.getPhrase)("wcf.global.snackbar.progress", {
-                label,
-                iteration: i + 1,
-                length: objectIds.length,
-            });
+            snackbar.setIteration(i + 1);
             const element = container.querySelector(`[data-object-id="${objectIds[i]}"]`);
             if (!element) {
                 continue;
