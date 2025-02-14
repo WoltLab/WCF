@@ -208,12 +208,46 @@ class SnackbarContainer {
   }
 }
 
+class SnackbarProgress {
+  readonly #snackbar: Snackbar;
+  readonly #label: string;
+  readonly #length: number;
+  #iteration = 0;
+
+  constructor(label: string, length: number) {
+    this.#label = label;
+    this.#length = length;
+
+    this.#snackbar = new Snackbar(this.#getMessage(), SnackbarType.Progress);
+  }
+
+  setIteration(iteration: number): void {
+    this.#iteration = iteration;
+  }
+
+  markAsDone(): void {
+    this.#snackbar.markAsDone();
+  }
+
+  get element(): Snackbar {
+    return this.#snackbar;
+  }
+
+  #getMessage(): string {
+    return getPhrase("wcf.global.snackbar.progress", {
+      label: this.#label,
+      iteration: this.#iteration,
+      length: this.#length,
+    });
+  }
+}
+
 export function showSuccessSnackbar(message: string): Snackbar {
   return new Snackbar(message, SnackbarType.Success);
 }
 
-export function showProgressSnackbar(message: string): Snackbar {
-  return new Snackbar(message, SnackbarType.Progress);
+export function showProgressSnackbar(label: string, length: number): SnackbarProgress {
+  return new SnackbarProgress(label, length);
 }
 
 export function showDefaultSuccessSnackbar(): Snackbar {

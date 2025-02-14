@@ -11,7 +11,6 @@ import { deleteObject } from "WoltLabSuite/Core/Api/DeleteObject";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
 import { ConfirmationType, handleConfirmation } from "../Confirmation";
 import { showProgressSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { getPhrase } from "WoltLabSuite/Core/Language";
 
 async function handleRpcInteraction(
   container: HTMLElement,
@@ -26,13 +25,7 @@ async function handleRpcInteraction(
     return;
   }
 
-  const snackbar = showProgressSnackbar(
-    getPhrase("wcf.global.snackbar.progress", {
-      label,
-      iteration: 0,
-      length: objectIds.length,
-    }),
-  );
+  const snackbar = showProgressSnackbar(label, objectIds.length);
 
   for (let i = 0; i < objectIds.length; i++) {
     if (confirmationType == ConfirmationType.Delete) {
@@ -44,11 +37,7 @@ async function handleRpcInteraction(
       );
     }
 
-    snackbar.message = getPhrase("wcf.global.snackbar.progress", {
-      label,
-      iteration: i + 1,
-      length: objectIds.length,
-    });
+    snackbar.setIteration(i + 1);
 
     const element = container.querySelector(`[data-object-id="${objectIds[i]}"]`);
     if (!element) {
