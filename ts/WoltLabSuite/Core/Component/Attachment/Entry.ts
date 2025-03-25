@@ -34,6 +34,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
       },
     });
   }
+  element.dataset.fileId = fileId.toString();
 
   const extraButtons: HTMLButtonElement[] = [];
 

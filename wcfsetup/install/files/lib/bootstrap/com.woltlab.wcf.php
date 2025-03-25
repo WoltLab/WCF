@@ -233,6 +233,7 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\reactions\types\DeleteType());
             $event->register(new \wcf\system\endpoint\controller\core\reactions\types\GetShowOrder());
             $event->register(new \wcf\system\endpoint\controller\core\reactions\types\ChangeShowOrder());
+            $event->register(new \wcf\system\endpoint\controller\core\attachments\ChangeShowOrder());
         }
     );
 

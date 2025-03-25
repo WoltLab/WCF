@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
                 },
             });
         }
+        element.dataset.fileId = fileId.toString();
         const extraButtons = [];
         let insertButton;
         if (file.isImage()) {
