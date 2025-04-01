@@ -3,9 +3,30 @@ import { CkeditorDropEvent } from "../File/Upload";
 import { createAttachmentFromFile } from "./Entry";
 import { listenToCkeditor } from "../Ckeditor/Event";
 import { getTabMenu } from "../Message/MessageTabMenu";
+import Sortable from "sortablejs";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { postObject } from "WoltLabSuite/Core/Api/PostObject";
+import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+
+async function addSortableHandler(container: HTMLLIElement, file: WoltlabCoreFileElement) {
+  await file.ready;
+
+  container.dataset.attachmentId = (file.data!.attachmentID as number).toString();
+
+  const icon = document.createElement("fa-icon");
+  icon.setIcon("up-down-left-right");
+  const handle = document.createElement("span");
+  handle.append(icon);
+  handle.classList.add("sortableList__handle");
+  container.prepend(handle);
+}
 
 function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
-  fileList.append(createAttachmentFromFile(file, editor));
+  const container = createAttachmentFromFile(file, editor);
+
+  void addSortableHandler(container, file);
+
+  fileList.append(container);
 }
 
 type Context = {
@@ -43,6 +64,36 @@ export function setup(editorId: string): void {
     fileList.classList.add("fileList");
     uploadButton.insertAdjacentElement("afterend", fileList);
   }
+
+  const sortable = new Sortable(fileList, {
+    direction: "vertical",
+    dataIdAttr: "data-attachment-id",
+    dragClass: ".fileList__item",
+    handle: ".sortableList__handle",
+    animation: 150,
+    fallbackOnBody: true,
+    onChange: (event) => {
+      const file = event.item.querySelector("woltlab-core-file")!;
+      const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
+      if (thumbnail !== undefined) {
+        file.thumbnail = thumbnail;
+      } else if (file.link) {
+        file.previewUrl = file.link;
+      }
+    },
+    onEnd: promiseMutex(async (event) => {
+      if (event.oldIndex === event.newIndex) {
+        return;
+      }
+
+      const attachmentIDs = sortable.toArray().map(Number);
+      const context = JSON.parse(uploadButton.dataset.context!);
+
+      await postObject(`${window.WSC_RPC_API_URL}core/attachments/show-order`, { ...context, attachmentIDs });
+
+      showDefaultSuccessSnackbar();
+    }),
+  });
 
   let showOrder = -1;
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {

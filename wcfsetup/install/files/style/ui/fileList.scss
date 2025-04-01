@@ -23,11 +23,11 @@
 	box-shadow: var(--wcfBoxShadowCard);
 	display: grid;
 	grid-template-areas:
-		"file filename"
-		"file fileSize"
-		"file buttons"
-		"file error";
-	grid-template-columns: 80px auto;
+		"file filename sortableHandle"
+		"file fileSize sortableHandle"
+		"file buttons buttons"
+		"file error error";
+	grid-template-columns: 80px auto 20px;
 	padding: 10px;
 }
 
@@ -105,4 +105,14 @@ woltlab-core-file img {
 
 .woltlabCoreFileUpload__input::-webkit-file-upload-button {
 	cursor: pointer;
+}
+
+.fileList__item .sortableList__handle {
+	grid-area: sortableHandle;
+}
+
+@media (hover: hover) {
+	.fileList__item .sortableList__handle:hover {
+		cursor: move;
+	}
 }

@@ -238,6 +238,7 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\smilies\ChangeShowOrder());
             $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\GetSmileyShowOrder());
             $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\ChangeSmileyShowOrder());
+            $event->register(new \wcf\system\endpoint\controller\core\attachments\ChangeShowOrder());
         }
     );
 
