@@ -23,11 +23,11 @@
 	box-shadow: var(--wcfBoxShadowCard);
 	display: grid;
 	grid-template-areas:
-		"file filename sortableHandle"
-		"file fileSize sortableHandle"
-		"file buttons buttons"
-		"file error error";
-	grid-template-columns: 80px auto 20px;
+		"file filename"
+		"file fileSize"
+		"file buttons"
+		"file error";
+	grid-template-columns: 80px auto;
 	padding: 10px;
 }
 
@@ -37,6 +37,10 @@
 
 .fileList__item--error .fileList__item__file {
 	color: var(--wcfStatusErrorText);
+}
+
+.fileList__item--ghost {
+	opacity: 0.54;
 }
 
 .fileList__item .innerError {
@@ -107,12 +111,8 @@ woltlab-core-file img {
 	cursor: pointer;
 }
 
-.fileList__item .sortableList__handle {
-	grid-area: sortableHandle;
-}
-
 @media (hover: hover) {
-	.fileList__item .sortableList__handle:hover {
+	.fileList__item__file:hover {
 		cursor: move;
 	}
 }

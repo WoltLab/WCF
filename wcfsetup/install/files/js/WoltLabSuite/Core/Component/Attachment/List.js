@@ -1,22 +1,10 @@
-define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Snackbar_1) {
+define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     sortablejs_1 = tslib_1.__importDefault(sortablejs_1);
-    async function addSortableHandler(container, file) {
-        await file.ready;
-        container.dataset.attachmentId = file.data.attachmentID.toString();
-        const icon = document.createElement("fa-icon");
-        icon.setIcon("up-down-left-right");
-        const handle = document.createElement("span");
-        handle.append(icon);
-        handle.classList.add("sortableList__handle");
-        container.prepend(handle);
-    }
     function fileToAttachment(fileList, file, editor) {
-        const container = (0, Entry_1.createAttachmentFromFile)(file, editor);
-        void addSortableHandler(container, file);
-        fileList.append(container);
+        fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor));
     }
     function setup(editorId) {
         const container = document.getElementById(`attachments_${editorId}`);
@@ -45,14 +33,14 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             fileList.classList.add("fileList");
             uploadButton.insertAdjacentElement("afterend", fileList);
         }
-        const sortable = new sortablejs_1.default(fileList, {
+        new sortablejs_1.default(fileList, {
             direction: "vertical",
-            dataIdAttr: "data-attachment-id",
             dragClass: ".fileList__item",
-            handle: ".sortableList__handle",
+            ghostClass: "fileList__item--ghost",
+            handle: ".fileList__item__file",
             animation: 150,
             fallbackOnBody: true,
-            onChange: (event) => {
+            onChange(event) {
                 const file = event.item.querySelector("woltlab-core-file");
                 const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
                 if (thumbnail !== undefined) {
@@ -66,10 +54,11 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
                 if (event.oldIndex === event.newIndex) {
                     return;
                 }
-                const attachmentIDs = sortable.toArray().map(Number);
+                const attachmentIDs = Array.from(fileList.querySelectorAll("woltlab-core-file"))
+                    .map((file) => file.data?.attachmentID)
+                    .filter((attachmentID) => attachmentID !== undefined);
                 const context = JSON.parse(uploadButton.dataset.context);
                 await (0, PostObject_1.postObject)(`${window.WSC_RPC_API_URL}core/attachments/show-order`, { ...context, attachmentIDs });
-                (0, Snackbar_1.showDefaultSuccessSnackbar)();
             }),
         });
         let showOrder = -1;

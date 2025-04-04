@@ -6,27 +6,9 @@ import { getTabMenu } from "../Message/MessageTabMenu";
 import Sortable from "sortablejs";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
-import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-
-async function addSortableHandler(container: HTMLLIElement, file: WoltlabCoreFileElement) {
-  await file.ready;
-
-  container.dataset.attachmentId = (file.data!.attachmentID as number).toString();
-
-  const icon = document.createElement("fa-icon");
-  icon.setIcon("up-down-left-right");
-  const handle = document.createElement("span");
-  handle.append(icon);
-  handle.classList.add("sortableList__handle");
-  container.prepend(handle);
-}
 
 function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
-  const container = createAttachmentFromFile(file, editor);
-
-  void addSortableHandler(container, file);
-
-  fileList.append(container);
+  fileList.append(createAttachmentFromFile(file, editor));
 }
 
 type Context = {
@@ -65,14 +47,14 @@ export function setup(editorId: string): void {
     uploadButton.insertAdjacentElement("afterend", fileList);
   }
 
-  const sortable = new Sortable(fileList, {
+  new Sortable(fileList, {
     direction: "vertical",
-    dataIdAttr: "data-attachment-id",
     dragClass: ".fileList__item",
-    handle: ".sortableList__handle",
+    ghostClass: "fileList__item--ghost",
+    handle: ".fileList__item__file",
     animation: 150,
     fallbackOnBody: true,
-    onChange: (event) => {
+    onChange(event) {
       const file = event.item.querySelector("woltlab-core-file")!;
       const thumbnail = file.thumbnails.find((thumbnail) => thumbnail.identifier === "tiny");
       if (thumbnail !== undefined) {
@@ -86,12 +68,12 @@ export function setup(editorId: string): void {
         return;
       }
 
-      const attachmentIDs = sortable.toArray().map(Number);
+      const attachmentIDs = Array.from(fileList.querySelectorAll("woltlab-core-file"))
+        .map((file) => file.data?.attachmentID)
+        .filter((attachmentID) => attachmentID !== undefined);
       const context = JSON.parse(uploadButton.dataset.context!);
 
       await postObject(`${window.WSC_RPC_API_URL}core/attachments/show-order`, { ...context, attachmentIDs });
-
-      showDefaultSuccessSnackbar();
     }),
   });
 
