@@ -170,7 +170,7 @@ class Email
     public function getDate()
     {
         if ($this->date === null) {
-            $this->date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+            $this->date = DateUtil::getDateTimeByTimestamp(\time());
         }
 
         return $this->date;
