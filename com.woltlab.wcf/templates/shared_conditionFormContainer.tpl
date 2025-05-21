@@ -26,12 +26,11 @@
 {include file='shared_formContainerDependencies'}
 
 <script data-relocate="true">
-  require([
-	'WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default',
-	'WoltLabSuite/Core/Form/Builder/Container/ConditionFormField'
-  ], (DefaultContainerDependency, { ConditionFormField }) => {
-	new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
-	{* TODO set dynamic index *}
-	new ConditionFormField('{unsafe:$container->getPrefixedId()|encodeJS}', '{link controller="ConditionAdd" isACP=false provider=$container->getConditionProviderClass()}{/link}', 0);
-  });
+	require([
+		'WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default',
+		'WoltLabSuite/Core/Form/Builder/Container/ConditionFormField'
+	], (DefaultContainerDependency, { ConditionFormField }) => {
+		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
+		new ConditionFormField('{unsafe:$container->getPrefixedId()|encodeJS}', '{link controller="ConditionAdd" isACP=false provider=$container->getConditionProviderClass()}{/link}', {$container->getLastConditionIndex() + 1});
+	});
 </script>

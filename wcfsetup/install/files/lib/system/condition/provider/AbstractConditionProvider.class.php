@@ -42,12 +42,21 @@ abstract class AbstractConditionProvider
         }
     }
 
-    final public function getConditionFormField(string $identifier, string $containerId, int $index): ConditionRowFormFieldContainer
+    final public function getFieldId(string $containerId, string $identifier, int $index): string
     {
-        $id = "{$containerId}_{$identifier}_{$index}";
+        return "{$containerId}_{$identifier}_{$index}";
+    }
+
+    final public function getConditionFormField(string $containerId, string $identifier, int $index, null|float|int|string $value = null): ConditionRowFormFieldContainer
+    {
         $condition = $this->getConditionByIdentifier($identifier);
         if ($condition === null) {
             throw new \InvalidArgumentException("Condition type with identifier '{$identifier}' not found.");
+        }
+
+        $formField = $condition->getFormField($this->getFieldId($containerId, $identifier, $index));
+        if ($value !== null) {
+            $formField->value($value);
         }
 
         return ConditionRowFormFieldContainer::create("{$containerId}_{$identifier}_{$index}_container")
@@ -55,9 +64,7 @@ abstract class AbstractConditionProvider
             ->conditionType($identifier)
             ->conditionIndex($index)
             ->label($condition->getLabel())
-            ->appendChild(
-                $condition->getFormField($id),
-            );
+            ->appendChild($formField);
     }
 
     /**

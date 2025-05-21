@@ -62,7 +62,7 @@ final class ConditionAddAction implements RequestHandlerInterface
 
             return new JsonResponse([
                 'result' => [
-                    'field' => $provider->getConditionFormField($data['conditionType'], $parameters['containerId'], $parameters['index'])
+                    'field' => $provider->getConditionFormField($parameters['containerId'], $data['conditionType'], $parameters['index'])
                         ->parent($document)
                         ->getHtml(),
                     'conditionType' => $data['conditionType'],
