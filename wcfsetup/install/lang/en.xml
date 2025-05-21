@@ -4096,6 +4096,7 @@ Attachments:
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[You must upload at least {if $minimum > 1}{#$minimum} files{else}one file{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[You can upload a maximum of {if $maximum > 1}{#$maximum} files{else}one file{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.fileExtension"><![CDATA[The file “{$filename}” has an invalid file extension. Allowed are: {implode from=$allowedFileExtensions item=extension}{$extension}{/implode}.]]></item>
+		<item name="wcf.form.field.condition"><![CDATA[Condition]]></item>
 		<item name="wcf.form.selectOptions.key"><![CDATA[Key]]></item>
 		<item name="wcf.form.selectOptions.value"><![CDATA[Value]]></item>
 		<item name="wcf.form.option.boolean"><![CDATA[Yes/No]]></item>

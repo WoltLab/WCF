@@ -4150,6 +4150,7 @@ Dateianhänge:
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} mindestens {if $minimum > 1}{#$minimum} Dateien{else}eine Datei{/if} hochladen.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} maximal {if $maximum > 1}{#$maximum} Dateien{else}eine Datei{/if} hochladen.]]></item>
 		<item name="wcf.form.field.upload.error.fileExtension"><![CDATA[Die Datei „{$filename}“ hat eine ungültige Dateiendung. Erlaubt sind: {implode from=$allowedFileExtensions item=extension}{$extension}{/implode}.]]></item>
+		<item name="wcf.form.field.condition"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.form.selectOptions.key"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.form.selectOptions.value"><![CDATA[Wert]]></item>
 		<item name="wcf.form.option.boolean"><![CDATA[Ja/Nein]]></item>

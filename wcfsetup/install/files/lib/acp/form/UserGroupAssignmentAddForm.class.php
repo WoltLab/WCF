@@ -6,6 +6,8 @@ use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\condition\provider\UserConditionProvider;
+use wcf\system\form\builder\container\ConditionFormContainer;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -62,7 +64,8 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
                         ->label('wcf.acp.group.assignment.isDisabled')
                         ->value(false),
                 ]),
-            // TODO add condition form container
+            ConditionFormContainer::create()
+                ->conditionProvider(new UserConditionProvider()),
         ]);
     }
 
