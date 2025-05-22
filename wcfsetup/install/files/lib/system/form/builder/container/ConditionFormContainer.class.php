@@ -105,8 +105,9 @@ final class ConditionFormContainer extends FormContainer
                             "identifier" => $identifier,
                             "value" => $parameters['data'][$fieldId],
                         ];
-                        unset($parameters['data'][$fieldId]);
                     }
+
+                    unset($parameters['data'][$fieldId]);
 
                     $parameters['data'][$prefixId] = JSON::encode($conditions);
 

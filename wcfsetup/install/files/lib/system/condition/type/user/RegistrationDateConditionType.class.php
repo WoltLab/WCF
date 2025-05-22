@@ -7,7 +7,8 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\AbstractConditionFormField;
+use wcf\system\form\builder\field\DateConditionFormField;
 
 /**
  * @author Olaf Braun
@@ -18,41 +19,47 @@ use wcf\system\form\builder\field\TextFormField;
  * @implements IDatabaseObjectListConditionType<UserList<User>>
  * @implements IObjectConditionType<User>
  */
-final class UsernameConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class RegistrationDateConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
-    public function getFormField(string $id): TextFormField
+    public function getFormField(string $id): AbstractConditionFormField
     {
-        // TODO supports beginns with, ends with and contains
-        return TextFormField::create($id)
-            ->removeFieldClass('long')
-            ->addFieldClass('medium');
+        return DateConditionFormField::create($id)
+            ->conditions(\array_combine($this->getConditions(), $this->getConditions()))
+            ->nullable()
+            ->supportTime();
     }
 
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'username';
+        return 'registrationDate';
     }
 
     #[\Override]
     public function getLabel(): string
     {
-        return 'wcf.condition.user.username';
+        return 'wcf.condition.user.registrationDate';
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList, float|int|string $filter): void
     {
-        $objectList->getConditionBuilder()->add(
-            $objectList->getDatabaseTableAlias() . '.username LIKE ?',
-            ['%' . $filter . '%']
-        );
+        // TODO
     }
 
     #[\Override]
     public function match(object $object, float|int|string $filter): bool
     {
-        return \str_contains($object->getUsername(), $filter);
+        // TODO
+        return false;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getConditions(): array
+    {
+        return [">", "<", ">=", "<="];
     }
 }

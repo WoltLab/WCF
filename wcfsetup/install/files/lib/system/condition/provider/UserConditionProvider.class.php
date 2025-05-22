@@ -6,6 +6,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
+use wcf\system\condition\type\user\RegistrationDateConditionType;
 use wcf\system\condition\type\user\UsernameConditionType;
 
 /**
@@ -22,6 +23,7 @@ final class UserConditionProvider extends AbstractConditionProvider
     {
         $this->addConditions([
             new UsernameConditionType(),
+            new RegistrationDateConditionType(),
         ]);
         // TODO PSR14-event
     }
