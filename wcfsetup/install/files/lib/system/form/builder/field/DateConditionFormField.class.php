@@ -7,6 +7,8 @@ namespace wcf\system\form\builder\field;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
+ *
+ * TODO The time/date value must be saved with the system timezone.
  */
 final class DateConditionFormField extends AbstractConditionFormField implements
     IAttributeFormField,

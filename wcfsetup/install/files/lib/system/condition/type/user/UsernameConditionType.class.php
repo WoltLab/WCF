@@ -5,6 +5,7 @@ namespace wcf\system\condition\type\user;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\TextFormField;
@@ -18,7 +19,7 @@ use wcf\system\form\builder\field\TextFormField;
  * @implements IDatabaseObjectListConditionType<UserList<User>>
  * @implements IObjectConditionType<User>
  */
-final class UsernameConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class UsernameConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): TextFormField
@@ -42,17 +43,17 @@ final class UsernameConditionType implements IDatabaseObjectListConditionType, I
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $objectList, float|int|string $filter): void
+    public function applyFilter(DatabaseObjectList $objectList): void
     {
         $objectList->getConditionBuilder()->add(
             $objectList->getDatabaseTableAlias() . '.username LIKE ?',
-            ['%' . $filter . '%']
+            ['%' . $this->filter . '%']
         );
     }
 
     #[\Override]
-    public function match(object $object, float|int|string $filter): bool
+    public function match(object $object): bool
     {
-        return \str_contains($object->getUsername(), $filter);
+        return \str_contains($object->getUsername(), $this->filter);
     }
 }

@@ -5,6 +5,7 @@ namespace wcf\system\condition\type\user;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\AbstractConditionFormField;
@@ -19,7 +20,7 @@ use wcf\system\form\builder\field\DateConditionFormField;
  * @implements IDatabaseObjectListConditionType<UserList<User>>
  * @implements IObjectConditionType<User>
  */
-final class RegistrationDateConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class RegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): AbstractConditionFormField
@@ -43,16 +44,68 @@ final class RegistrationDateConditionType implements IDatabaseObjectListConditio
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $objectList, float|int|string $filter): void
+    public function applyFilter(DatabaseObjectList $objectList): void
     {
-        // TODO
+        ["condition" => $condition, "time" => $time] = $this->getParsedFilter();
+
+        switch ($condition) {
+            case ">":
+                $objectList->getConditionBuilder()->add(
+                    "{$objectList->getDatabaseTableAlias()}.registrationDate > ?",
+                    [$time]
+                );
+                break;
+            case "<":
+                $objectList->getConditionBuilder()->add(
+                    "{$objectList->getDatabaseTableAlias()}.registrationDate < ?",
+                    [$time]
+                );
+                break;
+            case ">=":
+                $objectList->getConditionBuilder()->add(
+                    "{$objectList->getDatabaseTableAlias()}.registrationDate >= ?",
+                    [$time]
+                );
+                break;
+            case "<=":
+                $objectList->getConditionBuilder()->add(
+                    "{$objectList->getDatabaseTableAlias()}.registrationDate <= ?",
+                    [$time]
+                );
+                break;
+        }
     }
 
     #[\Override]
-    public function match(object $object, float|int|string $filter): bool
+    public function match(object $object): bool
     {
-        // TODO
-        return false;
+        ["condition" => $condition, "time" => $time] = $this->getParsedFilter();
+
+        return match ($condition) {
+            ">" => $object->registrationDate > $time,
+            "<" => $object->registrationDate < $time,
+            ">=" => $object->registrationDate >= $time,
+            "<=" => $object->registrationDate <= $time,
+            default => false,
+        };
+    }
+
+    /**
+     * @return array{condition: string, time: int}
+     */
+    private function getParsedFilter(): array
+    {
+        ["condition" => $condition, "value" => $filter] = @\unserialize($this->filter);
+        $dateTime = \DateTime::createFromFormat(
+            DateConditionFormField::TIME_FORMAT,
+            $filter,
+            new \DateTimeZone(TIMEZONE),
+        );
+
+        return [
+            'condition' => $condition,
+            'time' => $dateTime->getTimestamp(),
+        ];
     }
 
     /**

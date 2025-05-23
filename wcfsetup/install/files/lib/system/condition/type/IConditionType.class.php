@@ -26,4 +26,9 @@ interface IConditionType
      * Returns the label of this condition type.
      */
     public function getLabel(): string;
+
+    /**
+     * Set the filter value for this condition type.
+     */
+    public function setFilter(float|int|string $filter): void;
 }

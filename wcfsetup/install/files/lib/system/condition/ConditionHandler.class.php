@@ -8,17 +8,21 @@ use wcf\data\condition\ConditionList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
+use wcf\system\condition\provider\AbstractConditionProvider;
+use wcf\system\condition\type\IConditionType;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles general condition-related matters.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Olaf Braun, Matthias Schmidt
+ * @copyright   2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @phpstan-type ConditionValue float|int|string
  */
-class ConditionHandler extends SingletonFactory
+final class ConditionHandler extends SingletonFactory
 {
     /**
      * list of available conditions grouped by the id of the related condition
@@ -138,5 +142,36 @@ class ConditionHandler extends SingletonFactory
 
         // create new conditions
         $this->createConditions($objectID, $conditionObjectTypes);
+    }
+
+    /**
+     * Returns the list of conditions with assigned filter for the condition provider and stored condition-values.
+     *
+     * @template T of IConditionType
+     * @param AbstractConditionProvider<T> $provider
+     * @param array{identifier: string, value: ConditionValue}[] $conditions
+     *
+     * @return T[]
+     */
+    public function getConditionsWithFilter(AbstractConditionProvider $provider, array $conditions): array
+    {
+        $result = [];
+        foreach ($conditions as $condition) {
+            $_conditionType = $provider->getConditionByIdentifier($condition['identifier']);
+            if ($_conditionType === null) {
+                if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+                    throw new \InvalidArgumentException("Condition type with identifier '{$condition['identifier']}' not found.");
+                }
+
+                continue;
+            }
+
+            $conditionType = clone $_conditionType;
+            $conditionType->setFilter($condition['value']);
+
+            $result[] = $conditionType;
+        }
+
+        return $result;
     }
 }

@@ -19,5 +19,5 @@ interface IDatabaseObjectListConditionType extends IConditionType
      *
      * @param T $objectList
      */
-    public function applyFilter(DatabaseObjectList $objectList, float|int|string $filter): void;
+    public function applyFilter(DatabaseObjectList $objectList): void;
 }

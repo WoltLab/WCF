@@ -3,12 +3,13 @@
 namespace wcf\system\user\group\assignment;
 
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\provider\UserConditionProvider;
 use wcf\system\SingletonFactory;
 
 /**
@@ -48,6 +49,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
 
         /** @var UserGroupAssignment[] $assignments */
         $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
+        $conditionProvider = new UserConditionProvider();
         foreach ($userList as $user) {
             $groupIDs = $user->getGroupIDs();
             $newGroupIDs = [];
@@ -58,9 +60,9 @@ class UserGroupAssignmentHandler extends SingletonFactory
                 }
 
                 $checkFailed = false;
-                $conditions = $assignment->getConditions();
-                foreach ($conditions as $condition) {
-                    if (!$condition->getObjectType()->getProcessor()->checkUser($condition, $user)) {
+                $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($conditionProvider, $assignment->getConditions());
+                foreach ($conditions as $conditionType) {
+                    if (!$conditionType->match($user)) {
                         $checkFailed = true;
                         break;
                     }
@@ -116,31 +118,12 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        $conditions = $assignment->getConditions();
-        foreach ($conditions as $condition) {
-            $condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
+        $conditions = ConditionHandler::getInstance()->getConditionsWithFilter(new UserConditionProvider(), $assignment->getConditions());
+        foreach ($conditions as $conditionType) {
+            $conditionType->applyFilter($userList);
         }
         $userList->readObjects();
 
         return $userList->getObjects();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function init()
-    {
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.userGroupAssignment');
-        foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditiongroup) {
-                continue;
-            }
-
-            if (!isset($this->groupedObjectTypes[$objectType->conditiongroup])) {
-                $this->groupedObjectTypes[$objectType->conditiongroup] = [];
-            }
-
-            $this->groupedObjectTypes[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
-        }
     }
 }

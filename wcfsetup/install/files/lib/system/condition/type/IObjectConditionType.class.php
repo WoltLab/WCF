@@ -17,5 +17,5 @@ interface IObjectConditionType extends IConditionType
      *
      * @param T $object
      */
-    public function match(object $object, float|int|string $filter): bool;
+    public function match(object $object): bool;
 }
