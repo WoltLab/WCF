@@ -61,7 +61,9 @@ abstract class AbstractConditionFormField extends AbstractFormField implements I
     {
         $value = @\unserialize($value);
         if (!\is_array($value)) {
-            $value = [];
+            $value = null;
+        } elseif (!\array_key_exists('condition', $value) || !\array_key_exists('value', $value)) {
+            throw new \InvalidArgumentException('Invalid serialized value');
         }
 
         return parent::value($value);
@@ -115,7 +117,7 @@ abstract class AbstractConditionFormField extends AbstractFormField implements I
      */
     public function getCondition(): string
     {
-        return $this->value['condition'] ?? '';
+        return \is_array($this->value) ? $this->value['condition'] : '';
     }
 
     protected function getFieldValue(): mixed
