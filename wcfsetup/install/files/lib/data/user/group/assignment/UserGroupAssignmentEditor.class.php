@@ -4,8 +4,6 @@ namespace wcf\data\user\group\assignment;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\cache\builder\ConditionCacheBuilder;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 
 /**
@@ -32,8 +30,5 @@ class UserGroupAssignmentEditor extends DatabaseObjectEditor implements IEditabl
     public static function resetCache()
     {
         UserGroupAssignmentCacheBuilder::getInstance()->reset();
-        ConditionCacheBuilder::getInstance()->reset([
-            'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.userGroupAssignment')->definitionID,
-        ]);
     }
 }

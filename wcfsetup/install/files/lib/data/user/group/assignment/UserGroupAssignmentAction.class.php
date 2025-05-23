@@ -5,7 +5,6 @@ namespace wcf\data\user\group\assignment;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
-use wcf\system\condition\ConditionHandler;
 
 /**
  * Executes user group assignment-related actions.
@@ -34,17 +33,4 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
      * @inheritDoc
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
-
-    /**
-     * @inheritDoc
-     */
-    public function delete()
-    {
-        ConditionHandler::getInstance()->deleteConditions(
-            'com.woltlab.wcf.condition.userGroupAssignment',
-            $this->objectIDs
-        );
-
-        return parent::delete();
-    }
 }
