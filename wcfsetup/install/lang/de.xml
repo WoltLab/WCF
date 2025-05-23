@@ -3533,6 +3533,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[Das Enddatum ist ungültig.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Startdatum ist ungültig.]]></item>
+		<item name="wcf.condition.add"><![CDATA[Add condition]]></item>
+		<item name="wcf.condition.user.registrationDate"><![CDATA[Registrierungsdatum ist]]></item>
 	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontaktformular]]></item>
