@@ -64,6 +64,12 @@
 							{include file='shared_topReaction' cachedReactions=$article->cachedReactions render='short'}
 						</div>
 					{/if}
+					{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
+						<div class="contentItemMetaIcon">
+							{icon name="eye" type='solid'}
+							{$article->views}
+						</div>
+					{/if}
 					{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}
 						<div class="contentItemMetaIcon">
 							{icon name='comments'}
