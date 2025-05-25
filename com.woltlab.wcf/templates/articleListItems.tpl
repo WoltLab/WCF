@@ -3,7 +3,7 @@
 <div class="contentItemList">
 	{foreach from=$objects item='article' name='articles'}
 		{if $article->getArticleContent()}
-		<article class="contentItem contentItemMultiColumn">
+		<article class="contentItem contentItemMultiColumn {if !$article->isPublished()}contentItemUnpublished{/if}">
 			<div class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge">
 					<img
