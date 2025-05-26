@@ -2,13 +2,13 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+
 /**
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
- *
- * TODO The time/date value must be saved with the system timezone.
  */
 final class DateConditionFormField extends AbstractConditionFormField implements
     IAttributeFormField,
@@ -22,12 +22,14 @@ final class DateConditionFormField extends AbstractConditionFormField implements
     use TNullableFormField;
 
     public const DATE_FORMAT = 'Y-m-d';
+
     public const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
     /**
      * is `true` if not only the date, but also the time can be set
      */
     protected bool $supportsTime = false;
+
     /**
      * @inheritDoc
      */
@@ -36,8 +38,24 @@ final class DateConditionFormField extends AbstractConditionFormField implements
     #[\Override]
     public function validate()
     {
-        // TODO validate date value
         parent::validate();
+
+        if ($this->getValue() !== null) {
+            $dateTime = \DateTime::createFromFormat(
+                $this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT,
+                $this->getValue(),
+                new \DateTimeZone(TIMEZONE)
+            );
+
+            if ($dateTime === false) {
+                $this->addValidationError(
+                    new FormFieldValidationError(
+                        'format',
+                        'wcf.form.field.date.error.format'
+                    )
+                );
+            }
+        }
     }
 
     /**

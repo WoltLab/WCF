@@ -48,20 +48,10 @@ final class RegistrationDateConditionType extends AbstractConditionType implemen
     {
         ["condition" => $condition, "time" => $time] = $this->getParsedFilter();
 
-        switch ($condition) {
-            case ">":
-                $objectList->getConditionBuilder()->add(
-                    "{$objectList->getDatabaseTableAlias()}.registrationDate > ?",
-                    [$time]
-                );
-                break;
-            case "<":
-                $objectList->getConditionBuilder()->add(
-                    "{$objectList->getDatabaseTableAlias()}.registrationDate < ?",
-                    [$time]
-                );
-                break;
-        }
+        $objectList->getConditionBuilder()->add(
+            "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
+            [$time]
+        );
     }
 
     #[\Override]
@@ -72,6 +62,8 @@ final class RegistrationDateConditionType extends AbstractConditionType implemen
         return match ($condition) {
             ">" => $object->registrationDate > $time,
             "<" => $object->registrationDate < $time,
+            ">=" => $object->registrationDate >= $time,
+            "<=" => $object->registrationDate <= $time,
             default => false,
         };
     }
@@ -99,6 +91,6 @@ final class RegistrationDateConditionType extends AbstractConditionType implemen
      */
     private function getConditions(): array
     {
-        return [">", "<"];
+        return [">", "<", ">=", "<="];
     }
 }
