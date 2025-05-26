@@ -19,8 +19,9 @@ use wcf\system\form\builder\field\DateConditionFormField;
  *
  * @implements IDatabaseObjectListConditionType<UserList<User>>
  * @implements IObjectConditionType<User>
+ * @extends AbstractConditionType<string>
  */
-final class RegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class UserRegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): AbstractConditionFormField
