@@ -41,7 +41,7 @@ final class ConditionAddAction implements RequestHandlerInterface
             throw new UserInputException('provider', 'invalid');
         }
 
-        /** @var AbstractConditionProvider<IConditionType> $provider */
+        /** @var AbstractConditionProvider<IConditionType<mixed>> $provider */
         $provider = new $parameters['provider']();
 
         $form = $this->getForm($provider);
@@ -74,7 +74,7 @@ final class ConditionAddAction implements RequestHandlerInterface
     }
 
     /**
-     * @param AbstractConditionProvider<IConditionType> $provider
+     * @param AbstractConditionProvider<IConditionType<mixed>> $provider
      */
     private function getForm(AbstractConditionProvider $provider): Psr15DialogForm
     {

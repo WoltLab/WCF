@@ -19,8 +19,6 @@ use wcf\system\SingletonFactory;
  * @author Olaf Braun, Matthias Schmidt
  * @copyright   2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- *
- * @phpstan-type ConditionValue float|int|string
  */
 final class ConditionHandler extends SingletonFactory
 {
@@ -149,7 +147,7 @@ final class ConditionHandler extends SingletonFactory
      *
      * @template T of IConditionType
      * @param AbstractConditionProvider<T> $provider
-     * @param array{identifier: string, value: ConditionValue}[] $conditions
+     * @param array{identifier: string, value: mixed}[] $conditions
      *
      * @return T[]
      */

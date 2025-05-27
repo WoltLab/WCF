@@ -4,7 +4,6 @@ namespace wcf\data\user\group\assignment;
 
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\request\IRouteController;
 use wcf\util\JSON;
 
@@ -20,15 +19,13 @@ use wcf\util\JSON;
  * @property-read   string $title          title of the automatic user group assignment
  * @property-read   int $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
  * @property-read string $conditions JSON-encoded string containing the conditions of the automatic user group assignment
- *
- * @phpstan-import-type ConditionValue from ConditionHandler
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController
 {
     /**
      * Returns the conditions of the automatic assignment to a user group.
      *
-     * @return array{identifier: string, value: ConditionValue}[]
+     * @return array{identifier: string, value: mixed}[]
      */
     public function getConditions(): array
     {
