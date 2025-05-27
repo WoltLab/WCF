@@ -64,6 +64,6 @@ final class UserInGroupConditionType extends AbstractConditionType implements ID
     #[\Override]
     public function match(object $object): bool
     {
-        return \in_array($this->filter, $object->getGroupIDs());
+        return \in_array($this->filter, $object->getGroupIDs(), true);
     }
 }

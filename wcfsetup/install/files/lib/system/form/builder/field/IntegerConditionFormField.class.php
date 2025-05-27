@@ -56,14 +56,6 @@ final class IntegerConditionFormField extends AbstractConditionFormField impleme
         );
     }
 
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-        // TODO
-
-    }
-
     public function step(int $step): self
     {
         $this->step = $step;
