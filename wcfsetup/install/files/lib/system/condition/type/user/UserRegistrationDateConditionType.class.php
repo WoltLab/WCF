@@ -17,7 +17,7 @@ use wcf\system\form\builder\field\DateConditionFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @phpstan-type Filter = array{condition: string, value: string}
+ * @phpstan-type Filter = array{condition: string, value: int}
  * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
@@ -48,7 +48,7 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
-        ["condition" => $condition, "time" => $time] = $this->getParsedFilter();
+        ["condition" => $condition, "value" => $time] = $this->filter;
 
         $objectList->getConditionBuilder()->add(
             "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
@@ -59,7 +59,7 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
     #[\Override]
     public function match(object $object): bool
     {
-        ["condition" => $condition, "time" => $time] = $this->getParsedFilter();
+        ["condition" => $condition, "value" => $time] = $this->filter;
 
         return match ($condition) {
             ">" => $object->registrationDate > $time,
@@ -68,23 +68,6 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
             "<=" => $object->registrationDate <= $time,
             default => false,
         };
-    }
-
-    /**
-     * @return array{condition: string, time: int}
-     */
-    private function getParsedFilter(): array
-    {
-        $dateTime = \DateTime::createFromFormat(
-            DateConditionFormField::TIME_FORMAT,
-            $this->filter["value"],
-            new \DateTimeZone(TIMEZONE),
-        );
-
-        return [
-            'condition' => $this->filter["condition"],
-            'time' => $dateTime->getTimestamp(),
-        ];
     }
 
     /**

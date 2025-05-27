@@ -20,7 +20,7 @@ use wcf\system\event\EventHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @extends AbstractConditionProvider<IDatabaseObjectListConditionType<UserList>&IObjectConditionType<User>>
+ * @extends AbstractConditionProvider<IDatabaseObjectListConditionType<UserList, mixed>&IObjectConditionType<User, mixed>>
  */
 final class UserConditionProvider extends AbstractConditionProvider
 {

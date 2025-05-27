@@ -3,6 +3,8 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * @author Olaf Braun
@@ -23,7 +25,7 @@ final class DateConditionFormField extends AbstractConditionFormField implements
 
     public const DATE_FORMAT = 'Y-m-d';
 
-    public const TIME_FORMAT = 'Y-m-d\TH:i:sP';
+    public const TIME_FORMAT = 'Y-m-d\TH:i:s';
 
     /**
      * is `true` if not only the date, but also the time can be set
@@ -35,6 +37,30 @@ final class DateConditionFormField extends AbstractConditionFormField implements
      */
     protected $templateName = 'shared_dateConditionFormField';
 
+    public function __construct()
+    {
+        $this->fieldAttribute("data-ignore-timezone", "1");
+    }
+
+    #[\Override]
+    public function getSaveValue()
+    {
+        if ($this->getValue() === null) {
+            return parent::getSaveValue();
+        }
+
+        $dateTime = \DateTime::createFromFormat(
+            $this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT,
+            $this->getValue(),
+            WCF::getUser()->getTimezone()
+        );
+
+        return [
+            "condition" => $this->getCondition(),
+            "value" => $dateTime->getTimestamp(),
+        ];
+    }
+
     #[\Override]
     public function validate()
     {
@@ -44,7 +70,7 @@ final class DateConditionFormField extends AbstractConditionFormField implements
             $dateTime = \DateTime::createFromFormat(
                 $this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT,
                 $this->getValue(),
-                new \DateTimeZone(TIMEZONE)
+                WCF::getUser()->getTimezone()
             );
 
             if ($dateTime === false) {
@@ -56,6 +82,20 @@ final class DateConditionFormField extends AbstractConditionFormField implements
                 );
             }
         }
+    }
+
+    #[\Override]
+    public function value($value): self
+    {
+        parent::value($value);
+
+        if ($this->getValue() !== null) {
+            $dateTime = DateUtil::getDateTimeByTimestamp($this->getValue());
+            $dateTime->setTimezone(WCF::getUser()->getTimezone());
+            $this->value["value"] = $dateTime->format($this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT);
+        }
+
+        return $this;
     }
 
     /**
