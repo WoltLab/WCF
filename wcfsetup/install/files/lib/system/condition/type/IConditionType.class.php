@@ -9,6 +9,8 @@ use wcf\system\form\builder\field\IFormField;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
+ *
+ * @template TFilter
  */
 interface IConditionType
 {
@@ -29,6 +31,8 @@ interface IConditionType
 
     /**
      * Set the filter value for this condition type.
+     *
+     * @param TFilter $filter
      */
-    public function setFilter(float|int|string $filter): void;
+    public function setFilter(mixed $filter): void;
 }

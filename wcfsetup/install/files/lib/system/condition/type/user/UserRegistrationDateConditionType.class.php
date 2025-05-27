@@ -17,9 +17,10 @@ use wcf\system\form\builder\field\DateConditionFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>>
- * @implements IObjectConditionType<User>
- * @extends AbstractConditionType<string>
+ * @phpstan-type Filter = array{condition: string, value: string}
+ * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
+ * @implements IObjectConditionType<User, Filter>
+ * @extends AbstractConditionType<Filter>
  */
 final class UserRegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
@@ -74,15 +75,14 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
      */
     private function getParsedFilter(): array
     {
-        ["condition" => $condition, "value" => $filter] = @\unserialize($this->filter);
         $dateTime = \DateTime::createFromFormat(
             DateConditionFormField::TIME_FORMAT,
-            $filter,
+            $this->filter["value"],
             new \DateTimeZone(TIMEZONE),
         );
 
         return [
-            'condition' => $condition,
+            'condition' => $this->filter["condition"],
             'time' => $dateTime->getTimestamp(),
         ];
     }

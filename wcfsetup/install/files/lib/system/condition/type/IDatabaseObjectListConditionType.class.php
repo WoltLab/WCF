@@ -11,6 +11,8 @@ use wcf\data\DatabaseObjectList;
  * @since 6.3
  *
  * @template T of DatabaseObjectList
+ * @template TFilter
+ * @extends  IConditionType<TFilter>
  */
 interface IDatabaseObjectListConditionType extends IConditionType
 {

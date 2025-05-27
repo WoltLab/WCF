@@ -29,10 +29,10 @@ abstract class AbstractConditionFormField extends AbstractFormField implements I
         }
 
         if (!\is_array($this->value)) {
-            return \serialize([]);
+            return [];
         }
 
-        return \serialize($this->value);
+        return $this->value;
     }
 
     #[\Override]
@@ -61,7 +61,6 @@ abstract class AbstractConditionFormField extends AbstractFormField implements I
     #[\Override]
     public function value($value)
     {
-        $value = @\unserialize($value);
         if (!\is_array($value)) {
             $value = null;
         } elseif (!\array_key_exists('condition', $value) || !\array_key_exists('value', $value)) {

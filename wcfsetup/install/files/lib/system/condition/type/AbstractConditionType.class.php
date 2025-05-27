@@ -8,16 +8,17 @@ namespace wcf\system\condition\type;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  *
- * @template TFilter of float|int|string
+ * @template TFilter
+ * @implements IConditionType<TFilter>
  */
 abstract class AbstractConditionType implements IConditionType
 {
-    protected float|int|string $filter;
+    protected mixed $filter;
 
     /**
      * @inheritDoc
      */
-    public function setFilter(float|int|string $filter): void
+    public function setFilter(mixed $filter): void
     {
         $this->filter = $filter;
     }

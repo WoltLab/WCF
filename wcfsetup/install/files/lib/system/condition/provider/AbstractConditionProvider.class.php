@@ -47,7 +47,7 @@ abstract class AbstractConditionProvider
         return "{$containerId}_{$identifier}_{$index}";
     }
 
-    final public function getConditionFormField(string $containerId, string $identifier, int $index, null|float|int|string $value = null): ConditionRowFormFieldContainer
+    final public function getConditionFormField(string $containerId, string $identifier, int $index, mixed $value = null): ConditionRowFormFieldContainer
     {
         $condition = $this->getConditionByIdentifier($identifier);
         if ($condition === null) {

@@ -16,7 +16,7 @@ use wcf\util\JSON;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @phpstan-type ConditionProvider AbstractConditionProvider<IConditionType>
+ * @phpstan-type ConditionProvider AbstractConditionProvider<IConditionType<mixed>>
  */
 final class ConditionFormContainer extends FormContainer
 {
@@ -85,7 +85,7 @@ final class ConditionFormContainer extends FormContainer
         return $this;
     }
 
-    private function appendCondition(string $identifier, int $index, null|float|int|string $value = null): void
+    private function appendCondition(string $identifier, int $index, mixed $value = null): void
     {
         $prefixId = $this->getPrefixedId();
 

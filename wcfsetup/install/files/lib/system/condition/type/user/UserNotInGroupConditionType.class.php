@@ -17,8 +17,8 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>>
- * @implements IObjectConditionType<User>
+ * @implements IDatabaseObjectListConditionType<UserList<User>, int>
+ * @implements IObjectConditionType<User, int>
  * @extends AbstractConditionType<int>
  */
 final class UserNotInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType

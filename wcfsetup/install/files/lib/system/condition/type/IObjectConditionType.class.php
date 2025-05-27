@@ -9,6 +9,8 @@ namespace wcf\system\condition\type;
  * @since 6.3
  *
  * @template T of object
+ * @template TFilter
+ * @extends  IConditionType<TFilter>
  */
 interface IObjectConditionType extends IConditionType
 {

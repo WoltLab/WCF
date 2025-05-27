@@ -16,9 +16,10 @@ use wcf\system\form\builder\field\TextConditionFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>>
- * @implements IObjectConditionType<User>
- * @extends AbstractConditionType<string>
+ * @phpstan-type Filter = array{condition: string, value: string}
+ * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
+ * @implements IObjectConditionType<User, Filter>
+ * @extends AbstractConditionType<Filter>
  */
 final class UserUsernameConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
@@ -44,7 +45,7 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
-        ["condition" => $condition, "value" => $value] = @\unserialize($this->filter);
+        ["condition" => $condition, "value" => $value] = $this->filter;
         $filter = match ($condition) {
             "%_" => $value . '%',
             "%_%" => '%' . $value . '%',
@@ -61,7 +62,7 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     #[\Override]
     public function match(object $object): bool
     {
-        ["condition" => $condition, "value" => $value] = @\unserialize($this->filter);
+        ["condition" => $condition, "value" => $value] = $this->filter;
 
         return match ($condition) {
             "%_" => \str_starts_with($object->username, $value),

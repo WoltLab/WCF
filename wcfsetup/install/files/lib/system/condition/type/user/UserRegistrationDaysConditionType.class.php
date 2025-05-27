@@ -9,6 +9,7 @@ use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\IntegerConditionFormField;
+use wcf\util\DateUtil;
 
 /**
  * @author Olaf Braun
@@ -16,9 +17,10 @@ use wcf\system\form\builder\field\IntegerConditionFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>>
- * @implements IObjectConditionType<User>
- * @extends AbstractConditionType<string>
+ * @phpstan-type Filter = array{condition: string, value: int}
+ * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
+ * @implements IObjectConditionType<User, Filter>
+ * @extends AbstractConditionType<Filter>
  */
 final class UserRegistrationDaysConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
@@ -45,24 +47,24 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
-        ["condition" => $condition, "value" => $days] = @\unserialize($this->filter);
+        ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         $objectList->getConditionBuilder()->add(
             "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
-            [TIME_NOW - $days * 86_400]
+            [$timestamp]
         );
     }
 
     #[\Override]
     public function match(object $object): bool
     {
-        ["condition" => $condition, "value" => $days] = @\unserialize($this->filter);
+        ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         return match ($condition) {
-            '>' => $object->registrationDate < TIME_NOW - $days * 86_400,
-            '<' => $object->registrationDate > TIME_NOW - $days * 86_400,
-            '>=' => $object->registrationDate <= TIME_NOW - $days * 86_400,
-            '<=' => $object->registrationDate >= TIME_NOW - $days * 86_400,
+            '>' => $object->registrationDate < $timestamp,
+            '<' => $object->registrationDate > $timestamp,
+            '>=' => $object->registrationDate <= $timestamp,
+            '<=' => $object->registrationDate >= $timestamp,
             default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
     }
@@ -72,14 +74,17 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
      */
     private function getParsedFilter(): array
     {
-        $filter = @\unserialize($this->filter);
-        if (!\is_array($filter) || !isset($filter['condition'], $filter['value'])) {
+        if (!isset($this->filter['condition'], $this->filter['value'])) {
             throw new \InvalidArgumentException("Invalid filter format");
         }
 
+        $date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+        $date->setTimezone(new \DateTimeZone(TIMEZONE));
+        $date->sub(new \DateInterval("P{$this->filter['condition']}D"));
+
         return [
-            'condition' => $filter['condition'],
-            'timestamp' => TIME_NOW - ($filter['value'] * 86_400),
+            'condition' => $this->filter['condition'],
+            'timestamp' => $date->getTimestamp(),
         ];
     }
 
