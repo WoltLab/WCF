@@ -3458,6 +3458,13 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 		<item name="wcf.condition.add"><![CDATA[Bedingung hinzufügen]]></item>
 		<item name="wcf.condition.user.registrationDate"><![CDATA[Registration Date is]]></item>
+		<item name="wcf.condition.user.inGroup"><![CDATA[User is in the user group]]></item>
+		<item name="wcf.condition.user.notInGroup"><![CDATA[User is not in the user group]]></item>
+		<item name="wcf.condition.user.registrationDays"><![CDATA[Days since registration is]]></item>
+		<item name="wcf.condition.user.username"><![CDATA[Username]]></item>
+		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
+		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
+		<item name="wcf.condition.contains"><![CDATA[contains]]></item>
 	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>

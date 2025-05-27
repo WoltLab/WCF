@@ -79,8 +79,8 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     {
         return [
             "%_" => "wcf.condition.startsWith",
-            "%_%" => "wcf.condition.user.contains",
-            "_%" => "wcf.condition.user.endsWith",
+            "%_%" => "wcf.condition.contains",
+            "_%" => "wcf.condition.endsWith",
         ];
     }
 }
