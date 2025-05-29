@@ -1684,7 +1684,8 @@ CREATE TABLE wcf1_user_group_assignment (
 	assignmentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	conditions MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option;
