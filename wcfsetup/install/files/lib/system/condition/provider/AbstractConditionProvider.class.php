@@ -11,19 +11,19 @@ use wcf\system\form\builder\container\FormContainer;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @template T of IConditionType
+ * @template TCondition of IConditionType
  */
 abstract class AbstractConditionProvider
 {
     /**
-     * @var array<string, T>
+     * @var array<string, TCondition>
      */
     protected array $conditionTypes = [];
 
     /**
      * Adds a condition type to this provider.
      *
-     * @param T $conditionType
+     * @param TCondition $conditionType
      */
     public function addCondition(IConditionType $conditionType): void
     {
@@ -33,7 +33,7 @@ abstract class AbstractConditionProvider
     /**
      * Adds multiple condition types to this provider.
      *
-     * @param T[] $conditionTypes
+     * @param TCondition[] $conditionTypes
      */
     public function addConditions(array $conditionTypes): void
     {
@@ -70,7 +70,7 @@ abstract class AbstractConditionProvider
     /**
      * Returns the condition type with the given identifier.
      *
-     * @return T|null
+     * @return TCondition|null
      */
     public function getConditionByIdentifier(string $identifier): ?IConditionType
     {
@@ -80,7 +80,7 @@ abstract class AbstractConditionProvider
     /**
      * Returns all condition types of this provider.
      *
-     * @return array<string, T>
+     * @return array<string, TCondition>
      */
     public function getConditionTypes(): array
     {
