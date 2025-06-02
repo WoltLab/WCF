@@ -59,6 +59,7 @@ class FormContainer implements IFormContainer
             $this->templateName,
             \array_merge($this->getHtmlVariables(), [
                 'container' => $this,
+                'form' => $this->getDocument(),
             ]),
         );
     }

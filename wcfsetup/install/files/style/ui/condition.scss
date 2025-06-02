@@ -1,20 +1,14 @@
-.conditions {
+.condition-container {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
 
-.condition-row {
-	display: inline-flex;
+.condition-button-remove {
+	flex: 0 30px;
 }
 
-.condition-remove {
-	flex: 0;
-}
-
-.condition-label {
+.condition-container > dl {
 	flex: 1;
-}
-
-.condition-field {
-	flex: 1;
+	display: flex;
+	flex-direction: row;
 }

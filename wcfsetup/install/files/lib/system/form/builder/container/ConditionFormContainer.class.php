@@ -6,8 +6,10 @@ use wcf\data\IStorableObject;
 use wcf\system\condition\provider\AbstractConditionProvider;
 use wcf\system\condition\type\IConditionType;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\util\JSON;
 
 /**
@@ -75,24 +77,41 @@ final class ConditionFormContainer extends FormContainer
         if ($loadValues && isset($data[$this->getPrefixedId()])) {
             $conditions = JSON::decode($data[$this->getPrefixedId()]);
 
+            $data = $containers = [];
             foreach ($conditions as $index => $condition) {
-                $this->appendCondition($condition['identifier'], $index, $condition['value']);
+                $containers[] = $this->appendCondition($condition['identifier'], $index);
+                $fieldId = $this->getConditionProvider()->getFieldId($this->getPrefixedId(), $condition['identifier'], $index);
+                $data[$fieldId] = $condition['value'];
 
                 $this->lastConditionIndex = \max($this->lastConditionIndex, $index);
+            }
+
+            foreach ($containers as $container) {
+                /** @var IFormNode $child */
+                foreach ($container->getIterator() as $child) {
+                    if ($child instanceof IFormField || $child instanceof FormContainer) {
+                        $child->updatedObject($data, $object);
+                    }
+                }
             }
         }
 
         return $this;
     }
 
-    private function appendCondition(string $identifier, int $index, mixed $value = null): void
+    private function appendCondition(string $identifier, int $index): FormContainer
     {
         $prefixId = $this->getPrefixedId();
 
-        $formField = $this->getConditionProvider()->getConditionFormField($prefixId, $identifier, $index, $value);
-        $this->appendChild($formField);
+        $node = $this->getConditionProvider()->getConditionFormField($prefixId, $identifier, $index);
+        $this->appendChild($node);
 
-        $fieldId = $this->getConditionProvider()->getFieldId($prefixId, $identifier, $index);
+        $fieldId = $this->getConditionProvider()->getFieldId($this->getPrefixedId(), $identifier, $index);
+
+        /** @var IFormNode $child */
+        foreach ($node->getIterator() as $child) {
+            $child->populate();
+        }
 
         $this->getDocument()->getDataHandler()->addProcessor(
             new CustomFormDataProcessor(
@@ -115,6 +134,8 @@ final class ConditionFormContainer extends FormContainer
                 }
             )
         );
+
+        return $node;
     }
 
     /**

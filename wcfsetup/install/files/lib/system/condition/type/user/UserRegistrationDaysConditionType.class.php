@@ -8,7 +8,9 @@ use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\form\builder\field\IntegerConditionFormField;
+use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\util\DateUtil;
 
 /**
@@ -25,11 +27,19 @@ use wcf\util\DateUtil;
 final class UserRegistrationDaysConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
-    public function getFormField(string $id): IntegerConditionFormField
+    public function getFormField(string $id): PrefixConditionFormFieldContainer
     {
-        return IntegerConditionFormField::create($id)
-            ->conditions($this->getConditions())
-            ->suffix("wcf.acp.option.suffix.days");
+        return PrefixConditionFormFieldContainer::create($id)
+            ->field(
+                IntegerFormField::create("{$id}Value")
+                    ->suffix("wcf.acp.option.suffix.days")
+                    ->required()
+            )
+            ->prefixField(
+                SingleSelectionFormField::create("{$id}Condition")
+                    ->options($this->getConditions())
+                    ->required()
+            );
     }
 
     #[\Override]
@@ -56,7 +66,7 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
     }
 
     #[\Override]
-    public function match(object $object): bool
+    public function matches(object $object): bool
     {
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 

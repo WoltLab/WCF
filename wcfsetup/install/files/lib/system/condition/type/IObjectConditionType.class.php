@@ -15,9 +15,7 @@ namespace wcf\system\condition\type;
 interface IObjectConditionType extends IConditionType
 {
     /**
-     * Returns `true` if the given object matches the filter, `false` otherwise.
-     *
      * @param T $object
      */
-    public function match(object $object): bool;
+    public function matches(object $object): bool;
 }
