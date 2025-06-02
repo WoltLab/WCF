@@ -2,6 +2,7 @@
 
 namespace wcf\system\condition\type;
 
+use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\IFormField;
 
 /**
@@ -17,7 +18,7 @@ interface IConditionType
     /**
      * Returns the form field for this condition type.
      */
-    public function getFormField(string $id): IFormField;
+    public function getFormField(string $id): IFormField|IFormContainer;
 
     /**
      * Returns the identifier of this condition type.

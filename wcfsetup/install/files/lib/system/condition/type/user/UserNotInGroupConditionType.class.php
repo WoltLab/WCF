@@ -9,7 +9,7 @@ use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 
 /**
  * @author Olaf Braun
@@ -24,16 +24,17 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
 final class UserNotInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
-    public function getFormField(string $id): SingleSelectionFormField
+    public function getFormField(string $id): SelectFormField
     {
-        return SingleSelectionFormField::create($id)
+        return SelectFormField::create($id)
             ->options(
                 UserGroup::getGroupsByType(invalidGroupTypes: [
                     UserGroup::EVERYONE,
                     UserGroup::GUESTS,
                     UserGroup::USERS,
                 ])
-            );
+            )
+            ->required();
     }
 
     #[\Override]
@@ -62,7 +63,7 @@ final class UserNotInGroupConditionType extends AbstractConditionType implements
     }
 
     #[\Override]
-    public function match(object $object): bool
+    public function matches(object $object): bool
     {
         return !\in_array($this->filter, $object->getGroupIDs(), true);
     }

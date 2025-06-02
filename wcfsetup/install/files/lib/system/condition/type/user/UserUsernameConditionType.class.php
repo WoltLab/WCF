@@ -8,7 +8,9 @@ use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\form\builder\field\TextConditionFormField;
+use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
 
 /**
  * @author Olaf Braun
@@ -24,10 +26,18 @@ use wcf\system\form\builder\field\TextConditionFormField;
 final class UserUsernameConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
-    public function getFormField(string $id): TextConditionFormField
+    public function getFormField(string $id): PrefixConditionFormFieldContainer
     {
-        return TextConditionFormField::create($id)
-            ->conditions($this->getConditions());
+        return PrefixConditionFormFieldContainer::create($id)
+            ->field(
+                TextFormField::create("{$id}Value")
+                    ->required()
+            )
+            ->prefixField(
+                SingleSelectionFormField::create("{$id}Condition")
+                    ->options($this->getConditions())
+                    ->required()
+            );
     }
 
     #[\Override]
@@ -47,9 +57,9 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
         $filter = match ($condition) {
-            "%_" => $value . '%',
+            "_%" => $value . '%',
             "%_%" => '%' . $value . '%',
-            "_%" => '%' . $value,
+            "%_" => '%' . $value,
             default => '',
         };
 
@@ -60,14 +70,14 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     }
 
     #[\Override]
-    public function match(object $object): bool
+    public function matches(object $object): bool
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
 
         return match ($condition) {
-            "%_" => \str_starts_with($object->username, $value),
+            "_%" => \str_starts_with($object->username, $value),
             "%_%" => \str_contains($object->username, $value),
-            "_%" => \str_ends_with($object->username, $value),
+            "%_" => \str_ends_with($object->username, $value),
             default => false,
         };
     }
@@ -78,9 +88,9 @@ final class UserUsernameConditionType extends AbstractConditionType implements I
     private function getConditions(): array
     {
         return [
-            "%_" => "wcf.condition.startsWith",
+            "_%" => "wcf.condition.startsWith",
             "%_%" => "wcf.condition.contains",
-            "_%" => "wcf.condition.endsWith",
+            "%_" => "wcf.condition.endsWith",
         ];
     }
 }

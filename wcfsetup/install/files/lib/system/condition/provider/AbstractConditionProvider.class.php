@@ -3,7 +3,7 @@
 namespace wcf\system\condition\provider;
 
 use wcf\system\condition\type\IConditionType;
-use wcf\system\form\builder\container\ConditionRowFormFieldContainer;
+use wcf\system\form\builder\container\FormContainer;
 
 /**
  * @author Olaf Braun
@@ -47,23 +47,23 @@ abstract class AbstractConditionProvider
         return "{$containerId}_{$identifier}_{$index}";
     }
 
-    final public function getConditionFormField(string $containerId, string $identifier, int $index, mixed $value = null): ConditionRowFormFieldContainer
+    final public function getConditionFormField(string $containerId, string $identifier, int $index): FormContainer
     {
         $condition = $this->getConditionByIdentifier($identifier);
         if ($condition === null) {
             throw new \InvalidArgumentException("Condition type with identifier '{$identifier}' not found.");
         }
 
-        $formField = $condition->getFormField($this->getFieldId($containerId, $identifier, $index));
-        if ($value !== null) {
-            $formField->value($value);
-        }
+        $id = $this->getFieldId($containerId, $identifier, $index);
+        $formField = $condition->getFormField($id)
+            ->label($condition->getLabel());
 
-        return ConditionRowFormFieldContainer::create("{$containerId}_{$identifier}_{$index}_container")
-            ->containerId($containerId)
-            ->conditionType($identifier)
-            ->conditionIndex($index)
-            ->label($condition->getLabel())
+        return FormContainer::create("{$id}_container")
+            ->removeClass("section")
+            ->addClass("condition-container")
+            ->attribute("data-container-id", $containerId)
+            ->attribute("data-condition-type", $identifier)
+            ->attribute("data-condition-index", (string)$index)
             ->appendChild($formField);
     }
 

@@ -62,7 +62,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
                 $checkFailed = false;
                 $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($conditionProvider, $assignment->getConditions());
                 foreach ($conditions as $conditionType) {
-                    if (!$conditionType->match($user)) {
+                    if (!$conditionType->matches($user)) {
                         $checkFailed = true;
                         break;
                     }
