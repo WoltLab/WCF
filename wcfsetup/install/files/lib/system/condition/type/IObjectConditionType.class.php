@@ -8,14 +8,14 @@ namespace wcf\system\condition\type;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @template T of object
+ * @template TObject of object
  * @template TFilter
  * @extends  IConditionType<TFilter>
  */
 interface IObjectConditionType extends IConditionType
 {
     /**
-     * @param T $object
+     * @param TObject $object
      */
     public function matches(object $object): bool;
 }

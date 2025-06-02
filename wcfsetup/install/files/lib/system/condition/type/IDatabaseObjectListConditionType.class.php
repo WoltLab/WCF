@@ -10,7 +10,7 @@ use wcf\data\DatabaseObjectList;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @template T of DatabaseObjectList
+ * @template TObjectList of DatabaseObjectList
  * @template TFilter
  * @extends  IConditionType<TFilter>
  */
@@ -19,7 +19,7 @@ interface IDatabaseObjectListConditionType extends IConditionType
     /**
      * Adds a filter to the given object list.
      *
-     * @param T $objectList
+     * @param TObjectList $objectList
      */
     public function applyFilter(DatabaseObjectList $objectList): void;
 }

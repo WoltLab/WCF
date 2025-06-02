@@ -145,11 +145,11 @@ final class ConditionHandler extends SingletonFactory
     /**
      * Returns the list of conditions with assigned filter for the condition provider and stored condition-values.
      *
-     * @template T of IConditionType
-     * @param AbstractConditionProvider<T> $provider
+     * @template TCondition of IConditionType
+     * @param AbstractConditionProvider<TCondition> $provider
      * @param array{identifier: string, value: mixed}[] $conditions
      *
-     * @return T[]
+     * @return TCondition[]
      */
     public function getConditionsWithFilter(AbstractConditionProvider $provider, array $conditions): array
     {
