@@ -1,7 +1,7 @@
 {if $boxType == 'html' || $boxType == 'tpl'}
 	<ul class="codemirrorToolbar">
-		<li><button type="button" id="codemirror-content{@$languageID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</button></li>
-		<li><button type="button" id="codemirror-content{@$languageID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
+		<li><button type="button" id="codemirror-content{$languageID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</button></li>
+		<li><button type="button" id="codemirror-content{$languageID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
 	</ul>
 	<script data-relocate="true">
 		require([
@@ -21,27 +21,27 @@
 				'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
 			});
 			
-			new AcpUiCodeMirrorMedia('content{@$languageID}');
-			new AcpUiCodeMirrorPage('content{@$languageID}');
+			new AcpUiCodeMirrorMedia('content{$languageID}');
+			new AcpUiCodeMirrorPage('content{$languageID}');
 		});
 	</script>
 {/if}
 
 {if $boxType == 'text'}
-	<textarea name="content[{@$languageID}]" id="content{@$languageID}"
+	<textarea name="content[{$languageID}]" id="content{$languageID}"
 		{if $boxType == 'text'}
-			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{@$boxID}{else}0{/if}-{@$languageID}"
-			{if $action === 'edit'}data-autosave-last-edit-time="{@$box->lastUpdateTime}"{/if}
+			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{$boxID}{else}0{/if}-{$languageID}"
+			{if $action === 'edit'}data-autosave-last-edit-time="{$box->lastUpdateTime}"{/if}
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content'|concat:$languageID}
 	{include file='shared_wysiwyg' wysiwygSelector='content'|concat:$languageID}
 {else}
 	<div dir="ltr">
-		<textarea name="content[{@$languageID}]" id="content{@$languageID}"
+		<textarea name="content[{$languageID}]" id="content{$languageID}"
 			{if $boxType == 'text'}
-				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{@$boxID}{else}0{/if}-{@$languageID}"
-				{if $action === 'edit'}data-autosave-last-edit-time="{@$box->lastUpdateTime}"{/if}
+				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{$boxID}{else}0{/if}-{$languageID}"
+				{if $action === 'edit'}data-autosave-last-edit-time="{$box->lastUpdateTime}"{/if}
 			{/if}
 		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	</div>

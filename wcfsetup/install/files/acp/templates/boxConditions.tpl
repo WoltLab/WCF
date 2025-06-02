@@ -48,6 +48,6 @@
 	{event name='fields'}
 	
 	{foreach from=$conditionObjectTypes item=conditionObjectType}
-		{@$conditionObjectType->getProcessor()->getHtml()}
+		{unsafe:$conditionObjectType->getProcessor()->getHtml()}
 	{/foreach}
 </section>

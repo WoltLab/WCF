@@ -5,7 +5,7 @@
 
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
-			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
+			AcpUiBoxControllerHandler.init({if $boxController}{$boxController->objectTypeID}{/if});
 		});
 	{/if}
 
@@ -13,13 +13,13 @@
 		Language.addObject({
 			'wcf.page.pageObjectID': '{jslang}wcf.page.pageObjectID{/jslang}',
 			{foreach from=$pageNodeList item=pageNode}
-				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
+					'wcf.page.pageObjectID.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
 				{/if}
-				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
+					'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
 				{/if}
 			{/foreach}
 			'wcf.page.pageObjectID.search.noResults': '{jslang}wcf.page.pageObjectID.search.noResults{/jslang}',
@@ -29,7 +29,7 @@
 
 		var handlers = new Dictionary();
 		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
-			handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
+			handlers.set({$handlerPageID}, {if $requireObjectID}true{else}false{/if});
 		{/foreach}
 
 		AcpUiBoxHandler.init(handlers, '{$boxType}');
@@ -114,7 +114,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.box.name.error.{@$errorType}{/lang}
+									{lang}wcf.acp.box.name.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -127,7 +127,7 @@
 						<dd>
 							<select name="boxControllerID" id="boxControllerID">
 								{foreach from=$availableBoxControllers item=availableBoxController}
-									<option value="{$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+									<option value="{$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{$availableBoxController->objectType}{/lang}</option>
 								{/foreach}
 							</select>
 
@@ -136,7 +136,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.box.boxController.error.{@$errorType}{/lang}
+										{lang}wcf.acp.box.boxController.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -149,7 +149,7 @@
 					<dd>
 						<select name="position" id="position">
 							{foreach from=$availablePositions item=availablePosition}
-								<option value="{$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+								<option value="{$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{$availablePosition}{/lang}</option>
 							{/foreach}
 						</select>
 
@@ -158,7 +158,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.box.position.error.{@$errorType}{/lang}
+									{lang}wcf.acp.box.position.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -181,7 +181,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.box.cssClassName.error.{@$errorType}{/lang}
+									{lang}wcf.acp.box.cssClassName.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -227,7 +227,7 @@
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 
 								{foreach from=$pageNodeList item=pageNode}
-									<option value="{$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+									<option value="{$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{$pageNode->identifier}">{if $pageNode->getDepth() > 1}{unsafe:"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'linkPageID'}
@@ -235,7 +235,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.box.linkPageID.error.{@$errorType}{/lang}
+										{lang}wcf.acp.box.linkPageID.error.{unsafe:$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -254,7 +254,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.box.linkPageObjectID.error.{@$errorType}{/lang}
+										{lang}wcf.acp.box.linkPageObjectID.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -283,7 +283,7 @@
 
 			<div id="boxConditions">
 				{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
-					{@$boxController->getProcessor()->getConditionsTemplate()}
+					{unsafe:$boxController->getProcessor()->getConditionsTemplate()}
 				{/if}
 			</div>
 		</div>
@@ -297,7 +297,7 @@
 							<dd>
 								<div id="imageDisplay" class="selectedImagePreview">
 									{if $images[0]|isset && $images[0]->hasThumbnail('small')}
-										{@$images[0]->getThumbnailTag('small')}
+										{unsafe:$images[0]->getThumbnailTag('small')}
 									{/if}
 								</div>
 								<ul class="buttonGroup">
@@ -307,7 +307,7 @@
 								</ul>
 								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{$imageID[0]}"{/if}>
 								{if $errorField == 'image'}
-									<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
+									<small class="innerError">{lang}wcf.acp.box.image.error.{$errorType}{/lang}</small>
 								{/if}
 							</dd>
 						</dl>
@@ -315,7 +315,7 @@
 						<dl>
 							<dt>{lang}wcf.acp.box.image{/lang}</dt>
 							<dd>
-								<div id="imageDisplay">{@$images[0]->getThumbnailTag('small')}</div>
+								<div id="imageDisplay">{unsafe:$images[0]->getThumbnailTag('small')}</div>
 							</dd>
 						</dl>
 					{/if}
@@ -329,7 +329,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.box.title.error.{@$errorType}{/lang}
+										{lang}wcf.acp.box.title.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -346,7 +346,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.box.content.error.{@$errorType}{/lang}
+										{lang}wcf.acp.box.content.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -368,26 +368,26 @@
 					</nav>
 
 					{foreach from=$availableLanguages item=availableLanguage}
-						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
+						<div id="language{$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
 								{if $boxType != 'system'}
 									{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 										<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
-											<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
+											<dt><label for="image{$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
 											<dd>
-												<div id="imageDisplay{@$availableLanguage->languageID}" class="selectedImagePreview">
+												<div id="imageDisplay{$availableLanguage->languageID}" class="selectedImagePreview">
 													{if $images[$availableLanguage->languageID]|isset && $images[$availableLanguage->languageID]->hasThumbnail('small')}
-														{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
+														{unsafe:$images[$availableLanguage->languageID]->getThumbnailTag('small')}
 													{/if}
 												</div>
 												<ul class="buttonGroup">
 													<li>
-														<button type="button" class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
+														<button type="button" class="button jsMediaSelectButton" data-store="imageID{$availableLanguage->languageID}" data-display="imageDisplay{$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
 													</li>
 												</ul>
-												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
+												<input type="hidden" name="imageID[{$availableLanguage->languageID}]" id="imageID{$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
 												{if $errorField == 'image'|concat:$availableLanguage->languageID}
-													<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
+													<small class="innerError">{lang}wcf.acp.box.image.error.{$errorType}{/lang}</small>
 												{/if}
 											</dd>
 										</dl>
@@ -395,22 +395,22 @@
 										<dl>
 											<dt>{lang}wcf.acp.box.image{/lang}</dt>
 											<dd>
-												<div id="imageDisplay">{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+												<div id="imageDisplay">{unsafe:$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
 											</dd>
 										</dl>
 									{/if}
 								{/if}
 
 								<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
-									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
+									<dt><label for="title{$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+										<input type="text" id="title{$availableLanguage->languageID}" name="title[{$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 										{if $errorField == 'title'|concat:$availableLanguage->languageID}
 											<small class="innerError">
 												{if $errorType == 'empty'}
 													{lang}wcf.global.form.error.empty{/lang}
 												{else}
-													{lang}wcf.acp.box.title.error.{@$errorType}{/lang}
+													{lang}wcf.acp.box.title.error.{$errorType}{/lang}
 												{/if}
 											</small>
 										{/if}
@@ -419,7 +419,7 @@
 
 								{if $boxType != 'system'}
 									<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
-										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.box.content{/lang}</label></dt>
+										<dt><label for="content{$availableLanguage->languageID}">{lang}wcf.acp.box.content{/lang}</label></dt>
 										<dd>
 											{include file='__boxAddContent' languageID=$availableLanguage->languageID}
 
@@ -428,7 +428,7 @@
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
-														{lang}wcf.acp.box.content.error.{@$errorType}{/lang}
+														{lang}wcf.acp.box.content.error.{$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}
@@ -485,7 +485,7 @@
 
 				{if $groupedConditionObjectTypes['com.woltlab.wcf.page']|isset}
 					{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
-						{@$pageConditionObjectType->getProcessor()->getHtml()}
+						{unsafe:$pageConditionObjectType->getProcessor()->getHtml()}
 					{/foreach}
 				{/if}
 			</section>
@@ -497,7 +497,7 @@
 					</header>
 
 					{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
-						{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+						{unsafe:$pointInTimeConditionObjectType->getProcessor()->getHtml()}
 					{/foreach}
 				</section>
 			{/if}

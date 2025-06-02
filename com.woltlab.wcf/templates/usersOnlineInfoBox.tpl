@@ -25,11 +25,10 @@
 					<dd>
 						<ul class="inlineList commaSeparated">
 							{foreach from=$usersOnlineList->getUsersOnlineMarkings() item=usersOnlineMarking}
-								<li>{@$usersOnlineMarking}</li>
+								<li>{unsafe:$usersOnlineMarking}</li>
 							{/foreach}
 						</ul>
 					</dd>
-				
 				</dl>
 			</div>
 		{/if}

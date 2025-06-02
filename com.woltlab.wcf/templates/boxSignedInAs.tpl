@@ -1,5 +1,5 @@
 <div class="box96">
-	{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
+	{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 	
 	<div>
 		<div class="containerHeadline">
@@ -9,10 +9,10 @@
 			</h3>
 			{if MODULE_USER_RANK}
 				{if $__wcf->getUserProfileHandler()->getUserTitle()}
-					<p><span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span></p>
+					<p><span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span></p>
 				{/if}
 				{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
-					<p><span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span></p>
+					<p><span class="userRankImage">{unsafe:$__wcf->getUserProfileHandler()->getRank()->getImage()}</span></p>
 				{/if}
 			{/if}
 		</div>

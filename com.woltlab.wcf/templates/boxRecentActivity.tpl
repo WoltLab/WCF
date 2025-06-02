@@ -44,6 +44,6 @@
 		{jsphrase name='wcf.user.recentActivity.more'}
 		{jsphrase name='wcf.user.recentActivity.noMoreEntries'}
 
-		setup(document.getElementById('boxRecentActivity{unsafe:$boxID|encodeJS}'));
+		setup(document.getElementById('boxRecentActivity{$boxID}'));
 	});
 </script>

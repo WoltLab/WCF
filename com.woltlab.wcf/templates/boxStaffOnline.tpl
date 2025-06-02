@@ -16,10 +16,10 @@
 				<div class="sidebarListItem__meta">
 					<div class="sidebarListItem__meta__userRank">
 						{if $userOnline->getUserTitle()}
-							<p><span class="badge userTitleBadge{if $userOnline->getRank() && $userOnline->getRank()->cssClassName} {@$userOnline->getRank()->cssClassName}{/if}">{$userOnline->getUserTitle()}</span></p>
+							<p><span class="badge userTitleBadge{if $userOnline->getRank() && $userOnline->getRank()->cssClassName} {$userOnline->getRank()->cssClassName}{/if}">{$userOnline->getUserTitle()}</span></p>
 						{/if}
 						{if $userOnline->getRank() && $userOnline->getRank()->rankImage}
-							<p><span class="userRankImage">{@$userOnline->getRank()->getImage()}</span></p>
+							<p><span class="userRankImage">{unsafe:$userOnline->getRank()->getImage()}</span></p>
 						{/if}
 					</div>
 				</div>

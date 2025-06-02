@@ -16,7 +16,7 @@
 						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 						*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 					*}>
-					{@$__fieldNestedOption[label]}
+					{unsafe:$__fieldNestedOption[label]}
 				</label>
 			</li>
 		{/foreach}

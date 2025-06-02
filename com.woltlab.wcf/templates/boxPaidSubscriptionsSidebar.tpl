@@ -16,7 +16,7 @@
 					{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION && $__wcf->user->canPurchasePaidSubscriptions()}
 						<ul class="buttonList">
 							{foreach from=$subscription->getPurchaseButtons() item=button}
-								<li>{@$button}</li>
+								<li>{unsafe:$button}</li>
 							{/foreach}
 						</ul>
 					{/if}

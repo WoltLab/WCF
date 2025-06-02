@@ -10,7 +10,7 @@
 				<div class="containerContent">
 					<ul class="buttonList">
 						{foreach from=$subscription->getPurchaseButtons() item=button}
-							<li>{@$button}</li>
+							<li>{unsafe:$button}</li>
 						{/foreach}
 					</ul>
 				</div>

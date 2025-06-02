@@ -6,7 +6,7 @@
 	
 	{if USERS_ONLINE_RECORD}
 		<dt>{lang}wcf.user.mostOnlineUsers{/lang}</dt>
-		<dd title="{@USERS_ONLINE_RECORD_TIME|plainTime}" class="jsTooltip">{#USERS_ONLINE_RECORD}</dd>
+		<dd title="{USERS_ONLINE_RECORD_TIME|plainTime}" class="jsTooltip">{#USERS_ONLINE_RECORD}</dd>
 	{/if}
 
 	<dt>{lang}wcf.user.newestMember{/lang}</dt>
