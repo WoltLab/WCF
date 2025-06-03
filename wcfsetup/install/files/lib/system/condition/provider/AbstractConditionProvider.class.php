@@ -60,7 +60,7 @@ abstract class AbstractConditionProvider
 
         return FormContainer::create("{$id}_container")
             ->removeClass("section")
-            ->addClass("condition-container")
+            ->addClass("condition__container")
             ->attribute("data-container-id", $containerId)
             ->attribute("data-condition-type", $identifier)
             ->attribute("data-condition-index", (string)$index)
