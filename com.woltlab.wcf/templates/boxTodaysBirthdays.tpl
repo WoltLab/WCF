@@ -31,11 +31,11 @@
 					userList = new UserList({
 						className: 'wcf\\data\\user\\UserBirthdayAction',
 						parameters: {
-							date: '{TIME_NOW|date:'Y-m-d'}',
+							date: '{time type='custom' time=TIME_NOW format='Y-m-d'}',
 							sortField: '{$sortField}',
 							sortOrder: '{$sortOrder}'
 						}
-					}, '{unsafe:$box->getTitle()|encodeJS} ({TIME_NOW|date})');
+					}, '{unsafe:$box->getTitle()|encodeJS} ({time type='plainDate' time=TIME_NOW})');
 				}
 
 				userList.open();

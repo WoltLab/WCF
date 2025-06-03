@@ -10,7 +10,7 @@
 			{foreach from=$expiringLicenses item=date key=packageName}
 				<dl class="plain acpDashboardBox__keyValue">
 					<dd class="acpDashboardBox__keyValue__key">{$packages[$packageName]}</dd>
-					<dt class="acpDashboardBox__keyValue__value" title="{$date|plainTime}">{dateInterval end=$date}</dt>
+					<dt class="acpDashboardBox__keyValue__value" title="{time time=$date type='plainTime'}">{dateInterval end=$date}</dt>
 				</dl>
 			{/foreach}
 		{/content}
