@@ -12,7 +12,7 @@
 						{$user->username}
 					</a>
 					<div class="acpDashboardBox__usersAwaitingApproval__meta">
-						{unsafe:$user->registrationDate|time}
+						{time time=$user->registrationDate}
 					</div>
 				</div>
 			</div>
