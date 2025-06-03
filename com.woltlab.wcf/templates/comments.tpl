@@ -1,10 +1,8 @@
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Component/Comment/List'], (Language, { setup }) => {
-		Language.addObject({
-			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',
-			'wcf.comment.response.more': '{jslang}wcf.comment.response.more{/jslang}',
-		});
+	{jsphrase name='wcf.comment.more'}
+	{jsphrase name='wcf.comment.response.more'}
 
+	require(['WoltLabSuite/Core/Component/Comment/List'], ({ setup }) => {
 		setup('{unsafe:$commentContainerID|encodeJS}');
 	});
 </script>
