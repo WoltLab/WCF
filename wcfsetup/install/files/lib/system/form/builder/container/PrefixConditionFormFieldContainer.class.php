@@ -18,14 +18,14 @@ use wcf\system\form\builder\IFormDocument;
 final class PrefixConditionFormFieldContainer extends FormContainer
 {
     /**
-     * form field to which the prefix selection is added
+     * form field to which the prefix is added
      */
     protected IFormField $field;
 
     /**
-     * selection form field containing the prefix options
+     * form field containing the prefix field
      */
-    protected ?ISelectionFormField $prefixField;
+    protected IFormField $prefixField;
 
     /**
      * @inheritDoc
@@ -104,29 +104,28 @@ final class PrefixConditionFormFieldContainer extends FormContainer
      */
     public function getSelectedPrefixOption(): array
     {
-        if (!isset($this->prefixField)) {
-            throw new \BadMethodCallException(
-                "There is no prefix field for which a label could be determined for container '{$this->getId()}'."
-            );
-        }
-        if (empty($this->getPrefixField()->getOptions())) {
+        $prefixField = $this->getPrefixField();
+
+        \assert($prefixField instanceof ISelectionFormField);
+
+        if (empty($prefixField->getOptions())) {
             throw new \BadMethodCallException(
                 "The prefix field has no options for container '{$this->getId()}'."
             );
         }
 
-        foreach ($this->getPrefixField()->getNestedOptions() as $option) {
-            if ($this->getPrefixField()->getValue() === null) {
+        foreach ($prefixField->getNestedOptions() as $option) {
+            if ($prefixField->getValue() === null) {
                 if ($option['isSelectable']) {
                     return $option;
                 }
-            } elseif ($option['value'] == $this->getPrefixField()->getValue()) {
+            } elseif ($option['value'] == $prefixField->getValue()) {
                 return $option;
             }
         }
 
         // Return the first selectable option if no valid value is selected.
-        foreach ($this->getPrefixField()->getNestedOptions() as $option) {
+        foreach ($prefixField->getNestedOptions() as $option) {
             if ($option['isSelectable']) {
                 return $option;
             }
@@ -138,40 +137,23 @@ final class PrefixConditionFormFieldContainer extends FormContainer
     }
 
     /**
-     * Returns the selection form field containing the prefix options.
+     * Returns the prefix form field.
      */
-    public function getPrefixField(): ?ISelectionFormField
+    public function getPrefixField(): IFormField
     {
+        if (!isset($this->prefixField)) {
+            throw new \BadMethodCallException(
+                "Prefix field has not been set yet for container '{$this->getId()}'."
+            );
+        }
+
         return $this->prefixField;
     }
 
     /**
-     * Returns the label used for the prefix selection if the field has no selectable options
-     * or is immutable.
+     * Sets the prefix form field.
      */
-    public function getPrefixLabel(): string
-    {
-        if ($this->getPrefixField() === null) {
-            throw new \BadMethodCallException(
-                "There is no prefix field for which a label could be determined for container '{$this->getId()}'."
-            );
-        }
-
-        if (empty($this->getPrefixField()->getOptions())) {
-            return '';
-        }
-
-        if (isset($this->getPrefixField()->getOptions()[$this->getPrefixField()->getValue()])) {
-            return $this->getPrefixField()->getOptions()[$this->getPrefixField()->getValue()];
-        }
-
-        return '';
-    }
-
-    /**
-     * Sets the selection form field containing the prefix options.
-     */
-    public function prefixField(ISelectionFormField $formField): static
+    public function prefixField(IFormField $formField): static
     {
         if (isset($this->prefixField)) {
             throw new \BadMethodCallException(
@@ -186,13 +168,13 @@ final class PrefixConditionFormFieldContainer extends FormContainer
     }
 
     /**
-     * Returns `true` if the prefix selection has any selectable options.
+     * Returns `true` if the prefix form field has any selectable options.
      */
     public function prefixHasSelectableOptions(): bool
     {
         $prefixField = $this->getPrefixField();
 
-        if ($prefixField === null) {
+        if (!($prefixField instanceof ISelectionFormField)) {
             return false;
         }
 
