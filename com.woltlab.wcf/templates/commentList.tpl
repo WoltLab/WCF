@@ -29,7 +29,7 @@
 						{/if}
 					</div>
 					<div class="comment__date">
-						<meta itemprop="datePublished" content="{$comment->time|date:'c'}">
+						<meta itemprop="datePublished" content="{time type='custom' time=$comment->time format='c'}">
 						<a href="{$comment->getLink()}" class="comment__permalink">{time time=$comment->time}</a>
 					</div>
 					<div class="comment__status">

@@ -25,7 +25,7 @@
 							{$comment->username}
 						{/if}
 						&#xb7;
-						<small>{$comment->time|plainTime}</small>
+						<small>{time time=$comment->time type='plainTime'}</small>
 					</h3>
 				</div>
 				<div>
