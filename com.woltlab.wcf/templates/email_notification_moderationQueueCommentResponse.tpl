@@ -3,7 +3,7 @@
 {capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
 {lang}{$notificationContent[variables][languageItemPrefix]}.commentResponse.mail.plaintext{/lang}{if $count == 1 && !$guestTimesTriggered} {* this line ends with a space *}
 
-{@$event->getUserNotificationObject()->getMailText($mimeType)}{/if} {* this line ends with a space *}
+{unsafe:$event->getUserNotificationObject()->getMailText($mimeType)}{/if} {* this line ends with a space *}
 {else}
 	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.html{/lang}{/capture}
 	{lang}{$notificationContent[variables][languageItemPrefix]}.commentResponse.mail.html{/lang}
@@ -15,7 +15,7 @@
 	{capture assign='commentContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{unsafe:$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
@@ -29,7 +29,7 @@
 					</h3>
 				</div>
 				<div>
-					{@$comment->getMailText($mimeType)}
+					{unsafe:$comment->getMailText($mimeType)}
 				</div>
 			</td>
 		</tr>
