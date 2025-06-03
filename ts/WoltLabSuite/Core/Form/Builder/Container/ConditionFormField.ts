@@ -36,10 +36,10 @@ export class ConditionFormField {
       }),
     );
 
-    wheneverFirstSeen(`#${containerId}Container .condition-container`, (container: HTMLElement) => {
+    wheneverFirstSeen(`#${containerId}Container .condition__container`, (container: HTMLElement) => {
       const deleteButton = document.createElement("button");
       deleteButton.type = "button";
-      deleteButton.classList.add("button", "small", "jsTooltip", "condition-button-remove");
+      deleteButton.classList.add("button", "small", "jsTooltip", "condition__remove");
       deleteButton.title = getPhrase("wcf.global.button.delete");
       const icon = document.createElement("fa-icon");
       icon.setIcon("times");

@@ -21,10 +21,10 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
             this.#button?.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
                 await this.#showConditionAddDialog(endpoint);
             }));
-            (0, Selector_1.wheneverFirstSeen)(`#${containerId}Container .condition-container`, (container) => {
+            (0, Selector_1.wheneverFirstSeen)(`#${containerId}Container .condition__container`, (container) => {
                 const deleteButton = document.createElement("button");
                 deleteButton.type = "button";
-                deleteButton.classList.add("button", "small", "jsTooltip", "condition-button-remove");
+                deleteButton.classList.add("button", "small", "jsTooltip", "condition__remove");
                 deleteButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
                 const icon = document.createElement("fa-icon");
                 icon.setIcon("times");
