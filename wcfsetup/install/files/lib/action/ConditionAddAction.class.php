@@ -82,18 +82,22 @@ final class ConditionAddAction implements RequestHandlerInterface
             self::class,
             WCF::getLanguage()->get('wcf.condition.add')
         );
+        $options = \array_map(
+            static fn (IConditionType $conditionType) => WCF::getLanguage()->get($conditionType->getLabel()),
+            $provider->getConditionTypes()
+        );
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \usort(
+            $options,
+            static fn (string $a, string $b) => $collator->compare($a, $b)
+        );
 
         $form->appendChild(
             SingleSelectionFormField::create('conditionType')
                 ->label('wcf.condition.condition')
                 ->filterable()
                 ->required()
-                ->options(
-                    \array_map(
-                        static fn (IConditionType $conditionType) => WCF::getLanguage()->get($conditionType->getLabel()),
-                        $provider->getConditionTypes()
-                    )
-                )
+                ->options($options)
         );
 
         $form->markRequiredFields(false);
