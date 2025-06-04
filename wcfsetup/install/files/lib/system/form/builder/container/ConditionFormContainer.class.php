@@ -28,7 +28,6 @@ final class ConditionFormContainer extends FormContainer
      * @inheritDoc
      */
     protected $templateName = 'shared_conditionFormContainer';
-    private int $lastConditionIndex = 0;
 
     /**
      * @var ConditionProvider
@@ -63,8 +62,6 @@ final class ConditionFormContainer extends FormContainer
 
             foreach ($conditions as $index => $identifier) {
                 $this->appendCondition($identifier, $index);
-
-                $this->lastConditionIndex = \max($this->lastConditionIndex, $index);
             }
         }
 
@@ -82,8 +79,6 @@ final class ConditionFormContainer extends FormContainer
                 $containers[] = $this->appendCondition($condition['identifier'], $index);
                 $fieldId = $this->getConditionProvider()->getFieldId($this->getPrefixedId(), $condition['identifier'], $index);
                 $data[$fieldId] = $condition['value'];
-
-                $this->lastConditionIndex = \max($this->lastConditionIndex, $index);
             }
 
             foreach ($containers as $container) {
@@ -173,10 +168,5 @@ final class ConditionFormContainer extends FormContainer
         }
 
         return $this->conditionProvider::class;
-    }
-
-    public function getLastConditionIndex(): int
-    {
-        return $this->lastConditionIndex;
     }
 }

@@ -21,11 +21,10 @@ export class ConditionFormField {
   readonly #containerId: string;
   readonly #container: HTMLElement;
   readonly #button: HTMLButtonElement;
-  #index: number;
+  #index: number = 0;
 
-  constructor(containerId: string, endpoint: string, index: number) {
+  constructor(containerId: string, endpoint: string) {
     this.#containerId = containerId;
-    this.#index = index;
     this.#container = document.getElementById(`${containerId}Conditions`) as HTMLElement;
 
     this.#button = document.getElementById(`${containerId}AddCondition`) as HTMLButtonElement;
@@ -62,7 +61,7 @@ export class ConditionFormField {
   async #showConditionAddDialog(endpoint: string) {
     const url = new URL(unescapeHTML(endpoint));
     url.searchParams.set("containerId", this.#containerId);
-    url.searchParams.set("index", this.#index.toString());
+    url.searchParams.set("index", (this.#index + 1).toString());
 
     const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint<ConditionAddResponse>(url.toString());
 
