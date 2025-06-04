@@ -37,7 +37,7 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
             )
             ->prefixField(
                 SingleSelectionFormField::create("{$id}Condition")
-                    ->options($this->getConditions())
+                    ->options(\array_combine($this->getConditions(), $this->getConditions()))
                     ->required()
             );
     }
@@ -90,7 +90,7 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
 
         $date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
         $date->setTimezone(new \DateTimeZone(TIMEZONE));
-        $date->sub(new \DateInterval("P{$this->filter['condition']}D"));
+        $date->sub(new \DateInterval("P{$this->filter['value']}D"));
 
         return [
             'condition' => $this->filter['condition'],
