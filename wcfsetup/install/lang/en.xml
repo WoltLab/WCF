@@ -3465,6 +3465,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.user.avatar"><![CDATA[User has an avatar]]></item>
 		<item name="wcf.condition.user.signature"><![CDATA[User has a signature]]></item>
 		<item name="wcf.condition.user.coverPhoto"><![CDATA[User has a cover photo]]></item>
+		<item name="wcf.condition.user.isBanned"><![CDATA[User is banned]]></item>
+		<item name="wcf.condition.user.isEmailConfirmed"><![CDATA[User has a confirmed email address]]></item>
+		<item name="wcf.condition.user.isEnabled"><![CDATA[User is enabled]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
 		<item name="wcf.condition.contains"><![CDATA[contains]]></item>
