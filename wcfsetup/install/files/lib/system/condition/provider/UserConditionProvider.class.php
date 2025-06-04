@@ -10,6 +10,8 @@ use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\condition\type\user\UserAvatarConditionType;
 use wcf\system\condition\type\user\UserCoverPhotoConditionType;
 use wcf\system\condition\type\user\UserEmailConditionType;
+use wcf\system\condition\type\user\UserHasNotTrophyConditionType;
+use wcf\system\condition\type\user\UserHasTrophyConditionType;
 use wcf\system\condition\type\user\UserInGroupConditionType;
 use wcf\system\condition\type\user\UserIsBannedConditionType;
 use wcf\system\condition\type\user\UserIsEmailConfirmedConditionType;
@@ -48,6 +50,8 @@ final class UserConditionProvider extends AbstractConditionProvider
             new UserIsBannedConditionType(),
             new UserIsEnabledConditionType(),
             new UserIsEmailConfirmedConditionType(),
+            new UserHasTrophyConditionType(),
+            new UserHasNotTrophyConditionType(),
         ]);
 
         EventHandler::getInstance()->fire(
