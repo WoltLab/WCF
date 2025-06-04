@@ -23,7 +23,7 @@ use wcf\system\form\builder\field\BooleanFormField;
 abstract class AbstractUserBooleanConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     public function __construct(
-        public readonly string $id,
+        public readonly string $identifier,
         public readonly string $columnName
     ) {
     }
@@ -31,13 +31,13 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
     #[\Override]
     public function getIdentifier(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     #[\Override]
     public function getLabel(): string
     {
-        return "wcf.condition.user.{$this->id}";
+        return "wcf.condition.user.{$this->identifier}";
     }
 
     #[\Override]
