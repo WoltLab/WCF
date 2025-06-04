@@ -7,10 +7,14 @@ use wcf\data\user\UserList;
 use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
+use wcf\system\condition\type\user\UserAvatarConditionType;
+use wcf\system\condition\type\user\UserEmailConditionType;
 use wcf\system\condition\type\user\UserInGroupConditionType;
+use wcf\system\condition\type\user\UserLanguageConditionType;
 use wcf\system\condition\type\user\UserNotInGroupConditionType;
 use wcf\system\condition\type\user\UserRegistrationDateConditionType;
 use wcf\system\condition\type\user\UserRegistrationDaysConditionType;
+use wcf\system\condition\type\user\UserSignatureConditionType;
 use wcf\system\condition\type\user\UserUsernameConditionType;
 use wcf\system\event\EventHandler;
 
@@ -28,10 +32,14 @@ final class UserConditionProvider extends AbstractConditionProvider
     {
         $this->addConditions([
             new UserUsernameConditionType(),
+            new UserEmailConditionType(),
             new UserRegistrationDateConditionType(),
             new UserRegistrationDaysConditionType(),
             new UserInGroupConditionType(),
             new UserNotInGroupConditionType(),
+            new UserLanguageConditionType(),
+            new UserAvatarConditionType(),
+            new UserSignatureConditionType(),
         ]);
 
         EventHandler::getInstance()->fire(

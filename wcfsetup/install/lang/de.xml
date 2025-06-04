@@ -3537,6 +3537,10 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.user.notInGroup"><![CDATA[Benutzer ist nicht in der Benutzergruppe]]></item>
 		<item name="wcf.condition.user.registrationDays"><![CDATA[Tage seit der Registrierung]]></item>
 		<item name="wcf.condition.user.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.condition.user.email"><![CDATA[E-Mail-Adresse des Benutzers]]></item>
+		<item name="wcf.condition.user.language"><![CDATA[Sprache des Benutzers ist]]></item>
+		<item name="wcf.condition.user.avatar"><![CDATA[Benutzer hat ein Avatar]]></item>
+		<item name="wcf.condition.user.signature"><![CDATA[Benutzer hat eine Signatur]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[beginnt mit]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[endet mit]]></item>
 		<item name="wcf.condition.contains"><![CDATA[enthält]]></item>
