@@ -3544,6 +3544,9 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.user.avatar"><![CDATA[Benutzer hat ein Avatar]]></item>
 		<item name="wcf.condition.user.signature"><![CDATA[Benutzer hat eine Signatur]]></item>
 		<item name="wcf.condition.user.coverPhoto"><![CDATA[Benutzer hat ein Titelbild]]></item>
+		<item name="wcf.condition.user.isBanned"><![CDATA[Benutzer ist gesperrt]]></item>
+		<item name="wcf.condition.user.isEmailConfirmed"><![CDATA[Benutzer hat eine bestätigte E-Mail-Adresse]]></item>
+		<item name="wcf.condition.user.isEnabled"><![CDATA[Benutzer ist aktiviert]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[beginnt mit]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[endet mit]]></item>
 		<item name="wcf.condition.contains"><![CDATA[enthält]]></item>

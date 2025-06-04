@@ -11,6 +11,9 @@ use wcf\system\condition\type\user\UserAvatarConditionType;
 use wcf\system\condition\type\user\UserCoverPhotoConditionType;
 use wcf\system\condition\type\user\UserEmailConditionType;
 use wcf\system\condition\type\user\UserInGroupConditionType;
+use wcf\system\condition\type\user\UserIsBannedConditionType;
+use wcf\system\condition\type\user\UserIsEmailConfirmedConditionType;
+use wcf\system\condition\type\user\UserIsEnabledConditionType;
 use wcf\system\condition\type\user\UserLanguageConditionType;
 use wcf\system\condition\type\user\UserNotInGroupConditionType;
 use wcf\system\condition\type\user\UserRegistrationDateConditionType;
@@ -42,6 +45,9 @@ final class UserConditionProvider extends AbstractConditionProvider
             new UserAvatarConditionType(),
             new UserSignatureConditionType(),
             new UserCoverPhotoConditionType(),
+            new UserIsBannedConditionType(),
+            new UserIsEnabledConditionType(),
+            new UserIsEmailConfirmedConditionType(),
         ]);
 
         EventHandler::getInstance()->fire(
