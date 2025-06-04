@@ -11,7 +11,6 @@ use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
-use wcf\util\DateUtil;
 
 /**
  * @author Olaf Braun
@@ -24,16 +23,21 @@ use wcf\util\DateUtil;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-final class UserRegistrationDaysConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+abstract class AbstractUserIntegerConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
+    public function __construct(
+        public readonly string $identifier,
+        public readonly string $columnName
+    ) {
+    }
+
     #[\Override]
     public function getFormField(string $id): PrefixConditionFormFieldContainer
     {
         return PrefixConditionFormFieldContainer::create($id)
             ->field(
                 IntegerFormField::create("{$id}Value")
-                    ->suffix("wcf.acp.option.suffix.days")
-                    ->minimum(1)
+                    ->minimum(0)
                     ->required()
             )
             ->prefixField(
@@ -46,57 +50,35 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'registrationDays';
+        return $this->identifier;
     }
 
     #[\Override]
     public function getLabel(): string
     {
-        return 'wcf.condition.user.registrationDays';
+        return "wcf.condition.user.{$this->identifier}";
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
-        ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
-
         $objectList->getConditionBuilder()->add(
-            "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
-            [$timestamp]
+            "{$objectList->getDatabaseTableAlias()}{$this->columnName} {$this->filter['condition']} ?",
+            [$this->filter['value']]
         );
     }
 
     #[\Override]
     public function matches(object $object): bool
     {
-        ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
-
-        return match ($condition) {
-            '>' => $object->registrationDate < $timestamp,
-            '<' => $object->registrationDate > $timestamp,
-            '>=' => $object->registrationDate <= $timestamp,
-            '<=' => $object->registrationDate >= $timestamp,
-            default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
+        return match ($this->filter['condition']) {
+            '=' => $object->{$this->columnName} == $this->filter['value'],
+            '>' => $object->{$this->columnName} < $this->filter['value'],
+            '<' => $object->{$this->columnName} > $this->filter['value'],
+            '>=' => $object->{$this->columnName} <= $this->filter['value'],
+            '<=' => $object->{$this->columnName} >= $this->filter['value'],
+            default => throw new \InvalidArgumentException("Unknown condition: {$this->filter['condition']}"),
         };
-    }
-
-    /**
-     * @return array{condition: string, timestamp: int}
-     */
-    private function getParsedFilter(): array
-    {
-        if (!isset($this->filter['condition'], $this->filter['value'])) {
-            throw new \InvalidArgumentException("Invalid filter format");
-        }
-
-        $date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-        $date->setTimezone(new \DateTimeZone(TIMEZONE));
-        $date->sub(new \DateInterval("P{$this->filter['value']}D"));
-
-        return [
-            'condition' => $this->filter['condition'],
-            'timestamp' => $date->getTimestamp(),
-        ];
     }
 
     /**
@@ -104,6 +86,6 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
      */
     private function getConditions(): array
     {
-        return [">", "<", ">=", "<="];
+        return ["=", ">", "<", ">=", "<="];
     }
 }
