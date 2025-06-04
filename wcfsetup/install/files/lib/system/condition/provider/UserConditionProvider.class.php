@@ -7,6 +7,7 @@ use wcf\data\user\UserList;
 use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
+use wcf\system\condition\type\user\AbstractUserIntegerConditionType;
 use wcf\system\condition\type\user\UserAvatarConditionType;
 use wcf\system\condition\type\user\UserCoverPhotoConditionType;
 use wcf\system\condition\type\user\UserEmailConditionType;
@@ -52,6 +53,9 @@ final class UserConditionProvider extends AbstractConditionProvider
             new UserIsEmailConfirmedConditionType(),
             new UserHasTrophyConditionType(),
             new UserHasNotTrophyConditionType(),
+            new class("activityPoints", "activityPoints") extends AbstractUserIntegerConditionType {},
+            new class("likesReceived", "likesReceived") extends AbstractUserIntegerConditionType {},
+            new class("trophyPoints", "trophyPoints") extends AbstractUserIntegerConditionType {},
         ]);
 
         EventHandler::getInstance()->fire(
