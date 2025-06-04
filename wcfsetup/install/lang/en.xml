@@ -3468,6 +3468,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.user.isBanned"><![CDATA[User is banned]]></item>
 		<item name="wcf.condition.user.isEmailConfirmed"><![CDATA[User has a confirmed email address]]></item>
 		<item name="wcf.condition.user.isEnabled"><![CDATA[User is enabled]]></item>
+		<item name="wcf.condition.user.hasTrophy"><![CDATA[User has the trophy]]></item>
+		<item name="wcf.condition.user.hasNotTrophy"><![CDATA[User does not have the trophy]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
 		<item name="wcf.condition.contains"><![CDATA[contains]]></item>
