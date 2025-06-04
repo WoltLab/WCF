@@ -12,10 +12,9 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
         #containerId;
         #container;
         #button;
-        #index;
-        constructor(containerId, endpoint, index) {
+        #index = 0;
+        constructor(containerId, endpoint) {
             this.#containerId = containerId;
-            this.#index = index;
             this.#container = document.getElementById(`${containerId}Conditions`);
             this.#button = document.getElementById(`${containerId}AddCondition`);
             this.#button?.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
@@ -45,7 +44,7 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
         async #showConditionAddDialog(endpoint) {
             const url = new URL((0, StringUtil_1.unescapeHTML)(endpoint));
             url.searchParams.set("containerId", this.#containerId);
-            url.searchParams.set("index", this.#index.toString());
+            url.searchParams.set("index", (this.#index + 1).toString());
             const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url.toString());
             if (ok) {
                 (0, Util_1.insertHtml)(result.field, this.#container, "append");

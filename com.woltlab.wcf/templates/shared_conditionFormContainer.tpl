@@ -31,6 +31,6 @@
 		'WoltLabSuite/Core/Form/Builder/Container/ConditionFormField',
 	], (DefaultContainerDependency, { ConditionFormField }) => {
 		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
-		new ConditionFormField('{unsafe:$container->getPrefixedId()|encodeJS}', '{link controller="ConditionAdd" isACP=false provider=$container->getConditionProviderClass()}{/link}', {$container->getLastConditionIndex() + 1});
+		new ConditionFormField('{unsafe:$container->getPrefixedId()|encodeJS}', '{link controller="ConditionAdd" isACP=false provider=$container->getConditionProviderClass()}{/link}');
 	});
 </script>
