@@ -87,7 +87,7 @@ final class ConditionAddAction implements RequestHandlerInterface
             $provider->getConditionTypes()
         );
         $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \usort(
+        \uasort(
             $options,
             static fn (string $a, string $b) => $collator->compare($a, $b)
         );
