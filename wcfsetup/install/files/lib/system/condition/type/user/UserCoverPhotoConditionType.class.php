@@ -8,10 +8,10 @@ namespace wcf\system\condition\type\user;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserAvatarConditionType extends AbstractUserBooleanConditionType
+final class UserCoverPhotoConditionType extends AbstractUserBooleanConditionType
 {
     public function __construct()
     {
-        parent::__construct("avatar", 'avatarFileID');
+        parent::__construct("coverPhoto", 'coverPhotoFileID');
     }
 }

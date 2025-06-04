@@ -8,6 +8,7 @@ use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\condition\type\user\UserAvatarConditionType;
+use wcf\system\condition\type\user\UserCoverPhotoConditionType;
 use wcf\system\condition\type\user\UserEmailConditionType;
 use wcf\system\condition\type\user\UserInGroupConditionType;
 use wcf\system\condition\type\user\UserLanguageConditionType;
@@ -40,6 +41,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new UserLanguageConditionType(),
             new UserAvatarConditionType(),
             new UserSignatureConditionType(),
+            new UserCoverPhotoConditionType(),
         ]);
 
         EventHandler::getInstance()->fire(
