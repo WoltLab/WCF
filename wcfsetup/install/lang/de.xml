@@ -3552,6 +3552,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.user.trophyPoints"><![CDATA[Anzahl der Trophäen des Benutzers sind]]></item>
 		<item name="wcf.condition.user.hasTrophy"><![CDATA[Benutzer hat die Trophäe]]></item>
 		<item name="wcf.condition.user.hasNotTrophy"><![CDATA[Benutzer hat nicht die Trophäe]]></item>
+		<item name="wcf.condition.user.isMultifactorActive"><![CDATA[Benutzer hat die Mehrfaktor-Authentifizierung aktiviert]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[beginnt mit]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[endet mit]]></item>
 		<item name="wcf.condition.contains"><![CDATA[enthält]]></item>

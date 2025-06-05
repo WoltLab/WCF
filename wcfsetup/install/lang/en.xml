@@ -3475,6 +3475,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.user.trophyPoints"><![CDATA[Number of trophies the user has]]></item>
 		<item name="wcf.condition.user.hasTrophy"><![CDATA[User has the trophy]]></item>
 		<item name="wcf.condition.user.hasNotTrophy"><![CDATA[User does not have the trophy]]></item>
+		<item name="wcf.condition.user.isMultifactorActive"><![CDATA[User has enabled multi-factor authentication]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
 		<item name="wcf.condition.contains"><![CDATA[contains]]></item>
