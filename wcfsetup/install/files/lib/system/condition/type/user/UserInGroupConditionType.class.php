@@ -57,7 +57,7 @@ final class UserInGroupConditionType extends AbstractConditionType implements ID
                     SELECT userID
                     FROM   wcf1_user_to_group
                     WHERE  groupID = ?
-                )",
+            )",
             [$this->filter]
         );
     }

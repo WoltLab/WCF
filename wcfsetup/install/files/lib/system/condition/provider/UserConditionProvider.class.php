@@ -58,6 +58,8 @@ final class UserConditionProvider extends AbstractConditionProvider
             new class("trophyPoints", "trophyPoints") extends AbstractUserIntegerConditionType {},
         ]);
 
+        // TODO add conditions for user options that implement `ISearchableConditionUserOption`
+
         EventHandler::getInstance()->fire(
             new UserConditionProviderCollecting($this)
         );
