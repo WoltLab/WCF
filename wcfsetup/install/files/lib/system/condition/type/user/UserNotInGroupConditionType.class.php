@@ -8,6 +8,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\SelectFormField;
 
@@ -21,7 +22,7 @@ use wcf\system\form\builder\field\SelectFormField;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserNotInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class UserNotInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
@@ -68,5 +69,25 @@ final class UserNotInGroupConditionType extends AbstractConditionType implements
     public function matches(object $object): bool
     {
         return !\in_array((int)$this->filter, $object->getGroupIDs(), true);
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if (!isset($conditionData['notGroupIDs'])) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($conditionData['notGroupIDs'] as $groupID) {
+            $result[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => $groupID,
+            ];
+        }
+
+        unset($conditionData['notGroupIDs']);
+
+        return $result;
     }
 }
