@@ -57,7 +57,7 @@ final class UserNotInGroupConditionType extends AbstractConditionType implements
                     SELECT userID
                     FROM   wcf1_user_to_group
                     WHERE  groupID = ?
-                )",
+            )",
             [$this->filter]
         );
     }

@@ -23,7 +23,7 @@ final class UserIsEnabledConditionType extends AbstractUserBooleanConditionType
         if ($this->filter) {
             $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.activationCode = ?", [0]);
         } else {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.activationCode <> = ?", [0]);
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.activationCode <> ?", [0]);
         }
     }
 
