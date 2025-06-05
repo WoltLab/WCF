@@ -7,22 +7,19 @@ use wcf\data\user\UserList;
 use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
+use wcf\system\condition\type\user\AbstractUserBooleanConditionType;
 use wcf\system\condition\type\user\AbstractUserIntegerConditionType;
-use wcf\system\condition\type\user\UserAvatarConditionType;
-use wcf\system\condition\type\user\UserCoverPhotoConditionType;
-use wcf\system\condition\type\user\UserEmailConditionType;
+use wcf\system\condition\type\user\AbstractUserIsNullConditionType;
+use wcf\system\condition\type\user\AbstractUserStringConditionType;
 use wcf\system\condition\type\user\UserHasNotTrophyConditionType;
 use wcf\system\condition\type\user\UserHasTrophyConditionType;
 use wcf\system\condition\type\user\UserInGroupConditionType;
-use wcf\system\condition\type\user\UserIsBannedConditionType;
-use wcf\system\condition\type\user\UserIsEmailConfirmedConditionType;
 use wcf\system\condition\type\user\UserIsEnabledConditionType;
 use wcf\system\condition\type\user\UserLanguageConditionType;
 use wcf\system\condition\type\user\UserNotInGroupConditionType;
 use wcf\system\condition\type\user\UserRegistrationDateConditionType;
 use wcf\system\condition\type\user\UserRegistrationDaysConditionType;
 use wcf\system\condition\type\user\UserSignatureConditionType;
-use wcf\system\condition\type\user\UserUsernameConditionType;
 use wcf\system\event\EventHandler;
 
 /**
@@ -38,19 +35,19 @@ final class UserConditionProvider extends AbstractConditionProvider
     public function __construct()
     {
         $this->addConditions([
-            new UserUsernameConditionType(),
-            new UserEmailConditionType(),
+            new class("username", "username") extends AbstractUserStringConditionType {},
+            new class("email", "email") extends AbstractUserStringConditionType {},
             new UserRegistrationDateConditionType(),
             new UserRegistrationDaysConditionType(),
             new UserInGroupConditionType(),
             new UserNotInGroupConditionType(),
             new UserLanguageConditionType(),
-            new UserAvatarConditionType(),
+            new class("avatar", 'avatarFileID') extends AbstractUserIsNullConditionType {},
             new UserSignatureConditionType(),
-            new UserCoverPhotoConditionType(),
-            new UserIsBannedConditionType(),
+            new class("coverPhoto", 'coverPhotoFileID') extends AbstractUserIsNullConditionType {},
+            new class("isBanned", 'banned') extends AbstractUserBooleanConditionType {},
             new UserIsEnabledConditionType(),
-            new UserIsEmailConfirmedConditionType(),
+            new class("isEmailConfirmed", 'emailConfirmed') extends AbstractUserIsNullConditionType {},
             new UserHasTrophyConditionType(),
             new UserHasNotTrophyConditionType(),
             new class("activityPoints", "activityPoints") extends AbstractUserIntegerConditionType {},
