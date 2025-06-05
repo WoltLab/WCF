@@ -48,6 +48,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new class("isBanned", 'banned') extends AbstractUserBooleanConditionType {},
             new UserIsEnabledConditionType(),
             new class("isEmailConfirmed", 'emailConfirmed') extends AbstractUserIsNullConditionType {},
+            new class("isMultifactorActive", 'multifactorActive') extends AbstractUserBooleanConditionType {},
             new UserHasTrophyConditionType(),
             new UserHasNotTrophyConditionType(),
             new class("activityPoints", "activityPoints") extends AbstractUserIntegerConditionType {},
