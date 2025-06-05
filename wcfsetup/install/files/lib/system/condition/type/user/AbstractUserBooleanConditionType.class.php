@@ -50,9 +50,9 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         if ($this->filter) {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NULL");
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} = ?", [1]);
         } else {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NOT NULL");
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} = ?", [0]);
         }
     }
 
@@ -60,9 +60,9 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
     public function matches(object $object): bool
     {
         if ($this->filter) {
-            return $object->{$this->columnName} !== null;
+            return (bool)$object->{$this->columnName};
         } else {
-            return $object->{$this->columnName} === null;
+            return !$object->{$this->columnName};
         }
     }
 }

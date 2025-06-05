@@ -8,7 +8,7 @@ namespace wcf\system\condition\type\user;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserAvatarConditionType extends AbstractUserBooleanConditionType
+final class UserAvatarConditionType extends AbstractUserIsNullConditionType
 {
     public function __construct()
     {
