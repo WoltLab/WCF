@@ -7,6 +7,7 @@ use wcf\data\like\object\LikeObject;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Represents a comments view.
@@ -65,7 +66,6 @@ final class CommentsView
         return $this->commentList;
     }
 
-
     public function getLastCommentTime(): int
     {
         return $this->commentList->getMinCommentTime();
@@ -86,5 +86,13 @@ final class CommentsView
     public function isVisible(): bool
     {
         return $this->canAddComments || \count($this->getCommentList());
+    }
+
+    /**
+     * @since 6.2
+     */
+    public function render(): string
+    {
+        return WCF::getTPL()->render('wcf', 'commentsView', ['commentsView' => $this]);
     }
 }
