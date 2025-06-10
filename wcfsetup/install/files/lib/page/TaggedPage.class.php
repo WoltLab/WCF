@@ -185,7 +185,7 @@ class TaggedPage extends MultipleLinkPage
                 $title = $processor->getObjectTypeTitle();
                 $controller = TaggedListViewPage::class;
             } else {
-                $title = WCF::getLanguage()->get('wcf.tagging.objectType.' . $objectType->objectType);
+                $title = WCF::getLanguage()->getDynamicVariable('wcf.tagging.objectType.' . $objectType->objectType);
                 $controller = CombinedTaggedPage::class;
             }
 

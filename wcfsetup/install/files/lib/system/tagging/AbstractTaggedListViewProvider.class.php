@@ -21,13 +21,13 @@ abstract class AbstractTaggedListViewProvider extends AbstractObjectTypeProcesso
     #[\Override]
     public function getObjectTypeTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.tagging.objectType.' . $this->getDecoratedObject()->objectType);
+        return WCF::getLanguage()->getDynamicVariable('wcf.tagging.objectType.' . $this->getDecoratedObject()->objectType);
     }
 
     #[\Override]
     public function getContentTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.tagging.combinedTaggedObjects.' . $this->getDecoratedObject()->objectType);
+        return WCF::getLanguage()->getDynamicVariable('wcf.tagging.combinedTaggedObjects.' . $this->getDecoratedObject()->objectType);
     }
 
     #[\Override]
