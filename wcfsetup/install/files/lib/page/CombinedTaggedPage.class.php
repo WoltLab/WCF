@@ -131,7 +131,7 @@ class CombinedTaggedPage extends MultipleLinkPage
             }
 
             if (!$this->objectType) {
-                $this->objectType = \reset($this->availableObjectTypes);
+                throw new IllegalLinkException();
             }
         }
 
@@ -192,6 +192,10 @@ class CombinedTaggedPage extends MultipleLinkPage
     {
         $links = [];
         foreach ($this->availableObjectTypes as $objectType) {
+            if (empty($this->itemsPerType[$objectType->objectType])) {
+                continue;
+            }
+
             if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
                 $processor = $objectType->getProcessor();
                 \assert($processor instanceof ITaggedListViewProvider);
@@ -213,7 +217,7 @@ class CombinedTaggedPage extends MultipleLinkPage
                         'tagIDs' => $this->tagIDs
                     ]
                 ),
-                'items' => $this->itemsPerType[$objectType->objectType] ?? 0,
+                'items' => $this->itemsPerType[$objectType->objectType],
             ];
         }
 

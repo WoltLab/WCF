@@ -107,7 +107,7 @@ class TaggedListViewPage extends AbstractListViewPage
             }
 
             if (!$this->objectType) {
-                $this->objectType = \reset($this->availableObjectTypes);
+                throw new IllegalLinkException();
             }
         }
 
@@ -169,6 +169,10 @@ class TaggedListViewPage extends AbstractListViewPage
     {
         $links = [];
         foreach ($this->availableObjectTypes as $objectType) {
+            if (empty($this->itemsPerType[$objectType->objectType])) {
+                continue;
+            }
+
             if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
                 $processor = $objectType->getProcessor();
                 \assert($processor instanceof ITaggedListViewProvider);
@@ -190,7 +194,7 @@ class TaggedListViewPage extends AbstractListViewPage
                         'tagIDs' => $this->tagIDs
                     ]
                 ),
-                'items' => $this->itemsPerType[$objectType->objectType] ?? 0,
+                'items' => $this->itemsPerType[$objectType->objectType],
             ];
         }
 

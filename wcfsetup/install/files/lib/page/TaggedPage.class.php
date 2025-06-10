@@ -119,7 +119,7 @@ class TaggedPage extends MultipleLinkPage
             }
 
             if (!$this->objectType) {
-                $this->objectType = \reset($this->availableObjectTypes);
+                throw new IllegalLinkException();
             }
         }
 
@@ -178,6 +178,10 @@ class TaggedPage extends MultipleLinkPage
     {
         $links = [];
         foreach ($this->availableObjectTypes as $objectType) {
+            if (empty($this->itemsPerType[$objectType->objectType])) {
+                continue;
+            }
+
             if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
                 $processor = $objectType->getProcessor();
                 \assert($processor instanceof ITaggedListViewProvider);
