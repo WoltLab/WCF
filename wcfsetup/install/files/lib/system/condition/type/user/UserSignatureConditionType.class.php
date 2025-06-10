@@ -22,12 +22,12 @@ final class UserSignatureConditionType extends AbstractUserBooleanConditionType
     {
         if ($this->filter) {
             $objectList->getConditionBuilder()->add(
-                "({$objectList->getDatabaseTableAlias()}.signature = ? OR {$objectList->getDatabaseTableAlias()}.signature IS NULL)",
+                "({$objectList->getDatabaseTableAlias()}.signature <> ? AND {$objectList->getDatabaseTableAlias()}.signature IS NOT NULL)",
                 ['']
             );
         } else {
             $objectList->getConditionBuilder()->add(
-                "({$objectList->getDatabaseTableAlias()}.signature <> ? AND {$objectList->getDatabaseTableAlias()}.signature IS NOT NULL)",
+                "({$objectList->getDatabaseTableAlias()}.signature = ? OR {$objectList->getDatabaseTableAlias()}.signature IS NULL)",
                 ['']
             );
         }

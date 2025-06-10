@@ -16,9 +16,9 @@ abstract class AbstractUserIsNullConditionType extends AbstractUserBooleanCondit
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         if ($this->filter) {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NULL");
-        } else {
             $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NOT NULL");
+        } else {
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NULL");
         }
     }
 
