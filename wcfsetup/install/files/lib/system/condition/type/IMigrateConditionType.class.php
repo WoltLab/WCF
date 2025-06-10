@@ -18,4 +18,6 @@ interface IMigrateConditionType
      * @return array{identifier: string, value: mixed}[]
      */
     public function migrateConditionData(array &$conditionData): array;
+
+    public function canMigrateConditionData(string $objectType): bool;
 }

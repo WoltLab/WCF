@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -23,11 +24,13 @@ use wcf\system\form\builder\field\TextFormField;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-abstract class AbstractUserStringConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+abstract class AbstractUserStringConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
-        public readonly string $columnName
+        public readonly string $columnName,
+        public readonly ?string $migrateKeyName = null,
+        public readonly ?string $migrateConditionObjectType = null,
     ) {
     }
 
@@ -101,6 +104,33 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
             "_%" => "wcf.condition.startsWith",
             "%_%" => "wcf.condition.contains",
             "%_" => "wcf.condition.endsWith",
+        ];
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $this->migrateConditionObjectType !== null && $objectType === $this->migrateConditionObjectType;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if ($this->migrateKeyName === null || !isset($conditionData[$this->migrateKeyName])) {
+            return [];
+        }
+
+        $value = $conditionData[$this->migrateKeyName];
+        unset($conditionData[$this->migrateKeyName]);
+
+        return [
+            [
+                'identifier' => $this->identifier,
+                'value' => [
+                    'condition' => "%_%",
+                    'value' => $value,
+                ],
+            ],
         ];
     }
 }

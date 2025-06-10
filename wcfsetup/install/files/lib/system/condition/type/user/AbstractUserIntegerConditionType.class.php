@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\IntegerFormField;
@@ -23,11 +24,12 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-abstract class AbstractUserIntegerConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+abstract class AbstractUserIntegerConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
-        public readonly string $columnName
+        public readonly string $columnName,
+        public readonly ?string $migrateConditionObjectType = null,
     ) {
     }
 
@@ -84,8 +86,39 @@ abstract class AbstractUserIntegerConditionType extends AbstractConditionType im
     /**
      * @return string[]
      */
-    private function getConditions(): array
+    protected function getConditions(): array
     {
         return ["=", ">", "<", ">=", "<="];
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $this->migrateConditionObjectType !== null && $objectType === $this->migrateConditionObjectType;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        $lessThan = $conditionData['lessThan'] ?? null;
+        $greaterThan = $conditionData['greaterThan'] ?? null;
+        $conditions = [];
+
+        if ($lessThan !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["value" => $lessThan, 'condition' => '<'],
+            ];
+        }
+        if ($greaterThan !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["value" => $greaterThan, 'condition' => '>'],
+            ];
+        }
+
+        unset($conditionData['lessThan'], $conditionData['greaterThan']);
+
+        return $conditions;
     }
 }

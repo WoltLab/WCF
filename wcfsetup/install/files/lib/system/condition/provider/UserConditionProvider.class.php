@@ -6,7 +6,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
-use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\condition\type\user\AbstractUserBooleanConditionType;
 use wcf\system\condition\type\user\AbstractUserIntegerConditionType;
@@ -36,8 +35,8 @@ final class UserConditionProvider extends AbstractConditionProvider
     public function __construct()
     {
         $this->addConditions([
-            new class("username", "username") extends AbstractUserStringConditionType {},
-            new class("email", "email") extends AbstractUserStringConditionType {},
+            new class("username", "username", "username", 'com.woltlab.wcf.username') extends AbstractUserStringConditionType {},
+            new class("email", "email", "email", 'com.woltlab.wcf.email') extends AbstractUserStringConditionType {},
             new UserRegistrationDateConditionType(),
             new UserRegistrationDaysConditionType(),
             new UserInGroupConditionType(),
@@ -62,36 +61,5 @@ final class UserConditionProvider extends AbstractConditionProvider
         EventHandler::getInstance()->fire(
             new UserConditionProviderCollecting($this)
         );
-    }
-
-    /**
-     * @param array<string, mixed> $conditionData
-     *
-     * @return array{identifier: string, value: mixed}[]
-     */
-    public function migrateConditionData(array $conditionData): array
-    {
-        if ($conditionData === []) {
-            return [];
-        }
-
-        $result = [];
-
-        foreach ($this->conditionTypes as $conditionType) {
-            if (!($conditionType instanceof IMigrateConditionType)) {
-                continue;
-            }
-
-            \array_push(
-                $result,
-                ...$conditionType->migrateConditionData($conditionData)
-            );
-
-            if ($conditionData === []) {
-                break;
-            }
-        }
-
-        return $result;
     }
 }
