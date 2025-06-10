@@ -1,11 +1,9 @@
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Component/Comment/List'], (Language, { setup }) => {
-		Language.addObject({
-			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',
-			'wcf.comment.response.more': '{jslang}wcf.comment.response.more{/jslang}',
-		});
+	{jsphrase name='wcf.comment.more'}
+	{jsphrase name='wcf.comment.response.more'}
 
-		setup('{@$commentContainerID|encodeJS}');
+	require(['WoltLabSuite/Core/Component/Comment/List'], ({ setup }) => {
+		setup('{unsafe:$commentContainerID|encodeJS}');
 	});
 </script>
 
@@ -26,7 +24,7 @@
 			<div class="commentList__item">
 				<div class="commentAdd commentAdd--collapsed">
 					<div class="commentAdd__avatar">
-						{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
+						{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
 					</div>
 					
 					<div class="commentAdd__content commentAdd__content--collapsed jsOuterEditorContainer">
@@ -69,7 +67,7 @@
 		{capture assign=_commentResponseWysiwygSelector}{$commentContainerID}AddCommentResponse{/capture}
 		<div class="commentResponseAdd" hidden>
 			<div class="commentResponseAdd__avatar">
-				{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
+				{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
 			</div>
 
 			<div class="commentResponseAdd__content jsOuterEditorContainer">
