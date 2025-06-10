@@ -4,7 +4,7 @@ namespace wcf\data\user\group\assignment;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\cache\eager\UserGroupAssignmentCache;
 
 /**
  * Executes user group assignment-related actions.
@@ -29,6 +29,6 @@ class UserGroupAssignmentEditor extends DatabaseObjectEditor implements IEditabl
      */
     public static function resetCache()
     {
-        UserGroupAssignmentCacheBuilder::getInstance()->reset();
+        (new UserGroupAssignmentCache())->rebuild();
     }
 }

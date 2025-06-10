@@ -42,7 +42,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new UserInGroupConditionType(),
             new UserNotInGroupConditionType(),
             new UserLanguageConditionType(),
-            new class("avatar", 'avatarFileID') extends AbstractUserIsNullConditionType {},
+            new class("avatar", 'avatarFileID', 'userAvatar', 'com.woltlab.wcf.avatar') extends AbstractUserIsNullConditionType {},
             new UserSignatureConditionType(),
             new class("coverPhoto", 'coverPhotoFileID') extends AbstractUserIsNullConditionType {},
             new class("isBanned", 'banned') extends AbstractUserBooleanConditionType {},

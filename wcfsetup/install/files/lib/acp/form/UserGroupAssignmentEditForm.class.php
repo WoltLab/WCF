@@ -5,6 +5,7 @@ namespace wcf\acp\form;
 use wcf\acp\page\UserGroupAssignmentListPage;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\user\group\assignment\command\UserGroupAssignmentMigrateCondition;
 use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -43,6 +44,11 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         if (!$this->formObject->assignmentID) {
             throw new IllegalLinkException();
+        }
+
+        if ($this->formObject->needMigration) {
+            (new UserGroupAssignmentMigrateCondition($this->formObject))();
+            $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         }
     }
 

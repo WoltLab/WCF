@@ -4,7 +4,7 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\data\user\UserAction;
-use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\cache\eager\UserGroupAssignmentCache;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 
 /**
@@ -25,7 +25,7 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
+        $assignments = (new UserGroupAssignmentCache())->getCache();
         $usersToGroup = [];
 
         $assignmentCount = 0;

@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\BooleanFormField;
 
@@ -20,11 +21,13 @@ use wcf\system\form\builder\field\BooleanFormField;
  * @implements IObjectConditionType<User, bool>
  * @extends AbstractConditionType<bool>
  */
-abstract class AbstractUserBooleanConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+abstract class AbstractUserBooleanConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
-        public readonly string $columnName
+        public readonly string $columnName,
+        public readonly ?string $migrateKeyName = null,
+        public readonly ?string $migrateConditionObjectType = null,
     ) {
     }
 
@@ -64,5 +67,29 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
         } else {
             return !$object->{$this->columnName};
         }
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if ($this->migrateKeyName === null || !isset($conditionData[$this->migrateKeyName])) {
+            return [];
+        }
+
+        $value = $conditionData[$this->migrateKeyName];
+        unset($conditionData[$this->migrateKeyName]);
+
+        return [
+            [
+                'identifier' => $this->identifier,
+                'value' => \boolval($value),
+            ],
+        ];
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $this->migrateConditionObjectType === null || $this->migrateConditionObjectType === $objectType;
     }
 }

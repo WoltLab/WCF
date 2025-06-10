@@ -2,7 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\user\group\assignment\UserGroupAssignmentList;
+use wcf\system\cache\eager\UserGroupAssignmentCache;
 
 /**
  * Caches the enabled automatic user group assignments.
@@ -10,18 +10,20 @@ use wcf\data\user\group\assignment\UserGroupAssignmentList;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.2 use `UserGroupAssignmentCache` instead
  */
-class UserGroupAssignmentCacheBuilder extends AbstractCacheBuilder
+final class UserGroupAssignmentCacheBuilder extends AbstractLegacyCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
-    protected function rebuild(array $parameters)
+    #[\Override]
+    protected function rebuild(array $parameters): array
     {
-        $assignmentList = new UserGroupAssignmentList();
-        $assignmentList->getConditionBuilder()->add('isDisabled = ?', [0]);
-        $assignmentList->readObjects();
+        return (new UserGroupAssignmentCache())->getCache();
+    }
 
-        return $assignmentList->getObjects();
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        (new UserGroupAssignmentCache())->rebuild();
     }
 }

@@ -3,7 +3,6 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\system\condition\type\IMigrateConditionType;
 
 /**
  * @author Olaf Braun
@@ -11,11 +10,16 @@ use wcf\system\condition\type\IMigrateConditionType;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserSignatureConditionType extends AbstractUserBooleanConditionType implements IMigrateConditionType
+final class UserSignatureConditionType extends AbstractUserBooleanConditionType
 {
     public function __construct()
     {
-        parent::__construct('signature', 'signature');
+        parent::__construct(
+            'signature',
+            'signature',
+            'userSignature',
+            'com.woltlab.wcf.signature'
+        );
     }
 
     #[\Override]
@@ -42,28 +46,5 @@ final class UserSignatureConditionType extends AbstractUserBooleanConditionType 
         } else {
             return $object->signature === '' || $object->signature === null;
         }
-    }
-
-    public function canMigrateConditionData(string $objectType): bool
-    {
-        return $objectType === 'com.woltlab.wcf.signature';
-    }
-
-    public function migrateConditionData(array &$conditionData): array
-    {
-        if (!isset($conditionData['userSignature'])) {
-            return [];
-        }
-
-        $result = [
-            [
-                'identifier' => $this->getIdentifier(),
-                'value' => $conditionData['userSignature'] === 1,
-            ],
-        ];
-
-        unset($conditionData['userSignature']);
-
-        return $result;
     }
 }
