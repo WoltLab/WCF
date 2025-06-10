@@ -3,14 +3,8 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\user\User;
-use wcf\data\user\UserList;
-use wcf\system\condition\type\AbstractConditionType;
-use wcf\system\condition\type\IDatabaseObjectListConditionType;
-use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\util\DateUtil;
 
 /**
@@ -18,41 +12,23 @@ use wcf\util\DateUtil;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
- *
- * @phpstan-type Filter = array{condition: string, value: int}
- * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
- * @implements IObjectConditionType<User, Filter>
- * @extends AbstractConditionType<Filter>
  */
-final class UserRegistrationDaysConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class UserRegistrationDaysConditionType extends AbstractUserIntegerConditionType
 {
+    public function __construct()
+    {
+        parent::__construct('registrationDays', 'registrationDate', 'com.woltlab.wcf.registrationDateInterval');
+    }
+
     #[\Override]
     public function getFormField(string $id): PrefixConditionFormFieldContainer
     {
-        return PrefixConditionFormFieldContainer::create($id)
-            ->field(
-                IntegerFormField::create("{$id}Value")
-                    ->suffix("wcf.acp.option.suffix.days")
-                    ->minimum(1)
-                    ->required()
-            )
-            ->prefixField(
-                SingleSelectionFormField::create("{$id}Condition")
-                    ->options(\array_combine($this->getConditions(), $this->getConditions()))
-                    ->required()
-            );
-    }
+        $container = parent::getFormField($id);
+        $filed = $container->getField();
+        \assert($filed instanceof IntegerFormField);
+        $filed->suffix("wcf.acp.option.suffix.days");
 
-    #[\Override]
-    public function getIdentifier(): string
-    {
-        return 'registrationDays';
-    }
-
-    #[\Override]
-    public function getLabel(): string
-    {
-        return 'wcf.condition.user.registrationDays';
+        return $container;
     }
 
     #[\Override]
@@ -99,10 +75,8 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    private function getConditions(): array
+    #[\Override]
+    protected function getConditions(): array
     {
         return [">", "<", ">=", "<="];
     }

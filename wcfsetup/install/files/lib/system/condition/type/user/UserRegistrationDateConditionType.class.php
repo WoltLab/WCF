@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\DateFormField;
@@ -23,7 +24,7 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-final class UserRegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class UserRegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): PrefixConditionFormFieldContainer
@@ -84,5 +85,50 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
     private function getConditions(): array
     {
         return [">", "<", ">=", "<="];
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        $registrationDateStart = $conditionData['registrationDateStart'] ?? null;
+        $registrationDateEnd = $conditionData['registrationDateEnd'] ?? null;
+        $conditions = [];
+
+        if ($registrationDateStart !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => [
+                    'value' => $this->convertDateStringTimestamp($registrationDateStart, 0, 0, 0),
+                    'condition' => '>=',
+                ],
+            ];
+        }
+        if ($registrationDateEnd !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => [
+                    'value' => $this->convertDateStringTimestamp($registrationDateEnd, 23, 59, 59),
+                    'condition' => '<=',
+                ],
+            ];
+        }
+
+        unset($conditionData['registrationDateStart'], $conditionData['registrationDateEnd']);
+
+        return $conditions;
+    }
+
+    private function convertDateStringTimestamp(string $date, int $hour, int $minute, int $seconds): int
+    {
+        $dateTime = new \DateTime($date, new \DateTimeZone(TIMEZONE));
+        $dateTime->setTime($hour, $minute, $seconds);
+
+        return $dateTime->getTimestamp();
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === "com.woltlab.wcf.registrationDate";
     }
 }

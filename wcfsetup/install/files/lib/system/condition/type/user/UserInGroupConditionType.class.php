@@ -72,6 +72,12 @@ final class UserInGroupConditionType extends AbstractConditionType implements ID
     }
 
     #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.userGroup';
+    }
+
+    #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
         if (!isset($conditionData['groupIDs'])) {

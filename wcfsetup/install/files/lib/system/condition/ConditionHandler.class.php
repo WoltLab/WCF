@@ -9,9 +9,13 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
 use wcf\system\condition\provider\AbstractConditionProvider;
+use wcf\system\condition\provider\ConditionMigration;
 use wcf\system\condition\type\IConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles general condition-related matters.
@@ -171,5 +175,83 @@ final class ConditionHandler extends SingletonFactory
         }
 
         return $result;
+    }
+
+    /**
+     * Exports the conditions for all objects that belong to the specified object type definition.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function exportConditions(string $definitionName): array
+    {
+        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definitionName);
+        if ($objectTypes === []) {
+            return [];
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('objectTypeID IN (?)', [
+            \array_map(static fn (ObjectType $objectType): int => $objectType->objectTypeID, $objectTypes),
+        ]);
+
+        $sql = "SELECT * 
+                FROM   wcf1_condition
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditionBuilder->getParameters());
+
+        $result = [];
+        while ($row = $statement->fetchArray()) {
+            $result[$row['objectID']] ??= [];
+            $result[$row['objectID']][ObjectTypeCache::getInstance()->getObjectType($row['objectTypeID'])->objectType] = \unserialize($row['conditionData']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * The stored data from the `wcf1_condition` table is migrated to the new format.
+     * The key of `$conditionData` is the type of condition (objectType), the value is the content of the `wcf1_condition.conditionData` column, unserialize as an array.
+     *
+     * @template TCondition of IConditionType
+     * @param AbstractConditionProvider<TCondition> $provider
+     * @param array<string, array<string, mixed>> $conditionData
+     */
+    public function migrateConditionData(AbstractConditionProvider $provider, array $conditionData): ConditionMigration
+    {
+        if ($conditionData === []) {
+            return ConditionMigration::forNoConditions();
+        }
+
+        $migratedData = [];
+        /** @var IMigrateConditionType[] $conditionTypes */
+        $conditionTypes = \array_filter(
+            $provider->getConditionTypes(),
+            static fn (IConditionType $condition): bool => $condition instanceof IMigrateConditionType
+        );
+
+        if ($conditionTypes === []) {
+            return ConditionMigration::forNoConditions();
+        }
+
+        foreach ($conditionData as $objectType => &$condition) {
+            foreach ($conditionTypes as $conditionType) {
+                if (!$conditionType->canMigrateConditionData($objectType)) {
+                    continue;
+                }
+
+                \array_push(
+                    $migratedData,
+                    ...$conditionType->migrateConditionData($condition)
+                );
+
+                if ($condition === []) {
+                    unset($conditionData[$objectType]);
+                    break;
+                }
+            }
+        }
+
+        return ConditionMigration::for($conditionData, $migratedData);
     }
 }
