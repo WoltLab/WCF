@@ -1,4 +1,4 @@
-{capture assign='wysiwygSelector'}commentEditor{@$comment->commentID}{/capture}
+{capture assign='wysiwygSelector'}commentEditor{$comment->commentID}{/capture}
 <textarea id="{$wysiwygSelector}" class="wysiwygTextarea"
           data-disable-attachments="true"
           data-support-mention="true"
@@ -15,7 +15,7 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Component/Comment/Add'], ({ setCommentEditorFeatures }) => {
-		setCommentEditorFeatures(document.getElementById('{$wysiwygSelector}'));
+		setCommentEditorFeatures(document.getElementById('{unsafe:$wysiwygSelector|encodeJS}'));
 	});
 </script>
 

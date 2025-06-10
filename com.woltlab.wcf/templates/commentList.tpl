@@ -8,29 +8,29 @@
 		</div>
 	{else}
 		<div class="commentList__item jsComment{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID, 2)} ignoredUserContent{/if}"
-			data-comment-id="{@$comment->commentID}"
-			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
+			data-comment-id="{$comment->commentID}"
+			{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
 			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
-			data-responses="{@$comment->responses}" data-last-response-time="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{@$comment->isDisabled}"
-			data-last-response-id="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseID()}{else}0{/if}"
+			data-responses="{$comment->responses}" data-last-response-time="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{$comment->isDisabled}"
+			data-last-response-id="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseID()}{else}0{/if}"
 		>
-			<woltlab-core-comment class="comment" comment-id="{@$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment class="comment" comment-id="{$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="comment__header">
 					<div class="comment__avatar">
 						{user object=$comment->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
 					</div>
 					<div class="comment__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $comment->userID}
-							<a href="{$comment->getUserProfile()->getLink()}" class="comment__author__link userLink" data-object-id="{@$comment->userID}" itemprop="url">
-								<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
+							<a href="{$comment->getUserProfile()->getLink()}" class="comment__author__link userLink" data-object-id="{$comment->userID}" itemprop="url">
+								<span itemprop="name">{unsafe:$comment->getUserProfile()->getFormattedUsername()}</span>
 							</a>
 						{else}
 							<span itemprop="name">{$comment->username}</span>
 						{/if}
 					</div>
 					<div class="comment__date">
-						<meta itemprop="datePublished" content="{@$comment->time|date:'c'}">
-						<a href="{$comment->getLink()}" class="comment__permalink">{@$comment->time|time}</a>
+						<meta itemprop="datePublished" content="{time type='custom' time=$comment->time format='c'}">
+						<a href="{$comment->getLink()}" class="comment__permalink">{time time=$comment->time}</a>
 					</div>
 					<div class="comment__status">
 						{if $comment->isDisabled}
@@ -44,7 +44,7 @@
 						{event name='commentStatus'}
 					</div>
 					{hascontent}
-						<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
+						<div class="comment__menu dropdown" id="commentOptions{$comment->commentID}">
 							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 							<ul class="dropdownMenu">
@@ -95,7 +95,7 @@
 				{event name='commentBeforeMessage'}
 
 				<div class="comment__message">
-					<div class="htmlContent userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
+					<div class="htmlContent userMessage" itemprop="text">{unsafe:$comment->getFormattedMessage()}</div>
 				</div>
 
 				{event name='commentAfterMessage'}
@@ -140,7 +140,7 @@
 
 			{if !$ignoreLastResponseTime|empty || $comment|count}
 				<div class="comment__responses">
-					<div class="commentResponseList" data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}">
+					<div class="commentResponseList" data-responses="{if $commentCanModerate}{$comment->unfilteredResponses}{else}{$comment->responses}{/if}">
 						{if $ignoreLastResponseTime|empty}{include file='commentResponseList' responseList=$comment}{/if}
 					</div>
 				</div>

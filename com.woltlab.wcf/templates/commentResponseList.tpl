@@ -5,29 +5,29 @@
 		</div>
 	{else}
 		<div class="commentResponseList__item jsCommentResponse{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID, 2)} ignoredUserContent{/if}"
-			data-response-id="{@$response->responseID}"
-			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)}
+			data-response-id="{$response->responseID}"
+			{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)}
 			data-can-edit="{if $response->isEditable()}true{else}false{/if}"
 			data-can-delete="{if $response->isDeletable()}true{else}false{/if}"
-			data-user-id="{@$response->userID}"
+			data-user-id="{$response->userID}"
 		>
-			<woltlab-core-comment-response class="commentResponse" response-id="{@$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment-response class="commentResponse" response-id="{$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="commentResponse__header">
 					<div class="commentResponse__avatar">
 						{user object=$response->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
 					</div>
 					<div class="commentResponse__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $response->userID}
-							<a href="{$response->getUserProfile()->getLink()}" class="commentResponse__author__link userLink" data-object-id="{@$response->userID}" itemprop="url">
-								<span itemprop="name">{@$response->getUserProfile()->getFormattedUsername()}</span>
+							<a href="{$response->getUserProfile()->getLink()}" class="commentResponse__author__link userLink" data-object-id="{$response->userID}" itemprop="url">
+								<span itemprop="name">{unsafe:$response->getUserProfile()->getFormattedUsername()}</span>
 							</a>
 						{else}
 							<span itemprop="name">{$response->username}</span>
 						{/if}
 					</div>
 					<div class="commentResponse__date">
-						<meta itemprop="datePublished" content="{@$response->time|date:'c'}">
-						<a href="{$response->getLink()}" class="commentResponse__permalink">{@$response->time|time}</a>
+						<meta itemprop="datePublished" content="{time type='custom' time=$response->time format='c'}">
+						<a href="{$response->getLink()}" class="commentResponse__permalink">{time time=$response->time}</a>
 					</div>
 					<div class="commentResponse__status">
 						{if $response->isDisabled}
@@ -42,7 +42,7 @@
 					</div>
 
 					{hascontent}
-						<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
+						<div class="commentResponse__menu dropdown" id="commentResponseOptions{$response->responseID}">
 							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 							<ul class="dropdownMenu">
@@ -93,7 +93,7 @@
 				{event name='commentBeforeMessage'}
 
 				<div class="commentResponse__message">
-					<div class="htmlContent userMessage" itemprop="text">{@$response->getFormattedMessage()}</div>
+					<div class="htmlContent userMessage" itemprop="text">{unsafe:$response->getFormattedMessage()}</div>
 				</div>
 
 				{event name='commentAfterMessage'}
