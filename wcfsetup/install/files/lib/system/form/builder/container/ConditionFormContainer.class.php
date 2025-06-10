@@ -4,7 +4,6 @@ namespace wcf\system\form\builder\container;
 
 use wcf\data\IStorableObject;
 use wcf\system\condition\provider\AbstractConditionProvider;
-use wcf\system\condition\type\IConditionType;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
@@ -17,8 +16,6 @@ use wcf\util\JSON;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
- *
- * @phpstan-type ConditionProvider AbstractConditionProvider<IConditionType<mixed>>
  */
 final class ConditionFormContainer extends FormContainer
 {
@@ -30,7 +27,7 @@ final class ConditionFormContainer extends FormContainer
     protected $templateName = 'shared_conditionFormContainer';
 
     /**
-     * @var ConditionProvider
+     * @phpstan-ignore missingType.generics
      */
     protected AbstractConditionProvider $conditionProvider;
 
@@ -134,9 +131,7 @@ final class ConditionFormContainer extends FormContainer
     }
 
     /**
-     * @param ConditionProvider $conditionProvider
-     *
-     * @return self<ConditionProvider>
+     * @phpstan-ignore missingType.generics
      */
     public function conditionProvider(AbstractConditionProvider $conditionProvider): self
     {
@@ -146,7 +141,7 @@ final class ConditionFormContainer extends FormContainer
     }
 
     /**
-     * @return ConditionProvider
+     * @phpstan-ignore missingType.generics
      */
     public function getConditionProvider(): AbstractConditionProvider
     {
