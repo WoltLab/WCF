@@ -7,7 +7,7 @@ use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
-use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\cache\eager\UserGroupAssignmentCache;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\provider\UserConditionProvider;
 use wcf\system\SingletonFactory;
@@ -47,8 +47,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
         $userList->setObjectIDs($userIDs);
         $userList->readObjects();
 
-        /** @var UserGroupAssignment[] $assignments */
-        $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
+        $assignments = (new UserGroupAssignmentCache())->getCache();
         $conditionProvider = new UserConditionProvider();
         foreach ($userList as $user) {
             $groupIDs = $user->getGroupIDs();

@@ -1685,7 +1685,8 @@ CREATE TABLE wcf1_user_group_assignment (
 	groupID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	conditions MEDIUMTEXT
+	conditions MEDIUMTEXT,
+	needMigration TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option;

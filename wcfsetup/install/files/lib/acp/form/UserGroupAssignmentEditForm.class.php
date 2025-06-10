@@ -4,6 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\user\group\assignment\command\UserGroupAssignmentMigrateCondition;
 
 /**
  * Shows the form to edit an existing automatic user group assignment.
@@ -38,6 +39,11 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         if (!$this->formObject->assignmentID) {
             throw new IllegalLinkException();
+        }
+
+        if ($this->formObject->needMigration) {
+            (new UserGroupAssignmentMigrateCondition($this->formObject))();
+            $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         }
     }
 }

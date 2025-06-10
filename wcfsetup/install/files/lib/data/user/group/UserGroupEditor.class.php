@@ -4,9 +4,9 @@ namespace wcf\data\user\group;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
+use wcf\system\cache\eager\UserGroupAssignmentCache;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -208,7 +208,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         UserGroupPermissionCacheBuilder::getInstance()->reset();
 
         // https://github.com/WoltLab/WCF/issues/4045
-        UserGroupAssignmentCacheBuilder::getInstance()->reset();
+        (new UserGroupAssignmentCache())->rebuild();
 
         // Clear cached group assignments.
         UserStorageHandler::getInstance()->resetAll('groupIDs');
