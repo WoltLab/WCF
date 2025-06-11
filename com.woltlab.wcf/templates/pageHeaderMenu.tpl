@@ -1,4 +1,4 @@
-{@$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->render()}
+{unsafe:$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->render()}
 <button type="button" class="pageHeaderMenuMobile" aria-expanded="false" aria-label="{lang}wcf.menu.page{/lang}">
 	<span class="pageHeaderMenuMobileInactive">
 		{icon size=32 name='bars'}

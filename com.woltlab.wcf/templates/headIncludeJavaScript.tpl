@@ -3,20 +3,20 @@
 *}
 
 <script data-cfasync="false">
-	var WCF_PATH = '{@$__wcf->getPath()}';
-	var WSC_API_URL = '{@$__wcf->getPath()}';
+	var WCF_PATH = '{unsafe:$__wcf->getPath()|encodeJS}';
+	var WSC_API_URL = '{unsafe:$__wcf->getPath()|encodeJS}';
 	var WSC_RPC_API_URL = '{link controller="Api" id="rpc"}{/link}';
 	{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
-	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
+	var LANGUAGE_ID = {$__wcf->getLanguage()->languageID};
 	var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
-	var TIME_NOW = {@TIME_NOW};
-	var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
+	var TIME_NOW = {TIME_NOW};
+	var LAST_UPDATE_TIME = {LAST_UPDATE_TIME};
 	var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
-	var PAGE_TITLE = '{PAGE_TITLE|phrase|encodeJS}';
+	var PAGE_TITLE = '{unsafe:PAGE_TITLE|phrase|encodeJS}';
 	
-	var REACTION_TYPES = {@$__wcf->getReactionHandler()->getReactionsJSVariable()};
+	var REACTION_TYPES = {unsafe:$__wcf->getReactionHandler()->getReactionsJSVariable()};
 	
 	{if ENABLE_DEBUG_MODE}
 		{* This constant is a compiler option, it does not exist in production. *}
@@ -31,7 +31,7 @@
 	{/if}
 </script>
 
-<script data-cfasync="false" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-cfasync="false" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={LAST_UPDATE_TIME}"></script>
 <script data-cfasync="false" src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
@@ -41,8 +41,8 @@
 {js application='wcf' file='3rdParty/tslib' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 <script data-cfasync="false">
 requirejs.config({
-	baseUrl: '{@$__wcf->getPath()}js',
-	urlArgs: 't={@LAST_UPDATE_TIME}'
+	baseUrl: '{unsafe:$__wcf->getPath()|encodeJS}js',
+	urlArgs: 't={LAST_UPDATE_TIME}'
 	{hascontent}
 	, paths: {
 		{content}{event name='requirePaths'}{/content}
@@ -66,9 +66,9 @@ window.addEventListener('pageshow', function(event) {
 		{/hascontent}
 		
 		User.init(
-			{@$__wcf->user->userID},
-			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
-			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
+			{$__wcf->user->userID},
+			{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
+			{if $__wcf->user->userID}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if},
 			'{link controller='GuestTokenDialog'}{/link}'
 		);
 		
@@ -79,7 +79,7 @@ window.addEventListener('pageshow', function(event) {
 			},
 			{if $__wcf->user->userID && SERVICE_WORKER_PUBLIC_KEY !== ''}
 			serviceWorker: {
-				publicKey: '{@SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
+				publicKey: '{unsafe:SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
 				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}service-worker/',
 				registerUrl: '{link controller="RegisterServiceWorker"}{/link}',
 				notificationLastReadTime: {$__wcf->getUserNotificationHandler()->getTimeOfLastReadNotification()}
@@ -137,8 +137,8 @@ window.addEventListener('pageshow', function(event) {
 
 <script data-relocate="true">
 	WCF.User.init(
-		{@$__wcf->user->userID},
-		{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}
+		{$__wcf->user->userID},
+		{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
 	);
 </script>
 

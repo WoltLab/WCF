@@ -23,11 +23,11 @@
 				<div class="boxContainer">
 					{content}
 						{if !$boxesHero|empty}
-							{@$boxesHero}
+							{unsafe:$boxesHero}
 						{/if}
 
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('hero') item=box}
-							{@$box->render()}
+							{unsafe:$box->render()}
 						{/foreach}
 					{/content}
 				</div>

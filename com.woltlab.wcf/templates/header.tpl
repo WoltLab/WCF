@@ -9,7 +9,7 @@
 		{/if}
 	{/if}
 	
-	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|phrase}</title>
+	<title>{if $pageTitle}{unsafe:$pageTitle} - {/if}{PAGE_TITLE|phrase}</title>
 	
 	{include file='headInclude'}
 	
@@ -18,14 +18,14 @@
 	{/if}
 	
 	{if !$headContent|empty}
-		{@$headContent}
+		{unsafe:$headContent}
 	{/if}
 </head>
 
 <body id="tpl_{$templateNameApplication}_{$templateName}"
 	itemscope itemtype="http://schema.org/WebPage"{if !$canonicalURL|empty} itemid="{$canonicalURL}"{/if}
-	data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}
-	{if !$__pageDataAttributes|empty}{@$__pageDataAttributes}{/if}
+	data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}
+	{if !$__pageDataAttributes|empty}{unsafe:$__pageDataAttributes}{/if}
 	class="{if $__wcf->getActivePage() != null && $__wcf->getActivePage()->cssClassName}{$__wcf->getActivePage()->cssClassName}{/if}{if !$__pageCssClassName|empty} {$__pageCssClassName}{/if}">
 
 <span id="top"></span>
@@ -43,11 +43,11 @@
 				<div class="boxContainer">
 					{content}
 						{if !$headerBoxes|empty}
-							{@$headerBoxes}
+							{unsafe:$headerBoxes}
 						{/if}
 						
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
-							{@$box->render()}
+							{unsafe:$box->render()}
 						{/foreach}
 					{/content}
 				</div>
@@ -62,18 +62,18 @@
 			<div class="boxContainer">
 				{content}
 					{if !$boxesTop|empty}
-						{@$boxesTop}
+						{unsafe:$boxesTop}
 					{/if}
 				
 					{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
-						{@$box->render()}
+						{unsafe:$box->render()}
 					{/foreach}
 				{/content}
 			</div>
 		</div>
 	{/hascontent}
 	
-	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {@$__mainItemScope}{/if}>
+	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {unsafe:$__mainItemScope}{/if}>
 		{if !$beforeMaincontent|empty}
 			{unsafe:$beforeMaincontent}
 		{/if}
@@ -91,16 +91,16 @@
 							{* WCF2.1 Fallback *}
 							{if !$sidebar|empty}
 								{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
-									{@$sidebar}
+									{unsafe:$sidebar}
 								{/if}
 							{/if}
 							
 							{if !$sidebarLeft|empty}
-								{@$sidebarLeft}
+								{unsafe:$sidebarLeft}
 							{/if}
 							
 							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarLeft') item=box}
-								{@$box->render()}
+								{unsafe:$box->render()}
 							{/foreach}
 							
 							{event name='boxesSidebarLeftBottom'}
@@ -113,7 +113,7 @@
 				{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
 					<div class="box boxBorderless">
 						<div class="boxContent">
-							{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+							{unsafe:$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
 						</div>
 					</div>
 				{/if}
@@ -123,16 +123,16 @@
 				{* WCF2.1 Fallback *}
 				{if !$sidebar|empty}
 					{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
-						{@$sidebar}
+						{unsafe:$sidebar}
 					{/if}
 				{/if}
 				
 				{if !$sidebarRight|empty}
-					{@$sidebarRight}
+					{unsafe:$sidebarRight}
 				{/if}
 				
 				{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-					{@$box->render()}
+					{unsafe:$box->render()}
 				{/foreach}
 				
 				{event name='boxesSidebarRightBottom'}
@@ -140,18 +140,18 @@
 				{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
 					<div class="box boxBorderless">
 						<div class="boxContent">
-							{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+							{unsafe:$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
 						</div>
 					</div>
 				{/if}
 			{/capture}
 			
 			<div id="content" class="content{if $__sidebarRightContent|trim} content--sidebar-right{/if}">
-				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
+				{if MODULE_WCF_AD && $__disableAds|empty}{unsafe:$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
 				
 				{if $__disableContentHeader|empty}
 					{if !$contentHeader|empty}
-						{@$contentHeader}
+						{unsafe:$contentHeader}
 					{else}
 						{if $contentTitle|empty}
 							{if $__wcf->isLandingPage() && USE_PAGE_TITLE_ON_LANDING_PAGE}
@@ -165,15 +165,15 @@
 						{if !$contentTitle|empty}
 							<header class="contentHeader">
 								<div class="contentHeaderTitle">
-									<h1 class="contentTitle">{@$contentTitle}{if !$contentTitleBadge|empty} {@$contentTitleBadge}{/if}</h1>
-									{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+									<h1 class="contentTitle">{unsafe:$contentTitle}{if !$contentTitleBadge|empty} {unsafe:$contentTitleBadge}{/if}</h1>
+									{if !$contentDescription|empty}<p class="contentHeaderDescription">{unsafe:$contentDescription}</p>{/if}
 								</div>
 								
 								{hascontent}
 									<nav class="contentHeaderNavigation">
 										<ul>
 											{content}
-												{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
+												{if !$contentHeaderNavigation|empty}{unsafe:$contentHeaderNavigation}{/if}
 												
 												{event name='contentHeaderNavigation'}
 											{/content}
@@ -192,11 +192,11 @@
 						<div class="boxContainer">
 							{content}
 								{if !$boxesContentTop|empty}
-									{@$boxesContentTop}
+									{unsafe:$boxesContentTop}
 								{/if}
 								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
-									{@$box->render()}
+									{unsafe:$box->render()}
 								{/foreach}
 							{/content}
 						</div>
