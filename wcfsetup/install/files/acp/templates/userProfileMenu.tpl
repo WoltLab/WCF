@@ -27,7 +27,7 @@
 <div id="userProfileMenuItemList" class="section">
 	<ol class="sortableList" data-object-id="0">
 		{foreach from=$userProfileMenuItemList item=menuItem}
-			<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
+			<li class="sortableNode" data-object-id="{$menuItem->menuItemID}">
 				<span class="sortableNodeLabel">
 					<span>{$menuItem}</span>
 					

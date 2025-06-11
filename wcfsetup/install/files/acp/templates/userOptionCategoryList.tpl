@@ -26,10 +26,10 @@
 		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\option\category\UserOptionCategoryAction">
 			<thead>
 				<tr>
-					<th class="columnID columnCategoryID{if $sortField == 'categoryID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserOptionCategoryList'}pageNo={@$pageNo}&sortField=categoryID&sortOrder={if $sortField == 'categoryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnCategoryName{if $sortField == 'categoryName'} active {@$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={@$pageNo}&sortField=categoryName&sortOrder={if $sortField == 'categoryName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
-					<th class="columnDigits columnOptions{if $sortField == 'options'} active {@$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={@$pageNo}&sortField=options&sortOrder={if $sortField == 'options' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.user.option.category.options{/lang}</a></th>
-					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
+					<th class="columnID columnCategoryID{if $sortField == 'categoryID'} active {$sortOrder}{/if}" colspan="2"><a href="{link controller='UserOptionCategoryList'}pageNo={$pageNo}&sortField=categoryID&sortOrder={if $sortField == 'categoryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnCategoryName{if $sortField == 'categoryName'} active {$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={$pageNo}&sortField=categoryName&sortOrder={if $sortField == 'categoryName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnDigits columnOptions{if $sortField == 'options'} active {$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={$pageNo}&sortField=options&sortOrder={if $sortField == 'options' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.user.option.category.options{/lang}</a></th>
+					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {$sortOrder}{/if}"><a href="{link controller='UserOptionCategoryList'}pageNo={$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -37,7 +37,7 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=category}
-					<tr class="jsCategoryRow jsObjectActionObject" data-object-id="{@$category->getObjectID()}">
+					<tr class="jsCategoryRow jsObjectActionObject" data-object-id="{$category->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $category->userOptions > 0}
@@ -50,7 +50,7 @@
 							
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID">{@$category->categoryID}</td>
+						<td class="columnID">{$category->categoryID}</td>
 						<td class="columnTitle columnCategoryName"><a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</a></td>
 						<td class="columnDigits columnOptions">{#$category->userOptions}</td>
 						<td class="columnDigits columnShowOrder">{#$category->showOrder}</td>

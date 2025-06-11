@@ -24,7 +24,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.group.{@$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.group.{$action}{/lang}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -82,7 +82,7 @@
 						{elseif $errorType.groupName == 'multilingual'}
 							{lang}wcf.global.form.error.multilingual{/lang}
 						{else}
-							{lang}wcf.acp.group.groupName.error.{@$errorType}{/lang}
+							{lang}wcf.acp.group.groupName.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -97,7 +97,7 @@
 				<textarea id="groupDescription" name="groupDescription" cols="40" rows="10">{$i18nPlainValues['groupDescription']}</textarea>
 				{if $errorType.groupDescription|isset}
 					<small class="innerError">
-						{lang}wcf.acp.group.description.error.{@$errorType.groupDescription}{/lang}
+						{lang}wcf.acp.group.description.error.{$errorType.groupDescription}{/lang}
 					</small>
 				{/if}
 
@@ -111,7 +111,7 @@
 				<input type="number" id="priority" name="priority" value="{$priority}" class="tiny" max="8388607">
 				{if $errorType.priority|isset}
 					<small class="innerError">
-						{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}
+						{lang}wcf.acp.group.priority.error.{$errorType.priority}{/lang}
 					</small>
 				{/if}
 				<small>{lang}wcf.acp.group.priority.description{/lang}</small>
@@ -125,7 +125,7 @@
 					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" maxlength="255" class="long">
 					{if $errorType.userOnlineMarking|isset}
 						<small class="innerError">
-							{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.userOnlineMarking}{/lang}
+							{lang}wcf.acp.group.userOnlineMarking.error.{$errorType.userOnlineMarking}{/lang}
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.group.userOnlineMarking.description{/lang}</small>
@@ -171,24 +171,24 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.acp.group.option.category.{$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContainer tabMenuContent">
+			<div id="{$categoryLevel1[object]->categoryName}" class="tabMenuContainer tabMenuContent">
 				<nav class="menu">
 					<ul>
 						{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
 							{assign var=__categoryLevel2Name value=$categoryLevel1[object]->categoryName|concat:'-':$categoryLevel2[object]->categoryName}
-							<li><a href="#{$__categoryLevel2Name|rawurlencode}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
+							<li><a href="#{$__categoryLevel2Name|rawurlencode}">{lang}wcf.acp.group.option.category.{$categoryLevel2[object]->categoryName}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				</nav>
 				
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="tabMenuContent hidden">
+					<div id="{$categoryLevel1[object]->categoryName}-{$categoryLevel2[object]->categoryName}" class="tabMenuContent hidden">
 						{if $categoryLevel2[options]|count}
 							<div class="section">
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.' isGuestGroup=$groupIsGuest}
@@ -199,8 +199,8 @@
 							{foreach from=$categoryLevel2[categories] item=categoryLevel3}
 								<section class="section">
 									<header class="sectionHeader">
-										<h2 class="sectionTitle">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</h2>
-										{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
+										<h2 class="sectionTitle">{lang}wcf.acp.group.option.category.{$categoryLevel3[object]->categoryName}{/lang}</h2>
+										{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{$categoryLevel3[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 									</header>
 										
 									{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.' isGuestGroup=$groupIsGuest}

@@ -27,7 +27,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.group.assignment.title.error.{@$errorType}{/lang}
+							{lang}wcf.acp.group.assignment.title.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -42,7 +42,7 @@
 					{if $errorType == 'noValidSelection'}
 						<small class="innerError">{lang}wcf.global.form.error.noValidSelection{/lang}</small>
 					{else}
-						<small class="innerError">{lang}wcf.acp.group.assignment.groupID.error.{@$errorType}{/lang}</small>
+						<small class="innerError">{lang}wcf.acp.group.assignment.groupID.error.{$errorType}{/lang}</small>
 					{/if}
 				{/if}
 			</dd>

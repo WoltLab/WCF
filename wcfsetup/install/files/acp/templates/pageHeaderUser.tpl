@@ -3,7 +3,7 @@
 		{if $__wcf->user->userID}
 			{if PACKAGE_ID}
 				<li id="userMenu" class="dropdown">
-					<a href="#" class="dropdownToggle jsTooltip" title="{$__wcf->user->username}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}</a>
+					<a href="#" class="dropdownToggle jsTooltip" title="{$__wcf->user->username}">{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}</a>
 					<ul class="dropdownMenu dropdownMenuUserPanel" data-dropdown-alignment-horizontal="right">
 						<li><a href="{link controller='Logout'}t={csrfToken type=url}{/link}">{lang}wcf.user.logout{/lang}</a></li>
 					</ul>

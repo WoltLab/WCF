@@ -45,7 +45,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.user.username.error.{@$errorType}{/lang}
+								{lang}wcf.user.username.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -63,7 +63,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.paidSubscription.user.endDate.error.{@$errorType}{/lang}
+								{lang}wcf.acp.paidSubscription.user.endDate.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

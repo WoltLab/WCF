@@ -43,7 +43,7 @@
 			parent.appendChild(fragment);
 		}
 		
-		[{@$everyoneGroupID}, {@$guestGroupID}, {@$userGroupID}].forEach(function(groupID) {
+		[{$everyoneGroupID}, {$guestGroupID}, {$userGroupID}].forEach(function(groupID) {
 			elBySelAll('dl[data-group-id="' + groupID + '"] .jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
 				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
 				
@@ -57,7 +57,7 @@
 					var groupId = parseInt(elData(dl, 'group-id'), 10);
 					
 					elBySelAll('input[name="values[' + groupId + '][]"', undefined, function(input) {
-						if (groupId === {@$ownerGroupID}) {
+						if (groupId === {$ownerGroupID}) {
 							var shadow = elCreate('input');
 							shadow.type = 'hidden';
 							shadow.name = input.name;
@@ -68,14 +68,14 @@
 							input.disabled = true;
 						}
 						else {
-							if (parseInt(input.value, 10) === {@$ownerGroupID}) {
+							if (parseInt(input.value, 10) === {$ownerGroupID}) {
 								elRemove(input.closest('label'));
 							}
 						}
 					});
 				});
 			{elseif $userGroupOption->optionName|in_array:$ownerGroupPermissions}
-				elBySelAll('input[name="values[{@$ownerGroupID}]"]', undefined, function (input) {
+				elBySelAll('input[name="values[{$ownerGroupID}]"]', undefined, function (input) {
 					if (input.value === '1') {
 						input.checked = true;
 					}
@@ -116,11 +116,11 @@
 	<section class="section" id="optionValueContainer">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</h2>
-			<p class="sectionDescription">{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{@$parentCategory->categoryName}{/lang}{/implode}</p>
+			<p class="sectionDescription">{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{$parentCategory->categoryName}{/lang}{/implode}</p>
 		</header>
 		
 		{foreach from=$groups item=group}
-			<dl data-group-id="{@$group->groupID}">
+			<dl data-group-id="{$group->groupID}">
 				<dt>
 					{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}">
@@ -132,17 +132,17 @@
 							{icon name='shield-halved'}
 						</span>
 					{/if}
-					<label for="userGroupOption{@$group->groupID}">{$group->getTitle()}</label>
+					<label for="userGroupOption{$group->groupID}">{$group->getTitle()}</label>
 				</dt>
 				<dd>
-					{@$formElements[$group->groupID]}
+					{unsafe:$formElements[$group->groupID]}
 					
 					{if $errorType[$group->groupID]|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.option.error.{$errorType[$group->groupID]}{/lang}
 						</small>
 					{/if}
-					{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{@$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
+					{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
 				</dd>
 			</dl>
 		{/foreach}

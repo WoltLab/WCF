@@ -30,7 +30,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
+		<h1 class="contentTitle">{lang}{$pageTitle}{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 
 	{hascontent}
@@ -79,11 +79,11 @@
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
-					<th class="columnID columnUserID{if $sortField == 'userID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserList' id=$searchID}action={@$encodedAction}&pageNo={@$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnUsername{if $sortField == 'username'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserList' id=$searchID}action={@$encodedAction}&pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.user.username{/lang}</a></th>
+					<th class="columnID columnUserID{if $sortField == 'userID'} active {$sortOrder}{/if}" colspan="2"><a href="{link controller='UserList' id=$searchID}action={$encodedAction}&pageNo={$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnUsername{if $sortField == 'username'} active {$sortOrder}{/if}" colspan="2"><a href="{link controller='UserList' id=$searchID}action={$encodedAction}&pageNo={$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.user.username{/lang}</a></th>
 
 					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<th class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}{if $sortField == $column} active {@$sortOrder}{/if}"{if $column === 'registrationDate'} colspan="2"{/if}><a href="{link controller='UserList' id=$searchID}action={@$encodedAction}&pageNo={@$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}</a></th>
+						<th class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}{if $sortField == $column} active {$sortOrder}{/if}"{if $column === 'registrationDate'} colspan="2"{/if}><a href="{link controller='UserList' id=$searchID}action={$encodedAction}&pageNo={$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}</a></th>
 					{/foreach}
 
 					{event name='columnHeads'}
@@ -92,10 +92,10 @@
 
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$users item=user}
-					<tr class="jsUserRow jsClipboardObject jsObjectActionObject" data-object-id="{@$user->getObjectID()}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
-						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
+					<tr class="jsUserRow jsClipboardObject jsObjectActionObject" data-object-id="{$user->getObjectID()}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{$user->userID}"></td>
 						<td class="columnIcon">
-							<div class="dropdown" id="userListDropdown{@$user->userID}">
+							<div class="dropdown" id="userListDropdown{$user->userID}">
 								<a href="#" class="dropdownToggle button small">{icon name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a>
 
 								<ul class="dropdownMenu">
@@ -149,8 +149,8 @@
 								{event name='rowButtons'}
 							</div>
 						</td>
-						<td class="columnID columnUserID">{@$user->userID}</td>
-						<td class="columnIcon">{@$user->getAvatar()->getImageTag(24)}</td>
+						<td class="columnID columnUserID">{$user->userID}</td>
+						<td class="columnIcon">{unsafe:$user->getAvatar()->getImageTag(24)}</td>
 						<td class="columnTitle columnUsername">
 							<span class="username">
 								{if $user->editable}
@@ -179,8 +179,8 @@
 							</span>
 
 							{if MODULE_USER_RANK}
-								{if $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}
-								{if $user->getRank() && $user->getRank()->rankImage} <span class="userRankImage">{@$user->getRank()->getImage()}</span>{/if}
+								{if $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}
+								{if $user->getRank() && $user->getRank()->rankImage} <span class="userRankImage">{unsafe:$user->getRank()->getImage()}</span>{/if}
 							{/if}
 						</td>
 
@@ -202,7 +202,7 @@
 										{/if}
 									</td>
 								{/if}
-								<td class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
+								<td class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}">{if $columnValues[$user->userID][$column]|isset}{unsafe:$columnValues[$user->userID][$column]}{/if}</td>
 							{/if}	
 						{/foreach}
 

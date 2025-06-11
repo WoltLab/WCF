@@ -51,7 +51,7 @@
 							<small class="innerError">
 								{if $errorType|is_array}
 									{foreach from=$errorType item='errorData'}
-										{lang}wcf.acp.trophy.userTrophy.user.error.{@$errorData.type}{/lang}
+										{lang}wcf.acp.trophy.userTrophy.user.error.{$errorData.type}{/lang}
 									{/foreach}
 								{elseif $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
@@ -85,7 +85,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.trophy.userTrophy.trophy.error.{@$errorType}{/lang}
+									{lang}wcf.acp.trophy.userTrophy.trophy.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}

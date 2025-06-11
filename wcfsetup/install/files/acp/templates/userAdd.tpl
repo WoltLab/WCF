@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.user.{@$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.user.{$action}{/lang}</h1>
 		{if $action == 'edit'}<p class="contentHeaderDescription">{$user->username}</p>{/if}
 	</div>
 
@@ -12,8 +12,8 @@
 				{hascontent}
 					<li>
 						<div 	class="dropdown"{*
-								*}id="userListDropdown{@$user->userID}" {*
-								*}data-object-id="{@$user->getObjectID()}" {*
+								*}id="userListDropdown{$user->userID}" {*
+								*}data-object-id="{$user->getObjectID()}" {*
 								*}data-banned="{if $user->banned}true{else}false{/if}" {*
 								*}data-enabled="{if !$user->activationCode}true{else}false{/if}" {*
 								*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
@@ -120,28 +120,28 @@
 									'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
 								});
 
-								const dropdownElement = document.querySelector("#userListDropdown{@$user->userID}");
+								const dropdownElement = document.querySelector("#userListDropdown{$user->userID}");
 
 								const deleteContent = document.querySelector(".jsDeleteContent");
 								if (deleteContent !== null) {
-									new AcpUserContentRemoveHandler(deleteContent, {@$user->userID}, (data) => {
+									new AcpUserContentRemoveHandler(deleteContent, {$user->userID}, (data) => {
 										window.location.reload();
 									});
 								}
 
 								const sendNewPassword = document.querySelector(".jsSendNewPassword");
 								if (sendNewPassword !== null) {
-									new SendNewPasswordAction(sendNewPassword, {@$user->userID}, dropdownElement);
+									new SendNewPasswordAction(sendNewPassword, {$user->userID}, dropdownElement);
 								}
 
 								const toggleConfirmEmail = document.querySelector(".jsConfirmEmailToggle");
 								if (toggleConfirmEmail !== null) {
-									new ToggleConfirmEmailAction(toggleConfirmEmail, {@$user->userID}, dropdownElement);
+									new ToggleConfirmEmailAction(toggleConfirmEmail, {$user->userID}, dropdownElement);
 								}
 
 								const enableUser = document.querySelector(".jsEnable");
 								if (enableUser !== null) {
-									new DisableAction(enableUser, {@$user->userID}, dropdownElement);
+									new DisableAction(enableUser, {$user->userID}, dropdownElement);
 								}
 
 								const deleteUser = document.querySelector(".jsDelete");
@@ -149,7 +149,7 @@
 									// We cannot use the DeleteAction, because the Delete Action is only usable for
 									// dropdown menues.
 									deleteUser.addEventListener("click", (event) => {
-										const deleteAction = new Delete([{@$user->userID}], () => {
+										const deleteAction = new Delete([{$user->userID}], () => {
 											window.location.href = "{link controller='UserList'}{/link}";
 										}, '{jslang objectTitle=$user->username}wcf.button.delete.confirmMessage{/jslang}');
 
@@ -181,7 +181,7 @@
 				<li><a href="#__essentials">{lang}wcf.global.form.data{/lang}</a></li>
 
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.user.option.category.{$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 
 				{if MODULE_USER_SIGNATURE}
@@ -208,7 +208,7 @@
 								{if $errorType.username == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.user.username.error.{@$errorType.username}{/lang}
+									{lang}wcf.user.username.error.{$errorType.username}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -225,7 +225,7 @@
 									{if $errorType.email == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.user.email.error.{@$errorType.email}{/lang}
+										{lang}wcf.user.email.error.{$errorType.email}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -243,7 +243,7 @@
 									{if $errorType.password == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.user.password.error.{@$errorType.password}{/lang}
+										{lang}wcf.user.password.error.{$errorType.password}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -399,10 +399,10 @@
 		</div>
 
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContent hidden">
+			<div id="{$categoryLevel1[object]->categoryName}" class="tabMenuContent hidden">
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
+						<h2 class="sectionTitle">{lang}wcf.user.option.category.{$categoryLevel2[object]->categoryName}{/lang}</h2>
 
 						{if $categoryLevel2[object]->categoryName == 'settings.general'}
 							{if $availableLanguages|count > 1}
@@ -420,7 +420,7 @@
 										</dt>
 										<dd>
 											{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-												<label><input type="checkbox" name="visibleLanguages[]" value="{$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
+												<label><input type="checkbox" name="visibleLanguages[]" value="{$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {$availableLanguage}</label>
 											{/foreach}
 										</dd>
 									</dl>
@@ -440,9 +440,9 @@
 										{if $errorField === 'styleID'}
 											<small class="innerError">
 												{if $errorType === 'empty' || $errorType === 'noValidSelection'}
-													{lang}wcf.global.form.error.{@$errorType}{/lang}
+													{lang}wcf.global.form.error.{$errorType}{/lang}
 												{else}
-													{lang}wcf.user.style.error.{@$errorType.password}{/lang}
+													{lang}wcf.user.style.error.{$errorType.password}{/lang}
 												{/if}
 											</small>
 										{/if}
@@ -470,10 +470,10 @@
 							<dl>
 								<dt><label for="userTitle">{lang}wcf.user.userTitle{/lang}</label></dt>
 								<dd>
-									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}">
+									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{USER_TITLE_MAX_LENGTH}">
 									{if $errorType[userTitle]|isset}
 										<small class="innerError">
-											{lang}wcf.user.userTitle.error.{@$errorType[userTitle]}{/lang}
+											{lang}wcf.user.userTitle.error.{$errorType[userTitle]}{/lang}
 										</small>
 									{/if}
 									<small>{lang}wcf.user.userTitle.description{/lang}</small>
@@ -515,7 +515,7 @@
 									{elseif $errorType == 'disallowedBBCodes'}
 										{lang}wcf.message.error.disallowedBBCodes{/lang}
 									{else}
-										{lang}wcf.user.signature.error.{@$errorType}{/lang}
+										{lang}wcf.user.signature.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -606,7 +606,7 @@
 							{if $avatarType == 'custom' && $userAvatar !== null}
 								<img src="{$userAvatar->getLink()}" alt="" class="userAvatarImage" height="96" width="96">
 							{else}
-								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" height="96" width="96">
+								<img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" height="96" width="96">
 							{/if}
 						</dd>
 					</dl>
