@@ -19,7 +19,7 @@
 
 <script data-relocate="true">
 	if (document.referrer) {
-		$('#errorMessage').append('<br><br><a href="' + document.referrer + '">{lang}wcf.page.error.backward{/lang}</a>');
+		document.getElementById('errorMessage').insertAdjacentHTML('beforeend', `<br><br><a href="${ document.referrer }">{lang}wcf.page.error.backward{/lang}</a>`);
 	}
 </script>
 
