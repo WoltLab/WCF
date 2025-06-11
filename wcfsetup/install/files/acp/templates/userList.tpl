@@ -62,16 +62,18 @@
 	{/hascontent}
 </header>
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{assign var=encodedURL value=$url|rawurlencode}
-			{assign var=encodedAction value=$action|rawurlencode}
+{assign var=encodedURL value=$url|rawurlencode}
+{assign var=encodedAction value=$action|rawurlencode}
 
-			{pages print=true assign=pagesLinks controller="UserList" id=$searchID link="pageNo=%d&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"}
-		{/content}
+{if $pages > 1}
+	<div class="paginationTop">
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='UserList' id=$searchID}action={$encodedAction}&sortField={$sortField}&sortOrder={$sortOrder}{/link}">
+		</woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 {if $users|count}
 	<div id="userTableContainer" class="section tabularBox">
@@ -214,11 +216,15 @@
 	</div>
 
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='UserList' id=$searchID}action={$encodedAction}&sortField={$sortField}&sortOrder={$sortOrder}{/link}">
+				</woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 
 		{hascontent}
 			<nav class="contentFooterNavigation">
