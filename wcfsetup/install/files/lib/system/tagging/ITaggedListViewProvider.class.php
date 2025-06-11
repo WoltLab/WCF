@@ -2,7 +2,6 @@
 
 namespace wcf\system\tagging;
 
-use wcf\data\tag\Tag;
 use wcf\system\listView\AbstractListView;
 
 /**
