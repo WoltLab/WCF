@@ -6,10 +6,11 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\event\moderation\DeletedItemsCollecting;
+use wcf\event\moderation\DeletedContentProvidersCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\moderation\DeletedItemsBoxComponent;
+use wcf\system\moderation\IDeletedContentListViewProvider;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -18,6 +19,7 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.2 Use `DeletedContentListViewPage` instead.
  *
  * @extends MultipleLinkPage<DatabaseObjectList<DatabaseObject>>
  */
@@ -40,11 +42,18 @@ class DeletedContentListPage extends MultipleLinkPage
     public $objectType;
 
     /**
+     * @var array<string, IDeletedContentProvider | IDeletedContentListViewProvider>
+     */
+    private array $providers = [];
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
     {
         parent::readParameters();
+
+        $this->loadProviders();
 
         if (isset($_REQUEST['objectType'])) {
             $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
@@ -56,26 +65,30 @@ class DeletedContentListPage extends MultipleLinkPage
                 throw new IllegalLinkException();
             }
         } else {
-            $link = $this->getFirstTypeLink();
-            if ($link === null) {
+            if ($this->providers === []) {
                 throw new IllegalLinkException();
             }
 
-            return new RedirectResponse($link);
+            $provider = \reset($this->providers);
+            if ($provider instanceof IDeletedContentListViewProvider) {
+                return new RedirectResponse(LinkHandler::getInstance()->getControllerLink(
+                    DeletedContentListViewPage::class,
+                    ['provider' => $provider->getIdentifier()]
+                ));
+            }
+
+            $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.deletedContent',
+                $provider->getIdentifier()
+            );
         }
     }
 
-    private function getFirstTypeLink(): ?string
+    private function loadProviders(): void
     {
-        $event = new DeletedItemsCollecting();
+        $event = new DeletedContentProvidersCollecting();
         EventHandler::getInstance()->fire($event);
-        $types = $event->getTypes();
-
-        if ($types === []) {
-            return null;
-        }
-
-        return reset($types)->link;
+        $this->providers = $event->getProviders();
     }
 
     /**
@@ -94,10 +107,36 @@ class DeletedContentListPage extends MultipleLinkPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'deletedItemsBox' => new DeletedItemsBoxComponent($this->objectType->objectType),
+            'providerLinks' => $this->getProviderLinks(),
             'objectType' => $this->objectType->objectType,
             'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
             'resultListApplication' => $this->objectType->getProcessor()->getApplication(),
         ]);
+    }
+
+    private function getProviderLinks(): array
+    {
+        $links = [];
+        foreach ($this->providers as $identifier => $provider) {
+            if ($provider instanceof IDeletedContentListViewProvider) {
+                $title = $provider->getObjectTypeTitle();
+                $link = LinkHandler::getInstance()->getControllerLink(DeletedContentListViewPage::class, [
+                    'provider' => $identifier,
+                ]);
+            } else {
+                $title = WCF::getLanguage()->getDynamicVariable('wcf.moderation.deletedContent.objectType.' . $identifier);
+                $link = LinkHandler::getInstance()->getControllerLink(self::class, [
+                    'objectType' => $identifier,
+                ]);
+            }
+
+            $links[] = [
+                'identifier' => $identifier,
+                'title' => $title,
+                'link' => $link,
+            ];
+        }
+
+        return $links;
     }
 }

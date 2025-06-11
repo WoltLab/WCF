@@ -1,7 +1,21 @@
 {capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
 {capture assign='sidebarRight'}
-	{unsafe:$deletedItemsBox->render()}
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.DeletedContentListMenu">
+		<h2 class="boxTitle">{lang}wcf.moderation.deletedContent.objectTypes{/lang}</h2>
+		
+		<div class="boxContent">
+			<ul class="boxMenu">
+				{foreach from=$providerLinks item=providerLink}
+					<li{if $objectType == $providerLink[identifier]} class="active"{/if}>
+						<a class="boxMenuLink" href="{$providerLink[link]}">
+							<span class="boxMenuLinkTitle">{$providerLink[title]}</span>
+						</a>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+	</section>
 {/capture}
 
 {capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
