@@ -6,8 +6,12 @@
 	</div>
 	
 	<script data-relocate="true">
-	$(function() {
-		$('#{$option->optionName}').parents('dl:eq(0)').addClass('wide');
-	});
+		const element = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		if (element) {
+			const dl = element.closest('dl');
+			if (dl) {
+				dl.classList.add('wide');
+			}
+		}
 	</script>
 {/hascontent}
