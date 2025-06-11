@@ -82,7 +82,7 @@
 {foreach from=$objects item=user}
 	{capture assign=locationData}
 		<p>
-			{if $user->getLocation()}{unsafe:$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{@$user->lastActivityTime|time}</small>
+			{if $user->getLocation()}{unsafe:$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{time time=$user->lastActivityTime}</small>
 		</p>
 	{/capture}
 	
