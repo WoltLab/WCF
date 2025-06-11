@@ -55,7 +55,7 @@
 					'wcf.user.editProfile': '{jslang}wcf.user.editProfile{/jslang}'
 				});
 				
-				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
+				new WCF.User.Profile.Editor({$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
 			{event name='javascriptInit'}
@@ -105,7 +105,7 @@
 			{if $menuItem->getContentManager()->isVisible($userID)}
 				<div id="{$menuItem->getIdentifier()}" class="tabMenuContent" data-menu-item="{$menuItem->menuItem}">
 					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem($userID)}
-						{@$profileContent}
+						{unsafe:$profileContent}
 					{/if}
 				</div>
 			{/if}

@@ -2,7 +2,7 @@
 	{if OFFLINE && $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 		<woltlab-core-notice type="warning">
 			<p><strong>{lang}wcf.page.offline{/lang}</strong></p>
-			<div>{if OFFLINE_MESSAGE_ALLOW_HTML}{@OFFLINE_MESSAGE|phrase}{else}{@OFFLINE_MESSAGE|phrase|newlineToBreak}{/if}</div>
+			<div>{if OFFLINE_MESSAGE_ALLOW_HTML}{unsafe:OFFLINE_MESSAGE|phrase}{else}{unsafe:OFFLINE_MESSAGE|phrase|newlineToBreak}{/if}</div>
 		</woltlab-core-notice>
 	{/if}
 
@@ -35,7 +35,7 @@
 							</button>
 						{/if}
 						
-						{@$notice}
+						{unsafe:$notice}
 					</div>
 				{else}
 					<woltlab-core-notice type="{$notice->cssClassName}" class="notice{if $notice->isDismissible} noticeDismissible active{/if}">
@@ -45,7 +45,7 @@
 							</button>
 						{/if}
 						
-						{@$notice}
+						{unsafe:$notice}
 					</woltlab-core-notice>
 				{/if}
 			{/foreach}
@@ -63,6 +63,6 @@
 
 {if $__userNotice|trim}
 	<div class="userNotice">
-		{@$__userNotice}
+		{unsafe:$__userNotice}
 	</div>
 {/if}

@@ -1,10 +1,10 @@
 {capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='headContent'}
-	<link rel="canonical" href="{link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}{/if}{/link}">
+	<link rel="canonical" href="{link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={$pageNo}{/if}{/link}">
 	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
-		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">
+		<meta http-equiv="refresh" content="{USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">
 	{/if}
 {/capture}
 
@@ -56,7 +56,7 @@
 					<dd>
 						<ul class="inlineList commaSeparated">
 							{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
-								<li>{@$usersOnlineMarking}</li>
+								<li>{unsafe:$usersOnlineMarking}</li>
 							{/foreach}
 						</ul>
 					</dd>
@@ -82,7 +82,7 @@
 {foreach from=$objects item=user}
 	{capture assign=locationData}
 		<p>
-			{if $user->getLocation()}{@$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{@$user->lastActivityTime|time}</small>
+			{if $user->getLocation()}{unsafe:$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{@$user->lastActivityTime|time}</small>
 		</p>
 	{/capture}
 	
@@ -90,7 +90,7 @@
 		{if $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
-				<dd title="{$user->getFormattedIPAddress()}">{@$user->getFormattedIPAddress()|ipSearch}</dd>
+				<dd title="{$user->getFormattedIPAddress()}">{unsafe:$user->getFormattedIPAddress()|ipSearch}</dd>
 
 				{if !$user->spiderIdentifier}
 					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
@@ -113,17 +113,17 @@
 							<h3>{user object=$user}
 								{if MODULE_USER_RANK}
 									{if $user->getUserTitle()}
-										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
 									{/if}
 									{if $user->getRank() && $user->getRank()->rankImage}
-										<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+										<span class="userRankImage">{unsafe:$user->getRank()->getImage()}</span>
 									{/if}
 								{/if}
 							</h3>
-							{@$locationData}
+							{unsafe:$locationData}
 						</div>
 						
-						{@$sessionData}
+						{unsafe:$sessionData}
 						
 						{include file='userInformationButtons'}
 					</div>
@@ -144,10 +144,10 @@
 							<h3>{if $spider->url}
 									<a {anchorAttributes url=$spider->url}>{$spider->name}</a>{else}{$spider->name}{/if}
 							</h3>
-							{@$locationData}
+							{unsafe:$locationData}
 						</div>
 						
-						{@$sessionData}
+						{unsafe:$sessionData}
 					</div>
 				</div>
 			</li>
@@ -164,10 +164,10 @@
 					<div class="details userInformation">
 						<div class="containerHeadline">
 							<h3>{lang}wcf.user.guest{/lang}</h3>
-							{@$locationData}
+							{unsafe:$locationData}
 						</div>
 						
-						{@$sessionData}
+						{unsafe:$sessionData}
 					</div>
 				</div>
 			</li>
@@ -182,7 +182,7 @@
 		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.users{/lang}</h2>
 		
 		<ol class="containerList userList">
-			{@$usersOnlineList}
+			{unsafe:$usersOnlineList}
 		</ol>
 	</section>
 {/if}
@@ -192,7 +192,7 @@
 		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang}</h2>
 		
 		<ol class="containerList userList">
-			{@$guestsOnlineList}
+			{unsafe:$guestsOnlineList}
 		</ol>
 	</section>
 {/if}
@@ -202,7 +202,7 @@
 		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang}</h2>
 		
 		<ol class="containerList userList">
-			{@$robotsOnlineList}
+			{unsafe:$robotsOnlineList}
 		</ol>
 	</section>
 {/if}

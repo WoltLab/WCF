@@ -8,7 +8,7 @@
 {/if}
 
 {if $user->activityPoints}
-	<dt>{if $disableDialogLinks}<span>{lang}wcf.user.activityPoint{/lang}</span>{else}<a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{/if}</dt>
+	<dt>{if $disableDialogLinks}<span>{lang}wcf.user.activityPoint{/lang}</span>{else}<a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{/if}</dt>
 	<dd>{#$user->activityPoints}</dd>
 {/if}
 

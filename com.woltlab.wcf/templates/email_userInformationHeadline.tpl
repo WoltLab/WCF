@@ -4,7 +4,7 @@
 <div>
 	{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && $user->isAccessible('canViewProfile')}
 		{if $user->isVisibleOption('gender') && $user->gender}{$user->getFormattedUserOption('gender')}, {/if}
-		{if $user->isVisibleOption('birthday') && $user->getAge()}{@$user->getAge()}, {/if}
+		{if $user->isVisibleOption('birthday') && $user->getAge()}{$user->getAge()}, {/if}
 		{if $user->isVisibleOption('location') && $user->location}{lang}wcf.user.membersList.location{/lang}, {/if}
 	{/if}
 	{lang}wcf.user.membersList.registrationDate{/lang}

@@ -17,7 +17,7 @@
 			{/if}
 			
 			{foreach from=$conditionObjectTypes item='condition'}
-				{@$condition->getProcessor()->getHtml()}
+				{unsafe:$condition->getProcessor()->getHtml()}
 			{/foreach}
 			
 			{if $conditionGroup != 'userOptions'}

@@ -1,7 +1,7 @@
 {hascontent}
 	<div id="{$option->optionName}" class="htmlContent">
 		{content}
-			{@$value}
+			{unsafe:$value}
 		{/content}
 	</div>
 	

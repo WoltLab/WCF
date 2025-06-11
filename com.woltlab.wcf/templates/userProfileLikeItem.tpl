@@ -9,11 +9,11 @@
 						{user object=$like->getUserProfile()}
 						<small class="separatorLeft">{@$like->time|time}</small>
 					</h3>
-					<div>{@$like->getTitle()}</div>
+					<div>{unsafe:$like->getTitle()}</div>
 					<small class="containerContentType">{$like->getObjectTypeDescription()}</small>
 				</div>
 				
-				<div class="containerContent">{@$like->getDescription()}</div>
+				<div class="containerContent">{unsafe:$like->getDescription()}</div>
 			</div>
 		</div>
 	</li>

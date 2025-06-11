@@ -12,7 +12,7 @@
 	<div class="section sectionContainerList">
 		<ol class="containerList userList jsReloadPageWhenEmpty">
 			{foreach from=$objects item=user}
-				<li class="jsIgnoredUser" data-object-id="{@$user->getObjectID()}">
+				<li class="jsIgnoredUser" data-object-id="{$user->getObjectID()}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -44,7 +44,7 @@
 	<footer class="contentFooter">
 		{hascontent}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				{content}{unsafe:$pagesLinks}{/content}
 			</div>
 		{/hascontent}
 		

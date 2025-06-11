@@ -9,9 +9,9 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList/User'], function(UiItemListUser) {
-		UiItemListUser.init('{@$field->getPrefixedId()|encodeJS}', {
+		UiItemListUser.init('{unsafe:$field->getPrefixedId()|encodeJS}', {
 			{if $field->getMaximumMultiples() !== -1}
-				maxItems: {@$field->getMaximumMultiples()},
+				maxItems: {$field->getMaximumMultiples()},
 			{/if}
 		});
 	});
