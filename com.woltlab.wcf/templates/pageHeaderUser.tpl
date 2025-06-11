@@ -96,7 +96,7 @@
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
-				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
+				<li id="userNotifications" data-count="{$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 					<a
 						class="jsTooltip"
 						href="{link controller='NotificationList'}{/link}"
@@ -184,7 +184,7 @@
 		
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
-				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
+				<li id="outstandingModeration" data-count="{$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
 					<a
 						class="jsTooltip"
 						href="{link controller='ModerationList'}{/link}"
