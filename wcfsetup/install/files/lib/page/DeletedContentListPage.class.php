@@ -79,7 +79,7 @@ class DeletedContentListPage extends MultipleLinkPage
 
             $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
                 'com.woltlab.wcf.deletedContent',
-                $provider->getIdentifier()
+                \array_key_first($this->providers)
             );
         }
     }
