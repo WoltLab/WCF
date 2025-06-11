@@ -4,6 +4,6 @@
 	<h1 class="contentTitle">PHP Version {PHP_VERSION}</h1>
 </header>
 
-{@$phpInfo}
+{unsafe:$phpInfo}
 
 {include file='footer'}

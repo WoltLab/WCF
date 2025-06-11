@@ -14,7 +14,7 @@
 				<li class="dropdownDivider"></li>
 				
 				{foreach from=$availableAcpSearchProviders key='availableAcpSearchProviderName' item='availableAcpSearchProviderLabel'}
-					<li><a href="#" data-provider-name="{@$availableAcpSearchProviderName}">{@$availableAcpSearchProviderLabel}</a></li>
+					<li><a href="#" data-provider-name="{$availableAcpSearchProviderName}">{unsafe:$availableAcpSearchProviderLabel}</a></li>
 				{/foreach}
 			</ul>
 		</div>

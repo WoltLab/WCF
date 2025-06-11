@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
+<html dir="{$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex">
@@ -63,7 +63,7 @@
 						{elseif $errorType == 'notAuthorized'}
 							{lang}wcf.acp.rescueMode.username.notAuthorized{/lang}
 						{else}
-							{lang}wcf.user.username.error.{@$errorType}{/lang}
+							{lang}wcf.user.username.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -79,7 +79,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.password.error.{@$errorType}{/lang}
+							{lang}wcf.user.password.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -105,7 +105,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.application.domainName.error.{@$errorType}{/lang}
+							{lang}wcf.acp.application.domainName.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -120,21 +120,21 @@
 		</header>
 
 		{foreach from=$applications item=application}
-			{capture assign=applicationSectionPath}application_{@$application->packageID}{/capture}
+			{capture assign=applicationSectionPath}application_{$application->packageID}{/capture}
 			
 			<dl{if $errorField == $applicationSectionPath} class="formError"{/if}>
-				<dt><label for="application{@$application->packageID}">{$application->getPackage()}</label></dt>
+				<dt><label for="application{$application->packageID}">{$application->getPackage()}</label></dt>
 				<dd>
 					<div class="inputAddon">
 						<span class="inputPrefix">{lang}wcf.acp.application.domainPath{/lang}</span>
-						<input type="text" name="applicationValues[{@$application->packageID}]" value="{$applicationValues[$application->packageID]}" class="long" required>
+						<input type="text" name="applicationValues[{$application->packageID}]" value="{$applicationValues[$application->packageID]}" class="long" required>
 					</div>
 					{if $errorField == $applicationSectionPath}
 						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.application.domainPath.error.{@$errorType}{/lang}
+								{lang}wcf.acp.application.domainPath.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

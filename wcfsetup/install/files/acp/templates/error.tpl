@@ -4,7 +4,7 @@
 {if $exception !== null}
 <!--
 {* A comment may not contain double dashes. *}
-{@'--'|str_replace:'- -':$exception}
+{unsafe:'--'|str_replace:'- -':$exception}
 -->
 {/if}
 {/if}
@@ -19,7 +19,7 @@
 	<div class="box64 userException">
 		{icon size=64 name='circle-exclamation'}
 		<p class="userExceptionMessage">
-			{@$message}
+			{unsafe:$message}
 		</p>
 	</div>
 </div>

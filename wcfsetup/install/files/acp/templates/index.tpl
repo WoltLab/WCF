@@ -31,7 +31,7 @@
 		<div class="acpDashboardBox" data-name="{$box->getName()}">
 			<h2 class="acpDashboardBox__title">{$box->getTitle()}</h2>
 			<div class="acpDashboardBox__content">
-				{@$box->getContent()}
+				{unsafe:$box->getContent()}
 			</div>
 		</div>
 	{/foreach}
