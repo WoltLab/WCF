@@ -16,7 +16,7 @@
 		var pollEditor = new UiPollEditor(
 			DomUtil.identify(DomTraverse.childByTag(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container'), 'DD')),
 			[ {implode from=$field->getValue() item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
-			'{@$field->getPrefixedWysiwygId()}',
+			'{unsafe:$field->getPrefixedWysiwygId()|encodeJS}',
 			{
 				isAjax: {if $field->getDocument()->isAjax()}true{else}false{/if},
 				maxOptions: {POLL_MAX_OPTIONS}
