@@ -424,12 +424,7 @@ fieldset {
 
 .contentInteraction {
     display: flex;
-    justify-content: space-between;
     margin-top: 20px;
-
-    @include screen-xs {
-        flex-wrap: wrap;
-    }
 }
 
 .contentInteractionPagination {
@@ -520,6 +515,9 @@ fieldset {
 }
 
 .content {
+    container-type: inline-size;
+    container-name: content;
+
     .contentInteraction + .section,
     .contentInteraction + form {
         margin-top: 20px;
@@ -569,5 +567,63 @@ fieldset {
                 justify-content: flex-end;
             }
         }
+    }
+}
+
+.contentInteraction--withTabs {
+    border-bottom: solid 1px var(--wcfContentBorderInner);
+}
+
+.contentInteractionTabs {
+    display: flex;
+    gap: 10px;
+}
+
+.contentInteractionTab {
+    display: flex;
+    white-space: nowrap;
+}
+
+.contentInteractionTab__link {
+    display: flex;
+    padding: 5px 10px;
+    color: var(--wcfContentDimmedText);
+    font-size: var(--wcfFontSizeSection);
+    font-weight: 600;
+    position: relative;
+}
+
+.contentInteractionTab__link::after {
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    position: absolute;
+    height: 3px;
+}
+
+.contentInteractionTab--active .contentInteractionTab__link {
+    color: var(--wcfContentText);
+}
+
+.contentInteractionTab__link:hover {
+    color: var(--wcfContentText);
+}
+
+.contentInteractionTab__link:hover::after {
+    background-color: var(--wcfContentBorderInner);
+}
+
+.contentInteractionTab--active .contentInteractionTab__link::after {
+    background-color: var(--wcfTabularBoxHeadline);
+}
+
+@container content (width < 800px) {
+    .contentInteraction {
+        flex-direction: column;
+    }
+
+    .contentInteractionButtonContainer {
+        order: -1;
     }
 }

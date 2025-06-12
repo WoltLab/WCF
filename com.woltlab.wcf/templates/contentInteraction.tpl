@@ -26,9 +26,11 @@
 {/capture}
 {assign var='__contentInteractionShareButton' value=$__contentInteractionShareButton|trim}
 
-{if $__contentInteractionPagination || $__contentInteractionButtons || $__contentInteractionDropdownItems || $__contentInteractionShareButton}
-	<div class="contentInteraction">
-		{if $__contentInteractionPagination}
+{if $contentInteractionTabsComponent|isset || $__contentInteractionPagination || $__contentInteractionButtons || $__contentInteractionDropdownItems || $__contentInteractionShareButton}
+	<div class="contentInteraction{if $contentInteractionTabsComponent|isset} contentInteraction--withTabs{/if}">
+		{if $contentInteractionTabsComponent|isset}
+			{unsafe:$contentInteractionTabsComponent->render()}
+		{elseif $__contentInteractionPagination}
 			<div class="contentInteractionPagination paginationTop">
 				{@$__contentInteractionPagination}
 			</div>
