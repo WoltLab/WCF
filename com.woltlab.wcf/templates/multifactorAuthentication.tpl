@@ -4,7 +4,7 @@
 
 {include file='authFlowHeader'}
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 <div class="authOtherOptionButtons" hidden>
 	<div class="authOtherOptionButtons__separator">

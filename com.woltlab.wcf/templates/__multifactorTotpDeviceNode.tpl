@@ -6,7 +6,7 @@
 	<td class="columnText">
 		{foreach from=$container item='child'}
 			{if $child->isAvailable()}
-				{@$child->getHtml()}
+				{unsafe:$child->getHtml()}
 			{/if}
 		{/foreach}
 	</td>
