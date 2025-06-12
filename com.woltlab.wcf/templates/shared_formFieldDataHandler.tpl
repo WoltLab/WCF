@@ -2,7 +2,7 @@
 	<script data-relocate="true">
 		require([
 			'tslib',
-			'{$field->getJavaScriptDataHandlerModule()}',
+			'{unsafe:$field->getJavaScriptDataHandlerModule()|encodeJS}',
 			'WoltLabSuite/Core/Form/Builder/Manager'
 		], function(
 			tslib,

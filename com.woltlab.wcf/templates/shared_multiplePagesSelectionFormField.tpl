@@ -3,9 +3,9 @@
 {if $field->getVisibleEverywhereFieldId() !== null}
 	<script data-relocate="true">
 		{
-			const label = document.querySelector('label[for="{$field->getPrefixedId()}"]');
+			const label = document.querySelector('label[for="{unsafe:$field->getPrefixedId()|encodeJS}"]');
 
-			document.querySelectorAll('input[name="{$field->getVisibleEverywhereFieldId()}"]').forEach((input) => {
+			document.querySelectorAll('input[name="{unsafe:$field->getVisibleEverywhereFieldId()|encodeJS}"]').forEach((input) => {
 				input.addEventListener("change", () => {
 					setLabelText(input.value);
 				});
@@ -15,7 +15,7 @@
 				label.innerHTML = parseInt(value) === 0 ? '{unsafe:$field->getLabel()|encodeJS}' : '{unsafe:$field->getInvertedLabel()|encodeJS}';
 			}
 
-			setLabelText(document.querySelector('input[name="{$field->getVisibleEverywhereFieldId()}"]:checked').value);
+			setLabelText(document.querySelector('input[name="{unsafe:$field->getVisibleEverywhereFieldId()|encodeJS}"]:checked').value);
 		}
 	</script>
 {/if}

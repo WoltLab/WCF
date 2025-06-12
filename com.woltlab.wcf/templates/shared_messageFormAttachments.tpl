@@ -23,7 +23,7 @@
 		{jsphrase name='wcf.attachment.moreOptions'}
 
 		require(["WoltLabSuite/Core/Component/Attachment/List"], ({ setup }) => {
-			setup("{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}");
+			setup("{if $wysiwygSelector|isset}{unsafe:$wysiwygSelector|encodeJS}{else}text{/if}");
 		});
 	</script>
 	

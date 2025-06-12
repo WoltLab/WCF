@@ -29,7 +29,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Controller/Rating'], function(FormBuilderFieldRating) {
 		new FormBuilderFieldRating(
-			'{$field->getPrefixedId()}',
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
 			{if $field->getValue() !== null}{$field->getValue()}{else}''{/if}
 		);
 	});
