@@ -1,4 +1,4 @@
-<div id="{$container->getPrefixedId()|encodeJS}Container"{*
+<div id="{$container->getPrefixedId()}Container"{*
 	*} class="messageTabMenuContent messageTabMenuContent--quotes"></div>
 
 <script data-relocate="true">

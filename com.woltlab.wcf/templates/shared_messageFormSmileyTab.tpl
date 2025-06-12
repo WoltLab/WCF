@@ -25,7 +25,7 @@
 		</nav>
 		
 		{foreach from=$smileyCategories item=smileyCategory}
-			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{$smileyCategory->categoryID}">
+			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}-{$smileyCategory->categoryID}">
 				{if $__firstSmileyCategory->categoryID == $smileyCategory->categoryID}
 					{unsafe:$__defaultSmilies}
 				{else}
