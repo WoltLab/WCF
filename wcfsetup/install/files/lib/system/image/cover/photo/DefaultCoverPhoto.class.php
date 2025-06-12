@@ -3,6 +3,7 @@
 namespace wcf\system\image\cover\photo;
 
 use wcf\system\style\StyleHandler;
+use wcf\util\FileUtil;
 
 /**
  * Represents the default cover photo as defined in the style configuration.
@@ -39,6 +40,18 @@ final class DefaultCoverPhoto implements ICoverPhoto
     public function getHeight(?string $size = null): int
     {
         return $this->getDimensions()['height'];
+    }
+
+    #[\Override]
+    public function getFileSize(?string $size = null): int
+    {
+        return \filesize(StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation());
+    }
+
+    #[\Override]
+    public function getMimeType(?string $size = null): string
+    {
+        return FileUtil::getMimeType(StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation());
     }
 
     /**

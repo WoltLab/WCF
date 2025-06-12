@@ -54,4 +54,31 @@ final class FileCoverPhoto implements ICoverPhoto
 
         return $this->file->height;
     }
+
+    #[\Override]
+    public function getFileSize(?string $size = null): int
+    {
+        if ($size !== null) {
+            $thumbnail = $this->file->getThumbnail($size);
+            if ($thumbnail !== null) {
+                return \filesize($thumbnail->getPathname());
+            }
+        }
+
+        return $this->file->fileSize;
+    }
+
+    #[\Override]
+    public function getMimeType(?string $size = null): string
+    {
+        if ($size !== null) {
+            $thumbnail = $this->file->getThumbnail($size);
+            if ($thumbnail !== null) {
+                // Thumbnails are always webp.
+                return 'image/webp';
+            }
+        }
+
+        return $this->file->mimeType;
+    }
 }

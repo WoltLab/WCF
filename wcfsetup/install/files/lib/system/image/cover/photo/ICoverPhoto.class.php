@@ -17,4 +17,8 @@ interface ICoverPhoto
     public function getWidth(?string $size = null): int;
 
     public function getHeight(?string $size = null): int;
+
+    public function getFileSize(?string $size = null): int;
+
+    public function getMimeType(?string $size = null): string;
 }
