@@ -1,7 +1,7 @@
 require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/NonEmpty'], function(NonEmptyFieldDependency) {
-	// dependency '{@$dependency->getId()}'
+	// dependency '{unsafe:$dependency->getId()}'
 	new NonEmptyFieldDependency(
-		'{@$dependency->getDependentNode()->getPrefixedId()|encodeJS}Container',
-		'{@$dependency->getField()->getPrefixedId()|encodeJS}'
+		'{unsafe:$dependency->getDependentNode()->getPrefixedId()|encodeJS}Container',
+		'{unsafe:$dependency->getField()->getPrefixedId()|encodeJS}'
 	);
 });

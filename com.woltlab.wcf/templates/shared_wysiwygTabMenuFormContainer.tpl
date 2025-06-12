@@ -9,7 +9,7 @@
 					<li data-name="{$child->getName()}"{if !$child->checkDependencies()} hidden{/if}>
 						<button type="button">
 							{if $child->getIcon()}{unsafe:$child->getIcon()->toHtml()}{/if}
-							<span>{@$child->getLabel()}</span>
+							<span>{unsafe:$child->getLabel()}</span>
 						</button>
 					</li>
 				{/if}
@@ -24,6 +24,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/WysiwygTabMenu'], ({ WysiwygTabMenu }) => {
-		new WysiwygTabMenu('{@$container->getPrefixedId()|encodeJS}Container');
+		new WysiwygTabMenu('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
 </script>

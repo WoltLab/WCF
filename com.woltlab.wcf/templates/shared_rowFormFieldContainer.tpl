@@ -3,13 +3,13 @@
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<dt>{if $container->getLabel() !== null}<label for="{$container->getPrefixedId()}">{@$container->getLabel()}</label>{/if}</dt>
+	<dt>{if $container->getLabel() !== null}<label for="{$container->getPrefixedId()}">{unsafe:$container->getLabel()}</label>{/if}</dt>
 	<dd>
 		<div class="row rowColGap formGrid">
 			{foreach from=$container item='field'}
 				{if $field->isAvailable()}
 					<div id="{$field->getPrefixedId()}Container" {if !$field->getClasses()|empty} class="{implode from=$field->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$field->checkDependencies()} style="display: none;"{/if}>
-						{@$field->getFieldHtml()}
+						{unsafe:$field->getFieldHtml()}
 						
 						{include file='shared_formFieldErrors'}
 						{include file='shared_formFieldDependencies'}
@@ -19,7 +19,7 @@
 			{/foreach}
 		</div>
 		{if $container->getDescription() !== null}
-			<small>{@$container->getDescription()}</small>
+			<small>{unsafe:$container->getDescription()}</small>
 		{/if}
 	</dd>
 </dl>
@@ -28,6 +28,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {
-		new DefaultContainerDependency('{@$container->getPrefixedId()|encodeJS}Container');
+		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
 </script>

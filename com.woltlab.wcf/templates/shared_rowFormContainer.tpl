@@ -10,6 +10,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {
-		new DefaultContainerDependency('{@$container->getPrefixedId()|encodeJS}Container');
+		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
 </script>

@@ -3,7 +3,7 @@
 	{foreach from=$smileyCategories item=smileyCategory}
 		{assign var=__tabCount value=$__tabCount + 1}
 		{assign var='__smileyAnchor' value='smilies-'|concat:$smileyCategory->categoryID}
-		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><button type="button">{$smileyCategory->getTitle()}</button></li>
+		<li data-name="smilies-{$smileyCategory->categoryID}" data-smiley-category-id="{$smileyCategory->categoryID}"><button type="button">{$smileyCategory->getTitle()}</button></li>
 	{/foreach}
 {/capture}
 
@@ -20,21 +20,21 @@
 	{if $__tabCount > 1}
 		<nav class="jsOnly">
 			<ul>
-				{@$__categoryTabs}
+				{unsafe:$__categoryTabs}
 			</ul>
 		</nav>
 		
 		{foreach from=$smileyCategories item=smileyCategory}
-			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
+			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{$smileyCategory->categoryID}">
 				{if $__firstSmileyCategory->categoryID == $smileyCategory->categoryID}
-					{@$__defaultSmilies}
+					{unsafe:$__defaultSmilies}
 				{else}
 					{include file='shared_messageFormSmilies' smilies=$__wcf->getSmileyCache()->getCategorySmilies($smileyCategory->categoryID)}
 				{/if}
 			</div>
 		{/foreach}
 	{else}
-		{@$__defaultSmilies}
+		{unsafe:$__defaultSmilies}
 	{/if}
 	
 	{event name='fields'}

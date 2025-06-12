@@ -11,7 +11,7 @@
 				'wcf.global.filter.visibility.showAll': '{jslang}wcf.global.filter.visibility.showAll{/jslang}'
 			});
 			
-			new UiItemListFilter('{@$field->getPrefixedId()|encodeJS}_list');
+			new UiItemListFilter('{unsafe:$field->getPrefixedId()|encodeJS}_list');
 		});
 	</script>
 {/if}
@@ -29,7 +29,7 @@
 					*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 				*}>
-				{@$__fieldNestedOption[label]}
+				{unsafe:$__fieldNestedOption[label]}
 			</label>
 		</li>
 	{/foreach}

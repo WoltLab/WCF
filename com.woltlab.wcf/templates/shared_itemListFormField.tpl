@@ -10,11 +10,11 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList/Static'], function(UiItemListStatic) {
 		UiItemListStatic.init(
-			'{@$field->getPrefixedId()|encodeJS}',
-			[{if $field->getValue() !== null && !$field->getValue()|empty}{implode from=$field->getValue() item=item}'{@$item|encodeJS}'{/implode}{/if}],
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
+			[{if $field->getValue() !== null && !$field->getValue()|empty}{implode from=$field->getValue() item=item}'{unsafe:$item|encodeJS}'{/implode}{/if}],
 			{
-				maxItems: {if $field->allowsMultiple()}{@$field->getMaximumMultiples()}{else}1{/if},
-				submitFieldName: '{@$field->getPrefixedId()|encodeJS}[]'
+				maxItems: {if $field->allowsMultiple()}{$field->getMaximumMultiples()}{else}1{/if},
+				submitFieldName: '{unsafe:$field->getPrefixedId()|encodeJS}[]'
 			}
 		);
 	});

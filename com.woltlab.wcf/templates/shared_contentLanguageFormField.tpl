@@ -13,17 +13,17 @@
 	require(['WoltLabSuite/Core/Language/Chooser', 'Dom/Traverse', 'Dom/Util'], function(LanguageChooser, DomTraverse, DomUtil) {
 		var languages = {
 			{implode from=$field->getContentLanguages() item=contentLanguage}
-				'{@$contentLanguage->languageID}': {
-					iconPath: '{@$contentLanguage->getIconPath()|encodeJS}',
-					languageName: '{@$contentLanguage|encodeJS}'
+				'{$contentLanguage->languageID}': {
+					iconPath: '{unsafe:$contentLanguage->getIconPath()|encodeJS}',
+					languageName: '{unsafe:$contentLanguage|encodeJS}'
 				}
 			{/implode}
 		};
 		
 		LanguageChooser.init(
-			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()|encodeJS}Container'), 'DD')),
-			'{@$field->getPrefixedId()|encodeJS}',
-			{if $field->getValue()}{@$field->getValue()}{else}0{/if},
+			DomUtil.identify(DomTraverse.childByTag(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container'), 'DD')),
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
+			{if $field->getValue()}{$field->getValue()}{else}0{/if},
 			languages,
 			undefined,
 			{if !$field->isRequired()}true{else}false{/if}

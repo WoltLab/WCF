@@ -1,1 +1,1 @@
-<small class="innerError">{@$error->getMessage()}</small>
+<small class="innerError">{unsafe:$error->getMessage()}</small>

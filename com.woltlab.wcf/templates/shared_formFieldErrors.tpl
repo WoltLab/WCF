@@ -1,3 +1,3 @@
 {foreach from=$field->getValidationErrors() item='validationError'}
-	{@$validationError->getHtml()}
+	{unsafe:$validationError->getHtml()}
 {/foreach}

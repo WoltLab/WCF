@@ -10,6 +10,6 @@
 
 <script data-relocate="true">
 	(() => {
-		document.getElementById('{@$field->getPrefixedId()|encodeJS}').parentNode.dir = 'ltr';
+		document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}').parentNode.dir = 'ltr';
 	})();
 </script>

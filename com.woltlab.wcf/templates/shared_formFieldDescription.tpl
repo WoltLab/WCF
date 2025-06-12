@@ -1,3 +1,3 @@
 {if $field->getDescription() !== null}
-	<small>{@$field->getDescription()}</small>
+	<small>{unsafe:$field->getDescription()}</small>
 {/if}

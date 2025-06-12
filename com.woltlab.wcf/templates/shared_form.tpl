@@ -11,21 +11,21 @@
 			, FormBuilderManager
 		{/if}
 	) {
-		FormBuilderFieldDependencyManager.register('{@$form->getId()|encodeJS}');
+		FormBuilderFieldDependencyManager.register('{unsafe:$form->getId()|encodeJS}');
 		
 		{if $form->isAjax()}
-			FormBuilderManager.registerForm('{@$form->getId()|encodeJS}');
+			FormBuilderManager.registerForm('{unsafe:$form->getId()|encodeJS}');
 		{/if}
 	});
 </script>
 
 {if $form->hasValidationErrors() && $form->showsErrorMessage()}
-	<woltlab-core-notice type="error">{@$form->getErrorMessage()}</woltlab-core-notice>
+	<woltlab-core-notice type="error">{unsafe:$form->getErrorMessage()}</woltlab-core-notice>
 {/if}
 
 {if $form->showsSuccessMessage()}
 	<woltlab-core-notice type="success">
-		<span>{@$form->getSuccessMessage()}</span>
+		<span>{unsafe:$form->getSuccessMessage()}</span>
 		{if !$objectEditLink|empty}
 			<span>{lang}wcf.global.success.add.editCreatedObject{/lang}</span>
 		{/if}
@@ -38,7 +38,7 @@
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>
 {else}
-	<form method="{@$form->getMethod()}" {*
+	<form method="{$form->getMethod()}" {*
 		*}action="{$form->getAction()}" {*
 		*}id="{$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
@@ -47,7 +47,7 @@
 {/if}
 	{foreach from=$form item='child'}
 		{if $child->isAvailable()}
-			{@$child->getHtml()}
+			{unsafe:$child->getHtml()}
 		{/if}
 	{/foreach}
 	
@@ -55,7 +55,7 @@
 		<div class="formSubmit">
 			{foreach from=$form->getButtons() item=button}
 				{if $button->isAvailable()}
-					{@$button->getHtml()}
+					{unsafe:$button->getHtml()}
 				{/if}
 			{/foreach}
 		</div>

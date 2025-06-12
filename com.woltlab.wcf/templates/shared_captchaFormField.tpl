@@ -1,1 +1,1 @@
-{@$field->getObjectType()->getProcessor()->getFormElement()}
+{unsafe:$field->getObjectType()->getProcessor()->getFormElement()}

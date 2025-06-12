@@ -14,8 +14,8 @@
 		{jsphrase name='wcf.poll.maxVotes.error.invalid'}
 		
 		var pollEditor = new UiPollEditor(
-			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()|encodeJS}Container'), 'DD')),
-			[ {implode from=$field->getValue() item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
+			DomUtil.identify(DomTraverse.childByTag(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container'), 'DD')),
+			[ {implode from=$field->getValue() item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
 			'{@$field->getPrefixedWysiwygId()}',
 			{
 				isAjax: {if $field->getDocument()->isAjax()}true{else}false{/if},
@@ -24,7 +24,7 @@
 		);
 		
 		EventHandler.add('WoltLabSuite/Core/Form/Builder/Manager', 'registerField', function(data) {
-			if (data.formId === '{@$field->getDocument()->getId()|encodeJS}' && data.field.getId() === '{@$field->getPrefixedId()|encodeJS}') {
+			if (data.formId === '{unsafe:$field->getDocument()->getId()|encodeJS}' && data.field.getId() === '{unsafe:$field->getPrefixedId()|encodeJS}') {
 				data.field.setPollEditor(pollEditor);
 			}
 		});
