@@ -124,15 +124,17 @@
 	</div>
 </form>
 
-<script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
-		{jsphrase name='wcf.global.changeShowOrder'}
-		
-		setup(
-			document.querySelector('.jsChangeShowOrder'),
-			'core/labels/groups/{$labelGroup->groupID}/labels/show-order'
-		);
-	});
-</script>
+{if $action == 'edit'}
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
+			{jsphrase name='wcf.global.changeShowOrder'}
+
+			setup(
+				document.querySelector('.jsChangeShowOrder'),
+				'core/labels/groups/{$labelGroup->groupID}/labels/show-order'
+			);
+		});
+	</script>
+{/if}
 
 {include file='footer'}
