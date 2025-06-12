@@ -19,6 +19,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\DefaultUserAuthentication;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\LoginRedirect;
@@ -56,6 +57,10 @@ class LoginForm extends AbstractFormBuilderForm
                 ->maximumLength(255),
             PasswordFormField::create('password')
                 ->label('wcf.user.password')
+                ->description(
+                    UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
+                        ? 'wcf.user.lostPassword.link' : null
+                )
                 ->required()
                 ->passwordStrengthMeter(false)
                 ->removeFieldClass('medium')

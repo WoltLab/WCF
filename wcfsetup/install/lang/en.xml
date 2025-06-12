@@ -4728,6 +4728,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Names and surnames by themselves are easy to guess.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Common names and surnames are easy to guess.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
+		<item name="wcf.user.lostPassword.link"><![CDATA[<a href="{link controller='LostPassword'}{/link}">Lost Password</a>]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
 		<item name="wcf.user.lostPassword.error.flood"><![CDATA[You have requested too many passwords. The function has therefore been temporarily deactivated for security reasons. Please try again later.]]></item>
