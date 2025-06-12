@@ -21,13 +21,15 @@
 }
 
 .entryCardList__item {
+	--row-gap: 10px;
+
 	background-color: var(--wcfContentBackground);
 	border-radius: var(--wcfBorderRadius);
 	box-shadow: var(--wcfBoxShadowCard);
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	row-gap: 10px;
+	row-gap: var(--row-gap);
 }
 
 html[data-color-scheme="dark"] {
@@ -88,6 +90,7 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 
 .entryCardList__item__title__prefix {
 	color: var(--wcfContentDimmedText);
+	margin-bottom: calc(var(--row-gap) * -1 / 2);
 
 	@include wcfFontSmall;
 }
