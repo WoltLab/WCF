@@ -1,5 +1,5 @@
 {include file='authFlowHeader'}
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='authFlowFooter'}

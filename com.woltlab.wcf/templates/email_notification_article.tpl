@@ -1,9 +1,9 @@
 {if $mimeType === 'text/plain'}
-{lang}{@$languageVariablePrefix}.mail.plaintext{/lang}
+{lang}{$languageVariablePrefix}.mail.plaintext{/lang}
 
-{@$articleContent->getMailText($mimeType)} {* this line ends with a space *}
+{unsafe:$articleContent->getMailText($mimeType)} {* this line ends with a space *}
 {else}
-	{lang}{@$languageVariablePrefix}.mail.html{/lang}
+	{lang}{$languageVariablePrefix}.mail.html{/lang}
 	{assign var='user' value=$event->getAuthor()}
 	{assign var='article' value=$event->getUserNotificationObject()}
 	
@@ -12,7 +12,7 @@
 	{capture assign='articleContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$article->username}">{@$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$article->username}">{unsafe:$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
@@ -26,7 +26,7 @@
 					</h3>
 				</div>
 				<div>
-					{@$articleContent->getMailText($mimeType)}
+					{unsafe:$articleContent->getMailText($mimeType)}
 				</div>
 			</td>
 		</tr>

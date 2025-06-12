@@ -3,7 +3,7 @@
 {capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
 {lang}wcf.moderation.report.notification.mail.plaintext{/lang}
 
-{@$moderationQueue->getMailText($mimeType)} {* this line ends with a space *}
+{unsafe:$moderationQueue->getMailText($mimeType)} {* this line ends with a space *}
 {else}
 	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.html{/lang}{/capture}
 	{lang}wcf.moderation.report.notification.mail.html{/lang}
@@ -15,7 +15,7 @@
 		<table cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}"
-					   title="{$user->username}">{@$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
+					   title="{$user->username}">{unsafe:$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
 				<td class="boxContent">
 					<div class="containerHeadline">
 						<h3>
@@ -29,7 +29,7 @@
 						</h3>
 					</div>
 					<div>
-						{@$moderationQueue->getMailText($mimeType)}
+						{unsafe:$moderationQueue->getMailText($mimeType)}
 					</div>
 				</td>
 			</tr>

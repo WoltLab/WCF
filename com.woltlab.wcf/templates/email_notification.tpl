@@ -3,7 +3,7 @@
 {lang}wcf.user.notification.mail.plaintext.intro{/lang}
 
 {if $notificationContent|is_array}{include file=$notificationContent[template] application=$notificationContent[application]}{*
-*}{else}{@$notificationContent}{/if}
+*}{else}{unsafe:$notificationContent}{/if}
 
 {lang}wcf.user.notification.mail.plaintext.outro{/lang}
 {/capture}
@@ -15,7 +15,7 @@
 	{if $notificationContent|is_array}
 		{include file=$notificationContent[template] application=$notificationContent[application]}
 	{else}
-		{@$notificationContent}
+		{unsafe:$notificationContent}
 	{/if}
 
 	{capture assign=button}
