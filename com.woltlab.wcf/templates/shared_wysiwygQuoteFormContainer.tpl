@@ -3,7 +3,7 @@
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Component/Quote/List"], ({ setup }) => {
-		setup("{$container->getWysiwygId()|encodeJS}", "{$container->getPrefixedId()|encodeJS}Container");
+		setup("{unsafe:$container->getWysiwygId()|encodeJS}", "{unsafe:$container->getPrefixedId()|encodeJS}Container");
 	});
 </script>
 
@@ -11,6 +11,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/WysiwygTab'], ({ WysiwygTab }) => {
-		new WysiwygTab('{$container->getPrefixedId()|encodeJS}Container', '{$container->getName()|encodeJS}', '{$container->getWysiwygId()|encodeJS}');
+		new WysiwygTab('{unsafe:$container->getPrefixedId()|encodeJS}Container', '{unsafe:$container->getName()|encodeJS}', '{unsafe:$container->getWysiwygId()|encodeJS}');
 	});
 </script>

@@ -41,7 +41,7 @@
 	
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function (UiSmileyInsert) {
-			new UiSmileyInsert('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
+			new UiSmileyInsert('{if $wysiwygSelector|isset}{unsafe:$wysiwygSelector|encodeJS}{else}text{/if}');
 		});
 	</script>
 </div>
