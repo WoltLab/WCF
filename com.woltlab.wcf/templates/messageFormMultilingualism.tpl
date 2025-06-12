@@ -21,9 +21,9 @@
 			require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 				var languages = {
 					{implode from=$availableContentLanguages item=_language}
-						'{@$_language->languageID}': {
-							iconPath: '{@$_language->getIconPath()|encodeJS}',
-							languageName: '{@$_language|encodeJS}'
+						'{$_language->languageID}': {
+							iconPath: '{unsafe:$_language->getIconPath()|encodeJS}',
+							languageName: '{unsafe:$_language|encodeJS}'
 						}
 					{/implode}
 				};

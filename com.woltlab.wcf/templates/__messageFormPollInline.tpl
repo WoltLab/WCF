@@ -8,7 +8,7 @@
 			
 			new UiPollEditor(
 				"pollOptionContainer_{$wysiwygSelector}",
-				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{unsafe:$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				"{$wysiwygSelector}",
 				{
 					isAjax: true,

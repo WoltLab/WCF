@@ -8,7 +8,7 @@
 			
 			new UiPollEditor(
 				"pollOptionContainer",
-				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{unsafe:$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				"",
 				{
 					maxOptions: {POLL_MAX_OPTIONS}
@@ -51,7 +51,7 @@
 				<input type="datetime" tabindex="-1" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 				{if $errorField == 'pollEndTime'}
 					<small class="innerError">
-						{lang}wcf.poll.endTime.error.{@$errorType}{/lang}
+						{lang}wcf.poll.endTime.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -64,7 +64,7 @@
 				<input type="number" name="pollMaxVotes" id="pollMaxVotes" value="{$pollMaxVotes}" min="1" class="tiny">
 				{if $errorField == 'pollMaxVotes'}
 					<small class="innerError">
-						{lang}wcf.poll.maxVotes.error.{@$errorType}{/lang}
+						{lang}wcf.poll.maxVotes.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>

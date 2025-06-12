@@ -8,7 +8,7 @@
 			
 			{if $__messageFormSettingsInlineSettings}
 				<dl>
-					{@$__messageFormSettingsInlineSettings}
+					{unsafe:$__messageFormSettingsInlineSettings}
 				</dl>
 			{/if}
 			
