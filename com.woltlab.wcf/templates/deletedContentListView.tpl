@@ -15,7 +15,7 @@
 		<div class="boxContent">
 			<ul class="boxMenu">
 				{foreach from=$providerLinks item=providerLink}
-					<li{if $provider == $providerLink[identifier]} class="active"{/if}>
+					<li{if $provider === $providerLink[identifier]} class="active"{/if}>
 						<a class="boxMenuLink" href="{$providerLink[link]}">
 							<span class="boxMenuLinkTitle">{$providerLink[title]}</span>
 						</a>
