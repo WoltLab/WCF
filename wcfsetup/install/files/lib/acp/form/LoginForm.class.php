@@ -9,6 +9,7 @@ use wcf\data\user\UserProfile;
 use wcf\event\user\authentication\UserLoggedIn;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\form\LostPasswordForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -59,7 +60,11 @@ class LoginForm extends AbstractFormBuilderForm
                 ->label('wcf.user.password')
                 ->description(
                     UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
-                        ? 'wcf.user.lostPassword.link' : null
+                        ? \sprintf(
+                            '<a href="%s">%s</a>',
+                            StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(LostPasswordForm::class)),
+                            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword')
+                        ) : null
                 )
                 ->required()
                 ->passwordStrengthMeter(false)

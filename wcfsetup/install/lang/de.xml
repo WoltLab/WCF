@@ -4723,7 +4723,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Alleinstehende Namen sind einfach zu erraten.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Häufige Namen sind einfach zu erraten.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Kennwort vergessen]]></item>
-		<item name="wcf.user.lostPassword.link"><![CDATA[<a href="{link controller='LostPassword'}{/link}">Kennwort vergessen</a>]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Das Kennwort für dieses Benutzerkonto wurde in den letzten 24 Stunden bereits einmal angefordert. Aus Sicherheitsgründen kann das Kennwort eines Benutzers nur einmal pro Tag angefordert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} das Kennwort für dieses Benutzerkonto in {#$hours} Stunde{if $hours != 1}n{/if} erneut anfordern.]]></item>
 		<item name="wcf.user.lostPassword.error.flood"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele neue Kennwörter angefordert. Die Funktion wurde daher aus Sicherheitsgründen temporär deaktiviert. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es später erneut.]]></item>
