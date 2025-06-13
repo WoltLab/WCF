@@ -366,6 +366,21 @@
 		<page identifier="com.woltlab.wcf.DeletedContentList">
 			<pageType>system</pageType>
 			<controller>wcf\page\DeletedContentListPage</controller>
+			<name language="de">Gelöschte Inhalte (veraltet)</name>
+			<name language="en">Deleted Content (deprecated)</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.ModerationList</parent>
+			<permissions>mod.general.canUseModeration</permissions>
+			<content language="en">
+				<title>Deleted Content</title>
+			</content>
+			<content language="de">
+				<title>Gelöschte Inhalte</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.DeletedContentListView">
+			<pageType>system</pageType>
+			<controller>wcf\page\DeletedContentListViewPage</controller>
 			<name language="de">Gelöschte Inhalte</name>
 			<name language="en">Deleted Content</name>
 			<hasFixedParent>1</hasFixedParent>
