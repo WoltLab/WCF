@@ -111,13 +111,14 @@ final class BackgroundQueueHandler extends SingletonFactory
             }
         }
 
-        $sql = "INSERT INTO wcf1_background_job
-                            (job, time, identifier)
-                VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        foreach ($jobs as $job) {
-            $identifier = null;
-            if ($job instanceof AbstractUniqueBackgroundJob) {
+        $sql = "INSERT IGNORE INTO wcf1_background_job
+                                       (job, time,identifier)
+                    VALUES             (?, ?, ?)";
+            $statement = WCF::getDB()->prepare($sql);
+
+            foreach ($jobs as $job) {
+                $identifier = null;
+                if ($job instanceof AbstractUniqueBackgroundJob) {
                 $identifier = $job->identifier();
             }
 
