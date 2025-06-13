@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     exports.getUsedQuotes = getUsedQuotes;
     exports.clearQuotesForEditor = clearQuotesForEditor;
     exports.isFullQuoted = isFullQuoted;
+    exports.getFullQuoteUuid = getFullQuoteUuid;
     exports.getKey = getKey;
     Core = tslib_1.__importStar(Core);
     const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
@@ -165,6 +166,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         storage.quotes.get(key).set(uuid, quote);
         saveStorage(storage);
         return uuid;
+    }
+    function getFullQuoteUuid(objectType, objectId) {
+        const storage = getStorage();
+        const key = getKey(objectType, objectId);
+        for (const [uuid, q] of storage.quotes.get(key)) {
+            if (q.rawMessage !== undefined && q.message !== undefined) {
+                return uuid;
+            }
+        }
+        return undefined;
     }
     function getStorage() {
         const data = window.localStorage.getItem(STORAGE_KEY);

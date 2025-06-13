@@ -14,10 +14,12 @@ import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { CKEditor } from "WoltLabSuite/Core/Component/Ckeditor";
 import {
   saveQuote,
+  getFullQuoteUuid,
   saveFullQuote,
   markQuoteAsUsed,
   isFullQuoted,
   getKey,
+  removeQuotes,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
@@ -95,6 +97,12 @@ export function registerContainer(
       "click",
       promiseMutex(async (event: MouseEvent) => {
         event.preventDefault();
+
+        if (isFullQuoted(objectType, objectId)) {
+          removeQuotes([getFullQuoteUuid(objectType, objectId)!]);
+          quoteMessageButton!.classList.remove("active");
+          return;
+        }
 
         const quoteMessage = await saveFullQuote(objectType, className, ~~container.dataset.objectId!);
         quoteMessageButton!.classList.add("active");

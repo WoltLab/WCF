@@ -52,6 +52,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
             quoteMessage?.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async (event) => {
                 event.preventDefault();
+                if ((0, Storage_1.isFullQuoted)(objectType, objectId)) {
+                    (0, Storage_1.removeQuotes)([(0, Storage_1.getFullQuoteUuid)(objectType, objectId)]);
+                    quoteMessageButton.classList.remove("active");
+                    return;
+                }
                 const quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, className, ~~container.dataset.objectId);
                 quoteMessageButton.classList.add("active");
                 if (activeEditor !== undefined) {
