@@ -113,7 +113,7 @@
 								{if $interactionOption->link}
 									<a href="{$interactionOption->link}" {unsafe:$interactionOption->attributes}>{$interactionOption->title}</a>
 								{else}
-									<button type="button" {unsafe:$interactionOption->attributes}>{$interactionOption->title}</a>
+									<button type="button" {unsafe:$interactionOption->attributes}>{$interactionOption->title}</button>
 								{/if}
 							</li>
 						{/foreach}
@@ -131,7 +131,7 @@
 								{if $managementOption->link}
 									<a href="{$managementOption->link}" {unsafe:$managementOption->attributes}>{$managementOption->title}</a>
 								{else}
-									<button type="button" {unsafe:$managementOption->attributes}>{$managementOption->title}</a>
+									<button type="button" {unsafe:$managementOption->attributes}>{$managementOption->title}</button>
 								{/if}
 							</li>
 						{/foreach}

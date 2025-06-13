@@ -45,7 +45,7 @@
 					{if $view->hasInteractions()}
 						<th class="gridView__headerColumn gridView__actionColumn"></th>
 					{/if}
-				</td>
+				</tr>
 			</thead>
 			<tbody>
 				{unsafe:$view->renderRows()}

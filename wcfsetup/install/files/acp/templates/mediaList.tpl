@@ -132,7 +132,7 @@
 					<td class="columnIcon">
 						<button type="button" class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}">
 							{icon name='pencil'}
-						</span>
+						</button>
 						{objectAction action="delete" objectTitle=$media->filename}
 						
 						{event name='rowButtons'}
