@@ -52,6 +52,7 @@
 
 	<!-- 
 	Required order of the following steps for the update to 6.2:
+	<instruction type="script">acp/update_com.woltlab.wcf_6.2_backgroundJob.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_62_step1.php</instruction>
 	<instruction type="script">acp/update_com.woltlab.wcf_6.2_contactOptions.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_62_step2.php</instruction>

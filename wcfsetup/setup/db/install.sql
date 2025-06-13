@@ -241,7 +241,7 @@ CREATE TABLE wcf1_background_job (
 	time INT(10) NOT NULL,
 	identifier VARCHAR(191) NULL,
 
-	KEY identifier (identifier),
+	UNIQUE KEY identifier (identifier),
 	KEY (status, time)
 );
 
