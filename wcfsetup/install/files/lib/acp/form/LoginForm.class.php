@@ -9,6 +9,7 @@ use wcf\data\user\UserProfile;
 use wcf\event\user\authentication\UserLoggedIn;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\form\LostPasswordForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -19,6 +20,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
+use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\DefaultUserAuthentication;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\LoginRedirect;
@@ -56,6 +58,14 @@ class LoginForm extends AbstractFormBuilderForm
                 ->maximumLength(255),
             PasswordFormField::create('password')
                 ->label('wcf.user.password')
+                ->description(
+                    UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
+                        ? \sprintf(
+                            '<a href="%s">%s</a>',
+                            StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(LostPasswordForm::class)),
+                            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword')
+                        ) : null
+                )
                 ->required()
                 ->passwordStrengthMeter(false)
                 ->removeFieldClass('medium')
