@@ -16,7 +16,7 @@
 {capture assign='contentHeaderNavigation'}
 	{if $canManageArticles}
 		{if $availableLanguages|count > 1}
-			<li><button type="button" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><button type="button" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></button></li>
 		{else}
 			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
