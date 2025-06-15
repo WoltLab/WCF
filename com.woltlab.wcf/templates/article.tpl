@@ -243,7 +243,7 @@
 {/if}
 
 {if $relatedArticleListView && $relatedArticleListView->countItems()}
-	<section class="section relatedArticles">
+	<section class="section relatedArticles entryCardList__container">
 		<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
 		
 		{unsafe:$relatedArticleListView->render()}
