@@ -45,7 +45,7 @@
 					
 					{foreach from=$__wcf->getSearchEngine()->getAvailableObjectTypes() key=_searchObjectTypeName item=_searchObjectType}
 						{if $_searchObjectType->isAccessible()}
-							<li><a href="#" data-extended-link="{link controller='Search'}type={$_searchObjectTypeName}&extended=1{/link}" data-object-type="{$_searchObjectTypeName}">{lang}wcf.search.type.{$_searchObjectTypeName}{/lang}</a></li>
+							<li><a href="#" data-extended-link="{link controller='Search' type=$_searchObjectTypeName extended=1}{/link}" data-object-type="{$_searchObjectTypeName}">{lang}wcf.search.type.{$_searchObjectTypeName}{/lang}</a></li>
 						{/if}
 					{/foreach}
 					
