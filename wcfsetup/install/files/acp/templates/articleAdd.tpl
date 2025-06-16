@@ -100,11 +100,11 @@
 		
 		new UiUserSearchInput(document.querySelector('input[name="username"]'));
 		{if $action == 'edit'}
-			new AcpUiArticleInlineEditor({@$article->articleID}, {
+			new AcpUiArticleInlineEditor({$article->articleID}, {
 				i18n: {
-					defaultLanguageId: {@$defaultLanguageID},
+					defaultLanguageId: {$defaultLanguageID},
 					isI18n: {if $article->isMultilingual}true{else}false{/if},
-					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
+					languages: { {implode from=$languages item=language glue=', '}{$language->languageID}: '{$language|encodeJS}'{/implode} }
 				},
 				redirectUrl: '{link controller='ArticleList'}{/link}'
 			});
@@ -126,7 +126,7 @@
 {/if}
 
 {if $articleIsFrontend|empty}
-	{@$__contentHeader}
+	{unsafe:$__contentHeader}
 {/if}
 
 {include file='shared_formNotice'}
@@ -148,7 +148,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$categoryNodeList item=category}
-						<option value="{$category->categoryID}"{if !$category->categoryID|in_array:$accessibleCategoryIDs} disabled{elseif $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
+						<option value="{$category->categoryID}"{if !$category->categoryID|in_array:$accessibleCategoryIDs} disabled{elseif $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{unsafe:"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'categoryID'}
@@ -156,7 +156,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.article.category.error.{@$errorType}{/lang}
+							{lang}wcf.acp.article.category.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -171,20 +171,20 @@
 					<dl{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset} class="formError"{/if}>
 						<dt><label>{$labelGroup->getTitle()}</label></dt>
 						<dd>
-							<ul class="labelList jsOnly" data-object-id="{@$labelGroup->groupID}">
-								<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}" data-force-selection="{if $labelGroup->forceSelection}true{else}false{/if}">
-									<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
+							<ul class="labelList jsOnly" data-object-id="{$labelGroup->groupID}">
+								<li class="dropdown labelChooser" id="labelGroup{$labelGroup->groupID}" data-group-id="{$labelGroup->groupID}" data-force-selection="{if $labelGroup->forceSelection}true{else}false{/if}">
+									<div class="dropdownToggle" data-toggle="labelGroup{$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
 									<div class="dropdownMenu">
 										<ul class="scrollableDropdownMenu">
 											{foreach from=$labelGroup item=label}
-												<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
+												<li data-label-id="{$label->labelID}"><span>{unsafe:$label->render()}</span></li>
 											{/foreach}
 										</ul>
 									</div>
 								</li>
 							</ul>
 							<noscript>
-								<select name="labelIDs[{@$labelGroup->groupID}]">
+								<select name="labelIDs[{$labelGroup->groupID}]">
 									{foreach from=$labelGroup item=label}
 										<option value="{$label->labelID}">{$label->getTitle()}</option>
 									{/foreach}
@@ -214,7 +214,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.username.error.{@$errorType}{/lang}
+							{lang}wcf.user.username.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -232,7 +232,7 @@
 						{elseif $errorType == 'invalid'}
 							{lang latestDate=TIME_NOW|plainTime}wcf.form.field.date.error.latestDate{/lang}
 						{else}
-							{lang}wcf.acp.article.time.error.{@$errorType}{/lang}
+							{lang}wcf.acp.article.time.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -258,7 +258,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.article.publicationDate.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.publicationDate.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -284,7 +284,7 @@
 					<dd>
 						<div id="imageDisplay" class="selectedImagePreview">
 							{if $images[0]|isset && $images[0]->hasThumbnail('small')}
-								{@$images[0]->getThumbnailTag('small')}
+								{unsafe:$images[0]->getThumbnailTag('small')}
 							{/if}
 						</div>
 						<ul class="buttonGroup">
@@ -294,7 +294,7 @@
 						</ul>
 						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{$imageID[0]}"{/if}>
 						{if $errorField == 'image'}
-							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+							<small class="innerError">{lang}wcf.acp.article.image.error.{$errorType}{/lang}</small>
 						{/if}
 					</dd>
 				</dl>
@@ -302,7 +302,7 @@
 				<dl>
 					<dt>{lang}wcf.acp.article.image{/lang}</dt>
 					<dd>
-						<div id="imageDisplay">{@$images[0]->getThumbnailTag('small')}</div>
+						<div id="imageDisplay">{$images[0]->getThumbnailTag('small')}</div>
 					</dd>
 				</dl>
 			{/if}
@@ -313,7 +313,7 @@
 					<dd>
 						<div id="teaserImageDisplay" class="selectedImagePreview">
 							{if $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
-								{@$teaserImages[0]->getThumbnailTag('small')}
+								{$teaserImages[0]->getThumbnailTag('small')}
 							{/if}
 						</div>
 						<ul class="buttonGroup">
@@ -323,7 +323,7 @@
 						</ul>
 						<input type="hidden" name="teaserImageID[0]" id="teaserImageID0"{if $teaserImageID[0]|isset} value="{$teaserImageID[0]}"{/if}>
 						{if $errorField == 'teaserImage'}
-							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+							<small class="innerError">{lang}wcf.acp.article.image.error.{$errorType}{/lang}</small>
 						{/if}
 					</dd>
 				</dl>
@@ -331,7 +331,7 @@
 				<dl>
 					<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
 					<dd>
-						<div id="teaserImageDisplay">{@$teaserImages[0]->getThumbnailTag('small')}</div>
+						<div id="teaserImageDisplay">{unsafe:$teaserImages[0]->getThumbnailTag('small')}</div>
 					</dd>
 				</dl>
 			{/if}
@@ -345,7 +345,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.article.title.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.title.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -361,7 +361,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.article.metaTitle.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.metaTitle.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -377,7 +377,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.article.metaDescription.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.metaDescription.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -399,7 +399,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.article.teaser.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.teaser.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -409,7 +409,7 @@
 			<dl{if $errorField == 'content'} class="formError"{/if}>
 				<dt><label for="content0">{lang}wcf.acp.article.content{/lang}</label></dt>
 				<dd>
-					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					
 					{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content0'}
 					{include file='shared_wysiwyg' wysiwygSelector='content0'}
@@ -421,7 +421,7 @@
 							{elseif $errorType == 'disallowedBBCodes'}
 								{lang}wcf.message.error.disallowedBBCodes{/lang}
 							{else}
-								{lang}wcf.acp.article.content.error.{@$errorType}{/lang}
+								{lang}wcf.acp.article.content.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -443,25 +443,25 @@
 			</nav>
 			
 			{foreach from=$availableLanguages item=availableLanguage}
-				<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
+				<div id="language{$availableLanguage->languageID}" class="tabMenuContent">
 					<div class="section">
 						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
-								<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.article.image{/lang}</label></dt>
+								<dt><label for="image{$availableLanguage->languageID}">{lang}wcf.acp.article.image{/lang}</label></dt>
 								<dd>
-									<div id="imageDisplay{@$availableLanguage->languageID}">
+									<div id="imageDisplay{$availableLanguage->languageID}">
 										{if $images[$availableLanguage->languageID]|isset && $images[$availableLanguage->languageID]->hasThumbnail('small')}
-											{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
+											{unsafe:$images[$availableLanguage->languageID]->getThumbnailTag('small')}
 										{/if}
 									</div>
 									<ul class="buttonGroup">
 										<li>
-											<button type="button" class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
+											<button type="button" class="button jsMediaSelectButton" data-store="imageID{$availableLanguage->languageID}" data-display="imageDisplay{$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
 										</li>
 									</ul>
-									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
+									<input type="hidden" name="imageID[{$availableLanguage->languageID}]" id="imageID{$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
 									{if $errorField == 'image'|concat:$availableLanguage->languageID}
-										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+										<small class="innerError">{lang}wcf.acp.article.image.error.{$errorType}{/lang}</small>
 									{/if}
 								</dd>
 							</dl>
@@ -469,28 +469,28 @@
 							<dl>
 								<dt>{lang}wcf.acp.article.image{/lang}</dt>
 								<dd>
-									<div id="imageDisplay">{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+									<div id="imageDisplay">{unsafe:$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
 								</dd>
 							</dl>
 						{/if}
 						
 						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
-								<dt><label for="teaserImage{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
+								<dt><label for="teaserImage{$availableLanguage->languageID}">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
 								<dd>
-									<div id="teaserImageDisplay{@$availableLanguage->languageID}">
+									<div id="teaserImageDisplay{$availableLanguage->languageID}">
 										{if $teaserImages[$availableLanguage->languageID]|isset && $teaserImages[$availableLanguage->languageID]->hasThumbnail('small')}
-											{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}
+											{unsafe:$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}
 										{/if}
 									</div>
 									<ul class="buttonGroup">
 										<li>
-											<button type="button" class="button jsMediaSelectButton" data-store="teaserImageID{@$availableLanguage->languageID}" data-display="teaserImageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
+											<button type="button" class="button jsMediaSelectButton" data-store="teaserImageID{$availableLanguage->languageID}" data-display="teaserImageDisplay{$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</button>
 										</li>
 									</ul>
-									<input type="hidden" name="teaserImageID[{@$availableLanguage->languageID}]" id="teaserImageID{@$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{$teaserImageID[$availableLanguage->languageID]}"{/if}>
+									<input type="hidden" name="teaserImageID[{$availableLanguage->languageID}]" id="teaserImageID{$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{$teaserImageID[$availableLanguage->languageID]}"{/if}>
 									{if $errorField == 'teaserImage'|concat:$availableLanguage->languageID}
-										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+										<small class="innerError">{lang}wcf.acp.article.image.error.{$errorType}{/lang}</small>
 									{/if}
 								</dd>
 							</dl>
@@ -498,21 +498,21 @@
 							<dl>
 								<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
 								<dd>
-									<div id="imageDisplay">{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+									<div id="imageDisplay">{unsafe:$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
 								</dd>
 							</dl>
 						{/if}
 						
 						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
+							<dt><label for="title{$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 							<dd>
-								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								<input type="text" id="title{$availableLanguage->languageID}" name="title[{$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == 'title'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
-											{lang}wcf.acp.article.title.error.{@$errorType}{/lang}
+											{lang}wcf.acp.article.title.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -520,15 +520,15 @@
 						</dl>
 						
 						<dl{if $errorField == 'metaTitle'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="metaTitle{@$availableLanguage->languageID}">{lang}wcf.acp.article.metaTitle{/lang}</label></dt>
+							<dt><label for="metaTitle{$availableLanguage->languageID}">{lang}wcf.acp.article.metaTitle{/lang}</label></dt>
 							<dd>
-								<input type="text" id="metaTitle{@$availableLanguage->languageID}" name="metaTitle[{@$availableLanguage->languageID}]" value="{if !$metaTitle[$availableLanguage->languageID]|empty}{$metaTitle[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								<input type="text" id="metaTitle{$availableLanguage->languageID}" name="metaTitle[{$availableLanguage->languageID}]" value="{if !$metaTitle[$availableLanguage->languageID]|empty}{$metaTitle[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == 'metaTitle'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
-											{lang}wcf.acp.article.metaTitle.error.{@$errorType}{/lang}
+											{lang}wcf.acp.article.metaTitle.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -536,15 +536,15 @@
 						</dl>
 						
 						<dl{if $errorField == 'metaDescription'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.article.metaDescription{/lang}</label></dt>
+							<dt><label for="metaDescription{$availableLanguage->languageID}">{lang}wcf.acp.article.metaDescription{/lang}</label></dt>
 							<dd>
-								<input type="text" id="metaDescription{@$availableLanguage->languageID}" name="metaDescription[{@$availableLanguage->languageID}]" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								<input type="text" id="metaDescription{$availableLanguage->languageID}" name="metaDescription[{$availableLanguage->languageID}]" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == 'metaDescription'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
-											{lang}wcf.acp.article.metaDescription.error.{@$errorType}{/lang}
+											{lang}wcf.acp.article.metaDescription.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -559,15 +559,15 @@
 						{event name='informationFieldsMultilingual'}
 						
 						<dl{if $errorField == 'teaser'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="teaser{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaser{/lang}</label></dt>
+							<dt><label for="teaser{$availableLanguage->languageID}">{lang}wcf.acp.article.teaser{/lang}</label></dt>
 							<dd>
-								<textarea name="teaser[{@$availableLanguage->languageID}]" id="teaser{@$availableLanguage->languageID}" rows="5">{if !$teaser[$availableLanguage->languageID]|empty}{$teaser[$availableLanguage->languageID]}{/if}</textarea>
+								<textarea name="teaser[{$availableLanguage->languageID}]" id="teaser{$availableLanguage->languageID}" rows="5">{if !$teaser[$availableLanguage->languageID]|empty}{$teaser[$availableLanguage->languageID]}{/if}</textarea>
 								{if $errorField == 'teaser'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
-											{lang}wcf.acp.article.teaser.error.{@$errorType}{/lang}
+											{lang}wcf.acp.article.teaser.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -575,9 +575,9 @@
 						</dl>
 						
 						<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.article.content{/lang}</label></dt>
+							<dt><label for="content{$availableLanguage->languageID}">{lang}wcf.acp.article.content{/lang}</label></dt>
 							<dd>
-								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+								<textarea name="content[{$availableLanguage->languageID}]" id="content{$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{$articleID}{else}0{/if}-{$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								
 								{include file='shared_wysiwygCmsToolbar' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								{include file='shared_wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
@@ -589,7 +589,7 @@
 										{elseif $errorType == 'disallowedBBCodes'}
 											{lang}wcf.message.error.disallowedBBCodes{/lang}
 										{else}
-											{lang}wcf.acp.article.content.error.{@$errorType}{/lang}
+											{lang}wcf.acp.article.content.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -611,7 +611,7 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<button type="button" id="buttonMessagePreview" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 		<input type="hidden" name="isMultilingual" value="{$isMultilingual}">
-		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}">
+		<input type="hidden" name="timeNowReference" value="{TIME_NOW}">
 		{csrfToken}
 	</div>
 </form>
@@ -642,7 +642,7 @@
 		});
 		
 		{if !$labelGroups|empty}
-			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
+			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{$groupID}: {$labelID}{/implode} }, '.articleAddForm');
 		{/if}
 	});
 </script>

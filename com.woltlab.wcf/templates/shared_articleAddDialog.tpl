@@ -21,7 +21,7 @@
 			'wcf.acp.article.add': '{jslang}wcf.acp.article.add{/jslang}'
 		});
 		
-		AcpUiArticleAdd.init('{link controller='ArticleAdd' encode=false}{literal}isMultilingual={$isMultilingual}{/literal}{if $categoryID}&categoryID={@$categoryID}{/if}{/link}');
+		AcpUiArticleAdd.init('{link controller='ArticleAdd' encode=false}{literal}isMultilingual={$isMultilingual}{/literal}{if $categoryID}&categoryID={$categoryID}{/if}{/link}');
 		
 		{if $showArticleAddDialog}
 			window.setTimeout(function() {

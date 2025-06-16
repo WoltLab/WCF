@@ -6,7 +6,7 @@
 				
 				<div class="messageHeaderBox">
 					<h2 class="messageTitle">
-						<a href="{@$article->getLink()}">{$article->getTitle()}</a>
+						<a href="{$article->getLink()}">{$article->getTitle()}</a>
 					</h2>
 					
 					<ul class="messageHeaderMetaData">
@@ -25,7 +25,7 @@
 			{event name='beforeMessageText'}
 			
 			<div class="messageText">
-				{@$article->getFormattedContent()}
+				{unsafe:$article->getFormattedContent()}
 			</div>
 			
 			{event name='afterMessageText'}
