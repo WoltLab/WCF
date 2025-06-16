@@ -1,6 +1,6 @@
 <script data-relocate="true">
 	$(function() {
-		var $optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{@$optionTypeUsingSelectOptions}'{/implode}];
+		var $optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{unsafe:$optionTypeUsingSelectOptions|encodeJS}'{/implode}];
 		
 		$('#optionType').change(function(event) {
 			var $value = $(event.currentTarget).val();
@@ -27,7 +27,7 @@
 					{if $errorType == 'multilingual'}
 						{lang}wcf.global.form.error.multilingual{/lang}
 					{else}
-						{lang}wcf.acp.customOption.name.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.name.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -44,7 +44,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.description.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.description.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -85,7 +85,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.optionType.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.optionType.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -109,7 +109,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.selectOptions.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.selectOptions.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -126,7 +126,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.validationPattern.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.validationPattern.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}

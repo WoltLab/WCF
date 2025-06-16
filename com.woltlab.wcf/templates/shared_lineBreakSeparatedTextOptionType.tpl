@@ -22,7 +22,7 @@
 		});
 		
 		new UiItemListLineBreakSeparatedText(
-			document.getElementById("lineBreakSeparatedTextOption_{@$identifier|encodeJS}")
+			document.getElementById("lineBreakSeparatedTextOption_{unsafe:$identifier|encodeJS}")
 		);
 	});
 </script>
