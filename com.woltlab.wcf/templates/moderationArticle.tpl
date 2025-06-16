@@ -11,7 +11,7 @@
 					
 					<ul class="messageHeaderMetaData">
 						<li>{user object=$article->getUserProfile() class='username'}</li>
-						<li><span class="messagePublicationTime">{@$article->time|time}</span></li>
+						<li><span class="messagePublicationTime">{time time=$article->time}</span></li>
 						
 						{event name='messageHeaderMetaData'}
 					</ul>
