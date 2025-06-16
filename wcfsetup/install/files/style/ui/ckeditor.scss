@@ -67,7 +67,8 @@
 	cursor: pointer;
 }
 
-.ck.ck-button-bold, a.ck.ck-button-bold {
+.ck.ck-button-bold,
+a.ck.ck-button-bold {
 	font-weight: 400;
 }
 
@@ -182,7 +183,6 @@
 
 	.ck-button {
 		flex: 0 0 auto !important;
-		margin: 0 !important;
 	}
 
 	.ck-button[type="button"] {

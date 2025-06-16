@@ -46,10 +46,13 @@ class RedisCacheSource implements ICacheSource
         if (isset($parts[1])) {
             if ($useWildcard) {
                 // delete the complete hashset
-                $this->redis->del($this->getCacheName($parts[0]));
+                $this->redis->del(
+                    $this->getCacheName($parts[0], true),
+                    $this->getCacheName($parts[0]),
+                );
             } else {
                 // delete the specified key from the hashset
-                $this->redis->hDel($this->getCacheName($parts[0]), $parts[1]);
+                $this->redis->hDel($this->getCacheName($parts[0], true), $parts[1]);
             }
         } else {
             $this->redis->del($this->getCacheName($cacheName));
@@ -77,7 +80,7 @@ class RedisCacheSource implements ICacheSource
         $parts = \explode('-', $cacheName, 2);
 
         if (isset($parts[1])) {
-            $value = $this->redis->hGet($this->getCacheName($parts[0]), $parts[1]);
+            $value = $this->redis->hGet($this->getCacheName($parts[0], true), $parts[1]);
         } else {
             $value = $this->redis->get($this->getCacheName($cacheName));
         }
@@ -123,7 +126,7 @@ class RedisCacheSource implements ICacheSource
 
         // check if entry is parameterized
         if (isset($parts[1])) {
-            $key = $this->getCacheName($parts[0]);
+            $key = $this->getCacheName($parts[0], true);
 
             // save parameterized cache entries as field in a hashset
             // saving in a hashset is safe as the smallest lifetime of its fields is set as TTL for the whole hashset
@@ -148,7 +151,7 @@ class RedisCacheSource implements ICacheSource
      * @param string $cacheName
      * @return  string
      */
-    protected function getCacheName($cacheName)
+    protected function getCacheName($cacheName, bool $parameterized = false)
     {
         $flush = $this->redis->get('cache:_flush');
 
@@ -158,6 +161,10 @@ class RedisCacheSource implements ICacheSource
             $this->redis->incr('cache:_flush');
 
             $flush = $this->redis->get('cache:_flush');
+        }
+
+        if ($parameterized) {
+            $cacheName .= ':hset';
         }
 
         return 'cache:' . $flush . ':' . $cacheName;

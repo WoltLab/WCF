@@ -242,40 +242,24 @@ final class EmailMultifactorMethod implements IMultifactorMethod
      */
     public function processAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
-        $userCode = $form->getData()['data']['code'];
-
-        $sql = "SELECT  code
-                FROM    wcf1_user_multifactor_email
-                WHERE   setupID = ?
-                    AND createTime > ?
-                FOR UPDATE";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
+        $this->invalidateUsedCode(
             $setup->getId(),
-            (\TIME_NOW - self::LIFETIME),
-        ]);
-        $codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $form->getData()['data']['code']
+        );
+    }
 
-        $usedCode = $this->findValidCode($userCode, $codes);
-
-        if ($usedCode === null) {
-            throw new \RuntimeException('Unable to find a valid code.');
-        }
-
+    private function invalidateUsedCode(int $id, string $code): void
+    {
         $sql = "DELETE FROM wcf1_user_multifactor_email
                 WHERE       setupID = ?
                         AND createTime > ?
                         AND code = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            $setup->getId(),
+            $id,
             (\TIME_NOW - self::LIFETIME),
-            $usedCode['code'],
+            $code,
         ]);
-
-        if ($statement->getAffectedRows() !== 1) {
-            throw new \RuntimeException('Unable to invalidate the code.');
-        }
     }
 
     /**

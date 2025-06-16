@@ -6,11 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../Dialog", "../../Pagination"], function (require, exports, tslib_1, Ajax, Listener_1, Dialog_1, Pagination_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../Pagination", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Ajax, Pagination_1, Selector_1, Dialog_1, Util_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Pagination_1 = tslib_1.__importDefault(Pagination_1);
     class CacheData {
         pageCount;
@@ -34,23 +32,15 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
         cache = new Map();
         currentPageNo = 0;
         currentUser = 0;
-        knownElements = new WeakSet();
+        #dialog = undefined;
         /**
          * Initializes the user trophy list.
          */
         constructor() {
-            Listener_1.default.add("WoltLabSuite/Core/Ui/User/Trophy/List", () => this.rebuild());
-            this.rebuild();
-        }
-        /**
-         * Adds event userTrophyOverlayList elements.
-         */
-        rebuild() {
-            document.querySelectorAll(".userTrophyOverlayList").forEach((element) => {
-                if (!this.knownElements.has(element)) {
-                    element.addEventListener("click", (ev) => this.open(element, ev));
-                    this.knownElements.add(element);
-                }
+            (0, Selector_1.wheneverFirstSeen)(".userTrophyOverlayList", (element) => {
+                element.addEventListener("click", (event) => {
+                    this.open(element, event);
+                });
             });
         }
         /**
@@ -77,10 +67,15 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                 }
             }
             if (data && data.has(this.currentPageNo)) {
-                const dialog = Dialog_1.default.open(this, data.get(this.currentPageNo));
-                Dialog_1.default.setTitle("userTrophyListOverlay", data.title);
+                if (this.#dialog === undefined) {
+                    this.#dialog = (0, Dialog_1.dialogFactory)().withoutContent().withoutControls();
+                }
+                (0, Util_1.setInnerHtml)(this.#dialog.content, data.get(this.currentPageNo));
+                if (!this.#dialog.open) {
+                    this.#dialog.show(data.title);
+                }
                 if (data.pageCount > 1) {
-                    const element = dialog.content.querySelector(".jsPagination");
+                    const element = this.#dialog.content.querySelector(".jsPagination");
                     if (element !== null) {
                         new Pagination_1.default(element, {
                             activePage: this.currentPageNo,
@@ -117,15 +112,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                     actionName: "getGroupedUserTrophyList",
                     className: "wcf\\data\\user\\trophy\\UserTrophyAction",
                 },
-            };
-        }
-        _dialogSetup() {
-            return {
-                id: "userTrophyListOverlay",
-                options: {
-                    title: "",
-                },
-                source: null,
             };
         }
     }

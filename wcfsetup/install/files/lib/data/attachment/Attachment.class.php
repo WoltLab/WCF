@@ -421,7 +421,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             'filename' => $file->filename,
             'filesize' => $file->fileSize,
             'fileType' => $file->mimeType,
-            'isImage' => $file->isImage(),
+            'isImage' => $file->isImage() ? 1 : 0,
             'height' => $file->height ?: 0,
             'width' => $file->width ?: 0,
             'thumbnailType' => $file->getThumbnail('')?->getMimeType() ?: '',

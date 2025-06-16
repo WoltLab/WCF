@@ -16,6 +16,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\option\user\UserOptionHandler;
@@ -361,6 +362,9 @@ class UserEditForm extends UserAddForm
     {
         parent::assignVariables();
 
+        $signatureProcessor = new HtmlUpcastProcessor();
+        $signatureProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', $this->user->userID);
+
         WCF::getTPL()->assign([
             'userID' => $this->user->userID,
             'action' => 'edit',
@@ -384,6 +388,7 @@ class UserEditForm extends UserAddForm
             'availableStyles' => $this->availableStyles,
             'styleID' => $this->styleID,
             'colorScheme' => $this->colorScheme,
+            'signature' => $signatureProcessor->getHtml(),
         ]);
     }
 

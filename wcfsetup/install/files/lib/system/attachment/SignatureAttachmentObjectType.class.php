@@ -153,7 +153,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
 
         foreach ($attachments as $attachment) {
             if (($userProfile = $this->getObject($attachment->objectID)) !== null) {
-                if (!$userProfile->showSignature()) {
+                if (!$userProfile->showSignature() && $attachment->userID !== WCF::getUser()->userID) {
                     continue;
                 }
 

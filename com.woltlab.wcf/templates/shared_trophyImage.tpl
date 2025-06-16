@@ -6,4 +6,5 @@
 	class="trophyIcon{if $showTooltip} jsTooltip{/if}"
 	data-trophy-id="{$trophy->getObjectID()}"
 	loading="lazy"
+	alt="{$trophy->getTitle()}"
 />

@@ -26,12 +26,6 @@ WCF.User.Profile.ActivityPointList = {
 	_cache: { },
 	
 	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
 	 * initialization state
 	 * @var	boolean
 	 */
@@ -52,14 +46,11 @@ WCF.User.Profile.ActivityPointList = {
 		}
 		
 		this._cache = { };
-		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
 		
 		this._init();
-		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.User.Profile.ActivityPointList', $.proxy(this._init, this));
 		
 		this._didInit = true;
 	},
@@ -68,7 +59,12 @@ WCF.User.Profile.ActivityPointList = {
 	 * Initializes display for activity points.
 	 */
 	_init: function() {
-		$('.activityPointsDisplay').removeClass('activityPointsDisplay').click($.proxy(this._click, this));
+		require(["WoltLabSuite/Core/Helper/Selector"], ({ wheneverFirstSeen }) => {
+			wheneverFirstSeen(".activityPointsDisplay", (element) => {
+				element.classList.remove("activityPointsDisplay");
+				element.addEventListener("click", (event) => this._click(event));
+			});
+		});
 	},
 	
 	/**
@@ -99,16 +95,12 @@ WCF.User.Profile.ActivityPointList = {
 	 * @param	integer		userID
 	 */
 	_show: function(userID) {
-		if (this._dialog === null) {
-			this._dialog = $('<div>' + this._cache[userID] + '</div>').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.user.activityPoint')
-			});
-		}
-		else {
-			this._dialog.html(this._cache[userID]);
-			this._dialog.wcfDialog('open');
-		}
+		require(["WoltLabSuite/Core/Component/Dialog"], ({ dialogFactory }) => {
+			dialogFactory()
+				.fromHtml(this._cache[userID])
+				.withoutControls()
+				.show(WCF.Language.get("wcf.user.activityPoint"));
+		});
 	},
 	
 	/**

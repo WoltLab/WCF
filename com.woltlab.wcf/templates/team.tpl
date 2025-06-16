@@ -7,11 +7,11 @@
 			<p class="sectionDescription">{$team->getDescription()}</p>
 		</header>
 			
-		<ol class="containerList userCardList">
+		<div class="userCardList">
 			{foreach from=$team->getMembers() item=user}
 				{include file='userCard'}
 			{/foreach}
-		</ol>
+		</div>
 	</section>
 {/foreach}
 

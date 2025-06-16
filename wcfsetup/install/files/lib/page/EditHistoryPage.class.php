@@ -174,6 +174,10 @@ class EditHistoryPage extends AbstractPage
         $this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
         $this->objectList->readObjects();
 
+        if ($this->objectList->getObjects() === []) {
+            throw new IllegalLinkException();
+        }
+
         // set default values
         if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
             foreach ($this->objectList as $object) {

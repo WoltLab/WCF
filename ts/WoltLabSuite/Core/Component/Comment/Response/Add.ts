@@ -12,13 +12,13 @@ import { getPhrase } from "../../../Language";
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScroll from "../../../Ui/Scroll";
 import { CKEditor, getCkeditor } from "../../Ckeditor";
-import { listenToCkeditor } from "../../Ckeditor/Event";
 import User from "WoltLabSuite/Core/User";
 import { getGuestToken } from "../../GuestTokenDialog";
 import { createResponse } from "WoltLabSuite/Core/Api/Comments/Responses/CreateResponse";
 import { clearQuotesForEditor } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { setActiveEditor } from "WoltLabSuite/Core/Component/Quote/Message";
 import { showSuccessSnackbar } from "../../Snackbar";
+import { setCommentEditorFeatures } from "../Add";
 
 type CallbackInsertResponse = (commentId: number, responseId: number) => void;
 
@@ -48,11 +48,7 @@ export class CommentResponseAdd {
       void this.#submit();
     });
 
-    listenToCkeditor(this.#textarea).setupFeatures(({ features }) => {
-      features.heading = false;
-      features.spoiler = false;
-      features.table = false;
-    });
+    setCommentEditorFeatures(this.#textarea);
   }
 
   show(commentId: number): void {

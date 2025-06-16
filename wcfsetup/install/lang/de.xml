@@ -4066,8 +4066,8 @@ Dateianhänge:
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Die Gültigkeit der Anfrage konnte aufgrund eines fehlerhaften XSRF-Tokens nicht verifiziert werden. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sende{else}senden Sie{/if} das Formular erneut ab.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximale Anzahl erreicht]]></item>
 		<item name="wcf.global.form.required"><![CDATA[Benötigte Angaben]]></item>
-		<item name="wcf.global.form.password.button.hide"><![CDATA[Verbergen]]></item>
-		<item name="wcf.global.form.password.button.show"><![CDATA[Anzeigen]]></item>
+		<item name="wcf.global.form.password.button.hide"><![CDATA[Kennwort verbergen]]></item>
+		<item name="wcf.global.form.password.button.show"><![CDATA[Kennwort anzeigen]]></item>
 		<item name="wcf.global.form.error.invalidCssClassName"><![CDATA[Der eingegebene Wert ist keine gültige CSS-Klasse.]]></item>
 	</category>
 	<category name="wcf.form">

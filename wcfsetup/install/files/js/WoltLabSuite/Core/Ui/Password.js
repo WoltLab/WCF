@@ -34,7 +34,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         button.type = "button";
         button.title = Language.get("wcf.global.form.password.button.show");
         button.classList.add("button", "inputSuffix", "jsTooltip");
-        button.setAttribute("aria-hidden", "true");
         inputAddon.appendChild(button);
         const icon = document.createElement("fa-icon");
         icon.setIcon("eye");

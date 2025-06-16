@@ -356,7 +356,7 @@ class BBCodeHandler extends SingletonFactory
         $licenseData = $licenseApi->readFromFile();
 
         if ($licenseData === null) {
-            return '';
+            return 'GPL';
         }
 
         return $licenseData->license['ckeditorLicenseKeyV44'] ?? 'GPL';

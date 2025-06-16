@@ -9,10 +9,11 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
-import { DialogCallbackObject, DialogData, DialogCallbackSetup } from "../../Dialog/Data";
-import DomChangeListener from "../../../Dom/Change/Listener";
-import UiDialog from "../../Dialog";
 import UiPagination from "../../Pagination";
+import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
+import WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { setInnerHtml } from "WoltLabSuite/Core/Dom/Util";
 
 class CacheData {
   private readonly cache = new Map<number, string>();
@@ -35,31 +36,20 @@ class CacheData {
   }
 }
 
-class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
+class UiUserTrophyList implements AjaxCallbackObject {
   private readonly cache = new Map<number, CacheData>();
   private currentPageNo = 0;
   private currentUser = 0;
-  private readonly knownElements = new WeakSet<HTMLElement>();
+  #dialog: WoltlabCoreDialogElement | undefined = undefined;
 
   /**
    * Initializes the user trophy list.
    */
   constructor() {
-    DomChangeListener.add("WoltLabSuite/Core/Ui/User/Trophy/List", () => this.rebuild());
-
-    this.rebuild();
-  }
-
-  /**
-   * Adds event userTrophyOverlayList elements.
-   */
-  private rebuild(): void {
-    document.querySelectorAll(".userTrophyOverlayList").forEach((element: HTMLElement) => {
-      if (!this.knownElements.has(element)) {
-        element.addEventListener("click", (ev) => this.open(element, ev));
-
-        this.knownElements.add(element);
-      }
+    wheneverFirstSeen(".userTrophyOverlayList", (element) => {
+      element.addEventListener("click", (event) => {
+        this.open(element, event);
+      });
     });
   }
 
@@ -91,11 +81,18 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     }
 
     if (data && data.has(this.currentPageNo)) {
-      const dialog = UiDialog.open(this, data.get(this.currentPageNo)) as DialogData;
-      UiDialog.setTitle("userTrophyListOverlay", data.title);
+      if (this.#dialog === undefined) {
+        this.#dialog = dialogFactory().withoutContent().withoutControls();
+      }
+
+      setInnerHtml(this.#dialog.content, data.get(this.currentPageNo)!);
+
+      if (!this.#dialog.open) {
+        this.#dialog.show(data.title);
+      }
 
       if (data.pageCount > 1) {
-        const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
+        const element = this.#dialog.content.querySelector(".jsPagination") as HTMLElement;
         if (element !== null) {
           new UiPagination(element, {
             activePage: this.currentPageNo,
@@ -133,16 +130,6 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
         actionName: "getGroupedUserTrophyList",
         className: "wcf\\data\\user\\trophy\\UserTrophyAction",
       },
-    };
-  }
-
-  _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: "userTrophyListOverlay",
-      options: {
-        title: "",
-      },
-      source: null,
     };
   }
 }

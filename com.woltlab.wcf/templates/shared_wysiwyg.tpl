@@ -9,7 +9,7 @@
 		stylesheet = document.createElement("link");
 		stylesheet.rel = "stylesheet";
 		stylesheet.type = "text/css";
-		stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css";
+		stylesheet.href = "{$__wcf->getPath()}style/ckeditor5.css?t={LAST_UPDATE_TIME}";
 		stylesheet.id = "ckeditor5-stylesheet";
 
 		document.querySelector('link[rel="stylesheet"]').before(stylesheet);
