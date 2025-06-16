@@ -7,14 +7,14 @@
 	</script>
 {/if}
 
-<div id="poll{@$poll->pollID}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}"{*
-	*} data-poll-id="{@$poll->pollID}"{*
+<div id="poll{$poll->pollID}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}"{*
+	*} data-poll-id="{$poll->pollID}"{*
 	*} data-can-vote="{if $poll->canVote()}true{else}false{/if}"{*
 	*} data-can-view-result="{if $poll->canSeeResult()}true{else}false{/if}"{*
 	*} data-can-view-participants="{if $poll->canViewParticipants()}true{else}false{/if}"{*
 	*} data-in-vote="{if $poll->canVote() && !$poll->isParticipant()}true{else}false{/if}"{*
 	*} data-question="{$poll->question}"{*
-	*} data-max-votes="{@$poll->maxVotes}"{*
+	*} data-max-votes="{$poll->maxVotes}"{*
 	*} data-is-public="{if $poll->isPublic}true{else}false{/if}">
 	<section>
 		<h2>{$poll->question} <span class="badge jsTooltip pollTotalVotesBadge" title="{lang}wcf.poll.totalVotes{/lang}">{#$poll->votes}</span></h2>
