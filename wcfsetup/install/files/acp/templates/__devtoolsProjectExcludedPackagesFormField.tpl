@@ -37,7 +37,7 @@
 			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}'
 		});
 		
-		new ExcludedPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
+		new ExcludedPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=excludedPackage}
 			{
 				packageIdentifier: '{$excludedPackage[packageIdentifier]}',

@@ -6,7 +6,7 @@
 				'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}'
 			});
 			
-			DevtoolsProjectInstallationConfirmation.init({@$project->projectID}, '{@$project->name|encodeJS}');
+			DevtoolsProjectInstallationConfirmation.init({$project->projectID}, '{unsafe:$project->name|encodeJS}');
 		});
 	</script>
 {/if}

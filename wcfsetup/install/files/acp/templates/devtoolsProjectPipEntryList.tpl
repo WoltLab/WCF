@@ -36,10 +36,10 @@
 </header>
 
 {hascontent}
-	<woltlab-core-notice type="info">{content}{lang}wcf.acp.pip.{@$pip}.info{/lang}{/content}</woltlab-core-notice>
+	<woltlab-core-notice type="info">{content}{lang}wcf.acp.pip.{$pip}.info{/lang}{/content}</woltlab-core-notice>
 {/hascontent}
 
-<form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{@$linkParameters}{/link}">
+<form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{unsafe:$linkParameters}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
@@ -71,11 +71,11 @@
 			<thead>
 				<tr>
 					{foreach from=$entryList->getKeys() item=languageItem name=entryListKeys}
-						<th{if $tpl[foreach][entryListKeys][first]} colspan="2"{/if}>{@$languageItem|phrase}</th>
+						<th{if $tpl[foreach][entryListKeys][first]} colspan="2"{/if}>{unsafe:$languageItem|phrase}</th>
 					{/foreach}
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				{foreach from=$entryList->getEntries($startIndex-1, $itemsPerPage) key=identifier item=entry}
 					<tr class="jsPipEntryRow" data-identifier="{@$identifier}">
@@ -137,8 +137,8 @@
 			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description': '{jslang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description{/jslang}',
 			'wcf.acp.devtools.project.pip.entry.delete.confirmMessage': '{jslang}wcf.acp.devtools.project.pip.entry.delete.confirmMessage{/jslang}'
 		});
-		
-		new DevtoolsProjectPipEntryList('devtoolsProjectPipEntryList', '{@$project->projectID}', '{@$pip}', '{@$entryType}', {if $pipObject->getPip()->supportsDeleteInstruction()}true{else}false{/if});
+
+		new DevtoolsProjectPipEntryList('devtoolsProjectPipEntryList', {$project->projectID}, '{unsafe:$pip|encodeJS}', '{if $entryType !== null}{unsafe:$entryType|encodeJS}{/if}', {if $pipObject->getPip()->supportsDeleteInstruction()}true{else}false{/if});
 	});
 </script>
 

@@ -3,7 +3,7 @@
 	*}{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$field->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<dt>{if $field->getLabel() !== null}<label for="{$field->getPrefixedId()}">{@$field->getLabel()}</label>{/if}</dt>
+	<dt>{if $field->getLabel() !== null}<label for="{$field->getPrefixedId()}">{unsafe:$field->getLabel()}</label>{/if}</dt>
 	<dd>
 		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-10">
@@ -62,7 +62,7 @@
 						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_pip">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.packageInstallationPlugin{/lang}</option>
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
-								<option value="{$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
+								<option value="{$packageInstallationPlugin->pluginName}">{$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -82,7 +82,7 @@
 						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_application">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.application{/lang}</option>
 							{foreach from=$apps item=app}
-								<option value="{$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
+								<option value="{$app->getAbbreviation()}">{$app->getAbbreviation()}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -129,7 +129,7 @@
 						<select name="pip">
 							<option value="" selected>{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
-								<option value="{$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
+								<option value="{$packageInstallationPlugin->pluginName}">{$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -149,7 +149,7 @@
 						<select name="application">
 							<option value="" selected>{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$apps item=app}
-								<option value="{$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
+								<option value="{$app->getAbbreviation()}">{$app->getAbbreviation()}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -201,12 +201,12 @@
 			'wcf.global.form.error.noValidSelection': '{jslang}wcf.global.form.error.noValidSelection{/jslang}'
 		});
 		
-		var instructionsTemplate = new Template('{@$instructionsTemplate|encodeJS}');
-		var instructionsEditDialogTemplate = new Template('{@$instructionsEditDialogContent|encodeJS}');
-		var instructionEditDialogTemplate = new Template('{@$instructionEditDialogContent|encodeJS}');
+		var instructionsTemplate = new Template('{unsafe:$instructionsTemplate|encodeJS}');
+		var instructionsEditDialogTemplate = new Template('{unsafe:$instructionsEditDialogContent|encodeJS}');
+		var instructionEditDialogTemplate = new Template('{unsafe:$instructionEditDialogContent|encodeJS}');
 		
 		new InstructionsFormField(
-			'{@$field->getPrefixedId()|encodeJS}',
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
 			instructionsTemplate,
 			instructionsEditDialogTemplate,
 			instructionEditDialogTemplate,
@@ -223,7 +223,7 @@
 							{foreach from=$field->getValidationErrors() item=validationError}
 								{if $validationError->getInformation()[instructions]|isset && $validationError->getInformation()[instructions] === $instructionsKey && !$validationError->getInformation()[instruction]|isset}
 									{if $__instructionsHasError},{/if}
-									'{@$validationError->getMessage()|encodeJS}'
+									'{unsafe:$validationError->getMessage()|encodeJS}'
 									
 									{assign var='__instructionsHasError' value=true}
 								{/if}
@@ -242,7 +242,7 @@
 											{foreach from=$field->getValidationErrors() item=validationError}
 												{if $validationError->getInformation()[instructions]|isset && $validationError->getInformation()[instructions] === $instructionsKey && $validationError->getInformation()[instruction]|isset && $validationError->getInformation()[instruction] === $instructionKey}
 													{if $__instructionHasError},{/if}
-													'{@$validationError->getMessage()|encodeJS}'
+													'{unsafe:$validationError->getMessage()|encodeJS}'
 													
 													{assign var='__instructionHasError' value=true}
 												{/if}
@@ -255,7 +255,7 @@
 								{/implode}
 							{/if}
 						],
-						type: '{@$instructions[type]}'
+						type: '{unsafe:$instructions[type]|encodeJS}'
 					}
 				{/implode}
 			]
