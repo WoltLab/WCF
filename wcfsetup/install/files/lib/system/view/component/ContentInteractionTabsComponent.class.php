@@ -14,11 +14,23 @@ use wcf\system\WCF;
  */
 final class ContentInteractionTabsComponent
 {
+    /**
+     * @var list<ContentInteractionTab>
+     */
     private array $tabs = [];
 
     public function addTab(string $title, string $link, bool $active = false): void
     {
+        if ($active && $this->getActiveTab() !== null) {
+            throw new \BadMethodCallException("The tab '{$this->getActiveTab()->link}' is already marked as active");
+        }
+
         $this->tabs[] = new ContentInteractionTab($title, $link, $active);
+    }
+
+    private function getActiveTab(): ?ContentInteractionTab
+    {
+        return \array_find($this->tabs, static fn($tab) => $tab->active);
     }
 
     public function render(): string
@@ -43,6 +55,6 @@ final class ContentInteractionTab
     public function __construct(
         public readonly string $title,
         public readonly string $link,
-        public readonly bool $active = false,
+        public readonly bool $active,
     ) {}
 }
