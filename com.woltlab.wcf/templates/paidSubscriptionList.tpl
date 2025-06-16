@@ -74,7 +74,7 @@
 						<div class="containerContent">
 							<dl class="plain inlineDataList">
 								<dt>{lang}wcf.paidSubscription.expires{/lang}</dt>
-								<dd>{@$userSubscription->endDate|time}</dd>
+								<dd>{time time=$userSubscription->endDate}</dd>
 							</dl>
 						</div>
 					{/if}
