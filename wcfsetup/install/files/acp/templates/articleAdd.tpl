@@ -71,18 +71,25 @@
 
 {if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
 	<script data-relocate="true">
-		$(function() {
-			$('input[type="radio"][name="publicationStatus"]').change(function(event) {
-				var $selected = $('input[type="radio"][name="publicationStatus"]:checked');
-				if ($selected.length > 0) {
-					if ($selected.val() == 2) {
-						$('#publicationDateDl').show();
-					}
-					else {
-						$('#publicationDateDl').hide();
+		require(['WoltLabSuite/Core/Dom/Util'], ({ show, hide }) => {
+			const radios = document.querySelectorAll('input[type="radio"][name="publicationStatus"]');
+			const publicationDateDl = document.getElementById('publicationDateDl');
+
+			function togglePublicationDate () {
+				const selected = document.querySelector('input[type="radio"][name="publicationStatus"]:checked');
+				if (selected) {
+					if (parseInt(selected.value) === 2) {
+						show(publicationDateDl);
+					} else {
+						hide(publicationDateDl);
 					}
 				}
-			}).trigger('change');
+			}
+
+			radios.forEach((radio) => {
+				radio.addEventListener('change', togglePublicationDate);
+			});
+			togglePublicationDate();
 		});
 	</script>
 {/if}
