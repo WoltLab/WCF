@@ -1,12 +1,12 @@
 
 <tr>
 	<td class="columnText">{$device[deviceName]}</td>
-	<td class="columnDate">{$device[createTime]|plainTime}</td>
-	<td class="columnDate">{if $device[useTime]}{$device[useTime]|plainTime}{else}&ndash;{/if}</td>
+	<td class="columnDate">{time time=$device[createTime] type='plainTime'}</td>
+	<td class="columnDate">{if $device[useTime]}{time time=$device[useTime] type='plainTime'}{else}&ndash;{/if}</td>
 	<td class="columnText">
 		{foreach from=$container item='child'}
 			{if $child->isAvailable()}
-				{@$child->getHtml()}
+				{unsafe:$child->getHtml()}
 			{/if}
 		{/foreach}
 	</td>

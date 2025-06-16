@@ -6,11 +6,11 @@
 	{if $container->getLabel() !== null}
 		{if $container->getDescription() !== null}
 			<header class="sectionHeader">
-				<h2 class="sectionTitle">{@$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
-				<p class="sectionDescription">{@$container->getDescription()}</p>
+				<h2 class="sectionTitle">{unsafe:$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
+				<p class="sectionDescription">{unsafe:$container->getDescription()}</p>
 			</header>
 		{else}
-			<h2 class="sectionTitle">{@$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
+			<h2 class="sectionTitle">{unsafe:$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
 		{/if}
 	{/if}
 	
@@ -28,7 +28,7 @@
 			<tbody>
 				{foreach from=$container item='child'}
 					{if $child->isAvailable()}
-						{@$child->getHtml()}
+						{unsafe:$child->getHtml()}
 					{/if}
 				{/foreach}
 			</tbody>
@@ -40,6 +40,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {
-		new DefaultContainerDependency('{@$container->getPrefixedId()|encodeJS}Container');
+		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
 </script>

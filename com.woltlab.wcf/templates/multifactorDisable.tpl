@@ -2,6 +2,6 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer' __disableAds=true}
