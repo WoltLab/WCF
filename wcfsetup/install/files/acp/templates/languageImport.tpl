@@ -51,7 +51,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.language.add.source.error.{@$errorType}{/lang}
+							{lang}wcf.acp.language.add.source.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -73,7 +73,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.language.add.package.error.{@$errorType}{/lang}
+							{lang}wcf.acp.language.add.package.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

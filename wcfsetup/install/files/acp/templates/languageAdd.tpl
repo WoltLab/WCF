@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.language.{@$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.language.{$action}{/lang}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -14,6 +14,6 @@
 	</nav>
 </header>
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer'}
