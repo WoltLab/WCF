@@ -70,7 +70,7 @@
 		<woltlab-core-pagination
 			page="{$pageNo}"
 			count="{$pages}"
-			url="{link controller='UserList' id=$searchID}action={$encodedAction}&sortField={$sortField}&sortOrder={$sortOrder}{/link}">
+			url="{link controller='UserList' id=$searchID action=$action sortField=$sortField sortOrder=$sortOrder}{/link}">
 		</woltlab-core-pagination>
 	</div>
 {/if}
@@ -221,7 +221,7 @@
 				<woltlab-core-pagination
 					page="{$pageNo}"
 					count="{$pages}"
-					url="{link controller='UserList' id=$searchID}action={$encodedAction}&sortField={$sortField}&sortOrder={$sortOrder}{/link}">
+					url="{link controller='UserList' id=$searchID action=$action sortField=$sortField sortOrder=$sortOrder}{/link}">
 				</woltlab-core-pagination>
 			</div>
 		{/if}

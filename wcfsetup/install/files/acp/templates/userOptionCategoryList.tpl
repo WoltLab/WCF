@@ -17,7 +17,7 @@
 
 {if $pages > 1}
 	<div class="paginationTop">
-		<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UserOptionCategoryList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}"></woltlab-core-pagination>
+		<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UserOptionCategoryList' sortField=$sortField sortOrder=$sortOrder}{/link}"></woltlab-core-pagination>
 	</div>
 {/if}
 
@@ -65,7 +65,7 @@
 	<footer class="contentFooter">
 		{if $pages > 1}
 			<div class="paginationBottom">
-				<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UserOptionCategoryList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}"></woltlab-core-pagination>
+				<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UserOptionCategoryList' sortField=$sortField sortOrder=$sortOrder}{/link}"></woltlab-core-pagination>
 			</div>
 		{/if}
 		

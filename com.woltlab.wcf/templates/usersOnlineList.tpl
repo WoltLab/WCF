@@ -4,7 +4,7 @@
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={$pageNo}{/if}{/link}">
 	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
-		<meta http-equiv="refresh" content="{USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={$pageNo}&{/if}sortField={$sortField}&sortOrder={$sortOrder}{/link}">
+		<meta http-equiv="refresh" content="{USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList' sortField=$sortField sortOrder=$sortOrder}{if $pageNo > 1}pageNo={$pageNo}{/if}{/link}">
 	{/if}
 {/capture}
 
@@ -69,7 +69,7 @@
 
 {capture assign='contentInteractionPagination'}
 	{if $pages > 1}
-		<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UsersOnlineList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}"></woltlab-core-pagination>
+		<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UsersOnlineList' sortField=$sortField sortOrder=$sortOrder}{/link}"></woltlab-core-pagination>
 	{/if}
 {/capture}
 
@@ -212,7 +212,7 @@
 <footer class="contentFooter">
 	{if $pages > 1}
 		<div class="paginationBottom">
-			<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UsersOnlineList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}"></woltlab-core-pagination>
+			<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='UsersOnlineList' sortField=$sortField sortOrder=$sortOrder}{/link}"></woltlab-core-pagination>
 		</div>
 	{/if}
 	
