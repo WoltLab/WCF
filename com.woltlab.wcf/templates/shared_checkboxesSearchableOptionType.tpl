@@ -4,14 +4,15 @@
 {/foreach}
 
 <script data-relocate="true">
-	$(function() {
-		$('#search_{$option->optionName}').change(function(event) {
-			if ($(event.currentTarget).prop('checked')) {
-				$('input[name="values[{$option->optionName}][]"]').enable();
-			}
-			else {
-				$('input[name="values[{$option->optionName}][]"]').disable();
-			}
-		});
-	});
+	{
+		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
+		const inputs = document.querySelectorAll('input[name="values[{unsafe:$option->optionName|encodeJS}][]"]');
+		if (checkbox) {
+			checkbox.addEventListener('change', () => {
+				inputs.forEach((input) => {
+					input.disabled = !checkbox.checked;
+				});
+			});
+		}
+	}
 </script>

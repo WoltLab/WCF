@@ -2,7 +2,13 @@
 {include file='shared_wysiwyg' wysiwygSelector=$option->optionName}
 
 <script data-relocate="true">
-$(function() {
-	$('#{$option->optionName}').parents('dl:eq(0)').addClass('wide');
-});
+	{
+		const textarea = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		if (textarea) {
+			const dl = textarea.closest('dl');
+			if (dl) {
+				dl.classList.add('wide');
+			}
+		}
+	}
 </script>

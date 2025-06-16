@@ -7,14 +7,13 @@
 </select>
 
 <script data-relocate="true">
-$(function() {
-	$('#search_{$option->optionName}').change(function(event) {
-		if ($(event.currentTarget).prop('checked')) {
-			$('#{$option->optionName}').enable();
+	{
+		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
+		const select = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		if (checkbox && select) {
+			checkbox.addEventListener('change', () => {
+				select.disabled = !checkbox.checked;
+			});
 		}
-		else {
-			$('#{$option->optionName}').disable();
-		}
-	});
-});
+	}
 </script>

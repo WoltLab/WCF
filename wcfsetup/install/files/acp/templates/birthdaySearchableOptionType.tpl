@@ -2,7 +2,14 @@
 <input type="number" id="{$option->optionName}_age_to" name="values[{$option->optionName}][ageTo]" value="{$valueAgeTo}" placeholder="{lang}wcf.user.birthday.age.to{/lang}" min="0" max="120" class="tiny">
 
 <script data-relocate="true">
-$(function() {
-	$('#{$option->optionName}_age_from').parents('dl:eq(0)').find('> dt > label').text('{jslang}wcf.user.birthday.age{/jslang}').attr('for', '{$option->optionName}_age_from');
-});
+	{
+		const input = document.getElementById('{unsafe:$option->optionName|encodeJS}_age_from');
+		if (input) {
+			const label = input.closest('dl').querySelector(':scope > dt > label');
+			if (label) {
+				label.textContent = '{jslang}wcf.user.birthday.age{/jslang}';
+				label.setAttribute('for', '{unsafe:$option->optionName|encodeJS}_age_from');
+			}
+		}
+	}
 </script>

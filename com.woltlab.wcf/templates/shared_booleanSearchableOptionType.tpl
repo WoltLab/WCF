@@ -11,16 +11,21 @@
 </ol>
 
 <script data-relocate="true">
-	$(function() {
-		$('#search_{$option->optionName}').change(function(event) {
-			if ($(event.currentTarget).prop('checked')) {
-				$('#{$option->optionName}').enable();
-				$('#{$option->optionName}_no').enable();
-			}
-			else {
-				$('#{$option->optionName}').disable();
-				$('#{$option->optionName}_no').disable();
-			}
-		});
-	});
+	{
+		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
+		const radioYes = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		const radioNo = document.getElementById('{unsafe:$option->optionName|encodeJS}_no');
+
+		function setEnabled (enabled) {
+			radioYes.disabled = !enabled;
+			radioNo.disabled = !enabled;
+		}
+
+		if (checkbox) {
+			checkbox.addEventListener('change', (event) => {
+				setEnabled(event.currentTarget.checked);
+			});
+			setEnabled(checkbox.checked);
+		}
+	}
 </script>
