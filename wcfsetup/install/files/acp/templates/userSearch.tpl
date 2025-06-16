@@ -62,7 +62,7 @@
 						<option value="email"{if $sortField == 'email'} selected{/if}>{lang}wcf.user.email{/lang}</option>
 						<option value="registrationDate"{if $sortField == 'registrationDate'} selected{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 						
-						{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
+						{if $additionalSortFields|isset}{unsafe:$additionalSortFields}{/if}
 					</select>
 					
 					<select id="sortOrder" name="sortOrder">

@@ -2,7 +2,7 @@
 	<div class="section sectionContainerList">
 		<ol class="containerList jsGroupedUserList">
 			{foreach from=$users item=user}
-				<li data-object-id="{@$user->userID}">
+				<li data-object-id="{$user->userID}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -10,10 +10,10 @@
 							<div class="containerHeadline">
 								<h3>{user object=$user}{if MODULE_USER_RANK}
 									{if $user->getUserTitle()}
-										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
 									{/if}
 									{if $user->getRank() && $user->getRank()->rankImage}
-										<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+										<span class="userRankImage">{unsafe:$user->getRank()->getImage()}</span>
 									{/if}
 								{/if}</h3>
 							</div>

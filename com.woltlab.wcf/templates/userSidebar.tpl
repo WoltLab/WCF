@@ -70,7 +70,7 @@
 			<div class="boxContent">
 				<ul class="userAvatarList">
 					{foreach from=$visitors item=visitor}
-						<li><a href="{$visitor->getLink()}" title="{$visitor->username} ({@$visitor->time|plainTime})" class="jsTooltip">{@$visitor->getAvatar()->getImageTag(48)}</a></li>
+						<li><a href="{$visitor->getLink()}" title="{$visitor->username} ({time time=$visitor->time type='plainTime'})" class="jsTooltip">{unsafe:$visitor->getAvatar()->getImageTag(48)}</a></li>
 					{/foreach}
 				</ul>
 					

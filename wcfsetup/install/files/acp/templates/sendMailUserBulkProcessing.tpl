@@ -39,7 +39,7 @@
 				dialogTitle: '{jslang}wcf.acp.user.bulkProcessing.sendMail{/jslang}',
 				className: 'wcf\\system\\worker\\MailWorker',
 				parameters: {
-					mailID: {@$mailID},
+					mailID: {$mailID},
 				},
 			});
 		});

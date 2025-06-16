@@ -34,7 +34,7 @@
 		
 		{foreach from=$optionTree[0][categories] item=optionCategory}
 			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$optionCategory[object]->categoryName}{/lang}</h2>
+				<h2 class="sectionTitle">{lang}wcf.user.option.category.{$optionCategory[object]->categoryName}{/lang}</h2>
 				
 				{include file='optionFieldList' options=$optionCategory[options] langPrefix='wcf.user.option.'}
 				

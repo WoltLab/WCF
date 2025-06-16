@@ -1,7 +1,7 @@
 {foreach from=$groupedUsers item=group}
 	{if $group}
 		<section class="section sectionContainerList">
-			<h2 class="sectionTitle">{@$group}</h2>
+			<h2 class="sectionTitle">{unsafe:$group}</h2>
 	{/if}
 	
 	{if $group|count}
