@@ -9,7 +9,7 @@
 		{/if}
 	{/if}
 	
-	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|phrase}</title>
+	<title>{if $pageTitle}{unsafe:$pageTitle} - {/if}{PAGE_TITLE|phrase}</title>
 	
 	{include file='headInclude'}
 	
@@ -18,14 +18,14 @@
 	{/if}
 	
 	{if !$headContent|empty}
-		{@$headContent}
+		{unsafe:$headContent}
 	{/if}
 </head>
 
 <body id="tpl_{$templateNameApplication}_{$templateName}"
 	itemscope itemtype="http://schema.org/WebPage"{if !$canonicalURL|empty} itemid="{$canonicalURL}"{/if}
-	data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}
-	{if !$__pageDataAttributes|empty}{@$__pageDataAttributes}{/if}
+	data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}
+	{if !$__pageDataAttributes|empty}{unsafe:$__pageDataAttributes}{/if}
 	class="authFlow{if $__wcf->getActivePage() != null && $__wcf->getActivePage()->cssClassName} {$__wcf->getActivePage()->cssClassName}{/if}{if !$__pageCssClassName|empty} {$__pageCssClassName}{/if}">
 
 <span id="top"></span>
@@ -49,12 +49,12 @@
 		</header>
 	</div>
 	
-	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {@$__mainItemScope}{/if}>
+	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {unsafe:$__mainItemScope}{/if}>
 		<div class="layoutBoundary">
 			<div id="content" class="content">
 				{if $__disableContentHeader|empty}
 					{if !$contentHeader|empty}
-						{@$contentHeader}
+						{unsafe:$contentHeader}
 					{else}
 						{if $contentTitle|empty}
 							{if $__wcf->isLandingPage() && USE_PAGE_TITLE_ON_LANDING_PAGE}
@@ -68,8 +68,8 @@
 						{if !$contentTitle|empty}
 							<header class="contentHeader">
 								<div class="contentHeaderTitle">
-									<h1 class="contentTitle">{@$contentTitle}{if !$contentTitleBadge|empty} {@$contentTitleBadge}{/if}</h1>
-									{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+									<h1 class="contentTitle">{unsafe:$contentTitle}{if !$contentTitleBadge|empty} {unsafe:$contentTitleBadge}{/if}</h1>
+									{if !$contentDescription|empty}<p class="contentHeaderDescription">{unsafe:$contentDescription}</p>{/if}
 								</div>
 							</header>
 						{/if}

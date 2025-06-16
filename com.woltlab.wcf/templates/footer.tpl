@@ -5,11 +5,11 @@
 						<div class="boxContainer">
 							{content}
 								{if !$boxesContentBottom|empty}
-									{@$boxesContentBottom}
+									{unsafe:$boxesContentBottom}
 								{/if}
 								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
-									{@$box->render()}
+									{unsafe:$box->render()}
 								{/foreach}
 							{/content}
 						</div>
