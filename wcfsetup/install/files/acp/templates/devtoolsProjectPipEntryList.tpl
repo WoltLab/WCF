@@ -57,13 +57,15 @@
 	</section>
 </form>
 
-{hascontent}
+{if $pages > 1}
 	<div class="paginationTop">
-		{content}
-			{pages print=true assign=pagesLinks controller="DevtoolsProjectPipEntryList" id=$project->projectID link="$linkParameters&pageNo=%d"}
-		{/content}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{if $linkParameters}{unsafe:$linkParameters}{/if}{/link}">
+		</woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 {if !$entryList->getEntries()|empty}
 	<div class="section tabularBox jsShowOnlyMatches">
@@ -95,11 +97,15 @@
 	</div>
 	
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{if $linkParameters}{unsafe:$linkParameters}{/if}{/link}">
+				</woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		<nav class="contentFooterNavigation">
 			<ul>

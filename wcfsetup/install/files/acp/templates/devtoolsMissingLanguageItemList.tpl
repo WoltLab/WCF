@@ -21,13 +21,15 @@
 	{/hascontent}
 </header>
 
-{hascontent}
+{if $pages > 1}
 	<div class="paginationTop">
-		{content}
-			{pages print=true assign=pagesLinks controller='DevtoolsMissingLanguageItemList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-		{/content}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='DevtoolsMissingLanguageItemList' sortField=$sortField sortOrder=$sortOrder}{/link}">
+		</woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 {if $items}
 	<div id="missingLanguageItemTable" class="section tabularBox">
@@ -63,11 +65,15 @@
 	</div>
 
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='DevtoolsMissingLanguageItemList' sortField=$sortField sortOrder=$sortOrder}{/link}">
+				</woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		{hascontent}
 			<nav class="contentFooterNavigation">
