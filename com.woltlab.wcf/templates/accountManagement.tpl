@@ -9,7 +9,7 @@
 {if $success|isset && $success|count > 0}
 	<woltlab-core-notice type="success">
 		{foreach from=$success item=successMessage}
-			<p>{lang}{@$successMessage}{/lang}</p>
+			<p>{lang}{$successMessage}{/lang}</p>
 		{/foreach}
 	</woltlab-core-notice>
 {/if}
@@ -30,7 +30,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.user.password.error.{@$errorType}{/lang}
+								{lang}wcf.user.password.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -59,7 +59,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.user.username.error.{@$errorType}{/lang}
+								{lang}wcf.user.username.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -87,7 +87,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.user.password.error.{@$errorType}{/lang}
+								{lang}wcf.user.password.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -129,7 +129,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.user.email.error.{@$errorType}{/lang}
+								{lang}wcf.user.email.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -182,9 +182,9 @@
 			{content}
 				{if $__authProvider}
 					<dl>
-						<dt>{lang}wcf.user.3rdparty.{@$__authProvider}{/lang}</dt>
+						<dt>{lang}wcf.user.3rdparty.{$__authProvider}{/lang}</dt>
 						<dd>
-							<label><input type="checkbox" name="{@$__authProvider}Disconnect" value="1"> {lang}wcf.user.3rdparty.{@$__authProvider}.disconnect{/lang}</label>
+							<label><input type="checkbox" name="{$__authProvider}Disconnect" value="1"> {lang}wcf.user.3rdparty.{$__authProvider}.disconnect{/lang}</label>
 						</dd>
 					</dl>
 				{elseif !$__wcf->getUser()->hasAdministrativeAccess()}

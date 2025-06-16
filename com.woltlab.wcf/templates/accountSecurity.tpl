@@ -39,7 +39,7 @@
 							</h3>
 							
 							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
-								{@$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+								{unsafe:$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
 							{else}
 								{lang}wcf.user.security.multifactor.{$method->objectType}.description{/lang}
 							{/if}

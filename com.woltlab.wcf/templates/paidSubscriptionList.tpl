@@ -42,13 +42,13 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$subscription->getTitle()} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
-						<div class="htmlContent">{@$subscription->getFormattedDescription()}</div>
+						<div class="htmlContent">{unsafe:$subscription->getFormattedDescription()}</div>
 					</div>
 					
 					<div class="containerContent">
 						<ul class="buttonList">
 							{foreach from=$subscription->getPurchaseButtons() item=button}
-								<li>{@$button}</li>
+								<li>{unsafe:$button}</li>
 							{/foreach}
 						</ul>
 					</div>
@@ -67,7 +67,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$userSubscription->getSubscription()->getTitle()}</h3>
-						<div class="htmlContent">{@$userSubscription->getSubscription()->getFormattedDescription()}</div>
+						<div class="htmlContent">{unsafe:$userSubscription->getSubscription()->getFormattedDescription()}</div>
 					</div>
 					
 					{if $userSubscription->endDate}
