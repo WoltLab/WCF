@@ -36,7 +36,7 @@
 					<option value="0"></option>
 					{assign var=depth value=0}
 					{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
-						<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected{/if}{else} disabled{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
+						<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected{/if}{else} disabled{/if}>{unsafe:'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
 						{assign var=depth value=$depth + 1}
 					{/foreach}
 				</select>
@@ -97,7 +97,7 @@
 							*}{foreach from=$diff item='line'}{*
 								*}{if $line[0] == ' '}{*
 									*}{if $removeOffset > 0}{*
-										*}{@'<li style="list-style-type: none">&nbsp;</li>'|str_repeat:$removeOffset}{*
+										*}{unsafe:'<li style="list-style-type: none">&nbsp;</li>'|str_repeat:$removeOffset}{*
 									*}{/if}{*
 									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
 									*}<li value="{$lineNo}">{$line[1]}</li>{*

@@ -1,7 +1,7 @@
 {foreach from=$mediaList item=media}
-	<li class="jsClipboardObject mediaFile jsObjectActionObject" data-object-id="{@$media->getObjectID()}">
+	<li class="jsClipboardObject mediaFile jsObjectActionObject" data-object-id="{$media->getObjectID()}">
 		<div class="mediaThumbnail">
-			{@$media->getElementTag(144)}
+			{unsafe:$media->getElementTag(144)}
 		</div>
 
 		{assign var='__mediaTitle' value=$media->filename}
@@ -15,10 +15,10 @@
 		<nav class="jsMobileNavigation buttonGroupNavigation">
 			<ul class="buttonList iconList">
 				<li class="mediaCheckbox">
-					<a><label><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></label></a>
+					<a><label><input type="checkbox" class="jsClipboardItem" data-object-id="{$media->mediaID}"></label></a>
 				</li>
 				{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
-					<li class="jsMediaEditButton" data-object-id="{@$media->mediaID}">
+					<li class="jsMediaEditButton" data-object-id="{$media->mediaID}">
 						<button type="button" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
 							{icon name='pencil'}
 						</button>
@@ -30,13 +30,13 @@
 					</li>
 				{/if}
 				{if $mode == 'editor'}
-					<li class="jsMediaInsertButton" data-object-id="{@$media->mediaID}">
+					<li class="jsMediaInsertButton" data-object-id="{$media->mediaID}">
 						<button type="button" class="jsTooltip" title="{lang}wcf.media.button.insert{/lang}">
 							{icon name='plus'}
 						</button>
 					</li>
 				{elseif $mode == 'select'}
-					<li class="jsMediaSelectButton" data-object-id="{@$media->mediaID}">
+					<li class="jsMediaSelectButton" data-object-id="{$media->mediaID}">
 						<button type="button" class="jsTooltip" title="{lang}wcf.media.button.select{/lang}">
 							{icon name='check'}
 						</button>

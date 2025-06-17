@@ -9,7 +9,7 @@
 				protectRoot: true
 			},
 			additionalParameters: {
-				menuID: '{@$menuID}'
+				menuID: {$menuID}
 			}
 		});
 	});
@@ -24,7 +24,7 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
-			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
+			<li><a href="{link controller='MenuItemAdd'}menuID={$menuID}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -36,7 +36,7 @@
 		<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\menu\item\MenuItemAction" data-object-id="0">
 			{content}
 				{foreach from=$menuItemNodeList item=menuItemNode}
-					<li class="sortableNode jsObjectActionObject" data-object-id="{@$menuItemNode->getObjectID()}">
+					<li class="sortableNode jsObjectActionObject" data-object-id="{$menuItemNode->getObjectID()}">
 						<span class="sortableNodeLabel">
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{$menuItemNode->getTitle()}</a>
 							<span class="statusDisplay sortableButtonContainer">
@@ -67,10 +67,10 @@
 							</span>
 						</span>
 					
-						<ol class="sortableList jsObjectActionObjectChildren" data-object-id="{@$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
+						<ol class="sortableList jsObjectActionObjectChildren" data-object-id="{$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
 						
 						{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
-							{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+							{unsafe:"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
 						{/if}
 				{/foreach}
 			{/content}
