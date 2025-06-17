@@ -1,19 +1,26 @@
 <script data-relocate="true">
-	$(function() {
-		var $optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{unsafe:$optionTypeUsingSelectOptions|encodeJS}'{/implode}];
-		
-		$('#optionType').change(function(event) {
-			var $value = $(event.currentTarget).val();
-			if (WCF.inArray($value, $optionTypesUsingSelectOptions)) {
-				$('#selectOptionsDL').show();
+	require(['WoltLabSuite/Core/Dom/Util'], ({ show, hide }) => {
+		const optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{unsafe:$optionTypeUsingSelectOptions|encodeJS}'{/implode}];
+
+		const optionTypeSelect = document.getElementById('optionType');
+		const selectOptionsDL = document.getElementById('selectOptionsDL');
+		const validationPatternDL = document.getElementById('validationPatternDL');
+
+		optionTypeSelect.addEventListener('change', () => {
+			const value = optionTypeSelect.value;
+			if (optionTypesUsingSelectOptions.includes(value)) {
+				show(selectOptionsDL);
+			} else {
+				hide(selectOptionsDL);
 			}
-			else {
-				$('#selectOptionsDL').hide();
+
+			if (value === 'boolean') {
+				hide(validationPatternDL);
+			} else {
+				show(validationPatternDL);
 			}
-			
-			window[($value === 'boolean' ? 'elHide' : 'elShow')](elById('validationPatternDL'));
 		});
-		$('#optionType').trigger('change');
+		optionTypeSelect.dispatchEvent(new Event('change'));
 	});
 </script>
 
