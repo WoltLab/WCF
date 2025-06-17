@@ -58,7 +58,7 @@
 					<h2 class="sectionTitle">
 						{if $parent->templateGroupID}{$templateGroupHierarchy[$parent->templateGroupID][group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h2>
-					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$parent->lastModificationTime|time}</p>
+					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {time time=$parent->lastModificationTime}</p>
 				</header>
 				
 				{assign var=removeOffset value=0}
@@ -87,7 +87,7 @@
 					<h2 class="sectionTitle">
 						{if $template->templateGroupID}{$templateGroupHierarchy[$template->templateGroupID][group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h2>
-					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$template->lastModificationTime|time}</p>
+					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {time time=$template->lastModificationTime}</p>
 				</header>
 				{assign var=removeOffset value=0}
 				{assign var=lineNo value=0}

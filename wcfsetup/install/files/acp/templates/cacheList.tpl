@@ -82,7 +82,7 @@
 							<tr>
 								<td class="columnTitle">{$file.filename}</td>
 								<td class="columnDigits">{$file.filesize|filesize}</td>
-								<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
+								<td class="columnDate">{if $file.mtime > 1}{time time=$file.mtime}{/if}</td>
 								{if $file.perm|isset}
 									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{$file.perm}</span></td>
 								{/if}

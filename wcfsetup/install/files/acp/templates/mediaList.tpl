@@ -149,10 +149,10 @@
 						</div>
 					</td>
 					<td class="columnText columnMediaTitle">{$media->title|tableWordwrap}</td>
-					<td class="columnDate columnUploadTime">{@$media->uploadTime|time}</td>
+					<td class="columnDate columnUploadTime">{time time=$media->uploadTime}</td>
 					<td class="columnDigits columnFilesize">{$media->filesize|filesize}</td>
 					<td class="columnDigits columnDownloads">{#$media->downloads}</td>
-					<td class="columnDate columnLastDownloadTime">{if $media->lastDownloadTime}{@$media->lastDownloadTime|time}{/if}</td>
+					<td class="columnDate columnLastDownloadTime">{if $media->lastDownloadTime}{time time=$media->lastDownloadTime}{/if}</td>
 					
 					{event name='columns'}
 				</tr>

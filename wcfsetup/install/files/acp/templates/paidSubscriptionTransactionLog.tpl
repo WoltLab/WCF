@@ -39,7 +39,7 @@
 		<dd>{$log->transactionID}</dd>
 		
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.logTime{/lang}</dt>
-		<dd>{@$log->logTime|time}</dd>
+		<dd>{time time=$log->logTime}</dd>
 	</dl>
 </section>
 
