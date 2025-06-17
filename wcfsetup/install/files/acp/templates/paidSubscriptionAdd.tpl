@@ -1,16 +1,23 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.'|concat:$action}
 
 <script data-relocate="true">
-	$(function() {
-		$('#subscriptionLengthPermanent').change(function() {
-			if ($('#subscriptionLengthPermanent').is(':checked')) {
-				$('#subscriptionLengthDL, #isRecurringDL').hide();
+	require(['WoltLabSuite/Core/Dom/Util'], ({ show, hide }) => {
+		const subscriptionLengthPermanent = document.getElementById('subscriptionLengthPermanent');
+		const subscriptionLengthDL = document.getElementById('subscriptionLengthDL');
+		const isRecurringDL = document.getElementById('isRecurringDL');
+
+		function toggleSubscriptionElements() {
+			if (subscriptionLengthPermanent.checked) {
+				hide(subscriptionLengthDL);
+				hide(isRecurringDL);
+			} else {
+				show(subscriptionLengthDL);
+				show(isRecurringDL);
 			}
-			else {
-				$('#subscriptionLengthDL, #isRecurringDL').show();
-			}
-		});
-		$('#subscriptionLengthPermanent').change();
+		}
+
+		subscriptionLengthPermanent.addEventListener('change', toggleSubscriptionElements);
+		toggleSubscriptionElements();
 	});
 </script>
 

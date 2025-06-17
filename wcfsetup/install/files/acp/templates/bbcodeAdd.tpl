@@ -43,37 +43,45 @@
 {/capture}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Template'], (Template) => {
-		$(function() {
-			$('.jsDeleteButton').click(function (event) {
-				$(event.target).parent().parent().remove();
+	require(['WoltLabSuite/Core/Template', 'WoltLabSuite/Core/Dom/Util'], (Template, { hide, show }) => {
+		document.querySelectorAll('.jsDeleteButton').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				btn.closest('.section').remove();
 			});
-			
-			var attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
-			var attributeTemplate = new Template('{unsafe:$attributeTemplate|encodeJS}');
-			
-			$('.jsAddButton').click(function (event) {
-				var $html = $($.parseHTML(attributeTemplate.fetch({ attributeNo: attributeNo++ })));
-				$html.find('.jsDeleteButton').click(function (event) {
-					$(event.target).parent().parent().remove();
-				});
-				$('#attributeFieldset').append($html);
-			});
-			
-			var $buttonSettings = $('.jsButtonSetting');
-			var $showButton = $('#showButton');
-			function toggleButtonSettings() {
-				if ($showButton.is(':checked')) {
-					$buttonSettings.show();
-				}
-				else {
-					$buttonSettings.hide();
-				}
-			}
-			
-			$showButton.change(toggleButtonSettings);
-			toggleButtonSettings();
 		});
+
+		let attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
+		const attributeTemplate = new Template('{unsafe:$attributeTemplate|encodeJS}');
+
+		document.querySelectorAll('.jsAddButton').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const html = attributeTemplate.fetch({ attributeNo: attributeNo++ });
+				const tempDiv = document.createElement('div');
+				tempDiv.innerHTML = html;
+				const section = tempDiv.firstElementChild;
+				section.querySelectorAll('.jsDeleteButton').forEach((delBtn) => {
+					delBtn.addEventListener('click', () => {
+						delBtn.closest('.section').remove();
+					});
+				});
+				document.getElementById('attributeFieldset').appendChild(section);
+			});
+		});
+
+		const buttonSettings = document.querySelectorAll('.jsButtonSetting');
+		const showButton = document.getElementById('showButton');
+		function toggleButtonSettings() {
+			if (showButton.checked) {
+				buttonSettings.forEach(el => show(el));
+			} else {
+				buttonSettings.forEach(el => hide(el));
+			}
+		}
+
+		if (showButton) {
+			showButton.addEventListener('change', toggleButtonSettings);
+			toggleButtonSettings();
+		}
 	});
 </script>
 
