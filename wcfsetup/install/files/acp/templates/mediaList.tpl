@@ -95,18 +95,20 @@
 	</section>
 </form>
 
-{hascontent}
+{assign var='linkParameters' value=''}
+{if $username}{capture append=linkParameters}&username={unsafe:$username|rawurlencode}{/capture}{/if}
+{if $q}{capture append=linkParameters}&q={unsafe:$q|rawurlencode}{/capture}{/if}
+{if $categoryID}{capture append=linkParameters}&categoryID={$categoryID}{/capture}{/if}
+
+{if $pages > 1}
 	<div class="paginationTop">
-		{content}
-			{assign var='linkParameters' value=''}
-			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
-			{if $q}{capture append=linkParameters}&q={@$q|rawurlencode}{/capture}{/if}
-			{if $categoryID}{capture append=linkParameters}&categoryID={@$categoryID}{/capture}{/if}
-			
-			{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-		{/content}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='MediaList' sortField=$sortField sortOrder=$sortOrder}{unsafe:$linkParameters}{/link}"
+		></woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 <div class="section tabularBox"{if !$objects|count} style="display: none;{/if}">
 	<table class="table jsClipboardContainer jsObjectActionContainer" data-object-action-class-name="wcf\data\media\MediaAction" data-type="com.woltlab.wcf.media">
@@ -193,11 +195,15 @@
 
 {if $objects|count}
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='MediaList' sortField=$sortField sortOrder=$sortOrder}{unsafe:$linkParameters}{/link}"
+				></woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		<nav class="contentFooterNavigation">
 			<ul>
