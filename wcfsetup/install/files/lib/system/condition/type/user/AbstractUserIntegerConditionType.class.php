@@ -73,10 +73,10 @@ abstract class AbstractUserIntegerConditionType extends AbstractConditionType im
     {
         return match ($this->filter['condition']) {
             '=' => $object->{$this->columnName} == $this->filter['value'],
-            '>' => $object->{$this->columnName} < $this->filter['value'],
-            '<' => $object->{$this->columnName} > $this->filter['value'],
-            '>=' => $object->{$this->columnName} <= $this->filter['value'],
-            '<=' => $object->{$this->columnName} >= $this->filter['value'],
+            '>' => $object->{$this->columnName} > $this->filter['value'],
+            '<' => $object->{$this->columnName} < $this->filter['value'],
+            '>=' => $object->{$this->columnName} >= $this->filter['value'],
+            '<=' => $object->{$this->columnName} <= $this->filter['value'],
             default => throw new \InvalidArgumentException("Unknown condition: {$this->filter['condition']}"),
         };
     }
