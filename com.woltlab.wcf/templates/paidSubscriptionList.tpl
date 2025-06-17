@@ -1,16 +1,19 @@
 {capture assign='headContent'}
 	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
 		<script data-relocate="true">
-			const tosCheckbox = document.getElementById('tosConfirmed');
-			const buttons = document.querySelectorAll('.paidSubscriptionList button');
-			if (tosCheckbox) {
-				function toggleButtons() {
-					buttons.forEach(function(button) {
-						button.disabled = !tosCheckbox.checked;
-					});
+			{
+				const tosCheckbox = document.getElementById('tosConfirmed');
+				const buttons = document.querySelectorAll('.paidSubscriptionList button');
+				if (tosCheckbox) {
+					function toggleButtons () {
+						buttons.forEach(function(button) {
+							button.disabled = !tosCheckbox.checked;
+						});
+					}
+
+					tosCheckbox.addEventListener('change', toggleButtons);
+					toggleButtons();
 				}
-				tosCheckbox.addEventListener('change', toggleButtons);
-				toggleButtons();
 			}
 		</script>
 		
