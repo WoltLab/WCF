@@ -21,8 +21,7 @@
 							{icon name='shield-halved'}
 						</span>
 					{/if}
-					
-					{unsafe:$langPrefix|concat:$option->optionName|phrase}
+					{lang}{$langPrefix}{$option->optionName}{/lang}
 
 					{event name='afterOptionName'}
 				</label>

@@ -15,7 +15,7 @@
 							{icon name='bolt'}
 						</span>
 					{/if}
-					{$langPrefix|concat:$option->optionName|phrase}
+					{lang}{$langPrefix}{$option->optionName}{/lang}
 				</label>
 			{/if}
 		</dt>
