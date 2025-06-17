@@ -63,9 +63,7 @@ final class UserHasTrophyConditionType extends AbstractConditionType implements 
     public function matches(object $object): bool
     {
         $userTrophies = UserTrophyList::getUserTrophies([$object->userID], false)[$object->userID];
-        $trophyIDs = \array_map(static function ($userTrophy) {
-            return $userTrophy->trophyID;
-        }, $userTrophies);
+        $trophyIDs = \array_column($userTrophies, 'trophyID');
 
         return \in_array($this->filter, $trophyIDs, true);
     }
