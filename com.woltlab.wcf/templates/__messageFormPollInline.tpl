@@ -8,7 +8,7 @@
 			
 			new UiPollEditor(
 				"pollOptionContainer_{$wysiwygSelector}",
-				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{@$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{unsafe:$pollOption[optionValue]|encodeJS}' }{/implode} ],
 				"{$wysiwygSelector}",
 				{
 					isAjax: true,
@@ -39,7 +39,7 @@
 				<label for="{$wysiwygSelector}pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" tabindex="-1" name="pollEndTime" id="{$wysiwygSelector}pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
+				<input type="datetime" tabindex="-1" name="pollEndTime" id="{$wysiwygSelector}pollEndTime" value="{if $pollEndTime}{time time=$pollEndTime type='custom' format='c'}{/if}" class="medium">
 			</dd>
 		</dl>
 		<dl>

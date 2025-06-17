@@ -59,7 +59,7 @@
 		{include file='shared_messageFormAttachments'}
 	{/if}
 
-	{if $__messageFormSettingsInlineContent}{@$__messageFormSettingsInlineContent}{/if}
+	{if $__messageFormSettingsInlineContent}{unsafe:$__messageFormSettingsInlineContent}{/if}
 
 	{include file='__messageFormPollInline'}
 

@@ -24,8 +24,8 @@
 			{/if}
 			
 			<div class="messageAuthorContainer">
-				<a href="{$userProfile->getLink()}" class="username userLink" data-object-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
-					<span{if $enableMicrodata} itemprop="name"{/if}>{@$userProfile->getFormattedUsername()}</span>
+				<a href="{$userProfile->getLink()}" class="username userLink" data-object-id="{$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
+					<span{if $enableMicrodata} itemprop="name"{/if}>{unsafe:$userProfile->getFormattedUsername()}</span>
 				</a>
 				{if !$isReply}
 					{if $userProfile->banned}
@@ -45,7 +45,7 @@
 							{event name='beforeUserTitle'}
 						
 							{if MODULE_USER_RANK && $userProfile->getUserTitle()}
-								<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
+								<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
 							{/if}
 						
 							{event name='afterUserTitle'}
@@ -54,7 +54,7 @@
 				{/hascontent}
 				
 				{if MODULE_USER_RANK && $userProfile->getRank() && $userProfile->getRank()->rankImage}
-					<div class="userRank">{@$userProfile->getRank()->getImage()}</div>
+					<div class="userRank">{unsafe:$userProfile->getRank()->getImage()}</div>
 				{/if}
 			{/if}
 
@@ -62,14 +62,14 @@
 				<div class="specialTrophyContainer">
 					<ul>
 						{foreach from=$userProfile->getSpecialTrophies() item=trophy}
-							<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
+							<li><a href="{$trophy->getLink()}">{unsafe:$trophy->renderTrophy(32, true)}</a></li>
 						{/foreach}
 					</ul>
 				</div>
 			{/if}
 		{else}
 			<div class="userAvatar">
-				<span>{@$userProfile->getAvatar()->getImageTag(128)}</span>
+				<span>{unsafe:$userProfile->getAvatar()->getImageTag(128)}</span>
 			</div>
 			
 			<div class="messageAuthorContainer">
@@ -100,7 +100,7 @@
 							{/if}
 							
 							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
-								<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
+								<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
 								<dd>{#$userProfile->activityPoints}</dd>
 							{/if}
 							
@@ -118,7 +118,7 @@
 										{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
 										{if $__formattedUserOption}
 											<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
-											<dd>{@$__formattedUserOption}</dd>
+											<dd>{unsafe:$__formattedUserOption}</dd>
 										{/if}
 									{/if}
 								{/foreach}

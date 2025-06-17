@@ -9,10 +9,10 @@
 				<li>
 					<span class="tocItemTitle"><a href="#{$item->getID()}">{$item->getTitle()}</a></span>
 					
-					{if $item->hasChildren()}<ol class="tableOfContents tocLevel{@$item->getDepth() + 1}">{else}</li>{/if}
+					{if $item->hasChildren()}<ol class="tableOfContents tocLevel{$item->getDepth() + 1}">{else}</li>{/if}
 					
 					{if !$item->hasChildren() && $item->isLastSibling()}
-						{@"</ol></li>"|str_repeat:$item->getOpenParentNodes()}
+						{unsafe:"</ol></li>"|str_repeat:$item->getOpenParentNodes()}
 					{/if}
 			{/foreach}
 		</ol>
