@@ -5,11 +5,11 @@
 						<div class="boxContainer">
 							{content}
 								{if !$boxesContentBottom|empty}
-									{@$boxesContentBottom}
+									{unsafe:$boxesContentBottom}
 								{/if}
 								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
-									{@$box->render()}
+									{unsafe:$box->render()}
 								{/foreach}
 							{/content}
 						</div>
@@ -17,14 +17,14 @@
 				{/hascontent}
 				
 				{if MODULE_WCF_AD && $__disableAds|empty}
-					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
+					{unsafe:$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</div>
 			
 			{hascontent}
 				<aside class="sidebar boxesSidebarRight" aria-label="{lang}wcf.page.sidebar.right{/lang}">
 					<div class="boxContainer">
-						{content}{@$__sidebarRightContent}{/content}
+						{content}{unsafe:$__sidebarRightContent}{/content}
 					</div>
 				</aside>
 			{/hascontent}
@@ -36,11 +36,11 @@
 			<div class="boxContainer">
 				{content}
 					{if !$boxesBottom|empty}
-						{@$boxesBottom}
+						{unsafe:$boxesBottom}
 					{/if}
 				
 					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
-						{@$box->render()}
+						{unsafe:$box->render()}
 					{/foreach}
 				{/content}
 			</div>
@@ -53,11 +53,11 @@
 				<div class="boxContainer">
 					{content}
 						{if !$footerBoxes|empty}
-							{@$footerBoxes}
+							{unsafe:$footerBoxes}
 						{/if}
 					
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
-							{@$box->render()}
+							{unsafe:$box->render()}
 						{/foreach}
 					{/content}
 				</div>
@@ -84,7 +84,7 @@
 
 <!-- {$__wcf->getRequestNonce('JAVASCRIPT_RELOCATE_POSITION')} -->
 
-{@FOOTER_CODE}
+{unsafe:FOOTER_CODE}
 
 <span id="bottom"></span>
 

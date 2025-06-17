@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-	dir="{@$__wcf->getLanguage()->getPageDirection()}"
+	dir="{$__wcf->getLanguage()->getPageDirection()}"
 	lang="{$__wcf->getLanguage()->getBcp47()}"
 	data-color-scheme="{$__wcf->getStyleHandler()->getColorScheme()}"
 >
@@ -8,13 +8,13 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex">
-	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{jslang}wcf.global.acp{/jslang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
+	<title>{if $pageTitle|isset}{unsafe:$pageTitle|language} - {/if}{jslang}wcf.global.acp{/jslang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
 	
 	{* work-around for Microsoft Edge that sometimes does not apply this style, if it was set via an external stylesheet *}
 	<style>ol, ul { list-style: none; }</style>
 	
 	<!-- Stylesheets -->
-	{@$__wcf->getStyleHandler()->getStylesheet(true)}
+	{unsafe:$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
 	<!-- Icons -->
@@ -48,14 +48,14 @@
 	<meta name="timezone" content="{$__wcf->user->getTimeZone()->getName()}">
 	
 	<script data-eager="true">
-		var WCF_PATH = '{@$__wcf->getPath()}';
-		var WSC_API_URL = '{@$__wcf->getPath()}acp/';
+		var WCF_PATH = '{unsafe:$__wcf->getPath()|encodeJS}';
+		var WSC_API_URL = '{unsafe:$__wcf->getPath()|encodeJS}acp/';
 		var WSC_RPC_API_URL = '{link controller="Api" forceFrontend=true id="rpc"}{/link}';
 		{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
-		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
+		var LANGUAGE_ID = {$__wcf->getLanguage()->languageID};
 		var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
-		var TIME_NOW = {@TIME_NOW};
-		var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
+		var TIME_NOW = {TIME_NOW};
+		var LAST_UPDATE_TIME = {LAST_UPDATE_TIME};
 		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
@@ -65,7 +65,7 @@
 		var COMPILER_TARGET_DEFAULT = true;
 	</script>
 
-	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.min.js?v={LAST_UPDATE_TIME}"></script>
 	<script data-eager="true" src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
@@ -75,8 +75,8 @@
 	{js application='wcf' file='3rdParty/tslib' bundle='WoltLabSuite.Core' core='true'}
 	<script>
 		requirejs.config({
-			baseUrl: '{@$__wcf->getPath()}js',
-			urlArgs: 't={@LAST_UPDATE_TIME}'
+			baseUrl: '{unsafe:$__wcf->getPath()|encodeJS}js',
+			urlArgs: 't={LAST_UPDATE_TIME}'
 			{hascontent}
 			, paths: {
 				{content}{event name='requirePaths'}{/content}
@@ -94,9 +94,9 @@
 			});
 			
 			User.init(
-				{@$__wcf->user->userID},
-				{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
-				{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if}
+				{$__wcf->user->userID},
+				{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
+				{if $__wcf->user->userID}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if}
 			);
 			
 			AcpBootstrap.setup({
@@ -126,8 +126,8 @@
 		define.amd = __require_define_amd;
 		$.holdReady(true);
 		WCF.User.init(
-			{@$__wcf->user->userID},
-			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}
+			{$__wcf->user->userID},
+			{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
 		);
 	</script>
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
@@ -165,7 +165,7 @@
 	{event name='javascriptInclude'}
 	
 	{if !$headContent|empty}
-		{@$headContent}
+		{unsafe:$headContent}
 	{/if}
 </head>
 

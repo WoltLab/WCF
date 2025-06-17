@@ -1,5 +1,5 @@
 {if $__searchTypeLabel|empty}
-	{capture assign='__searchTypeLabel'}{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}{/capture}
+	{capture assign='__searchTypeLabel'}{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{$__searchObjectTypeName}{else}everywhere{/if}{/lang}{/capture}
 {/if}
 
 {if MODULE_ARTICLE && SEARCH_ENABLE_ARTICLES && $__wcf->getActivePage() != null && ($__wcf->getActivePage()->identifier == 'com.woltlab.wcf.ArticleList' || $__wcf->getActivePage()->identifier == 'com.woltlab.wcf.CategoryArticleList' || $__wcf->getActivePage()->identifier == 'com.woltlab.wcf.Article')}
@@ -12,7 +12,7 @@
 	{assign var='__searchObjectTypeName' value='com.woltlab.wcf.article'}
 	
 	{capture assign='__searchTypesScoped'}
-		{if $category|isset}<li><a href="#" data-extended-link="{link controller='Search'}type=com.woltlab.wcf.article&extended=1{/link}" data-object-type="com.woltlab.wcf.article" data-parameters='{ "articleCategoryID": {@$category->categoryID} }'>{$category->getTitle()}</a></li>{/if}
+		{if $category|isset}<li><a href="#" data-extended-link="{link controller='Search'}type=com.woltlab.wcf.article&extended=1{/link}" data-object-type="com.woltlab.wcf.article" data-parameters='{ "articleCategoryID": {$category->categoryID} }'>{$category->getTitle()}</a></li>{/if}
 	{/capture}
 	{assign var='__searchAreaInitialized' value=true}
 {/if}
@@ -28,7 +28,7 @@
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect">
-					<span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span>
+					<span class="pageHeaderSearchTypeLabel">{unsafe:$__searchTypeLabel}</span>
 					{icon name='angle-down' type='solid'}
 				</a>
 				<ul class="dropdownMenu">
@@ -37,7 +37,7 @@
 					
 					{hascontent}
 						{content}
-							{if !$__searchTypesScoped|empty}{@$__searchTypesScoped}{/if}
+							{if !$__searchTypesScoped|empty}{unsafe:$__searchTypesScoped}{/if}
 						{/content}
 						
 						<li class="dropdownDivider"></li>
@@ -45,7 +45,7 @@
 					
 					{foreach from=$__wcf->getSearchEngine()->getAvailableObjectTypes() key=_searchObjectTypeName item=_searchObjectType}
 						{if $_searchObjectType->isAccessible()}
-							<li><a href="#" data-extended-link="{link controller='Search'}type={@$_searchObjectTypeName}&extended=1{/link}" data-object-type="{@$_searchObjectTypeName}">{lang}wcf.search.type.{@$_searchObjectTypeName}{/lang}</a></li>
+							<li><a href="#" data-extended-link="{link controller='Search' type=$_searchObjectTypeName extended=1}{/link}" data-object-type="{$_searchObjectTypeName}">{lang}wcf.search.type.{$_searchObjectTypeName}{/lang}</a></li>
 						{/if}
 					{/foreach}
 					
@@ -62,7 +62,7 @@
 			
 			<div id="pageHeaderSearchParameters"></div>
 			
-			{if !$__searchStaticOptions|empty}{@$__searchStaticOptions}{/if}
+			{if !$__searchStaticOptions|empty}{unsafe:$__searchStaticOptions}{/if}
 		</div>
 	</form>
 </div>
@@ -70,7 +70,7 @@
 {if (!OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')) && (!FORCE_LOGIN || $__wcf->user->userID)}
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Search/Page'], function(UiSearchPage) {
-			UiSearchPage.init('{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{elseif !$searchPreselectObjectType|empty}{$searchPreselectObjectType}{else}everywhere{/if}');
+			UiSearchPage.init('{if !$__searchObjectTypeName|empty}{unsafe:$__searchObjectTypeName|encodeJS}{elseif !$searchPreselectObjectType|empty}{$searchPreselectObjectType}{else}everywhere{/if}');
 		});
 	</script>
 {/if}

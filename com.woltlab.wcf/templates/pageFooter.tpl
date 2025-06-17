@@ -36,11 +36,11 @@
 					<div class="boxContainer">
 						{content}
 							{if !$boxesFooter|empty}
-								{@$boxesFooter}
+								{unsafe:$boxesFooter}
 							{/if}
 
 							{foreach from=$__boxesFooter item=box}
-								{@$box->render()}
+								{unsafe:$box->render()}
 							{/foreach}
 						{/content}
 					</div>
@@ -60,7 +60,7 @@
 					{include file='pageFooterCopyright'}
 				
 					{if MODULE_WCF_AD && $__disableAds|empty}
-						{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
+						{unsafe:$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
 					{/if}
 				{/content}
 			</div>

@@ -17,7 +17,7 @@
 								<span class="breadcrumbs__title"{if $__microdata} itemprop="name"{/if}>{$breadcrumb->getLabel()}</span>
 							</a>
 							{if $__microdata}
-								<meta itemprop="position" content="{@$__breadcrumbPos}">
+								<meta itemprop="position" content="{$__breadcrumbPos}">
 								{assign var='__breadcrumbPos' value=$__breadcrumbPos+1}
 							{/if}
 						</li>

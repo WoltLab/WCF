@@ -21,7 +21,7 @@
 
 <!-- {$__wcf->getRequestNonce('JAVASCRIPT_RELOCATE_POSITION')} -->
 
-{@FOOTER_CODE}
+{unsafe:FOOTER_CODE}
 
 <span id="bottom"></span>
 

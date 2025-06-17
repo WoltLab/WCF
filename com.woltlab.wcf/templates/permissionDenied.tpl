@@ -23,7 +23,7 @@
 	
 	<p id="errorMessage" class="fullPageErrorMessage" data-exception-class-name="{$exceptionClassName}">
 		{if $message|isset}
-			{@$message}
+			{unsafe:$message}
 		{else}
 			{lang}wcf.page.error.permissionDenied{/lang}
 		{/if}
@@ -49,7 +49,7 @@
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 
-	{$name} thrown in {$file} ({@$line})
+	{$name} thrown in {$file} ({$line})
 	Stacktrace:
 	{$stacktrace}
 	-->
