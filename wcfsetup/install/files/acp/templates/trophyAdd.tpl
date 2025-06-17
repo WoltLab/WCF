@@ -230,7 +230,7 @@
 <div id="trophyIconEditor" style="display: none;">
 	<div class="box128">
 		<span class="jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}">
-			{@$icon->toHtml(128)}
+			{unsafe:$icon->toHtml(128)}
 		</span>
 		<div>
 			<dl>

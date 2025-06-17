@@ -35,7 +35,7 @@
 						{elseif $errorType == 'uploadFailed'}
 							{lang}wcf.upload.error.uploadFailed{/lang}
 						{else}
-							{lang}wcf.acp.style.import.source.error.{@$errorType}{/lang}
+							{lang}wcf.acp.style.import.source.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

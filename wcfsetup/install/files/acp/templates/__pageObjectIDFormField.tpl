@@ -32,11 +32,11 @@
 			{foreach from=$pageNodeList item=pageNode}
 			{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{$pageNode->identifier}{/lang}{/capture}
 			{if $pageObjectIDLanguageItem}
-				'wcf.page.pageObjectID.{$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
+				'wcf.page.pageObjectID.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
 			{/if}
 			{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{$pageNode->identifier}{/lang}{/capture}
 			{if $pageObjectIDLanguageItem}
-				'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
+				'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
 			{/if}
 			{/foreach}
 		});

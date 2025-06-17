@@ -28,7 +28,7 @@
 						{if $errorType == 'empty' || $errorType == 'multilingual'}
 							{lang}wcf.global.form.error.{$errorType}{/lang}
 						{else}
-							{lang}wcf.acp.smiley.smileyTitle.error.{@$errorType}{/lang}
+							{lang}wcf.acp.smiley.smileyTitle.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -49,7 +49,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.smiley.categoryID.error.{@$errorType}{/lang}
+							{lang}wcf.acp.smiley.categoryID.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -66,7 +66,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.smiley.smileyCode.error.{@$errorType}{/lang}
+							{lang}wcf.acp.smiley.smileyCode.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -80,7 +80,7 @@
 				
 				{if $errorField == 'aliases'}
 					<small class="innerError">
-						{lang}wcf.acp.smiley.aliases.error.{@$errorType}{/lang}
+						{lang}wcf.acp.smiley.aliases.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -93,7 +93,7 @@
 				
 				{if $errorField == 'showOrder'}
 					<small class="innerError">
-						{lang}wcf.acp.smiley.showOrder.error.{@$errorType}{/lang}
+						{lang}wcf.acp.smiley.showOrder.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -119,7 +119,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
+								{lang}wcf.acp.smiley.fileUpload.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -137,7 +137,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
+								{lang}wcf.acp.smiley.smileyPath.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -169,7 +169,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
+								{lang}wcf.acp.smiley.fileUpload.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -187,7 +187,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
+								{lang}wcf.acp.smiley.smileyPath.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

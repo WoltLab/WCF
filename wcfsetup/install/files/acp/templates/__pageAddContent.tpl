@@ -2,8 +2,8 @@
 
 {if $pageType == 'html' || $pageType == 'tpl'}
 	<ul class="codemirrorToolbar">
-		<li><button type="button" id="codemirror-{@$__pageContentID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</button></li>
-		<li><button type="button" id="codemirror-{@$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
+		<li><button type="button" id="codemirror-{$__pageContentID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</button></li>
+		<li><button type="button" id="codemirror-{$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
 	</ul>
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
@@ -25,27 +25,27 @@
 				'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
 			});
 			
-			new AcpUiCodeMirrorMedia('{@$__pageContentID}');
-			new AcpUiCodeMirrorPage('{@$__pageContentID}');
+			new AcpUiCodeMirrorMedia('{unsafe:$__pageContentID|encodeJS}');
+			new AcpUiCodeMirrorPage('{unsafe:$__pageContentID|encodeJS}');
 		});
 	</script>
 {/if}
 
 {if $pageType == 'text'}
-	<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
+	<textarea name="content[{$languageID}]" id="{$__pageContentID}"
 		{if $pageType == 'text'}
-			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
-			{if $action === 'edit'}data-autosave-last-edit-time="{@$page->lastUpdateTime}"{/if}
+			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{$pageID}{else}0{/if}-{$languageID}"
+			{if $action === 'edit'}data-autosave-last-edit-time="{$page->lastUpdateTime}"{/if}
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	{include file='shared_wysiwygCmsToolbar' wysiwygSelector=$__pageContentID}
 	{include file='shared_wysiwyg' wysiwygSelector=$__pageContentID}
 {else}
 	<div dir="ltr">
-		<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
+		<textarea name="content[{$languageID}]" id="{$__pageContentID}"
 			{if $pageType == 'text'}
-				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
-				{if $action === 'edit'}data-autosave-last-edit-time="{@$page->lastUpdateTime}"{/if}
+				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{$pageID}{else}0{/if}-{$languageID}"
+				{if $action === 'edit'}data-autosave-last-edit-time="{$page->lastUpdateTime}"{/if}
 			{/if}
 		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	</div>

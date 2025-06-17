@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
+		<h1 class="contentTitle">{unsafe:$objectType->getProcessor()->getLanguageVariable($action)}</h1>
 	</div>
 
 	{hascontent}
@@ -12,7 +12,7 @@
 					{if $action == 'edit' && $categoryNodeList !== null && $categoryNodeList->hasChildren()}
 						<li class="dropdown">
 							<a class="button dropdownToggle">
-								{icon name='sort'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span>
+								{icon name='sort'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('button.choose')}</span>
 							</a>
 							<div class="dropdownMenu">
 								<ul class="scrollableDropdownMenu">
@@ -28,7 +28,7 @@
 
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
 						<li>
-							<a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='list'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a>
+							<a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='list'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a>
 						</li>
 					{/if}
 
@@ -39,6 +39,6 @@
 	{/hascontent}
 </header>
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer'}

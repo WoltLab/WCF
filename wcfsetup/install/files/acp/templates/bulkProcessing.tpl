@@ -34,7 +34,7 @@
 				dialogTitle: '{jslang}{$pageTitle}{/jslang}',
 				className: "wcf\\system\\worker\\BulkProcessingWorker",
 				parameters: {
-					bulkProcessingID: {@$bulkProcessingID},
+					bulkProcessingID: {$bulkProcessingID},
 				},
 			});
 		});
@@ -63,12 +63,12 @@
 			<dt></dt>
 			<dd>
 				{foreach from=$actions item=actionObjectType}
-					<label><input type="radio" name="action" value="{$actionObjectType->action}"{if $actionObjectType->action == $action} checked{/if}> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</label>
+					<label><input type="radio" name="action" value="{$actionObjectType->action}"{if $actionObjectType->action == $action} checked{/if}> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{$actionObjectType->action}{/lang}</label>
 				{/foreach}
 				
 				{if $errorField == 'action'}
 					<small class="innerError">
-						{lang}wcf.global.form.error.{@$errorType}{/lang}
+						{lang}wcf.global.form.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -77,10 +77,10 @@
 	
 	{foreach from=$actions item=actionObjectType}
 		{if $actionObjectType->getProcessor()->getHTML()}
-			<section class="section jsBulkProcessingActionSettings" data-action="{@$actionObjectType->action}" {if $actionObjectType->action != $action}style="display: none;"{/if}>
-				<h2 class="sectionTitle">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</h2>
+			<section class="section jsBulkProcessingActionSettings" data-action="{$actionObjectType->action}" {if $actionObjectType->action != $action}style="display: none;"{/if}>
+				<h2 class="sectionTitle">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{$actionObjectType->action}{/lang}</h2>
 				
-				{@$actionObjectType->getProcessor()->getHTML()}
+				{unsafe:$actionObjectType->getProcessor()->getHTML()}
 			</section>
 		{/if}
 	{/foreach}
@@ -91,7 +91,7 @@
 			{hascontent}<p class="sectionDescription">{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.conditions.descriptions{/lang}{/content}</p>{/hascontent}
 		</header>
 		
-		{@$objectType->getProcessor()->getConditionHTML()}
+		{unsafe:$objectType->getProcessor()->getConditionHTML()}
 	</section>
 	
 	<div class="formSubmit">

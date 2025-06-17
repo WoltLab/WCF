@@ -88,7 +88,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.notice.cssClassName.error.{@$errorType}{/lang}
+							{lang}wcf.acp.notice.cssClassName.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -141,7 +141,7 @@
 			</header>
 			
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
-				{@$pageConditionObjectType->getProcessor()->getHtml()}
+				{unsafe:$pageConditionObjectType->getProcessor()->getHtml()}
 			{/foreach}
 		</section>
 		
@@ -152,7 +152,7 @@
 			</header>
 			
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
-				{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+				{unsafe:$pointInTimeConditionObjectType->getProcessor()->getHtml()}
 			{/foreach}
 		</section>
 		

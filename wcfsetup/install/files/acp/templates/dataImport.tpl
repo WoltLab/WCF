@@ -6,11 +6,11 @@
 			Language.addObject({
 				'wcf.acp.dataImport': '{jslang}wcf.acp.dataImport{/jslang}',
 				'wcf.acp.dataImport.completed': '{jslang}wcf.acp.dataImport.completed{/jslang}',
-				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{jslang}wcf.acp.dataImport.data.{@$importer}{/jslang}'{/implode}
+				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{$importer}': '{jslang}wcf.acp.dataImport.data.{$importer}{/jslang}'{/implode}
 			});
 			
-			const queue = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
-			new AcpUiDataImportManager(queue, '{link controller='RebuildData' encode=false}{/link}', '{$cacheClearEndpoint|encodeJS}');
+			const queue = [ {implode from=$queue item=item}'{unsafe:$item|encodeJS}'{/implode} ];
+			new AcpUiDataImportManager(queue, '{link controller='RebuildData' encode=false}{/link}', '{unsafe:$cacheClearEndpoint|encodeJS}');
 		});
 	</script>
 {/if}
@@ -38,7 +38,7 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.dataImport{/lang}</h1>
 		{if $exporterName}
-			<p class="contentHeaderDescription">{lang}wcf.acp.dataImport.exporter.{@$exporterName}{/lang}</p>
+			<p class="contentHeaderDescription">{lang}wcf.acp.dataImport.exporter.{$exporterName}{/lang}</p>
 		{/if}
 	</div>
 	
@@ -75,7 +75,7 @@
 					<dd>
 						<select name="exporterName" id="exporterName">
 							{foreach from=$availableExporters key=availableExporterName item=availableExporter}
-								<option value="{$availableExporterName}">{lang}wcf.acp.dataImport.exporter.{@$availableExporterName}{/lang}</option>
+								<option value="{$availableExporterName}">{lang}wcf.acp.dataImport.exporter.{$availableExporterName}{/lang}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'exporterName'}
@@ -83,7 +83,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.dataImport.exporterName.error.{@$errorType}{/lang}
+									{lang}wcf.acp.dataImport.exporterName.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -112,10 +112,10 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd class="jsImportCollection">
-						<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+						<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{$objectTypeName}{/lang}</label>
 						<p>
 							{foreach from=$objectTypes item=objectTypeName}
-								<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+								<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{$objectTypeName}{/lang}</label>
 							{/foreach}
 						</p>
 					</dd>
@@ -189,7 +189,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.dataImport.configure.database.error.{@$errorType}{/lang}
+								{lang}wcf.acp.dataImport.configure.database.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -211,7 +211,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.dataImport.configure.fileSystem.path.error.{@$errorType}{/lang}
+								{lang}wcf.acp.dataImport.configure.fileSystem.path.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

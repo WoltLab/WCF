@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
-<link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css?v={LAST_UPDATE_TIME}" type="text/css" rel="stylesheet">
+<link href="{$__wcf->getPath()}acp/style/acpStyleEditor.css?v={LAST_UPDATE_TIME}" type="text/css" rel="stylesheet">
 
 {include file='shared_colorPickerJavaScript'}
 
@@ -8,7 +8,7 @@
 	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
-			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
+			styleId: {if $action === 'edit'}{$style->styleID}{else}0{/if},
 		});
 
 		ColorPicker.fromSelector(".jsColorPicker");
@@ -226,7 +226,7 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('image')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('image')}
 						{if $errorField == 'image'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -244,7 +244,7 @@
 				<dl{if $errorField == 'image2x'} class="formError"{/if}>
 					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('image2x')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('image2x')}
 						{if $errorField == 'image2x'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -283,7 +283,7 @@
 				<dl{if $errorField == 'customAssets'} class="formError"{/if}>
 					<dt><label for="customAssets">{lang}wcf.acp.style.customAssets{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('customAssets')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('customAssets')}
 						{if $errorField == 'customAssets'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -306,7 +306,7 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('favicon')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('favicon')}
 						{if $errorField == 'favicon'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -336,7 +336,7 @@
 				<dl{if $errorField == 'coverPhoto'} class="formError"{/if}>
 					<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('coverPhoto')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('coverPhoto')}
 						{if $errorField == 'coverPhoto'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -380,7 +380,7 @@
 						<input type="number" id="wcfLayoutMinWidth" name="wcfLayoutMinWidth" value="{$variables[wcfLayoutMinWidth]}" class="tiny">
 						<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -391,7 +391,7 @@
 						<input type="number" id="wcfLayoutMaxWidth" name="wcfLayoutMaxWidth" value="{$variables[wcfLayoutMaxWidth]}" class="tiny">
 						<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -403,7 +403,7 @@
 						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{$variables[wcfLayoutFixedWidth]}" class="tiny">
 						<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -419,7 +419,7 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('pageLogo')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('pageLogo')}
 						<script data-relocate="true">
 						elBySel('#pageLogouploadFileList').addEventListener('change', function (ev) {
 							var img = elBySel('#pageLogouploadFileList img');
@@ -460,7 +460,7 @@
 				<dl>
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
-						{@$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
+						{unsafe:$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
 					</dd>
 				</dl>
 				
@@ -478,7 +478,7 @@
 						<select name="wcfFontSizeDefault_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
 								{if $unit == 'px' || $unit == 'pt'}
-									<option value="{$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected{/if}>{@$unit}</option>
+									<option value="{$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected{/if}>{$unit}</option>
 								{/if}
 							{/foreach}
 						</select>
@@ -490,7 +490,7 @@
 						<input type="number" id="wcfFontSizeSmall" name="wcfFontSizeSmall" value="{$variables[wcfFontSizeSmall]}" class="tiny">
 						<select name="wcfFontSizeSmall_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfFontSizeSmall_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfFontSizeSmall_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -501,7 +501,7 @@
 						<input type="number" id="wcfFontSizeHeadline" name="wcfFontSizeHeadline" value="{$variables[wcfFontSizeHeadline]}" class="tiny">
 						<select name="wcfFontSizeHeadline_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfFontSizeHeadline_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfFontSizeHeadline_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -512,7 +512,7 @@
 						<input type="number" id="wcfFontSizeSection" name="wcfFontSizeSection" value="{$variables[wcfFontSizeSection]}" class="tiny">
 						<select name="wcfFontSizeSection_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfFontSizeSection_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfFontSizeSection_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -523,7 +523,7 @@
 						<input type="number" id="wcfFontSizeTitle" name="wcfFontSizeTitle" value="{$variables[wcfFontSizeTitle]}" class="tiny">
 						<select name="wcfFontSizeTitle_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{$unit}"{if $variables[wcfFontSizeTitle_unit] == $unit} selected{/if}>{@$unit}</option>
+								<option value="{$unit}"{if $variables[wcfFontSizeTitle_unit] == $unit} selected{/if}>{$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -550,7 +550,7 @@
 					<dd>
 						<select name="wcfFontFamilyFallback" id="wcfFontFamilyFallback">
 							{foreach from=$availableFontFamilies key=fontFamily item=primaryFont}
-								<option value='{@$fontFamily}'{if $variables[wcfFontFamilyFallback] == $fontFamily} selected{/if}>{@$primaryFont}</option>
+								<option value='{$fontFamily}'{if $variables[wcfFontFamilyFallback] == $fontFamily} selected{/if}>{$primaryFont}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -591,7 +591,7 @@
 						
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
-								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
+								<div id="spLogo"><img src="{$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
 								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
 							</div>
 						</div>
