@@ -11,7 +11,7 @@
 </dl>
 <dl>
 	<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
-	<dd>{$exception[date]|plainTime}</dd>
+	<dd>{time time=$exception[date] type='plainTime'}</dd>
 </dl>
 <dl>
 	<dt>{lang}wcf.acp.exceptionLog.exception.requestURI{/lang}</dt>

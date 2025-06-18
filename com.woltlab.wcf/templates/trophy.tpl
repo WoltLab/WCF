@@ -49,7 +49,7 @@
 	
 					<div class="containerHeadline">
 						<h3>{user object=$userTrophy->getUserProfile()}</h3>
-						<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{unsafe:$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
+						<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{unsafe:$userTrophy->getDescription()}</span> {/if}{time time=$userTrophy->time}</small>
 					</div>
 				</li>
 			{/foreach}

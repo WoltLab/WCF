@@ -35,7 +35,7 @@
 		
 		{if $media->downloads}
 			<dt>{lang}wcf.media.lastDownloadTime{/lang}</dt>
-			<dd id="mediaDownloads">{@$media->lastDownloadTime|time}</dd>
+			<dd id="mediaDownloads">{time time=$media->lastDownloadTime}</dd>
 		{/if}
 	</dl>
 </div>
