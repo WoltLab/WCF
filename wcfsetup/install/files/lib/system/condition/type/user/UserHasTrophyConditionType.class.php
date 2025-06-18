@@ -20,15 +20,17 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>, int>
- * @implements IObjectConditionType<User, int>
- * @extends AbstractConditionType<int>
+ * @implements IDatabaseObjectListConditionType<UserList<User>, string>
+ * @implements IObjectConditionType<User, string>
+ * @extends AbstractConditionType<string>
  */
 final class UserHasTrophyConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
     {
+        // SelectFormField stores its value as a string,
+        // so we need to convert it to an integer in the `applyFilter`&`matches` method.
         return SelectFormField::create($id)
             ->options($this->getTrophies())
             ->required();
@@ -55,7 +57,7 @@ final class UserHasTrophyConditionType extends AbstractConditionType implements 
                     FROM   wcf1_user_trophy
                     WHERE  trophyID = ?
             )",
-            [$this->filter]
+            [(int)$this->filter]
         );
     }
 
@@ -65,7 +67,7 @@ final class UserHasTrophyConditionType extends AbstractConditionType implements 
         $userTrophies = UserTrophyList::getUserTrophies([$object->userID], false)[$object->userID];
         $trophyIDs = \array_column($userTrophies, 'trophyID');
 
-        return \in_array($this->filter, $trophyIDs, true);
+        return \in_array((int)$this->filter, $trophyIDs, true);
     }
 
     /**

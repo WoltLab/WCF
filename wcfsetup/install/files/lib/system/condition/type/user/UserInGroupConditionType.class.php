@@ -17,15 +17,17 @@ use wcf\system\form\builder\field\SelectFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>, int>
- * @implements IObjectConditionType<User, int>
- * @extends AbstractConditionType<int>
+ * @implements IDatabaseObjectListConditionType<UserList<User>, string>
+ * @implements IObjectConditionType<User, string>
+ * @extends AbstractConditionType<string>
  */
 final class UserInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
     {
+        // SelectFormField stores its value as a string,
+        // so we need to convert it to an integer in the `applyFilter`&`matches` method.
         return SelectFormField::create($id)
             ->options(
                 UserGroup::getGroupsByType(invalidGroupTypes: [
@@ -58,13 +60,13 @@ final class UserInGroupConditionType extends AbstractConditionType implements ID
                     FROM   wcf1_user_to_group
                     WHERE  groupID = ?
             )",
-            [$this->filter]
+            [(int)$this->filter]
         );
     }
 
     #[\Override]
     public function matches(object $object): bool
     {
-        return \in_array($this->filter, $object->getGroupIDs(), true);
+        return \in_array((int)$this->filter, $object->getGroupIDs(), true);
     }
 }
