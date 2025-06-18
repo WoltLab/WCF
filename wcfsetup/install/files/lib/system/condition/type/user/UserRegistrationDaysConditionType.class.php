@@ -72,10 +72,10 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         return match ($condition) {
-            '>' => $object->registrationDate < $timestamp,
-            '<' => $object->registrationDate > $timestamp,
-            '>=' => $object->registrationDate <= $timestamp,
-            '<=' => $object->registrationDate >= $timestamp,
+            '>' => $object->registrationDate > $timestamp,
+            '<' => $object->registrationDate < $timestamp,
+            '>=' => $object->registrationDate >= $timestamp,
+            '<=' => $object->registrationDate <= $timestamp,
             default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
     }
