@@ -63,7 +63,7 @@ abstract class AbstractUserIntegerConditionType extends AbstractConditionType im
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         $objectList->getConditionBuilder()->add(
-            "{$objectList->getDatabaseTableAlias()}{$this->columnName} {$this->filter['condition']} ?",
+            "{$objectList->getDatabaseTableAlias()}.{$this->columnName} {$this->filter['condition']} ?",
             [$this->filter['value']]
         );
     }
