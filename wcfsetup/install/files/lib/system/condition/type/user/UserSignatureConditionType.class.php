@@ -18,7 +18,7 @@ final class UserSignatureConditionType extends AbstractUserBooleanConditionType
             'signature',
             'signature',
             'userSignature',
-            'com.woltlab.wcf.signature'
+            'com.woltlab.wcf.user.signature'
         );
     }
 

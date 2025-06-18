@@ -129,6 +129,6 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
     #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
-        return $objectType === "com.woltlab.wcf.registrationDate";
+        return $objectType === "com.woltlab.wcf.user.registrationDate";
     }
 }

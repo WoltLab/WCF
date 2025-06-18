@@ -35,25 +35,25 @@ final class UserConditionProvider extends AbstractConditionProvider
     public function __construct()
     {
         $this->addConditions([
-            new class("username", "username", "username", 'com.woltlab.wcf.username') extends AbstractUserStringConditionType {},
-            new class("email", "email", "email", 'com.woltlab.wcf.email') extends AbstractUserStringConditionType {},
+            new class("username", "username", "username", 'com.woltlab.wcf.user.username') extends AbstractUserStringConditionType {},
+            new class("email", "email", "email", 'com.woltlab.wcf.user.email') extends AbstractUserStringConditionType {},
             new UserRegistrationDateConditionType(),
             new UserRegistrationDaysConditionType(),
             new UserInGroupConditionType(),
             new UserNotInGroupConditionType(),
             new UserLanguageConditionType(),
-            new class("avatar", 'avatarFileID', 'userAvatar', 'com.woltlab.wcf.avatar') extends AbstractUserIsNullConditionType {},
+            new class("avatar", 'avatarFileID', 'userAvatar', 'com.woltlab.wcf.user.avatar') extends AbstractUserIsNullConditionType {},
             new UserSignatureConditionType(),
-            new class("coverPhoto", 'coverPhotoFileID') extends AbstractUserIsNullConditionType {},
-            new class("isBanned", 'banned') extends AbstractUserBooleanConditionType {},
+            new class("coverPhoto", 'coverPhotoFileID', 'userCoverPhoto', 'com.woltlab.wcf.coverPhoto') extends AbstractUserIsNullConditionType {},
+            new class("isBanned", 'banned', 'userIsBanned', 'com.woltlab.wcf.user.state') extends AbstractUserBooleanConditionType {},
             new UserIsEnabledConditionType(),
-            new class("isEmailConfirmed", 'emailConfirmed') extends AbstractUserIsNullConditionType {},
-            new class("isMultifactorActive", 'multifactorActive') extends AbstractUserBooleanConditionType {},
+            new class("isEmailConfirmed", 'emailConfirmed', 'userIsEmailConfirmed', 'com.woltlab.wcf.user.state') extends AbstractUserIsNullConditionType {},
+            new class("isMultifactorActive", 'multifactorActive', 'multifactorActive', 'com.woltlab.wcf.user.multifactor') extends AbstractUserBooleanConditionType {},
             new UserHasTrophyConditionType(),
             new UserHasNotTrophyConditionType(),
-            new class("activityPoints", "activityPoints") extends AbstractUserIntegerConditionType {},
-            new class("likesReceived", "likesReceived") extends AbstractUserIntegerConditionType {},
-            new class("trophyPoints", "trophyPoints") extends AbstractUserIntegerConditionType {},
+            new class("activityPoints", "activityPoints", 'com.woltlab.wcf.user.activityPoints') extends AbstractUserIntegerConditionType {},
+            new class("likesReceived", "likesReceived", 'com.woltlab.wcf.user.likesReceived') extends AbstractUserIntegerConditionType {},
+            new class("trophyPoints", "trophyPoints", 'com.woltlab.wcf.user.trophyPoints') extends AbstractUserIntegerConditionType {},
         ]);
 
         // TODO add conditions for user options that implement `ISearchableConditionUserOption`

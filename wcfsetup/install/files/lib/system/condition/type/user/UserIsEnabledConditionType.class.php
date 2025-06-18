@@ -14,7 +14,7 @@ final class UserIsEnabledConditionType extends AbstractUserBooleanConditionType
 {
     public function __construct()
     {
-        parent::__construct("isEnabled", 'activationCode');
+        parent::__construct("isEnabled", 'activationCode', 'userIsEnabled', 'com.woltlab.wcf.user.state');
     }
 
     #[\Override]
