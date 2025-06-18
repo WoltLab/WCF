@@ -81,11 +81,13 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     public function matches(object $object): bool
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
+        $value = \strtolower($value);
+        $objectValue = \strtolower($object->{$this->columnName});
 
         return match ($condition) {
-            "_%" => \str_starts_with($object->{$this->columnName}, $value),
-            "%_%" => \str_contains($object->{$this->columnName}, $value),
-            "%_" => \str_ends_with($object->{$this->columnName}, $value),
+            "_%" => \str_starts_with($objectValue, $value),
+            "%_%" => \str_contains($objectValue, $value),
+            "%_" => \str_ends_with($objectValue, $value),
             default => false,
         };
     }
