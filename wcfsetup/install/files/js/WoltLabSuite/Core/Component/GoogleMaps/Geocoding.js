@@ -107,6 +107,9 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("[data-google-maps-geocoding]", (element) => {
             const map = document.getElementById(element.dataset.googleMapsGeocoding);
+            if (!map) {
+                throw new Error(`Unable to find Google Maps element '${element.dataset.googleMapsGeocoding}'.`);
+            }
             new Geocoding(element, map);
         });
     }

@@ -141,6 +141,9 @@ class Geocoding {
 export function setup(): void {
   wheneverFirstSeen("[data-google-maps-geocoding]", (element: HTMLInputElement) => {
     const map = document.getElementById(element.dataset.googleMapsGeocoding!) as WoltlabCoreGoogleMapsElement;
+    if (!map) {
+      throw new Error(`Unable to find Google Maps element '${element.dataset.googleMapsGeocoding}'.`);
+    }
 
     new Geocoding(element, map);
   });
