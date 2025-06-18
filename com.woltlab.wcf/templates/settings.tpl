@@ -25,14 +25,14 @@
 							require(['WoltLabSuite/Core/Language/Chooser'], ({ init }) => {
 								const languages = {
 									{implode from=$availableLanguages item=language}
-									'{@$language->languageID}': {
-										iconPath: '{@$language->getIconPath()|encodeJS}',
-										languageName: '{@$language|encodeJS}'
+									'{$language->languageID}': {
+										iconPath: '{unsafe:$language->getIconPath()|encodeJS}',
+										languageName: '{unsafe:$language|encodeJS}'
 									}
 									{/implode}
 								};
 								
-								init('languageIDContainer', 'languageID', {@$languageID}, languages);
+								init('languageIDContainer', 'languageID', {$languageID}, languages);
 							});
 						</script>
 						<noscript>
@@ -104,11 +104,11 @@
 						<ul class="specialTrophyList">
 							{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') == 1}
 								{foreach from=$availableTrophies item=trophy}
-									<li><label><input type="radio" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {@$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
+									<li><label><input type="radio" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {unsafe:$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
 								{/foreach}
 							{else}
 								{foreach from=$availableTrophies item=trophy}
-									<li><label><input type="checkbox" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {@$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
+									<li><label><input type="checkbox" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {unsafe:$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
 								{/foreach}
 							{/if}
 						</ul>
@@ -128,8 +128,8 @@
 	
 	{if !$optionTree|empty}
 		{foreach from=$optionTree[0][categories][0][categories] item=optionCategory}
-			<section class="section" id="optionCategory_{@$optionCategory[object]->categoryName}">
-				<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$optionCategory[object]->categoryName}{/lang}</h2>
+			<section class="section" id="optionCategory_{$optionCategory[object]->categoryName}">
+				<h2 class="sectionTitle">{lang}wcf.user.option.category.{$optionCategory[object]->categoryName}{/lang}</h2>
 				
 				{include file='userProfileOptionFieldList' options=$optionCategory[options] langPrefix='wcf.user.option.'}
 			</section>

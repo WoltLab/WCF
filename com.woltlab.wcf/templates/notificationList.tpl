@@ -5,7 +5,9 @@
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='NotificationList'}{/link}"></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {capture assign='contentInteractionButtons'}
@@ -84,11 +86,11 @@
 	</section>
 	
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{unsafe:$pagesLinks}{/content}
+				<woltlab-core-pagination page="{$pageNo}" count="{$pages}" url="{link controller='NotificationList'}{/link}"></woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		{hascontent}
 			<nav class="contentFooterNavigation">

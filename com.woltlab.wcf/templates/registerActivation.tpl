@@ -4,6 +4,6 @@
 	<woltlab-core-notice type="info">{lang}wcf.user.registerActivation.info{/lang}</woltlab-core-notice>
 {/if}
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='authFlowFooter'}

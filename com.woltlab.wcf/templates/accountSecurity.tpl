@@ -39,7 +39,7 @@
 							</h3>
 							
 							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
-								{@$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+								{unsafe:$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
 							{else}
 								{lang}wcf.user.security.multifactor.{$method->objectType}.description{/lang}
 							{/if}
@@ -88,7 +88,7 @@
 						
 						<dl class="plain inlineDataList small">
 							<dt>{lang}wcf.user.security.lastActivity{/lang}</dt>
-							<dd>{if $session->isCurrentSession()}{lang}wcf.user.security.currentSession{/lang}{else}{@$session->getLastActivityTime()|time}{/if}</dd>
+							<dd>{if $session->isCurrentSession()}{lang}wcf.user.security.currentSession{/lang}{else}{time time=$session->getLastActivityTime()}{/if}</dd>
 							
 							<dt>{lang}wcf.user.security.ipAddress{/lang}</dt>
 							<dd title="{$session->getIpAddress()}">{$session->getIpAddress()->toBulletMasked(16, 48)}</dd>

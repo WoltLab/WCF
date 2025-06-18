@@ -24,19 +24,19 @@
 				{foreach from=$eventList item=event}
 					<div class="notificationSettingsItem">
 						<div class="notificationSettingsEvent">
-							<label for="settings_{@$event->eventID}">{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</label>
+							<label for="settings_{$event->eventID}">{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</label>
 						</div>
 						<div class="notificationSettingsState">
 							<label>
-								<input type="checkbox" id="settings_{@$event->eventID}" name="settings[{@$event->eventID}][enabled]" class="jsCheckboxNotificationSettingsState" value="1" data-object-id="{@$event->eventID}"{if !$settings[$event->eventID][enabled]|empty} checked{/if}>
+								<input type="checkbox" id="settings_{$event->eventID}" name="settings[{$event->eventID}][enabled]" class="jsCheckboxNotificationSettingsState" value="1" data-object-id="{$event->eventID}"{if !$settings[$event->eventID][enabled]|empty} checked{/if}>
 								{icon size=24 name='bell' type='solid'}
 								{icon size=24 name='bell-slash'}
 							</label>
 						</div>
 						<div class="notificationSettingsEmail">
 							{if $event->supportsEmailNotification()}
-								<input type="hidden" id="settings_{$event->eventID}_mailNotificationType" name="settings[{@$event->eventID}][mailNotificationType]" value="{$settings[$event->eventID][mailNotificationType]}">
-								<button type="button" class="notificationSettingsEmailType jsTooltip{if $settings[$event->eventID][enabled]|empty} disabled{/if}" title="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
+								<input type="hidden" id="settings_{$event->eventID}_mailNotificationType" name="settings[{$event->eventID}][mailNotificationType]" value="{$settings[$event->eventID][mailNotificationType]}">
+								<button type="button" class="notificationSettingsEmailType jsTooltip{if $settings[$event->eventID][enabled]|empty} disabled{/if}" title="{lang}wcf.user.notification.mailNotificationType.{$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{$event->eventID}">
 									<span class="jsIconNotificationSettingsEmailType">
 										{if $settings[$event->eventID][mailNotificationType] === 'none'}
 											{icon size=24 name='xmark'}

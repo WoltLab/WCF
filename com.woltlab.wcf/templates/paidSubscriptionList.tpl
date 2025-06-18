@@ -1,17 +1,20 @@
 {capture assign='headContent'}
 	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
 		<script data-relocate="true">
-			$(function() {
-				$('#tosConfirmed').change(function () {
-					if ($('#tosConfirmed').is(':checked')) {
-						$('.paidSubscriptionList button').enable();
+			{
+				const tosCheckbox = document.getElementById('tosConfirmed');
+				const buttons = document.querySelectorAll('.paidSubscriptionList button');
+				if (tosCheckbox) {
+					function toggleButtons () {
+						buttons.forEach(function(button) {
+							button.disabled = !tosCheckbox.checked;
+						});
 					}
-					else {
-						$('.paidSubscriptionList button').disable();
-					}
-				});
-				$('#tosConfirmed').change();
-			});
+
+					tosCheckbox.addEventListener('change', toggleButtons);
+					toggleButtons();
+				}
+			}
 		</script>
 		
 		<noscript>
@@ -42,13 +45,13 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$subscription->getTitle()} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
-						<div class="htmlContent">{@$subscription->getFormattedDescription()}</div>
+						<div class="htmlContent">{unsafe:$subscription->getFormattedDescription()}</div>
 					</div>
 					
 					<div class="containerContent">
 						<ul class="buttonList">
 							{foreach from=$subscription->getPurchaseButtons() item=button}
-								<li>{@$button}</li>
+								<li>{unsafe:$button}</li>
 							{/foreach}
 						</ul>
 					</div>
@@ -67,14 +70,14 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$userSubscription->getSubscription()->getTitle()}</h3>
-						<div class="htmlContent">{@$userSubscription->getSubscription()->getFormattedDescription()}</div>
+						<div class="htmlContent">{unsafe:$userSubscription->getSubscription()->getFormattedDescription()}</div>
 					</div>
 					
 					{if $userSubscription->endDate}
 						<div class="containerContent">
 							<dl class="plain inlineDataList">
 								<dt>{lang}wcf.paidSubscription.expires{/lang}</dt>
-								<dd>{@$userSubscription->endDate|time}</dd>
+								<dd>{time time=$userSubscription->endDate}</dd>
 							</dl>
 						</div>
 					{/if}

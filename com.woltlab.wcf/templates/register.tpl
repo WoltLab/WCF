@@ -39,13 +39,13 @@
 	<div class="section">
 		<dl{if $errorType[username]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="formFieldRequired">*</span>
+				<label for="{$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
 				<input
 					type="text"
-					id="{@$randomFieldNames[username]}"
-					name="{@$randomFieldNames[username]}"
+					id="{$randomFieldNames[username]}"
+					name="{$randomFieldNames[username]}"
 					value="{$username}"
 					required
 					class="long"
@@ -67,13 +67,13 @@
 		
 		<dl{if $errorType[email]|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="formFieldRequired">*</span>
+				<label for="{$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="formFieldRequired">*</span>
 			</dt>
 			<dd>
 				<input
 					type="email"
-					id="{@$randomFieldNames[email]}"
-					name="{@$randomFieldNames[email]}"
+					id="{$randomFieldNames[email]}"
+					name="{$randomFieldNames[email]}"
 					value="{$email}"
 					required
 					class="long"
@@ -95,13 +95,13 @@
 		{if !$isExternalAuthentication}
 			<dl{if $errorType[password]|isset} class="formError"{/if}>
 				<dt>
-					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
+					<label for="{$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
 				</dt>
 				<dd>
 					<input
 						type="password"
-						id="{@$randomFieldNames[password]}"
-						name="{@$randomFieldNames[password]}"
+						id="{$randomFieldNames[password]}"
+						name="{$randomFieldNames[password]}"
 						value="{$password}"
 						required
 						class="long"
@@ -130,14 +130,14 @@
 						require(['WoltLabSuite/Core/Language/Chooser'], ({ init }) => {
 							const languages = {
 								{implode from=$availableLanguages item=language}
-								'{@$language->languageID}': {
-									iconPath: '{@$language->getIconPath()|encodeJS}',
-									languageName: '{@$language|encodeJS}'
+								'{$language->languageID}': {
+									iconPath: '{unsafe:$language->getIconPath()|encodeJS}',
+									languageName: '{unsafe:$language|encodeJS}'
 								}
 								{/implode}
 							};
 							
-							init('languageIDContainer', 'languageID', {@$languageID}, languages);
+							init('languageIDContainer', 'languageID', {$languageID}, languages);
 						});
 					</script>
 					<noscript>
@@ -214,22 +214,22 @@
 		{jsphrase name='wcf.user.email.error.notUnique'}
 		
 		setup(
-			document.getElementById('{@$randomFieldNames[username]}'),
-			document.getElementById('{@$randomFieldNames[email]}'),
-			document.getElementById('{@$randomFieldNames[password]}'),
+			document.getElementById('{unsafe:$randomFieldNames[username]|encodeJS}'),
+			document.getElementById('{unsafe:$randomFieldNames[email]|encodeJS}'),
+			document.getElementById('{unsafe:$randomFieldNames[password]|encodeJS}'),
 			{
-				minlength: {@REGISTER_USERNAME_MIN_LENGTH},
-				maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
+				minlength: {REGISTER_USERNAME_MIN_LENGTH},
+				maxlength: {REGISTER_USERNAME_MAX_LENGTH}
 			}
 		);
 	});
 	require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], (PasswordStrength, Language) => {
 		{include file='shared_passwordStrengthLanguage'}
 		
-		new PasswordStrength(document.getElementById('{@$randomFieldNames[password]}'), {
+		new PasswordStrength(document.getElementById('{unsafe:$randomFieldNames[password]|encodeJS}'), {
 			relatedInputs: [
-				document.getElementById('{@$randomFieldNames[username]}'),
-				document.getElementById('{@$randomFieldNames[email]}')
+				document.getElementById('{unsafe:$randomFieldNames[username]|encodeJS}'),
+				document.getElementById('{unsafe:$randomFieldNames[email]|encodeJS}')
 			]
 		});
 	});
