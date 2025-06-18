@@ -24,8 +24,8 @@
 		{jsphrase name='wcf.global.button.edit'}
 		WoltLabLanguage.registerPhrase("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}');
 
-		new MultilineItemListFormField(document.getElementById('lineBreakSeparatedTextOption_{@$field->getPrefixedId()|encodeJS}'), {
-			submitFieldName: '{@$field->getPrefixedId()|encodeJS}[]',
+		new MultilineItemListFormField(document.getElementById('lineBreakSeparatedTextOption_{unsafe:$field->getPrefixedId()|encodeJS}'), {
+			submitFieldName: '{unsafe:$field->getPrefixedId()|encodeJS}[]',
 		});
 	});
 	{if $field->isFilterable()}
@@ -38,7 +38,7 @@
 		{jsphrase name='wcf.global.filter.visibility.highlightActive'}
 		{jsphrase name='wcf.global.filter.visibility.showAll'}
 
-		new UiItemListFilter('lineBreakSeparatedTextOption_{@$field->getPrefixedId()|encodeJS}');
+		new UiItemListFilter('lineBreakSeparatedTextOption_{unsafe:$field->getPrefixedId()|encodeJS}');
 	});
 	{/if}
 </script>

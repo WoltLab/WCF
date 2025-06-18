@@ -3,7 +3,7 @@
 	id="{$field->getPrefixedId()}_from"
 	name="{$field->getPrefixedId()}[from]"
 	value="{$field->getFromValue()}"
-	step="{@$field->getDefaultStep()}"
+	step="{$field->getDefaultStep()}"
 	placeholder="{lang}wcf.date.period.start{/lang}"
 	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
 	{if $field->isAutofocused()} autofocus{/if}

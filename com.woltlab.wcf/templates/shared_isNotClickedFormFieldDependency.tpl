@@ -1,7 +1,7 @@
 require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/IsNotClicked'], ({ IsNotClicked }) => {
-	// dependency '{@$dependency->getId()}'
+	// dependency '{unsafe:$dependency->getId()|encodeJS}'
 	new IsNotClicked(
-		'{@$dependency->getDependentNode()->getPrefixedId()|encodeJS}Container',
-		'{@$dependency->getField()->getPrefixedId()|encodeJS}'
+		'{unsafe:$dependency->getDependentNode()->getPrefixedId()|encodeJS}Container',
+		'{unsafe:$dependency->getField()->getPrefixedId()|encodeJS}'
 	);
 });

@@ -3,11 +3,11 @@
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<nav class="{if !$__tabMenuCSSClassName|empty}{@$__tabMenuCSSClassName}{else}tabMenu{/if}">
+	<nav class="{if !$__tabMenuCSSClassName|empty}{$__tabMenuCSSClassName}{else}tabMenu{/if}">
 		<ul>
 			{foreach from=$container item='child'}
 				{if $child->isAvailable()}
-					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a{if $container->usesAnchors()} href="#{$child->getPrefixedId()|rawurlencode}Container"{/if}>{@$child->getLabel()}</a></li>
+					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a{if $container->usesAnchors()} href="#{$child->getPrefixedId()|rawurlencode}Container"{/if}>{unsafe:$child->getLabel()}</a></li>
 				{/if}
 			{/foreach}
 		</ul>
@@ -20,6 +20,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/TabMenu'], function(TabMenuContainerDependency) {
-		new TabMenuContainerDependency('{@$container->getPrefixedId()|encodeJS}Container');
+		new TabMenuContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
 </script>

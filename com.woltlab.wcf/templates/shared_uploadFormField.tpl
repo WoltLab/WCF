@@ -1,1 +1,1 @@
-{@$__wcf->getUploadHandler()->renderField($field->getPrefixedId())}
+{unsafe:$__wcf->getUploadHandler()->renderField($field->getPrefixedId())}

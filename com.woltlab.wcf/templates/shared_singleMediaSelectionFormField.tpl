@@ -1,11 +1,11 @@
 {if $field->isImmutable() && $field->getValue()}
 	{if $field->getMedia()->isImage && $field->getMedia()->hasThumbnail('small')}
 		<div id="{$field->getPrefixedId()}_preview" class="selectedImagePreview">
-			{@$field->getMedia()->getThumbnailTag('small')}
+			{unsafe:$field->getMedia()->getThumbnailTag('small')}
 		</div>
 	{else}
 		<div class="box16 selectedImagePreview">
-			{@$field->getMedia()->getElementTag(16)}
+			{unsafe:$field->getMedia()->getElementTag(16)}
 			
 			<p>{$field->getMedia()->getTitle()}</p>
 		</div>
@@ -14,7 +14,7 @@
 	{if $field->isImageOnly()}
 		<div id="{$field->getPrefixedId()}_preview" class="selectedImagePreview">
 			{if $field->getValue() && $field->getMedia()->hasThumbnail('small')}
-				{@$field->getMedia()->getThumbnailTag('small')}
+				{unsafe:$field->getMedia()->getThumbnailTag('small')}
 			{/if}
 		</div>
 	{/if}
@@ -30,7 +30,7 @@
 		
 		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
-				buttonClass: 'jsMediaSelectButton_{@$field->getPrefixedId()|encodeJS}',
+				buttonClass: 'jsMediaSelectButton_{unsafe:$field->getPrefixedId()|encodeJS}',
 				{if $field->isImageOnly()}
 					dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
 					imagesOnly: 1

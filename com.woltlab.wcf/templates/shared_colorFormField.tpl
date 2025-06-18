@@ -15,7 +15,7 @@
 
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Color/Picker'], (UiColorPicker) => {
-			UiColorPicker.fromSelector("#{@$field->getPrefixedId()|encodeJS}_colorPickerButton");
+			UiColorPicker.fromSelector("#{unsafe:$field->getPrefixedId()|encodeJS}_colorPickerButton");
 		});
 	</script>
 {/if}

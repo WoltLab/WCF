@@ -10,6 +10,6 @@
 			value="{$__fieldNestedOption[value]}"
 			{if $field->getValue() !== null && $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} selected{/if}
 			{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}
-		>{@'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{@$__fieldNestedOption[label]}</option>
+		>{unsafe:'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{unsafe:$__fieldNestedOption[label]}</option>
 	{/foreach}
 </select>

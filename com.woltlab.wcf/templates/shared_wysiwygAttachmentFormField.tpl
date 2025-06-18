@@ -25,7 +25,7 @@
 		{jsphrase name='wcf.attachment.moreOptions'}
 
 		require(["WoltLabSuite/Core/Component/Attachment/List"], ({ setup }) => {
-			setup("{$field->getPrefixedWysiwygId()}");
+			setup("{unsafe:$field->getPrefixedWysiwygId()|encodeJS}");
 		});
 	</script>
 </div>

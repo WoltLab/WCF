@@ -8,14 +8,14 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 		UiItemList.init(
-			'{@$field->getPrefixedId()|encodeJS}',
-			[{if $field->getValue() !== null && !$field->getValue()|empty}{implode from=$field->getValue() item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
+			'{unsafe:$field->getPrefixedId()|encodeJS}',
+			[{if $field->getValue() !== null && !$field->getValue()|empty}{implode from=$field->getValue() item=tag}'{unsafe:$tag|encodeJS}'{/implode}{/if}],
 			{
 				ajax: {
 					className: 'wcf\\data\\tag\\TagAction'
 				},
-				maxLength: {@TAGGING_MAX_TAG_LENGTH},
-				submitFieldName: '{@$field->getPrefixedId()|encodeJS}[]'
+				maxLength: {TAGGING_MAX_TAG_LENGTH},
+				submitFieldName: '{unsafe:$field->getPrefixedId()|encodeJS}[]'
 			}
 		);
 	});

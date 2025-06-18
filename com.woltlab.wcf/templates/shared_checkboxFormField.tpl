@@ -12,7 +12,7 @@
 				*}{if $field->getValue()} checked{/if}{*
 				*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 			*}>
-			{@$field->getLabel()}{if $field->isRequired()} <span class="formFieldRequired">*</span>{/if}
+			{unsafe:$field->getLabel()}{if $field->isRequired()} <span class="formFieldRequired">*</span>{/if}
 		</label>
 
 		{include file='shared_formFieldDescription'}

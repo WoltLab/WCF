@@ -11,7 +11,7 @@
 				'wcf.global.filter.visibility.showAll': '{jslang}wcf.global.filter.visibility.showAll{/jslang}'
 			});
 			
-			new UiItemListFilter('{@$field->getPrefixedId()|encodeJS}_list');
+			new UiItemListFilter('{unsafe:$field->getPrefixedId()|encodeJS}_list');
 		});
 	</script>
 	
@@ -25,7 +25,7 @@
 						*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 						*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} checked{/if}{*
 						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
-					*}> {@$__fieldNestedOption[label]}</label>
+					*}> {unsafe:$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
 	</ul>
@@ -39,7 +39,7 @@
 				*}value="{$__fieldNestedOption[value]}"{*
 				*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} selected{/if}{*
 				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
-			*}>{@'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{@$__fieldNestedOption[label]}</option>
+			*}>{unsafe:'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{unsafe:$__fieldNestedOption[label]}</option>
 		{/foreach}
 	</select>
 {/if}

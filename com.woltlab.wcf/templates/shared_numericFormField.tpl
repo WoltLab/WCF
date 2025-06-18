@@ -3,7 +3,7 @@
 {/if}
 
 <input type="number" {*
-	*}step="{@$field->getStep()}" {*
+	*}step="{$field->getStep()}" {*
 	*}id="{$field->getPrefixedId()}" {*
 	*}name="{$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}"{*
@@ -21,6 +21,6 @@
 *}>
 
 {if $field->getSuffix() !== null}
-		<span class="inputSuffix">{@$field->getSuffix()}</span>
+		<span class="inputSuffix">{unsafe:$field->getSuffix()}</span>
 	</div>
 {/if}

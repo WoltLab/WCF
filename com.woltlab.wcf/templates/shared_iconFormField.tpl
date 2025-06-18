@@ -1,6 +1,6 @@
 <span id="{$field->getPrefixedId()}_icon">
 	{if $field->getIcon()}
-		{@$field->getIcon()->toHtml(64)}
+		{unsafe:$field->getIcon()->toHtml(64)}
 	{/if}
 </span>
 {if !$field->isImmutable()}
@@ -16,9 +16,9 @@
 	
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
-			const iconContainer = document.getElementById('{@$field->getPrefixedId()|encodeJS}_icon');
-			const input = document.getElementById('{@$field->getPrefixedId()|encodeJS}');
-			const buttonRemoveIcon = document.getElementById('{@$field->getPrefixedId()|encodeJS}_removeIcon');
+			const iconContainer = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_icon');
+			const input = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}');
+			const buttonRemoveIcon = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_removeIcon');
 			
 			const callback = (iconName, forceSolid) => {
 				input.value = `${ iconName };${ forceSolid }`;
@@ -36,7 +36,7 @@
 				buttonRemoveIcon.hidden = false;
 			};
 			
-			const button = document.getElementById('{@$field->getPrefixedId()|encodeJS}_openIconDialog');
+			const button = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_openIconDialog');
 			button.addEventListener('click', () => UiStyleFontAwesome.open(callback));
 			buttonRemoveIcon.addEventListener("click", () => {
 				input.value = "";
