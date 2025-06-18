@@ -31,9 +31,9 @@ final class UserIsEnabledConditionType extends AbstractUserBooleanConditionType
     public function matches(object $object): bool
     {
         if ($this->filter) {
-            return $object->activationCode !== 0;
-        } else {
             return $object->activationCode === 0;
+        } else {
+            return $object->activationCode !== 0;
         }
     }
 }

@@ -37,9 +37,9 @@ final class UserSignatureConditionType extends AbstractUserBooleanConditionType
     public function matches(object $object): bool
     {
         if ($this->filter) {
-            return $object->signature === '' || $object->signature === null;
-        } else {
             return $object->signature !== '' && $object->signature !== null;
+        } else {
+            return $object->signature === '' || $object->signature === null;
         }
     }
 }
