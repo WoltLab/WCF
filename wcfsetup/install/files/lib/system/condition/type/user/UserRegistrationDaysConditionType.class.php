@@ -61,7 +61,7 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         $objectList->getConditionBuilder()->add(
-            "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
+            "? {$condition} {$objectList->getDatabaseTableAlias()}.registrationDate",
             [$timestamp]
         );
     }
@@ -72,10 +72,10 @@ final class UserRegistrationDaysConditionType extends AbstractConditionType impl
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         return match ($condition) {
-            '>' => $object->registrationDate > $timestamp,
-            '<' => $object->registrationDate < $timestamp,
-            '>=' => $object->registrationDate >= $timestamp,
-            '<=' => $object->registrationDate <= $timestamp,
+            '>' => $timestamp > $object->registrationDate,
+            '<' => $timestamp < $object->registrationDate,
+            '>=' => $timestamp >= $object->registrationDate,
+            '<=' => $timestamp <= $object->registrationDate,
             default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
     }
