@@ -17,15 +17,17 @@ use wcf\system\language\LanguageFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IDatabaseObjectListConditionType<UserList<User>, int>
- * @implements IObjectConditionType<User, int>
- * @extends AbstractConditionType<int>
+ * @implements IDatabaseObjectListConditionType<UserList<User>, string>
+ * @implements IObjectConditionType<User, string>
+ * @extends AbstractConditionType<string>
  */
 final class UserLanguageConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
     {
+        // SelectFormField stores its value as a string,
+        // so we need to convert it to an integer in the `applyFilter`&`matches` method.
         return SelectFormField::create($id)
             ->options(LanguageFactory::getInstance()->getLanguages())
             ->required();
@@ -48,13 +50,13 @@ final class UserLanguageConditionType extends AbstractConditionType implements I
     {
         $objectList->getConditionBuilder()->add(
             "{$objectList->getDatabaseTableAlias()}.languageID = ?",
-            [$this->filter]
+            [(int)$this->filter]
         );
     }
 
     #[\Override]
     public function matches(object $object): bool
     {
-        return $this->filter === $object->languageID;
+        return (int)$this->filter === $object->languageID;
     }
 }
