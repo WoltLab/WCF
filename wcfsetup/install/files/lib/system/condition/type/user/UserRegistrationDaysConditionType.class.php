@@ -17,7 +17,7 @@ final class UserRegistrationDaysConditionType extends AbstractUserIntegerConditi
 {
     public function __construct()
     {
-        parent::__construct('registrationDays', 'registrationDate', 'com.woltlab.wcf.registrationDateInterval');
+        parent::__construct('registrationDays', 'registrationDate', 'com.woltlab.wcf.user.registrationDateInterval');
     }
 
     #[\Override]
