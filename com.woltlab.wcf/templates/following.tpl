@@ -3,7 +3,13 @@
 {capture assign='contentTitleBadge'}<span class="badge">{#$items}</span>{/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign=pagesLinks controller='Following' link="pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='Following'}{/link}"
+		></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {include file='header' __sidebarLeftHasMenu=true}
@@ -37,11 +43,15 @@
 	</div>
 	
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='Following'}{/link}"
+				></woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		{hascontent}
 			<nav class="contentFooterNavigation">

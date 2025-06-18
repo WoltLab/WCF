@@ -16,7 +16,13 @@
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign='pagesLinks' controller='TrophyList' link="pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='TrophyList'}{/link}"
+		></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {include file='header'}
@@ -42,11 +48,15 @@
 {/if}
 
 <footer class="contentFooter">
-	{hascontent}
+	{if $pages > 1}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='TrophyList'}{/link}"
+			></woltlab-core-pagination>
 		</div>
-	{/hascontent}
+	{/if}
 
 	{hascontent}
 		<nav class="contentFooterNavigation">

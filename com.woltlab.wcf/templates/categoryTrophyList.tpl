@@ -13,15 +13,21 @@
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='CategoryTrophyList' object=$category}pageNo={$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='CategoryTrophyList' object=$category pageNo=$pageNo+1}{/link}">
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='CategoryTrophyList' object=$category}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
+		<link rel="prev" href="{link controller='CategoryTrophyList' object=$category}{if $pageNo > 2}pageNo={$pageNo-1}{/if}{/link}">
 	{/if}
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign='pagesLinks' controller='CategoryTrophyList' object=$category link="pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='CategoryTrophyList' object=$category}{/link}"
+		></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {include file='header'}
@@ -47,11 +53,15 @@
 {/if}
 
 <footer class="contentFooter">
-	{hascontent}
+	{if $pages > 1}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='CategoryTrophyList' object=$category}{/link}"
+			></woltlab-core-pagination>
 		</div>
-	{/hascontent}
+	{/if}
 
 	{hascontent}
 		<nav class="contentFooterNavigation">

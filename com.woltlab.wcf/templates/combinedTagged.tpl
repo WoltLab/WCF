@@ -48,7 +48,13 @@
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign=pagesLinks controller='CombinedTagged' link="$linkParameters&objectType=$objectType&pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='CombinedTagged' objectType=$objectType}{unsafe:$linkParameters}{/link}"
+		></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {capture assign='contentInteractionButtons'}
@@ -64,11 +70,15 @@
 {/if}
 
 <footer class="contentFooter">
-	{hascontent}
+	{if $pages > 1}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='CombinedTagged' objectType=$objectType}{unsafe:$linkParameters}{/link}"
+			></woltlab-core-pagination>
 		</div>
-	{/hascontent}
+	{/if}
 	
 	{hascontent}
 		<nav class="contentFooterNavigation">
