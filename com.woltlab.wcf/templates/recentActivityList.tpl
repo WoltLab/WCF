@@ -1,7 +1,7 @@
 {include file='header'}
 
 {if $eventList|count}
-	<div id="recentActivities" class="section recentActivityList" data-last-event-time="{@$lastEventTime}">
+	<div id="recentActivities" class="section recentActivityList" data-last-event-time="{$lastEventTime}">
 		{include file='recentActivityListItem'}
 	</div>
 	

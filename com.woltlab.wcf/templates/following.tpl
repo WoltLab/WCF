@@ -12,7 +12,7 @@
 	<div class="section sectionContainerList">
 		<ol class="containerList userList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\user\follow\UserFollowAction">
 			{foreach from=$objects item=user}
-				<li class="jsFollowing jsObjectActionObject" data-object-id="{@$user->getObjectID()}">
+				<li class="jsFollowing jsObjectActionObject" data-object-id="{$user->getObjectID()}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -21,7 +21,7 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{@$user->followID}">{icon name='xmark'} <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
+									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{$user->followID}">{icon name='xmark'} <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
 									{event name='userButtons'}
 								</ul>
 							</nav>

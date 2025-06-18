@@ -2,17 +2,17 @@
 {if $topReaction}
 	{if $render === 'tiny'}
 		<span class="topReactionTiny jsTooltip" title="{lang reaction=$topReaction[reaction] count=$topReaction[count] other=$topReaction[other]}wcf.like.reaction.topReaction{/lang}">
-			{@$topReaction[reaction]->renderIcon()}
+			{unsafe:$topReaction[reaction]->renderIcon()}
 			<span class="reactionCount">{$topReaction[count]|shortUnit}</span>
 		</span>
 	{elseif $render === 'short'}
 		<span class="topReactionShort jsTooltip" title="{lang reaction=$topReaction[reaction] count=$topReaction[count] other=$topReaction[other]}wcf.like.reaction.topReaction{/lang}">
-			{@$topReaction[reaction]->renderIcon()}
+			{unsafe:$topReaction[reaction]->renderIcon()}
 			<span class="reactionCount">{$topReaction[count]|shortUnit}</span>
 		</span>
 	{elseif $render === 'full'}
 		<span class="topReactionFull">
-			{@$topReaction[reaction]->renderIcon()} {lang reaction=$topReaction[reaction] count=$topReaction[count] other=$topReaction[other]}wcf.like.reaction.topReaction{/lang}
+			{unsafe:$topReaction[reaction]->renderIcon()} {lang reaction=$topReaction[reaction] count=$topReaction[count] other=$topReaction[other]}wcf.like.reaction.topReaction{/lang}
 		</span>
 	{/if}
 {/if}

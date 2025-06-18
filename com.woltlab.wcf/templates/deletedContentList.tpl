@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{$objectType}{/lang}{/capture}
 
 {capture assign='sidebarRight'}
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.DeletedContentListMenu">
@@ -18,7 +18,7 @@
 	</section>
 {/capture}
 
-{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
+{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{$objectType}{/lang}{/capture}
 
 {capture assign='contentInteractionPagination'}
 	{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}

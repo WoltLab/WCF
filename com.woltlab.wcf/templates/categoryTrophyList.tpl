@@ -5,7 +5,7 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$category->getTitle()}</h1>
 			{if $category && $category->getDescription()}
-				<p class="contentHeaderDescription">{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}</p>
+				<p class="contentHeaderDescription">{if $category->descriptionUseHtml}{unsafe:$category->getDescription()}{else}{$category->getDescription()}{/if}</p>
 			{/if}
 		</div>
 	</header>
@@ -13,7 +13,7 @@
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='CategoryTrophyList' object=$category}pageNo={@$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='CategoryTrophyList' object=$category}pageNo={$pageNo+1}{/link}">
 	{/if}
 	{if $pageNo > 1}
 		<link rel="prev" href="{link controller='CategoryTrophyList' object=$category}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
@@ -31,11 +31,11 @@
 		<ol class="containerList trophyCategoryList doubleColumned">
 			{foreach from=$objects item=trophy}
 				<li class="box64">
-					<div>{@$trophy->renderTrophy(64)}</div>
+					<div>{unsafe:$trophy->renderTrophy(64)}</div>
 					
 					<div class="containerHeadline">
-						<h3><a href="{$trophy->getLink()}">{@$trophy->getTitle()}</a></h3>
-						{if !$trophy->getDescription()|empty}<p><small>{@$trophy->getDescription()}</small></p>{/if}
+						<h3><a href="{$trophy->getLink()}">{unsafe:$trophy->getTitle()}</a></h3>
+						{if !$trophy->getDescription()|empty}<p><small>{unsafe:$trophy->getDescription()}</small></p>{/if}
 						<p><small>{lang items=$trophy->awarded}wcf.user.trophy.trophyAwarded{/lang}</small></p>
 					</div>
 				</li>

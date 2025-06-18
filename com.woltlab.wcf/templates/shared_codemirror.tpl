@@ -12,7 +12,7 @@
 			{elseif $codemirrorMode === 'text/x-scss'}
 				'codemirror/mode/css/css',
 			{else}
-				'codemirror/mode/{@$codemirrorMode}/{@$codemirrorMode}',
+				'codemirror/mode/{unsafe:$codemirrorMode|encodeJS}/{unsafe:$codemirrorMode|encodeJS}',
 			{/if}
 		{/if}
 		'codemirror/addon/search/search',
@@ -36,7 +36,7 @@
 			function addStylesheet(name) {
 				const link = document.createElement('link');
 				link.rel = 'stylesheet';
-				link.href = `{@$__wcf->getPath()}js/3rdParty/codemirror/${ name }.css`;
+				link.href = `{$__wcf->getPath()}js/3rdParty/codemirror/${ name }.css`;
 				document.head.append(link);
 			}
 
@@ -57,7 +57,7 @@
 						version: 3
 					},
 				{else}
-					mode: '{@$codemirrorMode|encodeJS}',
+					mode: '{unsafe:$codemirrorMode|encodeJS}',
 				{/if}
 			{/if}
 			lineWrapping: true,
@@ -71,7 +71,7 @@
 			config.theme = "material-darker";
 		}
 		
-		document.querySelectorAll('{@$codemirrorSelector|encodeJS}').forEach((element) => {
+		document.querySelectorAll('{unsafe:$codemirrorSelector|encodeJS}').forEach((element) => {
 			{event name='javascriptInit'}
 			
 			if (element.codemirror) {

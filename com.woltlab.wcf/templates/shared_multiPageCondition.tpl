@@ -6,4 +6,4 @@
 	</dd>
 </dl>
 
-{@$conditionHtml}
+{unsafe:$conditionHtml}

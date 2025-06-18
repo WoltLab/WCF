@@ -15,18 +15,18 @@
 		</h3>
 		
 		<div class="embeddedContentDescription">
-			{@$article->getFormattedTeaser()}
+			{unsafe:$article->getFormattedTeaser()}
 		</div>
 	</div>
 	
 	<div class="embeddedContentMeta">
 		<div class="embeddedContentMetaImage">
-			{@$article->getUserProfile()->getAvatar()->getImageTag(32)}
+			{unsafe:$article->getUserProfile()->getAvatar()->getImageTag(32)}
 		</div>
 		
 		<div class="embeddedContentMetaContent">
 			<div class="embeddedContentMetaAuthor">
-				{@$article->getUserProfile()->getFormattedUsername()}
+				{unsafe:$article->getUserProfile()->getFormattedUsername()}
 			</div>
 			
 			<div class="embeddedContentMetaTime">

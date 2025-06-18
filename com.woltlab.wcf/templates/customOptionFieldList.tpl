@@ -2,7 +2,7 @@
 	{assign var=option value=$optionData[object]}
 	<dl class="{if $errorType|is_array && $errorType[$option->optionName]|isset} formError{/if}">
 		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{$option->getTitle()}</label>{if $option->required} <span class="customOptionRequired">*</span>{/if}</dt>
-		<dd>{@$optionData[html]}
+		<dd>{unsafe:$optionData[html]}
 			<small>{$option->getDescription()}</small>
 			
 			{if $errorType|is_array && $errorType[$option->optionName]|isset}

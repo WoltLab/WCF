@@ -2,7 +2,7 @@
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='Trophy' object=$trophy}pageNo={@$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='Trophy' object=$trophy}pageNo={$pageNo+1}{/link}">
 	{/if}
 	{if $pageNo > 1}
 		<link rel="prev" href="{link controller='Trophy' object=$trophy}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
@@ -12,13 +12,13 @@
 {capture assign='contentHeader'}
 	<header class="contentHeader messageGroupContentHeader">
 		<div class="contentHeaderIcon">
-			{@$trophy->renderTrophy(64)}
+			{unsafe:$trophy->renderTrophy(64)}
 		</div>
 
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$trophy->getTitle()}</h1>
 			<ul class="inlineList contentHeaderMetaData">
-				{if !$trophy->getDescription()|empty}<li>{@$trophy->getDescription()}</li>{/if}
+				{if !$trophy->getDescription()|empty}<li>{unsafe:$trophy->getDescription()}</li>{/if}
 				<li>
 					{icon name='users'}
 					<span>{lang}wcf.user.trophy.trophyAwarded{/lang}</span>
@@ -39,11 +39,11 @@
 		<ol class="containerList trophyCategoryList doubleColumned">
 			{foreach from=$objects item=userTrophy}
 				<li class="box64">
-					<div>{@$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
+					<div>{unsafe:$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
 	
 					<div class="containerHeadline">
 						<h3>{user object=$userTrophy->getUserProfile()}</h3>
-						<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{@$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
+						<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{unsafe:$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
 					</div>
 				</li>
 			{/foreach}

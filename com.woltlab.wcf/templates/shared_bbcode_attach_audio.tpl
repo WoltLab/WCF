@@ -9,8 +9,8 @@
 <script data-relocate="true">
 	(function () {
 		{* try to determine if browser might be able to play audio *}
-		var audio = elById('attachmentAudio_{@$attachmentIdentifier}');
-		var canPlayType = audio.canPlayType('{$attachment->fileType}');
+		var audio = elById('attachmentAudio_{unsafe:$attachmentIdentifier|encodeJS}');
+		var canPlayType = audio.canPlayType('{unsafe:$attachment->fileType|encodeJS}');
 		
 		if (canPlayType === '') {
 			elRemove(audio);

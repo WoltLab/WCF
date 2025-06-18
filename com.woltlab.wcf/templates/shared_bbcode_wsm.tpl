@@ -6,7 +6,7 @@
 			{if !$removeLinks}
 				<a href="{$mediaLink}" data-caption="{$media->title}" class="embeddedAttachmentLink" data-fancybox="message-{$activeMessageObjectType}-{$activeMessageID}">
 			{/if}
-					<img src="{$thumbnailLink}" alt="{$media->altText}" title="{$media->title}" width="{@$media->getThumbnailWidth($thumbnailSize)}" height="{@$media->getThumbnailHeight($thumbnailSize)}" loading="lazy">
+					<img src="{$thumbnailLink}" alt="{$media->altText}" title="{$media->title}" width="{$media->getThumbnailWidth($thumbnailSize)}" height="{$media->getThumbnailHeight($thumbnailSize)}" loading="lazy">
 			{if !$removeLinks}
 					<span class="embeddedAttachmentLinkEnlarge">
 						{icon size=24 name='magnifying-glass'}
@@ -14,7 +14,7 @@
 				</a>
 			{/if}
 		{else}
-			<img src="{$mediaLink}" alt="{$media->altText}" title="{$media->title}" width="{@$media->width}" height="{@$media->height}" loading="lazy">
+			<img src="{$mediaLink}" alt="{$media->altText}" title="{$media->title}" width="{$media->width}" height="{$media->height}" loading="lazy">
 		{/if}
 	{elseif $media->isVideo()}
 		<video src="{$mediaLink}" controls></video>
@@ -26,7 +26,7 @@
 		<span class="mediaBBCodeCaption">
 			<span class="mediaBBCodeCaptionAlignment">
 				{if $media->captionEnableHtml}
-					{@$media->caption}
+					{unsafe:$media->caption}
 				{else}
 					{$media->caption}
 				{/if}

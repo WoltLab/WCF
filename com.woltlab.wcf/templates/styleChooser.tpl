@@ -1,9 +1,9 @@
 <ol class="containerList styleList{if $styleList|count > 4} doubleColumned{/if}">
 	{foreach from=$styleList item=style}
-		<li data-style-id="{@$style->styleID}">
+		<li data-style-id="{$style->styleID}">
 			<div class="box128">
 				<span class="styleListPreviewImage">
-					<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
+					<img src="{$style->getPreviewImage()}" srcset="{$style->getPreviewImage2x()} 2x" height="64" alt="">
 				</span>
 				<div class="details">
 					<div class="containerHeadline">
@@ -16,7 +16,7 @@
 							{/if}
 						</h3>
 					</div>
-					{if $style->styleDescription}<small>{lang __optional=true}{@$style->styleDescription}{/lang}</small>{/if}
+					{if $style->styleDescription}<small>{lang __optional=true}{$style->styleDescription}{/lang}</small>{/if}
 				</div>
 			</div>
 		</li>

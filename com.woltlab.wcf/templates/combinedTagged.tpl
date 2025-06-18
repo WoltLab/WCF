@@ -1,23 +1,23 @@
-{capture assign='pageTitle'}{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
+{capture assign='pageTitle'}{lang}wcf.tagging.combinedTaggedObjects.{$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{lang}wcf.tagging.combinedTaggedObjects.{@$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}</h1>
+			<h1 class="contentTitle">{lang}wcf.tagging.combinedTaggedObjects.{$objectType}{/lang} {lang}wcf.tagging.combinedTaggedObjects{/lang}</h1>
 		</div>
 	</header>
 {/capture}
 
-{capture assign='linkParameters'}{implode from=$combinedTags item=tag glue='&'}tagIDs[]={@$tag->tagID}{/implode}{/capture}
+{capture assign='linkParameters'}{implode from=$combinedTags item=tag glue='&'}tagIDs[]={$tag->tagID}{/implode}{/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='CombinedTagged'}{@$linkParameters}&objectType={@$objectType}&pageNo={@$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='CombinedTagged' objectType=$objectType pageNo=$pageNo+1}{unsafe:$linkParameters}{/link}">
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='CombinedTagged'}{@$linkParameters}&objectType={@$objectType}{if $pageNo > 2}&pageNo={@$pageNo-1}{/if}{/link}">
+		<link rel="prev" href="{link controller='CombinedTagged' objectType=$objectType}{unsafe:$linkParameters}{if $pageNo > 2}&pageNo={$pageNo-1}{/if}{/link}">
 	{/if}
-	<link rel="canonical" href="{link controller='CombinedTagged'}{@$linkParameters}&objectType={@$objectType}{if $pageNo > 1}&pageNo={@$pageNo}{/if}{/link}">
+	<link rel="canonical" href="{link controller='CombinedTagged' objectType=$objectType}{unsafe:$linkParameters}{if $pageNo > 1}&pageNo={$pageNo}{/if}{/link}">
 {/capture}
 
 {capture assign='sidebarRight'}

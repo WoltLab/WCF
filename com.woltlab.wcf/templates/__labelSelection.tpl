@@ -3,12 +3,12 @@
 		<dt><label>{$labelGroup->getTitle()}</label></dt>
 		<dd>
 			<ul class="labelList jsOnly">
-				<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}">
-					<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
+				<li class="dropdown labelChooser" id="labelGroup{$labelGroup->groupID}" data-group-id="{$labelGroup->groupID}">
+					<div class="dropdownToggle" data-toggle="labelGroup{$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$labelGroup item=label}
-								<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
+								<li data-label-id="{$label->labelID}"><span>{unsafe:$label->render()}</span></li>
 							{/foreach}
 						</ul>
 					</div>
@@ -17,7 +17,7 @@
 			{if $noLabelSelectionNoScript|empty}
 				<noscript>
 					{foreach from=$labelGroups item=labelGroup}
-						<select name="labelIDs[{@$labelGroup->groupID}]">
+						<select name="labelIDs[{$labelGroup->groupID}]">
 							<option value="0">{lang}wcf.label.none{/lang}</option>
 							<option value="-1">{lang}wcf.label.withoutSelection{/lang}</option>
 							{foreach from=$labelGroup item=label}
