@@ -62,6 +62,8 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
+        $value = \addcslashes($value, '_%');
+
         $filter = match ($condition) {
             "_%" => $value . '%',
             "%_%" => '%' . $value . '%',
