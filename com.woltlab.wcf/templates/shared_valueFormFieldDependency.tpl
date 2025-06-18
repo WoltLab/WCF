@@ -1,5 +1,5 @@
 require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Value'], function(ValueFieldDependency) {
-	// dependency '{unsafe:$dependency->getId()}'
+	// dependency '{unsafe:$dependency->getId()|encodeJS}'
 	new ValueFieldDependency(
 		'{unsafe:$dependency->getDependentNode()->getPrefixedId()|encodeJS}Container',
 		'{unsafe:$dependency->getField()->getPrefixedId()|encodeJS}'
