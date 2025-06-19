@@ -6,12 +6,12 @@
 				
 				<div class="messageHeaderBox">
 					<h2 class="messageTitle">
-						<a href="{@$article->getLink()}">{$article->getTitle()}</a>
+						<a href="{$article->getLink()}">{$article->getTitle()}</a>
 					</h2>
 					
 					<ul class="messageHeaderMetaData">
 						<li>{user object=$article->getUserProfile() class='username'}</li>
-						<li><span class="messagePublicationTime">{@$article->time|time}</span></li>
+						<li><span class="messagePublicationTime">{time time=$article->time}</span></li>
 						
 						{event name='messageHeaderMetaData'}
 					</ul>
@@ -25,7 +25,7 @@
 			{event name='beforeMessageText'}
 			
 			<div class="messageText">
-				{@$article->getFormattedContent()}
+				{unsafe:$article->getFormattedContent()}
 			</div>
 			
 			{event name='afterMessageText'}

@@ -69,4 +69,4 @@
 			</li>
 		{/foreach}
 	</ul>
-{if}
+{/if}
