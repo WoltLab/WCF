@@ -309,7 +309,7 @@
 				<dl>
 					<dt>{lang}wcf.acp.article.image{/lang}</dt>
 					<dd>
-						<div id="imageDisplay">{$images[0]->getThumbnailTag('small')}</div>
+						<div id="imageDisplay">{unsafe:$images[0]->getThumbnailTag('small')}</div>
 					</dd>
 				</dl>
 			{/if}
@@ -320,7 +320,7 @@
 					<dd>
 						<div id="teaserImageDisplay" class="selectedImagePreview">
 							{if $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
-								{$teaserImages[0]->getThumbnailTag('small')}
+								{unsafe:$teaserImages[0]->getThumbnailTag('small')}
 							{/if}
 						</div>
 						<ul class="buttonGroup">
