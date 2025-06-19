@@ -10,12 +10,17 @@
 
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
-use wcf\system\database\table\column\TextDatabaseTableColumn;
-use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
+use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_background_job')
+        ->indices([
+            DatabaseTableIndex::create('identifier')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['identifier']),
+        ]),
     PartialDatabaseTable::create('wcf1_user')
         ->columns([
             IntDatabaseTableColumn::create('avatarFileID')

@@ -5,7 +5,6 @@ namespace wcf\system\background;
 use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\AbstractUniqueBackgroundJob;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ParentClassException;
 use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
@@ -73,48 +72,17 @@ final class BackgroundQueueHandler extends SingletonFactory
             $jobs = [$jobs];
         }
 
-        $identifiers = [];
         foreach ($jobs as $job) {
             if (!($job instanceof AbstractBackgroundJob)) {
                 throw new ParentClassException(\get_class($job), AbstractBackgroundJob::class);
             }
-
-            if ($job instanceof AbstractUniqueBackgroundJob) {
-                $identifiers[] = $job->identifier();
-            }
         }
 
-        if ($identifiers !== []) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("identifier IN (?)", [$identifiers]);
-
-            $sql = "SELECT  DISTINCT identifier
-                    FROM    wcf1_background_job
-                    {$conditions}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            $existingJobs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            $jobs = \array_filter(
-                $jobs,
-                function ($job) use ($existingJobs) {
-                    if ($job instanceof AbstractUniqueBackgroundJob && \in_array($job->identifier(), $existingJobs)) {
-                        return false;
-                    }
-
-                    return true;
-                }
-            );
-
-            if ($jobs === []) {
-                return;
-            }
-        }
-
-        $sql = "INSERT INTO wcf1_background_job
-                            (job, time, identifier)
-                VALUES      (?, ?, ?)";
+        $sql = "INSERT IGNORE INTO wcf1_background_job
+                                   (job, time, identifier)
+                VALUES             (?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
+
         foreach ($jobs as $job) {
             $identifier = null;
             if ($job instanceof AbstractUniqueBackgroundJob) {
