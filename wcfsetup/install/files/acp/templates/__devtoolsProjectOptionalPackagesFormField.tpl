@@ -31,7 +31,7 @@
 			'wcf.acp.devtools.project.optionalPackage.optionalPackage': '{jslang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/jslang}'
 		});
 		
-		new OptionalPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
+		new OptionalPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=optionalPackage}
 			{
 				packageIdentifier: '{$optionalPackage[packageIdentifier]}'

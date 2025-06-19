@@ -10,7 +10,7 @@
 			{if $event[title]|isset}
 				<dl>
 					<dt>{lang}wcf.global.title{/lang}</dt>
-					<dd>{@$event[title]}</dd>
+					<dd>{unsafe:$event[title]}</dd>
 				</dl>
 			{else}
 				<dl>
@@ -22,7 +22,7 @@
 			{if $event[message]|isset}
 				<dl>
 					<dt>{lang}wcf.acp.devtools.notificationTest.message{/lang}</dt>
-					<dd>{@$event[message]}</dd>
+					<dd>{unsafe:$event[message]}</dd>
 				</dl>
 			{else}
 				<dl>
@@ -34,7 +34,7 @@
 			{if $event[link]|isset}
 				<dl>
 					<dt>{lang}wcf.acp.devtools.notificationTest.link{/lang}</dt>
-					<dd><a href="{@$event[link]}">{@$event[link]}</a></dd>
+					<dd><a href="{$event[link]}">{$event[link]}</a></dd>
 				</dl>
 			{else}
 				<dl>
@@ -78,7 +78,7 @@
 	<dl>
 		{foreach from=$events item=event}
 			<dt>{$event[description]}</dt>
-			<dd>{if $event[title]|isset}{@$event[title]}{else}<pre>{$event[titleException]}</pre>{/if}</dd>
+			<dd>{if $event[title]|isset}{unsafe:$event[title]}{else}<pre>{$event[titleException]}</pre>{/if}</dd>
 		{/foreach}
 	</dl>
 </section>
@@ -89,7 +89,7 @@
 	<dl>
 		{foreach from=$events item=event}
 			<dt>{$event[description]}</dt>
-			<dd>{if $event[message]|isset}{@$event[message]}{else}<pre>{$event[messageException]}</pre>{/if}</dd>
+			<dd>{if $event[message]|isset}{unsafe:$event[message]}{else}<pre>{$event[messageException]}</pre>{/if}</dd>
 		{/foreach}
 	</dl>
 </section>
@@ -100,7 +100,7 @@
 	<dl>
 		{foreach from=$events item=event}
 			<dt>{$event[description]}</dt>
-			<dd>{if $event[link]|isset}<a href="{@$event[link]}">{@$event[link]}</a>{else}<pre>{$event[linkException]}</pre>{/if}</dd>
+			<dd>{if $event[link]|isset}<a href="{$event[link]}">{$event[link]}</a>{else}<pre>{$event[linkException]}</pre>{/if}</dd>
 		{/foreach}
 	</dl>
 </section>

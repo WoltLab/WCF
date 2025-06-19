@@ -8,10 +8,10 @@
 			
 			var languages = {
 				{implode from=$__wcf->getLanguage()->getLanguages() item=_language}
-				'{@$_language->languageID}': {
-					iconPath: '{@$_language->getIconPath()|encodeJS}',
-					languageName: '{@$_language|encodeJS}',
-					languageCode: '{@$_language->languageCode|encodeJS}'
+				'{$_language->languageID}': {
+					iconPath: '{unsafe:$_language->getIconPath()|encodeJS}',
+					languageName: '{unsafe:$_language|encodeJS}',
+					languageCode: '{unsafe:$_language->languageCode|encodeJS}'
 				}
 				{/implode}
 			};
@@ -31,7 +31,7 @@
 				});
 			};
 			
-			LanguageChooser.init('pageLanguageContainer', 'pageLanguageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
+			LanguageChooser.init('pageLanguageContainer', 'pageLanguageID', {$__wcf->getLanguage()->languageID}, languages, callback);
 		});
 	</script>
 {/if}

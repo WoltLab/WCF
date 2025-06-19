@@ -16,8 +16,8 @@
 	</nav>
 </header>
 
-{@$pipObject->getPip()->getAdditionalTemplateCode()}
+{unsafe:$pipObject->getPip()->getAdditionalTemplateCode()}
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer'}

@@ -47,9 +47,9 @@
 			<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\project\DevtoolsProjectAction" id="devtoolsProjectList">
 				<thead>
 					<tr>
-						<th class="columnID{if $sortField === 'projectID'} active {@$sortOrder}{/if}" colspan="3"><a href="{link controller='DevtoolsProjectList'}sortField=projectID&sortOrder={if $sortField === 'projectID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-						<th class="columnText{if $sortField === 'name'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=name&sortOrder={if $sortField === 'name' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.name{/lang}</a></th>
-						<th class="columnText{if $sortField === 'path'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=path&sortOrder={if $sortField === 'path' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.path{/lang}</a></th>
+						<th class="columnID{if $sortField === 'projectID'} active {$sortOrder}{/if}" colspan="3"><a href="{link controller='DevtoolsProjectList'}sortField=projectID&sortOrder={if $sortField === 'projectID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+						<th class="columnText{if $sortField === 'name'} active {$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=name&sortOrder={if $sortField === 'name' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.name{/lang}</a></th>
+						<th class="columnText{if $sortField === 'path'} active {$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=path&sortOrder={if $sortField === 'path' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.path{/lang}</a></th>
 						
 						{event name='columnHeads'}
 					</tr>
@@ -67,7 +67,7 @@
 									<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 									{objectAction action="delete" objectTitle=$object->name}
 								</td>
-								<td class="columnID">{@$object->getObjectID()}</td>
+								<td class="columnID">{$object->getObjectID()}</td>
 								<td class="columnText"><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}">{$object->name}</a></td>
 								<td class="columnText"><small>{$object->path}</small></td>
 							</tr>

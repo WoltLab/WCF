@@ -21,23 +21,25 @@
 	{/hascontent}
 </header>
 
-{hascontent}
+{if $pages > 1}
 	<div class="paginationTop">
-		{content}
-			{pages print=true assign=pagesLinks controller='DevtoolsMissingLanguageItemList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-		{/content}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='DevtoolsMissingLanguageItemList' sortField=$sortField sortOrder=$sortOrder}{/link}">
+		</woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 {if $items}
 	<div id="missingLanguageItemTable" class="section tabularBox">
 		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemAction">
 			<thead>
 				<tr>
-					<th class="columnID{if $sortField === 'itemID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=itemID&sortOrder={if $sortField === 'itemID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnText{if $sortField === 'languageID'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=languageID&sortOrder={if $sortField === 'languageID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.languageID{/lang}</a></th>
-					<th class="columnText{if $sortField === 'languageItem'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=languageItem&sortOrder={if $sortField === 'languageItem' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.languageItem{/lang}</a></th>
-					<th class="columnText{if $sortField === 'lastTime'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=lastTime&sortOrder={if $sortField === 'lastTime' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.lastTime{/lang}</a></th>
+					<th class="columnID{if $sortField === 'itemID'} active {$sortOrder}{/if}" colspan="2"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=itemID&sortOrder={if $sortField === 'itemID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnText{if $sortField === 'languageID'} active {$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=languageID&sortOrder={if $sortField === 'languageID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.languageID{/lang}</a></th>
+					<th class="columnText{if $sortField === 'languageItem'} active {$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=languageItem&sortOrder={if $sortField === 'languageItem' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.languageItem{/lang}</a></th>
+					<th class="columnText{if $sortField === 'lastTime'} active {$sortOrder}{/if}"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=lastTime&sortOrder={if $sortField === 'lastTime' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.missingLanguageItem.lastTime{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -45,14 +47,14 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=logEntry}
-					<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$logEntry->getObjectID()}">
+					<tr class="jsObjectRow jsObjectActionObject" data-object-id="{$logEntry->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="delete" confirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
 							<button type="button" class="jsStackTraceButton jsTooltip" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}">
 								{icon name='align-justify'}
 							</button>
 						</td>
-						<td class="columnID">{@$logEntry->getObjectID()}</td>
+						<td class="columnID">{$logEntry->getObjectID()}</td>
 						<td class="columnText">{if $logEntry->getLanguage()}{$logEntry->getLanguage()}{else}{$logEntry->languageID}{/if}</td>
 						<td class="columnText">{$logEntry->languageItem}</td>
 						<td class="columnDate">{@$logEntry->lastTime|time}</td>
@@ -63,11 +65,15 @@
 	</div>
 
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='DevtoolsMissingLanguageItemList' sortField=$sortField sortOrder=$sortOrder}{/link}">
+				</woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		{hascontent}
 			<nav class="contentFooterNavigation">

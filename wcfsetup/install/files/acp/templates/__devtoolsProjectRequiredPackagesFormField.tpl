@@ -43,7 +43,7 @@
 			'wcf.acp.devtools.project.requiredPackage.requiredPackage': '{jslang __literal=true}wcf.acp.devtools.project.requiredPackage.requiredPackage{/jslang}'
 		});
 		
-		new RequiredPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
+		new RequiredPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=requiredPackage}
 				{
 					file: {if $requiredPackage[file]}true{else}false{/if},

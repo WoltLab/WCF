@@ -103,7 +103,7 @@
 	
 	<woltlab-core-notice type="info" style="display: none;">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {else}
-	<woltlab-core-notice type="error">{@$project->validate()}</woltlab-core-notice>
+	<woltlab-core-notice type="error">{unsafe:$project->validate()}</woltlab-core-notice>
 {/if}
 
 <script data-relocate="true">
