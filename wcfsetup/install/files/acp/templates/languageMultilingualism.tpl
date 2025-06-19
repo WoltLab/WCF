@@ -43,7 +43,7 @@
 				
 				{if $errorField == 'languageIDs'}
 					<small class="innerError">
-						{lang}wcf.acp.language.multilingualism.languages.error.{@$errorType}{/lang}
+						{lang}wcf.acp.language.multilingualism.languages.error.{$errorType}{/lang}
 					</small>
 				{/if}
 			</dd>

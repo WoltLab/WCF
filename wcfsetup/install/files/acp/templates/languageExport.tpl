@@ -27,7 +27,7 @@
 						{if $errorType == 'noValidSelection'}
 							{lang}wcf.global.form.error.noValidSelection{/lang}
 						{else}
-							{lang}wcf.acp.language.languageID.error.{@$errorType}{/lang}
+							{lang}wcf.acp.language.languageID.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -48,7 +48,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.language.export.package.error.{@$errorType}{/lang}
+							{lang}wcf.acp.language.export.package.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
