@@ -20,7 +20,9 @@ final class GoogleMapsFormField extends AbstractFormField implements
     IImmutableFormField,
     IPlaceholderFormField
 {
-    use TAttributeFormField;
+    use TInputAttributeFormField {
+        getReservedFieldAttributes as private getDefaultReservedFieldAttributes;
+    }
     use TAutoFocusFormField;
     use TCssClassFormField;
     use TImmutableFormField;
@@ -42,6 +44,21 @@ final class GoogleMapsFormField extends AbstractFormField implements
     public function __construct()
     {
         $this->addFieldClass('long');
+    }
+
+    /**
+     * @return string[]
+     */
+    protected static function getReservedFieldAttributes(): array
+    {
+        return \array_merge(
+            static::getDefaultReservedFieldAttributes(),
+            [
+                'data-google-maps-geocoding-store',
+                'data-google-maps-geocoding',
+                'data-google-maps-marker',
+            ]
+        );
     }
 
     #[\Override]
