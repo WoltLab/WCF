@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\BooleanType;
@@ -23,6 +25,11 @@ final class NativeBooleanType implements BooleanType
         return is_bool($value);
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        return Node::functionCall('is_bool', [$node]);
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof UnionType) {
@@ -30,6 +37,7 @@ final class NativeBooleanType implements BooleanType
         }
 
         return $other instanceof self
+            || $other instanceof ScalarConcreteType
             || $other instanceof MixedType;
     }
 
@@ -58,6 +66,11 @@ final class NativeBooleanType implements BooleanType
     public function errorMessage(): ErrorMessage
     {
         return MessageBuilder::newError('Value {source_value} is not a valid boolean.')->build();
+    }
+
+    public function nativeType(): NativeBooleanType
+    {
+        return $this;
     }
 
     public function toString(): string

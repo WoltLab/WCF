@@ -8,6 +8,7 @@ use RuntimeException;
 
 use function sprintf;
 
+/** @final */
 class EmitterException extends RuntimeException implements ExceptionInterface
 {
     public static function forHeadersSent(string $filename, int $line): self

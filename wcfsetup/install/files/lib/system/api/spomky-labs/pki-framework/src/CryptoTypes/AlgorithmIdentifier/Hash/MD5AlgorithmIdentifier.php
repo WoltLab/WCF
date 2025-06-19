@@ -11,17 +11,14 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifi
 use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
-From RFC 1321 - 1. Executive Summary
-
-    In the X.509 type AlgorithmIdentifier, the parameters for MD5
-    should have type NULL.
-
-From RFC 3370 - 2.2 MD5
-
-    The AlgorithmIdentifier parameters field MUST be present, and the
-    parameters field MUST contain NULL.  Implementations MAY accept the
-    MD5 AlgorithmIdentifiers with absent parameters as well as NULL
-    parameters.
+ * From RFC 1321 - 1. Executive Summary
+ * In the X.509 type AlgorithmIdentifier, the parameters for MD5
+ * should have type NULL.
+ * From RFC 3370 - 2.2 MD5
+ * The AlgorithmIdentifier parameters field MUST be present, and the
+ * parameters field MUST contain NULL.  Implementations MAY accept the
+ * MD5 AlgorithmIdentifiers with absent parameters as well as NULL
+ * parameters.
  */
 
 /**

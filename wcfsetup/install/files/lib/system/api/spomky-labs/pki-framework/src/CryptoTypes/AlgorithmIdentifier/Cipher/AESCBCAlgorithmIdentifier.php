@@ -8,11 +8,9 @@ use LogicException;
 use SpomkyLabs\Pki\ASN1\Type\Primitive\OctetString;
 
 /*
-From RFC 3565 - 4.1. AES Algorithm Identifiers and Parameters:
-
-The AlgorithmIdentifier parameters field MUST be present, and the parameter field MUST contain a AES-IV:
-
-    AES-IV ::= OCTET STRING (SIZE(16))
+ * From RFC 3565 - 4.1. AES Algorithm Identifiers and Parameters:
+ * The AlgorithmIdentifier parameters field MUST be present, and the parameter field MUST contain a AES-IV:
+ * AES-IV ::= OCTET STRING (SIZE(16))
  */
 
 /**

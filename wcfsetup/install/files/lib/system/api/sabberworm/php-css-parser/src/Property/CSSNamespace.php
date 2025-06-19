@@ -27,6 +27,8 @@ class CSSNamespace implements AtRule
 
     /**
      * @var array<array-key, Comment>
+     *
+     * @internal since 8.8.0
      */
     protected $aComments;
 
@@ -53,6 +55,8 @@ class CSSNamespace implements AtRule
 
     /**
      * @return string
+     *
+     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
      */
     public function __toString()
     {

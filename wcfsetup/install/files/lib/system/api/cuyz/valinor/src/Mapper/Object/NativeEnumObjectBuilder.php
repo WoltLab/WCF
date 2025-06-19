@@ -30,7 +30,7 @@ class NativeEnumObjectBuilder implements ObjectBuilder
 
         $this->enum = $type;
         $this->arguments = new Arguments(
-            new Argument('value', $argumentType)
+            new Argument('value', $type->className() . '::$value', $argumentType)
         );
     }
 

@@ -14,6 +14,7 @@ use function gettype;
 use function is_int;
 use function is_scalar;
 use function is_string;
+use function sprintf;
 use function strval;
 
 abstract class Number extends Element

@@ -10,6 +10,7 @@ use Laminas\HttpHandlerRunner\Emitter;
 use function get_debug_type;
 use function sprintf;
 
+/** @final */
 class InvalidEmitterException extends InvalidArgumentException implements ExceptionInterface
 {
     /**

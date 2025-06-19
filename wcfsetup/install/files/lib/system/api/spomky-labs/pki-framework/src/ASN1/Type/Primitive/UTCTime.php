@@ -30,14 +30,14 @@ final class UTCTime extends BaseTime
      * @var string
      */
     final public const REGEX = '#^' .
-    '(\d\d)' . // YY
-    '(\d\d)' . // MM
-    '(\d\d)' . // DD
-    '(\d\d)' . // hh
-    '(\d\d)' . // mm
-    '(\d\d)' . // ss
-    'Z' . // TZ
-    '$#';
+        '(\d\d)' . // YY
+        '(\d\d)' . // MM
+        '(\d\d)' . // DD
+        '(\d\d)' . // hh
+        '(\d\d)' . // mm
+        '(\d\d)' . // ss
+        'Z' . // TZ
+        '$#';
 
     private function __construct(DateTimeImmutable $dt)
     {

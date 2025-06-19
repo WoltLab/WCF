@@ -363,7 +363,7 @@ class UserEditForm extends UserAddForm
         parent::assignVariables();
 
         $signatureProcessor = new HtmlUpcastProcessor();
-        $signatureProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', $this->user->userID);
+        $signatureProcessor->process($this->signature ?: '', 'com.woltlab.wcf.user.signature', $this->user->userID);
 
         WCF::getTPL()->assign([
             'userID' => $this->user->userID,

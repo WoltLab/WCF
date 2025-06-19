@@ -10,16 +10,14 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIde
 use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
-From RFC 8410:
-
-    For all of the OIDs, the parameters MUST be absent.
-
-    It is possible to find systems that require the parameters to be
-    present.  This can be due to either a defect in the original 1997
-    syntax or a programming error where developers never got input where
-    this was not true.  The optimal solution is to fix these systems;
-    where this is not possible, the problem needs to be restricted to
-    that subsystem and not propagated to the Internet.
+ * From RFC 8410:
+ * For all of the OIDs, the parameters MUST be absent.
+ * It is possible to find systems that require the parameters to be
+ * present.  This can be due to either a defect in the original 1997
+ * syntax or a programming error where developers never got input where
+ * this was not true.  The optimal solution is to fix these systems;
+ * where this is not possible, the problem needs to be restricted to
+ * that subsystem and not propagated to the Internet.
  */
 
 /**

@@ -7,11 +7,10 @@ namespace SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Signature;
 use SpomkyLabs\Pki\ASN1\Element;
 
 /*
-From RFC 4055 - 5.  PKCS #1 Version 1.5 Signature Algorithm
-
-    When any of these four object identifiers appears within an
-    AlgorithmIdentifier, the parameters MUST be NULL.  Implementations
-    MUST accept the parameters being absent as well as present.
+ * From RFC 4055 - 5.  PKCS #1 Version 1.5 Signature Algorithm
+ * When any of these four object identifiers appears within an
+ * AlgorithmIdentifier, the parameters MUST be NULL.  Implementations
+ * MUST accept the parameters being absent as well as present.
  */
 
 /**

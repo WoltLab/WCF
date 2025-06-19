@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\FixedType;
@@ -22,6 +24,11 @@ final class FloatValueType implements FloatType, FixedType
         return $value === $this->value;
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        return $node->equals(Node::value($this->value));
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof UnionType) {
@@ -32,7 +39,9 @@ final class FloatValueType implements FloatType, FixedType
             return $this->value === $other->value;
         }
 
-        return $other instanceof NativeFloatType || $other instanceof MixedType;
+        return $other instanceof NativeFloatType
+            || $other instanceof ScalarConcreteType
+            || $other instanceof MixedType;
     }
 
     public function canCast(mixed $value): bool
@@ -57,6 +66,11 @@ final class FloatValueType implements FloatType, FixedType
     public function value(): float
     {
         return $this->value;
+    }
+
+    public function nativeType(): NativeFloatType
+    {
+        return NativeFloatType::get();
     }
 
     public function toString(): string

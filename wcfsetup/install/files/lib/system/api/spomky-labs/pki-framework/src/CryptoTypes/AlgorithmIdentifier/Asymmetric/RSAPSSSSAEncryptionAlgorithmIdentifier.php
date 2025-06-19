@@ -12,10 +12,9 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 use UnexpectedValueException;
 
 /*
-From RFC 3447:
-
-    When rsaEncryption is used in an AlgorithmIdentifier the
-    parameters MUST be present and MUST be NULL.
+ * From RFC 3447:
+ * When rsaEncryption is used in an AlgorithmIdentifier the
+ * parameters MUST be present and MUST be NULL.
  */
 
 /**

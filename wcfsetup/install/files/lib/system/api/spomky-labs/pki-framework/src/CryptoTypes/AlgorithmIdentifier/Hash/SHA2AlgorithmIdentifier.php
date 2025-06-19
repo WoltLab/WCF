@@ -10,13 +10,12 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifi
 use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
-From RFC 5754 - 2. Message Digest Algorithms
-
-    The AlgorithmIdentifier parameters field is OPTIONAL.
-    Implementations MUST accept SHA2 AlgorithmIdentifiers with absent
-    parameters.  Implementations MUST accept SHA2 AlgorithmIdentifiers
-    with NULL parameters.  Implementations MUST generate SHA2
-    AlgorithmIdentifiers with absent parameters.
+ * From RFC 5754 - 2. Message Digest Algorithms
+ * The AlgorithmIdentifier parameters field is OPTIONAL.
+ * Implementations MUST accept SHA2 AlgorithmIdentifiers with absent
+ * parameters.  Implementations MUST accept SHA2 AlgorithmIdentifiers
+ * with NULL parameters.  Implementations MUST generate SHA2
+ * AlgorithmIdentifiers with absent parameters.
  */
 
 /**

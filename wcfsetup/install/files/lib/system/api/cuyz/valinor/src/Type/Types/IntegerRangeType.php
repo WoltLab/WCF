@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\IntegerType;
@@ -51,13 +53,20 @@ final class IntegerRangeType implements IntegerType
             && $value <= $this->max;
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        return Node::functionCall('is_int', [$node])
+            ->and($node->isGreaterOrEqualsTo(Node::value($this->min)))
+            ->and($node->isLessOrEqualsTo(Node::value($this->max)));
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof UnionType) {
             return $other->isMatchedBy($this);
         }
 
-        if ($other instanceof NativeIntegerType || $other instanceof MixedType) {
+        if ($other instanceof NativeIntegerType || $other instanceof ScalarConcreteType || $other instanceof MixedType) {
             return true;
         }
 
@@ -117,6 +126,11 @@ final class IntegerRangeType implements IntegerType
     public function max(): int
     {
         return $this->max;
+    }
+
+    public function nativeType(): NativeIntegerType
+    {
+        return NativeIntegerType::get();
     }
 
     public function toString(): string

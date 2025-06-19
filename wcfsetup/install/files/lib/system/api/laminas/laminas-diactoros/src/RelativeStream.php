@@ -17,9 +17,9 @@ use const SEEK_SET;
  */
 final class RelativeStream implements StreamInterface, Stringable
 {
-    private int $offset;
+    private readonly int $offset;
 
-    public function __construct(private StreamInterface $decoratedStream, ?int $offset)
+    public function __construct(private readonly StreamInterface $decoratedStream, ?int $offset)
     {
         $this->offset = (int) $offset;
     }

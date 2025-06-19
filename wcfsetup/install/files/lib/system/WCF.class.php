@@ -10,14 +10,14 @@ use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
-use wcf\system\benchmark\Benchmark;
 use wcf\system\box\BoxHandler;
+use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
-use wcf\system\cache\eager\CoreObjectCache;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\command\RebuildBootstrapper;
@@ -31,7 +31,6 @@ use wcf\system\style\StyleHandler;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\user\UserProfileHandler;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -80,7 +79,7 @@ if (\function_exists('mb_regex_encoding')) {
 \mb_language('uni');
 
 // define current woltlab suite version
-\define('WCF_VERSION', '6.2.0 dev 1');
+\define('WCF_VERSION', '6.1.11');
 
 // define current unix timestamp
 \define('TIME_NOW', \time());
@@ -99,9 +98,6 @@ if (!\defined('NO_IMPORTS')) {
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- *
- * @method static Benchmark getBenchmark()
- * @method static UserProfileHandler getUserProfileHandler()
  */
 class WCF
 {
@@ -125,7 +121,7 @@ class WCF
 
     /**
      * list of autoload directories
-     * @var array<string, string>
+     * @var array
      */
     protected static $autoloadDirectories = [
         'wcf' => WCF_DIR . 'lib/',
@@ -139,10 +135,9 @@ class WCF
 
     /**
      * list of cached core objects
-     *
-     * @var array<string, class-string<SingletonFactory>>
+     * @var string[]
      */
-    protected static array $coreObjectCache;
+    protected static $coreObjectCache = [];
 
     /**
      * database object
@@ -180,7 +175,7 @@ class WCF
      */
     protected static $zendOpcacheEnabled;
 
-    public const BOOTSTRAP_LOADER = \WCF_DIR . 'lib/bootstrap.php';
+    public const BOOTSTRAP_LOADER = \WCF_DIR . '/lib/bootstrap.php';
 
     /**
      * Calls all init functions of the WCF class.
@@ -234,14 +229,11 @@ class WCF
      *
      * You *must* not create output in here under normal circumstances, as it might get eaten
      * when gzip is enabled.
-     *
-     * @return void
      */
     public static function destruct()
     {
         try {
             // database has to be initialized
-            // @phpstan-ignore function.alreadyNarrowedType
             if (!\is_object(self::$dbObj)) {
                 return;
             }
@@ -261,7 +253,6 @@ class WCF
             }
 
             // update session
-            // @phpstan-ignore function.alreadyNarrowedType
             if (\is_object(self::getSession())) {
                 self::getSession()->update();
             }
@@ -327,7 +318,7 @@ class WCF
     /**
      * Calls the show method on the given exception.
      */
-    final public static function handleException(\Throwable $e): never
+    final public static function handleException(\Throwable $e)
     {
         // backwards compatibility
         if ($e instanceof IPrintableException) {
@@ -347,8 +338,6 @@ class WCF
         @\header('HTTP/1.1 500 Internal Server Error');
         try {
             \wcf\functions\exception\printThrowable($e);
-
-            exit;
         } catch (\Throwable $e2) {
             echo "<pre>An Exception was thrown while handling an Exception:\n\n";
             echo \preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
@@ -369,11 +358,11 @@ class WCF
      * @param int $line
      * @throws  ErrorException
      */
-    final public static function handleError($severity, $message, $file, $line): bool
+    final public static function handleError($severity, $message, $file, $line): void
     {
         // this is necessary for the shut-up operator
         if (!(\error_reporting() & $severity)) {
-            return true;
+            return;
         }
 
         throw new ErrorException($message, 0, $severity, $file, $line);
@@ -423,7 +412,6 @@ class WCF
             if (!\is_writable($filename)) {
                 FileUtil::makeWritable($filename);
 
-                // @phpstan-ignore booleanNot.alwaysTrue
                 if (!\is_writable($filename)) {
                     throw new SystemException("The option file '" . $filename . "' is not writable.");
                 }
@@ -512,9 +500,6 @@ class WCF
 
         // The option for the SFS action has been converted into a general option with version 6.1.
         \define('BLACKLIST_SFS_ACTION', 'disable');
-
-        // The option to show an article counter in the message sidebar was removed with version 6.2.
-        \define('MESSAGE_SIDEBAR_ENABLE_ARTICLES', 0);
     }
 
     /**
@@ -654,7 +639,6 @@ class WCF
                 $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
                 self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
-                // @phpstan-ignore if.alwaysFalse
                 if (\class_exists($className)) {
                     // the class can now be found, update the `packageDir` value
                     (new PackageEditor($package))->update(['packageDir' => $relativePath]);
@@ -755,7 +739,7 @@ class WCF
             return;
         }
 
-        self::$coreObjectCache = (new CoreObjectCache())->getCache();
+        self::$coreObjectCache = CoreObjectCacheBuilder::getInstance()->getData();
     }
 
     /**
@@ -841,7 +825,7 @@ class WCF
     final public static function autoload(string $className): void
     {
         $className = \strtr($className, '\\', '/');
-        if (($slashPos = \strpos($className, '/')) !== false) {
+        if (($slashPos = \strpos($className, '/')) !== null) {
             $applicationPrefix = \substr($className, 0, $slashPos);
             if (isset(self::$autoloadDirectories[$applicationPrefix])) {
                 $classPath = self::$autoloadDirectories[$applicationPrefix] . \substr($className, $slashPos + 1) . '.class.php';
@@ -865,7 +849,7 @@ class WCF
         // logic cannot be moved into a shared function, because it
         // measurably reduced autoloader performance.
         $className = \strtr($className, '\\', '/');
-        if (($slashPos = \strpos($className, '/')) !== false) {
+        if (($slashPos = \strpos($className, '/')) !== null) {
             $applicationPrefix = \substr($className, 0, $slashPos);
             if (isset(self::$autoloadDirectories[$applicationPrefix])) {
                 $classPath = self::$autoloadDirectories[$applicationPrefix] . \substr($className, $slashPos + 1) . '.class.php';
@@ -888,8 +872,7 @@ class WCF
     }
 
     /**
-     * @param mixed[] $arguments
-     * @return ?object
+     * @inheritDoc
      */
     final public function __call(string $name, array $arguments)
     {
@@ -904,9 +887,9 @@ class WCF
     /**
      * Returns dynamically loaded core objects.
      *
-     * @param mixed[] $arguments
-     * @return ?object
-     * @throws SystemException
+     * @param array $arguments
+     * @return  object
+     * @throws  SystemException
      */
     final public static function __callStatic(string $name, array $arguments)
     {
@@ -922,18 +905,20 @@ class WCF
         }
 
         if (\class_exists($objectName)) {
+            if (!\is_subclass_of($objectName, SingletonFactory::class)) {
+                throw new ParentClassException($objectName, SingletonFactory::class);
+            }
+
             self::$coreObject[$className] = \call_user_func([$objectName, 'getInstance']);
 
             return self::$coreObject[$className];
         }
-
-        return null;
     }
 
     /**
      * Searches for cached core object definition.
      *
-     * @return  class-string<SingletonFactory>|null
+     * @return  string|null
      */
     final protected static function getCoreObject(string $className)
     {
@@ -1002,7 +987,6 @@ class WCF
     }
 
     /**
-     * @param string $fragment
      * @deprecated 5.5 - Put a '#' followed by the fragment as the anchor's href. Make sure to |rawurlencode any variables that may contain special characters.
      */
     public function getAnchor($fragment): string

@@ -10,12 +10,11 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIde
 use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
-From RFC 5758 - 3.2.  ECDSA Signature Algorithm
-
-    When the ecdsa-with-SHA224, ecdsa-with-SHA256, ecdsa-with-SHA384, or
-    ecdsa-with-SHA512 algorithm identifier appears in the algorithm field
-    as an AlgorithmIdentifier, the encoding MUST omit the parameters
-    field.
+ * From RFC 5758 - 3.2.  ECDSA Signature Algorithm
+ * When the ecdsa-with-SHA224, ecdsa-with-SHA256, ecdsa-with-SHA384, or
+ * ecdsa-with-SHA512 algorithm identifier appears in the algorithm field
+ * as an AlgorithmIdentifier, the encoding MUST omit the parameters
+ * field.
  */
 
 /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\IntegerType;
@@ -91,9 +93,30 @@ final class ArrayKeyType implements ScalarType
         return false;
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        $conditions = [];
+
+        foreach ($this->types as $type) {
+            $condition = $type->compiledAccept($node);
+
+            if ($type instanceof NativeStringType) {
+                $condition = $condition->or(Node::functionCall('is_int', [$node]));
+            }
+
+            $conditions[] = $condition;
+        }
+
+        return Node::logicalOr(...$conditions);
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof MixedType) {
+            return true;
+        }
+
+        if ($other instanceof ScalarConcreteType) {
             return true;
         }
 
@@ -154,6 +177,21 @@ final class ArrayKeyType implements ScalarType
     public function errorMessage(): ErrorMessage
     {
         return MessageBuilder::newError('Value {source_value} is not a valid array key.')->build();
+    }
+
+    public function nativeType(): Type
+    {
+        $types = [];
+
+        foreach ($this->types as $type) {
+            $types[$type->nativeType()->toString()] = $type->nativeType();
+        }
+
+        if (count($types) === 1) {
+            return array_values($types)[0];
+        }
+
+        return new UnionType(...array_values($types));
     }
 
     public function toString(): string

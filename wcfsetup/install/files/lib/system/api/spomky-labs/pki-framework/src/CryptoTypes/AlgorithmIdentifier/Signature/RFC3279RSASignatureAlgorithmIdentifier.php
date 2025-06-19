@@ -8,11 +8,10 @@ use SpomkyLabs\Pki\ASN1\Element;
 use SpomkyLabs\Pki\ASN1\Type\Primitive\NullType;
 
 /*
-From RFC 3279 - 2.2.1  RSA Signature Algorithm:
-
-    When any of these three OIDs appears within the ASN.1 type
-    AlgorithmIdentifier, the parameters component of that type SHALL be
-    the ASN.1 type NULL.
+ * From RFC 3279 - 2.2.1  RSA Signature Algorithm:
+ * When any of these three OIDs appears within the ASN.1 type
+ * AlgorithmIdentifier, the parameters component of that type SHALL be
+ * the ASN.1 type NULL.
  */
 
 /**

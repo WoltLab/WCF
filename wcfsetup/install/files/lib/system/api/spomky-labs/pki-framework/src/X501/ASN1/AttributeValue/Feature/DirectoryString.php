@@ -18,6 +18,7 @@ use SpomkyLabs\Pki\X501\MatchingRule\MatchingRule;
 use SpomkyLabs\Pki\X501\StringPrep\TranscodeStep;
 use UnexpectedValueException;
 use function array_key_exists;
+use function sprintf;
 
 /**
  * Base class for attribute values having *(Unbounded)DirectoryString* as a syntax.

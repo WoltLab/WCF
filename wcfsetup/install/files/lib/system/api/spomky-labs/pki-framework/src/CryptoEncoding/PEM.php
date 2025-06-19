@@ -47,15 +47,15 @@ final class PEM implements Stringable
      * @var string
      */
     final public const PEM_REGEX = '/' .
-    /* line start */
-    '(?:^|[\r\n])' .
-    /* header */
-    '-----BEGIN (.+?)-----[\r\n]+' .
-    /* payload */
-    '(.+?)' .
-    /* trailer */
-    '[\r\n]+-----END \\1-----' .
-    '/ms';
+        /* line start */
+        '(?:^|[\r\n])' .
+        /* header */
+        '-----BEGIN (.+?)-----[\r\n]+' .
+        /* payload */
+        '(.+?)' .
+        /* trailer */
+        '[\r\n]+-----END \\1-----' .
+        '/ms';
 
     /**
      * @param string $type Content type

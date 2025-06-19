@@ -46,6 +46,7 @@ use SpomkyLabs\Pki\ASN1\Type\UnspecifiedType;
 use UnexpectedValueException;
 use function array_key_exists;
 use function mb_strlen;
+use function sprintf;
 
 /**
  * Base class for all ASN.1 type elements.
@@ -240,7 +241,7 @@ abstract class Element implements ElementBase
      * Variable is updated to the offset next to the
      * parsed element. If null, start from offset 0.
      */
-    public static function fromDER(string $data, int &$offset = null): static
+    public static function fromDER(string $data, ?int &$offset = null): static
     {
         $idx = $offset ?? 0;
         // decode identifier

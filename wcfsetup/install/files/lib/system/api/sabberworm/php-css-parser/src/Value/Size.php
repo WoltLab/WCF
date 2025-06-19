@@ -20,10 +20,21 @@ class Size extends PrimitiveValue
      * @internal
      */
     const ABSOLUTE_SIZE_UNITS = [
-        'px', 'pt', 'pc',
-        'cm', 'mm', 'mozmm', 'in',
-        'vh', 'dvh', 'svh', 'lvh',
-        'vw', 'vmin', 'vmax', 'rem',
+        'px',
+        'pt',
+        'pc',
+        'cm',
+        'mm',
+        'mozmm',
+        'in',
+        'vh',
+        'dvh',
+        'svh',
+        'lvh',
+        'vw',
+        'vmin',
+        'vmax',
+        'rem',
     ];
 
     /**
@@ -81,6 +92,8 @@ class Size extends PrimitiveValue
      *
      * @throws UnexpectedEOFException
      * @throws UnexpectedTokenException
+     *
+     * @internal since V8.8.0
      */
     public static function parse(ParserState $oParserState, $bIsColorComponent = false)
     {
@@ -209,6 +222,8 @@ class Size extends PrimitiveValue
 
     /**
      * @return string
+     *
+     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
      */
     public function __toString()
     {

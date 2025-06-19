@@ -12,16 +12,14 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 use UnexpectedValueException;
 
 /*
-From RFC 5480 - 2.1.1.  Unrestricted Algorithm Identifier and Parameters:
-
-The parameter for id-ecPublicKey is as follows and MUST always be
-present:
-
-ECParameters ::= CHOICE {
-    namedCurve         OBJECT IDENTIFIER
-    -- implicitCurve   NULL
-    -- specifiedCurve  SpecifiedECDomain
-}
+ * From RFC 5480 - 2.1.1.  Unrestricted Algorithm Identifier and Parameters:
+ * The parameter for id-ecPublicKey is as follows and MUST always be
+ * present:
+ * ECParameters ::= CHOICE {
+ * namedCurve         OBJECT IDENTIFIER
+ * -- implicitCurve   NULL
+ * -- specifiedCurve  SpecifiedECDomain
+ * }
  */
 
 /**

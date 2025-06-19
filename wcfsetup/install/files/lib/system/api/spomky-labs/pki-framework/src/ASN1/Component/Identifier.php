@@ -87,7 +87,7 @@ final class Identifier implements Encodable
      * Variable is updated to the offset next to the
      * parsed identifier. If null, start from offset 0.
      */
-    public static function fromDER(string $data, int &$offset = null): self
+    public static function fromDER(string $data, ?int &$offset = null): self
     {
         $idx = $offset ?? 0;
         $datalen = mb_strlen($data, '8bit');

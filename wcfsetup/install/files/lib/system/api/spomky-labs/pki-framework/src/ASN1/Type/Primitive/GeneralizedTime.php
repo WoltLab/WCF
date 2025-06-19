@@ -34,15 +34,15 @@ final class GeneralizedTime extends BaseTime
      * @var string
      */
     final public const REGEX = '#^' .
-    '(\d\d\d\d)' . // YYYY
-    '(\d\d)' . // MM
-    '(\d\d)' . // DD
-    '(\d\d)' . // hh
-    '(\d\d)' . // mm
-    '(\d\d)' . // ss
-    '(?:\.(\d+))?' . // frac
-    'Z' . // TZ
-    '$#';
+        '(\d\d\d\d)' . // YYYY
+        '(\d\d)' . // MM
+        '(\d\d)' . // DD
+        '(\d\d)' . // hh
+        '(\d\d)' . // mm
+        '(\d\d)' . // ss
+        '(?:\.(\d+))?' . // frac
+        'Z' . // TZ
+        '$#';
 
     /**
      * Cached formatted date.

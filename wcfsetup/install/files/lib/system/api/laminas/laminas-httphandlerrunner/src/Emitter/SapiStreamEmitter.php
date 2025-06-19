@@ -13,6 +13,7 @@ use function substr;
 
 /**
  * @psalm-type ParsedRangeType = array{0:string,1:int,2:int,3:'*'|int}
+ * @final
  */
 class SapiStreamEmitter implements EmitterInterface
 {

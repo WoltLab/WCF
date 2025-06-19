@@ -17,6 +17,7 @@ use SpomkyLabs\Pki\CryptoTypes\Signature\Signature;
 use UnexpectedValueException;
 use function array_key_exists;
 use function mb_strlen;
+use function sprintf;
 use const OPENSSL_ALGO_MD4;
 use const OPENSSL_ALGO_MD5;
 use const OPENSSL_ALGO_SHA1;

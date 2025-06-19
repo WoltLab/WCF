@@ -15,6 +15,39 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+## 8.8.0: Bug fixes and deprecations
+
+### Added
+
+- `OutputFormat` properties for space around specific list separators (#880)
+
+### Changed
+
+- Mark the `OutputFormat` the constructor as `@internal` (#1131)
+- Mark `OutputFormatter` as `@internal` (#896)
+- Mark `Selector::isValid()` as `@internal` (#1037)
+- Mark parsing-related methods of most CSS elements as `@internal` (#908)
+- Mark `OutputFormat::nextLevel()` as `@internal` (#901)
+- Make all non-private properties `@internal` (#886)
+
+### Deprecated
+
+- Deprecate extending `OutputFormat` (#1131)
+- Deprecate `OutputFormat::get()` and `::set()` (#1107)
+- Deprecate support for `-webkit-calc` and `-moz-calc` (#1086)
+- Deprecate `__toString()` (#1006)
+- Deprecate greedy calculation of selector specificity (#1018)
+- Deprecate the IE hack in `Rule` (#993, #1003)
+- `OutputFormat` properties for space around list separators as an array (#880)
+- Deprecate `OutputFormat::level()` (#870)
+
+### Fixed
+
+- Include comments for all rules in declaration block (#1169)
+- Render rules in line and column number order (#1059)
+- Create `Size` with correct types in `expandBackgroundShorthand` (#814)
+- Parse `@font-face` `src` property as comma-delimited list (#794)
+
 ## 8.7.0: Add support for PHP 8.4
 
 ### Added
@@ -28,6 +61,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Deprecated
 
+- Deprecate magic method forwarding from `OutputFormat` to `OutputFormatter`
+  (#894)
 - Deprecate the expansion of shorthand properties (#719)
 - Deprecate `Parser::setCharset()` and `Parser::getCharset()` (#703)
 

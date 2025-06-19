@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\FixedType;
@@ -41,6 +43,11 @@ final class StringValueType implements StringType, FixedType
         return $value === $this->value;
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        return $node->equals(Node::value($this->value));
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof UnionType) {
@@ -56,6 +63,7 @@ final class StringValueType implements StringType, FixedType
         }
 
         return $other instanceof StringType
+            || $other instanceof ScalarConcreteType
             || $other instanceof MixedType;
     }
 
@@ -82,6 +90,11 @@ final class StringValueType implements StringType, FixedType
         return MessageBuilder::newError('Value {source_value} does not match string value {expected_value}.')
             ->withParameter('expected_value', ValueDumper::dump($this->value))
             ->build();
+    }
+
+    public function nativeType(): NativeStringType
+    {
+        return NativeStringType::get();
     }
 
     public function toString(): string

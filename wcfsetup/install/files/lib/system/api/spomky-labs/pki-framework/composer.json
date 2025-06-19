@@ -51,27 +51,25 @@
     "require": {
         "php": ">=8.1",
         "ext-mbstring": "*",
-        "brick/math": "^0.10|^0.11|^0.12"
+        "brick/math": "^0.10|^0.11|^0.12|^0.13"
     },
     "require-dev": {
         "ext-gmp": "*",
         "ext-openssl": "*",
-        "ekino/phpstan-banned-code": "^1.0",
-        "infection/infection": "^0.28",
+        "ekino/phpstan-banned-code": "^1.0|^2.0|^3.0",
+        "infection/infection": "^0.28|^0.29",
         "php-parallel-lint/php-parallel-lint": "^1.3",
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "^1.8",
-        "phpstan/phpstan-beberlei-assert": "^1.0",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.1",
-        "phpstan/phpstan-strict-rules": "^1.3",
-        "rector/rector": "^1.0",
+        "phpstan/extension-installer": "^1.3|^2.0",
+        "phpstan/phpstan": "^1.8|^2.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+        "phpstan/phpstan-phpunit": "^1.1|^2.0",
+        "phpstan/phpstan-strict-rules": "^1.3|^2.0",
+        "rector/rector": "^1.0|^2.0",
         "roave/security-advisories": "dev-latest",
-        "symfony/phpunit-bridge": "^6.4|^7.0",
         "symfony/string": "^6.4|^7.0",
         "symfony/var-dumper": "^6.4|^7.0",
         "symplify/easy-coding-standard": "^12.0",
-        "phpunit/phpunit": "^10.1|^11.0"
+        "phpunit/phpunit": "^10.1|^11.0|^12.0"
     },
     "suggest": {
         "ext-openssl": "For OpenSSL based cyphering",

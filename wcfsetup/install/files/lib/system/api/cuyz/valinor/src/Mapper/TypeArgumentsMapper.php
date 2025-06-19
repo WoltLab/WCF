@@ -11,6 +11,7 @@ use CuyZ\Valinor\Mapper\Exception\TypeErrorDuringArgumentsMapping;
 use CuyZ\Valinor\Mapper\Tree\Builder\RootNodeBuilder;
 use CuyZ\Valinor\Mapper\Tree\Exception\UnresolvableShellType;
 use CuyZ\Valinor\Mapper\Tree\Shell;
+use CuyZ\Valinor\Type\ObjectType;
 use CuyZ\Valinor\Type\Types\ShapedArrayElement;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
 use CuyZ\Valinor\Type\Types\StringValueType;
@@ -32,12 +33,13 @@ final class TypeArgumentsMapper implements ArgumentsMapper
             fn (ParameterDefinition $parameter) => new ShapedArrayElement(
                 new StringValueType($parameter->name),
                 $parameter->type,
-                $parameter->isOptional
+                $parameter->isOptional,
             ),
-            iterator_to_array($function->parameters)
+            $function->parameters->toList(),
         );
 
         $type = new ShapedArrayType(...$elements);
+
         $shell = Shell::root($this->settings, $type, $source);
 
         try {
@@ -46,11 +48,24 @@ final class TypeArgumentsMapper implements ArgumentsMapper
             throw new TypeErrorDuringArgumentsMapping($function, $exception);
         }
 
-        if (! $node->isValid()) {
-            throw new ArgumentsMapperError($function, $node->node());
+        if ($node->isValid()) {
+            /** @var array<string, mixed> */
+            return $node->value();
         }
 
-        /** @var array<string, mixed> */
-        return $node->value();
+        // Transforms the source value if there is only one object argument, to
+        // ensure the source can contain flattened values.
+        if (count($elements) === 1 && $elements[0]->type() instanceof ObjectType) {
+            $shell = $shell->withType($elements[0]->type());
+
+            $node = $this->nodeBuilder->build($shell);
+
+            if ($node->isValid()) {
+                /** @var array<string, mixed> */
+                return [$elements[0]->key()->value() => $node->value()];
+            }
+        }
+
+        throw new ArgumentsMapperError($function, $node->node());
     }
 }

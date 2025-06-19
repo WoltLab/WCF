@@ -9,6 +9,7 @@ use SpomkyLabs\Pki\ASN1\Exception\DecodeException;
 use SpomkyLabs\Pki\ASN1\Feature\ElementBase;
 use UnexpectedValueException;
 use function mb_strlen;
+use function sprintf;
 
 /**
  * Distinguished Name parsing conforming to RFC 2253 and RFC 1779.

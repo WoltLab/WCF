@@ -11,14 +11,13 @@ use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifi
 use SpomkyLabs\Pki\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
-From RFC 3370 - 2.1 SHA-1
-
-    The AlgorithmIdentifier parameters field is OPTIONAL.  If present,
-    the parameters field MUST contain a NULL.  Implementations MUST
-    accept SHA-1 AlgorithmIdentifiers with absent parameters.
-    Implementations MUST accept SHA-1 AlgorithmIdentifiers with NULL
-    parameters.  Implementations SHOULD generate SHA-1
-    AlgorithmIdentifiers with absent parameters.
+ * From RFC 3370 - 2.1 SHA-1
+ * The AlgorithmIdentifier parameters field is OPTIONAL.  If present,
+ * the parameters field MUST contain a NULL.  Implementations MUST
+ * accept SHA-1 AlgorithmIdentifiers with absent parameters.
+ * Implementations MUST accept SHA-1 AlgorithmIdentifiers with NULL
+ * parameters.  Implementations SHOULD generate SHA-1
+ * AlgorithmIdentifiers with absent parameters.
  */
 
 /**

@@ -13,6 +13,7 @@ use SpomkyLabs\Pki\ASN1\Util\BigInt;
 use function count;
 use function mb_strlen;
 use function ord;
+use function sprintf;
 
 /**
  * Class to represent BER/DER length octets.
@@ -49,7 +50,7 @@ final class Length implements Encodable
      * Variable is updated to the offset next to the
      * parsed length component. If null, start from offset 0.
      */
-    public static function fromDER(string $data, int &$offset = null): self
+    public static function fromDER(string $data, ?int &$offset = null): self
     {
         $idx = $offset ?? 0;
         $datalen = mb_strlen($data, '8bit');
@@ -89,7 +90,7 @@ final class Length implements Encodable
      * @param null|int $expected Expected length, null to bypass checking
      * @see self::fromDER
      */
-    public static function expectFromDER(string $data, int &$offset, int $expected = null): self
+    public static function expectFromDER(string $data, int &$offset, ?int $expected = null): self
     {
         $idx = $offset;
         $length = self::fromDER($data, $idx);

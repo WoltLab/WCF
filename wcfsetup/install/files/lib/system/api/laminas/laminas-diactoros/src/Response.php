@@ -34,6 +34,7 @@ class Response implements ResponseInterface
         101 => 'Switching Protocols',
         102 => 'Processing',
         103 => 'Early Hints',
+        104 => 'Upload Resumption Supported (TEMPORARY - registered 2024-11-13, expires 2025-11-13)',
         // SUCCESS CODES
         200 => 'OK',
         201 => 'Created',

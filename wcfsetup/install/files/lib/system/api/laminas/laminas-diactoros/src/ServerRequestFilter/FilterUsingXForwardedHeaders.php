@@ -50,8 +50,10 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
      * @param list<non-empty-string> $trustedProxies
      * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders
      */
-    private function __construct(private array $trustedProxies = [], private array $trustedHeaders = [])
-    {
+    private function __construct(
+        private readonly array $trustedProxies = [],
+        private readonly array $trustedHeaders = []
+    ) {
     }
 
     public function __invoke(ServerRequestInterface $request): ServerRequestInterface

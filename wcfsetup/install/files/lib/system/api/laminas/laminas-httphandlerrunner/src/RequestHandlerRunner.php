@@ -51,8 +51,8 @@ final class RequestHandlerRunner implements RequestHandlerRunnerInterface
         /**
          * A request handler to run as the application.
          */
-        private RequestHandlerInterface $handler,
-        private EmitterInterface $emitter,
+        private readonly RequestHandlerInterface $handler,
+        private readonly EmitterInterface $emitter,
         callable $serverRequestFactory,
         callable $serverRequestErrorResponseGenerator
     ) {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Types;
 
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
+use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Type\CompositeType;
@@ -15,6 +17,7 @@ use CuyZ\Valinor\Utility\IsSingleton;
 use CuyZ\Valinor\Utility\Reflection\Reflection;
 use Stringable;
 
+use function array_map;
 use function assert;
 use function is_string;
 
@@ -49,12 +52,8 @@ final class ClassStringType implements StringType, CompositeType
             return false;
         }
 
-        if (! Reflection::classOrInterfaceExists($value)) {
-            return false;
-        }
-
         if (! $this->subType) {
-            return true;
+            return Reflection::classOrInterfaceExists($value);
         }
 
         if ($this->subType instanceof ObjectType) {
@@ -71,10 +70,42 @@ final class ClassStringType implements StringType, CompositeType
         return false;
     }
 
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        $condition = Node::functionCall('is_string', [$node]);
+
+        if (! $this->subType) {
+            return $condition->and(Node::functionCall(Reflection::class . '::classOrInterfaceExists', [$node]));
+        }
+
+        if ($this->subType instanceof ObjectType) {
+            return $condition->and(
+                Node::functionCall('is_a', [
+                    $node,
+                    Node::value($this->subType->className()),
+                    Node::value(true),
+                ])
+            );
+        }
+
+        $conditions = array_map(
+            // @phpstan-ignore argument.type (We know it's an ObjectType)
+            static fn (ObjectType $type) => Node::functionCall('is_a', [
+                $node,
+                Node::value($type->className()),
+                Node::value(true),
+            ]),
+            $this->subType->types()
+        );
+
+        return $condition->and(Node::logicalOr(...$conditions)->wrap());
+    }
+
     public function matches(Type $other): bool
     {
         if ($other instanceof NativeStringType
             || $other instanceof NonEmptyStringType
+            || $other instanceof ScalarConcreteType
             || $other instanceof MixedType
         ) {
             return true;
@@ -93,7 +124,7 @@ final class ClassStringType implements StringType, CompositeType
         }
 
         if (! $other->subType) {
-            return false;
+            return true;
         }
 
         return $this->subType->matches($other->subType);
@@ -139,6 +170,11 @@ final class ClassStringType implements StringType, CompositeType
         }
 
         return [$this->subType];
+    }
+
+    public function nativeType(): NativeStringType
+    {
+        return NativeStringType::get();
     }
 
     public function toString(): string

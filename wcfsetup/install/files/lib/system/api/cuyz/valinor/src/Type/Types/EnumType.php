@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Type\Types;
 
 use BackedEnum;
+use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Type\ClassType;
 use CuyZ\Valinor\Type\CombiningType;
 use CuyZ\Valinor\Type\Parser\Exception\Enum\EnumCaseNotFound;
@@ -23,7 +24,7 @@ final class EnumType implements ClassType
 
     private string $pattern;
 
-    /** @var array<UnitEnum> */
+    /** @var non-empty-array<UnitEnum> */
     private array $cases;
 
     /**
@@ -32,7 +33,8 @@ final class EnumType implements ClassType
      */
     public function __construct(string $enumName, string $pattern, array $cases)
     {
-        $this->enumName = $enumName;
+        // @phpstan-ignore assign.propertyType (it is still an enum class-string)
+        $this->enumName = ltrim($enumName, '\\');
         $this->pattern = $pattern;
 
         if (empty($cases)) {
@@ -92,7 +94,12 @@ final class EnumType implements ClassType
 
     public function accepts(mixed $value): bool
     {
-        return $value instanceof $this->enumName;
+        return in_array($value, $this->cases, true);
+    }
+
+    public function compiledAccept(ComplianceNode $node): ComplianceNode
+    {
+        return $node->instanceOf($this->enumName);
     }
 
     public function matches(Type $other): bool
@@ -119,9 +126,17 @@ final class EnumType implements ClassType
             || $other instanceof MixedType;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function readableSignature(): string
     {
         return implode('|', array_keys($this->cases));
+    }
+
+    public function nativeType(): EnumType
+    {
+        return self::native($this->enumName);
     }
 
     public function toString(): string
