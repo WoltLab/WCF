@@ -24,7 +24,7 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
-			<li><a href="{link controller='MenuItemAdd'}menuID={$menuID}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
+			<li><a href="{link controller='MenuItemAdd' menuID=$menuID}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
