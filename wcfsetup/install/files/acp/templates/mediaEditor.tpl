@@ -4,7 +4,7 @@
 
 {if $media->isImage && $media->hasThumbnail('small')}
 	<div class="mediaThumbnail">
-		{@$media->getThumbnailTag('small')}
+		{unsafe:$media->getThumbnailTag('small')}
 	</div>
 {/if}
 
@@ -12,7 +12,7 @@
 	{if $media->isImage}
 		{icon size=48 name='file-image'}
 	{else}
-		{@$media->getElementTag(48)}
+		{unsafe:$media->getElementTag(48)}
 	{/if}
 	
 	<dl class="plain dataList">
@@ -20,7 +20,7 @@
 		<dd id="mediaFilename">{$media->filename}</dd>
 		
 		<dt>{lang}wcf.media.filesize{/lang}</dt>
-		<dd id="mediaFilesize">{@$media->filesize|filesize}</dd>
+		<dd id="mediaFilesize">{$media->filesize|filesize}</dd>
 		
 		{if $media->isImage}
 			<dt>{lang}wcf.media.imageDimensions{/lang}</dt>
@@ -35,7 +35,7 @@
 		
 		{if $media->downloads}
 			<dt>{lang}wcf.media.lastDownloadTime{/lang}</dt>
-			<dd id="mediaDownloads">{@$media->lastDownloadTime|time}</dd>
+			<dd id="mediaDownloads">{time time=$media->lastDownloadTime}</dd>
 		{/if}
 	</dl>
 </div>
@@ -45,9 +45,9 @@
 	
 	{hascontent}
 		<dl>
-			<dt><label for="categoryID_{@$media->mediaID}">{lang}wcf.global.category{/lang}</label></dt>
+			<dt><label for="categoryID_{$media->mediaID}">{lang}wcf.global.category{/lang}</label></dt>
 			<dd>
-				<select id="categoryID_{@$media->mediaID}" name="categoryID">
+				<select id="categoryID_{$media->mediaID}" name="categoryID">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{content}
@@ -86,9 +86,9 @@
 	{/if}
 	
 	<dl>
-		<dt><label for="title_{@$media->mediaID}">{lang}wcf.global.title{/lang}</label></dt>
+		<dt><label for="title_{$media->mediaID}">{lang}wcf.global.title{/lang}</label></dt>
 		<dd>
-			<input type="text" id="title_{@$media->mediaID}" name="title" class="long">
+			<input type="text" id="title_{$media->mediaID}" name="title" class="long">
 		</dd>
 	</dl>
 	{if $availableLanguages|count > 1}
@@ -97,9 +97,9 @@
 	
 	{if $media->isImage}
 		<dl>
-			<dt><label for="caption_{@$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
+			<dt><label for="caption_{$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
 			<dd>
-				<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
+				<textarea id="caption_{$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
 			</dd>
 		</dl>
 		{if $availableLanguages|count > 1}
@@ -117,9 +117,9 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
+			<dt><label for="altText_{$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
 			<dd>
-				<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long">
+				<input type="text" id="altText_{$media->mediaID}" name="altText" class="long">
 			</dd>
 		</dl>
 		{if $availableLanguages|count > 1}

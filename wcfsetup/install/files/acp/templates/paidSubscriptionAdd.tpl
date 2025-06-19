@@ -1,16 +1,23 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.'|concat:$action}
 
 <script data-relocate="true">
-	$(function() {
-		$('#subscriptionLengthPermanent').change(function() {
-			if ($('#subscriptionLengthPermanent').is(':checked')) {
-				$('#subscriptionLengthDL, #isRecurringDL').hide();
+	require(['WoltLabSuite/Core/Dom/Util'], ({ show, hide }) => {
+		const subscriptionLengthPermanent = document.getElementById('subscriptionLengthPermanent');
+		const subscriptionLengthDL = document.getElementById('subscriptionLengthDL');
+		const isRecurringDL = document.getElementById('isRecurringDL');
+
+		function toggleSubscriptionElements() {
+			if (subscriptionLengthPermanent.checked) {
+				hide(subscriptionLengthDL);
+				hide(isRecurringDL);
+			} else {
+				show(subscriptionLengthDL);
+				show(isRecurringDL);
 			}
-			else {
-				$('#subscriptionLengthDL, #isRecurringDL').show();
-			}
-		});
-		$('#subscriptionLengthPermanent').change();
+		}
+
+		subscriptionLengthPermanent.addEventListener('change', toggleSubscriptionElements);
+		toggleSubscriptionElements();
 	});
 </script>
 
@@ -46,7 +53,7 @@
 						{elseif $errorType == 'multilingual'}
 							{lang}wcf.global.form.error.multilingual{/lang}
 						{else}
-							{lang}wcf.acp.paidSubscription.title.error.{@$errorType}{/lang}
+							{lang}wcf.acp.paidSubscription.title.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -66,7 +73,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.paidSubscription.description.error.{@$errorType}{/lang}
+							{lang}wcf.acp.paidSubscription.description.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -76,7 +83,7 @@
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" id="showOrder" name="showOrder" value="{if $showOrder}{@$showOrder}{/if}" class="tiny" min="0">
+				<input type="number" id="showOrder" name="showOrder" value="{if $showOrder}{$showOrder}{/if}" class="tiny" min="0">
 				<small>{lang}wcf.acp.paidSubscription.showOrder.description{/lang}</small>
 			</dd>
 		</dl>
@@ -119,7 +126,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.paidSubscription.cost.error.{@$errorType}{/lang}
+							{lang}wcf.acp.paidSubscription.cost.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -147,7 +154,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.paidSubscription.subscriptionLength.error.{@$errorType}{/lang}
+							{lang}wcf.acp.paidSubscription.subscriptionLength.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -173,7 +180,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.paidSubscription.userGroups.error.{@$errorType}{/lang}
+							{lang}wcf.acp.paidSubscription.userGroups.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

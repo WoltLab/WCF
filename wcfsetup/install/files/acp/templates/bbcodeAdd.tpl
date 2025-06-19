@@ -10,30 +10,30 @@
 		</h2>
 		
 		<dl>
-			<dt><label for="attributes[{ldelim}@$attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
+			<dt><label for="attributes[{ldelim}$attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
 			<dd>
-				<input type="text" id="attributes[{ldelim}@$attributeNo}][attributeHtml]" name="attributes[{ldelim}@$attributeNo}][attributeHtml]" value="" class="long">
+				<input type="text" id="attributes[{ldelim}$attributeNo}][attributeHtml]" name="attributes[{ldelim}$attributeNo}][attributeHtml]" value="" class="long">
 			</dd>
 		</dl>
 		
 		<dl>
-			<dt><label for="attributes[{ldelim}@$attributeNo}][validationPattern]">{lang}wcf.acp.bbcode.attribute.validationPattern{/lang}</label></dt>
+			<dt><label for="attributes[{ldelim}$attributeNo}][validationPattern]">{lang}wcf.acp.bbcode.attribute.validationPattern{/lang}</label></dt>
 			<dd>
-				<input type="text" id="attributes[{ldelim}@$attributeNo}][validationPattern]" name="attributes[{ldelim}@$attributeNo}][validationPattern]" value="" class="long">
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt></dt>
-			<dd>
-				<label for="attributes[{ldelim}@$attributeNo}][required]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][required]" name="attributes[{ldelim}@$attributeNo}][required]" value="1"> {lang}wcf.acp.bbcode.attribute.required{/lang}</label>
+				<input type="text" id="attributes[{ldelim}$attributeNo}][validationPattern]" name="attributes[{ldelim}$attributeNo}][validationPattern]" value="" class="long">
 			</dd>
 		</dl>
 		
 		<dl>
 			<dt></dt>
 			<dd>
-				<label for="attributes[{ldelim}@$attributeNo}][useText]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][useText]" name="attributes[{ldelim}@$attributeNo}][useText]" value="1"> {lang}wcf.acp.bbcode.attribute.useText{/lang}</label>
+				<label for="attributes[{ldelim}$attributeNo}][required]"><input type="checkbox" id="attributes[{ldelim}$attributeNo}][required]" name="attributes[{ldelim}$attributeNo}][required]" value="1"> {lang}wcf.acp.bbcode.attribute.required{/lang}</label>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt></dt>
+			<dd>
+				<label for="attributes[{ldelim}$attributeNo}][useText]"><input type="checkbox" id="attributes[{ldelim}$attributeNo}][useText]" name="attributes[{ldelim}$attributeNo}][useText]" value="1"> {lang}wcf.acp.bbcode.attribute.useText{/lang}</label>
 				<small>{lang}wcf.acp.bbcode.attribute.useText.description{/lang}</small>
 			</dd>
 		</dl>
@@ -43,37 +43,45 @@
 {/capture}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Template'], (Template) => {
-		$(function() {
-			$('.jsDeleteButton').click(function (event) {
-				$(event.target).parent().parent().remove();
+	require(['WoltLabSuite/Core/Template', 'WoltLabSuite/Core/Dom/Util'], (Template, { hide, show }) => {
+		document.querySelectorAll('.jsDeleteButton').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				btn.closest('.section').remove();
 			});
-			
-			var attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
-			var attributeTemplate = new Template('{@$attributeTemplate|encodeJS}');
-			
-			$('.jsAddButton').click(function (event) {
-				var $html = $($.parseHTML(attributeTemplate.fetch({ attributeNo: attributeNo++ })));
-				$html.find('.jsDeleteButton').click(function (event) {
-					$(event.target).parent().parent().remove();
-				});
-				$('#attributeFieldset').append($html);
-			});
-			
-			var $buttonSettings = $('.jsButtonSetting');
-			var $showButton = $('#showButton');
-			function toggleButtonSettings() {
-				if ($showButton.is(':checked')) {
-					$buttonSettings.show();
-				}
-				else {
-					$buttonSettings.hide();
-				}
-			}
-			
-			$showButton.change(toggleButtonSettings);
-			toggleButtonSettings();
 		});
+
+		let attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
+		const attributeTemplate = new Template('{unsafe:$attributeTemplate|encodeJS}');
+
+		document.querySelectorAll('.jsAddButton').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const html = attributeTemplate.fetch({ attributeNo: attributeNo++ });
+				const tempDiv = document.createElement('div');
+				tempDiv.innerHTML = html;
+				const section = tempDiv.firstElementChild;
+				section.querySelectorAll('.jsDeleteButton').forEach((delBtn) => {
+					delBtn.addEventListener('click', () => {
+						delBtn.closest('.section').remove();
+					});
+				});
+				document.getElementById('attributeFieldset').appendChild(section);
+			});
+		});
+
+		const buttonSettings = document.querySelectorAll('.jsButtonSetting');
+		const showButton = document.getElementById('showButton');
+		function toggleButtonSettings() {
+			if (showButton.checked) {
+				buttonSettings.forEach(el => show(el));
+			} else {
+				buttonSettings.forEach(el => hide(el));
+			}
+		}
+
+		if (showButton) {
+			showButton.addEventListener('change', toggleButtonSettings);
+			toggleButtonSettings();
+		}
 	});
 </script>
 
@@ -180,7 +188,7 @@
 							{elseif $errorType == 'multilingual'}
 								{lang}wcf.global.form.error.multilingual{/lang}
 							{else}
-								{lang}wcf.acp.bbcode.buttonLabel.error.{@$errorType}{/lang}
+								{lang}wcf.acp.bbcode.buttonLabel.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -201,7 +209,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.bbcode.wysiwygIcon.error.{@$errorType}{/lang}
+								{lang}wcf.acp.bbcode.wysiwygIcon.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -231,16 +239,16 @@
 				</h2>
 				
 				<dl{if $errorField == 'attributeHtml'|concat:$attribute->attributeNo} class="formError"{/if}>
-					<dt><label for="attributes[{@$attribute->attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
+					<dt><label for="attributes[{$attribute->attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
 					<dd>
-						<input type="text" id="attributes[{@$attribute->attributeNo}][attributeHtml]" name="attributes[{@$attribute->attributeNo}][attributeHtml]" value="{$attribute->attributeHtml}" class="long">
+						<input type="text" id="attributes[{$attribute->attributeNo}][attributeHtml]" name="attributes[{$attribute->attributeNo}][attributeHtml]" value="{$attribute->attributeHtml}" class="long">
 					</dd>
 				</dl>
 				
 				<dl{if $errorField == 'attributeValidationPattern'|concat:$attribute->attributeNo} class="formError"{/if}>
-					<dt><label for="attributes[{@$attribute->attributeNo}][validationPattern]">{lang}wcf.acp.bbcode.attribute.validationPattern{/lang}</label></dt>
+					<dt><label for="attributes[{$attribute->attributeNo}][validationPattern]">{lang}wcf.acp.bbcode.attribute.validationPattern{/lang}</label></dt>
 					<dd>
-						<input type="text" id="attributes[{@$attribute->attributeNo}][validationPattern]" name="attributes[{@$attribute->attributeNo}][validationPattern]" value="{$attribute->validationPattern}" class="long">
+						<input type="text" id="attributes[{$attribute->attributeNo}][validationPattern]" name="attributes[{$attribute->attributeNo}][validationPattern]" value="{$attribute->validationPattern}" class="long">
 						{if $errorField == 'attributeValidationPattern'|concat:$attribute->attributeNo}
 							<small class="innerError">
 								{if $errorType == 'invalid'}
@@ -253,13 +261,13 @@
 				
 				<dl{if $errorField == 'attributeRequired'|concat:$attribute->attributeNo} class="formError"{/if}>
 					<dd>
-						<label for="attributes[{@$attribute->attributeNo}][required]"><input type="checkbox" id="attributes[{@$attribute->attributeNo}][required]" name="attributes[{@$attribute->attributeNo}][required]" value="1"{if $attribute->required} checked{/if}> {lang}wcf.acp.bbcode.attribute.required{/lang}</label>
+						<label for="attributes[{$attribute->attributeNo}][required]"><input type="checkbox" id="attributes[{$attribute->attributeNo}][required]" name="attributes[{$attribute->attributeNo}][required]" value="1"{if $attribute->required} checked{/if}> {lang}wcf.acp.bbcode.attribute.required{/lang}</label>
 					</dd>
 				</dl>
 				
 				<dl{if $errorField == 'attributeUseText'|concat:$attribute->attributeNo} class="formError"{/if}>
 					<dd>
-						<label for="attributes[{@$attribute->attributeNo}][useText]"><input type="checkbox" id="attributes[{@$attribute->attributeNo}][useText]" name="attributes[{@$attribute->attributeNo}][useText]" value="1"{if $attribute->useText} checked{/if}> {lang}wcf.acp.bbcode.attribute.useText{/lang}</label>
+						<label for="attributes[{$attribute->attributeNo}][useText]"><input type="checkbox" id="attributes[{$attribute->attributeNo}][useText]" name="attributes[{$attribute->attributeNo}][useText]" value="1"{if $attribute->useText} checked{/if}> {lang}wcf.acp.bbcode.attribute.useText{/lang}</label>
 						<small>{lang}wcf.acp.bbcode.attribute.useText.description{/lang}</small>
 					</dd>
 				</dl>

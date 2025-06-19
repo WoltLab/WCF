@@ -14,8 +14,8 @@
 				}
 			{else}
 				{foreach from=$availableLanguages item=availableLanguage}
-					if (elById('customURL{@$availableLanguage->languageID}').value === '') {
-						elById('customURL{@$availableLanguage->languageID}').value = name + '-{@$availableLanguage->languageCode}';
+					if (elById('customURL{$availableLanguage->languageID}').value === '') {
+						elById('customURL{$availableLanguage->languageID}').value = name + '-{unsafe:$availableLanguage->languageCode|encodeJS}';
 					}
 				{/foreach}
 			{/if}
@@ -100,7 +100,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.name.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.name.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -114,7 +114,7 @@
 							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
 
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{unsafe:"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}
@@ -122,7 +122,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.parentPage.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.parentPage.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -142,7 +142,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.application.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.application.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -165,7 +165,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.application.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.application.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -183,7 +183,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.customURL.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -193,15 +193,15 @@
 					{foreach from=$availableLanguages item=availableLanguage}
 						{assign var='__errorFieldName' value='customURL_'|concat:$availableLanguage->languageID}
 						<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-							<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
+							<dt><label for="customURL{$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
 							<dd>
-								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								<input type="text" id="customURL{$availableLanguage->languageID}" name="customURL[{$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == $__errorFieldName}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
-											{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
+											{lang}wcf.acp.page.customURL.error.{$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}
@@ -219,7 +219,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.cssClassName.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.cssClassName.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -275,7 +275,7 @@
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 
 								{foreach from=$menuItemNodeList item=menuItemNode}
-									<option value="{$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
+									<option value="{$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{unsafe:"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'parentMenuItemID'}
@@ -283,7 +283,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.parentMenuItem.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.parentMenuItem.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -316,7 +316,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.title.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -335,7 +335,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.content.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -357,7 +357,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+										{lang}wcf.acp.page.metaDescription.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -377,19 +377,19 @@
 					</nav>
 
 					{foreach from=$availableLanguages item=availableLanguage}
-						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
+						<div id="language{$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
 								{assign var='__errorFieldName' value='title_'|concat:$availableLanguage->languageID}
 								<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
+									<dt><label for="title{$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+										<input type="text" id="title{$availableLanguage->languageID}" name="title[{$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 										{if $errorField == $__errorFieldName}
 											<small class="innerError">
 												{if $errorType == 'empty'}
 													{lang}wcf.global.form.error.empty{/lang}
 												{else}
-													{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
+													{lang}wcf.acp.page.title.error.{$errorType}{/lang}
 												{/if}
 											</small>
 										{/if}
@@ -399,15 +399,15 @@
 								{if $pageType == 'system'}
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
+										<dt><label for="metaDescription{$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 										<dd>
-											<input type="text" class="long" name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
+											<input type="text" class="long" name="metaDescription[{$availableLanguage->languageID}]" id="metaDescription{$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
 											{if $errorField == $__errorFieldName}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
-														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+														{lang}wcf.acp.page.metaDescription.error.{$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}
@@ -422,7 +422,7 @@
 								{if $pageType != 'system'}
 									{assign var='__errorFieldName' value='content_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
+										<dt><label for="content{$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
 										<dd>
 											{include file='__pageAddContent' languageID=$availableLanguage->languageID}
 
@@ -431,7 +431,7 @@
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
-														{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
+														{lang}wcf.acp.page.content.error.{$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}
@@ -446,15 +446,15 @@
 
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
+										<dt><label for="metaDescription{$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 										<dd>
-											<input type="text" class="long" name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
+											<input type="text" class="long" name="metaDescription[{$availableLanguage->languageID}]" id="metaDescription{$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
 											{if $errorField == $__errorFieldName}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
-														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+														{lang}wcf.acp.page.metaDescription.error.{$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}
@@ -472,7 +472,7 @@
 
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
-				<woltlab-core-notice type="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</woltlab-core-notice>
+				<woltlab-core-notice type="info">{lang}wcf.acp.page.boxOrder.page{$action|ucfirst}{/lang}</woltlab-core-notice>
 				
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
@@ -497,7 +497,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.boxIDs.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.boxIDs.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}

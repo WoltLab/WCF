@@ -19,7 +19,7 @@
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$menuItemNodeList item='menuItemNode'}
-								<li{if $menuItemNode->itemID == $formObject->itemID} class="active"{/if}><a href="{link controller='MenuItemEdit' object=$menuItemNode}{/link}">{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</a></li>
+								<li{if $menuItemNode->itemID == $formObject->itemID} class="active"{/if}><a href="{link controller='MenuItemEdit' object=$menuItemNode}{/link}">{if $menuItemNode->getDepth() > 1}{unsafe:"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</a></li>
 							{/foreach}
 						</ul>
 					</div>

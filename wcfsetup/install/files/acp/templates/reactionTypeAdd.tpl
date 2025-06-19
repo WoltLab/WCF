@@ -14,6 +14,6 @@
 	</nav>
 </header>
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer'}

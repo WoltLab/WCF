@@ -3,7 +3,7 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.ACP.Ad.LocationHandler({
-			{implode from=$variablesDescriptions key=objectType item=description}'{$objectType}': '{@$description|encodeJS}'{/implode}
+			{implode from=$variablesDescriptions key=objectType item=description}'{$objectType}': '{unsafe:$description|encodeJS}'{/implode}
 		});
 	});
 </script>
@@ -73,7 +73,7 @@
 					<option value="0"{if !$objectTypeID} selected{/if}>{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$locations key='locationGroupLabel' item='locationGroup'}
 						{assign var='__firstLocationID' value=$locationGroup|key}
-						<optgroup label="{$locationGroupLabel}" data-category-name="{@$locationObjectTypes[$__firstLocationID]->categoryname}">
+						<optgroup label="{$locationGroupLabel}" data-category-name="{$locationObjectTypes[$__firstLocationID]->categoryname}">
 							{foreach from=$locationGroup key='locationID' item='location'}
 								<option value="{$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected{/if}>{$location}</option>
 							{/foreach}
@@ -120,7 +120,7 @@
 			</header>
 			
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
-				{@$pageConditionObjectType->getProcessor()->getHtml()}
+				{unsafe:$pageConditionObjectType->getProcessor()->getHtml()}
 			{/foreach}
 		</section>
 		
@@ -131,7 +131,7 @@
 			</header>
 				
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
-				{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+				{unsafe:$pointInTimeConditionObjectType->getProcessor()->getHtml()}
 			{/foreach}
 		</section>
 		

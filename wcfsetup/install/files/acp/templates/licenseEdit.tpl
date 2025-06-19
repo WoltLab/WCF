@@ -25,6 +25,6 @@
 	{/hascontent}
 </header>
 
-{@$form->getHtml()}
+{unsafe:$form->getHtml()}
 
 {include file='footer'}
