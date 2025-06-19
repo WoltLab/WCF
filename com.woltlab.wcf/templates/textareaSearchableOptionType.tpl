@@ -2,14 +2,13 @@
 <textarea id="{$option->optionName}" name="values[{$option->optionName}]"{if !$searchOption} disabled{/if} cols="40" rows="10"{if $option->required} required{/if}>{$value}</textarea>
 
 <script data-relocate="true">
-$(function() {
-	$('#search_{$option->optionName}').change(function(event) {
-		if ($(event.currentTarget).prop('checked')) {
-			$('#{$option->optionName}').enable();
+	{
+		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
+		const textarea = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		if (checkbox && textarea) {
+			checkbox.addEventListener('change', () => {
+				textarea.disabled = !checkbox.checked;
+			});
 		}
-		else {
-			$('#{$option->optionName}').disable();
-		}
-	});
-});
+	}
 </script>

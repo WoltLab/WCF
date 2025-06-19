@@ -1,19 +1,26 @@
 <script data-relocate="true">
-	$(function() {
-		var $optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{@$optionTypeUsingSelectOptions}'{/implode}];
-		
-		$('#optionType').change(function(event) {
-			var $value = $(event.currentTarget).val();
-			if (WCF.inArray($value, $optionTypesUsingSelectOptions)) {
-				$('#selectOptionsDL').show();
+	require(['WoltLabSuite/Core/Dom/Util'], ({ show, hide }) => {
+		const optionTypesUsingSelectOptions = [{implode from=$optionTypesUsingSelectOptions item=optionTypeUsingSelectOptions}'{unsafe:$optionTypeUsingSelectOptions|encodeJS}'{/implode}];
+
+		const optionTypeSelect = document.getElementById('optionType');
+		const selectOptionsDL = document.getElementById('selectOptionsDL');
+		const validationPatternDL = document.getElementById('validationPatternDL');
+
+		optionTypeSelect.addEventListener('change', () => {
+			const value = optionTypeSelect.value;
+			if (optionTypesUsingSelectOptions.includes(value)) {
+				show(selectOptionsDL);
+			} else {
+				hide(selectOptionsDL);
 			}
-			else {
-				$('#selectOptionsDL').hide();
+
+			if (value === 'boolean') {
+				hide(validationPatternDL);
+			} else {
+				show(validationPatternDL);
 			}
-			
-			window[($value === 'boolean' ? 'elHide' : 'elShow')](elById('validationPatternDL'));
 		});
-		$('#optionType').trigger('change');
+		optionTypeSelect.dispatchEvent(new Event('change'));
 	});
 </script>
 
@@ -27,7 +34,7 @@
 					{if $errorType == 'multilingual'}
 						{lang}wcf.global.form.error.multilingual{/lang}
 					{else}
-						{lang}wcf.acp.customOption.name.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.name.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -44,7 +51,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.description.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.description.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -85,7 +92,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.optionType.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.optionType.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -109,7 +116,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.selectOptions.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.selectOptions.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}
@@ -126,7 +133,7 @@
 					{if $errorType == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}wcf.acp.customOption.validationPattern.error.{@$errorType}{/lang}
+						{lang}wcf.acp.customOption.validationPattern.error.{$errorType}{/lang}
 					{/if}
 				</small>
 			{/if}

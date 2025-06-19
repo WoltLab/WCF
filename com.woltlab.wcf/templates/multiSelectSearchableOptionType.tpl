@@ -1,19 +1,18 @@
 <label><input type="checkbox" id="search_{$option->optionName}" name="searchOptions[{$option->optionName}]"{if $searchOption} checked{/if}> {lang}wcf.user.option.searchRadioButtonOption{/lang}</label>
-<select id="{$option->optionName}" name="values[{$option->optionName}][]" multiple size="{if $selectOptions|count > 10}10{else}{@$selectOptions|count}{/if}"{if !$searchOption} disabled{/if}{if $option->required} required{/if}>
+<select id="{$option->optionName}" name="values[{$option->optionName}][]" multiple size="{if $selectOptions|count > 10}10{else}{$selectOptions|count}{/if}"{if !$searchOption} disabled{/if}{if $option->required} required{/if}>
 	{foreach from=$selectOptions key=key item=selectOption}
-		<option value="{$key}"{if $key|in_array:$value} selected{/if}>{lang}{@$selectOption}{/lang}</option>
+		<option value="{$key}"{if $key|in_array:$value} selected{/if}>{lang}{$selectOption}{/lang}</option>
 	{/foreach}
 </select>
 
 <script data-relocate="true">
-$(function() {
-	$('#search_{$option->optionName}').change(function(event) {
-		if ($(event.currentTarget).prop('checked')) {
-			$('#{$option->optionName}').enable();
+	{
+		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
+		const select = document.getElementById('{unsafe:$option->optionName|encodeJS}');
+		if (checkbox && select) {
+			checkbox.addEventListener('change', () => {
+				select.disabled = !checkbox.checked;
+			});
 		}
-		else {
-			$('#{$option->optionName}').disable();
-		}
-	});
-});
+	}
 </script>

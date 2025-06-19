@@ -72,13 +72,13 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="#category_{$categoryLevel1[object]->categoryName|rawurlencode}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					<li><a href="#category_{$categoryLevel1[object]->categoryName|rawurlencode}" title="{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="category_{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
+			<div id="category_{$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
 					<div class="section">
 						{if $categoryLevel1[object]->categoryName === 'module.development'}
@@ -93,7 +93,7 @@
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<section class="section">
 							<header class="sectionHeader">
-								<h2 class="sectionTitle">{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
+								<h2 class="sectionTitle">{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}{/lang}</h2>
 								{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 							</header>
 							

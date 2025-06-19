@@ -15,7 +15,7 @@
 							{icon name='bolt'}
 						</span>
 					{/if}
-					{$langPrefix|concat:$option->optionName|phrase}
+					{lang}{$langPrefix}{$option->optionName}{/lang}
 				</label>
 			{/if}
 		</dt>
@@ -25,11 +25,11 @@
 					{if $error == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}
-						{lang}{@$langPrefix}error.{$error}{/lang}
+						{lang}{$langPrefix}error.{$error}{/lang}
 					{/if}
 				</small>
 			{/if}
-			<small>{lang __optional=true}{@$langPrefix}{$option->optionName}.description{/lang}</small>
+			<small>{lang __optional=true}{$langPrefix}{$option->optionName}.description{/lang}</small>
 		</dd>
 	</dl>
 {/foreach}
