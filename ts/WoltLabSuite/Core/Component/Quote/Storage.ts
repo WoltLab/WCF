@@ -234,6 +234,19 @@ function storeQuote(objectType: string, message: Message, quote: Quote): string 
   return uuid;
 }
 
+export function getFullQuoteUuid(objectType: string, objectId: number): string | undefined {
+  const storage = getStorage();
+  const key = getKey(objectType, objectId);
+
+  for (const [uuid, q] of storage.quotes.get(key)!) {
+    if (q.rawMessage !== undefined && q.message !== undefined) {
+      return uuid;
+    }
+  }
+
+  return undefined;
+}
+
 function getStorage(): StorageData {
   const data = window.localStorage.getItem(STORAGE_KEY);
 
