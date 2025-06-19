@@ -1,9 +1,9 @@
-{capture assign='pageTitle'}{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}{/capture}
+{capture assign='pageTitle'}{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {$log->logID}{/capture}
 {include file='header'}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {$log->logID}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -16,7 +16,7 @@
 </header>
 
 <section class="section">
-	<h2 class="sectionTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}</h2>
+	<h2 class="sectionTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {$log->logID}</h2>
 	
 	<dl>
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.logMessage{/lang}</dt>
@@ -33,13 +33,13 @@
 		{/if}
 		
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.paymentMethod{/lang}</dt>
-		<dd>{lang}wcf.payment.{@$log->getPaymentMethodName()}{/lang}</dd>
+		<dd>{lang}wcf.payment.{$log->getPaymentMethodName()}{/lang}</dd>
 		
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</dt>
 		<dd>{$log->transactionID}</dd>
 		
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.logTime{/lang}</dt>
-		<dd>{@$log->logTime|time}</dd>
+		<dd>{time time=$log->logTime}</dd>
 	</dl>
 </section>
 

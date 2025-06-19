@@ -14,7 +14,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
+		<h1 class="contentTitle">{unsafe:$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 	</div>
 	
 	{hascontent}
@@ -22,7 +22,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='plus'} <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
+						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='plus'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 						
 					{event name='contentHeaderNavigation'}
@@ -40,7 +40,7 @@
 				{foreach from=$categoryNodeList item='category'}
 					{section name=i loop=$oldDepth-$categoryNodeList->getDepth()}</ol></li>{/section}
 					
-					<li class="{if $objectType->getProcessor()->canEditCategory()}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory jsObjectActionObject" data-object-id="{@$category->getObjectID()}">
+					<li class="{if $objectType->getProcessor()->canEditCategory()}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory jsObjectActionObject" data-object-id="{$category->getObjectID()}">
 						<span class="sortableNodeLabel">
 							<span class="title">
 								{event name='beforeTitle'}
@@ -68,7 +68,7 @@
 										class="jsObjectAction jsTooltip"
 										title="{lang}wcf.global.button.delete{/lang}"
 										data-object-action="delete"
-										data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"
+										data-confirm-message="{unsafe:$objectType->getProcessor()->getLanguageVariable('delete.sure')}"
 									>
 										{icon name='xmark'}
 									</button>
@@ -78,7 +78,7 @@
 							</span>
 						</span>
 						
-						<ol class="categoryList sortableList jsObjectActionObjectChildren" data-object-id="{@$category->categoryID}">{if !$categoryNodeList->current()->hasChildren()}</ol></li>{/if}
+						<ol class="categoryList sortableList jsObjectActionObjectChildren" data-object-id="{$category->categoryID}">{if !$categoryNodeList->current()->hasChildren()}</ol></li>{/if}
 					{assign var=oldDepth value=$categoryNodeList->getDepth()}
 				{/foreach}
 				{section name=i loop=$oldDepth}</ol></li>{/section}
@@ -90,7 +90,7 @@
 		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 {hascontentelse}
-	<woltlab-core-notice type="info">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</woltlab-core-notice>
+	<woltlab-core-notice type="info">{unsafe:$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</woltlab-core-notice>
 {/hascontent}
 
 {include file='footer'}

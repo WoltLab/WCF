@@ -23,13 +23,13 @@
 	<nav class="tabMenu">
 		<ul>
 			{foreach from=$languages item=language}
-				<li data-name="language{@$language->languageID}"><a href="#">{$language}</a></li>
+				<li data-name="language{$language->languageID}"><a href="#">{$language}</a></li>
 			{/foreach}
 		</ul>
 	</nav>
 {/if}
 {foreach from=$diffs key=languageID item=properties}
-{if $languageID}<div class="tabMenuContent" data-name="language{@$languageID}">{/if}
+{if $languageID}<div class="tabMenuContent" data-name="language{$languageID}">{/if}
 <div class="section editHistoryDiff">
 	<table class="table">
 		<thead>
@@ -73,9 +73,9 @@
 					{/if}
 					<td{if $line[0] === '+'} class="diffAdded"{elseif $line[0] === '-'} class="diffRemoved"{/if}{if $colspan} colspan="2"{assign var='colspan' value=false}{/if}>
 				{/if}
-				{if $line[0] === ' '}{@$line[1]}<br>{/if}
-				{if $line[0] === '-'}{@$line[1]}<br>{/if}
-				{if $line[0] === '+'}{@$line[1]}<br>{/if}
+				{if $line[0] === ' '}{unsafe:$line[1]}<br>{/if}
+				{if $line[0] === '-'}{unsafe:$line[1]}<br>{/if}
+				{if $line[0] === '+'}{unsafe:$line[1]}<br>{/if}
 				{assign var='prevType' value=$line[0]}
 			{/foreach}
 		{/foreach}
@@ -123,7 +123,7 @@
 				{foreach from=$versions item=edit name=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<button type="button" class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.confirmMessage{/lang}">
+							<button type="button" class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.confirmMessage{/lang}">
 								{icon name='arrow-rotate-left'}
 							</button>
 							<input type="radio" name="oldID" value="{$edit->versionID}"{if $oldID == $edit->versionID} checked{/if}> <input type="radio" name="newID" value="{$edit->versionID}"{if $newID == $edit->versionID} checked{/if}>

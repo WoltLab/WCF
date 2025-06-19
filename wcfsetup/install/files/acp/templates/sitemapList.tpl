@@ -34,7 +34,7 @@
 			
 			<tbody>
 				{foreach from=$sitemapObjectTypes item=object}
-					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{@$object->getObjectID()}">
+					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{$object->getObjectID()}">
 						<td class="columnIcon">
 							{if $sitemapData[$object->objectType]['isDisabled']}
 								{objectAction action="toggle" isDisabled=true}

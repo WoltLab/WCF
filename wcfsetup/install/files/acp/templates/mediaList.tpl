@@ -11,7 +11,7 @@
 		
 		ControllerMediaList.init({
 			{if $categoryID}
-				categoryId: {@$categoryID},
+				categoryId: {$categoryID},
 			{/if}
 			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if}
 		});
@@ -95,31 +95,33 @@
 	</section>
 </form>
 
-{hascontent}
+{assign var='linkParameters' value=''}
+{if $username}{capture append=linkParameters}&username={unsafe:$username|rawurlencode}{/capture}{/if}
+{if $q}{capture append=linkParameters}&q={unsafe:$q|rawurlencode}{/capture}{/if}
+{if $categoryID}{capture append=linkParameters}&categoryID={$categoryID}{/capture}{/if}
+
+{if $pages > 1}
 	<div class="paginationTop">
-		{content}
-			{assign var='linkParameters' value=''}
-			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
-			{if $q}{capture append=linkParameters}&q={@$q|rawurlencode}{/capture}{/if}
-			{if $categoryID}{capture append=linkParameters}&categoryID={@$categoryID}{/capture}{/if}
-			
-			{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-		{/content}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='MediaList' sortField=$sortField sortOrder=$sortOrder}{unsafe:$linkParameters}{/link}"
+		></woltlab-core-pagination>
 	</div>
-{/hascontent}
+{/if}
 
 <div class="section tabularBox"{if !$objects|count} style="display: none;{/if}">
 	<table class="table jsClipboardContainer jsObjectActionContainer" data-object-action-class-name="wcf\data\media\MediaAction" data-type="com.woltlab.wcf.media">
 		<thead>
 			<tr>
 				<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
-				<th class="columnID columnMediaID{if $sortField == 'mediaID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=mediaID&sortOrder={if $sortField == 'mediaID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-				<th class="columnTitle columnFilename{if $sortField == 'filename'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=filename&sortOrder={if $sortField == 'filename' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.filename{/lang}</a></th>
-				<th class="columnText columnMediaTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.title{/lang}</a></th>
-				<th class="columnDate columnUploadTime{if $sortField == 'uploadTime'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=uploadTime&sortOrder={if $sortField == 'uploadTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.uploadTime{/lang}</a></th>
-				<th class="columnDigits columnFilesize{if $sortField == 'filesize'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=filesize&sortOrder={if $sortField == 'filesize' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.filesize{/lang}</a></th>
-				<th class="columnDigits columnDownloads{if $sortField == 'downloads'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=downloads&sortOrder={if $sortField == 'downloads' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.downloads{/lang}</a></th>
-				<th class="columnDate columnLastDownloadTime{if $sortField == 'lastDownloadTime'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=lastDownloadTime&sortOrder={if $sortField == 'lastDownloadTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.lastDownloadTime{/lang}</a></th>
+				<th class="columnID columnMediaID{if $sortField == 'mediaID'} active {$sortOrder}{/if}" colspan="2"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=mediaID&sortOrder={if $sortField == 'mediaID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+				<th class="columnTitle columnFilename{if $sortField == 'filename'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=filename&sortOrder={if $sortField == 'filename' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.media.filename{/lang}</a></th>
+				<th class="columnText columnMediaTitle{if $sortField == 'title'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.global.title{/lang}</a></th>
+				<th class="columnDate columnUploadTime{if $sortField == 'uploadTime'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=uploadTime&sortOrder={if $sortField == 'uploadTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.media.uploadTime{/lang}</a></th>
+				<th class="columnDigits columnFilesize{if $sortField == 'filesize'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=filesize&sortOrder={if $sortField == 'filesize' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.media.filesize{/lang}</a></th>
+				<th class="columnDigits columnDownloads{if $sortField == 'downloads'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=downloads&sortOrder={if $sortField == 'downloads' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.media.downloads{/lang}</a></th>
+				<th class="columnDate columnLastDownloadTime{if $sortField == 'lastDownloadTime'} active {$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={$pageNo}&sortField=lastDownloadTime&sortOrder={if $sortField == 'lastDownloadTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{unsafe:$linkParameters}{/link}">{lang}wcf.media.lastDownloadTime{/lang}</a></th>
 				
 				{event name='columnHeads'}
 			</tr>
@@ -127,20 +129,20 @@
 		
 		<tbody class="jsReloadPageWhenEmpty" id="mediaListTableBody" data-no-items-info="noItemsInfo">
 			{foreach from=$objects item=media}
-				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="{@$media->getObjectID()}">
-					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></td>
+				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="{$media->getObjectID()}">
+					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{$media->mediaID}"></td>
 					<td class="columnIcon">
-						<button type="button" class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}">
+						<button type="button" class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{$media->mediaID}">
 							{icon name='pencil'}
 						</button>
 						{objectAction action="delete" objectTitle=$media->filename}
 						
 						{event name='rowButtons'}
 					</td>
-					<td class="columnID columnMediaID">{@$media->mediaID}</td>
+					<td class="columnID columnMediaID">{$media->mediaID}</td>
 					<td class="columnTitle columnFilename">
 						<div class="box48">
-							{@$media->getElementTag(48)}
+							{unsafe:$media->getElementTag(48)}
 							
 							<div>
 								<p><a href="{$media->getLink()}">{$media->filename|tableWordwrap}</a></p>
@@ -149,10 +151,10 @@
 						</div>
 					</td>
 					<td class="columnText columnMediaTitle">{$media->title|tableWordwrap}</td>
-					<td class="columnDate columnUploadTime">{@$media->uploadTime|time}</td>
-					<td class="columnDigits columnFilesize">{@$media->filesize|filesize}</td>
+					<td class="columnDate columnUploadTime">{time time=$media->uploadTime}</td>
+					<td class="columnDigits columnFilesize">{$media->filesize|filesize}</td>
 					<td class="columnDigits columnDownloads">{#$media->downloads}</td>
-					<td class="columnDate columnLastDownloadTime">{if $media->lastDownloadTime}{@$media->lastDownloadTime|time}{/if}</td>
+					<td class="columnDate columnLastDownloadTime">{if $media->lastDownloadTime}{time time=$media->lastDownloadTime}{/if}</td>
 					
 					{event name='columns'}
 				</tr>
@@ -193,11 +195,15 @@
 
 {if $objects|count}
 	<footer class="contentFooter">
-		{hascontent}
+		{if $pages > 1}
 			<div class="paginationBottom">
-				{content}{@$pagesLinks}{/content}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='MediaList' sortField=$sortField sortOrder=$sortOrder}{unsafe:$linkParameters}{/link}"
+				></woltlab-core-pagination>
 			</div>
-		{/hascontent}
+		{/if}
 		
 		<nav class="contentFooterNavigation">
 			<ul>

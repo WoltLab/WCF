@@ -17,9 +17,9 @@
 		<dt>{lang}wcf.acp.systemCheck.web{/lang}</dt>
 		<dd>
 			{if $results[status][web]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
 			{/if}
 		</dd>
 	</dl>
@@ -29,12 +29,12 @@
 		<dd>
 			{if $results[status][php]}
 				{if $results[php][version][result] === 'sufficient'}
-					{@$statusSufficient} {lang}wcf.acp.systemCheck.sufficient{/lang}
+					{unsafe:$statusSufficient} {lang}wcf.acp.systemCheck.sufficient{/lang}
 				{else}
-					{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+					{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 				{/if}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
 			{/if}
 		</dd>
 	</dl>
@@ -43,9 +43,9 @@
 		<dt>{lang}wcf.acp.systemCheck.mysql{/lang}</dt>
 		<dd>
 			{if $results[status][mysql]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
 			{/if}
 		</dd>
 	</dl>
@@ -54,9 +54,9 @@
 		<dt>{lang}wcf.acp.systemCheck.directories{/lang}</dt>
 		<dd>
 			{if $results[status][directories]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.insufficient{/lang}
 			{/if}
 		</dd>
 	</dl>
@@ -69,9 +69,9 @@
 		<dt>{lang}wcf.acp.systemCheck.web.https{/lang}</dt>
 		<dd>
 			{if $results[web][https]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.web.https.description{/lang}</small>
 		</dd>
@@ -85,15 +85,15 @@
 		<dt>{lang}wcf.acp.systemCheck.php.version{/lang}</dt>
 		<dd>
 			{if $results[php][version][result] === 'recommended'}
-				{@$statusOk} {$results[php][version][value]}
+				{unsafe:$statusOk} {$results[php][version][value]}
 			{elseif $results[php][version][result] === 'sufficient'}
-				{@$statusSufficient} {$results[php][version][value]}
+				{unsafe:$statusSufficient} {$results[php][version][value]}
 			{elseif $results[php][version][result] === 'deprecated'}
-				{@$statusSufficient} {$results[php][version][value]}
+				{unsafe:$statusSufficient} {$results[php][version][value]}
 
 				<woltlab-core-notice type="warning">{lang}wcf.acp.systemCheck.php.version.deprecated{/lang}</woltlab-core-notice>
 			{else}
-				{@$statusInsufficient} {$results[php][version][value]}
+				{unsafe:$statusInsufficient} {$results[php][version][value]}
 			{/if}
 			
 			<small>{lang}wcf.acp.systemCheck.php.version.description{/lang}</small>
@@ -104,9 +104,9 @@
 		<dt>{lang}wcf.acp.systemCheck.php.x64{/lang}</dt>
 		<dd>
 			{if $results[php][x64]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.php.x64.description{/lang}</small>
 		</dd>
@@ -116,11 +116,11 @@
 		<dt>{lang}wcf.acp.systemCheck.php.extension{/lang}</dt>
 		<dd>
 			{if $results[php][extension]|empty}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
 				<ul class="nativeList">
 					{foreach from=$results[php][extension] item=extension}
-						<li>{@$statusInsufficient} <kbd>{$extension}</kbd></li>
+						<li>{unsafe:$statusInsufficient} <kbd>{$extension}</kbd></li>
 					{/foreach}
 				</ul>
 			{/if}
@@ -131,7 +131,7 @@
 	<dl{if !$results[php][memoryLimit][result]} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php.memoryLimit{/lang}</dt>
 		<dd>
-			{if $results[php][memoryLimit][result]}{@$statusOk}{else}{@$statusInsufficient}{/if} {$results[php][memoryLimit][value]}
+			{if $results[php][memoryLimit][result]}{unsafe:$statusOk}{else}{unsafe:$statusInsufficient}{/if} {$results[php][memoryLimit][value]}
 			<small>{lang}wcf.acp.systemCheck.php.memoryLimit.description{/lang}</small>
 		</dd>
 	</dl>
@@ -140,11 +140,11 @@
 		<dt>{lang}wcf.acp.systemCheck.php.opcache{/lang}</dt>
 		<dd>
 			{if $results[php][opcache] === true}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{elseif $results[php][opcache] === null}
-				{@$statusSufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{unsafe:$statusSufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.broken{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.broken{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.php.opcache.description{/lang}</small>
 		</dd>
@@ -154,17 +154,17 @@
 		<dt>{lang}wcf.acp.systemCheck.php.gd{/lang}</dt>
 		<dd>
 			{if $results[php][gd][result]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
 				<ul class="nativeList">
 					{if !$results[php][gd][jpeg]}
-						<li>{@$statusInsufficient} <kbd>jpeg</kbd></li>
+						<li>{unsafe:$statusInsufficient} <kbd>jpeg</kbd></li>
 					{/if}
 					{if !$results[php][gd][png]}
-						<li>{@$statusInsufficient} <kbd>png</kbd></li>
+						<li>{unsafe:$statusInsufficient} <kbd>png</kbd></li>
 					{/if}
 					{if !$results[php][gd][webp]}
-						<li>{@$statusInsufficient} <kbd>webp</kbd></li>
+						<li>{unsafe:$statusInsufficient} <kbd>webp</kbd></li>
 					{/if}
 				</ul>
 			{/if}
@@ -179,7 +179,7 @@
 	<dl{if !$results[mysql][result]} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.mysql.version{/lang}</dt>
 		<dd>
-			{if $results[mysql][result]}{@$statusOk}{else}{@$statusInsufficient}{/if}
+			{if $results[mysql][result]}{unsafe:$statusOk}{else}{unsafe:$statusInsufficient}{/if}
 			{if $results[mysql][mariadb]}MariaDB{else}MySQL{/if} {$results[mysql][version]}
 			<small>{lang}wcf.acp.systemCheck.mysql.version.description{/lang}</small>
 		</dd>
@@ -189,9 +189,9 @@
 		<dt>{lang}wcf.acp.systemCheck.mysql.mysqlnd{/lang}</dt>
 		<dd>
 			{if $results[mysql][mysqlnd]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.mysql.mysqlnd.description{/lang}</small>
 		</dd>
@@ -201,9 +201,9 @@
 		<dt>{lang}wcf.acp.systemCheck.mysql.innodb{/lang}</dt>
 		<dd>
 			{if $results[mysql][innodb]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.mysql.innodb.description{/lang}</small>
 		</dd>
@@ -213,9 +213,9 @@
 		<dt>{lang}wcf.acp.systemCheck.mysql.foreignKeys{/lang}</dt>
 		<dd>
 			{if $results[mysql][foreignKeys]}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notFound{/lang}
+				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.notFound{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.mysql.foreignKeys.description{/lang}</small>
 		</dd>
@@ -225,11 +225,11 @@
 		<dt>{lang}wcf.acp.systemCheck.mysql.bufferPool{/lang}</dt>
 		<dd>
 			{if $results[mysql][bufferPool][result] === 'recommended'}
-				{@$statusOk}
+				{unsafe:$statusOk}
 			{elseif $results[mysql][bufferPool][result] === 'sufficient'}
-				{@$statusSufficient}
+				{unsafe:$statusSufficient}
 			{else}
-				{@$statusInsufficient}
+				{unsafe:$statusInsufficient}
 			{/if} {$results[mysql][bufferPool][value]|filesizeBinary}
 			<small>{lang}wcf.acp.systemCheck.mysql.bufferPool.description{/lang}</small>
 		</dd>
@@ -243,11 +243,11 @@
 		<dt>{lang}wcf.acp.systemCheck.directories.writable{/lang}</dt>
 		<dd>
 			{if $results[directories]|empty}
-				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
 				<ul class="nativeList">
 					{foreach from=$results[directories] item=directory}
-						<li>{@$statusInsufficient} <kbd>{$directory}</kbd></li>
+						<li>{unsafe:$statusInsufficient} <kbd>{$directory}</kbd></li>
 					{/foreach}
 				</ul>
 			{/if}

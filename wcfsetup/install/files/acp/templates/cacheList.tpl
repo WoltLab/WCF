@@ -43,7 +43,7 @@
 	{/if}
 	{if $cacheData.size}<dl>
 		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
-		<dd>{@$cacheData.size|filesize}</dd>
+		<dd>{$cacheData.size|filesize}</dd>
 	</dl>{/if}
 	{if $cacheData.files}<dl>
 		<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
@@ -65,7 +65,7 @@
 					<br><kbd>{$cache}</kbd>
 				</summary>
 				
-				<table id="cache{@$cacheIndex}" class="table">
+				<table id="cache{$cacheIndex}" class="table">
 					<thead>
 						<tr>
 							<th class="columnTitle">{lang}wcf.acp.cache.list.name{/lang}</th>
@@ -81,10 +81,10 @@
 						{foreach from=$files item=file}
 							<tr>
 								<td class="columnTitle">{$file.filename}</td>
-								<td class="columnDigits">{@$file.filesize|filesize}</td>
-								<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
+								<td class="columnDigits">{$file.filesize|filesize}</td>
+								<td class="columnDate">{if $file.mtime > 1}{time time=$file.mtime}{/if}</td>
 								{if $file.perm|isset}
-									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{@$file.perm}</span></td>
+									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{$file.perm}</span></td>
 								{/if}
 							</tr>
 						{/foreach}

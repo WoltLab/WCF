@@ -1,8 +1,8 @@
 {include file='header' pageTitle='wcf.acp.stat'}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.js"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.time.js"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.resize.js"></script>
+<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.js"></script>
+<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.time.js"></script>
+<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.resize.js"></script>
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
@@ -62,10 +62,10 @@
 	
 	{foreach from=$availableObjectTypes key=categoryName item=objectTypes}
 		<dl>
-			<dt><label>{lang}wcf.acp.stat.category.{@$categoryName}{/lang}</label></dt>
+			<dt><label>{lang}wcf.acp.stat.category.{$categoryName}{/lang}</label></dt>
 			<dd>
 				{foreach from=$objectTypes item=objectType}
-					<label><input type="checkbox" name="objectTypeID" value="{$objectType->objectTypeID}"{if $objectType->default} checked{/if}> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
+					<label><input type="checkbox" name="objectTypeID" value="{$objectType->objectTypeID}"{if $objectType->default} checked{/if}> {lang}wcf.acp.stat.{$objectType->objectType}{/lang}</label>
 				{/foreach}
 			</dd>
 		</dl>
