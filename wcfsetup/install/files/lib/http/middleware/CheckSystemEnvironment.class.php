@@ -27,7 +27,7 @@ final class CheckSystemEnvironment implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!RequestHandler::getInstance()->isACPRequest()) {
-            if (!(80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80399)) {
+            if (!(80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80499)) {
                 return new HtmlResponse(
                     (new HtmlErrorRenderer())->render(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
