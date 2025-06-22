@@ -36,39 +36,37 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.setupLegacy = setupLegacy;
-    exports.createFancybox = createFancybox;
+    exports.showFancybox = showFancybox;
     exports.getLocalization = getLocalization;
-    const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
+    const LOCALES = { de: "de_DE", en: "en_EN" };
+    void setDefaultConfig();
     function setup() {
-        void getDefaultConfig().then((config) => {
-            ui_1.Fancybox.bind("[data-fancybox]", config);
-        });
+        ui_1.Fancybox.bind("[data-fancybox]");
     }
     function setupLegacy() {
-        void getDefaultConfig().then((config) => {
-            ui_1.Fancybox.bind(".jsImageViewer", {
-                ...config,
-                groupAll: true,
-            });
+        ui_1.Fancybox.bind(".jsImageViewer", {
+            groupAll: true,
         });
     }
-    async function createFancybox(userSlides) {
-        return new ui_1.Fancybox(userSlides, await getDefaultConfig());
+    function showFancybox(userSlides) {
+        return ui_1.Fancybox.show(userSlides);
     }
-    async function getDefaultConfig() {
-        return {
-            l10n: await getLocalization(),
-            parentEl: (0, PageOverlay_1.getPageOverlayContainer)(),
-            Html: {
-                videoAutoplay: false,
+    async function setDefaultConfig() {
+        const defaultConfig = ui_1.Fancybox.getDefaults();
+        defaultConfig.l10n = await getLocalization();
+        defaultConfig.parentEl = (0, PageOverlay_1.getPageOverlayContainer)();
+        defaultConfig.Carousel = {
+            Video: {
+                autoplay: false,
             },
         };
     }
     async function getLocalization() {
         let locale = document.documentElement.lang;
-        if (!LOCALES.includes(locale)) {
+        if (!Object.prototype.hasOwnProperty.call(LOCALES, locale)) {
             locale = "en";
         }
-        return (await new Promise((resolve_1, reject_1) => { require([`@fancyapps/ui/l10n/${locale}`], resolve_1, reject_1); }).then(__importStar))[locale];
+        const code = LOCALES[locale];
+        return (await new Promise((resolve_1, reject_1) => { require([`@fancyapps/ui/l10n/${code}`], resolve_1, reject_1); }).then(__importStar))[code];
     }
 });

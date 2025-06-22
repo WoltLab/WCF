@@ -96,7 +96,7 @@ final class AttachmentBBCode extends AbstractBBCode
         if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
             $result = \sprintf(
                 <<<'HTML'
-                    <a href="%s" data-caption="%s" data-fancybox="message-%s-%d" class="embeddedAttachmentLink %s" style="width: %s">
+                    <a href="%s" data-caption="%s" data-type="image" data-fancybox="message-%s-%d" class="embeddedAttachmentLink %s" style="width: %s">
                         %s
                         <span class="embeddedAttachmentLinkEnlarge">
                             %s
@@ -164,7 +164,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
             $result = \sprintf(
-                '<a href="%s" data-caption="%s" data-fancybox="message-%s-%d" class="embeddedAttachmentLink %s" style="width: %s">%s%s</a>',
+                '<a href="%s" data-caption="%s" data-type="image" data-fancybox="message-%s-%d" class="embeddedAttachmentLink %s" style="width: %s">%s%s</a>',
                 StringUtil::encodeHTML($attachment->getLink()),
                 StringUtil::encodeHTML($attachment->filename),
                 MessageEmbeddedObjectManager::getInstance()->getActiveMessageObjectType(),

@@ -1,35 +1,31 @@
-import { Fancybox } from "@fancyapps/ui";
-import { userSlideType } from "@fancyapps/ui/types/Carousel/types";
-import { OptionsType } from "@fancyapps/ui/types/Fancybox/options";
+import { Fancybox, CarouselSlide, FancyboxInstance } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 
-const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
+const LOCALES = { de: "de_DE", en: "en_EN" };
+
+void setDefaultConfig();
 
 export function setup() {
-  void getDefaultConfig().then((config) => {
-    Fancybox.bind("[data-fancybox]", config);
-  });
+  Fancybox.bind("[data-fancybox]");
 }
 
 export function setupLegacy() {
-  void getDefaultConfig().then((config) => {
-    Fancybox.bind(".jsImageViewer", {
-      ...config,
-      groupAll: true,
-    });
+  Fancybox.bind(".jsImageViewer", {
+    groupAll: true,
   });
 }
 
-export async function createFancybox(userSlides?: Array<userSlideType>): Promise<Fancybox> {
-  return new Fancybox(userSlides, await getDefaultConfig());
+export function showFancybox(userSlides?: Array<CarouselSlide>): FancyboxInstance {
+  return Fancybox.show(userSlides);
 }
 
-async function getDefaultConfig(): Promise<Partial<OptionsType>> {
-  return {
-    l10n: await getLocalization(),
-    parentEl: getPageOverlayContainer(),
-    Html: {
-      videoAutoplay: false,
+async function setDefaultConfig(): Promise<void> {
+  const defaultConfig = Fancybox.getDefaults();
+  defaultConfig.l10n = await getLocalization();
+  defaultConfig.parentEl = getPageOverlayContainer();
+  defaultConfig.Carousel = {
+    Video: {
+      autoplay: false,
     },
   };
 }
@@ -37,9 +33,11 @@ async function getDefaultConfig(): Promise<Partial<OptionsType>> {
 export async function getLocalization(): Promise<Record<string, string>> {
   let locale = document.documentElement.lang;
 
-  if (!LOCALES.includes(locale)) {
+  if (!Object.prototype.hasOwnProperty.call(LOCALES, locale)) {
     locale = "en";
   }
 
-  return (await import(`@fancyapps/ui/l10n/${locale}`))[locale];
+  const code = LOCALES[locale];
+
+  return (await import(`@fancyapps/ui/l10n/${code}`))[code];
 }
