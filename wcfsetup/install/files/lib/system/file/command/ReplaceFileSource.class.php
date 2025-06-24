@@ -25,6 +25,7 @@ final class ReplaceFileSource
     public function __construct(
         private readonly File $file,
         private readonly string $pathname,
+        private readonly ?string $filename = null,
     ) {}
 
     public function __invoke(): File
@@ -70,7 +71,7 @@ final class ReplaceFileSource
             [$width, $height] = \getimagesize($this->pathname);
         }
 
-        $filename = \basename($this->pathname);
+        $filename = $this->filename ? $this->filename : \basename($this->pathname);
         $fileSize = \filesize($this->pathname);
         $fileHash = \hash_file('sha256', $this->pathname);
         $fileExtension = File::getSafeFileExtension($mimeType, $filename);
@@ -104,6 +105,9 @@ final class ReplaceFileSource
             ]);
 
             $updatedFile = new File($this->file->fileID);
+
+            $path = \dirname($updatedFile->getPathname());
+            FileUtil::makePath($path);
 
             \rename(
                 $this->pathname,
