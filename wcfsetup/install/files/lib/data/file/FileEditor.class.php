@@ -6,7 +6,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
-use wcf\event\file\FileCreated;
+use wcf\event\file\UploadCompleted;
 use wcf\system\event\EventHandler;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\image\ImageHandler;
@@ -120,7 +120,7 @@ class FileEditor extends DatabaseObjectEditor
             $filePath . $file->getSourceFilename()
         );
 
-        $event = new FileCreated($file);
+        $event = new UploadCompleted($file);
         EventHandler::getInstance()->fire($event);
 
         return $event->getFile();
@@ -191,10 +191,7 @@ class FileEditor extends DatabaseObjectEditor
             $filePath . $file->getSourceFilename()
         );
 
-        $event = new FileCreated($file);
-        EventHandler::getInstance()->fire($event);
-
-        return $event->getFile();
+        return $file;
     }
 
     /**

@@ -6,14 +6,14 @@ use wcf\data\file\File;
 use wcf\event\IPsr14Event;
 
 /**
- * Fired when a file was created before it is returned to the callee.
+ * Fired when a file was uploaded before it is returned to the callee.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class FileCreated implements IPsr14Event
+final class UploadCompleted implements IPsr14Event
 {
     public function __construct(
         private File $file,
@@ -25,7 +25,8 @@ final class FileCreated implements IPsr14Event
     }
 
     /**
-     * Reloads the file to fetch updated values.
+     * Reloads the file to fetch updated values. This must be called whenever
+     * the uploaded files has been modified by a listener.
      */
     public function reload(): void
     {
