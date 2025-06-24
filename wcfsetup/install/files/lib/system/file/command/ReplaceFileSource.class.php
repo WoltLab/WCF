@@ -114,6 +114,12 @@ final class ReplaceFileSource
                 $updatedFile->getPathname(),
             );
 
+            // Remove the previous file source because the new filename could
+            // differ due to the checksums.
+            if ($this->file->getPathname() !== $updatedFile->getPathname()) {
+                \unlink($this->file->getPathname());
+            }
+
             WCF::getDB()->commitTransaction();
             $committed = true;
 
