@@ -9,22 +9,20 @@ use wcf\system\WCF;
 
 /**
  * Filter for columns that contain unix timestamps.
- * In contrast to `DateFilter`, this filter also allows filtering by a specific time.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class TimeFilter extends AbstractFilter
+class DateFilter extends AbstractFilter
 {
     #[\Override]
     public function getFormField(string $id, string $label): AbstractFormField
     {
         return DateRangeFormField::create($id)
             ->label($label)
-            ->nullable()
-            ->supportTime();
+            ->nullable();
     }
 
     #[\Override]
@@ -56,7 +54,7 @@ class TimeFilter extends AbstractFilter
         $fromString = $toString = '';
         if ($values[0] !== '') {
             $fromDateTime = \DateTime::createFromFormat(
-                'Y-m-d\TH:i:sP',
+                'Y-m-d',
                 $values[0],
                 WCF::getUser()->getTimeZone()
             );
@@ -65,7 +63,7 @@ class TimeFilter extends AbstractFilter
                     $fromDateTime,
                     [
                         \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
+                        \IntlDateFormatter::NONE,
                     ],
                     $locale
                 );
@@ -73,7 +71,7 @@ class TimeFilter extends AbstractFilter
         }
         if ($values[1] !== '') {
             $toDateTime = \DateTime::createFromFormat(
-                'Y-m-d\TH:i:sP',
+                'Y-m-d',
                 $values[1],
                 WCF::getUser()->getTimeZone()
             );
@@ -82,7 +80,7 @@ class TimeFilter extends AbstractFilter
                     $toDateTime,
                     [
                         \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
+                        \IntlDateFormatter::NONE,
                     ],
                     $locale
                 );
@@ -110,27 +108,28 @@ class TimeFilter extends AbstractFilter
 
         $values = explode(';', $value);
         if (\count($values) === 2) {
-            $from = $this->getTimestamp($values[0]);
-            $to = $this->getTimestamp($values[1]);
+            $fromDateTime = \DateTime::createFromFormat(
+                'Y-m-d',
+                $values[0]
+            );
+            if ($fromDateTime !== false) {
+                $fromDateTime->setTime(0, 0);
+                $from = $fromDateTime->getTimestamp();
+            }
+
+            $toDateTime = \DateTime::createFromFormat(
+                'Y-m-d',
+                $values[1]
+            );
+            if ($toDateTime !== false) {
+                $toDateTime->setTime(23, 59, 59);
+                $to = $toDateTime->getTimestamp();
+            }
         }
 
         return [
             'from' => $from,
             'to' => $to,
         ];
-    }
-
-    private function getTimestamp(string $date): int
-    {
-        $dateTime = \DateTime::createFromFormat(
-            'Y-m-d\TH:i:sP',
-            $date
-        );
-
-        if ($dateTime !== false) {
-            return $dateTime->getTimestamp();
-        }
-
-        return 0;
     }
 }
