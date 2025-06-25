@@ -356,4 +356,10 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
     {
         return $this->getAuthor()->username;
     }
+
+    #[\Override]
+    public function getEventName(): string
+    {
+        return WCF::getLanguage()->getDynamicVariable("wcf.user.notification.{$this->objectType}.{$this->eventName}");
+    }
 }
