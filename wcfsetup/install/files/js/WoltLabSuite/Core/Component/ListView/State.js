@@ -136,7 +136,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
         }
         #updateListViewFooter() {
-            this.#listViewFooter.hidden = this.#pagination.count < 2 && this.#selection.getSelectedIds().length === 0;
+            this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);

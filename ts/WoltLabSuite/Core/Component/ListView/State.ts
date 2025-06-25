@@ -186,7 +186,7 @@ export class State extends EventTarget {
   }
 
   #updateListViewFooter(): void {
-    this.#listViewFooter.hidden = this.#pagination.count < 2 && this.#selection.getSelectedIds().length === 0;
+    this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {
