@@ -79,11 +79,7 @@ class ArticleListBoxController extends AbstractListViewBoxController
     #[\Override]
     protected function createListView(): ArticleListView
     {
-        if (!isset($this->listView)) {
-            $this->listView = new ArticleListView();
-        }
-
-        return $this->listView;
+        return new ArticleListView();
     }
 
     #[\Override]
