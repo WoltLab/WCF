@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\gridView\filter;
+namespace wcf\system\listView\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
@@ -9,28 +9,26 @@ use wcf\system\WCF;
 
 /**
  * Filter for columns that contain unix timestamps.
- * In contrast to `DateFilter`, this filter also allows filtering by a specific time.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class TimeFilter extends AbstractFilter
+class DateFilter extends AbstractFilter
 {
     #[\Override]
-    public function getFormField(string $id, string $label): AbstractFormField
+    public function getFormField(): AbstractFormField
     {
-        return DateRangeFormField::create($id)
-            ->label($label)
-            ->nullable()
-            ->supportTime();
+        return DateRangeFormField::create($this->id)
+            ->label($this->languageItem)
+            ->nullable();
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+    public function applyFilter(DatabaseObjectList $list, string $value): void
     {
-        $columnName = $this->getDatabaseColumnName($list, $id);
+        $columnName = $this->getDatabaseColumnName($list);
         $timestamps = $this->getTimestamps($value);
 
         if (!$timestamps['from'] && !$timestamps['to']) {
@@ -56,7 +54,7 @@ class TimeFilter extends AbstractFilter
         $fromString = $toString = '';
         if ($values[0] !== '') {
             $fromDateTime = \DateTimeImmutable::createFromFormat(
-                'Y-m-d\TH:i:sP',
+                'Y-m-d',
                 $values[0],
                 WCF::getUser()->getTimeZone()
             );
@@ -65,7 +63,7 @@ class TimeFilter extends AbstractFilter
                     $fromDateTime,
                     [
                         \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
+                        \IntlDateFormatter::NONE,
                     ],
                     $locale
                 );
@@ -73,7 +71,7 @@ class TimeFilter extends AbstractFilter
         }
         if ($values[1] !== '') {
             $toDateTime = \DateTimeImmutable::createFromFormat(
-                'Y-m-d\TH:i:sP',
+                'Y-m-d',
                 $values[1],
                 WCF::getUser()->getTimeZone()
             );
@@ -82,7 +80,7 @@ class TimeFilter extends AbstractFilter
                     $toDateTime,
                     [
                         \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
+                        \IntlDateFormatter::NONE,
                     ],
                     $locale
                 );
@@ -110,27 +108,28 @@ class TimeFilter extends AbstractFilter
 
         $values = explode(';', $value);
         if (\count($values) === 2) {
-            $from = $this->getTimestamp($values[0]);
-            $to = $this->getTimestamp($values[1]);
+            $fromDateTime = \DateTimeImmutable::createFromFormat(
+                'Y-m-d',
+                $values[0]
+            );
+            if ($fromDateTime !== false) {
+                $fromDateTime = $fromDateTime->setTime(0, 0);
+                $from = $fromDateTime->getTimestamp();
+            }
+
+            $toDateTime = \DateTimeImmutable::createFromFormat(
+                'Y-m-d',
+                $values[1]
+            );
+            if ($toDateTime !== false) {
+                $toDateTime = $toDateTime->setTime(23, 59, 59);
+                $to = $toDateTime->getTimestamp();
+            }
         }
 
         return [
             'from' => $from,
             'to' => $to,
         ];
-    }
-
-    private function getTimestamp(string $date): int
-    {
-        $dateTime = \DateTimeImmutable::createFromFormat(
-            'Y-m-d\TH:i:sP',
-            $date
-        );
-
-        if ($dateTime !== false) {
-            return $dateTime->getTimestamp();
-        }
-
-        return 0;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\gridView\filter;
+namespace wcf\system\listView\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
@@ -22,24 +22,26 @@ class SelectFilter extends AbstractFilter
      */
     public function __construct(
         private readonly array $options,
+        string $id,
+        string $languageItem,
         string $databaseColumn = '',
         protected readonly bool $labelLanguageItems = true
     ) {
-        parent::__construct($databaseColumn);
+        parent::__construct($id, $languageItem, $databaseColumn);
     }
 
     #[\Override]
-    public function getFormField(string $id, string $label): AbstractFormField
+    public function getFormField(): AbstractFormField
     {
-        return SelectFormField::create($id)
-            ->label($label)
+        return SelectFormField::create($this->id)
+            ->label($this->languageItem)
             ->options($this->options, labelLanguageItems: $this->labelLanguageItems);
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+    public function applyFilter(DatabaseObjectList $list, string $value): void
     {
-        $columnName = $this->getDatabaseColumnName($list, $id);
+        $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);
     }
