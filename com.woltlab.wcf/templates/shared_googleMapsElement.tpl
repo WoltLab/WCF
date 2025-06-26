@@ -17,5 +17,5 @@
 ></woltlab-core-google-maps>
 
 {if $googleMapsHidden}
-	{include file='messageUserConsent' host="maps.google.com" url="https://www.google.com/maps/" target=$googleMapsElementID sandbox=true}
+	{include file='shared_messageUserConsent' host="maps.google.com" url="https://www.google.com/maps/" target=$googleMapsElementID sandbox=true}
 {/if}
