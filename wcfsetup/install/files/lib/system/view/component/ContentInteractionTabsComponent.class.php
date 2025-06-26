@@ -47,6 +47,11 @@ final class ContentInteractionTabsComponent
             ],
         );
     }
+
+    public function countTabs(): int
+    {
+        return \count($this->tabs);
+    }
 }
 
 /** @internal */
