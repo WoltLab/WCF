@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
@@ -90,10 +91,8 @@ final class GoogleMapsFormField extends AbstractFormField implements
             'coordinates',
             function (IFormDocument $document, array $parameters) {
                 if ($this->getValue()) {
-                    $parameters[$this->getPrefixedId() . '_coordinates'] = [
-                        'latitude' => $this->getLatitude(),
-                        'longitude' => $this->getLongitude(),
-                    ];
+                    $parameters[$this->getObjectProperty() . '_latitude'] = $this->getLatitude();
+                    $parameters[$this->getObjectProperty() . '_longitude'] = $this->getLongitude();
                 }
 
                 return $parameters;
@@ -119,5 +118,26 @@ final class GoogleMapsFormField extends AbstractFormField implements
         $this->longitude = $longitude;
 
         return $this;
+    }
+
+    #[\Override]
+    public function updatedObject(array $data, IStorableObject $object, $loadValues = true): static
+    {
+        if ($this->isImmutable()) {
+            $loadValues = true;
+        }
+
+        if (
+            $loadValues
+            && isset($data[$this->getObjectProperty() . '_latitude'])
+            && isset($data[$this->getObjectProperty() . '_longitude'])
+        ) {
+            $this->coordinates(
+                $data[$this->getObjectProperty() . '_latitude'],
+                $data[$this->getObjectProperty() . '_longitude']
+            );
+        }
+
+        return parent::updatedObject($data, $object, $loadValues);
     }
 }
