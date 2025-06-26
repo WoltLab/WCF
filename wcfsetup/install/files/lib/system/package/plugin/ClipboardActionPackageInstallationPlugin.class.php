@@ -148,6 +148,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     protected function postImport()
     {
+        if ($this->pages === []) {
+            return;
+        }
+
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('packageID = ?', [$this->installation->getPackageID()]);
         $conditionBuilder->add('actionID IN (?)', [\array_keys($this->pages)]);
@@ -158,20 +162,18 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
-        if (!empty($this->pages)) {
-            // insert pages
-            $sql = "INSERT INTO wcf1_clipboard_page
-                                (pageClassName, packageID, actionID)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            foreach ($this->pages as $actionID => $pages) {
-                foreach ($pages as $pageClassName) {
-                    $statement->execute([
-                        $pageClassName,
-                        $this->installation->getPackageID(),
-                        $actionID,
-                    ]);
-                }
+        // insert pages
+        $sql = "INSERT INTO wcf1_clipboard_page
+                            (pageClassName, packageID, actionID)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($this->pages as $actionID => $pages) {
+            foreach ($pages as $pageClassName) {
+                $statement->execute([
+                    $pageClassName,
+                    $this->installation->getPackageID(),
+                    $actionID,
+                ]);
             }
         }
     }
