@@ -42,6 +42,7 @@ abstract class AbstractListView
     private bool $allowFiltering = true;
     private bool $allowSorting = true;
     private bool $allowInteractions = true;
+    private bool $allowBulkInteractions = true;
     private int $fixedNumberOfItems = 0;
 
     /**
@@ -479,7 +480,7 @@ abstract class AbstractListView
      */
     public function hasBulkInteractions(): bool
     {
-        return $this->allowInteractions
+        return $this->allowBulkInteractions
             && $this->getBulkInteractionProvider() !== null
             && $this->getBulkInteractionProvider()->getInteractions() !== [];
     }
@@ -496,6 +497,11 @@ abstract class AbstractListView
     public function setAllowInteractions(bool $allowInteractions): void
     {
         $this->allowInteractions = $allowInteractions;
+    }
+
+    public function setAllowBulkInteractions(bool $allowBulkInteractions): void
+    {
+        $this->allowBulkInteractions = $allowBulkInteractions;
     }
 
     /**

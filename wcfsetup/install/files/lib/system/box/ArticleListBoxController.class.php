@@ -2,7 +2,7 @@
 
 namespace wcf\system\box;
 
-use wcf\data\article\AccessibleArticleList;
+use wcf\system\listView\user\ArticleListView;
 use wcf\system\WCF;
 
 /**
@@ -13,9 +13,9 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @extends AbstractDatabaseObjectListBoxController<AccessibleArticleList>
+ * @extends AbstractListViewBoxController<ArticleListView>
  */
-class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
+class ArticleListBoxController extends AbstractListViewBoxController
 {
     /**
      * @inheritDoc
@@ -51,12 +51,8 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
     public $validSortFields = [
         'time',
         'views',
-        'random',
     ];
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         if (!empty($this->validSortFields) && MODULE_LIKE) {
@@ -66,12 +62,10 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
         parent::__construct();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
-        $objectList = new AccessibleArticleList();
+        $objectList = $this->getListView()->getObjectList();
 
         switch ($this->sortField) {
             case 'views':
@@ -79,22 +73,31 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
                 break;
         }
 
-        if ($this->sortField === 'random') {
-            $this->sortField = 'RAND()';
-        }
-
         return $objectList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
+    protected function createListView(): ArticleListView
+    {
+        return new ArticleListView();
+    }
+
+    #[\Override]
+    public function getContainerCssClassName(): string
+    {
+        return 'entryCardList__container';
+    }
+
+    #[\Override]
     protected function getTemplate()
     {
-        return WCF::getTPL()->render('wcf', 'boxArticleList', [
-            'boxArticleList' => $this->objectList,
-            'boxSortField' => $this->sortField,
-            'boxPosition' => $this->box->position,
-        ]);
+        return match ($this->box->position) {
+            'top', 'bottom', 'contentTop', 'contentBottom' => parent::getTemplate(),
+            default => WCF::getTPL()->render('wcf', 'boxArticleList', [
+                'boxArticleList' => $this->getListView()->getItems(),
+                'boxSortField' => $this->sortField,
+                'boxPosition' => $this->box->position,
+            ])
+        };
     }
 }

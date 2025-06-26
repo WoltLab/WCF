@@ -42,6 +42,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             });
             this.#restoreSelection();
         }
+        selectionBarVisible() {
+            return this.#selectionBar !== null && this.getSelectedIds().length > 0;
+        }
         refresh() {
             this.#restoreSelection();
         }

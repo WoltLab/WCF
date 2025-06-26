@@ -51,6 +51,10 @@ export class Selection extends EventTarget {
     this.#restoreSelection();
   }
 
+  selectionBarVisible(): boolean {
+    return this.#selectionBar !== null && this.getSelectedIds().length > 0;
+  }
+
   refresh(): void {
     this.#restoreSelection();
   }
