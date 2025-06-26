@@ -22,7 +22,8 @@ class DeleteInteraction extends RpcInteraction
             'wcf.global.button.delete',
             InteractionConfirmationType::Delete,
             '',
-            $isAvailableCallback
+            $isAvailableCallback,
+            InteractionEffect::RemoveItem
         );
     }
 }
