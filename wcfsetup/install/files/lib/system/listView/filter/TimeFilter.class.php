@@ -55,7 +55,7 @@ class TimeFilter extends AbstractFilter
         $locale = WCF::getLanguage()->getLocale();
         $fromString = $toString = '';
         if ($values[0] !== '') {
-            $fromDateTime = \DateTime::createFromFormat(
+            $fromDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d\TH:i:sP',
                 $values[0],
                 WCF::getUser()->getTimeZone()
@@ -72,7 +72,7 @@ class TimeFilter extends AbstractFilter
             }
         }
         if ($values[1] !== '') {
-            $toDateTime = \DateTime::createFromFormat(
+            $toDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d\TH:i:sP',
                 $values[1],
                 WCF::getUser()->getTimeZone()
@@ -122,7 +122,7 @@ class TimeFilter extends AbstractFilter
 
     private function getTimestamp(string $date): int
     {
-        $dateTime = \DateTime::createFromFormat(
+        $dateTime = \DateTimeImmutable::createFromFormat(
             'Y-m-d\TH:i:sP',
             $date
         );

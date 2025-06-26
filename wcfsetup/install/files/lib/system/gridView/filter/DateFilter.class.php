@@ -53,7 +53,7 @@ class DateFilter extends AbstractFilter
         $locale = WCF::getLanguage()->getLocale();
         $fromString = $toString = '';
         if ($values[0] !== '') {
-            $fromDateTime = \DateTime::createFromFormat(
+            $fromDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d',
                 $values[0],
                 WCF::getUser()->getTimeZone()
@@ -70,7 +70,7 @@ class DateFilter extends AbstractFilter
             }
         }
         if ($values[1] !== '') {
-            $toDateTime = \DateTime::createFromFormat(
+            $toDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d',
                 $values[1],
                 WCF::getUser()->getTimeZone()
@@ -108,21 +108,21 @@ class DateFilter extends AbstractFilter
 
         $values = explode(';', $value);
         if (\count($values) === 2) {
-            $fromDateTime = \DateTime::createFromFormat(
+            $fromDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d',
                 $values[0]
             );
             if ($fromDateTime !== false) {
-                $fromDateTime->setTime(0, 0);
+                $fromDateTime = $fromDateTime->setTime(0, 0);
                 $from = $fromDateTime->getTimestamp();
             }
 
-            $toDateTime = \DateTime::createFromFormat(
+            $toDateTime = \DateTimeImmutable::createFromFormat(
                 'Y-m-d',
                 $values[1]
             );
             if ($toDateTime !== false) {
-                $toDateTime->setTime(23, 59, 59);
+                $toDateTime = $toDateTime->setTime(23, 59, 59);
                 $to = $toDateTime->getTimestamp();
             }
         }
