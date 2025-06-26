@@ -55,7 +55,7 @@
 				{foreach from=$eventList item=event}
 					<div class="notificationSettingsItem">
 						<div class="notificationSettingsEvent">
-							<label for="settings_{$event->eventID}">{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</label>
+							<label for="settings_{$event->eventID}">{unsafe:$event->getEventName()}</label>
 						</div>
 						<div class="notificationSettingsState">
 							<label>

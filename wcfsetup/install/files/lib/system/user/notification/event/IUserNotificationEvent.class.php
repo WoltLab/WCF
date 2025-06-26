@@ -190,4 +190,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObje
      * @return  IUserNotificationObject
      */
     public function getUserNotificationObject();
+
+    /**
+     * Returns the generic name of this event.
+     * The name is displayed to the user in the notification settings.
+     *
+     * @since 6.2
+     */
+    public function getEventName(): string;
 }
