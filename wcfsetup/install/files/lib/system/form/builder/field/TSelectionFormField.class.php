@@ -165,7 +165,7 @@ trait TSelectionFormField
         if ($nestedOptions) {
             foreach ($options as $key => &$option) {
                 if (!\is_array($option)) {
-                    throw new \InvalidArgumentException("Nested option with key '{$key}' has is no array for field '{$this->getId()}'.");
+                    throw new \InvalidArgumentException("Nested option with key '{$key}' is no array for field '{$this->getId()}'.");
                 }
 
                 // check if all required elements exist
@@ -186,12 +186,12 @@ trait TSelectionFormField
                         $option['label'] = $option['label']->getTitle();
                     } else {
                         throw new \InvalidArgumentException(
-                            "Nested option with key '{$key}' contain invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
+                            "Nested option with key '{$key}' has invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
                         );
                     }
                 } elseif (!\is_string($option['label']) && !\is_numeric($option['label'])) {
                     throw new \InvalidArgumentException(
-                        "Nested option with key '{$key}' contain invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
+                        "Nested option with key '{$key}' has invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
                     );
                 }
 
@@ -206,7 +206,7 @@ trait TSelectionFormField
                 // validate value
                 if (!\is_string($option['value']) && !\is_numeric($option['value'])) {
                     throw new \InvalidArgumentException(
-                        "Nested option with key '{$key}' contain invalid value of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
+                        "Nested option with key '{$key}' has invalid value of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
                     );
                 } elseif (isset($this->options[$option['value']])) {
                     throw new \InvalidArgumentException(
