@@ -2,16 +2,16 @@
 
 {capture assign='contentTitle'}{if $searchID}{lang}wcf.user.search.results{/lang}{else}{$__wcf->getActivePage()->getTitle()}{/if} <span class="badge">{#$items}</span>{/capture}
 
-{capture assign='canonicalURLParameters'}sortField={@$sortField}&sortOrder={@$sortOrder}{if $letter}&letter={@$letter|rawurlencode}{/if}{/capture}
+{capture assign='canonicalURLParameters'}sortField={$sortField}&sortOrder={$sortOrder}{if $letter}&letter={unsafe:$letter|rawurlencode}{/if}{/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='MembersList'}pageNo={@$pageNo+1}&{@$canonicalURLParameters}{/link}">
+		<link rel="next" href="{link controller='MembersList' pageNo=$pageNo+1}{unsafe:$canonicalURLParameters}{/link}">
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={@$pageNo-1}&{/if}{@$canonicalURLParameters}{/link}">
+		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={$pageNo-1}&{/if}{unsafe:$canonicalURLParameters}{/link}">
 	{/if}
-	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}">
+	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={$pageNo}&{/if}{unsafe:$canonicalURLParameters}{/link}">
 {/capture}
 
 {capture assign='sidebarRight'}
@@ -34,11 +34,21 @@
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{if $searchID}
-			{pages print=true assign=pagesLinks controller='MembersList' id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+	{if $pages > 1}
+		{if $searchID}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='MembersList' id=$searchID sortField=$sortField sortOrder=$sortOrder letter=$encodedLetter}{/link}"
+			></woltlab-core-pagination>
 		{else}
-			{pages print=true assign=pagesLinks controller='MembersList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='MembersList' sortField=$sortField sortOrder=$sortOrder letter=$encodedLetter}{/link}"
+			></woltlab-core-pagination>
 		{/if}
+	{/if}
 {/capture}
 
 {include file='header'}
@@ -50,7 +60,7 @@
 				<a
 					rel="nofollow"
 					class="jsTooltip"
-					href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}"
+					href="{link controller='MembersList' id=$searchID pageNo=$pageNo sortField=$sortField}sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}"
 					title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
 				>
 					{if $sortOrder === 'ASC'}
@@ -64,7 +74,7 @@
 					
 					<ul class="dropdownMenu">
 						{foreach from=$validSortFields item=_sortField}
-							<li{if $_sortField === $sortField} class="active"{/if}><a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$_sortField}&sortOrder={if $sortField === $_sortField}{if $sortOrder === 'DESC'}ASC{else}DESC{/if}{else}{$sortOrder}{/if}{if $letter}&letter={$letter}{/if}{/link}">{lang}wcf.user.sortField.{$_sortField}{/lang}</a></li>
+							<li{if $_sortField === $sortField} class="active"{/if}><a rel="nofollow" href="{link controller='MembersList' id=$searchID pageNo=$pageNo sortField=$_sortField}sortOrder={if $sortField === $_sortField}{if $sortOrder === 'DESC'}ASC{else}DESC{/if}{else}{$sortOrder}{/if}{if $letter}&letter={$letter}{/if}{/link}">{lang}wcf.user.sortField.{$_sortField}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				</div>
@@ -121,11 +131,23 @@
 {/if}
 
 <footer class="contentFooter">
-	{hascontent}
+	{if $pages > 1}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			{if $searchID}
+				<woltlab-core-pagination
+					page="{$pageNo}"
+					count="{$pages}"
+					url="{link controller='MembersList' id=$searchID sortField=$sortField sortOrder=$sortOrder letter=$encodedLetter}{/link}"
+				></woltlab-core-pagination>
+		{else}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='MembersList' sortField=$sortField sortOrder=$sortOrder letter=$encodedLetter}{/link}"
+			></woltlab-core-pagination>
+			{/if}
 		</div>
-	{/hascontent}
+	{/if}
 	
 	{hascontent}
 		<nav class="contentFooterNavigation">

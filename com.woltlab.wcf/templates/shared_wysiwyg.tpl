@@ -20,7 +20,7 @@
 	require([
 		"WoltLabSuite/Core/Component/Ckeditor",
 		"WoltLabSuite/Core/prism-meta",
-		{@$__wcf->getBBCodeHandler()->getEditorLocalization()}
+		{unsafe:$__wcf->getBBCodeHandler()->getEditorLocalization()}
 	], (
 		{ setupCkeditor },
 		PrismMeta
@@ -84,9 +84,9 @@
 		const bbcodes = [
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
-					icon: '{@$__bbcode->getIcon()|encodeJS}',
-					name: '{@$__bbcode->bbcodeTag|encodeJS}',
-					label: '{@$__bbcode->getButtonLabel()|encodeJS}',
+					icon: '{unsafe:$__bbcode->getIcon()|encodeJS}',
+					name: '{unsafe:$__bbcode->bbcodeTag|encodeJS}',
+					label: '{unsafe:$__bbcode->getButtonLabel()|encodeJS}',
 				},
 			{/foreach}
 		];
@@ -100,8 +100,8 @@
 		const smileys = [
 			{foreach from=$__wcf->getSmileyCache()->getEmojis() key=__code item=__smiley}
 			{
-				code: '{@$__code|encodeJS}',
-				html: '{@$__smiley->getHtml()|encodeJS}',
+				code: '{unsafe:$__code|encodeJS}',
+				html: '{unsafe:$__smiley->getHtml()|encodeJS}',
 			},
 			{/foreach}
 		];
@@ -110,10 +110,10 @@
 			{ language: "", label: '{jslang}wcf.editor.code.highlighter.detect{/jslang}' },
 			{ language: "plain", label: '{jslang}wcf.editor.code.highlighter.plain{/jslang}' },
 			{foreach from=$__wcf->getBBCodeHandler()->getCodeBlockLanguages() item=__codeBlockLanguage}
-				{ language: '{@$__codeBlockLanguage|encodeJS}', label: PrismMeta.default['{@$__codeBlockLanguage|encodeJS}'].title },
+				{ language: '{unsafe:$__codeBlockLanguage|encodeJS}', label: PrismMeta.default['{unsafe:$__codeBlockLanguage|encodeJS}'].title },
 			{/foreach}
 		];
 
-		void setupCkeditor(element, features, bbcodes, smileys, codeBlockLanguages, '{@$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
+		void setupCkeditor(element, features, bbcodes, smileys, codeBlockLanguages, '{unsafe:$__wcf->getBBCodeHandler()->getCkeditorLicenseKey()|encodeJS}');
 	});
 </script>

@@ -1,6 +1,6 @@
 <div class="benchmark">
 	{if ENABLE_DEBUG_MODE}<button class="benchmarkDetailsButton">{/if}
-		Execution time: {@$__wcf->getBenchmark()->getExecutionTime()}s ({#($__wcf->getBenchmark()->getExecutionTime()-$__wcf->getBenchmark()->getQueryExecutionTime())/$__wcf->getBenchmark()->getExecutionTime()*100}% PHP, {#$__wcf->getBenchmark()->getQueryExecutionTime()/$__wcf->getBenchmark()->getExecutionTime()*100}% SQL) | SQL queries: {#$__wcf->getBenchmark()->getQueryCount()} | Memory-Usage: {$__wcf->getBenchmark()->getMemoryUsage()}
+		Execution time: {$__wcf->getBenchmark()->getExecutionTime()}s ({#($__wcf->getBenchmark()->getExecutionTime()-$__wcf->getBenchmark()->getQueryExecutionTime())/$__wcf->getBenchmark()->getExecutionTime()*100}% PHP, {#$__wcf->getBenchmark()->getQueryExecutionTime()/$__wcf->getBenchmark()->getExecutionTime()*100}% SQL) | SQL queries: {#$__wcf->getBenchmark()->getQueryCount()} | Memory-Usage: {$__wcf->getBenchmark()->getMemoryUsage()}
 	{if ENABLE_DEBUG_MODE}</button>{/if}
 	
 	{if ENABLE_DEBUG_MODE}
@@ -18,7 +18,7 @@
 						<details>
 							<summary>
 								<span>{if $item.type == 1}(SQL Query) {/if}{$item.text}</span><br>
-								<small style="font-size: .85em">Execution time: <kbd>{@$item.use}s</kbd></small>
+								<small style="font-size: .85em">Execution time: <kbd>{$item.use}s</kbd></small>
 							</summary>
 					
 							<ol class="nativeList" start="0">

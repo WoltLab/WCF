@@ -87,6 +87,6 @@
 			'wcf.acl.access.denied': '{jslang}wcf.acl.access.denied{/jslang}',
 		});
 
-		new UiAclSimple('{$__aclSimplePrefix}', '{@$__aclInputName|encodeJS}');
+		new UiAclSimple('{$__aclSimplePrefix}', '{unsafe:$__aclInputName|encodeJS}');
 	});
 </script>

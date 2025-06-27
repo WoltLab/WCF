@@ -23,7 +23,7 @@
 					<div>
 						<div>
 							<p>{$file->getFilename()}</p>
-							<small>{@$file->filesize|filesize}</small>
+							<small>{$file->filesize|filesize}</small>
 						</div>
 						
 						<ul class="buttonGroup"></ul>

@@ -1,3 +1,3 @@
 {if $captchaObjectType}
-	{@$captchaObjectType->getProcessor()->getFormElement()}
+	{unsafe:$captchaObjectType->getProcessor()->getFormElement()}
 {/if}

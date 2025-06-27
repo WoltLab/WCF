@@ -1,28 +1,28 @@
 {if !$beforeContentInteraction|empty}
-	{@$beforeContentInteraction}
+	{unsafe:$beforeContentInteraction}
 {/if}
 
 {capture assign='__contentInteractionPagination'}
-	{if $contentInteractionPagination|isset}{@$contentInteractionPagination}{/if}
+	{if $contentInteractionPagination|isset}{unsafe:$contentInteractionPagination}{/if}
 {/capture}
 {assign var='__contentInteractionPagination' value=$__contentInteractionPagination|trim}
 
 {capture assign='__contentInteractionButtons'}
 	{event name='beforeButtons'}
-	{if $contentInteractionButtons|isset}{@$contentInteractionButtons}{/if}
+	{if $contentInteractionButtons|isset}{unsafe:$contentInteractionButtons}{/if}
 	{event name='afterButtons'}
 {/capture}
 {assign var='__contentInteractionButtons' value=$__contentInteractionButtons|trim}
 
 {capture assign='__contentInteractionDropdownItems'}
 	{event name='beforeDropdownItems'}
-	{if $contentInteractionDropdownItems|isset}{@$contentInteractionDropdownItems}{/if}
+	{if $contentInteractionDropdownItems|isset}{unsafe:$contentInteractionDropdownItems}{/if}
 	{event name='afterDropdownItems'}
 {/capture}
 {assign var='__contentInteractionDropdownItems' value=$__contentInteractionDropdownItems|trim}
 
 {capture assign='__contentInteractionShareButton'}
-	{if $contentInteractionShareButton|isset}{@$contentInteractionShareButton}{/if}
+	{if $contentInteractionShareButton|isset}{unsafe:$contentInteractionShareButton}{/if}
 {/capture}
 {assign var='__contentInteractionShareButton' value=$__contentInteractionShareButton|trim}
 
@@ -32,7 +32,7 @@
 			{unsafe:$contentInteractionTabsComponent->render()}
 		{elseif $__contentInteractionPagination}
 			<div class="contentInteractionPagination paginationTop">
-				{@$__contentInteractionPagination}
+				{unsafe:$__contentInteractionPagination}
 			</div>
 		{/if}
 
@@ -40,13 +40,13 @@
 			<div class="contentInteractionButtonContainer">
 				{if $__contentInteractionButtons}
 					<div class="contentInteractionButtons">
-						{@$__contentInteractionButtons}
+						{unsafe:$__contentInteractionButtons}
 					</div>
 				{/if}
 
 				{if $__contentInteractionShareButton}
 					 <div class="contentInteractionShareButton">
-						{@$__contentInteractionShareButton}
+						{unsafe:$__contentInteractionShareButton}
 					</div>
 				{/if}
 
@@ -55,7 +55,7 @@
 						<button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 						<ul class="contentInteractionDropdownItems dropdownMenu">
-							{@$__contentInteractionDropdownItems}
+							{unsafe:$__contentInteractionDropdownItems}
 						</ul>
 					</div>
 				{/if}

@@ -1,5 +1,5 @@
 <img
-	src="{@$__wcf->getPath()}images/trophy/{$trophy->iconFile}"
+	src="{$__wcf->getPath()}images/trophy/{$trophy->iconFile}"
 	width="{$size}"
 	height="{$size}"
 	{if $showTooltip}title="{$trophy->getTitle()}"{/if}

@@ -24,7 +24,7 @@
 								<li>{user object=$message->getUserProfile()}</li>
 							{/if}
 							{if $message->getTime()}
-								<li><small>{@$message->getTime()|time}</small></li>
+								<li><small>{time time=$message->getTime()}</small></li>
 							{/if}
 							{if $message->getContainerTitle()}
 								<li><small><a href="{$message->getContainerLink()}">{$message->getContainerTitle()}</a></small></li>
@@ -34,9 +34,9 @@
 				</div>
 				{/hascontent}
 
-				<small class="gridListItemType">{lang}wcf.search.object.{@$message->getObjectTypeName()}{/lang}</small>
+				<small class="gridListItemType">{lang}wcf.search.object.{$message->getObjectTypeName()}{/lang}</small>
 				
-				<div class="gridListItemContent">{@$message->getFormattedMessage()}</div>
+				<div class="gridListItemContent">{unsafe:$message->getFormattedMessage()}</div>
 			</li>
 		{/foreach}
 	</ul>

@@ -3,7 +3,7 @@
 {include file='shared_formError'}
 
 {if $errorMessage|isset}
-	<woltlab-core-notice type="error">{@$errorMessage}</woltlab-core-notice>
+	<woltlab-core-notice type="error">{unsafe:$errorMessage}</woltlab-core-notice>
 {/if}
 
 <form method="post" action="{link controller='TagSearch'}{/link}">
@@ -30,12 +30,12 @@
 			require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 				UiItemList.init(
 					'tagSearchInput',
-					[{if !$tagNames|empty}{implode from=$tagNames item=tagName}'{@$tagName|encodeJS}'{/implode}{/if}],
+					[{if !$tagNames|empty}{implode from=$tagNames item=tagName}'{unsafe:$tagName|encodeJS}'{/implode}{/if}],
 					{
 						ajax: {
 							className: 'wcf\\data\\tag\\TagAction'
 						},
-						maxItems: {@SEARCH_MAX_COMBINED_TAGS},
+						maxItems: {SEARCH_MAX_COMBINED_TAGS},
 						restricted: true,
 						submitFieldName: 'tagNames[]'
 					}

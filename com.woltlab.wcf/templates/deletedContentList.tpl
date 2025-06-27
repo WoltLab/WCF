@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{$objectType}{/lang}{/capture}
 
 {capture assign='sidebarRight'}
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.DeletedContentListMenu">
@@ -18,10 +18,16 @@
 	</section>
 {/capture}
 
-{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
+{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{$objectType}{/lang}{/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}
+	{if $pages > 1}
+		<woltlab-core-pagination
+			page="{$pageNo}"
+			count="{$pages}"
+			url="{link controller='DeletedContentList' objectType=$objectType}{/link}"
+		></woltlab-core-pagination>
+	{/if}
 {/capture}
 
 {include file='header'}
@@ -33,11 +39,15 @@
 {/if}
 
 <footer class="contentFooter">
-	{hascontent}
+	{if $pages > 1}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			<woltlab-core-pagination
+				page="{$pageNo}"
+				count="{$pages}"
+				url="{link controller='DeletedContentList' objectType=$objectType}{/link}"
+			></woltlab-core-pagination>
 		</div>
-	{/hascontent}
+	{/if}
 	
 	{hascontent}
 		<nav class="contentFooterNavigation">

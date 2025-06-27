@@ -9,8 +9,8 @@
 <script data-relocate="true">
 	(function () {
 		{* try to determine if browser might be able to play video *}
-		var video = elById('attachmentVideo_{@$attachmentIdentifier}');
-		var canPlayType = video.canPlayType('{$attachment->fileType}');
+		var video = elById('attachmentVideo_{unsafe:$attachmentIdentifier|encodeJS}');
+		var canPlayType = video.canPlayType('{unsafe:$attachment->fileType|encodeJS}');
 		
 		if (canPlayType === '') {
 			elRemove(video);

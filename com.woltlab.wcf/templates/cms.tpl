@@ -47,12 +47,12 @@
 {if $content->content}
 	{if $page->pageType == 'text'}
 		<div class="section cmsContent htmlContent">
-			{@$content->getFormattedContent()}
+			{unsafe:$content->getFormattedContent()}
 		</div>
 	{elseif $page->pageType == 'html'}
-		{@$content->getParsedContent()}
+		{unsafe:$content->getParsedContent()}
 	{elseif $page->pageType == 'tpl'}
-		{@$page->getParsedTemplate($content)}
+		{unsafe:$page->getParsedTemplate($content)}
 	{/if}
 {/if}
 
