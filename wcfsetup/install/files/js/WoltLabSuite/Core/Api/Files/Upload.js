@@ -13,7 +13,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         };
         let response;
         try {
-            response = (await (0, Backend_1.prepareRequest)(url).post(payload).fetchAsJson());
+            response = (await (0, Backend_1.prepareRequest)(url).post(payload).disableLoadingIndicator().fetchAsJson());
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);

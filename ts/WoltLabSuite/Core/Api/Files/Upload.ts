@@ -25,7 +25,7 @@ export async function upload(
 
   let response: Response;
   try {
-    response = (await prepareRequest(url).post(payload).fetchAsJson()) as Response;
+    response = (await prepareRequest(url).post(payload).disableLoadingIndicator().fetchAsJson()) as Response;
   } catch (e) {
     return apiResultFromError(e);
   }

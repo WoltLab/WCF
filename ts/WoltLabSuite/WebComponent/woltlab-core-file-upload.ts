@@ -39,15 +39,19 @@
           this.dispatchEvent(uploadEvent);
         }
 
-        const event = new CustomEvent<{ files: File[] }>("upload:files", {
-          detail: {
-            files: Array.from(files),
-          },
-        });
-        this.dispatchEvent(event);
+        this.uploadFiles(Array.from(files));
 
         // Reset the selected file.
         this.#element.value = "";
+      });
+
+      // Pass-through for the synthethic click event.
+      this.addEventListener("click", (event) => {
+        if (event.target !== this) {
+          return;
+        }
+
+        this.#element.click();
       });
     }
 
@@ -79,6 +83,15 @@
       button.append(icon, window.WoltLabLanguage.getPhrase("wcf.global.button.upload"), this.#element);
 
       this.append(button);
+    }
+
+    uploadFiles(files: File[]): void {
+      const event = new CustomEvent<{ files: File[] }>("upload:files", {
+        detail: {
+          files,
+        },
+      });
+      this.dispatchEvent(event);
     }
 
     get maximumCount(): number {

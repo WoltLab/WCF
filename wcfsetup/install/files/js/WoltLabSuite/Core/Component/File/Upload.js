@@ -128,12 +128,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         if (numberOfUploadedFiles + count <= maximumCount) {
             return true;
         }
-        (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.maximumCountReached", { maximumCount }));
+        reportError(element, null, (0, Language_1.getPhrase)("wcf.upload.error.maximumCountReached", { maximumCount }));
         return false;
     }
     function validateFileSize(element, file) {
         if (file.size === 0) {
-            (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.emptyFile", { filename: file.name }));
+            reportError(element, file, (0, Language_1.getPhrase)("wcf.upload.error.emptyFile", { filename: file.name }));
             return false;
         }
         let isImage = false;
@@ -156,7 +156,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         if (file.size <= maximumSize) {
             return true;
         }
-        (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.fileSizeTooLarge", { filename: file.name }));
+        reportError(element, file, (0, Language_1.getPhrase)("wcf.upload.error.fileSizeTooLarge", { filename: file.name }));
         return false;
     }
     function validateFileExtension(element, file) {
@@ -169,8 +169,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 return true;
             }
         }
-        (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.fileExtensionNotPermitted", { filename: file.name }));
+        reportError(element, file, (0, Language_1.getPhrase)("wcf.upload.error.fileExtensionNotPermitted", { filename: file.name }));
         return false;
+    }
+    function reportError(element, file, message) {
+        const event = new CustomEvent("upload:error", {
+            cancelable: true,
+            detail: {
+                file,
+                message,
+            },
+        });
+        element.dispatchEvent(event);
+        if (event.defaultPrevented) {
+            return;
+        }
+        (0, Util_1.innerError)(element, message);
     }
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("woltlab-core-file-upload", (element) => {
@@ -215,7 +229,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             validFiles.push(result.value);
                         }
                         else if (result.reason !== undefined) {
-                            (0, Util_1.innerError)(element, (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
+                            reportError(element, files[i], (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
                         }
                     }
                     const checksums = await Promise.allSettled(validFiles.map((file) => file.arrayBuffer().then((buffer) => getSha256Hash(buffer))));

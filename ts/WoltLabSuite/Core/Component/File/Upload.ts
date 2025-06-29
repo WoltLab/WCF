@@ -206,14 +206,14 @@ function validateFileLimit(element: WoltlabCoreFileUploadElement, count: number)
     return true;
   }
 
-  innerError(element, getPhrase("wcf.upload.error.maximumCountReached", { maximumCount }));
+  reportError(element, null, getPhrase("wcf.upload.error.maximumCountReached", { maximumCount }));
 
   return false;
 }
 
 function validateFileSize(element: WoltlabCoreFileUploadElement, file: File): boolean {
   if (file.size === 0) {
-    innerError(element, getPhrase("wcf.upload.error.emptyFile", { filename: file.name }));
+    reportError(element, file, getPhrase("wcf.upload.error.emptyFile", { filename: file.name }));
 
     return false;
   }
@@ -242,7 +242,7 @@ function validateFileSize(element: WoltlabCoreFileUploadElement, file: File): bo
     return true;
   }
 
-  innerError(element, getPhrase("wcf.upload.error.fileSizeTooLarge", { filename: file.name }));
+  reportError(element, file, getPhrase("wcf.upload.error.fileSizeTooLarge", { filename: file.name }));
 
   return false;
 }
@@ -257,9 +257,26 @@ function validateFileExtension(element: WoltlabCoreFileUploadElement, file: File
     }
   }
 
-  innerError(element, getPhrase("wcf.upload.error.fileExtensionNotPermitted", { filename: file.name }));
+  reportError(element, file, getPhrase("wcf.upload.error.fileExtensionNotPermitted", { filename: file.name }));
 
   return false;
+}
+
+function reportError(element: WoltlabCoreFileUploadElement, file: File | null, message: string): void {
+  const event = new CustomEvent<{ file: File | null; message: string }>("upload:error", {
+    cancelable: true,
+    detail: {
+      file,
+      message,
+    },
+  });
+  element.dispatchEvent(event);
+
+  if (event.defaultPrevented) {
+    return;
+  }
+
+  innerError(element, message);
 }
 
 export function setup(): void {
@@ -309,7 +326,7 @@ export function setup(): void {
           if (result.status === "fulfilled") {
             validFiles.push(result.value);
           } else if (result.reason !== undefined) {
-            innerError(element, getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
+            reportError(element, files[i], getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
           }
         }
 

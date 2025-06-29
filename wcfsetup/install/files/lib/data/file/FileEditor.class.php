@@ -5,6 +5,8 @@ namespace wcf\data\file;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
+use wcf\event\file\UploadCompleted;
+use wcf\system\event\EventHandler;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\util\ExifUtil;
@@ -111,7 +113,10 @@ class FileEditor extends DatabaseObjectEditor
             $filePath . $file->getSourceFilename()
         );
 
-        return $file;
+        $event = new UploadCompleted($file);
+        EventHandler::getInstance()->fire($event);
+
+        return $event->getFile();
     }
 
     public static function createFromExistingFile(
