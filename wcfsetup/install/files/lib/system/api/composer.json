@@ -29,7 +29,7 @@
     "psr/http-server-handler": "^1.0.2",
     "psr/http-server-middleware": "^1.0.2",
     "psr/log": "^3.0.2",
-    "scssphp/scssphp": "^1.13.0",
+    "scssphp/scssphp": "^2.0.1",
     "sebastian/diff": "^5.1.1",
     "symfony/polyfill-php82": "^1.32.0",
     "symfony/polyfill-php83": "^1.32",

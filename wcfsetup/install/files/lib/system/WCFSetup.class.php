@@ -365,7 +365,7 @@ final class WCFSetup extends WCF
     protected function showSystemRequirements(): ResponseInterface
     {
         $phpVersionLowerBound = '8.1.2';
-        $phpVersionUpperBound = '8.3.x';
+        $phpVersionUpperBound = '8.4.x';
         $system = [];
 
         // php version

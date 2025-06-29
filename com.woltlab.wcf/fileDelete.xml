@@ -19,6 +19,40 @@
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/KeyTransformersHandler.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/ValueTransformersHandler.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/PermissiveTypeFound.php</file>
+		<file>lib/system/api/bin/pscss</file>
+		<file>lib/system/api/scssphp/scssphp/bin/pscss</file>
+		<file>lib/system/api/scssphp/scssphp/scss.inc.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Base/Range.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/AtRootBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/CallableBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/ContentBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/DirectiveBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/EachBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/ElseBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/ElseifBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/ForBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/IfBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/MediaBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/NestedPropertyBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Block/WhileBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Cache.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Compiler/CachedResult.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Compiler/Environment.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Exception/CompilerException.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Exception/ParserException.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Exception/RangeException.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Exception/ServerException.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Compact.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Compressed.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Crunched.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Debug.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Expanded.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/Nested.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Formatter/OutputBlock.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/Parser.php</file>
+		<file>lib/system/api/scssphp/scssphp/src/SourceMap/SourceMapGenerator.php</file>
 		<file>lib/system/clipboard/action/ArticleClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/TagClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/ModerationQueueReportClipboardAction.class.php</file>
