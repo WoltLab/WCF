@@ -6,6 +6,7 @@ use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentEditor;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\provider\UserConditionProvider;
+use wcf\system\exception\SystemException;
 use wcf\util\JSON;
 
 /**
@@ -29,10 +30,15 @@ final class MigrateLegacyCondition
             return;
         }
 
-        $migratedData = ConditionHandler::getInstance()->migrateConditionData(
-            new UserConditionProvider(),
-            JSON::decode($this->assignment->conditions)
-        );
+        try {
+            $json = JSON::decode($this->assignment->conditions);
+        } catch (SystemException $ex) {
+            $ex->getExceptionID(); // Log the exception if JSON decoding fails
+
+            return;
+        }
+
+        $migratedData = ConditionHandler::getInstance()->migrateConditionData(new UserConditionProvider(), $json);
 
         $editor = new UserGroupAssignmentEditor($this->assignment);
         $editor->update([
