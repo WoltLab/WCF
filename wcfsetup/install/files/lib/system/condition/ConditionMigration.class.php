@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\condition\provider;
+namespace wcf\system\condition;
 
 /**
  * @author Olaf Braun
@@ -11,9 +11,9 @@ namespace wcf\system\condition\provider;
 final class ConditionMigration
 {
     private function __construct(
-        public readonly bool $isFullMigrated,
+        public readonly bool $isFullyMigrated,
         /** @var array{identifier: string, value: mixed}[] */
-        public readonly array $conditions = [],
+        public readonly array $conditions,
     ) {
     }
 
@@ -23,7 +23,7 @@ final class ConditionMigration
      * @param array{identifier: string, value: mixed}[] $previousConditionData
      * @param array{identifier: string, value: mixed}[] $migratedConditionData
      */
-    public static function for(array $previousConditionData, array $migratedConditionData): self
+    public static function fromData(array $previousConditionData, array $migratedConditionData): self
     {
         return new self($previousConditionData === [], $migratedConditionData);
     }
@@ -31,8 +31,8 @@ final class ConditionMigration
     /**
      * Creates a new ConditionMigration instance for empty data.
      */
-    public static function forNoConditions(): self
+    public static function withoutData(): self
     {
-        return new self(true);
+        return new self(true, []);
     }
 }

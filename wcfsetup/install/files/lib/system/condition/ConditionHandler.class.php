@@ -9,7 +9,6 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
 use wcf\system\condition\provider\AbstractConditionProvider;
-use wcf\system\condition\provider\ConditionMigration;
 use wcf\system\condition\type\IConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -220,7 +219,7 @@ final class ConditionHandler extends SingletonFactory
     public function migrateConditionData(AbstractConditionProvider $provider, array $conditionData): ConditionMigration
     {
         if ($conditionData === []) {
-            return ConditionMigration::forNoConditions();
+            return ConditionMigration::withoutData();
         }
 
         $migratedData = [];
@@ -231,7 +230,7 @@ final class ConditionHandler extends SingletonFactory
         );
 
         if ($conditionTypes === []) {
-            return ConditionMigration::forNoConditions();
+            return ConditionMigration::withoutData();
         }
 
         foreach ($conditionData as $objectType => &$condition) {
@@ -253,6 +252,6 @@ final class ConditionHandler extends SingletonFactory
         }
         \unset($condition);
 
-        return ConditionMigration::for($conditionData, $migratedData);
+        return ConditionMigration::fromData($conditionData, $migratedData);
     }
 }

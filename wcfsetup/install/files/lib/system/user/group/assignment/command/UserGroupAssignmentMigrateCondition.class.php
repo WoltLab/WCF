@@ -36,7 +36,7 @@ final class UserGroupAssignmentMigrateCondition
         $editor->update([
             'conditions' => JSON::encode($migratedData->conditions),
             'isLegacy' => 0,
-            'isDisabled' => $migratedData->isFullMigrated ? $this->assignment->isDisabled : 1,
+            'isDisabled' => $migratedData->isFullyMigrated ? $this->assignment->isDisabled : 1,
         ]);
     }
 }
