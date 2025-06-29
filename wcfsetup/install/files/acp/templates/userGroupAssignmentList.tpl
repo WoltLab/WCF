@@ -14,6 +14,12 @@
 	</nav>
 </header>
 
+{if $hasLegacyObjects}
+	<woltlab-core-notice type="warning">
+		{lang}wcf.acp.group.assignment.legacyNotice{/lang}
+	</woltlab-core-notice>
+{/if}
+
 <div class="section">
 	{unsafe:$gridView->render()}
 </div>
