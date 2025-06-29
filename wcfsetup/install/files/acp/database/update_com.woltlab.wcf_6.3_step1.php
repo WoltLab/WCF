@@ -16,6 +16,6 @@ return [
     PartialDatabaseTable::create('wcf1_user_group_assignment')
         ->columns([
             MediumtextDatabaseTableColumn::create('conditions'),
-            DefaultFalseBooleanDatabaseTableColumn::create('needMigration'),
+            DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
         ]),
 ];

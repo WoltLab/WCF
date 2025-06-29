@@ -46,7 +46,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
             throw new IllegalLinkException();
         }
 
-        if ($this->formObject->needMigration) {
+        if ($this->formObject->isLegacy) {
             (new UserGroupAssignmentMigrateCondition($this->formObject))();
             $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         }

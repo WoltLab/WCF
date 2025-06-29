@@ -25,7 +25,7 @@ final class UserGroupAssignmentCache extends AbstractEagerCache
 
         $migrationDone = false;
         foreach ($assignmentList as $assignment) {
-            if ($assignment->needMigration) {
+            if ($assignment->isLegacy) {
                 (new UserGroupAssignmentMigrateCondition($assignment))();
                 $migrationDone = true;
             }
