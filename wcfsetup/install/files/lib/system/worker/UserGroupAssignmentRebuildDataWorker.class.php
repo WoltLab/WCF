@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\user\group\assignment\UserGroupAssignmentList;
-use wcf\system\user\group\assignment\command\UserGroupAssignmentMigrateCondition;
+use wcf\system\user\group\assignment\command\MigrateLegacyCondition;
 
 /**
  * Worker implementation for updating user group assignments.
@@ -32,7 +32,7 @@ final class UserGroupAssignmentRebuildDataWorker extends AbstractLinearRebuildDa
         parent::execute();
 
         foreach ($this->objectList as $assignment) {
-            (new UserGroupAssignmentMigrateCondition($assignment))();
+            (new MigrateLegacyCondition($assignment))();
         }
     }
 }
