@@ -24,9 +24,9 @@ final class UserRegistrationDaysConditionType extends AbstractUserIntegerConditi
     public function getFormField(string $id): PrefixConditionFormFieldContainer
     {
         $container = parent::getFormField($id);
-        $filed = $container->getField();
-        \assert($filed instanceof IntegerFormField);
-        $filed->suffix("wcf.acp.option.suffix.days");
+        $field = $container->getField();
+        \assert($field instanceof IntegerFormField);
+        $field->suffix("wcf.acp.option.suffix.days");
 
         return $container;
     }
