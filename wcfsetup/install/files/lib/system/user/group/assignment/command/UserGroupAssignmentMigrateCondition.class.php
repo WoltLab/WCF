@@ -23,7 +23,7 @@ final class UserGroupAssignmentMigrateCondition
 
     public function __invoke(): void
     {
-        if (!$this->assignment->needMigration) {
+        if (!$this->assignment->isLegacy) {
             return;
         }
 
@@ -35,7 +35,7 @@ final class UserGroupAssignmentMigrateCondition
         $editor = new UserGroupAssignmentEditor($this->assignment);
         $editor->update([
             'conditions' => JSON::encode($migratedData->conditions),
-            'needMigration' => 0,
+            'isLegacy' => 0,
             'isDisabled' => $migratedData->isFullMigrated ? $this->assignment->isDisabled : 1,
         ]);
     }

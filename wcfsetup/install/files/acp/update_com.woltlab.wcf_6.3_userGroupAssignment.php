@@ -11,7 +11,7 @@ if ($exportedConditions === []) {
 
 $sql = "UPDATE wcf1_user_group_assignment
         SET    conditions = ?,
-               needMigration = ?
+               isLegacy = ?
         WHERE  assignmentID = ?";
 $statement = WCF::getDB()->prepare($sql);
 foreach ($exportedConditions as $assignmentID => $conditionData) {
