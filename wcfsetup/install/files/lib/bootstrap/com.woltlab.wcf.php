@@ -97,6 +97,7 @@ return static function (): void {
             $event->register(\wcf\system\worker\UnfurlUrlRebuildDataWorker::class, 450);
             $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
             $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
+            $event->register(\wcf\system\worker\UserGroupAssignmentRebuildDataWorker::class, 600);
             $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
         }
     );

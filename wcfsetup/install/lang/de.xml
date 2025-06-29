@@ -870,6 +870,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Automatische Zuordnung deaktivieren]]></item>
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[Der eingegebene Titel ist zu lang. Die maximale Länge beträgt 255 Zeichen.]]></item>
+		<item name="wcf.acp.group.assignment.legacyNotice"><![CDATA[Führen Sie für die Automatische Benutzergruppen-Zuordnung die <a href="{link controller='RebuildData'}{/link}">Anzeigen aktualisieren</a> durch.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Kann Hinweise verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Kann Werbung verwalten]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximallänge „Über mich“]]></item>
@@ -2698,6 +2699,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten; aktualisiert Benutzerränge]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker"><![CDATA[Rich Embeds aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker.description"><![CDATA[Erstellt Rich Embeds Bilder neu]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker"><![CDATA[Automatische Benutzergruppen-Zuordnungen aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Aktualisiert die Automatische Benutzergruppen-Zuordnungen]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[Es wird dringend empfohlen, während der Aktualisierung der Anzeigen den Wartungsmodus zu aktivieren.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Alle aktualisieren]]></item>
 	</category>
