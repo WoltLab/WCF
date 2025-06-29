@@ -120,8 +120,8 @@ final class UserRegistrationDateConditionType extends AbstractConditionType impl
 
     private function convertDateStringTimestamp(string $date, int $hour, int $minute, int $seconds): int
     {
-        $dateTime = new \DateTime($date, new \DateTimeZone(TIMEZONE));
-        $dateTime->setTime($hour, $minute, $seconds);
+        $dateTime = new \DateTimeImmutable($date, new \DateTimeZone(TIMEZONE));
+        $dateTime = $dateTime->setTime($hour, $minute, $seconds);
 
         return $dateTime->getTimestamp();
     }
