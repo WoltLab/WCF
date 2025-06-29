@@ -116,11 +116,11 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
-        if ($this->migrateKeyName === null || !isset($conditionData[$this->migrateKeyName])) {
+        $value = $conditionData[$this->migrateKeyName] ?? null;
+        if ($value === null) {
             return [];
         }
 
-        $value = $conditionData[$this->migrateKeyName];
         unset($conditionData[$this->migrateKeyName]);
 
         return [
