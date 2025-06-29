@@ -250,7 +250,7 @@ final class ConditionHandler extends SingletonFactory
                 }
             }
         }
-        \unset($condition);
+        unset($condition);
 
         return ConditionMigration::fromData($conditionData, $migratedData);
     }
