@@ -90,6 +90,6 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
     #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
-        return $this->migrateConditionObjectType === null || $this->migrateConditionObjectType === $objectType;
+        return $this->migrateConditionObjectType === $objectType;
     }
 }
