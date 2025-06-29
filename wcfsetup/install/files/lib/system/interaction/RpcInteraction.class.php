@@ -27,7 +27,7 @@ class RpcInteraction extends AbstractInteraction
         protected readonly InteractionConfirmationType $confirmationType = InteractionConfirmationType::None,
         protected readonly string|\Closure $confirmationMessage = '',
         ?\Closure $isAvailableCallback = null,
-        protected readonly bool $invalidatesAllItems = false,
+        protected readonly InteractionEffect $interactionEffect = InteractionEffect::ReloadItem,
     ) {
         parent::__construct($identifier, $isAvailableCallback);
     }
@@ -68,8 +68,6 @@ class RpcInteraction extends AbstractInteraction
             }
         }
 
-        $invalidatesAllItems = $this->invalidatesAllItems ? 'true' : 'false';
-
         return <<<HTML
             <button
                 type="button"
@@ -78,7 +76,7 @@ class RpcInteraction extends AbstractInteraction
                 data-endpoint="{$endpoint}"
                 data-confirmation-type="{$this->confirmationType->toString()}"
                 data-confirmation-message="{$confirmationMessage}"
-                data-invalidates-all-items="{$invalidatesAllItems}"
+                data-interaction-effect="{$this->interactionEffect->toString()}"
             >
                 {$label}
             </button>

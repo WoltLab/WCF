@@ -9,6 +9,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\WCF;
@@ -32,7 +33,7 @@ final class StyleInteractions extends AbstractInteractionProvider
                 'core/styles/%s/set-as-default',
                 'wcf.acp.style.button.setAsDefault',
                 isAvailableCallback: static fn(Style $object) => !$object->isDefault,
-                invalidatesAllItems: true
+                interactionEffect: InteractionEffect::ReloadList
             ),
             new RpcInteraction(
                 'copy',
@@ -43,7 +44,7 @@ final class StyleInteractions extends AbstractInteractionProvider
                     'wcf.acp.style.copyStyle.confirmMessage',
                     ['style' => $object]
                 ),
-                invalidatesAllItems: true
+                interactionEffect: InteractionEffect::ReloadList
             ),
             new LinkInteraction('export', StyleExportForm::class, 'wcf.acp.style.exportStyle'),
             new RpcInteraction(

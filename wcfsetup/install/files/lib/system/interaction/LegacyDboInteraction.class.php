@@ -27,7 +27,8 @@ class LegacyDboInteraction extends AbstractInteraction
         protected readonly string|\Closure $languageItem,
         protected readonly InteractionConfirmationType $confirmationType = InteractionConfirmationType::None,
         protected readonly string|\Closure $confirmationMessage = '',
-        ?\Closure $isAvailableCallback = null
+        ?\Closure $isAvailableCallback = null,
+        protected readonly InteractionEffect $interactionEffect = InteractionEffect::ReloadItem,
     ) {
         parent::__construct($identifier, $isAvailableCallback);
     }
@@ -67,6 +68,7 @@ class LegacyDboInteraction extends AbstractInteraction
                 data-action-name="{$actionName}"
                 data-confirmation-type="{$this->confirmationType->toString()}"
                 data-confirmation-message="{$confirmationMessage}"
+                data-interaction-effect="{$this->interactionEffect->toString()}"
             >
                 {$label}
             </button>

@@ -8,6 +8,7 @@ use wcf\event\interaction\admin\LanguageInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
 
@@ -30,7 +31,7 @@ final class LanguageInteractions extends AbstractInteractionProvider
                 "core/languages/%s/default",
                 "wcf.acp.language.setAsDefault",
                 isAvailableCallback: static fn(Language $language) => !$language->isDefault,
-                invalidatesAllItems: true
+                interactionEffect: InteractionEffect::ReloadList
             ),
             new DeleteInteraction(
                 "core/languages/%s",

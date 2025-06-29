@@ -12,6 +12,7 @@ import { postObject } from "WoltLabSuite/Core/Api/PostObject";
 import { ConfirmationType, handleConfirmation } from "./Confirmation";
 import { showDefaultSuccessSnackbar, showSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { InteractionEffect } from "./InteractionEffect";
 
 async function handleRpcInteraction(
   container: HTMLElement,
@@ -20,7 +21,7 @@ async function handleRpcInteraction(
   endpoint: string,
   confirmationType: ConfirmationType,
   customConfirmationMessage: string = "",
-  invalidatesAllItems = false,
+  interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
 ): Promise<void> {
   const confirmationResult = await handleConfirmation(objectName, confirmationType, customConfirmationMessage);
   if (!confirmationResult.result) {
@@ -42,25 +43,25 @@ async function handleRpcInteraction(
     }
   }
 
-  if (confirmationType === ConfirmationType.Delete) {
+  if (interactionEffect === InteractionEffect.ReloadItem) {
+    element.dispatchEvent(
+      new CustomEvent("interaction:invalidate", {
+        bubbles: true,
+      }),
+    );
+  } else if (interactionEffect === InteractionEffect.ReloadList) {
+    container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+  } else {
     element.dispatchEvent(
       new CustomEvent("interaction:remove", {
         bubbles: true,
       }),
     );
+  }
 
+  if (confirmationType === ConfirmationType.Delete) {
     showSuccessSnackbar(getPhrase("wcf.global.success.delete"));
   } else {
-    if (invalidatesAllItems) {
-      container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
-    } else {
-      element.dispatchEvent(
-        new CustomEvent("interaction:invalidate", {
-          bubbles: true,
-        }),
-      );
-    }
-
     showDefaultSuccessSnackbar();
   }
 }
@@ -75,7 +76,7 @@ export function setup(identifier: string, container: HTMLElement): void {
         event.detail.endpoint,
         event.detail.confirmationType,
         event.detail.confirmationMessage,
-        event.detail.invalidatesAllItems === "true",
+        event.detail.interactionEffect,
       );
     }
   });
