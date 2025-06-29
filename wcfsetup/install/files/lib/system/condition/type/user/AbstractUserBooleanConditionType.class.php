@@ -72,11 +72,11 @@ abstract class AbstractUserBooleanConditionType extends AbstractConditionType im
     #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
-        if ($this->migrateKeyName === null || !isset($conditionData[$this->migrateKeyName])) {
+        $value = $conditionData[$this->columnName] ?? null;
+        if ($value === null) {
             return [];
         }
 
-        $value = $conditionData[$this->migrateKeyName];
         unset($conditionData[$this->migrateKeyName]);
 
         return [
