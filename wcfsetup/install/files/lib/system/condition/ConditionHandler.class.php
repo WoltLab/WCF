@@ -191,7 +191,7 @@ final class ConditionHandler extends SingletonFactory
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('objectTypeID IN (?)', [
-            \array_map(static fn (ObjectType $objectType): int => $objectType->objectTypeID, $objectTypes),
+            \array_column($objectTypes, 'objectTypeID'),
         ]);
 
         $sql = "SELECT * 
@@ -251,6 +251,7 @@ final class ConditionHandler extends SingletonFactory
                 }
             }
         }
+        \unset($condition);
 
         return ConditionMigration::for($conditionData, $migratedData);
     }

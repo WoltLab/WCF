@@ -94,7 +94,7 @@ abstract class AbstractUserIntegerConditionType extends AbstractConditionType im
     #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
-        return $this->migrateConditionObjectType !== null && $objectType === $this->migrateConditionObjectType;
+        return $objectType === $this->migrateConditionObjectType;
     }
 
     #[\Override]
