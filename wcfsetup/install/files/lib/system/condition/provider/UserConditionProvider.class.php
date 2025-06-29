@@ -35,25 +35,25 @@ final class UserConditionProvider extends AbstractConditionProvider
     public function __construct()
     {
         $this->addConditions([
-            new class("username", "username", "username", 'com.woltlab.wcf.user.username') extends AbstractUserStringConditionType {},
-            new class("email", "email", "email", 'com.woltlab.wcf.user.email') extends AbstractUserStringConditionType {},
+            new class(identifier: "username", columnName: "username", migrateKeyName: "username", migrateConditionObjectType: 'com.woltlab.wcf.user.username') extends AbstractUserStringConditionType {},
+            new class(identifier: "email", columnName: "email", migrateKeyName: "email", migrateConditionObjectType: 'com.woltlab.wcf.user.email') extends AbstractUserStringConditionType {},
             new UserRegistrationDateConditionType(),
             new UserRegistrationDaysConditionType(),
             new UserInGroupConditionType(),
             new UserNotInGroupConditionType(),
             new UserLanguageConditionType(),
-            new class("avatar", 'avatarFileID', 'userAvatar', 'com.woltlab.wcf.user.avatar') extends AbstractUserIsNullConditionType {},
+            new class(identifier: "avatar", columnName: 'avatarFileID', migrateKeyName: 'userAvatar', migrateConditionObjectType: 'com.woltlab.wcf.user.avatar') extends AbstractUserIsNullConditionType {},
             new UserSignatureConditionType(),
-            new class("coverPhoto", 'coverPhotoFileID', 'userCoverPhoto', 'com.woltlab.wcf.coverPhoto') extends AbstractUserIsNullConditionType {},
-            new class("isBanned", 'banned', 'userIsBanned', 'com.woltlab.wcf.user.state') extends AbstractUserBooleanConditionType {},
+            new class(identifier: "coverPhoto", columnName: 'coverPhotoFileID', migrateKeyName: 'userCoverPhoto', migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto') extends AbstractUserIsNullConditionType {},
+            new class(identifier: "isBanned", columnName: 'banned', migrateKeyName: 'userIsBanned', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractUserBooleanConditionType {},
             new UserIsEnabledConditionType(),
-            new class("isEmailConfirmed", 'emailConfirmed', 'userIsEmailConfirmed', 'com.woltlab.wcf.user.state') extends AbstractUserIsNullConditionType {},
-            new class("isMultifactorActive", 'multifactorActive', 'multifactorActive', 'com.woltlab.wcf.user.multifactor') extends AbstractUserBooleanConditionType {},
+            new class(identifier: "isEmailConfirmed", columnName: 'emailConfirmed', migrateKeyName: 'userIsEmailConfirmed', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractUserIsNullConditionType {},
+            new class(identifier: "isMultifactorActive", columnName: 'multifactorActive', migrateKeyName: 'multifactorActive', migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor') extends AbstractUserBooleanConditionType {},
             new UserHasTrophyConditionType(),
             new UserHasNotTrophyConditionType(),
-            new class("activityPoints", "activityPoints", 'com.woltlab.wcf.user.activityPoints') extends AbstractUserIntegerConditionType {},
-            new class("likesReceived", "likesReceived", 'com.woltlab.wcf.user.likesReceived') extends AbstractUserIntegerConditionType {},
-            new class("trophyPoints", "trophyPoints", 'com.woltlab.wcf.user.trophyPoints') extends AbstractUserIntegerConditionType {},
+            new class(identifier: "activityPoints", columnName: "activityPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints') extends AbstractUserIntegerConditionType {},
+            new class(identifier: "likesReceived", columnName: "likesReceived", migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived') extends AbstractUserIntegerConditionType {},
+            new class(identifier: "trophyPoints", columnName: "trophyPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints') extends AbstractUserIntegerConditionType {},
         ]);
 
         // TODO add conditions for user options that implement `ISearchableConditionUserOption`
