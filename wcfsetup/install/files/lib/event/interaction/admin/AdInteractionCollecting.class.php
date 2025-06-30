@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\AdInteractions;
  */
 final class AdInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly AdInteractions $param)
-    {
-    }
+    public function __construct(public readonly AdInteractions $provider) {}
 }

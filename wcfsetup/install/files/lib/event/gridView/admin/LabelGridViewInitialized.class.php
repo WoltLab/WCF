@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\LabelGridView;
  */
 final class LabelGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly LabelGridView $param)
-    {
-    }
+    public function __construct(public readonly LabelGridView $gridView) {}
 }

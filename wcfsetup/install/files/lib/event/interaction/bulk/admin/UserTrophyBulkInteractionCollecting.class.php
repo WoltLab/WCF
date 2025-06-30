@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\UserTrophyBulkInteractions;
  */
 final class UserTrophyBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly UserTrophyBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly UserTrophyBulkInteractions $provider) {}
 }

@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\TrophyInteractions;
  */
 final class TrophyInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly TrophyInteractions $param)
-    {
-    }
+    public function __construct(public readonly TrophyInteractions $provider) {}
 }

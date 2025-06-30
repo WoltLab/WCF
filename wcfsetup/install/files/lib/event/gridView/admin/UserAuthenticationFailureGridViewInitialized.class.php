@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\UserAuthenticationFailureGridView;
  */
 final class UserAuthenticationFailureGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly UserAuthenticationFailureGridView $param)
-    {
-    }
+    public function __construct(public readonly UserAuthenticationFailureGridView $gridView) {}
 }

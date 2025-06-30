@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\LabelBulkInteractions;
  */
 final class LabelBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly LabelBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly LabelBulkInteractions $provider) {}
 }

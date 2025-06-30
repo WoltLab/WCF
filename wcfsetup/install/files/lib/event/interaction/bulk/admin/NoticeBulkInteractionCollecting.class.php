@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\NoticeBulkInteractions;
  */
 final class NoticeBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly NoticeBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly NoticeBulkInteractions $provider) {}
 }

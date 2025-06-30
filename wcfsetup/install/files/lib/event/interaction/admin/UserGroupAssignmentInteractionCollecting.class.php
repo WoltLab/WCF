@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
  */
 final class UserGroupAssignmentInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly UserGroupAssignmentInteractions $param)
-    {
-    }
+    public function __construct(public readonly UserGroupAssignmentInteractions $provider) {}
 }

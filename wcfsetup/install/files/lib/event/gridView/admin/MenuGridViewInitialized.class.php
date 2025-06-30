@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\MenuGridView;
  */
 final class MenuGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly MenuGridView $param)
-    {
-    }
+    public function __construct(public readonly MenuGridView $gridView) {}
 }

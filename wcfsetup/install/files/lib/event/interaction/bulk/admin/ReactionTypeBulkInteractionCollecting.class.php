@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\ReactionTypeBulkInteractions;
  */
 final class ReactionTypeBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly ReactionTypeBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly ReactionTypeBulkInteractions $provider) {}
 }

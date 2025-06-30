@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\ReactionTypeInteractions;
  */
 final class ReactionTypeInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly ReactionTypeInteractions $param)
-    {
-    }
+    public function __construct(public readonly ReactionTypeInteractions $provider) {}
 }

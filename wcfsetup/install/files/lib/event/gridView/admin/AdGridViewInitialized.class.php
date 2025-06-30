@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\AdGridView;
  */
 final class AdGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly AdGridView $param)
-    {
-    }
+    public function __construct(public readonly AdGridView $gridView) {}
 }

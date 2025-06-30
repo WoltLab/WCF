@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\LabelInteractions;
  */
 final class LabelInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly LabelInteractions $param)
-    {
-    }
+    public function __construct(public readonly LabelInteractions $provider) {}
 }

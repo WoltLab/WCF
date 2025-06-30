@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\SmileyInteractions;
  */
 final class SmileyInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly SmileyInteractions $param)
-    {
-    }
+    public function __construct(public readonly SmileyInteractions $provider) {}
 }

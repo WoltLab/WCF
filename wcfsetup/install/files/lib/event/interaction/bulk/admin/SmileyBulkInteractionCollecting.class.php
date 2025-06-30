@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\SmileyBulkInteractions;
  */
 final class SmileyBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly SmileyBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly SmileyBulkInteractions $provider) {}
 }

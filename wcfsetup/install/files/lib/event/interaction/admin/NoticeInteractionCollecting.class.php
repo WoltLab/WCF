@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\NoticeInteractions;
  */
 final class NoticeInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly NoticeInteractions $param)
-    {
-    }
+    public function __construct(public readonly NoticeInteractions $provider) {}
 }

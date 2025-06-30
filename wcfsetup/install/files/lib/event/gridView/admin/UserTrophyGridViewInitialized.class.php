@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\UserTrophyGridView;
  */
 final class UserTrophyGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly UserTrophyGridView $param)
-    {
-    }
+    public function __construct(public readonly UserTrophyGridView $gridView) {}
 }

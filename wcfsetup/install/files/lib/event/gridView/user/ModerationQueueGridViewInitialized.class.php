@@ -15,7 +15,5 @@ use wcf\system\gridView\user\ModerationQueueGridView;
  */
 final class ModerationQueueGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly ModerationQueueGridView $param)
-    {
-    }
+    public function __construct(public readonly ModerationQueueGridView $gridView) {}
 }

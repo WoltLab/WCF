@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\TemplateInteractions;
  */
 final class TemplateInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly TemplateInteractions $param)
-    {
-    }
+    public function __construct(public readonly TemplateInteractions $provider) {}
 }

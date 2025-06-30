@@ -15,7 +15,5 @@ use wcf\system\interaction\bulk\admin\AdBulkInteractions;
  */
 final class AdBulkInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly AdBulkInteractions $param)
-    {
-    }
+    public function __construct(public readonly AdBulkInteractions $provider) {}
 }

@@ -15,7 +15,5 @@ use wcf\system\interaction\user\ModerationQueueInteractions;
  */
 final class ModerationQueueInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly ModerationQueueInteractions $param)
-    {
-    }
+    public function __construct(public readonly ModerationQueueInteractions $provider) {}
 }

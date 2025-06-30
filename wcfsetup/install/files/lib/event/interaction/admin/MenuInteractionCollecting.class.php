@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\MenuInteractions;
  */
 final class MenuInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly MenuInteractions $param)
-    {
-    }
+    public function __construct(public readonly MenuInteractions $provider) {}
 }

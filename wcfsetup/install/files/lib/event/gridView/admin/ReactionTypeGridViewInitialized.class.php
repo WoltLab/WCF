@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\ReactionTypeGridView;
  */
 final class ReactionTypeGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly ReactionTypeGridView $param)
-    {
-    }
+    public function __construct(public readonly ReactionTypeGridView $gridView) {}
 }

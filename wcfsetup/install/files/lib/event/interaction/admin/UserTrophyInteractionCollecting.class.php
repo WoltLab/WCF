@@ -15,7 +15,5 @@ use wcf\system\interaction\admin\UserTrophyInteractions;
  */
 final class UserTrophyInteractionCollecting implements IPsr14Event
 {
-    public function __construct(public readonly UserTrophyInteractions $param)
-    {
-    }
+    public function __construct(public readonly UserTrophyInteractions $provider) {}
 }

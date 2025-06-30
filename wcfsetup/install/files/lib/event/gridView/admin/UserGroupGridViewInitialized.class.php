@@ -15,7 +15,5 @@ use wcf\system\gridView\admin\UserGroupGridView;
  */
 final class UserGroupGridViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly UserGroupGridView $param)
-    {
-    }
+    public function __construct(public readonly UserGroupGridView $gridView) {}
 }
