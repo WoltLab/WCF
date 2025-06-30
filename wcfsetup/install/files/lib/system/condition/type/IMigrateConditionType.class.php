@@ -11,13 +11,25 @@ namespace wcf\system\condition\type;
 interface IMigrateConditionType
 {
     /**
-     * Converts the old condition structure to the new one. All migrated values must be removed from the `$conditionData` array.
+     * Migrates old condition data to the new condition format by removing all successfully migrated entries from the `$conditionData`
+     * and returns a list of condition-data in the new structure. The remaining entries are assumed to be unprocessed and are handled
+     * by other condition types and must remain untouched.
+     *
+     * Note:
+     * - Remove entries that you have successfully migrated.
+     * - Leave unrecognized or unsupported entries untouched.
+     * - If no data can be migrated, return an empty array.
+     *
+     * This allows `ConditionHandler::migrateConditionData()` to check whether all data has been migrated correctly and completely.
      *
      * @param array<string, mixed> $conditionData
      *
-     * @return array{identifier: string, value: mixed}[]
+     * @return list<array{identifier: string, value: mixed}>
      */
     public function migrateConditionData(array &$conditionData): array;
 
+    /**
+     * Returns `true` if the method `migrateConditionData()` can migrate data for the given `$objectType` and `false` otherwise.
+     */
     public function canMigrateConditionData(string $objectType): bool;
 }
