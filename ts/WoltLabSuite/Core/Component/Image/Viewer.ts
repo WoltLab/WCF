@@ -12,7 +12,9 @@ import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
 setDefaultConfig();
 
 export function setup() {
-  Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="video"])');
+  Fancybox.bind(
+    '[data-fancybox]:is([data-type="image"],[data-type="youtube"],[data-type="vimeo"],[data-type="video"])',
+  );
 }
 
 export function setupLegacy() {

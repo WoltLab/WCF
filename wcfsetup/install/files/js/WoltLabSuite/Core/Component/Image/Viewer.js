@@ -12,7 +12,7 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
     exports.getLocalization = getLocalization;
     setDefaultConfig();
     function setup() {
-        ui_1.Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="video"])');
+        ui_1.Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="youtube"],[data-type="vimeo"],[data-type="video"])');
     }
     function setupLegacy() {
         ui_1.Fancybox.bind(".jsImageViewer", {
