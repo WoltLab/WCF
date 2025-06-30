@@ -5,7 +5,7 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 setDefaultConfig();
 
 export function setup() {
-  Fancybox.bind("[data-fancybox]");
+  Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="video"])');
 }
 
 export function setupLegacy() {
