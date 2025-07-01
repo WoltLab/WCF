@@ -117,7 +117,6 @@ final class DeletedContentListViewPage extends AbstractListViewPage
             'contentTitle' => $this->provider->getContentTitle(),
             'providerLinks' => $this->getProviderLinks(),
             'provider' => $this->providerID,
-            'containerCssClassName' => $this->provider->getContainerCssClassName(),
         ]);
     }
 

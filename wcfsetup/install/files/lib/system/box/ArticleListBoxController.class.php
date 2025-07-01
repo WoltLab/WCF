@@ -83,12 +83,6 @@ class ArticleListBoxController extends AbstractListViewBoxController
     }
 
     #[\Override]
-    public function getContainerCssClassName(): string
-    {
-        return 'entryCardList__container';
-    }
-
-    #[\Override]
     protected function getTemplate()
     {
         return match ($this->box->position) {

@@ -41,10 +41,4 @@ abstract class AbstractDeletedContentListViewProvider implements IDeletedContent
     {
         return WCF::getLanguage()->getDynamicVariable($this->contentTitle);
     }
-
-    #[\Override]
-    public function getContainerCssClassName(): string
-    {
-        return '';
-    }
 }

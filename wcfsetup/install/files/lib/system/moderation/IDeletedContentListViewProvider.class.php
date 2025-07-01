@@ -26,6 +26,4 @@ interface IDeletedContentListViewProvider
     public function getObjectTypeTitle(): string;
 
     public function getContentTitle(): string;
-
-    public function getContainerCssClassName(): string;
 }

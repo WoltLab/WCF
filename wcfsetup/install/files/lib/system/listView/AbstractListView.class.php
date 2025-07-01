@@ -34,6 +34,7 @@ abstract class AbstractListView
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private string $cssClassName = '';
+    private string $containerCssClassName = '';
     private int $pageNo = 1;
     private string|int|null $objectIDFilter = null;
     private ?IInteractionProvider $interactionProvider = null;
@@ -620,6 +621,16 @@ abstract class AbstractListView
     public function render(): string
     {
         return WCF::getTPL()->render('wcf', 'shared_listView', ['view' => $this]);
+    }
+
+    public function setContainerCssClassName(string $cssClassName): void
+    {
+        $this->containerCssClassName = $cssClassName;
+    }
+
+    public function getContainerCssClassName(): string
+    {
+        return $this->containerCssClassName;
     }
 
     /**

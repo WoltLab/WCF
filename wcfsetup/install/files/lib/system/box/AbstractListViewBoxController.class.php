@@ -97,13 +97,7 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
     {
         return WCF::getTPL()->render('wcf', 'boxListView', [
             'listView' => $this->listView,
-            'containerCssClassName' => $this->getContainerCssClassName(),
         ]);
-    }
-
-    public function getContainerCssClassName(): string
-    {
-        return '';
     }
 
     #[\Override]
