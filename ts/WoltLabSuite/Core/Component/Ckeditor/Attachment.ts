@@ -35,7 +35,7 @@ function uploadAttachment(element: HTMLElement, file: File, abortController?: Ab
 
   dispatchToCkeditor(element).uploadAttachment(payload);
 
-  return new Promise<UploadResult>((resolve) => {
+  return new Promise<UploadResult>((resolve, reject) => {
     void payload
       .promise!.then(({ attachmentId, url }) => {
         resolve({
@@ -45,7 +45,9 @@ function uploadAttachment(element: HTMLElement, file: File, abortController?: Ab
           },
         });
       })
-      .catch(() => {});
+      .catch(() => {
+        reject();
+      });
   });
 }
 
