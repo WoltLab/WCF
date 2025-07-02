@@ -14,7 +14,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
     function uploadAttachment(element, file, abortController) {
         const payload = { abortController, file };
         (0, Event_1.dispatchToCkeditor)(element).uploadAttachment(payload);
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             void payload
                 .promise.then(({ attachmentId, url }) => {
                 resolve({
@@ -24,7 +24,9 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
                     },
                 });
             })
-                .catch(() => { });
+                .catch(() => {
+                reject();
+            });
         });
     }
     function setupInsertAttachment(ckeditor) {

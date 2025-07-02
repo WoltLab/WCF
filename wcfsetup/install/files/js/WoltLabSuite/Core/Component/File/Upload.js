@@ -253,6 +253,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     promiseReject = reject;
                 });
                 clearPreviousErrors(element);
+                if (!validateFileLimit(element, 1)) {
+                    promiseReject();
+                    return;
+                }
                 if (!validateFileExtension(element, file)) {
                     promiseReject();
                     return;
