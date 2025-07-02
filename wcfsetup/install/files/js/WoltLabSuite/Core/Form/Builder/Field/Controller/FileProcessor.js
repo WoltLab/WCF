@@ -135,9 +135,19 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             });
             return replaceButton;
         }
-        #markElementUploadHasFailed(container, element, reason) {
-            (0, Helper_1.fileInitializationFailed)(container, element, reason);
-            container.classList.add("innerError");
+        #markElementUploadHasFailed(element, reason) {
+            let errorMessage;
+            if (reason instanceof Error) {
+                errorMessage = reason.message;
+            }
+            else {
+                errorMessage = (0, Helper_1.getErrorMessageFromFile)(element);
+            }
+            (0, Util_1.innerError)(this.#uploadButton, errorMessage);
+            element.remove();
+            if (reason instanceof Error) {
+                throw reason;
+            }
         }
         getDeleteButton(element) {
             const deleteButton = document.createElement("button");
@@ -246,7 +256,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                         container = tmpContainer;
                     }
                 }
-                this.#markElementUploadHasFailed(container, element, reason);
+                this.#markElementUploadHasFailed(element, reason);
             })
                 .finally(() => {
                 (0, Helper_1.removeUploadProgress)(container);

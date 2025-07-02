@@ -38,13 +38,13 @@ export function removeUploadProgress(element: HTMLElement): void {
   element.querySelector(".fileList__item__progress")?.remove();
 }
 
-export function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
-  if (reason instanceof Error) {
-    throw reason;
-  }
-
+export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
   if (file.apiError === undefined) {
-    return;
+    throw new Error("There is no recorded API error for this file.", {
+      cause: {
+        file,
+      },
+    });
   }
 
   let errorMessage: string;
@@ -67,7 +67,15 @@ export function fileInitializationFailed(element: HTMLElement, file: WoltlabCore
     errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
   }
 
-  markElementAsErroneous(element, errorMessage);
+  return errorMessage;
+}
+
+export function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
+  if (reason instanceof Error) {
+    throw reason;
+  }
+
+  markElementAsErroneous(element, getErrorMessageFromFile(file));
 }
 
 function markElementAsErroneous(element: HTMLElement, errorMessage: string): void {

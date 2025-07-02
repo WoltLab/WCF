@@ -10,7 +10,7 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import {
-  fileInitializationFailed,
+  getErrorMessageFromFile,
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
@@ -184,10 +184,21 @@ export class FileProcessor {
     return replaceButton;
   }
 
-  #markElementUploadHasFailed(container: HTMLElement, element: WoltlabCoreFileElement, reason: unknown): void {
-    fileInitializationFailed(container, element, reason);
+  #markElementUploadHasFailed(element: WoltlabCoreFileElement, reason: unknown): void {
+    let errorMessage: string;
+    if (reason instanceof Error) {
+      errorMessage = reason.message;
+    } else {
+      errorMessage = getErrorMessageFromFile(element);
+    }
 
-    container.classList.add("innerError");
+    innerError(this.#uploadButton, errorMessage);
+
+    element.remove();
+
+    if (reason instanceof Error) {
+      throw reason;
+    }
   }
 
   protected getDeleteButton(element: WoltlabCoreFileElement): HTMLButtonElement {
@@ -315,7 +326,7 @@ export class FileProcessor {
             container = tmpContainer;
           }
         }
-        this.#markElementUploadHasFailed(container!, element, reason);
+        this.#markElementUploadHasFailed(element, reason);
       })
       .finally(() => {
         removeUploadProgress(container!);

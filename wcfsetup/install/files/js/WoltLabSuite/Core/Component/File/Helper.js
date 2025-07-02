@@ -3,6 +3,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.trackUploadProgress = trackUploadProgress;
     exports.removeUploadProgress = removeUploadProgress;
+    exports.getErrorMessageFromFile = getErrorMessageFromFile;
     exports.fileInitializationFailed = fileInitializationFailed;
     exports.insertFileInformation = insertFileInformation;
     function trackUploadProgress(element, file) {
@@ -30,12 +31,13 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         element.classList.remove("fileProcessor__item--uploading");
         element.querySelector(".fileList__item__progress")?.remove();
     }
-    function fileInitializationFailed(element, file, reason) {
-        if (reason instanceof Error) {
-            throw reason;
-        }
+    function getErrorMessageFromFile(file) {
         if (file.apiError === undefined) {
-            return;
+            throw new Error("There is no recorded API error for this file.", {
+                cause: {
+                    file,
+                },
+            });
         }
         let errorMessage;
         const validationError = file.apiError.getValidationError();
@@ -55,7 +57,13 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         else {
             errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
         }
-        markElementAsErroneous(element, errorMessage);
+        return errorMessage;
+    }
+    function fileInitializationFailed(element, file, reason) {
+        if (reason instanceof Error) {
+            throw reason;
+        }
+        markElementAsErroneous(element, getErrorMessageFromFile(file));
     }
     function markElementAsErroneous(element, errorMessage) {
         element.classList.add("fileList__item--error");
