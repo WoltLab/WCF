@@ -21,6 +21,7 @@ use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UrlFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -210,7 +211,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                 ->fieldId('pageID')
                                 ->values(\array_keys($pageHandlers))
                         ),
-                    UrlFormField::create('externalURL')
+                    TextFormField::create('externalURL')
                         ->label('wcf.acp.menu.item.externalURL')
                         ->maximumLength(255)
                         ->placeholder('http://')
