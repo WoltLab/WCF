@@ -34,7 +34,7 @@ use wcf\util\StringUtil;
  *
  * @extends AbstractGridView<Package, I18nPackageList>
  */
-final class PackageGridView extends AbstractGridView
+class PackageGridView extends AbstractGridView
 {
     public function __construct()
     {
