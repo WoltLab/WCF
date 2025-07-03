@@ -46,9 +46,11 @@
 				{if $group->canCopy()}
 					<li><button type="button" class="jsButtonUserGroupCopy button" data-endpoint="{link controller="UserGroupCopy" id=$groupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.group.button.copy{/lang}</span></button></li>
 				{/if}
+
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
 			{/if}
-			
-			<li><a href="{link controller='UserGroupList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

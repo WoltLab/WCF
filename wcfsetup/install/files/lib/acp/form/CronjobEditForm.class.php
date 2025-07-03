@@ -3,9 +3,14 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\CronjobListPage;
 use wcf\data\cronjob\Cronjob;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\CronjobInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the cronjob edit form.
@@ -57,5 +62,19 @@ class CronjobEditForm extends CronjobAddForm
         parent::createForm();
 
         $this->form->getFormField('isDisabled')->available($this->formObject->canBeDisabled());
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new CronjobInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(CronjobListPage::class)
+            ),
+        ]);
     }
 }

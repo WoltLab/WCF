@@ -3,9 +3,14 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\LabelListPage;
 use wcf\data\label\Label;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\LabelInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the label edit form.
@@ -54,5 +59,19 @@ class LabelEditForm extends LabelAddForm
         if (!$this->formObject->getObjectID()) {
             throw new IllegalLinkException();
         }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new LabelInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(LabelListPage::class)
+            ),
+        ]);
     }
 }

@@ -24,8 +24,11 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TrophyList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.trophy.list{/lang}</span></a></li>
-
+			{if $action == 'edit'}
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>

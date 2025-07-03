@@ -3,9 +3,14 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\LanguageListPage;
 use wcf\data\language\Language;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\LanguageInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the language edit form.
@@ -21,9 +26,7 @@ class LanguageEditForm extends LanguageAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -53,5 +56,19 @@ class LanguageEditForm extends LanguageAddForm
         parent::createForm();
 
         $this->form->getFormField('isDisabled')->available(!$this->formObject->isDefault);
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new LanguageInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(LanguageListPage::class)
+            ),
+        ]);
     }
 }

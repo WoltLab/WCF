@@ -1014,6 +1014,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Feld leer {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, wird das Label an letzter Position einsortiert.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.label.group.showLabels"><![CDATA[Labels anzeigen]]></item>
 	</category>
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Sprache hinzufügen]]></item>
@@ -1254,6 +1255,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Fehlende Texte]]></item>
 		<item name="wcf.acp.menu.link.log.email"><![CDATA[E-Mails]]></item>
 		<item name="wcf.acp.menu.item.button.choose"><![CDATA[Menüpunkt wählen]]></item>
+		<item name="wcf.acp.menu.showItems"><![CDATA[Menüpunkte anzeigen]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>

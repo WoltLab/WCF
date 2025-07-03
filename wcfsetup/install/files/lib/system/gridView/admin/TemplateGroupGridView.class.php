@@ -11,6 +11,7 @@ use wcf\system\gridView\filter\I18nTextFilter;
 use wcf\system\gridView\filter\NumericFilter;
 use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
+use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\TemplateGroupInteractions;
@@ -65,6 +66,7 @@ final class TemplateGroupGridView extends AbstractGridView
             ),
         ]);
         $this->setInteractionProvider($provider);
+        $this->addRowLink(new GridViewRowLink(TemplateGroupEditForm::class));
 
         $this->setSortField("templateGroupName");
     }

@@ -3,11 +3,16 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\MenuListPage;
 use wcf\data\menu\Menu;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\interaction\admin\MenuInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the menu edit form.
@@ -29,9 +34,7 @@ class MenuEditForm extends MenuAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -71,5 +74,19 @@ class MenuEditForm extends MenuAddForm
         } else {
             parent::createForm();
         }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new MenuInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(MenuListPage::class)
+            ),
+        ]);
     }
 }

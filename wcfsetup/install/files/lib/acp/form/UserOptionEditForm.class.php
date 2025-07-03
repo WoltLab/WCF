@@ -3,12 +3,17 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\interaction\admin\UserOptionInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the user option edit form.
@@ -85,5 +90,19 @@ class UserOptionEditForm extends UserOptionAddForm
         );
 
         AbstractFormBuilderForm::saved();
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new UserOptionInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(UserOptionListPage::class)
+            ),
+        ]);
     }
 }

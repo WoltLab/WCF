@@ -3,9 +3,14 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\TagListPage;
 use wcf\data\tag\Tag;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\TagInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the tag edit form.
@@ -54,5 +59,19 @@ class TagEditForm extends TagAddForm
         if (!$this->formObject->getObjectID()) {
             throw new IllegalLinkException();
         }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new TagInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(TagListPage::class)
+            ),
+        ]);
     }
 }

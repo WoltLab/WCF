@@ -453,7 +453,7 @@ class StyleEditForm extends StyleAddForm
             'style' => $this->style,
             'styleID' => $this->styleID,
             'isDarkMode' => $this->isDarkMode,
-            'interactionContextMenu' => new StandaloneInteractionContextMenuComponent(
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new StyleInteractions(),
                 $this->style,
                 LinkHandler::getInstance()->getControllerLink(StyleListPage::class)

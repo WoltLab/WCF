@@ -2,12 +2,16 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\NoticeListPage;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeAction;
 use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\NoticeInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -56,6 +60,11 @@ class NoticeEditForm extends NoticeAddForm
             'action' => 'edit',
             'notice' => $this->notice,
             'resetIsDismissed' => $this->resetIsDismissed,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new NoticeInteractions(),
+                $this->notice,
+                LinkHandler::getInstance()->getControllerLink(NoticeListPage::class)
+            ),
         ]);
     }
 

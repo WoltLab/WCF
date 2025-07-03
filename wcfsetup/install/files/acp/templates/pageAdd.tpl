@@ -54,14 +54,11 @@
 					<li><a href="#" class="button jsButtonCopyPage">{icon name='copy'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
 				{/if}
 
-				{if !$page->requireObjectID}
-					<li><a href="{$page->getLink()}" class="button">{icon name='magnifying-glass'} <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
-				{/if}
-
-				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button">{icon name='arrow-down-short-wide'} <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
 			{/if}
-			<li><a href="{link controller='PageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
-
+			
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>

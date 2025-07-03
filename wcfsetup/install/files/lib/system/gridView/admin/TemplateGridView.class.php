@@ -22,6 +22,7 @@ use wcf\system\gridView\filter\SelectFilter;
 use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
+use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
@@ -80,6 +81,7 @@ final class TemplateGridView extends AbstractGridView
             ),
         ]);
         $this->setInteractionProvider($provider);
+        $this->addRowLink(new GridViewRowLink(TemplateEditForm::class));
 
         $this->setSortField("templateName");
 

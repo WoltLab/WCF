@@ -4,6 +4,7 @@ namespace wcf\data\package\update\server;
 
 use Laminas\Diactoros\Uri;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\Regex;
 use wcf\system\registry\RegistryHandler;
@@ -28,7 +29,7 @@ use wcf\util\Url;
  * @property-read   string $errorMessage           error message if the package update server if offline or empty otherwise
  * @property-read   string $apiVersion         version of the supported package update server api (`2.0`, `2.1`)
  */
-class PackageUpdateServer extends DatabaseObject
+class PackageUpdateServer extends DatabaseObject implements ITitledObject
 {
     /**
      * @inheritDoc
@@ -431,5 +432,11 @@ class PackageUpdateServer extends DatabaseObject
             '2.0',
             null,
         ]);
+    }
+
+    #[\Override]
+    public function getTitle(): string
+    {
+        return $this->serverURL;
     }
 }

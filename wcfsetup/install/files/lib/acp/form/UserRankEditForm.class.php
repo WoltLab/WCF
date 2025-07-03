@@ -31,9 +31,7 @@ class UserRankEditForm extends UserRankAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -58,15 +56,13 @@ class UserRankEditForm extends UserRankAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'interactionContextMenu' => new StandaloneInteractionContextMenuComponent(
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new UserRankInteractions(),
                 $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(UserRankListPage::class)

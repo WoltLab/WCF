@@ -2,11 +2,15 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserGroupAssignmentListPage;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -45,6 +49,11 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         WCF::getTPL()->assign([
             'action' => 'edit',
             'assignment' => $this->assignment,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new UserGroupAssignmentInteractions(),
+                $this->assignment,
+                LinkHandler::getInstance()->getControllerLink(UserGroupAssignmentListPage::class)
+            ),
         ]);
     }
 

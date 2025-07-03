@@ -2,11 +2,15 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\SmileyListPage;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\SmileyInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -127,6 +131,11 @@ class SmileyEditForm extends SmileyAddForm
         WCF::getTPL()->assign([
             'smiley' => $this->smiley,
             'action' => 'edit',
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new SmileyInteractions(),
+                $this->smiley,
+                LinkHandler::getInstance()->getControllerLink(SmileyListPage::class)
+            ),
         ]);
     }
 }

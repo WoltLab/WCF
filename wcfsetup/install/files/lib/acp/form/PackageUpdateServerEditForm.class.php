@@ -3,13 +3,15 @@
 namespace wcf\acp\form;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use wcf\acp\page\PackageUpdateServerListPage;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\PackageUpdateServerInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the server edit form.
@@ -119,6 +121,11 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
             'packageUpdateServerID' => $this->packageUpdateServerID,
             'packageUpdateServer' => $this->updateServer,
             'action' => 'edit',
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new PackageUpdateServerInteractions(),
+                $this->updateServer,
+                LinkHandler::getInstance()->getControllerLink(PackageUpdateServerListPage::class)
+            ),
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace wcf\data\captcha\question;
 
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -19,7 +20,7 @@ use wcf\util\StringUtil;
  * @property-read   string $answers    newline-separated list of answers or name of language item which contains the answers
  * @property-read   int $isDisabled is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
  */
-class CaptchaQuestion extends DatabaseObject
+class CaptchaQuestion extends DatabaseObject implements ITitledObject
 {
     /**
      * Returns the question in the active user's language.
@@ -54,5 +55,11 @@ class CaptchaQuestion extends DatabaseObject
         }
 
         return false;
+    }
+
+    #[\Override]
+    public function getTitle(): string
+    {
+        return $this->getQuestion();
     }
 }

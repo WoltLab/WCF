@@ -2,10 +2,14 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserTrophyListPage;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\UserTrophyInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -117,6 +121,11 @@ class UserTrophyEditForm extends UserTrophyAddForm
 
         WCF::getTPL()->assign([
             'userTrophy' => $this->userTrophy,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new UserTrophyInteractions(),
+                $this->userTrophy,
+                LinkHandler::getInstance()->getControllerLink(UserTrophyListPage::class)
+            ),
         ]);
     }
 }

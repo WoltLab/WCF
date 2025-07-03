@@ -7,8 +7,11 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ContactRecipientList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.contact.recipient.list{/lang}</span></a></li>
-			
+			{if $action == 'edit'}
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>

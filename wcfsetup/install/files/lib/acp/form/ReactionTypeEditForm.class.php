@@ -2,8 +2,13 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\ReactionTypeListPage;
 use wcf\data\reaction\type\ReactionType;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\ReactionTypeInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Represents the reaction type add form.
@@ -25,9 +30,7 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -40,5 +43,19 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
         } else {
             throw new IllegalLinkException();
         }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new ReactionTypeInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(ReactionTypeListPage::class)
+            ),
+        ]);
     }
 }
