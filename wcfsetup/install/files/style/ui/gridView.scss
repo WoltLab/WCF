@@ -111,6 +111,9 @@
 
 	&.gridView__column--image {
 		text-align: center;
+		white-space: nowrap;
+		width: 1px;
+		word-wrap: normal;
 	}
 }
 

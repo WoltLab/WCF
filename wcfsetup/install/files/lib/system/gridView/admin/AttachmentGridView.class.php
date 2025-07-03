@@ -78,6 +78,12 @@ final class AttachmentGridView extends AbstractGridView
                                 </a>
                                 HTML;
                         }
+
+                        #[\Override]
+                        public function getClasses(): string
+                        {
+                            return 'gridView__column--image';
+                        }
                     }
                 ),
             GridViewColumn::for('filename')

@@ -73,7 +73,7 @@ final class ArticleGridView extends AbstractGridView
                         #[\Override]
                         public function getClasses(): string
                         {
-                            return 'gridView__column--text gridView__column--image';
+                            return 'gridView__column--image';
                         }
                     }
                 ]),
