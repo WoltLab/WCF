@@ -7,6 +7,7 @@ use wcf\data\language\LanguageAction;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -123,6 +124,8 @@ class LanguageAddForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.language.countryCode.description')
                         ->maximumLength(10)
                         ->required(),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.global.button.disable'),
                     SingleSelectionFormField::create('locale')
                         ->label('wcf.acp.language.locale')
                         ->description('wcf.acp.language.locale.description')

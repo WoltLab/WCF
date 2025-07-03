@@ -50,4 +50,12 @@ class CronjobEditForm extends CronjobAddForm
             throw new IllegalLinkException();
         }
     }
+
+    #[\Override]
+    protected function createForm()
+    {
+        parent::createForm();
+
+        $this->form->getFormField('isDisabled')->available($this->formObject->canBeDisabled());
+    }
 }

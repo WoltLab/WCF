@@ -48,4 +48,12 @@ class LanguageEditForm extends LanguageAddForm
             throw new IllegalLinkException();
         }
     }
+
+    #[\Override]
+    protected function createForm()
+    {
+        parent::createForm();
+
+        $this->form->getFormField('isDisabled')->available(!$this->formObject->isDefault);
+    }
 }

@@ -10,6 +10,7 @@ use wcf\data\cronjob\CronjobEditor;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\cronjob\ICronjob;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -64,6 +65,8 @@ class CronjobAddForm extends AbstractFormBuilderForm
                         ->required()
                         ->i18n()
                         ->languageItemPattern('wcf.acp.cronjob.description.cronjob\d+'),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.global.button.disable'),
                 ]),
             FormContainer::create('timingContainer')
                 ->label('wcf.acp.cronjob.timing')

@@ -149,6 +149,8 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         ->i18n()
                         ->i18nRequired()
                         ->languageItemPattern('wcf.user.option.(option\d+|\w+).description'),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.global.button.disable'),
                     SingleSelectionFormField::create('categoryName')
                         ->label('wcf.global.category')
                         ->required()

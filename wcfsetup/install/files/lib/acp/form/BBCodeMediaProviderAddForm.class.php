@@ -8,6 +8,7 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\bbcode\media\provider\IBBCodeMediaProvider;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -63,6 +64,8 @@ class BBCodeMediaProviderAddForm extends AbstractFormBuilderForm
                     TextFormField::create('title')
                         ->label('wcf.acp.bbcode.mediaProvider.title')
                         ->required(),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.global.button.disable'),
                     MultilineTextFormField::create('regex')
                         ->label('wcf.acp.bbcode.mediaProvider.regex')
                         ->description('wcf.acp.bbcode.mediaProvider.regex.description')
