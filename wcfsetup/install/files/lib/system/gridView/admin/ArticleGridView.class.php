@@ -140,6 +140,7 @@ final class ArticleGridView extends AbstractGridView
             GridViewColumn::for('userID')
                 ->label('wcf.user.username')
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
+                ->sortable(sortByDatabaseColumn: 'username')
                 ->filter(new UserFilter()),
             GridViewColumn::for('categoryID')
                 ->label('wcf.global.category')
