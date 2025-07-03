@@ -61,6 +61,8 @@ class TagAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
+        $contentLanguages = LanguageFactory::getInstance()->getContentLanguages();
+
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
@@ -86,8 +88,9 @@ class TagAddForm extends AbstractFormBuilderForm
                         ),
                     SingleSelectionFormField::create('languageID')
                         ->label('wcf.acp.tag.languageID')
-                        ->options(LanguageFactory::getInstance()->getContentLanguages())
-                        ->value(WCF::getUser()->languageID)
+                        ->available($contentLanguages !== [])
+                        ->options($contentLanguages)
+                        ->value(isset($contentLanguages[WCF::getLanguage()->languageID]) ? WCF::getLanguage()->languageID : null)
                         ->immutable($this->formAction !== 'create')
                         ->required(),
                     TagFormField::create('synonyms')
