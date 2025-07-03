@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\language\item\LanguageItem;
 use wcf\data\language\item\LanguageItemEditor;
+use wcf\data\language\Language;
 use wcf\event\language\PhraseChanged;
 use wcf\http\Helper;
 use wcf\system\event\EventHandler;
@@ -76,7 +77,7 @@ final class LanguageItemEditAction implements RequestHandlerInterface
             LanguageFactory::getInstance()->clearCache();
             LanguageFactory::getInstance()->deleteLanguageCache();
 
-            $language = LanguageFactory::getInstance()->getLanguage($languageItem->languageID);
+            $language = new Language($languageItem->languageID);
             EventHandler::getInstance()->fire(
                 new PhraseChanged($language, $languageItem->languageItem)
             );

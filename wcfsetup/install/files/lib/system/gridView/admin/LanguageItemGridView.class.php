@@ -9,6 +9,7 @@ use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItem;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\language\Language;
+use wcf\data\language\LanguageList;
 use wcf\event\gridView\admin\LanguageItemGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\filter\BooleanFilter;
@@ -20,7 +21,6 @@ use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\admin\LanguageItemInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
-use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -38,6 +38,8 @@ final class LanguageItemGridView extends AbstractGridView
 {
     public function __construct(?Language $defaultLanguage = null)
     {
+        $availableLanguages = $this->getAvailableLanguages();
+
         $this->addColumns([
             GridViewColumn::for('languageItem')
                 ->label('wcf.global.name')
@@ -46,13 +48,18 @@ final class LanguageItemGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('languageID')
                 ->label('wcf.user.language')
-                ->filter(new SelectFilter(LanguageFactory::getInstance()->getLanguages()))
+                ->filter(new SelectFilter($this->getAvailableLanguages()))
                 ->renderer(
-                    new class extends AbstractColumnRenderer {
+                    new class($availableLanguages) extends AbstractColumnRenderer {
+                        /**
+                         * @param array<int, string> $availableLanguages
+                         */
+                        public function __construct(private readonly array $availableLanguages) {}
+
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            return LanguageFactory::getInstance()->getLanguage($value);
+                            return $this->availableLanguages[$value];
                         }
                     }
                 )
@@ -185,5 +192,16 @@ final class LanguageItemGridView extends AbstractGridView
         $list->readObjects();
 
         return \array_map(static fn($object) => $object->languageCategory, $list->getObjects());
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function getAvailableLanguages(): array
+    {
+        $list = new LanguageList();
+        $list->readObjects();
+
+        return $list->getObjects();
     }
 }
