@@ -108,6 +108,10 @@
 	&.gridView__column-smallText {
 		@include wcfFontSmall;
 	}
+
+	&.gridView__column--image {
+		text-align: center;
+	}
 }
 
 .gridView__headerColumn {

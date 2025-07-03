@@ -52,6 +52,31 @@ final class ArticleGridView extends AbstractGridView
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
                 ->sortable(),
+            GridViewColumn::for('teaserImage')
+                ->label('wcf.acp.article.teaserImage')
+                ->renderer([
+                    new class extends DefaultColumnRenderer {
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof ViewableArticle);
+
+                            if ($row->getTeaserImage() !== null) {
+                                return $row->getTeaserImage()->getElementTag(48);
+                            }
+
+                            return \sprintf(
+                                '<img src="%simages/placeholderTiny.png" width="48" height="48" loading="lazy" alt="">',
+                                WCF::getPath()
+                            );
+                        }
+
+                        #[\Override]
+                        public function getClasses(): string
+                        {
+                            return 'gridView__column--text gridView__column--image';
+                        }
+                    }
+                ]),
             GridViewColumn::for('title')
                 ->label('wcf.global.title')
                 ->sortable(sortByDatabaseColumn: 'articleContent.title')
@@ -103,7 +128,7 @@ final class ArticleGridView extends AbstractGridView
                             // @phpstan-ignore property.notFound
                             $articleTitle = StringUtil::encodeHTML($row->title);
 
-                            return \sprintf('<p>%s %s</p>%s', $badges, $articleTitle, $labels);
+                            return \sprintf('%s %s%s', $badges, $articleTitle, $labels);
                         }
                     },
                 ])
