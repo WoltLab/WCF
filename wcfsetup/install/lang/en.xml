@@ -79,7 +79,7 @@
 		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
 		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
-		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
+		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Toggle Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>

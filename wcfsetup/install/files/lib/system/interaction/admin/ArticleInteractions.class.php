@@ -2,16 +2,21 @@
 
 namespace wcf\system\interaction\admin;
 
+use wcf\acp\action\ToggleArticleI18nAction;
 use wcf\data\article\Article;
 use wcf\data\article\ViewableArticle;
 use wcf\event\interaction\admin\ArticleInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\RestoreInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\interaction\SoftDeleteInteraction;
+use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for articles.
@@ -27,20 +32,20 @@ final class ArticleInteractions extends AbstractInteractionProvider
     {
         $this->addInteractions([
             new LinkableObjectInteraction('view', 'wcf.acp.article.button.viewArticle'),
-            new SoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle $article): bool {
+            new SoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle|Article $article): bool {
                 return $article->isDeleted !== 1;
             }),
-            new RestoreInteraction('core/articles/%s/restore', function (ViewableArticle $article): bool {
+            new RestoreInteraction('core/articles/%s/restore', function (ViewableArticle|Article $article): bool {
                 return $article->isDeleted === 1;
             }),
-            new DeleteInteraction('core/articles/%s', function (ViewableArticle $article): bool {
+            new DeleteInteraction('core/articles/%s', function (ViewableArticle|Article $article): bool {
                 return $article->isDeleted === 1;
             }),
             new RpcInteraction(
                 'publish',
                 'core/articles/%s/publish',
                 'wcf.article.button.publish',
-                isAvailableCallback: static function (ViewableArticle $article): bool {
+                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
                     if (!$article->canPublish()) {
                         return false;
                     }
@@ -52,7 +57,7 @@ final class ArticleInteractions extends AbstractInteractionProvider
                 'unpublish',
                 'core/articles/%s/unpublish',
                 'wcf.article.button.unpublish',
-                isAvailableCallback: static function (ViewableArticle $article): bool {
+                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
                     if (!$article->canPublish()) {
                         return false;
                     }
@@ -60,6 +65,18 @@ final class ArticleInteractions extends AbstractInteractionProvider
                     return $article->publicationStatus === Article::PUBLISHED;
                 }
             ),
+            new FormBuilderDialogInteraction(
+                'toggle-i18n',
+                LinkHandler::getInstance()->getControllerLink(
+                    ToggleArticleI18nAction::class,
+                    ['id' => '%s']
+                ),
+                'wcf.acp.article.button.toggleI18n',
+                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
+                    return WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+                        && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual);
+                }
+            )
         ]);
 
         EventHandler::getInstance()->fire(

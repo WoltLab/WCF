@@ -2,6 +2,7 @@
 
 namespace wcf\system\interaction\user;
 
+use wcf\acp\action\ToggleArticleI18nAction;
 use wcf\data\article\Article;
 use wcf\data\article\ViewableArticle;
 use wcf\event\interaction\user\ArticleInteractionCollecting;
@@ -11,9 +12,13 @@ use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\RestoreInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\interaction\SoftDeleteInteraction;
+use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for articles.
@@ -71,6 +76,18 @@ final class ArticleInteractions extends AbstractInteractionProvider
                     }
 
                     return $article->publicationStatus === Article::PUBLISHED;
+                }
+            ),
+            new FormBuilderDialogInteraction(
+                'toggle-i18n',
+                LinkHandler::getInstance()->getControllerLink(
+                    ToggleArticleI18nAction::class,
+                    ['id' => '%s']
+                ),
+                'wcf.acp.article.button.toggleI18n',
+                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
+                    return WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+                        && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual);
                 }
             ),
             new Divider(),
