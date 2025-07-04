@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "./Confirmation", "WoltL
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    async function handleDboAction(container, element, objectName, className, actionName, confirmationType, customConfirmationMessage = "", interactionEffect = InteractionEffect_1.InteractionEffect.ReloadItem) {
+    async function handleDboAction(container, element, objectName, className, actionName, confirmationType, customConfirmationMessage = "", interactionEffect = InteractionEffect_1.InteractionEffect.ReloadItem, detail) {
         const confirmationResult = await (0, Confirmation_1.handleConfirmation)(objectName, confirmationType, customConfirmationMessage);
         if (!confirmationResult.result) {
             return;
@@ -23,14 +23,18 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "./Confirmation", "WoltL
         if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {
                 bubbles: true,
+                detail,
             }));
         }
         else if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadList) {
-            container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+            container.dispatchEvent(new CustomEvent("interaction:invalidate-all", {
+                detail,
+            }));
         }
         else {
             element.dispatchEvent(new CustomEvent("interaction:remove", {
                 bubbles: true,
+                detail,
             }));
         }
         if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
@@ -43,7 +47,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "./Confirmation", "WoltL
     function setup(identifier, container) {
         container.addEventListener("interaction:execute", (event) => {
             if (event.detail.interaction === identifier) {
-                void handleDboAction(container, event.target, event.detail.objectName, event.detail.className, event.detail.actionName, event.detail.confirmationType, event.detail.confirmationMessage, event.detail.interactionEffect);
+                void handleDboAction(container, event.target, event.detail.objectName, event.detail.className, event.detail.actionName, event.detail.confirmationType, event.detail.confirmationMessage, event.detail.interactionEffect, event.detail);
             }
         });
     }

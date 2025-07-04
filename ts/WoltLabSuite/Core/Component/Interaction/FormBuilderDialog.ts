@@ -10,7 +10,9 @@
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 
-async function handleFormBuilderDialogAction(element: HTMLElement, endpoint: string): Promise<void> {
+type Payload = Record<string, string>;
+
+async function handleFormBuilderDialogAction(element: HTMLElement, endpoint: string, detail: Payload): Promise<void> {
   const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint);
 
   if (!ok) {
@@ -18,8 +20,9 @@ async function handleFormBuilderDialogAction(element: HTMLElement, endpoint: str
   }
 
   element.dispatchEvent(
-    new CustomEvent("interaction:invalidate", {
+    new CustomEvent<Payload>("interaction:invalidate", {
       bubbles: true,
+      detail,
     }),
   );
 
@@ -27,9 +30,9 @@ async function handleFormBuilderDialogAction(element: HTMLElement, endpoint: str
 }
 
 export function setup(identifier: string, container: HTMLElement): void {
-  container.addEventListener("interaction:execute", (event: CustomEvent) => {
+  container.addEventListener("interaction:execute", (event: CustomEvent<Payload>) => {
     if (event.detail.interaction === identifier) {
-      void handleFormBuilderDialogAction(event.target as HTMLElement, event.detail.endpoint);
+      void handleFormBuilderDialogAction(event.target as HTMLElement, event.detail.endpoint, event.detail);
     }
   });
 }
