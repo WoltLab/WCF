@@ -14,6 +14,7 @@ enum InteractionEffect
 {
     case ReloadItem;
     case ReloadList;
+    case ReloadPage;
     case RemoveItem;
 
     public function toString(): string
@@ -21,6 +22,7 @@ enum InteractionEffect
         return match ($this) {
             self::ReloadItem => 'ReloadItem',
             self::ReloadList => 'ReloadList',
+            self::ReloadPage => 'ReloadPage',
             self::RemoveItem => 'RemoveItem',
         };
     }

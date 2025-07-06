@@ -20,10 +20,13 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "./Confirmation", "WoltL
             .objectIds([parseInt(element.dataset.objectId)])
             .payload(confirmationResult.reason ? { reason: confirmationResult.reason } : {})
             .dispatch();
-        if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem) {
+        if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem || interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {
                 bubbles: true,
-                detail,
+                detail: {
+                    ...detail,
+                    _reloadPage: String(interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage),
+                },
             }));
         }
         else if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadList) {

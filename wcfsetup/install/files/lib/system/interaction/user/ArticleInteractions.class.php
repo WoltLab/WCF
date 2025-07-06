@@ -78,18 +78,6 @@ final class ArticleInteractions extends AbstractInteractionProvider
                     return $article->publicationStatus === Article::PUBLISHED;
                 }
             ),
-            new FormBuilderDialogInteraction(
-                'toggle-i18n',
-                LinkHandler::getInstance()->getControllerLink(
-                    ToggleArticleI18nAction::class,
-                    ['id' => '%s']
-                ),
-                'wcf.acp.article.button.toggleI18n',
-                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
-                    return WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-                        && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual);
-                }
-            ),
             new Divider(),
             new EditInteraction(ArticleEditForm::class, function (ViewableArticle|Article $article): bool {
                 return $article->canEdit();

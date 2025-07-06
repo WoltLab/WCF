@@ -10,17 +10,6 @@
 			{if $action == 'edit'}
 				<li>
 					{unsafe:$interactionContextMenu->render()}
-					<script data-relocate="true">
-						{
-							document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}').addEventListener('interaction:invalidate', (event) => {
-								if (event.detail.interaction === 'toggle-i18n') {
-									setTimeout(() => {
-										window.location.reload();
-									}, 2000);
-								}
-							});
-						}
-					</script>
 				</li>
 			{/if}
 			

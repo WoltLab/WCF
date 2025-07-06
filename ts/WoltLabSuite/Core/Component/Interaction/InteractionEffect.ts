@@ -10,5 +10,6 @@
 export enum InteractionEffect {
   ReloadItem = "ReloadItem",
   ReloadList = "ReloadList",
+  ReloadPage = "ReloadPage",
   RemoveItem = "RemoveItem",
 }

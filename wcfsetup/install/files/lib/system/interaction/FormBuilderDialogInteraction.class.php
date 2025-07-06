@@ -20,7 +20,8 @@ class FormBuilderDialogInteraction extends AbstractInteraction
         string $identifier,
         protected readonly string $endpoint,
         protected readonly string|\Closure $languageItem,
-        ?\Closure $isAvailableCallback = null
+        ?\Closure $isAvailableCallback = null,
+        protected readonly InteractionEffect $interactionEffect = InteractionEffect::ReloadItem,
     ) {
         parent::__construct($identifier, $isAvailableCallback);
     }
@@ -45,6 +46,7 @@ class FormBuilderDialogInteraction extends AbstractInteraction
                 type="button"
                 data-interaction="{$identifier}"
                 data-endpoint="{$endpoint}"
+                data-interaction-effect="{$this->interactionEffect->toString()}"
             >
                 {$label}
             </button>

@@ -10,6 +10,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\FormBuilderDialogInteraction;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\RestoreInteraction;
 use wcf\system\interaction\RpcInteraction;
@@ -72,10 +73,11 @@ final class ArticleInteractions extends AbstractInteractionProvider
                     ['id' => '%s']
                 ),
                 'wcf.acp.article.button.toggleI18n',
-                isAvailableCallback: static function (ViewableArticle|Article $article): bool {
+                static function (ViewableArticle|Article $article): bool {
                     return WCF::getSession()->getPermission('admin.content.article.canManageArticle')
                         && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual);
-                }
+                },
+                InteractionEffect::ReloadPage
             )
         ]);
 

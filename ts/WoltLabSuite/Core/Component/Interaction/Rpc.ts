@@ -46,11 +46,14 @@ async function handleRpcInteraction(
     }
   }
 
-  if (interactionEffect === InteractionEffect.ReloadItem) {
+  if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {
     element.dispatchEvent(
       new CustomEvent<Payload>("interaction:invalidate", {
         bubbles: true,
-        detail,
+        detail: {
+          ...detail,
+          _reloadPage: String(interactionEffect === InteractionEffect.ReloadPage),
+        },
       }),
     );
   } else if (interactionEffect === InteractionEffect.ReloadList) {
