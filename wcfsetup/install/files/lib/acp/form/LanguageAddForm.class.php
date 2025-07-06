@@ -19,8 +19,6 @@ use wcf\system\WCF;
 /**
  * Shows the language add form.
  *
- * @property    LanguageAction  $objectAction
- *
  * @author  Florian Gail, Marcel Werk
  * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
