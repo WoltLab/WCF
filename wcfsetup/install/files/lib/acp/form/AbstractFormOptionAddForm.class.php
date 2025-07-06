@@ -11,7 +11,6 @@ use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\SharedConfigurationFormFields;
-use wcf\system\WCF;
 use wcf\util\JSON;
 
 /**
