@@ -96,14 +96,14 @@
 		{event name='informationFieldsets'}
 	</div>
 	
-	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
+	{if $requiredPackageGridView->countRows() || $dependentPackageGridView->countRows()}
 		<div id="dependencies" class="tabMenuContainer tabMenuContent">
 			<nav class="menu">
 				<ul>
-					{if $package->getRequiredPackages()|count}
+					{if $requiredPackageGridView->countRows()}
 						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
 					{/if}
-					{if $package->getDependentPackages()|count}
+					{if $dependentPackageGridView->countRows()}
 						<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
 					
@@ -111,95 +111,17 @@
 				</ul>
 			</nav>
 			
-			{hascontent}
-				<div id="dependencies-required" class="tabMenuContent tabularBox hidden">
-					<table class="table">
-						<thead>
-							<tr>
-								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
-								<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
-								<th class="columnText">{lang}wcf.acp.package.author{/lang}</th>
-								<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
-								<th class="columnDigits">{lang}wcf.acp.package.packageDate{/lang}</th>
-								
-								{event name='requirementColumnHeads'}
-							</tr>
-						</thead>
-						
-						<tbody>
-							{content}
-								{foreach from=$package->getRequiredPackages() item=requiredPackage}
-									<tr class="jsPackageRow">
-										<td class="columnIcon">
-											{if $requiredPackage->canUninstall()}
-												<button type="button" class="jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang __encode=true package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}">
-													{icon name='xmark'}
-												</button>
-											{else}
-												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
-													{icon name='xmark'}
-												</span>
-											{/if}
-										</td>
-										<td class="columnID">{@$requiredPackage->packageID}</td>
-										<td class="columnTitle" title="{$requiredPackage->getDescription()}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
-										<td class="columnText">{if $requiredPackage->authorURL}<a href="{$requiredPackage->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
-										<td class="columnText">{$requiredPackage->packageVersion}</td>
-										<td class="columnDate">{@$requiredPackage->packageDate|date}</td>
-										
-										{event name='requirementColumns'}
-									</tr>
-								{/foreach}
-							{/content}
-						</tbody>
-					</table>
+			{if $requiredPackageGridView->countRows()}
+				<div id="dependencies-required" class="tabMenuContent hidden">
+					{unsafe:$requiredPackageGridView->render()}
 				</div>
-			{/hascontent}
+			{/if}
 			
-			{hascontent}
-				<div id="dependencies-dependent" class="tabMenuContent tabularBox hidden">
-					<table class="table">
-						<thead>
-							<tr>
-								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
-								<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
-								<th class="columnText">{lang}wcf.acp.package.author{/lang}</th>
-								<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
-								<th class="columnDigits">{lang}wcf.acp.package.packageDate{/lang}</th>
-								
-								{event name='dependencyColumnHeads'}
-							</tr>
-						</thead>
-						
-						<tbody>
-							{content}
-								{foreach from=$package->getDependentPackages() item=dependentPackage}
-									<tr class="jsPackageRow">
-										<td class="columnIcon">
-											{if $dependentPackage->canUninstall()}
-												<button type="button" class="jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang __encode=true package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}">
-													{icon name='xmark'}
-												</button>
-											{else}
-												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
-													{icon name='xmark'}
-												</span>
-											{/if}
-										</td>
-										<td class="columnID">{@$dependentPackage->packageID}</td>
-										<td class="columnTitle" title="{$dependentPackage->getDescription()}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
-										<td class="columnText">{if $dependentPackage->authorURL}<a href="{$dependentPackage->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
-										<td class="columnText">{$dependentPackage->packageVersion}</td>
-										<td class="columnDate">{@$dependentPackage->packageDate|date}</td>
-										
-										{event name='dependencyColumns'}
-									</tr>
-								{/foreach}
-							{/content}
-						</tbody>
-					</table>
+			{if $dependentPackageGridView->countRows()}
+				<div id="dependencies-dependent" class="tabMenuContent hidden">
+					{unsafe:$dependentPackageGridView->render()}
 				</div>
-			{/hascontent}
+			{/if}
 			
 			{event name='dependenciesSubTabMenuContents'}
 		</div>

@@ -5,6 +5,8 @@ namespace wcf\acp\page;
 use wcf\data\package\Package;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\gridView\admin\DependentPackageGridView;
+use wcf\system\gridView\admin\RequiredPackageGridView;
 use wcf\system\WCF;
 
 /**
@@ -20,12 +22,6 @@ class PackagePage extends AbstractPage
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.package.list';
-
-    /**
-     * @var array{}
-     * @deprecated 5.5 This array is always empty.
-     */
-    public $compatibleVersions = [];
 
     /**
      * @inheritDoc
@@ -53,9 +49,10 @@ class PackagePage extends AbstractPage
      */
     public $pluginStoreFileID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    protected RequiredPackageGridView $requiredPackageGridView;
+    protected DependentPackageGridView $dependentPackageGridView;
+
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -69,9 +66,7 @@ class PackagePage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -83,19 +78,21 @@ class PackagePage extends AbstractPage
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->package->package]);
         $this->pluginStoreFileID = \intval($statement->fetchSingleColumn());
+
+        $this->requiredPackageGridView = new RequiredPackageGridView($this->packageID);
+        $this->dependentPackageGridView = new DependentPackageGridView($this->packageID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'compatibleVersions' => $this->compatibleVersions,
             'package' => $this->package,
             'pluginStoreFileID' => $this->pluginStoreFileID,
+            'requiredPackageGridView' => $this->requiredPackageGridView,
+            'dependentPackageGridView' => $this->dependentPackageGridView,
         ]);
     }
 }
