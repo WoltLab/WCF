@@ -5,7 +5,6 @@ namespace wcf\acp\form;
 use wcf\data\contact\option\ContactOption;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\option\ContactOptionList;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
@@ -19,7 +18,7 @@ use wcf\system\form\builder\field\TextFormField;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.1
  *
- * @extends AbstractFormBuilderForm<ContactOption>
+ * @extends AbstractFormOptionAddForm<ContactOption>
  */
 class ContactOptionAddForm extends AbstractFormOptionAddForm
 {
