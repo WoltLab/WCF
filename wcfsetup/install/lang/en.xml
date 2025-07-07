@@ -836,6 +836,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signatures]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Can manage automatic user group assignments]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Add User Group Automatic Assignment]]></item>
+		<item name="wcf.acp.group.assignment"><![CDATA[User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Add Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
@@ -954,6 +955,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon.cta"><![CDATA[Renew now and get a 10% discount!]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expired"><![CDATA[The licenses for the following products have expired and no longer entitle you to access new versions and ticket support.]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Renew Licenses Now ↗]]></item>
+		<item name="wcf.acp.dashboard.box.migrationNeeded"><![CDATA[The data for {implode from=$titles item=title}<strong>{$title}</strong>{/implode} need to be recalculated. Please perform this task by visiting <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
