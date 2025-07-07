@@ -43,9 +43,9 @@
 
 		{include file='mediaJavaScript'}
 
-		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
+		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');
 		if (element === null) {
-			throw new Error("Unable to find the source element '{$wysiwygSelector|encodeJS}' for the editor.")
+			throw new Error("Unable to find the source element '{unsafe:$wysiwygSelector|encodeJS}' for the editor.")
 		}
 
 		let enableAttachments = element.dataset.disableAttachments !== "true";

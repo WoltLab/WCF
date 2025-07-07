@@ -21,7 +21,7 @@
 		{jsphrase name='wcf.page.search.name'}
 		{jsphrase name='wcf.page.search.results'}
 
-		const element = document.getElementById('{$wysiwygSelector|encodeJS}');
+		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');
 		setupArticle(element);
 		setupPage(element);
 	});

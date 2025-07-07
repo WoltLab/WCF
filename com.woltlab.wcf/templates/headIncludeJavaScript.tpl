@@ -102,9 +102,9 @@ window.addEventListener('pageshow', function(event) {
 				],
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if},
-			{if $__wcf->user->userID && !$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs()|empty}removeQuotes: [{implode from=$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs() item=uuid}'{$uuid|encodeJS}'{/implode}],{/if}
+			{if $__wcf->user->userID && !$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs()|empty}removeQuotes: [{implode from=$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs() item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}],{/if}
 			{if $__wcf->user->userID && !$__wcf->getMessageQuoteManager()->getUsedQuotes()|empty}usedQuotes: new Map([
-				{foreach from=$__wcf->getMessageQuoteManager()->getUsedQuotes() key=editorID item=uuids}['{$editorID|encodeJS}', [{implode from=$uuids item=uuid}'{$uuid|encodeJS}'{/implode}]]{/foreach}
+				{foreach from=$__wcf->getMessageQuoteManager()->getUsedQuotes() key=editorID item=uuids}['{unsafe:$editorID|encodeJS}', [{implode from=$uuids item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}]]{/foreach}
 			]),
 			{/if}
 		});

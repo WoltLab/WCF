@@ -250,7 +250,7 @@
 										],
 										pip: '{$instruction[pip]}',
 										runStandalone: {$instruction[runStandalone]|intval},
-										value: '{$instruction[value]|encodeJS}'
+										value: '{unsafe:$instruction[value]|encodeJS}'
 									}
 								{/implode}
 							{/if}
