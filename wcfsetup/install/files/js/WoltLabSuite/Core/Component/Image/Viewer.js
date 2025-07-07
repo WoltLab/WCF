@@ -1,74 +1,73 @@
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay"], function (require, exports, ui_1, PageOverlay_1) {
+/**
+ * @author Olaf Braun
+ * @copyright 2001-2025 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.setupLegacy = setupLegacy;
-    exports.createFancybox = createFancybox;
+    exports.showFancybox = showFancybox;
     exports.getLocalization = getLocalization;
-    const LOCALES = ["cs", "de", "en", "es", "fr", "it", "lv", "pl", "sk"];
+    setDefaultConfig();
     function setup() {
-        void getDefaultConfig().then((config) => {
-            ui_1.Fancybox.bind("[data-fancybox]", config);
-        });
+        ui_1.Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="youtube"],[data-type="vimeo"],[data-type="video"])');
     }
     function setupLegacy() {
-        void getDefaultConfig().then((config) => {
-            ui_1.Fancybox.bind(".jsImageViewer", {
-                ...config,
-                groupAll: true,
-            });
+        ui_1.Fancybox.bind(".jsImageViewer", {
+            groupAll: true,
         });
     }
-    async function createFancybox(userSlides) {
-        return new ui_1.Fancybox(userSlides, await getDefaultConfig());
+    function showFancybox(userSlides) {
+        return ui_1.Fancybox.show(userSlides);
     }
-    async function getDefaultConfig() {
-        return {
-            l10n: await getLocalization(),
-            parentEl: (0, PageOverlay_1.getPageOverlayContainer)(),
-            Html: {
-                videoAutoplay: false,
+    function setDefaultConfig() {
+        const defaultConfig = ui_1.Fancybox.getDefaults();
+        defaultConfig.l10n = getLocalization();
+        defaultConfig.parentEl = (0, PageOverlay_1.getPageOverlayContainer)();
+        defaultConfig.Carousel = {
+            Video: {
+                autoplay: false,
             },
         };
-    }
-    async function getLocalization() {
-        let locale = document.documentElement.lang;
-        if (!LOCALES.includes(locale)) {
-            locale = "en";
+        if (!defaultConfig.plugins) {
+            defaultConfig.plugins = {};
         }
-        return (await new Promise((resolve_1, reject_1) => { require([`@fancyapps/ui/l10n/${locale}`], resolve_1, reject_1); }).then(__importStar))[locale];
+        defaultConfig.plugins.consent = () => {
+            return new ConsentPlugin_1.ConsentPlugin();
+        };
+    }
+    function getLocalization() {
+        return {
+            IMAGE_ERROR: (0, Language_1.getPhrase)("wcf.fancybox.imageError"),
+            MOVE_UP: (0, Language_1.getPhrase)("wcf.fancybox.moveUp"),
+            MOVE_DOWN: (0, Language_1.getPhrase)("wcf.fancybox.moveDown"),
+            MOVE_LEFT: (0, Language_1.getPhrase)("wcf.fancybox.moveLeft"),
+            MOVE_RIGHT: (0, Language_1.getPhrase)("wcf.fancybox.moveRight"),
+            ZOOM_IN: (0, Language_1.getPhrase)("wcf.fancybox.zoomIn"),
+            ZOOM_OUT: (0, Language_1.getPhrase)("wcf.fancybox.zoomOut"),
+            TOGGLE_FULL: (0, Language_1.getPhrase)("wcf.fancybox.toggleFull"),
+            TOGGLE_1TO1: (0, Language_1.getPhrase)("wcf.fancybox.toggle1to1"),
+            ITERATE_ZOOM: (0, Language_1.getPhrase)("wcf.fancybox.iterateZoom"),
+            ROTATE_CCW: (0, Language_1.getPhrase)("wcf.fancybox.rotateCcw"),
+            ROTATE_CW: (0, Language_1.getPhrase)("wcf.fancybox.rotateCw"),
+            FLIP_X: (0, Language_1.getPhrase)("wcf.fancybox.flipX"),
+            FLIP_Y: (0, Language_1.getPhrase)("wcf.fancybox.flipY"),
+            RESET: (0, Language_1.getPhrase)("wcf.fancybox.reset"),
+            ERROR: (0, Language_1.getPhrase)("wcf.fancybox.error"),
+            GOTO: (0, Language_1.getPhrase)("wcf.fancybox.goto"),
+            DOWNLOAD: (0, Language_1.getPhrase)("wcf.fancybox.download"),
+            TOGGLE_EXPAND: (0, Language_1.getPhrase)("wcf.fancybox.toggleExpand"),
+            TOGGLE_FULLSCREEN: (0, Language_1.getPhrase)("wcf.fancybox.toggleFullscreen"),
+            TOGGLE_THUMBS: (0, Language_1.getPhrase)("wcf.fancybox.toggleThumbs"),
+            TOGGLE_AUTOPLAY: (0, Language_1.getPhrase)("wcf.fancybox.toggleAutoplay"),
+            CLOSE: (0, Language_1.getPhrase)("wcf.fancybox.close"),
+            NEXT: (0, Language_1.getPhrase)("wcf.fancybox.next"),
+            PREV: (0, Language_1.getPhrase)("wcf.fancybox.prev"),
+            MODAL: (0, Language_1.getPhrase)("wcf.fancybox.modal"),
+            ELEMENT_NOT_FOUND: (0, Language_1.getPhrase)("wcf.fancybox.elementNotFound"),
+            IFRAME_ERROR: (0, Language_1.getPhrase)("wcf.fancybox.iframeError"),
+        };
     }
 });

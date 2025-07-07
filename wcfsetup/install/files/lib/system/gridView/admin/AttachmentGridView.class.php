@@ -62,7 +62,7 @@ final class AttachmentGridView extends AbstractGridView
 
                             $isImage = $row->isImage;
                             $link = StringUtil::encodeHTML($row->getLink());
-                            $fancyBox = $isImage ? ' data-fancybox="attachments" data-caption="' . StringUtil::encodeHTML($row->filename) . '"' : '';
+                            $fancyBox = $isImage ? ' data-type="image" data-fancybox="attachments" data-caption="' . StringUtil::encodeHTML($row->filename) . '"' : '';
                             if ($row->tinyThumbnailType) {
                                 $thumbnailLink = \sprintf(
                                     '<img src="%s" class="attachmentTinyThumbnail" alt="">',

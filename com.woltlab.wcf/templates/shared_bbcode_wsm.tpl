@@ -4,7 +4,7 @@
 	{if $media->isImage}
 		{if $thumbnailSize != 'original'}
 			{if !$removeLinks}
-				<a href="{$mediaLink}" data-caption="{$media->title}" class="embeddedAttachmentLink" data-fancybox="message-{$activeMessageObjectType}-{$activeMessageID}">
+				<a href="{$mediaLink}" data-caption="{$media->title}" class="embeddedAttachmentLink" data-type="image" data-fancybox="message-{$activeMessageObjectType}-{$activeMessageID}">
 			{/if}
 					<img src="{$thumbnailLink}" alt="{$media->altText}" title="{$media->title}" width="{$media->getThumbnailWidth($thumbnailSize)}" height="{$media->getThumbnailHeight($thumbnailSize)}" loading="lazy">
 			{if !$removeLinks}

@@ -14,11 +14,9 @@ import DomUtil from "../../Dom/Util";
 import User from "../../User";
 
 class UserConsent {
-  private enableAll = false;
-
   constructor() {
     if (window.sessionStorage.getItem(`${Core.getStoragePrefix()}user-consent`) === "all") {
-      this.enableAll = true;
+      enableAll = true;
     }
 
     this.registerEventListeners();
@@ -27,7 +25,7 @@ class UserConsent {
   }
 
   private registerEventListeners(): void {
-    if (this.enableAll) {
+    if (enableAll) {
       this.enableAllExternalMedia();
     } else {
       wheneverFirstSeen(".jsButtonMessageUserConsentEnable", (button) => {
@@ -39,7 +37,7 @@ class UserConsent {
   private click(event: MouseEvent): void {
     event.preventDefault();
 
-    this.enableAll = true;
+    enableAll = true;
 
     this.enableAllExternalMedia();
 
@@ -72,10 +70,15 @@ class UserConsent {
   }
 }
 
+let enableAll = false;
 let userConsent: UserConsent;
 
 export function init(): void {
   if (!userConsent) {
     userConsent = new UserConsent();
   }
+}
+
+export function allExternalMediaEnabled(): boolean {
+  return enableAll;
 }
