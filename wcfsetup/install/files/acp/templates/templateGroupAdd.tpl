@@ -15,8 +15,12 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action === 'edit'}<li><button type="button" class="jsButtonCopy button" data-endpoint="{link controller="TemplateGroupCopy" id=$formObject->templateGroupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></button></li>{/if}
-			<li><a href="{link controller='TemplateGroupList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.template.group.list{/lang}</span></a></li>
+			{if $action === 'edit'}
+				<li><button type="button" class="jsButtonCopy button" data-endpoint="{link controller="TemplateGroupCopy" id=$formObject->templateGroupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></button></li>
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

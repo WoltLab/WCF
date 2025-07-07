@@ -33,7 +33,7 @@ final class MenuInteractions extends AbstractInteractionProvider
                 "core/menus/%s",
                 static fn(Menu $menu) => $menu->canDelete()
             ),
-            new LinkInteraction("items", MenuItemListPage::class, "wcf.acp.menu.item.list"),
+            new LinkInteraction("show-items", MenuItemListPage::class, "wcf.acp.menu.showItems"),
             new class("add-items") extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string

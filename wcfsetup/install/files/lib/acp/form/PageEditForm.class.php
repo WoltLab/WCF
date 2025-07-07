@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\PageListPage;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageCache;
@@ -10,7 +11,10 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\interaction\admin\PageInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
@@ -267,7 +271,7 @@ class PageEditForm extends PageAddForm
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
-                    $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
+                        $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
                 }
             } else {
                 $this->content[0] = isset($this->htmlInputProcessors[0]) ?
@@ -347,6 +351,11 @@ class PageEditForm extends PageAddForm
             'page' => $this->page,
             'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID),
             'overrideApplicationPackageID' => $this->overrideApplicationPackageID,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new PageInteractions(),
+                $this->page,
+                LinkHandler::getInstance()->getControllerLink(PageListPage::class)
+            ),
         ]);
     }
 }

@@ -2,12 +2,16 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\PaidSubscriptionListPage;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\paid\subscription\PaidSubscriptionList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\interaction\admin\PaidSubscriptionInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -180,6 +184,11 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
             'subscriptionID' => $this->subscriptionID,
             'subscription' => $this->subscription,
             'canChangePaymentOptions' => !$this->subscription->hasActiveSubscriptions(),
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new PaidSubscriptionInteractions(),
+                $this->subscription,
+                LinkHandler::getInstance()->getControllerLink(PaidSubscriptionListPage::class)
+            ),
         ]);
     }
 }

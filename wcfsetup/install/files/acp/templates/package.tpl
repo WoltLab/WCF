@@ -15,21 +15,14 @@
 		<h1 class="contentTitle">{$package->getName()}</h1>
 	</div>
 	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}
-					{if $package->canUninstall()}
-						<li><button type="button" class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">{icon name='xmark'} <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></button></li>
-					{/if}
-
-					<li><a href="{link controller='PackageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
-
-					{event name='contentHeaderNavigation'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li>
+				{unsafe:$interactionContextMenu->render()}
+			</li>
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 <div class="section tabMenuContainer">

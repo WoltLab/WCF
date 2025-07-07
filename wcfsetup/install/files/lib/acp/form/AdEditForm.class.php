@@ -2,11 +2,15 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\AdListPage;
 use wcf\data\ad\Ad;
 use wcf\data\ad\AdAction;
 use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\AdInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -45,6 +49,11 @@ class AdEditForm extends AdAddForm
         WCF::getTPL()->assign([
             'action' => 'edit',
             'adObject' => $this->adObject,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new AdInteractions(),
+                $this->adObject,
+                LinkHandler::getInstance()->getControllerLink(AdListPage::class)
+            ),
         ]);
     }
 

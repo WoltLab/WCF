@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    async function handleRpcInteraction(container, element, objectName, endpoint, confirmationType, customConfirmationMessage = "", interactionEffect = InteractionEffect_1.InteractionEffect.ReloadItem) {
+    async function handleRpcInteraction(container, element, objectName, endpoint, confirmationType, customConfirmationMessage = "", interactionEffect = InteractionEffect_1.InteractionEffect.ReloadItem, detail) {
         const confirmationResult = await (0, Confirmation_1.handleConfirmation)(objectName, confirmationType, customConfirmationMessage);
         if (!confirmationResult.result) {
             return;
@@ -27,17 +27,22 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
                 return;
             }
         }
-        if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem) {
+        if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem || interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {
                 bubbles: true,
+                detail: {
+                    ...detail,
+                    _reloadPage: String(interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage),
+                },
             }));
         }
         else if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadList) {
-            container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+            container.dispatchEvent(new CustomEvent("interaction:invalidate-all", { detail }));
         }
         else {
             element.dispatchEvent(new CustomEvent("interaction:remove", {
                 bubbles: true,
+                detail,
             }));
         }
         if (confirmationType === Confirmation_1.ConfirmationType.Delete) {
@@ -50,7 +55,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
     function setup(identifier, container) {
         container.addEventListener("interaction:execute", (event) => {
             if (event.detail.interaction === identifier) {
-                void handleRpcInteraction(container, event.target, event.detail.objectName, event.detail.endpoint, event.detail.confirmationType, event.detail.confirmationMessage, event.detail.interactionEffect);
+                void handleRpcInteraction(container, event.target, event.detail.objectName, event.detail.endpoint, event.detail.confirmationType, event.detail.confirmationMessage, event.detail.interactionEffect, event.detail);
             }
         });
     }

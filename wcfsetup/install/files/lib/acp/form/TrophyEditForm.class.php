@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\TrophyListPage;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
 use wcf\data\user\UserAction;
@@ -9,7 +10,10 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\interaction\admin\TrophyInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\trophy\condition\TrophyConditionHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -255,6 +259,11 @@ class TrophyEditForm extends TrophyAddForm
 
         WCF::getTPL()->assign([
             'trophy' => $this->trophy,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new TrophyInteractions(),
+                $this->trophy,
+                LinkHandler::getInstance()->getControllerLink(TrophyListPage::class)
+            ),
         ]);
     }
 }

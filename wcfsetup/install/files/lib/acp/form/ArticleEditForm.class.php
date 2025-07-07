@@ -2,13 +2,17 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\ArticleListPage;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\interaction\admin\ArticleInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagEngine;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
@@ -236,6 +240,11 @@ class ArticleEditForm extends ArticleAddForm
             'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
             'languages' => LanguageFactory::getInstance()->getLanguages(),
             'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID),
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new ArticleInteractions(),
+                $this->article,
+                LinkHandler::getInstance()->getControllerLink(ArticleListPage::class)
+            ),
         ]);
     }
 }

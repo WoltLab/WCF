@@ -12,15 +12,4 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
  */
-class ArticleEditForm extends \wcf\acp\form\ArticleEditForm
-{
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign(['articleIsFrontend' => true]);
-    }
-}
+class ArticleEditForm extends \wcf\acp\form\ArticleEditForm {}

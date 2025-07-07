@@ -8,8 +8,11 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$formObject->templateID}{/link}" class="button">{icon name='right-left'} <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={$formObject->templateGroupID}{/if}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
+			{if $action == 'edit'}
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

@@ -20,16 +20,6 @@ class ArticleAddForm extends \wcf\acp\form\ArticleAddForm
     /**
      * @inheritDoc
      */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign(['articleIsFrontend' => true]);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function save()
     {
         parent::save();

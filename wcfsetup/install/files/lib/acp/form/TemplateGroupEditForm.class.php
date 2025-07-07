@@ -3,10 +3,15 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\TemplateGroupListPage;
 use wcf\data\template\group\TemplateGroup;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\interaction\admin\TemplateGroupInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the form for editing template groups.
@@ -55,5 +60,19 @@ class TemplateGroupEditForm extends TemplateGroupAddForm
         } catch (MappingError) {
             throw new IllegalLinkException();
         }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new TemplateGroupInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(TemplateGroupListPage::class)
+            ),
+        ]);
     }
 }

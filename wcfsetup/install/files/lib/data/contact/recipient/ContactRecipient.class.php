@@ -3,6 +3,7 @@
 namespace wcf\data\contact\recipient;
 
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\email\Mailbox;
 use wcf\system\WCF;
 
@@ -22,7 +23,7 @@ use wcf\system\WCF;
  * @property-read   int $isDisabled     is `1` if the recipient is disabled and thus is not available for selection, otherwise `0`
  * @property-read   int $originIsSystem     is `1` if the recipient has been delivered by a package, otherwise `0` (i.e. the recipient has been created in the ACP)
  */
-class ContactRecipient extends DatabaseObject
+class ContactRecipient extends DatabaseObject implements ITitledObject
 {
     /**
      * @inheritDoc
@@ -87,5 +88,11 @@ class ContactRecipient extends DatabaseObject
             $this->getEmail(),
             $this->getName()
         );
+    }
+
+    #[\Override]
+    public function getTitle(): string
+    {
+        return $this->getName();
     }
 }

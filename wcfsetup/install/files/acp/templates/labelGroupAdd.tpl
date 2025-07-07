@@ -24,9 +24,10 @@
 		<ul>
 			{if $action == 'edit'}
 				<li><button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button></li>
-				<li><a href="{link controller='LabelList'}filters[groupID]={$groupID}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.label.list{/lang}</span></a></li>
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
 			{/if}
-			<li><a href="{link controller='LabelGroupList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.label.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

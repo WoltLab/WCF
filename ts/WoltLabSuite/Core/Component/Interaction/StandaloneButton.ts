@@ -15,6 +15,8 @@ interface HeaderContent {
   template: string;
 }
 
+type Payload = Record<string, string>;
+
 export class StandaloneButton {
   #container: HTMLElement;
   #providerClassName: string;
@@ -100,9 +102,15 @@ export class StandaloneButton {
   }
 
   #initEventListeners(): void {
-    this.#container.addEventListener("interaction:invalidate", () => {
-      void this.#refreshContextMenu();
-      void this.#refreshHeader();
+    this.#container.addEventListener("interaction:invalidate", (event: CustomEvent<Payload>) => {
+      if (event.detail._reloadPage === "true") {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        void this.#refreshContextMenu();
+        void this.#refreshHeader();
+      }
     });
 
     this.#container.addEventListener("interaction:invalidate-all", () => {
@@ -111,7 +119,9 @@ export class StandaloneButton {
     });
 
     this.#container.addEventListener("interaction:remove", () => {
-      window.location.href = this.#redirectUrl;
+      setTimeout(() => {
+        window.location.href = this.#redirectUrl;
+      }, 2000);
     });
   }
 }

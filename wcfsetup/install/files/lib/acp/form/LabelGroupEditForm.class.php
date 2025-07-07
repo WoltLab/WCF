@@ -2,12 +2,16 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\LabelGroupListPage;
 use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupAction;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\LabelGroupInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -134,6 +138,11 @@ class LabelGroupEditForm extends LabelGroupAddForm
             'action' => 'edit',
             'groupID' => $this->groupID,
             'labelGroup' => $this->group,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new LabelGroupInteractions(),
+                $this->group,
+                LinkHandler::getInstance()->getControllerLink(LabelGroupListPage::class)
+            ),
         ]);
     }
 

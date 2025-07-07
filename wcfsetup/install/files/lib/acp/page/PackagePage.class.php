@@ -7,6 +7,9 @@ use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\gridView\admin\DependentPackageGridView;
 use wcf\system\gridView\admin\RequiredPackageGridView;
+use wcf\system\interaction\admin\PackageInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -93,6 +96,11 @@ class PackagePage extends AbstractPage
             'pluginStoreFileID' => $this->pluginStoreFileID,
             'requiredPackageGridView' => $this->requiredPackageGridView,
             'dependentPackageGridView' => $this->dependentPackageGridView,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new PackageInteractions(),
+                $this->package,
+                LinkHandler::getInstance()->getControllerLink(PackageListPage::class)
+            ),
         ]);
     }
 }

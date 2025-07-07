@@ -9,27 +9,65 @@
 
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+import { InteractionEffect } from "./InteractionEffect";
 
-async function handleFormBuilderDialogAction(element: HTMLElement, endpoint: string): Promise<void> {
+type Payload = Record<string, string>;
+
+async function handleFormBuilderDialogAction(
+  container: HTMLElement,
+  element: HTMLElement,
+  endpoint: string,
+  interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
+  detail: Payload,
+): Promise<void> {
   const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint);
 
   if (!ok) {
     return;
   }
 
-  element.dispatchEvent(
-    new CustomEvent("interaction:invalidate", {
-      bubbles: true,
-    }),
-  );
+  if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {
+    element.dispatchEvent(
+      new CustomEvent<Payload>("interaction:invalidate", {
+        bubbles: true,
+        detail: {
+          ...detail,
+          _reloadPage: String(interactionEffect === InteractionEffect.ReloadPage),
+        },
+      }),
+    );
+  } else if (interactionEffect === InteractionEffect.ReloadList) {
+    container.dispatchEvent(
+      new CustomEvent<Payload>("interaction:invalidate-all", {
+        detail: {
+          ...detail,
+        },
+      }),
+    );
+  } else {
+    element.dispatchEvent(
+      new CustomEvent<Payload>("interaction:remove", {
+        bubbles: true,
+        detail: {
+          ...detail,
+        },
+      }),
+    );
+  }
 
   showDefaultSuccessSnackbar();
 }
 
 export function setup(identifier: string, container: HTMLElement): void {
-  container.addEventListener("interaction:execute", (event: CustomEvent) => {
+  container.addEventListener("interaction:execute", (event: CustomEvent<Payload>) => {
     if (event.detail.interaction === identifier) {
-      void handleFormBuilderDialogAction(event.target as HTMLElement, event.detail.endpoint);
+      void handleFormBuilderDialogAction(
+        container,
+        event.target as HTMLElement,
+        event.detail.endpoint,
+        event.detail.interactionEffect as InteractionEffect,
+        event.detail,
+      );
     }
   });
 }

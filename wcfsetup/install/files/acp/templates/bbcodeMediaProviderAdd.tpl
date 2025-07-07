@@ -4,11 +4,14 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.bbcode.mediaProvider.{$action}{/lang}</h1>
 	</div>
-	
+
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeMediaProviderList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.bbcode.mediaProvider.list{/lang}</span></a></li>
-			
+			{if $action == 'edit'}
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>

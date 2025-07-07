@@ -1,73 +1,22 @@
-{capture assign='__contentHeader'}
-	<header class="contentHeader">
-		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">
-				{if $articleIsFrontend|empty}
-					{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}
-				{else}
-					{$__wcf->getActivePage()->getTitle()}
-				{/if}
-			</h1>
-		</div>
-		
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{if $action == 'edit'}
-					{if $article->canDelete()}
-						<li>
-							<button
-								type="button"
-								class="contentInteractionButton button jsButtonRestore"
-								{if !$article->isDeleted} style="display: none"{/if}
-							>
-								{icon name='rotate-left'}
-								<span>{lang}wcf.global.button.restore{/lang}</span>
-							</button>
-						</li>
-						<li>
-							<button
-								type="button"
-								class="contentInteractionButton button jsButtonDelete"
-								{if !$article->isDeleted} style="display: none"{/if}
-							>
-								{icon name='xmark'}
-								<span>{lang}wcf.global.button.delete{/lang}</span>
-							</button>
-						</li>
-						<li>
-							<button
-								type="button"
-								class="contentInteractionButton button jsButtonTrash"
-								{if $article->isDeleted} style="display: none"{/if}
-							>
-								{icon name='trash-can'}
-								<span>{lang}wcf.global.button.trash{/lang}</span>
-							</button>
-						</li>
-					{/if}
-					{if $languages|count > 1 || $article->isMultilingual}
-						<li>
-							<button type="button" class="button jsButtonToggleI18n">
-								{icon name='flag'}
-								<span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span>
-							</button>
-						</li>
-					{/if}
-					<li><a href="{$article->getLink()}" class="button">{icon name='magnifying-glass'} <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
-				{/if}
-				<li><a href="{link controller='ArticleList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
-				
-				{event name='contentHeaderNavigation'}
-			</ul>
-		</nav>
-	</header>
-{/capture}
+{include file='header' pageTitle='wcf.acp.article.'|concat:$action}
 
-{if $articleIsFrontend|empty}
-	{include file='header' pageTitle='wcf.acp.article.'|concat:$action}
-{else}
-	{include file='header' contentHeader=$__contentHeader}
-{/if}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			{if $action == 'edit'}
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
+			{/if}
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
+</header>
 
 {if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
 	<script data-relocate="true">
@@ -95,27 +44,8 @@
 {/if}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
-		Language.addObject({
-			'wcf.article.convertFromI18n.question': '{jslang}wcf.article.convertFromI18n.question{/jslang}',
-			'wcf.article.convertFromI18n.description': '{jslang}wcf.article.convertFromI18n.description{/jslang}',
-			'wcf.article.convertToI18n.question': '{jslang}wcf.article.convertToI18n.question{/jslang}',
-			'wcf.article.convertToI18n.description': '{jslang}wcf.article.convertToI18n.description{/jslang}',
-			'wcf.acp.article.i18n.source': '{jslang}wcf.acp.article.i18n.source{/jslang}',
-			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}',
-		});
-		
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.querySelector('input[name="username"]'));
-		{if $action == 'edit'}
-			new AcpUiArticleInlineEditor({$article->articleID}, {
-				i18n: {
-					defaultLanguageId: {$defaultLanguageID},
-					isI18n: {if $article->isMultilingual}true{else}false{/if},
-					languages: { {implode from=$languages item=language glue=', '}{$language->languageID}: '{$language|encodeJS}'{/implode} }
-				},
-				redirectUrl: '{link controller='ArticleList'}{/link}'
-			});
-		{/if}
 	});
 </script>
 
@@ -123,17 +53,13 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
+		require(['WoltLabSuite/Core/Media/Manager/Select'], (MediaManagerSelect) => {
 			new MediaManagerSelect({
 				dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
 				imagesOnly: 1
 			});
 		});
 	</script>
-{/if}
-
-{if $articleIsFrontend|empty}
-	{unsafe:$__contentHeader}
 {/if}
 
 {include file='shared_formNotice'}
@@ -653,6 +579,5 @@
 		{/if}
 	});
 </script>
-
 
 {include file='footer'}

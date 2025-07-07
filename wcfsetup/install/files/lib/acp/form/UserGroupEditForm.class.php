@@ -2,13 +2,17 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserGroupListPage;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\interaction\admin\UserGroupInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -147,6 +151,11 @@ class UserGroupEditForm extends UserGroupAddForm
             'isUnmentionableGroup' => $this->isUnmentionableGroup ? 1 : 0,
             'ownerGroupPermissions' => $ownerGroupPermissions,
             'ownerGroupID' => UserGroup::getOwnerGroupID(),
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new UserGroupInteractions(),
+                $this->group->getDecoratedObject(),
+                LinkHandler::getInstance()->getControllerLink(UserGroupListPage::class)
+            ),
         ]);
 
         // add warning when the initiator is in the group

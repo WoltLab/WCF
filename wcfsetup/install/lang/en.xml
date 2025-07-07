@@ -79,7 +79,7 @@
 		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
 		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
-		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
+		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Toggle Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
@@ -990,6 +990,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.label.showOrder.description"><![CDATA[Display order of the label in its label group. If you leave this field empty, the label will be placed at the last position.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.label.group.showLabels"><![CDATA[Show Labels]]></item>
 	</category>
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
@@ -1230,6 +1231,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
 		<item name="wcf.acp.menu.link.log.email"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.menu.item.button.choose"><![CDATA[Choose Menu Item]]></item>
+		<item name="wcf.acp.menu.showItems"><![CDATA[Show Menu Items]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>

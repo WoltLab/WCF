@@ -2,12 +2,14 @@
 
 namespace wcf\system\interaction\admin;
 
+use wcf\acp\page\PageBoxOrderPage;
 use wcf\data\page\Page;
 use wcf\event\interaction\admin\PageInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkableObjectInteraction;
+use wcf\system\interaction\LinkInteraction;
 
 /**
  * Interaction provider for pages.
@@ -27,6 +29,7 @@ final class PageInteractions extends AbstractInteractionProvider
                 'wcf.acp.page.button.viewPage',
                 static fn(Page $page) => !$page->requireObjectID
             ),
+            new LinkInteraction("order-boxes", PageBoxOrderPage::class, "wcf.acp.page.button.boxOrder"),
             new DeleteInteraction('core/pages/%s', static fn(Page $page) => $page->canDelete()),
         ]);
 

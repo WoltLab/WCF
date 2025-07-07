@@ -14,6 +14,8 @@ import { showDefaultSuccessSnackbar, showSuccessSnackbar } from "WoltLabSuite/Co
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { InteractionEffect } from "./InteractionEffect";
 
+type Payload = Record<string, string>;
+
 async function handleDboAction(
   container: HTMLElement,
   element: HTMLElement,
@@ -23,6 +25,7 @@ async function handleDboAction(
   confirmationType: ConfirmationType,
   customConfirmationMessage: string = "",
   interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
+  detail: Payload,
 ): Promise<void> {
   const confirmationResult = await handleConfirmation(objectName, confirmationType, customConfirmationMessage);
   if (!confirmationResult.result) {
@@ -34,18 +37,27 @@ async function handleDboAction(
     .payload(confirmationResult.reason ? { reason: confirmationResult.reason } : {})
     .dispatch();
 
-  if (interactionEffect === InteractionEffect.ReloadItem) {
+  if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {
     element.dispatchEvent(
-      new CustomEvent("interaction:invalidate", {
+      new CustomEvent<Payload>("interaction:invalidate", {
         bubbles: true,
+        detail: {
+          ...detail,
+          _reloadPage: String(interactionEffect === InteractionEffect.ReloadPage),
+        },
       }),
     );
   } else if (interactionEffect === InteractionEffect.ReloadList) {
-    container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+    container.dispatchEvent(
+      new CustomEvent<Payload>("interaction:invalidate-all", {
+        detail,
+      }),
+    );
   } else {
     element.dispatchEvent(
-      new CustomEvent("interaction:remove", {
+      new CustomEvent<Payload>("interaction:remove", {
         bubbles: true,
+        detail,
       }),
     );
   }
@@ -58,7 +70,7 @@ async function handleDboAction(
 }
 
 export function setup(identifier: string, container: HTMLElement): void {
-  container.addEventListener("interaction:execute", (event: CustomEvent) => {
+  container.addEventListener("interaction:execute", (event: CustomEvent<Payload>) => {
     if (event.detail.interaction === identifier) {
       void handleDboAction(
         container,
@@ -66,9 +78,10 @@ export function setup(identifier: string, container: HTMLElement): void {
         event.detail.objectName,
         event.detail.className,
         event.detail.actionName,
-        event.detail.confirmationType,
+        event.detail.confirmationType as ConfirmationType,
         event.detail.confirmationMessage,
-        event.detail.interactionEffect,
+        event.detail.interactionEffect as InteractionEffect,
+        event.detail,
       );
     }
   });
