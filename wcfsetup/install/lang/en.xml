@@ -846,7 +846,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
-		<item name="wcf.acp.group.assignment.legacyNotice"><![CDATA[For Automatic User Group Assignments, perform <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
+		<item name="wcf.acp.group.assignment.legacyNotice"><![CDATA[The automated user group assignments need to be recalculated. Please perform this task by visiting  <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
