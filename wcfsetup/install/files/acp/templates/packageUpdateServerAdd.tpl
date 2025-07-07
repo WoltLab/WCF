@@ -36,7 +36,7 @@
 						{elseif $errorType[duplicate]|isset}
 							{lang}wcf.acp.updateServer.serverURL.error.duplicate{/lang}
 						{else}
-							{lang}wcf.acp.updateServer.serverURL.error.{@$errorType}{/lang}
+							{lang}wcf.acp.updateServer.serverURL.error.{$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

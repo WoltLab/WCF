@@ -27,7 +27,7 @@
 				</label>
 			{/if}
 		</dt>
-		<dd>{@$optionData[html]}
+		<dd>{unsafe:$optionData[html]}
 			{if $error}
 				<small class="innerError">
 					{if $error == 'empty'}

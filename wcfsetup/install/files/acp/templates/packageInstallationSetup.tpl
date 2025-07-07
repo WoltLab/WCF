@@ -10,7 +10,7 @@
 	$(function() {
 		WCF.Language.add('wcf.acp.package.install.title', '{jslang}wcf.acp.package.install.title{/jslang}');
 		
-		var $installation = new WCF.ACP.Package.Installation({@$queueID});
+		var $installation = new WCF.ACP.Package.Installation({$queueID});
 		$installation.prepareInstallation();
 	});
 </script>

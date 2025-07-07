@@ -4,7 +4,7 @@
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 
-	{$name} thrown in {$file} ({@$line})
+	{$name} thrown in {$file} ({$line})
 	Stacktrace:
 	{$stacktrace}
 	-->

@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}{/capture}
+{capture assign='pageTitle'}{lang}wcf.acp.package.{$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}{/capture}
 {include file='header'}
 
 <script data-relocate="true">
@@ -10,15 +10,15 @@
 			'wcf.acp.package.update.title': '{jslang}wcf.acp.package.update.title{/jslang}'
 		});
 		
-		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}{if $queue->isApplication}false{else}true{/if}, false{else}false, true{/if});
+		new WCF.ACP.Package.Installation({$queue->queueID}, undefined, {if $queue->action == 'install'}{if $queue->isApplication}false{else}true{/if}, false{else}false, true{/if});
 		
-		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
+		new WCF.ACP.Package.Installation.Cancel({$queue->queueID});
 	});
 </script>
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.package.{$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
 		<p class="contentHeaderDescription">{$archive->getLocalizedPackageInfo('packageDescription')}</p>
 	</div>
 </header>
@@ -46,7 +46,7 @@
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
-		<dd>{@$archive->getPackageInfo('date')|date}</dd>
+		<dd>{time time=$archive->getPackageInfo('date') type='plainDate'}</dd>
 	</dl>
 	
 	{if $archive->getPackageInfo('packageURL') != ''}
@@ -82,7 +82,7 @@
 				{foreach from=$packageValidationArchives item=packageValidationArchive}
 					{assign var=exceptionMessage value=$packageValidationArchive->getExceptionMessage()}
 					<tr>
-						<td class="columnTitle columnPackageName"><span{if $packageValidationArchive->getDepth()} style="padding-left: {@$packageValidationArchive->getDepth() * 14}px"{/if}>{$packageValidationArchive->getArchive()->getLocalizedPackageInfo('packageName')}</span></td>
+						<td class="columnTitle columnPackageName"><span{if $packageValidationArchive->getDepth()} style="padding-left: {$packageValidationArchive->getDepth() * 14}px"{/if}>{$packageValidationArchive->getArchive()->getLocalizedPackageInfo('packageName')}</span></td>
 						<td class="columnText columnPackage">{$packageValidationArchive->getArchive()->getPackageInfo('name')}</td>
 						<td class="columnIcon columnStatus">
 							{if $exceptionMessage}
@@ -95,7 +95,7 @@
 					
 					{if $exceptionMessage}
 						<tr>
-							<td colspan="3"><span{if $packageValidationArchive->getDepth()} style="padding-left: {@$packageValidationArchive->getDepth() * 14}px"{/if}>{@$exceptionMessage}</span></td>
+							<td colspan="3"><span{if $packageValidationArchive->getDepth()} style="padding-left: {$packageValidationArchive->getDepth() * 14}px"{/if}>{unsafe:$exceptionMessage}</span></td>
 						</tr>
 					{/if}
 				{/foreach}
