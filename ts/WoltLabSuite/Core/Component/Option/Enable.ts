@@ -93,13 +93,10 @@ function enableOption(element: HTMLElement, enable: boolean) {
 
     const parentOptionTypeBoolean = element.closest(".optionTypeBoolean");
     if (parentOptionTypeBoolean) {
-      // escape dots so that they are not recognized as class selectors
-      const elementId = element.id.replace(/\./g, "\\.");
-
-      const noElement = document.getElementById(elementId + "_no") as HTMLInputElement;
+      const noElement = document.getElementById(element.id + "_no") as HTMLInputElement;
       noElement.disabled = !enable;
 
-      const neverElement = document.getElementById(elementId + "_never") as HTMLInputElement;
+      const neverElement = document.getElementById(element.id + "_never") as HTMLInputElement;
       if (neverElement) {
         neverElement.disabled = !enable;
       }

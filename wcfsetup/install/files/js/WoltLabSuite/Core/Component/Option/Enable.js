@@ -83,11 +83,9 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/Selector"], function (re
             }
             const parentOptionTypeBoolean = element.closest(".optionTypeBoolean");
             if (parentOptionTypeBoolean) {
-                // escape dots so that they are not recognized as class selectors
-                const elementId = element.id.replace(/\./g, "\\.");
-                const noElement = document.getElementById(elementId + "_no");
+                const noElement = document.getElementById(element.id + "_no");
                 noElement.disabled = !enable;
-                const neverElement = document.getElementById(elementId + "_never");
+                const neverElement = document.getElementById(element.id + "_never");
                 if (neverElement) {
                     neverElement.disabled = !enable;
                 }
