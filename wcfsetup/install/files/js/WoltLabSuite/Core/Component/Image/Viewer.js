@@ -1,4 +1,9 @@
-define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language"], function (require, exports, ui_1, PageOverlay_1, Language_1) {
+/**
+ * @author Olaf Braun
+ * @copyright 2001-2025 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -7,7 +12,7 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
     exports.getLocalization = getLocalization;
     setDefaultConfig();
     function setup() {
-        ui_1.Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="video"])');
+        ui_1.Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="youtube"],[data-type="vimeo"],[data-type="video"])');
     }
     function setupLegacy() {
         ui_1.Fancybox.bind(".jsImageViewer", {
@@ -25,6 +30,12 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
             Video: {
                 autoplay: false,
             },
+        };
+        if (!defaultConfig.plugins) {
+            defaultConfig.plugins = {};
+        }
+        defaultConfig.plugins.consent = () => {
+            return new ConsentPlugin_1.ConsentPlugin();
         };
     }
     function getLocalization() {

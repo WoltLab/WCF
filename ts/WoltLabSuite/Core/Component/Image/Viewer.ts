@@ -1,11 +1,20 @@
+/**
+ * @author Olaf Braun
+ * @copyright 2001-2025 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+
 import { Fancybox, CarouselSlide, FancyboxInstance } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
 
 setDefaultConfig();
 
 export function setup() {
-  Fancybox.bind('[data-fancybox]:is([data-type="image"],[data-type="video"])');
+  Fancybox.bind(
+    '[data-fancybox]:is([data-type="image"],[data-type="youtube"],[data-type="vimeo"],[data-type="video"])',
+  );
 }
 
 export function setupLegacy() {
@@ -26,6 +35,12 @@ function setDefaultConfig(): void {
     Video: {
       autoplay: false,
     },
+  };
+  if (!defaultConfig.plugins) {
+    defaultConfig.plugins = {};
+  }
+  defaultConfig.plugins.consent = () => {
+    return new ConsentPlugin();
   };
 }
 

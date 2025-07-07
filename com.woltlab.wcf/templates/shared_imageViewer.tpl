@@ -44,6 +44,11 @@
 		}
 	  }
 	</script>
+	{if MESSAGE_ENABLE_USER_CONSENT}
+		<template id="consentImageViewer" data-show-all-media="{if $__wcf->getUser()->userID && $__wcf->getUser()->getUserOption('enableEmbeddedMedia')}1{else}0{/if}">
+			{include file="messageUserConsent" target='' host='' url='' sandbox=true}
+		</template>
+	{/if}
 	
 	{assign var=__imageViewerLoaded value=true}
 {/if}
