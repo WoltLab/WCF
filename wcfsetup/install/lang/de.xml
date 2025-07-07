@@ -860,6 +860,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Kann Signatur sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Kann automatische Gruppenzuordnungen verwalten]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Automatische Benutzergruppen-Zuordnung hinzufügen]]></item>
+		<item name="wcf.acp.group.assignment"><![CDATA[Automatische Benutzergruppen-Zuordnung]]></item>
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Automatische Zuordnung hinzufügen]]></item>
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
@@ -978,6 +979,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon.cta"><![CDATA[Jetzt verlängern und 10% Rabatt sichern!]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expired"><![CDATA[Die Lizenzen für die folgenden Produkte sind ausgelaufen und berechtigen nicht länger zum Zugriff auf neue Versionen sowie den Ticket-Support.]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Jetzt Lizenzen verlängern ↗]]></item>
+		<item name="wcf.acp.dashboard.box.migrationNeeded"><![CDATA[Die Daten für {implode from=$titles item=title}<strong>{$title}</strong>{/implode} wurden noch nicht aktualisiert. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}führe{else}führen Sie{/if} dies unter <a href="{link controller='RebuildData'}{/link}">Anzeigen-Aktualisierung</a> durch.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
