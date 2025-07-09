@@ -56,15 +56,15 @@
 			</dl>
 			<dl>
 				<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
-				<dd>{@$package->packageDate|date}</dd>
+				<dd>{time time=$package->packageDate type='plainDate'}</dd>
 			</dl>
 			<dl>
 				<dt>{lang}wcf.acp.package.installDate{/lang}</dt>
-				<dd>{@$package->installDate|time}</dd>
+				<dd>{time time=$package->installDate}</dd>
 			</dl>
 			<dl>
 				<dt>{lang}wcf.acp.package.updateDate{/lang}</dt>
-				<dd>{@$package->updateDate|time}</dd>
+				<dd>{time time=$package->updateDate}</dd>
 			</dl>
 			{if $package->packageURL != ''}
 				<dl>

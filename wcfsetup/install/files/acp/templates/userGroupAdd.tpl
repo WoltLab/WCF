@@ -237,7 +237,7 @@
 					input.disabled = true;
 				});
 				
-				var permissions = [{implode from=$ownerGroupPermissions item=$_ownerPermission}'{$_ownerPermission|encodeJS}'{/implode}];
+				var permissions = [{implode from=$ownerGroupPermissions item=$_ownerPermission}'{unsafe:$_ownerPermission|encodeJS}'{/implode}];
 				permissions.forEach(function(permission) {
 					elBySelAll('input[name="values[' + permission + ']"]', undefined, function (input) {
 						if (input.value === '1') {

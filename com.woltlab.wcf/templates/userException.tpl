@@ -30,7 +30,7 @@
 	{$stacktrace}
 	-->
 	<script>
-		console.debug('{$name|encodeJS} thrown in {$file|encodeJS} ({$line})');
+		console.debug('{unsafe:$name|encodeJS} thrown in {unsafe:$file|encodeJS} ({$line})');
 		console.debug('Stacktrace:\n{unsafe:$stacktrace|encodeJS}');
 	</script>
 {/if}

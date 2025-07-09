@@ -52,7 +52,7 @@
 			imagePreview: {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}true{else}false{/if},
 			{if $uploadField->getAcceptableFiles()}
 				acceptableFiles: [
-					{implode from=$uploadField->getAcceptableFiles() item=accept}'{$accept|encodeJS}'{/implode}
+					{implode from=$uploadField->getAcceptableFiles() item=accept}'{unsafe:$accept|encodeJS}'{/implode}
 				],
 			{/if}
 		});

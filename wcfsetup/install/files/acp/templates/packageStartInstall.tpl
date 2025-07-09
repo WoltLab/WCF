@@ -28,7 +28,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
+		<h1 class="contentTitle">{lang}{$pageTitle}{/lang}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -112,7 +112,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.package.error.{@$errorType}{/lang}
+									{lang}wcf.acp.package.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}

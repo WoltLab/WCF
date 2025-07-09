@@ -57,7 +57,7 @@
 						<td class="columnID">{$logEntry->getObjectID()}</td>
 						<td class="columnText">{if $logEntry->getLanguage()}{$logEntry->getLanguage()}{else}{$logEntry->languageID}{/if}</td>
 						<td class="columnText">{$logEntry->languageItem}</td>
-						<td class="columnDate">{@$logEntry->lastTime|time}</td>
+						<td class="columnDate">{time time=$logEntry->lastTime}</td>
 					</tr>
 				{/foreach}
 			</tbody>

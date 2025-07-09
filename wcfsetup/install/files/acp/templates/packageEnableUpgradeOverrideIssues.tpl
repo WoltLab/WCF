@@ -2,8 +2,8 @@
 <ul class="nativeList">
 	{foreach from=$issues item='issue'}
 		<li>
-			<strong>{@$issue['title']}</strong><br>
-			{@$issue['description']}
+			<strong>{unsafe:$issue['title']}</strong><br>
+			{unsafe:$issue['description']}
 		</li>
 	{/foreach}
 </ul>

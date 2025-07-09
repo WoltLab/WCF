@@ -4,7 +4,7 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
 	</div>
-	
+
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
@@ -12,7 +12,7 @@
 					{unsafe:$interactionContextMenu->render()}
 				</li>
 			{/if}
-			
+
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>

@@ -261,11 +261,11 @@
 							new PasswordStrength(elById('password'), {
 								relatedInputs: relatedInputs,
 								staticDictionary: [
-									'{$__wcf->user->username|encodeJS}',
-									'{$__wcf->user->email|encodeJS}',
+									'{unsafe:$__wcf->user->username|encodeJS}',
+									'{unsafe:$__wcf->user->email|encodeJS}',
 									{if $user|isset}
-										'{$user->username|encodeJS}',
-										'{$user->email|encodeJS}',
+										'{unsafe:$user->username|encodeJS}',
+										'{unsafe:$user->email|encodeJS}',
 									{/if}
 								]
 							});
