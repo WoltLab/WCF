@@ -4418,6 +4418,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
 		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
+		<item name="wcf.moderation.objectType"><![CDATA[Inhalt]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>

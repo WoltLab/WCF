@@ -7,10 +7,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueueList;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\gridView\user\ModerationQueueGridViewInitialized;
-use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\filter\NumericFilter;
 use wcf\system\gridView\filter\SelectFilter;
@@ -128,9 +125,22 @@ final class ModerationQueueGridView extends AbstractGridView
                             }
                         }
                 ),
+            GridViewColumn::for("definition")
+                ->label("wcf.moderation.type")
+                ->filter($this->getDefinitionFilter())
+                ->renderer(
+                    new class extends AbstractColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof ViewableModerationQueue);
+
+                            return $row->getLabel();
+                        }
+                    }
+                ),
             GridViewColumn::for("objectType")
-                ->label("wcf.moderation.report.reportedContent")
-                ->filter($this->getObjectTypeFilter())
+                ->label("wcf.moderation.objectType")
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -143,8 +153,7 @@ final class ModerationQueueGridView extends AbstractGridView
                             );
                         }
                     }
-                )
-                ->sortable(sortByDatabaseColumn: "moderation_queue.objectTypeID"),
+                ),
             GridViewColumn::for("status")
                 ->label("wcf.moderation.status")
                 ->sortable(sortByDatabaseColumn: "moderation_queue.status")
@@ -214,72 +223,30 @@ final class ModerationQueueGridView extends AbstractGridView
         }
     }
 
-    private function getObjectTypeFilter(): SelectFilter
+    private function getDefinitionFilter(): SelectFilter
     {
         return new class extends SelectFilter {
             public function __construct()
             {
-                parent::__construct($this->getModerationQueueObjectTypeIDs(), "moderation_queue.objectTypeID");
+                parent::__construct($this->getDefinitionOptions(), "moderation_queue.objectTypeID");
             }
 
             #[\Override]
-            public function getFormField(string $id, string $label): AbstractFormField
+            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
             {
-                return SelectFormField::create($id)
-                    ->label($label)
-                    ->options($this->getModerationQueueObjectTypeOptions(), true);
+                $columnName = $this->getDatabaseColumnName($list, $id);
+
+                $list->getConditionBuilder()->add("{$columnName} IN (?)", [
+                    ModerationQueueManager::getInstance()->getObjectTypeIDs([$value]),
+                ]);
             }
 
-            /**
-             * @return array<int, string>
-             */
-            private function getModerationQueueObjectTypeIDs(): array
+            private function getDefinitionOptions(): array
             {
-                $objectTypes = [];
-                foreach (ModerationQueueManager::getInstance()->getDefinitionNamesByObjectTypeIDs() as $objectTypeID => $definition) {
-                    $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-                    $objectTypes[$objectTypeID] = \sprintf(
-                        "%s - %s",
-                        WCF::getLanguage()->getDynamicVariable('wcf.moderation.type.' . $definition),
-                        WCF::getLanguage()->getDynamicVariable('wcf.moderation.type.' . $objectType->objectType),
-                    );
-                }
-
-                return $objectTypes;
-            }
-
-            /**
-             * @return list<array{
-             *  value: string,
-             *  depth: int,
-             *  isSelectable: bool,
-             *  label: string,
-             * }>
-             */
-            private function getModerationQueueObjectTypeOptions(): array
-            {
-                $options = [];
-                foreach (ModerationQueueManager::getInstance()->getDefinitions() as $definitionName) {
-                    $options[] = [
-                        "value" => $definitionName,
-                        "depth" => 0,
-                        "isSelectable" => false,
-                        "label" => WCF::getLanguage()->getDynamicVariable('wcf.moderation.type.' . $definitionName)
-                    ];
-
-                    foreach (ObjectTypeCache::getInstance()->getObjectTypes($definitionName) as $objectType) {
-                        $options[] = [
-                            "value" => $objectType->objectTypeID,
-                            "depth" => 1,
-                            "isSelectable" => true,
-                            "label" => WCF::getLanguage()->getDynamicVariable(
-                                'wcf.moderation.type.' . $objectType->objectType
-                            ),
-                        ];
-                    }
-                }
-
-                return $options;
+                return \array_map(
+                    static fn($definition) => 'wcf.moderation.type.' . $definition,
+                    ModerationQueueManager::getInstance()->getDefinitions()
+                );
             }
         };
     }
