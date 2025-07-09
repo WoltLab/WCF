@@ -49,25 +49,24 @@ final class ModerationQueueGridView extends AbstractGridView
                 ->titleColumn()
                 ->renderer(
                     new
-                        /** @template-extends DefaultColumnRenderer<ViewableModerationQueue> */
                         class extends DefaultColumnRenderer {
                             #[\Override]
                             public function render(mixed $value, DatabaseObject $row): string
                             {
-                                /** @var ViewableModerationQueue $row */
+                                \assert($row instanceof ViewableModerationQueue);
                                 $title = StringUtil::encodeHTML($row->getTitle());
 
                                 if ($row->isNew()) {
                                     $badgeLabel = WCF::getLanguage()->get('wcf.message.new');
                                     $badge = <<<HTML
-                                    <span class="badge label newMessageBadge">{$badgeLabel}</span>
-                                HTML;
+                                        <span class="badge label newMessageBadge">{$badgeLabel}</span>
+                                    HTML;
                                 } else {
                                     $badge = '';
                                 }
                                 return <<<HTML
-                                {$title}{$badge}
-                            HTML;
+                                    {$title}{$badge}
+                                HTML;
                             }
                         }
                 ),
@@ -75,13 +74,11 @@ final class ModerationQueueGridView extends AbstractGridView
                 ->label("wcf.moderation.username")
                 ->renderer(
                     new
-                        /** @template-extends UserLinkColumnRenderer<ViewableModerationQueue> */
                         class extends UserLinkColumnRenderer {
                             #[\Override]
                             public function render(mixed $value, DatabaseObject $row): string
                             {
-                                /** @var ViewableModerationQueue $row */
-
+                                \assert($row instanceof ViewableModerationQueue);
                                 $userID = $row->getAffectedObject()->getUserID();
 
                                 if ($userID) {
@@ -98,7 +95,7 @@ final class ModerationQueueGridView extends AbstractGridView
                             #[\Override]
                             public function prepare(mixed $value, DatabaseObject $row): void
                             {
-                                /** @var ViewableModerationQueue $row */
+                                \assert($row instanceof ViewableModerationQueue);
                                 parent::prepare($row->getAffectedObject()->getUserID(), $row);
                             }
                         }
@@ -109,9 +106,7 @@ final class ModerationQueueGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: "assignedUsername")
                 ->renderer(
                     new
-                        /** @template-extends UserLinkColumnRenderer<ViewableModerationQueue> */
                         class extends UserLinkColumnRenderer {
-
                             public function __construct()
                             {
                                 parent::__construct(fallbackValue: "assignedUsername");
@@ -120,14 +115,14 @@ final class ModerationQueueGridView extends AbstractGridView
                             #[\Override]
                             public function render(mixed $value, DatabaseObject $row): string
                             {
-                                /** @var ViewableModerationQueue $row */
+                                \assert($row instanceof ViewableModerationQueue);
                                 return parent::render($row->assignedUserID, $row);
                             }
 
                             #[\Override]
                             public function prepare(mixed $value, DatabaseObject $row): void
                             {
-                                /** @var ViewableModerationQueue $row */
+                                \assert($row instanceof ViewableModerationQueue);
                                 parent::prepare($row->assignedUserID, $row);
                             }
                         }
@@ -140,7 +135,7 @@ final class ModerationQueueGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            /** @var ViewableModerationQueue $row */
+                            \assert($row instanceof ViewableModerationQueue);
                             return WCF::getLanguage()->getDynamicVariable(
                                 "wcf.moderation.type.{$row->getObjectTypeName()}"
                             );
@@ -184,7 +179,7 @@ final class ModerationQueueGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            /** @var ViewableModerationQueue $row */
+                            \assert($row instanceof ViewableModerationQueue);
                             $status = StringUtil::encodeHTML($row->getStatus());
                             return <<<HTML
                                 <span class="status status-{$status}">{$status}</span>
