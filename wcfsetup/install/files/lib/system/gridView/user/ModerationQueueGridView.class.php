@@ -197,7 +197,7 @@ final class ModerationQueueGridView extends AbstractGridView
                     }
                 ),
             GridViewColumn::for("comments")
-                ->label("wcf.moderation.comments")
+                ->label("wcf.global.comments")
                 ->sortable(sortByDatabaseColumn: "moderation_queue.comments")
                 ->filter(new NumericFilter("moderation_queue.comments"))
                 ->renderer(new NumberColumnRenderer()),

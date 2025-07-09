@@ -4318,12 +4318,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.assignedUser.other"><![CDATA[Other user]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Assigned User]]></item>
-		<item name="wcf.moderation.filter"><![CDATA[Filter Items]]></item>
-		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
-		<item name="wcf.moderation.filterByUser"><![CDATA[Assigned User]]></item>
-		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[All Items]]></item>
-		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Myself ({$__wcf->getUser()->username})]]></item>
-		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.items"><![CDATA[Moderation Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
@@ -4347,10 +4341,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Approval was denied]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.report"><![CDATA[Report was unjustified]]></item>
 		<item name="wcf.moderation.status.rejectedButJustified.com.woltlab.wcf.moderation.report"><![CDATA[Report was justified]]></item>
-		<item name="wcf.moderation.time"><![CDATA[Time]]></item>
-		<item name="wcf.moderation.title"><![CDATA[Title]]></item>
 		<item name="wcf.moderation.type"><![CDATA[Type]]></item>
-		<item name="wcf.moderation.type.all"><![CDATA[All Items]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Approval]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Delayed]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
@@ -4363,8 +4354,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>
 		<item name="wcf.moderation.comments.description"><![CDATA[All comments are internal and will not be exposed to non-moderators.]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Go to Related Content]]></item>
-		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Double-Click to Mark This Item Read]]></item>
-		<item name="wcf.moderation.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Author]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Content]]></item>
 	</category>

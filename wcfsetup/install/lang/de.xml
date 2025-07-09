@@ -4372,12 +4372,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
 		<item name="wcf.moderation.assignedUser.other"><![CDATA[Anderer Benutzer]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Zugewiesener Benutzer]]></item>
-		<item name="wcf.moderation.filter"><![CDATA[Einträge filtern]]></item>
-		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
-		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
-		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
-		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Ich ({$__wcf->getUser()->username})]]></item>
-		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Niemand]]></item>
 		<item name="wcf.moderation.items"><![CDATA[Moderationseinträge]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
@@ -4399,10 +4393,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung wurde abgelehnt]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.report"><![CDATA[Meldung unberechtigt]]></item>
 		<item name="wcf.moderation.status.rejectedButJustified.com.woltlab.wcf.moderation.report"><![CDATA[Meldung berechtigt]]></item>
-		<item name="wcf.moderation.time"><![CDATA[Datum]]></item>
-		<item name="wcf.moderation.title"><![CDATA[Titel]]></item>
 		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>
-		<item name="wcf.moderation.type.all"><![CDATA[Alle Einträge]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Zeitgesteuerte Freischaltung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
@@ -4413,10 +4404,8 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Alle Einträge anzeigen]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Gelöschte Inhalte anzeigen]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Gelöschte Inhalte]]></item>
-		<item name="wcf.moderation.comments.description"><![CDATA[Diese Kommentare sind intern und nur für Moderatoren einsehbar]]></item>
+		<item name="wcf.moderation.comments.description"><![CDATA[Diese Kommentare sind intern und nur für Moderatoren einsehbar.]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
-		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
-		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Inhalt]]></item>
 	</category>
