@@ -64,6 +64,7 @@ final class ModerationQueueGridView extends AbstractGridView
                                 } else {
                                     $badge = '';
                                 }
+
                                 return <<<HTML
                                     {$title}{$badge}
                                 HTML;
@@ -136,6 +137,7 @@ final class ModerationQueueGridView extends AbstractGridView
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof ViewableModerationQueue);
+
                             return WCF::getLanguage()->getDynamicVariable(
                                 "wcf.moderation.type.{$row->getObjectTypeName()}"
                             );
@@ -180,10 +182,8 @@ final class ModerationQueueGridView extends AbstractGridView
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof ViewableModerationQueue);
-                            $status = StringUtil::encodeHTML($row->getStatus());
-                            return <<<HTML
-                                <span class="status status-{$status}">{$status}</span>
-                            HTML;
+
+                            return StringUtil::encodeHTML($row->getStatus());
                         }
                     }
                 ),
