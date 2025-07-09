@@ -52,6 +52,8 @@ define(["require", "exports", "../../Helper/PromiseMutex", "../Dialog"], functio
                 const button = document.createElement("button");
                 button.type = "button";
                 button.classList.add("button", "small");
+                button.dataset.filter = key;
+                button.dataset.filterValue = this.#filters.get(key);
                 const icon = document.createElement("fa-icon");
                 icon.setIcon("circle-xmark");
                 button.append(icon, labels[key]);
