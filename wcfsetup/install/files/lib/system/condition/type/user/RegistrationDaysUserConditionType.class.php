@@ -13,7 +13,7 @@ use wcf\util\DateUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class RegistrationDaysUserConditionType extends AbstractIntegerUserConditionType
+final class RegistrationDaysUserConditionType extends IntegerUserConditionType
 {
     public function __construct()
     {

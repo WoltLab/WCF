@@ -24,7 +24,7 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-abstract class AbstractIntegerUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+class IntegerUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,

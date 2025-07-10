@@ -25,7 +25,7 @@ use wcf\system\WCF;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-abstract class AbstractStringUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+class StringUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
