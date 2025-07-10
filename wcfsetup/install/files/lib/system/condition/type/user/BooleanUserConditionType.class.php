@@ -3,6 +3,8 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
@@ -14,15 +16,20 @@ use wcf\system\form\builder\field\BooleanFormField;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
+ *
+ * @implements IDatabaseObjectListConditionType<UserList<User>, bool>
+ * @implements IObjectConditionType<User, bool>
+ * @extends AbstractConditionType<bool>
  */
-abstract class AbstractIsNullUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+class BooleanUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
         public readonly string $columnName,
         public readonly ?string $migrateKeyName = null,
         public readonly ?string $migrateConditionObjectType = null,
-    ) {}
+    ) {
+    }
 
     #[\Override]
     public function getIdentifier(): string
@@ -46,9 +53,9 @@ abstract class AbstractIsNullUserConditionType extends AbstractConditionType imp
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         if ($this->filter) {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NOT NULL");
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} = ?", [1]);
         } else {
-            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} IS NULL");
+            $objectList->getConditionBuilder()->add("{$objectList->getDatabaseTableAlias()}.{$this->columnName} = ?", [0]);
         }
     }
 
@@ -56,9 +63,9 @@ abstract class AbstractIsNullUserConditionType extends AbstractConditionType imp
     public function matches(object $object): bool
     {
         if ($this->filter) {
-            return $object->{$this->columnName} !== null;
+            return (bool)$object->{$this->columnName};
         } else {
-            return $object->{$this->columnName} === null;
+            return !$object->{$this->columnName};
         }
     }
 
