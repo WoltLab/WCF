@@ -84,8 +84,8 @@ abstract class AbstractStringUserConditionType extends AbstractConditionType imp
     public function matches(object $object): bool
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
-        $value = \strtolower($value);
-        $objectValue = \strtolower($object->{$this->columnName});
+        $value = \mb_strtolower($value);
+        $objectValue = \mb_strtolower($object->{$this->columnName});
 
         return match ($condition) {
             "_%" => \str_starts_with($objectValue, $value),
