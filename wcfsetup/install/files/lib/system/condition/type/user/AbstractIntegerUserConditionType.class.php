@@ -10,8 +10,8 @@ use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
+use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
-use wcf\system\form\builder\field\TextFormField;
 
 /**
  * @author Olaf Braun
@@ -19,17 +19,16 @@ use wcf\system\form\builder\field\TextFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @phpstan-type Filter = array{condition: string, value: string}
+ * @phpstan-type Filter = array{condition: string, value: int}
  * @implements IDatabaseObjectListConditionType<UserList<User>, Filter>
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-abstract class AbstractUserStringConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+abstract class AbstractIntegerUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     public function __construct(
         public readonly string $identifier,
         public readonly string $columnName,
-        public readonly ?string $migrateKeyName = null,
         public readonly ?string $migrateConditionObjectType = null,
     ) {
     }
@@ -39,12 +38,13 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     {
         return PrefixConditionFormFieldContainer::create($id)
             ->field(
-                TextFormField::create("{$id}Value")
+                IntegerFormField::create("{$id}Value")
+                    ->minimum(0)
                     ->required()
             )
             ->prefixField(
                 SingleSelectionFormField::create("{$id}Condition")
-                    ->options($this->getConditions())
+                    ->options(\array_combine($this->getConditions(), $this->getConditions()))
                     ->required()
             );
     }
@@ -64,47 +64,31 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
-        ["condition" => $condition, "value" => $value] = $this->filter;
-        $value = \addcslashes($value, '_%');
-
-        $filter = match ($condition) {
-            "_%" => $value . '%',
-            "%_%" => '%' . $value . '%',
-            "%_" => '%' . $value,
-            default => '',
-        };
-
         $objectList->getConditionBuilder()->add(
-            $objectList->getDatabaseTableAlias() . ".{$this->columnName} LIKE ?",
-            [$filter]
+            "{$objectList->getDatabaseTableAlias()}.{$this->columnName} {$this->filter['condition']} ?",
+            [$this->filter['value']]
         );
     }
 
     #[\Override]
     public function matches(object $object): bool
     {
-        ["condition" => $condition, "value" => $value] = $this->filter;
-        $value = \strtolower($value);
-        $objectValue = \strtolower($object->{$this->columnName});
-
-        return match ($condition) {
-            "_%" => \str_starts_with($objectValue, $value),
-            "%_%" => \str_contains($objectValue, $value),
-            "%_" => \str_ends_with($objectValue, $value),
-            default => false,
+        return match ($this->filter['condition']) {
+            '=' => $object->{$this->columnName} == $this->filter['value'],
+            '>' => $object->{$this->columnName} > $this->filter['value'],
+            '<' => $object->{$this->columnName} < $this->filter['value'],
+            '>=' => $object->{$this->columnName} >= $this->filter['value'],
+            '<=' => $object->{$this->columnName} <= $this->filter['value'],
+            default => throw new \InvalidArgumentException("Unknown condition: {$this->filter['condition']}"),
         };
     }
 
     /**
-     * @return array<string, string>
+     * @return string[]
      */
-    private function getConditions(): array
+    protected function getConditions(): array
     {
-        return [
-            "_%" => "wcf.condition.startsWith",
-            "%_%" => "wcf.condition.contains",
-            "%_" => "wcf.condition.endsWith",
-        ];
+        return ["=", ">", "<", ">=", "<="];
     }
 
     #[\Override]
@@ -116,21 +100,25 @@ abstract class AbstractUserStringConditionType extends AbstractConditionType imp
     #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
-        $value = $conditionData[$this->migrateKeyName] ?? null;
-        if ($value === null) {
-            return [];
+        $lessThan = $conditionData['lessThan'] ?? null;
+        $greaterThan = $conditionData['greaterThan'] ?? null;
+        $conditions = [];
+
+        if ($lessThan !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["value" => $lessThan, 'condition' => '<'],
+            ];
+        }
+        if ($greaterThan !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["value" => $greaterThan, 'condition' => '>'],
+            ];
         }
 
-        unset($conditionData[$this->migrateKeyName]);
+        unset($conditionData['lessThan'], $conditionData['greaterThan']);
 
-        return [
-            [
-                'identifier' => $this->identifier,
-                'value' => [
-                    'condition' => "%_%",
-                    'value' => $value,
-                ],
-            ],
-        ];
+        return $conditions;
     }
 }

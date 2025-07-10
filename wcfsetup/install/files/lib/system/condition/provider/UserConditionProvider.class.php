@@ -7,19 +7,19 @@ use wcf\data\user\UserList;
 use wcf\event\condition\provider\UserConditionProviderCollecting;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\condition\type\user\AbstractUserBooleanConditionType;
-use wcf\system\condition\type\user\AbstractUserIntegerConditionType;
-use wcf\system\condition\type\user\AbstractUserIsNullConditionType;
-use wcf\system\condition\type\user\AbstractUserStringConditionType;
-use wcf\system\condition\type\user\UserHasNotTrophyConditionType;
-use wcf\system\condition\type\user\UserHasTrophyConditionType;
-use wcf\system\condition\type\user\UserInGroupConditionType;
+use wcf\system\condition\type\user\AbstractBooleanUserConditionType;
+use wcf\system\condition\type\user\AbstractIntegerUserConditionType;
+use wcf\system\condition\type\user\AbstractIsNullUserConditionType;
+use wcf\system\condition\type\user\AbstractStringUserConditionType;
+use wcf\system\condition\type\user\HasNotTrophyUserConditionType;
+use wcf\system\condition\type\user\HasTrophyUserConditionType;
+use wcf\system\condition\type\user\InGroupUserConditionType;
 use wcf\system\condition\type\user\UserIsEnabledConditionType;
-use wcf\system\condition\type\user\UserLanguageConditionType;
-use wcf\system\condition\type\user\UserNotInGroupConditionType;
-use wcf\system\condition\type\user\UserRegistrationDateConditionType;
-use wcf\system\condition\type\user\UserRegistrationDaysConditionType;
-use wcf\system\condition\type\user\UserSignatureConditionType;
+use wcf\system\condition\type\user\LanguageUserConditionType;
+use wcf\system\condition\type\user\NotInGroupUserConditionType;
+use wcf\system\condition\type\user\RegistrationDateUserConditionType;
+use wcf\system\condition\type\user\RegistrationDaysUserConditionType;
+use wcf\system\condition\type\user\SignatureUserConditionType;
 use wcf\system\event\EventHandler;
 
 /**
@@ -35,25 +35,25 @@ final class UserConditionProvider extends AbstractConditionProvider
     public function __construct()
     {
         $this->addConditions([
-            new class(identifier: "username", columnName: "username", migrateKeyName: "username", migrateConditionObjectType: 'com.woltlab.wcf.user.username') extends AbstractUserStringConditionType {},
-            new class(identifier: "email", columnName: "email", migrateKeyName: "email", migrateConditionObjectType: 'com.woltlab.wcf.user.email') extends AbstractUserStringConditionType {},
-            new UserRegistrationDateConditionType(),
-            new UserRegistrationDaysConditionType(),
-            new UserInGroupConditionType(),
-            new UserNotInGroupConditionType(),
-            new UserLanguageConditionType(),
-            new class(identifier: "avatar", columnName: 'avatarFileID', migrateKeyName: 'userAvatar', migrateConditionObjectType: 'com.woltlab.wcf.user.avatar') extends AbstractUserIsNullConditionType {},
-            new UserSignatureConditionType(),
-            new class(identifier: "coverPhoto", columnName: 'coverPhotoFileID', migrateKeyName: 'userCoverPhoto', migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto') extends AbstractUserIsNullConditionType {},
-            new class(identifier: "isBanned", columnName: 'banned', migrateKeyName: 'userIsBanned', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractUserBooleanConditionType {},
+            new class(identifier: "username", columnName: "username", migrateKeyName: "username", migrateConditionObjectType: 'com.woltlab.wcf.user.username') extends AbstractStringUserConditionType {},
+            new class(identifier: "email", columnName: "email", migrateKeyName: "email", migrateConditionObjectType: 'com.woltlab.wcf.user.email') extends AbstractStringUserConditionType {},
+            new RegistrationDateUserConditionType(),
+            new RegistrationDaysUserConditionType(),
+            new InGroupUserConditionType(),
+            new NotInGroupUserConditionType(),
+            new LanguageUserConditionType(),
+            new class(identifier: "avatar", columnName: 'avatarFileID', migrateKeyName: 'userAvatar', migrateConditionObjectType: 'com.woltlab.wcf.user.avatar') extends AbstractIsNullUserConditionType {},
+            new SignatureUserConditionType(),
+            new class(identifier: "coverPhoto", columnName: 'coverPhotoFileID', migrateKeyName: 'userCoverPhoto', migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto') extends AbstractIsNullUserConditionType {},
+            new class(identifier: "isBanned", columnName: 'banned', migrateKeyName: 'userIsBanned', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractBooleanUserConditionType {},
             new UserIsEnabledConditionType(),
-            new class(identifier: "isEmailConfirmed", columnName: 'emailConfirmed', migrateKeyName: 'userIsEmailConfirmed', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractUserIsNullConditionType {},
-            new class(identifier: "isMultifactorActive", columnName: 'multifactorActive', migrateKeyName: 'multifactorActive', migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor') extends AbstractUserBooleanConditionType {},
-            new UserHasTrophyConditionType(),
-            new UserHasNotTrophyConditionType(),
-            new class(identifier: "activityPoints", columnName: "activityPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints') extends AbstractUserIntegerConditionType {},
-            new class(identifier: "likesReceived", columnName: "likesReceived", migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived') extends AbstractUserIntegerConditionType {},
-            new class(identifier: "trophyPoints", columnName: "trophyPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints') extends AbstractUserIntegerConditionType {},
+            new class(identifier: "isEmailConfirmed", columnName: 'emailConfirmed', migrateKeyName: 'userIsEmailConfirmed', migrateConditionObjectType: 'com.woltlab.wcf.user.state') extends AbstractIsNullUserConditionType {},
+            new class(identifier: "isMultifactorActive", columnName: 'multifactorActive', migrateKeyName: 'multifactorActive', migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor') extends AbstractBooleanUserConditionType {},
+            new HasTrophyUserConditionType(),
+            new HasNotTrophyUserConditionType(),
+            new class(identifier: "activityPoints", columnName: "activityPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints') extends AbstractIntegerUserConditionType {},
+            new class(identifier: "likesReceived", columnName: "likesReceived", migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived') extends AbstractIntegerUserConditionType {},
+            new class(identifier: "trophyPoints", columnName: "trophyPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints') extends AbstractIntegerUserConditionType {},
         ]);
 
         // TODO add conditions for user options that implement `ISearchableConditionUserOption`

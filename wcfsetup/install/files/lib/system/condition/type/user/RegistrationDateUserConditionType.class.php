@@ -24,7 +24,7 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
  * @implements IObjectConditionType<User, Filter>
  * @extends AbstractConditionType<Filter>
  */
-final class UserRegistrationDateConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+final class RegistrationDateUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): PrefixConditionFormFieldContainer

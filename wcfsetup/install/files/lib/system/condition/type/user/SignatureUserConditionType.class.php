@@ -10,7 +10,7 @@ use wcf\data\DatabaseObjectList;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserSignatureConditionType extends AbstractUserBooleanConditionType
+final class SignatureUserConditionType extends AbstractBooleanUserConditionType
 {
     public function __construct()
     {
