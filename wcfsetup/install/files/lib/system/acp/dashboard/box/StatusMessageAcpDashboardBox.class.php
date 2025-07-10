@@ -287,18 +287,18 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             $event->migrationNeeded(WCF::getLanguage()->get('wcf.acp.group.assignment'));
         }
 
-        if ($event->needsMigration() !== []) {
-            return [
-                new StatusMessage(
-                    StatusMessageType::Warning,
-                    WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.migrationNeeded', [
-                        'titles' => $event->needsMigration(),
-                    ])
-                ),
-            ];
+        if ($event->needsMigration() === []) {
+            return [];
         }
 
-        return [];
+        return [
+            new StatusMessage(
+                StatusMessageType::Warning,
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.migrationNeeded', [
+                    'titles' => $event->needsMigration(),
+                ])
+            ),
+        ];
     }
 
     private function userGroupAssignmentHasLegacyObjects(): bool
