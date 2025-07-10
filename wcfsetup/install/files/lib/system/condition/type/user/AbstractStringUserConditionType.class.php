@@ -12,6 +12,7 @@ use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\WCF;
 
 /**
  * @author Olaf Braun
@@ -31,8 +32,7 @@ abstract class AbstractStringUserConditionType extends AbstractConditionType imp
         public readonly string $columnName,
         public readonly ?string $migrateKeyName = null,
         public readonly ?string $migrateConditionObjectType = null,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getFormField(string $id): PrefixConditionFormFieldContainer
@@ -65,13 +65,13 @@ abstract class AbstractStringUserConditionType extends AbstractConditionType imp
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         ["condition" => $condition, "value" => $value] = $this->filter;
-        $value = \addcslashes($value, '_%');
+        $value = WCF::getDB()->escapeLikeValue($value);
 
         $filter = match ($condition) {
             "_%" => $value . '%',
             "%_%" => '%' . $value . '%',
             "%_" => '%' . $value,
-            default => '',
+            default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
 
         $objectList->getConditionBuilder()->add(
@@ -91,7 +91,7 @@ abstract class AbstractStringUserConditionType extends AbstractConditionType imp
             "_%" => \str_starts_with($objectValue, $value),
             "%_%" => \str_contains($objectValue, $value),
             "%_" => \str_ends_with($objectValue, $value),
-            default => false,
+            default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
     }
 
