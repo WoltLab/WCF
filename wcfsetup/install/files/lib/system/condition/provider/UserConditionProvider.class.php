@@ -34,27 +34,110 @@ final class UserConditionProvider extends AbstractConditionProvider
 {
     public function __construct()
     {
-        $this->addConditions([
-            new StringUserConditionType(identifier: "username", columnName: "username", migrateKeyName: "username", migrateConditionObjectType: 'com.woltlab.wcf.user.username'),
-            new StringUserConditionType(identifier: "email", columnName: "email", migrateKeyName: "email", migrateConditionObjectType: 'com.woltlab.wcf.user.email'),
+        $this->addCondition(
+            new StringUserConditionType(
+                identifier: "username",
+                columnName: "username",
+                migrateKeyName: "username",
+                migrateConditionObjectType: 'com.woltlab.wcf.user.username'
+            ),
+        );
+        $this->addCondition(
+            new StringUserConditionType(
+                identifier: "email",
+                columnName: "email",
+                migrateKeyName: "email",
+                migrateConditionObjectType: 'com.woltlab.wcf.user.email'
+            ),
+        );
+        $this->addCondition(
             new RegistrationDateUserConditionType(),
+        );
+        $this->addCondition(
             new RegistrationDaysUserConditionType(),
+        );
+        $this->addCondition(
             new InGroupUserConditionType(),
+        );
+        $this->addCondition(
             new NotInGroupUserConditionType(),
+        );
+        $this->addCondition(
             new LanguageUserConditionType(),
-            new IsNullUserConditionType(identifier: "avatar", columnName: 'avatarFileID', migrateKeyName: 'userAvatar', migrateConditionObjectType: 'com.woltlab.wcf.user.avatar'),
+        );
+        $this->addCondition(
+            new IsNullUserConditionType(
+                identifier: "avatar",
+                columnName: 'avatarFileID',
+                migrateKeyName: 'userAvatar',
+                migrateConditionObjectType: 'com.woltlab.wcf.user.avatar'
+            ),
+        );
+        $this->addCondition(
             new SignatureUserConditionType(),
-            new IsNullUserConditionType(identifier: "coverPhoto", columnName: 'coverPhotoFileID', migrateKeyName: 'userCoverPhoto', migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto'),
-            new BooleanUserConditionType(identifier: "isBanned", columnName: 'banned', migrateKeyName: 'userIsBanned', migrateConditionObjectType: 'com.woltlab.wcf.user.state'),
+        );
+        $this->addCondition(
+            new IsNullUserConditionType(
+                identifier: "coverPhoto",
+                columnName: 'coverPhotoFileID',
+                migrateKeyName: 'userCoverPhoto',
+                migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto'
+            ),
+        );
+        $this->addCondition(
+            new BooleanUserConditionType(
+                identifier: "isBanned",
+                columnName: 'banned',
+                migrateKeyName: 'userIsBanned',
+                migrateConditionObjectType: 'com.woltlab.wcf.user.state'
+            ),
+        );
+        $this->addCondition(
             new UserIsEnabledConditionType(),
-            new IsNullUserConditionType(identifier: "isEmailConfirmed", columnName: 'emailConfirmed', migrateKeyName: 'userIsEmailConfirmed', migrateConditionObjectType: 'com.woltlab.wcf.user.state'),
-            new BooleanUserConditionType(identifier: "isMultifactorActive", columnName: 'multifactorActive', migrateKeyName: 'multifactorActive', migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor'),
+        );
+        $this->addCondition(
+            new IsNullUserConditionType(
+                identifier: "isEmailConfirmed",
+                columnName: 'emailConfirmed',
+                migrateKeyName: 'userIsEmailConfirmed',
+                migrateConditionObjectType: 'com.woltlab.wcf.user.state'
+            ),
+        );
+        $this->addCondition(
+            new BooleanUserConditionType(
+                identifier: "isMultifactorActive",
+                columnName: 'multifactorActive',
+                migrateKeyName: 'multifactorActive',
+                migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor'
+            ),
+        );
+        $this->addCondition(
             new HasTrophyUserConditionType(),
+        );
+        $this->addCondition(
             new HasNotTrophyUserConditionType(),
-            new IntegerUserConditionType(identifier: "activityPoints", columnName: "activityPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints'),
-            new IntegerUserConditionType(identifier: "likesReceived", columnName: "likesReceived", migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived'),
-            new IntegerUserConditionType(identifier: "trophyPoints", columnName: "trophyPoints", migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints'),
-        ]);
+        );
+        $this->addCondition(
+            new IntegerUserConditionType(
+                identifier: "activityPoints",
+                columnName: "activityPoints",
+                migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints'
+            ),
+        );
+        $this->addCondition(
+            new IntegerUserConditionType(
+                identifier: "likesReceived",
+                columnName: "likesReceived",
+                migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived'
+            ),
+        );
+        $this->addCondition(
+            new IntegerUserConditionType(
+                identifier: "trophyPoints",
+                columnName: "trophyPoints",
+                migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints'
+            ),
+        );
 
         // TODO add conditions for user options that implement `ISearchableConditionUserOption`
 
