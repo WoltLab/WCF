@@ -22,7 +22,7 @@ use wcf\system\form\builder\field\SelectFormField;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserInGroupConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+final class InGroupUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField

@@ -3,9 +3,6 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyList;
-use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
@@ -13,7 +10,7 @@ use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\WCF;
+use wcf\system\language\LanguageFactory;
 
 /**
  * @author Olaf Braun
@@ -25,7 +22,7 @@ use wcf\system\WCF;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserHasNotTrophyConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+final class LanguageUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
@@ -33,31 +30,27 @@ final class UserHasNotTrophyConditionType extends AbstractConditionType implemen
         // SelectFormField stores its value as a string,
         // so we need to convert it to an integer in the `applyFilter`&`matches` method.
         return SelectFormField::create($id)
-            ->options($this->getTrophies())
+            ->options(LanguageFactory::getInstance()->getLanguages())
             ->required();
     }
 
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'hasNotTrophy';
+        return 'language';
     }
 
     #[\Override]
     public function getLabel(): string
     {
-        return 'wcf.condition.user.hasNotTrophy';
+        return 'wcf.condition.user.language';
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         $objectList->getConditionBuilder()->add(
-            "{$objectList->getDatabaseTableAlias()}.userID NOT IN (
-                    SELECT userID
-                    FROM   wcf1_user_trophy
-                    WHERE  trophyID = ?
-            )",
+            "{$objectList->getDatabaseTableAlias()}.languageID = ?",
             [(int)$this->filter]
         );
     }
@@ -65,46 +58,25 @@ final class UserHasNotTrophyConditionType extends AbstractConditionType implemen
     #[\Override]
     public function matches(object $object): bool
     {
-        $userTrophies = UserTrophyList::getUserTrophies([$object->userID], false)[$object->userID];
-        $trophyIDs = \array_column($userTrophies, 'trophyID');
-
-        return !\in_array((int)$this->filter, $trophyIDs, true);
-    }
-
-    /**
-     * @return Trophy[]
-     */
-    private function getTrophies(): array
-    {
-        $trophyList = new TrophyList();
-        $trophyList->readObjects();
-        $trophies = $trophyList->getObjects();
-
-        $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \uasort(
-            $trophies,
-            static fn (Trophy $a, Trophy $b) => $collator->compare($a->getTitle(), $b->getTitle())
-        );
-
-        return $trophies;
+        return (int)$this->filter === $object->languageID;
     }
 
     #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
-        if (!isset($conditionData['notUserTrophyIDs'])) {
+        if (!isset($conditionData['languageIDs'])) {
             return [];
         }
 
         $result = [];
-        foreach ($conditionData['notUserTrophyIDs'] as $trophyID) {
+        foreach ($conditionData['languageIDs'] as $languageID) {
             $result[] = [
                 'identifier' => $this->getIdentifier(),
-                'value' => $trophyID,
+                'value' => $languageID,
             ];
         }
 
-        unset($conditionData['notUserTrophyIDs']);
+        unset($conditionData['languageIDs']);
 
         return $result;
     }
@@ -112,6 +84,6 @@ final class UserHasNotTrophyConditionType extends AbstractConditionType implemen
     #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
-        return $objectType === 'com.woltlab.wcf.user.userTrophyCondition';
+        return $objectType === 'com.woltlab.wcf.user.languages';
     }
 }

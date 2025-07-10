@@ -3,9 +3,7 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyList;
-use wcf\data\user\trophy\UserTrophyList;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
@@ -13,7 +11,6 @@ use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\WCF;
 
 /**
  * @author Olaf Braun
@@ -25,7 +22,7 @@ use wcf\system\WCF;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserHasTrophyConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
+final class NotInGroupUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
@@ -33,30 +30,36 @@ final class UserHasTrophyConditionType extends AbstractConditionType implements 
         // SelectFormField stores its value as a string,
         // so we need to convert it to an integer in the `applyFilter`&`matches` method.
         return SelectFormField::create($id)
-            ->options($this->getTrophies())
+            ->options(
+                UserGroup::getGroupsByType(invalidGroupTypes: [
+                    UserGroup::EVERYONE,
+                    UserGroup::GUESTS,
+                    UserGroup::USERS,
+                ])
+            )
             ->required();
     }
 
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'hasTrophy';
+        return 'notInGroup';
     }
 
     #[\Override]
     public function getLabel(): string
     {
-        return 'wcf.condition.user.hasTrophy';
+        return 'wcf.condition.user.notInGroup';
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $objectList): void
     {
         $objectList->getConditionBuilder()->add(
-            "{$objectList->getDatabaseTableAlias()}.userID IN (
+            "{$objectList->getDatabaseTableAlias()}.userID NOT IN (
                     SELECT userID
-                    FROM   wcf1_user_trophy
-                    WHERE  trophyID = ?
+                    FROM   wcf1_user_to_group
+                    WHERE  groupID = ?
             )",
             [(int)$this->filter]
         );
@@ -65,53 +68,32 @@ final class UserHasTrophyConditionType extends AbstractConditionType implements 
     #[\Override]
     public function matches(object $object): bool
     {
-        $userTrophies = UserTrophyList::getUserTrophies([$object->userID], false)[$object->userID];
-        $trophyIDs = \array_column($userTrophies, 'trophyID');
-
-        return \in_array((int)$this->filter, $trophyIDs, true);
-    }
-
-    /**
-     * @return Trophy[]
-     */
-    private function getTrophies(): array
-    {
-        $trophyList = new TrophyList();
-        $trophyList->readObjects();
-        $trophies = $trophyList->getObjects();
-
-        $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \uasort(
-            $trophies,
-            static fn (Trophy $a, Trophy $b) => $collator->compare($a->getTitle(), $b->getTitle())
-        );
-
-        return $trophies;
-    }
-
-    #[\Override]
-    public function migrateConditionData(array &$conditionData): array
-    {
-        if (!isset($conditionData['userTrophyIDs'])) {
-            return [];
-        }
-
-        $result = [];
-        foreach ($conditionData['userTrophyIDs'] as $trophyID) {
-            $result[] = [
-                'identifier' => $this->getIdentifier(),
-                'value' => $trophyID,
-            ];
-        }
-
-        unset($conditionData['userTrophyIDs']);
-
-        return $result;
+        return !\in_array((int)$this->filter, $object->getGroupIDs(), true);
     }
 
     #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
-        return $objectType === 'com.woltlab.wcf.user.userTrophyCondition';
+        return $objectType === 'com.woltlab.wcf.user.userGroup';
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if (!isset($conditionData['notGroupIDs'])) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($conditionData['notGroupIDs'] as $groupID) {
+            $result[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => $groupID,
+            ];
+        }
+
+        unset($conditionData['notGroupIDs']);
+
+        return $result;
     }
 }
