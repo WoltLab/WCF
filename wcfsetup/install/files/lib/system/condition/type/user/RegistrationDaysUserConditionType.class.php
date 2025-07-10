@@ -37,7 +37,7 @@ final class RegistrationDaysUserConditionType extends IntegerUserConditionType
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         $objectList->getConditionBuilder()->add(
-            "? {$condition} {$objectList->getDatabaseTableAlias()}.registrationDate",
+            "{$objectList->getDatabaseTableAlias()}.registrationDate {$condition} ?",
             [$timestamp]
         );
     }
@@ -48,10 +48,10 @@ final class RegistrationDaysUserConditionType extends IntegerUserConditionType
         ["condition" => $condition, "timestamp" => $timestamp] = $this->getParsedFilter();
 
         return match ($condition) {
-            '>' => $timestamp > $object->registrationDate,
-            '<' => $timestamp < $object->registrationDate,
-            '>=' => $timestamp >= $object->registrationDate,
-            '<=' => $timestamp <= $object->registrationDate,
+            '>' => $object->registrationDate > $timestamp,
+            '<' => $object->registrationDate < $timestamp,
+            '>=' => $object->registrationDate >= $timestamp,
+            '<=' => $object->registrationDate <= $timestamp,
             default => throw new \InvalidArgumentException("Unknown condition: {$condition}"),
         };
     }
