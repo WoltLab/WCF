@@ -340,8 +340,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
 
     /**
      * @inheritDoc
+     * @return null
      */
-    final protected function prepareDeleteXmlElement(\DOMElement $element): null
+    final protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         return null;
     }
