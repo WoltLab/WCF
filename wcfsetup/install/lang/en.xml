@@ -3461,7 +3461,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
-		<item name="wcf.condition.add"><![CDATA[Bedingung hinzufügen]]></item>
+		<item name="wcf.condition.condition"><![CDATA[Condition]]></item>
+		<item name="wcf.condition.add"><![CDATA[Add condition]]></item>
 		<item name="wcf.condition.user.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.condition.user.inGroup"><![CDATA[User group]]></item>
 		<item name="wcf.condition.user.notInGroup"><![CDATA[Not in user group]]></item>
