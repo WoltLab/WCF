@@ -3,6 +3,8 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
@@ -14,6 +16,10 @@ use wcf\system\form\builder\field\BooleanFormField;
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
+ *
+ * @implements IDatabaseObjectListConditionType<UserList<User>, bool>
+ * @implements IObjectConditionType<User, bool>
+ * @extends AbstractConditionType<bool>
  */
 class IsNullUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {

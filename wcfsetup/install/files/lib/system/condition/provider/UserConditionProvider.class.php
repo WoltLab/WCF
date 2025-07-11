@@ -12,8 +12,8 @@ use wcf\system\condition\type\user\HasNotTrophyUserConditionType;
 use wcf\system\condition\type\user\HasTrophyUserConditionType;
 use wcf\system\condition\type\user\InGroupUserConditionType;
 use wcf\system\condition\type\user\IntegerUserConditionType;
+use wcf\system\condition\type\user\IsEnabledConditionType;
 use wcf\system\condition\type\user\IsNullUserConditionType;
-use wcf\system\condition\type\user\UserIsEnabledConditionType;
 use wcf\system\condition\type\user\LanguageUserConditionType;
 use wcf\system\condition\type\user\NotInGroupUserConditionType;
 use wcf\system\condition\type\user\RegistrationDateUserConditionType;
@@ -93,7 +93,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             ),
         );
         $this->addCondition(
-            new UserIsEnabledConditionType(),
+            new IsEnabledConditionType(),
         );
         $this->addCondition(
             new IsNullUserConditionType(
