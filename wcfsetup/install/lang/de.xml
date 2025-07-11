@@ -3536,7 +3536,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[Das Enddatum ist ungültig.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Startdatum ist ungültig.]]></item>
-		<item name="wcf.condition.add"><![CDATA[Add condition]]></item>
+		<item name="wcf.condition.condition"><![CDATA[Bedingung]]></item>
+		<item name="wcf.condition.add"><![CDATA[Bedingung hinzufügen]]></item>
 		<item name="wcf.condition.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.condition.user.inGroup"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.condition.user.notInGroup"><![CDATA[Nicht in Benutzergruppe]]></item>
