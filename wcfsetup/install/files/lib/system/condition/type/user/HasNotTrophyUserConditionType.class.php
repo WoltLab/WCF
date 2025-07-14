@@ -10,6 +10,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\WCF;
@@ -24,7 +25,7 @@ use wcf\system\WCF;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserHasNotTrophyConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class HasNotTrophyUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
@@ -86,5 +87,31 @@ final class UserHasNotTrophyConditionType extends AbstractConditionType implemen
         );
 
         return $trophies;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if (!isset($conditionData['notUserTrophyIDs'])) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($conditionData['notUserTrophyIDs'] as $trophyID) {
+            $result[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => $trophyID,
+            ];
+        }
+
+        unset($conditionData['notUserTrophyIDs']);
+
+        return $result;
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.user.userTrophyCondition';
     }
 }

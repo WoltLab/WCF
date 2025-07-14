@@ -836,6 +836,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signatures]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Can manage automatic user group assignments]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Add User Group Automatic Assignment]]></item>
+		<item name="wcf.acp.group.assignment"><![CDATA[User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Add Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
@@ -846,6 +847,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
+		<item name="wcf.acp.group.assignment.legacyNotice"><![CDATA[The automated user group assignments need to be recalculated. Please perform this task by visiting  <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
@@ -953,6 +955,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expiringSoon.cta"><![CDATA[Renew now and get a 10% discount!]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.expired"><![CDATA[The licenses for the following products have expired and no longer entitle you to access new versions and ticket support.]]></item>
 		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Renew Licenses Now ↗]]></item>
+		<item name="wcf.acp.dashboard.box.migrationNeeded"><![CDATA[The data for {implode from=$titles item=title}<strong>{$title}</strong>{/implode} need to be recalculated. Please perform this task by visiting <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
@@ -2625,6 +2628,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker.description"><![CDATA[Recalculates the number of activities for which users get points and rebuilds user ranks.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker"><![CDATA[Update rich embeds]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker.description"><![CDATA[Creates new rich embeds images]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker"><![CDATA[Rebuild Automatic User Group Assignment]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Rebuilds the Automatic User Group Assignment.]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[It is strongly recommended to enable the maintenance mode while performing a data rebuild.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
 	</category>
@@ -3454,26 +3459,27 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
-		<item name="wcf.condition.add"><![CDATA[Bedingung hinzufügen]]></item>
-		<item name="wcf.condition.user.registrationDate"><![CDATA[Registration Date is]]></item>
-		<item name="wcf.condition.user.inGroup"><![CDATA[User is in the user group]]></item>
-		<item name="wcf.condition.user.notInGroup"><![CDATA[User is not in the user group]]></item>
-		<item name="wcf.condition.user.registrationDays"><![CDATA[Days since registration is]]></item>
+		<item name="wcf.condition.condition"><![CDATA[Condition]]></item>
+		<item name="wcf.condition.add"><![CDATA[Add condition]]></item>
+		<item name="wcf.condition.user.registrationDate"><![CDATA[Registration Date]]></item>
+		<item name="wcf.condition.user.inGroup"><![CDATA[User group]]></item>
+		<item name="wcf.condition.user.notInGroup"><![CDATA[Not in user group]]></item>
+		<item name="wcf.condition.user.registrationDays"><![CDATA[Days since registration]]></item>
 		<item name="wcf.condition.user.username"><![CDATA[Username]]></item>
-		<item name="wcf.condition.user.email"><![CDATA[User's Email Address]]></item>
-		<item name="wcf.condition.user.language"><![CDATA[User's language is]]></item>
-		<item name="wcf.condition.user.avatar"><![CDATA[User has an avatar]]></item>
-		<item name="wcf.condition.user.signature"><![CDATA[User has a signature]]></item>
-		<item name="wcf.condition.user.coverPhoto"><![CDATA[User has a cover photo]]></item>
-		<item name="wcf.condition.user.isBanned"><![CDATA[User is banned]]></item>
-		<item name="wcf.condition.user.isEmailConfirmed"><![CDATA[User has a confirmed email address]]></item>
-		<item name="wcf.condition.user.isEnabled"><![CDATA[User is enabled]]></item>
-		<item name="wcf.condition.user.activityPoints"><![CDATA[User activity points are]]></item>
-		<item name="wcf.condition.user.likesReceived"><![CDATA[User responses received are]]></item>
-		<item name="wcf.condition.user.trophyPoints"><![CDATA[Number of trophies the user has]]></item>
-		<item name="wcf.condition.user.hasTrophy"><![CDATA[User has the trophy]]></item>
-		<item name="wcf.condition.user.hasNotTrophy"><![CDATA[User does not have the trophy]]></item>
-		<item name="wcf.condition.user.isMultifactorActive"><![CDATA[User has enabled multi-factor authentication]]></item>
+		<item name="wcf.condition.user.email"><![CDATA[Email Address]]></item>
+		<item name="wcf.condition.user.language"><![CDATA[Language]]></item>
+		<item name="wcf.condition.user.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.condition.user.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.condition.user.coverPhoto"><![CDATA[Cover photo]]></item>
+		<item name="wcf.condition.user.isBanned"><![CDATA[Banned]]></item>
+		<item name="wcf.condition.user.isEmailConfirmed"><![CDATA[Email address confirmed]]></item>
+		<item name="wcf.condition.user.isEnabled"><![CDATA[Approved]]></item>
+		<item name="wcf.condition.user.activityPoints"><![CDATA[Activity points]]></item>
+		<item name="wcf.condition.user.likesReceived"><![CDATA[Reactions received]]></item>
+		<item name="wcf.condition.user.trophyPoints"><![CDATA[Number of trophies]]></item>
+		<item name="wcf.condition.user.hasTrophy"><![CDATA[Trophy]]></item>
+		<item name="wcf.condition.user.hasNotTrophy"><![CDATA[Trophy not received]]></item>
+		<item name="wcf.condition.user.isMultifactorActive"><![CDATA[Multi-factor authentication]]></item>
 		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
 		<item name="wcf.condition.contains"><![CDATA[contains]]></item>

@@ -19,6 +19,7 @@ use wcf\util\JSON;
  * @property-read   string $title          title of the automatic user group assignment
  * @property-read   int $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
  * @property-read string $conditions JSON-encoded string containing the conditions of the automatic user group assignment
+ * @property-read bool $isLegacy indicates whether the conditions need to be migrated to the new format
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController
 {

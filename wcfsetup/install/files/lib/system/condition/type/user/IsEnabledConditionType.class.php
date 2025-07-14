@@ -10,11 +10,11 @@ use wcf\data\DatabaseObjectList;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserIsEnabledConditionType extends AbstractUserBooleanConditionType
+final class IsEnabledConditionType extends BooleanUserConditionType
 {
     public function __construct()
     {
-        parent::__construct("isEnabled", 'activationCode');
+        parent::__construct("isEnabled", 'activationCode', 'userIsEnabled', 'com.woltlab.wcf.user.state');
     }
 
     #[\Override]

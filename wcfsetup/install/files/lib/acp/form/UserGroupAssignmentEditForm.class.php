@@ -4,6 +4,9 @@ namespace wcf\acp\form;
 
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
+use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Shows the form to edit an existing automatic user group assignment.
@@ -38,6 +41,12 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         $this->formObject = new UserGroupAssignment(\intval($_REQUEST['id']));
         if (!$this->formObject->assignmentID) {
             throw new IllegalLinkException();
+        }
+
+        if ($this->formObject->isLegacy) {
+            throw new NamedUserException(
+                HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.group.assignment.legacyNotice'))
+            );
         }
     }
 }

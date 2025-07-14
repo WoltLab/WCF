@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\language\LanguageFactory;
@@ -21,7 +22,7 @@ use wcf\system\language\LanguageFactory;
  * @implements IObjectConditionType<User, string>
  * @extends AbstractConditionType<string>
  */
-final class UserLanguageConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType
+final class LanguageUserConditionType extends AbstractConditionType implements IDatabaseObjectListConditionType, IObjectConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getFormField(string $id): SelectFormField
@@ -58,5 +59,31 @@ final class UserLanguageConditionType extends AbstractConditionType implements I
     public function matches(object $object): bool
     {
         return (int)$this->filter === $object->languageID;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        if (!isset($conditionData['languageIDs'])) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($conditionData['languageIDs'] as $languageID) {
+            $result[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => $languageID,
+            ];
+        }
+
+        unset($conditionData['languageIDs']);
+
+        return $result;
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.user.languages';
     }
 }

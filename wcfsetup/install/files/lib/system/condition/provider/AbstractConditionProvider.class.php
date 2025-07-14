@@ -30,18 +30,6 @@ abstract class AbstractConditionProvider
         $this->conditionTypes[$conditionType->getIdentifier()] = $conditionType;
     }
 
-    /**
-     * Adds multiple condition types to this provider.
-     *
-     * @param TCondition[] $conditionTypes
-     */
-    public function addConditions(array $conditionTypes): void
-    {
-        foreach ($conditionTypes as $conditionType) {
-            $this->addCondition($conditionType);
-        }
-    }
-
     final public function getFieldId(string $containerId, string $identifier, int $index): string
     {
         return "{$containerId}_{$identifier}_{$index}";

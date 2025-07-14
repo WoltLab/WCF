@@ -3,6 +3,7 @@
 namespace wcf\system\acp\dashboard\box;
 
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
+use wcf\event\acp\dashboard\box\MigrationCollecting;
 use wcf\event\acp\dashboard\box\PHPExtensionCollecting;
 use wcf\event\acp\dashboard\box\StatusMessageCollecting;
 use wcf\system\application\ApplicationHandler;
@@ -60,6 +61,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
                 $this->getPHPExtensionMessage(),
                 $this->getEvaluationMessages(),
                 $this->getBasicMessages(),
+                $this->getMigrationMessage(),
                 $this->getCustomMessages()
             );
         }
@@ -270,5 +272,43 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         }
 
         return [];
+    }
+
+    /**
+     * @return StatusMessage[]
+     *
+     * @since 6.2
+     */
+    private function getMigrationMessage(): array
+    {
+        $event = new MigrationCollecting();
+        EventHandler::getInstance()->fire($event);
+        if ($this->userGroupAssignmentHasLegacyObjects()) {
+            $event->migrationNeeded(WCF::getLanguage()->get('wcf.acp.group.assignment'));
+        }
+
+        if ($event->needsMigration() === []) {
+            return [];
+        }
+
+        return [
+            new StatusMessage(
+                StatusMessageType::Warning,
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.dashboard.box.migrationNeeded', [
+                    'titles' => $event->needsMigration(),
+                ])
+            ),
+        ];
+    }
+
+    private function userGroupAssignmentHasLegacyObjects(): bool
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM   wcf1_user_group_assignment
+                WHERE  isLegacy = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+
+        return $statement->fetchColumn() > 0;
     }
 }

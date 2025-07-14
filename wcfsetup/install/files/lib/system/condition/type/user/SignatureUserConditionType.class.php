@@ -10,11 +10,16 @@ use wcf\data\DatabaseObjectList;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UserSignatureConditionType extends AbstractUserBooleanConditionType
+final class SignatureUserConditionType extends BooleanUserConditionType
 {
     public function __construct()
     {
-        parent::__construct('signature', 'signature');
+        parent::__construct(
+            'signature',
+            'signature',
+            'userSignature',
+            'com.woltlab.wcf.user.signature'
+        );
     }
 
     #[\Override]
