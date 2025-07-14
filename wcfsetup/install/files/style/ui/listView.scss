@@ -78,3 +78,8 @@
 .listView .info {
 	margin-top: 0;
 }
+
+.listView__selectAllItems,
+.listView__selectItem {
+	cursor: pointer;
+}

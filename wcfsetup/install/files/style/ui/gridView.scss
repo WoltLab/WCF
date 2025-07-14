@@ -239,3 +239,8 @@
 .gridView .info {
 	margin-top: 0;
 }
+
+.gridView__selectAllRows,
+.gridView__selectRow {
+	cursor: pointer;
+}
