@@ -9,6 +9,7 @@ use wcf\form\AbstractFormBuilderForm;
 use wcf\system\condition\provider\combined\NoticeConditionProvider;
 use wcf\system\form\builder\container\condition\ConditionFormContainer;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\CssClassNameFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
@@ -95,6 +96,15 @@ class NoticeAddForm extends AbstractFormBuilderForm
             ConditionFormContainer::create()
                 ->conditionProvider(new NoticeConditionProvider()),
         ]);
+    }
+
+    #[\Override]
+    public function finalizeForm()
+    {
+        parent::finalizeForm();
+
+        $this->form->getDataHandler()
+            ->addProcessor(new VoidFormDataProcessor('resetIsDismissed'));
     }
 
     /**

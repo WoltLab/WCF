@@ -9,6 +9,7 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\interaction\admin\NoticeInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\HtmlString;
 
@@ -64,5 +65,22 @@ class NoticeEditForm extends NoticeAddForm
                 HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.notice.legacyNotice')) // TODO add language item
             );
         }
+    }
+
+    #[\Override]
+    public function saved()
+    {
+        if ($this->form->getFormField('resetIsDismissed')->getValue()) {
+            $sql = "DELETE FROM wcf1_notice_dismissed
+                    WHERE       noticeID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $this->formObject->noticeID,
+            ]);
+
+            UserStorageHandler::getInstance()->resetAll('dismissedNotices');
+        }
+
+        parent::saved();
     }
 }
