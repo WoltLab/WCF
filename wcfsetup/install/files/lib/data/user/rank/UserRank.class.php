@@ -4,7 +4,6 @@ namespace wcf\data\user\rank;
 
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
-use wcf\system\form\builder\field\UploadFormField;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
