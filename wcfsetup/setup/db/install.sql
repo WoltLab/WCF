@@ -903,7 +903,9 @@ CREATE TABLE wcf1_notice (
 	cssClassName VARCHAR(255) NOT NULL DEFAULT 'info',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	isDismissible TINYINT(1) NOT NULL DEFAULT 0
+	isDismissible TINYINT(1) NOT NULL DEFAULT 0,
+	conditions MEDIUMTEXT,
+	isLegacy TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_notice_dismissed;

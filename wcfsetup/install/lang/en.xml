@@ -3485,6 +3485,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.startsWith"><![CDATA[starts with]]></item>
 		<item name="wcf.condition.endsWith"><![CDATA[ends with]]></item>
 		<item name="wcf.condition.contains"><![CDATA[contains]]></item>
+		<item name="wcf.condition.request.time"><![CDATA[Current time]]></item>
+		<item name="wcf.condition.request.activePage"><![CDATA[Active page]]></item>
+		<item name="wcf.condition.request.notOnPage"><![CDATA[Not on page]]></item>
 	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>

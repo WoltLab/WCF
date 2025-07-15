@@ -2,12 +2,11 @@
 
 namespace wcf\data\notice;
 
-use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -25,6 +24,8 @@ use wcf\util\StringUtil;
  * @property-read   int $showOrder      position of the notice in relation to the other notices
  * @property-read   int $isDisabled     is `1` if the notice is disabled and thus not shown, otherwise `0`
  * @property-read   int $isDismissible      is `1` if the notice can be dismissed by users, otherwise `0`
+ * @property-read   string $conditions
+ * @property-read   int $isLegacy
  */
 class Notice extends DatabaseObject implements IRouteController
 {
@@ -65,11 +66,11 @@ class Notice extends DatabaseObject implements IRouteController
     /**
      * Returns the conditions of the notice.
      *
-     * @return  Condition[]
+     * @return array{identifier: string, value: mixed}[]
      */
-    public function getConditions()
+    public function getConditions(): array
     {
-        return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.notice', $this->noticeID);
+        return JSON::decode($this->conditions);
     }
 
     /**

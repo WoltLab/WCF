@@ -4,7 +4,11 @@ namespace wcf\system\notice;
 
 use wcf\data\notice\Notice;
 use wcf\system\cache\builder\NoticeCacheBuilder;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\provider\combined\NoticeConditionProvider;
+use wcf\system\condition\type\IGlobalConditionType;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles notice-related matters.
@@ -47,14 +51,19 @@ class NoticeHandler extends SingletonFactory
         }
 
         $notices = [];
+        $provider = new NoticeConditionProvider();
         foreach ($this->notices as $notice) {
             if ($notice->isDismissed()) {
                 continue;
             }
 
-            $conditions = $notice->getConditions();
+            $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($provider, $notice->getConditions());
             foreach ($conditions as $condition) {
-                if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
+                $matches = $condition instanceof IGlobalConditionType
+                    ? $condition->matches()
+                    : $condition->matches(WCF::getUser());
+
+                if (!$matches) {
                     continue 2;
                 }
             }

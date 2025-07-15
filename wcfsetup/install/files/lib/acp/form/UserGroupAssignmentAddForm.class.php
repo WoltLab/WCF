@@ -7,7 +7,7 @@ use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\condition\provider\UserConditionProvider;
-use wcf\system\form\builder\container\ConditionFormContainer;
+use wcf\system\form\builder\container\condition\ConditionFormContainer;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;

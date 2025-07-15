@@ -1,8 +1,9 @@
 <?php
 
-namespace wcf\system\form\builder\container;
+namespace wcf\system\form\builder\container\condition;
 
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IImmutableFormField;

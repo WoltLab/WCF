@@ -9,7 +9,7 @@ use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IDatabaseObjectListConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\condition\type\IObjectConditionType;
-use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
+use wcf\system\form\builder\container\condition\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\WCF;

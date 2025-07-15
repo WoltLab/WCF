@@ -27,6 +27,10 @@ abstract class AbstractConditionProvider
      */
     public function addCondition(IConditionType $conditionType): void
     {
+        if (\array_key_exists($conditionType->getIdentifier(), $this->conditionTypes)) {
+            throw new \InvalidArgumentException("Condition type with identifier '{$conditionType->getIdentifier()}' already exists.");
+        }
+
         $this->conditionTypes[$conditionType->getIdentifier()] = $conditionType;
     }
 

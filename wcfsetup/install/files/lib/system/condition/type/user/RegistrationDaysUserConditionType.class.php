@@ -3,7 +3,7 @@
 namespace wcf\system\condition\type\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\system\form\builder\container\PrefixConditionFormFieldContainer;
+use wcf\system\form\builder\container\condition\PrefixConditionFormFieldContainer;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\util\DateUtil;
 

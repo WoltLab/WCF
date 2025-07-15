@@ -18,4 +18,9 @@ return [
             MediumtextDatabaseTableColumn::create('conditions'),
             DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
         ]),
+    PartialDatabaseTable::create('wcf1_notice')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('conditions'),
+            DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
+        ]),
 ];

@@ -5,6 +5,7 @@ namespace wcf\data\notice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
+use wcf\data\TI18nDatabaseObjectAction;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -21,6 +22,7 @@ use wcf\system\WCF;
 class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
     use TDatabaseObjectToggle;
+    use TI18nDatabaseObjectAction;
 
     /**
      * @inheritDoc
@@ -56,6 +58,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         /** @var Notice $notice */
         $notice = parent::create();
+
+        $this->saveI18nValue($notice);
+
         $noticeEditor = new NoticeEditor($notice);
         $noticeEditor->setShowOrder($showOrder);
 
@@ -69,7 +74,11 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.notice', $this->objectIDs);
 
-        return parent::delete();
+        $count = parent::delete();
+
+        $this->deleteI18nValues();
+
+        return $count;
     }
 
     /**
@@ -126,6 +135,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         parent::update();
 
+        foreach ($this->getObjects() as $labelEditor) {
+            $this->saveI18nValue($labelEditor->getDecoratedObject());
+        }
+
         if (
             \count($this->objects) == 1
             && isset($this->parameters['data']['showOrder'])
@@ -133,5 +146,23 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
         ) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
         }
+    }
+
+    #[\Override]
+    public function getI18nSaveTypes(): array
+    {
+        return ['notice' => 'wcf.notice.notice.notice\d+'];
+    }
+
+    #[\Override]
+    public function getLanguageCategory(): string
+    {
+        return 'wcf.notice';
+    }
+
+    #[\Override]
+    public function getPackageID(): int
+    {
+        return PACKAGE_ID;
     }
 }
