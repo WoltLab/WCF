@@ -10,6 +10,7 @@ use wcf\system\condition\provider\combined\NoticeConditionProvider;
 use wcf\system\form\builder\container\condition\ConditionFormContainer;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\CssClassNameFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
@@ -70,11 +71,13 @@ class NoticeAddForm extends AbstractFormBuilderForm
             FormContainer::create('settingsSection')
                 ->label('wcf.global.settings')
                 ->appendChildren([
-                    /*TODO
-                     * SingleSelectionFormField::create('cssClassName')
+                    CssClassNameFormField::create('cssClassName')
                         ->label('wcf.acp.notice.cssClassName')
+                        ->visualTemplate('<woltlab-core-notice type="{$className}">{$label}</woltlab-core-notice>')
+                        ->description('wcf.acp.notice.cssClassName.description')
+                        ->options($this->getClassNames())
+                        ->supportCustomClassName()
                         ->required(),
-                    */
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.acp.notice.isDisabled'),
                     BooleanFormField::create('isDismissible')
@@ -104,5 +107,19 @@ class NoticeAddForm extends AbstractFormBuilderForm
         $optionList->readObjects();
 
         return $optionList->getObjects();
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getClassNames(): array
+    {
+        $classNames = [];
+
+        foreach (Notice::TYPES as $type) {
+            $classNames[$type] = 'wcf.acp.notice.cssClassName.' . $type;
+        }
+
+        return $classNames;
     }
 }

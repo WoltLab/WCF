@@ -1,0 +1,28 @@
+.classNameSelection.inlineList > li {
+	flex-basis: 30%;
+}
+
+.classNameSelection > li.custom {
+	display: flex;
+}
+
+.classNameSelection__label {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.classNameSelection__radio {
+	flex: 0 0 auto;
+	margin-right: 7px;
+}
+
+.classNameSelection > li.custom .classNameSelection__span {
+	flex: 1 1 auto;
+}
+
+.classNameSelection__label > woltlab-core-notice {
+	display: inline-flex;
+	margin-top: 0;
+}
