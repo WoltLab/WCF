@@ -12,7 +12,7 @@ use wcf\system\WCF;
  *
  * @author  Marcel Werk
  * @copyright   2001-2022 WoltLab GmbH
- * @license WoltLab License <http://www.woltlab.com/license-agreement.html>
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.5
  *
  * @method  LikeUserNotificationObject  getUserNotificationObject()
