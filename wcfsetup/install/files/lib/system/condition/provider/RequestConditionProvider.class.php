@@ -4,6 +4,8 @@ namespace wcf\system\condition\provider;
 
 use wcf\system\condition\type\IGlobalConditionType;
 use wcf\system\condition\type\request\ActivePageRequestConditionType;
+use wcf\system\condition\type\request\DayOfWeekRequestConditionType;
+use wcf\system\condition\type\request\NotDayOfWeekRequestConditionType;
 use wcf\system\condition\type\request\NotOnPageRequestConditionType;
 use wcf\system\condition\type\request\TimeRequestConditionType;
 
@@ -23,5 +25,7 @@ final class RequestConditionProvider extends AbstractConditionProvider
         $this->addCondition(new TimeRequestConditionType());
         $this->addCondition(new ActivePageRequestConditionType());
         $this->addCondition(new NotOnPageRequestConditionType());
+        $this->addCondition(new DayOfWeekRequestConditionType());
+        $this->addCondition(new NotDayOfWeekRequestConditionType());
     }
 }

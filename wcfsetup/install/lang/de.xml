@@ -3565,6 +3565,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.request.time"><![CDATA[Aktuelle Uhrzeit]]></item>
 		<item name="wcf.condition.request.activePage"><![CDATA[Aktuelle Seite]]></item>
 		<item name="wcf.condition.request.notOnPage"><![CDATA[Nicht auf Seite]]></item>
+		<item name="wcf.condition.request.dayOfWeek"><![CDATA[Wochentage]]></item>
+		<item name="wcf.condition.request.notDayOfWeek"><![CDATA[Nicht Wochentage]]></item>
 	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontaktformular]]></item>
