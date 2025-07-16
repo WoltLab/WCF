@@ -1,7 +1,7 @@
 {capture assign='contentTitleBadge'}<span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span>{/capture}
 
 {capture assign='headContent'}
-	<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='NotificationRssFeed'}at={$__wcf->getUser()->userID}-{$__wcf->getUser()->accessToken}{/link}">
+	<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='NotificationRssFeed' at=$__wcf->user->getAccessToken()}{/link}">
 {/capture}
 
 {capture assign='contentInteractionPagination'}
@@ -17,7 +17,7 @@
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
-	<li><a rel="alternate" href="{link controller='NotificationRssFeed'}at={$__wcf->getUser()->userID}-{$__wcf->getUser()->accessToken}{/link}">{lang}wcf.global.button.rss{/lang}</a></li>
+	<li><a rel="alternate" href="{link controller='NotificationRssFeed' at=$__wcf->user->getAccessToken()}{/link}">{lang}wcf.global.button.rss{/lang}</a></li>
 {/capture}
 
 {include file='header'}

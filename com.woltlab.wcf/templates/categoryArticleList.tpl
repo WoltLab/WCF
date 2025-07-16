@@ -12,7 +12,7 @@
 	{/if}
 	
 	{if $__wcf->user->userID}
-		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID}at={$__wcf->user->userID}-{$__wcf->user->accessToken}{/link}">
+		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID at=$__wcf->user->getAccessToken()}{/link}">
 	{else}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID}{/link}">
 	{/if}
@@ -38,7 +38,7 @@
 
 {capture assign='contentInteractionDropdownItems'}
 	{if $__wcf->user->userID}
-		<li><a rel="alternate" href="{link controller='ArticleRssFeed' id=$categoryID}at={$__wcf->user->userID}-{$__wcf->user->accessToken}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+		<li><a rel="alternate" href="{link controller='ArticleRssFeed' id=$categoryID at=$__wcf->user->getAccessToken()}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
 	{else}
 		<li><a rel="alternate" href="{link controller='ArticleRssFeed' id=$categoryID}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
 	{/if}
