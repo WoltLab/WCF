@@ -2,7 +2,7 @@
 
 namespace wcf\system\condition\provider;
 
-use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IContextualConditionType;
 use wcf\system\condition\type\request\ActivePageRequestConditionType;
 use wcf\system\condition\type\request\DayOfWeekRequestConditionType;
 use wcf\system\condition\type\request\NotDayOfWeekRequestConditionType;
@@ -15,7 +15,7 @@ use wcf\system\condition\type\request\TimeRequestConditionType;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @phpstan-type RequestConditionType IGlobalConditionType<mixed>
+ * @phpstan-type RequestConditionType IContextualConditionType<mixed>
  * @extends AbstractConditionProvider<RequestConditionType>
  */
 final class RequestConditionProvider extends AbstractConditionProvider

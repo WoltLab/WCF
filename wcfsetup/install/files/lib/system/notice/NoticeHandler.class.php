@@ -6,7 +6,7 @@ use wcf\data\notice\Notice;
 use wcf\system\cache\eager\NoticeCache;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\provider\combined\NoticeConditionProvider;
-use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IContextualConditionType;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -59,7 +59,7 @@ class NoticeHandler extends SingletonFactory
 
             $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($provider, $notice->getConditions());
             foreach ($conditions as $condition) {
-                $matches = $condition instanceof IGlobalConditionType
+                $matches = $condition instanceof IContextualConditionType
                     ? $condition->matches()
                     : $condition->matches(WCF::getUser());
 

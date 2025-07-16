@@ -4,7 +4,7 @@ namespace wcf\system\condition\type\request;
 
 use wcf\data\page\PageNodeTree;
 use wcf\system\condition\type\AbstractConditionType;
-use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IContextualConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\request\RequestHandler;
@@ -15,10 +15,10 @@ use wcf\system\request\RequestHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IGlobalConditionType<string>
+ * @implements IContextualConditionType<string>
  * @extends AbstractConditionType<string>
  */
-final class ActivePageRequestConditionType extends AbstractConditionType implements IGlobalConditionType, IMigrateConditionType
+final class ActivePageRequestConditionType extends AbstractConditionType implements IContextualConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getIdentifier(): string

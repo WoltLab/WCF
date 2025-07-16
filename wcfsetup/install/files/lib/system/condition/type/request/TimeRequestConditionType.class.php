@@ -3,7 +3,7 @@
 namespace wcf\system\condition\type\request;
 
 use wcf\system\condition\type\AbstractConditionType;
-use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IContextualConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\form\builder\container\condition\RowConditionFormFieldContainer;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -18,10 +18,10 @@ use wcf\util\DateUtil;
  * @since 6.3
  *
  * @phpstan-type Filter = array{Condition: string, Value: string, Timezone: string}
- * @implements IGlobalConditionType<Filter>
+ * @implements IContextualConditionType<Filter>
  * @extends AbstractConditionType<Filter>
  */
-final class TimeRequestConditionType extends AbstractConditionType implements IGlobalConditionType, IMigrateConditionType
+final class TimeRequestConditionType extends AbstractConditionType implements IContextualConditionType, IMigrateConditionType
 {
     public const USER_TIMEZONE = 'userTimezone';
 

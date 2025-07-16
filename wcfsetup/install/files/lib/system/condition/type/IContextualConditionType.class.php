@@ -11,7 +11,7 @@ namespace wcf\system\condition\type;
  * @template TFilter
  * @extends  IConditionType<TFilter>
  */
-interface IGlobalConditionType extends IConditionType
+interface IContextualConditionType extends IConditionType
 {
     /**
      * Returns `true` if the condition matches the global context (e.g., the active user via `WCF::getUser()`).
