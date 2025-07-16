@@ -163,6 +163,6 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     #[\Override]
     public function getPackageID(): int
     {
-        return PACKAGE_ID;
+        return 1;
     }
 }
