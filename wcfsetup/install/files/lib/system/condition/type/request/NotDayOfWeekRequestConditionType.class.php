@@ -74,7 +74,7 @@ final class NotDayOfWeekRequestConditionType extends AbstractConditionType imple
         // We must remove all selected week of days to convert the previous condition from an “or” to an “and” condition.
         $daysOfWeeks = \array_diff_key(DateUtil::getWeekDays(), $daysOfWeeks);
 
-        foreach ($daysOfWeeks as $dayOfWeek => $_) {
+        foreach (\array_keys($daysOfWeeks) as $dayOfWeek) {
             $conditions[] = [
                 'identifier' => $this->getIdentifier(),
                 'value' => (string)$dayOfWeek,
