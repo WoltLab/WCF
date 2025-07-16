@@ -1272,6 +1272,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only view it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
+		<item name="wcf.acp.notice.legacyNotice"><![CDATA[The notices need to be recalculated. Please perform this task by visiting  <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 	</category>
 	<category name="wcf.acp.option">
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
@@ -2632,6 +2633,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker.description"><![CDATA[Creates new rich embeds images]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker"><![CDATA[Rebuild Automatic User Group Assignment]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Rebuilds the Automatic User Group Assignment.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker"><![CDATA[Rebuild Notice]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker.description"><![CDATA[Rebuilds the Notice.]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[It is strongly recommended to enable the maintenance mode while performing a data rebuild.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
 	</category>

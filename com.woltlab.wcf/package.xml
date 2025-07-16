@@ -54,5 +54,6 @@
 	Required order of the following steps for the update to 6.3:
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
 	<instruction type="script">acp/update_com.woltlab.wcf_6.3_userGroupAssignment.php</instruction>
+	<instruction type="script">acp/update_com.woltlab.wcf_6.3_notice.php</instruction>
 	-->
 </package>

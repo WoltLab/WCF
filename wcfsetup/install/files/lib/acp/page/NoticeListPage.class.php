@@ -4,6 +4,7 @@ namespace wcf\acp\page;
 
 use wcf\page\AbstractGridViewPage;
 use wcf\system\gridView\admin\NoticeGridView;
+use wcf\system\WCF;
 
 /**
  * Lists the available notices.
@@ -30,5 +31,26 @@ final class NoticeListPage extends AbstractGridViewPage
     protected function createGridView(): NoticeGridView
     {
         return new NoticeGridView();
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'hasLegacyObjects' => $this->hasLegacyObjects(),
+        ]);
+    }
+
+    private function hasLegacyObjects(): bool
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM   wcf1_notice
+                WHERE  isLegacy = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+
+        return $statement->fetchColumn() > 0;
     }
 }

@@ -1296,6 +1296,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Hinweise angezeigt werden.]]></item>
+		<item name="wcf.acp.notice.legacyNotice"><![CDATA[Die Hinweise wurden noch nicht aktualisiert. Bitte führen Sie dies unter <a href="{link controller='RebuildData'}{/link}">Anzeigen aktualisieren</a> durch.]]></item>
 	</category>
 	<category name="wcf.acp.option">
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
@@ -2705,6 +2706,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UnfurlUrlRebuildDataWorker.description"><![CDATA[Erstellt Rich Embeds Bilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker"><![CDATA[Automatische Benutzergruppen-Zuordnungen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Aktualisiert die Automatische Benutzergruppen-Zuordnungen]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker"><![CDATA[Hinweise aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker.description"><![CDATA[Aktualisiert die Hinweise]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[Es wird dringend empfohlen, während der Aktualisierung der Anzeigen den Wartungsmodus zu aktivieren.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Alle aktualisieren]]></item>
 	</category>
