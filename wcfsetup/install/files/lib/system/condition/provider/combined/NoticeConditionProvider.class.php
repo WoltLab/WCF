@@ -14,15 +14,13 @@ use wcf\system\condition\provider\UserConditionProvider;
  *
  * @phpstan-import-type RequestConditionType from RequestConditionProvider
  * @phpstan-import-type UserConditionType from UserConditionProvider
- * @extends CombinedConditionProvider<UserConditionType|RequestConditionType, AbstractConditionProvider<UserConditionType>|AbstractConditionProvider<RequestConditionType>>
+ * @extends AbstractConditionProvider<UserConditionType|RequestConditionType>
  */
-final class NoticeConditionProvider extends CombinedConditionProvider
+final class NoticeConditionProvider extends AbstractConditionProvider
 {
     public function __construct()
     {
-        parent::__construct(
-            new UserConditionProvider(),
-            new RequestConditionProvider(),
-        );
+        $this->withConditionsFrom(new UserConditionProvider());
+        $this->withConditionsFrom(new RequestConditionProvider());
     }
 }

@@ -78,4 +78,13 @@ abstract class AbstractConditionProvider
     {
         return $this->conditionTypes;
     }
+
+    public function withConditionsFrom(AbstractConditionProvider $provider): self
+    {
+        foreach ($provider->getConditionTypes() as $conditionType) {
+            $this->addCondition($conditionType);
+        }
+
+        return $this;
+    }
 }
