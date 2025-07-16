@@ -28,6 +28,7 @@
 	box-shadow: var(--wcfBoxShadowCard);
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 	position: relative;
 	row-gap: var(--row-gap);
 }
@@ -39,13 +40,26 @@ html[data-color-scheme="dark"] {
 }
 
 .entryCardList__item__buttons {
+	background-color: rgb(0 0 0 / 24%);
+	border-radius: var(--wcfBorderRadius);
 	position: absolute;
-	right: 10px;
-	top: 10px;
+	right: 5px;
+	top: 5px;
 	z-index: 1;
-	align-items: flex-start;
+	align-items: center;
 	display: flex;
 	gap: 5px;
+	padding: 5px;
+	transition:
+		opacity 0.24s ease-in-out 0.12s,
+		transform 0.24s ease-in-out 0.12s;
+}
+
+@media (hover: hover) {
+	.entryCardList__item:not(:hover) .entryCardList__item__buttons {
+		transform: translateX(100%);
+		opacity: 0;
+	}
 }
 
 .entryCardList__item__image {

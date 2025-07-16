@@ -14,7 +14,7 @@
 			<div class="listView__header__buttons">
 				{if $view->hasBulkInteractions()}
 					<div class="listView__header__button">
-						<label class="button small jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
+						<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
 							<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems" aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
 						</label>
 					</div>

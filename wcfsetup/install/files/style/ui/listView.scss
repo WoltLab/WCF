@@ -3,8 +3,19 @@
 	display: flex;
 	flex-direction: row;
 	gap: 5px;
-	margin-bottom: 20px;
 	padding-bottom: 5px;
+}
+
+@include screen-sm-down {
+	.listView__header {
+		margin-bottom: 10px;
+	}
+}
+
+@include screen-md-up {
+	.listView__header {
+		margin-bottom: 20px;
+	}
 }
 
 .listView__filters {
@@ -17,6 +28,10 @@
 	display: flex;
 	gap: 5px;
 	margin-inline-start: auto;
+}
+
+.listView__header__button {
+	display: flex;
 }
 
 .listView__sorting__button.ASC::after,
@@ -82,4 +97,14 @@
 .listView__selectAllItems,
 .listView__selectItem {
 	cursor: pointer;
+	height: 18px;
+	width: 18px;
+}
+
+.listView__selectAllItems__label,
+.listView__selectItem__label {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	padding: 0 6px;
 }
