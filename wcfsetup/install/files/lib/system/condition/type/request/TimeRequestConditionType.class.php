@@ -4,6 +4,7 @@ namespace wcf\system\condition\type\request;
 
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\form\builder\container\condition\RowConditionFormFieldContainer;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TimeFormField;
@@ -20,7 +21,7 @@ use wcf\util\DateUtil;
  * @implements IGlobalConditionType<Filter>
  * @extends AbstractConditionType<Filter>
  */
-final class TimeRequestConditionType extends AbstractConditionType implements IGlobalConditionType
+final class TimeRequestConditionType extends AbstractConditionType implements IGlobalConditionType, IMigrateConditionType
 {
     public const USER_TIMEZONE = 'userTimezone';
 
@@ -102,5 +103,37 @@ final class TimeRequestConditionType extends AbstractConditionType implements IG
     protected function getConditions(): array
     {
         return [">", "<", ">=", "<="];
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        $startTime = $conditionData['startTime'] ?? null;
+        $endTime = $conditionData['endTime'] ?? null;
+        $timezone = $conditionData['timezone'] ?? self::USER_TIMEZONE;
+        $conditions = [];
+
+        if ($startTime !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["Value" => $startTime, 'Condition' => '>', 'Timezone' => $timezone],
+            ];
+        }
+        if ($endTime !== null) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => ["Value" => $endTime, 'Condition' => '<', 'Timezone' => $timezone],
+            ];
+        }
+
+        unset($conditionData['startTime'], $conditionData['endTime'], $conditionData['timezone']);
+
+        return $conditions;
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.pointInTime.time';
     }
 }

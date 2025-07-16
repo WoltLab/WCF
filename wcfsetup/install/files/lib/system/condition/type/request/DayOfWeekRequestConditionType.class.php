@@ -4,6 +4,7 @@ namespace wcf\system\condition\type\request;
 
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -17,7 +18,7 @@ use wcf\util\DateUtil;
  * @implements IGlobalConditionType<string>
  * @extends AbstractConditionType<string>
  */
-final class DayOfWeekRequestConditionType extends AbstractConditionType implements IGlobalConditionType
+final class DayOfWeekRequestConditionType extends AbstractConditionType implements IGlobalConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getIdentifier(): string
@@ -50,5 +51,32 @@ final class DayOfWeekRequestConditionType extends AbstractConditionType implemen
         $dateTime = new \DateTimeImmutable("@" . TIME_NOW, WCF::getUser()->getTimeZone());
 
         return $dateTime->format('w') === $this->filter;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        $daysOfWeeks = $conditionData['daysOfWeek'] ?? [];
+        if (\count($daysOfWeeks) > 1) {
+            // `NotDayOfWeekRequestConditionType` should migrate the data.
+            return [];
+        }
+
+        $conditions = [
+            [
+                'identifier' => $this->getIdentifier(),
+                'value' => (string)\reset($daysOfWeeks),
+            ],
+        ];
+
+        unset($conditionData['daysOfWeek']);
+
+        return $conditions;
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.pointInTime.daysOfWeek';
     }
 }

@@ -4,6 +4,7 @@ namespace wcf\system\condition\type\request;
 
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IGlobalConditionType;
+use wcf\system\condition\type\IMigrateConditionType;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -17,7 +18,7 @@ use wcf\util\DateUtil;
  * @implements IGlobalConditionType<string>
  * @extends AbstractConditionType<string>
  */
-final class NotDayOfWeekRequestConditionType extends AbstractConditionType implements IGlobalConditionType
+final class NotDayOfWeekRequestConditionType extends AbstractConditionType implements IGlobalConditionType, IMigrateConditionType
 {
     #[\Override]
     public function getIdentifier(): string
@@ -50,5 +51,44 @@ final class NotDayOfWeekRequestConditionType extends AbstractConditionType imple
         $dateTime = new \DateTimeImmutable("@" . TIME_NOW, WCF::getUser()->getTimeZone());
 
         return $dateTime->format('w') !== $this->filter;
+    }
+
+    #[\Override]
+    public function migrateConditionData(array &$conditionData): array
+    {
+        $daysOfWeeks = $conditionData['daysOfWeek'] ?? [];
+        if (\count($daysOfWeeks) <= 1) {
+            // `DayOfWeekRequestConditionType` should migrate the data.
+            return [];
+        }
+
+        if (\count($daysOfWeeks) === 7) {
+            // If all days have been selected, this condition is unnecessary and can be removed.
+            unset($conditionData['daysOfWeek']);
+
+            return [];
+        }
+
+        $conditions = [];
+
+        // We must remove all selected week of days to convert the previous condition from an “or” to an “and” condition.
+        $daysOfWeeks = \array_diff_key(DateUtil::getWeekDays(), $daysOfWeeks);
+
+        foreach ($daysOfWeeks as $dayOfWeek => $_) {
+            $conditions[] = [
+                'identifier' => $this->getIdentifier(),
+                'value' => (string)$dayOfWeek,
+            ];
+        }
+
+        unset($conditionData['daysOfWeek']);
+
+        return $conditions;
+    }
+
+    #[\Override]
+    public function canMigrateConditionData(string $objectType): bool
+    {
+        return $objectType === 'com.woltlab.wcf.pointInTime.daysOfWeek';
     }
 }
