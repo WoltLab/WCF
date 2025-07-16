@@ -2,7 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\notice\NoticeList;
+use wcf\system\cache\eager\NoticeCache;
 
 /**
  * Caches the enabled notices.
@@ -10,19 +10,20 @@ use wcf\data\notice\NoticeList;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.2 use `NoticeCache` instead
  */
-class NoticeCacheBuilder extends AbstractCacheBuilder
+final class NoticeCacheBuilder extends AbstractLegacyCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
-    protected function rebuild(array $parameters)
+    #[\Override]
+    protected function rebuild(array $parameters): array
     {
-        $noticeList = new NoticeList();
-        $noticeList->getConditionBuilder()->add('isDisabled = ?', [0]);
-        $noticeList->sqlOrderBy = 'showOrder ASC';
-        $noticeList->readObjects();
+        return (new NoticeCache())->getCache();
+    }
 
-        return $noticeList->getObjects();
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        (new NoticeCache())->rebuild();
     }
 }

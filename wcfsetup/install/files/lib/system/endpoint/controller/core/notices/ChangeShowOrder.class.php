@@ -6,9 +6,8 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeCache;
 use wcf\data\notice\NoticeList;
-use wcf\system\cache\builder\NoticeCacheBuilder;
+use wcf\system\cache\eager\NoticeCache;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\showOrder\ShowOrderHandler;
@@ -63,6 +62,6 @@ final class ChangeShowOrder implements IController
         }
         WCF::getDB()->commitTransaction();
 
-        NoticeCacheBuilder::getInstance()->reset();
+        (new NoticeCache())->rebuild();
     }
 }

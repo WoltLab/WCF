@@ -3,7 +3,7 @@
 namespace wcf\system\notice;
 
 use wcf\data\notice\Notice;
-use wcf\system\cache\builder\NoticeCacheBuilder;
+use wcf\system\cache\eager\NoticeCache;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\provider\combined\NoticeConditionProvider;
 use wcf\system\condition\type\IGlobalConditionType;
@@ -36,7 +36,7 @@ class NoticeHandler extends SingletonFactory
      */
     protected function init()
     {
-        $this->notices = NoticeCacheBuilder::getInstance()->getData();
+        $this->notices = (new NoticeCache())->getCache();
     }
 
     /**

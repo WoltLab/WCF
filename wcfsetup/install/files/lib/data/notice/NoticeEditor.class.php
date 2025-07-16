@@ -4,9 +4,7 @@ namespace wcf\data\notice;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\cache\builder\ConditionCacheBuilder;
-use wcf\system\cache\builder\NoticeCacheBuilder;
+use wcf\system\cache\eager\NoticeCache;
 use wcf\system\WCF;
 
 /**
@@ -67,11 +65,6 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public static function resetCache()
     {
-        NoticeCacheBuilder::getInstance()->reset();
-        ConditionCacheBuilder::getInstance()->reset([
-            'definitionID' => ObjectTypeCache::getInstance()
-                ->getDefinitionByName('com.woltlab.wcf.condition.notice')
-                ->definitionID,
-        ]);
+        (new NoticeCache())->rebuild();
     }
 }
