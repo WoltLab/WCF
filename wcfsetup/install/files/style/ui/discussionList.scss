@@ -1,0 +1,303 @@
+.discussionList {
+	display: flex;
+	flex-direction: column;
+}
+
+.discussionList__item {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+}
+
+.discussionList__item:not(:last-child) {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+}
+
+@include screen-sm-down {
+	.discussionList__item:not(:last-child) {
+		padding-bottom: 15px;
+		margin-bottom: 15px;
+	}
+}
+
+@include screen-md-up {
+	.discussionList__item:not(:last-child) {
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+}
+
+.discussionList__item__header {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+.discussionList__item__meta {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+
+	.icon {
+		color: inherit;
+	}
+}
+
+.discussionList__item__meta__content {
+	display: flex;
+}
+
+@include screen-xs {
+	.discussionList__item__meta {
+		gap: 5px;
+	}
+
+	.discussionList__item__meta__avatar img {
+		height: 24px;
+		width: 24px;
+	}
+
+	.discussionList__item__meta__content {
+		align-items: center;
+	}
+
+	.discussionList__item__meta__time {
+		display: flex;
+	}
+
+	.discussionList__item__meta__time::before {
+		content: "•";
+		margin: 0 3px;
+	}
+}
+
+@include screen-sm-up {
+	.discussionList__item__meta__content {
+		flex-direction: column;
+	}
+}
+
+.discussionList__item__toolbar {
+	align-items: center;
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "status interactions";
+	grid-template-columns: auto fit-content(200px);
+	z-index: 1;
+}
+
+.discussionList__item__status {
+	display: flex;
+	gap: 5px;
+	grid-area: status;
+}
+
+.discussionList__item__interactions {
+	display: flex;
+	grid-area: interactions;
+	opacity: 1;
+}
+
+@media (hover: hover) {
+	.discussionList__item:not(:hover) .discussionList__item__toolbar {
+		grid-template-columns: min-content fit-content(0);
+		column-gap: 0;
+	}
+
+	.discussionList__item__toolbar {
+		transition:
+			grid-template-columns 0.24s ease-in-out 0.12s,
+			column-gap 0.24s ease-in-out 0.12s;
+	}
+
+	.discussionList__item:not(:hover) .discussionList__item__interactions {
+		opacity: 0;
+	}
+
+	.discussionList__item__interactions {
+		transition: opacity 0.24s ease-in-out 0.12s;
+	}
+}
+
+.discussionList__item__interactions .button:not(:hover) {
+	background-color: transparent;
+	color: inherit;
+}
+
+.discussionList__item__interactions .dropdown {
+	display: flex;
+}
+
+.discussionList__item__content {
+	display: grid;
+	grid-template-areas:
+		"markAsRead title image"
+		"teaser teaser image"
+		"labels labels image";
+	grid-template-columns: min-content 1fr min-content;
+	grid-template-rows: min-content min-content 1fr;
+}
+
+.discussionList__item__markAsRead {
+	align-items: center;
+	grid-area: markAsRead;
+	display: flex;
+	padding: 0 5px;
+	margin-right: 5px;
+	z-index: 1;
+}
+
+.discussionList__item__unread__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-radius: 50%;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+}
+
+@media (hover: hover) {
+	.discussionList__item__markAsRead:hover .discussionList__item__unread__indicator {
+		background-color: var(--wcfButtonPrimaryBackgroundActive);
+	}
+}
+
+.discussionList__item__title {
+	grid-area: title;
+
+	@include wcfFontHeadline;
+	@include wcfFontBold;
+}
+
+@include screen-xs {
+	.discussionList__item__title {
+		font-size: 14px;
+	}
+}
+
+.discussionList__item__labels {
+	grid-area: labels;
+	margin-top: 5px;
+}
+
+.discussionList__item__teaser {
+	display: -webkit-box;
+	grid-area: teaser;
+	overflow: hidden;
+	margin-top: 5px;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+@include screen-xs {
+	.discussionList__item__teaser {
+		font-size: 12px;
+	}
+}
+
+.discussionList__item__image {
+	grid-area: image;
+	width: 160px;
+	overflow: hidden;
+	border-radius: var(--wcfBorderRadius);
+	margin-left: 10px;
+}
+
+@include screen-xs {
+	.discussionList__item__image {
+		display: none;
+	}
+}
+
+.discussionList__item__image img {
+	height: 100px;
+	object-fit: cover;
+	object-position: center center;
+	width: 100%;
+}
+
+.discussionList__item__link {
+	color: inherit;
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+@media (hover: hover) {
+	.discussionList__item__link:hover,
+	.discussionList__item__link:focus {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+}
+
+.discussionList__item__footer {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+
+	.icon {
+		color: inherit;
+	}
+}
+
+.discussionList__item__lastPost {
+	margin-inline-start: auto;
+	display: flex;
+	gap: 10px;
+	position: relative;
+}
+
+.discussionList__item__lastPost__link {
+	z-index: 1;
+	color: inherit;
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+@media (hover: hover) {
+	.discussionList__item__lastPost__link:hover,
+	.discussionList__item__lastPost__link:focus {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+}
+
+.discussionList__item__replies,
+.discussionList__item__lastPost__time,
+.discussionList__item__lastPost__author {
+	align-items: center;
+	display: flex;
+	gap: 3px;
+}
+
+@include screen-xs {
+	.discussionList__item__lastPost__author {
+		display: none;
+	}
+}
