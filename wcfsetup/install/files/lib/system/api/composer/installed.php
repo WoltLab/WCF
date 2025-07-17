@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '6.2.x-dev',
-        'version' => '6.2.9999999.9999999-dev',
-        'reference' => 'b66a1721eeb9abf3b9b7e52dce7a6ec949c24e6c',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '6.2.x-dev',
-            'version' => '6.2.9999999.9999999-dev',
-            'reference' => 'b66a1721eeb9abf3b9b7e52dce7a6ec949c24e6c',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../',
             'aliases' => array(),
@@ -159,6 +159,15 @@
             'replaced' => array(
                 0 => '^1.0',
             ),
+        ),
+        'nelexa/buffer' => array(
+            'pretty_version' => '1.3.0',
+            'version' => '1.3.0.0',
+            'reference' => 'c97bc126d5fbe0c94152fce406a054f681149fac',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nelexa/buffer',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'nikic/fast-route' => array(
             'pretty_version' => '2.0.0-beta1',
@@ -519,6 +528,15 @@
             'reference' => '68e9ea0553ef6e2ee8db5c1d98829f111e623ec2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../willdurand/negotiation',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'woltlab/webp-exif' => array(
+            'pretty_version' => 'v0.1.0',
+            'version' => '0.1.0.0',
+            'reference' => '8ec500ac949935c22a624595f99703b40feb4eaa',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../woltlab/webp-exif',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

@@ -1,0 +1,5 @@
+/composer.lock export-ignore
+/generate-coverage.sh export-ignore
+/phpstan.neon export-ignore
+/phpunit.xml.dist export-ignore
+/test/ export-ignore

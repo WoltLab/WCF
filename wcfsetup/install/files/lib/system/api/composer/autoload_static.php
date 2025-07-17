@@ -12,6 +12,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
         'da94ac5d3ca7d2dbab84ce561ce72bfd' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.php',
@@ -23,13 +24,13 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '5897ea0ac4cccf14d323035e65887801' => __DIR__ . '/..' . '/symfony/polyfill-php82/bootstrap.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
-        '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
         '606a39d89246991a373564698c2d8383' => __DIR__ . '/..' . '/symfony/polyfill-php85/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
+            'WoltLab\\WebpExif\\' => 17,
             'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
@@ -61,6 +62,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         ),
         'N' => 
         array (
+            'Nelexa\\Buffer\\' => 14,
             'Negotiation\\' => 12,
         ),
         'M' => 
@@ -102,6 +104,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
     );
 
     public static $prefixDirsPsr4 = array (
+        'WoltLab\\WebpExif\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/woltlab/webp-exif/src',
+        ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
@@ -191,6 +197,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'ParagonIE\\ConstantTime\\' => 
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'Nelexa\\Buffer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer',
         ),
         'Negotiation\\' => 
         array (
@@ -1495,6 +1505,14 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Negotiation\\Exception\\InvalidMediaType' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Exception/InvalidMediaType.php',
         'Negotiation\\LanguageNegotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/LanguageNegotiator.php',
         'Negotiation\\Negotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Negotiator.php',
+        'Nelexa\\Buffer\\Buffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/Buffer.php',
+        'Nelexa\\Buffer\\BufferException' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/BufferException.php',
+        'Nelexa\\Buffer\\Cast' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/Cast.php',
+        'Nelexa\\Buffer\\FileBuffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/FileBuffer.php',
+        'Nelexa\\Buffer\\MemoryResourceBuffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/MemoryResourceBuffer.php',
+        'Nelexa\\Buffer\\ResourceBuffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/ResourceBuffer.php',
+        'Nelexa\\Buffer\\StringBuffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/StringBuffer.php',
+        'Nelexa\\Buffer\\TempBuffer' => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer/TempBuffer.php',
         'NoDiscard' => __DIR__ . '/..' . '/symfony/polyfill-php85/Resources/stubs/NoDiscard.php',
         'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
         'ParagonIE\\ConstantTime\\Base32' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base32.php',
@@ -2279,6 +2297,43 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
         'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',
+        'WoltLab\\WebpExif\\ChunkType' => __DIR__ . '/..' . '/woltlab/webp-exif/src/ChunkType.php',
+        'WoltLab\\WebpExif\\Chunk\\Alph' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Alph.php',
+        'WoltLab\\WebpExif\\Chunk\\Anim' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Anim.php',
+        'WoltLab\\WebpExif\\Chunk\\Anmf' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Anmf.php',
+        'WoltLab\\WebpExif\\Chunk\\Chunk' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Chunk.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\AnimationFrameWithoutBitstream' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/AnimationFrameWithoutBitstream.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\DimensionsExceedInt32' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/DimensionsExceedInt32.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\EmptyAnimationFrame' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/EmptyAnimationFrame.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\ExpectedKeyFrame' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/ExpectedKeyFrame.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\MissingExifExtension' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/MissingExifExtension.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\MissingMagicByte' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/MissingMagicByte.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\UnknownChunkWithKnownFourCC' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/UnknownChunkWithKnownFourCC.php',
+        'WoltLab\\WebpExif\\Chunk\\Exception\\UnsupportedVersion' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exception/UnsupportedVersion.php',
+        'WoltLab\\WebpExif\\Chunk\\Exif' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Exif.php',
+        'WoltLab\\WebpExif\\Chunk\\Iccp' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Iccp.php',
+        'WoltLab\\WebpExif\\Chunk\\UnknownChunk' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/UnknownChunk.php',
+        'WoltLab\\WebpExif\\Chunk\\Vp8' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Vp8.php',
+        'WoltLab\\WebpExif\\Chunk\\Vp8l' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Vp8l.php',
+        'WoltLab\\WebpExif\\Chunk\\Vp8x' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Vp8x.php',
+        'WoltLab\\WebpExif\\Chunk\\Xmp' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Xmp.php',
+        'WoltLab\\WebpExif\\Decoder' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Decoder.php',
+        'WoltLab\\WebpExif\\Encoder' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Encoder.php',
+        'WoltLab\\WebpExif\\Exception\\ExtraChunksInSimpleFormat' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/ExtraChunksInSimpleFormat.php',
+        'WoltLab\\WebpExif\\Exception\\ExtraVp8xChunk' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/ExtraVp8xChunk.php',
+        'WoltLab\\WebpExif\\Exception\\FileSizeMismatch' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/FileSizeMismatch.php',
+        'WoltLab\\WebpExif\\Exception\\LengthOutOfBounds' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/LengthOutOfBounds.php',
+        'WoltLab\\WebpExif\\Exception\\MissingChunks' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/MissingChunks.php',
+        'WoltLab\\WebpExif\\Exception\\NotEnoughData' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/NotEnoughData.php',
+        'WoltLab\\WebpExif\\Exception\\UnexpectedChunk' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/UnexpectedChunk.php',
+        'WoltLab\\WebpExif\\Exception\\UnexpectedEndOfFile' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/UnexpectedEndOfFile.php',
+        'WoltLab\\WebpExif\\Exception\\UnrecognizedFileFormat' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/UnrecognizedFileFormat.php',
+        'WoltLab\\WebpExif\\Exception\\Vp8xAbsentChunk' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/Vp8xAbsentChunk.php',
+        'WoltLab\\WebpExif\\Exception\\Vp8xHeaderLengthMismatch' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/Vp8xHeaderLengthMismatch.php',
+        'WoltLab\\WebpExif\\Exception\\Vp8xMissingImageData' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/Vp8xMissingImageData.php',
+        'WoltLab\\WebpExif\\Exception\\Vp8xWithoutChunks' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/Vp8xWithoutChunks.php',
+        'WoltLab\\WebpExif\\Exception\\WebpExifException' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Exception/WebpExifException.php',
+        'WoltLab\\WebpExif\\WebP' => __DIR__ . '/..' . '/woltlab/webp-exif/src/WebP.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
