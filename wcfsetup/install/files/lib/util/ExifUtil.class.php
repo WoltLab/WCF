@@ -2,6 +2,9 @@
 
 namespace wcf\util;
 
+use WoltLab\WebpExif\Decoder;
+use WoltLab\WebpExif\Exception\WebpExifException;
+
 /**
  * Provides exif-related functions.
  *
@@ -83,11 +86,27 @@ final class ExifUtil
      */
     public static function getExifData(string $filename): array
     {
-        if (\function_exists('exif_read_data')) {
-            $exifData = @\exif_read_data($filename, '', true);
-            if ($exifData !== false) {
-                return $exifData;
+        $mimeType = FileUtil::getMimeType($filename);
+        if ($mimeType === 'image/webp') {
+            $decoder = new Decoder();
+
+            try {
+                $webp = $decoder->fromBinary(\file_get_contents($filename));
+            } catch (WebpExifException) {
+                return [];
             }
+
+            $exifData = $webp->getExif()?->getParsedExif();
+            if ($exifData === null) {
+                return [];
+            }
+
+            return $exifData;
+        }
+
+        $exifData = @\exif_read_data($filename, '', true);
+        if ($exifData !== false) {
+            return $exifData;
         }
 
         return [];
