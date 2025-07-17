@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             navigation.parentElement.classList.add("hasMobileNavigation");
             const button = document.createElement("button");
             button.type = "button";
-            button.innerHTML = '<fa-icon size="24" name="ellipsis-vertical"></fa-icon>';
+            button.innerHTML = '<fa-icon size="24" name="ellipsis"></fa-icon>';
             button.classList.add("dropdownLabel");
             button.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -102,7 +102,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
                         buttonWrapper = document.createElement("li");
                         buttonWrapper.innerHTML = `
             <button type="button" aria-label="${Language.get("wcf.global.button.more")}">
-              <fa-icon name="ellipsis-vertical"></fa-icon>
+              <fa-icon name="ellipsis"></fa-icon>
             </button>
           `;
                         buttonWrapper.classList.add("messageQuickOptionsMobile");

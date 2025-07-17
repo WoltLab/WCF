@@ -105,7 +105,7 @@
 			
 			{if $view->hasInteractionOptions()}
 				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+					<button type="button" class="button dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
 
 					<ul class="dropdownMenu">
 						{foreach from=$view->getInteractionOptions() item='interactionOption'}

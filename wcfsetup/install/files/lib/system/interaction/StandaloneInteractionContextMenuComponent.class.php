@@ -20,7 +20,7 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
         protected readonly DatabaseObject $object,
         protected readonly string $redirectUrl,
         protected readonly string $label = '',
-        protected readonly string $icon = 'ellipsis-vertical',
+        protected readonly string $icon = 'ellipsis',
         protected readonly string $cssClassName = '',
         protected readonly string $buttonCssClassName = '',
         protected readonly string $reloadHeaderEndpoint = '',
@@ -66,7 +66,7 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
         DatabaseObject $object,
         string $redirectUrl,
     ): self {
-        return new self($provider, $object, $redirectUrl, icon: 'ellipsis-vertical');
+        return new self($provider, $object, $redirectUrl, icon: 'ellipsis');
     }
 
     public static function forContentInteractionButton(

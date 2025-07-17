@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         moreOptions.classList.add("button", "small");
         moreOptions.type = "button";
         moreOptions.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.global.button.more"));
-        moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
+        moreOptions.innerHTML = '<fa-icon name="ellipsis"></fa-icon>';
         const buttonList = document.createElement("div");
         buttonList.classList.add("fileList__item__buttons");
         insertButton.classList.add("button", "small");

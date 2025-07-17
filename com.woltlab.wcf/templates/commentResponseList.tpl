@@ -43,7 +43,7 @@
 
 					{hascontent}
 						<div class="commentResponse__menu dropdown" id="commentResponseOptions{$response->responseID}">
-							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
 
 							<ul class="dropdownMenu">
 								{content}

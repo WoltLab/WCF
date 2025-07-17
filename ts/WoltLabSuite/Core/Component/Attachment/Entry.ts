@@ -113,7 +113,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
   moreOptions.classList.add("button", "small");
   moreOptions.type = "button";
   moreOptions.setAttribute("aria-label", getPhrase("wcf.global.button.more"));
-  moreOptions.innerHTML = '<fa-icon name="ellipsis-vertical"></fa-icon>';
+  moreOptions.innerHTML = '<fa-icon name="ellipsis"></fa-icon>';
 
   const buttonList = document.createElement("div");
   buttonList.classList.add("fileList__item__buttons");
