@@ -28,6 +28,11 @@ class UserFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        $user = UserRuntimeCache::getInstance()->getObject((int)$value);
+        if ($user === null) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);

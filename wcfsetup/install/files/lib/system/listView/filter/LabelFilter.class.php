@@ -43,6 +43,11 @@ class LabelFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        $label = $this->labelGroup->getLabel((int)$value);
+        if ($label === null) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $list->getConditionBuilder()->add(
             "{$list->getDatabaseTableAlias()}.{$list->getDatabaseTableIndexName()} IN (
                 SELECT  objectID
@@ -52,7 +57,7 @@ class LabelFilter extends AbstractFilter
             )",
             [
                 $this->objectTypeID,
-                $value,
+                $label->labelID,
             ]
         );
     }

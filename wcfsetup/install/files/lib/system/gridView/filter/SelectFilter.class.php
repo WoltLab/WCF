@@ -39,6 +39,10 @@ class SelectFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
     {
+        if (!isset($this->options[$value])) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$id}' given.");
+        }
+
         $columnName = $this->getDatabaseColumnName($list, $id);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);

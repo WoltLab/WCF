@@ -39,7 +39,7 @@ class NumericFilter extends AbstractFilter
         $values = $this->parseValue($value);
 
         if (!$values['from'] && !$values['to']) {
-            return;
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$id}' given.");
         }
 
         if (!$values['to']) {

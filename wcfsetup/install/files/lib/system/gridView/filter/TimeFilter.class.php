@@ -34,7 +34,7 @@ class TimeFilter extends AbstractFilter
         $timestamps = $this->getTimestamps($value);
 
         if (!$timestamps['from'] && !$timestamps['to']) {
-            return;
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$id}' given.");
         }
 
         if (!$timestamps['to']) {
