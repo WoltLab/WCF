@@ -20,6 +20,7 @@ use wcf\util\JSON;
  * @property-read int|null $objectTypeID
  * @property-read string $context
  * @property-read string $chunks
+ * @property-read string|null $exifData
  */
 class FileTemporary extends DatabaseObject
 {

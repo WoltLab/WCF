@@ -11,6 +11,7 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
+use wcf\util\JSON;
 
 /**
  * @author Alexander Ebert
@@ -99,6 +100,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => \TIME_NOW,
+            'exifData' => $fileTemporary->exifData,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -124,7 +126,8 @@ class FileEditor extends DatabaseObjectEditor
         string $originalFilename,
         string $objectTypeName,
         bool $copy = false,
-        ?int $uploadTime = null
+        ?int $uploadTime = null,
+        ?array $exifData = null,
     ): ?File {
         if (!\is_readable($pathname)) {
             return null;
@@ -143,6 +146,14 @@ class FileEditor extends DatabaseObjectEditor
             'image/webp' => true,
             default => false,
         };
+
+        if ($exifData === null) {
+            $exifData = ExifUtil::getExifData($pathname);
+
+            if ($exifData === []) {
+                $exifData = null;
+            }
+        }
 
         $width = $height = null;
         if ($isImage) {
@@ -173,6 +184,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => $uploadTime,
+            'exifData' => JSON::encode($exifData),
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
