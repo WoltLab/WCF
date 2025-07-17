@@ -1,219 +1,219 @@
 /* Font Awesome 6 Free: Regular */
 @font-face {
-  font-family: "Font Awesome 6 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block !important;
-  src: url("../font/fa-regular-400.woff2?v=6.7.2") format("woff2");
+	font-family: "Font Awesome 6 Free";
+	font-style: normal;
+	font-weight: 400;
+	font-display: block !important;
+	src: url("../font/fa-regular-400.woff2?v=6.7.2") format("woff2");
 }
 
 /* Font Awesome 6 Free: Solid */
 @font-face {
-  font-family: "Font Awesome 6 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block !important;
-  src: url("../font/fa-solid-900.woff2?v=6.7.2") format("woff2");
+	font-family: "Font Awesome 6 Free";
+	font-style: normal;
+	font-weight: 900;
+	font-display: block !important;
+	src: url("../font/fa-solid-900.woff2?v=6.7.2") format("woff2");
 }
 
 fa-brand,
 fa-icon {
-  align-items: center;
-  display: inline-flex;
-  height: var(--icon-size);
-  justify-content: center;
-  pointer-events: none;
-  width: calc(var(--icon-size) * 1.25);
+	align-items: center;
+	display: inline-flex;
+	height: var(--icon-size);
+	justify-content: center;
+	pointer-events: none;
+	width: calc(var(--icon-size) * 1.25);
 
-  &:not(:upgraded) {
-    visibility: hidden !important;
-  }
+	&:not(:upgraded) {
+		visibility: hidden !important;
+	}
 
-  &[hidden] {
-    display: none;
-  }
+	&[hidden] {
+		display: none;
+	}
 
-  &[size="16"] {
-    --font-size: 14px;
-    --icon-size: 16px;
-  }
+	&[size="16"] {
+		--font-size: 14px;
+		--icon-size: 16px;
+	}
 
-  &[size="24"] {
-    --font-size: 18px;
-    --icon-size: 24px;
-  }
+	&[size="24"] {
+		--font-size: 18px;
+		--icon-size: 24px;
+	}
 
-  &[size="32"] {
-    --font-size: 28px;
-    --icon-size: 32px;
-  }
+	&[size="32"] {
+		--font-size: 28px;
+		--icon-size: 32px;
+	}
 
-  &[size="48"] {
-    --font-size: 42px;
-    --icon-size: 48px;
-  }
+	&[size="48"] {
+		--font-size: 42px;
+		--icon-size: 48px;
+	}
 
-  &[size="64"] {
-    --font-size: 56px;
-    --icon-size: 64px;
-  }
+	&[size="64"] {
+		--font-size: 56px;
+		--icon-size: 64px;
+	}
 
-  &[size="96"] {
-    --font-size: 84px;
-    --icon-size: 96px;
-  }
+	&[size="96"] {
+		--font-size: 84px;
+		--icon-size: 96px;
+	}
 
-  &[size="128"] {
-    --font-size: 112px;
-    --icon-size: 128px;
-  }
+	&[size="128"] {
+		--font-size: 112px;
+		--icon-size: 128px;
+	}
 
-  &[size="144"] {
-    --font-size: 130px;
-    --icon-size: 144px;
-  }
+	&[size="144"] {
+		--font-size: 130px;
+		--icon-size: 144px;
+	}
 }
 
 fa-icon {
-  -moz-osx-font-smoothing: grayscale !important;
-  -webkit-font-smoothing: antialiased !important;
-  -webkit-user-select: none !important;
+	-moz-osx-font-smoothing: grayscale !important;
+	-webkit-font-smoothing: antialiased !important;
+	-webkit-user-select: none !important;
 
-  font-family: var(--fa-font-family, "Font Awesome 6 Free") !important;
-  font-size: var(--font-size) !important;
-  font-style: normal !important;
-  font-variant: normal !important;
-  font-weight: var(--fa-font-weight, 400) !important;
-  line-height: 1 !important;
-  text-rendering: auto !important;
-  user-select: none !important;
+	font-family: var(--fa-font-family, "Font Awesome 6 Free") !important;
+	font-size: var(--font-size) !important;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: var(--fa-font-weight, 400) !important;
+	line-height: 1 !important;
+	text-rendering: auto !important;
+	user-select: none !important;
 
-  &[solid] {
-    font-weight: 900 !important;
-  }
+	&[solid] {
+		font-weight: 900 !important;
+	}
 }
 
 [disabled] :is(fa-brand, fa-icon),
 .disabled :is(fa-brand, fa-icon) {
-  opacity: 0.45;
+	opacity: 0.45;
 }
 
 /* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
 .icon,
 .fa-spinner {
-  align-items: center;
-  background-color: #f0c !important;
-  border-radius: 3px;
-  display: inline-flex;
-  font-family: inherit !important;
-  height: var(--icon-size);
-  justify-content: center;
-  width: var(--icon-size);
+	align-items: center;
+	background-color: #f0c !important;
+	border-radius: 3px;
+	display: inline-flex;
+	font-family: inherit !important;
+	height: var(--icon-size);
+	justify-content: center;
+	width: var(--icon-size);
 
-  &::before {
-    color: #fff !important;
-    content: "?" !important;
-    font-family: inherit !important;
-    font-size: var(--font-size) !important;
-  }
+	&::before {
+		color: #fff !important;
+		content: "?" !important;
+		font-family: inherit !important;
+		font-size: var(--font-size) !important;
+	}
 
-  &.icon16 {
-    --font-size: 14px;
-    --icon-size: 16px;
-  }
+	&.icon16 {
+		--font-size: 14px;
+		--icon-size: 16px;
+	}
 
-  &.icon24 {
-    --font-size: 18px;
-    --icon-size: 24px;
-  }
+	&.icon24 {
+		--font-size: 18px;
+		--icon-size: 24px;
+	}
 
-  &.icon32 {
-    --font-size: 28px;
-    --icon-size: 32px;
-  }
+	&.icon32 {
+		--font-size: 28px;
+		--icon-size: 32px;
+	}
 
-  &.icon48 {
-    --font-size: 42px;
-    --icon-size: 48px;
-  }
+	&.icon48 {
+		--font-size: 42px;
+		--icon-size: 48px;
+	}
 
-  &.icon64 {
-    --font-size: 56px;
-    --icon-size: 64px;
-  }
+	&.icon64 {
+		--font-size: 56px;
+		--icon-size: 64px;
+	}
 
-  &.icon96 {
-    --font-size: 84px;
-    --icon-size: 96px;
-  }
+	&.icon96 {
+		--font-size: 84px;
+		--icon-size: 96px;
+	}
 
-  &.icon128 {
-    --font-size: 112px;
-    --icon-size: 128px;
-  }
+	&.icon128 {
+		--font-size: 112px;
+		--icon-size: 128px;
+	}
 
-  &.icon144 {
-    --font-size: 130px;
-    --icon-size: 144px;
-  }
+	&.icon144 {
+		--font-size: 130px;
+		--icon-size: 144px;
+	}
 }
 
 fa-icon {
-  --preset-black: #333;
-  --preset-blue: #369;
-  --preset-brown: #c63;
-  --preset-green: #090;
-  --preset-orange: #f90;
-  --preset-pink: #f0c;
-  --preset-purple: #c0f;
-  --preset-red: #c00;
-  --preset-yellow: #ff0;
+	--preset-black: #333;
+	--preset-blue: #369;
+	--preset-brown: #c63;
+	--preset-green: #090;
+	--preset-orange: #f90;
+	--preset-pink: #f0c;
+	--preset-purple: #c0f;
+	--preset-red: #c00;
+	--preset-yellow: #ff0;
 }
 
 html[data-color-scheme="dark"] fa-icon {
-  --preset-black: #8c8c8c;
-  --preset-blue: #478cd1;
-  --preset-brown: #ad8476;
-  --preset-green: #2ea336;
-  --preset-orange: #f57c00;
-  --preset-pink: #f23ac8;
-  --preset-purple: #9c7bd5;
-  --preset-red: #eb5c7b;
-  --preset-yellow: #ffeb3b;
+	--preset-black: #8c8c8c;
+	--preset-blue: #478cd1;
+	--preset-brown: #ad8476;
+	--preset-green: #2ea336;
+	--preset-orange: #f57c00;
+	--preset-pink: #f23ac8;
+	--preset-purple: #9c7bd5;
+	--preset-red: #eb5c7b;
+	--preset-yellow: #ffeb3b;
 }
 
 .green fa-icon {
-  color: var(--preset-green);
+	color: var(--preset-green);
 }
 
 .red fa-icon {
-  color: var(--preset-red);
+	color: var(--preset-red);
 }
 
 .black fa-icon {
-  color: var(--preset-black);
+	color: var(--preset-black);
 }
 
 .brown fa-icon {
-  color: var(--preset-brown);
+	color: var(--preset-brown);
 }
 
 .orange fa-icon {
-  color: var(--preset-orange);
+	color: var(--preset-orange);
 }
 
 .yellow fa-icon {
-  color: var(--preset-yellow);
+	color: var(--preset-yellow);
 }
 
 .blue fa-icon {
-  color: var(--preset-blue);
+	color: var(--preset-blue);
 }
 
 .purple fa-icon {
-  color: var(--preset-purple);
+	color: var(--preset-purple);
 }
 
 .pink fa-icon {
-  color: var(--preset-pink);
+	color: var(--preset-pink);
 }

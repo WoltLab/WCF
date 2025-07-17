@@ -9,8 +9,8 @@ input[type="text"],
 input[type="url"],
 select,
 textarea {
-    margin: 0; /* safari fix */
-    @include input;
+	margin: 0; /* safari fix */
+	@include input;
 }
 
 /* set placeholder color */
@@ -23,349 +23,349 @@ input[type="search"],
 input[type="tel"],
 input[type="text"],
 input[type="url"] {
-    &::placeholder {
-        color: var(--wcfInputPlaceholder);
+	&::placeholder {
+		color: var(--wcfInputPlaceholder);
 
-        &:focus,
-        &:hover {
-            color: var(--wcfInputPlaceholderActive);
-        }
-    }
+		&:focus,
+		&:hover {
+			color: var(--wcfInputPlaceholderActive);
+		}
+	}
 
-    &[disabled],
-    &[readonly] {
-        background-color: var(--wcfInputDisabledBackground) !important;
-        border-color: var(--wcfInputDisabledBorder) !important;
-        color: var(--wcfInputDisabledText) !important;
-    }
+	&[disabled],
+	&[readonly] {
+		background-color: var(--wcfInputDisabledBackground) !important;
+		border-color: var(--wcfInputDisabledBorder) !important;
+		color: var(--wcfInputDisabledText) !important;
+	}
 }
 
 textarea::placeholder {
-    color: var(--wcfInputPlaceholder);
+	color: var(--wcfInputPlaceholder);
 
-    &:focus,
-    &:hover {
-        color: var(--wcfInputPlaceholderActive);
-    }
+	&:focus,
+	&:hover {
+		color: var(--wcfInputPlaceholderActive);
+	}
 }
 
 input[type="search"],
 input[type="text"] {
-    -webkit-appearance: none;
+	-webkit-appearance: none;
 }
 
 @media (pointer: coarse) {
-    input[type="date"],
-    input[type="datetime"],
-    input[type="email"],
-    input[type="number"],
-    input[type="password"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="text"],
-    input[type="url"],
-    select,
-    textarea {
-        font-size: 16px;
-        padding: 6px 8px;
-    }
+	input[type="date"],
+	input[type="datetime"],
+	input[type="email"],
+	input[type="number"],
+	input[type="password"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="text"],
+	input[type="url"],
+	select,
+	textarea {
+		font-size: 16px;
+		padding: 6px 8px;
+	}
 }
 
 textarea {
-    border-width: 1px;
-    font-weight: 400;
-    resize: vertical;
-    vertical-align: top;
-    width: 100%;
+	border-width: 1px;
+	font-weight: 400;
+	resize: vertical;
+	vertical-align: top;
+	width: 100%;
 
-    @include wcfFontDefault;
+	@include wcfFontDefault;
 
-    &[disabled],
-    &[readonly] {
-        background-color: var(--wcfInputDisabledBackground) !important;
-        border-color: var(--wcfInputDisabledBorder) !important;
-        color: var(--wcfInputDisabledText) !important;
-    }
+	&[disabled],
+	&[readonly] {
+		background-color: var(--wcfInputDisabledBackground) !important;
+		border-color: var(--wcfInputDisabledBorder) !important;
+		color: var(--wcfInputDisabledText) !important;
+	}
 }
 
 input[disabled],
 textarea[disabled] {
-    -webkit-text-fill-color: var(--wcfInputDisabledText); /* override safari font color change */
-    -webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
+	-webkit-text-fill-color: var(--wcfInputDisabledText); /* override safari font color change */
+	-webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
 }
 
 select {
-    // The width is determined by the browser based upon the longest <option> contained,
-    // but this can cause the <select> to overflow the parent container. This is acceptable
-    // to some extent, but on mobile it can cause the entire site to have a horizontal
-    // scrollbar instead. Setting a `max-width` will cause the browser to respect the page
-    // boundaries and nicely wrap the displayed value instead.
-    max-width: 100%;
+	// The width is determined by the browser based upon the longest <option> contained,
+	// but this can cause the <select> to overflow the parent container. This is acceptable
+	// to some extent, but on mobile it can cause the entire site to have a horizontal
+	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
+	// boundaries and nicely wrap the displayed value instead.
+	max-width: 100%;
 
-    &.fullWidth {
-        width: 100%;
-    }
+	&.fullWidth {
+		width: 100%;
+	}
 }
 
 .formSubmit {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
 
-    &:not(:first-child) {
-        margin-top: 30px;
-    }
+	&:not(:first-child) {
+		margin-top: 30px;
+	}
 }
 
 @include screen-xs {
-    .formSubmit {
-        input[type="button"],
-        input[type="reset"],
-        input[type="submit"],
-        .button,
-        a.button {
-            flex: 1 0 auto;
-        }
-    }
+	.formSubmit {
+		input[type="button"],
+		input[type="reset"],
+		input[type="submit"],
+		.button,
+		a.button {
+			flex: 1 0 auto;
+		}
+	}
 }
 
 .formSubmit.formSubmit.formSubmit + .section {
-    /* Intentional selector to overwrite existing selector. */
-    margin-top: 20px;
+	/* Intentional selector to overwrite existing selector. */
+	margin-top: 20px;
 }
 
 .inputAddon {
-    column-gap: 5px;
-    display: flex;
+	column-gap: 5px;
+	display: flex;
 
-    &:not(:last-child) {
-        margin-bottom: 5px;
-    }
+	&:not(:last-child) {
+		margin-bottom: 5px;
+	}
 
-    > .inputPrefix,
-    > .inputSuffix {
-        align-items: center;
-        display: flex;
-        flex: 0 0 auto;
-    }
+	> .inputPrefix,
+	> .inputSuffix {
+		align-items: center;
+		display: flex;
+		flex: 0 0 auto;
+	}
 
-    input {
-        flex: 1 auto;
+	input {
+		flex: 1 auto;
 
-        & + .inputPrefix {
-            margin-left: 5px;
-        }
-    }
+		& + .inputPrefix {
+			margin-left: 5px;
+		}
+	}
 }
 
 .inputAddonTextarea {
-    column-gap: 0;
-    flex-wrap: wrap;
-    row-gap: 5px;
+	column-gap: 0;
+	flex-wrap: wrap;
+	row-gap: 5px;
 
-    > textarea {
-        flex: 0 0 100%;
-    }
+	> textarea {
+		flex: 0 0 100%;
+	}
 
-    > .ck.ck-editor {
-        flex: 0 0 100%;
-        margin-top: 0 !important;
-    }
+	> .ck.ck-editor {
+		flex: 0 0 100%;
+		margin-top: 0 !important;
+	}
 }
 
 .inputAddon input,
 input {
-    &.tiny {
-        flex-grow: 0;
-        width: 80px;
-    }
+	&.tiny {
+		flex-grow: 0;
+		width: 80px;
+	}
 
-    &.long {
-        width: 100%;
-    }
+	&.long {
+		width: 100%;
+	}
 
-    @include screen-xs {
-        &.short {
-            flex-grow: 0;
-            width: 150px;
-        }
+	@include screen-xs {
+		&.short {
+			flex-grow: 0;
+			width: 150px;
+		}
 
-        &.medium {
-            width: 100%;
-        }
-    }
+		&.medium {
+			width: 100%;
+		}
+	}
 
-    @include screen-sm-up {
-        &.short {
-            flex-grow: 0;
-            min-width: 80px;
-            width: 10%;
-        }
+	@include screen-sm-up {
+		&.short {
+			flex-grow: 0;
+			min-width: 80px;
+			width: 10%;
+		}
 
-        &.medium {
-            flex-grow: 0;
-            min-width: 150px;
-            width: 30%;
-        }
-    }
+		&.medium {
+			flex-grow: 0;
+			min-width: 150px;
+			width: 30%;
+		}
+	}
 }
 
 .formError {
-    --color-error: #c00;
+	--color-error: #c00;
 
-    dt {
-        color: var(--color-error) !important;
-    }
+	dt {
+		color: var(--color-error) !important;
+	}
 
-    input,
-    select,
-    textarea {
-        border-color: var(--color-error) !important;
-    }
+	input,
+	select,
+	textarea {
+		border-color: var(--color-error) !important;
+	}
 }
 
 html[data-color-scheme="dark"] .formError {
-    --color-error: #ff4747;
+	--color-error: #ff4747;
 }
 
 .formSuccess {
-    --color-success: rgb(46, 139, 87);
+	--color-success: rgb(46, 139, 87);
 
-    dt {
-        color: var(--color-success) !important;
-    }
+	dt {
+		color: var(--color-success) !important;
+	}
 
-    input,
-    select,
-    textarea {
-        border-color: var(--color-success) !important;
-    }
+	input,
+	select,
+	textarea {
+		border-color: var(--color-success) !important;
+	}
 }
 
 /* grid-based form controls */
 .formGrid {
-    dt {
-        display: none;
-    }
+	dt {
+		display: none;
+	}
 
-    select {
-        width: 100%;
-    }
+	select {
+		width: 100%;
+	}
 }
 
 .formFieldRequired,
 .customOptionRequired {
-    color: rgba(204, 0, 1, 1) !important;
+	color: rgba(204, 0, 1, 1) !important;
 }
 
 .formFieldRequiredNotice {
-    color: var(--wcfContentDimmedText);
-    margin-top: 20px;
-    @include wcfFontSmall;
+	color: var(--wcfContentDimmedText);
+	margin-top: 20px;
+	@include wcfFontSmall;
 }
 
 html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
-    color: #ff4444 !important;
+	color: #ff4444 !important;
 }
 
 /* password strength estimator */
 .inputAddonPasswordStrength {
-    align-items: flex-start;
+	align-items: flex-start;
 
-    input.medium {
-        align-self: stretch;
-    }
+	input.medium {
+		align-self: stretch;
+	}
 
-    @include screen-xs {
-        flex-wrap: wrap;
+	@include screen-xs {
+		flex-wrap: wrap;
 
-        input:is(.medium, .long) {
-            width: auto;
-        }
-    }
+		input:is(.medium, .long) {
+			width: auto;
+		}
+	}
 }
 
 .passwordStrengthRating {
-    flex: 0 0 auto;
+	flex: 0 0 auto;
 
-    @include screen-sm-up {
-        margin-left: 10px;
-    }
+	@include screen-sm-up {
+		margin-left: 10px;
+	}
 
-    @include screen-xs {
-        margin-top: 5px;
-        width: 100%;
-    }
+	@include screen-xs {
+		margin-top: 5px;
+		width: 100%;
+	}
 }
 
 .passwordStrengthScore {
-    --background-color: rgb(224, 224, 224);
-    --score-0: #dd2c00;
-    --score-1: #ff9100;
-    --score-2: #cddc39;
-    --score-3: #64dd17;
-    --score-4: #2e7d32;
+	--background-color: rgb(224, 224, 224);
+	--score-0: #dd2c00;
+	--score-1: #ff9100;
+	--score-2: #cddc39;
+	--score-3: #64dd17;
+	--score-4: #2e7d32;
 
-    background-color: var(--background-color);
-    border-radius: 3px;
-    display: block;
-    height: 10px;
-    overflow: hidden;
-    position: relative;
+	background-color: var(--background-color);
+	border-radius: 3px;
+	display: block;
+	height: 10px;
+	overflow: hidden;
+	position: relative;
 
-    &::before {
-        background-color: transparent;
-        bottom: 0;
-        content: "";
-        left: 0;
-        position: absolute;
-        top: 0;
-        transition:
-            background-color 0.12s linear,
-            width 0.12s linear;
-        width: 0;
-    }
+	&::before {
+		background-color: transparent;
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition:
+			background-color 0.12s linear,
+			width 0.12s linear;
+		width: 0;
+	}
 
-    &[data-score="0"]::before {
-        background-color: var(--score-0);
-        width: 5%;
-    }
-    &[data-score="1"]::before {
-        background-color: var(--score-1);
-        width: 20%;
-    }
-    &[data-score="2"]::before {
-        background-color: var(--score-2);
-        width: 50%;
-    }
-    &[data-score="3"]::before {
-        background-color: var(--score-3);
-        width: 85%;
-    }
-    &[data-score="4"]::before {
-        background-color: var(--score-4);
-        width: 100%;
-    }
+	&[data-score="0"]::before {
+		background-color: var(--score-0);
+		width: 5%;
+	}
+	&[data-score="1"]::before {
+		background-color: var(--score-1);
+		width: 20%;
+	}
+	&[data-score="2"]::before {
+		background-color: var(--score-2);
+		width: 50%;
+	}
+	&[data-score="3"]::before {
+		background-color: var(--score-3);
+		width: 85%;
+	}
+	&[data-score="4"]::before {
+		background-color: var(--score-4);
+		width: 100%;
+	}
 }
 
 html[data-color-scheme="dark"] .passwordStrengthScore {
-    --background-color: rgb(43 57 74);
-    --score-0: #dd2c00;
-    --score-1: #ef6c00;
-    --score-2: #f9a825;
-    --score-3: #689f38;
-    --score-4: #1b5e20;
+	--background-color: rgb(43 57 74);
+	--score-0: #dd2c00;
+	--score-1: #ef6c00;
+	--score-2: #f9a825;
+	--score-3: #689f38;
+	--score-4: #1b5e20;
 }
 
 .selectOptionsList {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
 }
 
 .selectOptionsListItem {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }

@@ -1,336 +1,336 @@
 .userMenu {
-    background-color: var(--wcfUserMenuBackground);
-    color: var(--wcfUserMenuText);
-    pointer-events: all;
+	background-color: var(--wcfUserMenuBackground);
+	color: var(--wcfUserMenuText);
+	pointer-events: all;
 
-    &.userMenuControlPanel {
-        .userMenuItemImage {
-            align-self: center;
-        }
+	&.userMenuControlPanel {
+		.userMenuItemImage {
+			align-self: center;
+		}
 
-        .userMenuItemContent {
-            font-weight: 600;
-        }
-    }
+		.userMenuItemContent {
+			font-weight: 600;
+		}
+	}
 }
 
 .dropdownMenuContainer .userMenu {
-    border-radius: var(--wcfBorderRadius);
-    box-shadow: var(--wcfBoxShadow);
-    position: fixed;
-    width: 400px;
-    z-index: 450;
+	border-radius: var(--wcfBorderRadius);
+	box-shadow: var(--wcfBoxShadow);
+	position: fixed;
+	width: 400px;
+	z-index: 450;
 }
 
 .pageMenuUserTabPanel .userMenu {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 
-    .userMenuContentScrollable {
-        flex: 1 auto;
-    }
+	.userMenuContentScrollable {
+		flex: 1 auto;
+	}
 }
 
 .userMenuHeader {
-    align-items: center;
-    display: grid;
-    min-height: 44px;
-    grid-template-areas: "title buttons";
-    grid-template-columns: auto max-content;
+	align-items: center;
+	display: grid;
+	min-height: 44px;
+	grid-template-areas: "title buttons";
+	grid-template-columns: auto max-content;
 }
 
 .userMenuTitle {
-    grid-area: title;
-    margin: 0 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	grid-area: title;
+	margin: 0 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
-    @include wcfFontHeadline;
+	@include wcfFontHeadline;
 
-    font-weight: 600;
+	font-weight: 600;
 }
 
 .userMenuButtons {
-    column-gap: 1px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-area: buttons;
+	column-gap: 1px;
+	display: grid;
+	grid-auto-flow: column;
+	grid-area: buttons;
 }
 
 .userMenuButton {
-    align-items: center;
-    color: inherit;
-    display: flex;
-    height: 44px;
-    justify-content: center;
-    width: 44px;
+	align-items: center;
+	color: inherit;
+	display: flex;
+	height: 44px;
+	justify-content: center;
+	width: 44px;
 
-    &:hover {
-        color: inherit;
-    }
+	&:hover {
+		color: inherit;
+	}
 }
 
 html:not(.touch) .userMenuButton {
-    transform: scale(1);
-    transition: transform 0.24s ease-in-out;
+	transform: scale(1);
+	transition: transform 0.24s ease-in-out;
 
-    &:hover {
-        transform: scale(1.5);
-    }
+	&:hover {
+		transform: scale(1.5);
+	}
 }
 
 .userMenuContentStatus {
-    align-items: center;
-    color: var(--wcfUserMenuTextDimmed);
-    display: flex;
-    height: 60px;
-    justify-content: center;
+	align-items: center;
+	color: var(--wcfUserMenuTextDimmed);
+	display: flex;
+	height: 60px;
+	justify-content: center;
 
-    @include wcfFontHeadline;
+	@include wcfFontHeadline;
 }
 
 .userMenuContent.userMenuContentScrollable {
-    @include screen-lg {
-        max-height: 400px;
-        overflow: hidden;
-        position: relative;
-    }
+	@include screen-lg {
+		max-height: 400px;
+		overflow: hidden;
+		position: relative;
+	}
 
-    @include screen-md-down {
-        overflow: hidden auto;
-    }
+	@include screen-md-down {
+		overflow: hidden auto;
+	}
 }
 
 .userMenuItem {
-    background-color: var(--wcfUserMenuBackground);
-    display: grid;
-    grid-template-areas:
-        "image content"
-        "image meta";
-    grid-template-columns: 60px auto;
-    grid-template-rows: minmax(0, min-content);
-    /* min-height = 48px icon + 2*10px padding */
-    min-height: 68px;
-    padding: 10px 30px 10px 10px;
-    position: relative;
-    transition: background-color 0.12s linear;
+	background-color: var(--wcfUserMenuBackground);
+	display: grid;
+	grid-template-areas:
+		"image content"
+		"image meta";
+	grid-template-columns: 60px auto;
+	grid-template-rows: minmax(0, min-content);
+	/* min-height = 48px icon + 2*10px padding */
+	min-height: 68px;
+	padding: 10px 30px 10px 10px;
+	position: relative;
+	transition: background-color 0.12s linear;
 
-    &[data-is-unread="true"] .userMenuItemLink::before {
-        right: 30px;
-    }
+	&[data-is-unread="true"] .userMenuItemLink::before {
+		right: 30px;
+	}
 
-    &[data-is-unread="false"] .userMenuItemUnread {
-        display: none;
-    }
+	&[data-is-unread="false"] .userMenuItemUnread {
+		display: none;
+	}
 
-    &.userMenuItemNarrow {
-        grid-template-columns: 36px auto;
-    }
+	&.userMenuItemNarrow {
+		grid-template-columns: 36px auto;
+	}
 
-    &.userMenuItemSingleLine {
-        grid-template-areas: "image content";
-        grid-template-rows: auto;
+	&.userMenuItemSingleLine {
+		grid-template-areas: "image content";
+		grid-template-rows: auto;
 
-        &:not(.userMenuItemUserHeader) {
-            min-height: 0;
-        }
+		&:not(.userMenuItemUserHeader) {
+			min-height: 0;
+		}
 
-        .userMenuItemContent {
-            align-self: center;
-        }
+		.userMenuItemContent {
+			align-self: center;
+		}
 
-        .userMenuItemImage :is(fa-brand, fa-icon) {
-            left: 0;
-        }
-    }
+		.userMenuItemImage :is(fa-brand, fa-icon) {
+			left: 0;
+		}
+	}
 
-    &.userMenuItemWithUsernames {
-        grid-template-areas:
-            "image content"
-            "image usernames"
-            "image meta";
-        grid-template-columns: 60px auto;
-    }
+	&.userMenuItemWithUsernames {
+		grid-template-areas:
+			"image content"
+			"image usernames"
+			"image meta";
+		grid-template-columns: 60px auto;
+	}
 }
 
 html:not(.touch) .userMenuItem:hover {
-    background-color: var(--wcfUserMenuBackgroundActive);
-    color: var(--wcfUserMenuTextActive);
+	background-color: var(--wcfUserMenuBackgroundActive);
+	color: var(--wcfUserMenuTextActive);
 }
 
 .userMenuItemLinkPlain {
-    font-weight: 600;
+	font-weight: 600;
 }
 
 .userMenuItemLink,
 .userMenuItemLink:hover {
-    color: inherit;
+	color: inherit;
 }
 
 .userMenuItemLink::before {
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1;
+	bottom: 0;
+	content: "";
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1;
 }
 
 .userMenuItemImage {
-    grid-area: image;
-    /* Setting an element‘s position to `absolute` will remove it from the
+	grid-area: image;
+	/* Setting an element‘s position to `absolute` will remove it from the
 	   regular flow, causing it to be ignored for the calculation of the
 	   `grid-template-rows`. */
-    position: absolute;
+	position: absolute;
 
-    :is(fa-brand, fa-icon) {
-        left: -6px;
-        position: relative;
-    }
+	:is(fa-brand, fa-icon) {
+		left: -6px;
+		position: relative;
+	}
 }
 
 .userMenuItemContent {
-    grid-area: content;
+	grid-area: content;
 }
 
 .userMenuItemUsernames {
-    grid-area: usernames;
+	grid-area: usernames;
 }
 
 .userMenuItemMeta {
-    grid-area: meta;
+	grid-area: meta;
 }
 
 .userMenuItemUsernames,
 .userMenuItemMeta {
-    color: var(--wcfUserMenuTextDimmed);
-    margin-top: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	color: var(--wcfUserMenuTextDimmed);
+	margin-top: 2px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
-    @include wcfFontSmall;
+	@include wcfFontSmall;
 }
 
 .userMenuItemUnread {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 34px;
+	align-items: center;
+	bottom: 0;
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 34px;
 
-    &::before {
-        background-color: var(--wcfUserMenuIndicator);
-        border-radius: 50%;
-        content: "";
-        height: 10px;
-        left: 7px;
-        opacity: 1;
-        position: absolute;
-        top: calc(50% - 5px);
-        width: 10px;
-    }
+	&::before {
+		background-color: var(--wcfUserMenuIndicator);
+		border-radius: 50%;
+		content: "";
+		height: 10px;
+		left: 7px;
+		opacity: 1;
+		position: absolute;
+		top: calc(50% - 5px);
+		width: 10px;
+	}
 }
 
 html:not(.touch) .userMenuItemUnread::before {
-    transition:
-        left 0.12s ease-in-out,
-        opacity 0.12s ease-in-out;
+	transition:
+		left 0.12s ease-in-out,
+		opacity 0.12s ease-in-out;
 }
 
 html:not(.touch) .userMenuItem:hover .userMenuItemUnread::before {
-    opacity: 0;
-    left: 0;
+	opacity: 0;
+	left: 0;
 }
 
 .userMenuItemMarkAsRead {
-    display: block;
-    opacity: 1;
-    position: relative;
-    left: 0;
-    width: 100%;
+	display: block;
+	opacity: 1;
+	position: relative;
+	left: 0;
+	width: 100%;
 }
 
 html:not(.touch) .userMenuItemMarkAsRead {
-    transform: scale(1);
-    transition:
-        opacity 0.12s ease-in-out,
-        left 0.12s ease-in-out,
-        transform 0.24s ease-in-out;
+	transform: scale(1);
+	transition:
+		opacity 0.12s ease-in-out,
+		left 0.12s ease-in-out,
+		transform 0.24s ease-in-out;
 
-    &:hover {
-        transform: scale(1.5);
-    }
+	&:hover {
+		transform: scale(1.5);
+	}
 }
 
 /* Tapping the indicator on touch devices triggers the action
    to mark the item as read. Positioning the button over the
    indicator masks this behavior. */
 html.touch .userMenuItem .userMenuItemMarkAsRead {
-    opacity: 0;
-    left: 0;
-    width: 24px;
+	opacity: 0;
+	left: 0;
+	width: 24px;
 }
 
 .userMenuItem:not(:hover) .userMenuItemMarkAsRead {
-    opacity: 0;
-    left: 10px;
+	opacity: 0;
+	left: 10px;
 }
 
 .userMenuFooter {
-    border-top: 1px solid var(--wcfUserMenuBorder);
-    padding: 10px;
-    position: relative;
-    text-align: center;
+	border-top: 1px solid var(--wcfUserMenuBorder);
+	padding: 10px;
+	position: relative;
+	text-align: center;
 }
 
 .userMenuFooterLink {
-    color: inherit;
+	color: inherit;
 
-    &:hover {
-        color: inherit;
-        text-decoration: underline;
-    }
+	&:hover {
+		color: inherit;
+		text-decoration: underline;
+	}
 
-    &::before {
-        bottom: 0;
-        content: "";
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
+	&::before {
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 }
 
 .userMenuContent .ps__rail-y {
-    z-index: 2;
+	z-index: 2;
 }
 
 .userMenuContentDivider {
-    border-top: 1px solid var(--wcfUserMenuBorder);
+	border-top: 1px solid var(--wcfUserMenuBorder);
 }
 
 .userMenuNotifications {
-    border: 1px solid var(--wcfUserMenuIndicator);
-    border-radius: 5px;
-    margin: 0 10px;
-    padding: 10px;
+	border: 1px solid var(--wcfUserMenuIndicator);
+	border-radius: 5px;
+	margin: 0 10px;
+	padding: 10px;
 
-    @include wcfFontSmall;
+	@include wcfFontSmall;
 }
 
 .userMenuNotificationsButtons {
-    margin-top: 10px;
-    text-align: right;
+	margin-top: 10px;
+	text-align: right;
 }
 
 @include screen-sm-down {
-    .userMenuControlPanel {
-        font-size: 16px;
-    }
+	.userMenuControlPanel {
+		font-size: 16px;
+	}
 }

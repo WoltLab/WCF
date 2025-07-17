@@ -2,627 +2,627 @@
 /* content header */
 .contentHeader,
 .boxHeadline {
-    // deprecated
-    color: var(--wcfContentHeadlineText);
+	// deprecated
+	color: var(--wcfContentHeadlineText);
 
-    .contentTitle,
-    > h1 {
-        // deprecated
-        @include wcfFontTitle;
+	.contentTitle,
+	> h1 {
+		// deprecated
+		@include wcfFontTitle;
 
-        .badge {
-            top: -2px;
+		.badge {
+			top: -2px;
 
-            @include wcfLineHeight;
-        }
+			@include wcfLineHeight;
+		}
 
-        a {
-            color: var(--wcfContentHeadlineLink);
+		a {
+			color: var(--wcfContentHeadlineLink);
 
-            &:hover {
-                color: var(--wcfContentHeadlineLinkActive);
-            }
-        }
-    }
+			&:hover {
+				color: var(--wcfContentHeadlineLinkActive);
+			}
+		}
+	}
 }
 
 .contentHeader {
-    align-items: flex-start;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -10px;
+	align-items: flex-start;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -10px;
 
-    .contentHeaderIcon {
-        flex: 0 0 64px;
-        margin-right: 15px;
-    }
+	.contentHeaderIcon {
+		flex: 0 0 64px;
+		margin-right: 15px;
+	}
 
-    .contentHeaderTitle,
-    > .contentTitle {
-        flex: 1 auto;
-        margin-top: 10px;
-    }
+	.contentHeaderTitle,
+	> .contentTitle {
+		flex: 1 auto;
+		margin-top: 10px;
+	}
 
-    .contentHeaderNavigation {
-        flex: 0 0 auto;
-        margin-left: 15px;
-        margin-top: 10px;
-    }
+	.contentHeaderNavigation {
+		flex: 0 0 auto;
+		margin-left: 15px;
+		margin-top: 10px;
+	}
 
-    .contentHeaderDescription {
-        color: var(--wcfContentDimmedText);
-        margin-top: 5px;
-    }
+	.contentHeaderDescription {
+		color: var(--wcfContentDimmedText);
+		margin-top: 5px;
+	}
 
-    .contentHeaderMetaData {
-        color: var(--wcfContentDimmedText);
-        margin-top: 5px;
+	.contentHeaderMetaData {
+		color: var(--wcfContentDimmedText);
+		margin-top: 5px;
 
-        &.inlineList {
-            > li:not(:last-child) {
-                margin-right: 10px;
-            }
-        }
+		&.inlineList {
+			> li:not(:last-child) {
+				margin-right: 10px;
+			}
+		}
 
-        > li {
-            a,
-            a:hover {
-                color: var(--wcfContentDimmedText);
-            }
-        }
-    }
+		> li {
+			a,
+			a:hover {
+				color: var(--wcfContentDimmedText);
+			}
+		}
+	}
 
-    .contentTitle + .inlineDataList {
-        margin-top: 5px;
-    }
+	.contentTitle + .inlineDataList {
+		margin-top: 5px;
+	}
 
-    .inlineDataList {
-        color: var(--wcfContentDimmedText);
-    }
+	.inlineDataList {
+		color: var(--wcfContentDimmedText);
+	}
 
-    .contentHeaderNavigation {
-        > ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            margin-bottom: -5px;
-            margin-left: -5px;
-            white-space: nowrap;
+	.contentHeaderNavigation {
+		> ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			margin-bottom: -5px;
+			margin-left: -5px;
+			white-space: nowrap;
 
-            > li {
-                display: flex;
-            }
-        }
+			> li {
+				display: flex;
+			}
+		}
 
-        .button {
-            display: flex;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+		.button {
+			display: flex;
+			margin-left: 5px;
+			margin-bottom: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 
-        .dropdown {
-            display: flex;
-            margin-left: 5px;
-            margin-bottom: 5px;
+		.dropdown {
+			display: flex;
+			margin-left: 5px;
+			margin-bottom: 5px;
 
-            .button {
-                margin-left: 0;
-                margin-bottom: 0;
-            }
-        }
-    }
+			.button {
+				margin-left: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
 
-    @include screen-sm-down {
-        flex-wrap: wrap;
+	@include screen-sm-down {
+		flex-wrap: wrap;
 
-        .contentHeaderNavigation {
-            flex-shrink: 1;
-        }
+		.contentHeaderNavigation {
+			flex-shrink: 1;
+		}
 
-        .contentHeaderIcon {
-            display: none;
-        }
-    }
+		.contentHeaderIcon {
+			display: none;
+		}
+	}
 
-    @include screen-md-up {
-        .contentHeaderNavigation {
-            max-width: 40%;
-        }
-    }
+	@include screen-md-up {
+		.contentHeaderNavigation {
+			max-width: 40%;
+		}
+	}
 }
 
 /* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
 .boxHeadline.boxSubHeadline {
-    margin-top: 40px;
-    margin-bottom: 20px;
+	margin-top: 40px;
+	margin-bottom: 20px;
 
-    > h2 {
-        color: var(--wcfContentHeadlineText);
+	> h2 {
+		color: var(--wcfContentHeadlineText);
 
-        @include wcfFontSection;
+		@include wcfFontSection;
 
-        a {
-            color: var(--wcfContentHeadlineLink);
+		a {
+			color: var(--wcfContentHeadlineLink);
 
-            &:hover {
-                color: var(--wcfContentHeadlineLinkActive);
-            }
-        }
+			&:hover {
+				color: var(--wcfContentHeadlineLinkActive);
+			}
+		}
 
-        .badge {
-            top: -2px;
-        }
-    }
+		.badge {
+			top: -2px;
+		}
+	}
 }
 
 /* content sections */
 .section {
-    margin-top: 40px;
+	margin-top: 40px;
 
-    > :first-child {
-        margin-top: 0;
-    }
+	> :first-child {
+		margin-top: 0;
+	}
 
-    .sectionTitle {
-        color: var(--wcfContentHeadlineText);
+	.sectionTitle {
+		color: var(--wcfContentHeadlineText);
 
-        @include wcfFontSection;
+		@include wcfFontSection;
 
-        a {
-            color: var(--wcfContentHeadlineLink);
+		a {
+			color: var(--wcfContentHeadlineLink);
 
-            &:hover {
-                color: var(--wcfContentHeadlineLinkActive);
-            }
-        }
+			&:hover {
+				color: var(--wcfContentHeadlineLinkActive);
+			}
+		}
 
-        .badge {
-            top: -2px;
-        }
-    }
+		.badge {
+			top: -2px;
+		}
+	}
 
-    .sectionDescription {
-        color: var(--wcfContentDimmedText);
-    }
+	.sectionDescription {
+		color: var(--wcfContentDimmedText);
+	}
 
-    > .sectionHeader,
-    > .sectionTitle {
-        margin-bottom: 20px;
+	> .sectionHeader,
+	> .sectionTitle {
+		margin-bottom: 20px;
 
-        + .section {
-            margin-top: 20px;
-        }
-    }
+		+ .section {
+			margin-top: 20px;
+		}
+	}
 
-    &:not(.sectionContainerList) {
-        > .sectionHeader,
-        > .sectionTitle {
-            border-bottom: 1px solid var(--wcfContentBorderInner);
-            padding-bottom: 10px;
-        }
-    }
+	&:not(.sectionContainerList) {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-bottom: 1px solid var(--wcfContentBorderInner);
+			padding-bottom: 10px;
+		}
+	}
 
-    &.sectionContainerList {
-        > .sectionHeader,
-        > .sectionTitle {
-            margin-bottom: 10px;
-        }
-    }
+	&.sectionContainerList {
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 10px;
+		}
+	}
 
-    &.tabularBox {
-        > .sectionHeader,
-        > .sectionTitle {
-            border-color: var(--wcfContentBorder);
-            margin-bottom: 0;
-        }
-    }
+	&.tabularBox {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-color: var(--wcfContentBorder);
+			margin-bottom: 0;
+		}
+	}
 
-    .section {
-        margin-top: 30px;
+	.section {
+		margin-top: 30px;
 
-        &:first-child {
-            margin-top: 20px;
-        }
+		&:first-child {
+			margin-top: 20px;
+		}
 
-        .sectionTitle {
-            @include wcfFontHeadline;
-        }
+		.sectionTitle {
+			@include wcfFontHeadline;
+		}
 
-        > .sectionHeader,
-        > .sectionTitle {
-            margin-bottom: 15px;
-        }
-    }
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 15px;
+		}
+	}
 }
 
 /* fieldset styling (old sections / deprecated) */
 fieldset {
-    margin-top: 40px;
+	margin-top: 40px;
 
-    > legend {
-        border-bottom: 1px solid var(--wcfContentBorderInner);
-        color: var(--wcfContentHeadlineText);
-        float: left;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        width: 100%;
+	> legend {
+		border-bottom: 1px solid var(--wcfContentBorderInner);
+		color: var(--wcfContentHeadlineText);
+		float: left;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		width: 100%;
 
-        @include wcfFontSection;
+		@include wcfFontSection;
 
-        a {
-            color: var(--wcfContentHeadlineLink);
+		a {
+			color: var(--wcfContentHeadlineLink);
 
-            &:hover {
-                color: var(--wcfContentHeadlineLinkActive);
-            }
-        }
+			&:hover {
+				color: var(--wcfContentHeadlineLinkActive);
+			}
+		}
 
-        .badge {
-            top: -2px;
-        }
+		.badge {
+			top: -2px;
+		}
 
-        & + * {
-            clear: left;
-        }
+		& + * {
+			clear: left;
+		}
 
-        + small {
-            color: var(--wcfContentDimmedText);
-            position: relative;
-            top: -12px;
-        }
-    }
+		+ small {
+			color: var(--wcfContentDimmedText);
+			position: relative;
+			top: -12px;
+		}
+	}
 }
 .section {
-    fieldset {
-        margin-top: 20px;
+	fieldset {
+		margin-top: 20px;
 
-        > legend {
-            margin-bottom: 15px;
+		> legend {
+			margin-bottom: 15px;
 
-            @include wcfFontHeadline;
-        }
-    }
+			@include wcfFontHeadline;
+		}
+	}
 }
 
 /* styling for container headlines */
 .containerHeadline {
-    > h3 {
-        @include wcfFontHeadline;
+	> h3 {
+		@include wcfFontHeadline;
 
-        > .badge {
-            top: -2px;
-        }
-    }
+		> .badge {
+			top: -2px;
+		}
+	}
 
-    ~ .containerContent {
-        margin-top: 10px;
-    }
+	~ .containerContent {
+		margin-top: 10px;
+	}
 }
 
 /* DEPRECATED: styling for content navigation area (containing pagination / page buttons) */
 .contentNavigation {
-    & + .section {
-        margin-top: 30px;
-    }
+	& + .section {
+		margin-top: 30px;
+	}
 
-    @include screen-sm-down {
-        ul {
-            margin-top: 30px;
+	@include screen-sm-down {
+		ul {
+			margin-top: 30px;
 
-            > li {
-                > .button {
-                    display: block;
-                    padding: 7px 10px;
-                    text-align: center;
-                }
-            }
-        }
+			> li {
+				> .button {
+					display: block;
+					padding: 7px 10px;
+					text-align: center;
+				}
+			}
+		}
 
-        > nav:not(.pagination) > ul > li + li {
-            margin-top: 10px;
-        }
-    }
+		> nav:not(.pagination) > ul > li + li {
+			margin-top: 10px;
+		}
+	}
 
-    @include screen-md-up {
-        align-items: center;
-        display: flex;
+	@include screen-md-up {
+		align-items: center;
+		display: flex;
 
-        // align <nav> to the right side
-        justify-content: flex-end;
+		// align <nav> to the right side
+		justify-content: flex-end;
 
-        > nav {
-            flex: 0 0 auto;
-            margin-top: 30px;
-            order: 3;
+		> nav {
+			flex: 0 0 auto;
+			margin-top: 30px;
+			order: 3;
 
-            &.pagination {
-                order: 1;
+			&.pagination {
+				order: 1;
 
-                // use up maximum space, causing it to stick to the left while all other
-                // <nav> elements will still be aligned to the right side
-                flex: 1 1 auto;
-            }
+				// use up maximum space, causing it to stick to the left while all other
+				// <nav> elements will still be aligned to the right side
+				flex: 1 1 auto;
+			}
 
-            &.jsClipboardEditor {
-                margin-right: 5px;
-                order: 2;
-            }
+			&.jsClipboardEditor {
+				margin-right: 5px;
+				order: 2;
+			}
 
-            & + nav {
-                flex: 0 0 auto;
-            }
+			& + nav {
+				flex: 0 0 auto;
+			}
 
-            &:not(.pagination) {
-                text-align: right;
-            }
-        }
+			&:not(.pagination) {
+				text-align: right;
+			}
+		}
 
-        ul {
-            display: inline-flex;
+		ul {
+			display: inline-flex;
 
-            > li {
-                flex: 0 0 auto;
+			> li {
+				flex: 0 0 auto;
 
-                &:not(:last-child) {
-                    margin-right: 5px;
-                }
-            }
-        }
-    }
+				&:not(:last-child) {
+					margin-right: 5px;
+				}
+			}
+		}
+	}
 }
 
 .paginationTop {
-    margin-top: 40px;
+	margin-top: 40px;
 
-    & + .section {
-        margin-top: 20px;
-    }
+	& + .section {
+		margin-top: 20px;
+	}
 }
 
 .paginationBottom {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .contentFooter {
-    > .contentFooterNavigation {
-        margin-top: 20px;
+	> .contentFooterNavigation {
+		margin-top: 20px;
 
-        > ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            margin-bottom: -5px;
-            margin-left: -5px;
-            white-space: nowrap;
-        }
+		> ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			margin-bottom: -5px;
+			margin-left: -5px;
+			white-space: nowrap;
+		}
 
-        .button {
-            display: block;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
+		.button {
+			display: block;
+			margin-left: 5px;
+			margin-bottom: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
 
-    @include screen-sm-up {
-        display: flex;
+	@include screen-sm-up {
+		display: flex;
 
-        > .paginationBottom {
-            flex: 0 0 auto;
-        }
+		> .paginationBottom {
+			flex: 0 0 auto;
+		}
 
-        > .contentFooterNavigation {
-            flex: 1 1 auto;
-            margin-left: 20px;
-        }
-    }
+		> .contentFooterNavigation {
+			flex: 1 1 auto;
+			margin-left: 20px;
+		}
+	}
 }
 
 .contentInteraction {
-    display: flex;
-    margin-top: 20px;
+	display: flex;
+	margin-top: 20px;
 }
 
 .contentInteractionPagination {
-    flex: 0 0 auto;
+	flex: 0 0 auto;
 
-    &.paginationTop {
-        margin-top: 0;
-    }
+	&.paginationTop {
+		margin-top: 0;
+	}
 
-    @include screen-xs {
-        flex: 0 0 100%;
-    }
+	@include screen-xs {
+		flex: 0 0 100%;
+	}
 }
 
 @include screen-xs {
-    body:not(.mobileShowPaginationTop) {
-        .contentInteractionPagination {
-            display: none;
-        }
-    }
+	body:not(.mobileShowPaginationTop) {
+		.contentInteractionPagination {
+			display: none;
+		}
+	}
 
-    body.mobileShowPaginationTop {
-        .contentInteractionPagination + .contentInteractionButtonContainer {
-            margin-top: 20px;
-        }
-    }
+	body.mobileShowPaginationTop {
+		.contentInteractionPagination + .contentInteractionButtonContainer {
+			margin-top: 20px;
+		}
+	}
 }
 
 @include screen-sm-down {
-    .contentHeader + .contentInteraction {
-        margin-top: 10px;
-    }
+	.contentHeader + .contentInteraction {
+		margin-top: 10px;
+	}
 }
 
 .contentInteractionButtonContainer {
-    align-self: center;
-    display: flex;
-    margin-left: auto;
+	align-self: center;
+	display: flex;
+	margin-left: auto;
 }
 
 .contentInteractionButtons {
-    display: flex;
-    flex: 0 auto;
-    overflow: auto;
+	display: flex;
+	flex: 0 auto;
+	overflow: auto;
 }
 
 .contentInteractionButton {
-    flex: 0 0 auto;
-    overflow: hidden;
+	flex: 0 0 auto;
+	overflow: hidden;
 
-    &:not(:first-child) {
-        &.button,
-        .button {
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
-        }
-    }
+	&:not(:first-child) {
+		&.button,
+		.button {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
 
-    &:not(:last-child) {
-        &.button,
-        .button {
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
-        }
-    }
+	&:not(:last-child) {
+		&.button,
+		.button {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
 }
 
 .contentInteractionButton:not(:first-child) {
-    margin-left: 1px;
+	margin-left: 1px;
 }
 
 .contentInteractionShareButton {
-    display: flex;
-    flex: 1 0 auto;
-    margin-left: 5px;
+	display: flex;
+	flex: 1 0 auto;
+	margin-left: 5px;
 }
 
 .contentInteractionDropdown {
-    display: flex;
-    flex: 1 0 auto;
-    margin-left: 5px;
+	display: flex;
+	flex: 1 0 auto;
+	margin-left: 5px;
 
-    .dropdownToggle {
-        align-items: center;
-        display: flex;
-        white-space: nowrap;
-    }
+	.dropdownToggle {
+		align-items: center;
+		display: flex;
+		white-space: nowrap;
+	}
 }
 
 .content {
-    container-type: inline-size;
-    container-name: content;
+	container-type: inline-size;
+	container-name: content;
 
-    .contentInteraction + .section,
-    .contentInteraction + form {
-        margin-top: 20px;
-    }
+	.contentInteraction + .section,
+	.contentInteraction + form {
+		margin-top: 20px;
+	}
 }
 
 /* content navigation buttons */
 @include screen-xs {
-    .contentHeader > .contentHeaderNavigation > ul {
-        > .button {
-            display: block;
-            padding: 7px 10px;
-            text-align: center;
+	.contentHeader > .contentHeaderNavigation > ul {
+		> .button {
+			display: block;
+			padding: 7px 10px;
+			text-align: center;
 
-            > .invisible {
-                display: inline;
-            }
-        }
-    }
+			> .invisible {
+				display: inline;
+			}
+		}
+	}
 }
 
 @include screen-sm-down {
-    /* DEPRECATED */
-    .contentNavigation > .pagination {
-        display: none;
-    }
+	/* DEPRECATED */
+	.contentNavigation > .pagination {
+		display: none;
+	}
 
-    /* DEPRECATED */
-    .section ~ .contentNavigation > .pagination {
-        display: block;
+	/* DEPRECATED */
+	.section ~ .contentNavigation > .pagination {
+		display: block;
 
-        & + nav {
-            // gap between pagination and navigation buttons
-            margin-top: 10px;
-        }
-    }
+		& + nav {
+			// gap between pagination and navigation buttons
+			margin-top: 10px;
+		}
+	}
 }
 
 /* sidebar galore */
 @include screen-lg {
-    .sidebar + .content:not(:last-child) {
-        .contentHeaderNavigation {
-            flex: 1 1 0%;
+	.sidebar + .content:not(:last-child) {
+		.contentHeaderNavigation {
+			flex: 1 1 0%;
 
-            > ul {
-                flex-wrap: wrap !important;
-                justify-content: flex-end;
-            }
-        }
-    }
+			> ul {
+				flex-wrap: wrap !important;
+				justify-content: flex-end;
+			}
+		}
+	}
 }
 
 .contentInteraction--withTabs {
-    border-bottom: solid 1px var(--wcfContentBorderInner);
+	border-bottom: solid 1px var(--wcfContentBorderInner);
 }
 
 .contentInteractionTabs {
-    display: flex;
-    gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 
 .contentInteractionTab {
-    display: flex;
-    white-space: nowrap;
+	display: flex;
+	white-space: nowrap;
 }
 
 .contentInteractionTab__link {
-    display: flex;
-    padding: 5px 10px;
-    color: var(--wcfContentDimmedText);
-    font-size: var(--wcfFontSizeSection);
-    font-weight: 600;
-    position: relative;
+	display: flex;
+	padding: 5px 10px;
+	color: var(--wcfContentDimmedText);
+	font-size: var(--wcfFontSizeSection);
+	font-weight: 600;
+	position: relative;
 }
 
 .contentInteractionTab__link::after {
-    content: "";
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    position: absolute;
-    height: 3px;
+	content: "";
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	position: absolute;
+	height: 3px;
 }
 
 .contentInteractionTab--active .contentInteractionTab__link {
-    color: var(--wcfContentText);
+	color: var(--wcfContentText);
 }
 
 .contentInteractionTab__link:hover {
-    color: var(--wcfContentText);
+	color: var(--wcfContentText);
 }
 
 .contentInteractionTab__link:hover::after {
-    background-color: var(--wcfContentBorderInner);
+	background-color: var(--wcfContentBorderInner);
 }
 
 .contentInteractionTab--active .contentInteractionTab__link::after {
-    background-color: var(--wcfTabularBoxHeadline);
+	background-color: var(--wcfTabularBoxHeadline);
 }
 
 @container content (width < 800px) {
-    .contentInteraction {
-        flex-direction: column;
-    }
+	.contentInteraction {
+		flex-direction: column;
+	}
 
-    .contentInteractionButtonContainer {
-        order: -1;
-    }
+	.contentInteractionButtonContainer {
+		order: -1;
+	}
 }
