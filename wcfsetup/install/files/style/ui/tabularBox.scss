@@ -99,8 +99,7 @@ html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
 			}
 		}
 
-		a,
-		.icon {
+		a {
 			color: var(--wcfTabularBoxHeadline);
 
 			&:hover {
@@ -244,18 +243,6 @@ html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
 		&.columnSmallText {
 			@include screen-sm-down {
 				min-width: 200px;
-			}
-		}
-
-		&.columnIcon {
-			@include screen-md-down {
-				:not(.button) > .icon16,
-				> .icon16 {
-					font-size: 18px;
-					height: 24px;
-					line-height: 24px;
-					width: 24px;
-				}
 			}
 		}
 	}

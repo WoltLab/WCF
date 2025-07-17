@@ -120,10 +120,6 @@
 		}
 	}
 
-	.icon {
-		color: var(--wcfFooterBoxText);
-	}
-
 	.boxContainer {
 		@include screen-sm-up {
 			display: flex;
@@ -346,10 +342,6 @@
 				margin: 0 !important;
 			}
 		}
-	}
-
-	.icon {
-		color: var(--wcfSidebarText);
 	}
 
 	small,
@@ -798,10 +790,6 @@
 		}
 	}
 
-	.icon {
-		color: var(--wcfFooterBoxText);
-	}
-
 	.boxContainer {
 		@include screen-sm-down {
 			display: flex;
@@ -855,10 +843,6 @@
 
 	.layoutBoundary {
 		position: relative;
-	}
-
-	.icon {
-		color: var(--wcfFooterText);
 	}
 
 	a {
@@ -1033,10 +1017,6 @@ html:not([data-color-scheme="dark"]) .page__colorScheme--dark {
 		right: 4px;
 
 		&:hover {
-			color: inherit;
-		}
-
-		> .icon {
 			color: inherit;
 		}
 	}

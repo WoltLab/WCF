@@ -47,10 +47,6 @@ a.button {
 
 	@include userSelectNone;
 
-	.icon {
-		color: inherit;
-	}
-
 	&.active {
 		background-color: var(--wcfButtonBackgroundActive);
 		color: var(--wcfButtonTextActive);

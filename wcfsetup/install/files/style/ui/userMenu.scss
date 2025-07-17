@@ -11,14 +11,6 @@
         .userMenuItemContent {
             font-weight: 600;
         }
-
-        .icon {
-            color: var(--wcfUserMenuTextDimmed);
-        }
-    }
-
-    .icon {
-        color: var(--wcfUserMenuText);
     }
 }
 
@@ -166,10 +158,6 @@ html:not(.touch) .userMenuButton {
 html:not(.touch) .userMenuItem:hover {
     background-color: var(--wcfUserMenuBackgroundActive);
     color: var(--wcfUserMenuTextActive);
-
-    .icon {
-        color: var(--wcfUserMenuTextActive);
-    }
 }
 
 .userMenuItemLinkPlain {

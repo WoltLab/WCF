@@ -106,14 +106,6 @@
 		> .dialogCloseButton {
 			align-self: center;
 			flex: 0 0 auto;
-
-			&:hover > .icon {
-				color: var(--wcfHeaderLinkActive);
-			}
-
-			> .icon {
-				color: var(--wcfHeaderLink);
-			}
 		}
 	}
 

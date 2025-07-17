@@ -39,13 +39,8 @@
 		cursor: move;
 	}
 
-	> .icon,
 	> a {
 		margin-right: 5px;
-	}
-
-	> .icon {
-		flex: 0 0 auto;
 	}
 
 	> a {
@@ -85,7 +80,8 @@
 		color: var(--wcfStatusErrorText);
 	}
 
-	.sortableNodeLabel, &:is(tr):hover > td {
+	.sortableNodeLabel,
+	&:is(tr):hover > td {
 		background-color: transparent;
 	}
 }

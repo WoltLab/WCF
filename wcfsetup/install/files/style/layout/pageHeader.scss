@@ -11,10 +11,6 @@
 		}
 	}
 
-	.icon {
-		color: var(--wcfHeaderText);
-	}
-
 	/* reserved space for `.pageHeaderPanel` */
 	padding-top: 50px;
 }
@@ -208,7 +204,7 @@
 @include only_safari_no_ios(
 	".pageHeaderPanel > .layoutBoundary",
 	(
-		transform: translateZ(0),
+		transform: translateZ(0)
 	)
 );
 
@@ -242,7 +238,7 @@
 				}
 
 				/* hide icon label */
-				> span:not(.icon):not(.badge):not(.iconWrapper) {
+				> span:not(.badge):not(.iconWrapper) {
 					display: none;
 				}
 
@@ -257,10 +253,6 @@
 					top: 4px;
 					z-index: 101;
 				}
-
-				.icon {
-					color: var(--wcfHeaderMenuLink);
-				}
 			}
 
 			&.dropdownOpen > a,
@@ -268,18 +260,6 @@
 			&:hover > a {
 				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 				color: var(--wcfHeaderMenuLinkActive);
-
-				.icon {
-					color: var(--wcfHeaderMenuLinkActive);
-				}
-			}
-
-			/* ringing animation for notification icon */
-			&#userNotifications:not([data-count="0"]) {
-				> a > .icon {
-					animation: fa-bell-ring 5s ease 10s 6;
-					transform-origin: 50% 0;
-				}
 			}
 		}
 	}

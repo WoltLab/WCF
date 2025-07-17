@@ -80,16 +80,8 @@
 			> a {
 				color: var(--wcfSidebarHeadlineLink);
 
-				> .icon {
-					color: var(--wcfSidebarHeadlineLink);
-				}
-
 				&:hover {
 					color: var(--wcfSidebarHeadlineLinkActive);
-
-					> .icon {
-						color: var(--wcfSidebarHeadlineLinkActive);
-					}
 				}
 			}
 		}

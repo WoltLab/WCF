@@ -292,11 +292,6 @@ html[data-color-scheme="dark"] {
 }
 
 @include screen-lg {
-	.acpPageMenu .icon,
-	.acpPageSubMenu .icon {
-		color: inherit;
-	}
-
 	.acpPageMenu {
 		background-color: var(--wcfAcpPageMenu);
 		bottom: 0;

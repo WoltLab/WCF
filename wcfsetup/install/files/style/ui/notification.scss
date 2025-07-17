@@ -62,10 +62,6 @@
 		position: absolute;
 		z-index: -1;
 
-		&:focus-visible ~ .icon {
-			transform: scale(1.2);
-		}
-
 		&:not(:checked) + fa-icon[name="bell"] {
 			display: none;
 		}
