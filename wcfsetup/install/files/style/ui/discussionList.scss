@@ -43,10 +43,6 @@
 	color: var(--wcfContentDimmedText);
 
 	@include wcfFontSmall;
-
-	.icon {
-		color: inherit;
-	}
 }
 
 .discussionList__item__meta__content {
@@ -251,10 +247,6 @@
 	color: var(--wcfContentDimmedText);
 
 	@include wcfFontSmall;
-
-	.icon {
-		color: inherit;
-	}
 }
 
 .discussionList__item__lastPost {
