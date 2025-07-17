@@ -758,4 +758,14 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     {
         return 'userLink';
     }
+
+    /**
+     * Returns the value for the access token link parameter.
+     *
+     * @since 6.2
+     */
+    public function getAccessToken(): string
+    {
+        return \sprintf('%d-%s', $this->userID, $this->accessToken);
+    }
 }
