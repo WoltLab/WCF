@@ -53,6 +53,9 @@
 .listView__footer {
 	align-items: center;
 	background-color: var(--wcfContentContainerBackground);
+	border-bottom-left-radius: var(--wcfBorderRadius);
+	border-bottom-right-radius: var(--wcfBorderRadius);
+	border-top: 1px solid var(--wcfContentContainerBorder);
 	bottom: 0;
 	display: flex;
 	gap: 10px;
@@ -66,6 +69,7 @@
 
 @include screen-sm-down {
 	.listView__footer {
+		margin-bottom: -10px;
 		margin-left: -10px;
 		margin-right: -10px;
 		padding-left: 10px;
@@ -75,6 +79,7 @@
 
 @include screen-md-up {
 	.listView__footer {
+		margin-bottom: -20px;
 		margin-left: -20px;
 		margin-right: -20px;
 		padding-left: 20px;
