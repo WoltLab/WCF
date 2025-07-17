@@ -311,6 +311,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Invalid time format.]]></item>
+		<item name="wcf.acp.cronjob.showLog"><![CDATA[Show Log]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Cronjob Log]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
