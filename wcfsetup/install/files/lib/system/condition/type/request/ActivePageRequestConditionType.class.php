@@ -6,7 +6,7 @@ use wcf\data\page\PageNodeTree;
 use wcf\system\condition\type\AbstractConditionType;
 use wcf\system\condition\type\IContextualConditionType;
 use wcf\system\condition\type\IMigrateConditionType;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\request\RequestHandler;
 
 /**
@@ -15,8 +15,8 @@ use wcf\system\request\RequestHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @implements IContextualConditionType<string>
- * @extends AbstractConditionType<string>
+ * @implements IContextualConditionType<string[]>
+ * @extends AbstractConditionType<string[]>
  */
 final class ActivePageRequestConditionType extends AbstractConditionType implements IContextualConditionType, IMigrateConditionType
 {
@@ -33,19 +33,18 @@ final class ActivePageRequestConditionType extends AbstractConditionType impleme
     }
 
     #[\Override]
-    public function getFormField(string $id): SingleSelectionFormField
+    public function getFormField(string $id): MultipleSelectionFormField
     {
-        // SelectFormField stores its value as a string,
-        // so we need to convert it to an integer in the `matches` method.
-        return SingleSelectionFormField::create($id)
+        return MultipleSelectionFormField::create($id)
             ->options((new PageNodeTree())->getNodeList(), true)
+            ->filterable()
             ->required();
     }
 
     #[\Override]
     public function matches(): bool
     {
-        return RequestHandler::getInstance()->getActivePageID() === (int)$this->filter;
+        return \in_array(RequestHandler::getInstance()->getActivePageID(), $this->filter);
     }
 
     #[\Override]
@@ -54,18 +53,15 @@ final class ActivePageRequestConditionType extends AbstractConditionType impleme
         $reverseLogic = $conditionData['pageIDs_reverseLogic'] ?? false;
         $pageIDs = $conditionData['pageIDs'] ?? [];
 
-        if ($reverseLogic || \count($pageIDs) > 1) {
+        if ($reverseLogic) {
             // `NotOnPageRequestConditionType` should migrate the data.
             return [];
         }
 
-        $conditions = [];
-        foreach ($pageIDs as $pageID) {
-            $conditions[] = [
-                'identifier' => $this->getIdentifier(),
-                'value' => (string)$pageID,
-            ];
-        }
+        $conditions[] = [
+            'identifier' => $this->getIdentifier(),
+            'value' => \array_map('strval', $pageIDs),
+        ];
 
         unset($conditionData['pageIDs'], $conditionData['pageIDs_reverseLogic']);
 

@@ -55,18 +55,12 @@ final class NotOnPageRequestConditionType extends AbstractConditionType implemen
         $reverseLogic = $conditionData['pageIDs_reverseLogic'] ?? false;
         $pageIDs = $conditionData['pageIDs'] ?? [];
 
-        if (!$reverseLogic && \count($pageIDs) <= 1) {
+        if (!$reverseLogic) {
             // `ActivePageRequestConditionType` should migrate the data.
             return [];
         }
 
         $conditions = [];
-        if (!$reverseLogic) {
-            // If reverse logic is not activated, we must add all unselected pages.
-            // This allows us to turn an “or” condition into an “and” condition.
-            $pageIDs = \array_diff($this->getPageIDs(), $pageIDs);
-        }
-
         foreach ($pageIDs as $pageID) {
             $conditions[] = [
                 'identifier' => $this->getIdentifier(),

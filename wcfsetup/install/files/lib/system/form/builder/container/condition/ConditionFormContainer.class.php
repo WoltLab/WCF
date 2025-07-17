@@ -112,10 +112,10 @@ final class ConditionFormContainer extends FormContainer
                 static function (IFormDocument $document, array $parameters) use ($prefixId, $identifier, $fieldId) {
                     $conditions = isset($parameters['data'][$prefixId]) ? JSON::decode($parameters['data'][$prefixId]) : [];
 
-                    if (isset($parameters['data'][$fieldId])) {
+                    if (isset($parameters['data'][$fieldId]) || isset($parameters[$fieldId])) {
                         $conditions[] = [
                             "identifier" => $identifier,
-                            "value" => $parameters['data'][$fieldId],
+                            "value" => $parameters['data'][$fieldId] ?? $parameters[$fieldId],
                         ];
                     }
 
