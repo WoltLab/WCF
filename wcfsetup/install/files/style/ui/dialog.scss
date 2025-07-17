@@ -269,10 +269,10 @@
 /* New dialog API */
 @keyframes dialog {
 	0% {
-		transform: translateY(-20px);
+		top: -20px;
 	}
 	100% {
-		transform: translateY(0);
+		top: 0;
 	}
 }
 
@@ -294,6 +294,7 @@
 	min-width: 500px;
 	overflow: hidden;
 	padding: 0;
+	position: relative;
 }
 
 .dialog:not([open]) {
