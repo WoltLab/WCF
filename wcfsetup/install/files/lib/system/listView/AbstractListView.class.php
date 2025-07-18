@@ -12,6 +12,7 @@ use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\listView\filter\IListViewFilter;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -244,13 +245,27 @@ abstract class AbstractListView
      */
     protected function applyFilters(): void
     {
-        foreach ($this->getActiveFilters() as $key => $value) {
+        $this->activeFilters = \array_filter($this->activeFilters, function ($value, $key) {
             if (!isset($this->availableFilters[$key])) {
-                throw new \LogicException("Unknown filter '" . $key . "'");
+                if (\ENABLE_DEBUG_MODE) {
+                    throw new \LogicException("Filter applied for unknown column '{$key}'.");
+                } else {
+                    return false;
+                }
             }
 
-            $this->availableFilters[$key]->applyFilter($this->getObjectList(), $value);
-        }
+            try {
+                $this->availableFilters[$key]->applyFilter($this->getObjectList(), $value);
+            } catch (InvalidFilterValue $e) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw $e;
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
+        }, \ARRAY_FILTER_USE_BOTH);
     }
 
     /**

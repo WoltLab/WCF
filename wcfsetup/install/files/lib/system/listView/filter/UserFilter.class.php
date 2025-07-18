@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\user\UserFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 
 /**
  * Filter for columns that contain user ids.
@@ -28,6 +29,11 @@ class UserFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        $user = UserRuntimeCache::getInstance()->getObject((int)$value);
+        if ($user === null) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);

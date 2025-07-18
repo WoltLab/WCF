@@ -5,6 +5,7 @@ namespace wcf\system\listView\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
 
 /**
@@ -41,6 +42,10 @@ class SelectFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        if (!isset($this->options[$value])) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);

@@ -5,6 +5,7 @@ namespace wcf\system\listView\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 
 /**
  * Filter for columns that contain numerics.
@@ -41,7 +42,7 @@ class NumericFilter extends AbstractFilter
         $values = $this->parseValue($value);
 
         if (!$values['from'] && !$values['to']) {
-            return;
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
         if (!$values['to']) {

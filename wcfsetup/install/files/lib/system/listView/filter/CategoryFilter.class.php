@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\category\CategoryHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 
 /**
  * Allows a column to be filtered on the basis of a select category.
@@ -41,6 +42,11 @@ class CategoryFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        $category = CategoryHandler::getInstance()->getCategory((int)$value);
+        if ($category === null) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);

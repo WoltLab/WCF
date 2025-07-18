@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\label\LabelFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 
 /**
  * Filter that allows to filter a list view by labels.
@@ -43,6 +44,11 @@ class LabelFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        $label = $this->labelGroup->getLabel((int)$value);
+        if ($label === null) {
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+        }
+
         $list->getConditionBuilder()->add(
             "{$list->getDatabaseTableAlias()}.{$list->getDatabaseTableIndexName()} IN (
                 SELECT  objectID
@@ -52,7 +58,7 @@ class LabelFilter extends AbstractFilter
             )",
             [
                 $this->objectTypeID,
-                $value,
+                $label->labelID,
             ]
         );
     }

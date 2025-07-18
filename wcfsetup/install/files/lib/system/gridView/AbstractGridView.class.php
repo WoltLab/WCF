@@ -2,12 +2,12 @@
 
 namespace wcf\system\gridView;
 
-use LogicException;
 use wcf\action\GridViewFilterAction;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
+use wcf\system\gridView\filter\exception\InvalidFilterValue;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;
@@ -567,15 +567,15 @@ abstract class AbstractGridView
     {
         $column = $this->getColumn($id);
         if (!$column) {
-            throw new LogicException("Unknown column '" . $id . "'.");
+            throw new \LogicException("Unknown column '" . $id . "'.");
         }
 
         if (!$column->getFilter()) {
-            throw new LogicException("Column '" . $id . "' has no filter.");
+            throw new \LogicException("Column '" . $id . "' has no filter.");
         }
 
         if (!isset($this->activeFilters[$id])) {
-            throw new LogicException("No value for filter '" . $id . "' found.");
+            throw new \LogicException("No value for filter '" . $id . "' found.");
         }
 
         $value = $column->getFilter()->renderValue($this->activeFilters[$id]);
@@ -761,14 +761,28 @@ abstract class AbstractGridView
      */
     protected function applyFilters(): void
     {
-        foreach ($this->getActiveFilters() as $key => $value) {
+        $this->activeFilters = \array_filter($this->activeFilters, function ($value, $key) {
             $column = $this->getColumn($key);
             if (!$column) {
-                throw new LogicException("Unknown column '" . $key . "'");
+                if (\ENABLE_DEBUG_MODE) {
+                    throw new \LogicException("Filter applied for unknown column '{$key}'.");
+                } else {
+                    return false;
+                }
             }
 
-            $column->getFilter()->applyFilter($this->getObjectList(), $column->getID(), $value);
-        }
+            try {
+                $column->getFilter()->applyFilter($this->getObjectList(), $column->getID(), $value);
+            } catch (InvalidFilterValue $e) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw $e;
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
+        }, \ARRAY_FILTER_USE_BOTH);
     }
 
     /**

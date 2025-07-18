@@ -5,6 +5,7 @@ namespace wcf\system\listView\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\DateRangeFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
 
 /**
@@ -32,7 +33,7 @@ class DateFilter extends AbstractFilter
         $timestamps = $this->getTimestamps($value);
 
         if (!$timestamps['from'] && !$timestamps['to']) {
-            return;
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
         if (!$timestamps['to']) {
