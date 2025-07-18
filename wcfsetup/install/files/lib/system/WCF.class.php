@@ -515,6 +515,9 @@ class WCF
 
         // The option to show an article counter in the message sidebar was removed with version 6.2.
         \define('MESSAGE_SIDEBAR_ENABLE_ARTICLES', 0);
+
+        // The autoscale quality setting for attachments was removed with version 6.2.
+        \define('ATTACHMENT_IMAGE_AUTOSCALE_QUALITY', 80);
     }
 
     /**
