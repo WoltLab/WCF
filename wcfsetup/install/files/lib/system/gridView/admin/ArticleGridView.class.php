@@ -89,7 +89,7 @@ final class ArticleGridView extends AbstractGridView
 
                             $labels = '';
                             if ($row->hasLabels()) {
-                                $labels = '<ul class="labelList">';
+                                $labels = '<br><ul class="labelList">';
                                 foreach ($row->getLabels() as $label) {
                                     $labels .= '<li>' . $label->render() . '</li>';
                                 }
