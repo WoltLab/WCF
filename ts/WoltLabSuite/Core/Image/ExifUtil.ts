@@ -7,6 +7,8 @@
  * @woltlabExcludeBundle tiny
  */
 
+import { parseWebPFromBuffer } from "./WebP";
+
 const Tag = {
   SOI: 0xd8, // Start of image
   APP0: 0xe0, // JFIF tag
@@ -111,6 +113,19 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
   }
 
   return exif;
+}
+
+export async function getExifBytesFromWebP(blob: Blob | File): Promise<Exif | null> {
+  if (!((blob as any) instanceof Blob) && !(blob instanceof File)) {
+    throw new TypeError("The argument must be a Blob or a File");
+  }
+
+  const webp = parseWebPFromBuffer(await blob.arrayBuffer());
+  if (webp === undefined) {
+    return null;
+  }
+
+  return webp.getExifData();
 }
 
 /**

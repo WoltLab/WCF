@@ -85,6 +85,7 @@ final class PrepareUpload implements IController
                 'objectTypeID' => $objectType?->objectTypeID,
                 'context' => $parameters->context,
                 'chunks' => \str_repeat('0', $numberOfChunks),
+                'exifData' => $parameters->exifData,
             ],
         ]);
 
@@ -110,5 +111,7 @@ final class PostUploadParameters
 
         /** @var non-empty-string */
         public readonly string $context,
+
+        public readonly ?string $exifData = null,
     ) {}
 }

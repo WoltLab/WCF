@@ -13,6 +13,7 @@ import { innerError } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { createSHA256 } from "hash-wasm";
 import { cropImage, CropperConfiguration } from "WoltLabSuite/Core/Component/Image/Cropper";
+import { Exif, getExifBytesFromJpeg, getExifBytesFromWebP } from "WoltLabSuite/Core/Image/ExifUtil";
 
 export type CkeditorDropEvent = {
   file: File;
@@ -44,6 +45,7 @@ async function upload(
   element: WoltlabCoreFileUploadElement,
   file: File,
   fileHash: string,
+  exifData: Exif | null,
 ): Promise<ResponseCompleted | undefined> {
   const objectType = element.dataset.objectType!;
 
@@ -54,7 +56,14 @@ async function upload(
   const event = new CustomEvent<WoltlabCoreFileElement>("uploadStart", { detail: fileElement });
   element.dispatchEvent(event);
 
-  const response = await filesUpload(file.name, file.size, fileHash, objectType, element.dataset.context || "");
+  const response = await filesUpload(
+    file.name,
+    file.size,
+    fileHash,
+    objectType,
+    element.dataset.context || "",
+    exifData,
+  );
   if (!response.ok) {
     const validationError = response.error.getValidationError();
     if (validationError === undefined) {
@@ -290,6 +299,24 @@ function reportError(element: WoltlabCoreFileUploadElement, file: File | null, m
   innerError(element, message);
 }
 
+async function getExifBytes(file: File): Promise<Exif | null> {
+  if (file.type === "image/jpeg") {
+    try {
+      return await getExifBytesFromJpeg(file);
+    } catch {
+      return null;
+    }
+  } else if (file.type === "image/webp") {
+    try {
+      return await getExifBytesFromWebP(file);
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
+}
+
 export function setup(): void {
   wheneverFirstSeen("woltlab-core-file-upload", (element: WoltlabCoreFileUploadElement) => {
     element.addEventListener("upload:files", (event: CustomEvent<{ files: File[] }>) => {
@@ -311,11 +338,15 @@ export function setup(): void {
 
       element.markAsBusy();
 
+      const exifData = new Map<File, Exif | null>();
+
       let processImage: (file: File) => Promise<File>;
       if (element.dataset.cropperConfiguration) {
         const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration) as CropperConfiguration;
 
         processImage = async (file) => {
+          exifData.set(file, await getExifBytes(file));
+
           try {
             return await cropImage(element, file, cropperConfiguration);
           } catch (e) {
@@ -325,7 +356,11 @@ export function setup(): void {
           }
         };
       } else {
-        processImage = async (file) => resizeImage(element, file);
+        processImage = async (file) => {
+          exifData.set(file, await getExifBytes(file));
+
+          return resizeImage(element, file);
+        };
       }
 
       // Resize all files in parallel but keep the original order. This ensures
@@ -359,7 +394,8 @@ export function setup(): void {
             const result = checksums[i];
 
             if (result.status === "fulfilled") {
-              void upload(element, validFiles[i], result.value);
+              const exif = exifData.get(validFiles[i]) || null;
+              void upload(element, validFiles[i], result.value, exif);
             } else {
               throw new Error(result.reason);
             }
@@ -394,26 +430,32 @@ export function setup(): void {
         return;
       }
 
-      void resizeImage(element, file).then(async (resizeFile) => {
-        try {
-          const checksum = await getSha256Hash(resizeFile);
-          const data = await upload(element, resizeFile, checksum);
-          if (data === undefined || typeof data.data.attachmentID !== "number") {
+      let exifData: Exif | null;
+      void getExifBytes(file)
+        .then((exif) => {
+          exifData = exif;
+        })
+        .then(() => resizeImage(element, file))
+        .then(async (resizeFile) => {
+          try {
+            const checksum = await getSha256Hash(resizeFile);
+            const data = await upload(element, resizeFile, checksum, exifData);
+            if (data === undefined || typeof data.data.attachmentID !== "number") {
+              promiseReject();
+            } else {
+              const attachmentData: AttachmentData = {
+                attachmentId: data.data.attachmentID,
+                url: data.link,
+              };
+
+              promiseResolve(attachmentData);
+            }
+          } catch (e) {
             promiseReject();
-          } else {
-            const attachmentData: AttachmentData = {
-              attachmentId: data.data.attachmentID,
-              url: data.link,
-            };
 
-            promiseResolve(attachmentData);
+            throw e;
           }
-        } catch (e) {
-          promiseReject();
-
-          throw e;
-        }
-      });
+        });
     });
   });
 }
