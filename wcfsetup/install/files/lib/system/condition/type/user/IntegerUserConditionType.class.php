@@ -29,6 +29,7 @@ class IntegerUserConditionType extends AbstractConditionType implements IDatabas
     public function __construct(
         public readonly string $identifier,
         public readonly string $columnName,
+        public readonly string $category,
         public readonly ?string $migrateConditionObjectType = null,
     ) {
     }
@@ -81,6 +82,12 @@ class IntegerUserConditionType extends AbstractConditionType implements IDatabas
             '<=' => $object->{$this->columnName} <= $this->filter['value'],
             default => throw new \InvalidArgumentException("Unknown condition: {$this->filter['condition']}"),
         };
+    }
+
+    #[\Override]
+    public function getCategory(): string
+    {
+        return $this->category;
     }
 
     /**

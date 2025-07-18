@@ -72,6 +72,12 @@ final class NotInGroupUserConditionType extends AbstractConditionType implements
     }
 
     #[\Override]
+    public function getCategory(): string
+    {
+        return "user";
+    }
+
+    #[\Override]
     public function canMigrateConditionData(string $objectType): bool
     {
         return $objectType === 'com.woltlab.wcf.user.userGroup';

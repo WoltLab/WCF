@@ -54,6 +54,12 @@ final class DayOfWeekRequestConditionType extends AbstractConditionType implemen
     }
 
     #[\Override]
+    public function getCategory(): string
+    {
+        return "pointInTime";
+    }
+
+    #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
         $daysOfWeeks = $conditionData['daysOfWeek'] ?? [];

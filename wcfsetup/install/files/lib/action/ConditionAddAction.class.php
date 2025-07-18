@@ -82,27 +82,86 @@ final class ConditionAddAction implements RequestHandlerInterface
             self::class,
             WCF::getLanguage()->get('wcf.condition.add')
         );
-        $options = \array_map(
-            static fn (IConditionType $conditionType) => WCF::getLanguage()->get($conditionType->getLabel()),
-            $provider->getConditionTypes()
-        );
-        $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \uasort(
-            $options,
-            static fn (string $a, string $b) => $collator->compare($a, $b)
-        );
 
         $form->appendChild(
-            SingleSelectionFormField::create('conditionType')
+            $this->getConditionTypeFormField()
+                ->id('conditionType')
                 ->label('wcf.condition.condition')
                 ->filterable()
                 ->required()
-                ->options($options)
+                ->options($this->getOptions($provider), true, false)
         );
 
         $form->markRequiredFields(false);
         $form->build();
 
         return $form;
+    }
+
+    /**
+     * @param AbstractConditionProvider<IConditionType<mixed>> $provider
+     *
+     * @return array{}
+     */
+    private function getOptions(AbstractConditionProvider $provider): array
+    {
+        $conditionTypes = $provider->getConditionTypes();
+
+        $grouped = [];
+        foreach ($conditionTypes as $key => $conditionType) {
+            $category = $conditionType->getCategory();
+            $label = $conditionType->getLabel();
+
+            if (!isset($grouped[$category])) {
+                $grouped[$category] = [
+                    "items" => [],
+                    "label" => WCF::getLanguage()->get('wcf.condition.category.' . $category),
+                ];
+            }
+
+            $grouped[$category]["items"][$key] = WCF::getLanguage()->get($label);
+        }
+
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+
+        foreach ($grouped as &$category) {
+            \uasort($category["items"], static function ($labelA, $labelB) use ($collator) {
+                return $collator->compare($labelA, $labelB);
+            });
+        }
+        unset($category);
+
+        \uasort($grouped, static function ($catA, $catB) use ($collator) {
+            return $collator->compare($catA['label'], $catB['label']);
+        });
+
+        $options = [];
+
+        foreach ($grouped as $categoryKey => $category) {
+            $options[] = [
+                'depth' => 0,
+                'isSelectable' => false,
+                'label' => $category["label"],
+                'value' => $categoryKey,
+            ];
+
+            foreach ($category["items"] as $key => $label) {
+                $options[] = [
+                    'depth' => 1,
+                    'isSelectable' => true,
+                    'label' => $label,
+                    'value' => $key,
+                ];
+            }
+        }
+
+        return $options;
+    }
+
+    private function getConditionTypeFormField(): SingleSelectionFormField
+    {
+        return new class extends SingleSelectionFormField {
+            protected $templateName = 'shared_categorizedSingleSelectionFormField';
+        };
     }
 }

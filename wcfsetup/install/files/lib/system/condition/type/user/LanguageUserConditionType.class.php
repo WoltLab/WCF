@@ -62,6 +62,12 @@ final class LanguageUserConditionType extends AbstractConditionType implements I
     }
 
     #[\Override]
+    public function getCategory(): string
+    {
+        return "user";
+    }
+
+    #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
         if (!isset($conditionData['languageIDs'])) {

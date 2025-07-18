@@ -30,6 +30,7 @@ class StringUserConditionType extends AbstractConditionType implements IDatabase
     public function __construct(
         public readonly string $identifier,
         public readonly string $columnName,
+        public readonly string $category,
         public readonly ?string $migrateKeyName = null,
         public readonly ?string $migrateConditionObjectType = null,
     ) {}
@@ -105,6 +106,12 @@ class StringUserConditionType extends AbstractConditionType implements IDatabase
             "%_%" => "wcf.condition.contains",
             "%_" => "wcf.condition.endsWith",
         ];
+    }
+
+    #[\Override]
+    public function getCategory(): string
+    {
+        return $this->category;
     }
 
     #[\Override]

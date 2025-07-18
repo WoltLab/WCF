@@ -50,6 +50,12 @@ final class NotOnPageRequestConditionType extends AbstractConditionType implemen
     }
 
     #[\Override]
+    public function getCategory(): string
+    {
+        return "page";
+    }
+
+    #[\Override]
     public function migrateConditionData(array &$conditionData): array
     {
         $reverseLogic = $conditionData['pageIDs_reverseLogic'] ?? false;

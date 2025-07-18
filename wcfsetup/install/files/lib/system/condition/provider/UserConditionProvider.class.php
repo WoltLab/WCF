@@ -39,6 +39,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new StringUserConditionType(
                 identifier: "username",
                 columnName: "username",
+                category: "user",
                 migrateKeyName: "username",
                 migrateConditionObjectType: 'com.woltlab.wcf.user.username'
             ),
@@ -47,6 +48,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new StringUserConditionType(
                 identifier: "email",
                 columnName: "email",
+                category: "user",
                 migrateKeyName: "email",
                 migrateConditionObjectType: 'com.woltlab.wcf.user.email'
             ),
@@ -70,6 +72,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IsNullUserConditionType(
                 identifier: "avatar",
                 columnName: 'avatarFileID',
+                category: 'userProfile',
                 migrateKeyName: 'userAvatar',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.avatar'
             ),
@@ -81,6 +84,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IsNullUserConditionType(
                 identifier: "coverPhoto",
                 columnName: 'coverPhotoFileID',
+                category: 'userProfile',
                 migrateKeyName: 'userCoverPhoto',
                 migrateConditionObjectType: 'com.woltlab.wcf.coverPhoto'
             ),
@@ -89,6 +93,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new BooleanUserConditionType(
                 identifier: "isBanned",
                 columnName: 'banned',
+                category: 'user',
                 migrateKeyName: 'userIsBanned',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.state'
             ),
@@ -100,6 +105,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IsNullUserConditionType(
                 identifier: "isEmailConfirmed",
                 columnName: 'emailConfirmed',
+                category: 'user',
                 migrateKeyName: 'userIsEmailConfirmed',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.state'
             ),
@@ -108,6 +114,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new BooleanUserConditionType(
                 identifier: "isMultifactorActive",
                 columnName: 'multifactorActive',
+                category: 'user',
                 migrateKeyName: 'multifactorActive',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.multifactor'
             ),
@@ -122,6 +129,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IntegerUserConditionType(
                 identifier: "activityPoints",
                 columnName: "activityPoints",
+                category: 'userProfile',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.activityPoints'
             ),
         );
@@ -129,6 +137,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IntegerUserConditionType(
                 identifier: "likesReceived",
                 columnName: "likesReceived",
+                category: 'userProfile',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.likesReceived'
             ),
         );
@@ -136,6 +145,7 @@ final class UserConditionProvider extends AbstractConditionProvider
             new IntegerUserConditionType(
                 identifier: "trophyPoints",
                 columnName: "trophyPoints",
+                category: 'userProfile',
                 migrateConditionObjectType: 'com.woltlab.wcf.user.trophyPoints'
             ),
         );
