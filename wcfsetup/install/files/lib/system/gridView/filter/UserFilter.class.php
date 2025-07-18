@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\user\UserFormField;
+use wcf\system\gridView\filter\exception\InvalidFilterValue;
 
 /**
  * Filter for columns that contain user ids.

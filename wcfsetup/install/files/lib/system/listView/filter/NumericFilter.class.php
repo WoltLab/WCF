@@ -5,6 +5,7 @@ namespace wcf\system\listView\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 
 /**
  * Filter for columns that contain numerics.

@@ -7,7 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
-use wcf\system\gridView\filter\InvalidFilterValue;
+use wcf\system\gridView\filter\exception\InvalidFilterValue;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;

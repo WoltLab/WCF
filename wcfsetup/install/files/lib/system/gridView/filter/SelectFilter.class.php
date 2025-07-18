@@ -5,6 +5,7 @@ namespace wcf\system\gridView\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\gridView\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
 
 /**

@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\category\CategoryHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\gridView\filter\exception\InvalidFilterValue;
 
 /**
  * Allows a column to be filtered on the basis of a select category.

@@ -12,7 +12,7 @@ use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\listView\filter\IListViewFilter;
-use wcf\system\listView\filter\InvalidFilterValue;
+use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
