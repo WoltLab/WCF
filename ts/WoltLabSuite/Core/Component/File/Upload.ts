@@ -172,7 +172,7 @@ async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): P
   const resizeConfiguration = JSON.parse(element.dataset.resizeConfiguration!) as ResizeConfiguration;
 
   const resizer = new ImageResizer();
-  const { image, exif } = await resizer.loadFile(file);
+  const { image } = await resizer.loadFile(file);
 
   const maxHeight = resizeConfiguration.maxHeight === -1 ? image.height : resizeConfiguration.maxHeight;
   let maxWidth = resizeConfiguration.maxWidth === -1 ? image.width : resizeConfiguration.maxWidth;
@@ -196,14 +196,13 @@ async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): P
 
   let fileType: string = resizeConfiguration.fileType;
   if (fileType === "image/jpeg" || fileType === "image/webp") {
-    fileType = "image/jpeg";
+    fileType = "image/webp";
   } else {
     fileType = file.type;
   }
 
   const resizedFile = await resizer.saveFile(
     {
-      exif,
       image: canvas,
     },
     file.name,

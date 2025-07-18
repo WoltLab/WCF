@@ -94,7 +94,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         });
         const resizeConfiguration = JSON.parse(element.dataset.resizeConfiguration);
         const resizer = new Resizer_1.default();
-        const { image, exif } = await resizer.loadFile(file);
+        const { image } = await resizer.loadFile(file);
         const maxHeight = resizeConfiguration.maxHeight === -1 ? image.height : resizeConfiguration.maxHeight;
         let maxWidth = resizeConfiguration.maxWidth === -1 ? image.width : resizeConfiguration.maxWidth;
         if (window.devicePixelRatio >= 2) {
@@ -114,13 +114,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         let fileType = resizeConfiguration.fileType;
         if (fileType === "image/jpeg" || fileType === "image/webp") {
-            fileType = "image/jpeg";
+            fileType = "image/webp";
         }
         else {
             fileType = file.type;
         }
         const resizedFile = await resizer.saveFile({
-            exif,
             image: canvas,
         }, file.name, fileType, resizeConfiguration.quality);
         return resizedFile;
