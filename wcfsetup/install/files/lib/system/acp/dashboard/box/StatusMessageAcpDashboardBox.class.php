@@ -283,8 +283,12 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         $event = new MigrationCollecting();
         EventHandler::getInstance()->fire($event);
+
         if ($this->userGroupAssignmentHasLegacyObjects()) {
             $event->migrationNeeded(WCF::getLanguage()->get('wcf.acp.group.assignment'));
+        }
+        if ($this->noticeHasLegacyObjects()) {
+            $event->migrationNeeded(WCF::getLanguage()->get('wcf.acp.notice.list'));
         }
 
         if ($event->needsMigration() === []) {
@@ -305,6 +309,17 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         $sql = "SELECT COUNT(*) AS count
                 FROM   wcf1_user_group_assignment
+                WHERE  isLegacy = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+
+        return $statement->fetchColumn() > 0;
+    }
+
+    private function noticeHasLegacyObjects(): bool
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM   wcf1_notice
                 WHERE  isLegacy = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([1]);
