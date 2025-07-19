@@ -156,8 +156,4 @@ declare global {
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
     "woltlab-core-toggle-button": WoltlabCoreToggleButtonElement;
   }
-
-  // The type `Buffer` does not exist. To avoid having to load `@types/node`, we define it here.
-  // @see https://github.com/Daninet/hash-wasm/issues/68
-  type Buffer = BufferSource;
 }
