@@ -227,3 +227,4 @@
 \define('SERVICE_WORKER_PRIVATE_KEY', '');
 \define('SERVICE_WORKER_PUBLIC_KEY', '');
 \define('RECAPTCHA_PRIVATEKEY_V3', '');
+\define('IMAGE_CONVERT_FORMAT', 'webp');

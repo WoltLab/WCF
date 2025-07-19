@@ -532,6 +532,13 @@
 				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
 imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 			</option>
+			<option name="image_convert_format">
+				<categoryname>general.system.image</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>webp</defaultvalue>
+				<selectoptions>keep:wcf.acp.option.image_convert_format.keep
+webp:wcf.acp.option.image_convert_format.webp</selectoptions>
+			</option>
 			<!-- /general.system.image -->
 			<!-- general.system.search -->
 			<option name="search_engine">

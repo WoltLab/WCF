@@ -29,6 +29,7 @@ final class GenerateThumbnails implements IController
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
 
         FileProcessor::getInstance()->generateWebpVariant($file);
+        $file = FileProcessor::getInstance()->convertImageFormat($file);
         FileProcessor::getInstance()->generateThumbnails($file);
 
         $thumbnails = [];

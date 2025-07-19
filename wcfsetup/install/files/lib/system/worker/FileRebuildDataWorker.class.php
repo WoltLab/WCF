@@ -5,6 +5,7 @@ namespace wcf\system\worker;
 use wcf\data\file\File;
 use wcf\data\file\FileEditor;
 use wcf\data\file\FileList;
+use wcf\system\file\command\ReplaceWithWebpVariant;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
 use wcf\util\FileUtil;
@@ -49,9 +50,10 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $this->fixMimeType();
 
         $damagedFileIDs = [];
-        foreach ($this->objectList as $file) {
+        foreach ($this->objectList->getObjects() as $file) {
             try {
                 FileProcessor::getInstance()->generateWebpVariant($file);
+                $file = FileProcessor::getInstance()->convertImageFormat($file);
                 FileProcessor::getInstance()->generateThumbnails($file);
             } catch (DamagedImage $e) {
                 logThrowable($e);

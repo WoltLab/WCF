@@ -13,6 +13,7 @@ use wcf\event\file\GenerateWebpVariant;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\file\command\ReplaceWithWebpVariant;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
 use wcf\system\image\adapter\exception\ImageNotReadable;
@@ -422,6 +423,21 @@ final class FileProcessor extends SingletonFactory
         $this->copyThumbnails($oldFile->fileID, $newFile->fileID);
 
         return $newFile;
+    }
+
+    public function convertImageFormat(File $file): File
+    {
+        switch (\IMAGE_CONVERT_FORMAT) {
+            case 'keep':
+                return $file;
+
+            case 'webp':
+                $command = new ReplaceWithWebpVariant($file);
+                return $command();
+
+            default:
+                throw new \LogicException("Unreachable");
+        }
     }
 
     private function copyThumbnails(int $oldFileID, int $newFileID): void
