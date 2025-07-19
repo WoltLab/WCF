@@ -35,6 +35,7 @@ final class ReplaceFileSource
         $this->validatePathname($this->file->getPathnameWebp());
 
         $file = $this->replaceSource();
+        $file = $this->discardWebpVariantOfWebpFile($file);
         $this->regenerateExistingThumbnails($file);
 
         return $file;
@@ -129,6 +130,28 @@ final class ReplaceFileSource
                 WCF::getDB()->rollBackTransaction();
             }
         }
+    }
+
+    private function discardWebpVariantOfWebpFile(File $file): File
+    {
+        if ($file->mimeType !== 'image/webp') {
+            return $file;
+        }
+
+        $pathname = $file->getPathnameWebp();
+        if ($pathname === null) {
+            return $file;
+        }
+
+        if (\file_exists($pathname)) {
+            \unlink($file->getPathnameWebp());
+        }
+
+        (new FileEditor($file))->update([
+            'fileHashWebp' => null,
+        ]);
+
+        return new File($file->fileID);
     }
 
     private function regenerateExistingThumbnails(File $file): void
