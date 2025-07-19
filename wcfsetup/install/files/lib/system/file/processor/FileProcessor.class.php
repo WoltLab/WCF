@@ -425,6 +425,7 @@ final class FileProcessor extends SingletonFactory
         return $newFile;
     }
 
+    #[\NoDiscard("as the file itself could change")]
     public function convertImageFormat(File $file): File
     {
         switch (\IMAGE_CONVERT_FORMAT) {
