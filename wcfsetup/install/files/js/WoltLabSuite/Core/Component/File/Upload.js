@@ -1,9 +1,10 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Image/Cropper"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, Cropper_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.clearPreviousErrors = clearPreviousErrors;
     exports.setup = setup;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
+    const BUFFER_SIZE = 10 * 1_024 * 1_024;
     async function upload(element, file, fileHash) {
         const objectType = element.dataset.objectType;
         const fileElement = document.createElement("woltlab-core-file");
@@ -28,7 +29,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             const start = i * chunkSize;
             const end = start + chunkSize;
             const chunk = file.slice(start, end);
-            const checksum = await getSha256Hash(await chunk.arrayBuffer());
+            const checksum = await getSha256Hash(chunk);
             const response = await (0, Chunk_1.uploadChunk)(identifier, i, checksum, chunk);
             if (!response.ok) {
                 fileElement.uploadFailed(response.error);
@@ -63,10 +64,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
     }
     async function getSha256Hash(data) {
-        const buffer = await window.crypto.subtle.digest("SHA-256", data);
-        return Array.from(new Uint8Array(buffer))
-            .map((b) => b.toString(16).padStart(2, "0"))
-            .join("");
+        const sha256 = await (0, hash_wasm_1.createSHA256)();
+        sha256.init();
+        let offset = 0;
+        while (offset < data.size) {
+            const chunk = data.slice(offset, offset + BUFFER_SIZE);
+            const buffer = await chunk.arrayBuffer();
+            sha256.update(new Uint8Array(buffer));
+            offset += BUFFER_SIZE;
+        }
+        return sha256.digest("hex");
     }
     function clearPreviousErrors(element) {
         element.parentElement?.querySelectorAll(".innerError").forEach((x) => x.remove());
@@ -202,6 +209,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         return;
                     }
                 }
+                element.markAsBusy();
                 let processImage;
                 if (element.dataset.cropperConfiguration) {
                     const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration);
@@ -221,7 +229,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 // Resize all files in parallel but keep the original order. This ensures
                 // that files are uploaded in the same order that they were provided by
                 // the browser.
-                void Promise.allSettled(files.map((file) => processImage(file))).then(async (results) => {
+                void Promise.allSettled(files.map((file) => processImage(file)))
+                    .then(async (results) => {
                     const validFiles = [];
                     for (let i = 0, length = results.length; i < length; i++) {
                         const result = results[i];
@@ -232,7 +241,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             reportError(element, files[i], (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
                         }
                     }
-                    const checksums = await Promise.allSettled(validFiles.map((file) => file.arrayBuffer().then((buffer) => getSha256Hash(buffer))));
+                    const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
                     for (let i = 0, length = checksums.length; i < length; i++) {
                         const result = checksums[i];
                         if (result.status === "fulfilled") {
@@ -242,6 +251,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             throw new Error(result.reason);
                         }
                     }
+                })
+                    .finally(() => {
+                    element.markAsReady();
                 });
             });
             element.addEventListener("ckeditorDrop", (event) => {
@@ -263,7 +275,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 }
                 void resizeImage(element, file).then(async (resizeFile) => {
                     try {
-                        const checksum = await getSha256Hash(await resizeFile.arrayBuffer());
+                        const checksum = await getSha256Hash(resizeFile);
                         const data = await upload(element, resizeFile, checksum);
                         if (data === undefined || typeof data.data.attachmentID !== "number") {
                             promiseReject();

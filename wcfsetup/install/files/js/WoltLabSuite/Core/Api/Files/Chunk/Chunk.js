@@ -9,6 +9,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
             response = (await (0, Backend_1.prepareRequest)(url)
                 .post(payload)
                 .withHeader("chunk-checksum-sha256", checksum)
+                .disableLoadingIndicator()
                 .fetchAsJson());
         }
         catch (e) {

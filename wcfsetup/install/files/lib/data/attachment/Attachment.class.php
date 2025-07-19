@@ -392,7 +392,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     public function setFile(File $file): void
     {
-        if ($this->file->fileID === $file->fileID) {
+        if ($this->fileID === $file->fileID) {
             $this->file = $file;
         }
     }
@@ -400,11 +400,6 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     #[\Override]
     public function __get($name)
     {
-        $file = $this->getFile();
-        if ($file === null) {
-            return parent::__get($name);
-        }
-
         if ($name === 'downloads' || $name === 'lastDownloadTime') {
             // Static files are no longer served through PHP but the web server
             // instead, therefore we can no longer report any meaningful numbers.
@@ -412,26 +407,47 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             // For existing files the stored value is suppressed because it is
             // not going to be increased ever, possibly creating a false
             // impression when the historic stored value is being reported.
-            if ($file->isStaticFile()) {
+            if ($this->getFile()?->isStaticFile()) {
                 return 0;
             }
         }
 
-        return match ($name) {
-            'filename' => $file->filename,
-            'filesize' => $file->fileSize,
-            'fileType' => $file->mimeType,
-            'isImage' => $file->isImage() ? 1 : 0,
-            'height' => $file->height ?: 0,
-            'width' => $file->width ?: 0,
-            'thumbnailType' => $file->getThumbnail('')?->getMimeType() ?: '',
-            'thumbnailWidth' => $file->getThumbnail('')?->width ?: 0,
-            'thumbnailHeight' => $file->getThumbnail('')?->height ?: 0,
-            'tinyThumbnailType' => $file->getThumbnail('tiny')?->getMimeType() ?: '',
-            'tinyThumbnailWidth' => $file->getThumbnail('tiny')?->width ?: 0,
-            'tinyThumbnailHeight' => $file->getThumbnail('tiny')?->height ?: 0,
-            default => parent::__get($name),
-        };
+        if (\in_array($name, [
+            'filename',
+            'filesize',
+            'fileType',
+            'isImage',
+            'height',
+            'width',
+            'thumbnailType',
+            'thumbnailWidth',
+            'thumbnailHeight',
+            'tinyThumbnailType',
+            'tinyThumbnailWidth',
+            'tinyThumbnailHeight',
+        ])) {
+            $file = $this->getFile();
+            if ($file === null) {
+                return parent::__get($name);
+            }
+
+            return match ($name) {
+                'filename' => $file->filename,
+                'filesize' => $file->fileSize,
+                'fileType' => $file->mimeType,
+                'isImage' => $file->isImage() ? 1 : 0,
+                'height' => $file->height ?: 0,
+                'width' => $file->width ?: 0,
+                'thumbnailType' => $file->getThumbnail('')?->getMimeType() ?: '',
+                'thumbnailWidth' => $file->getThumbnail('')?->width ?: 0,
+                'thumbnailHeight' => $file->getThumbnail('')?->height ?: 0,
+                'tinyThumbnailType' => $file->getThumbnail('tiny')?->getMimeType() ?: '',
+                'tinyThumbnailWidth' => $file->getThumbnail('tiny')?->width ?: 0,
+                'tinyThumbnailHeight' => $file->getThumbnail('tiny')?->height ?: 0,
+            };
+        }
+
+        return parent::__get($name);
     }
 
     public function toHtmlElement(): ?string

@@ -68,6 +68,9 @@ jobs:
     - name: "Check '@ckeditor/ckeditor5-inspector'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/ckeditor/ckeditor5-inspector/inspector.js node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js
+    - name: "Check 'hash-wasm'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/hash-wasm/sha256.umd.min.js node_modules/hash-wasm/dist/sha256.umd.min.js
     - name: "Check '@fancyapps/ui'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/fancybox/fancybox.umd.js node_modules/@fancyapps/ui/dist/fancybox/fancybox.umd.js

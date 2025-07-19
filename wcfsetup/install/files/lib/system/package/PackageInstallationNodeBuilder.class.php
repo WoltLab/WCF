@@ -671,7 +671,9 @@ class PackageInstallationNodeBuilder
         if ($count === 0) {
             // Abort if an empty list of instructions is received. This most likely indicates that
             // the update instructions have been erroneously discarded.
-            throw new \Exception('Received an empty list of instructions.');
+            $action = $this->installation->getAction();
+            $name = $this->installation->getArchive()->getPackageInfo('name');
+            throw new \Exception("Received an empty list of {$action} instructions for package '{$name}'.");
         }
 
         if (!empty($this->node)) {

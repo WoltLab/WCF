@@ -15,6 +15,60 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+## 8.9.0: New features, bug fixes and deprecations
+
+### Added
+
+- `RuleSet::removeMatchingRules()` method
+  (for the implementing classes `AtRuleSet` and `DeclarationBlock`) (#1249)
+- `RuleSet::removeAllRules()` method
+  (for the implementing classes `AtRuleSet` and `DeclarationBlock`) (#1249)
+- Add Interface `CSSElement` (#1231)
+- Methods `getLineNumber` and `getColumnNumber` which return a nullable `int`
+  for the following classes:
+  `Comment`, `CSSList`, `SourceException`, `Charset`, `CSSNamespace`, `Import`,
+  `Rule`, `DeclarationBlock`, `RuleSet`, `CSSFunction`, `Value` (#1225, #1263)
+- `Positionable` interface for CSS items that may have a position
+  (line and perhaps column number) in the parsed CSS (#1221)
+
+### Changed
+
+- Parameters for `getAllValues()` are deconflated, so it now takes three (all
+  optional), allowing `$element` and `$ruleSearchPattern` to be specified
+  separately (#1241)
+- Implement `Positionable` in the following CSS item classes:
+  `Comment`, `CSSList`, `SourceException`, `Charset`, `CSSNamespace`, `Import`,
+  `Rule`, `DeclarationBlock`, `RuleSet`, `CSSFunction`, `Value` (#1225)
+
+### Deprecated
+
+- Support for PHP < 7.2 is deprecated; version 9.0 will require PHP 7.2 or later
+  (#1264)
+- Passing a `string` or `null` to `RuleSet::removeRule()` is deprecated
+  (implementing classes are `AtRuleSet` and `DeclarationBlock`);
+  use `removeMatchingRules()` or `removeAllRules()` instead (#1249)
+- Passing a `Rule` to `RuleSet::getRules()` or `getRulesAssoc()` is deprecated,
+  affecting the implementing classes `AtRuleSet` and `DeclarationBlock`
+  (call e.g. `getRules($rule->getRule())` instead) (#1248)
+- Passing a string as the first argument to `getAllValues()` is deprecated;
+  the search pattern should now be passed as the second argument (#1241)
+- Passing a Boolean as the second argument to `getAllValues()` is deprecated;
+  the flag for searching in function arguments should now be passed as the third
+  argument (#1241)
+- `getLineNo()` is deprecated in these classes (use `getLineNumber()` instead):
+  `Comment`, `CSSList`, `SourceException`, `Charset`, `CSSNamespace`, `Import`,
+  `Rule`, `DeclarationBlock`, `RuleSet`, `CSSFunction`, `Value` (#1225, #1233)
+- `Rule::getColNo()` is deprecated (use `getColumnNumber()` instead)
+  (#1225, #1233)
+- Providing zero as the line number argument to `Rule::setPosition()` is
+  deprecated (pass `null` instead if there is no line number) (#1225, #1233)
+
+### Fixed
+
+- Set line number when `RuleSet::addRule()` called with only column number set
+  (#1265)
+- Ensure first rule added with `RuleSet::addRule()` has valid position (#1262)
+
 ## 8.8.0: Bug fixes and deprecations
 
 ### Added
@@ -23,7 +77,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Mark the `OutputFormat` the constructor as `@internal` (#1131)
+- Mark the `OutputFormat` constructor as `@internal` (#1131)
 - Mark `OutputFormatter` as `@internal` (#896)
 - Mark `Selector::isValid()` as `@internal` (#1037)
 - Mark parsing-related methods of most CSS elements as `@internal` (#908)
@@ -35,6 +89,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Deprecate extending `OutputFormat` (#1131)
 - Deprecate `OutputFormat::get()` and `::set()` (#1107)
 - Deprecate support for `-webkit-calc` and `-moz-calc` (#1086)
+- Deprecate magic method forwarding from `OutputFormat` to `OutputFormatter`
+  (#894)
 - Deprecate `__toString()` (#1006)
 - Deprecate greedy calculation of selector specificity (#1018)
 - Deprecate the IE hack in `Rule` (#993, #1003)
@@ -61,8 +117,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Deprecated
 
-- Deprecate magic method forwarding from `OutputFormat` to `OutputFormatter`
-  (#894)
 - Deprecate the expansion of shorthand properties (#719)
 - Deprecate `Parser::setCharset()` and `Parser::getCharset()` (#703)
 

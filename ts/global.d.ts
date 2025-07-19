@@ -94,6 +94,8 @@ declare global {
   }
 
   interface WoltlabCoreFileUploadElement extends HTMLElement {
+    markAsBusy(): void;
+    markAsReady(): void;
     uploadFiles(files: File[]): void;
     get disabled(): boolean;
     set disabled(disabled: boolean);

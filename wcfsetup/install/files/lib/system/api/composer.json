@@ -10,7 +10,7 @@
     }
   },
   "require": {
-    "cuyz/valinor": "^1.16.1",
+    "cuyz/valinor": "^1.17.0",
     "dragonmantank/cron-expression": "^3.4.0",
     "erusev/parsedown": "^1.7.4",
     "ezyang/htmlpurifier": "^4.18",
@@ -34,6 +34,7 @@
     "symfony/polyfill-php82": "^1.32.0",
     "symfony/polyfill-php83": "^1.32",
     "symfony/polyfill-php84": "^1.32",
+    "symfony/polyfill-php85": "^1.32",
     "willdurand/negotiation": "^3.1"
   },
   "replace": {

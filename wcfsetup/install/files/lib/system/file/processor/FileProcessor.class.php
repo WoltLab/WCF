@@ -35,6 +35,7 @@ use function wcf\functions\exception\logThrowable;
 final class FileProcessor extends SingletonFactory
 {
     public const MAXIMUM_NUMBER_OF_CHUNKS = 255;
+    public const MAXIMUM_CHUNK_SIZE = 99_000_000;
 
     /**
      * @var array<string, ObjectType>
@@ -374,11 +375,13 @@ final class FileProcessor extends SingletonFactory
     {
         $postMaxSize = \ini_parse_quantity(\ini_get('post_max_size'));
         if ($postMaxSize === 0) {
-            // Disabling it is fishy, assume a more reasonable limit of 100 MB.
-            $postMaxSize = 100_000_000;
+            // Disabling it is fishy, assume a more reasonable limit of 99 MB.
+            return self::MAXIMUM_CHUNK_SIZE;
         }
 
-        return $postMaxSize;
+        // 99 MB is a reasonable upper limit that also plays nice with services
+        // like Cloudflare that usually come with a 100 MB request limit.
+        return \min(self::MAXIMUM_CHUNK_SIZE, $postMaxSize);
     }
 
     public function getMaximumFileSize(): int
