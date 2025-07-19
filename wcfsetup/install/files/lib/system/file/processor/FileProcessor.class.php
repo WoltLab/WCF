@@ -13,6 +13,7 @@ use wcf\event\file\GenerateWebpVariant;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\file\command\ReplaceFileSource;
 use wcf\system\file\command\ReplaceWithWebpVariant;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
@@ -20,6 +21,7 @@ use wcf\system\image\adapter\exception\ImageNotReadable;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -439,6 +441,24 @@ final class FileProcessor extends SingletonFactory
             default:
                 throw new \LogicException("Unreachable");
         }
+    }
+
+    #[\NoDiscard("as the file itself could change")]
+    public function stripExif(File $file): File
+    {
+        if (!\IMAGE_STRIP_EXIF) {
+            return $file;
+        }
+
+        $fileWithoutExif = ExifUtil::getFileWithoutExifData($file->getPathname());
+        if ($fileWithoutExif === null) {
+            return $file;
+        }
+
+        $command = new ReplaceFileSource($file, $fileWithoutExif);
+        $newFile = $command();
+
+        return $newFile;
     }
 
     private function copyThumbnails(int $oldFileID, int $newFileID): void

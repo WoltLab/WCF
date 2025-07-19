@@ -539,6 +539,11 @@ imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 				<selectoptions>keep:wcf.acp.option.image_convert_format.keep
 webp:wcf.acp.option.image_convert_format.webp</selectoptions>
 			</option>
+			<option name="image_strip_exif">
+				<categoryname>general.system.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /general.system.image -->
 			<!-- general.system.search -->
 			<option name="search_engine">

@@ -54,6 +54,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
             try {
                 FileProcessor::getInstance()->generateWebpVariant($file);
                 $file = FileProcessor::getInstance()->convertImageFormat($file);
+                $file = FileProcessor::getInstance()->stripExif($file);
                 FileProcessor::getInstance()->generateThumbnails($file);
             } catch (DamagedImage $e) {
                 logThrowable($e);
