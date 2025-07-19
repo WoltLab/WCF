@@ -217,7 +217,12 @@ class UserEditForm extends UserAddForm
         }
         if ($this->banned && !isset($_POST['banNeverExpires'])) {
             if (isset($_POST['banExpires'])) {
-                $this->banExpires = @\intval(\strtotime(StringUtil::trim($_POST['banExpires'])));
+                $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $_POST['banExpires'], new \DateTimeZone(\TIMEZONE));
+                if ($banExpires === false) {
+                    $this->banExpires = 0;
+                } else {
+                    $this->banExpires = $banExpires->getTimestamp();
+                }
             }
         }
 

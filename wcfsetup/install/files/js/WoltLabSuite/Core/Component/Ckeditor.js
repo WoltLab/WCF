@@ -216,6 +216,9 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         if (features.media) {
             (0, Media_1.setup)(element);
         }
+        else {
+            bbcodes = bbcodes.filter((item) => item.name !== "media");
+        }
         (0, Mention_1.setup)(element);
         if (features.quoteBlock) {
             (0, Quote_1.setup)(element);

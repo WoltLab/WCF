@@ -29,6 +29,7 @@ export async function uploadChunk(
     response = (await prepareRequest(url)
       .post(payload)
       .withHeader("chunk-checksum-sha256", checksum)
+      .disableLoadingIndicator()
       .fetchAsJson()) as Response;
   } catch (e) {
     return apiResultFromError(e);

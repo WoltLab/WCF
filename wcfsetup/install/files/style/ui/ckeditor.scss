@@ -61,6 +61,13 @@
 	/* The content area must not contain a border radius at all, because it is
 	   difficult to detect if there is an adjacent message tab menu. */
 	border-radius: 0 !important;
+
+	/* Override the default styling added in CKEditor v46.0.0 */
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	line-height: inherit;
+	word-break: inherit;
 }
 
 .ck.ck-button.ck-button:not(.ck-disabled) {
@@ -351,6 +358,15 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 		height: 30px;
 		padding: 5px !important;
 	}
+}
+
+/* Fix the background color and size when editing a link. */
+a.ck.ck-button.ck-link-toolbar__preview,
+a.ck.ck-button.ck-link-toolbar__preview:active,
+a.ck.ck-button.ck-link-toolbar__preview:focus {
+	background-color: var(--wcfButtonBackground);
+	padding-bottom: 2px !important;
+	padding-top: 2px !important;
 }
 
 /* Increase the width of the splitbutton arrows. */

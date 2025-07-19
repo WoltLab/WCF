@@ -1,6 +1,9 @@
 {
   class WoltlabCoreFileUploadElement extends HTMLElement {
     readonly #element: HTMLInputElement;
+    readonly #icon: FaIcon;
+    readonly #text: HTMLSpanElement;
+    #pendingProcesses = 0;
 
     constructor() {
       super();
@@ -53,6 +56,9 @@
 
         this.#element.click();
       });
+
+      this.#icon = document.createElement("fa-icon");
+      this.#text = document.createElement("span");
     }
 
     connectedCallback() {
@@ -66,9 +72,6 @@
         this.#element.multiple = true;
       }
 
-      const icon = document.createElement("fa-icon");
-      icon.setIcon("upload");
-
       const button = document.createElement("button");
       button.type = "button";
       button.classList.add("button", "woltlabCoreFileUpload__button");
@@ -80,7 +83,9 @@
           this.#element.click();
         }
       });
-      button.append(icon, window.WoltLabLanguage.getPhrase("wcf.global.button.upload"), this.#element);
+      button.append(this.#icon, this.#text, this.#element);
+
+      this.#updateButton();
 
       this.append(button);
     }
@@ -92,6 +97,18 @@
         },
       });
       this.dispatchEvent(event);
+    }
+
+    markAsBusy(): void {
+      this.#pendingProcesses++;
+
+      this.#updateButton();
+    }
+
+    markAsReady(): void {
+      this.#pendingProcesses--;
+
+      this.#updateButton();
     }
 
     get maximumCount(): number {
@@ -108,6 +125,14 @@
 
     set disabled(disabled: boolean) {
       this.#element.disabled = Boolean(disabled);
+    }
+
+    #updateButton(): void {
+      const iconName = this.#pendingProcesses === 0 ? "upload" : "spinner";
+      const phrase = this.#pendingProcesses === 0 ? "wcf.global.button.upload" : "wcf.global.loading";
+
+      this.#icon.setIcon(iconName);
+      this.#text.textContent = window.WoltLabLanguage.getPhrase(phrase);
     }
   }
 

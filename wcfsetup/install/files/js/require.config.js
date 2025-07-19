@@ -17,6 +17,7 @@ requirejs.config({
 		"@woltlab/editor": "3rdParty/ckeditor/ckeditor5.bundle",
 		"ckeditor5-translation": "3rdParty/ckeditor/translations",
 		"diff-match-patch": "3rdParty/diff-match-patch/diff_match_patch.min",
+		"hash-wasm": "3rdParty/hash-wasm/sha256.umd.min",
 		sortablejs: "3rdParty/Sortable.min",
 		cropperjs: "3rdParty/cropper.min",
 		exifreader: "3rdParty/exif-reader",

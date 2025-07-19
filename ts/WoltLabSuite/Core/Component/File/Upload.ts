@@ -11,6 +11,7 @@ import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 import { AttachmentData } from "../Ckeditor/Attachment";
 import { innerError } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { createSHA256 } from "hash-wasm";
 import { cropImage, CropperConfiguration } from "WoltLabSuite/Core/Component/Image/Cropper";
 
 export type CkeditorDropEvent = {
@@ -36,6 +37,8 @@ type ResizeConfiguration = {
   fileType: "image/jpeg" | "image/webp" | "keep";
   quality: number;
 };
+
+const BUFFER_SIZE = 10 * 1_024 * 1_024;
 
 async function upload(
   element: WoltlabCoreFileUploadElement,
@@ -75,7 +78,7 @@ async function upload(
     const end = start + chunkSize;
     const chunk = file.slice(start, end);
 
-    const checksum = await getSha256Hash(await chunk.arrayBuffer());
+    const checksum = await getSha256Hash(chunk);
 
     const response = await uploadChunk(identifier, i, checksum, chunk);
     if (!response.ok) {
@@ -120,12 +123,20 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result:
   }
 }
 
-async function getSha256Hash(data: BufferSource): Promise<string> {
-  const buffer = await window.crypto.subtle.digest("SHA-256", data);
+async function getSha256Hash(data: Blob): Promise<string> {
+  const sha256 = await createSHA256();
+  sha256.init();
 
-  return Array.from(new Uint8Array(buffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+  let offset = 0;
+
+  while (offset < data.size) {
+    const chunk = data.slice(offset, offset + BUFFER_SIZE);
+    const buffer = await chunk.arrayBuffer();
+    sha256.update(new Uint8Array(buffer));
+    offset += BUFFER_SIZE;
+  }
+
+  return sha256.digest("hex");
 }
 
 export function clearPreviousErrors(element: WoltlabCoreFileUploadElement): void {
@@ -298,6 +309,8 @@ export function setup(): void {
         }
       }
 
+      element.markAsBusy();
+
       let processImage: (file: File) => Promise<File>;
       if (element.dataset.cropperConfiguration) {
         const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration) as CropperConfiguration;
@@ -318,32 +331,38 @@ export function setup(): void {
       // Resize all files in parallel but keep the original order. This ensures
       // that files are uploaded in the same order that they were provided by
       // the browser.
-      void Promise.allSettled(files.map((file) => processImage(file))).then(async (results) => {
-        const validFiles: File[] = [];
-        for (let i = 0, length = results.length; i < length; i++) {
-          const result = results[i];
+      void Promise.allSettled(files.map((file) => processImage(file)))
+        .then(async (results) => {
+          const validFiles: File[] = [];
+          for (let i = 0, length = results.length; i < length; i++) {
+            const result = results[i];
 
-          if (result.status === "fulfilled") {
-            validFiles.push(result.value);
-          } else if (result.reason !== undefined) {
-            reportError(element, files[i], getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
+            if (result.status === "fulfilled") {
+              validFiles.push(result.value);
+            } else if (result.reason !== undefined) {
+              reportError(
+                element,
+                files[i],
+                getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }),
+              );
+            }
           }
-        }
 
-        const checksums = await Promise.allSettled(
-          validFiles.map((file) => file.arrayBuffer().then((buffer) => getSha256Hash(buffer))),
-        );
+          const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
 
-        for (let i = 0, length = checksums.length; i < length; i++) {
-          const result = checksums[i];
+          for (let i = 0, length = checksums.length; i < length; i++) {
+            const result = checksums[i];
 
-          if (result.status === "fulfilled") {
-            void upload(element, validFiles[i], result.value);
-          } else {
-            throw new Error(result.reason);
+            if (result.status === "fulfilled") {
+              void upload(element, validFiles[i], result.value);
+            } else {
+              throw new Error(result.reason);
+            }
           }
-        }
-      });
+        })
+        .finally(() => {
+          element.markAsReady();
+        });
     });
 
     element.addEventListener("ckeditorDrop", (event: CustomEvent<CkeditorDropEvent>) => {
@@ -372,7 +391,7 @@ export function setup(): void {
 
       void resizeImage(element, file).then(async (resizeFile) => {
         try {
-          const checksum = await getSha256Hash(await resizeFile.arrayBuffer());
+          const checksum = await getSha256Hash(resizeFile);
           const data = await upload(element, resizeFile, checksum);
           if (data === undefined || typeof data.data.attachmentID !== "number") {
             promiseReject();

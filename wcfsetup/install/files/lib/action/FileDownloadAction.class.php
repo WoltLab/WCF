@@ -62,6 +62,7 @@ final class FileDownloadAction implements RequestHandlerInterface
         $response = new Response(
             new Stream($filename),
         );
+        $response = $response->withHeader('x-robots-tag', 'noindex');
 
         $mimeType = FileUtil::getMimeType($filename);
         $contentDisposition = match ($mimeType) {
