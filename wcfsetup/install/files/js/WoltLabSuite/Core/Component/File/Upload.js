@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Image/Cropper"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, Cropper_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.clearPreviousErrors = clearPreviousErrors;
@@ -64,7 +64,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
     }
     async function getSha256Hash(data) {
-        const sha256 = await createSHA256();
+        const sha256 = await (0, hash_wasm_1.createSHA256)();
         sha256.init();
         let offset = 0;
         while (offset < data.size) {
@@ -209,6 +209,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         return;
                     }
                 }
+                element.markAsBusy();
                 let processImage;
                 if (element.dataset.cropperConfiguration) {
                     const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration);
@@ -225,7 +226,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 else {
                     processImage = async (file) => resizeImage(element, file);
                 }
-                void Promise.allSettled(files.map((file) => processImage(file))).then(async (results) => {
+                // Resize all files in parallel but keep the original order. This ensures
+                // that files are uploaded in the same order that they were provided by
+                // the browser.
+                void Promise.allSettled(files.map((file) => processImage(file)))
+                    .then(async (results) => {
                     const validFiles = [];
                     for (let i = 0, length = results.length; i < length; i++) {
                         const result = results[i];
@@ -235,15 +240,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         else if (result.reason !== undefined) {
                             reportError(element, files[i], (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
                         }
-                        const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
-                        for (let i = 0, length = checksums.length; i < length; i++) {
-                            const result = checksums[i];
-                            if (result.status === "fulfilled") {
-                                void upload(element, validFiles[i], result.value);
-                            }
-                            else {
-                                throw new Error(result.reason);
-                            }
+                    }
+                    const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
+                    for (let i = 0, length = checksums.length; i < length; i++) {
+                        const result = checksums[i];
+                        if (result.status === "fulfilled") {
+                            void upload(element, validFiles[i], result.value);
+                        }
+                        else {
+                            throw new Error(result.reason);
                         }
                     }
                 })
