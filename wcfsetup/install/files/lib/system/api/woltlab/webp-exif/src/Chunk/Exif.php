@@ -19,10 +19,11 @@ final class Exif extends Chunk
     }
 
     /**
-     * @return null|array<string,int|string>
+     * @param bool $sectionsAsArrays Creates separate arrays for each contained section
+     * @return ($sectionsAsArrays is true ? null|array<string, array<string, int|string>> : null|array<string, int|string>)
      * @throws MissingExifExtension
      */
-    public function getParsedExif(): ?array
+    public function getParsedExif(bool $sectionsAsArrays = true): ?array
     {
         $bytes = $this->getRawBytes();
         if (\strlen($bytes) === 0) {
@@ -67,6 +68,7 @@ final class Exif extends Chunk
                         $jpegBody
                 ),
             ),
+            as_arrays: $sectionsAsArrays,
         );
 
         // There is no known case where the call to `\exif_read_data()` can fail

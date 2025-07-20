@@ -36,7 +36,7 @@
     "symfony/polyfill-php84": "^1.32",
     "symfony/polyfill-php85": "^1.32",
     "willdurand/negotiation": "^3.1",
-    "woltlab/webp-exif": "^0.1.0"
+    "woltlab/webp-exif": "^0.1.1"
   },
   "replace": {
     "paragonie/random_compat": "*",

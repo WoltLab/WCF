@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eed2db0cb13e347de015269424ed1f52",
+    "content-hash": "7bda0b2a726b2865b120f6a816d53491",
     "packages": [
         {
             "name": "brick/math",
@@ -3330,16 +3330,16 @@
         },
         {
             "name": "woltlab/webp-exif",
-            "version": "v0.1.0",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/webp-exif.git",
-                "reference": "8ec500ac949935c22a624595f99703b40feb4eaa"
+                "reference": "5056d7114b3622dcd5b655340fdeaac01598997a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/webp-exif/zipball/8ec500ac949935c22a624595f99703b40feb4eaa",
-                "reference": "8ec500ac949935c22a624595f99703b40feb4eaa",
+                "url": "https://api.github.com/repos/WoltLab/webp-exif/zipball/5056d7114b3622dcd5b655340fdeaac01598997a",
+                "reference": "5056d7114b3622dcd5b655340fdeaac01598997a",
                 "shasum": ""
             },
             "require": {
@@ -3374,9 +3374,9 @@
             ],
             "support": {
                 "issues": "https://github.com/WoltLab/webp-exif/issues",
-                "source": "https://github.com/WoltLab/webp-exif/tree/v0.1.0"
+                "source": "https://github.com/WoltLab/webp-exif/tree/v0.1.1"
             },
-            "time": "2025-07-08T10:41:59+00:00"
+            "time": "2025-07-20T11:37:11+00:00"
         }
     ],
     "packages-dev": [],
