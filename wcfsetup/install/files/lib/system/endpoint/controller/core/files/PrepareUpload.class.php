@@ -104,9 +104,7 @@ final class PrepareUpload implements IController
             return null;
         }
 
-        $exif = new Exif(0, $exifData);
-
-        return $exif->getParsedExif();
+        return Exif::forBytes(0, $exifData)->getParsedExif();
     }
 }
 
