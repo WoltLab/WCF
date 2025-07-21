@@ -2,12 +2,12 @@
 
 namespace wcf\system\trophy\condition;
 
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyList;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\UserList;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\provider\UserConditionProvider;
 use wcf\system\SingletonFactory;
 
 /**
@@ -20,49 +20,6 @@ use wcf\system\SingletonFactory;
  */
 class TrophyConditionHandler extends SingletonFactory
 {
-    /**
-     * definition name for trophy conditions
-     * @var string
-     */
-    const CONDITION_DEFINITION_NAME = 'com.woltlab.wcf.condition.trophy';
-
-    /**
-     * list of grouped trophy condition object types
-     * @var ObjectType[][]
-     */
-    protected $groupedObjectTypes = [];
-
-    /**
-     * @inheritDoc
-     */
-    protected function init()
-    {
-        // TODO
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(self::CONDITION_DEFINITION_NAME);
-
-        foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditiongroup) {
-                continue;
-            }
-
-            if (!isset($this->groupedObjectTypes[$objectType->conditiongroup])) {
-                $this->groupedObjectTypes[$objectType->conditiongroup] = [];
-            }
-
-            $this->groupedObjectTypes[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
-        }
-    }
-
-    /**
-     * Returns the list of grouped trophy condition object types.
-     *
-     * @return  ObjectType[][]
-     */
-    public function getGroupedObjectTypes()
-    {
-        return $this->groupedObjectTypes;
-    }
-
     /**
      * Assign trophies based on rules.
      *
@@ -140,10 +97,10 @@ class TrophyConditionHandler extends SingletonFactory
             LEFT JOIN   wcf1_user_option_value user_option_value
             ON          user_option_value.userID = user_table.userID";
 
-        $conditions = $trophy->getConditions();
-        // TODO
+        $provider = new UserConditionProvider();
+        $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($provider, $trophy->getConditions());
         foreach ($conditions as $condition) {
-            $condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
+            $condition->applyFilter($userList);
         }
 
         // prevent multiple awards from a trophy for a user
@@ -187,9 +144,10 @@ class TrophyConditionHandler extends SingletonFactory
         }
 
         // Assign the condition to the pseudo DBOList object
-        // TODO
+        $provider = new UserConditionProvider();
+        $conditions = ConditionHandler::getInstance()->getConditionsWithFilter($provider, $trophy->getConditions());
         foreach ($conditions as $condition) {
-            $condition->getObjectType()->getProcessor()->addUserCondition($condition, $pseudoUserList);
+            $condition->applyFilter($pseudoUserList);
         }
 
         // Now we create our own query to find out which users no longer meet the conditions.
