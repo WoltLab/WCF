@@ -114,7 +114,7 @@ class TrophyPage extends MultipleLinkPage
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',
-                WCF::getPath() . 'images/trophy/' . $this->trophy->iconFile,
+                $this->trophy->getFile()->getFullSizeImageSource(),
                 true
             );
         }

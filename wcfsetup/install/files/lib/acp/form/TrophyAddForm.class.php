@@ -17,6 +17,7 @@ use wcf\system\form\builder\field\ColorFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\DescriptionFormField;
+use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IconFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
@@ -56,6 +57,11 @@ class TrophyAddForm extends AbstractFormBuilderForm
      * @inheritDoc
      */
     public $objectActionClass = TrophyAction::class;
+
+    /**
+     * @inheritDoc
+     */
+    public $objectEditLinkController = TrophyEditForm::class;
 
     #[\Override]
     public function createForm()
@@ -114,7 +120,15 @@ class TrophyAddForm extends AbstractFormBuilderForm
             FormContainer::create('imageUploadContainer')
                 ->label('wcf.acp.trophy.type.imageUpload')
                 ->appendChildren([
-                    // TODO
+                    FileProcessorFormField::create('imageFileID')
+                        ->label('wcf.acp.trophy.type.imageUpload')
+                        ->description('wcf.acp.trophy.type.imageUpload.description')
+                        ->objectType('com.woltlab.wcf.trophy')
+                        ->singleFileUpload()
+                        ->simpleReplace()
+                        ->bigPreview()
+                        ->hideDeleteButton()
+                        ->required(),
                 ])
                 ->addDependency(
                     ValueFormFieldDependency::create('typeDependency')

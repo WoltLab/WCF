@@ -1505,7 +1505,9 @@ CREATE TABLE wcf1_trophy(
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	conditions MEDIUMTEXT,
 	isLegacy TINYINT(1) NOT NULL DEFAULT 0,
-	KEY(categoryID)
+	imageFileID INT DEFAULT NULL,
+	KEY(categoryID),
+	KEY imageFileID(imageFileID)
 );
 
 DROP TABLE IF EXISTS wcf1_unfurl_url;

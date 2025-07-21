@@ -5194,7 +5194,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophäen-Typ]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Bild-Datei]]></item>
-		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein quadratisches Bild mit mindestens 64 × 64 Pixel hoch.]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Bild mit mindestens 64 × 64 Pixel hoch.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[Das Bild ist nicht quadratisch.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[Das Bild muss mindestens 64 × 64 Pixel groß sein.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>

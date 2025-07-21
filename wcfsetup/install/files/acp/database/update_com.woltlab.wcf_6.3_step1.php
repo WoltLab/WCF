@@ -9,7 +9,9 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
+use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -27,5 +29,10 @@ return [
         ->columns([
             MediumtextDatabaseTableColumn::create('conditions'),
             DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
+            IntDatabaseTableColumn::create('imageFileID'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('imageFileID')
+                ->columns(['imageFileID']),
         ]),
 ];

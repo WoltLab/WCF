@@ -3,9 +3,11 @@
 namespace wcf\data\trophy;
 
 use wcf\data\DatabaseObject;
+use wcf\data\file\File;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -27,7 +29,6 @@ use wcf\util\StringUtil;
  * @property-read   string $description            the trophy description
  * @property-read   int $categoryID         the categoryID of the trophy
  * @property-read   int $type               the trophy type
- * @property-read   string $iconFile           the file location of the icon
  * @property-read   string $iconName           the icon name
  * @property-read   string $iconColor          the icon color
  * @property-read   string $badgeColor         the icon badge color
@@ -38,6 +39,7 @@ use wcf\util\StringUtil;
  * @property-read   int $showOrder              position of the trophy in relation to the other trophies at the same location
  * @property-read   string|null $conditions
  * @property-read   int $isLegacy
+ * @property-read   int|null $imageFileID
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
 {
@@ -190,5 +192,13 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
         }
 
         return null;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getFile(): ?File
+    {
+        return FileRuntimeCache::getInstance()->getObject($this->imageFileID);
     }
 }

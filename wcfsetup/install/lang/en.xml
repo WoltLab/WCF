@@ -5193,7 +5193,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Image]]></item>
-		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64 × 64 pixels.]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a image with at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[The image is not square.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64 × 64 pixels.]]></item>
 		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>

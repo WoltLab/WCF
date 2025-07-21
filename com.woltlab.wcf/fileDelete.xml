@@ -62,5 +62,6 @@
 		<file>lib/system/upload/AvatarUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileSaveStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileValidationStrategy.class.php</file>
+		<file>lib/system/upload/TrophyImageUploadFileValidationStrategy.class.php</file>
 	</delete>
 </data>

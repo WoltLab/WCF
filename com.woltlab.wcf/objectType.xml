@@ -1767,6 +1767,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\UnfurlUrlImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.trophy</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\TrophyFileProcessor</classname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
