@@ -340,11 +340,16 @@ export function setup(): void {
             if (result.status === "fulfilled") {
               validFiles.push(result.value);
             } else if (result.reason !== undefined) {
-              reportError(
-                element,
-                files[i],
-                getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }),
-              );
+              let message: string;
+              if (result.reason instanceof Error) {
+                message = result.reason.message;
+              } else if (typeof result.reason === "string") {
+                message = result.reason;
+              } else {
+                message = getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name });
+              }
+
+              reportError(element, files[i], message);
             }
           }
 

@@ -238,7 +238,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             validFiles.push(result.value);
                         }
                         else if (result.reason !== undefined) {
-                            reportError(element, files[i], (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
+                            let message;
+                            if (result.reason instanceof Error) {
+                                message = result.reason.message;
+                            }
+                            else if (typeof result.reason === "string") {
+                                message = result.reason;
+                            }
+                            else {
+                                message = (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name });
+                            }
+                            reportError(element, files[i], message);
                         }
                     }
                     const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
