@@ -354,7 +354,8 @@ class UiColorPicker implements DialogCallbackObject {
     const colorString = ColorUtil.rgbaToString(color);
 
     this.oldColor!.style.backgroundColor = colorString;
-    this.input.value = colorString;
+    // The change in value via `this.input.value = colorString;` cannot be detected by a MutationObserver.
+    this.input.setAttribute("value", colorString);
 
     if (!(this.element instanceof HTMLButtonElement)) {
       const span = this.element.querySelector("span");
