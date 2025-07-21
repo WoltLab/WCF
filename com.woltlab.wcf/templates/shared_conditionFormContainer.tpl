@@ -21,6 +21,10 @@
 	<button type="button" class="button" id="{$container->getPrefixedId()}AddCondition">
 		{lang}wcf.condition.add{/lang}
 	</button>
+
+	{if $container->isRequired() && $container->isEmpty()}
+		<small class="innerError">{lang}wcf.global.form.error.empty{/lang}</small>
+	{/if}
 </section>
 
 {include file='shared_formContainerDependencies'}

@@ -31,12 +31,23 @@ final class ConditionFormContainer extends FormContainer
      * @phpstan-ignore missingType.generics
      */
     protected AbstractConditionProvider $conditionProvider;
+    private bool $isRequired = false;
 
     public function __construct()
     {
         parent::__construct();
         $this->label("wcf.form.field.condition");
     }
+
+    public function hasValidationErrors(): bool
+    {
+        if ($this->isRequired && $this->isEmpty()) {
+            return true;
+        }
+
+        return parent::hasValidationErrors();
+    }
+
 
     #[\Override]
     protected static function getDefaultId(): string
@@ -164,5 +175,22 @@ final class ConditionFormContainer extends FormContainer
         }
 
         return $this->conditionProvider::class;
+    }
+
+    public function required(bool $isRequired = true): self
+    {
+        $this->isRequired = $isRequired;
+
+        return $this;
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->isRequired;
+    }
+
+    public function isEmpty(): bool
+    {
+        return !$this->hasChildren();
     }
 }

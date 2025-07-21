@@ -160,11 +160,11 @@ class TrophyAddForm extends AbstractFormBuilderForm
                         ->fieldId('type')
                         ->values([Trophy::TYPE_BADGE])
                 ),
-            // TODO make it required
             ConditionFormContainer::create()
                 ->label('wcf.acp.trophy.conditions')
                 ->description('wcf.acp.trophy.conditions.description')
                 ->conditionProvider(new UserConditionProvider())
+                ->required()
                 ->addDependency(
                     NonEmptyFormFieldDependency::create('awardAutomaticallyDependency')
                         ->fieldId('awardAutomatically')
