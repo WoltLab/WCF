@@ -6,6 +6,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\FileEditor;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
+use wcf\data\TI18nDatabaseObjectAction;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
@@ -27,6 +28,7 @@ use wcf\system\WCF;
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
     use TDatabaseObjectToggle;
+    use TI18nDatabaseObjectAction;
 
     /**
      * @inheritDoc
@@ -55,6 +57,8 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         $trophy = parent::create();
+
+        $this->saveI18nValue($trophy);
 
         $trophyEditor = new TrophyEditor($trophy);
         $trophyEditor->setShowOrder($showOrder);
@@ -99,6 +103,8 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         $returnValues = parent::delete();
 
+        $this->deleteI18nValues();
+
         UserStorageHandler::getInstance()->resetAll('specialTrophies');
 
         return $returnValues;
@@ -113,6 +119,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         if (\count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
+        }
+
+        foreach ($this->objects as $object) {
+            $this->saveI18nValue($object->getDecoratedObject());
         }
     }
 
@@ -184,5 +194,26 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         UserStorageHandler::getInstance()->resetAll('specialTrophies');
+    }
+
+    #[\Override]
+    public function getI18nSaveTypes(): array
+    {
+        return [
+            'title' => 'wcf.user.trophy.title\d+',
+            'description' => 'wcf.user.trophy.description\d+',
+        ];
+    }
+
+    #[\Override]
+    public function getLanguageCategory(): string
+    {
+        return 'wcf.user.trophy';
+    }
+
+    #[\Override]
+    public function getPackageID(): int
+    {
+        return 1;
     }
 }
