@@ -552,6 +552,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         }
 
         Trophy::sort($trophies, 'showOrder');
+        TrophyCache::getInstance()->cacheFileIDs($trophies);
 
         return $trophies;
     }

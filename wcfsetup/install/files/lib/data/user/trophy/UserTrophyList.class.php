@@ -3,6 +3,7 @@
 namespace wcf\data\user\trophy;
 
 use wcf\data\DatabaseObjectList;
+use wcf\system\cache\runtime\FileRuntimeCache;
 
 /**
  * Provides a user trophy list.
@@ -70,5 +71,19 @@ class UserTrophyList extends DatabaseObjectList
         }
 
         return $returnValues;
+    }
+
+    #[\Override]
+    public function readObjects()
+    {
+        parent::readObjects();
+
+        $fileIDs = [];
+        foreach ($this->getObjects() as $trophy) {
+            if ($trophy->getTrophy()->imageFileID !== null) {
+                $fileIDs[] = $trophy->getTrophy()->imageFileID;
+            }
+        }
+        FileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($fileIDs));
     }
 }

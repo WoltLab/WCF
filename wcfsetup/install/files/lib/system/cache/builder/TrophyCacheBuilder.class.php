@@ -2,7 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\trophy\TrophyList;
+use wcf\system\cache\eager\TrophyCache;
 
 /**
  * Caches the trophies.
@@ -11,23 +11,26 @@ use wcf\data\trophy\TrophyList;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
+ *
+ * @deprecated since 6.3, use `wcf\system\cache\eager\TrophyCache` instead.
  */
-class TrophyCacheBuilder extends AbstractCacheBuilder
+class TrophyCacheBuilder extends AbstractLegacyCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
-    public function rebuild(array $parameters)
+    #[\Override]
+    protected function rebuild(array $parameters): array
     {
-        $trophyList = new TrophyList();
+        $cache = (new TrophyCache())->getCache();
 
         if (isset($parameters['onlyEnabled']) && $parameters['onlyEnabled']) {
-            $trophyList->getConditionBuilder()->add('isDisabled = ?', [0]);
+            return $cache->enabledTrophies;
         }
 
-        $trophyList->sqlOrderBy = 'trophy.showOrder ASC';
-        $trophyList->readObjects();
+        return $cache->trophies;
+    }
 
-        return $trophyList->getObjects();
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        (new TrophyCache())->rebuild();
     }
 }

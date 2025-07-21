@@ -10,7 +10,6 @@ use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\builder\TrophyCacheBuilder;
 use wcf\system\cache\eager\CategoryCache;
 use wcf\system\category\CategoryHandler;
 use wcf\system\style\FontAwesomeIcon;
@@ -97,7 +96,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
             ],
         ]))->executeAction()['returnValues'];
 
-        TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(TrophyCacheBuilder::getInstance());
+        TestableUserNotificationEventHandler::getInstance()->resetCacheHandler(new \wcf\system\cache\eager\TrophyCache());
         TrophyCache::getInstance()->clearCache();
         TrophyCache::getInstance()->init();
 

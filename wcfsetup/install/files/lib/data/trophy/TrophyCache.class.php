@@ -2,7 +2,8 @@
 
 namespace wcf\data\trophy;
 
-use wcf\system\cache\builder\TrophyCacheBuilder;
+use wcf\system\cache\eager\data\TrophyCacheData;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\SingletonFactory;
 
 /**
@@ -13,53 +14,33 @@ use wcf\system\SingletonFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
  */
-class TrophyCache extends SingletonFactory
+final class TrophyCache extends SingletonFactory
 {
-    /**
-     * Contains all trophies.
-     * @var Trophy[]
-     */
-    protected $trophies;
-
-    /**
-     * Contains all enabled trophies.
-     * @var Trophy[]
-     */
-    protected $enabledTrophies;
-
-    /**
-     * Contains all trophies sorted by the category.
-     * @var ?array<int, array<int, Trophy>>
-     */
-    protected $categorySortedTrophies;
+    private TrophyCacheData $trophyCache;
 
     /**
      * @inheritDoc
      */
     public function init()
     {
-        $this->trophies = TrophyCacheBuilder::getInstance()->getData();
-        $this->enabledTrophies = TrophyCacheBuilder::getInstance()->getData(['onlyEnabled' => 1]);
+        $this->trophyCache = (new \wcf\system\cache\eager\TrophyCache())->getCache();
     }
 
     /**
      * Returns the trophy with the given trophyID.
-     *
-     * @param int $trophyID
-     * @return  Trophy|null
      */
-    public function getTrophyByID($trophyID)
+    public function getTrophyByID(int $trophyID): ?Trophy
     {
-        return $this->trophies[$trophyID] ?? null;
+        return $this->trophyCache->getTrophyByID($trophyID);
     }
 
     /**
      * Returns the trophy with the given trophyID.
      *
      * @param int[] $trophyIDs
-     * @return (Trophy|null)[]
+     * @return Trophy[]
      */
-    public function getTrophiesByID(array $trophyIDs)
+    public function getTrophiesByID(array $trophyIDs): array
     {
         $returnValues = [];
 
@@ -73,37 +54,19 @@ class TrophyCache extends SingletonFactory
     /**
      * Returns all trophies for a specific category.
      *
-     * @param int $categoryID
      * @return  Trophy[]
      */
-    public function getTrophiesByCategoryID($categoryID)
+    public function getTrophiesByCategoryID(int $categoryID): array
     {
-        if (!\is_array($this->categorySortedTrophies)) {
-            $this->categorySortedTrophies = [];
-
-            foreach ($this->trophies as $trophy) {
-                if (!isset($this->categorySortedTrophies[$trophy->categoryID])) {
-                    $this->categorySortedTrophies[$trophy->categoryID] = [];
-                }
-
-                $this->categorySortedTrophies[$trophy->categoryID][$trophy->getObjectID()] = $trophy;
-            }
-        }
-
-        if (!isset($this->categorySortedTrophies[$categoryID])) {
-            return [];
-        }
-
-        return $this->categorySortedTrophies[$categoryID];
+        return $this->trophyCache->getTrophiesByCategoryID($categoryID);
     }
 
     /**
      * Returns all enabled trophies for a specific category.
      *
-     * @param int $categoryID
      * @return  Trophy[]
      */
-    public function getEnabledTrophiesByCategoryID($categoryID)
+    public function getEnabledTrophiesByCategoryID(int $categoryID): array
     {
         $trophies = $this->getTrophiesByCategoryID($categoryID);
 
@@ -122,9 +85,9 @@ class TrophyCache extends SingletonFactory
      *
      * @return  Trophy[]
      */
-    public function getTrophies()
+    public function getTrophies(): array
     {
-        return $this->trophies;
+        return $this->trophyCache->trophies;
     }
 
     /**
@@ -132,19 +95,31 @@ class TrophyCache extends SingletonFactory
      *
      * @return  Trophy[]
      */
-    public function getEnabledTrophies()
+    public function getEnabledTrophies(): array
     {
-        return $this->enabledTrophies;
+        return $this->trophyCache->enabledTrophies;
+    }
+
+    /**
+     * @param Trophy[] $trophies
+     */
+    public function cacheFileIDs(array $trophies): void
+    {
+        $fileIDs = [];
+        foreach ($trophies as $trophy) {
+            if ($trophy->imageFileID) {
+                $fileIDs[] = $trophy->imageFileID;
+            }
+        }
+
+        FileRuntimeCache::getInstance()->cacheObjectIDs($fileIDs);
     }
 
     /**
      * Resets the cache for the trophies.
-     *
-     * @return void
      */
-    public function clearCache()
+    public function clearCache(): void
     {
-        TrophyCacheBuilder::getInstance()->reset();
-        TrophyCacheBuilder::getInstance()->reset(['onlyEnabled' => 1]);
+        (new \wcf\system\cache\eager\TrophyCache())->rebuild();
     }
 }
