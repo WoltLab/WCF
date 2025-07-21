@@ -25,6 +25,12 @@ final class ReplaceWithWebpVariant
             return $this->file;
         }
 
+        // We cannot reliably detect if a GIF is animated without ImageMagick
+        // and the generated WebP variant will always be static.
+        if ($this->file->mimeType === 'image/gif') {
+            return $this->file;
+        }
+
         $command = new ReplaceFileSource(
             $this->file,
             $pathnameWebp,
