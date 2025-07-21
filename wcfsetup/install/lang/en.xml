@@ -2635,6 +2635,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Rebuilds the Automatic User Group Assignment.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker"><![CDATA[Rebuild Notice]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker.description"><![CDATA[Rebuilds the Notice.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_TrophyRebuildDataWorker"><![CDATA[Rebuild Trophies]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_TrophyRebuildDataWorker.description"><![CDATA[Rebuilds the Trophies.]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[It is strongly recommended to enable the maintenance mode while performing a data rebuild.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
 	</category>
@@ -5213,6 +5215,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 		<item name="wcf.acp.trophy.showOrder.description"><![CDATA[Choose display order of trophies.]]></item>
+		<item name="wcf.acp.trophy.legacyTrophies"><![CDATA[The trophies need to be recalculated. Please perform this task by visiting  <a href="{link controller='RebuildData'}{/link}">Rebuild Data</a>.]]></item>
 	</category>
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Users Online]]></item>

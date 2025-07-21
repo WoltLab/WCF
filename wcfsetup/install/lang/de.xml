@@ -2708,6 +2708,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserGroupAssignmentRebuildDataWorker.description"><![CDATA[Aktualisiert die Automatische Benutzergruppen-Zuordnungen]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker"><![CDATA[Hinweise aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_NoticeRebuildDataWorker.description"><![CDATA[Aktualisiert die Hinweise]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_TrophyRebuildDataWorker"><![CDATA[Trophäen aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_TrophyRebuildDataWorker.description"><![CDATA[Aktualisiert die Trophäen]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[Es wird dringend empfohlen, während der Aktualisierung der Anzeigen den Wartungsmodus zu aktivieren.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Alle aktualisieren]]></item>
 	</category>
@@ -5214,6 +5216,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe vergeben {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyAdd'}{/link}">Trophäe hinzufügen</a>, welche nicht automatisch durch das System vergeben wird.]]></item>
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 		<item name="wcf.acp.trophy.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Trophäen angezeigt werden.]]></item>
+		<item name="wcf.acp.trophy.legacyTrophies"><![CDATA[Die Trophäen wurden noch nicht aktualisiert. Bitte führen Sie dies unter <a href="{link controller='RebuildData'}{/link}">Anzeigen aktualisieren</a> durch.]]></item>
 	</category>
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Benutzer online]]></item>

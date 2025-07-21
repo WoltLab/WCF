@@ -23,4 +23,9 @@ return [
             MediumtextDatabaseTableColumn::create('conditions'),
             DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
         ]),
+    PartialDatabaseTable::create('wcf1_trophy')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('conditions'),
+            DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
+        ]),
 ];

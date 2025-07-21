@@ -37,6 +37,7 @@ class TrophyConditionHandler extends SingletonFactory
      */
     protected function init()
     {
+        // TODO
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(self::CONDITION_DEFINITION_NAME);
 
         foreach ($objectTypes as $objectType) {
@@ -140,6 +141,7 @@ class TrophyConditionHandler extends SingletonFactory
             ON          user_option_value.userID = user_table.userID";
 
         $conditions = $trophy->getConditions();
+        // TODO
         foreach ($conditions as $condition) {
             $condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
         }
@@ -185,6 +187,7 @@ class TrophyConditionHandler extends SingletonFactory
         }
 
         // Assign the condition to the pseudo DBOList object
+        // TODO
         foreach ($conditions as $condition) {
             $condition->getObjectType()->getProcessor()->addUserCondition($condition, $pseudoUserList);
         }

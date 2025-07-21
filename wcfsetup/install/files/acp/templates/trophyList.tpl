@@ -19,6 +19,12 @@
 	</nav>
 </header>
 
+{if $hasLegacyObjects}
+	<woltlab-core-notice type="warning">
+		{lang}wcf.acp.trophy.legacyTrophies{/lang}
+	</woltlab-core-notice>
+{/if}
+
 <div class="section">
 	{unsafe:$gridView->render()}
 </div>

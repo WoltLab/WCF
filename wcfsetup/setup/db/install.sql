@@ -1503,6 +1503,8 @@ CREATE TABLE wcf1_trophy(
 	revokeAutomatically TINYINT(1) NOT NULL DEFAULT 0,
 	trophyUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
+	conditions MEDIUMTEXT,
+	isLegacy TINYINT(1) NOT NULL DEFAULT 0,
 	KEY(categoryID)
 );
 

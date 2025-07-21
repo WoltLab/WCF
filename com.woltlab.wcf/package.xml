@@ -55,5 +55,6 @@
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
 	<instruction type="script">acp/update_com.woltlab.wcf_6.3_userGroupAssignment.php</instruction>
 	<instruction type="script">acp/update_com.woltlab.wcf_6.3_notice.php</instruction>
+	<instruction type="script">acp/update_com.woltlab.wcf_6.3_trophy.php</instruction>
 	-->
 </package>

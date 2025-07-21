@@ -4,6 +4,7 @@ namespace wcf\acp\page;
 
 use wcf\page\AbstractGridViewPage;
 use wcf\system\gridView\admin\TrophyGridView;
+use wcf\system\WCF;
 
 /**
  * Trophy list page.
@@ -36,5 +37,26 @@ final class TrophyListPage extends AbstractGridViewPage
     protected function createGridView(): TrophyGridView
     {
         return new TrophyGridView();
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'hasLegacyObjects' => $this->hasLegacyObjects(),
+        ]);
+    }
+
+    private function hasLegacyObjects(): bool
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM   wcf1_trophy
+                WHERE  isLegacy = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+
+        return $statement->fetchColumn() > 0;
     }
 }

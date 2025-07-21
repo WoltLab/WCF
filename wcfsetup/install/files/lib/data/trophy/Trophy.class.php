@@ -2,17 +2,16 @@
 
 namespace wcf\data\trophy;
 
-use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -37,6 +36,8 @@ use wcf\util\StringUtil;
  * @property-read   int $revokeAutomatically        `1` if the trophy should be automatically revoked once the conditions are no longer met.
  * @property-read   int $trophyUseHtml              `1` if the trophy use a html description
  * @property-read   int $showOrder              position of the trophy in relation to the other trophies at the same location
+ * @property-read   string|null $conditions
+ * @property-read   int $isLegacy
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
 {
@@ -172,11 +173,11 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     /**
      * Returns the conditions of the trophy.
      *
-     * @return  Condition[]
+     * @return array{identifier: string, value: mixed}[]
      */
-    public function getConditions()
+    public function getConditions(): array
     {
-        return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.trophy', $this->trophyID);
+        return $this->conditions !== null ? JSON::decode($this->conditions) : [];
     }
 
     /**
