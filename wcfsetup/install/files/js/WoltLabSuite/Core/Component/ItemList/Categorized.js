@@ -62,21 +62,8 @@ define(["require", "exports", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/L
                         element: li,
                     };
                     this.#categories.push(category);
-                    li.addEventListener("click", (event) => {
-                        this.#categoryClick(event, li, items);
-                    });
                 }
             }
-        }
-        #categoryClick(event, li, items) {
-            event.preventDefault();
-            const isOpen = !this.#categoryIsOpen(li);
-            li.dataset.open = isOpen ? "true" : "false";
-            li.querySelector("fa-icon").setIcon(isOpen ? "chevron-down" : "chevron-right");
-            this.#showItems({
-                items: items,
-                element: li,
-            });
         }
         #categoryIsOpen(category) {
             return category.dataset.open === "true";

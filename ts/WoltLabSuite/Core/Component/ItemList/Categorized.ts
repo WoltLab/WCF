@@ -82,26 +82,8 @@ export class CategorizedItemList {
           element: li,
         };
         this.#categories.push(category);
-
-        li.addEventListener("click", (event) => {
-          this.#categoryClick(event, li, items);
-        });
       }
     }
-  }
-
-  #categoryClick(event: MouseEvent, li: HTMLLIElement, items: Item[]): void {
-    event.preventDefault();
-
-    const isOpen = !this.#categoryIsOpen(li);
-    li.dataset.open = isOpen ? "true" : "false";
-
-    li.querySelector("fa-icon")!.setIcon(isOpen ? "chevron-down" : "chevron-right");
-
-    this.#showItems({
-      items: items,
-      element: li,
-    });
   }
 
   #categoryIsOpen(category: HTMLLIElement): boolean {

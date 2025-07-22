@@ -19,8 +19,13 @@
 	</div>
 	<ul class="scrollableCheckboxList">
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
-			<li{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}{if !$__fieldNestedOption[isSelectable]} data-open="true"{/if}>
-				{if $__fieldNestedOption[isSelectable]}
+			<li
+				{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}
+				{if !$__fieldNestedOption[isSelectable]} class="scrollableCheckboxList__category"{/if}
+			>
+				{if !$__fieldNestedOption[isSelectable]}
+					<span class="scrollableCheckboxList__category__label">{unsafe:$__fieldNestedOption[label]}</span>
+				{else}
 					<label>
 						<input {*
 							*}type="radio" {*
@@ -31,8 +36,6 @@
 							*}{if $field->isImmutable()} disabled{/if}{*
 						*}> <span>{unsafe:$__fieldNestedOption[label]}</span>
 					</label>
-				{else}
-					<button type="button">{icon name="chevron-down"} {unsafe:$__fieldNestedOption[label]}</button>
 				{/if}
 			</li>
 		{/foreach}
