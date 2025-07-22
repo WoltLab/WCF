@@ -11,6 +11,7 @@ define(["require", "exports"], function (require, exports) {
         editorAutosave: true,
         editorInspector: false,
         eventLogging: false,
+        persistentPopover: false,
     };
     function _updateConfig() {
         if (window.sessionStorage) {
@@ -57,6 +58,14 @@ define(["require", "exports"], function (require, exports) {
             window.console.log("%c\tEvent logging " + (_settings.eventLogging ? "enabled" : "disabled"), "font-style: italic");
         },
         /**
+         * Enables/disables persistent popovers that do not disappear on mouseout.
+         */
+        togglePersistentPopover(forceEnable) {
+            _settings.persistentPopover = forceEnable ? true : !_settings.persistentPopover;
+            _updateConfig();
+            window.console.log("%c\tPersistent popover " + (_settings.persistentPopover ? "enabled" : "disabled"), "font-style: italic");
+        },
+        /**
          * Internal methods not meant to be called directly.
          */
         _internal_: {
@@ -82,6 +91,9 @@ define(["require", "exports"], function (require, exports) {
                     if (_settings.eventLogging) {
                         Devtools.toggleEventLogging(true);
                     }
+                    if (_settings.persistentPopover) {
+                        Devtools.togglePersistentPopover(true);
+                    }
                 }
                 window.console.log("Settings are saved per browser session, enter `Devtools.help()` to learn more.");
                 window.console.log("");
@@ -96,6 +108,9 @@ define(["require", "exports"], function (require, exports) {
                 if (_settings.eventLogging) {
                     window.console.log("[Devtools.EventLogging] Firing event: " + action + " @ " + identifier);
                 }
+            },
+            persistentPopover() {
+                return _settings.persistentPopover;
             },
         },
     };

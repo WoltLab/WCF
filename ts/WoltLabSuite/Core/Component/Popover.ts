@@ -8,6 +8,7 @@
  * @since 6.1
  */
 
+import Devtools from "../Devtools";
 import DomUtil from "../Dom/Util";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { wheneverFirstSeen } from "../Helper/Selector";
@@ -91,7 +92,7 @@ class Popover {
   }
 
   #hidePopover(): void {
-    if (!this.#enabled) {
+    if (!this.#enabled || Devtools._internal_.persistentPopover()) {
       return;
     }
 

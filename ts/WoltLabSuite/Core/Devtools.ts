@@ -10,6 +10,7 @@ let _settings = {
   editorAutosave: true,
   editorInspector: false,
   eventLogging: false,
+  persistentPopover: false,
 };
 
 function _updateConfig() {
@@ -73,6 +74,19 @@ const Devtools = {
   },
 
   /**
+   * Enables/disables persistent popovers that do not disappear on mouseout.
+   */
+  togglePersistentPopover(forceEnable: boolean): void {
+    _settings.persistentPopover = forceEnable ? true : !_settings.persistentPopover;
+    _updateConfig();
+
+    window.console.log(
+      "%c\tPersistent popover " + (_settings.persistentPopover ? "enabled" : "disabled"),
+      "font-style: italic",
+    );
+  },
+
+  /**
    * Internal methods not meant to be called directly.
    */
   _internal_: {
@@ -100,6 +114,9 @@ const Devtools = {
         if (_settings.eventLogging) {
           Devtools.toggleEventLogging(true);
         }
+        if (_settings.persistentPopover) {
+          Devtools.togglePersistentPopover(true);
+        }
       }
 
       window.console.log("Settings are saved per browser session, enter `Devtools.help()` to learn more.");
@@ -118,6 +135,10 @@ const Devtools = {
       if (_settings.eventLogging) {
         window.console.log("[Devtools.EventLogging] Firing event: " + action + " @ " + identifier);
       }
+    },
+
+    persistentPopover(): boolean {
+      return _settings.persistentPopover;
     },
   },
 };

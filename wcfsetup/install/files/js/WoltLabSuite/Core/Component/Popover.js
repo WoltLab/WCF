@@ -7,11 +7,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment", "./Popover/SharedCache"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment, SharedCache_1) {
+define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/PageOverlay", "../Helper/Selector", "../Timer/Repeating", "../Ui/Alignment", "./Popover/SharedCache"], function (require, exports, tslib_1, Devtools_1, Util_1, PageOverlay_1, Selector_1, Repeating_1, UiAlignment, SharedCache_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupFor = setupFor;
     exports.resetCache = resetCache;
+    Devtools_1 = tslib_1.__importDefault(Devtools_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     Repeating_1 = tslib_1.__importDefault(Repeating_1);
     UiAlignment = tslib_1.__importStar(UiAlignment);
@@ -73,7 +74,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             }
         }
         #hidePopover() {
-            if (!this.#enabled) {
+            if (!this.#enabled || Devtools_1.default._internal_.persistentPopover()) {
                 return;
             }
             this.#timerShouldShow?.stop();
