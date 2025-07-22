@@ -290,6 +290,9 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         if ($this->noticeHasLegacyObjects()) {
             $event->migrationNeeded(WCF::getLanguage()->get('wcf.acp.notice.list'));
         }
+        if ($this->trophyHasLegacyObjects()) {
+            $event->migrationNeeded(WCF::getLanguage()->get('wcf.user.trophy.trophies'));
+        }
 
         if ($event->needsMigration() === []) {
             return [];
@@ -320,6 +323,17 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         $sql = "SELECT COUNT(*) AS count
                 FROM   wcf1_notice
+                WHERE  isLegacy = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+
+        return $statement->fetchColumn() > 0;
+    }
+
+    private function trophyHasLegacyObjects(): bool
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM   wcf1_trophy
                 WHERE  isLegacy = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([1]);
