@@ -52,7 +52,7 @@ define(["require", "exports", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/L
                     category.items.push({
                         element: li,
                         span: li.querySelector("span"),
-                        text: li.innerText.trim(),
+                        text: li.textContent.trim(),
                     });
                 }
                 else {

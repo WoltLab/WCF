@@ -14,7 +14,7 @@
 
 <div class="itemListFilter" id="{$field->getPrefixedId()}_list">
 	<div class="inputAddon">
-		<input type="text" class="long" placeholder="{lang}wcf.global.filter.placeholder{/lang}" />
+		<input type="text" class="long" placeholder="{lang}wcf.global.filter.placeholder{/lang}">
 		<button type="button" class="button clearButton inputSuffix disabled jsTooltip" title="{lang}wcf.global.filter.button.clear{/lang}">{icon name="xmark" solid=true}</button>
 	</div>
 	<ul class="scrollableCheckboxList">
@@ -32,7 +32,7 @@
 						*}> <span>{unsafe:$__fieldNestedOption[label]}</span>
 					</label>
 				{else}
-					<button type="button" class="pointer">{icon name="chevron-down"} {unsafe:$__fieldNestedOption[label]}</button>
+					<button type="button">{icon name="chevron-down"} {unsafe:$__fieldNestedOption[label]}</button>
 				{/if}
 			</li>
 		{/foreach}

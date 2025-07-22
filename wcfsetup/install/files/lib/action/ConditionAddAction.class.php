@@ -114,18 +114,18 @@ final class ConditionAddAction implements RequestHandlerInterface
 
             if (!isset($grouped[$category])) {
                 $grouped[$category] = [
-                    "items" => [],
-                    "label" => WCF::getLanguage()->get('wcf.condition.category.' . $category),
+                    'items' => [],
+                    'label' => WCF::getLanguage()->get('wcf.condition.category.' . $category),
                 ];
             }
 
-            $grouped[$category]["items"][$key] = WCF::getLanguage()->get($label);
+            $grouped[$category]['items'][$key] = WCF::getLanguage()->get($label);
         }
 
         $collator = new \Collator(WCF::getLanguage()->getLocale());
 
         foreach ($grouped as &$category) {
-            \uasort($category["items"], static function ($labelA, $labelB) use ($collator) {
+            \uasort($category['items'], static function ($labelA, $labelB) use ($collator) {
                 return $collator->compare($labelA, $labelB);
             });
         }
@@ -141,11 +141,11 @@ final class ConditionAddAction implements RequestHandlerInterface
             $options[] = [
                 'depth' => 0,
                 'isSelectable' => false,
-                'label' => $category["label"],
+                'label' => $category['label'],
                 'value' => $categoryKey,
             ];
 
-            foreach ($category["items"] as $key => $label) {
+            foreach ($category['items'] as $key => $label) {
                 $options[] = [
                     'depth' => 1,
                     'isSelectable' => true,

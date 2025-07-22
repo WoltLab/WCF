@@ -11,25 +11,25 @@ import { innerError, show, hide, isHidden } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { escapeRegExp } from "WoltLabSuite/Core/StringUtil";
 
-interface Item {
+type Item = {
   element: HTMLLIElement;
   span: HTMLSpanElement;
   text: string;
-}
+};
 
-interface Category {
+type Category = {
   items: Item[];
   element: HTMLLIElement;
-}
+};
 
 export class CategorizedItemList {
-  #container: HTMLElement;
-  #elementList: HTMLUListElement;
-  #input: HTMLInputElement;
+  readonly #container: HTMLElement;
+  readonly #elementList: HTMLUListElement;
+  readonly #input: HTMLInputElement;
   #value: string = "";
-  #clearButton: HTMLButtonElement;
+  readonly #clearButton: HTMLButtonElement;
   #categories: Category[] = [];
-  #fragment: DocumentFragment;
+  readonly #fragment: DocumentFragment;
 
   constructor(elementId: string) {
     this.#fragment = document.createDocumentFragment();
@@ -72,8 +72,8 @@ export class CategorizedItemList {
 
         category.items.push({
           element: li,
-          span: li.querySelector<HTMLSpanElement>("span")!,
-          text: li.innerText.trim(),
+          span: li.querySelector("span")!,
+          text: li.textContent!.trim(),
         });
       } else {
         const items: Item[] = [];
@@ -96,7 +96,7 @@ export class CategorizedItemList {
     const isOpen = !this.#categoryIsOpen(li);
     li.dataset.open = isOpen ? "true" : "false";
 
-    li.querySelector<FaIcon>("fa-icon")!.setIcon(isOpen ? "chevron-down" : "chevron-right");
+    li.querySelector("fa-icon")!.setIcon(isOpen ? "chevron-down" : "chevron-right");
 
     this.#showItems({
       items: items,
