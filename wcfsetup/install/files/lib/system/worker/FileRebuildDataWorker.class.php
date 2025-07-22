@@ -95,9 +95,9 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $width = $height = null;
             if (\str_starts_with($mimeType, 'image/')) {
                 $data = @\getimagesize($file->getPathname());
-                if ($data === null) {
+                if ($data === false) {
                     // Treat broken images as binary files.
-                    $mimeType === 'application/octet-stream';
+                    $mimeType = 'application/octet-stream';
                     $detectedFileExtension = 'bin';
 
                     if ($file->mimeType === $mimeType) {
