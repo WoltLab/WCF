@@ -7,7 +7,7 @@
  * @sice 6.3
  */
 
-import { innerError, show, hide, isHidden } from "WoltLabSuite/Core/Dom/Util";
+import { innerError } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { escapeRegExp } from "WoltLabSuite/Core/StringUtil";
 
@@ -86,10 +86,6 @@ export class CategorizedItemList {
     }
   }
 
-  #categoryIsOpen(category: HTMLLIElement): boolean {
-    return category.dataset.open === "true";
-  }
-
   #keyup(): void {
     const value = this.#input.value.trim();
     if (this.#value === value) {
@@ -109,56 +105,36 @@ export class CategorizedItemList {
     this.#fragment.appendChild(this.#elementList);
 
     this.#categories.forEach((category) => {
-      this.#showItems(category);
+      this.#filterItems(category);
     });
 
-    const hasVisibleItems = Array.from(
-      this.#elementList.querySelectorAll<HTMLLIElement>(".scrollableCheckboxList > li"),
-    ).some((li) => {
-      return !isHidden(li);
-    });
+    const hasVisibleItem = this.#elementList.querySelector(".scrollableCheckboxList > li:not([hidden])") !== null;
 
     this.#container.insertAdjacentElement("beforeend", this.#elementList);
 
-    innerError(this.#container, hasVisibleItems ? false : getPhrase("wcf.global.filter.error.noMatches"));
+    innerError(this.#container, hasVisibleItem ? false : getPhrase("wcf.global.filter.error.noMatches"));
   }
 
-  #showItems(category: Category): void {
-    const categoryIsOpen = this.#categoryIsOpen(category.element);
+  #filterItems(category: Category): void {
     const regexp = new RegExp("(" + escapeRegExp(this.#value) + ")", "i");
 
-    if (this.#value === "") {
-      show(category.element);
-
-      category.items.forEach((item) => {
+    let hasMatchingItem = false;
+    for (const item of category.items) {
+      if (this.#value === "") {
         item.span.innerHTML = item.text; // Reset highlighting
 
-        if (categoryIsOpen) {
-          show(item.element);
-        } else {
-          hide(item.element);
-        }
-      });
-    } else {
-      if (category.items.some((item) => regexp.test(item.text))) {
-        show(category.element);
+        hasMatchingItem = true;
+        item.element.hidden = false;
+      } else if (regexp.test(item.text)) {
+        item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
 
-        category.items.forEach((item) => {
-          if (categoryIsOpen && regexp.test(item.text)) {
-            item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
-
-            show(item.element);
-          } else {
-            hide(item.element);
-          }
-        });
+        item.element.hidden = false;
+        hasMatchingItem = true;
       } else {
-        hide(category.element);
-
-        category.items.forEach((item) => {
-          hide(item.element);
-        });
+        item.element.hidden = true;
       }
     }
+
+    category.element.hidden = !hasMatchingItem;
   }
 }

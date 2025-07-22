@@ -65,9 +65,6 @@ define(["require", "exports", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/L
                 }
             }
         }
-        #categoryIsOpen(category) {
-            return category.dataset.open === "true";
-        }
         #keyup() {
             const value = this.#input.value.trim();
             if (this.#value === value) {
@@ -84,49 +81,31 @@ define(["require", "exports", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/L
             // by avoiding the browser to perform repaint/layout over and over again
             this.#fragment.appendChild(this.#elementList);
             this.#categories.forEach((category) => {
-                this.#showItems(category);
+                this.#filterItems(category);
             });
-            const hasVisibleItems = Array.from(this.#elementList.querySelectorAll(".scrollableCheckboxList > li")).some((li) => {
-                return !(0, Util_1.isHidden)(li);
-            });
+            const hasVisibleItem = this.#elementList.querySelector(".scrollableCheckboxList > li:not([hidden])") !== null;
             this.#container.insertAdjacentElement("beforeend", this.#elementList);
-            (0, Util_1.innerError)(this.#container, hasVisibleItems ? false : (0, Language_1.getPhrase)("wcf.global.filter.error.noMatches"));
+            (0, Util_1.innerError)(this.#container, hasVisibleItem ? false : (0, Language_1.getPhrase)("wcf.global.filter.error.noMatches"));
         }
-        #showItems(category) {
-            const categoryIsOpen = this.#categoryIsOpen(category.element);
+        #filterItems(category) {
             const regexp = new RegExp("(" + (0, StringUtil_1.escapeRegExp)(this.#value) + ")", "i");
-            if (this.#value === "") {
-                (0, Util_1.show)(category.element);
-                category.items.forEach((item) => {
+            let hasMatchingItem = false;
+            for (const item of category.items) {
+                if (this.#value === "") {
                     item.span.innerHTML = item.text; // Reset highlighting
-                    if (categoryIsOpen) {
-                        (0, Util_1.show)(item.element);
-                    }
-                    else {
-                        (0, Util_1.hide)(item.element);
-                    }
-                });
-            }
-            else {
-                if (category.items.some((item) => regexp.test(item.text))) {
-                    (0, Util_1.show)(category.element);
-                    category.items.forEach((item) => {
-                        if (categoryIsOpen && regexp.test(item.text)) {
-                            item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
-                            (0, Util_1.show)(item.element);
-                        }
-                        else {
-                            (0, Util_1.hide)(item.element);
-                        }
-                    });
+                    hasMatchingItem = true;
+                    item.element.hidden = false;
+                }
+                else if (regexp.test(item.text)) {
+                    item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
+                    item.element.hidden = false;
+                    hasMatchingItem = true;
                 }
                 else {
-                    (0, Util_1.hide)(category.element);
-                    category.items.forEach((item) => {
-                        (0, Util_1.hide)(item.element);
-                    });
+                    item.element.hidden = true;
                 }
             }
+            category.element.hidden = !hasMatchingItem;
         }
     }
     exports.CategorizedItemList = CategorizedItemList;
