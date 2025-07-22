@@ -166,8 +166,8 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	@include wcfFontSmall;
 
 	> dt {
-		display: inline-block;
-		vertical-align: middle;
+		align-items: center;
+		display: inline-flex;
 
 		&:after {
 			content: ":";
@@ -185,6 +185,6 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	}
 
 	fa-icon {
-		vertical-align: middle;
+		margin-right: 2px;
 	}
 }
