@@ -36,9 +36,9 @@ final class ReplaceWithWebpVariant
             $pathnameWebp,
             $this->getNewFilename(),
         );
-        $command();
+        $newFile = $command();
 
-        return new File($this->file->fileID);
+        return $newFile;
     }
 
     private function getNewFilename(): string

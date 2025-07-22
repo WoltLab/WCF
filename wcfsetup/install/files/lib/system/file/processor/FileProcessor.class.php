@@ -152,7 +152,7 @@ final class FileProcessor extends SingletonFactory
         return $fileProcessor->canAdopt($file, $context);
     }
 
-    public function generateWebpVariant(File $file): void
+    public function generateWebpVariant(File $file): File
     {
         $canGenerateThumbnail = match ($file->mimeType) {
             'image/jpeg', 'image/png' => true,
@@ -166,13 +166,13 @@ final class FileProcessor extends SingletonFactory
                 ]);
             }
 
-            return;
+            return $file;
         }
 
         if ($file->fileHashWebp !== null) {
             $pathname = $file->getPathnameWebp();
             if (\file_exists($pathname) && \hash_file('sha256', $pathname) === $file->fileHashWebp) {
-                return;
+                return $file;
             }
         }
 
@@ -186,7 +186,7 @@ final class FileProcessor extends SingletonFactory
         if ($filename === null) {
             $imageAdapter = ImageHandler::getInstance()->getAdapter();
             if (!$imageAdapter->checkMemoryLimit($file->width, $file->height, $file->mimeType)) {
-                return;
+                return $file;
             }
 
             try {
@@ -196,7 +196,7 @@ final class FileProcessor extends SingletonFactory
             } catch (ImageNotProcessable $e) {
                 logThrowable($e);
 
-                return;
+                return $file;
             }
 
             $filename = FileUtil::getTemporaryFilename(extension: 'webp');
@@ -209,7 +209,7 @@ final class FileProcessor extends SingletonFactory
                     throw $e;
                 }
 
-                return;
+                return $file;
             }
         }
 
@@ -223,6 +223,8 @@ final class FileProcessor extends SingletonFactory
         \assert($pathname !== null);
 
         \rename($filename, $pathname);
+
+        return $file;
     }
 
     public function generateThumbnails(File $file): void
