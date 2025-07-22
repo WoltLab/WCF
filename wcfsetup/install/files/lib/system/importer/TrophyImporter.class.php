@@ -2,11 +2,11 @@
 
 namespace wcf\system\importer;
 
+use wcf\data\file\FileEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyEditor;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a trophy importer.
@@ -49,15 +49,18 @@ class TrophyImporter extends AbstractImporter
             }
 
             $filename = \basename($additionalData['fileLocation']);
-            while (\file_exists(WCF_DIR . 'images/trophy/' . $filename)) {
-                $filename = \substr(StringUtil::getRandomID(), 0, 5) . '_' . \basename($additionalData['fileLocation']);
-            }
+            $file = FileEditor::createFromExistingFile(
+                $additionalData['fileLocation'],
+                $filename,
+                'com.woltlab.wcf.trophy',
+                true
+            );
 
-            if (!@\copy($additionalData['fileLocation'], WCF_DIR . 'images/trophy/' . $filename)) {
+            if ($file === null) {
                 return 0;
             }
 
-            $data['iconFile'] = $filename;
+            $data['imageFileID'] = $file->fileID;
         }
 
         /** @var Trophy $trophy */
