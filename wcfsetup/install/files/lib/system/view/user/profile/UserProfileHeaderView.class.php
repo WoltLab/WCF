@@ -5,7 +5,6 @@ namespace wcf\system\view\user\profile;
 use wcf\acp\form\UserEditForm;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
-use wcf\event\user\profile\UserProfileHeaderInteractionOptionCollecting;
 use wcf\event\user\profile\UserProfileHeaderManagementOptionCollecting;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
 use wcf\event\user\profile\UserProfileStatItemCollecting;
@@ -48,7 +47,7 @@ final class UserProfileHeaderView
     ) {
         $this->initStatItems();
         $this->initSearchContentLinks();
-        $this->initInteractions();
+        $this->initInteractionContextMenu();
         $this->initManagementOptions();
     }
 
@@ -139,7 +138,7 @@ final class UserProfileHeaderView
         $this->searchContentLinks = $event->getLinks();
     }
 
-    private function initInteractions(): void
+    private function initInteractionContextMenu(): void
     {
         $this->interactionContextMenu = new StandaloneInteractionContextMenuComponent(
             new UserProfileInteractions(),
@@ -147,63 +146,6 @@ final class UserProfileHeaderView
             LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
             cssClassName: 'userProfileHeader__button'
         );
-
-        /*        if ($this->user->userID != WCF::getUser()->userID) {
-            if (WCF::getSession()->getPermission('user.profile.canReportContent')) {
-                $this->interactionOptions[] = UserProfileHeaderViewInteractionOption::forButton(
-                    WCF::getLanguage()->get('wcf.user.profile.report'),
-                    'data-report-content="com.woltlab.wcf.user" data-object-id="' . $this->user->userID . '"'
-                );
-            }
-
-            if (WCF::getUser()->userID && !$this->user->isIgnoredUser(WCF::getUser()->userID)) {
-                if ($this->user->isFollower(WCF::getUser()->userID)) {
-                    $label = 'wcf.user.button.unfollow';
-                    $value = 1;
-                } else {
-                    $label = 'wcf.user.button.follow';
-                    $value = 0;
-                }
-
-                $this->interactionOptions[] = UserProfileHeaderViewInteractionOption::forButton(
-                    WCF::getLanguage()->get($label),
-                    \sprintf(
-                        'data-following="%d" data-follow-user="%s" data-type="button"',
-                        $value,
-                        StringUtil::encodeHTML(
-                            LinkHandler::getInstance()->getControllerLink(UserFollowAction::class, ['id' => $this->user->userID])
-                        )
-                    )
-                );
-            }
-
-            if (WCF::getUser()->userID && !$this->user->getPermission('user.profile.cannotBeIgnored')) {
-                if ($this->user->isIgnoredByUser(WCF::getUser()->userID)) {
-                    $label = 'wcf.user.button.unignore';
-                    $value = 1;
-                } else {
-                    $label = 'wcf.user.button.ignore';
-                    $value = 0;
-                }
-
-                $this->interactionOptions[] = UserProfileHeaderViewInteractionOption::forButton(
-                    WCF::getLanguage()->get($label),
-                    \sprintf(
-                        'data-ignored="%d" data-ignore-user="%s" data-type="button"',
-                        $value,
-                        StringUtil::encodeHTML(
-                            LinkHandler::getInstance()->getControllerLink(UserIgnoreAction::class, ['id' => $this->user->userID])
-                        )
-                    )
-                );
-            }
-        }
-
-        $event = new UserProfileHeaderInteractionOptionCollecting($this->user);
-        EventHandler::getInstance()->fire($event);
-        if ($event->getOptions() !== []) {
-            $this->interactionOptions = \array_merge($this->interactionOptions, $event->getOptions());
-        }*/
     }
 
     private function initManagementOptions(): void
