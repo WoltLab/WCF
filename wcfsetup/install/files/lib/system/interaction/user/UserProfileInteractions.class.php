@@ -5,7 +5,7 @@ namespace wcf\system\interaction\user;
 use wcf\action\UserIgnoreAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\UserProfile;
-use wcf\event\interaction\user\UserCardInteractionCollecting;
+use wcf\event\interaction\user\UserProfileInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\AbstractInteractionProvider;
@@ -15,14 +15,14 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Interaction provider for the context menu of user cards.
+ * Interaction provider for the context menu of user profiles.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class UserCardInteractions extends AbstractInteractionProvider
+final class UserProfileInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
@@ -118,7 +118,7 @@ final class UserCardInteractions extends AbstractInteractionProvider
         ]);
 
         EventHandler::getInstance()->fire(
-            new UserCardInteractionCollecting($this)
+            new UserProfileInteractionCollecting($this)
         );
     }
 

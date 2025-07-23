@@ -7,7 +7,7 @@ use wcf\data\search\Search;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\event\listView\user\MembersListViewInitialized;
-use wcf\system\interaction\user\UserCardInteractions;
+use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\listView\filter\SelectFilter;
@@ -46,7 +46,7 @@ class MembersListView extends AbstractListView
             new TextFilter('username', 'wcf.user.username'),
         ]);
 
-        $this->setInteractionProvider(new UserCardInteractions());
+        $this->setInteractionProvider(new UserProfileInteractions());
 
         if (\in_array(\MEMBERS_LIST_DEFAULT_SORT_FIELD, \array_map(static fn($sortField) => $sortField->id, $this->getAvailableSortFields()))) {
             $this->setSortField(\MEMBERS_LIST_DEFAULT_SORT_FIELD);

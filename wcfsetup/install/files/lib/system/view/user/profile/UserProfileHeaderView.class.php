@@ -12,7 +12,7 @@ use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\page\MembersListPage;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\interaction\user\UserCardInteractions;
+use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -142,7 +142,7 @@ final class UserProfileHeaderView
     private function initInteractions(): void
     {
         $this->interactionContextMenu = new StandaloneInteractionContextMenuComponent(
-            new UserCardInteractions(),
+            new UserProfileInteractions(),
             $this->user,
             LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
             cssClassName: 'userProfileHeader__button'
