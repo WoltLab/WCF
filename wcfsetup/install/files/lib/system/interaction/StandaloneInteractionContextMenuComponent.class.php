@@ -4,6 +4,7 @@ namespace wcf\system\interaction;
 
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents the component of a standalone button for an interaction content menu.
@@ -15,17 +16,18 @@ use wcf\system\WCF;
  */
 class StandaloneInteractionContextMenuComponent extends InteractionContextMenuComponent
 {
+    protected readonly string $containerID;
+
     public function __construct(
         IInteractionProvider $provider,
         protected readonly DatabaseObject $object,
         protected readonly string $redirectUrl,
-        protected readonly string $label = '',
-        protected readonly string $icon = 'ellipsis',
-        protected readonly string $cssClassName = '',
-        protected readonly string $buttonCssClassName = '',
         protected readonly string $reloadHeaderEndpoint = '',
+        protected ?InteractionContextMenuComponentConfiguration $configuration = null,
     ) {
-        parent::__construct($provider);
+        parent::__construct($provider, $configuration);
+
+        $this->containerID = 'wcf-cm-' . StringUtil::getUUID();
     }
 
     public function render(): string
@@ -45,20 +47,15 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
                 'providerClassName' => \get_class($this->provider),
                 'objectID' => $this->object->getObjectID(),
                 'redirectUrl' => $this->redirectUrl,
-                'label' => $this->label,
-                'icon' => $this->icon,
-                'cssClassName' => $this->cssClassName,
-                'buttonCssClassName' => $this->buttonCssClassName,
                 'reloadHeaderEndpoint' => $this->reloadHeaderEndpoint,
+                'configuration' => $this->configuration,
             ],
         );
     }
 
     public function getContainerID(): string
     {
-        $classNamePieces = \explode('\\', \get_class($this->object));
-
-        return \implode('-', $classNamePieces) . '-' . $this->object->getObjectID();
+        return $this->containerID;
     }
 
     public static function forContentHeaderButton(
@@ -66,7 +63,14 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
         DatabaseObject $object,
         string $redirectUrl,
     ): self {
-        return new self($provider, $object, $redirectUrl, icon: 'ellipsis');
+        return new self(
+            $provider,
+            $object,
+            $redirectUrl,
+            configuration: new InteractionContextMenuComponentConfiguration(
+                buttonCssClassName: 'button',
+            )
+        );
     }
 
     public static function forContentInteractionButton(
@@ -80,11 +84,13 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
             $provider,
             $object,
             $redirectUrl,
-            $label,
-            'pencil',
-            'contentInteractionButton',
-            'small',
-            $reloadHeaderEndpoint
+            $reloadHeaderEndpoint,
+            new InteractionContextMenuComponentConfiguration(
+                cssClassName: 'contentInteractionButton',
+                buttonCssClassName: 'button small',
+                label: $label,
+                icon: 'pencil'
+            )
         );
     }
 }

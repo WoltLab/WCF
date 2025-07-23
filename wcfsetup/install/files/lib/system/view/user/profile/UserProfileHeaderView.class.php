@@ -2,15 +2,15 @@
 
 namespace wcf\system\view\user\profile;
 
-use wcf\acp\form\UserEditForm;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
-use wcf\event\user\profile\UserProfileHeaderManagementOptionCollecting;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
 use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\page\MembersListPage;
 use wcf\system\event\EventHandler;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\interaction\user\UserManagementInteractions;
 use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -35,12 +35,8 @@ final class UserProfileHeaderView
      */
     private array $searchContentLinks = [];
 
-    /**
-     * @var UserProfileHeaderViewManagementOption[]
-     */
-    private array $managementOptions = [];
-
     private StandaloneInteractionContextMenuComponent $interactionContextMenu;
+    private StandaloneInteractionContextMenuComponent $managementContextMenu;
 
     public function __construct(
         public readonly UserProfile $user,
@@ -48,7 +44,7 @@ final class UserProfileHeaderView
         $this->initStatItems();
         $this->initSearchContentLinks();
         $this->initInteractionContextMenu();
-        $this->initManagementOptions();
+        $this->initManagementContextMenu();
     }
 
     public function __toString(): string
@@ -89,17 +85,9 @@ final class UserProfileHeaderView
         return $this->interactionContextMenu;
     }
 
-    public function hasManagementOptions(): bool
+    public function getManagementContextMenu(): StandaloneInteractionContextMenuComponent
     {
-        return $this->managementOptions !== [];
-    }
-
-    /**
-     * @return UserProfileHeaderViewManagementOption[]
-     */
-    public function getManagementOptions(): array
-    {
-        return $this->managementOptions;
+        return $this->managementContextMenu;
     }
 
     public function canEditUser(): bool
@@ -144,57 +132,30 @@ final class UserProfileHeaderView
             new UserProfileInteractions(),
             $this->user,
             LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
-            cssClassName: 'userProfileHeader__button'
+            configuration: new InteractionContextMenuComponentConfiguration(
+                cssClassName: 'userProfileHeader__button',
+                buttonCssClassName: 'button small'
+            )
         );
     }
 
-    private function initManagementOptions(): void
+    private function initManagementContextMenu(): void
     {
+        $this->managementContextMenu = new StandaloneInteractionContextMenuComponent(
+            new UserManagementInteractions(),
+            $this->user,
+            LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
+            configuration: new InteractionContextMenuComponentConfiguration(
+                cssClassName: 'userProfileHeader__button',
+                buttonCssClassName: 'button small',
+                dropdownMenuCssClassName: 'userProfileHeader__managementOptions',
+                icon: 'gear',
+                tooltip: 'wcf.user.profile.management'
+            )
+        );
+
         if (!$this->isInAccessibleGroup() || $this->user->userID == WCF::getUser()->userID) {
             return;
-        }
-
-        if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forButton(
-                WCF::getLanguage()->get($this->user->banned ? 'wcf.user.unban' : 'wcf.user.ban'),
-                'class="jsButtonUserBan"',
-            );
-        }
-        if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forButton(
-                WCF::getLanguage()->get($this->user->disableAvatar ? 'wcf.user.enableAvatar' : 'wcf.user.disableAvatar'),
-                'class="jsButtonUserDisableAvatar"',
-            );
-        }
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forButton(
-                WCF::getLanguage()->get($this->user->disableSignature ? 'wcf.user.enableSignature' : 'wcf.user.disableSignature'),
-                'class="jsButtonUserDisableSignature"',
-            );
-        }
-        if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forButton(
-                WCF::getLanguage()->get($this->user->disableCoverPhoto ? 'wcf.user.enableCoverPhoto' : 'wcf.user.disableCoverPhoto'),
-                'class="jsButtonUserDisableCoverPhoto"',
-            );
-        }
-        if (WCF::getSession()->getPermission('admin.user.canEnableUser')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forButton(
-                WCF::getLanguage()->get($this->user->pendingActivation() ? 'wcf.acp.user.enable' : 'wcf.acp.user.disable'),
-                'class="jsButtonUserEnable"',
-            );
-        }
-        if (WCF::getSession()->getPermission('admin.general.canUseAcp') && WCF::getSession()->getPermission('admin.user.canEditUser')) {
-            $this->managementOptions[] = UserProfileHeaderViewManagementOption::forLink(
-                WCF::getLanguage()->get('wcf.user.edit'),
-                LinkHandler::getInstance()->getControllerLink(UserEditForm::class, ['id' => $this->user->userID]),
-            );
-        }
-
-        $event = new UserProfileHeaderManagementOptionCollecting($this->user);
-        EventHandler::getInstance()->fire($event);
-        if ($event->getOptions() !== []) {
-            $this->managementOptions = \array_merge($this->managementOptions, $event->getOptions());
         }
     }
 }

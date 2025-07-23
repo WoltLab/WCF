@@ -110,7 +110,7 @@
 							type="button"
 							data-following="1"
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
-							class="userProfileHeader__button button jsTooltip"
+							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.unfollow{/lang}"
 						>{icon name='minus' type='solid'}</button>
 					{else}
@@ -118,7 +118,7 @@
 							type="button"
 							data-following="0"
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
-							class="userProfileHeader__button button jsTooltip"
+							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.follow{/lang}"
 						>{icon name='plus' type='solid'}</button>
 					{/if}
@@ -126,28 +126,12 @@
 			{/if}
 			
 			{unsafe:$view->getInteractionContextMenu()->render()}
-			
-			{if $view->hasManagementOptions()}
-				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.profile.management{/lang}">{icon name='gear'}</button>
 
-					<ul class="dropdownMenu userProfileHeader__managementOptions">
-						{foreach from=$view->getManagementOptions() item='managementOption'}
-							<li>
-								{if $managementOption->link}
-									<a href="{$managementOption->link}" {unsafe:$managementOption->attributes}>{$managementOption->title}</a>
-								{else}
-									<button type="button" {unsafe:$managementOption->attributes}>{$managementOption->title}</button>
-								{/if}
-							</li>
-						{/foreach}
-					</ul>
-				</div>
-			{/if}
-			
+			{unsafe:$view->getManagementContextMenu()->render()}
+
 			{if $view->hasSearchContentLinks()}
 				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button buttonPrimary dropdownToggle">
+					<button type="button" class="button buttonPrimary small dropdownToggle">
 						{icon name='magnifying-glass'}
 						<span>{lang}wcf.user.searchUserContent{/lang}</span>
 					</button>

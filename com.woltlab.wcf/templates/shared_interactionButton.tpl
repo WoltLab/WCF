@@ -1,9 +1,16 @@
-<div class="dropdown {$configuration->containerCssClassName}">
-	<button type="button" class="jsTooltip dropdownToggle {$configuration->cssClassName}" title="{lang}wcf.global.button.more{/lang}">
+<div class="dropdown {$configuration->cssClassName}">
+	<button
+		type="button"
+		class="dropdownToggle {$configuration->buttonCssClassName}{if !$configuration->label} jsTooltip{/if}"
+		{if !$configuration->label}title="{lang}{$configuration->tooltip}{/lang}"{/if}
+	>
 		{icon name=$configuration->icon size=$configuration->iconSize}
+		{if $configuration->label}
+			<span>{$configuration->label}</span>
+		{/if}
 	</button>
 
-	<ul class="dropdownMenu">
+	<ul class="dropdownMenu {$configuration->dropdownMenuCssClassName}">
 		{unsafe:$contextMenuOptions}
 	</ul>
 </div>
