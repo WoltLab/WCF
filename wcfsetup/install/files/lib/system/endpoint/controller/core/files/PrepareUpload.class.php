@@ -76,7 +76,12 @@ final class PrepareUpload implements IController
         $identifier = \bin2hex(\random_bytes(20));
         $objectType = FileProcessor::getInstance()->getObjectType($parameters->objectType);
 
-        $exifData = $this->parseExifData($parameters->exifData);
+        $exifBytes = null;
+        if ($parameters->exifData !== null) {
+            $exifBytes = \hex2bin($parameters->exifData);
+        }
+
+        $exifData = $this->parseExifData($exifBytes);
         if ($exifData !== null) {
             $exifData = JSON::encode($exifData);
         }
@@ -104,7 +109,24 @@ final class PrepareUpload implements IController
             return null;
         }
 
-        return Exif::forBytes(0, $exifData)->getParsedExif();
+        $data = Exif::forBytes(0, $exifData)->getParsedExif();
+        if ($data === null) {
+            return null;
+        }
+
+        // Remove the `FILE` and `COMPUTED` section because those contain
+        // garbled data anyway and we do not need them in the first place.
+        unset($data['FILE'], $data['COMPUTED']);
+
+        // We can also discard the `THUMBNAIL` section because it is a
+        // pointless feature and we’re not extracting it either.
+        unset($data['THUMBNAIL']);
+
+        if ($data === []) {
+            return null;
+        }
+
+        return $data;
     }
 }
 

@@ -150,6 +150,14 @@ class FileEditor extends DatabaseObjectEditor
         if ($exifData === null) {
             $exifData = ExifUtil::getExifData($pathname);
 
+            // Remove the `FILE` and `COMPUTED` section because those contain
+            // garbled data anyway and we do not need them in the first place.
+            unset($exifData['FILE'], $exifData['COMPUTED']);
+
+            // We can also discard the `THUMBNAIL` section because it is a
+            // pointless feature and we’re not extracting it either.
+            unset($exifData['THUMBNAIL']);
+
             if ($exifData === []) {
                 $exifData = null;
             }

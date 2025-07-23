@@ -196,7 +196,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
     async function getExifBytes(file) {
         if (file.type === "image/jpeg") {
             try {
-                return await (0, ExifUtil_1.getExifBytesFromJpeg)(file);
+                const bytes = await (0, ExifUtil_1.getExifBytesFromJpeg)(file);
+                // ExifUtil returns the entire section but we only need the app data.
+                // Removing the first 10 bytes drops the 0xFF 0xE1 marker followed by two
+                // bytes for the length and then 6 bytes for the "Exif\x00\x00" header.
+                return bytes.slice(10);
             }
             catch {
                 return null;

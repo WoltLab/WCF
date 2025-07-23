@@ -294,7 +294,7 @@
 	min-width: 500px;
 	overflow: hidden;
 	padding: 0;
-	position: relative;
+	position: fixed;
 }
 
 .dialog:not([open]) {

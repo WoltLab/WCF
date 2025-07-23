@@ -19,7 +19,10 @@ export async function upload(
 
   let exifData: string | null = null;
   if (exifBytes !== null) {
-    exifData = new TextDecoder().decode(exifBytes);
+    exifData = "";
+    for (let i = 0, length = exifBytes.length; i < length; i++) {
+      exifData += exifBytes[i].toString(16).padStart(2, "0");
+    }
   }
 
   const payload = {
