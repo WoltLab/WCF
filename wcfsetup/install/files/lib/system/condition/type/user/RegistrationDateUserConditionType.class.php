@@ -79,6 +79,12 @@ final class RegistrationDateUserConditionType extends AbstractConditionType impl
         };
     }
 
+    #[\Override]
+    public function getCategory(): string
+    {
+        return "user";
+    }
+
     /**
      * @return string[]
      */

@@ -14,6 +14,28 @@
 	}
 }
 
+.scrollableCheckboxList__category:not(:first-child) {
+	margin-top: 5px;
+}
+
+.scrollableCheckboxList__category__label {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	column-gap: 10px;
+	display: flex;
+	font-size: 12px;
+	margin-bottom: 5px;
+	white-space: nowrap;
+
+	&::after {
+        border-top: 1px solid currentColor;
+		content: "";
+        display: block;
+        width: 100%;
+        opacity: 0.34;
+	}
+}
+
 .dialogContent .scrollableCheckboxList {
 	max-height: 300px;
 }

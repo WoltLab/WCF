@@ -71,6 +71,12 @@ final class HasTrophyUserConditionType extends AbstractConditionType implements 
         return \in_array((int)$this->filter, $trophyIDs, true);
     }
 
+    #[\Override]
+    public function getCategory(): string
+    {
+        return "userProfile";
+    }
+
     /**
      * @return Trophy[]
      */

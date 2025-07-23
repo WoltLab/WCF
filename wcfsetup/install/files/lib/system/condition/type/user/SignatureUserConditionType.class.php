@@ -17,6 +17,7 @@ final class SignatureUserConditionType extends BooleanUserConditionType
         parent::__construct(
             'signature',
             'signature',
+            'userProfile',
             'userSignature',
             'com.woltlab.wcf.user.signature'
         );

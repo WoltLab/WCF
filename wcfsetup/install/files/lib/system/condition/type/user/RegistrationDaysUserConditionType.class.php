@@ -56,6 +56,12 @@ final class RegistrationDaysUserConditionType extends IntegerUserConditionType
         };
     }
 
+    #[\Override]
+    public function getCategory(): string
+    {
+        return "user";
+    }
+
     /**
      * @return array{condition: string, timestamp: int}
      */

@@ -36,4 +36,11 @@ interface IConditionType
      * @param TFilter $filter
      */
     public function setFilter(mixed $filter): void;
+
+    /**
+     * Get the name of the category for this condition type.
+     * All condition types with the same category are grouped together.
+     * The language variable for the category name is `wcf.condition.category.<category>`.
+     */
+    public function getCategory(): string;
 }

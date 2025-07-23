@@ -74,6 +74,12 @@ final class TimeRequestConditionType extends AbstractConditionType implements IC
         };
     }
 
+    #[\Override]
+    public function getCategory(): string
+    {
+        return "pointInTime";
+    }
+
     /**
      * @return array<string, string>
      */

@@ -26,6 +26,7 @@ class BooleanUserConditionType extends AbstractConditionType implements IDatabas
     public function __construct(
         public readonly string $identifier,
         public readonly string $columnName,
+        public readonly string $category,
         public readonly ?string $migrateKeyName = null,
         public readonly ?string $migrateConditionObjectType = null,
     ) {
@@ -67,6 +68,12 @@ class BooleanUserConditionType extends AbstractConditionType implements IDatabas
         } else {
             return !$object->{$this->columnName};
         }
+    }
+
+    #[\Override]
+    public function getCategory(): string
+    {
+        return $this->category;
     }
 
     #[\Override]

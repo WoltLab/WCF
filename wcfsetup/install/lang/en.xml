@@ -3493,6 +3493,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.request.notOnPage"><![CDATA[Not on page]]></item>
 		<item name="wcf.condition.request.dayOfWeek"><![CDATA[Day of Week]]></item>
 		<item name="wcf.condition.request.notDayOfWeek"><![CDATA[Not Day of Week]]></item>
+		<item name="wcf.condition.category.page"><![CDATA[Page]]></item>
+		<item name="wcf.condition.category.pointInTime"><![CDATA[Point in time]]></item>
+		<item name="wcf.condition.category.user"><![CDATA[User]]></item>
+		<item name="wcf.condition.category.userProfile"><![CDATA[User profile]]></item>
 	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
