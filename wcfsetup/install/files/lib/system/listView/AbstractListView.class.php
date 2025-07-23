@@ -11,6 +11,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\listView\filter\IListViewFilter;
 use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
@@ -39,8 +40,10 @@ abstract class AbstractListView
     private int $pageNo = 1;
     private string|int|null $objectIDFilter = null;
     private ?IInteractionProvider $interactionProvider = null;
+    private ?IInteractionProvider $quickInteractionProvider = null;
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
+    private ?InteractionContextMenuComponentConfiguration $interactionContextMenuComponentConfiguration = null;
     private bool $allowFiltering = true;
     private bool $allowSorting = true;
     private bool $allowInteractions = true;
@@ -476,6 +479,22 @@ abstract class AbstractListView
     }
 
     /**
+     * Sets the quick interaction provider that is used to render the interaction directly.
+     */
+    public function setQuickInteractionProvider(IInteractionProvider $provider): void
+    {
+        $this->quickInteractionProvider = $provider;
+    }
+
+    /**
+     * Returns the quick interaction provider of the list view.
+     */
+    public function getQuickInteractionProvider(): ?IInteractionProvider
+    {
+        return $this->quickInteractionProvider;
+    }
+
+    /**
      * Sets the bulk interaction provider for this list view.
      */
     public function setBulkInteractionProvider(IBulkInteractionProvider $provider): void
@@ -530,15 +549,33 @@ abstract class AbstractListView
     }
 
     /**
+     * Returns true, if this list view has quick interactions.
+     */
+    public function hasQuickInteractions(): bool
+    {
+        return $this->allowInteractions
+            && $this->quickInteractionProvider !== null;
+    }
+
+    /**
      * Renders the initialization code for the interactions of the list view.
      */
     public function renderInteractionInitialization(): string
     {
-        if ($this->interactionProvider === null) {
-            return '';
+        $code = '';
+        if ($this->interactionProvider !== null) {
+            $code = $this->getInteractionContextMenuComponent()->renderInitialization($this->getID() . '_items');
         }
 
-        return $this->getInteractionContextMenuComponent()->renderInitialization($this->getID() . '_items');
+        if ($this->quickInteractionProvider !== null) {
+            $code .= "\n";
+            $code .= \implode("\n", \array_map(
+                fn($interaction) => $interaction->renderInitialization($this->getID() . '_items'),
+                $this->getQuickInteractionProvider()->getInteractions()
+            ));
+        }
+
+        return $code;
     }
 
     /**
@@ -557,6 +594,15 @@ abstract class AbstractListView
     }
 
     /**
+     * Allows to define a custom configuration for the interaction context menu.
+     * If no configuration is set, the default configuration will be used.
+     */
+    public function setInteractionContextMenuComponentConfiguration(InteractionContextMenuComponentConfiguration $configuration): void
+    {
+        $this->interactionContextMenuComponentConfiguration = $configuration;
+    }
+
+    /**
      * Returns the view of the interaction context menu.
      */
     public function getInteractionContextMenuComponent(): InteractionContextMenuComponent
@@ -566,7 +612,10 @@ abstract class AbstractListView
         }
 
         if (!isset($this->interactionContextMenuComponent)) {
-            $this->interactionContextMenuComponent = new InteractionContextMenuComponent($this->interactionProvider);
+            $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
+                $this->interactionProvider,
+                $this->interactionContextMenuComponentConfiguration
+            );
         }
 
         return $this->interactionContextMenuComponent;
@@ -584,6 +633,24 @@ abstract class AbstractListView
         }
 
         return $this->getInteractionContextMenuComponent()->renderButton($item);
+    }
+
+    /**
+     * Renders the interactions for the given object.
+     *
+     * @param TDatabaseObject $object
+     */
+    public function renderQuickInteractions(DatabaseObject $object): string
+    {
+        $availableInteractions = \array_filter(
+            $this->getQuickInteractionProvider()->getInteractions(),
+            static fn($interaction) => $interaction->isAvailable($object)
+        );
+
+        return \implode("\n", \array_map(
+            static fn($interaction) => $interaction->render($object),
+            $availableInteractions
+        ));
     }
 
     /**
