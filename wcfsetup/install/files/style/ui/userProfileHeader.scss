@@ -163,6 +163,11 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__meta__dataList {
+	display: flex;
+	gap: 3px;
+	align-items: center;
+	flex-wrap: wrap;
+
 	@include wcfFontSmall;
 
 	> dt {
