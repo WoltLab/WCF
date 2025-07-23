@@ -16,8 +16,13 @@ use wcf\system\WCF;
 class InteractionContextMenuComponent
 {
     public function __construct(
-        protected readonly IInteractionProvider $provider
-    ) {}
+        protected readonly IInteractionProvider $provider,
+        protected ?InteractionContextMenuComponentConfiguration $configuration = null
+    ) {
+        if ($this->configuration === null) {
+            $this->configuration = InteractionContextMenuComponentConfiguration::forDefault();
+        }
+    }
 
     public function renderContextMenuOptions(DatabaseObject $object): string
     {
@@ -46,7 +51,10 @@ class InteractionContextMenuComponent
         return WCF::getTPL()->render(
             'wcf',
             'shared_interactionButton',
-            ['contextMenuOptions' => $this->renderContextMenuOptions($object)]
+            [
+                'contextMenuOptions' => $this->renderContextMenuOptions($object),
+                'configuration' => $this->configuration,
+            ]
         );
     }
 
