@@ -23,12 +23,15 @@ foreach ($contactOptionList as $contactOption) {
         default => $contactOption->optionType,
     };
 
+    // @phpstan-ignore property.notFound
     if ($contactOption->required) {
         $configuration['required'] = 1;
     }
+    // @phpstan-ignore property.notFound
     if ($contactOption->defaultValue && $contactOption->optionType == 'text') {
         $configuration['defaultValue'] = $contactOption->defaultValue;
     }
+    // @phpstan-ignore property.notFound
     if ($contactOption->selectOptions) {
         $configuration['required'] = convertSelectOptions($contactOption->selectOptions);
     }

@@ -108,6 +108,9 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     #[\Override]
     public function getI18nSaveTypes(): array
     {

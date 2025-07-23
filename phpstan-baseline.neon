@@ -25,12 +25,6 @@ parameters:
 			path: wcfsetup/install/files/lib/acp/form/LanguageImportForm.class.php
 
 		-
-			message: '#^Parameter \#1 \$children of method wcf\\system\\form\\builder\\IFormParentNode\:\:appendChildren\(\) expects array\<wcf\\system\\form\\builder\\IFormChildNode\>, array\<int, wcf\\system\\form\\builder\\field\\PasswordFormField\|wcf\\system\\form\\builder\\field\\TextFormField\|wcf\\system\\form\\builder\\IObjectTypeFormNode\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wcfsetup/install/files/lib/acp/form/LoginForm.class.php
-
-		-
 			message: '#^Property wcf\\acp\\page\\DevtoolsNotificationTestPage\:\:\$events \(array\<array\<wcf\\system\\user\\notification\\event\\ITestableUserNotificationEvent\>\>\) does not accept array\<array\<wcf\\system\\user\\notification\\event\\IUserNotificationEvent\>\>\.$#'
 			identifier: assign.propertyType
 			count: 3
@@ -47,12 +41,6 @@ parameters:
 			identifier: booleanAnd.rightAlwaysFalse
 			count: 1
 			path: wcfsetup/install/files/lib/acp/page/TemplateDiffPage.class.php
-
-		-
-			message: '#^Parameter \#1 \$children of method wcf\\system\\form\\builder\\FormDocument\:\:appendChildren\(\) expects array\<wcf\\system\\form\\builder\\IFormChildNode\>, array\<int, wcf\\system\\form\\builder\\field\\user\\UsernameFormField\|wcf\\system\\form\\builder\\IObjectTypeFormNode\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wcfsetup/install/files/lib/action/GuestTokenDialogAction.class.php
 
 		-
 			message: '#^Method wcf\\data\\article\\ArticleAction\:\:delete\(\) should return int but returns array\<string, array\<int\>\|string\>\.$#'
@@ -89,12 +77,6 @@ parameters:
 			identifier: while.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/data/user/notification/event/UserNotificationEventAction.class.php
-
-		-
-			message: '#^Parameter \#1 \$children of method wcf\\system\\form\\builder\\container\\FormContainer\:\:appendChildren\(\) expects array\<wcf\\system\\form\\builder\\IFormChildNode\>, array\<int, wcf\\system\\form\\builder\\field\\TextFormField\|wcf\\system\\form\\builder\\IObjectTypeFormNode\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wcfsetup/install/files/lib/form/LostPasswordForm.class.php
 
 		-
 			message: '#^Instanceof between wcf\\data\\search\\ISearchResultObject and wcf\\data\\search\\ISearchResultObject will always evaluate to true\.$#'
@@ -787,75 +769,15 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractNumericFormField.class.php
 
 		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractNumericFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\AbstractNumericFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractNumericFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\BooleanFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/BooleanFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\ButtonFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/ButtonFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\DateFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/DateFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\DateRangeFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/DateRangeFormField.class.php
-
-		-
 			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
 
 		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\EmailFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\ItemListFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/ItemListFormField.class.php
-
-		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\MultipleSelectionFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
 
 		-
@@ -865,39 +787,15 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
 
 		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\NumericRangeFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/NumericRangeFormField.class.php
-
-		-
 			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/PasswordFormField.class.php
 
 		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/PasswordFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\PasswordFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/PasswordFormField.class.php
-
-		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/RadioButtonFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\RadioButtonFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/RadioButtonFormField.class.php
 
 		-
@@ -943,12 +841,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/SourceCodeFormField.class.php
 
 		-
-			message: '#^Call to function is_subclass_of\(\) with ''wcf\\\\system\\\\form\\\\builder\\\\field\\\\SourceCodeFormField'' and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/SourceCodeFormField.class.php
-
-		-
 			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
@@ -958,18 +850,6 @@ parameters:
 			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with class\-string\<static\(wcf\\system\\form\\builder\\field\\TextFormField\)\> and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
 
 		-
@@ -1021,39 +901,9 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/ValueFormFieldDependency.class.php
 
 		-
-			message: '#^Call to function is_subclass_of\(\) with ''wcf\\\\system\\\\form\\\\builder\\\\field\\\\tag\\\\TagFormField'' and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/tag/TagFormField.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/user/UserPasswordField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with ''wcf\\\\system\\\\form\\\\builder\\\\field\\\\user\\\\UserPasswordField'' and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/user/UserPasswordField.class.php
-
-		-
 			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/user/UsernameFormField.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/user/UsernameFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with ''wcf\\\\system\\\\form\\\\builder\\\\field\\\\user\\\\UsernameFormField'' and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/user/UsernameFormField.class.php
 
 		-
@@ -1066,12 +916,6 @@ parameters:
 			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/wysiwyg/WysiwygFormField.class.php
-
-		-
-			message: '#^Call to function is_subclass_of\(\) with ''wcf\\\\system\\\\form\\\\builder\\\\field\\\\wysiwyg\\\\WysiwygFormField'' and string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/wysiwyg/WysiwygFormField.class.php
 
 		-

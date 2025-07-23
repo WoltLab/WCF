@@ -17,20 +17,15 @@ use wcf\system\WCF;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
- *
- * @phpstan-type ColumnRenderer IColumnRenderer<DatabaseObject|\wcf\data\DatabaseObjectDecorator>
  */
 final class GridViewColumn
 {
     /**
-     * @var ColumnRenderer[]
+     * @var IColumnRenderer[]
      */
     private array $renderer = [];
     private string $label = '';
 
-    /**
-     * @var DefaultColumnRenderer<DatabaseObject>
-     */
     private static DefaultColumnRenderer $defaultRenderer;
 
     private bool $sortable = false;
@@ -94,7 +89,7 @@ final class GridViewColumn
     /**
      * Sets the renderer of this column.
      *
-     * @param ColumnRenderer[]|ColumnRenderer $renderers
+     * @param IColumnRenderer[]|IColumnRenderer $renderers
      */
     public function renderer(array|IColumnRenderer $renderers): static
     {
@@ -132,7 +127,8 @@ final class GridViewColumn
 
     /**
      * Returns the renderers of this column.
-     * @return IColumnRenderer<DatabaseObject>[]
+     *
+     * @return list<IColumnRenderer>
      */
     public function getRenderers(): array
     {
@@ -268,8 +264,6 @@ final class GridViewColumn
 
     /**
      * Returns the default renderer for the rendering of columns.
-     *
-     * @return DefaultColumnRenderer<DatabaseObject>
      */
     private static function getDefaultRenderer(): DefaultColumnRenderer
     {

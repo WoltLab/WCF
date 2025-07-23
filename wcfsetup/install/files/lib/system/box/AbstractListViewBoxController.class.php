@@ -16,6 +16,8 @@ use wcf\system\WCF;
  * @since       6.2
  *
  * @template TListView of AbstractListView
+ * @phpstan-type TDatabaseObjectList template-type<TListView, AbstractListView, 'TDatabaseObjectList'>
+ * @extends AbstractDatabaseObjectListBoxController<TDatabaseObjectList>
  */
 abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListBoxController
 {
@@ -67,7 +69,7 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
 
         if ($this->sortOrder && $this->sortField) {
             $this->getListView()->setSortField($this->sortField);
-            $this->getListView()->getSortOrder($this->sortOrder);
+            $this->getListView()->setSortOrder($this->sortOrder);
         }
 
         $this->objectList = $this->getObjectList();

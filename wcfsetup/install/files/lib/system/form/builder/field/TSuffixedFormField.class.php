@@ -51,6 +51,7 @@ trait TSuffixedFormField
 
             $this->suffix = null;
         } else {
+            // @phpstan-ignore function.alreadyNarrowedType
             if (!\is_string($languageItem)) {
                 throw new \InvalidArgumentException(
                     "Given suffix language item is no string, " . \gettype($languageItem) . " given for field '{$this->getId()}'."

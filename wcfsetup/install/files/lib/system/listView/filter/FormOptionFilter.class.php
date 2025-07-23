@@ -19,7 +19,7 @@ use wcf\system\WCF;
 final class FormOptionFilter extends AbstractFilter
 {
     /**
-     * @param array<string, mixed $configuration
+     * @param array<string, mixed> $configuration
      */
     public function __construct(
         private readonly IFormOption $option,

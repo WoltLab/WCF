@@ -106,7 +106,8 @@ class ContactForm extends AbstractFormBuilderForm
         $optionValues = [];
         foreach ($data as $key => $value) {
             if (\str_starts_with($key, 'option')) {
-                $optionValues[\substr($key, 6)] = $value;
+                $optionID = (int)\substr($key, 6);
+                $optionValues[$optionID] = $value;
             }
         }
 

@@ -35,7 +35,7 @@ final class SubmitContactForm
         private readonly array $fileIDs = []
     ) {}
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $messageData = [
             'options' => $this->getFormattedOptionValues($this->optionValues),
@@ -57,7 +57,13 @@ final class SubmitContactForm
     }
 
     /**
-     * @param array<string, mixed> $optionValues
+     * @param array<int, mixed> $optionValues
+     * @return list<array{
+     *  isMessage: false,
+     *  title: string,
+     *  value: string,
+     *  htmlValue: string,
+     * }>
      */
     private function getFormattedOptionValues(array $optionValues): array
     {

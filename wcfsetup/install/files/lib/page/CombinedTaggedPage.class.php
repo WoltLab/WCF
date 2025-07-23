@@ -188,18 +188,25 @@ class CombinedTaggedPage extends MultipleLinkPage
         }
     }
 
+    /**
+     * @return list<array{
+     *  objectType: string,
+     *  title: string,
+     *  link: string,
+     *  items: int,
+     * }>
+     */
     protected function getObjectTypeLinks(): array
     {
         $links = [];
         foreach ($this->availableObjectTypes as $objectType) {
-            if (empty($this->itemsPerType[$objectType->objectType])) {
+            $items = $this->itemsPerType[$objectType->objectType] ?? 0;
+            if ($items === 0) {
                 continue;
             }
 
-            if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
-                $processor = $objectType->getProcessor();
-                \assert($processor instanceof ITaggedListViewProvider);
-
+            $processor = $objectType->getProcessor();
+            if ($processor instanceof ITaggedListViewProvider) {
                 $title = $processor->getObjectTypeTitle();
                 $controller = TaggedListViewPage::class;
             } else {
@@ -217,7 +224,7 @@ class CombinedTaggedPage extends MultipleLinkPage
                         'tagIDs' => $this->tagIDs
                     ]
                 ),
-                'items' => $this->itemsPerType[$objectType->objectType],
+                'items' => $items,
             ];
         }
 
@@ -227,12 +234,11 @@ class CombinedTaggedPage extends MultipleLinkPage
     protected function readItemsPerType(): void
     {
         foreach ($this->availableObjectTypes as $key => $objectType) {
-            if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
-                $processor = $objectType->getProcessor();
-                \assert($processor instanceof ITaggedListViewProvider);
+            $processor = $objectType->getProcessor();
+            if ($processor instanceof ITaggedListViewProvider) {
                 $this->itemsPerType[$key] = $processor->getListView($this->tagIDs)->countItems();
             } else {
-                $objectList = $objectType->getProcessor()->getObjectListFor($this->tags);
+                $objectList = $processor->getObjectListFor($this->tags);
                 \assert($objectList instanceof DatabaseObjectList);
                 $this->itemsPerType[$key] = $objectList->countObjects();
             }

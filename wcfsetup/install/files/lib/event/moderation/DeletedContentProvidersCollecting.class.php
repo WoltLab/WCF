@@ -18,7 +18,8 @@ use wcf\system\moderation\IDeletedContentProvider;
 final class DeletedContentProvidersCollecting implements IPsr14Event
 {
     /**
-     * @var list<IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @var array<string, IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @phpstan-ignore missingType.generics, missingType.generics
      */
     private array $providers = [];
 
@@ -27,13 +28,17 @@ final class DeletedContentProvidersCollecting implements IPsr14Event
         $this->loadLegacyProviders();
     }
 
+    /**
+     * @phpstan-ignore missingType.generics
+     */
     public function register(IDeletedContentListViewProvider $provider): void
     {
         $this->providers[$provider->getIdentifier()] = $provider;
     }
 
     /**
-     * @return list<IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @return array<string, IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @phpstan-ignore missingType.generics, missingType.generics
      */
     public function getProviders(): array
     {

@@ -2,6 +2,7 @@
 
 namespace wcf\data\article\content;
 
+use wcf\data\article\ViewableArticle;
 use wcf\data\article\ViewableArticleList;
 use wcf\data\media\ViewableMediaList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -63,7 +64,7 @@ class ViewableArticleContentList extends ArticleContentList
         }
 
         // cache images
-        if (!empty($imageIDs)) {
+        if ($imageIDs !== []) {
             $mediaList = new ViewableMediaList($contentLanguageID);
             $mediaList->setObjectIDs($imageIDs);
             $mediaList->readObjects();
@@ -79,12 +80,16 @@ class ViewableArticleContentList extends ArticleContentList
             );
         }
 
-        if ($this->articleLoading && !empty($articleIDs)) {
+        /** @var array<int, ViewableArticle> */
+        $articles = [];
+        if ($this->articleLoading && $articleIDs !== []) {
             $articleList = new ViewableArticleList();
-            // to prevent an infinity loop, because the list loads otherwise the article content
+            // Prevents an infinite loop, because the list would load the
+            // content itself.
             $articleList->enableContentLoading(false);
             $articleList->setObjectIDs($articleIDs);
             $articleList->readObjects();
+            $articles = $articleList->getObjects();
         }
 
         foreach ($this->getObjects() as $articleContent) {
@@ -99,11 +104,12 @@ class ViewableArticleContentList extends ArticleContentList
             }
 
             if ($this->articleLoading) {
-                if ($articleList->search($articleContent->articleID) !== null) {
-                    $articleContent->setArticle($articleList->search($articleContent->articleID));
-                } else {
+                $article = $articles[$articleContent->articleID] ?? null;
+                if ($article === null) {
                     throw new \LogicException('Unable to find article with id "' . $articleContent->articleID . '".');
                 }
+
+                $articleContent->setArticle($article);
             }
         }
     }

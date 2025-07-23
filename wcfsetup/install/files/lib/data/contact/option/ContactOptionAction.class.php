@@ -118,6 +118,9 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     #[\Override]
     public function getI18nSaveTypes(): array
     {

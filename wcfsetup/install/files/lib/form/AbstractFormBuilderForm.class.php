@@ -239,6 +239,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
                 $parameters['object'] = $this->formObject;
             } else {
                 $object = $this->formObject;
+                // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
                 \assert($object instanceof IStorableObject);
 
                 $parameters['id'] = $object->{$object::getDatabaseTableIndexName()};

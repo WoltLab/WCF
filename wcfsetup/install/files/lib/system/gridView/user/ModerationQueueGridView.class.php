@@ -237,10 +237,13 @@ final class ModerationQueueGridView extends AbstractGridView
                 $columnName = $this->getDatabaseColumnName($list, $id);
 
                 $list->getConditionBuilder()->add("{$columnName} IN (?)", [
-                    ModerationQueueManager::getInstance()->getObjectTypeIDs([$value]),
+                    ModerationQueueManager::getInstance()->getObjectTypeIDs([(int)$value]),
                 ]);
             }
 
+            /**
+             * @return string[]
+             */
             private function getDefinitionOptions(): array
             {
                 return \array_map(

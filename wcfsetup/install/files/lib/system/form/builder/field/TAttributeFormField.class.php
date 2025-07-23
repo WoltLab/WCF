@@ -20,7 +20,7 @@ trait TAttributeFormField
     protected $fieldAttributes = [];
 
     /**
-     * @var array<string, string>
+     * @var array<class-string, string>
      */
     protected static $interfaceToFieldAttributeMap = [
         IAutoFocusFormField::class => 'autofocus',
@@ -119,6 +119,7 @@ trait TAttributeFormField
         ];
 
         foreach (static::$interfaceToFieldAttributeMap as $interface => $attribute) {
+            // @phpstan-ignore function.alreadyNarrowedType
             if (\is_subclass_of(static::class, $interface)) {
                 $attributes[] = $attribute;
             }

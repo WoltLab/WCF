@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\option;
 
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\system\database\table\column\AbstractDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
@@ -40,6 +41,9 @@ interface IFormOption
 
     public function getPlainTextFormatter(): IFormOptionFormatter;
 
+    /**
+     * @param DatabaseObjectList<DatabaseObject> $list
+     */
     public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void;
 
     /**

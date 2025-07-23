@@ -25,6 +25,9 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
+ *
+ * @template TListView of AbstractListView
+ * @extends AbstractListViewPage<TListView>
  */
 class TaggedListViewPage extends AbstractListViewPage
 {
@@ -58,7 +61,11 @@ class TaggedListViewPage extends AbstractListViewPage
      */
     public array $itemsPerType = [];
 
+    /**
+     * @var ITaggedListViewProvider<TListView>
+     */
     public ITaggedListViewProvider $provider;
+
     public ObjectType $objectType;
     public TypedTagCloud $tagCloud;
 
@@ -106,7 +113,7 @@ class TaggedListViewPage extends AbstractListViewPage
                 }
             }
 
-            if (!$this->objectType) {
+            if (!isset($this->objectType)) {
                 throw new IllegalLinkException();
             }
         }
@@ -164,18 +171,25 @@ class TaggedListViewPage extends AbstractListViewPage
         ]);
     }
 
+    /**
+     * @return list<array{
+     *  objectType: string,
+     *  title: string,
+     *  link: string,
+     *  items: int,
+     * }>
+     */
     protected function getObjectTypeLinks(): array
     {
         $links = [];
         foreach ($this->availableObjectTypes as $objectType) {
-            if (empty($this->itemsPerType[$objectType->objectType])) {
+            $items = $this->itemsPerType[$objectType->objectType] ?? 0;
+            if ($items === 0) {
                 continue;
             }
 
-            if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
-                $processor = $objectType->getProcessor();
-                \assert($processor instanceof ITaggedListViewProvider);
-
+            $processor = $objectType->getProcessor();
+            if ($processor instanceof ITaggedListViewProvider) {
                 $title = $processor->getObjectTypeTitle();
                 $controller = TaggedListViewPage::class;
             } else {
@@ -193,7 +207,7 @@ class TaggedListViewPage extends AbstractListViewPage
                         'tagIDs' => $this->tagIDs
                     ]
                 ),
-                'items' => $this->itemsPerType[$objectType->objectType],
+                'items' => $items,
             ];
         }
 
@@ -203,12 +217,11 @@ class TaggedListViewPage extends AbstractListViewPage
     protected function readItemsPerType(): void
     {
         foreach ($this->availableObjectTypes as $key => $objectType) {
-            if ($objectType->getProcessor() instanceof ITaggedListViewProvider) {
-                $processor = $objectType->getProcessor();
-                \assert($processor instanceof ITaggedListViewProvider);
+            $processor = $objectType->getProcessor();
+            if ($processor instanceof ITaggedListViewProvider) {
                 $this->itemsPerType[$key] = $processor->getListView($this->tagIDs)->countItems();
             } else {
-                $objectList = $objectType->getProcessor()->getObjectListFor($this->tags);
+                $objectList = $processor->getObjectListFor($this->tags);
                 \assert($objectList instanceof DatabaseObjectList);
                 $this->itemsPerType[$key] = $objectList->countObjects();
             }

@@ -25,7 +25,7 @@ final class CronjobScheduler extends SingletonFactory
 {
     /**
      * cached times of the next and after next cronjob execution
-     * @var array{afterNextExec: int, nextExec: int}
+     * @var array{afterNextExec: int, nextExec: ?int}
      */
     private array $cache;
 

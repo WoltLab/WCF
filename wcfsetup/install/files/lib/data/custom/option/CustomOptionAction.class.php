@@ -14,12 +14,12 @@ use wcf\data\TDatabaseObjectToggle;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
+ * @deprecated 6.2 Use `IFormOption` instead
  *
  * @template TCustomOption of CustomOption = CustomOption
  * @template TCustomOptionEditor of CustomOptionEditor|DatabaseObjectDecorator<TCustomOption> = CustomOptionEditor
  * @extends AbstractDatabaseObjectAction<TCustomOption, TCustomOptionEditor>
  * @phpstan-ignore generics.notSubtype
- * @deprecated 6.2 Use `IFormOption` instead
  */
 abstract class CustomOptionAction extends AbstractDatabaseObjectAction implements IToggleAction
 {

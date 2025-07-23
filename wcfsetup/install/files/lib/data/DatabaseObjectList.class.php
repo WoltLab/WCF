@@ -246,6 +246,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
 
         $collection = new ($firstObject->getCollectionClassName())($this->objects);
         foreach ($this->objects as $object) {
+            \assert($object instanceof CollectionDatabaseObject);
             $object->setCollection($collection);
         }
     }

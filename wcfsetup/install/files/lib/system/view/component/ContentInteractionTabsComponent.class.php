@@ -35,7 +35,7 @@ final class ContentInteractionTabsComponent
 
     public function render(): string
     {
-        if (!$this->tabs === []) {
+        if ($this->tabs === []) {
             return '';
         }
 

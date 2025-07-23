@@ -3,6 +3,7 @@
 namespace wcf\system\tagging;
 
 use wcf\data\object\type\AbstractObjectTypeProcessor;
+use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
 
 /**

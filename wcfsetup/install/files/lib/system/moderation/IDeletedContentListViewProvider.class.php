@@ -12,12 +12,12 @@ use wcf\system\listView\AbstractListView;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @template T of AbstractListView
+ * @template TListView of AbstractListView
  */
 interface IDeletedContentListViewProvider
 {
     /**
-     * @return T
+     * @return TListView
      */
     public function getListView(): AbstractListView;
 

@@ -45,7 +45,7 @@ trait TPlaceholderFormField
     public function placeholder($languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
-            if (!empty($variables)) {
+            if ($variables !== []) {
                 throw new \InvalidArgumentException(
                     "Cannot use variables when unsetting placeholder of field '{$this->getId()}'"
                 );
@@ -53,6 +53,7 @@ trait TPlaceholderFormField
 
             $this->placeholder = null;
         } else {
+            // @phpstan-ignore function.alreadyNarrowedType
             if (!\is_string($languageItem)) {
                 throw new \InvalidArgumentException(
                     "Given placeholder language item is no string, " . \gettype($languageItem) . " given for field '{$this->getId()}'."

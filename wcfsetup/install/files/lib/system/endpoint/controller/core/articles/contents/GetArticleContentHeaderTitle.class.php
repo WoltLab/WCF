@@ -27,7 +27,7 @@ final class GetArticleContentHeaderTitle implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $articleContent = ViewableArticleContent::getArticleContent($variables['id']);
+        $articleContent = ViewableArticleContent::getArticleContent((int)$variables['id']);
         if ($articleContent === null) {
             throw new IllegalLinkException();
         }

@@ -476,6 +476,6 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
             return false;
         }
 
-        return $package->isTainted;
+        return !!$package->isTainted;
     }
 }

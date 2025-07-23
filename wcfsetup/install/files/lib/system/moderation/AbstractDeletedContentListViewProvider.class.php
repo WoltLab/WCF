@@ -13,8 +13,8 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @template T of AbstractListView
- * @implements IDeletedContentListViewProvider<T>
+ * @template TListView of AbstractListView
+ * @implements IDeletedContentListViewProvider<TListView>
  */
 abstract class AbstractDeletedContentListViewProvider implements IDeletedContentListViewProvider
 {

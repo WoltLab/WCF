@@ -132,7 +132,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
      * Returns a specific article content decorated as viewable article content.
      *
      * @param int $articleContentID
-     * @return  ViewableArticleContent
+     * @return ?ViewableArticleContent
      */
     public static function getArticleContent($articleContentID)
     {

@@ -7,6 +7,7 @@ use wcf\data\IStorableObject;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\option\FormOptionHandler;
@@ -53,6 +54,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                 function (IFormDocument $document, array $data, IStorableObject $object) {
                     \assert($object instanceof DatabaseObject);
 
+                    // @phpstan-ignore property.notFound
                     if ($object->configuration) {
                         $data = \array_merge($data, JSON::decode($object->configuration));
                     }
@@ -80,7 +82,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
     }
 
     /**
-     * @return IFormField[]
+     * @return list<IFormField>
      */
     protected function getSharedConfigurationFormFields(): array
     {
@@ -101,6 +103,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
 
         foreach ($matrix as $formFieldId => $dependencies) {
             $formField = $sharedConfigurationFormFields->getFormField($formFieldId);
+            \assert($formField !== null);
             $formField->addDependency(
                 ValueFormFieldDependency::create($formFieldId . 'OptionTypeDependency')
                     ->fieldId('optionType')

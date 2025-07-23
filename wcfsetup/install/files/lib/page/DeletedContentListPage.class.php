@@ -10,6 +10,7 @@ use wcf\event\moderation\DeletedContentProvidersCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\IDeletedContentListViewProvider;
+use wcf\system\moderation\IDeletedContentProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -43,6 +44,7 @@ class DeletedContentListPage extends MultipleLinkPage
 
     /**
      * @var array<string, IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @phpstan-ignore missingType.generics, missingType.generics
      */
     private array $providers = [];
 
@@ -114,6 +116,13 @@ class DeletedContentListPage extends MultipleLinkPage
         ]);
     }
 
+    /**
+     * @return list<array{
+     *  identifier: string,
+     *  title: string,
+     *  link: string,
+     * }>
+     */
     private function getProviderLinks(): array
     {
         $links = [];

@@ -21,6 +21,9 @@ use wcf\system\WCF;
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
+ *
+ * @template TListView of AbstractListView
+ * @extends AbstractListViewPage<TListView>
  */
 final class DeletedContentListViewPage extends AbstractListViewPage
 {
@@ -36,11 +39,15 @@ final class DeletedContentListViewPage extends AbstractListViewPage
 
     /**
      * @var array<string, IDeletedContentProvider | IDeletedContentListViewProvider>
+     * @phpstan-ignore missingType.generics, missingType.generics
      */
     private array $providers = [];
 
     private string $providerID;
 
+    /**
+     * @var IDeletedContentListViewProvider<TListView>
+     */
     private IDeletedContentListViewProvider $provider;
 
     #[\Override]
@@ -120,6 +127,13 @@ final class DeletedContentListViewPage extends AbstractListViewPage
         ]);
     }
 
+    /**
+     * @return list<array{
+     *  identifier: string,
+     *  title: string,
+     *  link: string,
+     * }>
+     */
     private function getProviderLinks(): array
     {
         $links = [];
