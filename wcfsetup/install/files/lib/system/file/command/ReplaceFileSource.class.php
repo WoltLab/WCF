@@ -121,6 +121,29 @@ final class ReplaceFileSource
                 \unlink($this->file->getPathname());
             }
 
+            // Move the WebP thumbnail to the new location.
+            $webpVariant = $this->file->getPathnameWebp();
+            if ($webpVariant !== null) {
+                if ($updatedFile->mimeType === 'image/webp') {
+                    // The file might be missing if it was used to replace the
+                    // original version with it.
+                    @\unlink($webpVariant);
+
+                    (new FileEditor($updatedFile))->update([
+                        'fileHashWebp' => null,
+                    ]);
+                    $updatedFile = new File($updatedFile->fileID);
+                } else {
+                    $newWebpVariant = $updatedFile->getPathnameWebp();
+                    \assert($newWebpVariant !== null);
+
+                    \rename(
+                        $webpVariant,
+                        $newWebpVariant,
+                    );
+                }
+            }
+
             WCF::getDB()->commitTransaction();
             $committed = true;
 
@@ -168,8 +191,8 @@ final class ReplaceFileSource
 
         try {
             $file = FileProcessor::getInstance()->generateWebpVariant($file);
-            $file = FileProcessor::getInstance()->convertImageFormat($file);
             $file = FileProcessor::getInstance()->stripExif($file);
+            $file = FileProcessor::getInstance()->convertImageFormat($file);
             FileProcessor::getInstance()->generateThumbnails($file);
         } catch (DamagedImage $e) {
             logThrowable($e);

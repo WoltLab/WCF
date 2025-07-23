@@ -29,8 +29,8 @@ final class GenerateThumbnails implements IController
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
 
         $file = FileProcessor::getInstance()->generateWebpVariant($file);
-        $file = FileProcessor::getInstance()->convertImageFormat($file);
         $file = FileProcessor::getInstance()->stripExif($file);
+        $file = FileProcessor::getInstance()->convertImageFormat($file);
         FileProcessor::getInstance()->generateThumbnails($file);
 
         $thumbnails = [];
@@ -42,7 +42,7 @@ final class GenerateThumbnails implements IController
         }
 
         return new JsonResponse([
-            'filename' => 'test.bin',// $file->filename,
+            'filename' => $file->filename,
             'fileSize' => $file->fileSize,
             'mimeType' => $file->mimeType,
             'thumbnails' => $thumbnails,
