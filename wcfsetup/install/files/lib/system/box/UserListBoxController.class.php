@@ -183,6 +183,8 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         return WCF::getTPL()->render('wcf', $templateName, [
             'boxUsers' => $this->userIDs !== null ? $userProfiles : $this->objectList->getObjects(),
             'boxSortField' => $this->box->sortField,
+            'quickInteractions' => '',
+            'contextMenuButton' => '',
         ]);
     }
 

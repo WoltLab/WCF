@@ -1,21 +1,33 @@
-.userCardList {
-	--column-count: 3;
+.userCardList__container {
+	container-type: inline-size;
+}
 
+.userCardList {
 	display: grid;
 	gap: 20px;
 	grid-auto-rows: minmax(200px, auto);
-	grid-template-columns: repeat(var(--column-count), 1fr);
-	padding: 20px 0;
+}
 
-	@include screen-lg-only {
-		--column-count: 2;
+@container (min-width: 1280px) {
+	.userCardList {
+		grid-template-columns: repeat(4, 1fr);
 	}
-	@include screen-sm {
-		--column-count: 2;
+}
+
+@container (width < 1280px) and (min-width: 960px) {
+	.userCardList {
+		grid-template-columns: repeat(3, 1fr);
 	}
-	@include screen-xs {
-		--column-count: 1;
+}
+
+@container (width < 960px) and (min-width: 640px) {
+	.userCardList {
+		grid-template-columns: repeat(2, 1fr);
 	}
+}
+
+.userCardList__item {
+	display: flex;
 }
 
 .userCard {
@@ -26,6 +38,10 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
+}
+
+.userCardList__item .userCard {
+	flex: 1 1 auto;
 }
 
 .userCard__header {
@@ -49,6 +65,16 @@
 	width: 100%;
 }
 
+@media (hover: hover) {
+	.userCard__header__background__image {
+		transition: transform 0.24s linear;
+	}
+
+	.userCard:hover .userCard__header__background__image {
+		transform: scale(1.05);
+	}
+}
+
 .userCard__header__avatar {
 	position: relative;
 	border-radius: 50%;
@@ -66,6 +92,7 @@
 	position: absolute;
 	right: 6px;
 	width: 12px;
+	z-index: 1;
 }
 
 .userCard__footer {
@@ -85,8 +112,19 @@
 .userCard__username {
 	@include wcfFontHeadline;
 	@include wcfFontBold;
+}
 
-	a {
+.userCard__link {
+	color: inherit;
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+	}
+
+	&:hover,
+	&:focus {
 		color: inherit;
 	}
 }
@@ -102,6 +140,7 @@
 	color: inherit;
 	flex-direction: column;
 	text-align: center;
+	z-index: 1;
 
 	&:hover {
 		color: inherit;
@@ -129,6 +168,7 @@
 	gap: 5px;
 	margin: 5px auto 0 auto;
 	padding: 5px 10px;
+	z-index: 1;
 }
 
 .userCard__button {
@@ -150,6 +190,15 @@
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+}
+
+.userCard__details a {
+	color: inherit;
+	z-index: 1;
+
+	&:hover {
+		color: inherit;
+	}
 }
 
 .popoverContainer[data-identifier="com.woltlab.wcf.user"] {
