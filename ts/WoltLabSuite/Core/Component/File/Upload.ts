@@ -127,8 +127,9 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result:
   fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
 
   if (result.generateThumbnails) {
-    const response = await generateThumbnails(result.fileID);
-    fileElement.setThumbnails(response.unwrap());
+    const { filename, fileSize, mimeType, thumbnails } = (await generateThumbnails(result.fileID)).unwrap();
+    fileElement.setThumbnails(thumbnails);
+    fileElement.updateFileData(filename, fileSize, mimeType);
   }
 }
 

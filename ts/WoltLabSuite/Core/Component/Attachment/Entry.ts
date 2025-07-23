@@ -9,6 +9,7 @@ import {
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
+  updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
 
 type FileProcessorData = {
@@ -175,6 +176,10 @@ export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: H
   element.classList.add("fileList__item", "attachment__item");
 
   insertFileInformation(element, file);
+
+  file.addEventListener("file:update-data", () => {
+    updateFileInformation(element, file);
+  });
 
   void file.ready
     .then(() => {

@@ -17,6 +17,7 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         }
     }
     exports.Thumbnail = Thumbnail;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreFileElement extends HTMLElement {
         #data = undefined;
         #filename = "";
@@ -245,6 +246,18 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
             this.#state = 3 /* State.Ready */;
             this.#rebuildElement();
             this.#readyResolve();
+        }
+        /**
+         * Updates the filename, file size and mime type. These can change for images
+         * that are being converted to a different file format,
+         *
+         * @internal
+         */
+        updateFileData(filename, fileSize, mimeType) {
+            this.#filename = filename;
+            this.#fileSize = fileSize;
+            this.#mimeType = mimeType;
+            this.dispatchEvent(new CustomEvent("file:update-data"));
         }
         isFailedUpload() {
             return this.#state === 4 /* State.Failed */;

@@ -128,6 +128,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
         (0, Helper_1.insertFileInformation)(element, file);
+        file.addEventListener("file:update-data", () => {
+            (0, Helper_1.updateFileInformation)(element, file);
+        });
         void file.ready
             .then(() => {
             fileInitializationCompleted(element, file, editor);

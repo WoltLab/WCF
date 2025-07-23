@@ -103,3 +103,11 @@ export function insertFileInformation(container: HTMLElement, file: WoltlabCoreF
 
   container.append(fileWrapper, filename, fileSize);
 }
+
+export function updateFileInformation(container: HTMLElement, file: WoltlabCoreFileElement): void {
+  const filename = container.querySelector(".fileList__item__filename")!;
+  filename.textContent = file.filename || file.dataset.filename!;
+
+  const fileSize = container.querySelector(".fileList__item__fileSize")!;
+  fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
+}

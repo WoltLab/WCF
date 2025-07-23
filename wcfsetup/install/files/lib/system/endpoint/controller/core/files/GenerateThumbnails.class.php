@@ -41,7 +41,12 @@ final class GenerateThumbnails implements IController
             ];
         }
 
-        return new JsonResponse($thumbnails);
+        return new JsonResponse([
+            'filename' => 'test.bin',// $file->filename,
+            'fileSize' => $file->fileSize,
+            'mimeType' => $file->mimeType,
+            'thumbnails' => $thumbnails,
+        ]);
     }
 
     /**

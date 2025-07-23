@@ -59,8 +59,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
         if (result.generateThumbnails) {
-            const response = await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID);
-            fileElement.setThumbnails(response.unwrap());
+            const { filename, fileSize, mimeType, thumbnails } = (await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID)).unwrap();
+            fileElement.setThumbnails(thumbnails);
+            fileElement.updateFileData(filename, fileSize, mimeType);
         }
     }
     async function getSha256Hash(data) {

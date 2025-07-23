@@ -234,6 +234,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             }
             if (!this.#useBigPreview) {
                 (0, Helper_1.insertFileInformation)(container, element);
+                element.addEventListener("file:update-data", () => {
+                    (0, Helper_1.updateFileInformation)(container, element);
+                });
             }
             (0, Helper_1.trackUploadProgress)(container, element);
             element.ready
