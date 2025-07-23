@@ -170,7 +170,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             \ATTACHMENT_IMAGE_AUTOSCALE_MAX_WIDTH,
             \ATTACHMENT_IMAGE_AUTOSCALE_MAX_HEIGHT,
             ResizeFileType::fromString(\ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE),
-            \ATTACHMENT_IMAGE_AUTOSCALE_QUALITY
+            80
         );
     }
 

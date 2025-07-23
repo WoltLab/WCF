@@ -103,7 +103,10 @@ final class PrepareUpload implements IController
         return $action->executeAction()['returnValues'];
     }
 
-    private function parseExifData(?string $exifData): array|null
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
+    private function parseExifData(?string $exifData): ?array
     {
         if ($exifData === null) {
             return null;

@@ -121,6 +121,9 @@ class FileEditor extends DatabaseObjectEditor
         return $event->getFile();
     }
 
+    /**
+     * @param null|array<string, array<string, mixed>> $exifData
+     */
     public static function createFromExistingFile(
         string $pathname,
         string $originalFilename,
