@@ -133,16 +133,14 @@ final class SaveChunk implements IController
                 }
             }
 
-            if ($file->isImage()) {
-                $file = FileProcessor::getInstance()->generateWebpVariant($file);
-                $file = FileProcessor::getInstance()->convertImageFormat($file);
-                $file = FileProcessor::getInstance()->stripExif($file);
-            }
-
             $generateThumbnails = false;
             if ($processor !== null && $file->isImage()) {
                 $thumbnailFormats = $processor->getThumbnailFormats();
                 if ($thumbnailFormats !== []) {
+                    $generateThumbnails = true;
+                } else if (\IMAGE_CONVERT_FORMAT !== 'keep' || \IMAGE_STRIP_EXIF) {
+                    // The action to generate thumbnails implicitly handles the
+                    // format conversion and EXIF removal.
                     $generateThumbnails = true;
                 }
             }
