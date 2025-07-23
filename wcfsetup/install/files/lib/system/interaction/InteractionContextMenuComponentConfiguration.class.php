@@ -13,13 +13,14 @@ namespace wcf\system\interaction;
 final class InteractionContextMenuComponentConfiguration
 {
     public function __construct(
-        public readonly string $cssClassName,
-        public readonly string $icon,
-        public readonly int $iconSize
+        public readonly string $containerCssClassName = '',
+        public readonly string $cssClassName = '',
+        public readonly string $icon = 'ellipsis',
+        public readonly int $iconSize = 16
     ) {}
 
     public static function forDefault(): static
     {
-        return new static('button small', 'ellipsis', 16);
+        return new static(cssClassName: 'button small');
     }
 }

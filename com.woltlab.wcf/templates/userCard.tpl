@@ -11,6 +11,32 @@
 
 			{if $user->isOnline()}<span class="userCard__onlineIndicator jsTooltip" title="{lang username=$user->username}wcf.user.online.title{/lang}"></span>{/if}
 		</div>
+
+		<div class="userCard__header__interactions">
+			{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
+				{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
+					{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
+						<button
+							type="button"
+							data-following="1"
+							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							class="button small jsTooltip"
+							title="{lang}wcf.user.button.unfollow{/lang}"
+						>{icon name='minus' type='solid'}</button>
+					{else}
+						<button
+							type="button"
+							data-following="0"
+							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							class="button small jsTooltip"
+							title="{lang}wcf.user.button.follow{/lang}"
+						>{icon name='plus' type='solid'}</button>
+					{/if}
+				{/if}
+			{/if}
+			
+			{unsafe:$contextMenuButton}
+		</div>
 	</div>
 
 	<div class="userCard__content">
@@ -48,11 +74,7 @@
 		{hascontent}
 			<div class="userCard__buttons">
 				{content}
-					{unsafe:$quickInteractions}
-					
 					{* @deprecated 6.2: Use interaction provider instead. *}{event name='buttons'}
-
-					{unsafe:$contextMenuButton}
 				{/content}
 			</div>
 		{/hascontent}

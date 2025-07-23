@@ -76,10 +76,11 @@
 }
 
 .userCard__header__avatar {
+	align-self: start;
 	position: relative;
 	border-radius: 50%;
 	border: 5px solid var(--wcfContentBackground);
-	margin: auto;
+	margin-left: 15px;
 	margin-top: -37px;
 }
 
@@ -95,18 +96,32 @@
 	z-index: 1;
 }
 
+.userCard__header__interactions {
+	display: flex;
+	gap: 8px;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1;
+}
+
+.userCard__header__interactions .button {
+	box-shadow: var(--wcfBoxShadowImageButton);
+	border-radius: 50%;
+	padding: 6px 4px;
+}
+
 .userCard__footer {
 	border-top: 1px solid var(--wcfContentBorderInner);
 	padding: 10px 5px;
 }
 
 .userCard__content {
-	text-align: center;
 	display: flex;
 	flex-direction: column;
 	flex: 1 auto;
-	row-gap: 5px;
-	padding: 10px 20px 20px 20px;
+	padding: 5px 20px 10px 20px;
 }
 
 .userCard__username {
@@ -181,15 +196,18 @@
 
 .userCard__details {
 	@include wcfFontSmall;
-	margin-top: auto;
-	padding-top: 5px;
+	margin-top: 15px;
 }
 
 .userCard__details .dataList dd {
 	display: -webkit-box;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+}
+
+.userCard__details .dataList dd:not(:last-child) {
+	margin-bottom: 0;
 }
 
 .userCard__details a {

@@ -3,18 +3,18 @@
 namespace wcf\system\view\user\profile;
 
 use wcf\acp\form\UserEditForm;
-use wcf\action\UserFollowAction;
-use wcf\action\UserIgnoreAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\event\user\profile\UserProfileHeaderInteractionOptionCollecting;
 use wcf\event\user\profile\UserProfileHeaderManagementOptionCollecting;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
 use wcf\event\user\profile\UserProfileStatItemCollecting;
+use wcf\page\MembersListPage;
 use wcf\system\event\EventHandler;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\interaction\user\UserCardInteractions;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents the view for the user profile header.
@@ -37,21 +37,18 @@ final class UserProfileHeaderView
     private array $searchContentLinks = [];
 
     /**
-     * @var UserProfileHeaderViewInteractionOption[]
-     */
-    private array $interactionOptions = [];
-
-    /**
      * @var UserProfileHeaderViewManagementOption[]
      */
     private array $managementOptions = [];
+
+    private StandaloneInteractionContextMenuComponent $interactionContextMenu;
 
     public function __construct(
         public readonly UserProfile $user,
     ) {
         $this->initStatItems();
         $this->initSearchContentLinks();
-        $this->initInteractionOptions();
+        $this->initInteractions();
         $this->initManagementOptions();
     }
 
@@ -88,17 +85,9 @@ final class UserProfileHeaderView
         return $this->searchContentLinks;
     }
 
-    public function hasInteractionOptions(): bool
+    public function getInteractionContextMenu(): StandaloneInteractionContextMenuComponent
     {
-        return $this->interactionOptions !== [];
-    }
-
-    /**
-     * @return UserProfileHeaderViewInteractionOption[]
-     */
-    public function getInteractionOptions(): array
-    {
-        return $this->interactionOptions;
+        return $this->interactionContextMenu;
     }
 
     public function hasManagementOptions(): bool
@@ -150,16 +139,16 @@ final class UserProfileHeaderView
         $this->searchContentLinks = $event->getLinks();
     }
 
-    private function initInteractionOptions(): void
+    private function initInteractions(): void
     {
-        if ($this->user->userID != WCF::getUser()->userID) {
-            if ($this->user->isAccessible('canViewEmailAddress') || WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
-                $this->interactionOptions[] = UserProfileHeaderViewInteractionOption::forLink(
-                    WCF::getLanguage()->get('wcf.user.button.mail'),
-                    'mailto:' . $this->user->email
-                );
-            }
+        $this->interactionContextMenu = new StandaloneInteractionContextMenuComponent(
+            new UserCardInteractions(),
+            $this->user,
+            LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
+            cssClassName: 'userProfileHeader__button'
+        );
 
+        /*        if ($this->user->userID != WCF::getUser()->userID) {
             if (WCF::getSession()->getPermission('user.profile.canReportContent')) {
                 $this->interactionOptions[] = UserProfileHeaderViewInteractionOption::forButton(
                     WCF::getLanguage()->get('wcf.user.profile.report'),
@@ -214,7 +203,7 @@ final class UserProfileHeaderView
         EventHandler::getInstance()->fire($event);
         if ($event->getOptions() !== []) {
             $this->interactionOptions = \array_merge($this->interactionOptions, $event->getOptions());
-        }
+        }*/
     }
 
     private function initManagementOptions(): void

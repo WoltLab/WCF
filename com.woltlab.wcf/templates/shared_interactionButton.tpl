@@ -1,5 +1,5 @@
-<div class="dropdown">
-	<button type="button" class="{$configuration->cssClassName} jsTooltip dropdownToggle" title="{lang}wcf.global.button.more{/lang}">
+<div class="dropdown {$configuration->containerCssClassName}">
+	<button type="button" class="jsTooltip dropdownToggle {$configuration->cssClassName}" title="{lang}wcf.global.button.more{/lang}">
 		{icon name=$configuration->icon size=$configuration->iconSize}
 	</button>
 
