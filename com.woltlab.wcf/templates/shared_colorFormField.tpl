@@ -3,9 +3,9 @@
 		<span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
 	</span>
 {else}
-	<a href="#" class="colorPickerButton jsTooltip" id="{$field->getPrefixedId()}_colorPickerButton" title="{lang}wcf.style.colorPicker.button.changeColor{/lang}" data-store="{$field->getPrefixedId()}">
-		<span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
-	</a>
+	<button type="button" class="colorPickerButton jsTooltip" id="{$field->getPrefixedId()}_colorPickerButton" title="{lang}wcf.style.colorPicker.button.changeColor{/lang}" data-store="{$field->getPrefixedId()}">
+		<span class="colorPickerButton__color"{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
+	</button>
 	<input type="hidden" {*
 		*}id="{$field->getPrefixedId()}" {*
 		*}name="{$field->getPrefixedId()}" {*
