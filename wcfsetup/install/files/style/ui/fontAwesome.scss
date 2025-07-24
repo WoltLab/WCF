@@ -36,12 +36,11 @@
 
 .iconBadge {
 	align-self: flex-start;
-	display: inline-block;
+	display: inline-flex;
 	border-radius: 50%;
 
-	> fa-icon {
+	fa-icon {
 		transform: scale(0.5625);
 		width: var(--icon-size);
-		position: static !important;
 	}
 }
