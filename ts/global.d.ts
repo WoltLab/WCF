@@ -40,8 +40,8 @@ declare global {
     WSC_API_URL: string;
     WSC_RPC_API_URL: string;
 
-    getFontAwesome6Metadata: () => Map<string, IconMetadata>;
-    getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
+    getFontAwesome7Metadata: () => Map<string, IconMetadata>;
+    getFontAwesome7IconMetadata: (name: string) => IconMetadata | undefined;
 
     jQuery: JQueryStatic;
     WCF: any;

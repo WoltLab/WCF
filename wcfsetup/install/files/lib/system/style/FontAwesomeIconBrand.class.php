@@ -58,6 +58,6 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
 
     private static function getFilename(string $name): string
     {
-        return \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
+        return \WCF_DIR . "icon/font-awesome/v7/brands/{$name}.svg";
     }
 }

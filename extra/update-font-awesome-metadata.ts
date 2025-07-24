@@ -54,11 +54,11 @@ switch (outputFormat) {
     ${JSON.stringify(values)}
   );
 
-  window.getFontAwesome6Metadata = () => {
+  window.getFontAwesome7Metadata = () => {
     return new Map(metadata);
   };
 
-  window.getFontAwesome6IconMetadata = (name) => {
+  window.getFontAwesome7IconMetadata = (name) => {
     return metadata.get(aliases.get(name) || name);
   };
 })();\n`;

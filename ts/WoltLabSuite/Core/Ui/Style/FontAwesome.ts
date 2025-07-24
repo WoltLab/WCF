@@ -48,7 +48,7 @@ class UiStyleFontAwesome implements DialogCallbackObject {
           this.iconList = document.getElementById("fontAwesomeIcons") as HTMLElement;
 
           const icons: string[] = [];
-          window.getFontAwesome6Metadata().forEach(([, hasRegular], name) => {
+          window.getFontAwesome7Metadata().forEach(([, hasRegular], name) => {
             if (hasRegular) {
               icons.push(`<li><fa-icon size="48" name="${name}" solid></fa-icon><small>${name}</small></li>`);
             }

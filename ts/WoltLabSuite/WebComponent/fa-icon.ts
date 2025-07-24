@@ -1,16 +1,16 @@
 (() => {
-  let isFA6Free: boolean;
-  function isFontAwesome6Free(): boolean {
-    if (isFA6Free === undefined) {
-      isFA6Free = true;
+  let isFA7Free: boolean;
+  function isFontAwesome7Free(): boolean {
+    if (isFA7Free === undefined) {
+      isFA7Free = true;
 
       const iconFont = window.getComputedStyle(document.documentElement).getPropertyValue("--fa-font-family");
-      if (iconFont === "Font Awesome 6 Pro") {
-        isFA6Free = false;
+      if (iconFont === "Font Awesome 7 Pro") {
+        isFA7Free = false;
       }
     }
 
-    return isFA6Free;
+    return isFA7Free;
   }
 
   type IconSize = number;
@@ -83,14 +83,14 @@
     }
 
     private isValidIconName(name: string | null): boolean {
-      return name !== null && window.getFontAwesome6IconMetadata(name) !== undefined;
+      return name !== null && window.getFontAwesome7IconMetadata(name) !== undefined;
     }
 
     private hasNonSolidStyle(name: string): boolean {
-      if (isFontAwesome6Free()) {
-        const [, hasRegularVariant] = window.getFontAwesome6IconMetadata(name)!;
+      if (isFontAwesome7Free()) {
+        const [, hasRegularVariant] = window.getFontAwesome7IconMetadata(name)!;
         if (!hasRegularVariant) {
-          // Font Awesome 6 Free only includes solid icons with the
+          // Font Awesome 7 Free only includes solid icons with the
           // the exception to some special icons that use the weight
           // to differentiate two related icons. One such example is
           // the `bell` icon that comes in `solid` and `regular` flavor.
@@ -116,7 +116,7 @@
       if (this.name === "spinner") {
         root.append(this.createSpinner());
       } else {
-        const [codepoint] = window.getFontAwesome6IconMetadata(this.name)!;
+        const [codepoint] = window.getFontAwesome7IconMetadata(this.name)!;
         root.append(codepoint);
       }
     }
