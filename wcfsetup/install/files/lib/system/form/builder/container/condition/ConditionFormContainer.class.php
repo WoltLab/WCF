@@ -45,7 +45,9 @@ final class ConditionFormContainer extends FormContainer
     {
         parent::validate();
 
-        $this->isEmpty = !$this->hasChildren();
+        if ($this->isAvailable() && $this->checkDependencies()) {
+            $this->isEmpty = !$this->hasChildren();
+        }
     }
 
 
