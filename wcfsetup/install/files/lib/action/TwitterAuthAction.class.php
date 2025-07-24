@@ -86,7 +86,6 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
         try {
             $mapper = (new MapperBuilder())
                 ->allowSuperfluousKeys()
-                ->enableFlexibleCasting()
                 ->mapper();
 
             return $mapper->map(

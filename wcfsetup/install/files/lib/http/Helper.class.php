@@ -115,7 +115,7 @@ final class Helper
     {
         $mapper = (new MapperBuilder())
             ->allowSuperfluousKeys()
-            ->enableFlexibleCasting()
+            ->allowScalarValueCasting()
             ->mapper();
 
         return $mapper->map(

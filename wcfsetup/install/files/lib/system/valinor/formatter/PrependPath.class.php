@@ -20,6 +20,6 @@ final class PrependPath implements MessageFormatter
      */
     public function format(NodeMessage $m): NodeMessage
     {
-        return $m->withBody("{$m->node()->path()}: {$m->body()}");
+        return $m->withBody("{$m->path()}: {$m->body()}");
     }
 }
