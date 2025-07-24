@@ -31,8 +31,8 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('isLegacy'),
             IntDatabaseTableColumn::create('imageFileID'),
         ])
-        ->indices([
-            DatabaseTableForeignKey::create('imageFileID')
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
                 ->columns(['imageFileID'])
                 ->referencedTable('wcf1_file')
                 ->referencedColumns(['fileID'])

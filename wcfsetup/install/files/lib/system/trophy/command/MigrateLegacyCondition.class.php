@@ -19,9 +19,7 @@ use wcf\util\JSON;
  */
 final class MigrateLegacyCondition
 {
-    public function __construct(public readonly Trophy $trophy)
-    {
-    }
+    public function __construct(public readonly Trophy $trophy) {}
 
     public function __invoke(): void
     {
@@ -31,8 +29,9 @@ final class MigrateLegacyCondition
 
         try {
             $json = JSON::decode($this->trophy->conditions);
-        } catch (SystemException $ex) {
-            $ex->getExceptionID(); // Log the exception if JSON decoding fails
+        } catch (SystemException $e) {
+            // Side-effect: Logs the exception.
+            $e->getExceptionID();
 
             return;
         }

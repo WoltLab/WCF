@@ -19,8 +19,7 @@ final class TrophyCacheData
         public readonly array $enabledTrophies,
         /** @var array<int, array<int, Trophy>> */
         public readonly array $categorySortedTrophies = [],
-    ) {
-    }
+    ) {}
 
     public function getTrophyByID(int $trophyID): ?Trophy
     {
