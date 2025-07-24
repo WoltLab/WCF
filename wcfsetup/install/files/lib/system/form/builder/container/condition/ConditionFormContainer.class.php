@@ -45,9 +45,22 @@ final class ConditionFormContainer extends FormContainer
     {
         parent::validate();
 
-        if ($this->isAvailable() && $this->checkDependencies()) {
+        // `TFormNode::checkDependencies` also checks whether the container has at least one child element.
+        // We only want to know whether the container is available; we will check later whether a child element is present.
+        if ($this->isAvailable() && $this->checkDependency()) {
             $this->isEmpty = !$this->hasChildren();
         }
+    }
+
+    private function checkDependency(): bool
+    {
+        foreach ($this->dependencies as $dependency) {
+            if (!$dependency->checkDependency() || !$dependency->getField()->checkDependencies()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
