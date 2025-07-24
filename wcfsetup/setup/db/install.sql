@@ -1506,8 +1506,7 @@ CREATE TABLE wcf1_trophy(
 	conditions MEDIUMTEXT,
 	isLegacy TINYINT(1) NOT NULL DEFAULT 0,
 	imageFileID INT DEFAULT NULL,
-	KEY(categoryID),
-	KEY imageFileID(imageFileID)
+	KEY(categoryID)
 );
 
 DROP TABLE IF EXISTS wcf1_unfurl_url;
@@ -2224,6 +2223,7 @@ ALTER TABLE wcf1_template_group ADD FOREIGN KEY (parentTemplateGroupID) REFERENC
 ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_trophy ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
+ALTER TABLE wcf1_trophy ADD FOREIGN KEY (imageFileID) REFERENCES wcf1_file (fileID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
