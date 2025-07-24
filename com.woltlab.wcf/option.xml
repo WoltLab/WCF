@@ -532,6 +532,18 @@
 				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
 imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 			</option>
+			<option name="image_convert_format">
+				<categoryname>general.system.image</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>webp</defaultvalue>
+				<selectoptions>keep:wcf.acp.option.image_convert_format.keep
+webp:wcf.acp.option.image_convert_format.webp</selectoptions>
+			</option>
+			<option name="image_strip_exif">
+				<categoryname>general.system.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /general.system.image -->
 			<!-- general.system.search -->
 			<option name="search_engine">
@@ -922,17 +934,9 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 			<option name="attachment_image_autoscale_file_type">
 				<categoryname>message.attachment.autoscale</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue>keep</defaultvalue>
+				<defaultvalue>image/jpeg</defaultvalue>
 				<selectoptions>keep:wcf.acp.option.attachment_image_autoscale_file_type.keep
 image/jpeg:wcf.acp.option.attachment_image_autoscale_file_type.jpeg</selectoptions>
-			</option>
-			<option name="attachment_image_autoscale_quality">
-				<categoryname>message.attachment.autoscale</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>80</defaultvalue>
-				<minvalue>1</minvalue>
-				<maxvalue>100</maxvalue>
-				<suffix>percent</suffix>
 			</option>
 			<!-- message.general.edit -->
 			<option name="module_edit_history">
@@ -1635,5 +1639,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="message_sidebar_enable_articles"/>
 		<category name="security.blacklist"/>
 		<category name="security.blacklist.custom"/>
+
+		<option name="attachment_image_autoscale_quality"/>
 	</delete>
 </data>

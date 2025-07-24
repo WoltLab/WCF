@@ -1,0 +1,21 @@
+language: php
+php:
+    - '5.4'
+    - '5.5'
+    - '5.6'
+    - '7.1'
+    - '7.2'
+    - '7.3'
+
+cache:
+    directories:
+        - vendor
+        - $HOME/.composer/cache
+
+install:
+    - travis_retry composer self-update && composer --version
+    - travis_retry composer install --no-interaction
+
+script:
+    - composer validate --no-check-lock
+    - vendor/bin/phpunit -c phpunit.xml

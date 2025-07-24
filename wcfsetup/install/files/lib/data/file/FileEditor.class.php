@@ -11,6 +11,7 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
+use wcf\util\JSON;
 
 /**
  * @author Alexander Ebert
@@ -99,6 +100,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => \TIME_NOW,
+            'exifData' => $fileTemporary->exifData,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -119,12 +121,16 @@ class FileEditor extends DatabaseObjectEditor
         return $event->getFile();
     }
 
+    /**
+     * @param null|array<string, array<string, mixed>> $exifData
+     */
     public static function createFromExistingFile(
         string $pathname,
         string $originalFilename,
         string $objectTypeName,
         bool $copy = false,
-        ?int $uploadTime = null
+        ?int $uploadTime = null,
+        ?array $exifData = null,
     ): ?File {
         if (!\is_readable($pathname)) {
             return null;
@@ -143,6 +149,22 @@ class FileEditor extends DatabaseObjectEditor
             'image/webp' => true,
             default => false,
         };
+
+        if ($exifData === null) {
+            $exifData = ExifUtil::getExifData($pathname);
+
+            // Remove the `FILE` and `COMPUTED` section because those contain
+            // garbled data anyway and we do not need them in the first place.
+            unset($exifData['FILE'], $exifData['COMPUTED']);
+
+            // We can also discard the `THUMBNAIL` section because it is a
+            // pointless feature and we’re not extracting it either.
+            unset($exifData['THUMBNAIL']);
+
+            if ($exifData === []) {
+                $exifData = null;
+            }
+        }
 
         $width = $height = null;
         if ($isImage) {
@@ -173,6 +195,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => $uploadTime,
+            'exifData' => JSON::encode($exifData),
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);

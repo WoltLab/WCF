@@ -6,10 +6,11 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
+    exports.getExifBytesFromWebP = getExifBytesFromWebP;
     exports.removeExifData = removeExifData;
     exports.setExifData = setExifData;
     const Tag = {
@@ -99,6 +100,16 @@ define(["require", "exports"], function (require, exports) {
             i += length;
         }
         return exif;
+    }
+    async function getExifBytesFromWebP(blob) {
+        if (!(blob instanceof Blob) && !(blob instanceof File)) {
+            throw new TypeError("The argument must be a Blob or a File");
+        }
+        const webp = (0, WebP_1.parseWebPFromBuffer)(await blob.arrayBuffer());
+        if (webp === undefined) {
+            return null;
+        }
+        return webp.getExifData();
     }
     /**
      * Removes all EXIF and XMP sections of a JPEG blob.

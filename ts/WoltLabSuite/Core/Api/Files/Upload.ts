@@ -1,5 +1,6 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import type { Exif } from "WoltLabSuite/Core/Image/ExifUtil";
 
 type Response = {
   identifier: string;
@@ -12,8 +13,17 @@ export async function upload(
   fileHash: string,
   objectType: string,
   context: string,
+  exifBytes: Exif | null = null,
 ): Promise<ApiResult<Response>> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload`);
+
+  let exifData: string | null = null;
+  if (exifBytes !== null) {
+    exifData = "";
+    for (let i = 0, length = exifBytes.length; i < length; i++) {
+      exifData += exifBytes[i].toString(16).padStart(2, "0");
+    }
+  }
 
   const payload = {
     filename,
@@ -21,6 +31,7 @@ export async function upload(
     fileHash,
     objectType,
     context,
+    exifData,
   };
 
   let response: Response;

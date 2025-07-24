@@ -32,6 +32,7 @@ export class Thumbnail {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreFileElement extends HTMLElement {
   #data: Record<string, unknown> | undefined = undefined;
   #filename: string = "";
@@ -321,6 +322,20 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.#readyResolve();
   }
 
+  /**
+   * Updates the filename, file size and mime type. These can change for images
+   * that are being converted to a different file format,
+   *
+   * @internal
+   */
+  updateFileData(filename: string, fileSize: number, mimeType: string): void {
+    this.#filename = filename;
+    this.#fileSize = fileSize;
+    this.#mimeType = mimeType;
+
+    this.dispatchEvent(new CustomEvent<void>("file:update-data"));
+  }
+
   isFailedUpload(): boolean {
     return this.#state === State.Failed;
   }
@@ -344,6 +359,21 @@ export class WoltlabCoreFileElement extends HTMLElement {
   get apiError(): ApiError | undefined {
     return this.#apiError;
   }
+}
+
+interface WoltlabCoreFileElementEventMap {
+  "file:update-data": CustomEvent<void>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+export interface WoltlabCoreFileElement extends HTMLElement {
+  addEventListener: {
+    <T extends keyof WoltlabCoreFileElementEventMap>(
+      type: T,
+      listener: (this: Selection, ev: WoltlabCoreFileElementEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+  } & HTMLElement["addEventListener"];
 }
 
 export default WoltlabCoreFileElement;

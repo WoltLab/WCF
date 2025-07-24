@@ -607,7 +607,8 @@ CREATE TABLE wcf1_file (
 	width INT,
 	height INT,
 	fileHashWebp CHAR(64),
-	uploadTime INT
+	uploadTime INT,
+	exifData MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;
@@ -619,7 +620,8 @@ CREATE TABLE wcf1_file_temporary (
 	fileHash CHAR(64) NOT NULL,
 	objectTypeID INT,
 	context TEXT,
-	chunks VARBINARY(255) NOT NULL
+	chunks VARBINARY(255) NOT NULL,
+	exifData MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_file_thumbnail;

@@ -2,6 +2,10 @@
 
 namespace wcf\util;
 
+use WoltLab\WebpExif\Decoder;
+use WoltLab\WebpExif\Encoder;
+use WoltLab\WebpExif\Exception\WebpExifException;
+
 /**
  * Provides exif-related functions.
  *
@@ -83,11 +87,27 @@ final class ExifUtil
      */
     public static function getExifData(string $filename): array
     {
-        if (\function_exists('exif_read_data')) {
-            $exifData = @\exif_read_data($filename, '', true);
-            if ($exifData !== false) {
-                return $exifData;
+        $mimeType = FileUtil::getMimeType($filename);
+        if ($mimeType === 'image/webp') {
+            $decoder = new Decoder();
+
+            try {
+                $webp = $decoder->fromBinary(\file_get_contents($filename));
+            } catch (WebpExifException) {
+                return [];
             }
+
+            $exifData = $webp->getExif()?->getParsedExif();
+            if ($exifData === null) {
+                return [];
+            }
+
+            return $exifData;
+        }
+
+        $exifData = @\exif_read_data($filename, '', true);
+        if ($exifData !== false) {
+            return $exifData;
         }
 
         return [];
@@ -244,6 +264,72 @@ final class ExifUtil
         }
 
         return $orientation;
+    }
+
+    #[\NoDiscard("as the sanitized version is written to a temporary file")]
+    public static function getFileWithoutExifData(string $pathname): ?string
+    {
+        $fileExtension = match (FileUtil::getMimeType($pathname)) {
+            'image/jpeg' => 'jpg',
+            'image/gif' => 'gif',
+            'image/png' => 'png',
+            'image/webp' => 'webp',
+            default => 'bin',
+        };
+
+        if ($fileExtension === 'webp') {
+            return self::getWebpWithoutExif($pathname);
+        }
+
+        if (!\class_exists(\Imagick::class)) {
+            return null;
+        }
+
+        $exifData = self::getExifData($pathname);
+        $hasIdf0 = ($exifData['IFD0'] ?? []) !== [];
+        $hasGPS = ($exifData['GPS'] ?? []) !== [];
+        $hasEXIF = ($exifData['EXIF'] ?? []) !== [];
+        if (!$hasIdf0 && !$hasGPS && !$hasEXIF) {
+            return null;
+        }
+
+        $img = new \Imagick($pathname);
+        $profiles = $img->getImageProfiles('icc', true);
+        $img->stripImage();
+        if ($profiles !== []) {
+            $img->profileImage('icc', $profiles['icc']);
+        }
+
+        $tmpFile = FileUtil::getTemporaryFilename('fileWithoutExif_', ".{$fileExtension}");
+        $img->writeImage($tmpFile);
+
+        return $tmpFile;
+    }
+
+    private static function getWebpWithoutExif(string $pathname): ?string
+    {
+        $decoder = new Decoder();
+
+        try {
+            $webp = $decoder->fromBinary(\file_get_contents($pathname));
+        } catch (WebpExifException) {
+            return null;
+        }
+
+        if ($webp->getExif() !== null) {
+            $webp = $webp->withExif(null);
+        }
+        if ($webp->getXmp() !== null) {
+            $webp = $webp->withXmp(null);
+        }
+
+        $encoder = new Encoder();
+        $bytes = $encoder->fromWebP($webp);
+
+        $tmpFile = FileUtil::getTemporaryFilename('fileWithoutExif_', '.webp');
+        \file_put_contents($tmpFile, $bytes);
+
+        return $tmpFile;
     }
 
     /**

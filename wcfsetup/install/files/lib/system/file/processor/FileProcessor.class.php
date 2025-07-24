@@ -13,12 +13,15 @@ use wcf\event\file\GenerateWebpVariant;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\file\command\ReplaceFileSource;
+use wcf\system\file\command\ReplaceWithWebpVariant;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
 use wcf\system\image\adapter\exception\ImageNotReadable;
 use wcf\system\image\ImageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -149,7 +152,7 @@ final class FileProcessor extends SingletonFactory
         return $fileProcessor->canAdopt($file, $context);
     }
 
-    public function generateWebpVariant(File $file): void
+    public function generateWebpVariant(File $file): File
     {
         $canGenerateThumbnail = match ($file->mimeType) {
             'image/jpeg', 'image/png' => true,
@@ -163,13 +166,13 @@ final class FileProcessor extends SingletonFactory
                 ]);
             }
 
-            return;
+            return $file;
         }
 
         if ($file->fileHashWebp !== null) {
             $pathname = $file->getPathnameWebp();
             if (\file_exists($pathname) && \hash_file('sha256', $pathname) === $file->fileHashWebp) {
-                return;
+                return $file;
             }
         }
 
@@ -183,7 +186,7 @@ final class FileProcessor extends SingletonFactory
         if ($filename === null) {
             $imageAdapter = ImageHandler::getInstance()->getAdapter();
             if (!$imageAdapter->checkMemoryLimit($file->width, $file->height, $file->mimeType)) {
-                return;
+                return $file;
             }
 
             try {
@@ -193,7 +196,7 @@ final class FileProcessor extends SingletonFactory
             } catch (ImageNotProcessable $e) {
                 logThrowable($e);
 
-                return;
+                return $file;
             }
 
             $filename = FileUtil::getTemporaryFilename(extension: 'webp');
@@ -206,7 +209,7 @@ final class FileProcessor extends SingletonFactory
                     throw $e;
                 }
 
-                return;
+                return $file;
             }
         }
 
@@ -220,6 +223,8 @@ final class FileProcessor extends SingletonFactory
         \assert($pathname !== null);
 
         \rename($filename, $pathname);
+
+        return $file;
     }
 
     public function generateThumbnails(File $file): void
@@ -420,6 +425,40 @@ final class FileProcessor extends SingletonFactory
         }
 
         $this->copyThumbnails($oldFile->fileID, $newFile->fileID);
+
+        return $newFile;
+    }
+
+    #[\NoDiscard("as the file itself could change")]
+    public function convertImageFormat(File $file): File
+    {
+        switch (\IMAGE_CONVERT_FORMAT) {
+            case 'keep':
+                return $file;
+
+            case 'webp':
+                $command = new ReplaceWithWebpVariant($file);
+                return $command();
+
+            default:
+                throw new \LogicException("Unreachable");
+        }
+    }
+
+    #[\NoDiscard("as the file itself could change")]
+    public function stripExif(File $file): File
+    {
+        if (!\IMAGE_STRIP_EXIF) {
+            return $file;
+        }
+
+        $fileWithoutExif = ExifUtil::getFileWithoutExifData($file->getPathname());
+        if ($fileWithoutExif === null) {
+            return $file;
+        }
+
+        $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename);
+        $newFile = $command();
 
         return $newFile;
     }

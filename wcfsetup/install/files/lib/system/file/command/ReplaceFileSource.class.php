@@ -35,6 +35,7 @@ final class ReplaceFileSource
         $this->validatePathname($this->file->getPathnameWebp());
 
         $file = $this->replaceSource();
+        $file = $this->discardWebpVariantOfWebpFile($file);
         $this->regenerateExistingThumbnails($file);
 
         return $file;
@@ -120,6 +121,29 @@ final class ReplaceFileSource
                 \unlink($this->file->getPathname());
             }
 
+            // Move the WebP thumbnail to the new location.
+            $webpVariant = $this->file->getPathnameWebp();
+            if ($webpVariant !== null) {
+                if ($updatedFile->mimeType === 'image/webp') {
+                    // The file might be missing if it was used to replace the
+                    // original version with it.
+                    @\unlink($webpVariant);
+
+                    (new FileEditor($updatedFile))->update([
+                        'fileHashWebp' => null,
+                    ]);
+                    $updatedFile = new File($updatedFile->fileID);
+                } else {
+                    $newWebpVariant = $updatedFile->getPathnameWebp();
+                    \assert($newWebpVariant !== null);
+
+                    \rename(
+                        $webpVariant,
+                        $newWebpVariant,
+                    );
+                }
+            }
+
             WCF::getDB()->commitTransaction();
             $committed = true;
 
@@ -129,6 +153,28 @@ final class ReplaceFileSource
                 WCF::getDB()->rollBackTransaction();
             }
         }
+    }
+
+    private function discardWebpVariantOfWebpFile(File $file): File
+    {
+        if ($file->mimeType !== 'image/webp') {
+            return $file;
+        }
+
+        $pathname = $file->getPathnameWebp();
+        if ($pathname === null) {
+            return $file;
+        }
+
+        if (\file_exists($pathname)) {
+            \unlink($file->getPathnameWebp());
+        }
+
+        (new FileEditor($file))->update([
+            'fileHashWebp' => null,
+        ]);
+
+        return new File($file->fileID);
     }
 
     private function regenerateExistingThumbnails(File $file): void
@@ -144,7 +190,9 @@ final class ReplaceFileSource
         }
 
         try {
-            FileProcessor::getInstance()->generateWebpVariant($file);
+            $file = FileProcessor::getInstance()->generateWebpVariant($file);
+            $file = FileProcessor::getInstance()->stripExif($file);
+            $file = FileProcessor::getInstance()->convertImageFormat($file);
             FileProcessor::getInstance()->generateThumbnails($file);
         } catch (DamagedImage $e) {
             logThrowable($e);

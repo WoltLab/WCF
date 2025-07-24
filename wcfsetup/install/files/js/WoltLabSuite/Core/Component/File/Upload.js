@@ -1,18 +1,18 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper", "WoltLabSuite/Core/Image/ExifUtil"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1, ExifUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.clearPreviousErrors = clearPreviousErrors;
     exports.setup = setup;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
     const BUFFER_SIZE = 10 * 1_024 * 1_024;
-    async function upload(element, file, fileHash) {
+    async function upload(element, file, fileHash, exifData) {
         const objectType = element.dataset.objectType;
         const fileElement = document.createElement("woltlab-core-file");
         fileElement.dataset.filename = file.name;
         fileElement.dataset.fileSize = file.size.toString();
         const event = new CustomEvent("uploadStart", { detail: fileElement });
         element.dispatchEvent(event);
-        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, objectType, element.dataset.context || "");
+        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, objectType, element.dataset.context || "", exifData);
         if (!response.ok) {
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
@@ -59,8 +59,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
         if (result.generateThumbnails) {
-            const response = await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID);
-            fileElement.setThumbnails(response.unwrap());
+            const { filename, fileSize, mimeType, thumbnails } = (await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID)).unwrap();
+            fileElement.setThumbnails(thumbnails);
+            fileElement.updateFileData(filename, fileSize, mimeType);
         }
     }
     async function getSha256Hash(data) {
@@ -94,7 +95,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         });
         const resizeConfiguration = JSON.parse(element.dataset.resizeConfiguration);
         const resizer = new Resizer_1.default();
-        const { image, exif } = await resizer.loadFile(file);
+        const { image } = await resizer.loadFile(file);
         const maxHeight = resizeConfiguration.maxHeight === -1 ? image.height : resizeConfiguration.maxHeight;
         let maxWidth = resizeConfiguration.maxWidth === -1 ? image.width : resizeConfiguration.maxWidth;
         if (window.devicePixelRatio >= 2) {
@@ -114,13 +115,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         let fileType = resizeConfiguration.fileType;
         if (fileType === "image/jpeg" || fileType === "image/webp") {
-            fileType = "image/jpeg";
+            fileType = "image/webp";
         }
         else {
             fileType = file.type;
         }
         const resizedFile = await resizer.saveFile({
-            exif,
             image: canvas,
         }, file.name, fileType, resizeConfiguration.quality);
         return resizedFile;
@@ -193,6 +193,29 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         (0, Util_1.innerError)(element, message);
     }
+    async function getExifBytes(file) {
+        if (file.type === "image/jpeg") {
+            try {
+                const bytes = await (0, ExifUtil_1.getExifBytesFromJpeg)(file);
+                // ExifUtil returns the entire section but we only need the app data.
+                // Removing the first 10 bytes drops the 0xFF 0xE1 marker followed by two
+                // bytes for the length and then 6 bytes for the "Exif\x00\x00" header.
+                return bytes.slice(10);
+            }
+            catch {
+                return null;
+            }
+        }
+        else if (file.type === "image/webp") {
+            try {
+                return await (0, ExifUtil_1.getExifBytesFromWebP)(file);
+            }
+            catch {
+                return null;
+            }
+        }
+        return null;
+    }
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("woltlab-core-file-upload", (element) => {
             element.addEventListener("upload:files", (event) => {
@@ -210,10 +233,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     }
                 }
                 element.markAsBusy();
+                const exifData = new Map();
                 let processImage;
                 if (element.dataset.cropperConfiguration) {
                     const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration);
                     processImage = async (file) => {
+                        exifData.set(file, await getExifBytes(file));
                         try {
                             return await (0, Cropper_1.cropImage)(element, file, cropperConfiguration);
                         }
@@ -224,7 +249,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     };
                 }
                 else {
-                    processImage = async (file) => resizeImage(element, file);
+                    processImage = async (file) => {
+                        exifData.set(file, await getExifBytes(file));
+                        return resizeImage(element, file);
+                    };
                 }
                 // Resize all files in parallel but keep the original order. This ensures
                 // that files are uploaded in the same order that they were provided by
@@ -255,7 +283,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     for (let i = 0, length = checksums.length; i < length; i++) {
                         const result = checksums[i];
                         if (result.status === "fulfilled") {
-                            void upload(element, validFiles[i], result.value);
+                            const exif = exifData.get(validFiles[i]) || null;
+                            void upload(element, validFiles[i], result.value, exif);
                         }
                         else {
                             throw new Error(result.reason);
@@ -283,10 +312,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     promiseReject();
                     return;
                 }
-                void resizeImage(element, file).then(async (resizeFile) => {
+                let exifData;
+                void getExifBytes(file)
+                    .then((exif) => {
+                    exifData = exif;
+                })
+                    .then(() => resizeImage(element, file))
+                    .then(async (resizeFile) => {
                     try {
                         const checksum = await getSha256Hash(resizeFile);
-                        const data = await upload(element, resizeFile, checksum);
+                        const data = await upload(element, resizeFile, checksum, exifData);
                         if (data === undefined || typeof data.data.attachmentID !== "number") {
                             promiseReject();
                         }

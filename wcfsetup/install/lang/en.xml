@@ -1335,6 +1335,12 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
+		<item name="wcf.acp.option.image_convert_format"><![CDATA[File Format of Uploaded Images]]></item>
+		<item name="wcf.acp.option.image_convert_format.keep"><![CDATA[No Change]]></item>
+		<item name="wcf.acp.option.image_convert_format.webp"><![CDATA[Convert Images to the WebP Format]]></item>
+		<item name="wcf.acp.option.image_convert_format.description"><![CDATA[The WebP format is more efficient than PNG and JPEG graphics and achieves a comparable quality with some significant savings in file size. This feature is not yet available for all file uploads, but select components like attachments or profile pictures are already supported.]]></item>
+		<item name="wcf.acp.option.image_strip_exif"><![CDATA[Remove EXIF Data from Images]]></item>
+		<item name="wcf.acp.option.image_strip_exif.description"><![CDATA[EXIF data is metadata in images that can contain useful information as well as sensitive information such as GPS coordinates. When this featire is activated, the EXIF data is extracted, saved separately in the database and then permanently removed from the file. This feature is not yet available for all file uploads, but select components like attachments or profile pictures are already supported. Requires the ImageMagick extension for PHP.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses indefinitely for user-created content, e.g. profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator’s Email]]></item>

@@ -6,6 +6,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
     exports.getErrorMessageFromFile = getErrorMessageFromFile;
     exports.fileInitializationFailed = fileInitializationFailed;
     exports.insertFileInformation = insertFileInformation;
+    exports.updateFileInformation = updateFileInformation;
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
         progress.classList.add("fileList__item__progress__bar");
@@ -83,5 +84,11 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         fileSize.classList.add("fileList__item__fileSize");
         fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
         container.append(fileWrapper, filename, fileSize);
+    }
+    function updateFileInformation(container, file) {
+        const filename = container.querySelector(".fileList__item__filename");
+        filename.textContent = file.filename || file.dataset.filename;
+        const fileSize = container.querySelector(".fileList__item__fileSize");
+        fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
     }
 });

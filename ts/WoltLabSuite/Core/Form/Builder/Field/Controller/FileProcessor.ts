@@ -14,6 +14,7 @@ import {
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
+  updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
 import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
 import { innerError } from "WoltLabSuite/Core/Dom/Util";
@@ -300,6 +301,10 @@ export class FileProcessor {
 
     if (!this.#useBigPreview) {
       insertFileInformation(container, element);
+
+      element.addEventListener("file:update-data", () => {
+        updateFileInformation(container!, element);
+      });
     }
 
     trackUploadProgress(container, element);

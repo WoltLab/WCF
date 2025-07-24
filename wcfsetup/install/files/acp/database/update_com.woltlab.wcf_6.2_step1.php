@@ -62,5 +62,10 @@ return [
     PartialDatabaseTable::create('wcf1_file')
         ->columns([
             IntDatabaseTableColumn::create('uploadTime'),
+            MediumtextDatabaseTableColumn::create('exifData'),
+        ]),
+    PartialDatabaseTable::create('wcf1_file_temporary')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('exifData'),
         ]),
 ];

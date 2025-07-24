@@ -16,6 +16,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\FileProcessorPreflightResult;
 use wcf\util\JSON;
+use WoltLab\WebpExif\Chunk\Exif;
 
 /**
  * Prepares the upload of a file.
@@ -75,6 +76,16 @@ final class PrepareUpload implements IController
         $identifier = \bin2hex(\random_bytes(20));
         $objectType = FileProcessor::getInstance()->getObjectType($parameters->objectType);
 
+        $exifBytes = null;
+        if ($parameters->exifData !== null) {
+            $exifBytes = \hex2bin($parameters->exifData);
+        }
+
+        $exifData = $this->parseExifData($exifBytes);
+        if ($exifData !== null) {
+            $exifData = JSON::encode($exifData);
+        }
+
         $action = new FileTemporaryAction([], 'create', [
             'data' => [
                 'identifier' => $identifier,
@@ -85,10 +96,40 @@ final class PrepareUpload implements IController
                 'objectTypeID' => $objectType?->objectTypeID,
                 'context' => $parameters->context,
                 'chunks' => \str_repeat('0', $numberOfChunks),
+                'exifData' => $exifData,
             ],
         ]);
 
         return $action->executeAction()['returnValues'];
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
+    private function parseExifData(?string $exifData): ?array
+    {
+        if ($exifData === null) {
+            return null;
+        }
+
+        $data = Exif::forBytes(0, $exifData)->getParsedExif();
+        if ($data === null) {
+            return null;
+        }
+
+        // Remove the `FILE` and `COMPUTED` section because those contain
+        // garbled data anyway and we do not need them in the first place.
+        unset($data['FILE'], $data['COMPUTED']);
+
+        // We can also discard the `THUMBNAIL` section because it is a
+        // pointless feature and we’re not extracting it either.
+        unset($data['THUMBNAIL']);
+
+        if ($data === []) {
+            return null;
+        }
+
+        return $data;
     }
 }
 
@@ -110,5 +151,7 @@ final class PostUploadParameters
 
         /** @var non-empty-string */
         public readonly string $context,
+
+        public readonly ?string $exifData = null,
     ) {}
 }
