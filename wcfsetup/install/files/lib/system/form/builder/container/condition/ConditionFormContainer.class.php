@@ -32,6 +32,7 @@ final class ConditionFormContainer extends FormContainer
      */
     protected AbstractConditionProvider $conditionProvider;
     private bool $isRequired = false;
+    private bool $isEmpty = false;
 
     public function __construct()
     {
@@ -39,9 +40,18 @@ final class ConditionFormContainer extends FormContainer
         $this->label("wcf.form.field.condition");
     }
 
+    #[\Override]
+    public function validate()
+    {
+        parent::validate();
+
+        $this->isEmpty = !$this->hasChildren();
+    }
+
+
     public function hasValidationErrors(): bool
     {
-        if ($this->isRequired && $this->isEmpty()) {
+        if ($this->isRequired && $this->isEmpty) {
             return true;
         }
 
@@ -191,6 +201,6 @@ final class ConditionFormContainer extends FormContainer
 
     public function isEmpty(): bool
     {
-        return !$this->hasChildren();
+        return $this->isEmpty;
     }
 }
