@@ -131,10 +131,10 @@ class UiColorPicker implements DialogCallbackObject {
     <div class="colorPickerComparison">
       <small>${Language.get("wcf.style.colorPicker.new")}</small>
       <div class="colorPickerColorNew">
-        <span style="background-color: ${this.input.value}"></span>
+        <span style="background-color: ${this.input.value}; flex: 1 auto"></span>
       </div>
       <div class="colorPickerColorOld">
-        <span style="background-color: ${this.input.value}"></span>
+        <span style="background-color: ${this.input.value}; flex: 1 auto"></span>
       </div>
       <small>${Language.get("wcf.style.colorPicker.current")}</small>
     </div>
@@ -354,16 +354,15 @@ class UiColorPicker implements DialogCallbackObject {
     const colorString = ColorUtil.rgbaToString(color);
 
     this.oldColor!.style.backgroundColor = colorString;
-    // The change in value via `this.input.value = colorString;` cannot be detected by a MutationObserver.
-    this.input.setAttribute("value", colorString);
+    this.input.value = colorString;
 
-    if (!(this.element instanceof HTMLButtonElement)) {
-      const span = this.element.querySelector("span");
-      if (span) {
-        span.style.backgroundColor = colorString;
-      } else {
-        this.element.style.backgroundColor = colorString;
-      }
+    const event = new CustomEvent<void>("color-picker:submit");
+    this.input.dispatchEvent(event);
+
+    const span = this.element.querySelector("span")
+    if (span !== null) {
+      span.classList.add("colorPickerButton__color");
+      span.style.setProperty("background-color", colorString);
     }
 
     UiDialog.close(this);

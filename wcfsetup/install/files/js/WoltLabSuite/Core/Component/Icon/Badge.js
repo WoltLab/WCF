@@ -9,41 +9,23 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.IconBadge = void 0;
-    class IconBadge {
-        #iconContainer;
-        #colorInput;
-        #backgroundColorInput;
-        constructor(iconFieldId, colorFieldId, backgroundColorFieldId) {
-            this.#iconContainer = document.getElementById(`${iconFieldId}_icon`);
-            this.#iconContainer.classList.add("iconBadge");
-            const observer = new MutationObserver((mutationsList) => {
-                for (const mutation of mutationsList) {
-                    if (mutation.type === "attributes" && mutation.attributeName === "value") {
-                        this.#updateIcon();
-                    }
-                }
+    exports.setup = setup;
+    function setup(iconFieldId, colorFieldId, backgroundColorFieldId) {
+        const container = document.getElementById(`${iconFieldId}_icon`);
+        container.classList.add("iconBadge");
+        if (colorFieldId !== "") {
+            const colorInput = document.getElementById(colorFieldId);
+            colorInput.addEventListener("color-picker:submit", () => {
+                container.style.setProperty("color", colorInput.value);
             });
-            if (colorFieldId) {
-                this.#colorInput = document.getElementById(colorFieldId);
-                observer.observe(this.#colorInput, {
-                    attributes: true,
-                    attributeFilter: ["value"],
-                });
-            }
-            if (backgroundColorFieldId) {
-                this.#backgroundColorInput = document.getElementById(backgroundColorFieldId);
-                observer.observe(this.#backgroundColorInput, {
-                    attributes: true,
-                    attributeFilter: ["value"],
-                });
-            }
-            this.#updateIcon();
+            container.style.setProperty("color", colorInput.value);
         }
-        #updateIcon() {
-            this.#iconContainer.style.color = this.#colorInput?.value || "";
-            this.#iconContainer.style.backgroundColor = this.#backgroundColorInput?.value || "";
+        if (backgroundColorFieldId !== "") {
+            const backgroundColorInput = document.getElementById(backgroundColorFieldId);
+            backgroundColorInput.addEventListener("color-picker:submit", () => {
+                container.style.setProperty("background-color", backgroundColorInput.value);
+            });
+            container.style.setProperty("background-color", backgroundColorInput.value);
         }
     }
-    exports.IconBadge = IconBadge;
 });

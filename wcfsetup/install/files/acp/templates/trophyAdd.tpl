@@ -20,8 +20,8 @@
 {unsafe:$form->getHtml()}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Component/Icon/Badge'], ({ IconBadge }) => {
-		new IconBadge('iconName', 'iconColor', 'badgeColor');
+	require(["WoltLabSuite/Core/Component/Icon/Badge"], ({ setup }) => {
+		setup("iconName", "iconColor", "badgeColor");
 	});
 </script>
 
