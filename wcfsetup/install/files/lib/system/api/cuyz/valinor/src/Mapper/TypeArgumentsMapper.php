@@ -25,6 +25,9 @@ final class TypeArgumentsMapper implements ArgumentsMapper
         private Settings $settings,
     ) {}
 
+    /**
+     * @pure
+     */
     public function mapArguments(callable $callable, mixed $source): array
     {
         $function = $this->functionDefinitionRepository->for($callable);
@@ -34,6 +37,7 @@ final class TypeArgumentsMapper implements ArgumentsMapper
                 new StringValueType($parameter->name),
                 $parameter->type,
                 $parameter->isOptional,
+                $parameter->attributes,
             ),
             $function->parameters->toList(),
         );
@@ -41,6 +45,7 @@ final class TypeArgumentsMapper implements ArgumentsMapper
         $type = new ShapedArrayType(...$elements);
 
         $shell = Shell::root($this->settings, $type, $source);
+        $shell = $shell->withAttributes($function->attributes);
 
         try {
             $node = $this->nodeBuilder->build($shell);
@@ -66,6 +71,6 @@ final class TypeArgumentsMapper implements ArgumentsMapper
             }
         }
 
-        throw new ArgumentsMapperError($function, $node->node());
+        throw new ArgumentsMapperError($shell->value(), $type->toString(), $function->signature, $node->messages());
     }
 }

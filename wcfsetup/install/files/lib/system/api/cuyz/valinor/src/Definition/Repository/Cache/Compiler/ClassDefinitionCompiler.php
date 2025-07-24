@@ -9,7 +9,6 @@ use CuyZ\Valinor\Definition\MethodDefinition;
 use CuyZ\Valinor\Definition\PropertyDefinition;
 
 use function array_map;
-use function assert;
 use function implode;
 use function iterator_to_array;
 use function var_export;
@@ -27,17 +26,15 @@ final class ClassDefinitionCompiler
 
     public function __construct()
     {
-        $this->typeCompiler = new TypeCompiler();
         $this->attributesCompiler = new AttributesCompiler($this);
+        $this->typeCompiler = new TypeCompiler($this->attributesCompiler);
 
         $this->methodCompiler = new MethodDefinitionCompiler($this->typeCompiler, $this->attributesCompiler);
         $this->propertyCompiler = new PropertyDefinitionCompiler($this->typeCompiler, $this->attributesCompiler);
     }
 
-    public function compile(mixed $value): string
+    public function compile(ClassDefinition $value): string
     {
-        assert($value instanceof ClassDefinition);
-
         $name = var_export($value->name, true);
         $type = $this->typeCompiler->compile($value->type);
 

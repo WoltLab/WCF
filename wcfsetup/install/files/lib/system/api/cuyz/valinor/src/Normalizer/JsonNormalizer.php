@@ -63,6 +63,8 @@ final class JsonNormalizer implements Normalizer
      *   for PHPStan but Psalm does have some (not all) issues as well.
      * - Using this annotation provokes *severe* performance issues when
      *   running PHPStan analysis, therefore it is preferable to avoid it.
+     *
+     * @internal
      */
     public function __construct(
         Transformer $transformer,
@@ -80,7 +82,7 @@ final class JsonNormalizer implements Normalizer
      * This can be achieved by passing these flags to this method:
      *
      * ```php
-     * $normalizer = (new \CuyZ\Valinor\MapperBuilder())
+     * $normalizer = (new \CuyZ\Valinor\NormalizerBuilder())
      *     ->normalizer(\CuyZ\Valinor\Normalizer\Format::json())
      *     ->withOptions(\JSON_PRESERVE_ZERO_FRACTION);
      *
@@ -100,6 +102,9 @@ final class JsonNormalizer implements Normalizer
         return new self($this->transformer, $options);
     }
 
+    /**
+     * @pure
+     */
     public function normalize(mixed $value): string
     {
         $result = $this->transformer->transform($value);
@@ -136,7 +141,7 @@ final class JsonNormalizer implements Normalizer
      *
      * $file = fopen('path/to/some_file.json', 'w');
      *
-     * $normalizer = (new \CuyZ\Valinor\MapperBuilder())
+     * $normalizer = (new \CuyZ\Valinor\NormalizerBuilder())
      *     ->normalizer(\CuyZ\Valinor\Normalizer\Format::json())
      *     ->streamTo($file);
      *
