@@ -9,15 +9,29 @@
 		<file>js/WoltLabSuite/Core/Ui/User/CoverPhoto/Upload.js</file>
 		<file>lib/form/AvatarEditForm.class.php</file>
 		<file>lib/system/api/cuyz/valinor/qa/PHPStan/Stubs/Psr/SimpleCache/CacheInterface.stub</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/ChainCache.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Cache/WarmupCache.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Cache/CacheClassDefinitionRepository.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/CacheObjectBuilderFactory.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/IdentifiableSource.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/CasterNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/CasterProxyNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ErrorCatcherNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/IterableNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/StrictNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/TreeNode.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ValueAlteringNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/InvalidNodeHasNoMappedValue.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/NoCasterForType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/SourceValueWasNotFilled.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Node.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/NodeTraverser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Formatter/StreamFormatter.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/EvaluatedTransformer.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/KeyTransformersHandler.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/ValueTransformersHandler.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/HasPriority.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/PrioritizedList.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/PermissiveTypeFound.php</file>
 		<file>lib/system/api/bin/pscss</file>
 		<file>lib/system/api/scssphp/scssphp/bin/pscss</file>
