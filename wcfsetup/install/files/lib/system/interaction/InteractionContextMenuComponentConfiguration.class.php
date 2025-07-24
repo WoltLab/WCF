@@ -17,7 +17,7 @@ final class InteractionContextMenuComponentConfiguration
         public readonly string $buttonCssClassName = '',
         public readonly string $dropdownMenuCssClassName = '',
         public readonly string $label = '',
-        public readonly string $tooltip = 'wcf.global.button.more',
+        public readonly string $tooltip = 'wcf.global.button.moreOptions',
         public readonly string $icon = 'ellipsis',
         public readonly int $iconSize = 16
     ) {}

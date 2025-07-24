@@ -3937,6 +3937,7 @@ Dateianhänge:
 		<item name="wcf.global.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.global.button.list"><![CDATA[Auflistung]]></item>
 		<item name="wcf.global.button.more"><![CDATA[Mehr]]></item>
+		<item name="wcf.global.button.moreOptions"><![CDATA[Mehr Optionen]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>
