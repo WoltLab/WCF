@@ -4,7 +4,7 @@
 		class="dropdownToggle {$configuration->buttonCssClassName}{if !$configuration->label} jsTooltip{/if}"
 		{if !$configuration->label}title="{lang}{$configuration->tooltip}{/lang}"{/if}
 	>
-		{icon name=$configuration->icon size=$configuration->iconSize}
+		{unsafe:$configuration->getIconHtml()}
 		{if $configuration->label}
 			<span>{$configuration->label}</span>
 		{/if}

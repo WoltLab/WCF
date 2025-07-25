@@ -3,6 +3,7 @@
 namespace wcf\system\interaction;
 
 use wcf\data\DatabaseObject;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -89,7 +90,7 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
                 cssClassName: 'contentInteractionButton',
                 buttonCssClassName: 'button small',
                 label: $label,
-                icon: 'pencil'
+                icon: FontAwesomeIcon::fromValues('pencil')
             )
         );
     }

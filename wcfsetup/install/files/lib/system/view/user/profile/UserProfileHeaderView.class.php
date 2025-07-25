@@ -13,6 +13,7 @@ use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\interaction\user\UserManagementInteractions;
 use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -149,7 +150,7 @@ final class UserProfileHeaderView
                 cssClassName: 'userProfileHeader__button',
                 buttonCssClassName: 'button small',
                 dropdownMenuCssClassName: 'userProfileHeader__managementOptions',
-                icon: 'gear',
+                icon: FontAwesomeIcon::fromValues('gear'),
                 tooltip: 'wcf.user.profile.management'
             )
         );
