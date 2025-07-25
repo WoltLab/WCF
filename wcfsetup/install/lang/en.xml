@@ -3889,6 +3889,7 @@ Attachments:
 		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.global.button.list"><![CDATA[List]]></item>
 		<item name="wcf.global.button.more"><![CDATA[More]]></item>
+		<item name="wcf.global.button.moreOptions"><![CDATA[More Options]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.reply"><![CDATA[Reply]]></item>

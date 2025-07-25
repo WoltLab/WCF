@@ -27,7 +27,7 @@ async function toggleFollow(button: HTMLElement): Promise<void> {
       button.textContent = getPhrase("wcf.user.button.unfollow");
     } else {
       button.dataset.tooltip = getPhrase("wcf.user.button.unfollow");
-      button.querySelector("fa-icon")?.setIcon("circle-minus");
+      button.querySelector("fa-icon")?.setIcon("minus");
     }
   } else {
     await prepareRequest(button.dataset.followUser!)
@@ -42,7 +42,7 @@ async function toggleFollow(button: HTMLElement): Promise<void> {
       button.textContent = getPhrase("wcf.user.button.follow");
     } else {
       button.dataset.tooltip = getPhrase("wcf.user.button.follow");
-      button.querySelector("fa-icon")?.setIcon("circle-plus");
+      button.querySelector("fa-icon")?.setIcon("plus");
     }
   }
 

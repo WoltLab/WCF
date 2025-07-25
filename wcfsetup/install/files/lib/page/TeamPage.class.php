@@ -2,20 +2,19 @@
 
 namespace wcf\page;
 
-use wcf\data\user\TeamList;
+use wcf\data\user\group\UserGroupList;
+use wcf\system\listView\user\TeamListView;
 use wcf\system\page\PageLocationManager;
-use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the team members list.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- *
- * @extends MultipleLinkPage<TeamList>
+ * @author      Marcel Werk
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class TeamPage extends MultipleLinkPage
+class TeamPage extends AbstractPage
 {
     /**
      * @inheritDoc
@@ -27,46 +26,42 @@ class TeamPage extends MultipleLinkPage
      */
     public $neededModules = ['MODULE_TEAM_PAGE'];
 
-    /**
-     * @inheritDoc
-     */
-    public $itemsPerPage = 1000;
+    protected array $teams = [];
 
-    /**
-     * @inheritDoc
-     */
-    public $sortField = MEMBERS_LIST_DEFAULT_SORT_FIELD;
-
-    /**
-     * @inheritDoc
-     */
-    public $sortOrder = MEMBERS_LIST_DEFAULT_SORT_ORDER;
-
-    /**
-     * @inheritDoc
-     */
-    public $objectListClassName = TeamList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('Team');
-    }
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
 
-        // add breadcrumbs
-        if (MODULE_MEMBERS_LIST) {
+        $this->loadTeams();
+
+        if (\MODULE_MEMBERS_LIST) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
+        }
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'teams' => $this->teams,
+        ]);
+    }
+
+    protected function loadTeams(): void
+    {
+        $groupList = new UserGroupList();
+        $groupList->getConditionBuilder()->add('showOnTeamPage = ?', [1]);
+        $groupList->sqlOrderBy = 'priority DESC';
+        $groupList->readObjects();
+
+        foreach ($groupList->getObjects() as $team) {
+            $this->teams[] = [
+                'team' => $team,
+                'listView' => new TeamListView($team->groupID),
+            ];
         }
     }
 }

@@ -22,7 +22,7 @@ class SelectFilter extends AbstractFilter
      * @param array<string|int, mixed> $options
      */
     public function __construct(
-        private readonly array $options,
+        protected readonly array $options,
         string $id,
         string $languageItem,
         string $databaseColumn = '',

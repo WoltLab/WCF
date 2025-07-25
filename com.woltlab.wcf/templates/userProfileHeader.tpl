@@ -102,46 +102,36 @@
 		</div>
 		<div class="userProfileHeader__buttons">
 			{event name='beforeButtons'}
-			
-			{if $view->hasInteractionOptions()}
-				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
 
-					<ul class="dropdownMenu">
-						{foreach from=$view->getInteractionOptions() item='interactionOption'}
-							<li>
-								{if $interactionOption->link}
-									<a href="{$interactionOption->link}" {unsafe:$interactionOption->attributes}>{$interactionOption->title}</a>
-								{else}
-									<button type="button" {unsafe:$interactionOption->attributes}>{$interactionOption->title}</button>
-								{/if}
-							</li>
-						{/foreach}
-					</ul>
-				</div>
-			{/if}
-
-			{if $view->hasManagementOptions()}
-				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.profile.management{/lang}">{icon name='gear'}</button>
-
-					<ul class="dropdownMenu userProfileHeader__managementOptions">
-						{foreach from=$view->getManagementOptions() item='managementOption'}
-							<li>
-								{if $managementOption->link}
-									<a href="{$managementOption->link}" {unsafe:$managementOption->attributes}>{$managementOption->title}</a>
-								{else}
-									<button type="button" {unsafe:$managementOption->attributes}>{$managementOption->title}</button>
-								{/if}
-							</li>
-						{/foreach}
-					</ul>
-				</div>
+			{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
+				{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
+					{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
+						<button
+							type="button"
+							data-following="1"
+							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							class="userProfileHeader__button button small jsTooltip"
+							title="{lang}wcf.user.button.unfollow{/lang}"
+						>{icon name='minus' type='solid'}</button>
+					{else}
+						<button
+							type="button"
+							data-following="0"
+							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							class="userProfileHeader__button button small jsTooltip"
+							title="{lang}wcf.user.button.follow{/lang}"
+						>{icon name='plus' type='solid'}</button>
+					{/if}
+				{/if}
 			{/if}
 			
+			{unsafe:$view->getInteractionContextMenu()->render()}
+
+			{unsafe:$view->getManagementContextMenu()->render()}
+
 			{if $view->hasSearchContentLinks()}
 				<div class="userProfileHeader__button dropdown">
-					<button type="button" class="button buttonPrimary dropdownToggle">
+					<button type="button" class="button buttonPrimary small dropdownToggle">
 						{icon name='magnifying-glass'}
 						<span>{lang}wcf.user.searchUserContent{/lang}</span>
 					</button>

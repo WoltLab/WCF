@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\http\Helper;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
@@ -37,14 +38,22 @@ final class GetContextMenuOptions implements IController
         // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
         \assert($provider instanceof IInteractionProvider);
 
-        $object = new ($provider->getObjectClassName())($parameters->objectID);
-        \assert($object instanceof DatabaseObject);
-
+        $object = $this->getDatabaseObject($provider->getObjectClassName(), $parameters->objectID);
         $contextMenu = new InteractionContextMenuComponent($provider);
 
         return new JsonResponse([
             'template' => $contextMenu->renderContextMenuOptions($object),
         ]);
+    }
+
+    private function getDatabaseObject(string $className, int|string $objectID): DatabaseObject
+    {
+        if (\is_subclass_of($className, DatabaseObjectDecorator::class)) {
+            $baseObject = new ($className::getBaseClass())($objectID);
+            return new ($className)($baseObject);
+        } else {
+            return new ($className)($objectID);
+        }
     }
 }
 

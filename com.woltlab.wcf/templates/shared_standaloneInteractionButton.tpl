@@ -1,16 +1,16 @@
-<div class="dropdown {$cssClassName}" id="{$containerID}">
+<div class="dropdown {$configuration->cssClassName}" id="{$containerID}">
 	<button 
 		type="button"
-		class="button dropdownToggle {$buttonCssClassName}"
-		{if !$label}aria-label="{lang}wcf.global.button.more{/lang}"{/if}
+		class="dropdownToggle {$configuration->buttonCssClassName}{if !$configuration->label} jsTooltip{/if}"
+		{if !$configuration->label}title="{lang}{$configuration->tooltip}{/lang}"{/if}
 	>
-		{icon name=$icon}
-		{if $label}
-			<span>{$label}</span>
+		{unsafe:$configuration->getIconHtml()}
+		{if $configuration->label}
+			<span>{$configuration->label}</span>
 		{/if}
 	</button>
 
-	<ul class="dropdownMenu">
+	<ul class="dropdownMenu {$configuration->dropdownMenuCssClassName}">
 		{unsafe:$contextMenuOptions}
 	</ul>
 </div>

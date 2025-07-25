@@ -9,7 +9,6 @@ use wcf\system\listView\user\ArticleListView;
 use wcf\system\listView\user\CategoryArticleListView;
 use wcf\system\MetaTagHandler;
 use wcf\system\page\PageLocationManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -54,13 +53,11 @@ class CategoryArticleListPage extends ArticleListPage
     }
 
     #[\Override]
-    protected function initListView(): void
+    protected function getBaseUrlParameters(): array
     {
-        parent::initListView();
-
-        $this->listView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class, [
+        return [
             'object' => $this->category,
-        ]));
+        ];
     }
 
     #[\Override]

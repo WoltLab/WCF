@@ -11,6 +11,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\listView\filter\IListViewFilter;
 use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
@@ -41,6 +42,7 @@ abstract class AbstractListView
     private ?IInteractionProvider $interactionProvider = null;
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
+    private ?InteractionContextMenuComponentConfiguration $interactionContextMenuComponentConfiguration = null;
     private bool $allowFiltering = true;
     private bool $allowSorting = true;
     private bool $allowInteractions = true;
@@ -557,6 +559,15 @@ abstract class AbstractListView
     }
 
     /**
+     * Allows to define a custom configuration for the interaction context menu.
+     * If no configuration is set, the default configuration will be used.
+     */
+    public function setInteractionContextMenuComponentConfiguration(InteractionContextMenuComponentConfiguration $configuration): void
+    {
+        $this->interactionContextMenuComponentConfiguration = $configuration;
+    }
+
+    /**
      * Returns the view of the interaction context menu.
      */
     public function getInteractionContextMenuComponent(): InteractionContextMenuComponent
@@ -566,7 +577,10 @@ abstract class AbstractListView
         }
 
         if (!isset($this->interactionContextMenuComponent)) {
-            $this->interactionContextMenuComponent = new InteractionContextMenuComponent($this->interactionProvider);
+            $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
+                $this->interactionProvider,
+                $this->interactionContextMenuComponentConfiguration
+            );
         }
 
         return $this->interactionContextMenuComponent;

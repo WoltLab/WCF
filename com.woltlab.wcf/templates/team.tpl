@@ -1,28 +1,19 @@
 {include file='header'}
 
-{foreach from=$objects->getTeams() item=team}
-	<section class="section sectionContainerList">
+{foreach from=$teams item='teamData'}
+	{assign var='team' value=$teamData['team']}
+	{assign var='listView' value=$teamData['listView']}
+	
+	<section class="section">
 		<header class="sectionHeader">
-			<h2 class="sectionTitle" id="group{$team->groupID}">{$team->getTitle()} <span class="badge">{#$team->getMembers()|count}</span></h2>
+			<h2 class="sectionTitle" id="group{$team->groupID}">{$team->getTitle()} <span class="badge">{#$listView->countItems()}</span></h2>
 			<p class="sectionDescription">{$team->getDescription()}</p>
 		</header>
-			
-		<div class="userCardList">
-			{foreach from=$team->getMembers() item=user}
-				{include file='userCard'}
-			{/foreach}
+		
+		<div class="{$listView->getContainerCssClassName()}">
+			{unsafe:$listView->render()}
 		</div>
 	</section>
 {/foreach}
-
-<footer class="contentFooter">
-	{hascontent}
-		<nav class="contentFooterNavigation">
-			<ul>
-				{content}{event name='contentFooterNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</footer>
 
 {include file='footer'}
