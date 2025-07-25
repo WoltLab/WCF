@@ -2,6 +2,7 @@
 
 namespace wcf\system\listView\user;
 
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfileList;
 
 /**
@@ -32,6 +33,24 @@ class TeamListView extends MembersListView
         );
 
         return $list;
+    }
+
+    #[\Override]
+    public function isAccessible(): bool
+    {
+        if (!parent::isAccessible()) {
+            return false;
+        }
+
+        if (!\MODULE_TEAM_PAGE) {
+            return false;
+        }
+
+        if (UserGroup::getGroupByID($this->groupID) === null || !UserGroup::getGroupByID($this->groupID)->showOnTeamPage) {
+            return false;
+        }
+
+        return true;
     }
 
     #[\Override]
