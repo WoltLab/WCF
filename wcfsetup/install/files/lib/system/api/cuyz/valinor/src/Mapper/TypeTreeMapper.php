@@ -8,7 +8,6 @@ use CuyZ\Valinor\Library\Settings;
 use CuyZ\Valinor\Mapper\Exception\InvalidMappingTypeSignature;
 use CuyZ\Valinor\Mapper\Exception\TypeErrorDuringMapping;
 use CuyZ\Valinor\Mapper\Tree\Builder\RootNodeBuilder;
-use CuyZ\Valinor\Mapper\Tree\Builder\TreeNode;
 use CuyZ\Valinor\Mapper\Tree\Exception\UnresolvableShellType;
 use CuyZ\Valinor\Mapper\Tree\Shell;
 use CuyZ\Valinor\Type\Parser\Exception\InvalidType;
@@ -23,18 +22,10 @@ final class TypeTreeMapper implements TreeMapper
         private Settings $settings,
     ) {}
 
+    /**
+     * @pure
+     */
     public function map(string $signature, mixed $source): mixed
-    {
-        $node = $this->node($signature, $source);
-
-        if (! $node->isValid()) {
-            throw new TypeTreeMapperError($node->node());
-        }
-
-        return $node->value();
-    }
-
-    private function node(string $signature, mixed $source): TreeNode
     {
         try {
             $type = $this->typeParser->parse($signature);
@@ -45,9 +36,15 @@ final class TypeTreeMapper implements TreeMapper
         $shell = Shell::root($this->settings, $type, $source);
 
         try {
-            return $this->nodeBuilder->build($shell);
+            $node = $this->nodeBuilder->build($shell);
         } catch (UnresolvableShellType $exception) {
             throw new TypeErrorDuringMapping($type, $exception);
         }
+
+        if (! $node->isValid()) {
+            throw new TypeTreeMapperError($source, $type->toString(), $node->messages());
+        }
+
+        return $node->value();
     }
 }

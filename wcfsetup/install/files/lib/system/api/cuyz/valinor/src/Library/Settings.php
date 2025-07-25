@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Library;
 
 use Closure;
+use CuyZ\Valinor\Cache\Cache;
 use CuyZ\Valinor\Mapper\Object\Constructor;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
-use CuyZ\Valinor\Normalizer\AsTransformer;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Psr\SimpleCache\CacheInterface;
 use ReflectionFunction;
 use Throwable;
 
 use function array_keys;
+use function array_values;
 use function hash;
 
 /** @internal */
@@ -38,11 +38,7 @@ final class Settings
     /** @var list<callable> */
     public array $customConstructors = [];
 
-    /** @var list<callable> */
-    public array $valueModifier = [];
-
-    /** @var CacheInterface<mixed> */
-    public CacheInterface $cache;
+    public Cache $cache;
 
     /** @var non-empty-list<non-empty-string> */
     public array $supportedDateFormats = self::DEFAULT_SUPPORTED_DATETIME_FORMATS;
@@ -57,14 +53,20 @@ final class Settings
 
     public bool $allowPermissiveTypes = false;
 
-    /** @var callable(Throwable): ErrorMessage */
-    public $exceptionFilter;
-
     /** @var array<int, list<callable>> */
-    public array $transformers = [];
+    public array $mapperConverters = [];
 
     /** @var array<class-string, null> */
-    public array $transformerAttributes = [];
+    public array $mapperConverterAttributes = [];
+
+    /** @var callable(Throwable): ErrorMessage */
+    public mixed $exceptionFilter;
+
+    /** @var array<int, list<callable>> */
+    public array $normalizerTransformers = [];
+
+    /** @var array<class-string, null> */
+    public array $normalizerTransformerAttributes = [];
 
     private string $hash;
 
@@ -80,11 +82,27 @@ final class Settings
     public function allowedAttributes(): array
     {
         return [
-            AsTransformer::class,
             Constructor::class,
             DynamicConstructor::class,
-            ...array_keys($this->transformerAttributes),
+            ...array_keys($this->mapperConverterAttributes),
+            ...array_keys($this->normalizerTransformerAttributes),
         ];
+    }
+
+    /**
+     * @return list<callable>
+     */
+    public function convertersSortedByPriority(): array
+    {
+        krsort($this->mapperConverters);
+
+        $callables = [];
+
+        foreach ($this->mapperConverters as $list) {
+            $callables = [...$callables, ...$list];
+        }
+
+        return $callables;
     }
 
     /**
@@ -92,11 +110,11 @@ final class Settings
      */
     public function transformersSortedByPriority(): array
     {
-        krsort($this->transformers);
+        krsort($this->normalizerTransformers);
 
         $callables = [];
 
-        foreach ($this->transformers as $list) {
+        foreach ($this->normalizerTransformers as $list) {
             $callables = [...$callables, ...$list];
         }
 
@@ -110,29 +128,34 @@ final class Settings
     public function hash(): string
     {
         return $this->hash ??= hash('xxh128', serialize([
-            implode('', array_map($this->callableSignature(...), $this->inferredMapping)),
             $this->nativeConstructors,
-            implode('', array_map($this->callableSignature(...), $this->customConstructors)),
-            implode('', array_map($this->callableSignature(...), $this->valueModifier)),
             $this->supportedDateFormats,
             $this->allowScalarValueCasting,
             $this->allowNonSequentialList,
             $this->allowUndefinedValues,
             $this->allowSuperfluousKeys,
             $this->allowPermissiveTypes,
-            $this->callableSignature($this->exceptionFilter),
-            array_map(
-                fn (array $transformers) => implode('', array_map($this->callableSignature(...), $transformers)),
-                $this->transformers,
-            ),
-            $this->transformerAttributes,
+            $this->mapperConverterAttributes,
+            $this->normalizerTransformerAttributes,
+            implode('', array_map(function (callable $callable) {
+                $reflection = new ReflectionFunction(Closure::fromCallable($callable));
+
+                return ($reflection->getClosureCalledClass()->name ?? $reflection->getFileName()) . $reflection->getStartLine() . $reflection->getEndLine();
+            }, $this->callables())),
         ]));
     }
 
-    private function callableSignature(callable $callable): string
+    /**
+     * @return non-empty-list<callable>
+     */
+    public function callables(): array
     {
-        $reflection = new ReflectionFunction(Closure::fromCallable($callable));
-
-        return ($reflection->getClosureCalledClass()->name ?? $reflection->getFileName()) . $reflection->getStartLine() . $reflection->getEndLine();
+        return array_values([
+            $this->exceptionFilter,
+            ...$this->inferredMapping,
+            ...$this->customConstructors,
+            ...array_merge(...$this->mapperConverters),
+            ...array_merge(...$this->normalizerTransformers),
+        ]);
     }
 }

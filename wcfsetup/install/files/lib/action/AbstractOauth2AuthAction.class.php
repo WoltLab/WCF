@@ -111,7 +111,6 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
         try {
             $mapper = (new MapperBuilder())
                 ->allowSuperfluousKeys()
-                ->enableFlexibleCasting()
                 ->mapper();
 
             return $mapper->map(

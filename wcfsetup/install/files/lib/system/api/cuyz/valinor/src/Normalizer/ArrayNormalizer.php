@@ -14,10 +14,16 @@ use CuyZ\Valinor\Normalizer\Transformer\Transformer;
  */
 final class ArrayNormalizer implements Normalizer
 {
+    /**
+     * @internal
+     */
     public function __construct(
         private Transformer $transformer,
     ) {}
 
+    /**
+     * @pure
+     */
     public function normalize(mixed $value): mixed
     {
         /** @var array<mixed>|scalar|null */

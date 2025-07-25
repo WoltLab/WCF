@@ -3,7 +3,6 @@
 namespace wcf\http\middleware;
 
 use CuyZ\Valinor\Mapper\MappingError;
-use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -34,8 +33,8 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (MappingError $e) {
-            $message = "Could not map type '{$e->node()->type()}'.";
-            $errors = Messages::flattenFromNode($e->node())
+            $message = "Could not map type '{$e->type()}'.";
+            $errors = $e->messages()
                 ->formatWith(new PrependPath());
 
             $preferredType = Helper::getPreferredContentType($request, [
@@ -49,7 +48,7 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                         'message' => $message,
                         'exception' => \ENABLE_DEBUG_MODE ? $e->__toString() : null,
                         'errors' => \array_map(
-                            static fn (NodeMessage $m) => $m->toString(),
+                            static fn(NodeMessage $m) => $m->toString(),
                             \iterator_to_array($errors, false)
                         ),
                     ],
