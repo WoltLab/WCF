@@ -5,7 +5,6 @@ namespace wcf\form;
 use wcf\data\language\Language;
 use wcf\data\style\Style;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyCache;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
@@ -129,11 +128,9 @@ class SettingsForm extends AbstractForm
             $this->availableStyles = StyleHandler::getInstance()->getAvailableStyles();
 
             // read available trophies
-            $trophyIDs = \array_unique(\array_map(static function ($userTrophy) {
-                return $userTrophy->trophyID;
+            $this->availableTrophies = \array_unique(\array_map(static function ($userTrophy) {
+                return $userTrophy->getTrophy();
             }, UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID]));
-
-            $this->availableTrophies = TrophyCache::getInstance()->getTrophiesByID($trophyIDs);
 
             Trophy::sort($this->availableTrophies, 'showOrder');
         } elseif (!$this->optionHandler->countCategoryOptions('settings.' . $this->category)) {

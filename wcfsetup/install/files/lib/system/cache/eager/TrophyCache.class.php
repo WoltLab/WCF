@@ -2,8 +2,9 @@
 
 namespace wcf\system\cache\eager;
 
-use wcf\data\trophy\TrophyList;
+use wcf\data\trophy\Trophy;
 use wcf\system\cache\eager\data\TrophyCacheData;
+use wcf\system\WCF;
 
 /**
  * Caches for trophies.
@@ -20,11 +21,19 @@ final class TrophyCache extends AbstractEagerCache
     #[\Override]
     protected function getCacheData(): TrophyCacheData
     {
-        $trophyList = new TrophyList();
-        $trophyList->sqlOrderBy = 'showOrder ASC';
-        $trophyList->readObjects();
+        // `TrophyList` cannot be used, otherwise calling `Trophy::getFile()` would load the files for all existing trophies
+        // and not just those that are actually needed.
+        $sql = "SELECT   *
+                FROM     wcf1_trophy
+                ORDER BY showOrder ASC";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
 
-        $trophies = $trophyList->getObjects();
+        $trophies = [];
+        while ($trophy = $statement->fetchObject(Trophy::class)) {
+            $trophies[$trophy->trophyID] = $trophy;
+        }
+
         $enabledTrophies = \array_filter($trophies, static function ($trophy) {
             return !$trophy->isDisabled;
         });

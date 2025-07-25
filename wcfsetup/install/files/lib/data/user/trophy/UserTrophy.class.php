@@ -2,9 +2,8 @@
 
 namespace wcf\data\user\trophy;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -27,8 +26,10 @@ use wcf\util\StringUtil;
  * @property-read   string $description            the custom trophy description
  * @property-read   int $useCustomDescription       `1`, if the trophy use a custom description
  * @property-read   int $trophyUseHtml              `1`, if the trophy use a html description
+ *
+ * @extends CollectionDatabaseObject<UserTrophyCollection>
  */
-class UserTrophy extends DatabaseObject
+class UserTrophy extends CollectionDatabaseObject
 {
     /**
      * @inheritDoc
@@ -43,22 +44,18 @@ class UserTrophy extends DatabaseObject
 
     /**
      * Returns the trophy for the user trophy.
-     *
-     * @return Trophy
      */
-    public function getTrophy()
+    public function getTrophy(): Trophy
     {
-        return TrophyCache::getInstance()->getTrophyByID($this->trophyID);
+        return $this->getCollection()->getTrophy($this);
     }
 
     /**
      * Returns the user profile for the user trophy.
-     *
-     * @return UserProfile
      */
-    public function getUserProfile()
+    public function getUserProfile(): UserProfile
     {
-        return UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+        return $this->getCollection()->getUserProfile($this);
     }
 
     /**

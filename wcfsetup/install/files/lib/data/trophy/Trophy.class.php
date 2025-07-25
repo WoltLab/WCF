@@ -2,12 +2,11 @@
 
 namespace wcf\data\trophy;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\file\File;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -40,8 +39,10 @@ use wcf\util\StringUtil;
  * @property-read   string|null $conditions
  * @property-read   int $isLegacy
  * @property-read   int|null $imageFileID
+ *
+ * @extends CollectionDatabaseObject<TrophyCollection>
  */
-class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
+class Trophy extends CollectionDatabaseObject implements ITitledLinkObject, IRouteController
 {
     /**
      * The type value, if this trophy is an image trophy.
@@ -199,6 +200,6 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      */
     public function getFile(): ?File
     {
-        return FileRuntimeCache::getInstance()->getObject($this->imageFileID);
+        return $this->getCollection()->getFile($this);
     }
 }

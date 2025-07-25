@@ -3,7 +3,6 @@
 namespace wcf\data\trophy;
 
 use wcf\system\cache\eager\data\TrophyCacheData;
-use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\SingletonFactory;
 
 /**
@@ -17,6 +16,7 @@ use wcf\system\SingletonFactory;
 final class TrophyCache extends SingletonFactory
 {
     private TrophyCacheData $trophyCache;
+    private TrophyCollection $trophyCollection;
 
     /**
      * @inheritDoc
@@ -46,6 +46,16 @@ final class TrophyCache extends SingletonFactory
 
         foreach ($trophyIDs as $trophyID) {
             $returnValues[] = $this->getTrophyByID($trophyID);
+        }
+
+        if (!isset($this->trophyCollection)) {
+            $this->trophyCollection = new TrophyCollection($returnValues);
+        } else {
+            $this->trophyCollection = $this->trophyCollection->withTrophies($returnValues);
+        }
+
+        foreach ($returnValues as $trophy) {
+            $trophy->setCollection($this->trophyCollection);
         }
 
         return $returnValues;
@@ -98,21 +108,6 @@ final class TrophyCache extends SingletonFactory
     public function getEnabledTrophies(): array
     {
         return $this->trophyCache->enabledTrophies;
-    }
-
-    /**
-     * @param Trophy[] $trophies
-     */
-    public function cacheFileIDs(array $trophies): void
-    {
-        $fileIDs = [];
-        foreach ($trophies as $trophy) {
-            if ($trophy->imageFileID) {
-                $fileIDs[] = $trophy->imageFileID;
-            }
-        }
-
-        FileRuntimeCache::getInstance()->cacheObjectIDs($fileIDs);
     }
 
     /**

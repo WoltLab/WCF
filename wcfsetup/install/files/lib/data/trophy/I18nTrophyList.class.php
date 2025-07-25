@@ -25,12 +25,4 @@ class I18nTrophyList extends I18nDatabaseObjectList
      * @inheritDoc
      */
     public $className = Trophy::class;
-
-    #[\Override]
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        TrophyCache::getInstance()->cacheFileIDs($this->getObjects());
-    }
 }

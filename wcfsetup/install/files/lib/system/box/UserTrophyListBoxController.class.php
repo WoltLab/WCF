@@ -4,7 +4,6 @@ namespace wcf\system\box;
 
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\User;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -142,14 +141,6 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
      */
     public function getTemplate()
     {
-        $userIDs = [];
-
-        foreach ($this->objectList->getObjects() as $trophy) {
-            $userIDs[] = $trophy->userID;
-        }
-
-        UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
-
         $templateName = match ($this->getBox()->position) {
             'sidebarLeft', 'sidebarRight' => 'boxUserTrophyListSidebar',
             default => 'boxUserTrophyList',

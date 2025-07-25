@@ -4,7 +4,6 @@ namespace wcf\page;
 
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\data\trophy\TrophyCache;
 use wcf\data\trophy\TrophyList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
@@ -111,8 +110,6 @@ class TrophyListPage extends MultipleLinkPage
     public function assignVariables()
     {
         parent::assignVariables();
-
-        TrophyCache::getInstance()->cacheFileIDs($this->objectList->getObjects());
 
         WCF::getTPL()->assign([
             'category' => $this->category,
