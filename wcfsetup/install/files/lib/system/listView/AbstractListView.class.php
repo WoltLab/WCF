@@ -111,10 +111,6 @@ abstract class AbstractListView
      */
     public function setSortField(string $sortField): void
     {
-        if (!isset($this->availableSortFields[$sortField])) {
-            throw new \InvalidArgumentException("Invalid value '{$sortField}' as sort field given.");
-        }
-
         $this->sortField = $sortField;
     }
 
@@ -204,6 +200,9 @@ abstract class AbstractListView
     protected function initObjectList(): void
     {
         $this->objectList = $this->createObjectList();
+        $this->fireInitializedEvent();
+        $this->validate();
+
         $this->objectList->sqlLimit = $this->getFixedNumberOfItems() ?: $this->getItemsPerPage();
         if (!$this->getFixedNumberOfItems()) {
             $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getItemsPerPage();
@@ -215,8 +214,21 @@ abstract class AbstractListView
                 [$this->getObjectIDFilter()]
             );
         }
+
         $this->applyFilters();
-        $this->fireInitializedEvent();
+    }
+
+    protected function validate(): void
+    {
+        if ($this->getSortField()) {
+            if (!isset($this->availableSortFields[$this->getSortField()])) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw new \LogicException("Invalid value '{$this->getSortField()}' as sort field given.");
+                } else {
+                    $this->setSortField('');
+                }
+            }
+        }
     }
 
     protected function getSqlOrderBy(): string
@@ -234,7 +246,6 @@ abstract class AbstractListView
 
             $sqlOrderBy .= ',';
         }
-
 
         $sqlOrderBy .= $this->objectList->getDatabaseTableAlias() .
             '.' . $this->objectList->getDatabaseTableIndexName() . ' ' . $this->getSortOrder();
