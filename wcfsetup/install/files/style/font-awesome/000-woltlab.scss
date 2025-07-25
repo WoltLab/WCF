@@ -1,19 +1,19 @@
-/* Font Awesome 6 Free: Regular */
+/* Font Awesome 7 Free: Regular */
 @font-face {
-	font-family: "Font Awesome 6 Free";
+	font-family: "Font Awesome 7 Free";
 	font-style: normal;
 	font-weight: 400;
 	font-display: block !important;
-	src: url("../font/fa-regular-400.woff2?v=6.7.2") format("woff2");
+	src: url("../font/fa-regular-400.woff2?v=7.0.0") format("woff2");
 }
 
-/* Font Awesome 6 Free: Solid */
+/* Font Awesome 7 Free: Solid */
 @font-face {
-	font-family: "Font Awesome 6 Free";
+	font-family: "Font Awesome 7 Free";
 	font-style: normal;
 	font-weight: 900;
 	font-display: block !important;
-	src: url("../font/fa-solid-900.woff2?v=6.7.2") format("woff2");
+	src: url("../font/fa-solid-900.woff2?v=7.0.0") format("woff2");
 }
 
 fa-brand,
@@ -79,7 +79,7 @@ fa-icon {
 	-webkit-font-smoothing: antialiased !important;
 	-webkit-user-select: none !important;
 
-	font-family: var(--fa-font-family, "Font Awesome 6 Free") !important;
+	font-family: var(--fa-font-family, "Font Awesome 7 Free") !important;
 	font-size: var(--font-size) !important;
 	font-style: normal !important;
 	font-variant: normal !important;

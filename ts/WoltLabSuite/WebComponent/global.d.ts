@@ -28,7 +28,7 @@ declare global {
     };
     TIME_NOW: number;
 
-    getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
+    getFontAwesome7IconMetadata: (name: string) => IconMetadata | undefined;
 
     HTMLParsedElement: HTMLParsedElement;
     WoltLabLanguage: typeof Language;

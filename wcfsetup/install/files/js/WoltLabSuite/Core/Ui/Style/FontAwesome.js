@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
                     onSetup: () => {
                         this.iconList = document.getElementById("fontAwesomeIcons");
                         const icons = [];
-                        window.getFontAwesome6Metadata().forEach(([, hasRegular], name) => {
+                        window.getFontAwesome7Metadata().forEach(([, hasRegular], name) => {
                             if (hasRegular) {
                                 icons.push(`<li><fa-icon size="48" name="${name}" solid></fa-icon><small>${name}</small></li>`);
                             }
