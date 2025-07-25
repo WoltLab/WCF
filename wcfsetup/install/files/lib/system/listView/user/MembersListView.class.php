@@ -3,7 +3,6 @@
 namespace wcf\system\listView\user;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\search\Search;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\event\listView\user\MembersListViewInitialized;
@@ -29,9 +28,8 @@ use wcf\system\WCF;
 class MembersListView extends AbstractListView
 {
     private bool $userStoragePreloaded = false;
-    private ?Search $search = null;
 
-    public function __construct(private readonly ?int $searchID = null)
+    public function __construct()
     {
         $this->addAvailableSortFields([
             new ListViewSortField('username', 'wcf.user.sortField.username'),
@@ -52,24 +50,12 @@ class MembersListView extends AbstractListView
         $this->setItemsPerPage(\MEMBERS_LIST_USERS_PER_PAGE);
         $this->setCssClassName('userCardList');
         $this->setContainerCssClassName('userCardList__container');
-
-        if ($this->searchID !== null) {
-            $this->search = new Search($this->searchID);
-        }
     }
 
     #[\Override]
     protected function createObjectList(): UserProfileList
     {
-        $list = new UserProfileList();
-
-        if ($this->search !== null) {
-            $searchData = \unserialize($this->search->searchData);
-            $list->getConditionBuilder()->add("user_table.userID IN (?)", [$searchData['matches']]);
-            unset($searchData);
-        }
-
-        return $list;
+        return new UserProfileList();
     }
 
     #[\Override]
@@ -77,12 +63,6 @@ class MembersListView extends AbstractListView
     {
         if (!\MODULE_MEMBERS_LIST || !WCF::getSession()->getPermission('user.profile.canViewMembersList')) {
             return false;
-        }
-
-        if ($this->search !== null) {
-            if (!$this->search->searchID || $this->search->userID !== WCF::getUser()->userID || $this->search->searchType !== 'users') {
-                return false;
-            }
         }
 
         return true;
@@ -106,18 +86,6 @@ class MembersListView extends AbstractListView
         }
 
         return $objects;
-    }
-
-    #[\Override]
-    public function getParameters(): array
-    {
-        if ($this->searchID !== null) {
-            return [
-                'searchID' => $this->searchID,
-            ];
-        }
-
-        return [];
     }
 
     #[\Override]
