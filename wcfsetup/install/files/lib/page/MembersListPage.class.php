@@ -69,4 +69,16 @@ class MembersListPage extends AbstractListViewPage
             'searchID' => $this->searchID,
         ]);
     }
+
+    #[\Override]
+    protected function getBaseUrlParameters(): array
+    {
+        if ($this->searchID) {
+            return [
+                'id' => $this->searchID,
+            ];
+        }
+
+        return parent::getBaseUrlParameters();
+    }
 }

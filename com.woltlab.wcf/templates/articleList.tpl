@@ -1,11 +1,4 @@
 {capture append='headContent'}
-	{if $listView->getPageNo() < $listView->countPages()}
-		<link rel="next" href="{link controller='ArticleList'}pageNo={$listView->getPageNo() + 1}{/link}">
-	{/if}
-	{if $listView->getPageNo() > 1}
-		<link rel="prev" href="{link controller='ArticleList'}{if $listView->getPageNo() > 2}pageNo={$listView->getPageNo() - 1}{/if}{/link}">
-	{/if}
-	
 	{if $__wcf->user->userID}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' at=$__wcf->user->getAccessToken()}{/link}">
 	{else}

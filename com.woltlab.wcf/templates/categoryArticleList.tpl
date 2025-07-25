@@ -4,13 +4,6 @@
 {capture assign='contentDescription'}{if $category->descriptionUseHtml}{unsafe:$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
 {capture append='headContent'}
-	{if $listView->getPageNo() < $listView->countPages()}
-		<link rel="next" href="{link controller='CategoryArticleList' object=$category}pageNo={$listView->getPageNo() + 1}{/link}">
-	{/if}
-	{if $listView->getPageNo() > 1}
-		<link rel="prev" href="{link controller='CategoryArticleList' object=$category}{if $listView->getPageNo() > 2}pageNo={$listView->getPageNo() - 1}{/if}{/link}">
-	{/if}
-	
 	{if $__wcf->user->userID}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID at=$__wcf->user->getAccessToken()}{/link}">
 	{else}

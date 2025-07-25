@@ -130,14 +130,12 @@ class TaggedListViewPage extends AbstractListViewPage
     }
 
     #[\Override]
-    protected function initListView(): void
+    protected function getBaseUrlParameters(): array
     {
-        parent::initListView();
-
-        $this->listView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class, [
+        return [
             'objectType' => $this->objectType->objectType,
             'tagIDs' => $this->tagIDs,
-        ]));
+        ];
     }
 
     #[\Override]

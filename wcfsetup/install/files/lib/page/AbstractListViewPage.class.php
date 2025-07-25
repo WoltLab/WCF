@@ -6,6 +6,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a page that is rendering a list view.
@@ -67,6 +68,7 @@ abstract class AbstractListViewPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'listView' => $this->listView,
+            'headContent' => $this->getHeadContent(),
         ]);
     }
 
@@ -89,7 +91,67 @@ abstract class AbstractListViewPage extends AbstractPage
         if ($this->pageNo != 1) {
             $this->listView->setPageNo($this->pageNo);
         }
-        $this->listView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class));
+        $this->listView->setBaseUrl(
+            LinkHandler::getInstance()->getControllerLink(static::class, $this->getBaseUrlParameters())
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getBaseUrlParameters(): array
+    {
+        return [];
+    }
+
+    protected function getHeadContent(): string
+    {
+        $linkTags = [];
+        if ($this->listView->getPageNo() < $this->listView->countPages()) {
+            $linkTags[] = \sprintf(
+                '<link rel="next" href="%s">',
+                StringUtil::encodeHTML(
+                    LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+                        $this->getBaseUrlParameters(),
+                        [
+                            'pageNo' => $this->listView->getPageNo() + 1,
+                            'sortField' => $this->sortField ?: null,
+                            'sortOrder' => $this->sortOrder ?: null,
+                        ]
+                    ))
+                )
+            );
+        }
+
+        if ($this->listView->getPageNo() > 1) {
+            $linkTags[] = \sprintf(
+                '<link rel="prev" href="%s">',
+                StringUtil::encodeHTML(
+                    LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+                        $this->getBaseUrlParameters(),
+                        [
+                            'pageNo' => $this->listView->getPageNo() !== 2 ? $this->listView->getPageNo() - 1 : null,
+                            'sortField' => $this->sortField ?: null,
+                            'sortOrder' => $this->sortOrder ?: null,
+                        ]
+                    ))
+                )
+            );
+        }
+
+        $linkTags[] = \sprintf(
+            '<link rel="canonical" href="%s">',
+            StringUtil::encodeHTML(
+                LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+                    $this->getBaseUrlParameters(),
+                    [
+                        'pageNo' => $this->listView->getPageNo() !== 1 ? $this->listView->getPageNo() : null,
+                    ]
+                ))
+            )
+        );
+
+        return \implode("\n", $linkTags);
     }
 
     /**
