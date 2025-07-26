@@ -692,6 +692,13 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $overrideScss['custom']
             );
 
+            // Import variables for the dark mode if the style previously had none.
+            if (!$style->hasDarkMode && $styleData['hasDarkMode']) {
+                foreach ($styleData['variablesDarkMode'] as $k => $v) {
+                    $variables[Style::DARK_MODE_PREFIX . $k] = $v;
+                }
+            }
+
             $styleData['variables'] = $variables;
             unset($styleData['variablesDarkMode']);
 
