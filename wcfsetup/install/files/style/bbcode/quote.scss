@@ -96,6 +96,7 @@
 	align-self: center;
 	column-gap: 5px;
 	display: flex;
+	justify-content: end;
 	grid-area: buttons;
 	white-space: nowrap;
 }
