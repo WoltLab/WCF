@@ -69,15 +69,12 @@
 }
 
 .quoteBoxContent {
+	display: -webkit-box;
 	grid-area: content;
-
-	> :first-child {
-		margin-top: 0 !important;
-	}
-
-	> :last-child {
-		margin-bottom: 0 !important;
-	}
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	line-clamp: 5;
 }
 
 .quoteBox.quoteBox--tabMenu {
