@@ -54,7 +54,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
       <fa-icon name="paste"></fa-icon>
     </button>
   </div>
-  <div class="quoteBoxContent">
+  <div class="quoteBoxContent htmlContent">
     ${quote.rawMessage === undefined ? quote.message : quote.rawMessage}
   </div>
 </div>
