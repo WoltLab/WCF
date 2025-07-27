@@ -51,6 +51,10 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	flex-wrap: wrap;
 	gap: 10px;
 	padding: 10px 20px;
+
+	@include screen-sm-down {
+		padding: 10px;
+	}
 }
 
 .userProfileHeader__avatar {
@@ -91,6 +95,10 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	font-size: var(--wcfFontSizeTitle);
 	font-weight: 600;
 	line-height: 1.05;
+
+	@include screen-sm-down {
+		font-size: var(--wcfFontSizeHeadline);
+	}
 }
 
 .userProfileHeader__stats {
