@@ -20,6 +20,13 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         #cancelButton;
         #extraButton;
         #primaryButton;
+        constructor() {
+            super();
+            const observer = new ResizeObserver(() => {
+                this.#checkForButtonOverflow();
+            });
+            observer.observe(this);
+        }
         set primary(primary) {
             this.setAttribute("primary", primary);
         }
@@ -114,6 +121,38 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     this.dispatchEvent(event);
                 });
                 this.append(this.#extraButton);
+            }
+            this.#checkForButtonOverflow();
+        }
+        #checkForButtonOverflow() {
+            const hasCancelButton = this.#cancelButton !== undefined;
+            const hasExtraButton = this.#extraButton !== undefined;
+            if (!hasCancelButton) {
+                return;
+            }
+            const gap = parseInt(window.getComputedStyle(this).columnGap.replace(/^px/, ""), 10);
+            const primaryAndCancelWidth = this.#primaryButton.clientWidth + gap + this.#cancelButton.clientWidth;
+            const extraWidth = hasExtraButton ? gap + this.#extraButton.clientWidth : 0;
+            if (hasExtraButton) {
+                if (primaryAndCancelWidth > this.clientWidth) {
+                    this.classList.add("dialog__control--tripple-stacked");
+                    this.classList.remove("dialog__control--extra-stacked");
+                }
+                else if (primaryAndCancelWidth + extraWidth > this.clientWidth) {
+                    this.classList.add("dialog__control--extra-stacked");
+                    this.classList.remove("dialog__control--tripple-stacked");
+                }
+                else {
+                    this.classList.remove("dialog__control--tripple-stacked", "dialog__control--extra-stacked");
+                }
+            }
+            else {
+                if (primaryAndCancelWidth > this.clientWidth) {
+                    this.classList.add("dialog__control--duo-stacked");
+                }
+                else {
+                    this.classList.remove("dialog__control--duo-stacked");
+                }
             }
         }
     }

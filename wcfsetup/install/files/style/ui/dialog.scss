@@ -388,8 +388,39 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 	column-gap: 10px;
 	display: grid;
 	grid-template-areas: "extra cancel primary";
-	grid-template-columns: auto max-content max-content;
+	grid-template-columns: minmax(min-content, auto) max-content max-content;
 	margin-top: 30px;
+	row-gap: 10px;
+}
+
+.dialog__control--duo-stacked,
+.dialog__control--extra-stacked,
+.dialog__control--tripple-stacked {
+	justify-content: end;
+}
+
+/* Cancel + Primary stacked on top of each other */
+.dialog__control--duo-stacked {
+	grid-template-areas:
+		"cancel"
+		"primary";
+	grid-template-columns: auto;
+}
+
+/* Cancel + Primary are next to each other and extra on top */
+.dialog__control--extra-stacked {
+	grid-template-areas:
+		"extra  extra"
+		"cancel primary";
+	grid-template-columns: auto max-content;
+}
+
+.dialog__control--tripple-stacked {
+	grid-template-areas:
+		"extra"
+		"cancel"
+		"primary";
+	grid-template-columns: auto;
 }
 
 .dialog__control__button--primary {
@@ -402,7 +433,13 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 
 .dialog__control__button--extra {
 	grid-area: extra;
-	margin-right: auto;
+	justify-self: start;
+}
+
+.dialog__control--extra-stacked .dialog__control__button--extra,
+.dialog__control--tripple-stacked .dialog__control__button--extra {
+	justify-self: end;
+	margin-right: 0;
 }
 
 /* Sections inside dialogs */

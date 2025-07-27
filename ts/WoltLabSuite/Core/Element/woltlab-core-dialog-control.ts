@@ -24,6 +24,15 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   #extraButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
 
+  constructor() {
+    super();
+
+    const observer = new ResizeObserver(() => {
+      this.#checkForButtonOverflow();
+    });
+    observer.observe(this);
+  }
+
   set primary(primary: string) {
     this.setAttribute("primary", primary);
   }
@@ -143,6 +152,40 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       });
 
       this.append(this.#extraButton);
+    }
+
+    this.#checkForButtonOverflow();
+  }
+
+  #checkForButtonOverflow(): void {
+    const hasCancelButton = this.#cancelButton !== undefined;
+    const hasExtraButton = this.#extraButton !== undefined;
+
+    if (!hasCancelButton) {
+      return;
+    }
+
+    const gap = parseInt(window.getComputedStyle(this).columnGap.replace(/^px/, ""), 10);
+
+    const primaryAndCancelWidth = this.#primaryButton!.clientWidth + gap + this.#cancelButton!.clientWidth;
+    const extraWidth = hasExtraButton ? gap + this.#extraButton!.clientWidth : 0;
+
+    if (hasExtraButton) {
+      if (primaryAndCancelWidth > this.clientWidth) {
+        this.classList.add("dialog__control--tripple-stacked");
+        this.classList.remove("dialog__control--extra-stacked");
+      } else if (primaryAndCancelWidth + extraWidth > this.clientWidth) {
+        this.classList.add("dialog__control--extra-stacked");
+        this.classList.remove("dialog__control--tripple-stacked");
+      } else {
+        this.classList.remove("dialog__control--tripple-stacked", "dialog__control--extra-stacked");
+      }
+    } else {
+      if (primaryAndCancelWidth > this.clientWidth) {
+        this.classList.add("dialog__control--duo-stacked");
+      } else {
+        this.classList.remove("dialog__control--duo-stacked");
+      }
     }
   }
 }
