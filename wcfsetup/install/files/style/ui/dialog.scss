@@ -367,7 +367,7 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 
 .dialog[role="alert"]:not(.dialog--iframe),
 .dialog[role="alertdialog"] {
-	max-width: 500px;
+	max-width: min(500px, var(--dialog-max-width));
 }
 
 .dialog[role="alert"] .dialog__header,
