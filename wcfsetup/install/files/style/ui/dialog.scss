@@ -454,7 +454,7 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 @include screen-xs {
 	.dialog {
 		--dialog-max-height: calc(100vh - 20px);
-		--dialog-max-width: calc(100vw - 20px);
+		--dialog-max-width: calc(100vw - 10px);
 		min-width: 0;
 	}
 
