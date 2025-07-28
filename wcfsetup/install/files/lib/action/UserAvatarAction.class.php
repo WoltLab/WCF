@@ -10,6 +10,7 @@ use wcf\data\IStorableObject;
 use wcf\data\user\UserProfile;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
@@ -20,6 +21,7 @@ use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\user\command\SetAvatar;
 use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Handles user avatars editing.
@@ -51,6 +53,12 @@ final class UserAvatarAction implements RequestHandlerInterface
             $user = UserProfileRuntimeCache::getInstance()->getObject($parameters['id']);
         } else {
             $user = UserProfileHandler::getInstance()->getUserProfile();
+        }
+
+        if ($user->disableAvatar && $user->userID === WCF::getUser()->userID) {
+            throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.avatar.error.disabled'
+            )));
         }
 
         if (!$user->canEditAvatar()) {
