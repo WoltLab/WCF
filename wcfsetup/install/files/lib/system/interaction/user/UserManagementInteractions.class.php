@@ -4,6 +4,7 @@ namespace wcf\system\interaction\user;
 
 use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
+use wcf\action\UserDisableAvatarAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -32,7 +33,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
     {
         $this->addInteraction(
             new FormBuilderDialogInteraction(
-                "ban",
+                'ban',
                 LinkHandler::getInstance()->getControllerLink(UserBanAction::class, [
                     'id' => '%s',
                 ]),
@@ -54,7 +55,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
         );
         $this->addInteraction(
             new RpcInteraction(
-                "unban",
+                'unban',
                 'core/users/%s/unban',
                 'wcf.user.unban',
                 isAvailableCallback: static function (UserProfile $user): bool {
@@ -72,26 +73,49 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 },
             )
         );
-
-        if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
-            $this->addInteraction(
-                new class('disable-avatar', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableAvatar ? 'wcf.user.enableAvatar' : 'wcf.user.disableAvatar');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableAvatar"
-                            >{$title}</button>
-                            HTML;
+        $this->addInteraction(
+            new FormBuilderDialogInteraction(
+                'disable-avatar',
+                LinkHandler::getInstance()->getControllerLink(UserDisableAvatarAction::class, [
+                    'id' => '%s',
+                ]),
+                'wcf.user.disableAvatar',
+                static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
-                }
-            );
-        }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableAvatar === 0;
+                },
+            )
+        );
+        $this->addInteraction(
+            new RpcInteraction(
+                'enable-avatar',
+                'core/users/%s/enable-avatar',
+                'wcf.user.enableAvatar',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableAvatar === 1;
+                },
+            )
+        );
+
         if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
             $this->addInteraction(
                 new class('disable-signature', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
