@@ -139,14 +139,18 @@ class StyleHandler extends SingletonFactory
         if ($isACP) {
             // ACP
             $filename = 'acp/style/style' . (WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '') . '.css';
-            if (!\file_exists(WCF_DIR . $filename)) {
+            $filemtime = @\filemtime(\WCF_DIR . $filename);
+            if ($filemtime === false) {
                 StyleCompiler::getInstance()->compileACP();
+                $filemtime = \filemtime(\WCF_DIR . $filename);
             }
         } else {
             // frontend
             $filename = 'style/style-' . $this->getStyle()->styleID . (WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '') . '.css';
-            if (!\file_exists(WCF_DIR . $filename)) {
+            $filemtime = @\filemtime(\WCF_DIR . $filename);
+            if ($filemtime === false) {
                 StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
+                $filemtime = \filemtime(\WCF_DIR . $filename);
             }
 
             $preloadFilename = WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json';
@@ -168,7 +172,7 @@ class StyleHandler extends SingletonFactory
             }
         }
 
-        return '<link rel="stylesheet" type="text/css" href="' . WCF::getPath() . $filename . '?m=' . \filemtime(WCF_DIR . $filename) . '">' . $preload;
+        return '<link rel="stylesheet" type="text/css" href="' . WCF::getPath() . $filename . '?m=' . $filemtime . '">' . $preload;
     }
 
     /**
