@@ -5,6 +5,7 @@ namespace wcf\system\interaction\user;
 use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
+use wcf\action\UserDisableCoverPhotoAction;
 use wcf\action\UserDisableSignatureAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
@@ -74,6 +75,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 },
             )
         );
+        
         $this->addInteraction(
             new FormBuilderDialogInteraction(
                 'disable-avatar',
@@ -116,6 +118,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 },
             )
         );
+        
         $this->addInteraction(
             new FormBuilderDialogInteraction(
                 'disable-signature',
@@ -159,25 +162,49 @@ final class UserManagementInteractions extends AbstractInteractionProvider
             )
         );
 
-        if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
-            $this->addInteraction(
-                new class('disable-cover-photo', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableCoverPhoto ? 'wcf.user.enableCoverPhoto' : 'wcf.user.disableCoverPhoto');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableCoverPhoto"
-                            >{$title}</button>
-                            HTML;
+        $this->addInteraction(
+            new FormBuilderDialogInteraction(
+                'disable-cover-photo',
+                LinkHandler::getInstance()->getControllerLink(UserDisableCoverPhotoAction::class, [
+                    'id' => '%s',
+                ]),
+                'wcf.user.disableCoverPhoto',
+                static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
-                }
-            );
-        }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableCoverPhoto === 0;
+                },
+            )
+        );
+        $this->addInteraction(
+            new RpcInteraction(
+                'enable-cover-photo',
+                'core/users/%s/enable-cover-photo',
+                'wcf.user.enableCoverPhoto',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableCoverPhoto === 1;
+                },
+            )
+        );
+
         if (WCF::getSession()->getPermission('admin.user.canEnableUser')) {
             $this->addInteraction(
                 new class('enable', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
