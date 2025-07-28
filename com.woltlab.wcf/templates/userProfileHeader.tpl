@@ -31,7 +31,8 @@
 				<ul class="userProfileManageCoverPhoto buttonGroup buttonList smallButtons">
 					<li>
 						<button type="button" data-edit-cover-photo="{link controller="UserCoverPhoto" id=$user->userID}{/link}" data-default-cover-photo="{$__wcf->styleHandler->getStyle()->getCoverPhotoUrl()}" class="button small">
-							{icon name='camera'} {lang}wcf.user.coverPhoto.management{/lang}
+							{icon name='camera'}
+							<span>{lang}wcf.user.coverPhoto.edit{/lang}</span>
 						</button>
 					</li>
 				</ul>
@@ -39,12 +40,16 @@
 
 			{if $view->user->canEditAvatar()}
 				<button type="button" data-edit-avatar="{link controller="UserAvatar" id=$view->user->userID}{/link}" class="button small">
-					{icon name='circle-user' type='solid'} {lang}wcf.user.avatar.edit{/lang}
+					{icon name='circle-user' type='solid'}
+					<span>{lang}wcf.user.avatar.edit{/lang}</span>
 				</button>
 			{/if}
 
 			{if $view->canEditUser()}
-				<button type="button" class="jsButtonEditProfile button small">{icon name='pencil'} <span>{lang}wcf.user.editProfile{/lang}</span></button>
+				<button type="button" class="jsButtonEditProfile button small">
+					{icon name='pencil'}
+					<span>{lang}wcf.user.editProfile{/lang}</span>
+				</button>
 			{/if}
 
 			{event name='afterManageButtons'}

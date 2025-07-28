@@ -64,7 +64,7 @@ final class UserCoverPhotoAction implements RequestHandlerInterface
     {
         $form = new Psr15DialogForm(
             UserCoverPhotoAction::class,
-            WCF::getLanguage()->get('wcf.user.coverPhoto.management')
+            WCF::getLanguage()->get('wcf.user.coverPhoto.edit')
         );
         $form->appendChildren([
             FileProcessorFormField::create('coverPhotoFileID')

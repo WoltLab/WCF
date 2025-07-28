@@ -95,7 +95,7 @@ final class UserAvatarAction implements RequestHandlerInterface
     {
         $form = new Psr15DialogForm(
             UserAvatarAction::class,
-            WCF::getLanguage()->get('wcf.user.avatarManagement')
+            WCF::getLanguage()->get('wcf.user.avatar.edit')
         );
         $form->appendChildren([
             RadioButtonFormField::create('avatarType')
@@ -106,7 +106,8 @@ final class UserAvatarAction implements RequestHandlerInterface
                     "custom" => WCF::getLanguage()->get('wcf.user.avatar.type.custom'),
                 ]),
             FileProcessorFormField::create('avatarFileID')
-                ->objectType("com.woltlab.wcf.user.avatar")
+                ->objectType('com.woltlab.wcf.user.avatar')
+                ->description('wcf.user.avatar.type.custom.description')
                 ->required()
                 ->singleFileUpload()
                 ->bigPreview()

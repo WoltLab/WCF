@@ -3221,7 +3221,6 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
-		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[You can upload a cover photo on their user profile page.]]></item>
 		<item name="wcf.acp.user.security.multifactor"><![CDATA[Multi-factor Authentication]]></item>
 		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Active]]></item>
 		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[This user account is protected by a second factor.]]></item>
@@ -4921,7 +4920,6 @@ not register with us.]]></item>
 		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[The user cannot be blocked.]]></item>
 		<item name="wcf.user.reactionsReceived"><![CDATA[Reactions]]></item>
 		<item name="wcf.user.oldUsername"><![CDATA[Previous Username]]></item>
-		<item name="wcf.user.avatarManagement"><![CDATA[Avatar Management]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
@@ -5257,18 +5255,11 @@ You also received a list of backup codes to use when your second factor becomes 
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
-		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
+		<item name="wcf.user.avatar.edit"><![CDATA[Edit Avatar]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128 × 128 pixels.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar.<br>The minimum dimensions are 128 × 128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
-		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
-		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
-		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Your avatar is too big.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Your avatar is too small.]]></item>
-		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
-		<item name="wcf.user.avatar.upload.success"><![CDATA[Your avatar has been saved.]]></item>
 	</category>
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
@@ -5325,27 +5316,13 @@ You also received a list of backup codes to use when your second factor becomes 
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete your cover photo? This will replace your current photo with the default image.]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoFileID}have blocked your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
-		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum image size: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} pixels<br>
 Maximum image size: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} pixels<br>
 Maximum file size: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}<br>
 Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
-		<item name="wcf.user.coverPhoto.management"><![CDATA[Cover Photo Management]]></item>
 	</category>
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>

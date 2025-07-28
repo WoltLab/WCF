@@ -615,7 +615,7 @@
 						<dt></dt>
 						<dd>
 							<button type="button" class="button userAvatarManagement" data-edit-avatar="{link controller="UserAvatar" forceFrontend=true id=$user->userID}{/link}">
-								{lang}wcf.user.avatarManagement{/lang}
+								{lang}wcf.user.avatar.edit{/lang}
 							</button>
 						</dd>
 					</dl>
@@ -693,7 +693,6 @@
 				<section class="section">
 					<header class="sectionHeader">
 						<h2 class="sectionTitle">{lang}wcf.user.coverPhoto{/lang}</h2>
-						<p class="sectionDescription">{lang}wcf.acp.user.coverPhoto.description{/lang}</p>
 					</header>
 
 					<dl>
@@ -712,7 +711,7 @@
 							<dt></dt>
 							<dd>
 								<button type="button" class="button" data-edit-cover-photo="{link controller="UserCoverPhoto" forceFrontend=true id=$user->userID}{/link}">
-									{lang}wcf.user.coverPhoto.management{/lang}
+									{lang}wcf.user.coverPhoto.edit{/lang}
 								</button>
 							</dd>
 						</dl>
