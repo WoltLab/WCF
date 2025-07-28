@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, GetObject_1, GetContextMenuOptions_1, Simple_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, GetObject_1, GetContextMenuOptions_1, Simple_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.StandaloneButton = void 0;
@@ -17,12 +17,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
         #objectId;
         #redirectUrl;
         #reloadHeaderEndpoint;
-        constructor(container, providerClassName, objectId, redirectUrl, reloadHeaderEndpoint) {
+        #headerCssClassName;
+        #reloadContextMenu;
+        constructor(container, providerClassName, objectId, redirectUrl, reloadHeaderEndpoint, headerCssClassName, reloadContextMenu) {
             this.#container = container;
             this.#providerClassName = providerClassName;
             this.#objectId = objectId;
             this.#redirectUrl = redirectUrl;
             this.#reloadHeaderEndpoint = reloadHeaderEndpoint;
+            this.#headerCssClassName = headerCssClassName;
+            this.#reloadContextMenu = reloadContextMenu;
             this.#initInteractions();
             this.#initEventListeners();
         }
@@ -36,10 +40,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             this.#initInteractions();
         }
         async #refreshHeader() {
-            if (!this.#reloadHeaderEndpoint) {
+            if (!this.#reloadContextMenu || !this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
                 return;
             }
-            const header = document.querySelector(".contentHeaderTitle");
+            const header = document.querySelector(`${this.#headerCssClassName}`);
             if (!header) {
                 return;
             }
@@ -47,7 +51,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             if (!result.ok) {
                 return;
             }
-            header.outerHTML = result.value.template;
+            (0, Util_1.insertHtml)(result.value.template, header, "before");
+            header.remove();
         }
         #getDropdownMenu() {
             const button = this.#container.querySelector(".dropdownToggle");

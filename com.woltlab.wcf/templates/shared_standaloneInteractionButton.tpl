@@ -22,7 +22,9 @@
 			'{unsafe:$providerClassName|encodeJS}',
 			'{unsafe:$objectID|encodeJS}',
 			'{unsafe:$redirectUrl|encodeJS}',
-			'{unsafe:$reloadHeaderEndpoint|encodeJS}'
+			'{unsafe:$reloadHeaderEndpoint|encodeJS}',
+			'{unsafe:$headerCssClassName|encodeJS}',
+			{if $reloadContextMenu}true{else}false{/if}
 		);
 	});
 </script>

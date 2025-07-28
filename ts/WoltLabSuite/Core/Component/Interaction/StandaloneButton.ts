@@ -10,6 +10,7 @@
 import { getObject } from "WoltLabSuite/Core/Api/GetObject";
 import { getContextMenuOptions } from "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
+import { insertHtml } from "WoltLabSuite/Core/Dom/Util";
 
 interface HeaderContent {
   template: string;
@@ -23,6 +24,8 @@ export class StandaloneButton {
   #objectId: string | number;
   #redirectUrl: string;
   #reloadHeaderEndpoint: string;
+  #headerCssClassName: string;
+  #reloadContextMenu: boolean;
 
   constructor(
     container: HTMLElement,
@@ -30,12 +33,16 @@ export class StandaloneButton {
     objectId: string | number,
     redirectUrl: string,
     reloadHeaderEndpoint: string,
+    headerCssClassName: string,
+    reloadContextMenu: boolean,
   ) {
     this.#container = container;
     this.#providerClassName = providerClassName;
     this.#objectId = objectId;
     this.#redirectUrl = redirectUrl;
     this.#reloadHeaderEndpoint = reloadHeaderEndpoint;
+    this.#headerCssClassName = headerCssClassName;
+    this.#reloadContextMenu = reloadContextMenu;
 
     this.#initInteractions();
     this.#initEventListeners();
@@ -55,11 +62,11 @@ export class StandaloneButton {
   }
 
   async #refreshHeader(): Promise<void> {
-    if (!this.#reloadHeaderEndpoint) {
+    if (!this.#reloadContextMenu || !this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
       return;
     }
 
-    const header = document.querySelector(".contentHeaderTitle");
+    const header = document.querySelector(`${this.#headerCssClassName}`);
     if (!header) {
       return;
     }
@@ -69,7 +76,8 @@ export class StandaloneButton {
       return;
     }
 
-    header.outerHTML = result.value.template;
+    insertHtml(result.value.template, header, "before");
+    header.remove();
   }
 
   #getDropdownMenu(): HTMLElement | undefined {

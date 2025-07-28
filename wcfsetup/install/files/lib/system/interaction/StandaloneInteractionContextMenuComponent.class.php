@@ -25,6 +25,8 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
         protected readonly string $redirectUrl,
         protected readonly string $reloadHeaderEndpoint = '',
         protected ?InteractionContextMenuComponentConfiguration $configuration = null,
+        protected readonly string $headerCssClassName = '.contentHeaderTitle',
+        protected readonly bool $reloadContextMenu = true,
     ) {
         parent::__construct($provider, $configuration);
 
@@ -49,6 +51,8 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
                 'objectID' => $this->object->getObjectID(),
                 'redirectUrl' => $this->redirectUrl,
                 'reloadHeaderEndpoint' => $this->reloadHeaderEndpoint,
+                'headerCssClassName' => $this->headerCssClassName,
+                'reloadContextMenu' => $this->reloadContextMenu,
                 'configuration' => $this->configuration,
             ],
         );
