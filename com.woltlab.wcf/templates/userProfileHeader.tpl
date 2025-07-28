@@ -30,7 +30,7 @@
 			{if $view->canEditCoverPhoto()}
 				<ul class="userProfileManageCoverPhoto buttonGroup buttonList smallButtons">
 					<li>
-						<button type="button" data-edit-cover-photo="{link controller="UserCoverPhoto" id=$user->userID}{/link}" data-default-cover-photo="{$__wcf->styleHandler->getStyle()->getCoverPhotoUrl()}" class="button small">
+						<button type="button" data-edit-cover-photo="{link controller="UserCoverPhoto" id=$view->user->userID}{/link}" data-default-cover-photo="{$__wcf->styleHandler->getStyle()->getCoverPhotoUrl()}" class="button small">
 							{icon name='camera'}
 							<span>{lang}wcf.user.coverPhoto.edit{/lang}</span>
 						</button>
@@ -68,7 +68,7 @@
 			<h1 class="userProfileHeader__username">
 				<span class="userProfileUsername">{$view->user->username}</span>
 				{if $view->user->banned}
-					<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
+					<span class="jsTooltip jsUserBanned" title="{lang user=$view->user}wcf.user.banned{/lang}">
 						{icon name='lock'}
 					</span>
 				{/if}
@@ -108,13 +108,13 @@
 		<div class="userProfileHeader__buttons">
 			{event name='beforeButtons'}
 
-			{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
-				{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
-					{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
+			{if $__wcf->user->userID && $view->user->userID != $__wcf->user->userID}
+				{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($view->user->userID)}
+					{if $__wcf->getUserProfileHandler()->isFollowing($view->user->userID)}
 						<button
 							type="button"
 							data-following="1"
-							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							data-follow-user="{link controller='UserFollow' id=$view->user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.unfollow{/lang}"
 						>{icon name='minus' type='solid'}</button>
@@ -122,7 +122,7 @@
 						<button
 							type="button"
 							data-following="0"
-							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
+							data-follow-user="{link controller='UserFollow' id=$view->user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.follow{/lang}"
 						>{icon name='plus' type='solid'}</button>
@@ -164,9 +164,9 @@
 				{if $view->user->canViewOnlineStatus() && $view->user->getLastActivityTime()}
 					<dt>{icon name='clock'} {lang}wcf.user.usersOnline.lastActivity{/lang}</dt>
 					<dd>{time time=$view->user->getLastActivityTime()}</dd>
-					{if $user->getCurrentLocation()}
+					{if $view->user->getCurrentLocation()}
 						<dt>{icon name='location-arrow'} {lang}wcf.user.usersOnline.location{/lang}</dt>
-						<dd>{unsafe:$user->getCurrentLocation()}</dd>
+						<dd>{unsafe:$view->user->getCurrentLocation()}</dd>
 					{/if}
 				{/if}
 				{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $view->user->registrationIpAddress}
