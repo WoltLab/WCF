@@ -2,7 +2,7 @@
 <table cellpadding="0" cellspacing="0" border="0" class="paddingHelper{if $block|isset && $block} block{/if}{if $outerClass|isset && $outerClass} {$outerClass}{/if}">
 	<tr>
 		<td class="{$class}">
-			{@$content}
+			{unsafe:$content}
 		</td>
 	</tr>
 </table>

@@ -14,7 +14,7 @@
 		}
 
 		body, body * {
-			font-family: {@$style->getEmailFontFamily()};
+			font-family: {unsafe:$style->getEmailFontFamily()};
 			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
 
@@ -148,20 +148,20 @@
 	{/capture}
 	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
 
-	{if $beforeContent|isset}{@$beforeContent}{/if}
+	{if $beforeContent|isset}{unsafe:$beforeContent}{/if}
 
 	{include file='email_paddingHelper' block=true class='content' content=$content sandbox=true}
 
-	{if $afterContent|isset}{@$afterContent}{/if}
+	{if $afterContent|isset}{unsafe:$afterContent}{/if}
 
 	{capture assign='footer'}
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>
 	{content}
 	{if MAIL_SIGNATURE_HTML|phrase}
-	{@MAIL_SIGNATURE_HTML|phrase}
+	{unsafe:MAIL_SIGNATURE_HTML|phrase}
 	{else}
-	{@MAIL_SIGNATURE|phrase|newlineToBreak}
+	{unsafe:MAIL_SIGNATURE|phrase|newlineToBreak}
 	{/if}
 	{/content}{/hascontent}{/capture}
 	{include file='email_paddingHelper' block=true class='footer' content=$footer sandbox=true}
