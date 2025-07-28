@@ -3,7 +3,8 @@
 namespace wcf\system\user\command;
 
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
+use wcf\util\DateUtil;
 
 /**
  * Ban a user.
@@ -24,11 +25,14 @@ final class Ban
 
     public function __invoke(): void
     {
-        $editor = new UserEditor($this->user);
-        $editor->update([
-            'banned' => 1,
+        $banExpires = null;
+        if ($this->banExpires !== null) {
+            $banExpires = DateUtil::getDateTimeByTimestamp($this->banExpires)->format('Y-m-d');
+        }
+
+        (new UserAction([$this->user], 'ban', [
             'banReason' => $this->reason,
-            'banExpires' => $this->banExpires ?? 0,
-        ]);
+            'banExpires' => $banExpires,
+        ]))->executeAction();
     }
 }

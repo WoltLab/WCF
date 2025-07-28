@@ -7,12 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\user\command\Unban;
 use wcf\system\WCF;
 
 /**
@@ -34,7 +34,7 @@ final class UnbanUser implements IController
         $this->assertUserCanUnbanned($user);
 
         if ($user->banned) {
-            (new Unban($user))();
+            (new UserAction([$user], 'unban'))->executeAction();
         }
 
         return new JsonResponse([]);

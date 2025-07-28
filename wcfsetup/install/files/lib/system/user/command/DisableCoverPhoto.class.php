@@ -3,7 +3,8 @@
 namespace wcf\system\user\command;
 
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
+use wcf\util\DateUtil;
 
 /**
  * Disable a user's cover photo.
@@ -18,17 +19,20 @@ final class DisableCoverPhoto
     public function __construct(
         private readonly User $user,
         private readonly string $reason,
-        private readonly ?int $banExpires = null,
+        private readonly ?int $expires = null,
     ) {
     }
 
     public function __invoke(): void
     {
-        $editor = new UserEditor($this->user);
-        $editor->update([
-            'disableCoverPhoto' => 1,
+        $expires = null;
+        if ($this->expires !== null) {
+            $expires = DateUtil::getDateTimeByTimestamp($this->expires)->format('Y-m-d');
+        }
+
+        (new UserAction([$this->user], 'disableCoverPhoto', [
             'disableCoverPhotoReason' => $this->reason,
-            'disableCoverPhotoExpires' => $this->banExpires ?? 0,
-        ]);
+            'disableCoverPhotoExpires' => $expires,
+        ]))->executeAction();
     }
 }
