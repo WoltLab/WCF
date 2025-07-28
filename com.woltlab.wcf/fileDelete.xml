@@ -572,5 +572,6 @@
 		<file>icon/font-awesome/v6/brands/yoast.svg</file>
 		<file>icon/font-awesome/v6/brands/youtube.svg</file>
 		<file>icon/font-awesome/v6/brands/zhihu.svg</file>
+		<file>js/WoltLabSuite/Core/Ui/User/Editor.js</file>
 	</delete>
 </data>

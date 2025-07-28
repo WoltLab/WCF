@@ -7,22 +7,19 @@ use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
 use wcf\action\UserDisableCoverPhotoAction;
 use wcf\action\UserDisableSignatureAction;
-use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\event\interaction\user\UserManagementInteractionCollecting;
 use wcf\system\event\EventHandler;
-use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
+use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Interaction provider for the management context menu in user profiles.
- * This interaction provider currently only works on the user profile page due to the nature of the underlying (outdated) JavaScript code.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
