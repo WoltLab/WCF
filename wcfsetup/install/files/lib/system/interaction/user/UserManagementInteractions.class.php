@@ -5,6 +5,7 @@ namespace wcf\system\interaction\user;
 use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
+use wcf\action\UserDisableSignatureAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -115,26 +116,49 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 },
             )
         );
-
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
-            $this->addInteraction(
-                new class('disable-signature', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableSignature ? 'wcf.user.enableSignature' : 'wcf.user.disableSignature');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableSignature"
-                            >{$title}</button>
-                            HTML;
+        $this->addInteraction(
+            new FormBuilderDialogInteraction(
+                'disable-signature',
+                LinkHandler::getInstance()->getControllerLink(UserDisableSignatureAction::class, [
+                    'id' => '%s',
+                ]),
+                'wcf.user.disableSignature',
+                static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
-                }
-            );
-        }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableSignature === 0;
+                },
+            )
+        );
+        $this->addInteraction(
+            new RpcInteraction(
+                'enable-signature',
+                'core/users/%s/enable-signature',
+                'wcf.user.enableSignature',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->disableSignature === 1;
+                },
+            )
+        );
+
         if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
             $this->addInteraction(
                 new class('disable-cover-photo', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
