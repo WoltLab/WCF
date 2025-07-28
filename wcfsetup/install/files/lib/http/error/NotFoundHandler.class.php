@@ -46,7 +46,7 @@ final class NotFoundHandler implements RequestHandlerInterface
         return match ($preferredType) {
             'application/json' => new JsonResponse(
                 [
-                    'message' => $message,
+                    'message' => (string)$message,
                     'exception' => \ENABLE_DEBUG_MODE ? $errorDetail?->getThrowable()?->__toString() : null,
                 ],
                 self::STATUS_CODE,
