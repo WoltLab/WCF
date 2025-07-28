@@ -174,6 +174,8 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\users\options\EnableOption());
             $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank());
             $event->register(new \wcf\system\endpoint\controller\core\users\trophies\DeleteUserTrophy());
+            $event->register(new \wcf\system\endpoint\controller\core\users\GetUserProfileHeader());
+            $event->register(new \wcf\system\endpoint\controller\core\users\UnbanUser());
             $event->register(new \wcf\system\endpoint\controller\core\interactions\GetBulkContextMenuOptions());
             $event->register(new \wcf\system\endpoint\controller\core\interactions\GetContextMenuOptions());
             $event->register(new \wcf\system\endpoint\controller\core\articles\DeleteArticle());

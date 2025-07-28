@@ -3,6 +3,7 @@
 namespace wcf\system\interaction\user;
 
 use wcf\acp\form\UserEditForm;
+use wcf\action\UserBanAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -10,6 +11,8 @@ use wcf\event\interaction\user\UserManagementInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\AbstractInteractionProvider;
+use wcf\system\interaction\FormBuilderDialogInteraction;
+use wcf\system\interaction\RpcInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -27,34 +30,52 @@ final class UserManagementInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
-            $this->addInteraction(
-                new class(
-                    'ban',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->banned ? 'wcf.user.unban' : 'wcf.user.ban');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserBan"
-                            >{$title}</button>
-                            HTML;
+        $this->addInteraction(
+            new FormBuilderDialogInteraction(
+                "ban",
+                LinkHandler::getInstance()->getControllerLink(UserBanAction::class, [
+                    'id' => '%s',
+                ]),
+                'wcf.user.ban',
+                static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
-                }
-            );
-        }
+                    if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->banned === 0;
+                },
+            )
+        );
+        $this->addInteraction(
+            new RpcInteraction(
+                "unban",
+                'core/users/%s/unban',
+                'wcf.user.unban',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->banned === 1;
+                },
+            )
+        );
+
         if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
             $this->addInteraction(
-                new class(
-                    'disable-avatar',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
+                new class('disable-avatar', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
                     #[\Override]
                     public function render(DatabaseObject $object): string
                     {
@@ -73,10 +94,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
         }
         if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
             $this->addInteraction(
-                new class(
-                    'disable-signature',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
+                new class('disable-signature', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
                     #[\Override]
                     public function render(DatabaseObject $object): string
                     {
@@ -95,10 +113,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
         }
         if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
             $this->addInteraction(
-                new class(
-                    'disable-cover-photo',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
+                new class('disable-cover-photo', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
                     #[\Override]
                     public function render(DatabaseObject $object): string
                     {
@@ -117,10 +132,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
         }
         if (WCF::getSession()->getPermission('admin.user.canEnableUser')) {
             $this->addInteraction(
-                new class(
-                    'enable',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
+                new class('enable', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
                     #[\Override]
                     public function render(DatabaseObject $object): string
                     {
@@ -139,10 +151,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
         }
         if (WCF::getSession()->getPermission('admin.general.canUseAcp') && WCF::getSession()->getPermission('admin.user.canEditUser')) {
             $this->addInteraction(
-                new class(
-                    'edit',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
+                new class('edit', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
                     #[\Override]
                     public function render(DatabaseObject $object): string
                     {

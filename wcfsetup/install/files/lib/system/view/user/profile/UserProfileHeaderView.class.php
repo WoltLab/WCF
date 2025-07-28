@@ -146,13 +146,15 @@ final class UserProfileHeaderView
             new UserManagementInteractions(),
             $this->user,
             LinkHandler::getInstance()->getControllerLink(MembersListPage::class),
+            reloadHeaderEndpoint: "core/users/{$this->user->userID}/profile-header",
             configuration: new InteractionContextMenuComponentConfiguration(
                 cssClassName: 'userProfileHeader__button',
                 buttonCssClassName: 'button small',
                 dropdownMenuCssClassName: 'userProfileHeader__managementOptions',
+                tooltip: 'wcf.user.profile.management',
                 icon: FontAwesomeIcon::fromValues('gear'),
-                tooltip: 'wcf.user.profile.management'
-            )
+            ),
+            headerCssClassName: '.userProfileHeader'
         );
 
         if (!$this->isInAccessibleGroup() || $this->user->userID == WCF::getUser()->userID) {
