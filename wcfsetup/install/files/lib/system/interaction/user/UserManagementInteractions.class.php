@@ -205,25 +205,47 @@ final class UserManagementInteractions extends AbstractInteractionProvider
             )
         );
 
-        if (WCF::getSession()->getPermission('admin.user.canEnableUser')) {
-            $this->addInteraction(
-                new class('enable', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->pendingActivation() ? 'wcf.acp.user.enable' : 'wcf.acp.user.disable');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserEnable"
-                            >{$title}</button>
-                            HTML;
+        $this->addInteraction(
+            new RpcInteraction(
+                'disable',
+                'core/users/%s/disable',
+                'wcf.acp.user.disable',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
-                }
-            );
-        }
+                    if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return !$user->pendingActivation();
+                },
+            )
+        );
+        $this->addInteraction(
+            new RpcInteraction(
+                'enable',
+                'core/users/%s/enable',
+                'wcf.acp.user.enable',
+                isAvailableCallback: static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return $user->pendingActivation();
+                },
+            )
+        );
+
         if (WCF::getSession()->getPermission('admin.general.canUseAcp') && WCF::getSession()->getPermission('admin.user.canEditUser')) {
             $this->addInteraction(
                 new class('edit', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {

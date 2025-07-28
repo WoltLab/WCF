@@ -179,6 +179,8 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\users\EnableUserAvatar());
             $event->register(new \wcf\system\endpoint\controller\core\users\EnableUserSignature());
             $event->register(new \wcf\system\endpoint\controller\core\users\EnableUserCoverPhoto());
+            $event->register(new \wcf\system\endpoint\controller\core\users\EnableUser());
+            $event->register(new \wcf\system\endpoint\controller\core\users\DisableUser());
             $event->register(new \wcf\system\endpoint\controller\core\interactions\GetBulkContextMenuOptions());
             $event->register(new \wcf\system\endpoint\controller\core\interactions\GetContextMenuOptions());
             $event->register(new \wcf\system\endpoint\controller\core\articles\DeleteArticle());
