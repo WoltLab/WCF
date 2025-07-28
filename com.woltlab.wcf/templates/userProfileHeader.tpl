@@ -1,24 +1,4 @@
-<header
-	class="userProfileHeader"
-	data-object-id="{$view->user->userID}"
-	{if $view->isInAccessibleGroup()}
-		{if $__wcf->session->getPermission('admin.user.canBanUser')}
-			data-banned="{$view->user->banned}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-			data-disable-avatar="{$view->user->disableAvatar}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-			data-disable-signature="{$view->user->disableSignature}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
-			data-disable-cover-photo="{$view->user->disableCoverPhoto}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-			data-is-disabled="{if $view->user->activationCode}true{else}false{/if}"
-		{/if}
-	{/if}
->
+<header class="userProfileHeader" data-object-id="{$view->user->userID}">
 	<div class="userProfileHeader__coverPhotoContainer">
 		<div class="userProfileHeader__coverPhoto">
 			<img src="{$view->user->getCoverPhoto()->getURL()}" data-object-id="{$view->user->getCoverPhoto()->getObjectID()}" class="userProfileHeader__coverPhotoImage">
