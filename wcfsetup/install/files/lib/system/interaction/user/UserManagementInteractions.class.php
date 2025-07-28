@@ -243,23 +243,30 @@ final class UserManagementInteractions extends AbstractInteractionProvider
             )
         );
 
-        if (WCF::getSession()->getPermission('admin.general.canUseAcp') && WCF::getSession()->getPermission('admin.user.canEditUser')) {
-            $this->addInteraction(
-                new class('edit', static fn (UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        return \sprintf(
-                            '<a href="%s">%s</a>',
-                            StringUtil::encodeHTML(
-                                LinkHandler::getInstance()->getControllerLink(UserEditForm::class, ['id' => $object->getObjectID()])
-                            ),
-                            WCF::getLanguage()->get('wcf.user.edit')
-                        );
+        $this->addInteraction(
+            new LinkInteraction(
+                'edit',
+                UserEditForm::class,
+                'wcf.user.edit',
+                static function (UserProfile $user): bool {
+                    if (WCF::getUser()->userID === $user->userID) {
+                        return false;
                     }
+                    if (!WCF::getSession()->getPermission('admin.general.canUseAcp')) {
+                        return false;
+                    }
+                    if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
+                        return false;
+                    }
+                    if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                        return false;
+                    }
+
+                    return true;
                 }
-            );
-        }
+            )
+        );
+
 
         EventHandler::getInstance()->fire(
             new UserManagementInteractionCollecting($this)
