@@ -14,7 +14,7 @@ use wcf\util\DateUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class Ban
+final class BanUser
 {
     public function __construct(
         private readonly User $user,

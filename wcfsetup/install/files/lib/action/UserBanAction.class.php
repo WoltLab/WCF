@@ -10,7 +10,7 @@ use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\user\command\Ban;
+use wcf\system\user\command\BanUser;
 use wcf\system\WCF;
 
 /**
@@ -33,7 +33,7 @@ final class UserBanAction extends UserManagementAction
             $expires = $data['expires'];
         }
 
-        (new Ban($userProfile->getDecoratedObject(), $reason, $expires))();
+        (new BanUser($userProfile->getDecoratedObject(), $reason, $expires))();
     }
 
     #[\Override]
