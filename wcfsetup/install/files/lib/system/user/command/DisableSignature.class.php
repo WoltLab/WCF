@@ -19,7 +19,7 @@ final class DisableSignature
     public function __construct(
         private readonly User $user,
         private readonly string $reason,
-        private readonly ?int $expires = null,
+        private readonly int $expires = 0,
     ) {
     }
 

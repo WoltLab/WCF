@@ -19,7 +19,7 @@ final class BanUser
     public function __construct(
         private readonly User $user,
         private readonly string $reason,
-        private readonly ?int $banExpires = null,
+        private readonly int $banExpires = 0,
     ) {
     }
 

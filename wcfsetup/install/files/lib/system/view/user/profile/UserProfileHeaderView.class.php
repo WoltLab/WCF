@@ -154,7 +154,8 @@ final class UserProfileHeaderView
                 tooltip: 'wcf.user.profile.management',
                 icon: FontAwesomeIcon::fromValues('gear'),
             ),
-            headerCssClassName: '.userProfileHeader'
+            headerCssClassName: '.userProfileHeader',
+            reloadContextMenu: false
         );
 
         if (!$this->isInAccessibleGroup() || $this->user->userID == WCF::getUser()->userID) {
