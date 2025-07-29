@@ -852,7 +852,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
-		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
+		<item name="wcf.acp.group.copy"><![CDATA[Copy User Group]]></item>
+		<item name="wcf.acp.group.button.copy"><![CDATA[Copy]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[The permissions set for certain objects like label groups will also be set for the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>
