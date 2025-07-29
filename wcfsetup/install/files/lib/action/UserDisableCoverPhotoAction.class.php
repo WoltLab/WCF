@@ -37,7 +37,7 @@ final class UserDisableCoverPhotoAction extends UserManagementAction
     }
 
     #[\Override]
-    protected function assertUserCanBeManaged(?UserProfile $userProfile): void
+    protected function assertUserCanBeManaged(UserProfile $userProfile): void
     {
         parent::assertUserCanBeManaged($userProfile);
 

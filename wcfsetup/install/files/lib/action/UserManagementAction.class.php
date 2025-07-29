@@ -36,6 +36,11 @@ abstract class UserManagementAction implements RequestHandlerInterface
         );
 
         $user = UserProfileRuntimeCache::getInstance()->getObject($parameters['id']);
+
+        if (!$user) {
+            throw new IllegalLinkException();
+        }
+
         $this->assertUserCanBeManaged($user);
 
         $form = $this->getForm();
@@ -58,12 +63,8 @@ abstract class UserManagementAction implements RequestHandlerInterface
         }
     }
 
-    protected function assertUserCanBeManaged(?UserProfile $userProfile): void
+    protected function assertUserCanBeManaged(UserProfile $userProfile): void
     {
-        if (!$userProfile) {
-            throw new IllegalLinkException();
-        }
-
         if ($userProfile->userID === WCF::getUser()->userID) {
             throw new IllegalLinkException();
         }
