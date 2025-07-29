@@ -3,8 +3,9 @@
 namespace wcf\system\user\command;
 
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
-use wcf\util\DateUtil;
+use wcf\data\user\UserEditor;
+use wcf\event\user\UserAvatarDisabled;
+use wcf\system\event\EventHandler;
 
 /**
  * Disable a user's avatar.
@@ -25,14 +26,13 @@ final class DisableAvatar
 
     public function __invoke(): void
     {
-        $expires = null;
-        if ($this->expires !== null) {
-            $expires = DateUtil::getDateTimeByTimestamp($this->expires)->format('Y-m-d');
-        }
-
-        (new UserAction([$this->user], 'disableAvatar', [
+        (new UserEditor($this->user))->update([
+            'disableAvatar' => 1,
             'disableAvatarReason' => $this->reason,
-            'disableAvatarExpires' => $expires,
-        ]))->executeAction();
+            'disableAvatarExpires' => $this->expires,
+        ]);
+
+        $event = new UserAvatarDisabled($this->user);
+        EventHandler::getInstance()->fire($event);
     }
 }

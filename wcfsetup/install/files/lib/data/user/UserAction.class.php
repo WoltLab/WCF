@@ -25,6 +25,9 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\user\command\BanUser;
+use wcf\system\user\command\DisableAvatar;
+use wcf\system\user\command\DisableSignature;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -225,9 +228,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Bans users.
      *
      * @return string
+     *
+     * @deprecated 6.3 use `BanUser`
      */
     public function ban()
     {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
         $banExpires = $this->parameters['banExpires'];
         if ($banExpires) {
             $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $banExpires, new \DateTimeZone(\TIMEZONE))->getTimestamp();
@@ -238,22 +247,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $banExpires = 0;
         }
 
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
-
-        $sql = "UPDATE  wcf1_user
-                SET     banned = ?,
-                        banReason = ?,
-                        banExpires = ?
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(
-            \array_merge([
-                1,
-                $this->parameters['banReason'],
-                $banExpires,
-            ], $conditionBuilder->getParameters())
-        );
+        foreach ($this->getObjects() as $userEditor) {
+            (new BanUser($userEditor->getDecoratedObject(), $this->parameters['banReason'], $banExpires))();
+        }
 
         $this->unmarkItems();
 
@@ -896,6 +892,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Disables the signature of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `DisableSignature`
      */
     public function disableSignature()
     {
@@ -911,11 +909,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->update([
-                'disableSignature' => 1,
-                'disableSignatureReason' => $this->parameters['disableSignatureReason'],
-                'disableSignatureExpires' => $disableSignatureExpires,
-            ]);
+            (new DisableSignature($userEditor->getDecoratedObject(), $this->parameters['disableSignatureReason'], $disableSignatureExpires))();
         }
     }
 
@@ -974,6 +968,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Disables the avatar of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `DisableAvatar`
      */
     public function disableAvatar()
     {
@@ -989,11 +985,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->update([
-                'disableAvatar' => 1,
-                'disableAvatarReason' => $this->parameters['disableAvatarReason'],
-                'disableAvatarExpires' => $disableAvatarExpires,
-            ]);
+            (new DisableAvatar($userEditor->getDecoratedObject(), $this->parameters['disableAvatarReason'], $disableAvatarExpires))();
         }
     }
 
@@ -1016,6 +1008,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3 use `DisableCoverPhoto`
      */
     public function disableCoverPhoto()
     {

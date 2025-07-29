@@ -3,8 +3,9 @@
 namespace wcf\system\user\command;
 
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
-use wcf\util\DateUtil;
+use wcf\data\user\UserEditor;
+use wcf\event\user\UserSignatureDisabled;
+use wcf\system\event\EventHandler;
 
 /**
  * Disable a user's signature.
@@ -25,14 +26,13 @@ final class DisableSignature
 
     public function __invoke(): void
     {
-        $expires = null;
-        if ($this->expires !== null) {
-            $expires = DateUtil::getDateTimeByTimestamp($this->expires)->format('Y-m-d');
-        }
-
-        (new UserAction([$this->user], 'disableSignature', [
+        (new UserEditor($this->user))->update([
+            'disableSignature' => 1,
             'disableSignatureReason' => $this->reason,
-            'disableSignatureExpires' => $expires,
-        ]))->executeAction();
+            'disableSignatureExpires' => $this->expires,
+        ]);
+
+        $event = new UserSignatureDisabled($this->user);
+        EventHandler::getInstance()->fire($event);
     }
 }

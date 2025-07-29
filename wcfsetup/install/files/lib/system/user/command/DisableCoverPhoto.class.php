@@ -3,8 +3,9 @@
 namespace wcf\system\user\command;
 
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
-use wcf\util\DateUtil;
+use wcf\data\user\UserEditor;
+use wcf\event\user\UserCoverPhotoDisabled;
+use wcf\system\event\EventHandler;
 
 /**
  * Disable a user's cover photo.
@@ -25,14 +26,13 @@ final class DisableCoverPhoto
 
     public function __invoke(): void
     {
-        $expires = null;
-        if ($this->expires !== null) {
-            $expires = DateUtil::getDateTimeByTimestamp($this->expires)->format('Y-m-d');
-        }
-
-        (new UserAction([$this->user], 'disableCoverPhoto', [
+        (new UserEditor($this->user))->update([
+            'disableCoverPhoto' => 1,
             'disableCoverPhotoReason' => $this->reason,
-            'disableCoverPhotoExpires' => $expires,
-        ]))->executeAction();
+            'disableCoverPhotoExpires' => $this->expires,
+        ]);
+
+        $event = new UserCoverPhotoDisabled($this->user);
+        EventHandler::getInstance()->fire($event);
     }
 }

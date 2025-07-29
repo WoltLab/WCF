@@ -28,7 +28,7 @@ final class UserBanAction extends UserManagementAction
     {
         $reason = $data['reason'];
         if ($data['neverExpires']) {
-            $expires = null;
+            $expires = 0;
         } else {
             $expires = $data['expires'];
         }
