@@ -31,6 +31,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             this.#initEventListeners();
         }
         async #refreshContextMenu() {
+            if (!this.#reloadContextMenu) {
+                return;
+            }
             const { template } = await (0, GetContextMenuOptions_1.getContextMenuOptions)(this.#providerClassName, this.#objectId);
             const dropdown = this.#getDropdownMenu();
             if (!dropdown) {
@@ -40,7 +43,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             this.#initInteractions();
         }
         async #refreshHeader() {
-            if (!this.#reloadContextMenu || !this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
+            if (!this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
                 return;
             }
             const header = document.querySelector(`${this.#headerCssClassName}`);

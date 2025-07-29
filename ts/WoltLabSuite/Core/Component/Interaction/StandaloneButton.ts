@@ -49,6 +49,10 @@ export class StandaloneButton {
   }
 
   async #refreshContextMenu(): Promise<void> {
+    if (!this.#reloadContextMenu) {
+      return;
+    }
+
     const { template } = await getContextMenuOptions(this.#providerClassName, this.#objectId);
 
     const dropdown = this.#getDropdownMenu();
@@ -62,7 +66,7 @@ export class StandaloneButton {
   }
 
   async #refreshHeader(): Promise<void> {
-    if (!this.#reloadContextMenu || !this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
+    if (!this.#reloadHeaderEndpoint || !this.#headerCssClassName) {
       return;
     }
 
