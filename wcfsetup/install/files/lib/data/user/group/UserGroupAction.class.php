@@ -3,6 +3,10 @@
 namespace wcf\data\user\group;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
+use wcf\system\user\group\command\CopyUserGroup;
+use wcf\system\WCF;
 
 /**
  * Executes user group-related actions.
@@ -19,6 +23,12 @@ class UserGroupAction extends AbstractDatabaseObjectAction
      * @inheritDoc
      */
     public $className = UserGroupEditor::class;
+
+    /**
+     * editor object for the copied user group
+     * @var UserGroupEditor
+     */
+    public $groupEditor;
 
     /**
      * @inheritDoc
@@ -38,7 +48,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'update'];
+    protected $requireACP = ['copy', 'create', 'delete', 'update'];
 
     /**
      * @inheritDoc
@@ -70,5 +80,48 @@ class UserGroupAction extends AbstractDatabaseObjectAction
             $object->update($this->parameters['data']);
             $object->updateGroupOptions($this->parameters['options']);
         }
+    }
+
+    /**
+     * Validates the 'copy' action.
+     * @deprecated 6.2 Use `CopyUserGroup` instead.
+     */
+    public function validateCopy()
+    {
+        WCF::getSession()->checkPermissions([
+            'admin.user.canAddGroup',
+            'admin.user.canEditGroup',
+        ]);
+
+        $this->readBoolean('copyACLOptions');
+        $this->readBoolean('copyMembers');
+        $this->readBoolean('copyUserGroupOptions');
+
+        $this->groupEditor = $this->getSingleObject();
+        if (!$this->groupEditor->canCopy()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Copies a user group.
+     * @deprecated 6.2 Use `CopyUserGroup` instead.
+     */
+    public function copy()
+    {
+        $command = new CopyUserGroup(
+            $this->groupEditor->getDecoratedObject(),
+            $this->parameters['copyUserGroupOptions'],
+            $this->parameters['copyMembers'],
+            $this->parameters['copyACLOptions']
+        );
+        $group = $command();
+
+        return [
+            'groupID' => $group->groupID,
+            'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
+                'id' => $group->groupID,
+            ]),
+        ];
     }
 }
