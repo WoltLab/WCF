@@ -20,7 +20,7 @@ async function handleFormBuilderDialogAction(
   interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
   detail: Payload,
 ): Promise<void> {
-  const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint);
+  const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint<Payload>(endpoint);
 
   if (!ok) {
     return;
@@ -32,6 +32,7 @@ async function handleFormBuilderDialogAction(
         bubbles: true,
         detail: {
           ...detail,
+          ...result,
           _reloadPage: String(interactionEffect === InteractionEffect.ReloadPage),
         },
       }),
@@ -41,6 +42,7 @@ async function handleFormBuilderDialogAction(
       new CustomEvent<Payload>("interaction:invalidate-all", {
         detail: {
           ...detail,
+          ...result,
         },
       }),
     );
@@ -50,6 +52,7 @@ async function handleFormBuilderDialogAction(
         bubbles: true,
         detail: {
           ...detail,
+          ...result,
         },
       }),
     );
