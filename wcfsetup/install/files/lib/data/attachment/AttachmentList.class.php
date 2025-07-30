@@ -2,7 +2,6 @@
 
 namespace wcf\data\attachment;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -53,12 +52,5 @@ class AttachmentList extends DatabaseObjectList
         }
 
         FileRuntimeCache::getInstance()->cacheObjectIDs($fileIDs);
-
-        foreach ($this->objects as $attachment) {
-            $file = FileRuntimeCache::getInstance()->getObject($attachment->fileID) ?? null;
-            if ($file !== null) {
-                $attachment->setFile($file);
-            }
-        }
     }
 }
