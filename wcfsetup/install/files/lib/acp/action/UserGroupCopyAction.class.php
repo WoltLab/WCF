@@ -89,7 +89,7 @@ final class UserGroupCopyAction implements RequestHandlerInterface
     {
         $form = new Psr15DialogForm(
             UserGroupCopyAction::class,
-            WCF::getLanguage()->get('wcf.acp.dashboard.configure')
+            WCF::getLanguage()->get('wcf.acp.group.copy')
         );
         $form->appendChildren([
             FormContainer::create('section')

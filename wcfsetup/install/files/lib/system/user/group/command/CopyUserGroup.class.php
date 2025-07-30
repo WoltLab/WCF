@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Copies a user group.
  *
  * @author      Olaf Braun
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 final class CopyUserGroup
@@ -22,53 +22,39 @@ final class CopyUserGroup
         public readonly UserGroup $userGroup,
         public readonly bool $copyUserGroupOptions,
         public readonly bool $copyMembers,
-        public readonly bool $copyACLOptions
-    ) {
-    }
+        public readonly bool $copyACLOptions,
+    ) {}
 
     public function __invoke(): UserGroup
     {
-        // fetch user group option values
         if ($this->copyUserGroupOptions) {
-            $sql = "SELECT  optionID, optionValue
-                    FROM    wcf1_user_group_option_value
-                    WHERE   groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userGroup->groupID]);
+            $optionValues = $this->getOptionValues($this->userGroup);
         } else {
-            $sql = "SELECT  optionID, defaultValue AS optionValue
-                    FROM    wcf1_user_group_option";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute();
+            $optionValues = $this->getDefaultOptionValues();
         }
 
-        $optionValues = $statement->fetchMap('optionID', 'optionValue');
-
-        $groupType = $this->userGroup->groupType;
-        // When copying special user groups of which only one may exist,
-        // change the group type to 'other'.
-        if (\in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER])) {
-            $groupType = UserGroup::OTHER;
-        }
-
-        /** @var UserGroup $group */
-        $group = (new UserGroupAction([], 'create', [
-            'data' => [
-                'groupName' => $this->userGroup->groupName,
-                'groupDescription' => $this->userGroup->groupDescription,
-                'priority' => $this->userGroup->priority,
-                'userOnlineMarking' => $this->userGroup->userOnlineMarking,
-                'showOnTeamPage' => $this->userGroup->showOnTeamPage,
-                'groupType' => $groupType,
-            ],
-            'options' => $optionValues,
-        ]))->executeAction()['returnValues'];
+        $group = $this->copyUserGroup($this->userGroup, $optionValues);
         $groupEditor = new UserGroupEditor($group);
+        $groupName = $this->updateGroupName($this->userGroup, $group);
+        $groupDescription = $this->updateGroupDescription($this->userGroup, $group);
+        $groupEditor->update([
+            'groupDescription' => $groupDescription,
+            'groupName' => $groupName,
+        ]);
 
-        // update group name
-        $groupName = $this->userGroup->groupName;
-        if (\preg_match('~^wcf\.acp\.group\.group\d+$~', $this->userGroup->groupName)) {
-            $groupName = 'wcf.acp.group.group' . $group->groupID;
+        $this->copyMembers($this->userGroup, $group);
+        $this->copyACLOptions($this->userGroup, $group);
+
+        LanguageFactory::getInstance()->deleteLanguageCache();
+        UserGroupEditor::resetCache();
+
+        return $group;
+    }
+
+    private function updateGroupName(UserGroup $oldGroup, UserGroup $newGroup): string
+    {
+        if (\preg_match('~^wcf\.acp\.group\.group\d+$~', $oldGroup->groupName)) {
+            $groupName = 'wcf.acp.group.group' . $newGroup->groupID;
 
             // create group name language item
             $sql = "INSERT INTO wcf1_language_item
@@ -77,15 +63,18 @@ final class CopyUserGroup
                     FROM        wcf1_language_item
                     WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userGroup->groupName]);
+            $statement->execute([$oldGroup->groupName]);
         } else {
-            $groupName .= ' (2)';
+            $groupName = $oldGroup->groupName . ' (2)';
         }
 
-        // update group name
-        $groupDescription = $this->userGroup->groupName;
-        if (\preg_match('~^wcf\.acp\.group\.groupDescription\d+$~', $this->userGroup->groupDescription)) {
-            $groupDescription = 'wcf.acp.group.groupDescription' . $group->groupID;
+        return $groupName;
+    }
+
+    private function updateGroupDescription(UserGroup $oldGroup, UserGroup $newGroup): string
+    {
+        if (\preg_match('~^wcf\.acp\.group\.groupDescription\d+$~', $oldGroup->groupDescription)) {
+            $groupDescription = 'wcf.acp.group.groupDescription' . $newGroup->groupID;
 
             // create group name language item
             $sql = "INSERT INTO wcf1_language_item
@@ -94,48 +83,103 @@ final class CopyUserGroup
                     FROM        wcf1_language_item
                     WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userGroup->groupDescription]);
+            $statement->execute([$oldGroup->groupDescription]);
+        } else {
+            $groupDescription = $oldGroup->groupDescription;
         }
 
-        $groupEditor->update([
-            'groupDescription' => $groupDescription,
-            'groupName' => $groupName,
-        ]);
+        return $groupDescription;
+    }
 
-        // copy members
-        if ($this->copyMembers) {
-            $sql = "INSERT INTO wcf1_user_to_group
-                                (userID, groupID)
-                    SELECT      userID, " . $group->groupID . "
-                    FROM        wcf1_user_to_group
-                    WHERE       groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userGroup->groupID]);
+    private function copyMembers(UserGroup $oldGroup, UserGroup $newGroup): void
+    {
+        if (!$this->copyMembers) {
+            return;
         }
 
-        // copy acl options
-        if ($this->copyACLOptions) {
-            $sql = "INSERT INTO wcf1_acl_option_to_group
-                                (optionID, objectID, groupID, optionValue)
-                    SELECT      optionID, objectID, " . $group->groupID . ", optionValue
-                    FROM        wcf1_acl_option_to_group
-                    WHERE       groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userGroup->groupID]);
+        $sql = "INSERT INTO wcf1_user_to_group
+                            (userID, groupID)
+                SELECT      userID, " . $newGroup->groupID . "
+                FROM        wcf1_user_to_group
+                WHERE       groupID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$oldGroup->groupID]);
+    }
 
-            // it is likely that applications or plugins use caches
-            // for acl option values like for the labels which have
-            // to be renewed after copying the acl options; because
-            // there is no other way to delete these caches, we simply
-            // delete all caches
-            CacheHandler::getInstance()->flushAll();
+    private function copyACLOptions(UserGroup $oldGroup, UserGroup $newGroup): void
+    {
+        if (!$this->copyACLOptions) {
+            return;
         }
 
-        // reset language cache
-        LanguageFactory::getInstance()->deleteLanguageCache();
+        $sql = "INSERT INTO wcf1_acl_option_to_group
+                        (optionID, objectID, groupID, optionValue)
+                SELECT      optionID, objectID, " . $newGroup->groupID . ", optionValue
+                FROM        wcf1_acl_option_to_group
+                WHERE       groupID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$oldGroup->groupID]);
 
-        UserGroupEditor::resetCache();
+        // it is likely that applications or plugins use caches
+        // for acl option values like for the labels which have
+        // to be renewed after copying the acl options; because
+        // there is no other way to delete these caches, we simply
+        // delete all caches
+        CacheHandler::getInstance()->flushAll();
+    }
+
+    /**
+     * @param array<int, mixed> $optionValues
+     */
+    private function copyUserGroup(UserGroup $group, array $optionValues): UserGroup
+    {
+        $groupType = $group->groupType;
+        // When copying special user groups of which only one may exist,
+        // change the group type to 'other'.
+        if (\in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER])) {
+            $groupType = UserGroup::OTHER;
+        }
+
+        $group = (new UserGroupAction([], 'create', [
+            'data' => [
+                'groupName' => $group->groupName,
+                'groupDescription' => $group->groupDescription,
+                'priority' => $group->priority,
+                'userOnlineMarking' => $group->userOnlineMarking,
+                'showOnTeamPage' => $group->showOnTeamPage,
+                'groupType' => $groupType,
+            ],
+            'options' => $optionValues,
+        ]))->executeAction()['returnValues'];
+        \assert($group instanceof UserGroup);
 
         return $group;
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    private function getOptionValues(UserGroup $group): array
+    {
+        $sql = "SELECT  optionID, optionValue
+                FROM    wcf1_user_group_option_value
+                WHERE   groupID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$group->groupID]);
+
+        return $statement->fetchMap('optionID', 'optionValue');
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    private function getDefaultOptionValues(): array
+    {
+        $sql = "SELECT  optionID, defaultValue AS optionValue
+                FROM    wcf1_user_group_option";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchMap('optionID', 'optionValue');
     }
 }

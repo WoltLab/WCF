@@ -1,12 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
 <script data-relocate="true">
-	{if $action == 'edit' && $group->canCopy()}
-		require(['WoltLabSuite/Core/Acp/Component/User/Group/Copy'], ({ init }) => {
-			init();
-		});
-	{/if}
-
 	$(function() {
 		{if $action === 'add' && $isBlankForm}
 			elBySelAll('.jsBbcodeSelectOptionHtml input[type="checkbox"]', undefined, function (checkbox) {
@@ -43,12 +37,20 @@
 					</li>
 				{/if}
 				
-				{if $group->canCopy()}
-					<li><button type="button" class="jsButtonUserGroupCopy button" data-endpoint="{link controller="UserGroupCopy" id=$groupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.group.button.copy{/lang}</span></button></li>
-				{/if}
-
 				<li>
 					{unsafe:$interactionContextMenu->render()}
+					<script data-relocate="true">
+						{
+							const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
+							container.addEventListener('interaction:invalidate-all', (event) => {
+								if (event.detail.interaction === 'copy') {
+									setTimeout(() => {
+										window.location.href = event.detail.redirectURL;
+									}, 2000);
+								}
+							});
+						}
+					</script>
 				</li>
 			{/if}
 			

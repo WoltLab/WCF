@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function handleFormBuilderDialogAction(container, element, endpoint, interactionEffect = InteractionEffect_1.InteractionEffect.ReloadItem, detail) {
-        const { ok } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(endpoint);
+        const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(endpoint);
         if (!ok) {
             return;
         }
@@ -20,6 +20,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 bubbles: true,
                 detail: {
                     ...detail,
+                    ...result,
                     _reloadPage: String(interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage),
                 },
             }));
@@ -28,6 +29,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
             container.dispatchEvent(new CustomEvent("interaction:invalidate-all", {
                 detail: {
                     ...detail,
+                    ...result,
                 },
             }));
         }
@@ -36,6 +38,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 bubbles: true,
                 detail: {
                     ...detail,
+                    ...result,
                 },
             }));
         }
