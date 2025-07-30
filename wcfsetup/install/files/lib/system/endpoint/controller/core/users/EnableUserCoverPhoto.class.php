@@ -7,12 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\command\EnableCoverPhoto;
 use wcf\system\WCF;
 
 /**
@@ -34,7 +34,7 @@ final class EnableUserCoverPhoto implements IController
         $this->assertCoverPhotoCanBeEnabled($user);
 
         if ($user->disableCoverPhoto) {
-            (new UserAction([$user], 'enableCoverPhoto'))->executeAction();
+            (new EnableCoverPhoto($user))();
         }
 
         return new JsonResponse([]);

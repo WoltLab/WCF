@@ -28,9 +28,14 @@ use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\command\BanUser;
 use wcf\system\user\command\DisableAvatar;
 use wcf\system\user\command\DisableSignature;
+use wcf\system\user\command\DisableUser;
+use wcf\system\user\command\EnableAvatar;
+use wcf\system\user\command\EnableCoverPhoto;
+use wcf\system\user\command\EnableSignature;
+use wcf\system\user\command\EnableUser;
+use wcf\system\user\command\UnbanUser;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
-use wcf\util\UserRegistrationUtil;
 
 /**
  * Executes user-related actions.
@@ -262,23 +267,18 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Unbans users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `UnbanUser`
      */
     public function unban()
     {
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
 
-        $sql = "UPDATE  wcf1_user
-                SET     banned = ?,
-                        banExpires = ?
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(
-            \array_merge([
-                0,
-                0,
-            ], $conditionBuilder->getParameters())
-        );
+        foreach ($this->getObjects() as $userEditor) {
+            (new UnbanUser($userEditor->getDecoratedObject()))();
+        }
     }
 
     /**
@@ -759,6 +759,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Enables users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `EnableUser`
      */
     public function enable()
     {
@@ -766,52 +768,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $this->readObjects();
         }
 
-        $data = [
-            'activationCode' => 0,
-            'blacklistMatches' => '',
-        ];
-
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
-            $data['emailConfirmed'] = null;
-        }
-
-        $action = new self($this->objects, 'update', [
-            'data' => $data,
-            'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS]),
-        ]);
-        $action->executeAction();
-        $action = new self($this->objects, 'addToGroups', [
-            'groups' => UserGroup::getGroupIDsByType([UserGroup::USERS]),
-            'deleteOldGroups' => false,
-            'addDefaultGroups' => false,
-        ]);
-        $action->executeAction();
-
-        // send e-mail notification
-        if (empty($this->parameters['skipNotification'])) {
-            foreach ($this->getObjects() as $user) {
-                $email = new Email();
-                $email->setMessageID(\sprintf(
-                    'com.woltlab.wcf.adminActivation/%d/%d/%s',
-                    $user->userID,
-                    TIME_NOW,
-                    \bin2hex(\random_bytes(8))
-                ));
-                $email->addRecipient(new UserMailbox($user->getDecoratedObject()));
-                $email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'));
-                $email->setBody(new MimePartFacade([
-                    new RecipientAwareTextMimePart('text/html', 'email_adminActivation'),
-                    new RecipientAwareTextMimePart('text/plain', 'email_adminActivation'),
-                ]));
-                $email->send();
-            }
-        }
-
-        $userIDs = [];
         foreach ($this->getObjects() as $user) {
-            $userIDs[] = $user->userID;
+            (new EnableUser($user->getDecoratedObject(), $this->parameters['skipNotification'] ?? false))();
         }
-        UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
 
         $this->unmarkItems();
     }
@@ -820,6 +779,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Disables users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `DisableUser`
      */
     public function disable()
     {
@@ -827,24 +788,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $this->readObjects();
         }
 
-        // We reset the activationCode (which indicates, that the user is not enabled) AND disable the email
-        // confirm status, because if the user can enable himself by an email confirmation and we do not reset
-        // the email confirmed status, the behavior is undefined, because a user exists, which is not enabled
-        // but has a valid email address (Which doesn't usually happen).
-        $action = new self($this->objects, 'update', [
-            'data' => [
-                'activationCode' => UserRegistrationUtil::getActivationCode(),
-                'emailConfirmed' => Hex::encode(\random_bytes(20)),
-            ],
-            'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS]),
-        ]);
-        $action->executeAction();
-        $action = new self($this->objects, 'addToGroups', [
-            'groups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS]),
-            'deleteOldGroups' => false,
-            'addDefaultGroups' => false,
-        ]);
-        $action->executeAction();
+        foreach ($this->getObjects() as $userEditor) {
+            (new DisableUser($userEditor->getDecoratedObject()))();
+        }
 
         $this->unmarkItems();
     }
@@ -937,6 +883,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Enables the signature of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `EnableSignature`
      */
     public function enableSignature()
     {
@@ -945,9 +893,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->update([
-                'disableSignature' => 0,
-            ]);
+            (new EnableSignature($userEditor->getDecoratedObject()))();
         }
     }
 
@@ -1057,6 +1003,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      * Enables the avatar of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `EnableAvatar`
      */
     public function enableAvatar()
     {
@@ -1065,9 +1013,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->update([
-                'disableAvatar' => 0,
-            ]);
+            (new EnableAvatar($userEditor->getDecoratedObject()))();
         }
     }
 
@@ -1097,6 +1043,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3 use `EnableCoverPhoto`
      */
     public function enableCoverPhoto()
     {
@@ -1105,9 +1053,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->update([
-                'disableCoverPhoto' => 0,
-            ]);
+            (new EnableCoverPhoto($userEditor->getDecoratedObject()))();
         }
     }
 

@@ -7,12 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\command\EnableAvatar;
 use wcf\system\WCF;
 
 /**
@@ -34,7 +34,7 @@ final class EnableUserAvatar implements IController
         $this->assertAvatarCanBeEnabled($user);
 
         if ($user->disableAvatar) {
-            (new UserAction([$user], 'enableAvatar'))->executeAction();
+            (new EnableAvatar($user))();
         }
 
         return new JsonResponse([]);

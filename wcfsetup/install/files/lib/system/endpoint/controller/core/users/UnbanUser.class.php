@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -34,7 +33,7 @@ final class UnbanUser implements IController
         $this->assertUserCanUnbanned($user);
 
         if ($user->banned) {
-            (new UserAction([$user], 'unban'))->executeAction();
+            (new \wcf\system\user\command\UnbanUser($user))();
         }
 
         return new JsonResponse([]);
