@@ -32,6 +32,7 @@ use wcf\system\WCF;
  * @property-read   int $isDisabled     is `1` if the menu item is disabled and thus not shown in the menu, otherwise `0`
  * @property-read   int $originIsSystem     is `1` if the menu item has been delivered by a package, otherwise `0` (if the menu item has been created by an admin in the ACP)
  * @property-read   int $packageID      id of the package the which delivers the menu item or `1` if it has been created in the ACP
+ * @property-read   string $additionalInternalURL
  */
 class MenuItem extends DatabaseObject implements ITitledObject
 {
@@ -93,12 +94,12 @@ class MenuItem extends DatabaseObject implements ITitledObject
         if ($this->pageObjectID) {
             $handler = $this->getMenuPageHandler();
             if ($handler && $handler instanceof ILookupPageHandler) {
-                return $handler->getLink($this->pageObjectID);
+                return $handler->getLink($this->pageObjectID) . $this->additionalInternalURL;
             }
         }
 
         if ($this->pageID) {
-            return $this->getPage()->getLink();
+            return $this->getPage()->getLink() . $this->additionalInternalURL;
         } else {
             return WCF::getLanguage()->get($this->externalURL);
         }

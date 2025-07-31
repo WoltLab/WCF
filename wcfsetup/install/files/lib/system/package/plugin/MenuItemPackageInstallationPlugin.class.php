@@ -155,11 +155,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
 
         $externalURL = (!empty($data['elements']['externalURL'])) ? $data['elements']['externalURL'] : '';
+        $additionalInternalURL = $data['elements']['additionalInternalURL'] ?? '';
 
         if ($pageID === null && empty($externalURL)) {
             throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' must either have an associated page or an external url set.");
         } elseif ($pageID !== null && !empty($externalURL)) {
             throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' can either have an associated page or an external url, but not both.");
+        } elseif ($pageID === null && !empty($additionalInternalURL)) {
+            throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' can not have an additional internal URL set if it does not have an associated page.");
         }
 
         return [
@@ -171,6 +174,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             'parentItemID' => $parentItemID,
             'showOrder' => $this->getItemOrder($menuID, $parentItemID),
             'title' => $this->getI18nValues($data['elements']['title']),
+            'additionalInternalURL' => $additionalInternalURL,
         ];
     }
 
@@ -390,6 +394,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                         ->values(['internal'])
                 ),
 
+            TextFormField::create('additionalInternalURL')
+                ->label('wcf.acp.pip.menuItem.additionalInternalURL')
+                ->maximumLength(255)
+                ->addDependency(
+                    ValueFormFieldDependency::create('linkType')
+                        ->fieldId('linkType')
+                        ->values(['internal'])
+                ),
             TextFormField::create('externalURL')
                 ->label('wcf.acp.pip.menuItem.externalURL')
                 ->description('wcf.acp.pip.menuItem.externalURL.description')
@@ -469,7 +481,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             $data['title'][LanguageFactory::getInstance()->getLanguageByCode($title->getAttribute('language'))->languageID] = $title->nodeValue;
         }
 
-        foreach (['externalURL', 'menu', 'page', 'parent'] as $optionalElementName) {
+        foreach (['externalURL', 'menu', 'page', 'parent', 'additionalInternalURL'] as $optionalElementName) {
             $optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
             if ($optionalElement !== null) {
                 $data[$optionalElementName] = $optionalElement->nodeValue;
@@ -594,6 +606,10 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             [
                 'page' => '',
                 'externalURL' => '',
+                'additionalInternalURL' => [
+                    'defaultValue' => '',
+                    'cdata' => true,
+                ],
                 'showOrder' => null,
             ],
             $form
