@@ -199,6 +199,11 @@ a.ck.ck-button-bold {
 	.ck-button[type="submit"] {
 		order: 2;
 	}
+
+	.ck-button.ck-button-extra {
+		margin-left: 0;
+		order: 0;
+	}
 }
 
 .ck.ck-form__row,

@@ -283,6 +283,7 @@ class ConfigurationBuilder {
     dictionary["Line number"] = getPhrase("wcf.ckeditor.code.lineNumber");
     dictionary["Quote"] = getPhrase("wcf.ckeditor.quote");
     dictionary["Quote from %0"] = getPhrase("wcf.ckeditor.quoteFrom");
+    dictionary["Remove Quote"] = getPhrase("wcf.ckeditor.quote.remove");
     dictionary["Spoiler"] = getPhrase("wcf.editor.button.spoiler");
 
     // TODO: The typings are both incompleted and outdated.

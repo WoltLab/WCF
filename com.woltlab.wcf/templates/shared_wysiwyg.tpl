@@ -34,6 +34,7 @@
 		{jsphrase name='wcf.ckeditor.quote'}
 		{jsphrase name='wcf.ckeditor.quote.author'}
 		{jsphrase name='wcf.ckeditor.quoteFrom'}
+		{jsphrase name='wcf.ckeditor.quote.remove'}
 		{jsphrase name='wcf.editor.button.group.format'}
 		{jsphrase name='wcf.editor.button.group.list'}
 		{jsphrase name='wcf.editor.button.spoiler'}

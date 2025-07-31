@@ -3462,6 +3462,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.ckeditor.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.ckeditor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Zitat von %0]]></item>
+		<item name="wcf.ckeditor.quote.remove"><![CDATA[Zitat entfernen]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>

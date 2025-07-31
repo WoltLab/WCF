@@ -3385,6 +3385,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.ckeditor.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.ckeditor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.ckeditor.quoteFrom"><![CDATA[Quote from %0]]></item>
+		<item name="wcf.ckeditor.quote.remove"><![CDATA[Remove Quote]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.version"><![CDATA[Displays the version number and exits.]]></item>

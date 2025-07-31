@@ -245,6 +245,7 @@ define(["require", "exports", "../../Language", "WoltLabSuite/Core/Component/Emo
             dictionary["Line number"] = (0, Language_1.getPhrase)("wcf.ckeditor.code.lineNumber");
             dictionary["Quote"] = (0, Language_1.getPhrase)("wcf.ckeditor.quote");
             dictionary["Quote from %0"] = (0, Language_1.getPhrase)("wcf.ckeditor.quoteFrom");
+            dictionary["Remove Quote"] = (0, Language_1.getPhrase)("wcf.ckeditor.quote.remove");
             dictionary["Spoiler"] = (0, Language_1.getPhrase)("wcf.editor.button.spoiler");
             // TODO: The typings are both incompleted and outdated.
             return {
