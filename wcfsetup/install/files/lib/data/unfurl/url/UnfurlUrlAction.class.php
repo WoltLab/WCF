@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UnfurlUrlAction extends AbstractDatabaseObjectAction
 {
-    public const REFETCH_UNFURL_URL = 30 * 86_400;
+    public const REFETCH_UNFURL_URL = 86_400;
 
     /**
      * @inheritDoc
