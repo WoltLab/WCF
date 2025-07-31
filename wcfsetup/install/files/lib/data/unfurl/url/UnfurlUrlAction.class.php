@@ -2,6 +2,7 @@
 
 namespace wcf\data\unfurl\url;
 
+use wcf\command\unfurl\url\FindOrCreateUnfurlUrl;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\UnfurlUrlBackgroundJob;
@@ -19,8 +20,6 @@ use wcf\system\WCF;
  */
 class UnfurlUrlAction extends AbstractDatabaseObjectAction
 {
-    public const REFETCH_UNFURL_URL = 86_400;
-
     /**
      * @inheritDoc
      */
@@ -84,30 +83,10 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
 
     /**
      * Returns the unfurl url object to a given url.
+     * @deprecated 6.2 Use `FindOrCreateUnfurlUrl` instead.
      */
     public function findOrCreate(): UnfurlUrl
     {
-        $object = UnfurlUrl::getByUrl($this->parameters['data']['url']);
-
-        if (!$object) {
-            $returnValues = (new self([], 'create', [
-                'data' => [
-                    'url' => $this->parameters['data']['url'],
-                    'urlHash' => \sha1($this->parameters['data']['url']),
-                ],
-            ]))->executeAction();
-
-            return $returnValues['returnValues'];
-        }
-
-        if ($object->status !== UnfurlUrl::STATUS_PENDING && $object->lastFetch < \TIME_NOW - self::REFETCH_UNFURL_URL) {
-            BackgroundQueueHandler::getInstance()->enqueueIn([
-                new UnfurlUrlBackgroundJob($object),
-            ]);
-
-            BackgroundQueueHandler::getInstance()->forceCheck();
-        }
-
-        return $object;
+        return (new FindOrCreateUnfurlUrl($this->parameters['data']['url']))();
     }
 }
