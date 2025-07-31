@@ -19,6 +19,8 @@ use wcf\system\WCF;
  */
 class UnfurlUrlAction extends AbstractDatabaseObjectAction
 {
+    public const REFETCH_UNFURL_URL = 30 * 86_400;
+
     /**
      * @inheritDoc
      */
@@ -96,6 +98,14 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
             ]))->executeAction();
 
             return $returnValues['returnValues'];
+        }
+
+        if ($object->status !== UnfurlUrl::STATUS_PENDING && $object->lastFetch < \TIME_NOW - self::REFETCH_UNFURL_URL) {
+            BackgroundQueueHandler::getInstance()->enqueueIn([
+                new UnfurlUrlBackgroundJob($object),
+            ]);
+
+            BackgroundQueueHandler::getInstance()->forceCheck();
         }
 
         return $object;
