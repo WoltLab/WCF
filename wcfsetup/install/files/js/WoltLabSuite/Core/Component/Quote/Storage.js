@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
     const usedQuotes = new Map();
     async function saveQuote(objectType, objectId, objectClassName, message) {
-        const result = await (0, Author_1.messageAuthor)(objectClassName, objectId);
+        const result = await (0, Author_1.getMessageAuthor)(objectClassName, objectId);
         if (!result.ok) {
             throw new Error("Error fetching author data");
         }
