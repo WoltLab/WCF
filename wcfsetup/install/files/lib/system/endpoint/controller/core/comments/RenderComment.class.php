@@ -21,7 +21,7 @@ use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the rendering of a single comment.
+ * Retrieves the HTML code for the rendering of the comment with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

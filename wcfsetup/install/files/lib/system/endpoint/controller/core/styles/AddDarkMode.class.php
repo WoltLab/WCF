@@ -14,7 +14,7 @@ use wcf\system\style\command\AddDarkMode as AddDarkModeCommand;
 use wcf\system\WCF;
 
 /**
- * API endpoint for adding the dark mode to an existing style.
+ * Adds a dark mode to the style with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

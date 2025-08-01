@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint for deleting user groups.
+ * Deletes the user group with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

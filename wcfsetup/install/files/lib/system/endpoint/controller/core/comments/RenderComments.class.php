@@ -15,7 +15,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for loading additional rendered comments.
+ * Retrieves the HTML code for the rendering of a list of comments.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
@@ -87,6 +87,5 @@ final class RenderCommentsParameters
         public readonly int $objectTypeID,
 
         public readonly int $lastCommentTime = 0,
-    ) {
-    }
+    ) {}
 }

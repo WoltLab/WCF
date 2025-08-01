@@ -16,7 +16,7 @@ use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\WCF;
 
 /**
- * API endpoint for starting the editing of a comment response.
+ * Retrieves the HTML code for the editing of the comment response with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

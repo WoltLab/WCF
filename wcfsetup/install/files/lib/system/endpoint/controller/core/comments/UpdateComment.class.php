@@ -17,7 +17,7 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * API endpoint for the update of comments.
+ * Updates the comment with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

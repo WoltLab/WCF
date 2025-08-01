@@ -18,7 +18,7 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * API endpoint for the update of responses.
+ * Updates the comment response with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
@@ -74,6 +74,5 @@ final class UpdateCommentParameters
     public function __construct(
         /** @var non-empty-string */
         public readonly string $message,
-    ) {
-    }
+    ) {}
 }

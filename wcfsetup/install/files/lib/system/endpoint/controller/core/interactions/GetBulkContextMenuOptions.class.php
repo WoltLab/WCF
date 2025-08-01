@@ -14,7 +14,7 @@ use wcf\system\interaction\bulk\BulkInteractionContextMenuComponent;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 
 /**
- * Retrieves the options for a bulk interaction context menu.
+ * Retrieves the HTML code for the rendering of a bulk interaction context menu.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

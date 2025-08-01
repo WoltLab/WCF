@@ -15,7 +15,7 @@ use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 
 /**
- * Retrieves the options for an interaction context menu.
+ * Retrieves the HTML code for the rendering of a interaction context menu.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

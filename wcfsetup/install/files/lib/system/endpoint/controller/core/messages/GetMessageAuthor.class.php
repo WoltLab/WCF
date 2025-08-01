@@ -13,7 +13,7 @@ use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 
 /**
- * Returns information about the author of a message.
+ * Returns information about the author of a quoted message.
  *
  * @author    Olaf Braun
  * @copyright 2001-2024 WoltLab GmbH

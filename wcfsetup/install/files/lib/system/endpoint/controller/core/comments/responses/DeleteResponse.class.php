@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint for the deletion of responses.
+ * Deletes the comment response with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

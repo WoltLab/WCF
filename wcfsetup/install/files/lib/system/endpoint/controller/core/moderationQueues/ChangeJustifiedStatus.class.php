@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * Changes the justified status of a report.
+ * Changes the justified status of the report with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

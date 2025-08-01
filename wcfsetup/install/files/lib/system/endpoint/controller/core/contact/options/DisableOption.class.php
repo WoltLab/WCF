@@ -14,6 +14,8 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
+ * Disables the contact option with the given ID.
+ *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

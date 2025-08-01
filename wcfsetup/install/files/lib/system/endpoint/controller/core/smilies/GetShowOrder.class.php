@@ -14,7 +14,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for retrieving the show order of smilies.
+ * Retrieves the show order of smilies.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

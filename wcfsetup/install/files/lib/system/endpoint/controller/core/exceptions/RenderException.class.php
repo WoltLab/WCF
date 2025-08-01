@@ -15,12 +15,12 @@ use wcf\util\DirectoryUtil;
 use wcf\util\ExceptionLogUtil;
 
 /**
- * API endpoint for the rendering of an exception log entry.
+ * Retrieves the HTML code for the rendering of the exception log entry with the given ID.
  *
  * @author      Marcel Werk
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 #[GetRequest('/core/exceptions/{id:[a-f0-9]{40}}/render')]
 final class RenderException implements IController

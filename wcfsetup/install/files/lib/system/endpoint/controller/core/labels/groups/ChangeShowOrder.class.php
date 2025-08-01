@@ -14,7 +14,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of label groups.
+ * Saves the show order of label groups.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

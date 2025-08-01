@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeCache;
 use wcf\data\notice\NoticeList;
 use wcf\system\cache\builder\NoticeCacheBuilder;
 use wcf\system\endpoint\IController;
@@ -16,7 +15,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of notices.
+ * Saves the show order of user notices.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

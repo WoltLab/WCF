@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * Closes a report by marking it as done without further processing.
+ * Closes the report with the given ID by marking it as done without further processing.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

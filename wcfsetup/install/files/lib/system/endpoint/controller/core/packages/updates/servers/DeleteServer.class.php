@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the deletion of package update servers.
+ * Deletes the package update server with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

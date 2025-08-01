@@ -13,7 +13,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\gridView\AbstractGridView;
 
 /**
- * Retrieves a row for a grid view.
+ * Retrieves the HTML code for the rendering of a grid view row.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

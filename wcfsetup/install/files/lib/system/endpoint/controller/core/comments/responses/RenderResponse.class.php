@@ -17,7 +17,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the rendering of a single comment response.
+ * Retrieves the HTML code for the rendering of the comment response with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

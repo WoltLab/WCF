@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\WCF;
 
 /**
- * API endpoint for deleting notices.
+ * Deletes the user notices with the given ID.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

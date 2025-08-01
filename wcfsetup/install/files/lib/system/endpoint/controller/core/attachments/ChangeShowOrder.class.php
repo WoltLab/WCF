@@ -13,7 +13,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of attachments.
+ * Saves the show order of attachments.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -95,6 +95,5 @@ final class ChangeShowOrderParameters
         public readonly string $tmpHash,
         /** @var list<positive-int> */
         public readonly array $attachmentIDs,
-    ) {
-    }
+    ) {}
 }

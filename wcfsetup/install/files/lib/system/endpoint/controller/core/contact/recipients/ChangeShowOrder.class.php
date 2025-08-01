@@ -15,7 +15,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of contact recipients.
+ * Saves the show order of contact recipients.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -34,7 +34,7 @@ final class ChangeShowOrder implements IController
         $recipientList->readObjects();
 
         $items = \array_map(
-            static fn (ContactRecipient $recipient) => new ShowOrderItem(
+            static fn(ContactRecipient $recipient) => new ShowOrderItem(
                 $recipient->recipientID,
                 $recipient->getName()
             ),

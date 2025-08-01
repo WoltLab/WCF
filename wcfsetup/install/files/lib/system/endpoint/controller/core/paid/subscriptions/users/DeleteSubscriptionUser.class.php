@@ -14,6 +14,8 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
+ * Deletes the paid subscription user with the given ID.
+ *
  * API endpoint for the deletion of paid subscriptions for users.
  *
  * @author      Olaf Braun

@@ -15,7 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for loading additional rendered responses.
+ * Retrieves the HTML code for the rendering of a list of comment responses.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

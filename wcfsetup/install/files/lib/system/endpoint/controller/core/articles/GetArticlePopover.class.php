@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the rendering of the article popover.
+ * Retrieves the HTML code for the popover of the article with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

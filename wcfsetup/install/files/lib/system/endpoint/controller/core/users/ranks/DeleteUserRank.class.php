@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the deletion of user ranks.
+ * Deletes the user rank with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

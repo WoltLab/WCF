@@ -18,7 +18,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of smilies in a category.
+ * Saves the show order of smilies in the category with the given ID.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

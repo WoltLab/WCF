@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for disabling cronjobs.
+ * Disables the cronjob with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

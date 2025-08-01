@@ -19,7 +19,7 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * API endpoint for the creation of new comments.
+ * Creates a new comment.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
@@ -104,6 +104,5 @@ final class CreateCommentParameters
         public readonly string $message,
 
         public readonly string $guestToken,
-    ) {
-    }
+    ) {}
 }

@@ -14,7 +14,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\file\processor\FileProcessor;
 
 /**
- * Generates a thumbnail for a file.
+ * Generates thumbnails for the file with the given ID.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH

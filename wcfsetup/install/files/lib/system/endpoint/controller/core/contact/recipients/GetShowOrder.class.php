@@ -14,7 +14,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for retrieving the show order of contact recipients.
+ * Retrieves the show order of contact recipients.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -33,7 +33,7 @@ final class GetShowOrder implements IController
         $recipientList->readObjects();
 
         $items = \array_map(
-            static fn (ContactRecipient $recipient) => new ShowOrderItem(
+            static fn(ContactRecipient $recipient) => new ShowOrderItem(
                 $recipient->recipientID,
                 $recipient->getName()
             ),

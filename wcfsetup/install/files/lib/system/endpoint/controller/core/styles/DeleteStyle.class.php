@@ -14,7 +14,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the deletion of styles.
+ * Deletes the style with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

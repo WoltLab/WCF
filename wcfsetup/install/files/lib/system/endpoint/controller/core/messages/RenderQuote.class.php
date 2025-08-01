@@ -16,7 +16,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
- * Renders a quote message.
+ * Retrieves data for the rendering of a quote.
  *
  * @author    Olaf Braun
  * @copyright 2001-2024 WoltLab GmbH

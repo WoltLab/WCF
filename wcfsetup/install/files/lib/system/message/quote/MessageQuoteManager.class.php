@@ -4,7 +4,6 @@ namespace wcf\system\message\quote;
 
 use wcf\data\IMessage;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -242,9 +241,7 @@ class MessageQuoteManager extends SingletonFactory
      * @return void
      * @deprecated 6.2
      */
-    public function removeMarkedQuotes()
-    {
-    }
+    public function removeMarkedQuotes() {}
 
     /**
      * Returns the number of stored quotes.
@@ -278,9 +275,7 @@ class MessageQuoteManager extends SingletonFactory
      * @return void
      * @deprecated 6.2
      */
-    public function initObjects($objectType, array $objectIDs)
-    {
-    }
+    public function initObjects($objectType, array $objectIDs) {}
 
     /**
      * Reads the quote message id.
@@ -288,9 +283,7 @@ class MessageQuoteManager extends SingletonFactory
      * @return void
      * @deprecated 6.2
      */
-    public function readParameters()
-    {
-    }
+    public function readParameters() {}
 
     /**
      * Reads a list of quote ids to remove.
@@ -331,9 +324,7 @@ class MessageQuoteManager extends SingletonFactory
      * @return void
      * @deprecated 6.2
      */
-    public function assignVariables()
-    {
-    }
+    public function assignVariables() {}
 
     /**
      * Returns quote message id.
@@ -353,9 +344,7 @@ class MessageQuoteManager extends SingletonFactory
      * @return void
      * @deprecated 6.2
      */
-    public function removeOrphanedQuotes(array $quoteIDs)
-    {
-    }
+    public function removeOrphanedQuotes(array $quoteIDs) {}
 
     /**
      * Returns true if a quote id represents a full quote.
@@ -408,7 +397,7 @@ class MessageQuoteManager extends SingletonFactory
     }
 
     /**
-     * Updates data stored in session,
+     * Updates data stored in session.
      */
     protected function updateSession(): void
     {

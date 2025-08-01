@@ -13,7 +13,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\listView\AbstractListView;
 
 /**
- * Retrieves a single item for a list view.
+ * Retrieves the HTML code for the rendering of a list view item.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

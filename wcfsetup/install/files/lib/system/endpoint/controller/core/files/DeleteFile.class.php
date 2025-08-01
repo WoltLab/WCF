@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * Deletes a file.
+ * Deletes the file with the given ID.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH

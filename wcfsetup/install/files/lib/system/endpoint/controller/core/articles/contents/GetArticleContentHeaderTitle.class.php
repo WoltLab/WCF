@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the rendering of the article content header title.
+ * Retrieves the HTML code for the content header title of the article content with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

@@ -15,7 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\AbstractModerationQueueManager;
 
 /**
- * API endpoint for the deletion of the content associated with a moderation queue entry.
+ * Deletes the content associated with the moderation queue entry with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

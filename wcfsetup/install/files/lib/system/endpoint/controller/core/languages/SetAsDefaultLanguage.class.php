@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API endpoint for setting a language as the default language.
+ * Flags the language with the given ID as default language.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

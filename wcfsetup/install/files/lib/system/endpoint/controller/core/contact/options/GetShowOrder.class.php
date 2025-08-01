@@ -14,7 +14,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for retrieving the show order of contact options.
+ * Retrieves the show order of contact options.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -33,7 +33,7 @@ final class GetShowOrder implements IController
         $optionList->readObjects();
 
         $items = \array_map(
-            static fn (ContactOption $option) => new ShowOrderItem(
+            static fn(ContactOption $option) => new ShowOrderItem(
                 $option->optionID,
                 $option->getTitle()
             ),

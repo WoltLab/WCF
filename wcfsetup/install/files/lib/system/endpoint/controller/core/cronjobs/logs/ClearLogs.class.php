@@ -11,7 +11,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\WCF;
 
 /**
- * API endpoint for the deletion of all entries of the cronjob log.
+ * Clears the cronjob log.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

@@ -16,7 +16,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for changing the show order of ads.
+ * Saves the show order of ads.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

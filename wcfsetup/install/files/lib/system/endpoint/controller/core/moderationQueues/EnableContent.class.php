@@ -14,7 +14,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 
 /**
- * API endpoint for the enabling of the content associated with a moderation queue entry.
+ * Enables the content associated with the moderation queue entry with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

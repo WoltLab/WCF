@@ -21,7 +21,7 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * API endpoint for the creation of new responses.
+ * Creates a new comment response.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
@@ -109,6 +109,5 @@ final class CreateResponseParameters
         public readonly string $message,
 
         public readonly string $guestToken,
-    ) {
-    }
+    ) {}
 }

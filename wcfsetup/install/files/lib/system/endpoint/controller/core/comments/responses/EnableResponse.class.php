@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint for enabling responses.
+ * Enables the comment response with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

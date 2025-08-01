@@ -13,7 +13,7 @@ use wcf\system\showOrder\ShowOrderItem;
 use wcf\system\WCF;
 
 /**
- * API endpoint for retrieving the show order of notices.
+ * Retrieves the show order of user notices.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

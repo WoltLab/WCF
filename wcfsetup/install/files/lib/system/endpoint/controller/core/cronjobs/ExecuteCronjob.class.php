@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * API endpoint for enabling cronjobs.
+ * Executes the cronjob with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint for marking a moderation queue entry as read.
+ * Marks the moderation queue entry with the given ID as read.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

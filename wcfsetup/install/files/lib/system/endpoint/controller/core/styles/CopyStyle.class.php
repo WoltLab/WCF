@@ -13,7 +13,7 @@ use wcf\system\style\command\CopyStyle as CopyStyleCommand;
 use wcf\system\WCF;
 
 /**
- * API endpoint for copying styles.
+ * Copies the style with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

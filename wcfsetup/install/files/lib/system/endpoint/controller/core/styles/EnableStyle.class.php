@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * API endpoint for enabling styles.
+ * Enables the style with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

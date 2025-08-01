@@ -13,7 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * API endpoint that allows to set a style as the default style.
+ * Flags the style with the given ID as default style.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

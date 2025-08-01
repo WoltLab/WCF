@@ -14,7 +14,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint for moving an article to the trash.
+ * Soft-deletes the article with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

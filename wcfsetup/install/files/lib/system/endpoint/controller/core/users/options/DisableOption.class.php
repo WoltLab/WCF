@@ -12,7 +12,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * API endpoint for disabling user options.
+ * Disables the user option with the given ID.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
