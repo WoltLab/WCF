@@ -4,7 +4,7 @@ namespace wcf\system\html\node;
 
 use Laminas\Diactoros\Exception\InvalidArgumentException;
 use Laminas\Diactoros\Uri;
-use wcf\data\unfurl\url\UnfurlUrlAction;
+use wcf\command\unfurl\url\FindOrCreateUnfurlUrl;
 use wcf\util\DOMUtil;
 use wcf\util\Url;
 
@@ -42,7 +42,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
             // be encoded at all times according to RFC 1738.
             $path = \preg_replace_callback(
                 '~[^0-9a-zA-Z$-_.+!*\'(),;/?:@=&]~',
-                static fn (array $matches) => \rawurlencode($matches[0]),
+                static fn(array $matches) => \rawurlencode($matches[0]),
                 $path
             );
             $uri = $uri->withPath($path);
@@ -91,13 +91,8 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
 
     private static function findOrCreate(Uri $uri): int
     {
-        $object = new UnfurlUrlAction([], 'findOrCreate', [
-            'data' => [
-                'url' => $uri->__toString(),
-            ],
-        ]);
-        $returnValues = $object->executeAction();
+        $unfurlUrl = (new FindOrCreateUnfurlUrl($uri->__toString()))();
 
-        return $returnValues['returnValues']->urlID;
+        return $unfurlUrl->urlID;
     }
 }

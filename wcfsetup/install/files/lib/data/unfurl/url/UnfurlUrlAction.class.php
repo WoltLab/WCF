@@ -2,6 +2,7 @@
 
 namespace wcf\data\unfurl\url;
 
+use wcf\command\unfurl\url\FindOrCreateUnfurlUrl;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\UnfurlUrlBackgroundJob;
@@ -82,22 +83,10 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
 
     /**
      * Returns the unfurl url object to a given url.
+     * @deprecated 6.2 Use `FindOrCreateUnfurlUrl` instead.
      */
     public function findOrCreate(): UnfurlUrl
     {
-        $object = UnfurlUrl::getByUrl($this->parameters['data']['url']);
-
-        if (!$object) {
-            $returnValues = (new self([], 'create', [
-                'data' => [
-                    'url' => $this->parameters['data']['url'],
-                    'urlHash' => \sha1($this->parameters['data']['url']),
-                ],
-            ]))->executeAction();
-
-            return $returnValues['returnValues'];
-        }
-
-        return $object;
+        return (new FindOrCreateUnfurlUrl($this->parameters['data']['url']))();
     }
 }
