@@ -12,6 +12,7 @@ use wcf\system\exception\SystemException;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
+ * @deprecated 6.2 No longer offers any benefits over the disk cache (see https://github.com/WoltLab/WCF/issues/6376)
  */
 class RedisCacheSource implements ICacheSource
 {
