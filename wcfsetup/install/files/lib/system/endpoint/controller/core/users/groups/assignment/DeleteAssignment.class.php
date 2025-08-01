@@ -13,8 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\WCF;
 
 /**
- * Deletes the trophy with the given ID.
- * API endpoint for deleting user group assignments.
+ * Deletes the user group assignments with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH

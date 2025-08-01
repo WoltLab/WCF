@@ -16,8 +16,6 @@ use wcf\system\WCF;
 /**
  * Deletes the paid subscription user with the given ID.
  *
- * API endpoint for the deletion of paid subscriptions for users.
- *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

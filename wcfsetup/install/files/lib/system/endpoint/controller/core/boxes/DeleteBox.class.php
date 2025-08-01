@@ -13,7 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * Enables the media provider with the given ID.
+ * Deletes the box with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH
