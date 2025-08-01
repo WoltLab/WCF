@@ -726,6 +726,14 @@ abstract class AbstractGridView
     }
 
     /**
+     * Returns true if the rows are currently sorted by the provided column.
+     */
+    public function isSortedBy(GridViewColumn $column): bool
+    {
+        return $this->getSortField() === $column->getID();
+    }
+
+    /**
      * Initializes the database object list.
      */
     protected function initObjectList(): void

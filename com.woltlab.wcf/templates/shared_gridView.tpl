@@ -29,7 +29,7 @@
 					{/if}
 					{foreach from=$view->getVisibleColumns() item='column'}
 						<th
-							class="gridView__headerColumn {$column->getClasses()}"
+							class="gridView__headerColumn {$column->getClasses()} {if $view->isSortedBy($column)}active {$view->getSortOrder()}{/if}"
 							data-id="{$column->getID()}"
 							data-sortable="{$column->isSortable()}"
 						>
