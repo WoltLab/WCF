@@ -21,7 +21,7 @@ type Response = {
   avatar: string;
 };
 
-export async function messageAuthor(className: string, objectID: number): Promise<ApiResult<Response>> {
+export async function getMessageAuthor(className: string, objectID: number): Promise<ApiResult<Response>> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/message-author");
   url.searchParams.set("className", className);
   url.searchParams.set("objectID", objectID.toString());

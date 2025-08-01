@@ -10,7 +10,7 @@
 
 import * as Core from "WoltLabSuite/Core/Core";
 import { renderQuote } from "WoltLabSuite/Core/Api/Messages/RenderQuote";
-import { messageAuthor } from "WoltLabSuite/Core/Api/Messages/Author";
+import { getMessageAuthor } from "WoltLabSuite/Core/Api/Messages/Author";
 import { refreshQuoteLists } from "WoltLabSuite/Core/Component/Quote/List";
 import { resetRemovalQuotes } from "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes";
 import { removeQuoteStatus } from "WoltLabSuite/Core/Component/Quote/Message";
@@ -44,7 +44,7 @@ export async function saveQuote(
   objectClassName: string,
   message: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = await messageAuthor(objectClassName, objectId);
+  const result = await getMessageAuthor(objectClassName, objectId);
   if (!result.ok) {
     throw new Error("Error fetching author data");
   }
