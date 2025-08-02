@@ -84,17 +84,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             uuid,
         };
     }
-    async function saveFullQuote(objectType, objectClassName, objectId) {
-        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectClassName, objectId);
+    async function saveFullQuote(objectType, objectId) {
+        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId);
         if (!result.ok) {
             throw new Error("Error fetching quote data");
         }
         const message = {
             objectID: result.value.objectID,
-            time: result.value.time,
-            title: result.value.title,
             link: result.value.link,
-            authorID: result.value.authorID,
             author: result.value.author,
             avatar: result.value.avatar,
         };

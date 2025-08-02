@@ -111,7 +111,7 @@ export function registerContainer(
         if (className.endsWith("Action")) {
           quoteMessage = await legacySaveFullQuote(objectType, className, ~~container.dataset.objectId!);
         } else {
-          quoteMessage = await saveFullQuote(objectType, className, ~~container.dataset.objectId!);
+          quoteMessage = await saveFullQuote(objectType, ~~container.dataset.objectId!);
         }
         quoteMessageButton!.classList.add("active");
 

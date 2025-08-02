@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                     quoteMessage = await (0, Storage_1.legacySaveFullQuote)(objectType, className, ~~container.dataset.objectId);
                 }
                 else {
-                    quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, className, ~~container.dataset.objectId);
+                    quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, ~~container.dataset.objectId);
                 }
                 quoteMessageButton.classList.add("active");
                 if (activeEditor !== undefined) {

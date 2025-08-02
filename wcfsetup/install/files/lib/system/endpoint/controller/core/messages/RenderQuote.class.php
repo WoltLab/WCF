@@ -5,14 +5,16 @@ namespace wcf\system\endpoint\controller\core\messages;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\data\DatabaseObject;
 use wcf\data\IEmbeddedMessageObject;
 use wcf\data\IMessage;
 use wcf\data\user\UserProfile;
+use wcf\event\message\MessageQuoteRendering;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\event\EventHandler;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -31,33 +33,32 @@ final class RenderQuote implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetRenderQuoteParameters::class);
 
-        // @phpstan-ignore argument.templateType
-        $object = Helper::fetchObjectFromRequestParameter($parameters->objectID, $parameters->className);
-        \assert($object instanceof IMessage && $object instanceof DatabaseObject);
+        $event = new MessageQuoteRendering($parameters->objectType, $parameters->objectID);
+        EventHandler::getInstance()->fire($event);
 
-        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($object->getUserID());
+        $message = $event->getMessage();
+        if ($message === null) {
+            throw new PermissionDeniedException();
+        }
+
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($message->getUserID());
         if ($userProfile === null) {
-            $userProfile = UserProfile::getGuestUserProfile($object->getUsername());
+            $userProfile = UserProfile::getGuestUserProfile($message->getUsername());
         }
 
-        if ($object instanceof IEmbeddedMessageObject) {
-            $object->loadEmbeddedObjects();
+        if ($message instanceof IEmbeddedMessageObject) {
+            $message->loadEmbeddedObjects();
         }
 
-        return new JsonResponse(
-            [
-                "objectID" => $object->getObjectID(),
-                "authorID" => $userProfile->getUserID(),
-                "author" => $userProfile->getUsername(),
-                "avatar" => $userProfile->getAvatar()->getURL(),
-                "time" => (new \DateTime('@' . $object->getTime()))->format("c"),
-                "title" => $object->getTitle(),
-                "link" => $object->getLink(),
-                "rawMessage" => $parameters->fullQuote ? $this->renderFullQuote($object) : null,
-                "message" => $parameters->fullQuote ? $object->getFormattedMessage() : null
-            ],
-            200,
-        );
+        return new JsonResponse([
+            'objectID' => $parameters->objectID,
+            'authorID' => $userProfile->getUserID(),
+            'author' => $userProfile->getUsername(),
+            'avatar' => $userProfile->getAvatar()->getURL(),
+            'link' => $message->getLink(),
+            'rawMessage' => $parameters->isFullQuote ? $this->renderFullQuote($message) : null,
+            'message' => $parameters->isFullQuote ? $message->getFormattedMessage() : null
+        ]);
     }
 
     private function renderFullQuote(IMessage $object): string
@@ -78,9 +79,10 @@ final class GetRenderQuoteParameters
 {
     public function __construct(
         /** @var non-empty-string */
-        public readonly string $className,
+        public readonly string $objectType,
         /** @var positive-int */
         public readonly int $objectID,
-        public readonly bool $fullQuote = false,
+
+        public readonly bool $isFullQuote,
     ) {}
 }
