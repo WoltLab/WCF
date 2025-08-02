@@ -80,8 +80,8 @@ class QuoteList {
 
           dispatchToCkeditor(this.#editor).insertQuote({
             author: message.author,
-            content: quote.rawMessage === undefined ? quote.message : quote.rawMessage,
-            isText: quote.rawMessage === undefined,
+            content: quote.rawMessage ? quote.rawMessage : quote.message,
+            isText: !quote.rawMessage,
             link: message.link,
           });
         });

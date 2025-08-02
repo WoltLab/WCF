@@ -171,7 +171,6 @@ function setup() {
         await saveQuote(
           selectedMessage!.container.objectType,
           selectedMessage!.container.objectId,
-          selectedMessage!.container.className,
           selectedMessage!.message,
         );
       }
@@ -201,7 +200,6 @@ function setup() {
         quoteMessage = await saveQuote(
           selectedMessage!.container.objectType,
           selectedMessage!.container.objectId,
-          selectedMessage!.container.className,
           selectedMessage!.message,
         );
       }
@@ -209,8 +207,8 @@ function setup() {
       if (activeEditor !== undefined) {
         dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
           author: quoteMessage.author,
-          content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-          isText: quoteMessage.rawMessage === undefined,
+          content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+          isText: !quoteMessage.rawMessage,
           link: quoteMessage.link,
         });
 

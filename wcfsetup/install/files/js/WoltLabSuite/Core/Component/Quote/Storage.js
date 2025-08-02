@@ -7,7 +7,7 @@
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Api/Messages/RenderQuote", "WoltLabSuite/Core/Api/Messages/Author", "WoltLabSuite/Core/Component/Quote/List", "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Ajax"], function (require, exports, tslib_1, Core, RenderQuote_1, Author_1, List_1, ResetRemovalQuotes_1, Message_1, Ajax_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Api/Messages/RenderQuote", "WoltLabSuite/Core/Component/Quote/List", "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Ajax"], function (require, exports, tslib_1, Core, RenderQuote_1, List_1, ResetRemovalQuotes_1, Message_1, Ajax_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.legacySaveQuote = legacySaveQuote;
@@ -45,8 +45,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             uuid,
         };
     }
-    async function saveQuote(objectType, objectId, objectClassName, message) {
-        const result = await (0, Author_1.getMessageAuthor)(objectClassName, objectId);
+    async function saveQuote(objectType, objectId, message) {
+        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, false);
         if (!result.ok) {
             throw new Error("Error fetching author data");
         }
@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         };
     }
     async function saveFullQuote(objectType, objectId) {
-        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId);
+        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, true);
         if (!result.ok) {
             throw new Error("Error fetching quote data");
         }

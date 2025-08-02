@@ -10,7 +10,6 @@
 
 import * as Core from "WoltLabSuite/Core/Core";
 import { renderQuote } from "WoltLabSuite/Core/Api/Messages/RenderQuote";
-import { getMessageAuthor } from "WoltLabSuite/Core/Api/Messages/Author";
 import { refreshQuoteLists } from "WoltLabSuite/Core/Component/Quote/List";
 import { resetRemovalQuotes } from "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes";
 import { removeQuoteStatus } from "WoltLabSuite/Core/Component/Quote/Message";
@@ -25,7 +24,7 @@ interface Message {
 
 interface Quote {
   message: string;
-  rawMessage?: string;
+  rawMessage?: string | null;
 }
 
 interface StorageData {
@@ -72,10 +71,9 @@ export async function legacySaveQuote(
 export async function saveQuote(
   objectType: string,
   objectId: number,
-  objectClassName: string,
   message: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = await getMessageAuthor(objectClassName, objectId);
+  const result = await renderQuote(objectType, objectId, false);
   if (!result.ok) {
     throw new Error("Error fetching author data");
   }
@@ -127,11 +125,8 @@ export async function legacySaveFullQuote(
   };
 }
 
-export async function saveFullQuote(
-  objectType: string,
-  objectId: number,
-): Promise<Message & Quote & { uuid: string }> {
-  const result = await renderQuote(objectType, objectId);
+export async function saveFullQuote(objectType: string, objectId: number): Promise<Message & Quote & { uuid: string }> {
+  const result = await renderQuote(objectType, objectId, true);
   if (!result.ok) {
     throw new Error("Error fetching quote data");
   }

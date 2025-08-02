@@ -23,10 +23,11 @@ type Response = {
 export async function renderQuote(
   objectType: string,
   objectID: number,
+  isFullQuote: boolean,
 ): Promise<ApiResult<Response>> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/render-quote");
   url.searchParams.set("objectType", objectType);
-  url.searchParams.set("isFullQuote", "true");
+  url.searchParams.set("isFullQuote", String(isFullQuote));
   url.searchParams.set("objectID", objectID.toString());
 
   let response: Response;

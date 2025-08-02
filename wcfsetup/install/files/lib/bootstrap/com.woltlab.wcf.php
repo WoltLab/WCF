@@ -152,7 +152,6 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\listViews\GetItem());
             $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions());
             $event->register(new \wcf\system\endpoint\controller\core\messages\RenderQuote());
-            $event->register(new \wcf\system\endpoint\controller\core\messages\GetMessageAuthor());
             $event->register(new \wcf\system\endpoint\controller\core\messages\ResetRemovalQuotes());
             $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession());
             $event->register(new \wcf\system\endpoint\controller\core\versionTrackers\RevertVersion());

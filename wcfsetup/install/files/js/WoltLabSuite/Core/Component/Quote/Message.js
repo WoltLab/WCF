@@ -104,7 +104,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
             }
             else {
-                await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+                await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message);
             }
             removeSelection();
         }));
@@ -121,13 +121,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 quoteMessage = await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
             }
             else {
-                quoteMessage = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+                quoteMessage = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message);
             }
             if (activeEditor !== undefined) {
                 (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
                     author: quoteMessage.author,
-                    content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-                    isText: quoteMessage.rawMessage === undefined,
+                    content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+                    isText: !quoteMessage.rawMessage,
                     link: quoteMessage.link,
                 });
                 (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quoteMessage.uuid);

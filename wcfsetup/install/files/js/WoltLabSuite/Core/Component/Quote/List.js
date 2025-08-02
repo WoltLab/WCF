@@ -63,8 +63,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                         (0, Storage_1.markQuoteAsUsed)(this.#editorId, uuid);
                         (0, Event_1.dispatchToCkeditor)(this.#editor).insertQuote({
                             author: message.author,
-                            content: quote.rawMessage === undefined ? quote.message : quote.rawMessage,
-                            isText: quote.rawMessage === undefined,
+                            content: quote.rawMessage ? quote.rawMessage : quote.message,
+                            isText: !quote.rawMessage,
                             link: message.link,
                         });
                     });
