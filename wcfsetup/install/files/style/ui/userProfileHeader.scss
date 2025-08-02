@@ -59,11 +59,11 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 
 .userProfileHeader__avatar {
 	position: relative;
-	flex: 0 0 128px;
+	flex: 0 0 138px;
 	align-self: flex-end;
 
 	@include screen-sm-down {
-		flex-basis: 64px;
+		flex-basis: 74px;
 	}
 }
 
@@ -71,7 +71,7 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	border: 3px solid var(--wcfContentBackground);
+	border: 5px solid var(--wcfContentBackground);
 	width: 100%;
 	aspect-ratio: 1;
 	border-radius: 50%;
