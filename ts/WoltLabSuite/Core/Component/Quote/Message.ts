@@ -21,6 +21,7 @@ import {
   getKey,
   removeQuotes,
   legacySaveQuote,
+  legacySaveFullQuote,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
@@ -105,7 +106,13 @@ export function registerContainer(
           return;
         }
 
-        const quoteMessage = await saveFullQuote(objectType, className, ~~container.dataset.objectId!);
+        // TODO
+        let quoteMessage: any;
+        if (className.endsWith("Action")) {
+          quoteMessage = await legacySaveFullQuote(objectType, className, ~~container.dataset.objectId!);
+        } else {
+          quoteMessage = await saveFullQuote(objectType, className, ~~container.dataset.objectId!);
+        }
         quoteMessageButton!.classList.add("active");
 
         if (activeEditor !== undefined) {
@@ -181,12 +188,23 @@ function setup() {
   buttonSaveAndInsertQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      const quoteMessage = await saveQuote(
-        selectedMessage!.container.objectType,
-        selectedMessage!.container.objectId,
-        selectedMessage!.container.className,
-        selectedMessage!.message,
-      );
+      // TODO
+      let quoteMessage: any;
+      if (selectedMessage!.container.className.endsWith("Action")) {
+        quoteMessage = await legacySaveQuote(
+          selectedMessage!.container.objectType,
+          selectedMessage!.container.objectId,
+          selectedMessage!.container.className,
+          selectedMessage!.message,
+        );
+      } else {
+        quoteMessage = await saveQuote(
+          selectedMessage!.container.objectType,
+          selectedMessage!.container.objectId,
+          selectedMessage!.container.className,
+          selectedMessage!.message,
+        );
+      }
 
       if (activeEditor !== undefined) {
         dispatchToCkeditor(activeEditor.sourceElement).insertQuote({

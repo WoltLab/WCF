@@ -36,6 +36,12 @@ interface StorageData {
   messages: Map<string, Message>;
 }
 
+type LegacyQuoteData = {
+  count: number;
+  fullQuoteMessageIDs: number[];
+  renderedQuote: Message;
+};
+
 const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
 const usedQuotes = new Map<string, Set<string>>();
 
@@ -44,16 +50,26 @@ export async function legacySaveQuote(
   objectId: number,
   className: string,
   message: string,
-): Promise<void> {
-  const result = await dboAction("saveQuote", className)
+): Promise<Message & Quote & { uuid: string }> {
+  const result = (await dboAction("saveQuote", className)
     .objectIds([objectId])
     .payload({
       message,
       renderQuote: true,
     })
-    .dispatch();
+    .dispatch()) as LegacyQuoteData;
 
-  debugger;
+  const uuid = storeQuote(objectType, result.renderedQuote, {
+    message,
+  });
+
+  refreshQuoteLists();
+
+  return {
+    ...result.renderedQuote,
+    message,
+    uuid,
+  };
 }
 
 export async function saveQuote(
@@ -76,6 +92,43 @@ export async function saveQuote(
   return {
     ...result.value,
     message,
+    uuid,
+  };
+}
+
+export async function legacySaveFullQuote(
+  objectType: string,
+  objectClassName: string,
+  objectId: number,
+): Promise<Message & Quote & { uuid: string }> {
+  const result = (await dboAction("saveFullQuote", objectClassName)
+    .objectIds([objectId])
+    .dispatch()) as LegacyQuoteData;
+
+  const message = {
+    objectID: result.renderedQuote.objectID,
+    time: result.renderedQuote.time,
+    title: result.renderedQuote.title,
+    link: result.renderedQuote.link,
+    authorID: result.renderedQuote.authorID,
+    author: result.renderedQuote.author,
+    avatar: result.renderedQuote.avatar,
+  };
+
+  const quote = {
+    // TODO
+    message: (result.renderedQuote as any).message,
+    // TODO
+    rawMessage: (result.renderedQuote as any).rawMessage,
+  };
+
+  const uuid = storeQuote(objectType, message, quote);
+
+  refreshQuoteLists();
+
+  return {
+    ...message,
+    ...quote,
     uuid,
   };
 }

@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.legacySaveQuote = legacySaveQuote;
     exports.saveQuote = saveQuote;
+    exports.legacySaveFullQuote = legacySaveFullQuote;
     exports.saveFullQuote = saveFullQuote;
     exports.getQuotes = getQuotes;
     exports.getMessage = getMessage;
@@ -27,14 +28,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
     const usedQuotes = new Map();
     async function legacySaveQuote(objectType, objectId, className, message) {
-        const result = await (0, Ajax_1.dboAction)("saveQuote", className)
+        const result = (await (0, Ajax_1.dboAction)("saveQuote", className)
             .objectIds([objectId])
             .payload({
             message,
             renderQuote: true,
         })
-            .dispatch();
-        debugger;
+            .dispatch());
+        const uuid = storeQuote(objectType, result.renderedQuote, {
+            message,
+        });
+        (0, List_1.refreshQuoteLists)();
+        return {
+            ...result.renderedQuote,
+            message,
+            uuid,
+        };
     }
     async function saveQuote(objectType, objectId, objectClassName, message) {
         const result = await (0, Author_1.getMessageAuthor)(objectClassName, objectId);
@@ -48,6 +57,33 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         return {
             ...result.value,
             message,
+            uuid,
+        };
+    }
+    async function legacySaveFullQuote(objectType, objectClassName, objectId) {
+        const result = (await (0, Ajax_1.dboAction)("saveFullQuote", objectClassName)
+            .objectIds([objectId])
+            .dispatch());
+        const message = {
+            objectID: result.renderedQuote.objectID,
+            time: result.renderedQuote.time,
+            title: result.renderedQuote.title,
+            link: result.renderedQuote.link,
+            authorID: result.renderedQuote.authorID,
+            author: result.renderedQuote.author,
+            avatar: result.renderedQuote.avatar,
+        };
+        const quote = {
+            // TODO
+            message: result.renderedQuote.message,
+            // TODO
+            rawMessage: result.renderedQuote.rawMessage,
+        };
+        const uuid = storeQuote(objectType, message, quote);
+        (0, List_1.refreshQuoteLists)();
+        return {
+            ...message,
+            ...quote,
             uuid,
         };
     }

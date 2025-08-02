@@ -7,6 +7,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -83,6 +84,20 @@ final class MessageQuoteManager extends SingletonFactory
     ) {
         if (isset($this->legacyQuoteData)) {
             throw new \RuntimeException("Cannot store another quote, there is already one legacy quote present.");
+        }
+
+        if ($fullQuote !== '') {
+            $htmlInputProcessor = new HtmlInputProcessor();
+            $htmlInputProcessor->processIntermediate($fullQuote);
+
+            if (MESSAGE_MAX_QUOTE_DEPTH) {
+                $htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1, true);
+            }
+
+            $parameters = ['htmlInputProcessor' => $htmlInputProcessor];
+            EventHandler::getInstance()->fireAction($this, 'addFullQuote', $parameters);
+
+            $fullQuote = $htmlInputProcessor->getHtml();
         }
 
         $this->legacyQuoteData = [
@@ -165,6 +180,10 @@ final class MessageQuoteManager extends SingletonFactory
             $avatar = (new DefaultAvatar($message->getUsername()))->getURL();
         }
 
+        $messageData = $quoteHandler->renderQuotes([
+            $this->legacyQuoteData['objectID'] => [self::LEGACY_QUOTE_MARKER],
+        ]);
+
         return [
             'objectID' => $this->legacyQuoteData['objectID'],
             'authorID' => $message->getUserID(),
@@ -173,6 +192,8 @@ final class MessageQuoteManager extends SingletonFactory
             'avatar' => $avatar,
             'time' => (new \DateTime('@' . $message->getTime()))->format("c"),
             'link' => $message->getLink(),
+            'message' => $messageData[0],
+            'rawMessage' => $this->isFullQuote(self::LEGACY_QUOTE_MARKER) ? $message->getMessage() : $this->legacyQuoteData['message'],
         ];
     }
 
@@ -234,6 +255,13 @@ final class MessageQuoteManager extends SingletonFactory
      */
     public function getQuote($quoteID, $useFullQuote = true)
     {
+        \assert(isset($this->legacyQuoteData));
+        if ($useFullQuote && $this->legacyQuoteData['fullQuote'] !== '') {
+            return $this->legacyQuoteData['fullQuote'];
+        } else {
+            return $this->legacyQuoteData['message'];
+        }
+
         return null;
     }
 
@@ -422,7 +450,9 @@ final class MessageQuoteManager extends SingletonFactory
      */
     public function isFullQuote($quoteID)
     {
-        return false;
+        \assert(isset($this->legacyQuoteData));
+
+        return $this->legacyQuoteData['fullQuote'] !== '';
     }
 
     /**

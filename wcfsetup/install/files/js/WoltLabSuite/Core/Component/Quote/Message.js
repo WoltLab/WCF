@@ -57,7 +57,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                     quoteMessageButton.classList.remove("active");
                     return;
                 }
-                const quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, className, ~~container.dataset.objectId);
+                // TODO
+                let quoteMessage;
+                if (className.endsWith("Action")) {
+                    quoteMessage = await (0, Storage_1.legacySaveFullQuote)(objectType, className, ~~container.dataset.objectId);
+                }
+                else {
+                    quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, className, ~~container.dataset.objectId);
+                }
                 quoteMessageButton.classList.add("active");
                 if (activeEditor !== undefined) {
                     (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
@@ -108,7 +115,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveAndInsertQuote.classList.add("jsQuoteManagerQuoteAndInsert");
         buttonSaveAndInsertQuote.textContent = (0, Language_1.getPhrase)("wcf.message.quote.quoteAndReply");
         buttonSaveAndInsertQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
-            const quoteMessage = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            // TODO
+            let quoteMessage;
+            if (selectedMessage.container.className.endsWith("Action")) {
+                quoteMessage = await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            }
+            else {
+                quoteMessage = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            }
             if (activeEditor !== undefined) {
                 (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
                     author: quoteMessage.author,
