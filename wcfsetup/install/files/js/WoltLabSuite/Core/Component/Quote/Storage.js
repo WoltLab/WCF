@@ -66,10 +66,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             .dispatch());
         const message = {
             objectID: result.renderedQuote.objectID,
-            time: result.renderedQuote.time,
-            title: result.renderedQuote.title,
             link: result.renderedQuote.link,
-            authorID: result.renderedQuote.authorID,
             author: result.renderedQuote.author,
             avatar: result.renderedQuote.avatar,
         };

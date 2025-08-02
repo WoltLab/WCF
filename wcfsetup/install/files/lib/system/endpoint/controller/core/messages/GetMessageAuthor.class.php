@@ -37,11 +37,8 @@ final class GetMessageAuthor implements IController
         return new JsonResponse(
             [
                 "objectID" => $object->getObjectID(),
-                "authorID" => $userProfile->getUserID(),
                 "author" => $userProfile->getUsername(),
-                "title" => $object->getTitle(),
                 "avatar" => $userProfile->getAvatar()->getURL(),
-                "time" => (new \DateTime('@' . $object->getTime()))->format("c"),
                 "link" => $object->getLink(),
             ],
             200,

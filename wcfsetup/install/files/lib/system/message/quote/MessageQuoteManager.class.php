@@ -186,11 +186,8 @@ final class MessageQuoteManager extends SingletonFactory
 
         return [
             'objectID' => $this->legacyQuoteData['objectID'],
-            'authorID' => $message->getUserID(),
             'author' => $message->getUsername(),
-            'title' => $message->getTitle(),
             'avatar' => $avatar,
-            'time' => (new \DateTime('@' . $message->getTime()))->format("c"),
             'link' => $message->getLink(),
             'message' => $messageData[0],
             'rawMessage' => $this->isFullQuote(self::LEGACY_QUOTE_MARKER) ? $message->getMessage() : $this->legacyQuoteData['message'],

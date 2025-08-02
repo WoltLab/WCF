@@ -18,10 +18,7 @@ import { dboAction } from "WoltLabSuite/Core/Ajax";
 
 interface Message {
   objectID: number;
-  time: string;
-  title: string;
   link: string;
-  authorID: number | null;
   author: string;
   avatar: string;
 }
@@ -107,10 +104,7 @@ export async function legacySaveFullQuote(
 
   const message = {
     objectID: result.renderedQuote.objectID,
-    time: result.renderedQuote.time,
-    title: result.renderedQuote.title,
     link: result.renderedQuote.link,
-    authorID: result.renderedQuote.authorID,
     author: result.renderedQuote.author,
     avatar: result.renderedQuote.avatar,
   };
