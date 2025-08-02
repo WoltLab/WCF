@@ -112,4 +112,14 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      * @return QuotedMessage[]
      */
     abstract protected function getMessages(array $data);
+
+    /**
+     * @return list<QuotedMessage>
+     */
+    public function legacyGetMessages(int $objectID, string $marker): array
+    {
+        return $this->getMessages([
+            $objectID => [$marker],
+        ]);
+    }
 }

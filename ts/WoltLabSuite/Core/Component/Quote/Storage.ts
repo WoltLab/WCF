@@ -14,6 +14,7 @@ import { getMessageAuthor } from "WoltLabSuite/Core/Api/Messages/Author";
 import { refreshQuoteLists } from "WoltLabSuite/Core/Component/Quote/List";
 import { resetRemovalQuotes } from "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes";
 import { removeQuoteStatus } from "WoltLabSuite/Core/Component/Quote/Message";
+import { dboAction } from "WoltLabSuite/Core/Ajax";
 
 interface Message {
   objectID: number;
@@ -37,6 +38,23 @@ interface StorageData {
 
 const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
 const usedQuotes = new Map<string, Set<string>>();
+
+export async function legacySaveQuote(
+  objectType: string,
+  objectId: number,
+  className: string,
+  message: string,
+): Promise<void> {
+  const result = await dboAction("saveQuote", className)
+    .objectIds([objectId])
+    .payload({
+      message,
+      renderQuote: true,
+    })
+    .dispatch();
+
+  debugger;
+}
 
 export async function saveQuote(
   objectType: string,

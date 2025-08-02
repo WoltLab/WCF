@@ -29,10 +29,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             const objectId = ~~container.dataset.objectId;
             containers.set(id, {
                 element: container,
-                messageBodySelector: messageBodySelector,
-                objectType: objectType,
-                className: className,
-                objectId: objectId,
+                messageBodySelector,
+                objectType,
+                className,
+                objectId,
             });
             if (container.classList.contains("jsInvalidQuoteTarget")) {
                 return;
@@ -93,7 +93,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveQuote.classList.add("jsQuoteManagerStore");
         buttonSaveQuote.textContent = (0, Language_1.getPhrase)("wcf.message.quote.quoteSelected");
         buttonSaveQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
-            await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            if (selectedMessage.container.className.endsWith("Action")) {
+                await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            }
+            else {
+                await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            }
             removeSelection();
         }));
         copyQuote.appendChild(buttonSaveQuote);

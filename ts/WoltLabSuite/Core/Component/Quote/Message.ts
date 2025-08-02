@@ -20,17 +20,18 @@ import {
   isFullQuoted,
   getKey,
   removeQuotes,
+  legacySaveQuote,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 
-interface Container {
+type Container = {
   element: HTMLElement;
   messageBodySelector: string;
   objectType: string;
   className: string;
   objectId: number;
-}
+};
 
 let selectedMessage:
   | undefined
@@ -39,12 +40,12 @@ let selectedMessage:
       container: Container;
     };
 
-interface ElementBoundaries {
+type ElementBoundaries = {
   bottom: number;
   left: number;
   right: number;
   top: number;
-}
+};
 
 const containers = new Map<string, Container>();
 const quoteMessageButtons = new Map<string, HTMLElement>();
@@ -66,10 +67,10 @@ export function registerContainer(
 
     containers.set(id, {
       element: container,
-      messageBodySelector: messageBodySelector,
-      objectType: objectType,
-      className: className,
-      objectId: objectId,
+      messageBodySelector,
+      objectType,
+      className,
+      objectId,
     });
 
     if (container.classList.contains("jsInvalidQuoteTarget")) {
@@ -152,12 +153,21 @@ function setup() {
   buttonSaveQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      await saveQuote(
-        selectedMessage!.container.objectType,
-        selectedMessage!.container.objectId,
-        selectedMessage!.container.className,
-        selectedMessage!.message,
-      );
+      if (selectedMessage!.container.className.endsWith("Action")) {
+        await legacySaveQuote(
+          selectedMessage!.container.objectType,
+          selectedMessage!.container.objectId,
+          selectedMessage!.container.className,
+          selectedMessage!.message,
+        );
+      } else {
+        await saveQuote(
+          selectedMessage!.container.objectType,
+          selectedMessage!.container.objectId,
+          selectedMessage!.container.className,
+          selectedMessage!.message,
+        );
+      }
 
       removeSelection();
     }),

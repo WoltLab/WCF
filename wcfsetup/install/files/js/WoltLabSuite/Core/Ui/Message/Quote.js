@@ -13,9 +13,9 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Quote/Message"], func
          */
         constructor(_quoteManager, className, objectType, containerSelector, messageBodySelector, _messageContentSelector, _supportDirectInsert) {
             // remove "Action" from className
-            if (className.endsWith("Action")) {
-                className = className.substring(0, className.length - 6);
-            }
+            /*if (className.endsWith("Action")) {
+              className = className.substring(0, className.length - 6);
+            }*/
             (0, Message_1.registerContainer)(containerSelector, messageBodySelector, className, objectType);
         }
     }

@@ -7,9 +7,10 @@
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Api/Messages/RenderQuote", "WoltLabSuite/Core/Api/Messages/Author", "WoltLabSuite/Core/Component/Quote/List", "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes", "WoltLabSuite/Core/Component/Quote/Message"], function (require, exports, tslib_1, Core, RenderQuote_1, Author_1, List_1, ResetRemovalQuotes_1, Message_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Api/Messages/RenderQuote", "WoltLabSuite/Core/Api/Messages/Author", "WoltLabSuite/Core/Component/Quote/List", "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Ajax"], function (require, exports, tslib_1, Core, RenderQuote_1, Author_1, List_1, ResetRemovalQuotes_1, Message_1, Ajax_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.legacySaveQuote = legacySaveQuote;
     exports.saveQuote = saveQuote;
     exports.saveFullQuote = saveFullQuote;
     exports.getQuotes = getQuotes;
@@ -25,6 +26,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     Core = tslib_1.__importStar(Core);
     const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
     const usedQuotes = new Map();
+    async function legacySaveQuote(objectType, objectId, className, message) {
+        const result = await (0, Ajax_1.dboAction)("saveQuote", className)
+            .objectIds([objectId])
+            .payload({
+            message,
+            renderQuote: true,
+        })
+            .dispatch();
+        debugger;
+    }
     async function saveQuote(objectType, objectId, objectClassName, message) {
         const result = await (0, Author_1.getMessageAuthor)(objectClassName, objectId);
         if (!result.ok) {
