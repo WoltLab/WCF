@@ -6,18 +6,15 @@
 
 import { registerContainer } from "WoltLabSuite/Core/Component/Quote/Message";
 
-// see WCF.Message.Quote.Manager
-export interface WCFMessageQuoteManager {
-  supportPaste: () => boolean;
-  updateCount: (number, object) => void;
-}
-
+/**
+ * @deprecated 6.2 Use `registerContainer()` without the className parameter.
+ */
 export class UiMessageQuote {
   /**
    * Initializes the quote handler for given object type.
    */
   constructor(
-    _quoteManager: WCFMessageQuoteManager,
+    _quoteManager: typeof window.WCF.Message.Quote.Manager,
     className: string,
     objectType: string,
     containerSelector: string,
@@ -25,12 +22,7 @@ export class UiMessageQuote {
     _messageContentSelector: string,
     _supportDirectInsert: boolean,
   ) {
-    // remove "Action" from className
-    /*if (className.endsWith("Action")) {
-      className = className.substring(0, className.length - 6);
-    }*/
-
-    registerContainer(containerSelector, messageBodySelector, className, objectType);
+    registerContainer(containerSelector, messageBodySelector, objectType, className);
   }
 }
 

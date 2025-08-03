@@ -12,7 +12,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.legacySaveQuote = legacySaveQuote;
     exports.saveQuote = saveQuote;
-    exports.legacySaveFullQuote = legacySaveFullQuote;
     exports.saveFullQuote = saveFullQuote;
     exports.getQuotes = getQuotes;
     exports.getMessage = getMessage;
@@ -60,50 +59,25 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             uuid,
         };
     }
-    async function legacySaveFullQuote(objectType, objectClassName, objectId) {
-        const result = (await (0, Ajax_1.dboAction)("saveFullQuote", objectClassName)
-            .objectIds([objectId])
-            .dispatch());
-        const message = {
-            objectID: result.renderedQuote.objectID,
-            link: result.renderedQuote.link,
-            author: result.renderedQuote.author,
-            avatar: result.renderedQuote.avatar,
-        };
-        const quote = {
-            // TODO
-            message: result.renderedQuote.message,
-            // TODO
-            rawMessage: result.renderedQuote.rawMessage,
-        };
-        const uuid = storeQuote(objectType, message, quote);
-        (0, List_1.refreshQuoteLists)();
-        return {
-            ...message,
-            ...quote,
-            uuid,
-        };
-    }
-    async function saveFullQuote(objectType, objectId) {
-        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, true);
-        if (!result.ok) {
-            throw new Error("Error fetching quote data");
+    async function saveFullQuote(objectType, objectId, 
+    /** @deprecated 6.2 Used for legacy implementations only. */
+    className) {
+        let message;
+        if (className !== undefined) {
+            const result = (await (0, Ajax_1.dboAction)("saveFullQuote", className).objectIds([objectId]).dispatch());
+            message = result.renderedQuote;
         }
-        const message = {
-            objectID: result.value.objectID,
-            link: result.value.link,
-            author: result.value.author,
-            avatar: result.value.avatar,
-        };
-        const quote = {
-            message: result.value.message,
-            rawMessage: result.value.rawMessage,
-        };
-        const uuid = storeQuote(objectType, message, quote);
+        else {
+            const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, true);
+            if (!result.ok) {
+                throw new Error("Error fetching quote data");
+            }
+            message = result.value;
+        }
+        const uuid = storeQuote(objectType, message, message);
         (0, List_1.refreshQuoteLists)();
         return {
             ...message,
-            ...quote,
             uuid,
         };
     }

@@ -21,7 +21,6 @@ import {
   getKey,
   removeQuotes,
   legacySaveQuote,
-  legacySaveFullQuote,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
@@ -30,8 +29,9 @@ type Container = {
   element: HTMLElement;
   messageBodySelector: string;
   objectType: string;
-  className: string;
   objectId: number;
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className: string | undefined;
 };
 
 let selectedMessage:
@@ -59,8 +59,8 @@ const copyQuote = document.createElement("div");
 export function registerContainer(
   containerSelector: string,
   messageBodySelector: string,
-  className: string,
   objectType: string,
+  className?: string,
 ): void {
   wheneverFirstSeen(containerSelector, (container: HTMLElement) => {
     const id = DomUtil.identify(container);
@@ -70,8 +70,8 @@ export function registerContainer(
       element: container,
       messageBodySelector,
       objectType,
-      className,
       objectId,
+      className,
     });
 
     if (container.classList.contains("jsInvalidQuoteTarget")) {
@@ -103,22 +103,22 @@ export function registerContainer(
         if (isFullQuoted(objectType, objectId)) {
           removeQuotes([getFullQuoteUuid(objectType, objectId)!]);
           quoteMessageButton!.classList.remove("active");
+
           return;
         }
 
-        // TODO
-        let quoteMessage: any;
-        if (className.endsWith("Action")) {
-          quoteMessage = await legacySaveFullQuote(objectType, className, ~~container.dataset.objectId!);
-        } else {
-          quoteMessage = await saveFullQuote(objectType, ~~container.dataset.objectId!);
-        }
+        const quoteMessage = await saveFullQuote(objectType, objectId, className);
         quoteMessageButton!.classList.add("active");
 
         if (activeEditor !== undefined) {
+          const content = quoteMessage.rawMessage || quoteMessage.message;
+          if (content === null) {
+            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+          }
+
           dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
             author: quoteMessage.author,
-            content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+            content,
             isText: !quoteMessage.rawMessage,
             link: quoteMessage.link,
           });
@@ -160,7 +160,7 @@ function setup() {
   buttonSaveQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      if (selectedMessage!.container.className.endsWith("Action")) {
+      if (selectedMessage!.container.className) {
         await legacySaveQuote(
           selectedMessage!.container.objectType,
           selectedMessage!.container.objectId,
@@ -179,6 +179,7 @@ function setup() {
     }),
   );
   copyQuote.appendChild(buttonSaveQuote);
+
   const buttonSaveAndInsertQuote = document.createElement("button");
   buttonSaveAndInsertQuote.type = "button";
   buttonSaveAndInsertQuote.hidden = true;
@@ -189,7 +190,7 @@ function setup() {
     promiseMutex(async () => {
       // TODO
       let quoteMessage: any;
-      if (selectedMessage!.container.className.endsWith("Action")) {
+      if (selectedMessage!.container.className) {
         quoteMessage = await legacySaveQuote(
           selectedMessage!.container.objectType,
           selectedMessage!.container.objectId,

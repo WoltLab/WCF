@@ -23,7 +23,7 @@ interface Message {
 }
 
 interface Quote {
-  message: string;
+  message: string | null;
   rawMessage?: string | null;
 }
 
@@ -35,7 +35,7 @@ interface StorageData {
 type LegacyQuoteData = {
   count: number;
   fullQuoteMessageIDs: number[];
-  renderedQuote: Message;
+  renderedQuote: Message & Quote;
 };
 
 const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
@@ -91,65 +91,32 @@ export async function saveQuote(
   };
 }
 
-export async function legacySaveFullQuote(
+export async function saveFullQuote(
   objectType: string,
-  objectClassName: string,
   objectId: number,
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className?: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = (await dboAction("saveFullQuote", objectClassName)
-    .objectIds([objectId])
-    .dispatch()) as LegacyQuoteData;
+  let message: Message & Quote;
 
-  const message = {
-    objectID: result.renderedQuote.objectID,
-    link: result.renderedQuote.link,
-    author: result.renderedQuote.author,
-    avatar: result.renderedQuote.avatar,
-  };
+  if (className !== undefined) {
+    const result = (await dboAction("saveFullQuote", className).objectIds([objectId]).dispatch()) as LegacyQuoteData;
+    message = result.renderedQuote;
+  } else {
+    const result = await renderQuote(objectType, objectId, true);
+    if (!result.ok) {
+      throw new Error("Error fetching quote data");
+    }
 
-  const quote = {
-    // TODO
-    message: (result.renderedQuote as any).message,
-    // TODO
-    rawMessage: (result.renderedQuote as any).rawMessage,
-  };
-
-  const uuid = storeQuote(objectType, message, quote);
-
-  refreshQuoteLists();
-
-  return {
-    ...message,
-    ...quote,
-    uuid,
-  };
-}
-
-export async function saveFullQuote(objectType: string, objectId: number): Promise<Message & Quote & { uuid: string }> {
-  const result = await renderQuote(objectType, objectId, true);
-  if (!result.ok) {
-    throw new Error("Error fetching quote data");
+    message = result.value;
   }
 
-  const message = {
-    objectID: result.value.objectID,
-    link: result.value.link,
-    author: result.value.author,
-    avatar: result.value.avatar,
-  };
-
-  const quote = {
-    message: result.value.message!,
-    rawMessage: result.value.rawMessage!,
-  };
-
-  const uuid = storeQuote(objectType, message, quote);
+  const uuid = storeQuote(objectType, message, message);
 
   refreshQuoteLists();
 
   return {
     ...message,
-    ...quote,
     uuid,
   };
 }

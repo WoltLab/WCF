@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
     let timerSelectionChange = undefined;
     let isMouseDown = false;
     const copyQuote = document.createElement("div");
-    function registerContainer(containerSelector, messageBodySelector, className, objectType) {
+    function registerContainer(containerSelector, messageBodySelector, objectType, className) {
         (0, Selector_1.wheneverFirstSeen)(containerSelector, (container) => {
             const id = Util_1.default.identify(container);
             const objectId = ~~container.dataset.objectId;
@@ -31,8 +31,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 element: container,
                 messageBodySelector,
                 objectType,
-                className,
                 objectId,
+                className,
             });
             if (container.classList.contains("jsInvalidQuoteTarget")) {
                 return;
@@ -57,19 +57,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                     quoteMessageButton.classList.remove("active");
                     return;
                 }
-                // TODO
-                let quoteMessage;
-                if (className.endsWith("Action")) {
-                    quoteMessage = await (0, Storage_1.legacySaveFullQuote)(objectType, className, ~~container.dataset.objectId);
-                }
-                else {
-                    quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, ~~container.dataset.objectId);
-                }
+                const quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, objectId, className);
                 quoteMessageButton.classList.add("active");
                 if (activeEditor !== undefined) {
+                    const content = quoteMessage.rawMessage || quoteMessage.message;
+                    if (content === null) {
+                        throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+                    }
                     (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
                         author: quoteMessage.author,
-                        content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+                        content,
                         isText: !quoteMessage.rawMessage,
                         link: quoteMessage.link,
                     });
@@ -100,7 +97,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveQuote.classList.add("jsQuoteManagerStore");
         buttonSaveQuote.textContent = (0, Language_1.getPhrase)("wcf.message.quote.quoteSelected");
         buttonSaveQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
-            if (selectedMessage.container.className.endsWith("Action")) {
+            if (selectedMessage.container.className) {
                 await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
             }
             else {
@@ -117,7 +114,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveAndInsertQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
             // TODO
             let quoteMessage;
-            if (selectedMessage.container.className.endsWith("Action")) {
+            if (selectedMessage.container.className) {
                 quoteMessage = await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
             }
             else {
