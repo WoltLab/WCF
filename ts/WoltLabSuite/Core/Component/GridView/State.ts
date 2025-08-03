@@ -24,6 +24,7 @@ export class State extends EventTarget {
   readonly #pagination: WoltlabCorePaginationElement;
   readonly #selection: Selection;
   readonly #sorting: Sorting;
+  readonly #gridViewFooter: HTMLElement;
   #pageNo: number;
 
   constructor(
@@ -38,6 +39,8 @@ export class State extends EventTarget {
 
     this.#baseUrl = baseUrl;
     this.#pageNo = pageNo;
+
+    this.#gridViewFooter = document.getElementById(`${gridId}_footer`) as HTMLElement;
 
     this.#pagination = document.getElementById(`${gridId}_pagination`) as WoltlabCorePaginationElement;
     this.#pagination.addEventListener("switchPage", (event: CustomEvent) => {
@@ -60,12 +63,16 @@ export class State extends EventTarget {
         new CustomEvent("grid-view:get-bulk-interactions", { detail: { objectIds: event.detail.objectIds } }),
       );
     });
+    this.#selection.addEventListener("grid-view:update-selection", () => {
+      this.#updateGridViewFooter();
+    });
 
     window.addEventListener("popstate", () => {
       this.#handlePopState();
     });
 
     this.#updatePaginationUrl();
+    this.#updateGridViewFooter();
   }
 
   getPageNo(): number {
@@ -174,6 +181,10 @@ export class State extends EventTarget {
     this.#sorting.updateFromSearchParams(searchParams);
 
     this.#switchPage(pageNo, StateChangeCause.History);
+  }
+
+  #updateGridViewFooter(): void {
+    this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {

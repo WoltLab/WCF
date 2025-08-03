@@ -51,6 +51,10 @@ export class Selection extends EventTarget {
     this.#restoreSelection();
   }
 
+  selectionBarVisible(): boolean {
+    return this.#selectionBar !== null && this.getSelectedIds().length > 0;
+  }
+
   refresh(): void {
     this.#restoreSelection();
   }
@@ -168,6 +172,8 @@ export class Selection extends EventTarget {
       return;
     }
 
+    this.dispatchEvent(new CustomEvent("grid-view:update-selection"));
+
     if (selectedIds.length === 0) {
       this.#selectionBar.hidden = true;
       return;
@@ -284,6 +290,7 @@ export class Selection extends EventTarget {
 
 interface SelectionEventMap {
   "grid-view:get-bulk-interactions": CustomEvent<{ objectIds: number[] }>;
+  "grid-view:update-selection": CustomEvent<void>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging

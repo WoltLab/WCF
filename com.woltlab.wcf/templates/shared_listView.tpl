@@ -54,6 +54,8 @@
 		</div>
 	</div>
 
+	<woltlab-core-notice type="info" id="{$view->getID()}_noItemsNotice"{if $view->countItems()} hidden{/if}>{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
+
 	<div class="listView__footer" id="{$view->getID()}_footer"{if $view->countPages() < 2} hidden{/if}>
 		{if $view->hasBulkInteractions()}
 			<div id="{$view->getID()}_selectionBar" class="listView__selectionBar dropdown" hidden>
@@ -78,8 +80,6 @@
 			></woltlab-core-pagination>
 		</div>
 	</div>
-
-	<woltlab-core-notice type="info" id="{$view->getID()}_noItemsNotice"{if $view->countItems()} hidden{/if}>{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 </div>
 
 <script data-relocate="true">

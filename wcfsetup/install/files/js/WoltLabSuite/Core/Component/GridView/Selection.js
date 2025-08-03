@@ -42,6 +42,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             });
             this.#restoreSelection();
         }
+        selectionBarVisible() {
+            return this.#selectionBar !== null && this.getSelectedIds().length > 0;
+        }
         refresh() {
             this.#restoreSelection();
         }
@@ -142,6 +145,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             if (!this.#selectionBar) {
                 return;
             }
+            this.dispatchEvent(new CustomEvent("grid-view:update-selection"));
             if (selectedIds.length === 0) {
                 this.#selectionBar.hidden = true;
                 return;

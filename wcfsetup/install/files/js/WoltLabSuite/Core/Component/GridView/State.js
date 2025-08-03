@@ -20,11 +20,13 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         #pagination;
         #selection;
         #sorting;
+        #gridViewFooter;
         #pageNo;
         constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
+            this.#gridViewFooter = document.getElementById(`${gridId}_footer`);
             this.#pagination = document.getElementById(`${gridId}_pagination`);
             this.#pagination.addEventListener("switchPage", (event) => {
                 void this.#switchPage(event.detail, 2 /* StateChangeCause.Pagination */);
@@ -41,10 +43,14 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#selection.addEventListener("grid-view:get-bulk-interactions", (event) => {
                 this.dispatchEvent(new CustomEvent("grid-view:get-bulk-interactions", { detail: { objectIds: event.detail.objectIds } }));
             });
+            this.#selection.addEventListener("grid-view:update-selection", () => {
+                this.#updateGridViewFooter();
+            });
             window.addEventListener("popstate", () => {
                 this.#handlePopState();
             });
             this.#updatePaginationUrl();
+            this.#updateGridViewFooter();
         }
         getPageNo() {
             return this.#pageNo;
@@ -127,6 +133,9 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#filter.updateFromSearchParams(searchParams);
             this.#sorting.updateFromSearchParams(searchParams);
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
+        }
+        #updateGridViewFooter() {
+            this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);
