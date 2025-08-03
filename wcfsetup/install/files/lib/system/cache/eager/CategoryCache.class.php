@@ -25,6 +25,7 @@ final class CategoryCache extends AbstractEagerCache
         $categoryList->sqlJoins = "
             LEFT JOIN wcf1_object_type object_type
             ON        object_type.objectTypeID = category.objectTypeID";
+        $categoryList->sqlOrderBy = "category.showOrder";
         $categoryList->readObjects();
 
         $objectTypeCategoryIDs = [];
