@@ -215,24 +215,6 @@ export function clearQuotesForEditor(editorId: string): void {
   });
 }
 
-export function isFullQuoted(objectType: string, objectId: number): boolean {
-  const key = getKey(objectType, objectId);
-  const storage = getStorage();
-  const quotes = storage.quotes.get(key);
-
-  if (quotes === undefined) {
-    return false;
-  }
-
-  return (
-    Array.from(quotes).filter(([, quote]) => {
-      if (quote.rawMessage !== undefined) {
-        return true;
-      }
-    }).length > 0
-  );
-}
-
 function storeQuote(objectType: string, message: Message, quote: Quote): string {
   const storage = getStorage();
 
@@ -258,11 +240,14 @@ function storeQuote(objectType: string, message: Message, quote: Quote): string 
 }
 
 export function getFullQuoteUuid(objectType: string, objectId: number): string | undefined {
-  const storage = getStorage();
   const key = getKey(objectType, objectId);
+  const quotes = getStorage().quotes.get(key);
+  if (quotes === undefined) {
+    return undefined;
+  }
 
-  for (const [uuid, q] of storage.quotes.get(key)!) {
-    if (q.rawMessage !== undefined && q.message !== undefined) {
+  for (const [uuid, q] of quotes) {
+    if (q.rawMessage && q.message) {
       return uuid;
     }
   }

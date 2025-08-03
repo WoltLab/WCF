@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
     function registerContainer(containerSelector, messageBodySelector, objectType, className) {
         (0, Selector_1.wheneverFirstSeen)(containerSelector, (container) => {
             const id = Util_1.default.identify(container);
-            const objectId = ~~container.dataset.objectId;
+            const objectId = parseInt(container.dataset.objectId || "0");
             containers.set(id, {
                 element: container,
                 messageBodySelector,
@@ -40,37 +40,41 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             container.addEventListener("mousedown", (event) => onMouseDown(event));
             container.classList.add("jsQuoteMessageContainer");
             const quoteMessage = container.querySelector(".jsQuoteMessage");
-            let quoteMessageButton = quoteMessage?.querySelector(".button");
-            if (!quoteMessageButton && quoteMessage?.classList.contains("button")) {
+            if (quoteMessage === null) {
+                return;
+            }
+            let quoteMessageButton = quoteMessage.querySelector(".button");
+            if (!quoteMessageButton && quoteMessage.classList.contains("button")) {
                 quoteMessageButton = quoteMessage;
             }
-            if (quoteMessageButton) {
+            if (quoteMessageButton !== null) {
                 quoteMessageButtons.set((0, Storage_1.getKey)(objectType, objectId), quoteMessageButton);
-                if ((0, Storage_1.isFullQuoted)(objectType, objectId)) {
+                if ((0, Storage_1.getFullQuoteUuid)(objectType, objectId) !== undefined) {
                     quoteMessageButton.classList.add("active");
                 }
             }
-            quoteMessage?.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async (event) => {
+            quoteMessage.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async (event) => {
                 event.preventDefault();
-                if ((0, Storage_1.isFullQuoted)(objectType, objectId)) {
-                    (0, Storage_1.removeQuotes)([(0, Storage_1.getFullQuoteUuid)(objectType, objectId)]);
-                    quoteMessageButton.classList.remove("active");
+                const uuid = (0, Storage_1.getFullQuoteUuid)(objectType, objectId);
+                if (uuid !== undefined) {
+                    (0, Storage_1.removeQuotes)([uuid]);
+                    quoteMessageButton?.classList.remove("active");
                     return;
                 }
-                const quoteMessage = await (0, Storage_1.saveFullQuote)(objectType, objectId, className);
-                quoteMessageButton.classList.add("active");
+                const quote = await (0, Storage_1.saveFullQuote)(objectType, objectId, className);
+                quoteMessageButton?.classList.add("active");
                 if (activeEditor !== undefined) {
-                    const content = quoteMessage.rawMessage || quoteMessage.message;
+                    const content = quote.rawMessage || quote.message;
                     if (content === null) {
                         throw new Error("Expected either the `rawMessage` or `message` to be a string.");
                     }
                     (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
-                        author: quoteMessage.author,
+                        author: quote.author,
                         content,
-                        isText: !quoteMessage.rawMessage,
-                        link: quoteMessage.link,
+                        isText: !quote.rawMessage,
+                        link: quote.link,
                     });
-                    (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quoteMessage.uuid);
+                    (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quote.uuid);
                 }
             }));
         });
