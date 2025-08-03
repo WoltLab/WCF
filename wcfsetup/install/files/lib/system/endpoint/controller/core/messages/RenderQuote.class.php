@@ -5,23 +5,23 @@ namespace wcf\system\endpoint\controller\core\messages;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\data\IEmbeddedMessageObject;
 use wcf\data\IMessage;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
-use wcf\event\message\MessageQuoteRendering;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
-use wcf\system\event\EventHandler;
+use wcf\system\exception\NotImplementedException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\quote\IMessageQuoteHandler;
 
 /**
  * Retrieves data for the rendering of a quote.
  *
  * @author    Olaf Braun
- * @copyright 2001-2024 WoltLab GmbH
+ * @copyright 2001-2025 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.2
  */
@@ -33,10 +33,21 @@ final class RenderQuote implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetRenderQuoteParameters::class);
 
-        $event = new MessageQuoteRendering($parameters->objectType, $parameters->objectID);
-        EventHandler::getInstance()->fire($event);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.message.quote',
+            $parameters->objectType,
+        );
+        $processor = $objectType->getProcessor();
+        \assert($processor instanceof IMessageQuoteHandler);
 
-        $message = $event->getMessage();
+        $message = null;
+        try {
+            $message = $processor->getMessage($parameters->objectID);
+        } catch (NotImplementedException) {
+            // This can happen for legacy implementations that do not yet
+            // implement the new `getMessage()` method.
+        }
+
         if ($message === null) {
             throw new PermissionDeniedException();
         }
@@ -44,10 +55,6 @@ final class RenderQuote implements IController
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($message->getUserID());
         if ($userProfile === null) {
             $userProfile = UserProfile::getGuestUserProfile($message->getUsername());
-        }
-
-        if ($message instanceof IEmbeddedMessageObject) {
-            $message->loadEmbeddedObjects();
         }
 
         return new JsonResponse([
