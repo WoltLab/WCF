@@ -19,7 +19,6 @@ import {
   markQuoteAsUsed,
   getKey,
   removeQuotes,
-  legacySaveQuote,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
@@ -123,7 +122,7 @@ export function registerContainer(
           dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
             author: quote.author,
             content,
-            isText: !quote.rawMessage,
+            isText: quote.rawMessage === null,
             link: quote.link,
           });
 
@@ -164,20 +163,16 @@ function setup() {
   buttonSaveQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      if (selectedMessage!.container.className) {
-        await legacySaveQuote(
-          selectedMessage!.container.objectType,
-          selectedMessage!.container.objectId,
-          selectedMessage!.container.className,
-          selectedMessage!.message,
-        );
-      } else {
-        await saveQuote(
-          selectedMessage!.container.objectType,
-          selectedMessage!.container.objectId,
-          selectedMessage!.message,
-        );
+      if (selectedMessage === undefined) {
+        return;
       }
+
+      await saveQuote(
+        selectedMessage.container.objectType,
+        selectedMessage.container.objectId,
+        selectedMessage.message,
+        selectedMessage.container.className,
+      );
 
       removeSelection();
     }),
@@ -192,32 +187,31 @@ function setup() {
   buttonSaveAndInsertQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      // TODO
-      let quoteMessage: any;
-      if (selectedMessage!.container.className) {
-        quoteMessage = await legacySaveQuote(
-          selectedMessage!.container.objectType,
-          selectedMessage!.container.objectId,
-          selectedMessage!.container.className,
-          selectedMessage!.message,
-        );
-      } else {
-        quoteMessage = await saveQuote(
-          selectedMessage!.container.objectType,
-          selectedMessage!.container.objectId,
-          selectedMessage!.message,
-        );
+      if (selectedMessage === undefined) {
+        return;
       }
 
+      const quote = await saveQuote(
+        selectedMessage.container.objectType,
+        selectedMessage.container.objectId,
+        selectedMessage.message,
+        selectedMessage.container.className,
+      );
+
       if (activeEditor !== undefined) {
+        const content = quote.rawMessage || quote.message;
+        if (content === null) {
+          throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+        }
+
         dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
-          author: quoteMessage.author,
-          content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
-          isText: !quoteMessage.rawMessage,
-          link: quoteMessage.link,
+          author: quote.author,
+          content,
+          isText: quote.rawMessage === null,
+          link: quote.link,
         });
 
-        markQuoteAsUsed(activeEditor.sourceElement.id, quoteMessage.uuid);
+        markQuoteAsUsed(activeEditor.sourceElement.id, quote.uuid);
       }
 
       removeSelection();

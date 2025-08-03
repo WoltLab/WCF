@@ -71,7 +71,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                     (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
                         author: quote.author,
                         content,
-                        isText: !quote.rawMessage,
+                        isText: quote.rawMessage === null,
                         link: quote.link,
                     });
                     (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quote.uuid);
@@ -101,12 +101,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveQuote.classList.add("jsQuoteManagerStore");
         buttonSaveQuote.textContent = (0, Language_1.getPhrase)("wcf.message.quote.quoteSelected");
         buttonSaveQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
-            if (selectedMessage.container.className) {
-                await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            if (selectedMessage === undefined) {
+                return;
             }
-            else {
-                await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message);
-            }
+            await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message, selectedMessage.container.className);
             removeSelection();
         }));
         copyQuote.appendChild(buttonSaveQuote);
@@ -116,22 +114,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         buttonSaveAndInsertQuote.classList.add("jsQuoteManagerQuoteAndInsert");
         buttonSaveAndInsertQuote.textContent = (0, Language_1.getPhrase)("wcf.message.quote.quoteAndReply");
         buttonSaveAndInsertQuote.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
-            // TODO
-            let quoteMessage;
-            if (selectedMessage.container.className) {
-                quoteMessage = await (0, Storage_1.legacySaveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.container.className, selectedMessage.message);
+            if (selectedMessage === undefined) {
+                return;
             }
-            else {
-                quoteMessage = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message);
-            }
+            const quote = await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message, selectedMessage.container.className);
             if (activeEditor !== undefined) {
+                const content = quote.rawMessage || quote.message;
+                if (content === null) {
+                    throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+                }
                 (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
-                    author: quoteMessage.author,
-                    content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
-                    isText: !quoteMessage.rawMessage,
-                    link: quoteMessage.link,
+                    author: quote.author,
+                    content,
+                    isText: quote.rawMessage === null,
+                    link: quote.link,
                 });
-                (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quoteMessage.uuid);
+                (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quote.uuid);
             }
             removeSelection();
         }));

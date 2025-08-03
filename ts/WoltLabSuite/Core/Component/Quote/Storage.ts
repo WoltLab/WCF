@@ -24,7 +24,7 @@ interface Message {
 
 interface Quote {
   message: string | null;
-  rawMessage?: string | null;
+  rawMessage: string | null;
 }
 
 interface StorageData {
@@ -41,51 +41,42 @@ type LegacyQuoteData = {
 const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
 const usedQuotes = new Map<string, Set<string>>();
 
-export async function legacySaveQuote(
-  objectType: string,
-  objectId: number,
-  className: string,
-  message: string,
-): Promise<Message & Quote & { uuid: string }> {
-  const result = (await dboAction("saveQuote", className)
-    .objectIds([objectId])
-    .payload({
-      message,
-      renderQuote: true,
-    })
-    .dispatch()) as LegacyQuoteData;
-
-  const uuid = storeQuote(objectType, result.renderedQuote, {
-    message,
-  });
-
-  refreshQuoteLists();
-
-  return {
-    ...result.renderedQuote,
-    message,
-    uuid,
-  };
-}
-
 export async function saveQuote(
   objectType: string,
   objectId: number,
   message: string,
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className?: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = await renderQuote(objectType, objectId, false);
-  if (!result.ok) {
-    throw new Error("Error fetching author data");
+  let quote: Message & Quote;
+
+  if (className !== undefined) {
+    const result = (await dboAction("saveQuote", className)
+      .objectIds([objectId])
+      .payload({
+        message,
+        renderQuote: true,
+      })
+      .dispatch()) as LegacyQuoteData;
+    quote = result.renderedQuote;
+  } else {
+    const result = await renderQuote(objectType, objectId, false);
+    if (!result.ok) {
+      throw new Error("Error fetching quote data");
+    }
+
+    quote = result.value;
   }
 
-  const uuid = storeQuote(objectType, result.value, {
+  const uuid = storeQuote(objectType, quote, {
     message,
+    rawMessage: null,
   });
 
   refreshQuoteLists();
 
   return {
-    ...result.value,
+    ...quote,
     message,
     uuid,
   };
@@ -190,7 +181,7 @@ export function clearQuotesForEditor(editorId: string): void {
   usedQuotes.get(editorId)?.forEach((uuid) => {
     for (const [key, quotes] of storage.quotes) {
       const quote = quotes.get(uuid);
-      if (quote?.rawMessage !== undefined) {
+      if (quote?.rawMessage !== null) {
         fullQuotes.push(key);
       }
 
@@ -226,7 +217,7 @@ function storeQuote(objectType: string, message: Message, quote: Quote): string 
   storage.messages.set(key, message);
 
   for (const [uuid, q] of storage.quotes.get(key)!) {
-    if ((q.rawMessage !== undefined && q.rawMessage === quote.rawMessage) || q.message === quote.message) {
+    if ((q.rawMessage !== null && q.rawMessage === null) || q.message === quote.message) {
       return uuid;
     }
   }
@@ -247,7 +238,7 @@ export function getFullQuoteUuid(objectType: string, objectId: number): string |
   }
 
   for (const [uuid, q] of quotes) {
-    if (q.rawMessage && q.message) {
+    if (q.rawMessage !== null && q.message !== null) {
       return uuid;
     }
   }
@@ -311,7 +302,7 @@ window.addEventListener("storage", (event) => {
   // Update the quote status if the quote was removed in another tab
   for (const [key, quotes] of oldValue.quotes) {
     for (const [, quote] of quotes) {
-      if (quote.rawMessage !== undefined && !newValue.quotes.has(key)) {
+      if (quote.rawMessage !== null && !newValue.quotes.has(key)) {
         removeQuoteStatus(key);
       }
     }

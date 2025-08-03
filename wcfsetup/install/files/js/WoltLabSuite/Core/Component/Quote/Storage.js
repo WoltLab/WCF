@@ -10,7 +10,6 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Api/Messages/RenderQuote", "WoltLabSuite/Core/Component/Quote/List", "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Ajax"], function (require, exports, tslib_1, Core, RenderQuote_1, List_1, ResetRemovalQuotes_1, Message_1, Ajax_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.legacySaveQuote = legacySaveQuote;
     exports.saveQuote = saveQuote;
     exports.saveFullQuote = saveFullQuote;
     exports.getQuotes = getQuotes;
@@ -25,35 +24,34 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
     Core = tslib_1.__importStar(Core);
     const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
     const usedQuotes = new Map();
-    async function legacySaveQuote(objectType, objectId, className, message) {
-        const result = (await (0, Ajax_1.dboAction)("saveQuote", className)
-            .objectIds([objectId])
-            .payload({
-            message,
-            renderQuote: true,
-        })
-            .dispatch());
-        const uuid = storeQuote(objectType, result.renderedQuote, {
-            message,
-        });
-        (0, List_1.refreshQuoteLists)();
-        return {
-            ...result.renderedQuote,
-            message,
-            uuid,
-        };
-    }
-    async function saveQuote(objectType, objectId, message) {
-        const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, false);
-        if (!result.ok) {
-            throw new Error("Error fetching author data");
+    async function saveQuote(objectType, objectId, message, 
+    /** @deprecated 6.2 Used for legacy implementations only. */
+    className) {
+        let quote;
+        if (className !== undefined) {
+            const result = (await (0, Ajax_1.dboAction)("saveQuote", className)
+                .objectIds([objectId])
+                .payload({
+                message,
+                renderQuote: true,
+            })
+                .dispatch());
+            quote = result.renderedQuote;
         }
-        const uuid = storeQuote(objectType, result.value, {
+        else {
+            const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, false);
+            if (!result.ok) {
+                throw new Error("Error fetching quote data");
+            }
+            quote = result.value;
+        }
+        const uuid = storeQuote(objectType, quote, {
             message,
+            rawMessage: null,
         });
         (0, List_1.refreshQuoteLists)();
         return {
-            ...result.value,
+            ...quote,
             message,
             uuid,
         };
@@ -132,7 +130,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         usedQuotes.get(editorId)?.forEach((uuid) => {
             for (const [key, quotes] of storage.quotes) {
                 const quote = quotes.get(uuid);
-                if (quote?.rawMessage !== undefined) {
+                if (quote?.rawMessage !== null) {
                     fullQuotes.push(key);
                 }
                 quotes.delete(uuid);
@@ -159,7 +157,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         }
         storage.messages.set(key, message);
         for (const [uuid, q] of storage.quotes.get(key)) {
-            if ((q.rawMessage !== undefined && q.rawMessage === quote.rawMessage) || q.message === quote.message) {
+            if ((q.rawMessage !== null && q.rawMessage === null) || q.message === quote.message) {
                 return uuid;
             }
         }
@@ -175,7 +173,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             return undefined;
         }
         for (const [uuid, q] of quotes) {
-            if (q.rawMessage && q.message) {
+            if (q.rawMessage !== null && q.message !== null) {
                 return uuid;
             }
         }
@@ -224,7 +222,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         // Update the quote status if the quote was removed in another tab
         for (const [key, quotes] of oldValue.quotes) {
             for (const [, quote] of quotes) {
-                if (quote.rawMessage !== undefined && !newValue.quotes.has(key)) {
+                if (quote.rawMessage !== null && !newValue.quotes.has(key)) {
                     (0, Message_1.removeQuoteStatus)(key);
                 }
             }
