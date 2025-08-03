@@ -118,8 +118,8 @@ export function registerContainer(
         if (activeEditor !== undefined) {
           dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
             author: quoteMessage.author,
-            content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-            isText: quoteMessage.rawMessage === undefined,
+            content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+            isText: !quoteMessage.rawMessage,
             link: quoteMessage.link,
           });
 

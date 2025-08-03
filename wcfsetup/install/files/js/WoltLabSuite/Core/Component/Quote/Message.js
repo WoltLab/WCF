@@ -69,8 +69,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 if (activeEditor !== undefined) {
                     (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
                         author: quoteMessage.author,
-                        content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-                        isText: quoteMessage.rawMessage === undefined,
+                        content: quoteMessage.rawMessage ? quoteMessage.rawMessage : quoteMessage.message,
+                        isText: !quoteMessage.rawMessage,
                         link: quoteMessage.link,
                     });
                     (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quoteMessage.uuid);

@@ -52,7 +52,6 @@ final class RenderQuote implements IController
 
         return new JsonResponse([
             'objectID' => $parameters->objectID,
-            'authorID' => $userProfile->getUserID(),
             'author' => $userProfile->getUsername(),
             'avatar' => $userProfile->getAvatar()->getURL(),
             'link' => $message->getLink(),
