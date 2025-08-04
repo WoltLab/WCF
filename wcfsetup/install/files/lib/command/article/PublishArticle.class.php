@@ -9,7 +9,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
-use wcf\system\user\storage\UserStorageHandler;
 
 /**
  * Publish an article.
@@ -39,7 +38,7 @@ final class PublishArticle
 
         $this->registerArticleActivity();
 
-        $this->resetUserStorage();
+        (new ResetUserStorageForUnreadArticles())();
 
         $event = new ArticlePublished($this->article);
         EventHandler::getInstance()->fire($event);
@@ -66,12 +65,5 @@ final class PublishArticle
         ArticleEditor::updateArticleCounter([
             $this->article->userID => 1,
         ]);
-    }
-
-    private function resetUserStorage(): void
-    {
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
     }
 }

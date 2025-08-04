@@ -3,6 +3,7 @@
 namespace wcf\data\article;
 
 use wcf\command\article\PublishArticle;
+use wcf\command\article\RestoreArticle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
@@ -539,19 +540,16 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Restores articles.
      *
      * @return array{objectIDs: int[]}
+     *
+     * @deprecated 6.3 use `RestoreArticle`
      */
     public function restore()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['isDeleted' => 0]);
+            (new RestoreArticle($articleEditor->getDecoratedObject()))();
         }
 
         $this->unmarkItems();
-
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 
         return ['objectIDs' => $this->objectIDs];
     }
