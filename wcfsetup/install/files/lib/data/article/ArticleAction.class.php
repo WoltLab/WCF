@@ -2,6 +2,7 @@
 
 namespace wcf\data\article;
 
+use wcf\command\article\PublishArticle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
@@ -790,46 +791,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Publishes articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `PublishArticle`
      */
     public function publish()
     {
-        $usersToArticles = [];
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update([
-                'time' => TIME_NOW,
-                'publicationStatus' => Article::PUBLISHED,
-                'publicationDate' => 0,
-            ]);
-
-            if (!isset($usersToArticles[$articleEditor->userID])) {
-                $usersToArticles[$articleEditor->userID] = 0;
-            }
-
-            $usersToArticles[$articleEditor->userID]++;
-
-            UserObjectWatchHandler::getInstance()->updateObject(
-                'com.woltlab.wcf.article.category',
-                $articleEditor->getCategory()->categoryID,
-                'article',
-                'com.woltlab.wcf.article.notification',
-                new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
-            );
-
-            UserActivityEventHandler::getInstance()->fireEvent(
-                'com.woltlab.wcf.article.recentActivityEvent',
-                $articleEditor->articleID,
-                null,
-                $articleEditor->userID,
-                TIME_NOW
-            );
+            (new PublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        ArticleEditor::updateArticleCounter($usersToArticles);
-
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 
         $this->unmarkItems();
     }

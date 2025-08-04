@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -39,8 +38,7 @@ final class PublishArticle implements IController
             throw new IllegalLinkException();
         }
 
-        $action = new ArticleAction([$article], 'publish');
-        $action->executeAction();
+        (new \wcf\command\article\PublishArticle($article))();
 
         return new JsonResponse([]);
     }
