@@ -2,11 +2,11 @@
 
 namespace wcf\system\application;
 
+use wcf\command\application\RebuildApplicationsCookieDomain;
 use wcf\data\application\Application;
-use wcf\data\application\ApplicationAction;
-use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
-use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\cache\eager\ApplicationCache;
+use wcf\system\cache\eager\data\ApplicationCacheData;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
@@ -27,9 +27,8 @@ final class ApplicationHandler extends SingletonFactory
 {
     /**
      * application cache
-     * @var mixed[][]
      */
-    protected $cache;
+    protected ApplicationCacheData $cache;
 
     /**
      * list of page URLs
@@ -42,7 +41,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     protected function init()
     {
-        $this->cache = ApplicationCacheBuilder::getInstance()->getData();
+        $this->cache = (new ApplicationCache())->getCache();
     }
 
     /**
@@ -54,15 +53,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function getApplication(string $abbreviation): ?Application
     {
-        if (isset($this->cache['abbreviation'][$abbreviation])) {
-            $packageID = $this->cache['abbreviation'][$abbreviation];
-
-            if (isset($this->cache['application'][$packageID])) {
-                return $this->cache['application'][$packageID];
-            }
-        }
-
-        return null;
+        return $this->cache->getApplicationByAbbreviation($abbreviation);
     }
 
     /**
@@ -73,7 +64,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function getApplicationByID(int $packageID): ?Application
     {
-        return $this->cache['application'][$packageID] ?? null;
+        return $this->cache->getApplication($packageID);
     }
 
     /**
@@ -120,11 +111,7 @@ final class ApplicationHandler extends SingletonFactory
             return $this->getApplication($abbreviation);
         }
 
-        if (isset($this->cache['application'][PACKAGE_ID])) {
-            return $this->cache['application'][PACKAGE_ID];
-        }
-
-        return $this->getWCF();
+        return $this->cache->getApplication(PACKAGE_ID) ?? $this->getWCF();
     }
 
     /**
@@ -152,7 +139,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function getApplications(): array
     {
-        return $this->cache['application'];
+        return $this->cache->application;
     }
 
     /**
@@ -160,13 +147,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function getAbbreviation(int $packageID): ?string
     {
-        foreach ($this->cache['abbreviation'] as $abbreviation => $applicationID) {
-            if ($packageID == $applicationID) {
-                return $abbreviation;
-            }
-        }
-
-        return null;
+        return $this->cache->getAbbreviationByPackageID($packageID);
     }
 
     /**
@@ -177,7 +158,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function getAbbreviations(): array
     {
-        return \array_keys($this->cache['abbreviation']);
+        return \array_keys($this->cache->abbreviation);
     }
 
     /**
@@ -236,11 +217,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public static function rebuild(): void
     {
-        $applicationList = new ApplicationList();
-        $applicationList->readObjects();
-
-        $applicationAction = new ApplicationAction($applicationList->getObjects(), 'rebuild');
-        $applicationAction->executeAction();
+        (new RebuildApplicationsCookieDomain())();
     }
 
     /**

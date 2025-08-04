@@ -4,7 +4,7 @@ namespace wcf\data\application;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\cache\eager\ApplicationCache;
 
 /**
  * Provides functions to edit applications.
@@ -29,6 +29,6 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     public static function resetCache()
     {
-        ApplicationCacheBuilder::getInstance()->reset();
+        (new ApplicationCache())->rebuild();
     }
 }

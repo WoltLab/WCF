@@ -6,10 +6,11 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use wcf\acp\page\PackageListPage;
 use wcf\action\AbstractSecureAction;
-use wcf\data\application\ApplicationAction;
+use wcf\command\application\MarkApplicationAsTainted;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\request\LinkHandler;
@@ -116,8 +117,7 @@ final class UninstallPackageAction extends AbstractSecureAction
 
         // mark package as tainted if it is an app
         if ($package->isApplication) {
-            $applicationAction = new ApplicationAction([$package->packageID], 'markAsTainted');
-            $applicationAction->executeAction();
+            (new MarkApplicationAsTainted(ApplicationHandler::getInstance()->getApplicationByID($package->packageID)))();
         }
 
         $this->installation->nodeBuilder->purgeNodes();
