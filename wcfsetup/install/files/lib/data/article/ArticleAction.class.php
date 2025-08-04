@@ -5,6 +5,7 @@ namespace wcf\data\article;
 use wcf\command\article\PublishArticle;
 use wcf\command\article\RestoreArticle;
 use wcf\command\article\SoftDeleteArticle;
+use wcf\command\article\UnpublishArticle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
@@ -831,35 +832,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Unpublishes articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `UnpublishArticle`
      */
     public function unpublish()
     {
-        $usersToArticles = $articleIDs = [];
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['publicationStatus' => Article::UNPUBLISHED]);
-
-            if (!isset($usersToArticles[$articleEditor->userID])) {
-                $usersToArticles[$articleEditor->userID] = 0;
-            }
-
-            $usersToArticles[$articleEditor->userID]--;
-
-            $articleIDs[] = $articleEditor->articleID;
+            (new UnpublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        // delete user notifications
-        UserNotificationHandler::getInstance()->removeNotifications(
-            'com.woltlab.wcf.article.notification',
-            $articleIDs
-        );
-
-        // delete recent activity events
-        UserActivityEventHandler::getInstance()->removeEvents(
-            'com.woltlab.wcf.article.recentActivityEvent',
-            $articleIDs
-        );
-
-        ArticleEditor::updateArticleCounter($usersToArticles);
 
         $this->unmarkItems();
     }
