@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle=$objectType->getProcessor()->getLanguageVariable($action)}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
