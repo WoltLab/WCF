@@ -4,6 +4,7 @@ namespace wcf\data\article;
 
 use wcf\command\article\PublishArticle;
 use wcf\command\article\RestoreArticle;
+use wcf\command\article\SetArticleCategory;
 use wcf\command\article\SoftDeleteArticle;
 use wcf\command\article\UnpublishArticle;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -55,6 +56,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @var Language
      */
     public $language;
+
+    public ?ArticleCategory $category;
 
     /**
      * @inheritDoc
@@ -733,11 +736,11 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         $this->readInteger('categoryID');
-        $category = ArticleCategory::getCategory($this->parameters['categoryID']);
-        if ($category === null) {
+        $this->category = ArticleCategory::getCategory($this->parameters['categoryID']);
+        if ($this->category === null) {
             throw new UserInputException('categoryID');
         }
-        if (!$category->isAccessible()) {
+        if (!$this->category->isAccessible()) {
             throw new UserInputException('categoryID');
         }
     }
@@ -746,11 +749,13 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Sets the category of articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `SetArticleCategory`
      */
     public function setCategory()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['categoryID' => $this->parameters['categoryID']]);
+            (new SetArticleCategory($articleEditor->getDecoratedObject(), $this->category))();
         }
 
         $this->unmarkItems();
