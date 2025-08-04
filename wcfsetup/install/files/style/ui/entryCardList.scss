@@ -5,7 +5,7 @@
 .entryCardList {
 	display: grid;
 	gap: 20px;
-	grid-auto-rows: minmax(200px, auto);
+	grid-auto-rows: minmax(170px, auto);
 }
 
 @container (min-width: 1000px) {
@@ -30,7 +30,6 @@
 	flex-direction: column;
 	overflow: hidden;
 	position: relative;
-	row-gap: var(--row-gap);
 }
 
 html[data-color-scheme="dark"] {
@@ -100,6 +99,11 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 	flex-direction: column;
 	padding: 0 10px;
 	row-gap: 10px;
+	margin-top: calc(var(--row-gap) * 2);
+}
+
+.entryCardList__item__image + .entryCardList__item__content {
+	margin-top: var(--row-gap);
 }
 
 .entryCardList__item__title__prefix {
@@ -144,6 +148,7 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 	padding: 10px;
 	white-space: nowrap;
 	gap: 10px;
+	margin-top: var(--row-gap);
 }
 
 .entryCardList__item__meta__image {
