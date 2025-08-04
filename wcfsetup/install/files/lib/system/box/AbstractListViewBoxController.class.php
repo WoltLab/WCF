@@ -83,6 +83,9 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
             }
         }
 
+        // Side-effect: Call of the method necessary so that the objects are loaded in `objectList`.
+        $this->getListView()->getItems();
+
         $this->content = $this->getTemplate();
 
         EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
