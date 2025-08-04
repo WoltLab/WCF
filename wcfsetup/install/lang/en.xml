@@ -4467,6 +4467,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Edit Box]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}New Item{else}News Items{/if})]]></item>
 		<item name="wcf.page.guestTokenDialog.title"><![CDATA[Verification Required]]></item>
+		<item name="wcf.page.readingTime"><![CDATA[{#$minutes} min read]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>

@@ -4515,6 +4515,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Box bearbeiten]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}neuer Eintrag{else}neue Einträge{/if})]]></item>
 		<item name="wcf.page.guestTokenDialog.title"><![CDATA[Verifizierung erforderlich]]></item>
+		<item name="wcf.page.readingTime"><![CDATA[Lesezeit: {#$minutes} Min.]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Verfügbare Mitgliedschaften]]></item>
