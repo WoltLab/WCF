@@ -61,10 +61,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
         `);
                     fragment.querySelector('button[data-action="insert"]').addEventListener("click", () => {
                         (0, Storage_1.markQuoteAsUsed)(this.#editorId, uuid);
+                        const content = quote.rawMessage || quote.message;
+                        if (content === null) {
+                            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+                        }
                         (0, Event_1.dispatchToCkeditor)(this.#editor).insertQuote({
                             author: message.author,
-                            content: quote.rawMessage === undefined ? quote.message : quote.rawMessage,
-                            isText: quote.rawMessage === undefined,
+                            content,
+                            isText: !quote.rawMessage,
                             link: message.link,
                         });
                     });
@@ -110,7 +114,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
         if (editor === null) {
             throw new Error(`The editor '${editorId}' does not exist.`);
         }
-        (0, Event_1.listenToCkeditor)(editor).ready(({ ckeditor }) => {
+        (0, Event_1.listenToCkeditor)(editor)
+            .ready(({ ckeditor }) => {
             if (ckeditor.features.quoteBlock) {
                 quoteLists.set(editorId, new QuoteList(editorId, editor, containerId));
             }
@@ -122,7 +127,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                     (0, Message_1.setActiveEditor)(ckeditor, ckeditor.features.quoteBlock);
                 }
             });
-        }).destroy(() => {
+        })
+            .destroy(() => {
             (0, Message_1.removeActiveEditor)(editor);
         });
     }

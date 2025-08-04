@@ -17,20 +17,20 @@ import {
   getFullQuoteUuid,
   saveFullQuote,
   markQuoteAsUsed,
-  isFullQuoted,
   getKey,
   removeQuotes,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 
-interface Container {
+type Container = {
   element: HTMLElement;
   messageBodySelector: string;
   objectType: string;
-  className: string;
   objectId: number;
-}
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className: string | undefined;
+};
 
 let selectedMessage:
   | undefined
@@ -39,12 +39,12 @@ let selectedMessage:
       container: Container;
     };
 
-interface ElementBoundaries {
+type ElementBoundaries = {
   bottom: number;
   left: number;
   right: number;
   top: number;
-}
+};
 
 const containers = new Map<string, Container>();
 const quoteMessageButtons = new Map<string, HTMLElement>();
@@ -57,19 +57,19 @@ const copyQuote = document.createElement("div");
 export function registerContainer(
   containerSelector: string,
   messageBodySelector: string,
-  className: string,
   objectType: string,
+  className?: string,
 ): void {
   wheneverFirstSeen(containerSelector, (container: HTMLElement) => {
     const id = DomUtil.identify(container);
-    const objectId = ~~container.dataset.objectId!;
+    const objectId = parseInt(container.dataset.objectId || "0");
 
     containers.set(id, {
       element: container,
-      messageBodySelector: messageBodySelector,
-      objectType: objectType,
-      className: className,
-      objectId: objectId,
+      messageBodySelector,
+      objectType,
+      objectId,
+      className,
     });
 
     if (container.classList.contains("jsInvalidQuoteTarget")) {
@@ -80,42 +80,53 @@ export function registerContainer(
     container.classList.add("jsQuoteMessageContainer");
 
     const quoteMessage = container.querySelector<HTMLElement>(".jsQuoteMessage");
-    let quoteMessageButton = quoteMessage?.querySelector<HTMLElement>(".button");
-    if (!quoteMessageButton && quoteMessage?.classList.contains("button")) {
+    if (quoteMessage === null) {
+      return;
+    }
+
+    let quoteMessageButton = quoteMessage.querySelector<HTMLElement>(".button");
+    if (!quoteMessageButton && quoteMessage.classList.contains("button")) {
       quoteMessageButton = quoteMessage;
     }
 
-    if (quoteMessageButton) {
+    if (quoteMessageButton !== null) {
       quoteMessageButtons.set(getKey(objectType, objectId), quoteMessageButton);
 
-      if (isFullQuoted(objectType, objectId)) {
+      if (getFullQuoteUuid(objectType, objectId) !== undefined) {
         quoteMessageButton.classList.add("active");
       }
     }
 
-    quoteMessage?.addEventListener(
+    quoteMessage.addEventListener(
       "click",
       promiseMutex(async (event: MouseEvent) => {
         event.preventDefault();
 
-        if (isFullQuoted(objectType, objectId)) {
-          removeQuotes([getFullQuoteUuid(objectType, objectId)!]);
-          quoteMessageButton!.classList.remove("active");
+        const uuid = getFullQuoteUuid(objectType, objectId);
+        if (uuid !== undefined) {
+          removeQuotes([uuid]);
+          quoteMessageButton?.classList.remove("active");
+
           return;
         }
 
-        const quoteMessage = await saveFullQuote(objectType, className, ~~container.dataset.objectId!);
-        quoteMessageButton!.classList.add("active");
+        const quote = await saveFullQuote(objectType, objectId, className);
+        quoteMessageButton?.classList.add("active");
 
         if (activeEditor !== undefined) {
+          const content = quote.rawMessage || quote.message;
+          if (content === null) {
+            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+          }
+
           dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
-            author: quoteMessage.author,
-            content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-            isText: quoteMessage.rawMessage === undefined,
-            link: quoteMessage.link,
+            author: quote.author,
+            content,
+            isText: quote.rawMessage === null,
+            link: quote.link,
           });
 
-          markQuoteAsUsed(activeEditor.sourceElement.id, quoteMessage.uuid);
+          markQuoteAsUsed(activeEditor.sourceElement.id, quote.uuid);
         }
       }),
     );
@@ -152,17 +163,22 @@ function setup() {
   buttonSaveQuote.addEventListener(
     "click",
     promiseMutex(async () => {
+      if (selectedMessage === undefined) {
+        return;
+      }
+
       await saveQuote(
-        selectedMessage!.container.objectType,
-        selectedMessage!.container.objectId,
-        selectedMessage!.container.className,
-        selectedMessage!.message,
+        selectedMessage.container.objectType,
+        selectedMessage.container.objectId,
+        selectedMessage.message,
+        selectedMessage.container.className,
       );
 
       removeSelection();
     }),
   );
   copyQuote.appendChild(buttonSaveQuote);
+
   const buttonSaveAndInsertQuote = document.createElement("button");
   buttonSaveAndInsertQuote.type = "button";
   buttonSaveAndInsertQuote.hidden = true;
@@ -171,22 +187,31 @@ function setup() {
   buttonSaveAndInsertQuote.addEventListener(
     "click",
     promiseMutex(async () => {
-      const quoteMessage = await saveQuote(
-        selectedMessage!.container.objectType,
-        selectedMessage!.container.objectId,
-        selectedMessage!.container.className,
-        selectedMessage!.message,
+      if (selectedMessage === undefined) {
+        return;
+      }
+
+      const quote = await saveQuote(
+        selectedMessage.container.objectType,
+        selectedMessage.container.objectId,
+        selectedMessage.message,
+        selectedMessage.container.className,
       );
 
       if (activeEditor !== undefined) {
+        const content = quote.rawMessage || quote.message;
+        if (content === null) {
+          throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+        }
+
         dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
-          author: quoteMessage.author,
-          content: quoteMessage.rawMessage === undefined ? quoteMessage.message : quoteMessage.rawMessage,
-          isText: quoteMessage.rawMessage === undefined,
-          link: quoteMessage.link,
+          author: quote.author,
+          content,
+          isText: quote.rawMessage === null,
+          link: quote.link,
         });
 
-        markQuoteAsUsed(activeEditor.sourceElement.id, quoteMessage.uuid);
+        markQuoteAsUsed(activeEditor.sourceElement.id, quote.uuid);
       }
 
       removeSelection();

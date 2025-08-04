@@ -2,35 +2,42 @@
 
 namespace wcf\system\message\quote;
 
+use wcf\data\IMessage;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\NotImplementedException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
  * Default implementation for quote handlers.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- *
- * @deprecated 6.2
+ * @author      Alexander Ebert
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractMessageQuoteHandler extends SingletonFactory implements IMessageQuoteHandler
 {
     /**
      * template name
      * @var string
+     * @deprecated 6.2
      */
     public $templateName = 'messageQuoteList';
 
     /**
      * list of quoted message
      * @var QuotedMessage[]
+     * @deprecated 6.2
      */
     public $quotedMessages = [];
 
     /**
-     * @inheritDoc
+     * Renders a template for given quotes.
+     *
+     * @param mixed[][] $data
+     * @param bool $supportPaste
+     * @return string
+     * @deprecated 6.2 Implement `getMessage()` instead.
      */
     public function render(array $data, $supportPaste = false)
     {
@@ -58,8 +65,12 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
     }
 
     /**
-     * @inheritDoc
-     * @param bool $renderAsString
+     * Renders a list of quotes for insertation.
+     *
+     * @param mixed[][] $data
+     * @param bool $render
+     * @return  string[]
+     * @deprecated 6.2 Implement `getMessage()` instead.
      */
     public function renderQuotes(array $data, $render = true, $renderAsString = true)
     {
@@ -94,6 +105,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      *
      * @param QuotedMessage[] $messages
      * @return void
+     * @deprecated 6.2
      */
     protected function overrideIsFullQuote(array $messages)
     {
@@ -110,6 +122,27 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      *
      * @param mixed[][] $data
      * @return QuotedMessage[]
+     * @deprecated 6.2 Implement `getMessage()` instead.
      */
-    abstract protected function getMessages(array $data);
+    protected function getMessages(array $data)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @return list<QuotedMessage>
+     * @deprecated 6.2
+     */
+    public function legacyGetMessages(int $objectID, string $marker): array
+    {
+        return $this->getMessages([
+            $objectID => [$marker],
+        ]);
+    }
+
+    #[\Override]
+    public function getMessage(int $objectID): ?IMessage
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -11,11 +11,10 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.renderQuote = renderQuote;
-    async function renderQuote(objectType, className, objectID) {
+    async function renderQuote(objectType, objectID, isFullQuote) {
         const url = new URL(window.WSC_RPC_API_URL + "core/messages/render-quote");
         url.searchParams.set("objectType", objectType);
-        url.searchParams.set("className", className);
-        url.searchParams.set("fullQuote", "true");
+        url.searchParams.set("isFullQuote", String(isFullQuote));
         url.searchParams.set("objectID", objectID.toString());
         let response;
         try {

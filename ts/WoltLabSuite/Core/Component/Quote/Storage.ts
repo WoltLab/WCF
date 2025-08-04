@@ -10,24 +10,21 @@
 
 import * as Core from "WoltLabSuite/Core/Core";
 import { renderQuote } from "WoltLabSuite/Core/Api/Messages/RenderQuote";
-import { getMessageAuthor } from "WoltLabSuite/Core/Api/Messages/Author";
 import { refreshQuoteLists } from "WoltLabSuite/Core/Component/Quote/List";
 import { resetRemovalQuotes } from "WoltLabSuite/Core/Api/Messages/ResetRemovalQuotes";
 import { removeQuoteStatus } from "WoltLabSuite/Core/Component/Quote/Message";
+import { dboAction } from "WoltLabSuite/Core/Ajax";
 
 interface Message {
   objectID: number;
-  time: string;
-  title: string;
   link: string;
-  authorID: number | null;
   author: string;
   avatar: string;
 }
 
 interface Quote {
-  message: string;
-  rawMessage?: string;
+  message: string | null;
+  rawMessage: string | null;
 }
 
 interface StorageData {
@@ -35,28 +32,51 @@ interface StorageData {
   messages: Map<string, Message>;
 }
 
+type LegacyQuoteData = {
+  count: number;
+  fullQuoteMessageIDs: number[];
+  renderedQuote: Message & Quote;
+};
+
 const STORAGE_KEY = Core.getStoragePrefix() + "quotes";
 const usedQuotes = new Map<string, Set<string>>();
 
 export async function saveQuote(
   objectType: string,
   objectId: number,
-  objectClassName: string,
   message: string,
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className?: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = await getMessageAuthor(objectClassName, objectId);
-  if (!result.ok) {
-    throw new Error("Error fetching author data");
+  let quote: Message & Quote;
+
+  if (className !== undefined) {
+    const result = (await dboAction("saveQuote", className)
+      .objectIds([objectId])
+      .payload({
+        message,
+        renderQuote: true,
+      })
+      .dispatch()) as LegacyQuoteData;
+    quote = result.renderedQuote;
+  } else {
+    const result = await renderQuote(objectType, objectId, false);
+    if (!result.ok) {
+      throw new Error("Error fetching quote data");
+    }
+
+    quote = result.value;
   }
 
-  const uuid = storeQuote(objectType, result.value, {
+  const uuid = storeQuote(objectType, quote, {
     message,
+    rawMessage: null,
   });
 
   refreshQuoteLists();
 
   return {
-    ...result.value,
+    ...quote,
     message,
     uuid,
   };
@@ -64,36 +84,30 @@ export async function saveQuote(
 
 export async function saveFullQuote(
   objectType: string,
-  objectClassName: string,
   objectId: number,
+  /** @deprecated 6.2 Used for legacy implementations only. */
+  className?: string,
 ): Promise<Message & Quote & { uuid: string }> {
-  const result = await renderQuote(objectType, objectClassName, objectId);
-  if (!result.ok) {
-    throw new Error("Error fetching quote data");
+  let message: Message & Quote;
+
+  if (className !== undefined) {
+    const result = (await dboAction("saveFullQuote", className).objectIds([objectId]).dispatch()) as LegacyQuoteData;
+    message = result.renderedQuote;
+  } else {
+    const result = await renderQuote(objectType, objectId, true);
+    if (!result.ok) {
+      throw new Error("Error fetching quote data");
+    }
+
+    message = result.value;
   }
 
-  const message = {
-    objectID: result.value.objectID,
-    time: result.value.time,
-    title: result.value.title,
-    link: result.value.link,
-    authorID: result.value.authorID,
-    author: result.value.author,
-    avatar: result.value.avatar,
-  };
-
-  const quote = {
-    message: result.value.message!,
-    rawMessage: result.value.rawMessage!,
-  };
-
-  const uuid = storeQuote(objectType, message, quote);
+  const uuid = storeQuote(objectType, message, message);
 
   refreshQuoteLists();
 
   return {
     ...message,
-    ...quote,
     uuid,
   };
 }
@@ -167,7 +181,7 @@ export function clearQuotesForEditor(editorId: string): void {
   usedQuotes.get(editorId)?.forEach((uuid) => {
     for (const [key, quotes] of storage.quotes) {
       const quote = quotes.get(uuid);
-      if (quote?.rawMessage !== undefined) {
+      if (quote?.rawMessage !== null) {
         fullQuotes.push(key);
       }
 
@@ -192,24 +206,6 @@ export function clearQuotesForEditor(editorId: string): void {
   });
 }
 
-export function isFullQuoted(objectType: string, objectId: number): boolean {
-  const key = getKey(objectType, objectId);
-  const storage = getStorage();
-  const quotes = storage.quotes.get(key);
-
-  if (quotes === undefined) {
-    return false;
-  }
-
-  return (
-    Array.from(quotes).filter(([, quote]) => {
-      if (quote.rawMessage !== undefined) {
-        return true;
-      }
-    }).length > 0
-  );
-}
-
 function storeQuote(objectType: string, message: Message, quote: Quote): string {
   const storage = getStorage();
 
@@ -221,7 +217,7 @@ function storeQuote(objectType: string, message: Message, quote: Quote): string 
   storage.messages.set(key, message);
 
   for (const [uuid, q] of storage.quotes.get(key)!) {
-    if ((q.rawMessage !== undefined && q.rawMessage === quote.rawMessage) || q.message === quote.message) {
+    if ((q.rawMessage !== null && q.rawMessage === null) || q.message === quote.message) {
       return uuid;
     }
   }
@@ -235,11 +231,14 @@ function storeQuote(objectType: string, message: Message, quote: Quote): string 
 }
 
 export function getFullQuoteUuid(objectType: string, objectId: number): string | undefined {
-  const storage = getStorage();
   const key = getKey(objectType, objectId);
+  const quotes = getStorage().quotes.get(key);
+  if (quotes === undefined) {
+    return undefined;
+  }
 
-  for (const [uuid, q] of storage.quotes.get(key)!) {
-    if (q.rawMessage !== undefined && q.message !== undefined) {
+  for (const [uuid, q] of quotes) {
+    if (q.rawMessage !== null && q.message !== null) {
       return uuid;
     }
   }
@@ -303,7 +302,7 @@ window.addEventListener("storage", (event) => {
   // Update the quote status if the quote was removed in another tab
   for (const [key, quotes] of oldValue.quotes) {
     for (const [, quote] of quotes) {
-      if (quote.rawMessage !== undefined && !newValue.quotes.has(key)) {
+      if (quote.rawMessage !== null && !newValue.quotes.has(key)) {
         removeQuoteStatus(key);
       }
     }

@@ -13,11 +13,8 @@ import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
 
 type Response = {
   objectID: number;
-  authorID: number | null;
   author: string;
-  time: string;
   link: string;
-  title: string;
   avatar: string;
   message: string | null;
   rawMessage: string | null;
@@ -25,13 +22,12 @@ type Response = {
 
 export async function renderQuote(
   objectType: string,
-  className: string,
   objectID: number,
+  isFullQuote: boolean,
 ): Promise<ApiResult<Response>> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/render-quote");
   url.searchParams.set("objectType", objectType);
-  url.searchParams.set("className", className);
-  url.searchParams.set("fullQuote", "true");
+  url.searchParams.set("isFullQuote", String(isFullQuote));
   url.searchParams.set("objectID", objectID.toString());
 
   let response: Response;

@@ -3,7 +3,11 @@
 namespace wcf\system\message\quote;
 
 use wcf\data\IMessage;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\avatar\DefaultAvatar;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -15,7 +19,7 @@ use wcf\util\ArrayUtil;
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class MessageQuoteManager extends SingletonFactory
+final class MessageQuoteManager extends SingletonFactory
 {
     /**
      * list of quote ids to be removed
@@ -29,6 +33,19 @@ class MessageQuoteManager extends SingletonFactory
      * @var array<string, string[]>
      */
     protected array $usedQuotes = [];
+
+    /**
+     * @var array{
+     *  objectType: string,
+     *  parentObjectID: int,
+     *  objectID: int,
+     *  message: string,
+     *  fullQuote: string,
+     * }
+     */
+    private array $legacyQuoteData;
+
+    private const LEGACY_QUOTE_MARKER = '@@@legacy_quote@@@';
 
     /**
      * @inheritDoc
@@ -65,7 +82,33 @@ class MessageQuoteManager extends SingletonFactory
         $fullQuote = '',
         $returnFalseIfExists = true
     ) {
-        return false;
+        if (isset($this->legacyQuoteData)) {
+            throw new \RuntimeException("Cannot store another quote, there is already one legacy quote present.");
+        }
+
+        if ($fullQuote !== '') {
+            $htmlInputProcessor = new HtmlInputProcessor();
+            $htmlInputProcessor->processIntermediate($fullQuote);
+
+            if (MESSAGE_MAX_QUOTE_DEPTH) {
+                $htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1, true);
+            }
+
+            $parameters = ['htmlInputProcessor' => $htmlInputProcessor];
+            EventHandler::getInstance()->fireAction($this, 'addFullQuote', $parameters);
+
+            $fullQuote = $htmlInputProcessor->getHtml();
+        }
+
+        $this->legacyQuoteData = [
+            'objectType' => $objectType,
+            'parentObjectID' => $parentObjectID,
+            'objectID' => $objectID,
+            'message' => $message,
+            'fullQuote' => $fullQuote,
+        ];
+
+        return self::LEGACY_QUOTE_MARKER;
     }
 
     /**
@@ -107,7 +150,48 @@ class MessageQuoteManager extends SingletonFactory
      */
     public function getQuoteComponents($quoteID)
     {
-        return false;
+        if ($quoteID !== self::LEGACY_QUOTE_MARKER) {
+            throw new \RuntimeException("Encountered an unexpected quote id, found '{$quoteID}'.");
+        }
+
+        \assert(isset($this->legacyQuoteData));
+
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message.quote', $this->legacyQuoteData['objectType']);
+        if ($objectType === null) {
+            throw new \RuntimeException("Cannot find the object type '{$this->legacyQuoteData['objectType']}' for quotes.");
+        }
+
+        $quoteHandler = \call_user_func([$objectType->className, 'getInstance']);
+        \assert($quoteHandler instanceof AbstractMessageQuoteHandler);
+
+        $messages = $quoteHandler->legacyGetMessages($this->legacyQuoteData['objectID'], self::LEGACY_QUOTE_MARKER);
+        $message = \current($messages);
+        \assert($message !== false);
+
+        $avatar = '';
+        if ($message->getUserID()) {
+            $userProfile = UserProfileRuntimeCache::getInstance()->getObject($message->getUserID());
+            if ($userProfile !== null) {
+                $avatar = $userProfile->getAvatar()->getURL();
+            }
+        }
+
+        if ($avatar === '') {
+            $avatar = (new DefaultAvatar($message->getUsername()))->getURL();
+        }
+
+        $messageData = $quoteHandler->renderQuotes([
+            $this->legacyQuoteData['objectID'] => [self::LEGACY_QUOTE_MARKER],
+        ]);
+
+        return [
+            'objectID' => $this->legacyQuoteData['objectID'],
+            'author' => $message->getUsername(),
+            'avatar' => $avatar,
+            'link' => $message->getLink(),
+            'message' => $messageData[0],
+            'rawMessage' => $this->isFullQuote(self::LEGACY_QUOTE_MARKER) ? $message->getMessage() : $this->legacyQuoteData['message'],
+        ];
     }
 
     /**
@@ -168,6 +252,13 @@ class MessageQuoteManager extends SingletonFactory
      */
     public function getQuote($quoteID, $useFullQuote = true)
     {
+        \assert(isset($this->legacyQuoteData));
+        if ($useFullQuote && $this->legacyQuoteData['fullQuote'] !== '') {
+            return $this->legacyQuoteData['fullQuote'];
+        } else {
+            return $this->legacyQuoteData['message'];
+        }
+
         return null;
     }
 
@@ -356,7 +447,9 @@ class MessageQuoteManager extends SingletonFactory
      */
     public function isFullQuote($quoteID)
     {
-        return false;
+        \assert(isset($this->legacyQuoteData));
+
+        return $this->legacyQuoteData['fullQuote'] !== '';
     }
 
     /**

@@ -78,10 +78,15 @@ class QuoteList {
         fragment.querySelector('button[data-action="insert"]')!.addEventListener("click", () => {
           markQuoteAsUsed(this.#editorId, uuid);
 
+          const content = quote.rawMessage || quote.message;
+          if (content === null) {
+            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+          }
+
           dispatchToCkeditor(this.#editor).insertQuote({
             author: message.author,
-            content: quote.rawMessage === undefined ? quote.message : quote.rawMessage,
-            isText: quote.rawMessage === undefined,
+            content,
+            isText: !quote.rawMessage,
             link: message.link,
           });
         });
@@ -142,21 +147,23 @@ export function setup(editorId: string, containerId?: string): void {
     throw new Error(`The editor '${editorId}' does not exist.`);
   }
 
-  listenToCkeditor(editor).ready(({ ckeditor }) => {
-    if (ckeditor.features.quoteBlock) {
-      quoteLists.set(editorId, new QuoteList(editorId, editor, containerId));
-    }
+  listenToCkeditor(editor)
+    .ready(({ ckeditor }) => {
+      if (ckeditor.features.quoteBlock) {
+        quoteLists.set(editorId, new QuoteList(editorId, editor, containerId));
+      }
 
-    if (ckeditor.isVisible()) {
-      setActiveEditor(ckeditor, ckeditor.features.quoteBlock);
-    }
-
-    ckeditor.focusTracker.on("change:isFocused", (_evt: unknown, _name: unknown, isFocused: boolean) => {
-      if (isFocused) {
+      if (ckeditor.isVisible()) {
         setActiveEditor(ckeditor, ckeditor.features.quoteBlock);
       }
+
+      ckeditor.focusTracker.on("change:isFocused", (_evt: unknown, _name: unknown, isFocused: boolean) => {
+        if (isFocused) {
+          setActiveEditor(ckeditor, ckeditor.features.quoteBlock);
+        }
+      });
+    })
+    .destroy(() => {
+      removeActiveEditor(editor);
     });
-  }).destroy(() => {
-    removeActiveEditor(editor);
-  });
 }

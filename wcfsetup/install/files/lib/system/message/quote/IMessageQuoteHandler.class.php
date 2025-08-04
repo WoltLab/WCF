@@ -2,32 +2,24 @@
 
 namespace wcf\system\message\quote;
 
+use wcf\data\IMessage;
+
 /**
  * Default interface for quote handlers.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- *
- * @deprecated 6.2
+ * @author      Alexander Ebert
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface IMessageQuoteHandler
 {
     /**
-     * Renders a template for given quotes.
+     * Returns the message identified by the provided object id.
      *
-     * @param mixed[][] $data
-     * @param bool $supportPaste
-     * @return string
-     */
-    public function render(array $data, $supportPaste = false);
-
-    /**
-     * Renders a list of quotes for insertation.
+     * If the object does not exist or is inaccessible by the current user,
+     * `null` must be returned instead.
      *
-     * @param mixed[][] $data
-     * @param bool $render
-     * @return  string[]
+     * @since 6.2
      */
-    public function renderQuotes(array $data, $render = true);
+    public function getMessage(int $objectID): ?IMessage;
 }

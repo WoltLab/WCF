@@ -5,21 +5,23 @@ namespace wcf\system\endpoint\controller\core\messages;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\data\DatabaseObject;
-use wcf\data\IEmbeddedMessageObject;
 use wcf\data\IMessage;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\exception\NotImplementedException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\quote\IMessageQuoteHandler;
 
 /**
  * Retrieves data for the rendering of a quote.
  *
  * @author    Olaf Braun
- * @copyright 2001-2024 WoltLab GmbH
+ * @copyright 2001-2025 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.2
  */
@@ -31,33 +33,38 @@ final class RenderQuote implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetRenderQuoteParameters::class);
 
-        // @phpstan-ignore argument.templateType
-        $object = Helper::fetchObjectFromRequestParameter($parameters->objectID, $parameters->className);
-        \assert($object instanceof IMessage && $object instanceof DatabaseObject);
-
-        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($object->getUserID());
-        if ($userProfile === null) {
-            $userProfile = UserProfile::getGuestUserProfile($object->getUsername());
-        }
-
-        if ($object instanceof IEmbeddedMessageObject) {
-            $object->loadEmbeddedObjects();
-        }
-
-        return new JsonResponse(
-            [
-                "objectID" => $object->getObjectID(),
-                "authorID" => $userProfile->getUserID(),
-                "author" => $userProfile->getUsername(),
-                "avatar" => $userProfile->getAvatar()->getURL(),
-                "time" => (new \DateTime('@' . $object->getTime()))->format("c"),
-                "title" => $object->getTitle(),
-                "link" => $object->getLink(),
-                "rawMessage" => $parameters->fullQuote ? $this->renderFullQuote($object) : null,
-                "message" => $parameters->fullQuote ? $object->getFormattedMessage() : null
-            ],
-            200,
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.message.quote',
+            $parameters->objectType,
         );
+        $processor = $objectType->getProcessor();
+        \assert($processor instanceof IMessageQuoteHandler);
+
+        $message = null;
+        try {
+            $message = $processor->getMessage($parameters->objectID);
+        } catch (NotImplementedException) {
+            // This can happen for legacy implementations that do not yet
+            // implement the new `getMessage()` method.
+        }
+
+        if ($message === null) {
+            throw new PermissionDeniedException();
+        }
+
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($message->getUserID());
+        if ($userProfile === null) {
+            $userProfile = UserProfile::getGuestUserProfile($message->getUsername());
+        }
+
+        return new JsonResponse([
+            'objectID' => $parameters->objectID,
+            'author' => $userProfile->getUsername(),
+            'avatar' => $userProfile->getAvatar()->getURL(),
+            'link' => $message->getLink(),
+            'rawMessage' => $parameters->isFullQuote ? $this->renderFullQuote($message) : null,
+            'message' => $parameters->isFullQuote ? $message->getFormattedMessage() : null
+        ]);
     }
 
     private function renderFullQuote(IMessage $object): string
@@ -78,9 +85,10 @@ final class GetRenderQuoteParameters
 {
     public function __construct(
         /** @var non-empty-string */
-        public readonly string $className,
+        public readonly string $objectType,
         /** @var positive-int */
         public readonly int $objectID,
-        public readonly bool $fullQuote = false,
+
+        public readonly bool $isFullQuote,
     ) {}
 }

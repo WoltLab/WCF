@@ -7,16 +7,15 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Quote/Message"], func
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiMessageQuote = void 0;
+    /**
+     * @deprecated 6.2 Use `registerContainer()` without the className parameter.
+     */
     class UiMessageQuote {
         /**
          * Initializes the quote handler for given object type.
          */
         constructor(_quoteManager, className, objectType, containerSelector, messageBodySelector, _messageContentSelector, _supportDirectInsert) {
-            // remove "Action" from className
-            if (className.endsWith("Action")) {
-                className = className.substring(0, className.length - 6);
-            }
-            (0, Message_1.registerContainer)(containerSelector, messageBodySelector, className, objectType);
+            (0, Message_1.registerContainer)(containerSelector, messageBodySelector, objectType, className);
         }
     }
     exports.UiMessageQuote = UiMessageQuote;
