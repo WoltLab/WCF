@@ -12,9 +12,10 @@ use wcf\command\article\UnpublishArticle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentAction;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
+use wcf\system\article\command\DisableI18n;
+use wcf\system\article\command\EnableI18n;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
@@ -587,56 +588,16 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Toggles between i18n and monolingual mode.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `EnableI18n` or `DisableI18n`
      */
     public function toggleI18n()
     {
-        $removeContent = [];
-
-        // i18n -> monolingual
-        if ($this->articleEditor->getDecoratedObject()->isMultilingual) {
-            foreach ($this->articleEditor->getArticleContents() as $articleContent) {
-                if ($articleContent->languageID == $this->language->languageID) {
-                    $articleContentEditor = new ArticleContentEditor($articleContent);
-                    $articleContentEditor->update(['languageID' => null]);
-                } else {
-                    $removeContent[] = $articleContent;
-                }
-            }
+        if ($this->articleEditor->isMultilingual) {
+            (new DisableI18n($this->articleEditor->getDecoratedObject(), $this->language))();
         } else {
-            // monolingual -> i18n
-            $articleContent = $this->articleEditor->getArticleContent();
-            $data = [];
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $data[$language->languageID] = [
-                    'title' => $articleContent->title,
-                    'teaser' => $articleContent->teaser,
-                    'content' => $articleContent->content,
-                    'imageID' => $articleContent->imageID ?: null,
-                    'teaserImageID' => $articleContent->teaserImageID ?: null,
-                ];
-            }
-
-            $action = new self([$this->articleEditor], 'update', ['content' => $data]);
-            $action->executeAction();
-
-            $removeContent[] = $articleContent;
+            (new EnableI18n($this->articleEditor->getDecoratedObject()))();
         }
-
-        if (!empty($removeContent)) {
-            $action = new ArticleContentAction($removeContent, 'delete');
-            $action->executeAction();
-        }
-
-        // flush edit history
-        VersionTracker::getInstance()->reset(
-            'com.woltlab.wcf.article',
-            $this->articleEditor->getDecoratedObject()->articleID
-        );
-
-        // update article's i18n state
-        $this->articleEditor->update([
-            'isMultilingual' => ($this->articleEditor->getDecoratedObject()->isMultilingual) ? 0 : 1,
-        ]);
     }
 
     /**
