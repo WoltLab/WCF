@@ -99,16 +99,12 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 	flex-direction: column;
 	padding: 0 10px;
 	row-gap: 10px;
-	margin-top: calc(var(--row-gap) * 2);
-}
-
-.entryCardList__item__image + .entryCardList__item__content {
 	margin-top: var(--row-gap);
 }
 
 .entryCardList__item__title__prefix {
 	color: var(--wcfContentDimmedText);
-	margin-bottom: calc(var(--row-gap) * -1 / 2);
+	margin-bottom: calc(var(--row-gap) * -1);
 
 	@include wcfFontSmall;
 }
