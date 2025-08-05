@@ -468,8 +468,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        $this->unmarkItems();
-
         return [
             'objectIDs' => $this->objectIDs,
             'redirectURL' => LinkHandler::getInstance()->getLink('ArticleList', ['isACP' => true]),
@@ -518,8 +516,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
             (new SoftDeleteArticle($articleEditor->getDecoratedObject()))();
         }
 
-        $this->unmarkItems();
-
         return ['objectIDs' => $this->objectIDs];
     }
 
@@ -546,8 +542,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjects() as $articleEditor) {
             (new RestoreArticle($articleEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
 
         return ['objectIDs' => $this->objectIDs];
     }
@@ -689,8 +683,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjects() as $articleEditor) {
             (new SetArticleCategory($articleEditor->getDecoratedObject(), $this->category))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -733,8 +725,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjects() as $articleEditor) {
             (new PublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -777,8 +767,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjects() as $articleEditor) {
             (new UnpublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -835,27 +823,5 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         return $articles;
-    }
-
-    /**
-     * Unmarks articles.
-     *
-     * @param int[] $articleIDs
-     * @return void
-     */
-    protected function unmarkItems(array $articleIDs = [])
-    {
-        if (empty($articleIDs)) {
-            foreach ($this->getObjects() as $article) {
-                $articleIDs[] = $article->articleID;
-            }
-        }
-
-        if (!empty($articleIDs)) {
-            ClipboardHandler::getInstance()->unmark(
-                $articleIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')
-            );
-        }
     }
 }
