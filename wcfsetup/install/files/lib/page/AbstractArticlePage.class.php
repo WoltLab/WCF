@@ -2,7 +2,7 @@
 
 namespace wcf\page;
 
-use wcf\data\article\ArticleAction;
+use wcf\command\article\MarkArticleAsRead;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
@@ -128,10 +128,7 @@ abstract class AbstractArticlePage extends AbstractPage
 
         // update article visit
         if ($this->article->isNew()) {
-            $articleAction = new ArticleAction([$this->article->getDecoratedObject()], 'markAsRead', [
-                'viewableArticle' => $this->article,
-            ]);
-            $articleAction->executeAction();
+            (new MarkArticleAsRead($this->article->getDecoratedObject()))();
         }
 
         // get tags

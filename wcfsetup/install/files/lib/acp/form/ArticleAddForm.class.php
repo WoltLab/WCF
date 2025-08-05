@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\article\MarkArticleAsRead;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\article\category\ArticleCategory;
@@ -573,7 +574,7 @@ class ArticleAddForm extends AbstractForm
 
         // mark published article as read
         if ($article->publicationStatus == Article::PUBLISHED) {
-            (new ArticleAction([$article], 'markAsRead'))->executeAction();
+            (new MarkArticleAsRead($article))();
         }
 
         // call saved event

@@ -2,6 +2,8 @@
 
 namespace wcf\data\article;
 
+use wcf\command\article\MarkAllArticleAsRead;
+use wcf\command\article\MarkArticleAsRead;
 use wcf\command\article\PublishArticle;
 use wcf\command\article\RestoreArticle;
 use wcf\command\article\SetArticleCategory;
@@ -30,7 +32,6 @@ use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
-use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -642,6 +643,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Marks articles as read.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `MarkArticleAsRead`
      */
     public function markAsRead()
     {
@@ -657,28 +660,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $articleIDs = [];
-        foreach ($this->getObjects() as $article) {
-            $articleIDs[] = $article->articleID;
-            VisitTracker::getInstance()->trackObjectVisit(
-                'com.woltlab.wcf.article',
-                $article->articleID,
-                $this->parameters['visitTime']
-            );
-        }
-
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
-
-        // delete obsolete notifications
-        if ($articleIDs !== []) {
-            UserNotificationHandler::getInstance()->markAsConfirmed(
-                'article',
-                'com.woltlab.wcf.article.notification',
-                [WCF::getUser()->userID],
-                $articleIDs
-            );
+        foreach ($this->getObjects() as $articleEditor) {
+            (new MarkArticleAsRead($articleEditor->getDecoratedObject(), $this->parameters['visitTime']))();
         }
     }
 
@@ -686,18 +669,12 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Marks all articles as read.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `MarkAllArticleAsRead`
      */
     public function markAllAsRead()
     {
-        if (!WCF::getUser()->userID) {
-            return;
-        }
-
-        VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.article');
-
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
+        (new MarkAllArticleAsRead())();
     }
 
     /**
