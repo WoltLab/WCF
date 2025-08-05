@@ -7,6 +7,7 @@ use wcf\data\label\Label;
 use wcf\data\label\LabelAction;
 use wcf\data\label\LabelList;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\exception\NamedUserException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BadgeColorFormField;
 use wcf\system\form\builder\field\IFormField;
@@ -14,6 +15,8 @@ use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Shows the label add form.
@@ -51,12 +54,20 @@ class LabelAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
+        $labelGroupList = new LabelGroupList();
+        $labelGroupList->readObjects();
+        if ($labelGroupList->count() === 0) {
+            throw new NamedUserException(
+                HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.label.error.noGroups'))
+            );
+        }
+
         $this->form->appendChildren([
             FormContainer::create('section')
                 ->appendChildren([
                     SelectFormField::create('groupID')
                         ->label('wcf.acp.label.group')
-                        ->options(new LabelGroupList())
+                        ->options($labelGroupList)
                         ->immutable($this->formAction !== 'create')
                         ->description('wcf.acp.label.group.permanentSelection')
                         ->required(),
