@@ -1,7 +1,7 @@
 <ol class="sidebarList">
 	{foreach from=$usersOnlineList item=userOnline}
 		<li class="sidebarListItem">
-			<div class="sidebarListItem__avatar">
+			<div class="sidebarListItem__image">
 				{user object=$userOnline type='avatar32' ariaHidden='true' tabindex='-1'}
 			</div>
 
@@ -12,7 +12,7 @@
 			</div>
 
 			<div class="sidebarListItem__meta">
-				<div class="sidebarListItem__meta__time">
+				<div class="sidebarListItem__meta__item sidebarListItem__meta__time">
 					{time time=$userOnline->lastActivityTime}
 				</div>
 			</div>
