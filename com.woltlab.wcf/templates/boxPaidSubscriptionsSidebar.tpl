@@ -12,7 +12,7 @@
 			</div>
 
 			<div class="sidebarListItem__meta">
-				<div class="sidebarListItem__meta__buttons">
+				<div class="sidebarListItem__meta__item sidebarListItem__meta__buttons">
 					{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION && $__wcf->user->canPurchasePaidSubscriptions()}
 						<ul class="buttonList">
 							{foreach from=$subscription->getPurchaseButtons() item=button}
