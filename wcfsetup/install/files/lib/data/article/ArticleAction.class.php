@@ -5,6 +5,7 @@ namespace wcf\data\article;
 use wcf\command\article\MarkAllArticleAsRead;
 use wcf\command\article\MarkArticleAsRead;
 use wcf\command\article\PublishArticle;
+use wcf\command\article\ResetUserStorageForUnreadArticles;
 use wcf\command\article\RestoreArticle;
 use wcf\command\article\SetArticleCategory;
 use wcf\command\article\SoftDeleteArticle;
@@ -31,7 +32,6 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
@@ -158,10 +158,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
+        (new ResetUserStorageForUnreadArticles())();
 
         if ($article->publicationStatus == Article::PUBLISHED) {
             ArticleEditor::updateArticleCounter([$article->userID => 1]);
@@ -303,10 +300,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
+        (new ResetUserStorageForUnreadArticles())();
 
         $publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
         if ($publicationStatus !== null) {
