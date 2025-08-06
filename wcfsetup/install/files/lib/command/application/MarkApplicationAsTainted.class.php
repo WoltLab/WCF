@@ -7,8 +7,8 @@ use wcf\data\application\ApplicationEditor;
 use wcf\system\cache\eager\ApplicationCache;
 
 /**
- * Marking an application as tainted, prevents it from loading.
- * This should be called during the uninstallation.
+ * Marking an application as tainted prevents it from being loaded during its
+ * uninstallation. This MUST NOT be called outside of an active uninstallation.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -17,9 +17,9 @@ use wcf\system\cache\eager\ApplicationCache;
  */
 final class MarkApplicationAsTainted
 {
-    public function __construct(public readonly Application $application)
-    {
-    }
+    public function __construct(
+        public readonly Application $application
+    ) {}
 
     public function __invoke(): void
     {

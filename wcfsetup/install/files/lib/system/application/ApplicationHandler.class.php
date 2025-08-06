@@ -2,7 +2,7 @@
 
 namespace wcf\system\application;
 
-use wcf\command\application\RebuildApplicationsCookieDomain;
+use wcf\command\application\SynchronizeCookieDomain;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\system\cache\eager\ApplicationCache;
@@ -19,22 +19,18 @@ use wcf\util\Url;
 /**
  * Handles multi-application environments.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Alexander Ebert
+ * @copyright 2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 final class ApplicationHandler extends SingletonFactory
 {
-    /**
-     * application cache
-     */
-    protected ApplicationCacheData $cache;
+    private ApplicationCacheData $cache;
 
     /**
-     * list of page URLs
      * @var string[]
      */
-    protected array $pageURLs = [];
+    private array $pageURLs = [];
 
     /**
      * Initializes cache.
@@ -59,8 +55,6 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Returns an application delivered by the package with the given id or `null`
      * if no such application exists.
-     *
-     * @since   3.0
      */
     public function getApplicationByID(int $packageID): ?Application
     {
@@ -117,7 +111,7 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Returns a list of dependent applications.
      *
-     * @return  Application[]
+     * @return Application[]
      */
     public function getDependentApplications(): array
     {
@@ -135,11 +129,11 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Returns a list of all active applications.
      *
-     * @return  Application[]
+     * @return Application[]
      */
     public function getApplications(): array
     {
-        return $this->cache->application;
+        return $this->cache->applications;
     }
 
     /**
@@ -153,12 +147,11 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Returns the list of application abbreviations.
      *
-     * @return      string[]
-     * @since       3.1
+     * @return string[]
      */
     public function getAbbreviations(): array
     {
-        return \array_keys($this->cache->abbreviation);
+        return \array_keys($this->cache->abbreviations);
     }
 
     /**
@@ -188,7 +181,6 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Always returns false.
      *
-     * @since       3.1
      * @deprecated  5.4
      */
     public function isMultiDomainSetup(): bool
@@ -197,12 +189,9 @@ final class ApplicationHandler extends SingletonFactory
     }
 
     /**
-     * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication(): void
-    {
-    }
+    public function rebuildActiveApplication(): void {}
 
     /**
      * @since 6.0
@@ -217,7 +206,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public static function rebuild(): void
     {
-        (new RebuildApplicationsCookieDomain())();
+        (new SynchronizeCookieDomain())();
     }
 
     /**
@@ -228,7 +217,6 @@ final class ApplicationHandler extends SingletonFactory
      * queries, for example.
      *
      * @param $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
-     * @since   5.2
      */
     public static function insertRealDatabaseTableNames(string $string, bool $skipCache = false): string
     {
@@ -240,7 +228,7 @@ final class ApplicationHandler extends SingletonFactory
         }
 
         if ($skipCache) {
-            $sql = "SELECT package 
+            $sql = "SELECT package
                     FROM   wcf" . WCF_N . "_package
                     WHERE  isApplication = ?";
             $statement = WCF::getDB()->prepareUnmanaged($sql);

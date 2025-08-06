@@ -3,7 +3,7 @@
 namespace wcf\acp\form;
 
 use Laminas\Diactoros\Response\RedirectResponse;
-use wcf\command\application\RebuildApplicationsCookieDomain;
+use wcf\command\application\SynchronizeCookieDomain;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\application\ApplicationList;
@@ -333,7 +333,7 @@ final class RescueModeForm extends AbstractForm
             ]);
         }
 
-        (new RebuildApplicationsCookieDomain())();
+        (new SynchronizeCookieDomain())();
 
         // reload currently active application to avoid outdated cache data
         $application = ApplicationHandler::getInstance()->getActiveApplication();

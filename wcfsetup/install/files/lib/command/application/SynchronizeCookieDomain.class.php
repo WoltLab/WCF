@@ -10,19 +10,15 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * Rebuilds application cookie domains.
+ * Synchronizes the cookie domain for all installed apps.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class RebuildApplicationsCookieDomain
+final class SynchronizeCookieDomain
 {
-    public function __construct()
-    {
-    }
-
     public function __invoke(): void
     {
         $sql = "UPDATE  wcf1_application

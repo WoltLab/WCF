@@ -14,20 +14,20 @@ final class ApplicationCacheData
 {
     public function __construct(
         /** @var array<int, Application> */
-        public readonly array $application,
+        public readonly array $applications,
         /** @var array<string, int> */
-        public readonly array $abbreviation,
+        public readonly array $abbreviations,
     ) {
     }
 
     public function getApplication(int $packageID): ?Application
     {
-        return $this->application[$packageID] ?? null;
+        return $this->applications[$packageID] ?? null;
     }
 
     public function getApplicationByAbbreviation(string $abbreviation): ?Application
     {
-        $packageID = $this->abbreviation[$abbreviation] ?? null;
+        $packageID = $this->abbreviations[$abbreviation] ?? null;
         if ($packageID === null) {
             return null;
         }
@@ -37,6 +37,6 @@ final class ApplicationCacheData
 
     public function getAbbreviationByPackageID(int $packageID): ?string
     {
-        return \array_search($packageID, $this->abbreviation) ?: null;
+        return \array_search($packageID, $this->abbreviations) ?: null;
     }
 }

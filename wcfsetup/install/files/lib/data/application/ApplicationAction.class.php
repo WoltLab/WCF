@@ -3,7 +3,7 @@
 namespace wcf\data\application;
 
 use wcf\command\application\MarkApplicationAsTainted;
-use wcf\command\application\RebuildApplicationsCookieDomain;
+use wcf\command\application\SynchronizeCookieDomain;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
@@ -27,11 +27,11 @@ class ApplicationAction extends AbstractDatabaseObjectAction
      *
      * @return void
      *
-     * @deprecated 6.3 use `RebuildApplicationsCookieDomain`
+     * @deprecated 6.3 use `SynchronizeCookieDomain`
      */
     public function rebuild()
     {
-        (new RebuildApplicationsCookieDomain())();
+        (new SynchronizeCookieDomain())();
     }
 
     /**

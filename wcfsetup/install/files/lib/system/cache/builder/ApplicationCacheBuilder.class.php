@@ -21,8 +21,8 @@ class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
         $cache = (new ApplicationCache())->getCache();
 
         return [
-            'application' => $cache->application,
-            'abbreviation' => $cache->abbreviation,
+            'application' => $cache->applications,
+            'abbreviation' => $cache->abbreviations,
         ];
     }
 
