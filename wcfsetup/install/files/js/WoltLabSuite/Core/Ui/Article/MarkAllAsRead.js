@@ -6,12 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Articles/MarkAllArticleAsRead"], function (require, exports, Snackbar_1, MarkAllArticleAsRead_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Articles/MarkAllArticlesAsRead"], function (require, exports, Snackbar_1, MarkAllArticlesAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function markAllAsRead() {
-        await (0, MarkAllArticleAsRead_1.markAllArticleAsRead)();
+        await (0, MarkAllArticlesAsRead_1.markAllArticlesAsRead)();
         document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
         document.querySelectorAll(".boxMenu .active .badge").forEach((el) => el.remove());
         (0, Snackbar_1.showDefaultSuccessSnackbar)();

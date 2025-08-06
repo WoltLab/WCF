@@ -9,10 +9,12 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.markAllArticleAsRead = markAllArticleAsRead;
-    async function markAllArticleAsRead() {
+    exports.markAllArticlesAsRead = markAllArticlesAsRead;
+    async function markAllArticlesAsRead() {
         try {
-            await (0, Backend_1.prepareRequest)(new URL(`${window.WSC_RPC_API_URL}core/articles/mark-all-as-read`)).post().fetchAsJson();
+            await (0, Backend_1.prepareRequest)(new URL(`${window.WSC_RPC_API_URL}core/articles/mark-all-as-read`))
+                .post()
+                .fetchAsJson();
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);

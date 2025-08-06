@@ -2,6 +2,8 @@
 
 namespace wcf\event\article;
 
+use wcf\data\article\Article;
+use wcf\data\article\category\ArticleCategory;
 use wcf\event\IPsr14Event;
 
 /**
@@ -15,9 +17,9 @@ use wcf\event\IPsr14Event;
 final class ArticleCategorySet implements IPsr14Event
 {
     public function __construct(
-        public readonly \wcf\data\article\Article $article,
-        public readonly \wcf\data\article\category\ArticleCategory $oldCategory,
-        public readonly \wcf\data\article\category\ArticleCategory $newCategory,
+        public readonly Article $article,
+        public readonly ArticleCategory $oldCategory,
+        public readonly ArticleCategory $newCategory,
     ) {
     }
 }

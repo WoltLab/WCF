@@ -8,7 +8,7 @@ use wcf\event\article\ArticleRestored;
 use wcf\system\event\EventHandler;
 
 /**
- * Restores an article from the trash.
+ * Restores a soft-deleted article.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

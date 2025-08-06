@@ -12,7 +12,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
- * API Endpoint to mark all articles as read.
+ * Marks all articles as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -20,7 +20,7 @@ use wcf\system\WCF;
  * @since 6.3
  */
 #[PostRequest('/core/articles/mark-all-as-read')]
-final class MarkAllArticleAsRead implements IController
+final class MarkAllArticlesAsRead implements IController
 {
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
@@ -31,7 +31,7 @@ final class MarkAllArticleAsRead implements IController
 
         $this->assertUserIsLoggedIn();
 
-        (new \wcf\command\article\MarkAllArticleAsRead())();
+        (new \wcf\command\article\MarkAllArticlesAsRead())();
 
         return new JsonResponse([]);
     }

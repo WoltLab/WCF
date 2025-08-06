@@ -2,7 +2,7 @@
 
 namespace wcf\data\article;
 
-use wcf\command\article\MarkAllArticleAsRead;
+use wcf\command\article\MarkAllArticlesAsRead;
 use wcf\command\article\MarkArticleAsRead;
 use wcf\command\article\PublishArticle;
 use wcf\command\article\ResetUserStorageForUnreadArticles;
@@ -58,8 +58,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @var Language
      */
     public $language;
-
-    public ?ArticleCategory $category;
 
     /**
      * @inheritDoc
@@ -623,7 +621,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function markAllAsRead()
     {
-        (new MarkAllArticleAsRead())();
+        (new MarkAllArticlesAsRead())();
     }
 
     /**
@@ -662,11 +660,11 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         $this->readInteger('categoryID');
-        $this->category = ArticleCategory::getCategory($this->parameters['categoryID']);
-        if ($this->category === null) {
+        $category = ArticleCategory::getCategory($this->parameters['categoryID']);
+        if ($category === null) {
             throw new UserInputException('categoryID');
         }
-        if (!$this->category->isAccessible()) {
+        if (!$category->isAccessible()) {
             throw new UserInputException('categoryID');
         }
     }
@@ -680,8 +678,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function setCategory()
     {
+        $category = ArticleCategory::getCategory($this->parameters['categoryID']);
+
         foreach ($this->getObjects() as $articleEditor) {
-            (new SetArticleCategory($articleEditor->getDecoratedObject(), $this->category))();
+            (new SetArticleCategory($articleEditor->getDecoratedObject(), $category))();
         }
     }
 

@@ -10,9 +10,11 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "WoltLabSuite/Core/Api/Result";
 
-export async function markAllArticleAsRead(): Promise<ApiResult<[]>> {
+export async function markAllArticlesAsRead(): Promise<ApiResult<[]>> {
   try {
-    await prepareRequest(new URL(`${window.WSC_RPC_API_URL}core/articles/mark-all-as-read`)).post().fetchAsJson();
+    await prepareRequest(new URL(`${window.WSC_RPC_API_URL}core/articles/mark-all-as-read`))
+      .post()
+      .fetchAsJson();
   } catch (e) {
     return apiResultFromError(e);
   }

@@ -13,12 +13,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class MarkAllArticleAsRead
+final class MarkAllArticlesAsRead
 {
-    public function __construct()
-    {
-    }
-
     public function __invoke(): void
     {
         if (!WCF::getUser()->userID) {

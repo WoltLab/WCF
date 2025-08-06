@@ -8,7 +8,7 @@ use wcf\event\article\ArticleSoftDeleted;
 use wcf\system\event\EventHandler;
 
 /**
- * Soft-deletes(Moves to trash) an article.
+ * Soft-deletes an article.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

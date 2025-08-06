@@ -2,6 +2,7 @@
 
 namespace wcf\event\article;
 
+use wcf\data\article\Article;
 use wcf\event\IPsr14Event;
 
 /**
@@ -14,7 +15,7 @@ use wcf\event\IPsr14Event;
  */
 final class ArticlePublished implements IPsr14Event
 {
-    public function __construct(public readonly \wcf\data\article\Article $articleEditor)
+    public function __construct(public readonly Article $article)
     {
     }
 }

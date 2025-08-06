@@ -27,26 +27,30 @@ final class UnpublishArticle
     {
         (new ArticleEditor($this->article))->update(['publicationStatus' => Article::UNPUBLISHED]);
 
-        $this->deleteArticleActivity($this->article->articleID, $this->article->userID);
+        $this->removeNotifications($this->article->articleID);
+        $this->removeUserActivity($this->article->articleID);
+
+        ArticleEditor::updateArticleCounter([
+            $this->article->userID => -1,
+        ]);
 
         $event = new ArticleUnpublished($this->article);
         EventHandler::getInstance()->fire($event);
     }
 
-    private function deleteArticleActivity(int $articleID, int $userID): void
+    private function removeNotifications(int $articleID):void
     {
         UserNotificationHandler::getInstance()->removeNotifications(
             'com.woltlab.wcf.article.notification',
             [$articleID]
         );
+    }
 
+    private function removeUserActivity(int $articleID): void
+    {
         UserActivityEventHandler::getInstance()->removeEvents(
             'com.woltlab.wcf.article.recentActivityEvent',
             [$articleID]
         );
-
-        ArticleEditor::updateArticleCounter([
-            $userID => -1,
-        ]);
     }
 }

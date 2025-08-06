@@ -8,11 +8,10 @@
  */
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { markAllArticleAsRead } from "WoltLabSuite/Core/Api/Articles/MarkAllArticleAsRead";
-
+import { markAllArticlesAsRead } from "WoltLabSuite/Core/Api/Articles/MarkAllArticlesAsRead";
 
 async function markAllAsRead(): Promise<void> {
-  await markAllArticleAsRead();
+  await markAllArticlesAsRead();
 
   document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el: HTMLElement) => el.remove());
   document.querySelectorAll(".boxMenu .active .badge").forEach((el: HTMLElement) => el.remove());

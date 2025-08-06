@@ -36,7 +36,12 @@ final class PublishArticle
             'publicationDate' => 0,
         ]);
 
-        $this->registerArticleActivity();
+        $this->updateUserWatch($this->article);
+        $this->addUserActivity($this->article->articleID, $this->article->userID);
+
+        ArticleEditor::updateArticleCounter([
+            $this->article->userID => 1,
+        ]);
 
         (new ResetUserStorageForUnreadArticles())();
 
@@ -44,26 +49,25 @@ final class PublishArticle
         EventHandler::getInstance()->fire($event);
     }
 
-    private function registerArticleActivity(): void
+    private function updateUserWatch(Article $article): void
     {
         UserObjectWatchHandler::getInstance()->updateObject(
             'com.woltlab.wcf.article.category',
-            $this->article->getCategory()->categoryID,
+            $article->getCategory()->categoryID,
             'article',
             'com.woltlab.wcf.article.notification',
-            new ArticleUserNotificationObject($this->article)
+            new ArticleUserNotificationObject($article)
         );
+    }
 
+    private function addUserActivity(int $articleID, int $userID): void
+    {
         UserActivityEventHandler::getInstance()->fireEvent(
             'com.woltlab.wcf.article.recentActivityEvent',
-            $this->article->articleID,
+            $articleID,
             null,
-            $this->article->userID,
+            $userID,
             TIME_NOW
         );
-
-        ArticleEditor::updateArticleCounter([
-            $this->article->userID => 1,
-        ]);
     }
 }

@@ -5,7 +5,7 @@ namespace wcf\command\article;
 use wcf\system\user\storage\UserStorageHandler;
 
 /**
- * Reset the user storage for unread articles.
+ * Resets the user storage for unread articles.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
