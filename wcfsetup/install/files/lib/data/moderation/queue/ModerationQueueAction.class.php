@@ -2,6 +2,8 @@
 
 namespace wcf\data\moderation\queue;
 
+use wcf\command\moderation\queue\MarkAllModerationQueueAsRead;
+use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
@@ -230,6 +232,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks queue entries as read.
      *
      * @return void|array{markAsRead: int, totalCount: int}
+     *
+     * @deprecated 6.3 use `MarkModerationQueueAsRead`
      */
     public function markAsRead()
     {
@@ -241,16 +245,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $queue) {
-            VisitTracker::getInstance()->trackObjectVisit(
-                'com.woltlab.wcf.moderation.queue',
-                $queue->queueID,
-                $this->parameters['visitTime']
-            );
+        foreach ($this->getObjects() as $queueEditor) {
+            (new MarkModerationQueueAsRead($queueEditor->getDecoratedObject(), $this->parameters["visitTime"]))();
         }
-
-        // reset storage
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
 
         if (\count($this->objects) == 1) {
             $queue = \reset($this->objects);
@@ -264,6 +261,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAsRead()
     {
@@ -282,13 +281,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks all queue entries as read.
      *
      * @return array{markAllAsRead: bool}
+     *
+     * @deprecated 6.3 use `MarkAllModerationQueueAsRead`
      */
     public function markAllAsRead()
     {
-        VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.moderation.queue');
-
-        // reset storage
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
+        (new MarkAllModerationQueueAsRead())();
 
         return [
             'markAllAsRead' => true,
@@ -299,6 +297,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Validates the mark all as read action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAllAsRead()
     {

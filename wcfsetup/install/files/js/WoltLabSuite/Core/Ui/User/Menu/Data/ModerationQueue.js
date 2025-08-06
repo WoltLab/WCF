@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, MarkModerationQueueItemAsRead_1, MarkAllModerationQueueItemsAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -93,13 +93,13 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             return this.counter > 0;
         }
         async markAsRead(objectId) {
-            const response = (await (0, Ajax_1.dboAction)("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-                .objectIds([objectId])
-                .dispatch());
-            this.updateCounter(response.totalCount);
+            const response = await (0, MarkModerationQueueItemAsRead_1.markModerationQueueItemAsRead)(objectId);
+            if (response.ok) {
+                this.updateCounter(response.value);
+            }
         }
         async markAllAsRead() {
-            await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+            await (0, MarkAllModerationQueueItemsAsRead_1.markAllModerationQueueItemsAsRead)();
             this.updateCounter(0);
         }
         updateCounter(counter) {

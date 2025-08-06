@@ -2,8 +2,8 @@
 
 namespace wcf\form;
 
+use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\comment\StructuredCommentList;
-use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
@@ -133,10 +133,7 @@ abstract class AbstractModerationForm extends AbstractForm
 
         // update queue visit
         if ($this->queue->isNew()) {
-            $action = new ModerationQueueAction([$this->queue->getDecoratedObject()], 'markAsRead', [
-                'visitTime' => TIME_NOW,
-            ]);
-            $action->executeAction();
+            (new MarkModerationQueueAsRead($this->queue->getDecoratedObject()))();
         }
     }
 

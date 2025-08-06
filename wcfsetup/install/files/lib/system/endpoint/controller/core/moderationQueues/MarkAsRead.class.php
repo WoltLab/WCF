@@ -5,12 +5,13 @@ namespace wcf\system\endpoint\controller\core\moderationQueues;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\moderation\queue\ModerationQueue;
-use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\moderation\queue\ModerationQueueManager;
 
 /**
  * Marks the moderation queue entry with the given ID as read.
@@ -30,9 +31,11 @@ final class MarkAsRead implements IController
 
         $this->assertQueueCanBeMarkedAsRead($queue);
 
-        (new ModerationQueueAction([$queue], 'markAsRead'))->executeAction();
+        (new MarkModerationQueueAsRead($queue))();
 
-        return new JsonResponse([]);
+        return new JsonResponse([
+            'unreadModerationItems' => ModerationQueueManager::getInstance()->getUnreadModerationCount(true)
+        ]);
     }
 
     private function assertQueueCanBeMarkedAsRead(ModerationQueue $queue): void

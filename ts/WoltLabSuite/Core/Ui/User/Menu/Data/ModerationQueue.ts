@@ -11,6 +11,8 @@ import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
+import { markModerationQueueItemAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead";
+import { markAllModerationQueueItemsAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead";
 
 type Options = {
   noItems: string;
@@ -23,11 +25,6 @@ type Options = {
 
 type ResponseGetData = {
   items: UserMenuData[];
-  totalCount: number;
-};
-
-type ResponseMarkAsRead = {
-  markAsRead: number;
   totalCount: number;
 };
 
@@ -134,15 +131,14 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async markAsRead(objectId: number): Promise<void> {
-    const response = (await dboAction("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-      .objectIds([objectId])
-      .dispatch()) as ResponseMarkAsRead;
-
-    this.updateCounter(response.totalCount);
+    const response = await markModerationQueueItemAsRead(objectId);
+    if (response.ok) {
+      this.updateCounter(response.value);
+    }
   }
 
   async markAllAsRead(): Promise<void> {
-    await dboAction("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+    await markAllModerationQueueItemsAsRead();
 
     this.updateCounter(0);
   }
