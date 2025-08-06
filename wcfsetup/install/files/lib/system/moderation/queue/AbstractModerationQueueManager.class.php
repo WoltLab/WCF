@@ -2,6 +2,7 @@
 
 namespace wcf\system\moderation\queue;
 
+use wcf\command\moderation\queue\MarkModerationQueueAsDone;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
@@ -262,9 +263,8 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         $queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", [$objectIDs]);
         $queueList->readObjects();
 
-        if (\count($queueList)) {
-            $objectAction = new ModerationQueueAction($queueList->getObjects(), 'markAsDone');
-            $objectAction->executeAction();
+        foreach($queueList->getObjects() as $queue) {
+            (new MarkModerationQueueAsDone($queue))();
         }
     }
 }

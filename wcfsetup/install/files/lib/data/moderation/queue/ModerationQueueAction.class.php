@@ -3,6 +3,7 @@
 namespace wcf\data\moderation\queue;
 
 use wcf\command\moderation\queue\MarkAllModerationQueueAsRead;
+use wcf\command\moderation\queue\MarkModerationQueueAsDone;
 use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
@@ -73,6 +74,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks a list of objects as done.
      *
      * @return void
+     *
+     * @deprecated use `MarkModerationQueueAsDone` instead.
      */
     public function markAsDone()
     {
@@ -80,22 +83,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $queueIDs = [];
         foreach ($this->getObjects() as $queue) {
-            $queueIDs[] = $queue->queueID;
+            (new MarkModerationQueueAsDone($queue->getDecoratedObject()))();
         }
-
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("queueID IN (?)", [$queueIDs]);
-
-        $sql = "UPDATE  wcf1_moderation_queue
-                SET     status = " . ModerationQueue::STATUS_DONE . "
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-
-        // reset number of active moderation queue items
-        ModerationQueueManager::getInstance()->resetModerationCount();
     }
 
     /**
