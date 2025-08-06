@@ -66,8 +66,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
             $moderationQueueEditor->markAsConfirmed();
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 
     /**
@@ -102,8 +100,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
 
             $moderationQueueEditor->markAsRejected();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -150,7 +146,5 @@ class ModerationQueueActivationAction extends ModerationQueueAction
             $moderationQueueEditor->markAsConfirmed();
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 }

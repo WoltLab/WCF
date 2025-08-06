@@ -66,8 +66,6 @@ class ModerationQueueReportAction extends ModerationQueueAction
 
             $moderationQueueEditor->markAsConfirmed();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -113,8 +111,6 @@ class ModerationQueueReportAction extends ModerationQueueAction
             $moderationQueueEditor->markAsRejected($this->parameters['markAsJustified'] ?? false);
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 
     /**
@@ -308,7 +304,5 @@ class ModerationQueueReportAction extends ModerationQueueAction
             $moderationQueueEditor->markAsConfirmed();
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 }

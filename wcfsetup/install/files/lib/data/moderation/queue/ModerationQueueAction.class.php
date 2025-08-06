@@ -7,7 +7,6 @@ use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -309,6 +308,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Validates the `assignUserByClipboard` action.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3
      */
     public function validateAssignUserByClipboard(): void
     {
@@ -364,6 +365,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Assigns a user to multiple moderation queue entries via clipboard.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3
      */
     public function assignUserByClipboard(): void
     {
@@ -385,28 +388,5 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $moderationQueueEditor->update($data);
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
-    }
-
-    /**
-     * Unmarks the moderation queue entries with the given ids or all currently handled entries if
-     * no argument is given.
-     *
-     * @param   int[]   $queueIDs
-     * @since   5.4
-     */
-    protected function unmarkItems(array $queueIDs = []): void
-    {
-        if (empty($queueIDs)) {
-            $queueIDs = $this->objectIDs;
-        }
-
-        if (!empty($queueIDs)) {
-            ClipboardHandler::getInstance()->unmark(
-                $queueIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
-            );
-        }
     }
 }
