@@ -479,6 +479,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateTrash()
     {
@@ -522,6 +524,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateRestore()
     {
@@ -549,6 +553,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws      UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateToggleI18n()
     {
@@ -628,6 +634,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Validates the mark all as read action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAllAsRead()
     {
@@ -639,6 +647,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateSetCategory()
     {
@@ -691,6 +701,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validatePublish()
     {
@@ -733,6 +745,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateUnpublish()
     {
