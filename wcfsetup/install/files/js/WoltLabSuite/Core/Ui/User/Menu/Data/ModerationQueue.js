@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, MarkModerationQueueItemAsRead_1, MarkAllModerationQueueItemsAsRead_1) {
+define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead", "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems"], function (require, exports, tslib_1, View_1, Manager_1, MarkModerationQueueItemAsRead_1, MarkAllModerationQueueItemsAsRead_1, GetModerationUserMenuItems_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -46,12 +46,13 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             ];
         }
         async getData() {
-            const data = (await (0, Ajax_1.dboAction)("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-                .disableLoadingIndicator()
-                .dispatch());
-            this.updateCounter(data.totalCount);
+            const response = await (0, GetModerationUserMenuItems_1.getModerationUserMenuItems)();
+            if (!response.ok) {
+                throw new Error("Moderation queue items could not be loaded.");
+            }
+            this.updateCounter(response.value.unreadModerationCount);
             this.stale = false;
-            return data.items;
+            return response.value.items;
         }
         getFooter() {
             return {

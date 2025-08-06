@@ -91,6 +91,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     /**
      * @return void
      * @since 5.5
+     *
+     * @deprecated 6.3
      */
     public function validateGetModerationQueueData(): void
     {
@@ -108,6 +110,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      *  usernames: string[],
      * }>, totalCount: int}
      * @since 5.5
+     *
+     * @deprecated 6.3 use `RenderModerationQueueItems` endpoint instead.
      */
     public function getModerationQueueData(): array
     {

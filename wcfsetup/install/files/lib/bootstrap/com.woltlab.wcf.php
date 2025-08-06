@@ -161,6 +161,7 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\EnableContent());
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\MarkAsRead());
             $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\MarkAllAsRead());
+            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\GetUserMenuModerationQueueItems());
             $event->register(new \wcf\system\endpoint\controller\core\styles\AddDarkMode());
             $event->register(new \wcf\system\endpoint\controller\core\styles\CopyStyle());
             $event->register(new \wcf\system\endpoint\controller\core\styles\DeleteStyle());

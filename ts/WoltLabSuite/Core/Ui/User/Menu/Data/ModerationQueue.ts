@@ -7,12 +7,12 @@
  * @woltlabExcludeBundle all
  */
 
-import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
 import { markModerationQueueItemAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead";
 import { markAllModerationQueueItemsAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead";
+import { getModerationUserMenuItems } from "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems";
 
 type Options = {
   noItems: string;
@@ -69,15 +69,16 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const data = (await dboAction("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-      .disableLoadingIndicator()
-      .dispatch()) as ResponseGetData;
+    const response = await getModerationUserMenuItems();
+    if (!response.ok) {
+      throw new Error("Moderation queue items could not be loaded.");
+    }
 
-    this.updateCounter(data.totalCount);
+    this.updateCounter(response.value.unreadModerationCount);
 
     this.stale = false;
 
-    return data.items;
+    return response.value.items;
   }
 
   getFooter(): UserMenuFooter | null {
