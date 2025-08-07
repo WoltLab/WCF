@@ -36,7 +36,7 @@ export class ListView {
     listViewParameters?: Map<string, string>,
   ) {
     this.#viewClassName = viewClassName;
-    this.#viewElement = document.getElementById(`${viewId}_items`) as HTMLTableElement;
+    this.#viewElement = document.getElementById(`${viewId}_items`) as HTMLElement;
     this.#noItemsNotice = document.getElementById(`${viewId}_noItemsNotice`) as HTMLElement;
     this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
     this.#listViewParameters = listViewParameters;
