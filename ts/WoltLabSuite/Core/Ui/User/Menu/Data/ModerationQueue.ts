@@ -23,11 +23,6 @@ type Options = {
   title: string;
 };
 
-type ResponseGetData = {
-  items: UserMenuData[];
-  totalCount: number;
-};
-
 class UserMenuDataModerationQueue implements UserMenuProvider {
   private readonly button: HTMLElement;
   private counter = 0;
