@@ -32,6 +32,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Validates parameters to enable content.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateEnableContent()
     {
@@ -54,6 +56,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Enables content.
      *
      * @return void
+     *
+     * @deprecated 6.3 use API endpoint `EnableContent` instead
      */
     public function enableContent()
     {
@@ -72,6 +76,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Validates parameters to delete reported content.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateRemoveContent()
     {
@@ -89,6 +95,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Deletes reported content.
      *
      * @return void
+     *
+     * @deprecated 6.3 use API endpoint `DeleteContent` instead
      */
     public function removeContent()
     {
@@ -106,6 +114,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Validates the `removeActivationContent` action.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3
      */
     public function validateRemoveActivationContent(): void
     {
@@ -133,6 +143,8 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Deletes disabled content via clipboard.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3 use API endpoint `DeleteContent` instead
      */
     public function removeActivationContent(): void
     {
