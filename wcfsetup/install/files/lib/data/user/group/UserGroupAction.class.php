@@ -84,6 +84,8 @@ class UserGroupAction extends AbstractDatabaseObjectAction
 
     /**
      * Validates the 'copy' action.
+     *
+     * @return void
      * @deprecated 6.2 Use `CopyUserGroup` instead.
      */
     public function validateCopy()
@@ -105,6 +107,8 @@ class UserGroupAction extends AbstractDatabaseObjectAction
 
     /**
      * Copies a user group.
+     *
+     * @return array{groupID: int, redirectURL: string}
      * @deprecated 6.2 Use `CopyUserGroup` instead.
      */
     public function copy()

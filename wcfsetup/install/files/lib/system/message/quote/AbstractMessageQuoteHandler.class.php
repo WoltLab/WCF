@@ -69,6 +69,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      *
      * @param mixed[][] $data
      * @param bool $render
+     * @param bool $renderAsString
      * @return  string[]
      * @deprecated 6.2 Implement `getMessage()` instead.
      */

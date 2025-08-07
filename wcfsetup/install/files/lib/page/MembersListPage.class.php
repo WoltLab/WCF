@@ -32,6 +32,7 @@ class MembersListPage extends AbstractListViewPage
     public ?int $searchID = null;
 
     /**
+     * @var list<string>
      * @deprecated 6.2 No longer in use, but here for backwards compatibility.
      */
     public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime'];

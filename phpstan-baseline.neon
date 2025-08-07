@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Variable \$this might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: wcfsetup/install/files/acp/update_com.woltlab.wcf_6.1_spider_step1.php
-
-		-
 			message: '#^Property wcf\\acp\\form\\AbstractCategoryAddForm\:\:\$categoryNodeTree \(wcf\\data\\category\\UncachedCategoryNodeTree\) does not accept wcf\\data\\category\\CategoryNodeTree\.$#'
 			identifier: assign.propertyType
 			count: 1
