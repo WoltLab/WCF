@@ -111,9 +111,16 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 
 .entryCardList__item__title {
 	color: var(--wcfContentHeadlineLink);
+	display: flex;
 
 	@include wcfFontHeadline;
 	@include wcfFontBold;
+}
+
+.entryCardList__item .listView__item__markAsRead {
+	flex: 0 0 auto;
+	margin-right: 5px;
+	z-index: 1;
 }
 
 .entryCardList__item__link {
