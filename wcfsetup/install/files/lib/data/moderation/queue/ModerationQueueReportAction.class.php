@@ -125,6 +125,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Validates parameters to prepare a report.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validatePrepareReport()
     {
@@ -162,6 +164,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Prepares a report.
      *
      * @return array{alreadyReported: 0|1, template: string}
+     *
+     * @deprecated 6.3
      */
     public function prepareReport()
     {
@@ -187,6 +191,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Validates parameters for reporting.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateReport()
     {
@@ -215,6 +221,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Reports an item.
      *
      * @return array{reported: 1}
+     *
+     * @deprecated 6.3 use `ReportAction` instead
      */
     public function report()
     {

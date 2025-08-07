@@ -123,46 +123,43 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
                 setup();
             });
         }
-        (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
-            void new Promise((resolve_2, reject_2) => { require(["./Ui/Moderation/Report"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
-        });
         (0, LazyLoader_1.whenFirstSeen)(".messageTabMenu", () => {
-            void new Promise((resolve_3, reject_3) => { require(["./Component/Message/MessageTabMenu"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_2, reject_2) => { require(["./Component/Message/MessageTabMenu"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-edit-avatar]", () => {
-            void new Promise((resolve_4, reject_4) => { require(["./Component/User/Avatar"], resolve_4, reject_4); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_3, reject_3) => { require(["./Component/User/Avatar"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-pagination", () => {
-            void new Promise((resolve_5, reject_5) => { require(["./Ui/Pagination/JumpToPage"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_4, reject_4) => { require(["./Ui/Pagination/JumpToPage"], resolve_4, reject_4); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-google-maps", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_6, reject_6); }).then(tslib_1.__importStar);
+            void new Promise((resolve_5, reject_5) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_5, reject_5); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
-            void new Promise((resolve_7, reject_7) => { require(["./Component/GoogleMaps/Geocoding"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_6, reject_6) => { require(["./Component/GoogleMaps/Geocoding"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file", () => {
-            void new Promise((resolve_8, reject_8) => { require(["./Component/File/woltlab-core-file"], resolve_8, reject_8); }).then(tslib_1.__importStar);
+            void new Promise((resolve_7, reject_7) => { require(["./Component/File/woltlab-core-file"], resolve_7, reject_7); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file-upload", () => {
-            void new Promise((resolve_9, reject_9) => { require(["./Component/File/woltlab-core-file"], resolve_9, reject_9); }).then(tslib_1.__importStar);
-            void new Promise((resolve_10, reject_10) => { require(["./Component/File/Upload"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_8, reject_8) => { require(["./Component/File/woltlab-core-file"], resolve_8, reject_8); }).then(tslib_1.__importStar);
+            void new Promise((resolve_9, reject_9) => { require(["./Component/File/Upload"], resolve_9, reject_9); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".activityPointsDisplay", () => {
-            void new Promise((resolve_11, reject_11) => { require(["./Component/User/ActivityPointList"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_10, reject_10) => { require(["./Component/User/ActivityPointList"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-fancybox]", () => {
-            void new Promise((resolve_12, reject_12) => { require(["./Component/Image/Viewer"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_11, reject_11) => { require(["./Component/Image/Viewer"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsImageViewer", () => {
             console.warn("The class `jsImageViewer` is deprecated. Use the attribute `data-fancybox` instead.");
-            void new Promise((resolve_13, reject_13) => { require(["./Component/Image/Viewer"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
+            void new Promise((resolve_12, reject_12) => { require(["./Component/Image/Viewer"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsEnablesOptions", () => {
-            void new Promise((resolve_14, reject_14) => { require(["./Component/Option/Enable"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_13, reject_13) => { require(["./Component/Option/Enable"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-edit-cover-photo]", () => {
-            void new Promise((resolve_15, reject_15) => { require(["./Component/User/CoverPhoto"], resolve_15, reject_15); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_14, reject_14) => { require(["./Component/User/CoverPhoto"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
         // when widget form elements are placed in a dialog.

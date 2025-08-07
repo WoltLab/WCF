@@ -8,76 +8,28 @@
  */
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { dboAction } from "../../Ajax";
 import { dialogFactory } from "../../Component/Dialog";
-import { innerError } from "../../Dom/Util";
-import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 import { wheneverFirstSeen } from "../../Helper/Selector";
-import * as Language from "../../Language";
 
-type ResponsePrepareReport = {
-  alreadyReported: 0 | 1;
-  template: string;
-};
+let reportEndpoint: string | undefined;
 
 async function openReportDialog(element: HTMLElement): Promise<void> {
+  if (!reportEndpoint) {
+    throw new Error("Report endpoint is not set. Please call 'setup()' first.");
+  }
+
   const objectId = parseInt(element.dataset.objectId || "");
   const objectType = element.dataset.reportContent!;
 
-  const response = (await dboAction("prepareReport", "wcf\\data\\moderation\\queue\\ModerationQueueReportAction")
-    .payload({
-      objectID: objectId,
-      objectType,
-    })
-    .dispatch()) as ResponsePrepareReport;
+  const url = new URL(reportEndpoint);
+  url.searchParams.set("objectID", objectId.toString());
+  url.searchParams.set("objectType", objectType);
 
-  let dialog: WoltlabCoreDialogElement;
-  if (response.alreadyReported) {
-    dialog = dialogFactory().fromHtml(response.template).asAlert();
-  } else {
-    dialog = dialogFactory().fromHtml(response.template).asPrompt();
-    dialog.addEventListener("validate", (event) => {
-      if (!validateReport(dialog)) {
-        event.preventDefault();
-      }
-    });
-    dialog.addEventListener("primary", () => {
-      void submitReport(dialog, objectType, objectId);
-    });
+  const response = await dialogFactory().usingFormBuilder().fromEndpoint(url.toString());
+
+  if (response.ok) {
+    showDefaultSuccessSnackbar();
   }
-
-  dialog.show(Language.get("wcf.moderation.report.reportContent"));
-}
-
-function validateReport(dialog: WoltlabCoreDialogElement): boolean {
-  const message = dialog.content.querySelector(".jsReportMessage") as HTMLTextAreaElement;
-  const dl = message.closest("dl")!;
-  if (message.value.trim() === "") {
-    dl.classList.add("formError");
-    innerError(message, Language.get("wcf.global.form.error.empty"));
-
-    return false;
-  }
-
-  dl.classList.remove("formError");
-  innerError(message, false);
-
-  return true;
-}
-
-async function submitReport(dialog: WoltlabCoreDialogElement, objectType: string, objectId: number): Promise<void> {
-  const message = dialog.content.querySelector(".jsReportMessage") as HTMLTextAreaElement;
-  const value = message.value.trim();
-
-  await dboAction("report", "wcf\\data\\moderation\\queue\\ModerationQueueReportAction")
-    .payload({
-      message: value,
-      objectID: objectId,
-      objectType,
-    })
-    .dispatch();
-
-  showDefaultSuccessSnackbar();
 }
 
 function validateButton(element: HTMLElement): boolean {
@@ -117,6 +69,8 @@ export function registerLegacyButton(element: HTMLElement, objectType: string): 
   registerButton(element);
 }
 
-export function setup(): void {
+export function setup(reportEndpointUrl: string): void {
+  reportEndpoint = reportEndpointUrl;
+
   wheneverFirstSeen("[data-report-content]", (element) => registerButton(element));
 }

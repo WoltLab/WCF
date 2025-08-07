@@ -6,61 +6,25 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "../../Ajax", "../../Component/Dialog", "../../Dom/Util", "../../Helper/Selector", "../../Language"], function (require, exports, tslib_1, Snackbar_1, Ajax_1, Dialog_1, Util_1, Selector_1, Language) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "../../Component/Dialog", "../../Helper/Selector"], function (require, exports, Snackbar_1, Dialog_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerLegacyButton = registerLegacyButton;
     exports.setup = setup;
-    Language = tslib_1.__importStar(Language);
+    let reportEndpoint;
     async function openReportDialog(element) {
+        if (!reportEndpoint) {
+            throw new Error("Report endpoint is not set. Please call 'setup()' first.");
+        }
         const objectId = parseInt(element.dataset.objectId || "");
         const objectType = element.dataset.reportContent;
-        const response = (await (0, Ajax_1.dboAction)("prepareReport", "wcf\\data\\moderation\\queue\\ModerationQueueReportAction")
-            .payload({
-            objectID: objectId,
-            objectType,
-        })
-            .dispatch());
-        let dialog;
-        if (response.alreadyReported) {
-            dialog = (0, Dialog_1.dialogFactory)().fromHtml(response.template).asAlert();
+        const url = new URL(reportEndpoint);
+        url.searchParams.set("objectID", objectId.toString());
+        url.searchParams.set("objectType", objectType);
+        const response = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url.toString());
+        if (response.ok) {
+            (0, Snackbar_1.showDefaultSuccessSnackbar)();
         }
-        else {
-            dialog = (0, Dialog_1.dialogFactory)().fromHtml(response.template).asPrompt();
-            dialog.addEventListener("validate", (event) => {
-                if (!validateReport(dialog)) {
-                    event.preventDefault();
-                }
-            });
-            dialog.addEventListener("primary", () => {
-                void submitReport(dialog, objectType, objectId);
-            });
-        }
-        dialog.show(Language.get("wcf.moderation.report.reportContent"));
-    }
-    function validateReport(dialog) {
-        const message = dialog.content.querySelector(".jsReportMessage");
-        const dl = message.closest("dl");
-        if (message.value.trim() === "") {
-            dl.classList.add("formError");
-            (0, Util_1.innerError)(message, Language.get("wcf.global.form.error.empty"));
-            return false;
-        }
-        dl.classList.remove("formError");
-        (0, Util_1.innerError)(message, false);
-        return true;
-    }
-    async function submitReport(dialog, objectType, objectId) {
-        const message = dialog.content.querySelector(".jsReportMessage");
-        const value = message.value.trim();
-        await (0, Ajax_1.dboAction)("report", "wcf\\data\\moderation\\queue\\ModerationQueueReportAction")
-            .payload({
-            message: value,
-            objectID: objectId,
-            objectType,
-        })
-            .dispatch();
-        (0, Snackbar_1.showDefaultSuccessSnackbar)();
     }
     function validateButton(element) {
         if (element.dataset.reportContent === "") {
@@ -92,7 +56,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "
         element.dataset.isLegacyButton = "true";
         registerButton(element);
     }
-    function setup() {
+    function setup(reportEndpointUrl) {
+        reportEndpoint = reportEndpointUrl;
         (0, Selector_1.wheneverFirstSeen)("[data-report-content]", (element) => registerButton(element));
     }
 });

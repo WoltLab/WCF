@@ -107,6 +107,7 @@ window.addEventListener('pageshow', function(event) {
 				{foreach from=$__wcf->getMessageQuoteManager()->getUsedQuotes() key=editorID item=uuids}['{unsafe:$editorID|encodeJS}', [{implode from=$uuids item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}]]{/foreach}
 			]),
 			{/if}
+			reportEndpoint: '{link controller="Report"}{/link}',
 		});
 	});
 </script>

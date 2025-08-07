@@ -122,5 +122,8 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
             void new Promise((resolve_10, reject_10) => { require(["./Component/User/Ignore"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
+            void new Promise((resolve_11, reject_11) => { require(["./Ui/Moderation/Report"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup(options.reportEndpoint));
+        });
     }
 });

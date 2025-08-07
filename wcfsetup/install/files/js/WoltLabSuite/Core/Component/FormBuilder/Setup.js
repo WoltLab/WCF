@@ -17,6 +17,13 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
             const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());
             // Prevents a circular dependency.
             const { dialogFactory } = await new Promise((resolve_1, reject_1) => { require(["../Dialog"], resolve_1, reject_1); }).then(tslib_1.__importStar);
+            if (json.softExceptionMessage) {
+                dialogFactory().fromHtml(json.softExceptionMessage).asAlert().show(json.title);
+                return Promise.resolve({
+                    ok: false,
+                    result: undefined,
+                });
+            }
             const dialog = dialogFactory().fromHtml(json.dialog).asPrompt();
             return new Promise((resolve) => {
                 dialog.addEventListener("validate", (event) => {
