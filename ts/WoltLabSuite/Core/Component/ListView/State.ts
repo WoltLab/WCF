@@ -7,9 +7,12 @@
  * @since 6.2
  */
 
+import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import Filter from "./Filter";
 import Selection from "./Selection";
 import Sorting from "./Sorting";
+import { postObject } from "WoltLabSuite/Core/Api/PostObject";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 
 export const enum StateChangeCause {
   Change,
@@ -69,6 +72,18 @@ export class State extends EventTarget {
 
     window.addEventListener("popstate", () => {
       this.#handlePopState();
+    });
+
+    wheneverFirstSeen(`#${viewId}_items .listView__item__markAsRead`, (button: HTMLButtonElement) => {
+      button.addEventListener(
+        "click",
+        promiseMutex(async () => {
+          await postObject(button.dataset.endpoint!);
+          button
+            .closest(".listView__item")
+            ?.dispatchEvent(new CustomEvent("interaction:invalidate", { bubbles: true }));
+        }),
+      );
     });
 
     this.#updatePaginationUrl();

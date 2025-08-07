@@ -114,3 +114,23 @@
 	display: flex;
 	padding: 0 6px;
 }
+
+.listView__item__markAsRead {
+	align-items: center;
+	display: flex;
+	padding: 0 5px;
+}
+
+.listView__item__unread__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-radius: 50%;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+}
+
+@media (hover: hover) {
+	.listView__item__markAsRead:hover .listView__item__unread__indicator {
+		background-color: var(--wcfButtonPrimaryBackgroundActive);
+	}
+}
