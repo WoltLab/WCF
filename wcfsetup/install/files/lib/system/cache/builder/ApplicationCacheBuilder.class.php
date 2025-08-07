@@ -2,9 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\application\Application;
-use wcf\data\package\Package;
-use wcf\system\WCF;
+use wcf\system\cache\eager\ApplicationCache;
 
 /**
  * Caches applications.
@@ -12,41 +10,25 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.3 Use `ApplicationCache` instead.
  */
-class ApplicationCacheBuilder extends AbstractCacheBuilder
+class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
-    public function rebuild(array $parameters)
+    #[\Override]
+    protected function rebuild(array $parameters): array
     {
-        $data = [
-            'abbreviation' => [],
-            'application' => [],
+        $cache = (new ApplicationCache())->getCache();
+
+        return [
+            'application' => $cache->applications,
+            'abbreviation' => $cache->abbreviations,
         ];
+    }
 
-        // fetch applications
-        $sql = "SELECT *
-                FROM   wcf" . WCF_N . "_application";
-        $statement = WCF::getDB()->prepareUnmanaged($sql);
-        $statement->execute();
-        $applications = $statement->fetchObjects(Application::class);
-
-        foreach ($applications as $application) {
-            $data['application'][$application->packageID] = $application;
-        }
-
-        // fetch abbreviations
-        $sql = "SELECT packageID, package
-                FROM   wcf" . WCF_N . "_package
-                WHERE  isApplication = ?";
-        $statement = WCF::getDB()->prepareUnmanaged($sql);
-        $statement->execute([1]);
-        $packages = $statement->fetchMap('packageID', 'package');
-        foreach ($packages as $packageID => $package) {
-            $data['abbreviation'][Package::getAbbreviation($package)] = $packageID;
-        }
-
-        return $data;
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        (new ApplicationCache())->rebuild();
     }
 }

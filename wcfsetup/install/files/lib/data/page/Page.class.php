@@ -12,8 +12,8 @@ use wcf\data\TDatabaseObjectPermissions;
 use wcf\data\user\User;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
+use wcf\system\cache\eager\ApplicationCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -297,7 +297,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         WCF::getDB()->commitTransaction();
 
         // reset caches to reflect new landing page
-        ApplicationCacheBuilder::getInstance()->reset();
+        (new ApplicationCache())->rebuild();
         RoutingCacheBuilder::getInstance()->reset();
     }
 

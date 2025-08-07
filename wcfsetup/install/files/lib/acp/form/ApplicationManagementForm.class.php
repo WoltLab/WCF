@@ -9,9 +9,9 @@ use wcf\data\page\PageNode;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
+use wcf\system\cache\eager\ApplicationCache;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
 use wcf\system\style\StyleHandler;
@@ -188,7 +188,7 @@ final class ApplicationManagementForm extends AbstractForm
         ApplicationHandler::rebuild();
 
         // Reset caches to reflect the new landing pages.
-        ApplicationCacheBuilder::getInstance()->reset();
+        (new ApplicationCache())->rebuild();
         PageCacheBuilder::getInstance()->reset();
         RoutingCacheBuilder::getInstance()->reset();
         StyleHandler::resetStylesheets();
