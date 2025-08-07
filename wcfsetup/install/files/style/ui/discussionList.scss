@@ -140,27 +140,10 @@
 	grid-template-rows: min-content min-content 1fr;
 }
 
-.discussionList__item__markAsRead {
-	align-items: center;
+.discussionList__item .listView__item__markAsRead {
 	grid-area: markAsRead;
-	display: flex;
-	padding: 0 5px;
 	margin-right: 5px;
 	z-index: 1;
-}
-
-.discussionList__item__unread__indicator {
-	background-color: var(--wcfButtonPrimaryBackground);
-	border-radius: 50%;
-	display: inline-block;
-	height: 10px;
-	width: 10px;
-}
-
-@media (hover: hover) {
-	.discussionList__item__markAsRead:hover .discussionList__item__unread__indicator {
-		background-color: var(--wcfButtonPrimaryBackgroundActive);
-	}
 }
 
 .discussionList__item__title {

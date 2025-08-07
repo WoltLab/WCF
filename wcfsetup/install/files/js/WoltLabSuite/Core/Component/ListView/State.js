@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], function (require, exports, tslib_1, Filter_1, Selection_1, Sorting_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./Filter", "./Selection", "./Sorting", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, tslib_1, Selector_1, Filter_1, Selection_1, Sorting_1, PostObject_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.State = void 0;
@@ -48,6 +48,14 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             });
             window.addEventListener("popstate", () => {
                 this.#handlePopState();
+            });
+            (0, Selector_1.wheneverFirstSeen)(`#${viewId}_items .listView__item__markAsRead`, (button) => {
+                button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
+                    await (0, PostObject_1.postObject)(button.dataset.endpoint);
+                    button
+                        .closest(".listView__item")
+                        ?.dispatchEvent(new CustomEvent("interaction:invalidate", { bubbles: true }));
+                }));
             });
             this.#updatePaginationUrl();
             this.#updateListViewFooter();
