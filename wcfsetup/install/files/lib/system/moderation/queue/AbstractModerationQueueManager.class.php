@@ -7,6 +7,8 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\NotImplementedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -266,5 +268,20 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         foreach($queueList->getObjects() as $queue) {
             (new MarkModerationQueueAsDone($queue))();
         }
+    }
+
+    #[\Override]
+    public function getController(): string
+    {
+        throw new NotImplementedException();
+    }
+
+    #[\Override]
+    public function getLink($queueID)
+    {
+        return LinkHandler::getInstance()->getControllerLink($this->getController(), [
+            'id' => $queueID,
+            'forceFrontend' => true,
+        ]);
     }
 }

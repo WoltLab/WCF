@@ -6,11 +6,11 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\form\ModerationReportForm;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -94,15 +94,10 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         return $this->getProcessor($objectType)->canReport($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getLink($queueID)
+    #[\Override]
+    public function getController(): string
     {
-        return LinkHandler::getInstance()->getLink('ModerationReport', [
-            'id' => $queueID,
-            'forceFrontend' => true,
-        ]);
+        return ModerationReportForm::class;
     }
 
     /**

@@ -4409,6 +4409,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Inhalt]]></item>
+		<item name="wcf.moderation.edit.button"><![CDATA[{$queue->getLabel()} bearbeiten]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>

@@ -8,6 +8,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\page\IPage;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -525,5 +526,24 @@ class ModerationQueueManager extends SingletonFactory
         }
 
         $this->resetModerationCount();
+    }
+
+    /**
+     * Returns the controller class that can be used to view/edit the moderation type.
+     *
+     * @return null|class-string<IPage>
+     */
+    public function getController(int $objectTypeID): ?string
+    {
+        foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
+            if (\in_array($objectTypeID, $objectTypeIDs)) {
+                $processor = $this->moderationTypes[$definitionName]->getProcessor();
+                \assert($processor instanceof IModerationQueueManager);
+
+                return $processor->getController();
+            }
+        }
+
+        return null;
     }
 }

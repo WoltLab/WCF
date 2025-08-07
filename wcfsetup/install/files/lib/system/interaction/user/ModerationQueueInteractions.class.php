@@ -11,6 +11,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\request\LinkHandler;
@@ -41,7 +42,7 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
                 "assign-user",
                 LinkHandler::getInstance()->getControllerLink(ModerationQueueAssignUserAction::class, ["id" => "%s"]),
                 "wcf.moderation.assignedUser.change",
-                static fn(ViewableModerationQueue $queue) => $queue->canEdit()
+                static fn(ViewableModerationQueue $queue) => $queue->canEdit(),
             ),
             new FormBuilderDialogInteraction(
                 "close",
@@ -51,7 +52,8 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
                     return self::isReportQueue($queue)
                         && $queue->canEdit()
                         && !$queue->isDone();
-                }
+                },
+                interactionEffect: InteractionEffect::RemoveItem,
             ),
             new RpcInteraction(
                 "remove-content",
@@ -66,7 +68,8 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
                     return $queue->canEdit()
                         && !$queue->isDone()
                         && $processor->canRemoveContent($queue->getDecoratedObject());
-                }
+                },
+                interactionEffect: InteractionEffect::RemoveItem,
             ),
             new RpcInteraction(
                 "enable",
@@ -82,7 +85,8 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
                     return self::isActivationQueue($queue)
                         && $queue->canEdit()
                         && !$queue->isDone();
-                }
+                },
+                interactionEffect: InteractionEffect::RemoveItem,
             )
         ]);
 

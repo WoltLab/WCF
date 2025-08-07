@@ -4,9 +4,9 @@ namespace wcf\system\moderation\queue;
 
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\form\ModerationActivationForm;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
-use wcf\system\request\LinkHandler;
 
 /**
  * Moderation queue implementation for moderated content.
@@ -44,15 +44,10 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
         return $this->getProcessor(null, $queue->objectTypeID)->getDisabledContent($queue);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getLink($queueID)
+    #[\Override]
+    public function getController(): string
     {
-        return LinkHandler::getInstance()->getLink('ModerationActivation', [
-            'id' => $queueID,
-            'forceFrontend' => true,
-        ]);
+        return ModerationActivationForm::class;
     }
 
     /**

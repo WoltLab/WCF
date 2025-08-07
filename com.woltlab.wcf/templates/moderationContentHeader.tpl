@@ -1,0 +1,31 @@
+<div class="contentHeaderTitle">
+	<h1 class="contentTitle">{$title}: {$queue->getTitle()}</h1>
+	<ul class="inlineList contentHeaderMetaData">
+		{event name='beforeMetaData'}
+
+		{if $queue->lastChangeTime}
+			<li title="{lang}wcf.moderation.lastChangeTime{/lang}">
+				{icon name='clock'}
+				{time time=$queue->lastChangeTime}
+			</li>
+		{/if}
+
+		<li title="{lang}wcf.moderation.assignedUser{/lang}">
+			{icon name='user'}
+			<span id="moderationAssignedUser">
+				{if $queue->assignedUserID}
+					<a href="{link controller='User' id=$queue->assignedUserID}{/link}" class="userLink" data-object-id="{$queue->assignedUserID}">{$queue->assignedUsername}</a>
+				{else}
+					{lang}wcf.moderation.assignedUser.nobody{/lang}
+				{/if}
+			</span>
+		</li>
+
+		<li title="{lang}wcf.moderation.status{/lang}">
+			{icon name='arrows-rotate'}
+			<span id="moderationQueueStatus">{$queue->getStatus()}</span>
+		</li>
+
+		{event name='afterMetaData'}
+	</ul>
+</div>

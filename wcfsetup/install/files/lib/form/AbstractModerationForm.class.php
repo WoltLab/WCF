@@ -5,13 +5,17 @@ namespace wcf\form;
 use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\page\ModerationListPage;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\interaction\user\ModerationQueueInteractions;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -152,6 +156,15 @@ abstract class AbstractModerationForm extends AbstractForm
             'commentList' => $this->commentList,
             'commentObjectTypeID' => $this->commentObjectTypeID,
             'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0,
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentInteractionButton(
+                new ModerationQueueInteractions(),
+                $this->queue,
+                LinkHandler::getInstance()->getControllerLink(ModerationListPage::class),
+                WCF::getLanguage()->getDynamicVariable('wcf.moderation.edit.button', [
+                    'queue' => $this->queue,
+                ]),
+                "core/moderation-queues/{$this->queue->queueID}/content-header-title"
+            ),
         ]);
     }
 

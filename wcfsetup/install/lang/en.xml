@@ -4357,6 +4357,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Go to Related Content]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Author]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Content]]></item>
+		<item name="wcf.moderation.edit.button"><![CDATA[Edit {$queue->getLabel()}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
