@@ -8,7 +8,7 @@ use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
- * Marks a moderation queue entry as read for the current user.
+ * Marks a moderation queue as read for the current user.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

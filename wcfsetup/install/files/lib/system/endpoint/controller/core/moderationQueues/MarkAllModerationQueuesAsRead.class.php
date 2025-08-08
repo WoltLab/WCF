@@ -5,13 +5,12 @@ namespace wcf\system\endpoint\controller\core\moderationQueues;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\command\moderation\queue\MarkAllModerationQueuesAsRead;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * Marks all moderation queue entries as read.
+ * Marks all moderation queues as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -19,14 +18,14 @@ use wcf\system\WCF;
  * @since 6.3
  */
 #[PostRequest('/core/moderation-queues/mark-all-as-read')]
-final class MarkAllAsRead implements IController
+final class MarkAllModerationQueuesAsRead implements IController
 {
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
 
-        (new MarkAllModerationQueuesAsRead())();
+        (new \wcf\command\moderation\queue\MarkAllModerationQueuesAsRead())();
 
         return new JsonResponse([]);
     }
