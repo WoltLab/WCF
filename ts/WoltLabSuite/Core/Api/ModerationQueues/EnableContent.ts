@@ -1,5 +1,5 @@
 /**
- * Enables the content associated with a moderation queue entry.
+ * Enables the content associated with a moderation queue.
  *
  * @author Marcel Werk
  * @copyright 2001-2024 WoltLab GmbH

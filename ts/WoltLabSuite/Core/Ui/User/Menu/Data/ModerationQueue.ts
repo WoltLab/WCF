@@ -64,16 +64,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const response = await getUserMenuItems();
-    if (!response.ok) {
-      throw new Error("Moderation queue items could not be loaded.");
-    }
+    const { items, unreadModerationCount } = (await getUserMenuItems()).unwrap();
 
-    this.updateCounter(response.value.unreadModerationCount);
+    this.updateCounter(unreadModerationCount);
 
     this.stale = false;
 
-    return response.value.items;
+    return items;
   }
 
   getFooter(): UserMenuFooter | null {

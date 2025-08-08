@@ -46,13 +46,10 @@ define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Co
             ];
         }
         async getData() {
-            const response = await (0, GetUserMenuItems_1.getUserMenuItems)();
-            if (!response.ok) {
-                throw new Error("Moderation queue items could not be loaded.");
-            }
-            this.updateCounter(response.value.unreadModerationCount);
+            const { items, unreadModerationCount } = (await (0, GetUserMenuItems_1.getUserMenuItems)()).unwrap();
+            this.updateCounter(unreadModerationCount);
             this.stale = false;
-            return response.value.items;
+            return items;
         }
         getFooter() {
             return {

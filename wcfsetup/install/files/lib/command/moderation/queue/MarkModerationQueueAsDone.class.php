@@ -16,7 +16,9 @@ use wcf\system\moderation\queue\ModerationQueueManager;
  */
 final class MarkModerationQueueAsDone
 {
-    public function __construct(private readonly ModerationQueue $queue) {}
+    public function __construct(
+        private readonly ModerationQueue $queue
+    ) {}
 
     public function __invoke(): void
     {

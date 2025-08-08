@@ -2,7 +2,7 @@
 
 namespace wcf\data\moderation\queue;
 
-use wcf\command\moderation\queue\MarkAllModerationQueueAsRead;
+use wcf\command\moderation\queue\MarkAllModerationQueuesAsRead;
 use wcf\command\moderation\queue\MarkModerationQueueAsDone;
 use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -111,7 +111,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * }>, totalCount: int}
      * @since 5.5
      *
-     * @deprecated 6.3 use `RenderModerationQueueItems` endpoint instead.
+     * @deprecated 6.3 use the `RenderModerationQueueItems` endpoint instead.
      */
     public function getModerationQueueData(): array
     {
@@ -275,11 +275,11 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      *
      * @return array{markAllAsRead: bool}
      *
-     * @deprecated 6.3 use `MarkAllModerationQueueAsRead`
+     * @deprecated 6.3 use `MarkAllModerationQueuesAsRead`
      */
     public function markAllAsRead()
     {
-        (new MarkAllModerationQueueAsRead())();
+        (new MarkAllModerationQueuesAsRead())();
 
         return [
             'markAllAsRead' => true,

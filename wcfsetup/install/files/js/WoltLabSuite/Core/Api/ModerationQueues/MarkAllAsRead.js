@@ -1,5 +1,5 @@
 /**
- * Mark all moderation queue as read.
+ * Marks all moderation queues as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
