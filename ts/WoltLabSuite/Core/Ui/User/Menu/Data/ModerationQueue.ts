@@ -10,9 +10,9 @@
 import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
-import { markModerationQueueAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead";
-import { markAllModerationQueuesAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead";
-import { getModerationUserMenuItems } from "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems";
+import { getUserMenuItems } from "WoltLabSuite/Core/Api/ModerationQueues/GetUserMenuItems";
+import { markAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAsRead";
+import { markAllAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead";
 
 type Options = {
   noItems: string;
@@ -64,7 +64,7 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const response = await getModerationUserMenuItems();
+    const response = await getUserMenuItems();
     if (!response.ok) {
       throw new Error("Moderation queue items could not be loaded.");
     }
@@ -127,13 +127,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async markAsRead(objectId: number): Promise<void> {
-    const { unreadModerationItems } = (await markModerationQueueAsRead(objectId)).unwrap();
+    const { unreadModerationItems } = (await markAsRead(objectId)).unwrap();
 
     this.updateCounter(unreadModerationItems);
   }
 
   async markAllAsRead(): Promise<void> {
-    await markAllModerationQueuesAsRead();
+    (await markAllAsRead()).unwrap();
 
     this.updateCounter(0);
   }

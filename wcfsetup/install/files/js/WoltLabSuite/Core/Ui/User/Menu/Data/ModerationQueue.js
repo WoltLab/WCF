@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead", "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems"], function (require, exports, tslib_1, View_1, Manager_1, MarkModerationQueueAsRead_1, MarkAllModerationQueuesAsRead_1, GetModerationUserMenuItems_1) {
+define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/GetUserMenuItems", "WoltLabSuite/Core/Api/ModerationQueues/MarkAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead"], function (require, exports, tslib_1, View_1, Manager_1, GetUserMenuItems_1, MarkAsRead_1, MarkAllAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -46,7 +46,7 @@ define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Co
             ];
         }
         async getData() {
-            const response = await (0, GetModerationUserMenuItems_1.getModerationUserMenuItems)();
+            const response = await (0, GetUserMenuItems_1.getUserMenuItems)();
             if (!response.ok) {
                 throw new Error("Moderation queue items could not be loaded.");
             }
@@ -94,11 +94,11 @@ define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Co
             return this.counter > 0;
         }
         async markAsRead(objectId) {
-            const { unreadModerationItems } = (await (0, MarkModerationQueueAsRead_1.markModerationQueueAsRead)(objectId)).unwrap();
+            const { unreadModerationItems } = (await (0, MarkAsRead_1.markAsRead)(objectId)).unwrap();
             this.updateCounter(unreadModerationItems);
         }
         async markAllAsRead() {
-            await (0, MarkAllModerationQueuesAsRead_1.markAllModerationQueuesAsRead)();
+            (await (0, MarkAllAsRead_1.markAllAsRead)()).unwrap();
             this.updateCounter(0);
         }
         updateCounter(counter) {

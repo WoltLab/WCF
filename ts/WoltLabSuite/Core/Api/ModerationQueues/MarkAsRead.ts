@@ -1,5 +1,5 @@
 /**
- * Retrieves the user menu items for the moderation queues.
+ * Marks a moderation queue as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -10,19 +10,17 @@
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
-import { UserMenuData } from "WoltLabSuite/Core/Ui/User/Menu/Data/Provider";
 
 type Response = {
-  unreadModerationCount: number;
-  items: UserMenuData[];
+  unreadModerationItems: number;
 };
 
-export async function getModerationUserMenuItems(): Promise<ApiResult<Response>> {
+export async function markAsRead(queueId: number): Promise<ApiResult<Response>> {
   let response: Response;
 
   try {
-    response = (await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/user-menu-items`)
-      .get()
+    response = (await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/mark-as-read`)
+      .post()
       .fetchAsJson()) as Response;
   } catch (e) {
     return apiResultFromError(e);

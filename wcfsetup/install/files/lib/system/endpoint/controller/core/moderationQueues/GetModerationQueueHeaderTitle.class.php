@@ -28,7 +28,7 @@ final class GetModerationQueueHeaderTitle implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $queue = ViewableModerationQueue::getViewableModerationQueue($variables['id']);
+        $queue = ViewableModerationQueue::getViewableModerationQueue((int)$variables['id']);
         if ($queue === null) {
             throw new IllegalLinkException();
         }

@@ -17,7 +17,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * API Endpoint to get the moderation queue items for the user menu.
+ * Retrieves the latest moderation queues for the user menu.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -25,20 +25,23 @@ use wcf\util\StringUtil;
  * @since 6.3
  */
 #[GetRequest('/core/moderation-queues/user-menu-items')]
-final class GetUserMenuModerationQueueItems implements IController
+final class GetUserMenuItems implements IController
 {
-    public const MAX_ITEMS = 10;
+    /**
+     * @var int
+     */
+    private const MAX_ITEMS = 10;
 
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
 
-        $queueItems = $this->getModerationQueueItems();
+        $queueItems = $this->getModerationQueues();
         $unreadEntries = ModerationQueueManager::getInstance()->getUnreadModerationCount();
 
         if ($this->userStorageCouldBeOutdated(\count($queueItems), $unreadEntries)) {
-            $this->removeOrphansQueueItems();
+            $this->removeOrphanedQueues();
 
             $unreadEntries = ModerationQueueManager::getInstance()->getUnreadModerationCount();
         }
@@ -75,7 +78,7 @@ final class GetUserMenuModerationQueueItems implements IController
         return false;
     }
 
-    private function removeOrphansQueueItems(): void
+    private function removeOrphanedQueues(): void
     {
         ModerationQueueManager::getInstance()->identifyOrphans();
         UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
@@ -84,22 +87,23 @@ final class GetUserMenuModerationQueueItems implements IController
     /**
      * @return array<int, ViewableModerationQueue>
      */
-    private function getModerationQueueItems(): array
+    private function getModerationQueues(): array
     {
-        $items = $this->getUnreadModerationQueueItems();
+        $items = $this->getUnreadModerationQueues();
 
         $count = \count($items);
         if ($count < self::MAX_ITEMS) {
-            $items = \array_merge($items, $this->getQueueItems(\array_keys($items), $count));
+            $items = \array_merge($items, $this->getReadModerationQueues(\array_keys($items), $count));
         }
 
         return $items;
     }
 
     /**
+     * @param list<int> $unreadQueueIDs
      * @return array<int, ViewableModerationQueue>
      */
-    private function getQueueItems(array $unreadQueueIDs, int $count): array
+    private function getReadModerationQueues(array $unreadQueueIDs, int $count): array
     {
         $queueList = new ViewableModerationQueueList();
         $queueList->getConditionBuilder()->add(
@@ -121,7 +125,7 @@ final class GetUserMenuModerationQueueItems implements IController
     /**
      * @return array<int, ViewableModerationQueue>
      */
-    private function getUnreadModerationQueueItems(): array
+    private function getUnreadModerationQueues(): array
     {
         $queueList = new ViewableModerationQueueList();
         $queueList->sqlJoins .= " LEFT JOIN   wcf1_tracked_visit tracked_visit

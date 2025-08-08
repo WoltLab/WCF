@@ -10,8 +10,8 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.markAllModerationQueuesAsRead = markAllModerationQueuesAsRead;
-    async function markAllModerationQueuesAsRead() {
+    exports.markAllAsRead = markAllAsRead;
+    async function markAllAsRead() {
         try {
             await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/mark-all-as-read`).post().fetchAsJson();
         }

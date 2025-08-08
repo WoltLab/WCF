@@ -1,5 +1,5 @@
 /**
- * Marks all moderation queue entries as read.
+ * Marks all moderation queues as read.
  *
  * @author  Marcel Werk
  * @copyright  2001-2022 WoltLab GmbH
@@ -8,10 +8,10 @@
  */
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { markAllModerationQueuesAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead";
+import { markAllAsRead as apiMarkAllAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead";
 
 async function markAllAsRead(): Promise<void> {
-  await markAllModerationQueuesAsRead();
+  (await apiMarkAllAsRead()).unwrap();
 
   const gridViewTable = document.getElementById("wcf-system-gridView-user-ModerationQueueGridView_table")!;
   gridViewTable.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
