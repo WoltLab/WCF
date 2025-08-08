@@ -12,18 +12,16 @@
 
 		<li title="{lang}wcf.moderation.assignedUser{/lang}">
 			{icon name='user'}
-			<span id="moderationAssignedUser">
-				{if $queue->assignedUserID}
-					<a href="{link controller='User' id=$queue->assignedUserID}{/link}" class="userLink" data-object-id="{$queue->assignedUserID}">{$queue->assignedUsername}</a>
-				{else}
-					{lang}wcf.moderation.assignedUser.nobody{/lang}
-				{/if}
-			</span>
+			{if $queue->assignedUserID}
+				<a href="{link controller='User' id=$queue->assignedUserID}{/link}" class="userLink" data-object-id="{$queue->assignedUserID}">{$queue->assignedUsername}</a>
+			{else}
+				{lang}wcf.moderation.assignedUser.nobody{/lang}
+			{/if}
 		</li>
 
 		<li title="{lang}wcf.moderation.status{/lang}">
 			{icon name='arrows-rotate'}
-			<span id="moderationQueueStatus">{$queue->getStatus()}</span>
+			{$queue->getStatus()}
 		</li>
 
 		{event name='afterMetaData'}

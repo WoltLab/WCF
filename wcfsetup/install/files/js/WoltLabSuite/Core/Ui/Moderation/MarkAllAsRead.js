@@ -6,12 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead"], function (require, exports, Snackbar_1, MarkAllModerationQueueItemsAsRead_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead"], function (require, exports, Snackbar_1, MarkAllModerationQueuesAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function markAllAsRead() {
-        await (0, MarkAllModerationQueueItemsAsRead_1.markAllModerationQueueItemsAsRead)();
+        await (0, MarkAllModerationQueuesAsRead_1.markAllModerationQueuesAsRead)();
         const gridViewTable = document.getElementById("wcf-system-gridView-user-ModerationQueueGridView_table");
         gridViewTable.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
         (0, Snackbar_1.showDefaultSuccessSnackbar)();

@@ -1,5 +1,5 @@
 /**
- * Mark all moderation queue items as read.
+ * Mark all moderation queue as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
 
-export async function markAllModerationQueueItemsAsRead(): Promise<ApiResult<[]>> {
+export async function markAllModerationQueuesAsRead(): Promise<ApiResult<[]>> {
   try {
     await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/mark-all-as-read`).post().fetchAsJson();
   } catch (e) {

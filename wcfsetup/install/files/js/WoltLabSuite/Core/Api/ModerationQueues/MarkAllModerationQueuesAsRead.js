@@ -1,5 +1,5 @@
 /**
- * Mark all moderation queue items as read.
+ * Mark all moderation queue as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -10,8 +10,8 @@
 define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], function (require, exports, Backend_1, Result_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.markAllModerationQueueItemsAsRead = markAllModerationQueueItemsAsRead;
-    async function markAllModerationQueueItemsAsRead() {
+    exports.markAllModerationQueuesAsRead = markAllModerationQueuesAsRead;
+    async function markAllModerationQueuesAsRead() {
         try {
             await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/mark-all-as-read`).post().fetchAsJson();
         }

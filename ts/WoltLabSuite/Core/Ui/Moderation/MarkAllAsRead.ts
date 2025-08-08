@@ -8,10 +8,10 @@
  */
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { markAllModerationQueueItemsAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead";
+import { markAllModerationQueuesAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead";
 
 async function markAllAsRead(): Promise<void> {
-  await markAllModerationQueueItemsAsRead();
+  await markAllModerationQueuesAsRead();
 
   const gridViewTable = document.getElementById("wcf-system-gridView-user-ModerationQueueGridView_table")!;
   gridViewTable.dispatchEvent(new CustomEvent("interaction:invalidate-all"));

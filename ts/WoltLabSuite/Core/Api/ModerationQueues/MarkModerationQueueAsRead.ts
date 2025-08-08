@@ -1,5 +1,5 @@
 /**
- * Mark a moderation queue item as read.
+ * Mark a moderation queue as read.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -15,7 +15,7 @@ type Response = {
   unreadModerationItems: number;
 };
 
-export async function markModerationQueueItemAsRead(queueId: number): Promise<ApiResult<number>> {
+export async function markModerationQueueAsRead(queueId: number): Promise<ApiResult<Response>> {
   let response: Response;
 
   try {
@@ -26,5 +26,5 @@ export async function markModerationQueueItemAsRead(queueId: number): Promise<Ap
     return apiResultFromError(e);
   }
 
-  return apiResultFromValue(response.unreadModerationItems);
+  return apiResultFromValue(response);
 }

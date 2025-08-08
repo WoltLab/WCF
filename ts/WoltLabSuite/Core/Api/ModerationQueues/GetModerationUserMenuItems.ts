@@ -1,7 +1,7 @@
 /**
  * Retrieves the user menu items for the moderation queues.
  *
- * @author olaf Braun
+ * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3

@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueItemAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueueItemsAsRead", "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems"], function (require, exports, tslib_1, View_1, Manager_1, MarkModerationQueueItemAsRead_1, MarkAllModerationQueueItemsAsRead_1, GetModerationUserMenuItems_1) {
+define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead", "WoltLabSuite/Core/Api/ModerationQueues/GetModerationUserMenuItems"], function (require, exports, tslib_1, View_1, Manager_1, MarkModerationQueueAsRead_1, MarkAllModerationQueuesAsRead_1, GetModerationUserMenuItems_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -94,13 +94,11 @@ define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Co
             return this.counter > 0;
         }
         async markAsRead(objectId) {
-            const response = await (0, MarkModerationQueueItemAsRead_1.markModerationQueueItemAsRead)(objectId);
-            if (response.ok) {
-                this.updateCounter(response.value);
-            }
+            const { unreadModerationItems } = (await (0, MarkModerationQueueAsRead_1.markModerationQueueAsRead)(objectId)).unwrap();
+            this.updateCounter(unreadModerationItems);
         }
         async markAllAsRead() {
-            await (0, MarkAllModerationQueueItemsAsRead_1.markAllModerationQueueItemsAsRead)();
+            await (0, MarkAllModerationQueuesAsRead_1.markAllModerationQueuesAsRead)();
             this.updateCounter(0);
         }
         updateCounter(counter) {
