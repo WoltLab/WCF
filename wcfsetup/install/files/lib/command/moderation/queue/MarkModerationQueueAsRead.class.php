@@ -18,8 +18,8 @@ use wcf\system\WCF;
 final class MarkModerationQueueAsRead
 {
     public function __construct(
-        public readonly ModerationQueue $moderationQueue,
-        public readonly int $visitTime = TIME_NOW
+        private readonly ModerationQueue $moderationQueue,
+        private readonly int $visitTime = TIME_NOW
     ) {}
 
     public function __invoke(): void
