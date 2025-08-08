@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3
  */
 class ModerationQueueReportAction extends ModerationQueueAction
 {
@@ -258,7 +259,6 @@ class ModerationQueueReportAction extends ModerationQueueAction
 
     /**
      * Updates the `markAsJustified` status.
-     *
      * @deprecated 6.3 use the API endpoint `ChangeJustifiedStatus` instead
      */
     public function changeJustifiedStatus(): void

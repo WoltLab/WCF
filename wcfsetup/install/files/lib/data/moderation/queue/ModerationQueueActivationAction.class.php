@@ -14,6 +14,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3
  */
 class ModerationQueueActivationAction extends ModerationQueueAction
 {
@@ -32,7 +33,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Validates parameters to enable content.
      *
      * @return void
-     *
      * @deprecated 6.3
      */
     public function validateEnableContent()
@@ -56,7 +56,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Enables content.
      *
      * @return void
-     *
      * @deprecated 6.3 use the API endpoint `EnableContent` instead
      */
     public function enableContent()
@@ -76,7 +75,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Validates parameters to delete reported content.
      *
      * @return void
-     *
      * @deprecated 6.3
      */
     public function validateRemoveContent()
@@ -95,7 +93,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      * Deletes reported content.
      *
      * @return void
-     *
      * @deprecated 6.3 use the API endpoint `DeleteContent` instead
      */
     public function removeContent()
@@ -113,8 +110,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction
     /**
      * Validates the `removeActivationContent` action.
      *
-     * @since   5.4
-     *
+     * @since 5.4
      * @deprecated 6.3
      */
     public function validateRemoveActivationContent(): void
