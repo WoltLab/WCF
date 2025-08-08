@@ -22,10 +22,10 @@ use wcf\system\file\processor\FileProcessor;
 final class CopyAttachments
 {
     public function __construct(
-        public readonly string $sourceObjectType,
-        public readonly int $sourceObjectID,
-        public readonly string $targetObjectType,
-        public readonly int $targetObjectID,
+        private readonly string $sourceObjectType,
+        private readonly int $sourceObjectID,
+        private readonly string $targetObjectType,
+        private readonly int $targetObjectID,
     ) {
     }
 
