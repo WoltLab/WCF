@@ -16,9 +16,8 @@ final class ResetUserStorageForUnreadArticles
 {
     public function __construct(
         /** @var int[] */
-        public readonly array $userIDs = []
-    ) {
-    }
+        private readonly array $userIDs = []
+    ) {}
 
     public function __invoke(): void
     {

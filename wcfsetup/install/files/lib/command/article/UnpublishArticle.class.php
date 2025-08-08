@@ -19,9 +19,7 @@ use wcf\system\user\notification\UserNotificationHandler;
  */
 final class UnpublishArticle
 {
-    public function __construct(public readonly Article $article)
-    {
-    }
+    public function __construct(private readonly Article $article) {}
 
     public function __invoke(): void
     {

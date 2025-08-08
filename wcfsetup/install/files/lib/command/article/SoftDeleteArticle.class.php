@@ -17,9 +17,7 @@ use wcf\system\event\EventHandler;
  */
 final class SoftDeleteArticle
 {
-    public function __construct(public readonly Article $article)
-    {
-    }
+    public function __construct(private readonly Article $article) {}
 
     public function __invoke(): void
     {

@@ -19,9 +19,8 @@ final class MarkArticleAsRead
 {
     public function __construct(
         private readonly Article $article,
-        public readonly int $visitTime = TIME_NOW
-    ) {
-    }
+        private readonly int $visitTime = TIME_NOW
+    ) {}
 
     public function __invoke(): void
     {

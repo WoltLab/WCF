@@ -19,10 +19,9 @@ use wcf\system\event\EventHandler;
 final class SetArticleCategory
 {
     public function __construct(
-        public readonly Article $article,
-        public readonly ArticleCategory $category,
-    ) {
-    }
+        private readonly Article $article,
+        private readonly ArticleCategory $category,
+    ) {}
 
     public function __invoke(): void
     {

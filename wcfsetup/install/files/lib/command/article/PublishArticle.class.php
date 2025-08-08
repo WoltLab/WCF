@@ -20,9 +20,7 @@ use wcf\system\user\object\watch\UserObjectWatchHandler;
  */
 final class PublishArticle
 {
-    public function __construct(public readonly Article $article)
-    {
-    }
+    public function __construct(private readonly Article $article) {}
 
     public function __invoke(): void
     {
