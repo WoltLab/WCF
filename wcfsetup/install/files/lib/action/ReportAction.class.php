@@ -18,6 +18,8 @@ use wcf\system\WCF;
 use wcf\util\HtmlString;
 
 /**
+ * Reports an object to be reviewed by a moderator.
+ *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -25,6 +27,9 @@ use wcf\util\HtmlString;
  */
 final class ReportAction implements RequestHandlerInterface
 {
+    /**
+     * @var int
+     */
     private const ALLOWED_REPORTS_PER_10M = 10;
 
     #[\Override]
@@ -49,7 +54,7 @@ final class ReportAction implements RequestHandlerInterface
 
         if ($request->getMethod() === 'GET') {
             if (ModerationQueueReportManager::getInstance()->hasPendingReport($objectType, $objectID)) {
-                $form->softExceptionMessage(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.moderation.report.alreadyReported')));
+                throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.moderation.report.alreadyReported')));
             }
 
             return $form->toResponse();

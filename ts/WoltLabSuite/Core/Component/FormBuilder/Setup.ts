@@ -15,7 +15,6 @@ type ResponseGetForm = {
   dialog: string;
   formId: string;
   title: string;
-  softExceptionMessage?: string;
 };
 
 type ResponseSubmitForm =
@@ -40,15 +39,6 @@ export class FormBuilderSetup {
 
     // Prevents a circular dependency.
     const { dialogFactory } = await import("../Dialog");
-
-    if (json.softExceptionMessage) {
-      dialogFactory().fromHtml(json.softExceptionMessage).asAlert().show(json.title);
-
-      return Promise.resolve({
-        ok: false,
-        result: undefined,
-      });
-    }
 
     const dialog = dialogFactory().fromHtml(json.dialog).asPrompt();
 

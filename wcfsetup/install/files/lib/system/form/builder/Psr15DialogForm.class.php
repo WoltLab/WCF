@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\system\form\builder\button\IFormButton;
-use wcf\util\HtmlString;
 
 /**
  * Represents a PSR15 compatible form builder that
@@ -21,7 +20,6 @@ use wcf\util\HtmlString;
 final class Psr15DialogForm extends FormDocument
 {
     private readonly string $title;
-    private ?HtmlString $softExceptionMessage = null;
 
     public function __construct(
         string $id,
@@ -54,19 +52,6 @@ final class Psr15DialogForm extends FormDocument
     }
 
     /**
-     * Sets a soft exception message that is displayed in the dialog.
-     * This message is not considered an HTTP error and prevents the user to submit the dialog.
-     *
-     * @since 6.3
-     */
-    public function softExceptionMessage(HtmlString $softExceptionMessage):self
-    {
-        $this->softExceptionMessage = $softExceptionMessage;
-
-        return $this;
-    }
-
-    /**
      * Returns a response that can be consumed by JavaScript's `dialogFactory().usingFormBuilder()`.
      */
     public function toResponse(): ResponseInterface
@@ -75,7 +60,6 @@ final class Psr15DialogForm extends FormDocument
             'dialog' => $this->getHtml(),
             'formId' => $this->getId(),
             'title' => $this->title,
-            'softExceptionMessage' => (string)$this->softExceptionMessage?->__toString(),
         ]);
     }
 
