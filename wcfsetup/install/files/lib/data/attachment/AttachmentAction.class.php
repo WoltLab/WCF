@@ -2,12 +2,11 @@
 
 namespace wcf\data\attachment;
 
+use wcf\command\attachment\CopyAttachments;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
 
 /**
@@ -75,82 +74,18 @@ class AttachmentAction extends AbstractDatabaseObjectAction
      * Copies attachments from one object id to another.
      *
      * @return array{attachmentIDs: array<int, int>}
+     *
+     * @deprecated 6.3 use `CopyAttachments` instead.
      */
     public function copy()
     {
-        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.attachment.objectType',
-            $this->parameters['sourceObjectType']
-        );
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.attachment.objectType',
-            $this->parameters['targetObjectType']
-        );
-
-        $attachmentList = new AttachmentList();
-        $attachmentList->getConditionBuilder()->add("attachment.objectTypeID = ?", [$sourceObjectType->objectTypeID]);
-        $attachmentList->getConditionBuilder()->add("attachment.objectID = ?", [$this->parameters['sourceObjectID']]);
-        $attachmentList->readObjects();
-
-        $newAttachmentIDs = [];
-        foreach ($attachmentList as $attachment) {
-            $file = $attachment->getFile();
-            if ($file !== null) {
-                $file = FileProcessor::getInstance()->copy($file, 'com.woltlab.wcf.attachment');
-
-                $thumbnailID = $tinyThumbnailID = null;
-                if ($attachment->thumbnailID !== null || $attachment->tinyThumbnailID !== null) {
-                    $thumbnailList = new FileThumbnailList();
-                    $thumbnailList->getConditionBuilder()->add('fileID = ?', [$file->fileID]);
-                    $thumbnailList->readObjects();
-
-                    foreach ($thumbnailList as $thumbnail) {
-                        switch ($thumbnail->identifier) {
-                            case '':
-                                $thumbnailID = $thumbnail->thumbnailID;
-                                break;
-
-                            case 'tiny':
-                                $tinyThumbnailID = $thumbnail->thumbnailID;
-                                break;
-                        }
-                    }
-                }
-            }
-
-            $newAttachment = AttachmentEditor::create([
-                'objectTypeID' => $targetObjectType->objectTypeID,
-                'objectID' => $this->parameters['targetObjectID'],
-                'userID' => $attachment->userID,
-                'filename' => $attachment->filename,
-                'filesize' => $attachment->filesize,
-                'fileType' => $attachment->fileType,
-                'fileHash' => $attachment->fileHash,
-                'isImage' => $attachment->isImage,
-                'width' => $attachment->width,
-                'height' => $attachment->height,
-                'tinyThumbnailType' => $attachment->tinyThumbnailType,
-                'tinyThumbnailSize' => $attachment->tinyThumbnailSize,
-                'tinyThumbnailWidth' => $attachment->tinyThumbnailWidth,
-                'tinyThumbnailHeight' => $attachment->tinyThumbnailHeight,
-                'thumbnailType' => $attachment->thumbnailType,
-                'thumbnailSize' => $attachment->thumbnailSize,
-                'thumbnailWidth' => $attachment->thumbnailWidth,
-                'thumbnailHeight' => $attachment->thumbnailHeight,
-                'downloads' => $attachment->downloads,
-                'lastDownloadTime' => $attachment->lastDownloadTime,
-                'uploadTime' => $attachment->uploadTime,
-                'showOrder' => $attachment->showOrder,
-                'fileID' => $file?->fileID,
-                'thumbnailID' => $thumbnailID ?? null,
-                'tinyThumbnailID' => $tinyThumbnailID ?? null,
-            ]);
-
-            $newAttachmentIDs[$attachment->attachmentID] = $newAttachment->attachmentID;
-        }
-
         return [
-            'attachmentIDs' => $newAttachmentIDs,
+            'attachmentIDs' => (new CopyAttachments(
+                $this->parameters['sourceObjectType'],
+                $this->parameters['sourceObjectID'],
+                $this->parameters['targetObjectType'],
+                $this->parameters['targetObjectID']
+            ))()
         ];
     }
 }
