@@ -8,7 +8,7 @@
  */
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { markAllAsRead as apiMarkAllAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead";
+import { markAllModerationQueuesAsRead as apiMarkAllAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead";
 
 async function markAllAsRead(): Promise<void> {
   (await apiMarkAllAsRead()).unwrap();

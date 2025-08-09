@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function markAllAsRead() {
-        (await (0, MarkAllAsRead_1.markAllAsRead)()).unwrap();
+        (await (0, MarkAllAsRead_1.markAllModerationQueuesAsRead)()).unwrap();
         const gridViewTable = document.getElementById("wcf-system-gridView-user-ModerationQueueGridView_table");
         gridViewTable.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
         (0, Snackbar_1.showDefaultSuccessSnackbar)();

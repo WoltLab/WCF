@@ -11,8 +11,8 @@ import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
 import { getUserMenuItems } from "WoltLabSuite/Core/Api/ModerationQueues/GetUserMenuItems";
-import { markAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAsRead";
-import { markAllAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllAsRead";
+import { markModerationQueueAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead";
+import { markAllModerationQueuesAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead";
 
 type Options = {
   noItems: string;
@@ -124,13 +124,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async markAsRead(objectId: number): Promise<void> {
-    const { unreadModerationItems } = (await markAsRead(objectId)).unwrap();
+    const { unreadModerationItems } = (await markModerationQueueAsRead(objectId)).unwrap();
 
     this.updateCounter(unreadModerationItems);
   }
 
   async markAllAsRead(): Promise<void> {
-    (await markAllAsRead()).unwrap();
+    (await markAllModerationQueuesAsRead()).unwrap();
 
     this.updateCounter(0);
   }
