@@ -2,9 +2,10 @@
 
 namespace wcf\data\bbcode\media\provider;
 
+use wcf\command\bbcode\media\provider\DisableBBCodeMediaProvider;
+use wcf\command\bbcode\media\provider\EnableBBCodeMediaProvider;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 
 /**
  * Executes BBCode media provider-related actions.
@@ -17,8 +18,6 @@ use wcf\data\TDatabaseObjectToggle;
  */
 class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -38,4 +37,26 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements 
      * @inheritDoc
      */
     protected $requireACP = ['delete', 'update'];
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableBBCodeMediaProvider` or `DisableBBCodeMediaProvider` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableBBCodeMediaProvider($editor->getDecoratedObject()))();
+            } else {
+                (new DisableBBCodeMediaProvider($editor->getDecoratedObject()))();
+            }
+        }
+    }
 }
