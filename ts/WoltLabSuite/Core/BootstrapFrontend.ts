@@ -39,6 +39,7 @@ interface BootstrapOptions {
   styleChanger: boolean;
   removeQuotes?: string[];
   usedQuotes?: Map<string, string[]>;
+  reportEndpoint: string;
 }
 
 /**
@@ -166,5 +167,8 @@ export function setup(options: BootstrapOptions): void {
   });
   whenFirstSeen("[data-ignore-user]", () => {
     void import("./Component/User/Ignore").then(({ setup }) => setup());
+  });
+  whenFirstSeen("[data-report-content]", () => {
+    void import("./Ui/Moderation/Report").then(({ setup }) => setup(options.reportEndpoint));
   });
 }

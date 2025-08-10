@@ -7,10 +7,12 @@
  * @woltlabExcludeBundle all
  */
 
-import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
+import { getUserMenuItems } from "WoltLabSuite/Core/Api/ModerationQueues/GetUserMenuItems";
+import { markModerationQueueAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead";
+import { markAllModerationQueuesAsRead } from "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead";
 
 type Options = {
   noItems: string;
@@ -19,16 +21,6 @@ type Options = {
   showAllLink: string;
   showAllTitle: string;
   title: string;
-};
-
-type ResponseGetData = {
-  items: UserMenuData[];
-  totalCount: number;
-};
-
-type ResponseMarkAsRead = {
-  markAsRead: number;
-  totalCount: number;
 };
 
 class UserMenuDataModerationQueue implements UserMenuProvider {
@@ -72,15 +64,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const data = (await dboAction("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-      .disableLoadingIndicator()
-      .dispatch()) as ResponseGetData;
+    const { items, unreadModerationCount } = (await getUserMenuItems()).unwrap();
 
-    this.updateCounter(data.totalCount);
+    this.updateCounter(unreadModerationCount);
 
     this.stale = false;
 
-    return data.items;
+    return items;
   }
 
   getFooter(): UserMenuFooter | null {
@@ -134,15 +124,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async markAsRead(objectId: number): Promise<void> {
-    const response = (await dboAction("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-      .objectIds([objectId])
-      .dispatch()) as ResponseMarkAsRead;
+    const { unreadModerationItems } = (await markModerationQueueAsRead(objectId)).unwrap();
 
-    this.updateCounter(response.totalCount);
+    this.updateCounter(unreadModerationItems);
   }
 
   async markAllAsRead(): Promise<void> {
-    await dboAction("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+    (await markAllModerationQueuesAsRead()).unwrap();
 
     this.updateCounter(0);
   }

@@ -4,6 +4,7 @@ namespace wcf\system\moderation\queue;
 
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\page\IPage;
 
 /**
  * Default interface for moderation queue managers.
@@ -83,4 +84,11 @@ interface IModerationQueueManager
      * @return void
      */
     public function removeContent(ModerationQueue $queue, $message = '');
+
+    /**
+     * Returns the controller class that can be used to view/edit the moderation type
+     *
+     * @return class-string<IPage>
+     */
+    public function getController(): string;
 }

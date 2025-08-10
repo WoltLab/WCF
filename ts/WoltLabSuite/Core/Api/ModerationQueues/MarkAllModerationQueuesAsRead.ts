@@ -1,21 +1,19 @@
 /**
- * Enables the content associated with a moderation queue.
+ * Marks all moderation queues as read.
  *
- * @author Marcel Werk
- * @copyright 2001-2024 WoltLab GmbH
+ * @author Olaf Braun
+ * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since 6.2
+ * @since 6.3
  * @woltlabExcludeBundle tiny
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
 
-export async function enableContent(queueId: number): Promise<ApiResult<[]>> {
+export async function markAllModerationQueuesAsRead(): Promise<ApiResult<[]>> {
   try {
-    await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/enable-content`)
-      .post()
-      .fetchAsJson();
+    await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/mark-all-as-read`).post().fetchAsJson();
   } catch (e) {
     return apiResultFromError(e);
   }

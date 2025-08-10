@@ -2,10 +2,12 @@
 
 namespace wcf\data\moderation\queue;
 
+use wcf\command\moderation\queue\MarkAllModerationQueuesAsRead;
+use wcf\command\moderation\queue\MarkModerationQueueAsDone;
+use wcf\command\moderation\queue\MarkModerationQueueAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -72,6 +74,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks a list of objects as done.
      *
      * @return void
+     *
+     * @deprecated use `MarkModerationQueueAsDone` instead.
      */
     public function markAsDone()
     {
@@ -79,27 +83,16 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $queueIDs = [];
         foreach ($this->getObjects() as $queue) {
-            $queueIDs[] = $queue->queueID;
+            (new MarkModerationQueueAsDone($queue->getDecoratedObject()))();
         }
-
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("queueID IN (?)", [$queueIDs]);
-
-        $sql = "UPDATE  wcf1_moderation_queue
-                SET     status = " . ModerationQueue::STATUS_DONE . "
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-
-        // reset number of active moderation queue items
-        ModerationQueueManager::getInstance()->resetModerationCount();
     }
 
     /**
      * @return void
      * @since 5.5
+     *
+     * @deprecated 6.3
      */
     public function validateGetModerationQueueData(): void
     {
@@ -117,6 +110,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      *  usernames: string[],
      * }>, totalCount: int}
      * @since 5.5
+     *
+     * @deprecated 6.3 use the `RenderModerationQueueItems` endpoint instead.
      */
     public function getModerationQueueData(): array
     {
@@ -230,6 +225,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks queue entries as read.
      *
      * @return void|array{markAsRead: int, totalCount: int}
+     *
+     * @deprecated 6.3 use `MarkModerationQueueAsRead`
      */
     public function markAsRead()
     {
@@ -241,16 +238,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $queue) {
-            VisitTracker::getInstance()->trackObjectVisit(
-                'com.woltlab.wcf.moderation.queue',
-                $queue->queueID,
-                $this->parameters['visitTime']
-            );
+        foreach ($this->getObjects() as $queueEditor) {
+            (new MarkModerationQueueAsRead($queueEditor->getDecoratedObject(), $this->parameters["visitTime"]))();
         }
-
-        // reset storage
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
 
         if (\count($this->objects) == 1) {
             $queue = \reset($this->objects);
@@ -264,6 +254,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAsRead()
     {
@@ -282,13 +274,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Marks all queue entries as read.
      *
      * @return array{markAllAsRead: bool}
+     *
+     * @deprecated 6.3 use `MarkAllModerationQueuesAsRead`
      */
     public function markAllAsRead()
     {
-        VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.moderation.queue');
-
-        // reset storage
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
+        (new MarkAllModerationQueuesAsRead())();
 
         return [
             'markAllAsRead' => true,
@@ -299,6 +290,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Validates the mark all as read action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAllAsRead()
     {
@@ -309,6 +302,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Validates the `assignUserByClipboard` action.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3
      */
     public function validateAssignUserByClipboard(): void
     {
@@ -364,6 +359,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Assigns a user to multiple moderation queue entries via clipboard.
      *
      * @since   5.4
+     *
+     * @deprecated 6.3
      */
     public function assignUserByClipboard(): void
     {
@@ -385,28 +382,5 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $moderationQueueEditor->update($data);
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
-    }
-
-    /**
-     * Unmarks the moderation queue entries with the given ids or all currently handled entries if
-     * no argument is given.
-     *
-     * @param   int[]   $queueIDs
-     * @since   5.4
-     */
-    protected function unmarkItems(array $queueIDs = []): void
-    {
-        if (empty($queueIDs)) {
-            $queueIDs = $this->objectIDs;
-        }
-
-        if (!empty($queueIDs)) {
-            ClipboardHandler::getInstance()->unmark(
-                $queueIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
-            );
-        }
     }
 }

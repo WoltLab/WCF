@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1) {
+define(["require", "exports", "tslib", "../View", "../Manager", "WoltLabSuite/Core/Api/ModerationQueues/GetUserMenuItems", "WoltLabSuite/Core/Api/ModerationQueues/MarkModerationQueueAsRead", "WoltLabSuite/Core/Api/ModerationQueues/MarkAllModerationQueuesAsRead"], function (require, exports, tslib_1, View_1, Manager_1, GetUserMenuItems_1, MarkModerationQueueAsRead_1, MarkAllModerationQueuesAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -46,12 +46,10 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             ];
         }
         async getData() {
-            const data = (await (0, Ajax_1.dboAction)("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-                .disableLoadingIndicator()
-                .dispatch());
-            this.updateCounter(data.totalCount);
+            const { items, unreadModerationCount } = (await (0, GetUserMenuItems_1.getUserMenuItems)()).unwrap();
+            this.updateCounter(unreadModerationCount);
             this.stale = false;
-            return data.items;
+            return items;
         }
         getFooter() {
             return {
@@ -93,13 +91,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             return this.counter > 0;
         }
         async markAsRead(objectId) {
-            const response = (await (0, Ajax_1.dboAction)("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
-                .objectIds([objectId])
-                .dispatch());
-            this.updateCounter(response.totalCount);
+            const { unreadModerationItems } = (await (0, MarkModerationQueueAsRead_1.markModerationQueueAsRead)(objectId)).unwrap();
+            this.updateCounter(unreadModerationItems);
         }
         async markAllAsRead() {
-            await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+            (await (0, MarkAllModerationQueuesAsRead_1.markAllModerationQueuesAsRead)()).unwrap();
             this.updateCounter(0);
         }
         updateCounter(counter) {

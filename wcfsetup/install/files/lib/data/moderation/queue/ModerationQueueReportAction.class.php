@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3
  */
 class ModerationQueueReportAction extends ModerationQueueAction
 {
@@ -37,6 +38,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Validates parameters to delete reported content.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validateRemoveContent()
     {
@@ -55,6 +57,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Deletes reported content.
      *
      * @return void
+     * @deprecated 6.3 use the API endpoint `DeleteContent` instead
      */
     public function removeContent()
     {
@@ -66,14 +69,13 @@ class ModerationQueueReportAction extends ModerationQueueAction
 
             $moderationQueueEditor->markAsConfirmed();
         }
-
-        $this->unmarkItems();
     }
 
     /**
      * Validates parameters to mark this report as done.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validateRemoveReport()
     {
@@ -105,6 +107,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Removes this report by marking it as done without further processing.
      *
      * @return void
+     * @deprecated 6.3 use the API endpoint `CloseReport` instead
      */
     public function removeReport()
     {
@@ -113,14 +116,13 @@ class ModerationQueueReportAction extends ModerationQueueAction
             $moderationQueueEditor->markAsRejected($this->parameters['markAsJustified'] ?? false);
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 
     /**
      * Validates parameters to prepare a report.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validatePrepareReport()
     {
@@ -158,6 +160,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Prepares a report.
      *
      * @return array{alreadyReported: 0|1, template: string}
+     * @deprecated 6.3
      */
     public function prepareReport()
     {
@@ -183,6 +186,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Validates parameters for reporting.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validateReport()
     {
@@ -211,6 +215,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
      * Reports an item.
      *
      * @return array{reported: 1}
+     * @deprecated 6.3 use `ReportAction` instead
      */
     public function report()
     {
@@ -239,7 +244,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
     /**
      * Validates the `changeJustifiedStatus` action.
      *
-     * @since   5.4
+     * @since 5.4
+     * @deprecated 6.3
      */
     public function validateChangeJustifiedStatus(): void
     {
@@ -253,6 +259,7 @@ class ModerationQueueReportAction extends ModerationQueueAction
 
     /**
      * Updates the `markAsJustified` status.
+     * @deprecated 6.3 use the API endpoint `ChangeJustifiedStatus` instead
      */
     public function changeJustifiedStatus(): void
     {
@@ -267,7 +274,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
     /**
      * Validates the `removeReportContent` action.
      *
-     * @since   5.4
+     * @since 5.4
+     * @deprecated 6.3
      */
     public function validateRemoveReportContent(): void
     {
@@ -294,7 +302,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
     /**
      * Deletes reported content via clipboard.
      *
-     * @since   5.4
+     * @since 5.4
+     * @deprecated 6.3 use the API endpoint `DeleteContent` instead
      */
     public function removeReportContent(): void
     {
@@ -308,7 +317,5 @@ class ModerationQueueReportAction extends ModerationQueueAction
             $moderationQueueEditor->markAsConfirmed();
         }
         WCF::getDB()->commitTransaction();
-
-        $this->unmarkItems();
     }
 }
