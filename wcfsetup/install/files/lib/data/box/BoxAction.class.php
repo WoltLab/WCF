@@ -2,13 +2,14 @@
 
 namespace wcf\data\box;
 
+use wcf\command\box\DisableBox;
+use wcf\command\box\EnableBox;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\content\BoxContent;
 use wcf\data\box\content\BoxContentEditor;
 use wcf\data\IToggleAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -29,8 +30,6 @@ use wcf\system\WCF;
  */
 class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -319,5 +318,27 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
             'objectTypeID' => $this->boxController->objectTypeID,
             'template' => $this->boxController->getProcessor() instanceof IConditionBoxController ? $this->boxController->getProcessor()->getConditionsTemplate() : '',
         ];
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableBox` or `DisableBox` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableBox($editor->getDecoratedObject()))();
+            } else {
+                (new DisableBox($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

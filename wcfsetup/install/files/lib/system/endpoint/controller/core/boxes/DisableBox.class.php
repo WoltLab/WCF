@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\box\Box;
-use wcf\data\box\BoxAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +30,7 @@ final class DisableBox implements IController
 
         $this->assertBoxCanBeDisabled($box);
 
-        (new BoxAction([$box], 'toggle'))->executeAction();
+        (new \wcf\command\box\DisableBox($box))();
 
         return new JsonResponse([]);
     }
