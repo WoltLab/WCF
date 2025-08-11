@@ -6,12 +6,10 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -29,23 +27,19 @@ final class EnableTrophy implements IController
     {
         $trophy = Helper::fetchObjectFromRequestParameter($variables['id'], Trophy::class);
 
-        $this->assertTrophyCanBeEnabled($trophy);
+        $this->assertTrophyCanBeEnabled();
 
-        (new TrophyAction([$trophy], 'toggle'))->executeAction();
+        (new \wcf\command\trophy\EnableTrophy($trophy))();
 
         return new JsonResponse([]);
     }
 
-    private function assertTrophyCanBeEnabled(Trophy $trophy): void
+    private function assertTrophyCanBeEnabled( ): void
     {
         if (!\MODULE_TROPHY) {
             throw new IllegalLinkException();
         }
 
         WCF::getSession()->checkPermissions(['admin.trophy.canManageTrophy']);
-
-        if (!$trophy->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }
