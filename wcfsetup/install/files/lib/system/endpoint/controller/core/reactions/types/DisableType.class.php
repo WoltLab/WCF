@@ -5,13 +5,12 @@ namespace wcf\system\endpoint\controller\core\reactions\types;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\reaction\type\DisableReactionType;
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -29,23 +28,19 @@ final class DisableType implements IController
     {
         $reactionType = Helper::fetchObjectFromRequestParameter($variables['id'], ReactionType::class);
 
-        $this->assertReactionTypeCanBeDisabled($reactionType);
+        $this->assertReactionTypeCanBeDisabled();
 
-        (new ReactionTypeAction([$reactionType], 'toggle'))->executeAction();
+        (new DisableReactionType($reactionType))();
 
         return new JsonResponse([]);
     }
 
-    private function assertReactionTypeCanBeDisabled(ReactionType $reactionType): void
+    private function assertReactionTypeCanBeDisabled(): void
     {
         if (!\MODULE_LIKE) {
             throw new IllegalLinkException();
         }
 
         WCF::getSession()->checkPermissions(["admin.content.reaction.canManageReactionType"]);
-
-        if (!$reactionType->isAssignable) {
-            throw new PermissionDeniedException();
-        }
     }
 }
