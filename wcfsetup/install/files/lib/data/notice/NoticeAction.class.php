@@ -2,9 +2,10 @@
 
 namespace wcf\data\notice;
 
+use wcf\command\notice\DisableNotice;
+use wcf\command\notice\EnableNotice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -20,8 +21,6 @@ use wcf\system\WCF;
  */
 class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -132,6 +131,28 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
             && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder
         ) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
+        }
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableNotice` or `DisableNotice` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableNotice($editor->getDecoratedObject()))();
+            } else {
+                (new DisableNotice($editor->getDecoratedObject()))();
+            }
         }
     }
 }

@@ -6,11 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -28,19 +26,15 @@ final class DisableNotice implements IController
     {
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);
 
-        $this->assertNoticeCanBeDisabled($notice);
+        $this->assertNoticeCanBeDisabled();
 
-        (new NoticeAction([$notice], 'toggle'))->executeAction();
+        (new \wcf\command\notice\DisableNotice($notice))();
 
         return new JsonResponse([]);
     }
 
-    private function assertNoticeCanBeDisabled(Notice $notice): void
+    private function assertNoticeCanBeDisabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.notice.canManageNotice']);
-
-        if ($notice->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }
