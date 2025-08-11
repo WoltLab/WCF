@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\page\Page;
-use wcf\data\page\PageAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +30,7 @@ final class EnablePage implements IController
 
         $this->assertPageCanBeEnabled($page);
 
-        (new PageAction([$page], 'toggle'))->executeAction();
+        (new \wcf\command\page\EnablePage($page))();
 
         return new JsonResponse([]);
     }
@@ -41,10 +40,6 @@ final class EnablePage implements IController
         WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
 
         if (!$page->canDisable()) {
-            throw new PermissionDeniedException();
-        }
-
-        if (!$page->isDisabled) {
             throw new PermissionDeniedException();
         }
     }

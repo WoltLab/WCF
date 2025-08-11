@@ -2,6 +2,8 @@
 
 namespace wcf\data\page;
 
+use wcf\command\page\DisablePage;
+use wcf\command\page\EnablePage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\Box;
 use wcf\data\ISearchAction;
@@ -9,7 +11,6 @@ use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentEditor;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -33,8 +34,6 @@ use wcf\system\WCF;
  */
 class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, ISortableAction, IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -305,6 +304,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
     /**
      * @inheritDoc
+     *
+     * @deprecated 6.3
      */
     public function validateToggle()
     {
@@ -529,5 +530,27 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 WHERE       pageID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnablePage` or `DisablePage` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnablePage($editor->getDecoratedObject()))();
+            } else {
+                (new DisablePage($editor->getDecoratedObject()))();
+            }
+        }
     }
 }
