@@ -2,10 +2,11 @@
 
 namespace wcf\data\cronjob;
 
+use wcf\command\cronjob\DisableCronjob;
+use wcf\command\cronjob\EnableCronjob;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\User;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\cronjob\ICronjob;
@@ -24,8 +25,6 @@ use wcf\util\DateUtil;
  */
 class CronjobAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -86,6 +85,8 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 
     /**
      * @inheritDoc
+     *
+     * @deprecated 6.3
      */
     public function validateToggle()
     {
@@ -241,5 +242,19 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
         WCF::getSession()->disableUpdate();
 
         CronjobScheduler::getInstance()->executeCronjobs();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableCronjob` or `DisableCronjob` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableCronjob($editor->getDecoratedObject()))();
+            } else {
+                (new DisableCronjob($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

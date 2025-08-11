@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\CronjobAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -32,7 +31,7 @@ final class DisableCronjob implements IController
         $this->assertCronjobCanBeDisabled($cronjob);
 
         if (!$cronjob->isDisabled) {
-            (new CronjobAction([$cronjob], 'toggle'))->executeAction();
+            (new \wcf\command\cronjob\DisableCronjob($cronjob))();
         }
 
         return new JsonResponse([]);
