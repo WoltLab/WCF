@@ -2,9 +2,10 @@
 
 namespace wcf\data\user\group\assignment;
 
+use wcf\command\user\group\assignment\DisableUserGroupAssignment;
+use wcf\command\user\group\assignment\EnableUserGroupAssignment;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 
 /**
@@ -18,8 +19,6 @@ use wcf\system\condition\ConditionHandler;
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -46,5 +45,27 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
         );
 
         return parent::delete();
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableUserGroupAssignment` or `DisableUserGroupAssignment` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableUserGroupAssignment($editor->getDecoratedObject()))();
+            } else {
+                (new DisableUserGroupAssignment($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

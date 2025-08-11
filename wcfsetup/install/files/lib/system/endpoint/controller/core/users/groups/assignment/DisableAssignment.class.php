@@ -5,12 +5,11 @@ namespace wcf\system\endpoint\controller\core\users\groups\assignment;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\group\assignment\DisableUserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignment;
-use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -28,19 +27,15 @@ final class DisableAssignment implements IController
     {
         $assignment = Helper::fetchObjectFromRequestParameter($variables['id'], UserGroupAssignment::class);
 
-        $this->assertAssignmentCanBeDisabled($assignment);
+        $this->assertAssignmentCanBeDisabled();
 
-        (new UserGroupAssignmentAction([$assignment], 'toggle'))->executeAction();
+        (new DisableUserGroupAssignment($assignment))();
 
         return new JsonResponse([]);
     }
 
-    private function assertAssignmentCanBeDisabled(UserGroupAssignment $assignment): void
+    private function assertAssignmentCanBeDisabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
-
-        if ($assignment->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }
