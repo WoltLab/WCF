@@ -5,12 +5,11 @@ namespace wcf\system\endpoint\controller\core\paid\subscriptions;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\paid\subscription\DisablePaidSubscription;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -29,19 +28,15 @@ final class DisableSubscription implements IController
     {
         $subscription = Helper::fetchObjectFromRequestParameter($variables['id'], PaidSubscription::class);
 
-        $this->assertSubscriptionCanBeDisabled($subscription);
+        $this->assertSubscriptionCanBeDisabled();
 
-        (new PaidSubscriptionAction([$subscription], 'toggle'))->executeAction();
+        (new DisablePaidSubscription($subscription))();
 
         return new JsonResponse([]);
     }
 
-    private function assertSubscriptionCanBeDisabled(PaidSubscription $subscription): void
+    private function assertSubscriptionCanBeDisabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.paidSubscription.canManageSubscription']);
-
-        if ($subscription->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }
