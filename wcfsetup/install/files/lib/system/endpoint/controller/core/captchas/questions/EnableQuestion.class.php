@@ -6,11 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\captcha\question\CaptchaQuestion;
-use wcf\data\captcha\question\CaptchaQuestionAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -31,7 +29,7 @@ final class EnableQuestion implements IController
 
         $this->assertQuestionCanBeEnabled($question);
 
-        (new CaptchaQuestionAction([$question], 'toggle'))->executeAction();
+        (new \wcf\command\captcha\question\EnableCaptchaQuestion($question))();
 
         return new JsonResponse([]);
     }
@@ -39,9 +37,5 @@ final class EnableQuestion implements IController
     private function assertQuestionCanBeEnabled(CaptchaQuestion $question): void
     {
         WCF::getSession()->checkPermissions(['admin.captcha.canManageCaptchaQuestion']);
-
-        if (!$question->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }

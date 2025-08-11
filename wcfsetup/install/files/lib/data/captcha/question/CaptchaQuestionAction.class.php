@@ -2,9 +2,10 @@
 
 namespace wcf\data\captcha\question;
 
+use wcf\command\captcha\question\DisableCaptchaQuestion;
+use wcf\command\captcha\question\EnableCaptchaQuestion;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\TI18nDatabaseObjectAction;
 
 /**
@@ -18,7 +19,6 @@ use wcf\data\TI18nDatabaseObjectAction;
  */
 class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
     use TI18nDatabaseObjectAction;
 
     /**
@@ -86,5 +86,27 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
         $this->deleteI18nValues();
 
         return $returnValue;
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableCaptchaQuestion` or `DisableCaptchaQuestion` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableCaptchaQuestion($editor->getDecoratedObject()))();
+            } else {
+                (new DisableCaptchaQuestion($editor->getDecoratedObject()))();
+            }
+        }
     }
 }
