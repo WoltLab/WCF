@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\style\Style;
-use wcf\data\style\StyleEditor;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -30,11 +29,7 @@ final class EnableStyle implements IController
 
         $this->assertStyleCanBeEnabled();
 
-        if ($style->isDisabled) {
-            (new StyleEditor($style))->update([
-                'isDisabled' => 0,
-            ]);
-        }
+        (new \wcf\command\style\EnableStyle($style))();
 
         return new JsonResponse([]);
     }
