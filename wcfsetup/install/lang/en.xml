@@ -4122,6 +4122,7 @@ Attachments:
 		<item name="wcf.form.option.shared.maxValue"><![CDATA[Maximum]]></item>
 		<item name="wcf.form.option.shared.selectOptions"><![CDATA[Options]]></item>
 		<item name="wcf.form.option.shared.required"><![CDATA[This is a required field]]></item>
+		<item name="wcf.form.option.shared.unit"><![CDATA[Unit]]></item>
 		<item name="wcf.form.option.optionType"><![CDATA[Option Type]]></item>
 	</category>
 	<category name="wcf.image">
