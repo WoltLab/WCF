@@ -4,11 +4,10 @@ namespace wcf\data\notice;
 
 use wcf\command\notice\DisableNotice;
 use wcf\command\notice\EnableNotice;
+use wcf\command\notice\DismissNotice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\WCF;
 
 /**
  * Executes notice-related actions.
@@ -75,33 +74,14 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      * Dismisses a certain notice.
      *
      * @return  int[]
+     *
+     * @deprecated 6.3 Use the `DismissNotice` command instead.
      */
     public function dismiss()
     {
-        if (WCF::getUser()->userID) {
-            $sql = "INSERT IGNORE INTO  wcf1_notice_dismissed
-                                        (noticeID, userID)
-                    VALUES              (?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                \reset($this->objectIDs),
-                WCF::getUser()->userID,
-            ]);
+        $editor = $this->getSingleObject();
 
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'dismissedNotices');
-        } else {
-            $dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
-            if ($dismissedNotices !== null) {
-                $dismissedNotices = @\unserialize($dismissedNotices);
-                $dismissedNotices[] = \reset($this->objectIDs);
-            } else {
-                $dismissedNotices = [
-                    \reset($this->objectIDs),
-                ];
-            }
-
-            WCF::getSession()->register('dismissedNotices', \serialize($dismissedNotices));
-        }
+        (new DismissNotice($editor->getDecoratedObject()))();
 
         return [
             'noticeID' => \reset($this->objectIDs),
@@ -112,6 +92,8 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      * Validates the 'dismiss' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateDismiss()
     {

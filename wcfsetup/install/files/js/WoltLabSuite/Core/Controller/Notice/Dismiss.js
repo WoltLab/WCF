@@ -6,33 +6,23 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax"], function (require, exports, tslib_1, Ajax) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Notices/DismissNotice", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, DismissNotice_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    Ajax = tslib_1.__importStar(Ajax);
     /**
      * Initializes dismiss buttons.
      */
     function setup() {
         document.querySelectorAll(".jsDismissNoticeButton").forEach((button) => {
-            button.addEventListener("click", (ev) => click(ev));
+            button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => click(button)));
         });
     }
     /**
      * Sends a request to dismiss a notice and removes it afterwards.
      */
-    function click(event) {
-        const button = event.currentTarget;
-        Ajax.apiOnce({
-            data: {
-                actionName: "dismiss",
-                className: "wcf\\data\\notice\\NoticeAction",
-                objectIDs: [button.dataset.objectId],
-            },
-            success: () => {
-                button.parentElement.remove();
-            },
-        });
+    async function click(button) {
+        await (0, DismissNotice_1.dismissNotice)(parseInt(button.dataset.objectId, 10));
+        button.parentElement.remove();
     }
 });
