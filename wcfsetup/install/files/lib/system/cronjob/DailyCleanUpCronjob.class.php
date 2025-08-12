@@ -2,8 +2,8 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\command\email\log\entry\PruneEmailLogEntries;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\email\log\entry\EmailLogEntryAction;
 use wcf\system\flood\FloodControl;
 use wcf\system\user\multifactor\EmailMultifactorMethod;
 use wcf\system\visitTracker\VisitTracker;
@@ -210,6 +210,6 @@ class DailyCleanUpCronjob extends AbstractCronjob
 
         FloodControl::getInstance()->prune();
         EmailMultifactorMethod::prune();
-        (new EmailLogEntryAction([], 'prune'))->executeAction();
+        (new PruneEmailLogEntries())();
     }
 }
