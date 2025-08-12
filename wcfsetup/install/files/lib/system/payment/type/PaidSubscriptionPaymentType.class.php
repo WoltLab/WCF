@@ -2,6 +2,9 @@
 
 namespace wcf\system\payment\type;
 
+use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
+use wcf\command\paid\subscription\user\RestorePaidSubscriptionUser;
+use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogAction;
@@ -83,25 +86,19 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                     $returnValues = $action->executeAction();
                     $userSubscription = $returnValues['returnValues'];
                 } else {
-                    // extend existing subscription
-                    $action = new PaidSubscriptionUserAction([$userSubscription], 'extend');
-                    $action->executeAction();
+                    (new ExtendPaidSubscriptionUser($userSubscription))();
                 }
                 $logMessage = 'payment completed';
             }
             if ($status == 'reversed') {
                 if ($userSubscription !== null) {
-                    // revoke subscription
-                    $action = new PaidSubscriptionUserAction([$userSubscription], 'revoke');
-                    $action->executeAction();
+                    (new RevokePaidSubscriptionUser($userSubscription))();
                 }
                 $logMessage = 'payment reversed';
             }
             if ($status == 'canceled_reversal') {
                 if ($userSubscription !== null) {
-                    // restore subscription
-                    $action = new PaidSubscriptionUserAction([$userSubscription], 'restore');
-                    $action->executeAction();
+                    (new RestorePaidSubscriptionUser($userSubscription))();
                 }
                 $logMessage = 'reversal canceled';
             }

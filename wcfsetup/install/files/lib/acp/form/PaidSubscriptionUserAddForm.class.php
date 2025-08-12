@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
@@ -169,9 +170,10 @@ class PaidSubscriptionUserAddForm extends AbstractForm
             ]);
             $this->objectAction->executeAction();
         } else {
-            // extend existing subscription
-            $this->objectAction = new PaidSubscriptionUserAction([$userSubscription], 'extend', ['data' => $data]);
-            $this->objectAction->executeAction();
+            (new ExtendPaidSubscriptionUser(
+                $userSubscription,
+                $data['endDate'] ?? 0
+            ))();
         }
         $this->saved();
 

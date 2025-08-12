@@ -2,11 +2,14 @@
 
 namespace wcf\data\paid\subscription\user;
 
+use wcf\command\paid\subscription\AddGroupMembership;
+use wcf\command\paid\subscription\RemoveGroupMembership;
+use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
+use wcf\command\paid\subscription\user\RestorePaidSubscriptionUser;
+use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\system\exception\UserInputException;
 use wcf\util\DateUtil;
 
@@ -62,9 +65,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
 
         $subscriptionUser = parent::create();
 
-        // update group memberships
-        $action = new self([$subscriptionUser], 'addGroupMemberships');
-        $action->executeAction();
+        (new AddGroupMembership(
+            $this->parameters['subscription'],
+            $this->parameters['user']
+        ))();
 
         return $subscriptionUser;
     }
@@ -91,6 +95,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Extends an existing subscription.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `ExtendPaidSubscriptionUser` command instead.
      */
     public function extend()
     {
@@ -98,29 +104,14 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $subscriptionUser) {
-            $endDate = 0;
-            if (!isset($this->parameters['data']['endDate'])) {
-                $subscription = $subscriptionUser->getSubscription();
-                if ($subscription->subscriptionLength) {
-                    $d = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-                    $d->add($subscription->getDateInterval());
-                    $endDate = $d->getTimestamp();
-                }
+        foreach ($this->getObjects() as $editor) {
+            if (isset($this->parameters['data']['endDate'])) {
+                (new ExtendPaidSubscriptionUser(
+                    $editor->getDecoratedObject(),
+                    $this->parameters['data']['endDate']
+                ))();
             } else {
-                $endDate = $this->parameters['data']['endDate'];
-            }
-
-            $subscriptionUser->update([
-                'endDate' => $endDate,
-                'isActive' => 1,
-                'sentExpirationNotification' => 0,
-            ]);
-
-            if (!$subscriptionUser->isActive) {
-                // update group memberships
-                $action = new self([$subscriptionUser], 'addGroupMemberships');
-                $action->executeAction();
+                (new ExtendPaidSubscriptionUser($editor->getDecoratedObject()))();
             }
         }
     }
@@ -139,6 +130,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Revokes an existing subscription.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `RevokePaidSubscriptionUser` command instead.
      */
     public function revoke()
     {
@@ -146,28 +139,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $userIDs = [];
-        foreach ($this->getObjects() as $subscriptionUser) {
-            $userIDs[] = $subscriptionUser->userID;
-            $subscriptionUser->update(['isActive' => 0]);
-
-            // update group memberships
-            $action = new self([$subscriptionUser], 'removeGroupMemberships');
-            $action->executeAction();
-        }
-
-        if (!empty($userIDs)) {
-            $userIDs = \array_unique($userIDs);
-
-            $subscriptionUserList = new PaidSubscriptionUserList();
-            $subscriptionUserList->getConditionBuilder()->add('isActive = ?', [1]);
-            $subscriptionUserList->getConditionBuilder()->add('userID IN (?)', [$userIDs]);
-            $subscriptionUserList->readObjects();
-
-            if (\count($subscriptionUserList->getObjects())) {
-                $action = new self($subscriptionUserList->getObjects(), 'addGroupMemberships');
-                $action->executeAction();
-            }
+        foreach ($this->getObjects() as $editor) {
+            (new RevokePaidSubscriptionUser($editor->getDecoratedObject()))();
         }
     }
 
@@ -175,6 +148,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Validates the revoke action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateRevoke()
     {
@@ -193,6 +168,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Restores an existing subscription.
      *
      * @return void
+     *
+     * @deprecated 6.3 use the `RestorePaidSubscriptionUser` command instead.
      */
     public function restore()
     {
@@ -200,12 +177,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $subscriptionUser) {
-            $subscriptionUser->update(['isActive' => 1]);
-
-            // update group memberships
-            $action = new self([$subscriptionUser], 'addGroupMemberships');
-            $action->executeAction();
+        foreach ($this->getObjects() as $editor) {
+            (new RestorePaidSubscriptionUser($editor->getDecoratedObject()))();
         }
     }
 
@@ -213,6 +186,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Validates the restore action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateRestore()
     {
@@ -231,6 +206,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Applies group memberships.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `AddGroupMembership` command instead.
      */
     public function addGroupMemberships()
     {
@@ -239,21 +216,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $subscriptionUser) {
-            $groupIDs = [];
-            foreach (\explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
-                $groupID = (int)$groupID;
-                if (UserGroup::getGroupByID($groupID) !== null) {
-                    $groupIDs[] = $groupID;
-                }
-            }
-            if (!empty($groupIDs)) {
-                $action = new UserAction([$subscriptionUser->userID], 'addToGroups', [
-                    'groups' => $groupIDs,
-                    'deleteOldGroups' => false,
-                    'addDefaultGroups' => false,
-                ]);
-                $action->executeAction();
-            }
+            (new AddGroupMembership(
+                $subscriptionUser->getSubscription(),
+                $subscriptionUser->getUser()
+            ))();
         }
     }
 
@@ -261,6 +227,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      * Removes group memberships.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `RemoveGroupMembership` command instead.
      */
     public function removeGroupMemberships()
     {
@@ -268,20 +236,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $subscriptionUser) {
-            $groupIDs = [];
-            foreach (\explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
-                $groupID = (int)$groupID;
-                if (UserGroup::getGroupByID($groupID) !== null) {
-                    $groupIDs[] = $groupID;
-                }
-            }
-            if (!empty($groupIDs)) {
-                $action = new UserAction([$subscriptionUser->userID], 'removeFromGroups', [
-                    'groups' => $groupIDs,
-                ]);
-                $action->executeAction();
-            }
+        foreach ($this->getObjects() as $editor) {
+            (new RemoveGroupMembership($editor->getSubscription(), $editor->getUser()))();
         }
     }
 }
