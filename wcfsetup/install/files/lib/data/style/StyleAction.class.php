@@ -546,6 +546,8 @@ BROWSERCONFIG;
      * Validates the 'getStyleChooser' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateGetStyleChooser()
     {
@@ -556,6 +558,8 @@ BROWSERCONFIG;
      * Returns the style chooser dialog.
      *
      * @return array{actionName: string, template: string}
+     *
+     * @deprecated 6.3 Use the `\wcf\system\endpoint\controller\core\styles\GetStyleChooser` API-Endpoint instead.
      */
     public function getStyleChooser()
     {
