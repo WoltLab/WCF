@@ -2,9 +2,9 @@
 
 namespace wcf\data\user\ignore;
 
+use wcf\command\user\IgnoreUser;
+use wcf\command\user\UnignoreUser;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\user\follow\UserFollow;
-use wcf\data\user\follow\UserFollowEditor;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -38,6 +38,8 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      * Validates the 'ignore' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateIgnore()
     {
@@ -70,53 +72,14 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      * Ignores a user.
      *
      * @return array{isIgnoredUser: 1}
+     *
+     * @deprecated 6.3 use the `IgnoreUser` command instead.
      */
     public function ignore()
     {
-        $ignore = new UserIgnoreEditor(UserIgnore::getIgnore($this->parameters['data']['userID']));
         $type = $this->parameters['data']['type'] ?? UserIgnore::TYPE_BLOCK_DIRECT_CONTACT;
 
-        if ($ignore->ignoreID) {
-            $ignore->update([
-                'type' => $type,
-                'time' => TIME_NOW,
-            ]);
-        } else {
-            $ignore = UserIgnoreEditor::createOrIgnore([
-                'ignoreUserID' => $this->parameters['data']['userID'],
-                'type' => $type,
-                'time' => TIME_NOW,
-                'userID' => WCF::getUser()->userID,
-            ]);
-        }
-
-        if ($ignore !== null) {
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
-            UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
-
-            // check if target user is following the current user
-            $sql = "SELECT  *
-                    FROM    wcf1_user_follow
-                    WHERE   userID = ?
-                        AND followUserID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $this->parameters['data']['userID'],
-                WCF::getUser()->userID,
-            ]);
-
-            $follow = $statement->fetchObject(UserFollow::class);
-
-            // remove follower
-            if ($follow !== null) {
-                $followEditor = new UserFollowEditor($follow);
-                $followEditor->delete();
-
-                // reset storage
-                UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followerUserIDs');
-                UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followingUserIDs');
-            }
-        }
+        (new IgnoreUser($this->parameters['data']['userID'], $type))();
 
         return ['isIgnoredUser' => 1];
     }
@@ -125,6 +88,8 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      * Validates the 'unignore' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateUnignore()
     {
@@ -140,18 +105,12 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      * Unignores a user.
      *
      * @return array{isIgnoredUser: 0}
+     *
+     * @deprecated 6.3 use the `UnignoreUser` command instead.
      */
     public function unignore()
     {
-        $ignore = UserIgnore::getIgnore($this->parameters['data']['userID']);
-
-        if ($ignore->ignoreID) {
-            $ignoreEditor = new UserIgnoreEditor($ignore);
-            $ignoreEditor->delete();
-
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
-            UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
-        }
+        (new UnignoreUser($this->parameters['data']['userID']))();
 
         return ['isIgnoredUser' => 0];
     }

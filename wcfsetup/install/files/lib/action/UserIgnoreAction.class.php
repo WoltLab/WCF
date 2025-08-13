@@ -6,8 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\command\user\IgnoreUser;
+use wcf\command\user\UnignoreUser;
 use wcf\data\user\ignore\UserIgnore;
-use wcf\data\user\ignore\UserIgnoreAction as IgnoreUserIgnoreAction;
 use wcf\data\user\UserProfile;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -62,18 +63,9 @@ final class UserIgnoreAction implements RequestHandlerInterface
             $type = \intval($form->getData()['data']['type']);
 
             if ($type === UserIgnore::TYPE_NO_IGNORE) {
-                (new IgnoreUserIgnoreAction([], 'unignore', [
-                    'data' => [
-                        'userID' => $parameters['id'],
-                    ],
-                ]))->executeAction();
+                (new UnignoreUser($parameters['id']))();
             } else {
-                (new IgnoreUserIgnoreAction([], 'ignore', [
-                    'data' => [
-                        'userID' => $parameters['id'],
-                        'type' => $type,
-                    ],
-                ]))->executeAction();
+                (new IgnoreUser($parameters['id'], $type))();
             }
 
             return new JsonResponse([
