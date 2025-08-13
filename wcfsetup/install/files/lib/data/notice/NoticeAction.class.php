@@ -81,7 +81,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         $editor = $this->getSingleObject();
 
-        (new DismissNotice($editor->getDecoratedObject()))();
+        if ($editor->isDismissible) {
+            (new DismissNotice($editor->getDecoratedObject()))();
+        }
 
         return [
             'noticeID' => \reset($this->objectIDs),
