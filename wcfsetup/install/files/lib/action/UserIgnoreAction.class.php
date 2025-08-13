@@ -12,6 +12,7 @@ use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\UserProfile;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -62,10 +63,11 @@ final class UserIgnoreAction implements RequestHandlerInterface
 
             $type = \intval($form->getData()['data']['type']);
 
+            $user = UserRuntimeCache::getInstance()->getObject($parameters['id']);
             if ($type === UserIgnore::TYPE_NO_IGNORE) {
-                (new UnignoreUser($parameters['id']))();
+                (new UnignoreUser(WCF::getUser(), $user))();
             } else {
-                (new IgnoreUser($parameters['id'], $type))();
+                (new IgnoreUser(WCF::getUser(), $user, $type))();
             }
 
             return new JsonResponse([

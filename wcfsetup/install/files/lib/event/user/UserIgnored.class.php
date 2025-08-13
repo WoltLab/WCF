@@ -2,10 +2,11 @@
 
 namespace wcf\event\user;
 
+use wcf\data\user\User;
 use wcf\event\IPsr14Event;
 
 /**
- * Indicates that the current user has ignored another user.
+ * Indicates that the user has ignored another user.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -14,5 +15,5 @@ use wcf\event\IPsr14Event;
  */
 final class UserIgnored implements IPsr14Event
 {
-    public function __construct(public readonly int $ignoreUserID, public readonly int $type) {}
+    public function __construct(public readonly User $user, public readonly User $ignoreUser, public readonly int $type) {}
 }

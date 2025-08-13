@@ -6,6 +6,7 @@ use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\User;
 use wcf\event\user\UserIgnored;
 use wcf\system\event\EventHandler;
+use wcf\system\user\command\Unfollow;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -20,49 +21,36 @@ use wcf\system\WCF;
 final class IgnoreUser
 {
     public function __construct(
-        private readonly int $ignoreUserID,
+        private readonly User $user,
+        private readonly User $ignoreUser,
         /** @var UserIgnore::TYPE_BLOCK_DIRECT_CONTACT|UserIgnore::TYPE_HIDE_MESSAGES */
         private readonly int $type
     ) {}
 
     public function __invoke(): void
     {
-        $user = WCF::getUser();
+        $this->ignoreUser($this->user, $this->ignoreUser, $this->type);
 
-        $this->ignoreUser($user->userID, $this->ignoreUserID, $this->type);
-        $this->deleteFollowing($user->userID, $this->ignoreUserID);
+        (new Unfollow(WCF::getUser(), $this->ignoreUser))();
 
-        $this->resetStorage($user, $this->ignoreUserID);
+        $this->resetStorage($this->user, $this->ignoreUser);
 
-        $event = new UserIgnored($this->ignoreUserID, $this->type);
+        $event = new UserIgnored($this->user, $this->ignoreUser, $this->type);
         EventHandler::getInstance()->fire($event);
     }
 
-    private function resetStorage(User $user, int $ignoreUserID): void
+    private function resetStorage(User $user, User $ignoreUser): void
     {
-        UserStorageHandler::getInstance()->reset([$user->userID, $ignoreUserID], 'ignoredByUserIDs');
-        UserStorageHandler::getInstance()->reset([$user->userID, $ignoreUserID], 'followerUserIDs');
+        UserStorageHandler::getInstance()->reset([$user->userID, $ignoreUser->userID], 'ignoredByUserIDs');
     }
 
-    private function deleteFollowing(int $userID, int $followUserID): void
-    {
-        $sql = "DELETE FROM wcf1_user_follow
-                WHERE       userID = ?
-                        AND followUserID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $userID,
-            $followUserID,
-        ]);
-    }
-
-    private function ignoreUser(int $userID, int $ignoreUserID, int $type): void
+    private function ignoreUser(User $user, User $ignoreUser, int $type): void
     {
         $sql = "INSERT INTO wcf1_user_ignore
                             (userID, ignoreUserID, type, time)
                 VALUES      (?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE type = VALUES(type), time = VALUES(time)";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$userID, $ignoreUserID, $type, TIME_NOW]);
+        $statement->execute([$user->userID, $ignoreUser->userID, $type, TIME_NOW]);
     }
 }

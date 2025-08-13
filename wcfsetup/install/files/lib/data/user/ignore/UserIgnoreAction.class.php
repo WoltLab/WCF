@@ -6,6 +6,7 @@ use wcf\command\user\IgnoreUser;
 use wcf\command\user\UnignoreUser;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -78,8 +79,9 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
     public function ignore()
     {
         $type = $this->parameters['data']['type'] ?? UserIgnore::TYPE_BLOCK_DIRECT_CONTACT;
+        $user = UserRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
 
-        (new IgnoreUser($this->parameters['data']['userID'], $type))();
+        (new IgnoreUser(WCF::getUser(), $user, $type))();
 
         return ['isIgnoredUser' => 1];
     }
@@ -110,7 +112,9 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
      */
     public function unignore()
     {
-        (new UnignoreUser($this->parameters['data']['userID']))();
+        $user = UserRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
+
+        (new UnignoreUser(WCF::getUser(), $user))();
 
         return ['isIgnoredUser' => 0];
     }
