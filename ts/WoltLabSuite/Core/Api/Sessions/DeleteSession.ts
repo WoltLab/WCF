@@ -10,14 +10,10 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
-export async function deleteSession(sessionId: string): Promise<ApiResult<[]>> {
-  try {
-    await prepareRequest(`${window.WSC_RPC_API_URL}core/sessions/${sessionId}`).delete().fetchAsJson();
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue([]);
+export async function deleteSession(sessionId: string): Promise<[]> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/sessions/${sessionId}`).delete().fetchAsJson();
+  });
 }

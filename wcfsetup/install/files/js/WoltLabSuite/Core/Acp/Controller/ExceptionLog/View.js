@@ -11,11 +11,8 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Exceptions/RenderException"
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function showDialog(button) {
-        const response = await (0, RenderException_1.renderException)(button.closest("tr").dataset.objectId);
-        if (!response.ok) {
-            return;
-        }
-        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(response.value.template).withoutControls();
+        const { template } = await (0, RenderException_1.renderException)(button.closest("tr").dataset.objectId);
+        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(template).withoutControls();
         dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", () => {
             void (0, Clipboard_1.copyTextToClipboard)(dialog.content.querySelector(".jsCopyException").value);
         });

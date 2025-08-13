@@ -14,12 +14,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/ModerationQueues/ChangeJust
     async function handleRemoveContent(queueId, objectName, redirectUrl) {
         const { result, reason } = await (0, Confirmation_1.confirmationFactory)().softDelete(objectName, true);
         if (result) {
-            const response = await (0, DeleteContent_1.deleteContent)(queueId, reason);
-            if (response.ok) {
-                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                    window.location.href = redirectUrl;
-                });
-            }
+            await (0, DeleteContent_1.deleteContent)(queueId, reason);
+            (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                window.location.href = redirectUrl;
+            });
         }
     }
     async function handleCloseReport(queueId, redirectUrl) {
@@ -33,12 +31,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/ModerationQueues/ChangeJust
             label.append(input, " ", (0, Language_1.getPhrase)("wcf.moderation.report.removeReport.markAsJustified"));
         });
         if (result) {
-            const response = await (0, CloseReport_1.closeReport)(queueId, dialog.content.querySelector("input").checked);
-            if (response.ok) {
-                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                    window.location.href = redirectUrl;
-                });
-            }
+            await (0, CloseReport_1.closeReport)(queueId, dialog.content.querySelector("input").checked);
+            (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                window.location.href = redirectUrl;
+            });
         }
     }
     async function handleChangeJustifiedStatus(queueId, justified, redirectUrl) {
@@ -53,12 +49,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/ModerationQueues/ChangeJust
             label.append(input, " ", (0, Language_1.getPhrase)("wcf.moderation.report.changeJustifiedStatus.markAsJustified"));
         });
         if (result) {
-            const response = await (0, ChangeJustifiedStatus_1.changeJustifiedStatus)(queueId, dialog.content.querySelector("input").checked);
-            if (response.ok) {
-                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                    window.location.href = redirectUrl;
-                });
-            }
+            await (0, ChangeJustifiedStatus_1.changeJustifiedStatus)(queueId, dialog.content.querySelector("input").checked);
+            (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                window.location.href = redirectUrl;
+            });
         }
     }
     function setup(removeContentButton, closeReportButton, changeJustifiedStatusButton) {

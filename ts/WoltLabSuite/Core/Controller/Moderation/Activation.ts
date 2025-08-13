@@ -21,12 +21,11 @@ async function handleEnableContent(queueId: number, redirectUrl: string): Promis
     .withoutMessage();
 
   if (result) {
-    const response = await enableContent(queueId);
-    if (response.ok) {
-      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-        window.location.href = redirectUrl;
-      });
-    }
+    await enableContent(queueId);
+
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.href = redirectUrl;
+    });
   }
 }
 
@@ -34,12 +33,11 @@ async function handleRemoveContent(queueId: number, objectName: string, redirect
   const { result, reason } = await confirmationFactory().softDelete(objectName, true);
 
   if (result) {
-    const response = await deleteContent(queueId, reason);
-    if (response.ok) {
-      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-        window.location.href = redirectUrl;
-      });
-    }
+    await deleteContent(queueId, reason);
+
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.href = redirectUrl;
+    });
   }
 }
 

@@ -42,14 +42,14 @@ export class StandaloneButton {
   }
 
   async #refreshContextMenu(): Promise<void> {
-    const response = (await getContextMenuOptions(this.#providerClassName, this.#objectId)).unwrap();
+    const { template } = await getContextMenuOptions(this.#providerClassName, this.#objectId);
 
     const dropdown = this.#getDropdownMenu();
     if (!dropdown) {
       return;
     }
 
-    dropdown.innerHTML = response.template;
+    dropdown.innerHTML = template;
 
     this.#initInteractions();
   }

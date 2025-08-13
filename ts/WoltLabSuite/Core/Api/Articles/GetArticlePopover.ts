@@ -8,21 +8,16 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "WoltLabSuite/Core/Api/Result";
+import { fromInfallibleApiRequest } from "WoltLabSuite/Core/Api/Result";
 
 type Response = {
   template: string;
 };
 
-export async function getArticlePopover(articleId: number): Promise<ApiResult<string>> {
+export async function getArticlePopover(articleId: number): Promise<string> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/articles/${articleId}/popover`);
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url).get().fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response.template);
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(url).get().fetchAsJson();
+  });
 }

@@ -17,12 +17,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/VersionTrackers/RevertVersi
                 if (!result) {
                     return;
                 }
-                const response = await (0, RevertVersion_1.revertVersion)(objectType, objectId, parseInt(button.dataset.objectId));
-                if (response.ok) {
-                    (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                        window.location.reload();
-                    });
-                }
+                await (0, RevertVersion_1.revertVersion)(objectType, objectId, parseInt(button.dataset.objectId));
+                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                    window.location.reload();
+                });
             });
         });
     }

@@ -27,12 +27,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             this.#initEventListeners();
         }
         async #refreshContextMenu() {
-            const response = (await (0, GetContextMenuOptions_1.getContextMenuOptions)(this.#providerClassName, this.#objectId)).unwrap();
+            const { template } = await (0, GetContextMenuOptions_1.getContextMenuOptions)(this.#providerClassName, this.#objectId);
             const dropdown = this.#getDropdownMenu();
             if (!dropdown) {
                 return;
             }
-            dropdown.innerHTML = response.template;
+            dropdown.innerHTML = template;
             this.#initInteractions();
         }
         async #refreshHeader() {

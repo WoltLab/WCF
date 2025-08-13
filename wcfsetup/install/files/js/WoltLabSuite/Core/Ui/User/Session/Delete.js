@@ -16,7 +16,7 @@ define(["require", "exports", "tslib", "../../Confirmation", "../../../Language"
         UiConfirmation.show({
             message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
             confirm: async (_parameters) => {
-                (await (0, DeleteSession_1.deleteSession)(button.dataset.sessionId)).unwrap();
+                await (0, DeleteSession_1.deleteSession)(button.dataset.sessionId);
                 button.closest("li")?.remove();
                 (0, Snackbar_1.showDefaultSuccessSnackbar)();
             },

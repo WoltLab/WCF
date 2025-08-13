@@ -9,16 +9,12 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
-export async function enableContent(queueId: number): Promise<ApiResult<[]>> {
-  try {
-    await prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/enable-content`)
+export async function enableContent(queueId: number): Promise<[]> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/enable-content`)
       .post()
       .fetchAsJson();
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue([]);
+  });
 }

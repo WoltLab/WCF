@@ -9,12 +9,11 @@
 					.withoutMessage();
 					
 				if (result) {
-					const response = await clearLogs();
-					if (response.ok) {
-						showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-							window.location.reload();
-						});
-					}
+					await clearLogs();
+
+					showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+						window.location.reload();
+					});
 				}
 			});
 		});

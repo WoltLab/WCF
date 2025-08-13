@@ -29,7 +29,7 @@ export async function mentionSuggestions(query: string): Promise<Response> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/mention-suggestions");
   url.searchParams.set("query", query);
 
-  return fromInfallibleApiRequest<Response>(() => {
+  return fromInfallibleApiRequest(() => {
     return prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson();
   });
 }
