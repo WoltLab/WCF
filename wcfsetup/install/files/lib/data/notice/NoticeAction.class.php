@@ -74,7 +74,6 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      * Dismisses a certain notice.
      *
      * @return  int[]
-     *
      * @deprecated 6.3 Use the `DismissNotice` command instead.
      */
     public function dismiss()
@@ -94,7 +93,6 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      * Validates the 'dismiss' action.
      *
      * @return void
-     *
      * @deprecated 6.3
      */
     public function validateDismiss()

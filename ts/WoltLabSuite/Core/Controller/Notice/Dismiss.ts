@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @woltlabExcludeBundle tiny
  */
 
 import { dismissNotice } from "WoltLabSuite/Core/Api/Notices/DismissNotice";
@@ -26,7 +25,7 @@ export function setup(): void {
  * Sends a request to dismiss a notice and removes it afterwards.
  */
 async function click(button: HTMLElement): Promise<void> {
-  await dismissNotice(parseInt(button.dataset.objectId!, 10));
+  (await dismissNotice(parseInt(button.dataset.objectId!, 10))).unwrap();
 
   button.parentElement!.remove();
 }

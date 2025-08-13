@@ -6,7 +6,7 @@ use wcf\data\notice\Notice;
 use wcf\event\IPsr14Event;
 
 /**
- * Indicates that a notice has been dismissed by the current user.
+ * Indicates that a notice has been dismissed.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
@@ -15,5 +15,7 @@ use wcf\event\IPsr14Event;
  */
 final class NoticeDismissed implements IPsr14Event
 {
-    public function __construct(public readonly Notice $notice) {}
+    public function __construct(
+        public readonly Notice $notice
+    ) {}
 }

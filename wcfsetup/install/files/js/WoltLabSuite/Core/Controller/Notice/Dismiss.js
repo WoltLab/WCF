@@ -4,7 +4,6 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "WoltLabSuite/Core/Api/Notices/DismissNotice", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, DismissNotice_1, PromiseMutex_1) {
     "use strict";
@@ -22,7 +21,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/Notices/DismissNotice", "Wo
      * Sends a request to dismiss a notice and removes it afterwards.
      */
     async function click(button) {
-        await (0, DismissNotice_1.dismissNotice)(parseInt(button.dataset.objectId, 10));
+        (await (0, DismissNotice_1.dismissNotice)(parseInt(button.dataset.objectId, 10))).unwrap();
         button.parentElement.remove();
     }
 });

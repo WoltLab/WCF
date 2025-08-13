@@ -9,7 +9,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
- * Dismisses a notice for the current user.
+ * Dismisses a notice.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

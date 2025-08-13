@@ -12,7 +12,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
- * API endpoint to dismiss a notice for the current user.
+ * Dismisses a notice.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
