@@ -30,7 +30,9 @@ final class DisableOption implements IController
 
         $option = Helper::fetchObjectFromRequestParameter($variables['id'], ContactOption::class);
 
-        (new DisableContactOption($option))();
+        if (!$option->isDisabled) {
+            (new DisableContactOption($option))();
+        }
 
         return new JsonResponse([]);
     }

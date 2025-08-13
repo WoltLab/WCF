@@ -20,10 +20,6 @@ final class EnableContactRecipient {
 
     public function __invoke(): void
     {
-        if (!$this->recipient->isDisabled) {
-            return;
-        }
-
         (new ContactRecipientEditor($this->recipient))->update([
             'isDisabled' => 0,
         ]);

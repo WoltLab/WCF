@@ -21,14 +21,6 @@ final class DisableStyle
 
     public function __invoke(): void
     {
-        if ($this->style->isDefault) {
-            return;
-        }
-
-        if ($this->style->isDisabled) {
-            return;
-        }
-
         (new StyleEditor($this->style))->update([
             'isDisabled' => 1,
         ]);

@@ -22,14 +22,6 @@ final class DisableCronjob implements IPsr14Event
 
     public function __invoke(): void
     {
-        if (!$this->cronjob->canBeDisabled()) {
-            return;
-        }
-
-        if ($this->cronjob->isDisabled) {
-            return;
-        }
-
         (new CronjobEditor($this->cronjob))->update([
             'isDisabled' => 1,
         ]);

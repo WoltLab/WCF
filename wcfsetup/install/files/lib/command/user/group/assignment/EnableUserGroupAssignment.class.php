@@ -21,10 +21,6 @@ final class EnableUserGroupAssignment
 
     public function __invoke(): void
     {
-        if (!$this->assignment->isDisabled) {
-            return;
-        }
-
         (new UserGroupAssignmentEditor($this->assignment))->update([
             'isDisabled' => 0,
         ]);

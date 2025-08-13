@@ -29,7 +29,9 @@ final class EnableBox implements IController
 
         $this->assertBoxCanBeEnabled();
 
-        (new \wcf\command\box\EnableBox($box))();
+        if ($box->isDisabled) {
+            (new \wcf\command\box\EnableBox($box))();
+        }
 
         return new JsonResponse([]);
     }

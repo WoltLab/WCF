@@ -25,10 +25,6 @@ final class EnableTrophy
 
     public function __invoke(): void
     {
-        if (!$this->trophy->isDisabled) {
-            return;
-        }
-
         (new TrophyEditor($this->trophy))->update([
             'isDisabled' => 0,
         ]);

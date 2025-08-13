@@ -23,10 +23,6 @@ final class DisableAd
 
     public function __invoke(): void
     {
-        if ($this->ad->isDisabled) {
-            return;
-        }
-
         (new AdEditor($this->ad))->update([
             'isDisabled' => 1,
         ]);

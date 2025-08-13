@@ -29,7 +29,9 @@ final class EnableProvider implements IController
 
         $this->assertMediaProviderCanBeEnabled();
 
-        (new \wcf\command\bbcode\media\provider\EnableBBCodeMediaProvider($provider))();
+        if ($provider->isDisabled) {
+            (new \wcf\command\bbcode\media\provider\EnableBBCodeMediaProvider($provider))();
+        }
 
         return new JsonResponse([]);
     }

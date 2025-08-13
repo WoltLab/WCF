@@ -23,10 +23,6 @@ final class EnableCaptchaQuestion
 
     public function __invoke(): void
     {
-        if (!$this->captchaQuestion->isDisabled) {
-            return;
-        }
-
         (new CaptchaQuestionEditor($this->captchaQuestion))->update([
             'isDisabled' => 0,
         ]);

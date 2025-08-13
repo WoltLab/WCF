@@ -30,7 +30,9 @@ final class DisableType implements IController
 
         $this->assertReactionTypeCanBeDisabled();
 
-        (new DisableReactionType($reactionType))();
+        if ($reactionType->isAssignable) {
+            (new DisableReactionType($reactionType))();
+        }
 
         return new JsonResponse([]);
     }

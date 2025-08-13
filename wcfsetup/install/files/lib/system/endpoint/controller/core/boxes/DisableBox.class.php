@@ -30,7 +30,9 @@ final class DisableBox implements IController
 
         $this->assertBoxCanBeDisabled($box);
 
-        (new \wcf\command\box\DisableBox($box))();
+        if (!$box->isDisabled) {
+            (new \wcf\command\box\DisableBox($box))();
+        }
 
         return new JsonResponse([]);
     }

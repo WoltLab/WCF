@@ -21,10 +21,6 @@ final class EnableReactionType
 
     public function __invoke(): void
     {
-        if ($this->reactionType->isAssignable) {
-            return;
-        }
-
         (new ReactionTypeEditor($this->reactionType))->update([
             'isAssignable' => 1,
         ]);

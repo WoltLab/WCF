@@ -31,7 +31,9 @@ final class EnableServer implements IController
 
         $this->assertServerCanBeEnabled($server);
 
-        (new EnablePackageUpdateServer($server))();
+        if ($server->isDisabled) {
+            (new EnablePackageUpdateServer($server))();
+        }
 
         return new JsonResponse([]);
     }

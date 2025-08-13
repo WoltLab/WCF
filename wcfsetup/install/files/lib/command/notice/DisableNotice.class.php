@@ -21,10 +21,6 @@ final class DisableNotice
     
     public function __invoke(): void
     {
-        if ($this->notice->isDisabled) {
-            return;
-        }
-
         (new NoticeEditor($this->notice))->update([
             'isDisabled' => 1,
         ]);

@@ -21,14 +21,6 @@ final class DisableLanguage
 
     public function __invoke(): void
     {
-        if ($this->language->isDefault) {
-            return;
-        }
-
-        if ($this->language->isDisabled) {
-            return;
-        }
-
         (new LanguageEditor($this->language))->update([
             'isDisabled' => 1,
         ]);

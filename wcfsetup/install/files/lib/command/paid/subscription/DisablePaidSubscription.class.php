@@ -21,10 +21,6 @@ final class DisablePaidSubscription
 
     public function __invoke(): void
     {
-        if ($this->subscription->isDisabled) {
-            return;
-        }
-
         (new PaidSubscriptionEditor($this->subscription))->update([
             'isDisabled' => 1,
         ]);

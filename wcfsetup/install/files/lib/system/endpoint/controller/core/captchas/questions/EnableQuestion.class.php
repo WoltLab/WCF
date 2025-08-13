@@ -27,14 +27,16 @@ final class EnableQuestion implements IController
     {
         $question = Helper::fetchObjectFromRequestParameter($variables['id'], CaptchaQuestion::class);
 
-        $this->assertQuestionCanBeEnabled($question);
+        $this->assertQuestionCanBeEnabled();
 
-        (new \wcf\command\captcha\question\EnableCaptchaQuestion($question))();
+        if ($question->isDisabled) {
+            (new \wcf\command\captcha\question\EnableCaptchaQuestion($question))();
+        }
 
         return new JsonResponse([]);
     }
 
-    private function assertQuestionCanBeEnabled(CaptchaQuestion $question): void
+    private function assertQuestionCanBeEnabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.captcha.canManageCaptchaQuestion']);
     }

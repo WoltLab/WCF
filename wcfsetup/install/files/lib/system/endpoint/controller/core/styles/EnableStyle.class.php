@@ -29,7 +29,9 @@ final class EnableStyle implements IController
 
         $this->assertStyleCanBeEnabled();
 
-        (new \wcf\command\style\EnableStyle($style))();
+        if ($style->isDisabled) {
+            (new \wcf\command\style\EnableStyle($style))();
+        }
 
         return new JsonResponse([]);
     }

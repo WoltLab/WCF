@@ -30,7 +30,9 @@ final class DisablePage implements IController
 
         $this->assertPageCanBeDisabled($page);
 
-        (new \wcf\command\page\DisablePage($page))();
+        if (!$page->isDisabled) {
+            (new \wcf\command\page\DisablePage($page))();
+        }
 
         return new JsonResponse([]);
     }

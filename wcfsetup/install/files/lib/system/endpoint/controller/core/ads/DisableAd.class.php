@@ -29,7 +29,9 @@ final class DisableAd implements IController
 
         $this->assertAdCanBeDisabled();
 
-        (new \wcf\command\ad\DisableAd($ad))();
+        if (!$ad->isDisabled) {
+            (new \wcf\command\ad\DisableAd($ad))();
+        }
 
         return new JsonResponse([]);
     }

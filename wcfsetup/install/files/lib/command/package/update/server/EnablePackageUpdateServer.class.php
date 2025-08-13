@@ -21,14 +21,6 @@ final class EnablePackageUpdateServer
 
     public function __invoke(): void
     {
-        if (!$this->server->canDisable()) {
-            return;
-        }
-
-        if (!$this->server->isDisabled) {
-            return;
-        }
-
         (new PackageUpdateServerEditor($this->server))->update([
             'isDisabled' => 0,
         ]);

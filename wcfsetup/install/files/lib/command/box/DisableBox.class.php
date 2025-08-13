@@ -21,10 +21,6 @@ final class DisableBox
 
     public function __invoke(): void
     {
-        if ($this->box->isDisabled) {
-            return;
-        }
-
         (new BoxEditor($this->box))->update([
             'isDisabled' => 1,
         ]);
