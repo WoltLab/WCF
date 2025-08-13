@@ -4,34 +4,28 @@
  * @author  Alexander Ebert
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @woltlabExcludeBundle tiny
  */
 
-import * as Ajax from "../../Ajax";
+import { dismissNotice } from "WoltLabSuite/Core/Api/Notices/DismissNotice";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 
 /**
  * Initializes dismiss buttons.
  */
 export function setup(): void {
-  document.querySelectorAll(".jsDismissNoticeButton").forEach((button) => {
-    button.addEventListener("click", (ev) => click(ev));
+  document.querySelectorAll<HTMLElement>(".jsDismissNoticeButton").forEach((button) => {
+    button.addEventListener(
+      "click",
+      promiseMutex(() => click(button)),
+    );
   });
 }
 
 /**
  * Sends a request to dismiss a notice and removes it afterwards.
  */
-function click(event: Event): void {
-  const button = event.currentTarget as HTMLElement;
+async function click(button: HTMLElement): Promise<void> {
+  (await dismissNotice(parseInt(button.dataset.objectId!, 10))).unwrap();
 
-  Ajax.apiOnce({
-    data: {
-      actionName: "dismiss",
-      className: "wcf\\data\\notice\\NoticeAction",
-      objectIDs: [button.dataset.objectId!],
-    },
-    success: () => {
-      button.parentElement!.remove();
-    },
-  });
+  button.parentElement!.remove();
 }
