@@ -3,9 +3,10 @@
 namespace wcf\data\style;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\style\DisableStyle;
+use wcf\command\style\EnableStyle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\image\ImageHandler;
@@ -28,8 +29,6 @@ use wcf\util\ImageUtil;
  */
 class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -638,5 +637,27 @@ BROWSERCONFIG;
             'isTainted' => 1,
             'packageName' => '',
         ]);
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableStyle` or `DisableStyle` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableStyle($editor->getDecoratedObject()))();
+            } else {
+                (new DisableStyle($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

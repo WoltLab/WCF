@@ -2,9 +2,11 @@
 
 namespace wcf\data\contact\option;
 
+use wcf\command\contact\option\DisableContactOption;
+use wcf\command\contact\option\EnableContactOption;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
-use wcf\data\TDatabaseObjectToggle;
+use wcf\data\IToggleAction;
 use wcf\data\TI18nDatabaseObjectAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -19,10 +21,9 @@ use wcf\system\WCF;
  *
  * @extends AbstractDatabaseObjectAction<ContactOption, ContactOptionEditor>
  */
-class ContactOptionAction extends AbstractDatabaseObjectAction implements ISortableAction
+class ContactOptionAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction
 {
     use TI18nDatabaseObjectAction;
-    use TDatabaseObjectToggle;
 
     /**
      * @inheritDoc
@@ -140,5 +141,27 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
     public function getPackageID(): int
     {
         return 1;
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableContactOption` or `DisableContactOption` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableContactOption($editor->getDecoratedObject()))();
+            } else {
+                (new DisableContactOption($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\language\Language;
-use wcf\data\language\LanguageAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +30,9 @@ final class EnableLanguage implements IController
 
         $this->assertLanguageCanBeEnabled($language);
 
-        (new LanguageAction([$language], 'toggle'))->executeAction();
+        if ($language->isDisabled) {
+            (new \wcf\command\language\EnableLanguage($language))();
+        }
 
         return new JsonResponse([]);
     }
@@ -41,10 +42,6 @@ final class EnableLanguage implements IController
         WCF::getSession()->checkPermissions(['admin.language.canManageLanguage']);
 
         if ($language->isDefault) {
-            throw new PermissionDeniedException();
-        }
-
-        if (!$language->isDisabled) {
             throw new PermissionDeniedException();
         }
     }

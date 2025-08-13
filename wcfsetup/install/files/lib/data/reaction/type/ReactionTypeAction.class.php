@@ -2,9 +2,10 @@
 
 namespace wcf\data\reaction\type;
 
+use wcf\command\reaction\type\DisableReactionType;
+use wcf\command\reaction\type\EnableReactionType;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -21,8 +22,6 @@ use wcf\system\WCF;
  */
 class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -202,14 +201,26 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
     }
 
     /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
      * @inheritDoc
+     *
+     * @deprecated 6.3 use the `DisableReactionType` or `EnableReactionType` command instead.
      */
     public function toggle()
     {
-        foreach ($this->getObjects() as $object) {
-            $object->update([
-                'isAssignable' => $object->isAssignable ? 0 : 1,
-            ]);
+        foreach ($this->getObjects() as $editor) {
+            if ($editor->isAssignable) {
+                (new DisableReactionType($editor->getDecoratedObject()))();
+            } else {
+                (new EnableReactionType($editor->getDecoratedObject()))();
+            }
         }
     }
 }

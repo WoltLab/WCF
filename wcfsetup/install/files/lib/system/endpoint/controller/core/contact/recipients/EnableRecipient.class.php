@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\contact\recipients;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\contact\recipient\EnableContactRecipient;
 use wcf\data\contact\recipient\ContactRecipient;
-use wcf\data\contact\recipient\ContactRecipientAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +31,7 @@ final class EnableRecipient implements IController
         $recipient = Helper::fetchObjectFromRequestParameter($variables['id'], ContactRecipient::class);
 
         if ($recipient->isDisabled) {
-            (new ContactRecipientAction([$recipient], 'toggle'))->executeAction();
+            (new EnableContactRecipient($recipient))();
         }
 
         return new JsonResponse([]);

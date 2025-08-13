@@ -2,9 +2,10 @@
 
 namespace wcf\data\language;
 
+use wcf\command\language\DisableLanguage;
+use wcf\command\language\EnableLanguage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\style\StyleHandler;
@@ -21,8 +22,6 @@ use wcf\system\WCF;
  */
 class LanguageAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -103,6 +102,8 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 
     /**
      * @inheritDoc
+     *
+     * @deprecated 6.3
      */
     public function validateToggle()
     {
@@ -111,6 +112,20 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
         foreach ($this->getObjects() as $language) {
             if ($language->isDefault) {
                 throw new UserInputException('objectIDs');
+            }
+        }
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableLanguage` or `DisableLanguage` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableLanguage($editor->getDecoratedObject()))();
+            } else {
+                (new DisableLanguage($editor->getDecoratedObject()))();
             }
         }
     }

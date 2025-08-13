@@ -6,11 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\box\Box;
-use wcf\data\box\BoxAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -29,19 +27,17 @@ final class EnableBox implements IController
     {
         $box = Helper::fetchObjectFromRequestParameter($variables['id'], Box::class);
 
-        $this->assertBoxCanBeEnabled($box);
+        $this->assertBoxCanBeEnabled();
 
-        (new BoxAction([$box], 'toggle'))->executeAction();
+        if ($box->isDisabled) {
+            (new \wcf\command\box\EnableBox($box))();
+        }
 
         return new JsonResponse([]);
     }
 
-    private function assertBoxCanBeEnabled(Box $box): void
+    private function assertBoxCanBeEnabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageBox']);
-
-        if (!$box->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }

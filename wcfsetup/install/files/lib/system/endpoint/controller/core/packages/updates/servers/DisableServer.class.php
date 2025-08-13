@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\packages\updates\servers;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\package\update\server\DisablePackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServer;
-use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +31,9 @@ final class DisableServer implements IController
 
         $this->assertServerCanBeDisabled($server);
 
-        (new PackageUpdateServerAction([$server], 'toggle'))->executeAction();
+        if (!$server->isDisabled) {
+            (new DisablePackageUpdateServer($server))();
+        }
 
         return new JsonResponse([]);
     }
@@ -41,9 +43,6 @@ final class DisableServer implements IController
         WCF::getSession()->checkPermissions(['admin.configuration.package.canEditServer']);
 
         if (!$server->canDisable()) {
-            throw new PermissionDeniedException();
-        }
-        if ($server->isDisabled) {
             throw new PermissionDeniedException();
         }
     }

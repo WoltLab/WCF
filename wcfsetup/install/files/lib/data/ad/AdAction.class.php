@@ -2,9 +2,10 @@
 
 namespace wcf\data\ad;
 
+use wcf\command\ad\DisableAd;
+use wcf\command\ad\EnableAd;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 
 /**
@@ -18,8 +19,6 @@ use wcf\system\condition\ConditionHandler;
  */
 class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -63,5 +62,27 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
         ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.ad', $this->objectIDs);
 
         return parent::delete();
+    }
+
+    /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableAd` or `DisableAd` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $adEditor) {
+            if ($adEditor->isDisabled) {
+                (new EnableAd($adEditor->getDecoratedObject()))();
+            } else {
+                (new DisableAd($adEditor->getDecoratedObject()))();
+            }
+        }
     }
 }

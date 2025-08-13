@@ -2,9 +2,10 @@
 
 namespace wcf\data\package\update\server;
 
+use wcf\command\package\update\server\DisablePackageUpdateServer;
+use wcf\command\package\update\server\EnablePackageUpdateServer;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -18,10 +19,6 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle {
-        validateToggle as traitValidateToggle;
-    }
-
     /**
      * @inheritDoc
      */
@@ -64,15 +61,31 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 
     /**
      * @inheritDoc
+     *
+     * @deprecated 6.3
      */
     public function validateToggle()
     {
-        $this->traitValidateToggle();
+        $this->validateUpdate();
 
         /** @var PackageUpdateServer $updateServer */
         foreach ($this->getObjects() as $updateServer) {
             if (!$updateServer->canDisable()) {
                 throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnablePackageUpdateServer` or `DisablePackageUpdateServer` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnablePackageUpdateServer($editor->getDecoratedObject()))();
+            } else {
+                (new DisablePackageUpdateServer($editor->getDecoratedObject()))();
             }
         }
     }

@@ -6,11 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
-use wcf\data\bbcode\media\provider\BBCodeMediaProviderAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -29,19 +27,17 @@ final class DisableProvider implements IController
     {
         $provider = Helper::fetchObjectFromRequestParameter($variables['id'], BBCodeMediaProvider::class);
 
-        $this->assertMediaProviderCanBeDisabled($provider);
+        $this->assertMediaProviderCanBeDisabled();
 
-        (new BBCodeMediaProviderAction([$provider], 'toggle'))->executeAction();
+        if (!$provider->isDisabled) {
+            (new \wcf\command\bbcode\media\provider\DisableBBCodeMediaProvider($provider))();
+        }
 
         return new JsonResponse([]);
     }
 
-    private function assertMediaProviderCanBeDisabled(BBCodeMediaProvider $provider): void
+    private function assertMediaProviderCanBeDisabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.content.bbcode.canManageBBCode']);
-
-        if ($provider->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }

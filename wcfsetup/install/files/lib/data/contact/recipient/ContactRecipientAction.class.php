@@ -2,9 +2,10 @@
 
 namespace wcf\data\contact\recipient;
 
+use wcf\command\contact\recipient\DisableContactRecipient;
+use wcf\command\contact\recipient\EnableContactRecipient;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\TI18nDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 
@@ -20,7 +21,6 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class ContactRecipientAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TDatabaseObjectToggle;
     use TI18nDatabaseObjectAction;
 
     /**
@@ -64,6 +64,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
 
     /**
      * @inheritDoc
+     * @deprecated 6.3
      */
     public function validateToggle()
     {
@@ -130,5 +131,19 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     public function getPackageID(): int
     {
         return 1;
+    }
+
+    /**
+     * @deprecated 6.3 use the `EnableContactRecipient` or `DisableContactRecipient` commands instead.
+     */
+    public function toggle()
+    {
+        foreach ($this->objects as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableContactRecipient($editor->getDecoratedObject()))();
+            } else {
+                (new DisableContactRecipient($editor->getDecoratedObject()))();
+            }
+        }
     }
 }

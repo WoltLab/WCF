@@ -2,14 +2,13 @@
 
 namespace wcf\data\trophy;
 
+use wcf\command\trophy\DisableTrophy;
+use wcf\command\trophy\EnableTrophy;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
-use wcf\data\user\UserAction;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
@@ -30,8 +29,6 @@ use wcf\system\WCF;
  */
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction
 {
-    use TDatabaseObjectToggle;
-
     /**
      * @inheritDoc
      */
@@ -128,73 +125,26 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
     }
 
     /**
+     * @deprecated 6.3
+     */
+    public function validateToggle()
+    {
+        $this->validateUpdate();
+    }
+
+    /**
      * @inheritDoc
+     * @deprecated 6.3 use the `EnableTrophy` or `DisableTrophy` commands instead.
      */
     public function toggle()
     {
-        $enabledTrophyIDs = [];
-        $disabledTrophyIDs = [];
-
-        foreach ($this->getObjects() as $trophy) {
-            $trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
-
-            if (!$trophy->isDisabled) {
-                $disabledTrophyIDs[] = $trophy->trophyID;
+        foreach ($this->getObjects() as $editor) {
+            if ($editor->isDisabled) {
+                (new EnableTrophy($editor->getDecoratedObject()))();
             } else {
-                $enabledTrophyIDs[] = $trophy->trophyID;
+                (new DisableTrophy($editor->getDecoratedObject()))();
             }
         }
-
-        if (!empty($disabledTrophyIDs)) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
-            $sql = "DELETE FROM wcf1_user_special_trophy
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-
-            // update trophy points
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
-            $sql = "SELECT      COUNT(*) as count, userID
-                    FROM        wcf1_user_trophy
-                    " . $conditionBuilder . "
-                    GROUP BY    userID";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-
-            while ($row = $statement->fetchArray()) {
-                $userAction = new UserAction([$row['userID']], 'update', [
-                    'counters' => [
-                        'trophyPoints' => $row['count'] * -1,
-                    ],
-                ]);
-                $userAction->executeAction();
-            }
-        }
-
-        if (!empty($enabledTrophyIDs)) {
-            // update trophy points
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('trophyID IN (?)', [$enabledTrophyIDs]);
-            $sql = "SELECT      COUNT(*) as count, userID
-                    FROM        wcf1_user_trophy
-                    " . $conditionBuilder . "
-                    GROUP BY    userID";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-
-            while ($row = $statement->fetchArray()) {
-                $userAction = new UserAction([$row['userID']], 'update', [
-                    'counters' => [
-                        'trophyPoints' => $row['count'],
-                    ],
-                ]);
-                $userAction->executeAction();
-            }
-        }
-
-        UserStorageHandler::getInstance()->resetAll('specialTrophies');
     }
 
     /**

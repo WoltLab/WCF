@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\contact\options;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\contact\option\DisableContactOption;
 use wcf\data\contact\option\ContactOption;
-use wcf\data\contact\option\ContactOptionAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -31,7 +31,7 @@ final class DisableOption implements IController
         $option = Helper::fetchObjectFromRequestParameter($variables['id'], ContactOption::class);
 
         if (!$option->isDisabled) {
-            (new ContactOptionAction([$option], 'toggle'))->executeAction();
+            (new DisableContactOption($option))();
         }
 
         return new JsonResponse([]);
