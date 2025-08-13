@@ -25,7 +25,6 @@ class EmailLogEntryAction extends AbstractDatabaseObjectAction
      * Deletes old log entries.
      *
      * @return void
-     *
      * @deprecated 6.3 use the `PruneEmailLogEntries` command instead.
      */
     public function prune()

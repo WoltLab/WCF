@@ -17,12 +17,11 @@ final class PruneEmailLogEntries
 {
     public function __invoke(): void
     {
-        $sql = "DELETE
-                FROM   wcf1_email_log_entry
-                WHERE  time < ?";
-        $statement = WCF::getDB()->prepare($sql, 65_000);
+        $sql = "DELETE FROM wcf1_email_log_entry
+                WHERE       time < ?";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            (\TIME_NOW - EmailLogEntry::LIFETIME),
+            \TIME_NOW - EmailLogEntry::LIFETIME,
         ]);
     }
 }
