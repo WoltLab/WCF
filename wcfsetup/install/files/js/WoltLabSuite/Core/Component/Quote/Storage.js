@@ -39,11 +39,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             quote = result.renderedQuote;
         }
         else {
-            const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, false);
-            if (!result.ok) {
-                throw new Error("Error fetching quote data");
-            }
-            quote = result.value;
+            quote = await (0, RenderQuote_1.renderQuote)(objectType, objectId, false);
         }
         const uuid = storeQuote(objectType, quote, {
             message,
@@ -65,11 +61,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             message = result.renderedQuote;
         }
         else {
-            const result = await (0, RenderQuote_1.renderQuote)(objectType, objectId, true);
-            if (!result.ok) {
-                throw new Error("Error fetching quote data");
-            }
-            message = result.value;
+            message = await (0, RenderQuote_1.renderQuote)(objectType, objectId, true);
         }
         const uuid = storeQuote(objectType, message, message);
         (0, List_1.refreshQuoteLists)();

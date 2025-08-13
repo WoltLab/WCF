@@ -9,7 +9,7 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Item =
   | {
@@ -25,16 +25,11 @@ type Item =
     };
 type Response = Item[];
 
-export async function mentionSuggestions(query: string): Promise<ApiResult<Response>> {
+export async function mentionSuggestions(query: string): Promise<Response> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/mention-suggestions");
   url.searchParams.set("query", query);
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+  return fromInfallibleApiRequest<Response>(() => {
+    return prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson();
+  });
 }
