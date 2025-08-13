@@ -2,12 +2,21 @@
 
 namespace wcf\data\article;
 
+use wcf\command\article\MarkAllArticlesAsRead;
+use wcf\command\article\MarkArticleAsRead;
+use wcf\command\article\PublishArticle;
+use wcf\command\article\ResetUserStorageForUnreadArticles;
+use wcf\command\article\RestoreArticle;
+use wcf\command\article\SetArticleCategory;
+use wcf\command\article\SoftDeleteArticle;
+use wcf\command\article\UnpublishArticle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentAction;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
+use wcf\system\article\command\DisableI18n;
+use wcf\system\article\command\EnableI18n;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
@@ -23,9 +32,7 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
-use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -149,10 +156,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
+        (new ResetUserStorageForUnreadArticles())();
 
         if ($article->publicationStatus == Article::PUBLISHED) {
             ArticleEditor::updateArticleCounter([$article->userID => 1]);
@@ -294,10 +298,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
+        (new ResetUserStorageForUnreadArticles())();
 
         $publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
         if ($publicationStatus !== null) {
@@ -465,8 +466,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        $this->unmarkItems();
-
         return [
             'objectIDs' => $this->objectIDs,
             'redirectURL' => LinkHandler::getInstance()->getLink('ArticleList', ['isACP' => true]),
@@ -480,6 +479,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateTrash()
     {
@@ -506,19 +507,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Moves articles to the trash bin.
      *
      * @return array{objectIDs: int[]}
+     *
+     * @deprecated 6.3 use `SoftDeleteArticle`
      */
     public function trash()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['isDeleted' => 1]);
+            (new SoftDeleteArticle($articleEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
-
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 
         return ['objectIDs' => $this->objectIDs];
     }
@@ -528,6 +524,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateRestore()
     {
@@ -538,19 +536,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Restores articles.
      *
      * @return array{objectIDs: int[]}
+     *
+     * @deprecated 6.3 use `RestoreArticle`
      */
     public function restore()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['isDeleted' => 0]);
+            (new RestoreArticle($articleEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
-
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 
         return ['objectIDs' => $this->objectIDs];
     }
@@ -560,6 +553,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws      UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateToggleI18n()
     {
@@ -585,62 +580,24 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Toggles between i18n and monolingual mode.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `EnableI18n` or `DisableI18n`
      */
     public function toggleI18n()
     {
-        $removeContent = [];
-
-        // i18n -> monolingual
-        if ($this->articleEditor->getDecoratedObject()->isMultilingual) {
-            foreach ($this->articleEditor->getArticleContents() as $articleContent) {
-                if ($articleContent->languageID == $this->language->languageID) {
-                    $articleContentEditor = new ArticleContentEditor($articleContent);
-                    $articleContentEditor->update(['languageID' => null]);
-                } else {
-                    $removeContent[] = $articleContent;
-                }
-            }
+        if ($this->articleEditor->isMultilingual) {
+            (new DisableI18n($this->articleEditor->getDecoratedObject(), $this->language))();
         } else {
-            // monolingual -> i18n
-            $articleContent = $this->articleEditor->getArticleContent();
-            $data = [];
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $data[$language->languageID] = [
-                    'title' => $articleContent->title,
-                    'teaser' => $articleContent->teaser,
-                    'content' => $articleContent->content,
-                    'imageID' => $articleContent->imageID ?: null,
-                    'teaserImageID' => $articleContent->teaserImageID ?: null,
-                ];
-            }
-
-            $action = new self([$this->articleEditor], 'update', ['content' => $data]);
-            $action->executeAction();
-
-            $removeContent[] = $articleContent;
+            (new EnableI18n($this->articleEditor->getDecoratedObject()))();
         }
-
-        if (!empty($removeContent)) {
-            $action = new ArticleContentAction($removeContent, 'delete');
-            $action->executeAction();
-        }
-
-        // flush edit history
-        VersionTracker::getInstance()->reset(
-            'com.woltlab.wcf.article',
-            $this->articleEditor->getDecoratedObject()->articleID
-        );
-
-        // update article's i18n state
-        $this->articleEditor->update([
-            'isMultilingual' => ($this->articleEditor->getDecoratedObject()->isMultilingual) ? 0 : 1,
-        ]);
     }
 
     /**
      * Marks articles as read.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `MarkArticleAsRead`
      */
     public function markAsRead()
     {
@@ -656,28 +613,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $articleIDs = [];
-        foreach ($this->getObjects() as $article) {
-            $articleIDs[] = $article->articleID;
-            VisitTracker::getInstance()->trackObjectVisit(
-                'com.woltlab.wcf.article',
-                $article->articleID,
-                $this->parameters['visitTime']
-            );
-        }
-
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
-
-        // delete obsolete notifications
-        if ($articleIDs !== []) {
-            UserNotificationHandler::getInstance()->markAsConfirmed(
-                'article',
-                'com.woltlab.wcf.article.notification',
-                [WCF::getUser()->userID],
-                $articleIDs
-            );
+        foreach ($this->getObjects() as $articleEditor) {
+            (new MarkArticleAsRead($articleEditor->getDecoratedObject(), $this->parameters['visitTime']))();
         }
     }
 
@@ -685,24 +622,20 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Marks all articles as read.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `MarkAllArticleAsRead`
      */
     public function markAllAsRead()
     {
-        if (!WCF::getUser()->userID) {
-            return;
-        }
-
-        VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.article');
-
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
+        (new MarkAllArticlesAsRead())();
     }
 
     /**
      * Validates the mark all as read action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAllAsRead()
     {
@@ -714,6 +647,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      *
      * @return void
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateSetCategory()
     {
@@ -748,14 +683,16 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Sets the category of articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `SetArticleCategory`
      */
     public function setCategory()
     {
-        foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['categoryID' => $this->parameters['categoryID']]);
-        }
+        $category = ArticleCategory::getCategory($this->parameters['categoryID']);
 
-        $this->unmarkItems();
+        foreach ($this->getObjects() as $articleEditor) {
+            (new SetArticleCategory($articleEditor->getDecoratedObject(), $category))();
+        }
     }
 
     /**
@@ -764,6 +701,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validatePublish()
     {
@@ -790,48 +729,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Publishes articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `PublishArticle`
      */
     public function publish()
     {
-        $usersToArticles = [];
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update([
-                'time' => TIME_NOW,
-                'publicationStatus' => Article::PUBLISHED,
-                'publicationDate' => 0,
-            ]);
-
-            if (!isset($usersToArticles[$articleEditor->userID])) {
-                $usersToArticles[$articleEditor->userID] = 0;
-            }
-
-            $usersToArticles[$articleEditor->userID]++;
-
-            UserObjectWatchHandler::getInstance()->updateObject(
-                'com.woltlab.wcf.article.category',
-                $articleEditor->getCategory()->categoryID,
-                'article',
-                'com.woltlab.wcf.article.notification',
-                new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
-            );
-
-            UserActivityEventHandler::getInstance()->fireEvent(
-                'com.woltlab.wcf.article.recentActivityEvent',
-                $articleEditor->articleID,
-                null,
-                $articleEditor->userID,
-                TIME_NOW
-            );
+            (new PublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        ArticleEditor::updateArticleCounter($usersToArticles);
-
-        // reset storage
-        UserStorageHandler::getInstance()->resetAll('unreadArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
-        UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-
-        $this->unmarkItems();
     }
 
     /**
@@ -840,6 +745,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     *
+     * @deprecated 6.3
      */
     public function validateUnpublish()
     {
@@ -866,37 +773,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * Unpublishes articles.
      *
      * @return void
+     *
+     * @deprecated 6.3 use `UnpublishArticle`
      */
     public function unpublish()
     {
-        $usersToArticles = $articleIDs = [];
         foreach ($this->getObjects() as $articleEditor) {
-            $articleEditor->update(['publicationStatus' => Article::UNPUBLISHED]);
-
-            if (!isset($usersToArticles[$articleEditor->userID])) {
-                $usersToArticles[$articleEditor->userID] = 0;
-            }
-
-            $usersToArticles[$articleEditor->userID]--;
-
-            $articleIDs[] = $articleEditor->articleID;
+            (new UnpublishArticle($articleEditor->getDecoratedObject()))();
         }
-
-        // delete user notifications
-        UserNotificationHandler::getInstance()->removeNotifications(
-            'com.woltlab.wcf.article.notification',
-            $articleIDs
-        );
-
-        // delete recent activity events
-        UserActivityEventHandler::getInstance()->removeEvents(
-            'com.woltlab.wcf.article.recentActivityEvent',
-            $articleIDs
-        );
-
-        ArticleEditor::updateArticleCounter($usersToArticles);
-
-        $this->unmarkItems();
     }
 
     /**
@@ -953,27 +837,5 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         return $articles;
-    }
-
-    /**
-     * Unmarks articles.
-     *
-     * @param int[] $articleIDs
-     * @return void
-     */
-    protected function unmarkItems(array $articleIDs = [])
-    {
-        if (empty($articleIDs)) {
-            foreach ($this->getObjects() as $article) {
-                $articleIDs[] = $article->articleID;
-            }
-        }
-
-        if (!empty($articleIDs)) {
-            ClipboardHandler::getInstance()->unmark(
-                $articleIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')
-            );
-        }
     }
 }

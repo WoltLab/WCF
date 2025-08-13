@@ -6,6 +6,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\command\article\SetArticleCategory;
+use wcf\data\article\ArticleList;
+use wcf\data\article\category\ArticleCategory;
 use wcf\data\category\CategoryNodeTree;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
@@ -43,6 +46,10 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
+        $articleList = new ArticleList();
+        $articleList->setObjectIDs($parameters['objectIDs']);
+        $articleList->readObjects();
+
         $form = $this->getForm();
 
         if ($request->getMethod() === 'GET') {
@@ -54,16 +61,12 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             }
 
             $data = $form->getData()['data'];
+            $category = ArticleCategory::getCategory($data['categoryID']);
 
             WCF::getDB()->beginTransaction();
 
-            $sql = "UPDATE wcf1_article
-                    SET    categoryID = ?
-                    WHERE  articleID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            foreach ($parameters['objectIDs'] as $articleID) {
-                $statement->execute([$data['categoryID'], $articleID]);
+            foreach ($articleList as $article) {
+                (new SetArticleCategory($article, $category))();
             }
 
             WCF::getDB()->commitTransaction();

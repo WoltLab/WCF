@@ -2,13 +2,12 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\command\article\ResetUserStorageForUnreadArticles;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\LikeableArticle;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
-use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\WCF;
 
 /**
  * User notification event for post likes.
@@ -128,10 +127,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     public function checkAccess()
     {
         if (!ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'wbbUnreadWatchedThreads');
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
+            (new ResetUserStorageForUnreadArticles())();
 
             return false;
         }
