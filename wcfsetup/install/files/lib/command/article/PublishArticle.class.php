@@ -24,10 +24,6 @@ final class PublishArticle
 
     public function __invoke(): void
     {
-        if ($this->article->publicationStatus === Article::PUBLISHED) {
-            return;
-        }
-
         (new ArticleEditor($this->article))->update([
             'time' => TIME_NOW,
             'publicationStatus' => Article::PUBLISHED,

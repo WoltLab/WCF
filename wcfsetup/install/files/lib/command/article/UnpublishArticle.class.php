@@ -36,7 +36,7 @@ final class UnpublishArticle
         EventHandler::getInstance()->fire($event);
     }
 
-    private function removeNotifications(int $articleID):void
+    private function removeNotifications(int $articleID): void
     {
         UserNotificationHandler::getInstance()->removeNotifications(
             'com.woltlab.wcf.article.notification',

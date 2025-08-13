@@ -34,11 +34,10 @@ final class PublishArticle implements IController
         if (!$article->canPublish()) {
             throw new PermissionDeniedException();
         }
-        if ($article->publicationStatus === Article::PUBLISHED) {
-            throw new IllegalLinkException();
-        }
 
-        (new \wcf\command\article\PublishArticle($article))();
+        if ($article->publicationStatus !== Article::PUBLISHED) {
+            (new \wcf\command\article\PublishArticle($article))();
+        }
 
         return new JsonResponse([]);
     }
