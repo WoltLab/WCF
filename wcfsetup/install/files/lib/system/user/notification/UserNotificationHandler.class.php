@@ -3,6 +3,7 @@
 namespace wcf\system\user\notification;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\notification\CreateStackableUserNotification;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientList;
@@ -277,16 +278,21 @@ class UserNotificationHandler extends SingletonFactory
             ];
 
             if ($event->isStackable()) {
-                $data['notifications'] = $notifications;
-
-                $action = new UserNotificationAction([], 'createStackable', $data);
+                $notifications = (new CreateStackableUserNotification(
+                    $event,
+                    $event->getAuthor(),
+                    $notificationObject,
+                    $objectTypeObject,
+                    $baseObjectID,
+                    $recipients,
+                    $additionalData
+                ))();
             } else {
                 $data['data']['timesTriggered'] = 1;
                 $action = new UserNotificationAction([], 'createDefault', $data);
+                $result = $action->executeAction();
+                $notifications = $result['returnValues'];
             }
-
-            $result = $action->executeAction();
-            $notifications = $result['returnValues'];
 
             // send notifications
             if ($event->supportsEmailNotification()) {
