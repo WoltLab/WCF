@@ -47,16 +47,14 @@ export class ListView {
   }
 
   async #loadItems(cause: StateChangeCause): Promise<void> {
-    const response = (
-      await getItems(
-        this.#viewClassName,
-        this.#state.getPageNo(),
-        this.#state.getSortField(),
-        this.#state.getSortOrder(),
-        this.#state.getActiveFilters(),
-        this.#listViewParameters,
-      )
-    ).unwrap();
+    const response = await getItems(
+      this.#viewClassName,
+      this.#state.getPageNo(),
+      this.#state.getSortField(),
+      this.#state.getSortOrder(),
+      this.#state.getActiveFilters(),
+      this.#listViewParameters,
+    );
     setInnerHtml(this.#viewElement, response.template);
 
     this.#viewElement.hidden = response.totalItems === 0;
@@ -70,8 +68,8 @@ export class ListView {
   }
 
   async #refreshItem(item: HTMLElement): Promise<void> {
-    const response = (await getItem(this.#viewClassName, item.dataset.objectId!, this.#listViewParameters)).unwrap();
-    item.replaceWith(createFragmentFromHtml(response.template));
+    const { template } = await getItem(this.#viewClassName, item.dataset.objectId!, this.#listViewParameters);
+    item.replaceWith(createFragmentFromHtml(template));
     this.#state.refreshSelection();
     triggerDomChange();
   }
@@ -130,8 +128,8 @@ export class ListView {
   }
 
   async #loadBulkInteractions(objectIds: number[]): Promise<void> {
-    const response = await getBulkContextMenuOptions(this.#bulkInteractionProviderClassName, objectIds);
-    this.#state.setBulkInteractionContextMenuOptions(response.unwrap().template);
+    const { template } = await getBulkContextMenuOptions(this.#bulkInteractionProviderClassName, objectIds);
+    this.#state.setBulkInteractionContextMenuOptions(template);
   }
 
   #checkEmptyList(): void {

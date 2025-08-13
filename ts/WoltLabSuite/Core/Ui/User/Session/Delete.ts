@@ -16,7 +16,7 @@ function onClick(button: HTMLElement): void {
   UiConfirmation.show({
     message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
     confirm: async (_parameters) => {
-      (await deleteSession(button.dataset.sessionId!)).unwrap();
+      await deleteSession(button.dataset.sessionId!);
 
       button.closest("li")?.remove();
 

@@ -60,12 +60,7 @@ export async function saveQuote(
       .dispatch()) as LegacyQuoteData;
     quote = result.renderedQuote;
   } else {
-    const result = await renderQuote(objectType, objectId, false);
-    if (!result.ok) {
-      throw new Error("Error fetching quote data");
-    }
-
-    quote = result.value;
+    quote = await renderQuote(objectType, objectId, false);
   }
 
   const uuid = storeQuote(objectType, quote, {
@@ -94,12 +89,7 @@ export async function saveFullQuote(
     const result = (await dboAction("saveFullQuote", className).objectIds([objectId]).dispatch()) as LegacyQuoteData;
     message = result.renderedQuote;
   } else {
-    const result = await renderQuote(objectType, objectId, true);
-    if (!result.ok) {
-      throw new Error("Error fetching quote data");
-    }
-
-    message = result.value;
+    message = await renderQuote(objectType, objectId, true);
   }
 
   const uuid = storeQuote(objectType, message, message);

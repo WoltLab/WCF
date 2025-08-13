@@ -19,12 +19,11 @@ function initRevertButtons(container: HTMLElement, objectType: string, objectId:
         return;
       }
 
-      const response = await revertVersion(objectType, objectId, parseInt(button.dataset.objectId!));
-      if (response.ok) {
-        showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-          window.location.reload();
-        });
-      }
+      await revertVersion(objectType, objectId, parseInt(button.dataset.objectId!));
+
+      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+        window.location.reload();
+      });
     });
   });
 }

@@ -15,12 +15,9 @@ import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 
 async function showDialog(button: HTMLElement): Promise<void> {
-  const response = await renderException(button.closest("tr")!.dataset.objectId!);
-  if (!response.ok) {
-    return;
-  }
+  const { template } = await renderException(button.closest("tr")!.dataset.objectId!);
 
-  const dialog = dialogFactory().fromHtml(response.value.template).withoutControls();
+  const dialog = dialogFactory().fromHtml(template).withoutControls();
   dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", () => {
     void copyTextToClipboard(dialog.content.querySelector<HTMLTextAreaElement>(".jsCopyException")!.value);
   });

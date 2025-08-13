@@ -9,7 +9,7 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Response = {
   objectID: number;
@@ -20,22 +20,13 @@ type Response = {
   rawMessage: string | null;
 };
 
-export async function renderQuote(
-  objectType: string,
-  objectID: number,
-  isFullQuote: boolean,
-): Promise<ApiResult<Response>> {
+export async function renderQuote(objectType: string, objectID: number, isFullQuote: boolean): Promise<Response> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/render-quote");
   url.searchParams.set("objectType", objectType);
   url.searchParams.set("isFullQuote", String(isFullQuote));
   url.searchParams.set("objectID", objectID.toString());
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url).get().fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(url).get().fetchAsJson();
+  });
 }

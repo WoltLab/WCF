@@ -46,16 +46,14 @@ export class GridView {
   }
 
   async #loadRows(cause: StateChangeCause): Promise<void> {
-    const response = (
-      await getRows(
-        this.#gridClassName,
-        this.#state.getPageNo(),
-        this.#state.getSortField(),
-        this.#state.getSortOrder(),
-        this.#state.getActiveFilters(),
-        this.#gridViewParameters,
-      )
-    ).unwrap();
+    const response = await getRows(
+      this.#gridClassName,
+      this.#state.getPageNo(),
+      this.#state.getSortField(),
+      this.#state.getSortOrder(),
+      this.#state.getActiveFilters(),
+      this.#gridViewParameters,
+    );
     DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.template);
 
     this.#table.hidden = response.totalRows == 0;
@@ -66,8 +64,9 @@ export class GridView {
   }
 
   async #refreshRow(row: HTMLElement): Promise<void> {
-    const response = (await getRow(this.#gridClassName, row.dataset.objectId!, this.#gridViewParameters)).unwrap();
-    row.replaceWith(DomUtil.createFragmentFromHtml(response.template));
+    const { template } = await getRow(this.#gridClassName, row.dataset.objectId!, this.#gridViewParameters);
+
+    row.replaceWith(DomUtil.createFragmentFromHtml(template));
     this.#state.refreshSelection();
     DomChangeListener.trigger();
   }
@@ -126,8 +125,8 @@ export class GridView {
   }
 
   async #loadBulkInteractions(objectIds: number[]): Promise<void> {
-    const response = await getBulkContextMenuOptions(this.#bulkInteractionProviderClassName, objectIds);
-    this.#state.setBulkInteractionContextMenuOptions(response.unwrap().template);
+    const { template } = await getBulkContextMenuOptions(this.#bulkInteractionProviderClassName, objectIds);
+    this.#state.setBulkInteractionContextMenuOptions(template);
   }
 
   #checkEmptyTable(): void {

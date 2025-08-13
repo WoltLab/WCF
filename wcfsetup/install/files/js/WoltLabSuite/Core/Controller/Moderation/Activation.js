@@ -16,23 +16,19 @@ define(["require", "exports", "WoltLabSuite/Core/Api/ModerationQueues/DeleteCont
             .custom((0, Language_1.getPhrase)("wcf.moderation.activation.enableContent.confirmMessage"))
             .withoutMessage();
         if (result) {
-            const response = await (0, EnableContent_1.enableContent)(queueId);
-            if (response.ok) {
-                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                    window.location.href = redirectUrl;
-                });
-            }
+            await (0, EnableContent_1.enableContent)(queueId);
+            (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                window.location.href = redirectUrl;
+            });
         }
     }
     async function handleRemoveContent(queueId, objectName, redirectUrl) {
         const { result, reason } = await (0, Confirmation_1.confirmationFactory)().softDelete(objectName, true);
         if (result) {
-            const response = await (0, DeleteContent_1.deleteContent)(queueId, reason);
-            if (response.ok) {
-                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                    window.location.href = redirectUrl;
-                });
-            }
+            await (0, DeleteContent_1.deleteContent)(queueId, reason);
+            (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                window.location.href = redirectUrl;
+            });
         }
     }
     function setup(enableContentButton, removeContentButton) {

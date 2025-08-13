@@ -8,25 +8,17 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Response = {
   template: string;
 };
 
-export async function getBulkContextMenuOptions(
-  providerClassName: string,
-  objectIds: number[],
-): Promise<ApiResult<Response>> {
-  let response: Response;
-  try {
-    response = (await prepareRequest(`${window.WSC_RPC_API_URL}core/interactions/bulk-context-menu-options`)
+export async function getBulkContextMenuOptions(providerClassName: string, objectIds: number[]): Promise<Response> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/interactions/bulk-context-menu-options`)
       .post({ provider: providerClassName, objectIDs: objectIds })
       .disableLoadingIndicator()
-      .fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+      .fetchAsJson();
+  });
 }

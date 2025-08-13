@@ -20,12 +20,11 @@ async function handleRemoveContent(queueId: number, objectName: string, redirect
   const { result, reason } = await confirmationFactory().softDelete(objectName, true);
 
   if (result) {
-    const response = await deleteContent(queueId, reason);
-    if (response.ok) {
-      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-        window.location.href = redirectUrl;
-      });
-    }
+    await deleteContent(queueId, reason);
+
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.href = redirectUrl;
+    });
   }
 }
 
@@ -42,12 +41,11 @@ async function handleCloseReport(queueId: number, redirectUrl: string): Promise<
     });
 
   if (result) {
-    const response = await closeReport(queueId, dialog.content.querySelector("input")!.checked);
-    if (response.ok) {
-      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-        window.location.href = redirectUrl;
-      });
-    }
+    await closeReport(queueId, dialog.content.querySelector("input")!.checked);
+
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.href = redirectUrl;
+    });
   }
 }
 
@@ -65,12 +63,11 @@ async function handleChangeJustifiedStatus(queueId: number, justified: boolean, 
     });
 
   if (result) {
-    const response = await changeJustifiedStatus(queueId, dialog.content.querySelector("input")!.checked);
-    if (response.ok) {
-      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
-        window.location.href = redirectUrl;
-      });
-    }
+    await changeJustifiedStatus(queueId, dialog.content.querySelector("input")!.checked);
+
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.href = redirectUrl;
+    });
   }
 }
 

@@ -14,13 +14,8 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         const url = new URL(`${window.WSC_RPC_API_URL}core/interactions/context-menu-options`);
         url.searchParams.set("provider", providerClassName);
         url.searchParams.set("objectID", objectId.toString());
-        let response;
-        try {
-            response = (await (0, Backend_1.prepareRequest)(url).get().allowCaching().disableLoadingIndicator().fetchAsJson());
-        }
-        catch (e) {
-            return (0, Result_1.apiResultFromError)(e);
-        }
-        return (0, Result_1.apiResultFromValue)(response);
+        return (0, Result_1.fromInfallibleApiRequest)(() => {
+            return (0, Backend_1.prepareRequest)(url).get().allowCaching().disableLoadingIndicator().fetchAsJson();
+        });
     }
 });
