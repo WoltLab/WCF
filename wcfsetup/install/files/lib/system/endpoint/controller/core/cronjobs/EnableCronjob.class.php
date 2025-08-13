@@ -31,7 +31,9 @@ final class EnableCronjob implements IController
 
         $this->assertCronjobCanBeEnabled($cronjob);
 
-        (new CronjobAction([$cronjob], 'toggle'))->executeAction();
+        if ($cronjob->isDisabled) {
+            (new CronjobAction([$cronjob], 'toggle'))->executeAction();
+        }
 
         return new JsonResponse([]);
     }
@@ -40,11 +42,7 @@ final class EnableCronjob implements IController
     {
         WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
 
-        if ($cronjob->canBeDisabled()) {
-            throw new PermissionDeniedException();
-        }
-
-        if (!$cronjob->isDisabled) {
+        if (!$cronjob->canBeDisabled()) {
             throw new PermissionDeniedException();
         }
     }

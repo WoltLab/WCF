@@ -109,7 +109,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
     }
 
     /**
-     * @return static
+     * @return ?static
      */
     public function getParentCategory()
     {

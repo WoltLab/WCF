@@ -144,8 +144,7 @@ final class MessageQuoteManager extends SingletonFactory
      * Returns an array containing the quote author, link and text.
      *
      * @param string $quoteID
-     *
-     * @return  string[]|false
+     * @return array{objectID: int, author: string, avatar: string, link: string, message: string, rawMessage: string}
      * @deprecated 6.2
      */
     public function getQuoteComponents($quoteID)
@@ -245,30 +244,25 @@ final class MessageQuoteManager extends SingletonFactory
      *
      * @param string $quoteID
      * @param bool $useFullQuote
-     *
-     * @return  string|null
-     *
+     * @return string
      * @deprecated 6.2
      */
     public function getQuote($quoteID, $useFullQuote = true)
     {
         \assert(isset($this->legacyQuoteData));
+
         if ($useFullQuote && $this->legacyQuoteData['fullQuote'] !== '') {
             return $this->legacyQuoteData['fullQuote'];
-        } else {
-            return $this->legacyQuoteData['message'];
         }
 
-        return null;
+        return $this->legacyQuoteData['message'];
     }
 
     /**
      * Returns the object id by quote id.
      *
      * @param string $quoteID
-     *
-     * @return  int|null
-     *
+     * @return null
      * @deprecated 6.2
      */
     public function getObjectID($quoteID)

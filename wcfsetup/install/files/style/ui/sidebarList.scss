@@ -7,17 +7,21 @@
 .sidebarListItem {
 	display: grid;
 	grid-template-areas:
-		"avatar content"
-		"avatar meta";
+		"image content"
+		"image meta";
 	grid-template-columns: min-content 1fr;
 	grid-template-rows: 1fr min-content;
-	column-gap: 10px;
-	row-gap: 5px;
 	position: relative;
+	row-gap: 2px;
 }
 
-.sidebarListItem__avatar {
-	grid-area: avatar;
+.sidebarListItem__image {
+	grid-area: image;
+	margin-right: 10px;
+}
+
+.sidebarListItem__image img {
+	max-width: 64px;
 }
 
 .sidebarListItem__content {
@@ -29,15 +33,15 @@
 
 .sidebarListItem__meta {
 	grid-area: meta;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	flex-wrap: wrap;
 
 	@include wcfFontSmall;
 }
 
-.sidebarListItem__meta__time {
-	color: var(--wcfContentDimmedText);
-}
-
-a.sidebarListItem__link {
+/* Selector required to override legacy styling of the sidebar. */
+.sidebarListItem .sidebarListItem__link {
 	color: inherit;
 
 	&::before {
@@ -65,4 +69,18 @@ a.sidebarListItem__link {
 
 .sidebarListItem__description {
 	@include wcfFontSmall;
+}
+
+.sidebarListItem__meta__item {
+	align-items: center;
+	display: flex;
+}
+
+.sidebarListItem__meta__avatar + .sidebarListItem__meta__item {
+	margin-left: 5px;
+}
+
+.sidebarListItem__meta__item:not(.sidebarListItem__meta__avatar) + .sidebarListItem__meta__item::before {
+	content: "•";
+	margin: 0 3px;
 }

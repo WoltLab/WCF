@@ -2,6 +2,7 @@
 
 namespace wcf\system\listView;
 
+use wcf\action\ApiAction;
 use wcf\action\ListViewFilterAction;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
@@ -16,6 +17,7 @@ use wcf\system\listView\filter\IListViewFilter;
 use wcf\system\listView\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a list view.
@@ -48,6 +50,7 @@ abstract class AbstractListView
     private bool $allowInteractions = true;
     private bool $allowBulkInteractions = true;
     private int $fixedNumberOfItems = 0;
+    private string $markAsReadEndpoint = '';
 
     /**
      * @var array<string, string>
@@ -671,6 +674,35 @@ abstract class AbstractListView
     public function getContainerCssClassName(): string
     {
         return $this->containerCssClassName;
+    }
+
+    public function setMarkAsReadEndpoints(string $endpoint): void
+    {
+        $this->markAsReadEndpoint = $endpoint;
+    }
+
+    public function renderMarkAsReadButton(DatabaseObject $object): string
+    {
+        if (!$this->markAsReadEndpoint) {
+            throw new \BadMethodCallException("No mark as read endpoint has been specified.");
+        }
+
+        $endpoint = StringUtil::encodeHTML(
+            LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) .
+                \sprintf($this->markAsReadEndpoint, $object->getObjectID())
+        );
+        $title = WCF::getLanguage()->get('wcf.global.button.markAsRead');
+
+        return <<<HTML
+            <button
+                type="button"
+                class="listView__item__markAsRead jsTooltip"
+                title="{$title}"
+                data-endpoint="{$endpoint}"
+            >
+                <span class="listView__item__unread__indicator" aria-hidden="true"></span>
+            </button>
+            HTML;
     }
 
     /**

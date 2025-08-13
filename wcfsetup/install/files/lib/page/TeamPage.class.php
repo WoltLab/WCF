@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupList;
 use wcf\system\listView\user\TeamListView;
 use wcf\system\page\PageLocationManager;
@@ -26,6 +27,12 @@ class TeamPage extends AbstractPage
      */
     public $neededModules = ['MODULE_TEAM_PAGE'];
 
+    /**
+     * @var list<array{
+     *  team: UserGroup,
+     *  listView: TeamListView,
+     * }>
+     */
     protected array $teams = [];
 
     #[\Override]

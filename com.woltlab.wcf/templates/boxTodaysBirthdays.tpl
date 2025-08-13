@@ -1,7 +1,7 @@
 <ol class="sidebarList">
 	{foreach from=$birthdayUserProfiles item=birthdayUserProfile}
 		<li class="sidebarListItem">
-			<div class="sidebarListItem__avatar">
+			<div class="sidebarListItem__image">
 				{user object=$birthdayUserProfile type='avatar32' ariaHidden='true' tabindex='-1'}
 			</div>
 
@@ -12,7 +12,7 @@
 			</div>
 
 			<div class="sidebarListItem__meta">
-				<div class="sidebarListItem__meta__birthday">
+				<div class="sidebarListItem__meta__item sidebarListItem__meta__birthday">
 					{$birthdayUserProfile->getBirthday()}
 				</div>
 			</div>
