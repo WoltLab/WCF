@@ -9,7 +9,6 @@ use wcf\data\box\Box;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -37,12 +36,8 @@ final class DisableBox implements IController
         return new JsonResponse([]);
     }
 
-    private function assertBoxCanBeDisabled(Box $box): void
+    private function assertBoxCanBeDisabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageBox']);
-
-        if ($box->isDisabled) {
-            throw new PermissionDeniedException();
-        }
     }
 }
