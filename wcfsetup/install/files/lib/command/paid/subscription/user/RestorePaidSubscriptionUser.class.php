@@ -24,10 +24,6 @@ final class RestorePaidSubscriptionUser
 
     public function __invoke(): void
     {
-        if ($this->subscriptionUser->isActive) {
-            return;
-        }
-
         $user = $this->subscriptionUser->getUser();
         $subscription = $this->subscriptionUser->getSubscription();
 

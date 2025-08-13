@@ -97,7 +97,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                 $logMessage = 'payment reversed';
             }
             if ($status == 'canceled_reversal') {
-                if ($userSubscription !== null) {
+                if ($userSubscription?->isActive === 1) {
                     (new RestorePaidSubscriptionUser($userSubscription))();
                 }
                 $logMessage = 'reversal canceled';
