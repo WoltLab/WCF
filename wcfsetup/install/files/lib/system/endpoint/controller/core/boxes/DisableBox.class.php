@@ -28,7 +28,7 @@ final class DisableBox implements IController
     {
         $box = Helper::fetchObjectFromRequestParameter($variables['id'], Box::class);
 
-        $this->assertBoxCanBeDisabled($box);
+        $this->assertBoxCanBeDisabled();
 
         if (!$box->isDisabled) {
             (new \wcf\command\box\DisableBox($box))();

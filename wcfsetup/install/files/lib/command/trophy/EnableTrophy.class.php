@@ -12,7 +12,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
- * Enables the given trophy.
+ * Enables a trophy.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

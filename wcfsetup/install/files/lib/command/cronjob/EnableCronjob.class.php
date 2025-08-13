@@ -9,7 +9,7 @@ use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given cronjob.
+ * Enables a cronjob.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

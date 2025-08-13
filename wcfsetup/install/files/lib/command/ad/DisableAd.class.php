@@ -8,7 +8,7 @@ use wcf\event\ad\AdDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disable an ad.
+ * Disables an ad.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

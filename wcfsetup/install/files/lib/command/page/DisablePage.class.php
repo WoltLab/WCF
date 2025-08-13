@@ -8,7 +8,7 @@ use wcf\event\page\PageDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given page.
+ * Disables a page.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

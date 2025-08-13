@@ -8,7 +8,7 @@ use wcf\event\contact\recipient\ContactRecipientEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the contact recipient.
+ * Enables a contact recipient.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

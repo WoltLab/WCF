@@ -8,7 +8,7 @@ use wcf\event\language\LanguageDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given language.
+ * Disables a language.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

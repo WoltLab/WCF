@@ -8,7 +8,7 @@ use wcf\event\contact\option\ContactOptionEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the contact option.
+ * Enables a contact option.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

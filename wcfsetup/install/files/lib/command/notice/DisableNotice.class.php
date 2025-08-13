@@ -8,7 +8,7 @@ use wcf\event\notice\NoticeDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given notice.
+ * Disables a notice.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

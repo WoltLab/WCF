@@ -8,7 +8,7 @@ use wcf\event\ad\AdEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enable an ad.
+ * Enables an ad.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

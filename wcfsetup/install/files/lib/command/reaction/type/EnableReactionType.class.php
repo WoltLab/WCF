@@ -8,7 +8,7 @@ use wcf\event\reaction\type\ReactionTypeEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enable a reaction type.
+ * Enables a reaction type.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

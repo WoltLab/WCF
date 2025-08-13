@@ -8,7 +8,7 @@ use wcf\event\contact\recipient\ContactRecipientDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the contact recipient.
+ * Disables a contact recipient.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

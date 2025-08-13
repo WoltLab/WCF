@@ -8,7 +8,7 @@ use wcf\event\captcha\question\CaptchaQuestionDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given captcha question.
+ * Disables a captcha question.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

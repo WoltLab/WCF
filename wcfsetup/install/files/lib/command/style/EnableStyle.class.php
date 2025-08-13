@@ -8,7 +8,7 @@ use wcf\event\style\StyleEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given style.
+ * Enables a style.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

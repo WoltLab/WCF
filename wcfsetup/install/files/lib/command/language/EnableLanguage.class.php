@@ -8,7 +8,7 @@ use wcf\event\language\LanguageEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given language.
+ * Enables a language.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

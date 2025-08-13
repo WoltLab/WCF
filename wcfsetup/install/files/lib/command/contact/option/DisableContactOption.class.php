@@ -8,7 +8,7 @@ use wcf\event\contact\option\ContactOptionDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disable the contact option.
+ * Disables a contact option.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

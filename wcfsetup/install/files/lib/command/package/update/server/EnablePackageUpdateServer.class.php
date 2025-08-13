@@ -8,7 +8,7 @@ use wcf\event\package\update\server\PackageUpdateServerEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given package update server.
+ * Enables a package update server.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

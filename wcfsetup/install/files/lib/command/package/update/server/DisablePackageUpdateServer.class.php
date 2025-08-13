@@ -8,7 +8,7 @@ use wcf\event\package\update\server\PackageUpdateServerDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given package update server.
+ * Disables a package update server.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

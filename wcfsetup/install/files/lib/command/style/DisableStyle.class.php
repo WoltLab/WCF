@@ -8,7 +8,7 @@ use wcf\event\style\StyleDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Disables the given style.
+ * Disables a style.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

@@ -8,7 +8,7 @@ use wcf\event\notice\NoticeEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given notice.
+ * Enables a notice.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

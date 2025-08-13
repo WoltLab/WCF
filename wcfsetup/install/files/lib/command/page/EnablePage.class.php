@@ -8,7 +8,7 @@ use wcf\event\page\PageEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given page.
+ * Enables a page.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

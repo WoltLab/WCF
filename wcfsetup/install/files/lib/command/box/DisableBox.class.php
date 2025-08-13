@@ -8,7 +8,7 @@ use wcf\event\box\BoxDisabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables a box.
+ * Disables a box.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

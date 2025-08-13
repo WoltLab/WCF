@@ -8,7 +8,7 @@ use wcf\event\captcha\question\CaptchaQuestionEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables the given captcha question.
+ * Enables a captcha question.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
