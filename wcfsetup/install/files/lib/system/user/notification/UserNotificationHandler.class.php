@@ -261,77 +261,79 @@ class UserNotificationHandler extends SingletonFactory
         $recipientList->getConditionBuilder()->add('event_to_user.userID IN (?)', [$recipientIDs]);
         $recipientList->readObjects();
         $recipients = $recipientList->getObjects();
-        if (!empty($recipients)) {
-            if ($event->isStackable()) {
-                $notifications = (new CreateStackableUserNotification(
-                    $event->eventID,
-                    $event->getEventHash(),
-                    $event->getAuthor(),
-                    $notificationObject->getObjectID(),
-                    $objectTypeObject->packageID,
-                    $baseObjectID,
-                    $recipients,
-                    \serialize($additionalData)
-                ))();
-            } else {
-                $notifications = (new CreateUserNotification(
-                    $event->eventID,
-                    $event->getEventHash(),
-                    $event->getAuthor(),
-                    $notificationObject->getObjectID(),
-                    $objectTypeObject->packageID,
-                    $baseObjectID,
-                    $recipients,
-                    \serialize($additionalData)
-                ))();
-            }
+        if ($recipients === []) {
+            return;
+        }
 
-            // send notifications
-            if ($event->supportsEmailNotification()) {
-                foreach ($recipients as $recipient) {
-                    if ($recipient->mailNotificationType === UserNotification::MAIL_NOTIFICATION_TYPE_INSTANT) {
-                        if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
-                            $event->setObject(
-                                $notifications[$recipient->userID]['object'],
-                                $notificationObject,
-                                $userProfile,
-                                $additionalData
-                            );
-                            $event->setAuthors([$userProfile->userID => $userProfile]);
-                            $this->sendInstantMailNotification(
-                                $notifications[$recipient->userID]['object'],
-                                $recipient,
-                                $event
-                            );
-                        }
+        if ($event->isStackable()) {
+            $notifications = (new CreateStackableUserNotification(
+                $event->eventID,
+                $event->getEventHash(),
+                $event->getAuthor(),
+                $notificationObject->getObjectID(),
+                $objectTypeObject->packageID,
+                $baseObjectID,
+                $recipients,
+                \serialize($additionalData)
+            ))();
+        } else {
+            $notifications = (new CreateUserNotification(
+                $event->eventID,
+                $event->getEventHash(),
+                $event->getAuthor(),
+                $notificationObject->getObjectID(),
+                $objectTypeObject->packageID,
+                $baseObjectID,
+                $recipients,
+                \serialize($additionalData)
+            ))();
+        }
+
+        // send notifications
+        if ($event->supportsEmailNotification()) {
+            foreach ($recipients as $recipient) {
+                if ($recipient->mailNotificationType === UserNotification::MAIL_NOTIFICATION_TYPE_INSTANT) {
+                    if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
+                        $event->setObject(
+                            $notifications[$recipient->userID]['object'],
+                            $notificationObject,
+                            $userProfile,
+                            $additionalData
+                        );
+                        $event->setAuthors([$userProfile->userID => $userProfile]);
+                        $this->sendInstantMailNotification(
+                            $notifications[$recipient->userID]['object'],
+                            $recipient,
+                            $event
+                        );
                     }
                 }
             }
-
-            $sql = "INSERT IGNORE INTO  wcf1_service_worker_notification
-                                        (workerID, notificationID, time)
-                    SELECT              workerID, ?, ?
-                    FROM                wcf1_service_worker
-                    WHERE               userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            foreach ($notifications as $userID => $notification) {
-                $notificationObject = $notification['object'];
-
-                $statement->execute([
-                    $notificationObject->notificationID,
-                    $notificationObject->time,
-                    $userID,
-                ]);
-            }
-            BackgroundQueueHandler::getInstance()->enqueueIn(new ServiceWorkerDeliveryBackgroundJob());
-            // reset notification count
-            UserStorageHandler::getInstance()->reset(\array_keys($recipients), 'userNotificationCount');
-
-            $parameters['notifications'] = $notifications;
-            $parameters['recipients'] = $recipients;
-            EventHandler::getInstance()->fireAction($this, 'createdNotification', $parameters);
         }
+
+        $sql = "INSERT IGNORE INTO  wcf1_service_worker_notification
+                                    (workerID, notificationID, time)
+                SELECT              workerID, ?, ?
+                FROM                wcf1_service_worker
+                WHERE               userID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+
+        foreach ($notifications as $userID => $notification) {
+            $notificationObject = $notification['object'];
+
+            $statement->execute([
+                $notificationObject->notificationID,
+                $notificationObject->time,
+                $userID,
+            ]);
+        }
+        BackgroundQueueHandler::getInstance()->enqueueIn(new ServiceWorkerDeliveryBackgroundJob());
+        // reset notification count
+        UserStorageHandler::getInstance()->reset(\array_keys($recipients), 'userNotificationCount');
+
+        $parameters['notifications'] = $notifications;
+        $parameters['recipients'] = $recipients;
+        EventHandler::getInstance()->fireAction($this, 'createdNotification', $parameters);
     }
 
     /**
