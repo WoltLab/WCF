@@ -3,8 +3,12 @@
 namespace wcf\data\user\notification;
 
 use wcf\action\NotificationConfirmAction;
+use wcf\command\user\notification\CreateStackableUserNotification;
+use wcf\command\user\notification\CreateUserNotification;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
@@ -35,127 +39,53 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Creates a simple notification without stacking support, applies to legacy notifications too.
      *
      * @return  mixed[][]
+     * @deprecated 6.3 use the `CreateDefaultUserNotification` command instead
      */
     public function createDefault()
     {
-        $notifications = [];
-        foreach ($this->parameters['recipients'] as $recipient) {
-            $this->parameters['data']['userID'] = $recipient->userID;
-            $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
-            $notification = $this->create();
-
-            $notifications[$recipient->userID] = [
-                'isNew' => true,
-                'object' => $notification,
-            ];
-        }
-
-        // insert author
-        $sql = "INSERT INTO wcf1_user_notification_author
-                            (notificationID, authorID, time)
-                VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-
-        WCF::getDB()->beginTransaction();
-        foreach ($notifications as $notificationData) {
-            $statement->execute([
-                $notificationData['object']->notificationID,
-                $this->parameters['authorID'] ?: null,
-                TIME_NOW,
-            ]);
-        }
-        WCF::getDB()->commitTransaction();
-
-        return $notifications;
+        return (new CreateUserNotification(
+            $this->parameters['data']['eventID'],
+            $this->parameters['data']['eventHash'],
+            $this->getUserProfile($this->parameters['authorID']),
+            $this->parameters['data']['objectID'],
+            $this->parameters['data']['packageID'],
+            $this->parameters['data']['baseObjectID'],
+            $this->parameters['recipients'],
+            $this->parameters['data']['additionalData']
+        ))();
     }
 
     /**
      * Creates a notification or adds another author to an existing one.
      *
      * @return  mixed[][]
+     *
+     * @deprecated 6.3 use the `CreateStackableUserNotification` command instead.
      */
     public function createStackable()
     {
-        // get existing notifications
-        $notificationList = new UserNotificationList();
-        $notificationList->getConditionBuilder()->add("eventID = ?", [$this->parameters['data']['eventID']]);
-        $notificationList->getConditionBuilder()->add("eventHash = ?", [$this->parameters['data']['eventHash']]);
-        $notificationList->getConditionBuilder()->add("userID IN (?)", [\array_keys($this->parameters['recipients'])]);
-        $notificationList->getConditionBuilder()->add("confirmTime = ?", [0]);
-        $notificationList->readObjects();
-        $existingNotifications = [];
-        foreach ($notificationList as $notification) {
-            $existingNotifications[$notification->userID] = $notification;
+        return (new CreateStackableUserNotification(
+            $this->parameters['data']['eventID'],
+            $this->parameters['data']['eventHash'],
+            $this->getUserProfile($this->parameters['authorID']),
+            $this->parameters['data']['objectID'],
+            $this->parameters['data']['packageID'],
+            $this->parameters['data']['baseObjectID'],
+            $this->parameters['recipients'],
+            $this->parameters['data']['additionalData']
+        ))();
+    }
+
+    private function getUserProfile(?int $authorID): UserProfile
+    {
+        if ($authorID === null) {
+            return new UserProfile(new User(null, []));
+        }
+        if ($authorID === WCF::getUser()->userID) {
+            return new UserProfile(WCF::getUser());
         }
 
-        $notifications = [];
-        foreach ($this->parameters['recipients'] as $recipient) {
-            $notification = ($existingNotifications[$recipient->userID] ?? null);
-            $isNew = ($notification === null);
-
-            if ($notification === null) {
-                $this->parameters['data']['userID'] = $recipient->userID;
-                $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
-                $notification = $this->create();
-            }
-
-            $notifications[$recipient->userID] = [
-                'isNew' => $isNew,
-                'object' => $notification,
-            ];
-        }
-
-        \uasort($notifications, static function ($a, $b) {
-            if ($a['object']->notificationID == $b['object']->notificationID) {
-                return 0;
-            } elseif ($a['object']->notificationID < $b['object']->notificationID) {
-                return -1;
-            }
-
-            return 1;
-        });
-
-        // insert author
-        $sql = "INSERT IGNORE INTO  wcf1_user_notification_author
-                                    (notificationID, authorID, time)
-                VALUES              (?, ?, ?)";
-        $authorStatement = WCF::getDB()->prepare($sql);
-
-        // update trigger count
-        $sql = "UPDATE  wcf1_user_notification
-                SET     timesTriggered = timesTriggered + ?,
-                        guestTimesTriggered = guestTimesTriggered + ?
-                WHERE   notificationID = ?";
-        $triggerStatement = WCF::getDB()->prepare($sql);
-
-        WCF::getDB()->beginTransaction();
-        $notificationIDs = [];
-        foreach ($notifications as $notificationData) {
-            $notificationIDs[] = $notificationData['object']->notificationID;
-
-            $authorStatement->execute([
-                $notificationData['object']->notificationID,
-                $this->parameters['authorID'] ?: null,
-                TIME_NOW,
-            ]);
-            $triggerStatement->execute([
-                1,
-                $this->parameters['authorID'] ? 0 : 1,
-                $notificationData['object']->notificationID,
-            ]);
-        }
-        WCF::getDB()->commitTransaction();
-
-        $notificationList = new UserNotificationList();
-        $notificationList->setObjectIDs($notificationIDs);
-        $notificationList->readObjects();
-        $updatedNotifications = $notificationList->getObjects();
-
-        return \array_map(static function ($notificationData) use ($updatedNotifications) {
-            $notificationData['object'] = $updatedNotifications[$notificationData['object']->notificationID];
-
-            return $notificationData;
-        }, $notifications);
+        return UserProfileRuntimeCache::getInstance()->getObject($authorID);
     }
 
     /**

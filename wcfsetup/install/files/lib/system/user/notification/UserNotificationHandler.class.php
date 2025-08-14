@@ -4,6 +4,7 @@ namespace wcf\system\user\notification;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\command\user\notification\CreateStackableUserNotification;
+use wcf\command\user\notification\CreateUserNotification;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientList;
@@ -261,43 +262,34 @@ class UserNotificationHandler extends SingletonFactory
         $recipientList->readObjects();
         $recipients = $recipientList->getObjects();
         if (!empty($recipients)) {
-            $data = [
-                'authorID' => $event->getAuthorID() ?: null,
-                'data' => [
-                    'eventID' => $event->eventID,
-                    'authorID' => $event->getAuthorID() ?: null,
-                    'objectID' => $notificationObject->getObjectID(),
-                    'baseObjectID' => $baseObjectID,
-                    'eventHash' => $event->getEventHash(),
-                    'packageID' => $objectTypeObject->packageID,
-                    'mailNotified' => $event->supportsEmailNotification() ? 0 : 1,
-                    'time' => TIME_NOW,
-                    'additionalData' => \serialize($additionalData),
-                ],
-                'recipients' => $recipients,
-            ];
-
             if ($event->isStackable()) {
                 $notifications = (new CreateStackableUserNotification(
-                    $event,
+                    $event->eventID,
+                    $event->getEventHash(),
                     $event->getAuthor(),
-                    $notificationObject,
-                    $objectTypeObject,
+                    $notificationObject->getObjectID(),
+                    $objectTypeObject->packageID,
                     $baseObjectID,
                     $recipients,
-                    $additionalData
+                    \serialize($additionalData)
                 ))();
             } else {
-                $data['data']['timesTriggered'] = 1;
-                $action = new UserNotificationAction([], 'createDefault', $data);
-                $result = $action->executeAction();
-                $notifications = $result['returnValues'];
+                $notifications = (new CreateUserNotification(
+                    $event->eventID,
+                    $event->getEventHash(),
+                    $event->getAuthor(),
+                    $notificationObject->getObjectID(),
+                    $objectTypeObject->packageID,
+                    $baseObjectID,
+                    $recipients,
+                    \serialize($additionalData)
+                ))();
             }
 
             // send notifications
             if ($event->supportsEmailNotification()) {
                 foreach ($recipients as $recipient) {
-                    if ($recipient->mailNotificationType == 'instant') {
+                    if ($recipient->mailNotificationType === UserNotification::MAIL_NOTIFICATION_TYPE_INSTANT) {
                         if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
                             $event->setObject(
                                 $notifications[$recipient->userID]['object'],
@@ -324,15 +316,12 @@ class UserNotificationHandler extends SingletonFactory
             $statement = WCF::getDB()->prepare($sql);
 
             foreach ($notifications as $userID => $notification) {
-                $notificationObject = $notification['object'] ?? null;
-                if ($notificationObject === null) {
-                    continue;
-                }
-                \assert($notificationObject instanceof UserNotification);
+                $notificationObject = $notification['object'];
+
                 $statement->execute([
                     $notificationObject->notificationID,
                     $notificationObject->time,
-                    $userID
+                    $userID,
                 ]);
             }
             BackgroundQueueHandler::getInstance()->enqueueIn(new ServiceWorkerDeliveryBackgroundJob());

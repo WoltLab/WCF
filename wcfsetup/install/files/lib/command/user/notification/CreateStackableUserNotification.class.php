@@ -7,9 +7,6 @@ use wcf\data\user\notification\UserNotificationEditor;
 use wcf\data\user\notification\UserNotificationList;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
-use wcf\system\user\notification\event\IUserNotificationEvent;
-use wcf\system\user\notification\object\IUserNotificationObject;
-use wcf\system\user\notification\object\type\IUserNotificationObjectType;
 use wcf\system\WCF;
 
 /**
@@ -23,15 +20,15 @@ use wcf\system\WCF;
 final class CreateStackableUserNotification
 {
     public function __construct(
-        private readonly IUserNotificationEvent $event,
+        private readonly int $eventID,
+        private readonly string $eventHash,
         private readonly UserProfile $author,
-        private readonly IUserNotificationObject $object,
-        private readonly IUserNotificationObjectType $objectType,
+        private readonly int $objectID,
+        private readonly int $packageID,
         private readonly int $baseObjectID,
         /** @var array<int, User> */
         private readonly array $recipients,
-        /** @var array<string, mixed> */
-        private readonly array $additionalData = [],
+        private readonly string $additionalData,
     ) {}
 
     /**
@@ -39,7 +36,7 @@ final class CreateStackableUserNotification
      */
     public function __invoke(): array
     {
-        $existingNotifications = $this->getExistingNotifications($this->event, $this->recipients);
+        $existingNotifications = $this->getExistingNotifications($this->eventID, $this->eventHash, $this->recipients);
 
         $notifications = [];
         foreach ($this->recipients as $recipient) {
@@ -48,12 +45,13 @@ final class CreateStackableUserNotification
 
             if ($notification === null) {
                 $notification = $this->createNotification(
-                    $this->objectType,
-                    $this->event,
-                    $this->object,
+                    $this->packageID,
+                    $this->eventID,
+                    $this->eventHash,
+                    $this->objectID,
                     $this->baseObjectID,
                     $this->author,
-                    \serialize($this->additionalData),
+                    $this->additionalData,
                     $recipient,
                 );
             }
@@ -99,7 +97,7 @@ final class CreateStackableUserNotification
         $triggerStatement = WCF::getDB()->prepare($sql);
 
         $authorId = $author->userID;
-        $isGuestTrigger = $authorId ? 1 : 0;
+        $isGuestTrigger = $authorId ? 0 : 1;
         $now = TIME_NOW;
         $notificationIDs = [];
 
@@ -144,11 +142,11 @@ final class CreateStackableUserNotification
      *
      * @return array<int, UserNotification>
      */
-    private function getExistingNotifications(IUserNotificationEvent $event, array $recipients): array
+    private function getExistingNotifications(int $eventID, string $eventHash, array $recipients): array
     {
         $notificationList = new UserNotificationList();
-        $notificationList->getConditionBuilder()->add("eventID = ?", [$event->eventID]);
-        $notificationList->getConditionBuilder()->add("eventHash = ?", [$event->getEventHash()]);
+        $notificationList->getConditionBuilder()->add("eventID = ?", [$eventID]);
+        $notificationList->getConditionBuilder()->add("eventHash = ?", [$eventHash]);
         $notificationList->getConditionBuilder()->add("userID IN (?)", [\array_keys($recipients)]);
         $notificationList->getConditionBuilder()->add("confirmTime = ?", [0]);
         $notificationList->readObjects();
@@ -170,8 +168,6 @@ final class CreateStackableUserNotification
     }
 
     /**
-     * Comparator for user notifications by their notificationID.
-     *
      * @param array{isNew: bool, object: UserNotification} $left
      * @param array{isNew: bool, object: UserNotification} $right
      */
@@ -180,25 +176,30 @@ final class CreateStackableUserNotification
         return $left['object']->notificationID <=> $right['object']->notificationID;
     }
 
+    private function shouldNotifyByMail(User $recipient): bool
+    {
+        return $recipient->mailNotificationType === UserNotification::MAIL_NOTIFICATION_TYPE_NONE
+            || $recipient->mailNotificationType === UserNotification::MAIL_NOTIFICATION_TYPE_INSTANT;
+    }
+
     private function createNotification(
-        IUserNotificationObjectType $objectType,
-        IUserNotificationEvent $event,
-        IUserNotificationObject $object,
+        int $packageID,
+        int $eventID,
+        string $eventHash,
+        int $objectID,
         int $baseObjectID,
         ?UserProfile $author,
         string $additionalData,
         User $recipient,
     ): UserNotification {
-        $mailNotified = (($recipient->mailNotificationType === 'none' || $recipient->mailNotificationType === 'instant') ? 1 : 0);
-
         return UserNotificationEditor::create([
-            'packageID' => $objectType->packageID,
-            'eventID' => $event->eventID,
-            'objectID' => $object->getObjectID(),
+            'packageID' => $packageID,
+            'eventID' => $eventID,
+            'objectID' => $objectID,
             'baseObjectID' => $baseObjectID,
-            'eventHash' => $event->getEventHash(),
+            'eventHash' => $eventHash,
             'authorID' => $author->userID ?: null,
-            'mailNotified' => $mailNotified ? 0 : 1,
+            'mailNotified' => $this->shouldNotifyByMail($recipient) ? 0 : 1,
             'time' => TIME_NOW,
             'additionalData' => $additionalData,
             'userID' => $recipient->userID,

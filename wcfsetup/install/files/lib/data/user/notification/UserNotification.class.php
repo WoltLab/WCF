@@ -29,6 +29,9 @@ use wcf\system\WCF;
  */
 class UserNotification extends DatabaseObject
 {
+    public const MAIL_NOTIFICATION_TYPE_NONE = 'none';
+    public const MAIL_NOTIFICATION_TYPE_INSTANT = 'instant';
+
     /**
      * @inheritDoc
      */
