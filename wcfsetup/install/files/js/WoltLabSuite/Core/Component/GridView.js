@@ -31,7 +31,7 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
             this.#initEventListeners();
         }
         async #loadRows(cause) {
-            const response = (await (0, GetRows_1.getRows)(this.#gridClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#gridViewParameters)).unwrap();
+            const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#gridViewParameters);
             Util_1.default.setInnerHtml(this.#table.querySelector("tbody"), response.template);
             this.#table.hidden = response.totalRows == 0;
             this.#noItemsNotice.hidden = response.totalRows != 0;
@@ -39,8 +39,8 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
             Listener_1.default.trigger();
         }
         async #refreshRow(row) {
-            const response = (await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#gridViewParameters)).unwrap();
-            row.replaceWith(Util_1.default.createFragmentFromHtml(response.template));
+            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#gridViewParameters);
+            row.replaceWith(Util_1.default.createFragmentFromHtml(template));
             this.#state.refreshSelection();
             Listener_1.default.trigger();
         }
@@ -88,8 +88,8 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
             return state;
         }
         async #loadBulkInteractions(objectIds) {
-            const response = await (0, GetBulkContextMenuOptions_1.getBulkContextMenuOptions)(this.#bulkInteractionProviderClassName, objectIds);
-            this.#state.setBulkInteractionContextMenuOptions(response.unwrap().template);
+            const { template } = await (0, GetBulkContextMenuOptions_1.getBulkContextMenuOptions)(this.#bulkInteractionProviderClassName, objectIds);
+            this.#state.setBulkInteractionContextMenuOptions(template);
         }
         #checkEmptyTable() {
             if (this.#table.querySelectorAll("tbody tr").length > 0) {

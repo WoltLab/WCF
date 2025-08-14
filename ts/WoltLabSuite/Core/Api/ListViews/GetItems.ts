@@ -8,7 +8,7 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Response = {
   template: string;
@@ -24,7 +24,7 @@ export async function getItems(
   sortOrder: string = "ASC",
   filters?: Map<string, string>,
   listViewParameters?: Map<string, string>,
-): Promise<ApiResult<Response>> {
+): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/items`);
   url.searchParams.set("listView", listViewClass);
   url.searchParams.set("pageNo", pageNo.toString());
@@ -47,12 +47,7 @@ export async function getItems(
     });
   }
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson();
+  });
 }

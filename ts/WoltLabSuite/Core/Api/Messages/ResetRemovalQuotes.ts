@@ -9,16 +9,12 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
-export async function resetRemovalQuotes(): Promise<ApiResult<[]>> {
+export async function resetRemovalQuotes(): Promise<[]> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/reset-removal-quotes");
 
-  try {
-    await prepareRequest(url).post().fetchAsJson();
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue([]);
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(url).post().fetchAsJson();
+  });
 }

@@ -8,21 +8,16 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Response = {
   template: string;
 };
 
-export async function renderException(exceptionId: string): Promise<ApiResult<Response>> {
+export async function renderException(exceptionId: string): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/exceptions/${exceptionId}/render`);
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url).get().fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(url).get().fetchAsJson();
+  });
 }

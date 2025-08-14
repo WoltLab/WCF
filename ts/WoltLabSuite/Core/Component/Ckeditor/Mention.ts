@@ -25,7 +25,7 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
     return [];
   }
 
-  return (await mentionSuggestions(query)).unwrap().map((item) => {
+  return (await mentionSuggestions(query)).map((item) => {
     if (item.type === "user") {
       return {
         id: `@${item.username}`,

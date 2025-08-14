@@ -12,13 +12,8 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     exports.getArticlePopover = getArticlePopover;
     async function getArticlePopover(articleId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/articles/${articleId}/popover`);
-        let response;
-        try {
-            response = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());
-        }
-        catch (e) {
-            return (0, Result_1.apiResultFromError)(e);
-        }
-        return (0, Result_1.apiResultFromValue)(response.template);
+        return (0, Result_1.fromInfallibleApiRequest)(() => {
+            return (0, Backend_1.prepareRequest)(url).get().fetchAsJson();
+        });
     }
 });

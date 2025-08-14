@@ -30,7 +30,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             this.#initEventListeners();
         }
         async #loadItems(cause) {
-            const response = (await (0, GetItems_1.getItems)(this.#viewClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#listViewParameters)).unwrap();
+            const response = await (0, GetItems_1.getItems)(this.#viewClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#listViewParameters);
             (0, Util_1.setInnerHtml)(this.#viewElement, response.template);
             this.#viewElement.hidden = response.totalItems === 0;
             this.#noItemsNotice.hidden = response.totalItems !== 0;
@@ -41,8 +41,8 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             (0, Listener_1.trigger)();
         }
         async #refreshItem(item) {
-            const response = (await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#listViewParameters)).unwrap();
-            item.replaceWith((0, Util_1.createFragmentFromHtml)(response.template));
+            const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#listViewParameters);
+            item.replaceWith((0, Util_1.createFragmentFromHtml)(template));
             this.#state.refreshSelection();
             (0, Listener_1.trigger)();
         }
@@ -90,8 +90,8 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             return state;
         }
         async #loadBulkInteractions(objectIds) {
-            const response = await (0, GetBulkContextMenuOptions_1.getBulkContextMenuOptions)(this.#bulkInteractionProviderClassName, objectIds);
-            this.#state.setBulkInteractionContextMenuOptions(response.unwrap().template);
+            const { template } = await (0, GetBulkContextMenuOptions_1.getBulkContextMenuOptions)(this.#bulkInteractionProviderClassName, objectIds);
+            this.#state.setBulkInteractionContextMenuOptions(template);
         }
         #checkEmptyList() {
             if (this.#viewElement.querySelectorAll(".listView__item").length > 0) {

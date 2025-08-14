@@ -12,16 +12,12 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.deleteContent = deleteContent;
     async function deleteContent(queueId, reason) {
-        try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/delete-content`)
+        return (0, Result_1.fromInfallibleApiRequest)(() => {
+            return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/delete-content`)
                 .post({
                 reason,
             })
                 .fetchAsJson();
-        }
-        catch (e) {
-            return (0, Result_1.apiResultFromError)(e);
-        }
-        return (0, Result_1.apiResultFromValue)([]);
+        });
     }
 });

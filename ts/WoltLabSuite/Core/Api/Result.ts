@@ -10,7 +10,10 @@
  */
 
 import { StatusNotOk } from "../Ajax/Error";
+import { dialogFactory } from "../Component/Dialog";
 import { isPlainObject } from "../Core";
+import { getPhrase } from "../Language";
+import { escapeHTML } from "../StringUtil";
 import { ApiError } from "./Error";
 
 export type ApiResult<T> =
@@ -58,7 +61,7 @@ export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResul
 
   let json: unknown;
   try {
-    json = await response.json();
+    json = await response.clone().json();
   } catch {
     throw e;
   }
@@ -77,10 +80,55 @@ export async function apiResultFromStatusNotOk(e: StatusNotOk): Promise<ApiResul
       ok: false,
       error: apiError,
       unwrap() {
+        showErrorDialog(apiError);
+
         throw new Error("Trying to unwrap an erroneous result.", { cause: apiError });
       },
     };
   }
 
   throw e;
+}
+
+/**
+ * Helper method for API requests that are expected to never fail. Infallible
+ * requests are those that should only fail if there is an unexpected server
+ * error or if the request was the result of a bug in the client.
+ */
+export async function fromInfallibleApiRequest<T = unknown>(request: () => Promise<unknown>): Promise<T> {
+  try {
+    return (await request()) as T;
+  } catch (e) {
+    const error = await apiResultFromError(e);
+    return error.unwrap();
+  }
+}
+
+function showErrorDialog(apiError: ApiError): void {
+  const code = escapeHTML(apiError.code);
+  const type = escapeHTML(apiError.type);
+  const message = apiError.message ? escapeHTML(apiError.message) : "(not set)";
+  const param = apiError.param ? "<kbd>" + escapeHTML(apiError.param) + "</kbd>" : "(not set)";
+
+  const html = `
+    <dl>
+      <dt>Unexpected server error</dt>
+      <dd><kbd>${type}</kbd></dd>
+    </dl>
+    <dl>
+      <dt>Error code</dt>
+      <dd><kbd>${code}</kbd></dd>
+    </dl>
+    <dl>
+      <dt>Parameter</dt>
+      <dd>${param}</dd>
+    </dl>
+    <dl>
+      <dt>Message</dt>
+      <dd>${message}</dd>
+    </dl>
+  `;
+
+  const dialog = dialogFactory().fromHtml(html).asAlert();
+  dialog.show(getPhrase("wcf.global.error.title"));
 }

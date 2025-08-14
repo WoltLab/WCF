@@ -16,7 +16,7 @@ define(["require", "exports", "../../Dom/Util", "./Event", "WoltLabSuite/Core/Ap
         if (query.length > 24) {
             return [];
         }
-        return (await (0, MentionSuggestions_1.mentionSuggestions)(query)).unwrap().map((item) => {
+        return (await (0, MentionSuggestions_1.mentionSuggestions)(query)).map((item) => {
             if (item.type === "user") {
                 return {
                     id: `@${item.username}`,

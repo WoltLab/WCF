@@ -9,20 +9,16 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
-export async function revertVersion(objectType: string, objectId: number, versionId: number): Promise<ApiResult<[]>> {
-  try {
-    await prepareRequest(`${window.WSC_RPC_API_URL}core/version-trackers/revert`)
+export async function revertVersion(objectType: string, objectId: number, versionId: number): Promise<[]> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/version-trackers/revert`)
       .post({
         objectType,
         objectId,
         versionId,
       })
       .fetchAsJson();
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue([]);
+  });
 }

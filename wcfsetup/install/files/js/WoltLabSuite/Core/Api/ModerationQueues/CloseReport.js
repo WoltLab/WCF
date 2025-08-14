@@ -12,16 +12,12 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.closeReport = closeReport;
     async function closeReport(queueId, markAsJustified) {
-        try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/close`)
+        return (0, Result_1.fromInfallibleApiRequest)(() => {
+            return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/close`)
                 .post({
                 markAsJustified,
             })
                 .fetchAsJson();
-        }
-        catch (e) {
-            return (0, Result_1.apiResultFromError)(e);
-        }
-        return (0, Result_1.apiResultFromValue)([]);
+        });
     }
 });

@@ -12,14 +12,10 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.enableContent = enableContent;
     async function enableContent(queueId) {
-        try {
-            await (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/enable-content`)
+        return (0, Result_1.fromInfallibleApiRequest)(() => {
+            return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/enable-content`)
                 .post()
                 .fetchAsJson();
-        }
-        catch (e) {
-            return (0, Result_1.apiResultFromError)(e);
-        }
-        return (0, Result_1.apiResultFromValue)([]);
+        });
     }
 });
