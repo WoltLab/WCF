@@ -14,6 +14,8 @@ import { registerProvider } from "../Manager";
 import * as Language from "../../../../Language";
 import { enableNotifications } from "../../../../Notification/Handler";
 import { registerServiceWorker, updateNotificationLastReadTime } from "../../../../Notification/ServiceWorker";
+import { markUserNotificationAsRead } from "WoltLabSuite/Core/Api/Users/Notifications/MarkUserNotificationAsRead";
+import { markAllUserNotificationsAsRead } from "WoltLabSuite/Core/Api/Users/Notifications/MarkAllUserNotificationsAsRead";
 
 let originalFavicon = "";
 function setFaviconCounter(counter: number): void {
@@ -277,16 +279,14 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
   }
 
   async markAsRead(objectId: number): Promise<void> {
-    const response = (await dboAction("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
-      .objectIds([objectId])
-      .dispatch()) as ResponseMarkAsRead;
+    const { unreadNotifications } = await markUserNotificationAsRead(objectId);
     updateNotificationLastReadTime();
 
-    this.updateCounter(response.totalCount);
+    this.updateCounter(unreadNotifications);
   }
 
   async markAllAsRead(): Promise<void> {
-    await dboAction("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+    await markAllUserNotificationsAsRead();
     updateNotificationLastReadTime();
 
     this.updateCounter(0);

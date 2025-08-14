@@ -5,17 +5,16 @@ namespace wcf\data\user\notification;
 use wcf\action\NotificationConfirmAction;
 use wcf\command\user\notification\CreateStackableUserNotification;
 use wcf\command\user\notification\CreateUserNotification;
+use wcf\command\user\notification\MarkAllUserNotificationsAsRead;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -161,6 +160,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Validates parameters to mark a notification as confirmed.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAsConfirmed()
     {
@@ -174,6 +175,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Marks a notification as confirmed.
      *
      * @return array{markAsRead: int, totalCount: int}
+     *
+     * @deprecated 6.3 use the API-Endpoint `\wcf\system\endpoint\controller\core\users\notifications\MarkUserNotificationAsRead` instead.
      */
     public function markAsConfirmed()
     {
@@ -189,6 +192,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Validates parameters to mark all notifications of current user as confirmed.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateMarkAllAsConfirmed()
     {
@@ -199,42 +204,12 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Marks all notifications of current user as confirmed.
      *
      * @return array{markAllAsRead: bool}
+     *
+     * @deprecated 6.3 use the API-Endpoint `\wcf\system\endpoint\controller\core\users\notifications\MarkAllUserNotificationsAsRead` instead.
      */
     public function markAllAsConfirmed()
     {
-        // Step 1) Find the IDs of the unread notifications.
-        // This is done in a separate step, because this allows the UPDATE query to
-        // leverage fine-grained locking of exact rows based off the PRIMARY KEY.
-        // Simply updating all notifications belonging to a specific user will need
-        // to prevent concurrent threads from inserting new notifications for proper
-        // consistency, possibly leading to deadlocks.
-        $sql = "SELECT  notificationID
-                FROM    wcf1_user_notification
-                WHERE   userID = ?
-                    AND confirmTime = ?
-                    AND time < ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            WCF::getUser()->userID,
-            0,
-            TIME_NOW,
-        ]);
-        $notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-        if (!empty($notificationIDs)) {
-            // Step 2) Mark the notifications as read.
-            $condition = new PreparedStatementConditionBuilder();
-            $condition->add('notificationID IN (?)', [$notificationIDs]);
-
-            $sql = "UPDATE  wcf1_user_notification
-                    SET     confirmTime = ?
-                    {$condition}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute(\array_merge([TIME_NOW], $condition->getParameters()));
-        }
-
-        // Step 4) Clear cached values.
-        UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
+        (new MarkAllUserNotificationsAsRead(WCF::getUser()->userID));
 
         return [
             'markAllAsRead' => true,

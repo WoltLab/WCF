@@ -226,6 +226,8 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\EnableAssignment());
             $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DisableAssignment());
             $event->register(new \wcf\system\endpoint\controller\core\users\groups\DeleteGroup());
+            $event->register(new \wcf\system\endpoint\controller\core\users\notifications\MarkUserNotificationAsRead());
+            $event->register(new \wcf\system\endpoint\controller\core\users\notifications\MarkAllUserNotificationsAsRead());
             $event->register(new \wcf\system\endpoint\controller\core\menus\DeleteMenu());
             $event->register(new \wcf\system\endpoint\controller\core\trophies\EnableTrophy());
             $event->register(new \wcf\system\endpoint\controller\core\trophies\DisableTrophy());

@@ -7,7 +7,7 @@
  * @since       6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, Ajax_1, Confirmation_1, Snackbar_1, PromiseMutex_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Users/Notifications/MarkAllUserNotificationsAsRead", "WoltLabSuite/Core/Api/Users/Notifications/MarkUserNotificationAsRead"], function (require, exports, Confirmation_1, Snackbar_1, PromiseMutex_1, Language_1, MarkAllUserNotificationsAsRead_1, MarkUserNotificationAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -21,7 +21,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Compo
         if (!result) {
             return;
         }
-        await (0, Ajax_1.dboAction)("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+        await (0, MarkAllUserNotificationsAsRead_1.markAllUserNotificationsAsRead)();
         (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
             window.location.reload();
         });
@@ -32,9 +32,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Compo
         });
     }
     async function markAsRead(element) {
-        await (0, Ajax_1.dboAction)("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
-            .objectIds([parseInt(element.dataset.objectId)])
-            .dispatch();
+        await (0, MarkUserNotificationAsRead_1.markUserNotificationAsRead)(parseInt(element.dataset.objectId, 10));
         element.querySelector(".notificationListItem__unread")?.remove();
         element.dataset.isRead = "true";
     }

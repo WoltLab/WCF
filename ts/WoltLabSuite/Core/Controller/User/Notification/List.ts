@@ -8,11 +8,12 @@
  * @woltlabExcludeBundle tiny
  */
 
-import { dboAction } from "WoltLabSuite/Core/Ajax";
 import { confirmationFactory } from "WoltLabSuite/Core/Component/Confirmation";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { markAllUserNotificationsAsRead } from "WoltLabSuite/Core/Api/Users/Notifications/MarkAllUserNotificationsAsRead";
+import { markUserNotificationAsRead } from "WoltLabSuite/Core/Api/Users/Notifications/MarkUserNotificationAsRead";
 
 function initMarkAllAsRead(): void {
   document.querySelector(".jsMarkAllAsConfirmed")?.addEventListener(
@@ -29,7 +30,7 @@ async function markAllAsRead(): Promise<void> {
     return;
   }
 
-  await dboAction("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+  await markAllUserNotificationsAsRead();
 
   showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
     window.location.reload();
@@ -46,9 +47,7 @@ function initMarkAsRead(): void {
 }
 
 async function markAsRead(element: HTMLElement): Promise<void> {
-  await dboAction("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
-    .objectIds([parseInt(element.dataset.objectId!)])
-    .dispatch();
+  await markUserNotificationAsRead(parseInt(element.dataset.objectId!, 10));
 
   element.querySelector(".notificationListItem__unread")?.remove();
   element.dataset.isRead = "true";

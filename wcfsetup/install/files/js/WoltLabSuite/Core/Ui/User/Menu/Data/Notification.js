@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler", "../../../../Notification/ServiceWorker"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1, ServiceWorker_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler", "../../../../Notification/ServiceWorker", "WoltLabSuite/Core/Api/Users/Notifications/MarkUserNotificationAsRead", "WoltLabSuite/Core/Api/Users/Notifications/MarkAllUserNotificationsAsRead"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1, ServiceWorker_1, MarkUserNotificationAsRead_1, MarkAllUserNotificationsAsRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -206,14 +206,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             return element;
         }
         async markAsRead(objectId) {
-            const response = (await (0, Ajax_1.dboAction)("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
-                .objectIds([objectId])
-                .dispatch());
+            const { unreadNotifications } = await (0, MarkUserNotificationAsRead_1.markUserNotificationAsRead)(objectId);
             (0, ServiceWorker_1.updateNotificationLastReadTime)();
-            this.updateCounter(response.totalCount);
+            this.updateCounter(unreadNotifications);
         }
         async markAllAsRead() {
-            await (0, Ajax_1.dboAction)("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+            await (0, MarkAllUserNotificationsAsRead_1.markAllUserNotificationsAsRead)();
             (0, ServiceWorker_1.updateNotificationLastReadTime)();
             this.updateCounter(0);
         }
