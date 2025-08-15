@@ -130,11 +130,6 @@ type ResponseGetData = {
   totalCount: number;
 };
 
-type ResponseMarkAsRead = {
-  markAsRead: number;
-  totalCount: number;
-};
-
 class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider {
   private readonly button: HTMLElement;
   private readonly options: Options;
