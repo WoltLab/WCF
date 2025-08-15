@@ -24,7 +24,7 @@ final class UpdateUserOnlineMarking
 
     public function __invoke(): void
     {
-        $groupIDs = (new UpdateUserGroups($this->user))();
+        $groupIDs = (new UpdateMandatoryUserGroups($this->user))();
 
         $newOnlineGroupID = $this->newOnlineGroupID($groupIDs);
 

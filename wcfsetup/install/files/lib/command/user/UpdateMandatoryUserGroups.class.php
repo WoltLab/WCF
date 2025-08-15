@@ -8,14 +8,15 @@ use wcf\data\user\UserEditor;
 use wcf\system\user\storage\UserStorageHandler;
 
 /**
- * Updates the groups of users. Removes unnecessary groups and adds missing groups.
+ * Updates the mandatory user groups of a user.
+ * Adds missing groups and removes groups in which the user is not allowed to be.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class UpdateUserGroups
+final class UpdateMandatoryUserGroups
 {
     public function __construct(
         private readonly User $user
