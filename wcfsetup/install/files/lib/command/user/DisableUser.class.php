@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\group\UserGroup;
@@ -23,8 +23,7 @@ final class DisableUser
 {
     public function __construct(
         private readonly User $user,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): void
     {

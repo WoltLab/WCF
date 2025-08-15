@@ -5,6 +5,7 @@ namespace wcf\system\endpoint\controller\core\users;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\EnableCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\http\Helper;
@@ -12,7 +13,6 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\user\command\EnableCoverPhoto;
 use wcf\system\WCF;
 
 /**

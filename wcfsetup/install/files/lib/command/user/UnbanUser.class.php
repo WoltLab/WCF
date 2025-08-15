@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -17,9 +17,7 @@ use wcf\system\event\EventHandler;
  */
 final class UnbanUser
 {
-    public function __construct(private readonly User $user)
-    {
-    }
+    public function __construct(private readonly User $user) {}
 
     public function __invoke(): void
     {

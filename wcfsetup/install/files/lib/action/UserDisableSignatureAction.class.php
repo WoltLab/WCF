@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use wcf\command\user\DisableSignature;
 use wcf\data\user\UserProfile;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -10,7 +11,6 @@ use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\user\command\DisableSignature;
 use wcf\system\WCF;
 
 /**

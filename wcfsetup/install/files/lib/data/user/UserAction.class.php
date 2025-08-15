@@ -3,6 +3,15 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\BanUser;
+use wcf\command\user\DisableAvatar;
+use wcf\command\user\DisableSignature;
+use wcf\command\user\DisableUser;
+use wcf\command\user\EnableAvatar;
+use wcf\command\user\EnableCoverPhoto;
+use wcf\command\user\EnableSignature;
+use wcf\command\user\EnableUser;
+use wcf\command\user\UnbanUser;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\FileAction;
 use wcf\data\IClipboardAction;
@@ -25,15 +34,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\FontAwesomeIcon;
-use wcf\system\user\command\BanUser;
-use wcf\system\user\command\DisableAvatar;
-use wcf\system\user\command\DisableSignature;
-use wcf\system\user\command\DisableUser;
-use wcf\system\user\command\EnableAvatar;
-use wcf\system\user\command\EnableCoverPhoto;
-use wcf\system\user\command\EnableSignature;
-use wcf\system\user\command\EnableUser;
-use wcf\system\user\command\UnbanUser;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 

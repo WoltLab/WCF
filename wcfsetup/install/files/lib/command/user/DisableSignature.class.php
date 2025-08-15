@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -21,8 +21,7 @@ final class DisableSignature
         private readonly User $user,
         private readonly string $reason,
         private readonly int $expires = 0,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): void
     {

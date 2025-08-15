@@ -33,7 +33,7 @@ final class UnbanUser implements IController
         $this->assertUserCanUnbanned($user);
 
         if ($user->banned) {
-            (new \wcf\system\user\command\UnbanUser($user))();
+            (new \wcf\command\user\UnbanUser($user))();
         }
 
         return new JsonResponse([]);

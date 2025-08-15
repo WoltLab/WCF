@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
@@ -27,8 +27,7 @@ final class EnableUser
     public function __construct(
         private readonly User $user,
         public readonly bool $skipNotification = false,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): void
     {

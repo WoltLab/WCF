@@ -33,7 +33,7 @@ final class DisableUser implements IController
         $this->assertUserCanBeDisabled($user);
 
         if (!$user->pendingActivation()) {
-            (new \wcf\system\user\command\DisableUser($user))();
+            (new \wcf\command\user\DisableUser($user))();
         }
 
         return new JsonResponse([]);

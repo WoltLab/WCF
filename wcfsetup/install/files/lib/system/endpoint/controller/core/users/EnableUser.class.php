@@ -33,7 +33,7 @@ final class EnableUser implements IController
         $this->assertUserCanBeEnabled($user);
 
         if ($user->pendingActivation()) {
-            (new \wcf\system\user\command\EnableUser($user))();
+            (new \wcf\command\user\EnableUser($user))();
         }
 
         return new JsonResponse([]);

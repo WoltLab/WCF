@@ -1,34 +1,31 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\event\user\UserAvatarEnabled;
+use wcf\event\user\UserSignatureEnabled;
 use wcf\system\event\EventHandler;
 
 /**
- * Enable a user's avatar.
+ * Enable a user's signature.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class EnableAvatar
+final class EnableSignature
 {
-    public function __construct(
-        private readonly User $user,
-    ) {
-    }
+    public function __construct(private readonly User $user) {}
 
     public function __invoke(): void
     {
         (new UserEditor($this->user))->update([
-            'disableAvatar' => 0,
+            'disableSignature' => 0,
         ]);
 
-        $event = new UserAvatarEnabled($this->user);
+        $event = new UserSignatureEnabled($this->user);
         EventHandler::getInstance()->fire($event);
     }
 }
