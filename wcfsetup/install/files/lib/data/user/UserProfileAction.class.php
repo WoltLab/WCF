@@ -2,6 +2,7 @@
 
 namespace wcf\data\user;
 
+use wcf\command\user\UpdateUserRank;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
@@ -292,8 +293,7 @@ class UserProfileAction extends UserAction
 
             // update user rank
             if (MODULE_USER_RANK) {
-                $action = new self([new UserEditor($user)], 'updateUserRank');
-                $action->executeAction();
+                (new UpdateUserRank($user))();
             }
 
             // reload option handler
@@ -326,6 +326,8 @@ class UserProfileAction extends UserAction
      * Updates user ranks.
      *
      * @return void
+     *
+     * @deprecated 6.3 use the `UpdateUserRank` command instead.
      */
     public function updateUserRank()
     {
@@ -333,51 +335,8 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $userToRank = [];
-        foreach ($this->getObjects() as $user) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
-            $conditionBuilder->add('user_rank.requiredPoints <= ?', [$user->activityPoints]);
-            if ($user->gender) {
-                $conditionBuilder->add('user_rank.requiredGender IN (?)', [[0, $user->gender]]);
-            } else {
-                $conditionBuilder->add('user_rank.requiredGender = ?', [0]);
-            }
-
-            $sql = "SELECT      user_rank.rankID
-                    FROM        wcf1_user_rank user_rank
-                    LEFT JOIN   wcf1_user_group user_group
-                    ON          user_group.groupID = user_rank.groupID
-                    " . $conditionBuilder . "
-                    ORDER BY    user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
-            $statement = WCF::getDB()->prepare($sql, 1);
-            $statement->execute($conditionBuilder->getParameters());
-            $row = $statement->fetchArray();
-            if ($row === false) {
-                if ($user->rankID) {
-                    $userToRank[$user->userID] = null;
-                }
-            } else {
-                if ($row['rankID'] != $user->rankID) {
-                    $userToRank[$user->userID] = $row['rankID'];
-                }
-            }
-        }
-
-        if (!empty($userToRank)) {
-            $sql = "UPDATE  wcf1_user
-                    SET     rankID = ?
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($userToRank as $userID => $rankID) {
-                $statement->execute([
-                    $rankID,
-                    $userID,
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
+        foreach ($this->getObjects() as $editor) {
+            (new UpdateUserRank($editor->getDecoratedObject()))();
         }
     }
 

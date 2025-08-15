@@ -1,5 +1,6 @@
 <?php
 
+use wcf\command\user\UpdateUserRank;
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeEditor;
@@ -44,8 +45,7 @@ foreach ([
 
 // update administrator user rank and user online marking
 $editor = new UserEditor(WCF::getUser());
-$action = new UserProfileAction([$editor], 'updateUserRank');
-$action->executeAction();
+(new UpdateUserRank(WCF::getUser()))();
 $action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();
 

@@ -2,9 +2,10 @@
 
 namespace wcf\system\user\activity\point;
 
+use wcf\command\user\UpdateUserRank;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfileAction;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\SystemException;
@@ -289,7 +290,13 @@ class UserActivityPointHandler extends SingletonFactory
      */
     protected function updateUserRanks(array $userIDs)
     {
-        $action = new UserProfileAction($userIDs, 'updateUserRank');
-        $action->executeAction();
+        // Do not use the `UserRuntimeCache` to get up-to-date values.
+        $userList = new UserList();
+        $userList->setObjectIDs($userIDs);
+        $userList->readObjects();
+
+        foreach ($userList->getObjects() as $user) {
+            (new UpdateUserRank($user))();
+        }
     }
 }

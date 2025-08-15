@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\UpdateUserRank;
 use wcf\data\file\File;
 use wcf\data\style\Style;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
@@ -19,7 +20,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\option\user\UserOptionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\command\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
@@ -500,8 +500,7 @@ class UserEditForm extends UserAddForm
 
         // update user rank
         if (MODULE_USER_RANK) {
-            $action = new UserProfileAction([$this->user], 'updateUserRank');
-            $action->executeAction();
+            (new UpdateUserRank($this->user->getDecoratedObject()))();
         }
         if (MODULE_USERS_ONLINE) {
             $action = new UserProfileAction([$this->user], 'updateUserOnlineMarking');

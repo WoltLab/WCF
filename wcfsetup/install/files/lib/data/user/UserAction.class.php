@@ -3,6 +3,7 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\UpdateUserRank;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\FileAction;
 use wcf\data\IClipboardAction;
@@ -323,8 +324,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
             // update user rank
             if (MODULE_USER_RANK) {
-                $action = new UserProfileAction([$userEditor], 'updateUserRank');
-                $action->executeAction();
+                (new UpdateUserRank($userEditor->getDecoratedObject()))();
             }
             // update user online marking
             $action = new UserProfileAction([$userEditor], 'updateUserOnlineMarking');
@@ -476,8 +476,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $this->readObjects();
 
         if (MODULE_USER_RANK) {
-            $action = new UserProfileAction($this->objects, 'updateUserRank');
-            $action->executeAction();
+            foreach ($this->objects as $userEditor) {
+                (new UpdateUserRank($userEditor->getDecoratedObject()))();
+            }
         }
         if (MODULE_USERS_ONLINE) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
@@ -521,8 +522,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $this->readObjects();
 
         if (MODULE_USER_RANK) {
-            $action = new UserProfileAction($this->objects, 'updateUserRank');
-            $action->executeAction();
+            foreach ($this->objects as $userEditor) {
+                (new UpdateUserRank($userEditor->getDecoratedObject()))();
+            }
         }
         if (MODULE_USERS_ONLINE) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
