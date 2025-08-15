@@ -2,6 +2,7 @@
 
 namespace wcf\data\user\profile\visitor;
 
+use wcf\command\user\profile\RegisterUserProfileVisitor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\data\user\UserProfile;
@@ -95,18 +96,15 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      * Inserts a new visitor if it does not already exist, or updates it if it does.
      * @return void
      * @since       5.2
+     *
+     * @deprecated 6.3 use the `RegisterUserProfileVisitor` competitor instead.
      */
     public function registerVisitor()
     {
-        $sql = "INSERT INTO             wcf1_user_profile_visitor
-                                        (ownerID, userID, time)
-                VALUES                  (?, ?, ?)
-                ON DUPLICATE KEY UPDATE time = VALUES(time)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
+        (new RegisterUserProfileVisitor(
             $this->parameters['data']['ownerID'],
             $this->parameters['data']['userID'],
-            $this->parameters['data']['time'] ?? TIME_NOW,
-        ]);
+            $this->parameters['data']['time'] ?? TIME_NOW
+        ))();
     }
 }
