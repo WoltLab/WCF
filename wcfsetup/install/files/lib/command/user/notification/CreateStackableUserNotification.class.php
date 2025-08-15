@@ -7,6 +7,7 @@ use wcf\data\user\notification\UserNotificationEditor;
 use wcf\data\user\notification\UserNotificationList;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -90,33 +91,38 @@ final class CreateStackableUserNotification
                                     (notificationID, authorID, time)
                 VALUES              (?, ?, ?)";
         $authorStatement = WCF::getDB()->prepare($sql);
-        $sql = "UPDATE  wcf1_user_notification
-                SET     timesTriggered = timesTriggered + ?,
-                        guestTimesTriggered = guestTimesTriggered + ?
-                WHERE   notificationID = ?";
-        $triggerStatement = WCF::getDB()->prepare($sql);
 
         $authorId = $author->userID;
         $isGuestTrigger = $authorId ? 0 : 1;
         $now = TIME_NOW;
-        $notificationIDs = [];
+        $notificationIDs = \array_map(static function ($notificationData) {
+            return $notificationData['object']->notificationID;
+        }, $notifications);
 
         WCF::getDB()->beginTransaction();
-        foreach ($notifications as $notificationData) {
-            $notificationID = $notificationData['object']->notificationID;
-            $notificationIDs[] = $notificationID;
-
+        foreach ($notificationIDs as $notificationID) {
             $authorStatement->execute([
                 $notificationID,
                 $authorId,
                 $now,
             ]);
+        }
 
-            $triggerStatement->execute([
+        $chunks = \array_chunk($notificationIDs, 1_000);
+        foreach ($chunks as $chunk) {
+            $conditionBuilder = new PreparedStatementConditionBuilder();
+            $conditionBuilder->add('notificationID IN (?)', [$chunk]);
+
+            $sql = "UPDATE  wcf1_user_notification
+                    SET     timesTriggered = timesTriggered + ?,
+                            guestTimesTriggered = guestTimesTriggered + ?
+                    " . $conditionBuilder;
+            $triggerStatement = WCF::getDB()->prepare($sql);
+
+            $triggerStatement->execute(\array_merge([
                 1,
                 $isGuestTrigger,
-                $notificationID,
-            ]);
+            ], $conditionBuilder->getParameters()));
         }
         WCF::getDB()->commitTransaction();
 
