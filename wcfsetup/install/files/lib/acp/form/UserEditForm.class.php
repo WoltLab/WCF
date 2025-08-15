@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\UpdateUserOnlineMarking;
 use wcf\command\user\UpdateUserRank;
 use wcf\data\file\File;
 use wcf\data\style\Style;
@@ -10,7 +11,6 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -503,8 +503,7 @@ class UserEditForm extends UserAddForm
             (new UpdateUserRank($this->user->getDecoratedObject()))();
         }
         if (MODULE_USERS_ONLINE) {
-            $action = new UserProfileAction([$this->user], 'updateUserOnlineMarking');
-            $action->executeAction();
+            (new UpdateUserOnlineMarking($this->user->getDecoratedObject()))();
         }
 
         // remove assignments

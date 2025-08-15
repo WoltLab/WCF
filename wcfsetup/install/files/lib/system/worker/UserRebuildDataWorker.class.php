@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\command\user\UpdateUserOnlineMarking;
 use wcf\data\file\FileEditor;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatarEditor;
@@ -11,7 +12,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -70,10 +70,8 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $userIDs[] = $user->userID;
         }
 
-        // update user ranks
-        if (!empty($users)) {
-            $action = new UserProfileAction($users, 'updateUserOnlineMarking');
-            $action->executeAction();
+        foreach ($users as $user) {
+            (new UpdateUserOnlineMarking($user->getDecoratedObject()))();
         }
 
         $this->updateUserOnlineStatus($users);

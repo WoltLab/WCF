@@ -3,6 +3,7 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\UpdateUserOnlineMarking;
 use wcf\command\user\UpdateUserRank;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\FileAction;
@@ -326,9 +327,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             if (MODULE_USER_RANK) {
                 (new UpdateUserRank($userEditor->getDecoratedObject()))();
             }
-            // update user online marking
-            $action = new UserProfileAction([$userEditor], 'updateUserOnlineMarking');
-            $action->executeAction();
+            if (MODULE_USERS_ONLINE) {
+                (new UpdateUserOnlineMarking($userEditor->getDecoratedObject()))();
+            }
         }
 
         return $user;
@@ -475,14 +476,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (MODULE_USER_RANK) {
-            foreach ($this->objects as $userEditor) {
+        foreach ($this->objects as $userEditor) {
+            if (MODULE_USER_RANK) {
                 (new UpdateUserRank($userEditor->getDecoratedObject()))();
             }
-        }
-        if (MODULE_USERS_ONLINE) {
-            $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
-            $action->executeAction();
+            if (MODULE_USERS_ONLINE) {
+                (new UpdateUserOnlineMarking($userEditor->getDecoratedObject()))();
+            }
         }
     }
 
@@ -521,14 +521,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (MODULE_USER_RANK) {
-            foreach ($this->objects as $userEditor) {
+        foreach ($this->objects as $userEditor) {
+            if (MODULE_USER_RANK) {
                 (new UpdateUserRank($userEditor->getDecoratedObject()))();
             }
-        }
-        if (MODULE_USERS_ONLINE) {
-            $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
-            $action->executeAction();
+            if (MODULE_USERS_ONLINE) {
+                (new UpdateUserOnlineMarking($userEditor->getDecoratedObject()))();
+            }
         }
     }
 

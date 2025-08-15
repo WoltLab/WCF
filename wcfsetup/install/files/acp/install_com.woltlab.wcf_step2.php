@@ -1,12 +1,12 @@
 <?php
 
+use wcf\command\user\UpdateUserOnlineMarking;
 use wcf\command\user\UpdateUserRank;
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeEditor;
 use wcf\data\user\rank\UserRankEditor;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfileAction;
 use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\WCF;
 
@@ -46,8 +46,7 @@ foreach ([
 // update administrator user rank and user online marking
 $editor = new UserEditor(WCF::getUser());
 (new UpdateUserRank(WCF::getUser()))();
-$action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
-$action->executeAction();
+(new UpdateUserOnlineMarking(WCF::getUser()))();
 
 // install default reactions
 foreach ([
