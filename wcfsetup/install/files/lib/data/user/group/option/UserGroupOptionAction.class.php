@@ -2,10 +2,8 @@
 
 namespace wcf\data\user\group\option;
 
+use wcf\command\user\group\option\UpdateUserGroupOptionValues;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\user\group\UserGroupEditor;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\WCF;
 
 /**
  * Executes user group option-related actions.
@@ -27,43 +25,13 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction
      * Updates option values for given option id.
      *
      * @return void
+     *
+     * @deprecated 6.3 use the `UpdateUserGroupOptionValues` command instead.
      */
     public function updateValues()
     {
-        /** @var UserGroupOption $option */
-        $option = \current($this->objects);
+        $editor = $this->getSingleObject();
 
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("optionID = ?", [$option->optionID]);
-        if (!empty($this->parameters['values'])) {
-            $groupIDs = \array_keys($this->parameters['values']);
-            $conditions->add("groupID IN (?)", [$groupIDs]);
-        }
-
-        // remove old values
-        $sql = "DELETE FROM wcf1_user_group_option_value
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-
-        if (!empty($this->parameters['values'])) {
-            $sql = "INSERT INTO wcf1_user_group_option_value
-                                (optionID, groupID, optionValue)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($this->parameters['values'] as $groupID => $optionValue) {
-                $statement->execute([
-                    $option->optionID,
-                    $groupID,
-                    $optionValue,
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        // clear cache
-        UserGroupEditor::resetCache();
+        (new UpdateUserGroupOptionValues($editor->getDecoratedObject(), $this->parameters['values'] ?? []))();
     }
 }

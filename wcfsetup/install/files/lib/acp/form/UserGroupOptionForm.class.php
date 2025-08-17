@@ -2,10 +2,10 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\group\option\UpdateUserGroupOptionValues;
 use wcf\data\user\group\option\category\UserGroupOptionCategory;
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
-use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -258,12 +258,7 @@ class UserGroupOptionForm extends AbstractForm
     {
         parent::save();
 
-        $this->objectAction = new UserGroupOptionAction(
-            [$this->userGroupOption],
-            'updateValues',
-            ['values' => $this->values]
-        );
-        $this->objectAction->executeAction();
+        (new UpdateUserGroupOptionValues($this->userGroupOption, $this->values))();
 
         // fire saved event
         $this->saved();
