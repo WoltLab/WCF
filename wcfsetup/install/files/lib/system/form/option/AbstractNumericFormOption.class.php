@@ -43,13 +43,17 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
     public function renderFilterValue(string $value, array $configuration = []): string
     {
         $values = $this->parseFilterValue($value);
+        $suffix = $this->getSuffix($configuration);
+        if ($suffix !== '') {
+            $suffix = ' ' . $suffix;
+        }
 
         if ($values['from'] && $values['to']) {
-            return $values['from'] . ' ‐ ' . $values['to'];
+            return $values['from'] . ' ‐ ' . $values['to'] . $suffix;
         } else if ($values['from']) {
-            return '>= ' . $values['from'];
+            return '>= ' . $values['from'] . $suffix;
         } else if ($values['to']) {
-            return '<= ' . $values['to'];
+            return '<= ' . $values['to'] . $suffix;
         }
 
         return '';
@@ -73,5 +77,13 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
             'from' => $from,
             'to' => $to,
         ];
+    }
+
+    /**
+     * @param array<string, mixed> $configuration
+     */
+    protected function getSuffix(array $configuration): string
+    {
+        return '';
     }
 }

@@ -9,6 +9,7 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\CurrencyFormField;
 use wcf\system\form\option\formatter\CurrencyFormatter;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
+use wcf\util\StringUtil;
 
 /**
  * Implementation of a form field for currency values.
@@ -81,5 +82,15 @@ class CurrencyFormOption extends AbstractNumericFormOption
     public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
     {
         return IntDatabaseTableColumn::create($name);
+    }
+
+    #[\Override]
+    protected function getSuffix(array $configuration): string
+    {
+        if (!empty($configuration['currency'])) {
+            return StringUtil::encodeHTML($configuration['currency']);
+        }
+
+        return '';
     }
 }

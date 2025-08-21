@@ -8,6 +8,7 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\option\formatter\FloatFormatter;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
+use wcf\util\StringUtil;
 
 /**
  * Implementation of a form field for float values.
@@ -42,7 +43,7 @@ class FloatFormOption extends AbstractNumericFormOption
     #[\Override]
     public function getConfigurationFormFields(): array
     {
-        return ['minFloatValue', 'maxFloatValue', 'required'];
+        return ['unit', 'minFloatValue', 'maxFloatValue', 'required'];
     }
 
     #[\Override]
@@ -61,5 +62,15 @@ class FloatFormOption extends AbstractNumericFormOption
     public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
     {
         return FloatDatabaseTableColumn::create($name);
+    }
+
+    #[\Override]
+    protected function getSuffix(array $configuration): string
+    {
+        if (!empty($configuration['unit'])) {
+            return StringUtil::encodeHTML($configuration['unit']);
+        }
+
+        return '';
     }
 }

@@ -9,6 +9,7 @@ use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
 use wcf\system\form\option\formatter\IntegerFormatter;
+use wcf\util\StringUtil;
 
 /**
  * Implementation of a form field for integer values.
@@ -51,7 +52,7 @@ class IntegerFormOption extends AbstractNumericFormOption
     #[\Override]
     public function getConfigurationFormFields(): array
     {
-        return ['minIntegerValue', 'maxIntegerValue', 'required'];
+        return ['unit', 'minIntegerValue', 'maxIntegerValue', 'required'];
     }
 
     #[\Override]
@@ -70,5 +71,15 @@ class IntegerFormOption extends AbstractNumericFormOption
     public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
     {
         return IntDatabaseTableColumn::create($name);
+    }
+
+    #[\Override]
+    protected function getSuffix(array $configuration): string
+    {
+        if (!empty($configuration['unit'])) {
+            return StringUtil::encodeHTML($configuration['unit']);
+        }
+
+        return '';
     }
 }

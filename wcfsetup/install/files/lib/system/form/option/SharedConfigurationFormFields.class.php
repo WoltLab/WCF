@@ -61,6 +61,9 @@ final class SharedConfigurationFormFields
             'required' => BooleanFormField::create('required')
                 ->label('wcf.form.option.shared.required')
                 ->value(false),
+            'unit' => TextFormField::create('unit')
+                ->label('wcf.form.option.shared.unit')
+                ->addFieldClass('short')
         ];
     }
 
