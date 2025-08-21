@@ -34,7 +34,7 @@
 		<item identifier="com.woltlab.wcf.RecentActivityList">
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<title language="de">Letzte Aktivitäten</title>
-			<title language="en">Recent Activities</title>
+			<title language="en">Recent Activity</title>
 			<page>com.woltlab.wcf.RecentActivityList</page>
 		</item>
 		<item identifier="com.woltlab.wcf.UsersOnlineList">

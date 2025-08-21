@@ -305,4 +305,14 @@ class Language extends DatabaseObject
             $this->getLocale(),
         );
     }
+
+    /**
+     * This method allows phrases to be temporarily set or overwritten at runtime.
+     *
+     * @since 6.2
+     */
+    public function overrideItem(string $item, string $value): void
+    {
+        $this->items[$item] = $value;
+    }
 }
