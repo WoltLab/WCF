@@ -5,18 +5,13 @@
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
- * @woltlabExcludeBundle tiny
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
-export async function changeStyle(styleId: number): Promise<ApiResult<[]>> {
-  try {
-    await prepareRequest(`${window.WSC_RPC_API_URL}core/styles/${styleId}/change`).post().fetchAsJson();
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue([]);
+export function changeStyle(styleId: number): Promise<[]> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/styles/${styleId}/change`).post().fetchAsJson();
+  });
 }

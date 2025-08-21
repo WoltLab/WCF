@@ -25,28 +25,23 @@ define(["require", "exports", "../../Language", "WoltLabSuite/Core/Api/Styles/Ch
          */
         async showDialog(event) {
             event.preventDefault();
-            const response = await (0, GetStyleChooser_1.getStyleChooser)();
-            if (!response.ok) {
-                throw new Error("Failed to load style chooser.");
-            }
-            const dialog = (0, Dialog_1.dialogFactory)().fromHtml(response.value).withoutControls();
+            const { template } = await (0, GetStyleChooser_1.getStyleChooser)();
+            const dialog = (0, Dialog_1.dialogFactory)().fromHtml(template).withoutControls();
             dialog.content.querySelectorAll(".styleList > li").forEach((style) => {
                 style.classList.add("pointer");
-                style.addEventListener("click", (ev) => this.#click(ev));
+                style.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    (0, PromiseMutex_1.promiseMutex)(() => this.#changeStyle(style));
+                });
             });
             dialog.show((0, Language_1.getPhrase)("wcf.style.changeStyle"));
         }
         /**
          * Changes the style and reloads current page.
          */
-        async #click(event) {
-            event.preventDefault();
-            const listElement = event.currentTarget;
-            const styleId = parseInt(listElement.dataset.styleId, 10);
-            const response = await (0, ChangeStyle_1.changeStyle)(styleId);
-            if (!response.ok) {
-                throw new Error("Failed to change style.");
-            }
+        async #changeStyle(style) {
+            const styleId = parseInt(style.dataset.styleId, 10);
+            await (0, ChangeStyle_1.changeStyle)(styleId);
             window.location.reload();
         }
     }

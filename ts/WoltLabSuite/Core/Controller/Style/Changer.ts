@@ -32,16 +32,16 @@ class ControllerStyleChanger {
   async showDialog(event: MouseEvent): Promise<void> {
     event.preventDefault();
 
-    const response = await getStyleChooser();
-    if (!response.ok) {
-      throw new Error("Failed to load style chooser.");
-    }
-
-    const dialog = dialogFactory().fromHtml(response.value).withoutControls();
+    const { template } = await getStyleChooser();
+    const dialog = dialogFactory().fromHtml(template).withoutControls();
 
     dialog.content.querySelectorAll(".styleList > li").forEach((style: HTMLLIElement) => {
       style.classList.add("pointer");
-      style.addEventListener("click", (ev) => this.#click(ev));
+      style.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        promiseMutex(() => this.#changeStyle(style));
+      });
     });
 
     dialog.show(getPhrase("wcf.style.changeStyle"));
@@ -50,16 +50,10 @@ class ControllerStyleChanger {
   /**
    * Changes the style and reloads current page.
    */
-  async #click(event: MouseEvent): Promise<void> {
-    event.preventDefault();
+  async #changeStyle(style: HTMLLIElement): Promise<void> {
+    const styleId = parseInt(style.dataset.styleId!, 10);
 
-    const listElement = event.currentTarget as HTMLLIElement;
-    const styleId = parseInt(listElement.dataset.styleId!, 10);
-    const response = await changeStyle(styleId);
-
-    if (!response.ok) {
-      throw new Error("Failed to change style.");
-    }
+    await changeStyle(styleId);
 
     window.location.reload();
   }

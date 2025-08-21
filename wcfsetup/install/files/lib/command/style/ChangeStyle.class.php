@@ -41,18 +41,18 @@ final class ChangeStyle
         EventHandler::getInstance()->fire($event);
     }
 
-    private function saveUserStyle(int $styleID, bool $defaultStyle): void
+    private function saveUserStyle(int $styleID, bool $isDefaultStyle): void
     {
         (new UserAction([WCF::getUser()], 'update', [
             'data' => [
-                'styleID' => $defaultStyle ? 0 : $styleID,
+                'styleID' => $isDefaultStyle ? 0 : $styleID,
             ],
         ]))->executeAction();
     }
 
-    private function saveGuestStyle(int $styleID, bool $defaultStyle): void
+    private function saveGuestStyle(int $styleID, bool $isDefaultStyle): void
     {
-        if ($defaultStyle) {
+        if ($isDefaultStyle) {
             WCF::getSession()->unregister('styleID');
         } else {
             WCF::getSession()->register('styleID', $styleID);
