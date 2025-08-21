@@ -172,7 +172,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
         } else {
             (new ExtendPaidSubscriptionUser(
                 $userSubscription,
-                $data['endDate'] ?? 0
+                $data['endDate'] ?? null,
             ))();
         }
         $this->saved();

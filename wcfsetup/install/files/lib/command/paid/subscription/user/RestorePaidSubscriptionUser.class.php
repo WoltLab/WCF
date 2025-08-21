@@ -9,7 +9,7 @@ use wcf\event\paid\subscription\user\PaidSubscriptionUserRestored;
 use wcf\system\event\EventHandler;
 
 /**
- * Restore a paid subscription for a user.
+ * Restores a paid subscription for a user.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH

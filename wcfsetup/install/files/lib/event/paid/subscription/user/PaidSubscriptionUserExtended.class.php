@@ -13,7 +13,10 @@ use wcf\event\IPsr14Event;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class PaidSubscriptionUserExtend implements IPsr14Event
+final class PaidSubscriptionUserExtended implements IPsr14Event
 {
-    public function __construct(public readonly PaidSubscriptionUser $subscriptionUser, int $endDate) {}
+    public function __construct(
+        public readonly PaidSubscriptionUser $subscriptionUser,
+        public readonly int $endDate
+    ) {}
 }

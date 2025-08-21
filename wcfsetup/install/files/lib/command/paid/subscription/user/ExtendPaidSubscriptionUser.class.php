@@ -6,7 +6,7 @@ use wcf\command\paid\subscription\AddGroupMembership;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserEditor;
-use wcf\event\paid\subscription\user\PaidSubscriptionUserExtend;
+use wcf\event\paid\subscription\user\PaidSubscriptionUserExtended;
 use wcf\system\event\EventHandler;
 use wcf\util\DateUtil;
 
@@ -27,7 +27,7 @@ final class ExtendPaidSubscriptionUser
 
     public function __invoke(): void
     {
-        $endDate = $this->getEndDate($this->subscriptionUser->getSubscription());
+        $endDate = $this->getEndDate($this->subscriptionUser->getSubscription(), $this->endDate);
 
         $this->extendSubscription($this->subscriptionUser, $endDate);
 
@@ -38,24 +38,24 @@ final class ExtendPaidSubscriptionUser
             ))();
         }
 
-        $event = new PaidSubscriptionUserExtend($this->subscriptionUser, $endDate);
+        $event = new PaidSubscriptionUserExtended($this->subscriptionUser, $endDate);
         EventHandler::getInstance()->fire($event);
     }
 
-    private function getEndDate(PaidSubscription $subscription): int
+    private function getEndDate(PaidSubscription $subscription, ?int $endDate): int
     {
-        if ($this->endDate === null) {
-            if (!$subscription->subscriptionLength) {
-                return 0;
-            }
-
-            $d = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-            $d->add($subscription->getDateInterval());
-
-            return $d->getTimestamp();
+        if ($endDate !== null) {
+            return $endDate;
         }
 
-        return $this->endDate;
+        if (!$subscription->subscriptionLength) {
+            return 0;
+        }
+
+        $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
+        $d->add($subscription->getDateInterval());
+
+        return $d->getTimestamp();
     }
 
     private function extendSubscription(PaidSubscriptionUser $subscriptionUser, int $endDate): void
