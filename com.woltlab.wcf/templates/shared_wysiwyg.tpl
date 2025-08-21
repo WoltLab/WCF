@@ -14,6 +14,11 @@
 
 		document.querySelector('link[rel="stylesheet"]').before(stylesheet);
 	}
+
+	// Immediately remove the script from the DOM. This prevents any selectors
+	// from breaking that target the immediate sibling of the editor element.
+	// Furthermore, removing it makes no difference in terms of the functionality.
+	document.currentScript.remove();
 }
 </script>
 <script data-relocate="true">
