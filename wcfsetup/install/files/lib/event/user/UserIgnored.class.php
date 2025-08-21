@@ -15,5 +15,9 @@ use wcf\event\IPsr14Event;
  */
 final class UserIgnored implements IPsr14Event
 {
-    public function __construct(public readonly User $user, public readonly User $ignoreUser, public readonly int $type) {}
+    public function __construct(
+        public readonly User $user,
+        public readonly User $target,
+        public readonly int $type,
+    ) {}
 }
