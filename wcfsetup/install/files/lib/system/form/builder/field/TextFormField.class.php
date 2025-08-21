@@ -18,6 +18,7 @@ class TextFormField extends AbstractFormField implements
     IAttributeFormField,
     IAutoCompleteFormField,
     IAutoFocusFormField,
+    ICensorshipFormField,
     ICssClassFormField,
     II18nFormField,
     IImmutableFormField,
@@ -30,6 +31,7 @@ class TextFormField extends AbstractFormField implements
     use TInputAttributeFormField;
     use TTextAutoCompleteFormField;
     use TAutoFocusFormField;
+    use TCensorshipFormField;
     use TCssClassFormField;
     use TImmutableFormField;
     use TInputModeFormField;
@@ -115,6 +117,7 @@ class TextFormField extends AbstractFormField implements
     {
         $this->validateMinimumLength($text, $language);
         $this->validateMaximumLength($text, $language);
+        $this->validateCensorship($text);
     }
 
     /**

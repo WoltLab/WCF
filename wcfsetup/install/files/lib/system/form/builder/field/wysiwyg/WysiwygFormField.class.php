@@ -6,8 +6,10 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IAttributeFormField;
+use wcf\system\form\builder\field\ICensorshipFormField;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
+use wcf\system\form\builder\field\TCensorshipFormField;
 use wcf\system\form\builder\field\TInputAttributeFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
@@ -17,7 +19,6 @@ use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
-use wcf\system\message\censorship\Censorship;
 use wcf\system\message\quote\MessageQuoteManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -32,10 +33,12 @@ use wcf\util\StringUtil;
  */
 final class WysiwygFormField extends AbstractFormField implements
     IAttributeFormField,
+    ICensorshipFormField,
     IMaximumLengthFormField,
     IMinimumLengthFormField,
     IObjectTypeFormNode
 {
+    use TCensorshipFormField;
     use TInputAttributeFormField {
         getReservedFieldAttributes as private inputGetReservedFieldAttributes;
     }
@@ -88,6 +91,12 @@ final class WysiwygFormField extends AbstractFormField implements
      * @inheritDoc
      */
     protected $templateName = 'shared_wysiwygFormField';
+
+    public function __construct()
+    {
+        // WYSIWYG form fields use the censorship function by default for backward compatibility reasons.
+        $this->censorship();
+    }
 
     /**
      * Sets the identifier used to autosave the field value and returns this field.
@@ -372,14 +381,7 @@ final class WysiwygFormField extends AbstractFormField implements
                     $this->validateMaximumLength($message);
 
                     if (empty($this->getValidationErrors())) {
-                        $censoredWords = Censorship::getInstance()->test($message);
-                        if ($censoredWords) {
-                            $this->addValidationError(new FormFieldValidationError(
-                                'censoredWords',
-                                'wcf.message.error.censoredWordsFound',
-                                ['censoredWords' => $censoredWords]
-                            ));
-                        }
+                        $this->validateCensorship($message);
                     }
                 }
             }
