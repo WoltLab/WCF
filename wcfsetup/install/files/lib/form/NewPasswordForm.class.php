@@ -129,7 +129,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'notSecure',
-                    'wcf.user.newPassword.error.notSecure'
+                    'wcf.user.password.error.notSecure'
                 )
             );
         }

@@ -128,7 +128,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     public function checkAccess()
     {
         if (!ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'wbbUnreadWatchedThreads');
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');

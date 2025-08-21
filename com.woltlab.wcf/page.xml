@@ -20,10 +20,10 @@
 			<pageType>system</pageType>
 			<controller>wcf\page\RecentActivityListPage</controller>
 			<name language="de">Letzte Aktivitäten</name>
-			<name language="en">Recent Activities</name>
+			<name language="en">Recent Activity</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<content language="en">
-				<title>Recent Activities</title>
+				<title>Recent Activity</title>
 			</content>
 			<content language="de">
 				<title>Letzte Aktivitäten</title>

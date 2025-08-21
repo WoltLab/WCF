@@ -3,7 +3,7 @@
 	<import>
 		<box identifier="com.woltlab.wcf.RecentActivity">
 			<name language="de">Letzte Aktivitäten</name>
-			<name language="en">Recent Activities</name>
+			<name language="en">Recent Activity</name>
 			<boxType>system</boxType>
 			<position>contentBottom</position>
 			<objectType>com.woltlab.wcf.recentActivityList</objectType>
@@ -16,7 +16,7 @@
 				<title>Letzte Aktivitäten</title>
 			</content>
 			<content language="en">
-				<title>Recent Activities</title>
+				<title>Recent Activity</title>
 			</content>
 		</box>
 		<box identifier="com.woltlab.wcf.RegisterButton">

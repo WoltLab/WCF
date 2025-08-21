@@ -5200,7 +5200,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.usersOnline.sortField.username"><![CDATA[Username]]></item>
 	</category>
 	<category name="wcf.user.recentActivity">
-		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
+		<item name="wcf.user.recentActivity"><![CDATA[Recent Activity]]></item>
 		<item name="wcf.user.recentActivity.more"><![CDATA[Display More]]></item>
 		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[There are no new activities at the moment.]]></item>
 		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are no activities at the moment.]]></item>

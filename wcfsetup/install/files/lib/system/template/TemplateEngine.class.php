@@ -122,6 +122,7 @@ class TemplateEngine extends SingletonFactory
         'radioButtonSearchableOptionType' => 'shared_radioButtonSearchableOptionType',
         'recaptcha' => 'shared_recaptcha',
         'scrollablePageCheckboxList' => 'shared_scrollablePageCheckboxList',
+        'spoilerMetaCode' => 'shared_spoilerMetaCode',
         'sitemapEnd' => 'shared_sitemapEnd',
         'sitemapEntry' => 'shared_sitemapEntry',
         'sitemapIndex' => 'shared_sitemapIndex',

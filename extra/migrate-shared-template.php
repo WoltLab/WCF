@@ -131,6 +131,7 @@ $templates = [
     '__multiPageCondition' => 'shared_multiPageCondition',
     '__multilineItemListFormField' => 'shared_multilineItemListFormField',
     'imageViewer' => 'shared_imageViewer',
+    'spoilerMetaCode' => 'shared_spoilerMetaCode',
 ];
 if ($argc !== 2) {
     echo "ERROR: Expected a single argument to the directory that should be used to recursively replace template includes.\n";
