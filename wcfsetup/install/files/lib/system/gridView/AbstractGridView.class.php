@@ -428,9 +428,16 @@ abstract class AbstractGridView
      */
     public function getID(): string
     {
-        $classNamePieces = \explode('\\', static::class);
+        $id = \str_replace('\\', '_', static::class);
 
-        return \implode('-', $classNamePieces);
+        if ($this->getParameters() !== []) {
+            $parameters = $this->getParameters();
+            \array_multisort($parameters);
+
+            $id .= '_' . \sha1(\serialize($parameters));
+        }
+
+        return $id;
     }
 
     /**
