@@ -2,8 +2,8 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 
 /**
@@ -29,9 +29,8 @@ class HourlyCleanUpCronjob extends AbstractCronjob
             $subscriptionUserList->getConditionBuilder()->add('endDate > 0 AND endDate < ?', [TIME_NOW]);
             $subscriptionUserList->readObjects();
 
-            if (\count($subscriptionUserList->getObjects())) {
-                $action = new PaidSubscriptionUserAction($subscriptionUserList->getObjects(), 'revoke');
-                $action->executeAction();
+            foreach ($subscriptionUserList->getObjects() as $subscriptionUser) {
+                (new RevokePaidSubscriptionUser($subscriptionUser))();
             }
         }
     }
