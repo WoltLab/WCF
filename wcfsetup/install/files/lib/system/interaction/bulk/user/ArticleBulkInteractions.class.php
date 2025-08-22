@@ -11,7 +11,7 @@ use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkRestoreInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
-use wcf\system\interaction\bulk\BulkTrashInteraction;
+use wcf\system\interaction\bulk\BulkSoftDeleteInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\WCF;
 
@@ -32,7 +32,7 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
         }
 
         $this->addInteractions([
-            new BulkTrashInteraction('core/articles/%s/trash', function (ViewableArticle $article): bool {
+            new BulkSoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle $article): bool {
                 if (!$article->canDelete()) {
                     return false;
                 }

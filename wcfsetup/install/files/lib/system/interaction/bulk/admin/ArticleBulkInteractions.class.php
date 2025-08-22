@@ -13,7 +13,7 @@ use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
 use wcf\system\interaction\bulk\BulkRestoreInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
-use wcf\system\interaction\bulk\BulkTrashInteraction;
+use wcf\system\interaction\bulk\BulkSoftDeleteInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 
 /**
@@ -29,7 +29,7 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
-            new BulkTrashInteraction('core/articles/%s/trash', function (ViewableArticle $article): bool {
+            new BulkSoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle $article): bool {
                 if (!$article->canDelete()) {
                     return false;
                 }

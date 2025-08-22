@@ -34,12 +34,12 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                 array {
-                    objectIDs: positive-int[]
+                    ids: positive-int[]
                 }
                 EOT
         );
 
-        if ($parameters['objectIDs'] === []) {
+        if ($parameters['ids'] === []) {
             throw new IllegalLinkException();
         }
 
@@ -62,7 +62,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
                     WHERE  articleID = ?";
             $statement = WCF::getDB()->prepare($sql);
 
-            foreach ($parameters['objectIDs'] as $articleID) {
+            foreach ($parameters['ids'] as $articleID) {
                 $statement->execute([$data['categoryID'], $articleID]);
             }
 

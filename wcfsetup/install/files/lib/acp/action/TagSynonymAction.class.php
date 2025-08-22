@@ -42,21 +42,21 @@ final class TagSynonymAction implements RequestHandlerInterface
             $parameters = Helper::mapQueryParameters(
                 $request->getQueryParams(),
                 <<<'EOT'
-                array {
-                    objectIDs: array<positive-int>
-                }
-                EOT,
+                    array {
+                        ids: array<positive-int>
+                    }
+                    EOT
             );
         } catch (MappingError) {
             throw new IllegalLinkException();
         }
 
-        if (\count($parameters['objectIDs']) < 2) {
+        if (\count($parameters['ids']) < 2) {
             throw new IllegalLinkException();
         }
 
         $tagList = new TagList();
-        $tagList->setObjectIDs($parameters['objectIDs']);
+        $tagList->setObjectIDs($parameters['ids']);
         $tagList->readObjects();
 
         $form = $this->getForm($tagList->getObjects());

@@ -103,6 +103,9 @@ final class ArticleGridView extends AbstractGridView
                                 );
                             }
                             if ($row->publicationStatus === Article::UNPUBLISHED) {
+                                if ($badges !== '') {
+                                    $badges .= ' ';
+                                }
                                 $badges .= \sprintf(
                                     '<span class="badge">%s</span>',
                                     WCF::getLanguage()->get('wcf.acp.article.publicationStatus.unpublished')
@@ -118,6 +121,9 @@ final class ArticleGridView extends AbstractGridView
                                     WCF::getLanguage()->getLocale()
                                 );
 
+                                if ($badges !== '') {
+                                    $badges .= ' ';
+                                }
                                 $badges .= \sprintf(
                                     '<span class="badge" title="%s">%s</span>',
                                     $dateTime,
