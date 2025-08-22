@@ -40,16 +40,16 @@ abstract class AbstractModerationAction implements RequestHandlerInterface
             <<<'EOT'
                 array {
                     id?: positive-int,
-                    objectIDs?: positive-int[]
+                    ids?: positive-int[]
                 }
                 EOT
         );
 
-        if (!isset($parameters['id']) && !isset($parameters['objectIDs'])) {
+        if (!isset($parameters['id']) && !isset($parameters['ids'])) {
             throw new IllegalLinkException();
         }
 
-        $objectIDs = $parameters['objectIDs'] ?? [$parameters['id']];
+        $objectIDs = $parameters['ids'] ?? [$parameters['id']];
         $moderationList = new ModerationQueueList();
         $moderationList->setObjectIDs($objectIDs);
         $moderationList->readObjects();
