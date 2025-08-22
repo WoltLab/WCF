@@ -204,6 +204,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     this.#bulkInteractionsPlaceholder = lastDivider.previousElementSibling;
                     this.#bulkInteractionsPlaceholder.remove();
                 }
+                while (lastDivider.previousElementSibling !== null) {
+                    lastDivider.previousElementSibling.remove();
+                }
                 menu.prepend(fragment);
                 this.#initBulkInteractions();
             }

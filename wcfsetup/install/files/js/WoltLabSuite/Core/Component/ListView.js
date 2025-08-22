@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listener", "../Dom/Util", "../Api/ListViews/GetItems", "WoltLabSuite/Core/Ui/Scroll", "../Helper/Selector", "../Ui/Dropdown/Simple", "../Api/ListViews/GetItem", "../Api/Interactions/GetBulkContextMenuOptions"], function (require, exports, tslib_1, State_1, Listener_1, Util_1, GetItems_1, Scroll_1, Selector_1, Simple_1, GetItem_1, GetBulkContextMenuOptions_1) {
+define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listener", "../Dom/Util", "../Api/ListViews/GetItems", "WoltLabSuite/Core/Ui/Scroll", "../Helper/Selector", "../Ui/Dropdown/Simple", "../Api/ListViews/GetItem", "../Api/Interactions/GetBulkContextMenuOptions", "../Helper/PromiseMutex"], function (require, exports, tslib_1, State_1, Listener_1, Util_1, GetItems_1, Scroll_1, Selector_1, Simple_1, GetItem_1, GetBulkContextMenuOptions_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ListView = void 0;
@@ -84,9 +84,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             state.addEventListener("list-view:change", (event) => {
                 void this.#loadItems(event.detail.source);
             });
-            state.addEventListener("list-view:get-bulk-interactions", (event) => {
-                void this.#loadBulkInteractions(event.detail.objectIds);
-            });
+            state.addEventListener("list-view:get-bulk-interactions", (0, PromiseMutex_1.promiseMutex)((event) => this.#loadBulkInteractions(event.detail.objectIds)));
             return state;
         }
         async #loadBulkInteractions(objectIds) {

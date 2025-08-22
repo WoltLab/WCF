@@ -12,6 +12,7 @@ import { getRows } from "../Api/Gridviews/GetRows";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
+import { promiseMutex } from "../Helper/PromiseMutex";
 import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { State, StateChangeCause } from "./GridView/State";
@@ -117,9 +118,10 @@ export class GridView {
     state.addEventListener("grid-view:change", (event) => {
       void this.#loadRows(event.detail.source);
     });
-    state.addEventListener("grid-view:get-bulk-interactions", (event) => {
-      void this.#loadBulkInteractions(event.detail.objectIds);
-    });
+    state.addEventListener(
+      "grid-view:get-bulk-interactions",
+      promiseMutex((event) => this.#loadBulkInteractions(event.detail.objectIds)),
+    );
 
     return state;
   }

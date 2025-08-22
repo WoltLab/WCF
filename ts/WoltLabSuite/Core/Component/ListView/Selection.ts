@@ -247,6 +247,10 @@ export class Selection extends EventTarget {
         this.#bulkInteractionsPlaceholder.remove();
       }
 
+      while (lastDivider.previousElementSibling !== null) {
+        lastDivider.previousElementSibling.remove();
+      }
+
       menu.prepend(fragment);
 
       this.#initBulkInteractions();

@@ -16,6 +16,7 @@ import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { getItem } from "../Api/ListViews/GetItem";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
+import { promiseMutex } from "../Helper/PromiseMutex";
 
 export class ListView {
   readonly #viewClassName: string;
@@ -120,9 +121,10 @@ export class ListView {
     state.addEventListener("list-view:change", (event) => {
       void this.#loadItems(event.detail.source);
     });
-    state.addEventListener("list-view:get-bulk-interactions", (event) => {
-      void this.#loadBulkInteractions(event.detail.objectIds);
-    });
+    state.addEventListener(
+      "list-view:get-bulk-interactions",
+      promiseMutex((event) => this.#loadBulkInteractions(event.detail.objectIds)),
+    );
 
     return state;
   }
