@@ -18,9 +18,10 @@ use wcf\system\user\storage\UserStorageHandler;
  */
 final class Unfollow
 {
-    public function __construct(private readonly User $user, private readonly User $target)
-    {
-    }
+    public function __construct(
+        private readonly User $user,
+        private readonly User $target,
+    ) {}
 
     public function __invoke(): void
     {

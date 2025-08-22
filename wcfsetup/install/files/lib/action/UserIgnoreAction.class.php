@@ -6,11 +6,13 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\command\user\IgnoreUser;
+use wcf\command\user\UnignoreUser;
 use wcf\data\user\ignore\UserIgnore;
-use wcf\data\user\ignore\UserIgnoreAction as IgnoreUserIgnoreAction;
 use wcf\data\user\UserProfile;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -61,19 +63,11 @@ final class UserIgnoreAction implements RequestHandlerInterface
 
             $type = \intval($form->getData()['data']['type']);
 
+            $user = UserRuntimeCache::getInstance()->getObject($parameters['id']);
             if ($type === UserIgnore::TYPE_NO_IGNORE) {
-                (new IgnoreUserIgnoreAction([], 'unignore', [
-                    'data' => [
-                        'userID' => $parameters['id'],
-                    ],
-                ]))->executeAction();
+                (new UnignoreUser(WCF::getUser(), $user))();
             } else {
-                (new IgnoreUserIgnoreAction([], 'ignore', [
-                    'data' => [
-                        'userID' => $parameters['id'],
-                        'type' => $type,
-                    ],
-                ]))->executeAction();
+                (new IgnoreUser(WCF::getUser(), $user, $type))();
             }
 
             return new JsonResponse([
