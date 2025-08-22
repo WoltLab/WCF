@@ -169,6 +169,8 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\styles\DisableStyle());
             $event->register(new \wcf\system\endpoint\controller\core\styles\EnableStyle());
             $event->register(new \wcf\system\endpoint\controller\core\styles\SetStyleAsDefault());
+            $event->register(new \wcf\system\endpoint\controller\core\styles\ChangeStyle());
+            $event->register(new \wcf\system\endpoint\controller\core\styles\GetStyleChooser());
             $event->register(new \wcf\system\endpoint\controller\core\users\options\DeleteOption());
             $event->register(new \wcf\system\endpoint\controller\core\users\options\DisableOption());
             $event->register(new \wcf\system\endpoint\controller\core\users\options\EnableOption());

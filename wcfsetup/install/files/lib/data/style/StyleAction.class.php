@@ -3,11 +3,11 @@
 namespace wcf\data\style;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\style\ChangeStyle;
 use wcf\command\style\DisableStyle;
 use wcf\command\style\EnableStyle;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
@@ -519,6 +519,8 @@ BROWSERCONFIG;
      * Validates parameters to change user style.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateChangeStyle()
     {
@@ -532,33 +534,20 @@ BROWSERCONFIG;
      * Changes user style.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `ChangeStyle` command instead.
      */
     public function changeStyle()
     {
-        StyleHandler::getInstance()->changeStyle($this->style->styleID);
-        if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
-            if (WCF::getUser()->userID) {
-                // set this as the permanent style
-                $userAction = new UserAction([WCF::getUser()], 'update', [
-                    'data' => [
-                        'styleID' => $this->style->isDefault ? 0 : $this->style->styleID,
-                    ],
-                ]);
-                $userAction->executeAction();
-            } else {
-                if ($this->style->isDefault) {
-                    WCF::getSession()->unregister('styleID');
-                } else {
-                    WCF::getSession()->register('styleID', $this->style->styleID);
-                }
-            }
-        }
+        (new ChangeStyle($this->style))();
     }
 
     /**
      * Validates the 'getStyleChooser' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateGetStyleChooser()
     {
@@ -569,6 +558,8 @@ BROWSERCONFIG;
      * Returns the style chooser dialog.
      *
      * @return array{actionName: string, template: string}
+     *
+     * @deprecated 6.3 Use the `\wcf\system\endpoint\controller\core\styles\GetStyleChooser` API-Endpoint instead.
      */
     public function getStyleChooser()
     {

@@ -7,10 +7,11 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Ajax from "../../Ajax";
-import * as Language from "../../Language";
-import UiDialog from "../../Ui/Dialog";
-import { DialogCallbackSetup } from "../../Ui/Dialog/Data";
+import { getPhrase } from "../../Language";
+import { changeStyle } from "WoltLabSuite/Core/Api/Styles/ChangeStyle";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { getStyleChooser } from "WoltLabSuite/Core/Api/Styles/GetStyleChooser";
 
 class ControllerStyleChanger {
   /**
@@ -18,59 +19,43 @@ class ControllerStyleChanger {
    */
   constructor() {
     document.querySelectorAll(".jsButtonStyleChanger").forEach((link: HTMLAnchorElement) => {
-      link.addEventListener("click", (ev) => this.showDialog(ev));
+      link.addEventListener(
+        "click",
+        promiseMutex((ev) => this.showDialog(ev)),
+      );
     });
   }
 
   /**
    * Loads and displays the style change dialog.
    */
-  showDialog(event: MouseEvent): void {
+  async showDialog(event: MouseEvent): Promise<void> {
     event.preventDefault();
 
-    UiDialog.open(this);
-  }
+    const { template } = await getStyleChooser();
+    const dialog = dialogFactory().fromHtml(template).withoutControls();
 
-  _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: "styleChanger",
-      options: {
-        disableContentPadding: true,
-        title: Language.get("wcf.style.changeStyle"),
-      },
-      source: {
-        data: {
-          actionName: "getStyleChooser",
-          className: "wcf\\data\\style\\StyleAction",
-        },
-        after: (content) => {
-          content.querySelectorAll(".styleList > li").forEach((style: HTMLLIElement) => {
-            style.classList.add("pointer");
-            style.addEventListener("click", (ev) => this.click(ev));
-          });
-        },
-      },
-    };
+    dialog.content.querySelectorAll(".styleList > li").forEach((style: HTMLLIElement) => {
+      style.classList.add("pointer");
+      style.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        promiseMutex(() => this.#changeStyle(style));
+      });
+    });
+
+    dialog.show(getPhrase("wcf.style.changeStyle"));
   }
 
   /**
    * Changes the style and reloads current page.
    */
-  private click(event: MouseEvent): void {
-    event.preventDefault();
+  async #changeStyle(style: HTMLLIElement): Promise<void> {
+    const styleId = parseInt(style.dataset.styleId!, 10);
 
-    const listElement = event.currentTarget as HTMLLIElement;
+    await changeStyle(styleId);
 
-    Ajax.apiOnce({
-      data: {
-        actionName: "changeStyle",
-        className: "wcf\\data\\style\\StyleAction",
-        objectIDs: [listElement.dataset.styleId],
-      },
-      success: function () {
-        window.location.reload();
-      },
-    });
+    window.location.reload();
   }
 }
 
@@ -89,5 +74,5 @@ export function setup(): void {
  * Loads and displays the style change dialog.
  */
 export function showDialog(event: MouseEvent): void {
-  controllerStyleChanger.showDialog(event);
+  void controllerStyleChanger.showDialog(event);
 }
