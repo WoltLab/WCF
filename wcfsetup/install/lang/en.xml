@@ -5568,7 +5568,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.option.occupation"><![CDATA[Occupation]]></item>
 		<item name="wcf.user.option.showSignature"><![CDATA[Display members’ signatures]]></item>
 		<item name="wcf.user.option.timezone"><![CDATA[Timezone]]></item>
-		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[X]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
