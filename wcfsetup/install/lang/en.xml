@@ -666,7 +666,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	<category name="wcf.acp.firstTimeSetup">
 		<item name="wcf.acp.firstTimeSetup.license"><![CDATA[First Time Setup: License]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials"><![CDATA[License Data]]></item>
-		<item name="wcf.acp.firstTimeSetup.license.credentials.customerArea"><![CDATA[You can find the license and serial no in the <a href="https://www.woltlab.com/license-list/" class="externalURL">customer’s area on woltlab.com</a>.]]></item>
+		<item name="wcf.acp.firstTimeSetup.license.credentials.customerArea"><![CDATA[You can find the license and serial number in the <a href="https://www.woltlab.com/license-list/" class="externalURL">customer’s area on woltlab.com</a>.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedConnect"><![CDATA[Failed to establish a connection to confirm the license data.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.credentials.error.failedValidation"><![CDATA[The license data could not be confirmed as valid.]]></item>
 		<item name="wcf.acp.firstTimeSetup.license.noCredentials"><![CDATA[Skip Step (Not Recommended)]]></item>
