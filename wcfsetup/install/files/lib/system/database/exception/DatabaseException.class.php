@@ -3,7 +3,7 @@
 namespace wcf\system\database\exception;
 
 /**
- * Denotes an database related error.
+ * Denotes a database related error.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
