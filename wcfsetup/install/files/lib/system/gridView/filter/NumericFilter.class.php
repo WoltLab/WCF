@@ -19,7 +19,9 @@ class NumericFilter extends AbstractFilter
 {
     public function __construct(
         string $databaseColumn = '',
-        protected readonly bool $integerValues = false
+        protected readonly bool $integerValues = false,
+        protected readonly null|int|float $minimum = null,
+        protected readonly null|int|float $maximum = null,
     ) {
         parent::__construct($databaseColumn);
     }
@@ -30,7 +32,9 @@ class NumericFilter extends AbstractFilter
         return NumericRangeFormField::create($id)
             ->label($label)
             ->nullable()
-            ->integerValues($this->integerValues);
+            ->integerValues($this->integerValues)
+            ->minimum($this->minimum)
+            ->maximum($this->maximum);
     }
 
     #[\Override]

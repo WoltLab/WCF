@@ -21,7 +21,9 @@ class NumericFilter extends AbstractFilter
         string $id,
         string $languageItem,
         string $databaseColumn = '',
-        protected readonly bool $integerValues = false
+        protected readonly bool $integerValues = false,
+        protected readonly null|int|float $minimum = null,
+        protected readonly null|int|float $maximum = null,
     ) {
         parent::__construct($id, $languageItem, $databaseColumn);
     }
@@ -32,7 +34,9 @@ class NumericFilter extends AbstractFilter
         return NumericRangeFormField::create($this->id)
             ->label($this->languageItem)
             ->nullable()
-            ->integerValues($this->integerValues);
+            ->integerValues($this->integerValues)
+            ->minimum($this->minimum)
+            ->maximum($this->maximum);
     }
 
     #[\Override]

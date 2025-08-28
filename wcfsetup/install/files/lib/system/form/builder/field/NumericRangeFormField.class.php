@@ -17,12 +17,16 @@ class NumericRangeFormField extends AbstractFormField implements
     IAutoFocusFormField,
     ICssClassFormField,
     IImmutableFormField,
+    IMaximumFormField,
+    IMinimumFormField,
     INullableFormField
 {
     use TAttributeFormField;
     use TAutoFocusFormField;
     use TCssClassFormField;
     use TImmutableFormField;
+    use TMaximumFormField;
+    use TMinimumFormField;
     use TNullableFormField;
 
     /**
@@ -39,6 +43,11 @@ class NumericRangeFormField extends AbstractFormField implements
      * Is `true` if only integer values are supported.
      */
     protected bool $integerValues = false;
+
+    public function __construct()
+    {
+        $this->addFieldClass('short');
+    }
 
     #[\Override]
     public function getSaveValue()
