@@ -45,10 +45,10 @@ abstract class AbstractListView
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
     private ?InteractionContextMenuComponentConfiguration $interactionContextMenuComponentConfiguration = null;
-    private bool $allowFiltering = true;
-    private bool $allowSorting = true;
-    private bool $allowInteractions = true;
-    private bool $allowBulkInteractions = true;
+    protected bool $allowFiltering = true;
+    protected bool $allowSorting = true;
+    protected bool $allowInteractions = true;
+    protected bool $allowBulkInteractions = true;
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
 
