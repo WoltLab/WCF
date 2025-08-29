@@ -84,14 +84,13 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="objectTypeDefinition"/>
 		<instruction type="objectType"/>
 		<instruction type="page"/>
-		<instruction type="menuItem"/>
 		<instruction type="acpMenu"/>
 		<instruction type="acpTemplateDelete"/>
-		<instruction type="box"/>
 		<instruction type="clipboardAction"/>
 		<instruction type="coreObject"/>
 		<instruction type="fileDelete"/>
 		<instruction type="templateDelete"/>
 		<instruction type="userMenu"/>
+		<instruction type="userOption"/>
 	</instructions>
 </package>
