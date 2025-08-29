@@ -145,20 +145,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getThumbnailFormats(): array
     {
-        return [
-            new ThumbnailFormat(
-                '128',
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                false
-            ),
-            new ThumbnailFormat(
-                '256',
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                false
-            ),
-        ];
+        return [];
     }
 
     #[\Override]
