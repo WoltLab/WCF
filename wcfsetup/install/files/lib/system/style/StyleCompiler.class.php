@@ -710,6 +710,14 @@ final class StyleCompiler extends SingletonFactory
                 return ValueConverter::fromPhp($value);
             }
 
+            // The SCSS v2 compiler trips over string values when trying to feed
+            // them into `parseValue()`. Explicitly treating them as strings
+            // when they are not numeric fixes this while preserving the ability
+            // to work with numbers passed as strings.
+            if (\is_string($value) && !\is_numeric($value)) {
+                return ValueConverter::fromPhp($value);
+            }
+
             return ValueConverter::parseValue($value);
         }, $variables));
 
