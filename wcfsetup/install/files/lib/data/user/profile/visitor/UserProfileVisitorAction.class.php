@@ -2,7 +2,7 @@
 
 namespace wcf\data\user\profile\visitor;
 
-use wcf\command\user\profile\RegisterUserProfileVisitor;
+use wcf\command\user\profile\TrackUserProfileVisitor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\data\user\UserProfile;
@@ -97,13 +97,19 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      * @return void
      * @since       5.2
      *
-     * @deprecated 6.3 use the `RegisterUserProfileVisitor` competitor instead.
+     * @deprecated 6.3 use the `RegisterUserProfileVisitor` command instead.
      */
     public function registerVisitor()
     {
-        (new RegisterUserProfileVisitor(
-            $this->parameters['data']['ownerID'],
-            $this->parameters['data']['userID'],
+        $user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
+        \assert($user !== null);
+
+        $target = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ownerID']);
+        \assert($target !== null);
+
+        (new TrackUserProfileVisitor(
+            $user->getDecoratedObject(),
+            $target->getDecoratedObject(),
             $this->parameters['data']['time'] ?? TIME_NOW
         ))();
     }

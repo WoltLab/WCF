@@ -2,7 +2,7 @@
 
 namespace wcf\page;
 
-use wcf\command\user\profile\RegisterUserProfileVisitor;
+use wcf\command\user\profile\TrackUserProfileVisitor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\cover\photo\UserCoverPhoto;
@@ -207,7 +207,7 @@ class UserPage extends AbstractPage
             // save visitor
             /** @noinspection PhpUndefinedFieldInspection */
             if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
-                (new RegisterUserProfileVisitor($this->user->userID, WCF::getUser()->userID, \TIME_NOW))();
+                (new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW))();
             }
         }
 

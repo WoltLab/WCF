@@ -2,21 +2,23 @@
 
 namespace wcf\command\user\profile;
 
+use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
- * Registers a user profile visitor or updates the time of an existing one.
+ * Tracks a visit to a user profile, updating the time if the visitor is already
+ * known.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-final class RegisterUserProfileVisitor
+final class TrackUserProfileVisitor
 {
     public function __construct(
-        private readonly int $ownerID,
-        private readonly int $userID,
+        private readonly User $user,
+        private readonly User $target,
         private readonly int $time
     ) {}
 
@@ -28,8 +30,8 @@ final class RegisterUserProfileVisitor
                 ON DUPLICATE KEY UPDATE time = VALUES(time)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            $this->ownerID,
-            $this->userID,
+            $this->target->userID,
+            $this->user->userID,
             $this->time,
         ]);
     }
