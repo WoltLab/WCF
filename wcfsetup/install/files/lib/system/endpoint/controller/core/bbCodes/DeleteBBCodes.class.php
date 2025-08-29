@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\endpoint\controller\core\bbCodes;
+namespace wcf\system\endpoint\controller\core\bbcodes;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
