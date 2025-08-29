@@ -2,13 +2,13 @@
 
 namespace wcf\page;
 
+use wcf\command\user\profile\TrackUserProfileVisitor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\profile\visitor\UserProfileVisitorAction;
 use wcf\data\user\profile\visitor\UserProfileVisitorList;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
@@ -207,12 +207,7 @@ class UserPage extends AbstractPage
             // save visitor
             /** @noinspection PhpUndefinedFieldInspection */
             if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
-                (new UserProfileVisitorAction([], 'registerVisitor', [
-                    'data' => [
-                        'ownerID' => $this->user->userID,
-                        'userID' => WCF::getUser()->userID,
-                    ],
-                ]))->executeAction();
+                (new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW))();
             }
         }
 
