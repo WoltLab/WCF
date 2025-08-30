@@ -36,7 +36,7 @@ final class ReplaceFileSource
 
         $file = $this->replaceSource();
         $file = $this->discardWebpVariantOfWebpFile($file);
-        $this->regenerateExistingThumbnails($file);
+        $file = $this->regenerateExistingThumbnails($file);
 
         return $file;
     }
@@ -177,7 +177,7 @@ final class ReplaceFileSource
         return new File($file->fileID);
     }
 
-    private function regenerateExistingThumbnails(File $file): void
+    private function regenerateExistingThumbnails(File $file): File
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_file_thumbnail
@@ -186,7 +186,7 @@ final class ReplaceFileSource
         $statement->execute([$file->fileID]);
         $count = $statement->fetchSingleColumn();
         if ($count === 0) {
-            return;
+            return $file;
         }
 
         try {
@@ -196,6 +196,8 @@ final class ReplaceFileSource
             FileProcessor::getInstance()->generateThumbnails($file);
         } catch (DamagedImage $e) {
             logThrowable($e);
+        } finally {
+            return $file;
         }
     }
 }
