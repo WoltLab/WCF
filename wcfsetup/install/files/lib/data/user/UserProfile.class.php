@@ -356,19 +356,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                 if ($this->canSeeAvatar()) {
                     if ($this->avatarPathname !== null) {
                         $avatar = new StaticAvatar($this->avatarPathname);
-                    } else if ($this->avatarFileID !== null) {
-                        $data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
-                        if ($data === null) {
-                            $avatar = FileRuntimeCache::getInstance()->getObject($this->avatarFileID);
-
-                            UserStorageHandler::getInstance()->update(
-                                $this->userID,
-                                'avatar',
-                                \serialize($avatar)
-                            );
-                        } else {
-                            $avatar = \unserialize($data);
-                        }
                     } else {
                         $parameters = ['avatar' => null];
                         EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
