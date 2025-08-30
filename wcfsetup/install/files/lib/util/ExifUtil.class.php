@@ -316,10 +316,16 @@ final class ExifUtil
             return null;
         }
 
-        if ($webp->getExif() !== null) {
+        $hasExif = $webp->getExif();
+        $hasXmp = $webp->getXmp();
+        if (!$hasExif && !$hasXmp) {
+            return null;
+        }
+
+        if ($hasExif) {
             $webp = $webp->withExif(null);
         }
-        if ($webp->getXmp() !== null) {
+        if ($hasXmp) {
             $webp = $webp->withXmp(null);
         }
 
