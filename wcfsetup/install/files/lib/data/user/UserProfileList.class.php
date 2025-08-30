@@ -15,8 +15,6 @@ use wcf\system\cache\runtime\FileRuntimeCache;
  */
 class UserProfileList extends UserList
 {
-    use TUserAvatarObjectList;
-
     /**
      * @inheritDoc
      */
@@ -55,8 +53,6 @@ class UserProfileList extends UserList
         }
 
         parent::readObjects();
-
-        $this->cacheAvatarFiles();
 
         $coverPhotoFileIDs = [];
         foreach ($this->objects as $object) {

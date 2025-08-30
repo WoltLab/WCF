@@ -2,7 +2,6 @@
 
 namespace wcf\data\user\ignore;
 
-use wcf\data\user\TUserAvatarObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 
@@ -15,8 +14,6 @@ use wcf\data\user\UserProfile;
  */
 class ViewableUserIgnoreList extends UserIgnoreList
 {
-    use TUserAvatarObjectList;
-
     /**
      * @inheritDoc
      */
@@ -57,13 +54,5 @@ class ViewableUserIgnoreList extends UserIgnoreList
             ON          user_option_value.userID = user_table.userID";
 
         $this->sqlSelects .= ", user_table.*";
-    }
-
-    #[\Override]
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        $this->cacheAvatarFiles();
     }
 }

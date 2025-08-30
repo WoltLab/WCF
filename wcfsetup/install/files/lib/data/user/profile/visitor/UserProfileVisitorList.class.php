@@ -3,7 +3,6 @@
 namespace wcf\data\user\profile\visitor;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\user\TUserAvatarObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 
@@ -18,8 +17,6 @@ use wcf\data\user\UserProfile;
  */
 class UserProfileVisitorList extends DatabaseObjectList
 {
-    use TUserAvatarObjectList;
-
     /**
      * @inheritDoc
      */
@@ -42,18 +39,10 @@ class UserProfileVisitorList extends DatabaseObjectList
     {
         parent::__construct();
 
-        $this->sqlSelects .= "user_table.username, user_table.email, user_table.disableAvatar";
+        $this->sqlSelects .= "user_table.username, user_table.email, user_table.disableAvatar, user_table.avatarPathname";
 
         $this->sqlJoins .= "
             LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = user_profile_visitor.userID";
-    }
-
-    #[\Override]
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        $this->cacheAvatarFiles();
     }
 }
