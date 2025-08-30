@@ -438,7 +438,15 @@ final class FileProcessor extends SingletonFactory
 
             case 'webp':
                 $command = new ReplaceWithWebpVariant($file);
-                return $command();
+                $newFile = $command();
+
+                // The files identity differs if the file has been replaced.
+                if ($file !== $newFile) {
+                    $processor = $newFile->getProcessor();
+                    $processor?->replacedWithWebpVariant($newFile);
+                }
+
+                return $newFile;
 
             default:
                 throw new \LogicException("Unreachable");
