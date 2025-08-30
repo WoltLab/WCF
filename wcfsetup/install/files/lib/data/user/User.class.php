@@ -49,6 +49,7 @@ use wcf\util\UserUtil;
  * @property-read   string $registrationIpAddress      ip address of the user at the time of registration or empty if user has been created manually or if no ip address are logged
  * @property-read   int|null $avatarID           id of the user's avatar or null if they have no avatar
  * @property-read   int|null $avatarFileID           id of the user's avatar core file or null if they have no avatar
+ * @property-read   string|null $avatarPathname           pathname of the user's avatar relative to the core itself
  * @property-read   int $disableAvatar          is `1` if the user's avatar has been disabled, otherwise `0`
  * @property-read   string $disableAvatarReason        reason why the user's avatar is disabled
  * @property-read   int $disableAvatarExpires       timestamp at which the user's avatar will automatically be enabled again
