@@ -174,4 +174,12 @@ interface IFileProcessor
      * @since 6.2
      */
     public function getImageCropperConfiguration(): ?ImageCropperConfiguration;
+
+    /**
+     * Notifies the processor that one of its files was replaced with its WebP
+     * variant.
+     *
+     * @since 6.2
+     */
+    public function replacedWithWebpVariant(File $file): void;
 }

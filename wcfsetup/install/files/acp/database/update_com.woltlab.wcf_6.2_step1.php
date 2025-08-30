@@ -10,6 +10,7 @@
 
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
@@ -25,6 +26,8 @@ return [
         ->columns([
             IntDatabaseTableColumn::create('avatarFileID')
                 ->length(10)
+                ->defaultValue(null),
+            VarcharDatabaseTableColumn::create('avatarPathname')
                 ->defaultValue(null),
             IntDatabaseTableColumn::create('coverPhotoFileID')
                 ->length(10)

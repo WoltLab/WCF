@@ -3,6 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
+use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -145,20 +146,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getThumbnailFormats(): array
     {
-        return [
-            new ThumbnailFormat(
-                '128',
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                false
-            ),
-            new ThumbnailFormat(
-                '256',
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                false
-            ),
-        ];
+        return [];
     }
 
     #[\Override]
@@ -214,6 +202,29 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
             new ImageCropSize(UserAvatarFileProcessor::AVATAR_SIZE, UserAvatarFileProcessor::AVATAR_SIZE),
             new ImageCropSize(UserAvatarFileProcessor::AVATAR_SIZE_2X, UserAvatarFileProcessor::AVATAR_SIZE_2X)
         );
+    }
+
+    #[\Override]
+    public function replacedWithWebpVariant(File $file): void
+    {
+        $user = $this->getUserByFile($file);
+        if ($user === null) {
+            return;
+        }
+
+        $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+        $pathname = $file->getRelativePath() . $filename;
+
+        if ($user->avatarPathname === $pathname) {
+            return;
+        }
+
+        // The relative path to the avatar is stored in a denormalized form in
+        // the user table. This path may be outdated if either the avatar is
+        // later converted to WebP or during the upload.
+        (new UserEditor($user->getDecoratedObject()))->update([
+            'avatarPathname' => $pathname,
+        ]);
     }
 
     /**

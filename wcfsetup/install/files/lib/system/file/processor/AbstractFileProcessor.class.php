@@ -97,4 +97,10 @@ abstract class AbstractFileProcessor implements IFileProcessor
         // Do not crop images.
         return null;
     }
+
+    #[\Override]
+    public function replacedWithWebpVariant(File $file): void
+    {
+        // There is usually no need to react to this change.
+    }
 }
