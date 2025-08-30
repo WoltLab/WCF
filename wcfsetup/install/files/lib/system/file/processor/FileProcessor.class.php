@@ -204,6 +204,12 @@ final class FileProcessor extends SingletonFactory
             try {
                 $imageAdapter->saveImageAs($imageAdapter->getImage(), $filename, 'webp', 80);
             } catch (\Throwable $e) {
+                // The image violates the policy for the maximum width, height
+                // or area. This is not actionable in any case.
+                if (\str_starts_with($e->getMessage(), 'width or height exceeds limit')) {
+                    return $file;
+                }
+
                 // Ignore any errors trying to save the file unless in debug mode.
                 if (\ENABLE_DEBUG_MODE) {
                     throw $e;
