@@ -24,7 +24,17 @@
 							<ol class="nativeList" start="0">
 								{foreach from=$item.trace item=traceItem}
 									<li>
-										{if !$traceItem.class|empty}{$traceItem.class}{$traceItem.type}{else}{if !$traceItem.file|empty}{$traceItem.file}: {/if}{/if}{$traceItem.function}() {if !$traceItem.line|empty}(line {#$traceItem.line}){/if}
+										{if !$traceItem.class|empty}{*
+											*}{$traceItem.class}{$traceItem.type}{*
+										*}{elseif !$traceItem.file|empty}{*
+											*}{$traceItem.file}: {*
+										*}{/if}{*
+										*}{$traceItem.function}()
+										<span class="benchmark__stacktrace__context">
+										{$traceItem[file]}{if !$traceItem.line|empty}{*
+											*}:{#$traceItem.line}{*
+										*}{/if}
+										</span>
 									</li>
 								{/foreach}
 							</ol>

@@ -115,6 +115,17 @@ class Benchmark extends SingletonFactory
             );
         }
 
+        foreach ($backtrace as &$segment) {
+            if (!isset($segment['file'])) {
+                continue;
+            }
+
+            if (preg_match('~^(' . preg_quote($_SERVER['DOCUMENT_ROOT'], '~') . '|' . preg_quote(WCF_DIR, '~') . ')~', $segment['file'])) {
+                $segment['file'] = '*/' . FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $segment['file']));
+            }
+        }
+        unset($segment);
+
         $this->items[$newIndex]['trace'] = $backtrace;
 
         return $newIndex;
