@@ -26,6 +26,7 @@ final class ReplaceFileSource
         private readonly File $file,
         private readonly string $pathname,
         private readonly ?string $filename = null,
+        private readonly ?bool $regenerateThumbnails = true,
     ) {}
 
     public function __invoke(): File
@@ -36,7 +37,10 @@ final class ReplaceFileSource
 
         $file = $this->replaceSource();
         $file = $this->discardWebpVariantOfWebpFile($file);
-        $file = $this->regenerateExistingThumbnails($file);
+
+        if ($this->regenerateThumbnails) {
+            $file = $this->regenerateExistingThumbnails($file);
+        }
 
         return $file;
     }

@@ -471,7 +471,7 @@ final class FileProcessor extends SingletonFactory
             return $file;
         }
 
-        $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename);
+        $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false);
         $newFile = $command();
 
         return $newFile;
