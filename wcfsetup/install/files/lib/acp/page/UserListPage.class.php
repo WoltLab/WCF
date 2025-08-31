@@ -52,7 +52,6 @@ class UserListPage extends SortablePage
     public $columnStyling = [
         'registrationDate' => 'columnDate',
         'lastActivityTime' => 'columnDate',
-        'profileHits' => 'columnDigits',
         'activityPoints' => 'columnDigits',
         'likesReceived' => 'columnDigits',
     ];
@@ -134,7 +133,6 @@ class UserListPage extends SortablePage
         'registrationDate',
         'username',
         'lastActivityTime',
-        'profileHits',
         'activityPoints',
         'likesReceived',
     ];
@@ -343,7 +341,6 @@ class UserListPage extends SortablePage
                             );
                             break;
 
-                        case 'profileHits':
                         case 'activityPoints':
                         case 'likesReceived':
                             $this->columnValues[$user->userID][$column] = StringUtil::formatNumeric($user->{$column});

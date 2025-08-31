@@ -1570,7 +1570,6 @@ CREATE TABLE wcf1_user (
 	disableSignatureReason TEXT,
 	disableSignatureExpires INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	profileHits INT(10) NOT NULL DEFAULT 0,
 	rankID INT(10),
 	userTitle VARCHAR(255) NOT NULL DEFAULT '',
 	userOnlineGroupID INT(10),
