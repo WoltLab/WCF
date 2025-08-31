@@ -28,6 +28,7 @@ return [
                 ->length(10)
                 ->defaultValue(null),
             VarcharDatabaseTableColumn::create('avatarPathname')
+                ->length(255)
                 ->defaultValue(null),
             IntDatabaseTableColumn::create('coverPhotoFileID')
                 ->length(10)
