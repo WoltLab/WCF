@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\file\FileEditor;
+use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
@@ -140,15 +141,28 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     WHERE   userID = ?";
             $statement = WCF::getDB()->prepare($sql);
 
-            // retrieve permissions
+            // retrieve permissions and cache avatar files
             $userIDs = [];
+            $avatarFileIDs = [];
             foreach ($users as $user) {
                 $userIDs[] = $user->userID;
+
+                if ($user->avatarFileID !== null) {
+                    $avatarFileIDs[] = $user->avatarFileID;
+                }
             }
             $userPermissions = $this->getBulkUserPermissions(
                 $userIDs,
                 ['user.message.disallowedBBCodes', 'user.signature.disallowedBBCodes']
             );
+
+            $avatarFiles = [];
+            if ($avatarFileIDs !== []) {
+                $fileList = new FileList();
+                $fileList->setObjectIDs($avatarFileIDs);
+                $fileList->readObjects();
+                $avatarFiles = $fileList->getObjects();
+            }
 
             $htmlInputProcessor = new HtmlInputProcessor();
             WCF::getDB()->beginTransaction();
@@ -211,6 +225,21 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     }
 
                     $statement->execute([$html, $user->userID]);
+                }
+
+                if ($user->avatarFileID !== null && $user->avatarPathname === null) {
+                    $file = $avatarFiles[$user->avatarFileID] ?? null;
+                    \assert(
+                        $file !== null,
+                        "Expected the avatarFileID {$user->avatarFileID} of user {$user->userID} to exist."
+                    );
+
+                    $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+                    $pathname = $file->getRelativePath() . $filename;
+
+                    $user->update([
+                        'avatarPathname' => $pathname,
+                    ]);
                 }
             }
             WCF::getDB()->commitTransaction();
