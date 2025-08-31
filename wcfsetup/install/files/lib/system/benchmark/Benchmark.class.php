@@ -80,7 +80,42 @@ class Benchmark extends SingletonFactory
         $this->items[$newIndex]['type'] = $type;
         $this->items[$newIndex]['before'] = self::getMicrotime();
         $this->items[$newIndex]['start'] = self::compareMicrotimes($this->startTime, $this->items[$newIndex]['before']);
-        $this->items[$newIndex]['trace'] = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+
+        // Remove middlewares from the stacktrace because they are usually never
+        // a concern but increase the size of the stacktrace by an order of
+        // magnitude.
+        // It does not remove items if the benchmark was started from within a
+        // middleware. The Request and Pipeline items are preserved as markers.
+        $backtrace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+
+        $endOfMiddleware = \array_find_key($backtrace, function (array $segment) {
+            if (!isset($segment['class'])) {
+                return false;
+            }
+
+            return $segment['class'] === \wcf\system\request\Request::class && $segment['function'] === 'handle';
+        });
+        $startOfMiddleware = \array_find_key($backtrace, function (array $segment) {
+            if (!isset($segment['class'])) {
+                return false;
+            }
+
+            return $segment['class'] === \wcf\http\Pipeline::class && $segment['function'] === 'process';
+        });
+
+        if ($startOfMiddleware !== null && $endOfMiddleware !== null) {
+            $backtrace = \array_values(
+                \array_filter(
+                    $backtrace,
+                    static function ($index) use ($startOfMiddleware, $endOfMiddleware) {
+                        return $index <= $endOfMiddleware || $index >= $startOfMiddleware;
+                    },
+                    \ARRAY_FILTER_USE_KEY
+                )
+            );
+        }
+
+        $this->items[$newIndex]['trace'] = $backtrace;
 
         return $newIndex;
     }
