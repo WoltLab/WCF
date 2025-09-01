@@ -5,6 +5,7 @@ namespace wcf\data\comment;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\like\IViewableLikeProvider;
@@ -85,5 +86,20 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
                 $commentManager->prepare($likes);
             }
         }
+    }
+
+    #[\Override]
+    public function getObjectByID($objectID)
+    {
+        return new LikeableComment(CommentRuntimeCache::getInstance()->getObject($objectID));
+    }
+
+    #[\Override]
+    public function getObjectsByIDs(array $objectIDs)
+    {
+        return \array_map(
+            static fn(Comment $comment) => new LikeableComment($comment),
+            CommentRuntimeCache::getInstance()->getObjects($objectIDs)
+        );
     }
 }

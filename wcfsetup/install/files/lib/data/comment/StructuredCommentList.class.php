@@ -5,6 +5,8 @@ namespace wcf\data\comment;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\like\object\LikeObject;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -131,6 +133,8 @@ class StructuredCommentList extends CommentList
 
             $comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
             $comment->setIsEditable($this->commentManager->canEditComment($comment->getDecoratedObject()));
+
+            CommentRuntimeCache::getInstance()->cacheComment($comment->getDecoratedObject());
         }
 
         // fetch last responses
@@ -160,6 +164,8 @@ class StructuredCommentList extends CommentList
                 if ($response->hasEmbeddedObjects) {
                     $embeddedResponseIDs[] = $response->getObjectID();
                 }
+
+                CommentResponseRuntimeCache::getInstance()->cacheResponse($response->getDecoratedObject());
             }
 
             if (!empty($embeddedResponseIDs)) {
