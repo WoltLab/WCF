@@ -32,6 +32,8 @@ return [
             IntDatabaseTableColumn::create('coverPhotoFileID')
                 ->length(10)
                 ->defaultValue(null),
+            IntDatabaseTableColumn::create('profileHits')
+                ->drop(),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

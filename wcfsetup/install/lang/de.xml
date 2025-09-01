@@ -4706,8 +4706,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.user.membersList.location"><![CDATA[aus {$user->location}]]></item>
 		<item name="wcf.user.myProfile"><![CDATA[Mein Profil]]></item>
 		<item name="wcf.user.editProfile"><![CDATA[Profil bearbeiten]]></item>
-		<item name="wcf.user.profileHits"><![CDATA[Profil-Aufrufe]]></item>
-		<item name="wcf.user.profileHits.hitsPerDay"><![CDATA[{#$user->profileHits/$user->getProfileAge()} Aufrufe pro Tag]]></item>
 		<item name="wcf.user.online"><![CDATA[Online]]></item>
 		<item name="wcf.user.online.title"><![CDATA[{$username} ist online]]></item>
 		<item name="wcf.user.button.follow"><![CDATA[Folgen]]></item>
@@ -7654,5 +7652,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.clipboard.label.com.woltlab.wcf.moderation.queue.marked"/>
 	<item name="wcf.acp.label.sortAfterGroupFiltering"/>
 	<item name="wcf.acp.menu.link.contact.settings"/>
+	<item name="wcf.user.profileHits"/>
+	<item name="wcf.user.profileHits.hitsPerDay"/>
 </delete>
 </language>

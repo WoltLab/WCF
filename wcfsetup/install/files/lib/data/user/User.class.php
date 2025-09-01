@@ -59,7 +59,6 @@ use wcf\util\UserUtil;
  * @property-read   string $disableSignatureReason     reason why the user's signature is disabled
  * @property-read   int $disableSignatureExpires    timestamp at which the user's signature will automatically be enabled again
  * @property-read   int $lastActivityTime       timestamp of the user's last activity
- * @property-read   int $profileHits            number of times the user's profile has been visited
  * @property-read   int|null $rankID             id of the user's rank or null if they have no rank
  * @property-read   string $userTitle          custom user title used instead of rank title or empty if user has no custom title
  * @property-read   int|null $userOnlineGroupID      id of the user group whose online marking is used when printing the user's formatted name or null if no special marking is used
