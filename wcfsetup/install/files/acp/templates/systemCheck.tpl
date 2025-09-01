@@ -139,12 +139,20 @@
 	<dl{if $results[php][opcache] === false} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php.opcache{/lang}</dt>
 		<dd>
-			{if $results[php][opcache] === true}
+			{if $results[php][opcache][result] === true}
 				{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
-			{elseif $results[php][opcache] === null}
+			{elseif $results[php][opcache][result] === null}
 				{unsafe:$statusSufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
 			{else}
-				{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.broken{/lang}
+				{if !$results[php][opcache][management]}
+					{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.broken{/lang}
+					{if !$results[php][opcache][saveComments]}
+						<br>
+					{/if}
+				{/if}
+				{if !$results[php][opcache][saveComments]}
+					{unsafe:$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.saveComments{/lang}
+				{/if}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.php.opcache.description{/lang}</small>
 		</dd>

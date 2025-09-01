@@ -172,7 +172,11 @@ class SystemCheckPage extends AbstractPage
                 'result' => false,
                 'value' => '0',
             ],
-            'opcache' => null,
+            'opcache' => [
+                'result' => null,
+                'management' => false,
+                'saveComments' => false,
+            ],
             'version' => [
                 'result' => 'unsupported',
                 'value' => '0.0.0',
@@ -362,14 +366,18 @@ class SystemCheckPage extends AbstractPage
             WCF::resetZendOpcache(__FILE__);
 
             if (\extension_loaded('Zend Opcache') && \ini_get('opcache.enable')) {
-                $this->results['php']['opcache'] = \function_exists('opcache_reset') && \function_exists('opcache_invalidate');
+                $this->results['php']['opcache']['management'] = \function_exists('opcache_reset') && \function_exists('opcache_invalidate');
+                $this->results['php']['opcache']['saveComments'] = \ini_get('opcache.save_comments') === '1';
+
+                $this->results['php']['opcache']['result'] = $this->results['php']['opcache']['management']
+                    && $this->results['php']['opcache']['saveComments'];
             }
         } catch (\Exception $e) {
-            $this->results['php']['opcache'] = false;
+            $this->results['php']['opcache']['result'] = false;
         }
 
         $this->results['status']['php'] = empty($this->results['php']['extension'])
-            && $this->results['php']['opcache'] !== false;
+            && $this->results['php']['opcache']['result'] !== false;
     }
 
     /**
