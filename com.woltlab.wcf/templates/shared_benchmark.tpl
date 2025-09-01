@@ -31,9 +31,12 @@
 										*}{/if}{*
 										*}{$traceItem.function}()
 										<span class="benchmark__stacktrace__context">
-										{$traceItem[file]}{if !$traceItem.line|empty}{*
-											*}:{#$traceItem.line}{*
-										*}{/if}
+											{if !$traceItem[file]|empty}
+												{$traceItem[file]}:{*
+											*}{/if}{*
+											*}{if !$traceItem.line|empty}{*
+												*}{#$traceItem.line}{*
+											*}{/if}
 										</span>
 									</li>
 								{/foreach}
