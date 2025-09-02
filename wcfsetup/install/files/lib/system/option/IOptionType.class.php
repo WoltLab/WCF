@@ -28,7 +28,7 @@ interface IOptionType
      * a wcf\system\exception\UserInputException if the validation should fail.
      *
      * @param Option $option
-     * @param string $newValue
+     * @param mixed $newValue
      * @return void
      */
     public function validate(Option $option, $newValue);
@@ -38,7 +38,7 @@ interface IOptionType
      * be saved in the database.
      *
      * @param Option $option
-     * @param string $newValue
+     * @param mixed $newValue
      * @return  string
      */
     public function getData(Option $option, $newValue);
