@@ -17,44 +17,41 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
     /**
      * label object type container
      * @var LabelObjectTypeContainer
+     * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public $container;
 
     /**
      * object type id
      * @var int
+     * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public $objectTypeID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setObjectTypeID($objectTypeID)
     {
         $this->objectTypeID = $objectTypeID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeID()
     {
         return $this->objectTypeID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainer()
     {
         return $this->container;
     }
 
     #[\Override]
-    public function getContainerForObjectType(ObjectType $objectType): ?LabelObjectTypeContainer
+    public function getContainerForObjectType(ObjectType $objectType): LabelObjectTypeContainer
     {
         // This exists for backwards-compatibility only; Implementations are
         // expected to implement this method themselves.
-        return null;
+        $this->setObjectTypeID($objectType->objectTypeID);
+        return $this->getContainer();
     }
 }

@@ -133,10 +133,6 @@ class LabelGroupAddForm extends AbstractForm
             \assert($handler instanceof ILabelObjectTypeHandler);
 
             $container = $handler->getContainerForObjectType($objectType);
-            if ($container === null) {
-                $handler->setObjectTypeID($objectType->objectTypeID);
-                $container = $handler->getContainer();
-            }
 
             $this->labelObjectTypes[$objectType->objectTypeID] = $handler;
             $this->labelObjectTypeContainers[$objectType->objectTypeID] = $container;

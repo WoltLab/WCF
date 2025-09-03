@@ -21,7 +21,7 @@ interface ILabelObjectTypeHandler
      *
      * @since 6.2
      */
-    public function getContainerForObjectType(ObjectType $objectType): ?LabelObjectTypeContainer;
+    public function getContainerForObjectType(ObjectType $objectType): LabelObjectTypeContainer;
 
     /**
      * Sets object type id.
