@@ -2,6 +2,7 @@
 
 namespace wcf\system\label\object\type;
 
+use wcf\data\object\type\ObjectType;
 use wcf\system\SingletonFactory;
 
 /**
@@ -47,5 +48,13 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
     public function getContainer()
     {
         return $this->container;
+    }
+
+    #[\Override]
+    public function getContainerForObjectType(ObjectType $objectType): ?LabelObjectTypeContainer
+    {
+        // This exists for backwards-compatibility only; Implementations are
+        // expected to implement this method themselves.
+        return null;
     }
 }
