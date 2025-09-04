@@ -3,9 +3,11 @@
 namespace wcf\system\label\object\type;
 
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\WCF;
 
 /**
- * Label object type container.
+ * This type of container is used to allow the user when editing label groups to specify
+ * in which sub-areas (e.g., categories or sub-forums) a label group is available.
  *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
@@ -15,28 +17,16 @@ use wcf\data\object\type\ObjectTypeCache;
 final class LabelObjectTypeContainer implements \Countable, \Iterator
 {
     /**
-     * list of object types
      * @var LabelObjectType[]
      */
-    public array $objectTypes = [];
+    private array $objectTypes = [];
 
-    /**
-     * object type id
-     */
-    public int $objectTypeID = 0;
-
-    /**
-     * iterator position
-     */
     private int $position = 0;
 
-    /**
-     * Creates a new LabelObjectTypeContainer object.
-     */
-    public function __construct(int $objectTypeID)
-    {
-        $this->objectTypeID = $objectTypeID;
-    }
+    public function __construct(
+        public readonly int $objectTypeID,
+        public readonly string $title = ''
+    ) {}
 
     /**
      * Adds a label object type.
@@ -46,65 +36,47 @@ final class LabelObjectTypeContainer implements \Countable, \Iterator
         $this->objectTypes[] = $objectType;
     }
 
-    /**
-     * Returns the object type id.
-     */
-    public function getObjectTypeID(): int
-    {
-        return $this->objectTypeID;
-    }
-
-    /**
-     * Returns the object type name.
-     */
     public function getObjectTypeName(): string
     {
-        return ObjectTypeCache::getInstance()->getObjectType($this->getObjectTypeID())->objectType;
+        return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    public function getTitle(): string
+    {
+        return $this->title ?: WCF::getLanguage()->get('wcf.acp.label.container.' . $this->getObjectTypeName());
+    }
+
+    #[\Override]
     public function current(): LabelObjectType
     {
         return $this->objectTypes[$this->position];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->position++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->objectTypes[$this->position]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->objectTypes);
