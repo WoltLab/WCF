@@ -12,8 +12,6 @@ use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Interaction provider for templates.
@@ -30,19 +28,13 @@ final class TemplateInteractions extends AbstractInteractionProvider
         $this->addInteractions([
             new class("copy", TemplateAddForm::class, "wcf.acp.template.copy") extends LinkInteraction {
                 #[\Override]
-                public function render(DatabaseObject $object): string
+                protected function getLink(DatabaseObject $object): string
                 {
                     \assert($object instanceof Template);
 
-                    $href = LinkHandler::getInstance()->getControllerLink(
+                    return LinkHandler::getInstance()->getControllerLink(
                         $this->controllerClass,
                         ['copy' => $object->templateID]
-                    );
-
-                    return \sprintf(
-                        '<a href="%s">%s</a>',
-                        StringUtil::encodeHTML($href),
-                        WCF::getLanguage()->get($this->languageItem)
                     );
                 }
             },
