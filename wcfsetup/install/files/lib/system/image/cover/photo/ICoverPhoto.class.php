@@ -2,6 +2,8 @@
 
 namespace wcf\system\image\cover\photo;
 
+use wcf\system\file\processor\ImageData;
+
 /**
  * Default interface for cover photos that support mulitple sizes.
  *
@@ -21,4 +23,6 @@ interface ICoverPhoto
     public function getFileSize(?string $size = null): int;
 
     public function getMimeType(?string $size = null): string;
+
+    public function getImageData(?int $minWidth = null, ?int $minHeight = null): ?ImageData;
 }
