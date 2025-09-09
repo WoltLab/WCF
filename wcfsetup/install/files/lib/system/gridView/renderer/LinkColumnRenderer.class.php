@@ -23,16 +23,24 @@ class LinkColumnRenderer extends DefaultColumnRenderer implements ILinkColumnRen
     public function __construct(
         private readonly string $controllerClass,
         private readonly array $parameters = [],
-        private readonly string $titleLanguageItem = ''
+        private readonly string $titleLanguageItem = '',
+        private readonly string $idPropertyName = ''
     ) {}
 
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        $href = LinkHandler::getInstance()->getControllerLink(
-            $this->controllerClass,
-            \array_merge($this->parameters, ['object' => $row])
-        );
+        if ($this->idPropertyName) {
+            $href = LinkHandler::getInstance()->getControllerLink(
+                $this->controllerClass,
+                \array_merge($this->parameters, ['id' => $row->__get($this->idPropertyName)])
+            );
+        } else {
+            $href = LinkHandler::getInstance()->getControllerLink(
+                $this->controllerClass,
+                \array_merge($this->parameters, ['object' => $row])
+            );
+        }
 
         return '<a href="' . StringUtil::encodeHTML($href) . '"'
             . ($this->titleLanguageItem ? ' title="' . WCF::getLanguage()->get($this->titleLanguageItem) . '"' : '') . '>'
