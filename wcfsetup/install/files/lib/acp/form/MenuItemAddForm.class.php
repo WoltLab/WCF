@@ -217,7 +217,8 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                             ValueFormFieldDependency::create('isInternalLinkDependency')
                                 ->fieldId('isInternalLink')
                                 ->values([1])
-                        ),
+                        )
+                        ->addFieldClass('medium'),
                     TextFormField::create('externalURL')
                         ->label('wcf.acp.menu.item.externalURL')
                         ->maximumLength(255)
