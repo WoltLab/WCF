@@ -1206,8 +1206,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Other]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
-		<item name="wcf.acp.menu.item.additionalInternalURL"><![CDATA[Additional internal URL parameters]]></item>
-		<item name="wcf.acp.menu.item.additionalInternalURL.description"><![CDATA[Additional parameters that can be appended to the URL. Ideally, these should starts with <kbd>&</kbd> or <kbd>#</kbd>.]]></item>
+		<item name="wcf.acp.menu.item.urlParameters"><![CDATA[Additional URL Parameters]]></item>
 		<item name="wcf.acp.menu.link.contact"><![CDATA[Contact Form]]></item>
 		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Option Fields]]></item>
 		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipient]]></item>

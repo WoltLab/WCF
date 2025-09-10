@@ -210,9 +210,8 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                 ->fieldId('pageID')
                                 ->values(\array_keys($pageHandlers))
                         ),
-                    TextFormField::create('additionalInternalURL')
-                        ->label('wcf.acp.menu.item.additionalInternalURL')
-                        ->description('wcf.acp.menu.item.additionalInternalURL.description')
+                    TextFormField::create('urlParameters')
+                        ->label('wcf.acp.menu.item.urlParameters')
                         ->maximumLength(255)
                         ->addDependency(
                             ValueFormFieldDependency::create('isInternalLinkDependency')
