@@ -74,13 +74,17 @@ export class GridView {
 
   #initInteractions(): void {
     wheneverFirstSeen(`#${this.#table.id} tbody tr`, (row) => {
-      row.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
-        let dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
-        if (!dropdown) {
-          dropdown = element.closest(".dropdown")!.querySelector<HTMLElement>(".dropdownMenu")!;
-        }
+      const containers = [row];
 
-        dropdown?.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
+      row.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
+        const dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
+        if (dropdown) {
+          containers.push(dropdown);
+        }
+      });
+
+      for (const container of containers) {
+        container.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
           element.addEventListener("click", () => {
             row.dispatchEvent(
               new CustomEvent("interaction:execute", {
@@ -90,7 +94,7 @@ export class GridView {
             );
           });
         });
-      });
+      }
     });
   }
 

@@ -46,12 +46,15 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
         }
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#table.id} tbody tr`, (row) => {
+                const containers = [row];
                 row.querySelectorAll(".dropdownToggle").forEach((element) => {
-                    let dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
-                    if (!dropdown) {
-                        dropdown = element.closest(".dropdown").querySelector(".dropdownMenu");
+                    const dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
+                    if (dropdown) {
+                        containers.push(dropdown);
                     }
-                    dropdown?.querySelectorAll("[data-interaction]").forEach((element) => {
+                });
+                for (const container of containers) {
+                    container.querySelectorAll("[data-interaction]").forEach((element) => {
                         element.addEventListener("click", () => {
                             row.dispatchEvent(new CustomEvent("interaction:execute", {
                                 detail: element.dataset,
@@ -59,7 +62,7 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
                             }));
                         });
                     });
-                });
+                }
             });
         }
         #initEventListeners() {
