@@ -94,15 +94,28 @@ class MenuItem extends DatabaseObject implements ITitledObject
         if ($this->pageObjectID) {
             $handler = $this->getMenuPageHandler();
             if ($handler && $handler instanceof ILookupPageHandler) {
-                return $handler->getLink($this->pageObjectID) . $this->urlParameters;
+                return $this->appendUrlParameters($handler->getLink($this->pageObjectID));
             }
         }
 
         if ($this->pageID) {
-            return $this->getPage()->getLink() . $this->urlParameters;
+            return $this->appendUrlParameters($this->getPage()->getLink());
         } else {
             return WCF::getLanguage()->get($this->externalURL);
         }
+    }
+
+    private function appendUrlParameters(string $url): string
+    {
+        if (!$this->urlParameters) {
+            return $url;
+        }
+
+        if (\str_contains($url, '?')) {
+            return $url .= '&' . $this->urlParameters;
+        }
+
+        return $url .= '?' . $this->urlParameters;
     }
 
     /**
