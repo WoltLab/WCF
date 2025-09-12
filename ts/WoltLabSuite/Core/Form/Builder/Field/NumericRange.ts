@@ -16,7 +16,7 @@ class NumericRange extends Field {
   constructor(fieldId: string) {
     super(fieldId);
 
-    this.#fromField = document.getElementById(this._fieldId + "_from") as HTMLInputElement;
+    this.#fromField = document.getElementById(this._fieldId) as HTMLInputElement;
     if (this.#fromField === null) {
       throw new Error("Unknown field with id '" + this._fieldId + "'.");
     }

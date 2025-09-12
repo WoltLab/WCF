@@ -6,7 +6,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
         #toField;
         constructor(fieldId) {
             super(fieldId);
-            this.#fromField = document.getElementById(this._fieldId + "_from");
+            this.#fromField = document.getElementById(this._fieldId);
             if (this.#fromField === null) {
                 throw new Error("Unknown field with id '" + this._fieldId + "'.");
             }

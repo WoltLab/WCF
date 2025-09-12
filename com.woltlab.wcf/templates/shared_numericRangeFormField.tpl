@@ -1,6 +1,6 @@
 <input
 	type="number"
-	id="{$field->getPrefixedId()}_from"
+	id="{$field->getPrefixedId()}"
 	name="{$field->getPrefixedId()}[from]"
 	value="{$field->getFromValue()}"
 	step="{$field->getDefaultStep()}"

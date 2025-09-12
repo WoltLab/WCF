@@ -1,6 +1,6 @@
 <input
 	type="{if $field->supportsTime()}datetime{else}date{/if}"
-	id="{$field->getPrefixedId()}_from"
+	id="{$field->getPrefixedId()}"
 	name="{$field->getPrefixedId()}[from]"
 	value="{$field->getFromValue()}"
 	data-placeholder="{lang}wcf.date.period.start{/lang}"
