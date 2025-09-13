@@ -11,6 +11,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
+use wcf\util\Url;
 
 /**
  * Represents a menu item.
@@ -111,11 +112,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
             return $url;
         }
 
-        if (\str_contains($url, '?')) {
-            return $url .= '&' . $this->urlParameters;
-        }
-
-        return $url .= '?' . $this->urlParameters;
+        return Url::withQueryString($url, $this->urlParameters);
     }
 
     /**

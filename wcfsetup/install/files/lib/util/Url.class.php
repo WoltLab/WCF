@@ -2,6 +2,9 @@
 
 namespace wcf\util;
 
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
+
 /**
  * Generic wrapper around `parse_url()`.
  *
@@ -215,5 +218,76 @@ final class Url implements \ArrayAccess
 
             return false;
         };
+    }
+
+    /**
+     * Appends a query string and an optional fragment to an existing URI.
+     *
+     * @since 6.3
+     */
+    public static function withQueryString(string|Uri $uri, string $queryString): UriInterface
+    {
+        if (\is_string($uri)) {
+            $uri = new Uri($uri);
+        }
+
+        if ($queryString === '') {
+            return $uri;
+        }
+
+        $anchorPosition = \mb_strpos($queryString, '#');
+        if ($anchorPosition !== false) {
+            $anchor = \mb_substr($queryString, $anchorPosition + 1);
+            $queryString = \mb_substr($queryString, 0, $anchorPosition);
+
+            $uri = $uri->withFragment($anchor);
+        }
+
+        if ($queryString === '') {
+            return $uri;
+        }
+
+        \parse_str($queryString, $parts);
+
+        $flattenedParts = [];
+        foreach ($parts as $key => $value) {
+            self::flattenQueryKey($key, $value, $flattenedParts);
+        }
+
+        return $uri->withQueryValues($uri, $flattenedParts);
+    }
+
+    /**
+     * PHP’s `parse_str()` splits a query string into an array but nested keys
+     * using the square bracket notation are parsed into nested arrays. This
+     * conflicts with `Uri::withQueryValues()` that expects a one-dimensional
+     * array with keys using the bracket notation.
+     *
+     * This method recursively processes the value with each child key added to
+     * the `$key` value using the bracket notation.
+     *
+     * @param string|array<string, string> $value
+     * @param array<string, string> &$flattenedParts
+     * @since 6.3
+     */
+    private static function flattenQueryKey(string $key, string|array $value, array &$flattenedParts): void
+    {
+        if (\is_string($value)) {
+            $flattenedParts[$key] = $value;
+
+            return;
+        }
+
+        foreach ($value as $subKey => $subValue) {
+            self::flattenQueryKey(
+                \sprintf(
+                    '%s[%s]',
+                    $key,
+                    $subKey
+                ),
+                $subValue,
+                $flattenedParts,
+            );
+        }
     }
 }
