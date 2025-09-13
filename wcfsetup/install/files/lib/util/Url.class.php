@@ -247,47 +247,43 @@ final class Url implements \ArrayAccess
             return $uri;
         }
 
-        \parse_str($queryString, $parts);
+        $parts = self::parseQueryString($queryString);
 
-        $flattenedParts = [];
-        foreach ($parts as $key => $value) {
-            self::flattenQueryKey($key, $value, $flattenedParts);
-        }
-
-        return $uri->withQueryValues($uri, $flattenedParts);
+        return $uri->withQueryValues($uri, $parts);
     }
 
     /**
-     * PHP’s `parse_str()` splits a query string into an array but nested keys
-     * using the square bracket notation are parsed into nested arrays. This
-     * conflicts with `Uri::withQueryValues()` that expects a one-dimensional
-     * array with keys using the bracket notation.
+     * Parses a query string into a one-dimensional key-value list.
      *
-     * This method recursively processes the value with each child key added to
-     * the `$key` value using the bracket notation.
+     * This is a replacement for PHP’s `parse_str()` that has two problems:
+     *  1. Dots inside the key are replaced by underscores.
+     *  2. Keys containing square brackets are converted into nested arrays.
      *
-     * @param string|array<string, string> $value
-     * @param array<string, string> &$flattenedParts
+     * @return array<string, string>
      * @since 6.3
      */
-    private static function flattenQueryKey(string $key, string|array $value, array &$flattenedParts): void
+    public static function parseQueryString(string $queryString): array
     {
-        if (\is_string($value)) {
-            $flattenedParts[$key] = $value;
+        $components = \explode('&', $queryString);
+        $keyValueMap = [];
+        for ($i = 0, $length = \count($components); $i < $length; $i++) {
+            $component = $components[$i];
+            if (\str_contains($component, '=')) {
+                [$key, $value] = \explode('=', $component, 2);
+            } else {
+                $key = $component;
+                $value = '';
+            }
 
-            return;
-        }
-
-        foreach ($value as $subKey => $subValue) {
-            self::flattenQueryKey(
-                \sprintf(
-                    '%s[%s]',
-                    $key,
-                    $subKey
-                ),
-                $subValue,
-                $flattenedParts,
+            $key = \str_replace(
+                ['%5B', '%5D'],
+                ['[', ']'],
+                $key
             );
+
+            $keyValueMap[$key] = $value;
         }
+
+        return $keyValueMap;
     }
 }

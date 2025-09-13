@@ -4,6 +4,8 @@ namespace wcf\data\menu\item;
 
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RequestHandler;
+use wcf\system\request\RouteHandler;
+use wcf\util\Url;
 
 /**
  * Represents a menu item node tree.
@@ -75,17 +77,28 @@ class MenuItemNodeTree
         $activeMenuItems = [];
 
         if (!RequestHandler::getInstance()->isACPRequest()) {
-            $possibleLocations = PageLocationManager::getInstance()->getLocations();
-            $length = \count($possibleLocations);
-            for ($i = 0; $i < $length; $i++) {
-                foreach ($menuItemList as $menuItem) {
-                    if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
-                        if (!isset($activeMenuItems[$i])) {
-                            $activeMenuItems[$i] = [];
-                        }
+            $requestParameters = Url::parseQueryString($_SERVER['QUERY_STRING']);
 
-                        $activeMenuItems[$i][] = $menuItem->itemID;
+            $possibleLocations = PageLocationManager::getInstance()->getLocations();
+            for ($i = 0, $length = \count($possibleLocations); $i < $length; $i++) {
+                foreach ($menuItemList->getObjects() as $menuItem) {
+                    if ($menuItem->pageID !== $possibleLocations[$i]['pageID']) {
+                        continue;
                     }
+
+                    if ($menuItem->pageObjectID !== $possibleLocations[$i]['pageObjectID']) {
+                        continue;
+                    }
+
+                    if ($menuItem->urlParameters !== '') {
+                        $expectedParameters = Url::parseQueryString($menuItem->urlParameters);
+                        if (\array_diff($expectedParameters, $requestParameters) !== []) {
+                            continue;
+                        }
+                    }
+
+                    $activeMenuItems[$i] ??= [];
+                    $activeMenuItems[$i][] = $menuItem->itemID;
                 }
             }
         }
