@@ -486,31 +486,29 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        boolean                disableCache
 		 */
 		_prepareEdit: function (data, disableCache) {
-			this._destroyEditor();
-			
-			// update template
-			var self = this;
-			this._tab.html(function (index, oldHTML) {
-				if (disableCache !== true) {
-					self._cachedTemplate = oldHTML;
-				}
+			require(["WoltLabSuite/Core/Dom/Util"], ({ setInnerHtml }) => {
+				this._destroyEditor();
 				
-				return data.returnValues.template;
-			});
-			
-			// block autocomplete
-			this._tab.find('input[type=text]').attr('autocomplete', 'off');
-			
-			// bind event listener
-			this._tab.find('.formSubmit > button[data-type=save]').click($.proxy(this._save, this));
-			this._tab.find('.formSubmit > button[data-type=restore]').click($.proxy(this._restore, this));
-			this._tab.find('input').keyup(function (event) {
-				if (event.which === $.ui.keyCode.ENTER) {
-					self._save();
-					
-					event.preventDefault();
-					return false;
+				if (disableCache !== true) {
+					this._cachedTemplate = this._tab[0].innerHTML;
 				}
+
+				setInnerHtml(this._tab[0], data.returnValues.template);
+				
+				// block autocomplete
+				this._tab.find('input[type=text]').attr('autocomplete', 'off');
+				
+				// bind event listener
+				this._tab.find('.formSubmit > button[data-type=save]').click($.proxy(this._save, this));
+				this._tab.find('.formSubmit > button[data-type=restore]').click($.proxy(this._restore, this));
+				this._tab.find('input').keyup(function (event) {
+					if (event.which === $.ui.keyCode.ENTER) {
+						self._save();
+						
+						event.preventDefault();
+						return false;
+					}
+				});
 			});
 		},
 		
