@@ -39,7 +39,8 @@ html[data-color-scheme="dark"] {
 }
 
 .entryCardList__item__buttons {
-	background-color: rgb(0 0 0 / 24%);
+	background-color: var(--wcfContentBackground);
+	box-shadow: var(--wcfBoxShadowImageButton);
 	border-radius: var(--wcfBorderRadius);
 	position: absolute;
 	right: 5px;
@@ -59,6 +60,10 @@ html[data-color-scheme="dark"] {
 		transform: translateX(100%);
 		opacity: 0;
 	}
+}
+
+html[data-color-scheme="dark"] .entryCardList__item__buttons {
+	border: 1px solid var(--wcfContentBorderInner);
 }
 
 .entryCardList__item__image {
