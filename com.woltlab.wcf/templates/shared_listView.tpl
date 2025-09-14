@@ -12,11 +12,19 @@
 				</div>
 			{/if}
 			<div class="listView__header__buttons">
-				{if $view->hasBulkInteractions()}
+				{if $view->hasAvailableInteractions()}
 					<div class="listView__header__button">
-						<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
-							<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems" aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
-						</label>
+						<button type="button" class="button small listView__editMode__toggle">
+							{icon name='pencil'}
+							<span>{lang}wcf.global.button.edit{/lang}</span>
+						</button>
+
+						{if $view->hasBulkInteractions()}
+							<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
+								<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems"
+									aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
+							</label>
+						{/if}
 					</div>
 				{/if}
 				{if $view->isSortable()}

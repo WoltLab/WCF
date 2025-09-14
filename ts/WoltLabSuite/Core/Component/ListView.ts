@@ -95,6 +95,11 @@ export class ListView {
         });
       });
     });
+
+    const listView = this.#viewElement.closest(".listView") as HTMLElement;
+    listView.querySelector<HTMLButtonElement>(".listView__editMode__toggle")?.addEventListener("click", () => {
+      listView.classList.add("listView--editMode");
+    });
   }
 
   #initEventListeners(): void {

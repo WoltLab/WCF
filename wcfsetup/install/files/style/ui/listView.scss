@@ -34,6 +34,27 @@
 	display: flex;
 }
 
+@include screen-xs {
+	.listView.listView--editMode {
+		.listView__editMode__toggle {
+			display: none;
+		}
+	}
+
+	.listView:not(.listView--editMode) {
+		.listView__selectAllItems__label,
+		.listView__item__buttons {
+			display: none;
+		}
+	}
+}
+
+@include screen-sm-up {
+	.listView__editMode__toggle {
+		display: none;
+	}
+}
+
 .listView__sorting__button.ASC::after,
 .listView__sorting__button.DESC::after {
 	display: inline-block;

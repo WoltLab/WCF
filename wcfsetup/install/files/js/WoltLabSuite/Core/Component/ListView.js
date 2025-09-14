@@ -63,6 +63,10 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
                     });
                 });
             });
+            const listView = this.#viewElement.closest(".listView");
+            listView.querySelector(".listView__editMode__toggle")?.addEventListener("click", () => {
+                listView.classList.add("listView--editMode");
+            });
         }
         #initEventListeners() {
             this.#viewElement.addEventListener("interaction:invalidate-all", () => {

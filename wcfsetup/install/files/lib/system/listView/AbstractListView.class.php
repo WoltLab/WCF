@@ -553,6 +553,27 @@ abstract class AbstractListView
     }
 
     /**
+     * Returns true if there is at least one kind of interaction available to
+     * the current user.
+     */
+    public function hasAvailableInteractions(): bool
+    {
+        if ($this->hasBulkInteractions()) {
+            return true;
+        }
+
+        if ($this->hasInteractions()) {
+            foreach ($this->getItems() as $item) {
+                if ($this->renderInteractionContextMenuButton($item) !== '') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Renders the initialization code for the interactions of the list view.
      */
     public function renderInteractionInitialization(): string
