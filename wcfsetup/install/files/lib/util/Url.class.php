@@ -2,6 +2,9 @@
 
 namespace wcf\util;
 
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
+
 /**
  * Generic wrapper around `parse_url()`.
  *
@@ -215,5 +218,72 @@ final class Url implements \ArrayAccess
 
             return false;
         };
+    }
+
+    /**
+     * Appends a query string and an optional fragment to an existing URI.
+     *
+     * @since 6.3
+     */
+    public static function withQueryString(string|Uri $uri, string $queryString): UriInterface
+    {
+        if (\is_string($uri)) {
+            $uri = new Uri($uri);
+        }
+
+        if ($queryString === '') {
+            return $uri;
+        }
+
+        $anchorPosition = \mb_strpos($queryString, '#');
+        if ($anchorPosition !== false) {
+            $anchor = \mb_substr($queryString, $anchorPosition + 1);
+            $queryString = \mb_substr($queryString, 0, $anchorPosition);
+
+            $uri = $uri->withFragment($anchor);
+        }
+
+        if ($queryString === '') {
+            return $uri;
+        }
+
+        $parts = self::parseQueryString($queryString);
+
+        return $uri->withQueryValues($uri, $parts);
+    }
+
+    /**
+     * Parses a query string into a one-dimensional key-value list.
+     *
+     * This is a replacement for PHP’s `parse_str()` that has two problems:
+     *  1. Dots inside the key are replaced by underscores.
+     *  2. Keys containing square brackets are converted into nested arrays.
+     *
+     * @return array<string, string>
+     * @since 6.3
+     */
+    public static function parseQueryString(string $queryString): array
+    {
+        $components = \explode('&', $queryString);
+        $keyValueMap = [];
+        for ($i = 0, $length = \count($components); $i < $length; $i++) {
+            $component = $components[$i];
+            if (\str_contains($component, '=')) {
+                [$key, $value] = \explode('=', $component, 2);
+            } else {
+                $key = $component;
+                $value = '';
+            }
+
+            $key = \str_replace(
+                ['%5B', '%5D'],
+                ['[', ']'],
+                $key
+            );
+
+            $keyValueMap[$key] = $value;
+        }
+
+        return $keyValueMap;
     }
 }

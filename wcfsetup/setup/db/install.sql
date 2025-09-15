@@ -835,7 +835,8 @@ CREATE TABLE wcf1_menu_item (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
-	packageID INT(10) NOT NULL
+	packageID INT(10) NOT NULL,
+	urlParameters VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_message_embedded_object;

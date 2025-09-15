@@ -11,6 +11,7 @@
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
@@ -73,5 +74,10 @@ return [
     PartialDatabaseTable::create('wcf1_file_temporary')
         ->columns([
             MediumtextDatabaseTableColumn::create('exifData'),
+        ]),
+    PartialDatabaseTable::create('wcf1_menu_item')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('urlParameters')
+                ->defaultValue(''),
         ]),
 ];
