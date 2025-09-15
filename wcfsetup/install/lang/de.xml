@@ -1230,6 +1230,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Sonstiges]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
+		<item name="wcf.acp.menu.item.urlParameters"><![CDATA[Zusätzliche URL-Parameter]]></item>
 		<item name="wcf.acp.menu.link.contact"><![CDATA[Kontaktformular]]></item>
 		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Eingabefelder]]></item>
 		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Empfänger]]></item>
@@ -2547,6 +2548,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name der Objekteigenschaft und Spalte der <kbd>{$tableName}</kbd>-Datenbanktabelle, der für diese Bedingung verwendet wird.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn"><![CDATA[Die angegebene Spalte der Datenbanktabelle <kbd>{$tableName}</kbd> ist keine Spalte vom Typ <kbd>INT</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent"><![CDATA[Die angegebene Spalte existiert nicht in der Datenbanktabelle <kbd>{$tableName}</kbd>.]]></item>
+		<item name="wcf.acp.pip.menuItem.additionalInternalURL"><![CDATA[Zusätzliche interne URL-Parameter]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[Externe URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[Wenn der Benutzer auf den Menüpunkt klickt, wird er auf die angegebene Website weitergeleitet.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Bezeichner des Menüpunktes]]></item>

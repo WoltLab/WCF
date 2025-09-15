@@ -1206,6 +1206,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Other]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
+		<item name="wcf.acp.menu.item.urlParameters"><![CDATA[Additional URL Parameters]]></item>
 		<item name="wcf.acp.menu.link.contact"><![CDATA[Contact Form]]></item>
 		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Option Fields]]></item>
 		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipient]]></item>
@@ -2347,6 +2348,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
+		<item name="wcf.acp.pip.menuItem.additionalInternalURL"><![CDATA[Additional internal URL parameters]]></item>
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
 		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <kbd>Form</kbd> and <kbd>Page</kbd>. Example: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[This identifier is already used by another page.]]></item>
