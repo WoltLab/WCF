@@ -3,16 +3,20 @@
 {foreach from=$view->getItems() item='article' name='articles'}
 	{if $article->getArticleContent()}
 	<article class="entryCardList__item listView__item" data-object-id="{$article->getObjectID()}">
-		<div class="entryCardList__item__buttons listView__item__buttons">
-			{if $view->hasBulkInteractions()}
-				<label class="listView__selectItem__label jsTooltip" title="{lang}wcf.clipboard.item.mark{/lang}">
-					<input type="checkbox" class="listView__selectItem" aria-label="{lang}wcf.clipboard.item.mark{/lang}">
-				</label>
-			{/if}
-
-			{unsafe:$view->renderInteractionContextMenuButton($article)}
-		</div>
-
+		{hascontent}
+			<div class="entryCardList__item__buttons listView__item__buttons">
+				{content}
+					{if $view->hasBulkInteractions()}
+						<label class="listView__selectItem__label jsTooltip" title="{lang}wcf.clipboard.item.mark{/lang}">
+							<input type="checkbox" class="listView__selectItem" aria-label="{lang}wcf.clipboard.item.mark{/lang}">
+						</label>
+					{/if}
+					
+					{unsafe:$view->renderInteractionContextMenuButton($article)}
+				{/content}
+			</div>
+		{/hascontent}
+		
 		<div class="entryCardList__item__image">
 			<img
 				class="entryCardList__item__image__element"
