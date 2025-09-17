@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * @since       6.2
  */
 #[DeleteRequest('/core/bbcodes/{id:\d+}')]
-final class DeleteBBCodes implements IController
+final class DeleteBBCode implements IController
 {
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface

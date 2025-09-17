@@ -193,7 +193,7 @@ return static function (): void {
             $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DeleteProvider());
             $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DisableProvider());
             $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\EnableProvider());
-            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\DeleteBBCodes());
+            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\DeleteBBCode());
             $event->register(new \wcf\system\endpoint\controller\core\languages\DisableLanguage());
             $event->register(new \wcf\system\endpoint\controller\core\languages\DeleteLanguage());
             $event->register(new \wcf\system\endpoint\controller\core\languages\EnableLanguage());
