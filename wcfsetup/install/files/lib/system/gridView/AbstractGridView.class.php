@@ -461,10 +461,6 @@ abstract class AbstractGridView
      */
     public function setSortField(string $sortField): void
     {
-        if (!\in_array($sortField, \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
-            throw new \InvalidArgumentException("Invalid value '{$sortField}' as sort field given.");
-        }
-
         $this->sortField = $sortField;
     }
 
@@ -652,6 +648,16 @@ abstract class AbstractGridView
      */
     protected function validate(): void
     {
+        if ($this->getSortField()) {
+            if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
+                } {
+                    $this->setSortField('');
+                }
+            }
+        }
+
         $titleColumn = null;
 
         foreach ($this->getColumns() as $column) {
@@ -746,6 +752,9 @@ abstract class AbstractGridView
     protected function initObjectList(): void
     {
         $this->objectList = $this->createObjectList();
+        $this->fireInitializedEvent();
+        $this->validate();
+
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField()) {
@@ -766,9 +775,8 @@ abstract class AbstractGridView
                 [$this->getObjectIDFilter()]
             );
         }
+
         $this->applyFilters();
-        $this->validate();
-        $this->fireInitializedEvent();
     }
 
     /**
