@@ -92,6 +92,8 @@
 			'{unsafe:$view->getBaseUrl()|encodeJS}',
 			'{unsafe:$view->getSortField()|encodeJS}',
 			'{unsafe:$view->getSortOrder()|encodeJS}',
+			'{unsafe:$view->getDefaultSortField()|encodeJS}',
+			'{unsafe:$view->getDefaultSortOrder()|encodeJS}',
 			'{unsafe:$view->getBulkInteractionProviderClassName()|encodeJS}',
 			new Map([
 				{foreach from=$view->getParameters() key='name' item='value'}

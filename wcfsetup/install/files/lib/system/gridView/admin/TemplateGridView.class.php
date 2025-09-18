@@ -83,7 +83,7 @@ final class TemplateGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->addRowLink(new GridViewRowLink(TemplateEditForm::class));
 
-        $this->setSortField("templateName");
+        $this->setDefaultSortField("templateName");
 
         if ($templateGroupID !== null) {
             $this->setActiveFilters([

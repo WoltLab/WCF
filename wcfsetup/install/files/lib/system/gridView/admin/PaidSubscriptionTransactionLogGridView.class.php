@@ -118,8 +118,8 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
 
         $this->setInteractionProvider($this->getInteractions());
         $this->addRowLink(new GridViewRowLink(PaidSubscriptionTransactionLogPage::class));
-        $this->setSortField("logTime");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("logTime");
+        $this->setDefaultSortOrder("DESC");
     }
 
     /**

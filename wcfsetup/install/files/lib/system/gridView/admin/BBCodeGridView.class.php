@@ -64,7 +64,7 @@ final class BBCodeGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('bbcodeTag');
+        $this->setDefaultSortField('bbcodeTag');
         $this->addRowLink(new GridViewRowLink(BBCodeEditForm::class));
     }
 

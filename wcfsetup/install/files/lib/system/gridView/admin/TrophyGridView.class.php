@@ -88,7 +88,7 @@ final class TrophyGridView extends AbstractGridView
             new ToggleInteraction("enable", "core/trophies/%s/enable", "core/trophies/%s/disable")
         );
 
-        $this->setSortField("showOrder");
+        $this->setDefaultSortField("showOrder");
         $this->addRowLink(new GridViewRowLink(TrophyEditForm::class));
     }
 

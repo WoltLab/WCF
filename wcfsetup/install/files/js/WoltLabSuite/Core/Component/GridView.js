@@ -20,14 +20,14 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
         #noItemsNotice;
         #bulkInteractionProviderClassName;
         #gridViewParameters;
-        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters) {
+        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters) {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
             this.#noItemsNotice = document.getElementById(`${gridId}_noItemsNotice`);
             this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
             this.#gridViewParameters = gridViewParameters;
             this.#initInteractions();
-            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder);
+            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#initEventListeners();
         }
         async #loadRows(cause) {
@@ -80,8 +80,8 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
                 this.#state.resetSelection();
             });
         }
-        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder) {
-            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder);
+        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
+            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             state.addEventListener("grid-view:change", (event) => {
                 void this.#loadRows(event.detail.source);
             });

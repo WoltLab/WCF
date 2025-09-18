@@ -112,7 +112,7 @@ class PackageGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
 
         $this->setRowsPerPage(50);
-        $this->setSortField('packageID');
+        $this->setDefaultSortField('packageID');
         $this->addRowLink(new GridViewRowLink(PackagePage::class));
     }
 

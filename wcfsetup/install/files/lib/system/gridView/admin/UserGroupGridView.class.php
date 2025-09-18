@@ -114,7 +114,7 @@ final class UserGroupGridView extends AbstractGridView
             UserGroupEditForm::class,
             isAvailableCallback: static fn(UserGroup $group) => $group->isEditable()
         ));
-        $this->setSortField("groupName");
+        $this->setDefaultSortField("groupName");
     }
 
     private function subSelectMembers(): string

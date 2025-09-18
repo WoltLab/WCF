@@ -62,7 +62,7 @@ final class BBCodeMediaProviderGridView extends AbstractGridView
         );
 
         $this->addRowLink(new GridViewRowLink(BBCodeMediaProviderEditForm::class));
-        $this->setSortField('title');
+        $this->setDefaultSortField('title');
     }
 
     #[\Override]

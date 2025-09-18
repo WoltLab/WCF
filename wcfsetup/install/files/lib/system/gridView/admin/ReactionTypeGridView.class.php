@@ -94,7 +94,7 @@ final class ReactionTypeGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("showOrder");
+        $this->setDefaultSortField("showOrder");
         $this->addRowLink(new GridViewRowLink(ReactionTypeEditForm::class));
     }
 

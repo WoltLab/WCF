@@ -117,7 +117,7 @@ final class UserRankGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new UserRankBulkInteractions());
         $this->addRowLink(new GridViewRowLink(UserRankEditForm::class));
-        $this->setSortField('rankTitle');
+        $this->setDefaultSortField('rankTitle');
     }
 
     #[\Override]

@@ -122,7 +122,7 @@ final class StyleGridView extends AbstractGridView
             )
         );
         $this->addRowLink(new GridViewRowLink(StyleEditForm::class));
-        $this->setSortField('styleName');
+        $this->setDefaultSortField('styleName');
     }
 
     #[\Override]

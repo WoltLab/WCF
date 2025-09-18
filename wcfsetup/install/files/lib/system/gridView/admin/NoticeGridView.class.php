@@ -66,7 +66,7 @@ final class NoticeGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("showOrder");
+        $this->setDefaultSortField("showOrder");
         $this->addRowLink(new GridViewRowLink(NoticeEditForm::class));
     }
 

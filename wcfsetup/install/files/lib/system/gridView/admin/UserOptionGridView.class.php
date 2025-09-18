@@ -89,7 +89,7 @@ final class UserOptionGridView extends AbstractGridView
             new ToggleInteraction('enable', 'core/users/options/%s/enable', 'core/users/options/%s/disable')
         );
         $this->addRowLink(new GridViewRowLink(UserOptionEditForm::class));
-        $this->setSortField('showOrder');
+        $this->setDefaultSortField('showOrder');
     }
 
     #[\Override]

@@ -114,7 +114,7 @@ final class LabelGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new LabelBulkInteractions());
 
-        $this->setSortField("label");
+        $this->setDefaultSortField("label");
         $this->addRowLink(new GridViewRowLink(LabelEditForm::class));
     }
 

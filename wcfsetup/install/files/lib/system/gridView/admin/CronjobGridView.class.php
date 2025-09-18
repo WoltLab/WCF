@@ -118,7 +118,7 @@ final class CronjobGridView extends AbstractGridView
         $this->setBulkInteractionProvider(new CronjobBulkInteractions());
 
         $this->addRowLink(new GridViewRowLink(CronjobEditForm::class));
-        $this->setSortField('description');
+        $this->setDefaultSortField('description');
     }
 
     #[\Override]

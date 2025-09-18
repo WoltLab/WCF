@@ -91,7 +91,7 @@ final class MenuGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
-        $this->setSortField("title");
+        $this->setDefaultSortField("title");
         $this->addRowLink(new GridViewRowLink(MenuEditForm::class));
     }
 

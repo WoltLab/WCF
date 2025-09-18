@@ -75,8 +75,8 @@ final class ACPSessionLogGridView extends AbstractGridView
         ]);
 
         $this->addRowLink(new GridViewRowLink(ACPSessionLogPage::class));
-        $this->setSortField('lastActivityTime');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('lastActivityTime');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

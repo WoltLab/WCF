@@ -113,8 +113,8 @@ final class UserTrophyGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("time");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("time");
+        $this->setDefaultSortOrder("DESC");
     }
 
     private function getTrophySelectFilter(): SelectFilter

@@ -17,12 +17,12 @@ define(["require", "exports"], function (require, exports) {
         #sortField;
         #sortOrder;
         #table;
-        constructor(table, sortField, sortOrder) {
+        constructor(table, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#sortField = sortField;
-            this.#defaultSortField = sortField;
+            this.#defaultSortField = defaultSortField;
             this.#sortOrder = sortOrder;
-            this.#defaultSortOrder = sortOrder;
+            this.#defaultSortOrder = defaultSortOrder;
             this.#table = table;
             this.#table
                 .querySelectorAll('.gridView__headerColumn[data-sortable="1"]')
@@ -43,6 +43,14 @@ define(["require", "exports"], function (require, exports) {
         getQueryParameters() {
             if (this.#sortField === "") {
                 return [];
+            }
+            if (this.#sortField === this.#defaultSortField) {
+                if (this.#sortOrder !== this.#defaultSortOrder) {
+                    return [["sortOrder", this.#sortOrder]];
+                }
+                else {
+                    return [];
+                }
             }
             return [
                 ["sortField", this.#sortField],

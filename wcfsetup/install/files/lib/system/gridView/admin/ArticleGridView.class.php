@@ -186,8 +186,8 @@ final class ArticleGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new ArticleBulkInteractions());
 
-        $this->setSortField('time');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder('DESC');
         $this->addRowLink(new GridViewRowLink(ArticleEditForm::class));
     }
 

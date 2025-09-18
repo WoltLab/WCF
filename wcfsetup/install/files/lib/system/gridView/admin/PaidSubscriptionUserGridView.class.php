@@ -73,7 +73,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
 
         $this->setInteractionProvider($provider);
 
-        $this->setSortField("userID");
+        $this->setDefaultSortField("userID");
     }
 
     /**

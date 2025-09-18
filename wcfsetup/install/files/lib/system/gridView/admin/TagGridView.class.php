@@ -96,7 +96,7 @@ final class TagGridView extends AbstractGridView
         $this->setBulkInteractionProvider(new TagBulkInteractions());
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('name');
+        $this->setDefaultSortField('name');
         $this->addRowLink(new GridViewRowLink(TagEditForm::class));
     }
 
