@@ -35,7 +35,8 @@
 }
 
 @include screen-xs {
-	.listView.listView--editMode {
+	.listView.listView--editMode,
+	.listView:not(:has(.listView__item__buttons)) {
 		.listView__editMode__toggle {
 			display: none;
 		}
