@@ -166,9 +166,9 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__meta {
-	flex: 1 0 calc(100% - 138px);
+	flex: 1 0 calc(100% - 148px);
 	color: var(--wcfContentDimmedText);
-	margin-left: 138px;
+	margin-left: 148px;
 
 	@include screen-sm-down {
 		margin-left: 0;
