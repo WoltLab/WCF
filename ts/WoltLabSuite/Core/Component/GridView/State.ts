@@ -34,6 +34,8 @@ export class State extends EventTarget {
     baseUrl: string,
     sortField: string,
     sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
   ) {
     super();
 
@@ -52,7 +54,7 @@ export class State extends EventTarget {
       this.#switchPage(1, StateChangeCause.Change);
     });
 
-    this.#sorting = new Sorting(table, sortField, sortOrder);
+    this.#sorting = new Sorting(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#sorting.addEventListener("grid-view:change", () => {
       this.#switchPage(1, StateChangeCause.Change);
     });

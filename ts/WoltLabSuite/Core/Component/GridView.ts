@@ -32,6 +32,8 @@ export class GridView {
     baseUrl: string = "",
     sortField = "",
     sortOrder = "ASC",
+    defaultSortField = "",
+    defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
     gridViewParameters?: Map<string, string>,
   ) {
@@ -42,7 +44,7 @@ export class GridView {
     this.#gridViewParameters = gridViewParameters;
 
     this.#initInteractions();
-    this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder);
+    this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#initEventListeners();
   }
 
@@ -117,8 +119,25 @@ export class GridView {
     });
   }
 
-  #setupState(gridId: string, pageNo: number, baseUrl: string, sortField: string, sortOrder: string): State {
-    const state = new State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder);
+  #setupState(
+    gridId: string,
+    pageNo: number,
+    baseUrl: string,
+    sortField: string,
+    sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
+  ): State {
+    const state = new State(
+      gridId,
+      this.#table,
+      pageNo,
+      baseUrl,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+    );
     state.addEventListener("grid-view:change", (event) => {
       void this.#loadRows(event.detail.source);
     });

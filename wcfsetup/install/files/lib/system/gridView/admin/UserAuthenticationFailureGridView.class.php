@@ -107,8 +107,8 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->sortable(),
         ]);
 
-        $this->setSortField("time");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("time");
+        $this->setDefaultSortOrder("DESC");
     }
 
     #[\Override]

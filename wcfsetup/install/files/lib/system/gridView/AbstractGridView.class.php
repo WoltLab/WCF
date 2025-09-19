@@ -54,6 +54,8 @@ abstract class AbstractGridView
     private GridViewRowLink $rowLink;
     private int $rowsPerPage = 20;
     private string $baseUrl = '';
+    private string $defaultSortField = '';
+    private string $defaultSortOrder = '';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private int $pageNo = 1;
@@ -457,6 +459,44 @@ abstract class AbstractGridView
     }
 
     /**
+     * Sets the default sort field of the grid view.
+     */
+    public function setDefaultSortField(string $sortField): void
+    {
+        $this->defaultSortField = $sortField;
+        $this->setSortField($sortField);
+    }
+
+    /**
+     * Sets the default sort order of the grid view.
+     */
+    public function setDefaultSortOrder(string $sortOrder): void
+    {
+        if ($sortOrder !== 'ASC' && $sortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$sortOrder}' as default sort order given.");
+        }
+
+        $this->defaultSortOrder = $sortOrder;
+        $this->setSortOrder($sortOrder);
+    }
+
+    /**
+     * Returns the default sort field of the grid view.
+     */
+    public function getDefaultSortField(): string
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * Returns the sort order of the grid view.
+     */
+    public function getDefaultSortOrder(): string
+    {
+        return $this->defaultSortOrder;
+    }
+
+    /**
      * Sets the sort field of the grid view.
      */
     public function setSortField(string $sortField): void
@@ -648,6 +688,10 @@ abstract class AbstractGridView
      */
     protected function validate(): void
     {
+        if ($this->getDefaultSortField() === '') {
+            throw new \InvalidArgumentException("Undefined default sort field.");
+        }
+
         if ($this->getSortField()) {
             if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
                 if (\ENABLE_DEBUG_MODE) {

@@ -142,7 +142,7 @@ final class LanguageGridView extends AbstractGridView
         );
 
         $this->addRowLink(new GridViewRowLink(LanguageEditForm::class));
-        $this->setSortField('languageName');
+        $this->setDefaultSortField('languageName');
     }
 
     private function subSelectUsers(): string

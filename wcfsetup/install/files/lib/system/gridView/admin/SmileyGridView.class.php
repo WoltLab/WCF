@@ -137,8 +137,7 @@ final class SmileyGridView extends AbstractGridView
 
         $this->addRowLink(new GridViewRowLink(SmileyEditForm::class));
 
-        $this->setSortField("showOrder");
-        $this->setSortOrder("ASC");
+        $this->setDefaultSortField("showOrder");
     }
 
     /**

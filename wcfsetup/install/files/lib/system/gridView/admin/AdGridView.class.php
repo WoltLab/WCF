@@ -71,7 +71,7 @@ final class AdGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("showOrder");
+        $this->setDefaultSortField("showOrder");
         $this->addRowLink(new GridViewRowLink(AdEditForm::class));
     }
 

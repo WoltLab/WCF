@@ -68,8 +68,8 @@ final class ACPSessionGridView extends AbstractGridView
                 ),
         ]);
 
-        $this->setSortField('time');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

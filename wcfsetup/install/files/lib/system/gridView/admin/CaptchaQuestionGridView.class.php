@@ -69,7 +69,7 @@ final class CaptchaQuestionGridView extends AbstractGridView
             new ToggleInteraction('enable', 'core/captchas/questions/%s/enable', 'core/captchas/questions/%s/disable')
         );
 
-        $this->setSortField('questionID');
+        $this->setDefaultSortField('questionID');
         $this->addRowLink(new GridViewRowLink(CaptchaQuestionEditForm::class));
     }
 

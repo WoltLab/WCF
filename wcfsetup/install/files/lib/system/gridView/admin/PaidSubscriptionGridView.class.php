@@ -120,7 +120,7 @@ final class PaidSubscriptionGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField('showOrder');
+        $this->setDefaultSortField('showOrder');
         $this->addRowLink(new GridViewRowLink(PaidSubscriptionEditForm::class));
     }
 

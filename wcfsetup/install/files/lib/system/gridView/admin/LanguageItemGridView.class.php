@@ -158,7 +158,7 @@ final class LanguageItemGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('languageItem');
+        $this->setDefaultSortField('languageItem');
 
         if ($defaultLanguage !== null) {
             $this->setActiveFilters(['languageID' => $defaultLanguage->languageID]);

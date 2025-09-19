@@ -91,8 +91,8 @@ final class CronjobLogGridView extends AbstractGridView
         ]);
 
         $this->addQuickInteraction($this->getShowDetailsInteraction());
-        $this->setSortField('execTime');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('execTime');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

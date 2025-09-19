@@ -84,7 +84,7 @@ final class UserGroupAssignmentGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("title");
+        $this->setDefaultSortField("title");
         $this->addRowLink(new GridViewRowLink(UserGroupAssignmentEditForm::class));
     }
 

@@ -155,8 +155,8 @@ final class ModificationLogGridView extends AbstractGridView
                 ->filter(new TimeFilter()),
         ]);
 
-        $this->setSortField('time');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

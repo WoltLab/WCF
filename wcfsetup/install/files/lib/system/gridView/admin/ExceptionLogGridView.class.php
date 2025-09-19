@@ -55,8 +55,8 @@ final class ExceptionLogGridView extends AbstractGridView
         ]);
 
         $this->addRowLink(new GridViewRowLink(cssClass: 'jsExceptionLogEntry'));
-        $this->setSortField('date');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('date');
+        $this->setDefaultSortOrder('DESC');
 
         if ($applyDefaultFilter && $this->getDefaultLogFile() !== null) {
             $this->setActiveFilters([

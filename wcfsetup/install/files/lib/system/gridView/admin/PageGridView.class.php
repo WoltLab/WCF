@@ -146,7 +146,7 @@ final class PageGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField('name');
+        $this->setDefaultSortField('name');
         $this->addRowLink(new GridViewRowLink(PageEditForm::class));
     }
 

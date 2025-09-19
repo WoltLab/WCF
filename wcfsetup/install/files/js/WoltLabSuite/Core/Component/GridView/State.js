@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         #sorting;
         #gridViewFooter;
         #pageNo;
-        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder) {
+        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#filter.addEventListener("grid-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
-            this.#sorting = new Sorting_1.default(table, sortField, sortOrder);
+            this.#sorting = new Sorting_1.default(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#sorting.addEventListener("grid-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });

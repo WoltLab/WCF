@@ -110,7 +110,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField('serverURL');
+        $this->setDefaultSortField('serverURL');
         $this->addRowLink(new GridViewRowLink(PackageUpdateServerEditForm::class));
     }
 

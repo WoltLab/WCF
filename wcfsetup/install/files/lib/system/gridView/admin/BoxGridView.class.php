@@ -110,7 +110,7 @@ final class BoxGridView extends AbstractGridView
 
         $this->addQuickInteraction(new ToggleInteraction('enable', 'core/boxes/%s/enable', 'core/boxes/%s/disable'));
 
-        $this->setSortField('name');
+        $this->setDefaultSortField('name');
         $this->addRowLink(new GridViewRowLink(BoxEditForm::class));
     }
 

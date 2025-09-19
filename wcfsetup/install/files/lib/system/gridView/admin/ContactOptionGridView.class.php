@@ -77,8 +77,8 @@ final class ContactOptionGridView extends AbstractGridView
 
         $this->addRowLink(new GridViewRowLink(ContactOptionEditForm::class));
 
-        $this->setSortField("showOrder");
-        $this->setSortOrder("ASC");
+        $this->setDefaultSortField("showOrder");
+        $this->setDefaultSortOrder("ASC");
     }
 
     #[\Override]

@@ -150,9 +150,8 @@ final class AttachmentGridView extends AbstractGridView
         $this->setInteractionProvider($interaction);
         $this->setBulkInteractionProvider(new AttachmentBulkInteractions());
         $this->addRowLink(new GridViewRowLink(isLinkableObject: true));
-
-        $this->setSortOrder('DESC');
-        $this->setSortField('uploadTime');
+        $this->setDefaultSortField('uploadTime');
+        $this->setDefaultSortOrder('DESC');
     }
 
     /**

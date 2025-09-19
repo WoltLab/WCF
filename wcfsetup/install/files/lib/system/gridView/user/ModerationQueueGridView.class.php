@@ -212,8 +212,8 @@ final class ModerationQueueGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new ModerationQueueBulkInteractions());
 
-        $this->setSortField("lastChangeTime");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("lastChangeTime");
+        $this->setDefaultSortOrder("DESC");
         $this->addRowLink(new GridViewRowLink(isLinkableObject: true));
 
         if ($status !== null) {

@@ -158,8 +158,8 @@ final class EmailLogGridView extends AbstractGridView
         ]);
 
         $this->addQuickInteraction($this->getShowDetailsInteraction());
-        $this->setSortField('time');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

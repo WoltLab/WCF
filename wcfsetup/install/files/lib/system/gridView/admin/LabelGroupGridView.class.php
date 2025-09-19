@@ -73,7 +73,7 @@ final class LabelGroupGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('showOrder');
+        $this->setDefaultSortField('showOrder');
         $this->addRowLink(new GridViewRowLink(LabelGroupEditForm::class));
     }
 
