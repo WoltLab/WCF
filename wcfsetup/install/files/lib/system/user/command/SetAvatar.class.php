@@ -33,7 +33,7 @@ final class SetAvatar
             (new FileAction([$this->user->avatarFileID], 'delete'))->executeAction();
         }
 
-        $pathname = '';
+        $pathname = null;
         if ($this->file !== null) {
             $filename = $this->file->getSourceFilenameWebp() ?? $this->file->getSourceFilename();
             $pathname = $this->file->getRelativePath() . $filename;
