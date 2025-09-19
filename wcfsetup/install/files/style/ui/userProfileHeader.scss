@@ -68,6 +68,8 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__avatarBorder {
+	/* The color prevents any bleed-through caused by rounding errors. */
+	background-color: var(--wcfContentBackground);
 	position: absolute;
 	bottom: 0;
 	left: 0;
