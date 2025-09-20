@@ -162,11 +162,16 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('avatarFileID IN (?)', [$fileIDs]);
 
-        $sql = "UPDATE wcf1_user
-                SET    avatarFileID = ?
+        $sql = "UPDATE  wcf1_user
+                SET     avatarFileID = ?,
+                        avatarPathname = ?
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([null, ...$conditionBuilder->getParameters()]);
+        $statement->execute([
+            null,
+            null,
+            ...$conditionBuilder->getParameters()
+        ]);
     }
 
     #[\Override]
