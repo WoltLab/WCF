@@ -35,6 +35,8 @@ abstract class AbstractListView
     private int $objectCount;
     private int $itemsPerPage = 20;
     private string $baseUrl = '';
+    private string $defaultSortField = '';
+    private string $defaultSortOrder = '';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private string $cssClassName = '';
@@ -107,6 +109,44 @@ abstract class AbstractListView
     public function setFixedNumberOfItems(int $fixedNumberOfItems): void
     {
         $this->fixedNumberOfItems = $fixedNumberOfItems;
+    }
+
+    /**
+     * Sets the default sort field of the list view.
+     */
+    public function setDefaultSortField(string $sortField): void
+    {
+        $this->defaultSortField = $sortField;
+        $this->setSortField($sortField);
+    }
+
+    /**
+     * Sets the default sort order of the list view.
+     */
+    public function setDefaultSortOrder(string $sortOrder): void
+    {
+        if ($sortOrder !== 'ASC' && $sortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$sortOrder}' as default sort order given.");
+        }
+
+        $this->defaultSortOrder = $sortOrder;
+        $this->setSortOrder($sortOrder);
+    }
+
+    /**
+     * Returns the default sort field of the list view.
+     */
+    public function getDefaultSortField(): string
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * Returns the sort order of the list view.
+     */
+    public function getDefaultSortOrder(): string
+    {
+        return $this->defaultSortOrder;
     }
 
     /**
@@ -223,6 +263,10 @@ abstract class AbstractListView
 
     protected function validate(): void
     {
+        if ($this->getDefaultSortField() === '') {
+            throw new \InvalidArgumentException("Undefined default sort field.");
+        }
+
         if ($this->getSortField()) {
             if (!isset($this->availableSortFields[$this->getSortField()])) {
                 if (\ENABLE_DEBUG_MODE) {

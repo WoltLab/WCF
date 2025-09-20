@@ -45,8 +45,8 @@ class MembersListView extends AbstractListView
         ]);
 
         $this->setInteractionProvider(new UserProfileInteractions());
-        $this->setSortField(\MEMBERS_LIST_DEFAULT_SORT_FIELD);
-        $this->setSortOrder(\MEMBERS_LIST_DEFAULT_SORT_ORDER);
+        $this->setDefaultSortField(\MEMBERS_LIST_DEFAULT_SORT_FIELD);
+        $this->setDefaultSortOrder(\MEMBERS_LIST_DEFAULT_SORT_ORDER);
         $this->setItemsPerPage(\MEMBERS_LIST_USERS_PER_PAGE);
         $this->setCssClassName('userCardList');
         $this->setContainerCssClassName('userCardList__container');

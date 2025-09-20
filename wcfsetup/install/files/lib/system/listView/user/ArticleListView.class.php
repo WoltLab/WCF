@@ -53,8 +53,8 @@ class ArticleListView extends AbstractListView
         $this->setInteractionProvider(new ArticleInteractions());
         $this->setBulkInteractionProvider(new ArticleBulkInteractions());
         $this->setItemsPerPage(\ARTICLES_PER_PAGE);
-        $this->setSortField('time');
-        $this->setSortOrder(\ARTICLE_SORT_ORDER);
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder(\ARTICLE_SORT_ORDER);
         $this->setCssClassName('entryCardList');
         $this->setContainerCssClassName('entryCardList__container');
     }

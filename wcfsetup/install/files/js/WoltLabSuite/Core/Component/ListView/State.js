@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         #sorting;
         #listViewFooter;
         #pageNo;
-        constructor(viewId, viewElement, pageNo, baseUrl, sortField, sortOrder) {
+        constructor(viewId, viewElement, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#filter.addEventListener("list-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
-            this.#sorting = new Sorting_1.default(document.getElementById(`${viewId}_sorting`) ?? undefined, sortField, sortOrder);
+            this.#sorting = new Sorting_1.default(document.getElementById(`${viewId}_sorting`) ?? undefined, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#sorting.addEventListener("list-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });

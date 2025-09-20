@@ -33,6 +33,8 @@ export class ListView {
     baseUrl: string = "",
     sortField = "",
     sortOrder = "ASC",
+    defaultSortField = "",
+    defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
     listViewParameters?: Map<string, string>,
   ) {
@@ -43,7 +45,7 @@ export class ListView {
     this.#listViewParameters = listViewParameters;
 
     this.#initInteractions();
-    this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder);
+    this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#initEventListeners();
   }
 
@@ -121,8 +123,25 @@ export class ListView {
     });
   }
 
-  #setupState(viewId: string, pageNo: number, baseUrl: string, sortField: string, sortOrder: string): State {
-    const state = new State(viewId, this.#viewElement, pageNo, baseUrl, sortField, sortOrder);
+  #setupState(
+    viewId: string,
+    pageNo: number,
+    baseUrl: string,
+    sortField: string,
+    sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
+  ): State {
+    const state = new State(
+      viewId,
+      this.#viewElement,
+      pageNo,
+      baseUrl,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+    );
     state.addEventListener("list-view:change", (event) => {
       void this.#loadItems(event.detail.source);
     });

@@ -19,14 +19,14 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
         #noItemsNotice;
         #bulkInteractionProviderClassName;
         #listViewParameters;
-        constructor(viewId, viewClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", bulkInteractionProviderClassName, listViewParameters) {
+        constructor(viewId, viewClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, listViewParameters) {
             this.#viewClassName = viewClassName;
             this.#viewElement = document.getElementById(`${viewId}_items`);
             this.#noItemsNotice = document.getElementById(`${viewId}_noItemsNotice`);
             this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
             this.#listViewParameters = listViewParameters;
             this.#initInteractions();
-            this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder);
+            this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#initEventListeners();
         }
         async #loadItems(cause) {
@@ -83,8 +83,8 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
                 this.#state.resetSelection();
             });
         }
-        #setupState(viewId, pageNo, baseUrl, sortField, sortOrder) {
-            const state = new State_1.default(viewId, this.#viewElement, pageNo, baseUrl, sortField, sortOrder);
+        #setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
+            const state = new State_1.default(viewId, this.#viewElement, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             state.addEventListener("list-view:change", (event) => {
                 void this.#loadItems(event.detail.source);
             });
