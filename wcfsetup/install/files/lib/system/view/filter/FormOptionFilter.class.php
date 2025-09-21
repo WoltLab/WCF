@@ -1,12 +1,10 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\option\IFormOption;
-use wcf\system\listView\filter\AbstractFilter;
-use wcf\system\WCF;
 
 /**
  * Filter for columns that contain form option values.

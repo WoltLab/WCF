@@ -1,11 +1,11 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\DateRangeFormField;
-use wcf\system\listView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
 
 /**

@@ -1,27 +1,27 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\CheckboxFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\WCF;
 
 /**
- * Filter for boolean columns.
+ * Filter for text columns.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class BooleanFilter extends AbstractFilter
+class TextFilter extends AbstractFilter
 {
     #[\Override]
     public function getFormField(): AbstractFormField
     {
-        return CheckboxFormField::create($this->id)
-            ->label($this->languageItem)
-            ->nullable();
+        return TextFormField::create($this->id)
+            ->label($this->languageItem);
     }
 
     #[\Override]
@@ -30,14 +30,8 @@ class BooleanFilter extends AbstractFilter
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add(
-            "{$columnName} = ?",
-            [1]
+            "{$columnName} LIKE ?",
+            ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
         );
-    }
-
-    #[\Override]
-    public function renderValue(string $value): string
-    {
-        return '';
     }
 }

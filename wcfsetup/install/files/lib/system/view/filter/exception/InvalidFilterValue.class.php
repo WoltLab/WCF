@@ -1,9 +1,9 @@
 <?php
 
-namespace wcf\system\listView\filter\exception;
+namespace wcf\system\view\filter\exception;
 
 /**
- * This exception is thrown if a list view filter has received an invalid parameter value.
+ * This exception is thrown if a view filter has received an invalid parameter value.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

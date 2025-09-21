@@ -1,20 +1,20 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 
 /**
- * Represents a filter of a list view.
+ * Represents a filter of a view.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-interface IListViewFilter
+interface IViewFilter
 {
     /**
      * Returns the form field for the input of this filter.
