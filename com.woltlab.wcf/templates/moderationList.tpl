@@ -1,6 +1,5 @@
 {capture assign='pageTitle'}{lang}wcf.moderation.items{/lang}{if $gridView->getPageNo() > 1} - {lang pageNo=$gridView->getPageNo()}wcf.page.pageNo{/lang}{/if}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.moderation.items{/lang} <span class="badge">{#$gridView->countRows()}</span>{/capture}
+{capture assign='contentTitle'}{lang}wcf.moderation.items{/lang}{/capture}
 
 {capture assign='sidebarRight'}
 	{event name='sidebarBoxes'}

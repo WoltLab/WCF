@@ -3,7 +3,6 @@
 namespace wcf\system\attachment;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IUserContent;
 
 /**
@@ -12,7 +11,7 @@ use wcf\data\IUserContent;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @template T of object
+ * @template T of IUserContent
  */
 interface IAttachmentObjectType
 {
