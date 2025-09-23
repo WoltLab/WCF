@@ -15,7 +15,6 @@ use wcf\system\interaction\admin\BBCodeMediaProviderInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
@@ -37,7 +36,6 @@ final class BBCodeMediaProviderGridView extends AbstractGridView
             GridViewColumn::for('providerID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for('title')
                 ->label('wcf.acp.bbcode.mediaProvider.title')

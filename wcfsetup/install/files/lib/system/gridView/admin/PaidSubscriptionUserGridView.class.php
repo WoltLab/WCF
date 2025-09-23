@@ -18,7 +18,6 @@ use wcf\system\gridView\renderer\UserLinkColumnRenderer;
 use wcf\system\interaction\admin\PaidSubscriptionUserInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\view\filter\UserFilter;
@@ -42,7 +41,6 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
             GridViewColumn::for('subscriptionUserID')
                 ->label('wcf.global.objectID')
                 ->sortable()
-                ->filter(ObjectIdFilter::class)
                 ->renderer(new ObjectIdColumnRenderer()),
             GridViewColumn::for('userID')
                 ->label('wcf.user.username')

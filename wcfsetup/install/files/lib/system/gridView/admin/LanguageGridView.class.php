@@ -21,7 +21,6 @@ use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -43,7 +42,6 @@ final class LanguageGridView extends AbstractGridView
         $this->addColumns([
             GridViewColumn::for('languageID')
                 ->label('wcf.global.objectID')
-                ->filter(ObjectIdFilter::class)
                 ->renderer(new ObjectIdColumnRenderer())
                 ->sortable(),
             GridViewColumn::for('languageName')

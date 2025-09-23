@@ -18,7 +18,6 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
@@ -40,7 +39,6 @@ final class AdGridView extends AbstractGridView
             GridViewColumn::for('adID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for('adName')
                 ->label('wcf.global.name')

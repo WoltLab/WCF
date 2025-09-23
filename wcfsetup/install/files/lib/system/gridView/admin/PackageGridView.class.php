@@ -20,6 +20,7 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
@@ -43,7 +44,8 @@ class PackageGridView extends AbstractGridView
             GridViewColumn::for('packageID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->sortable(),
+                ->sortable()
+                ->filter(ObjectIdFilter::class),
             GridViewColumn::for('packageName')
                 ->label('wcf.acp.package.name')
                 ->titleColumn()

@@ -21,7 +21,6 @@ use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\view\filter\FloatFilter;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 
@@ -43,7 +42,6 @@ final class PaidSubscriptionGridView extends AbstractGridView
             GridViewColumn::for('subscriptionID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for('title')
                 ->label('wcf.global.title')

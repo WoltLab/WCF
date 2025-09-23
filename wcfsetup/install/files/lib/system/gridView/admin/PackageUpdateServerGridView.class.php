@@ -21,7 +21,6 @@ use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
@@ -46,7 +45,6 @@ final class PackageUpdateServerGridView extends AbstractGridView
             GridViewColumn::for('packageUpdateServerID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for('serverURL')
                 ->label('wcf.acp.updateServer.serverURL')

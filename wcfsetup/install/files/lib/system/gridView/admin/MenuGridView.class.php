@@ -20,7 +20,6 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 
@@ -42,7 +41,6 @@ final class MenuGridView extends AbstractGridView
             GridViewColumn::for("menuID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for("title")
                 ->label("wcf.global.name")

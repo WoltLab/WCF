@@ -19,6 +19,7 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\language\LanguageFactory;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
@@ -42,7 +43,8 @@ final class TagGridView extends AbstractGridView
             GridViewColumn::for('tagID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->sortable(),
+                ->sortable()
+                ->filter(ObjectIdFilter::class),
             GridViewColumn::for('name')
                 ->label('wcf.acp.tag.name')
                 ->titleColumn()

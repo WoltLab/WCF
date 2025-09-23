@@ -19,7 +19,6 @@ use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 
@@ -41,7 +40,6 @@ final class ContactOptionGridView extends AbstractGridView
             GridViewColumn::for("optionID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for("optionTitle")
                 ->label("wcf.global.name")

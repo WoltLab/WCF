@@ -21,7 +21,6 @@ use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
-use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\WCF;
 
 /**
@@ -42,7 +41,6 @@ final class TrophyGridView extends AbstractGridView
             GridViewColumn::for("trophyID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for("image")
                 ->label("wcf.acp.trophy")
