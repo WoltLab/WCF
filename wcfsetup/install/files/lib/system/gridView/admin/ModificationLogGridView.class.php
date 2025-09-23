@@ -167,7 +167,30 @@ final class ModificationLogGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): ModificationLogList
     {
-        return new ModificationLogList();
+        $list = new ModificationLogList();
+
+        $availableObjectTypeIDs = [];
+        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.modifiableContent') as $objectType) {
+            $processor = $objectType->getProcessor();
+            if ($processor === null) {
+                continue;
+            }
+            \assert($processor instanceof IExtendedModificationLogHandler);
+
+            if (!$processor->includeInLogList()) {
+                continue;
+            }
+
+            $availableObjectTypeIDs[] = $objectType->objectTypeID;
+        }
+
+        if ($availableObjectTypeIDs !== []) {
+            $list->getConditionBuilder()->add('objectTypeID IN (?)', [$availableObjectTypeIDs]);
+        } else {
+            $list->getConditionBuilder()->add('1 = 0');
+        }
+
+        return $list;
     }
 
     /**
