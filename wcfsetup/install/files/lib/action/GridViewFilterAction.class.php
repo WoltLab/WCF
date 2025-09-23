@@ -91,11 +91,11 @@ final class GridViewFilterAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.global.filter')
         );
 
-        foreach ($gridView->getFilterableColumns() as $column) {
-            $formField = $column->getFilterFormField();
+        foreach ($gridView->getAvailableFilters() as $filter) {
+            $formField = $filter->getFormField();
 
-            if (isset($values[$column->getID()])) {
-                $formField->value($values[$column->getID()]);
+            if (isset($values[$filter->getID()])) {
+                $formField->value($values[$filter->getID()]);
             }
 
             $form->appendChild($formField);

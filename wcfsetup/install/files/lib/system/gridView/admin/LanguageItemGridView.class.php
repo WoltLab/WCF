@@ -12,9 +12,6 @@ use wcf\data\language\Language;
 use wcf\data\language\LanguageList;
 use wcf\event\gridView\admin\LanguageItemGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\BooleanFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
@@ -22,6 +19,9 @@ use wcf\system\interaction\admin\LanguageItemInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\BooleanFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -44,11 +44,11 @@ final class LanguageItemGridView extends AbstractGridView
             GridViewColumn::for('languageItem')
                 ->label('wcf.global.name')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('languageID')
                 ->label('wcf.user.language')
-                ->filter(new SelectFilter($this->getAvailableLanguages()))
+                ->filter(new SelectFilter($this->getAvailableLanguages(), 'languageID', 'wcf.user.language'))
                 ->renderer(
                     new class($availableLanguages) extends AbstractColumnRenderer {
                         /**
@@ -64,18 +64,11 @@ final class LanguageItemGridView extends AbstractGridView
                     }
                 )
                 ->sortable(),
-            GridViewColumn::for('languageCategoryID')
-                ->label('wcf.global.category')
-                ->hidden()
-                ->filter(new SelectFilter(
-                    $this->getAvailableCategories(),
-                    labelLanguageItems: false
-                )),
             GridViewColumn::for('languageItemValue')
                 ->label('wcf.acp.language.item.value')
                 ->valueEncoding(false)
                 ->renderer(new TruncatedTextColumnRenderer(255))
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('languageCustomItemValue')
                 ->label('wcf.acp.language.item.customValue')
@@ -95,55 +88,45 @@ final class LanguageItemGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
-            GridViewColumn::for('languageUseCustomValue')
-                ->label('wcf.acp.language.item.customValues')
-                ->hidden()
-                ->filter(
-                    new class extends BooleanFilter {
-                        #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-                        {
-                            $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-                        }
-                    }
-                ),
-            GridViewColumn::for('hasDisabledCustomValue')
-                ->label('wcf.acp.language.item.disabledCustomValues')
-                ->hidden()
-                ->filter(
-                    new class extends BooleanFilter {
-                        #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-                        {
-                            $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-                            $list->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
-                        }
-                    }
-                ),
-            GridViewColumn::for('hasRecentlyDisabledCustomValue')
-                ->label('wcf.acp.language.item.recentlyDisabledCustomValues')
-                ->hidden()
-                ->filter(
-                    new class extends BooleanFilter {
-                        #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-                        {
-                            $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-                            $list->getConditionBuilder()->add(
-                                "languageCustomItemDisableTime >= ?",
-                                [TIME_NOW - 86400 * 7]
-                            );
-                        }
-                    }
-                ),
-            GridViewColumn::for('isCustomLanguageItem')
-                ->label('wcf.acp.language.item.isCustomLanguageItem')
-                ->hidden()
-                ->filter(new BooleanFilter()),
         ]);
 
+        $this->addAvailableFilters([
+            new SelectFilter(
+                $this->getAvailableCategories(),
+                'languageCategoryID',
+                'wcf.global.category',
+                labelLanguageItems: false
+            ),
+            new class('languageUseCustomValue', 'wcf.acp.language.item.customValues') extends BooleanFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
+                }
+            },
+            new class('hasDisabledCustomValue', 'wcf.acp.language.item.disabledCustomValues') extends BooleanFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
+                    $list->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
+                }
+            },
+            new class('hasRecentlyDisabledCustomValue', 'wcf.acp.language.item.recentlyDisabledCustomValues') extends BooleanFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
+                    $list->getConditionBuilder()->add(
+                        "languageCustomItemDisableTime >= ?",
+                        [TIME_NOW - 86400 * 7]
+                    );
+                }
+            },
+            new BooleanFilter('isCustomLanguageItem', 'wcf.acp.language.item.isCustomLanguageItem'),
+        ]);
         $provider = new LanguageItemInteractions();
         $provider->addInteractions([
             new Divider(),
@@ -157,12 +140,7 @@ final class LanguageItemGridView extends AbstractGridView
             )
         ]);
         $this->setInteractionProvider($provider);
-
         $this->setDefaultSortField('languageItem');
-
-        if ($defaultLanguage !== null) {
-            $this->setActiveFilters(['languageID' => $defaultLanguage->languageID]);
-        }
     }
 
     #[\Override]

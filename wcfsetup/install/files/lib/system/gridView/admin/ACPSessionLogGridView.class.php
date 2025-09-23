@@ -8,10 +8,6 @@ use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogList;
 use wcf\event\gridView\admin\ACPSessionLogGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\IpAddressFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\IpAddressColumnRenderer;
@@ -20,6 +16,10 @@ use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
+use wcf\system\view\filter\IpAddressFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 
 /**
@@ -46,28 +46,28 @@ final class ACPSessionLogGridView extends AbstractGridView
                 ->sortable(true, 'user_table.username')
                 ->titleColumn()
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
-                ->filter(new UserFilter()),
+                ->filter(UserFilter::class),
             GridViewColumn::for('ipAddress')
                 ->label('wcf.user.ipAddress')
                 ->sortable()
                 ->renderer(new IpAddressColumnRenderer())
-                ->filter(new IpAddressFilter()),
+                ->filter(IpAddressFilter::class),
             GridViewColumn::for('userAgent')
                 ->label('wcf.user.userAgent')
                 ->sortable()
                 ->valueEncoding(false)
                 ->renderer(new TruncatedTextColumnRenderer(50))
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for('time')
                 ->label('wcf.acp.sessionLog.time')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
+                ->filter(TimeFilter::class),
             GridViewColumn::for('lastActivityTime')
                 ->label('wcf.acp.sessionLog.lastActivityTime')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
+                ->filter(TimeFilter::class),
             GridViewColumn::for('accesses')
                 ->label('wcf.acp.sessionLog.actions')
                 ->sortable(true, 'accesses')

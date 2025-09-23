@@ -12,12 +12,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\event\gridView\admin\ArticleGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\BooleanFilter;
-use wcf\system\gridView\filter\CategoryFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\CategoryColumnRenderer;
@@ -30,6 +24,12 @@ use wcf\system\interaction\admin\ArticleInteractions;
 use wcf\system\interaction\bulk\admin\ArticleBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\BooleanFilter;
+use wcf\system\view\filter\CategoryFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -80,7 +80,20 @@ final class ArticleGridView extends AbstractGridView
             GridViewColumn::for('title')
                 ->label('wcf.global.title')
                 ->sortable(sortByDatabaseColumn: 'articleContent.title')
-                ->filter($this->getArticleContentFilter())
+                ->filter(new class('title', 'wcf.global.title') extends TextFilter {
+                    #[\Override]
+                    public function applyFilter(DatabaseObjectList $list, string $value): void
+                    {
+                        $list->getConditionBuilder()->add(
+                            "article.articleID IN (
+                                SELECT  articleID
+                                FROM    wcf1_article_content
+                                WHERE   title LIKE ?
+                            )",
+                            ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                        );
+                    }
+                })
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, DatabaseObject $row): string
@@ -139,30 +152,20 @@ final class ArticleGridView extends AbstractGridView
                     },
                 ])
                 ->titleColumn(),
-            GridViewColumn::for('content')
-                ->label('wcf.acp.article.content')
-                ->filter($this->getArticleContentFilter())
-                ->hidden(),
             GridViewColumn::for('userID')
                 ->label('wcf.user.username')
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
                 ->sortable(sortByDatabaseColumn: 'username')
-                ->filter(new UserFilter()),
+                ->filter(UserFilter::class),
             GridViewColumn::for('categoryID')
                 ->label('wcf.global.category')
                 ->sortable()
                 ->renderer(new CategoryColumnRenderer())
-                ->filter(new CategoryFilter((new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator())),
-            GridViewColumn::for('publicationStatus')
-                ->label('wcf.acp.article.publicationStatus')
-                ->filter(
-                    new SelectFilter([
-                        0 => 'wcf.acp.article.publicationStatus.unpublished',
-                        1 => 'wcf.acp.article.publicationStatus.published',
-                        2 => 'wcf.acp.article.publicationStatus.delayed',
-                    ])
-                )
-                ->hidden(),
+                ->filter(new CategoryFilter(
+                    (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+                    'categoryID',
+                    'wcf.global.category'
+                )),
             GridViewColumn::for('views')
                 ->label('wcf.acp.article.views')
                 ->renderer(new NumberColumnRenderer())
@@ -171,13 +174,35 @@ final class ArticleGridView extends AbstractGridView
                 ->label('wcf.acp.sessionLog.time')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
-            GridViewColumn::for('isDeleted')
-                ->label('wcf.acp.article.isDeleted')
-                ->filter(new BooleanFilter())
-                ->hidden(),
+                ->filter(TimeFilter::class),
         ]);
 
+        $this->addAvailableFilters([
+            new class('content', 'wcf.acp.article.content') extends TextFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "article.articleID IN (
+                        SELECT  articleID
+                        FROM    wcf1_article_content
+                        WHERE   content LIKE ?
+                    )",
+                        ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                    );
+                }
+            },
+            new SelectFilter(
+                [
+                    0 => 'wcf.acp.article.publicationStatus.unpublished',
+                    1 => 'wcf.acp.article.publicationStatus.published',
+                    2 => 'wcf.acp.article.publicationStatus.delayed',
+                ],
+                'publicationStatus',
+                'wcf.acp.article.publicationStatus'
+            ),
+            new BooleanFilter('isDeleted', 'wcf.acp.article.isDeleted')
+        ]);
         $provider = new ArticleInteractions();
         $provider->addInteractions([
             new Divider(),
@@ -189,24 +214,6 @@ final class ArticleGridView extends AbstractGridView
         $this->setDefaultSortField('time');
         $this->setDefaultSortOrder('DESC');
         $this->addRowLink(new GridViewRowLink(ArticleEditForm::class));
-    }
-
-    private function getArticleContentFilter(): TextFilter
-    {
-        return new class() extends TextFilter {
-            #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-            {
-                $list->getConditionBuilder()->add(
-                    "article.articleID IN (
-                                  SELECT  articleID
-                                  FROM    wcf1_article_content
-                                  WHERE   {$id} LIKE ?
-                              )",
-                    ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
-                );
-            }
-        };
     }
 
     #[\Override]

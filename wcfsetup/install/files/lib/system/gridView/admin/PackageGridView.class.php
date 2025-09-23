@@ -8,8 +8,6 @@ use wcf\data\package\I18nPackageList;
 use wcf\data\package\Package;
 use wcf\event\gridView\admin\PackageGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -21,6 +19,9 @@ use wcf\system\interaction\admin\PackageInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -46,7 +47,7 @@ class PackageGridView extends AbstractGridView
             GridViewColumn::for('packageName')
                 ->label('wcf.acp.package.name')
                 ->titleColumn()
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer(
                     new class extends PhraseColumnRenderer {
                         #[\Override]
@@ -74,7 +75,7 @@ class PackageGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: "packageNameI18n"),
             GridViewColumn::for('author')
                 ->label('wcf.acp.package.author')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->renderer([
                     new class extends DefaultColumnRenderer implements ILinkColumnRenderer {
                         #[\Override]
@@ -101,7 +102,8 @@ class PackageGridView extends AbstractGridView
             GridViewColumn::for('updateDate')
                 ->label('wcf.acp.package.updateDate')
                 ->sortable()
-                ->renderer(new TimeColumnRenderer()),
+                ->renderer(new TimeColumnRenderer())
+                ->filter(TimeFilter::class),
         ]);
 
         $provider = new PackageInteractions();

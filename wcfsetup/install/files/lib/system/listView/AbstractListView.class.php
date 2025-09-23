@@ -365,9 +365,7 @@ abstract class AbstractListView
      */
     public function getObjectList(): DatabaseObjectList
     {
-        if (!isset($this->objectList)) {
-            $this->initObjectList();
-        }
+        $this->init();
 
         return $this->objectList;
     }
@@ -418,8 +416,8 @@ abstract class AbstractListView
      */
     public function isFilterable(): bool
     {
-        return $this->allowFiltering
-            && $this->availableFilters !== [];
+        return $this->getAvailableFilters() !== []
+            && $this->allowFiltering;
     }
 
     /**
@@ -735,6 +733,8 @@ abstract class AbstractListView
 
     public function render(): string
     {
+        $this->init();
+
         return WCF::getTPL()->render('wcf', 'shared_listView', ['view' => $this]);
     }
 
@@ -775,6 +775,13 @@ abstract class AbstractListView
                 <span class="listView__item__unread__indicator" aria-hidden="true"></span>
             </button>
             HTML;
+    }
+
+    private function init(): void
+    {
+        if (!isset($this->objectList)) {
+            $this->initObjectList();
+        }
     }
 
     /**

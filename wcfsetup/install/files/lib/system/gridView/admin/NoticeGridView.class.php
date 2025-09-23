@@ -6,8 +6,6 @@ use wcf\acp\form\NoticeEditForm;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeList;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
@@ -17,6 +15,8 @@ use wcf\system\interaction\bulk\admin\NoticeBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -41,12 +41,12 @@ final class NoticeGridView extends AbstractGridView
             GridViewColumn::for('noticeName')
                 ->label('wcf.global.name')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->sortable(),
         ]);
 

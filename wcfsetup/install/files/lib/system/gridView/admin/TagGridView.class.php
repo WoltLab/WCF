@@ -8,9 +8,6 @@ use wcf\data\tag\Tag;
 use wcf\data\tag\TagList;
 use wcf\event\gridView\admin\TagGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -21,6 +18,9 @@ use wcf\system\interaction\bulk\admin\TagBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\language\LanguageFactory;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -46,12 +46,12 @@ final class TagGridView extends AbstractGridView
             GridViewColumn::for('name')
                 ->label('wcf.acp.tag.name')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('synonymName')
                 ->label('wcf.acp.tag.synonymFor')
                 ->renderer(new DefaultColumnRenderer())
-                ->filter(new TextFilter("synonym.name"))
+                ->filter(new TextFilter('synonymName', 'wcf.acp.tag.synonymFor', 'synonym.name'))
                 ->sortable(sortByDatabaseColumn: "synonym.name"),
             GridViewColumn::for('languageName')
                 ->label('wcf.acp.tag.languageID')
@@ -79,12 +79,17 @@ final class TagGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new SelectFilter(LanguageFactory::getInstance()->getLanguages(), "tag.languageID"))
+                ->filter(new SelectFilter(
+                    LanguageFactory::getInstance()->getLanguages(),
+                    'languageName',
+                    'wcf.acp.tag.languageID',
+                    'tag.languageID'
+                ))
                 ->sortable(sortByDatabaseColumn: 'language.languageName'),
             GridViewColumn::for('usageCount')
                 ->label('wcf.acp.tag.usageCount')
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter($this->subSelectUsageCount(), true))
+                ->filter(new IntegerFilter('usageCount', 'wcf.acp.tag.usageCount', $this->subSelectUsageCount()))
                 ->sortable(sortByDatabaseColumn: $this->subSelectUsageCount()),
         ]);
 

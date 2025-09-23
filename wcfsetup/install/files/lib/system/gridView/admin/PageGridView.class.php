@@ -11,14 +11,8 @@ use wcf\data\page\PageList;
 use wcf\event\gridView\admin\PageGridViewInitialized;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\BooleanFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
-use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
@@ -26,8 +20,12 @@ use wcf\system\interaction\admin\PageInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\BooleanFilter;
+use wcf\system\view\filter\ObjectIdFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Grid view for the list of pages.
@@ -47,22 +45,14 @@ final class PageGridView extends AbstractGridView
             GridViewColumn::for('pageID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
+                ->filter(ObjectIdFilter::class)
                 ->sortable(),
             GridViewColumn::for('name')
                 ->label('wcf.global.name')
                 ->titleColumn()
                 ->renderer(new DefaultColumnRenderer())
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
-            GridViewColumn::for('pageTitle')
-                ->label('wcf.global.title')
-                ->filter($this->getPageContentFilter('title'))
-                ->hidden(),
-            GridViewColumn::for('pageContent')
-                ->label('wcf.acp.page.content')
-                ->filter($this->getPageContentFilter('content'))
-                ->hidden(),
             GridViewColumn::for('url')
                 ->label('wcf.acp.page.url')
                 ->renderer(
@@ -80,57 +70,67 @@ final class PageGridView extends AbstractGridView
                 ->label('wcf.acp.page.type')
                 ->renderer(new DefaultColumnRenderer())
                 ->filter(
-                    new SelectFilter([
-                        'text' => 'wcf.acp.page.type.text',
-                        'html' => 'wcf.acp.page.type.html',
-                        'tpl' => 'wcf.acp.page.type.tpl',
-                        'system' => 'wcf.acp.page.type.system',
-                    ])
+                    new SelectFilter(
+                        [
+                            'text' => 'wcf.acp.page.type.text',
+                            'html' => 'wcf.acp.page.type.html',
+                            'tpl' => 'wcf.acp.page.type.tpl',
+                            'system' => 'wcf.acp.page.type.system',
+                        ],
+                        'pageType',
+                        'wcf.acp.page.type'
+                    )
                 )
                 ->sortable(),
-            GridViewColumn::for('applicationPackageID')
-                ->label('wcf.acp.page.application')
-                ->filter($this->getApplicationFilter())
-                ->renderer(
-                    new class extends AbstractColumnRenderer {
-                        #[\Override]
-                        public function render(mixed $value, DatabaseObject $row): string
-                        {
-                            \assert($row instanceof Page);
-
-                            $application = $row->getApplication();
-
-                            return StringUtil::encodeHTML($application->domainName . $application->domainPath);
-                        }
-                    }
-                )
-                ->hidden(),
             GridViewColumn::for('lastUpdateTime')
                 ->label('wcf.acp.page.lastUpdateTime')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
-            GridViewColumn::for('originIsSystem')
-                ->label('wcf.acp.page.originIsNotSystem')
-                ->filter(new BooleanFilter(reverseValue: true))
-                ->hidden(),
-            GridViewColumn::for('controllerCustomURL')
-                ->label('wcf.acp.page.customURL')
-                ->filter(
-                    new class extends BooleanFilter {
-                        #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-                        {
-                            $list->getConditionBuilder()->add(
-                                "(page.controllerCustomURL <> ? OR page.pageType <> ?)",
-                                ['', 'system']
-                            );
-                        }
-                    }
-                )
-                ->hidden(),
         ]);
 
+        $this->addAvailableFilters([
+            new class('title', 'wcf.global.title') extends TextFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "page.pageID IN (
+                            SELECT  pageID
+                            FROM    wcf1_page_content
+                            WHERE   title LIKE ?
+                        )",
+                        ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                    );
+                }
+            },
+            new class('content', 'wcf.acp.page.content') extends TextFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "page.pageID IN (
+                            SELECT  pageID
+                            FROM    wcf1_page_content
+                            WHERE   content LIKE ?
+                        )",
+                        ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                    );
+                }
+            },
+            new BooleanFilter('originIsNotSystem', 'wcf.acp.page.originIsNotSystem', 'originIsSystem', true),
+            new class('controllerCustomURL', 'wcf.acp.page.customURL') extends BooleanFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "(page.controllerCustomURL <> ? OR page.pageType <> ?)",
+                        ['', 'system']
+                    );
+                }
+            },
+            $this->getApplicationFilter(),
+        ]);
         $provider = new PageInteractions();
         $provider->addInteractions([
             new Divider(),
@@ -150,33 +150,15 @@ final class PageGridView extends AbstractGridView
         $this->addRowLink(new GridViewRowLink(PageEditForm::class));
     }
 
-    private function getPageContentFilter(string $databaseColumn): TextFilter
-    {
-        return new class($databaseColumn) extends TextFilter {
-            #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-            {
-                $list->getConditionBuilder()->add(
-                    "page.pageID IN (
-                    SELECT  pageID
-                    FROM    wcf1_page_content
-                    WHERE   {$this->databaseColumn} LIKE ?
-                )",
-                    ['%' . $value . '%']
-                );
-            }
-        };
-    }
-
     private function getApplicationFilter(): SelectFilter
     {
         $applications = \array_map(static function (Application $application): string {
             return $application->domainName . $application->domainPath;
         }, ApplicationHandler::getInstance()->getApplications());
 
-        return new class($applications) extends SelectFilter {
+        return new class($applications, 'applicationPackageID', 'wcf.acp.page.application') extends SelectFilter {
             #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+            public function applyFilter(DatabaseObjectList $list, string $value): void
             {
                 $list->getConditionBuilder()->add(
                     '((page.applicationPackageID = ? AND page.overrideApplicationPackageID IS NULL) OR page.overrideApplicationPackageID = ?)',

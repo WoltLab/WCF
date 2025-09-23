@@ -7,17 +7,18 @@ use wcf\data\label\group\I18nLabelGroupList;
 use wcf\data\label\group\LabelGroup;
 use wcf\event\gridView\admin\LabelGroupGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
+use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\admin\LabelGroupInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -43,16 +44,18 @@ final class LabelGroupGridView extends AbstractGridView
                 ->label('wcf.global.title')
                 ->titleColumn()
                 ->renderer(new PhraseColumnRenderer())
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->sortable(sortByDatabaseColumn: 'groupNameI18n'),
             GridViewColumn::for('groupDescription')
                 ->label('wcf.global.description')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->renderer(new TruncatedTextColumnRenderer())
+                ->valueEncoding(false)
                 ->sortable(),
             GridViewColumn::for('labels')
                 ->label('wcf.acp.label.list')
-                ->filter(new NumericFilter())
+                ->renderer(new NumberColumnRenderer())
+                ->filter(IntegerFilter::class)
                 ->sortable(
                     sortByDatabaseColumn: '(
                         SELECT  COUNT(*)
@@ -62,8 +65,9 @@ final class LabelGroupGridView extends AbstractGridView
                 ),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
+                ->renderer(new NumberColumnRenderer())
+                ->filter(IntegerFilter::class)
                 ->sortable()
-                ->filter(new NumericFilter())
         ]);
 
         $provider = new LabelGroupInteractions();

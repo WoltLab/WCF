@@ -8,10 +8,6 @@ use wcf\data\box\BoxList;
 use wcf\data\DatabaseObjectList;
 use wcf\event\gridView\admin\BoxGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\BooleanFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
@@ -19,6 +15,10 @@ use wcf\system\interaction\admin\BoxInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\BooleanFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -43,16 +43,8 @@ final class BoxGridView extends AbstractGridView
             GridViewColumn::for('name')
                 ->label('wcf.global.name')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
-            GridViewColumn::for('title')
-                ->label('wcf.global.title')
-                ->filter($this->getBoxContentFilter('title'))
-                ->hidden(),
-            GridViewColumn::for('content')
-                ->label('wcf.acp.box.content')
-                ->filter($this->getBoxContentFilter('content'))
-                ->hidden(),
             GridViewColumn::for('boxType')
                 ->label('wcf.acp.box.type')
                 ->filter(
@@ -63,7 +55,9 @@ final class BoxGridView extends AbstractGridView
                                 static fn(string $type) => 'wcf.acp.box.type.' . $type,
                                 Box::$availableBoxTypes
                             )
-                        )
+                        ),
+                        'boxType',
+                        'wcf.acp.box.type'
                     )
                 )
                 ->sortable(),
@@ -77,30 +71,49 @@ final class BoxGridView extends AbstractGridView
                                 static fn(string $position) => 'wcf.acp.box.position.' . $position,
                                 Box::$availablePositions
                             )
-                        )
+                        ),
+                        'position',
+                        'wcf.acp.box.position'
                     )
                 )
                 ->sortable(),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->sortable(),
-            GridViewColumn::for('originIsSystem')
-                ->label('wcf.acp.box.originIsNotSystem')
-                ->filter(
-                    new class extends BooleanFilter {
-                        #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-                        {
-                            $columnName = $this->getDatabaseColumnName($list, $id);
-
-                            $list->getConditionBuilder()->add("{$columnName} = ?", [0]);
-                        }
-                    }
-                )
-                ->hidden(),
         ]);
 
+        $this->addAvailableFilters([
+            new class('title', 'wcf.global.title') extends TextFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "box.boxID IN (
+                            SELECT  boxID
+                            FROM    wcf1_box_content
+                            WHERE   title LIKE ?
+                        )",
+                        ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                    );
+                }
+            },
+            new class('content', 'wcf.acp.box.content') extends TextFilter {
+                #[\Override]
+                public function applyFilter(DatabaseObjectList $list, string $value): void
+                {
+                    $list->getConditionBuilder()->add(
+                        "box.boxID IN (
+                            SELECT  boxID
+                            FROM    wcf1_box_content
+                            WHERE   content LIKE ?
+                        )",
+                        ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
+                    );
+                }
+            },
+            new BooleanFilter('originIsNotSystem', 'wcf.acp.box.originIsNotSystem', 'originIsSystem', true),
+        ]);
         $provider = new BoxInteractions();
         $provider->addInteractions([
             new Divider(),
@@ -112,24 +125,6 @@ final class BoxGridView extends AbstractGridView
 
         $this->setDefaultSortField('name');
         $this->addRowLink(new GridViewRowLink(BoxEditForm::class));
-    }
-
-    private function getBoxContentFilter(string $databaseColumn): TextFilter
-    {
-        return new class($databaseColumn) extends TextFilter {
-            #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
-            {
-                $list->getConditionBuilder()->add(
-                    "box.boxID IN (
-                                    SELECT  boxID
-                                    FROM    wcf1_box_content
-                                    WHERE   {$this->databaseColumn} LIKE ?
-                              )",
-                    ['%' . WCF::getDB()->escapeLikeValue($value) . '%']
-                );
-            }
-        };
     }
 
     #[\Override]

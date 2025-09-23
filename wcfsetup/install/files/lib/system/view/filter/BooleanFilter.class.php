@@ -16,6 +16,15 @@ use wcf\system\form\builder\field\CheckboxFormField;
  */
 class BooleanFilter extends AbstractFilter
 {
+    public function __construct(
+        string $id,
+        string $languageItem,
+        string $databaseColumn = '',
+        private readonly bool $reverseValue = false
+    ) {
+        parent::__construct($id, $languageItem, $databaseColumn);
+    }
+
     #[\Override]
     public function getFormField(): AbstractFormField
     {
