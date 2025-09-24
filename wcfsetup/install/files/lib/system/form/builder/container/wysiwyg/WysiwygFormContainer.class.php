@@ -130,7 +130,7 @@ class WysiwygFormContainer extends FormContainer
      * is `true` if smilies are supported for this container, otherwise `false`
      * @var bool
      */
-    protected $supportSmilies = \MODULE_SMILEY;
+    protected $supportSmilies = !!\MODULE_SMILEY;
 
     /**
      * actual wysiwyg form field
