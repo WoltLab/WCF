@@ -54,6 +54,10 @@ class SelectFilter extends AbstractFilter
     #[\Override]
     public function renderValue(string $value): string
     {
-        return WCF::getLanguage()->get($this->options[$value]);
+        if ($this->labelLanguageItems) {
+            return WCF::getLanguage()->get($this->options[$value]);
+        } else {
+            return $this->options[$value];
+        }
     }
 }
