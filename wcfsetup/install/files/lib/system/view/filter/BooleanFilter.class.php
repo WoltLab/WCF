@@ -38,10 +38,9 @@ class BooleanFilter extends AbstractFilter
     {
         $columnName = $this->getDatabaseColumnName($list);
 
-        $list->getConditionBuilder()->add(
-            "{$columnName} = ?",
-            [1]
-        );
+        $list->getConditionBuilder()->add("{$columnName} = ?", [
+            $this->reverseValue ? 0 : 1,
+        ]);
     }
 
     #[\Override]
