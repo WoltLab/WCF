@@ -991,60 +991,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/message/QuickReplyManager.class.php
 
 		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/AbstractCategoryMultiSelectOptionType.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/MultiSelectOptionType.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/MultiSelectOptionType.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/PaymentMethodSelectOptionType.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/PaymentMethodSelectOptionType.class.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/PaymentMethodSelectOptionType.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/UseroptionsOptionType.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/UseroptionsOptionType.class.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/UseroptionsOptionType.class.php
-
-		-
 			message: '#^Loose comparison using \=\= between non\-falsy\-string and ''0'' will always evaluate to false\.$#'
 			identifier: equal.alwaysFalse
 			count: 1
@@ -1061,24 +1007,6 @@ parameters:
 			identifier: identical.alwaysFalse
 			count: 1
 			path: wcfsetup/install/files/lib/system/option/user/NewlineToBreakUserOptionOutput.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/user/group/BBCodeSelectUserGroupOptionType.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/user/group/BBCodeSelectUserGroupOptionType.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/option/user/group/UserGroupsUserGroupOptionType.class.php
 
 		-
 			message: '#^Dead catch \- wcf\\system\\package\\exception\\IncoherentUpdatePath is never thrown in the try block\.$#'
