@@ -63,6 +63,7 @@ final class GetRows implements IController
     /**
      * @param list<string> $ids
      * @return array<string, string>
+     * @phpstan-ignore missingType.generics
      */
     private function getFilterLabels(AbstractGridView $view, array $ids): array
     {

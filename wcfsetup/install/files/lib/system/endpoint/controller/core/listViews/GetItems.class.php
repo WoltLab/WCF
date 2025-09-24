@@ -63,6 +63,7 @@ final class GetItems implements IController
     /**
      * @param list<string> $ids
      * @return array<string, string>
+     * @phpstan-ignore missingType.generics
      */
     private function getFilterLabels(AbstractListView $view, array $ids): array
     {

@@ -36,7 +36,7 @@ use wcf\system\WCF;
  */
 final class LanguageItemGridView extends AbstractGridView
 {
-    public function __construct(?Language $defaultLanguage = null)
+    public function __construct()
     {
         $availableLanguages = $this->getAvailableLanguages();
 

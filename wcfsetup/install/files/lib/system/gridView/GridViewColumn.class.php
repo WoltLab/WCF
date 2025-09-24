@@ -3,7 +3,6 @@
 namespace wcf\system\gridView;
 
 use wcf\data\DatabaseObject;
-use wcf\system\exception\ParentClassException;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\view\filter\IViewFilter;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -176,10 +175,6 @@ final class GridViewColumn
     public function filter(IViewFilter|string|null $filter): static
     {
         if (\is_string($filter)) {
-            if (!\is_subclass_of($filter, IViewFilter::class)) {
-                throw new ParentClassException($filter, IViewFilter::class);
-            }
-
             $possibleValues = [
                 'id' => $this->getID(),
                 'languageItem' => $this->getLabel(),
@@ -223,7 +218,7 @@ final class GridViewColumn
             throw new \LogicException('This column has no filter.');
         }
 
-        return $this->getFilter()->getFormField($this->getID(), $this->getLabel());
+        return $this->getFilter()->getFormField();
     }
 
     /**
