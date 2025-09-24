@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;

@@ -3,8 +3,6 @@
 namespace wcf\system\attachment;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\DatabaseObjectDecorator;
-use wcf\data\IUserContent;
 
 /**
  * Any attachment object type should implement this interface.

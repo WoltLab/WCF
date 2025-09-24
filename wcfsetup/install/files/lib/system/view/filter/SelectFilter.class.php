@@ -1,32 +1,32 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
-use wcf\system\category\CategoryHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\listView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\exception\InvalidFilterValue;
+use wcf\system\WCF;
 
 /**
- * Allows a column to be filtered on the basis of a select category.
+ * Allows a column to be filtered on the basis of a select dropdown.
  *
- * @author      Olaf Braun
- * @copyright   2001-2025 WoltLab GmbH
+ * @author      Marcel Werk
+ * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class CategoryFilter extends AbstractFilter
+class SelectFilter extends AbstractFilter
 {
     /**
-     * @param \Traversable<mixed> $options
+     * @param array<string|int, mixed> $options
      */
     public function __construct(
-        private readonly \Traversable $options,
+        protected readonly array $options,
         string $id,
-        string $languageItem = 'wcf.global.category',
-        string $databaseColumn = ''
-
+        string $languageItem,
+        string $databaseColumn = '',
+        protected readonly bool $labelLanguageItems = true
     ) {
         parent::__construct($id, $languageItem, $databaseColumn);
     }
@@ -36,14 +36,13 @@ class CategoryFilter extends AbstractFilter
     {
         return SelectFormField::create($this->id)
             ->label($this->languageItem)
-            ->options($this->options, true);
+            ->options($this->options, labelLanguageItems: $this->labelLanguageItems);
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
-        $category = CategoryHandler::getInstance()->getCategory((int)$value);
-        if ($category === null) {
+        if (!isset($this->options[$value])) {
             throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
@@ -55,6 +54,6 @@ class CategoryFilter extends AbstractFilter
     #[\Override]
     public function renderValue(string $value): string
     {
-        return CategoryHandler::getInstance()->getCategory((int)$value)->getTitle();
+        return WCF::getLanguage()->get($this->options[$value]);
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
-use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\NumericRangeFormField;
-use wcf\system\listView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 
 /**
  * Filter for columns that contain numerics.
@@ -15,30 +13,8 @@ use wcf\system\listView\filter\exception\InvalidFilterValue;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class NumericFilter extends AbstractFilter
+abstract class NumericFilter extends AbstractFilter
 {
-    public function __construct(
-        string $id,
-        string $languageItem,
-        string $databaseColumn = '',
-        protected readonly bool $integerValues = false,
-        protected readonly null|int|float $minimum = null,
-        protected readonly null|int|float $maximum = null,
-    ) {
-        parent::__construct($id, $languageItem, $databaseColumn);
-    }
-
-    #[\Override]
-    public function getFormField(): AbstractFormField
-    {
-        return NumericRangeFormField::create($this->id)
-            ->label($this->languageItem)
-            ->nullable()
-            ->integerValues($this->integerValues)
-            ->minimum($this->minimum)
-            ->maximum($this->maximum);
-    }
-
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {

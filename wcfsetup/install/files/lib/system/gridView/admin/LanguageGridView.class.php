@@ -9,9 +9,6 @@ use wcf\data\language\Language;
 use wcf\data\language\LanguageList;
 use wcf\event\gridView\admin\LanguageGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -23,6 +20,8 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -43,12 +42,11 @@ final class LanguageGridView extends AbstractGridView
         $this->addColumns([
             GridViewColumn::for('languageID')
                 ->label('wcf.global.objectID')
-                ->filter(new ObjectIdFilter())
                 ->renderer(new ObjectIdColumnRenderer())
                 ->sortable(),
             GridViewColumn::for('languageName')
                 ->label('wcf.global.name')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->titleColumn()
                 ->sortable()
                 ->renderer([
@@ -71,16 +69,16 @@ final class LanguageGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('languageCode')
                 ->label('wcf.acp.language.code')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('users')
                 ->label('wcf.acp.language.users')
-                ->filter(new NumericFilter($this->subSelectUsers()))
+                ->filter(new IntegerFilter('users', 'wcf.acp.language.users', $this->subSelectUsers()))
                 ->renderer(new NumberColumnRenderer())
                 ->sortable(sortByDatabaseColumn: $this->subSelectUsers()),
             GridViewColumn::for('variables')
                 ->label('wcf.acp.language.variables')
-                ->filter(new NumericFilter($this->subSelectVariables()))
+                ->filter(new IntegerFilter('variables', 'wcf.acp.language.variables', $this->subSelectVariables()))
                 ->renderer(
                     new class extends NumberColumnRenderer implements ILinkColumnRenderer {
                         #[\Override]
@@ -102,7 +100,7 @@ final class LanguageGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: $this->subSelectVariables()),
             GridViewColumn::for('customVariables')
                 ->label('wcf.acp.language.customVariables')
-                ->filter(new NumericFilter($this->subSelectCustomVariables()))
+                ->filter(new IntegerFilter('customVariables', 'wcf.acp.language.customVariables', $this->subSelectCustomVariables()))
                 ->renderer(
                     new class extends NumberColumnRenderer implements ILinkColumnRenderer {
                         #[\Override]

@@ -1,27 +1,28 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\CheckboxFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\WCF;
+use wcf\util\UserUtil;
 
 /**
- * Filter for boolean columns.
+ * Filter for columns that contain ipv6 addresses, allowing the user to enter addresses in the ipv4 format.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class BooleanFilter extends AbstractFilter
+class IpAddressFilter extends AbstractFilter
 {
     #[\Override]
     public function getFormField(): AbstractFormField
     {
-        return CheckboxFormField::create($this->id)
-            ->label($this->languageItem)
-            ->nullable();
+        return TextFormField::create($this->id)
+            ->label($this->languageItem);
     }
 
     #[\Override]
@@ -30,14 +31,13 @@ class BooleanFilter extends AbstractFilter
         $columnName = $this->getDatabaseColumnName($list);
 
         $list->getConditionBuilder()->add(
-            "{$columnName} = ?",
-            [1]
+            "{$columnName} LIKE ?",
+            ['%' . WCF::getDB()->escapeLikeValue($this->convertIPv4To6($value)) . '%']
         );
     }
 
-    #[\Override]
-    public function renderValue(string $value): string
+    private function convertIPv4To6(string $value): string
     {
-        return '';
+        return UserUtil::convertIPv4To6($value);
     }
 }

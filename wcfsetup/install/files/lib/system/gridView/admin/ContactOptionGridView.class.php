@@ -8,10 +8,6 @@ use wcf\data\contact\option\ContactOptionList;
 use wcf\event\gridView\admin\ContactOptionGridViewInitialized;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
@@ -21,6 +17,9 @@ use wcf\system\interaction\admin\ContactOptionInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 
 /**
@@ -41,21 +40,24 @@ final class ContactOptionGridView extends AbstractGridView
             GridViewColumn::for("optionID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for("optionTitle")
                 ->label("wcf.global.name")
                 ->renderer(new PhraseColumnRenderer())
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->titleColumn()
                 ->sortable(sortByDatabaseColumn: $this->subqueryOptionTitle()),
             GridViewColumn::for("optionType")
                 ->label("wcf.acp.customOption.optionType")
-                ->filter(new SelectFilter(FormOptionHandler::getInstance()->getSortedOptionTypes()))
+                ->filter(new SelectFilter(
+                    FormOptionHandler::getInstance()->getSortedOptionTypes(),
+                    'optionType',
+                    'wcf.acp.customOption.optionType'
+                ))
                 ->sortable(),
             GridViewColumn::for("showOrder")
                 ->label("wcf.acp.customOption.showOrder")
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->renderer(new NumberColumnRenderer())
                 ->sortable(),
         ]);

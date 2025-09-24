@@ -9,9 +9,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\package\PackageCache;
 use wcf\event\gridView\admin\CronjobGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -23,6 +20,9 @@ use wcf\system\interaction\bulk\admin\CronjobBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -61,12 +61,16 @@ final class CronjobGridView extends AbstractGridView
             GridViewColumn::for('description')
                 ->label('wcf.acp.cronjob.description')
                 ->sortable(sortByDatabaseColumn: 'descriptionI18n')
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer(new PhraseColumnRenderer())
                 ->titleColumn(),
             GridViewColumn::for('packageID')
                 ->label('wcf.acp.package.name')
-                ->filter(new SelectFilter(PackageCache::getInstance()->getPackages()))
+                ->filter(new SelectFilter(
+                    PackageCache::getInstance()->getPackages(),
+                    'packageID',
+                    'wcf.acp.package.name'
+                ))
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -96,7 +100,7 @@ final class CronjobGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
         ]);
 

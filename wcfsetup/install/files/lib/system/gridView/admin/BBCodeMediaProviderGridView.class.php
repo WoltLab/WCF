@@ -7,8 +7,6 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderList;
 use wcf\event\gridView\admin\BBCodeMediaProviderGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -17,6 +15,7 @@ use wcf\system\interaction\admin\BBCodeMediaProviderInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -37,13 +36,12 @@ final class BBCodeMediaProviderGridView extends AbstractGridView
             GridViewColumn::for('providerID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for('title')
                 ->label('wcf.acp.bbcode.mediaProvider.title')
                 ->renderer(new DefaultColumnRenderer())
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
         ]);
 

@@ -8,7 +8,6 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleList;
 use wcf\event\gridView\admin\StyleGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -19,6 +18,7 @@ use wcf\system\interaction\admin\StyleInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -71,7 +71,7 @@ final class StyleGridView extends AbstractGridView
                         }
                     },
                 ])
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for('styleVersion')
                 ->label('wcf.acp.style.styleVersion')
                 ->sortable(),
@@ -100,7 +100,7 @@ final class StyleGridView extends AbstractGridView
                         }
                     },
                 ])
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for('users')
                 ->label('wcf.acp.style.users')
                 ->sortable(true, 'users')

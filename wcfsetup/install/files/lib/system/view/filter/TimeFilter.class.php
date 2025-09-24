@@ -1,11 +1,11 @@
 <?php
 
-namespace wcf\system\gridView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\DateRangeFormField;
-use wcf\system\gridView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
 
 /**
@@ -20,22 +20,22 @@ use wcf\system\WCF;
 class TimeFilter extends AbstractFilter
 {
     #[\Override]
-    public function getFormField(string $id, string $label): AbstractFormField
+    public function getFormField(): AbstractFormField
     {
-        return DateRangeFormField::create($id)
-            ->label($label)
+        return DateRangeFormField::create($this->id)
+            ->label($this->languageItem)
             ->nullable()
             ->supportTime();
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+    public function applyFilter(DatabaseObjectList $list, string $value): void
     {
-        $columnName = $this->getDatabaseColumnName($list, $id);
+        $columnName = $this->getDatabaseColumnName($list);
         $timestamps = $this->getTimestamps($value);
 
         if (!$timestamps['from'] && !$timestamps['to']) {
-            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$id}' given.");
+            throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
         if (!$timestamps['to']) {

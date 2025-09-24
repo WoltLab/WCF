@@ -13,8 +13,8 @@ use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
-use wcf\system\listView\filter\IListViewFilter;
-use wcf\system\listView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\IViewFilter;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -65,7 +65,7 @@ abstract class AbstractListView
     private array $availableSortFields = [];
 
     /**
-     * @var array<string, IListViewFilter>
+     * @var array<string, IViewFilter>
      */
     private array $availableFilters = [];
 
@@ -365,9 +365,7 @@ abstract class AbstractListView
      */
     public function getObjectList(): DatabaseObjectList
     {
-        if (!isset($this->objectList)) {
-            $this->initObjectList();
-        }
+        $this->init();
 
         return $this->objectList;
     }
@@ -418,8 +416,8 @@ abstract class AbstractListView
      */
     public function isFilterable(): bool
     {
-        return $this->allowFiltering
-            && $this->availableFilters !== [];
+        return $this->getAvailableFilters() !== []
+            && $this->allowFiltering;
     }
 
     /**
@@ -470,13 +468,13 @@ abstract class AbstractListView
         return $this->availableSortFields;
     }
 
-    public function addAvailableFilter(IListViewFilter $filter): void
+    public function addAvailableFilter(IViewFilter $filter): void
     {
         $this->availableFilters[$filter->getId()] = $filter;
     }
 
     /**
-     * @param IListViewFilter[] $filters
+     * @param IViewFilter[] $filters
      */
     public function addAvailableFilters(array $filters): void
     {
@@ -491,7 +489,7 @@ abstract class AbstractListView
     }
 
     /**
-     * @return array<string, IListViewFilter>
+     * @return array<string, IViewFilter>
      */
     public function getAvailableFilters(): array
     {
@@ -735,6 +733,8 @@ abstract class AbstractListView
 
     public function render(): string
     {
+        $this->init();
+
         return WCF::getTPL()->render('wcf', 'shared_listView', ['view' => $this]);
     }
 
@@ -775,6 +775,13 @@ abstract class AbstractListView
                 <span class="listView__item__unread__indicator" aria-hidden="true"></span>
             </button>
             HTML;
+    }
+
+    private function init(): void
+    {
+        if (!isset($this->objectList)) {
+            $this->initObjectList();
+        }
     }
 
     /**

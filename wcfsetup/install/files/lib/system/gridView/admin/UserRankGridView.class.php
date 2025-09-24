@@ -9,8 +9,6 @@ use wcf\data\user\rank\I18nUserRankList;
 use wcf\data\user\rank\UserRank;
 use wcf\event\gridView\admin\UserRankGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\SelectFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -20,6 +18,9 @@ use wcf\system\interaction\admin\UserRankInteractions;
 use wcf\system\interaction\bulk\admin\UserRankBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -46,7 +47,7 @@ final class UserRankGridView extends AbstractGridView
                 ->label('wcf.acp.user.rank.title')
                 ->sortable(true, 'rankTitleI18n')
                 ->titleColumn()
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, DatabaseObject $row): string
@@ -75,7 +76,11 @@ final class UserRankGridView extends AbstractGridView
             GridViewColumn::for('groupID')
                 ->label('wcf.user.group')
                 ->sortable()
-                ->filter(new SelectFilter($this->getAvailableUserGroups()))
+                ->filter(new SelectFilter(
+                    $this->getAvailableUserGroups(),
+                    'groupID',
+                    'wcf.user.group'
+                ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, DatabaseObject $row): string
@@ -106,7 +111,8 @@ final class UserRankGridView extends AbstractGridView
             GridViewColumn::for('requiredPoints')
                 ->label('wcf.acp.user.rank.requiredPoints')
                 ->sortable()
-                ->renderer(new NumberColumnRenderer()),
+                ->renderer(new NumberColumnRenderer())
+                ->filter(IntegerFilter::class),
         ]);
 
         $provider = new UserRankInteractions();

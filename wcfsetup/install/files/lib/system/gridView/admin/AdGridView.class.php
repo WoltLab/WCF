@@ -7,9 +7,6 @@ use wcf\data\ad\Ad;
 use wcf\data\ad\AdList;
 use wcf\event\gridView\admin\AdGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -20,6 +17,8 @@ use wcf\system\interaction\bulk\admin\AdBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -40,19 +39,18 @@ final class AdGridView extends AbstractGridView
             GridViewColumn::for('adID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for('adName')
                 ->label('wcf.global.name')
                 ->titleColumn()
                 ->renderer(new DefaultColumnRenderer())
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
                 ->sortable()
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
         ]);
 
         $provider = new AdInteractions();

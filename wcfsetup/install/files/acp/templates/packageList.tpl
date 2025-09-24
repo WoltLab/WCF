@@ -20,7 +20,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$gridView->countRows()}</span></h1>
+		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang}</h1>
 	</div>
 	
 	{hascontent}

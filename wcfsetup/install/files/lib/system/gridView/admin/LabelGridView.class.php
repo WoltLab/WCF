@@ -10,10 +10,6 @@ use wcf\data\label\Label;
 use wcf\event\gridView\admin\LabelGridViewInitialized;
 use wcf\system\cache\builder\LabelCacheBuilder;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -23,6 +19,9 @@ use wcf\system\interaction\admin\LabelInteractions;
 use wcf\system\interaction\bulk\admin\LabelBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -44,12 +43,11 @@ final class LabelGridView extends AbstractGridView
             GridViewColumn::for("labelID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for("label")
                 ->label("wcf.acp.label.label")
                 ->titleColumn()
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -96,13 +94,15 @@ final class LabelGridView extends AbstractGridView
                             static fn(ViewableLabelGroup $group) => $group->getTitle(),
                             LabelCacheBuilder::getInstance()->getData(arrayIndex: "groups"),
                         ),
+                        'groupID',
+                        'wcf.acp.label.group'
                     )
                 )
                 ->sortable(),
             GridViewColumn::for("showOrder")
                 ->label("wcf.global.showOrder")
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->sortable(),
         ]);
 

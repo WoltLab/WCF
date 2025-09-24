@@ -7,9 +7,6 @@ use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\event\gridView\admin\ContactRecipientGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\EmailColumnRenderer;
@@ -20,6 +17,8 @@ use wcf\system\interaction\admin\ContactRecipientInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
 use wcf\system\WCF;
 
 /**
@@ -40,11 +39,10 @@ final class ContactRecipientGridView extends AbstractGridView
             GridViewColumn::for("recipientID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for("name")
                 ->label("wcf.global.name")
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->titleColumn()
                 ->renderer(new PhraseColumnRenderer())
                 ->sortable(sortByDatabaseColumn: $this->subqueryName()),
@@ -54,7 +52,7 @@ final class ContactRecipientGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for("showOrder")
                 ->label("wcf.acp.customOption.showOrder")
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->renderer(new NumberColumnRenderer())
                 ->sortable(),
         ]);

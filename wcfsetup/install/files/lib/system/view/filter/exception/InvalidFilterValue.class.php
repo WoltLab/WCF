@@ -1,9 +1,9 @@
 <?php
 
-namespace wcf\system\gridView\filter\exception;
+namespace wcf\system\view\filter\exception;
 
 /**
- * This exception is thrown if a grid view filter has received an invalid parameter value.
+ * This exception is thrown if a view filter has received an invalid parameter value.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

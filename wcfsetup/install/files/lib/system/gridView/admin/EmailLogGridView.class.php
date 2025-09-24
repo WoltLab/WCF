@@ -4,14 +4,9 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\UserEditForm;
 use wcf\data\DatabaseObject;
-use wcf\data\DatabaseObjectList;
 use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\email\log\entry\EmailLogEntryList;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -21,6 +16,10 @@ use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\IInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -46,13 +45,15 @@ final class EmailLogGridView extends AbstractGridView
             GridViewColumn::for('subject')
                 ->label('wcf.acp.email.log.subject')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable()
+                ->valueEncoding(false)
                 ->renderer(new TruncatedTextColumnRenderer()),
             GridViewColumn::for('messageID')
                 ->label('wcf.acp.email.log.messageId')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable()
+                ->valueEncoding(false)
                 ->renderer(
                     new class(50) extends TruncatedTextColumnRenderer {
                         #[\Override]
@@ -66,7 +67,7 @@ final class EmailLogGridView extends AbstractGridView
                 ),
             GridViewColumn::for('recipient')
                 ->label('wcf.user.email')
-                ->filter(WCF::getSession()->getPermission("admin.user.canEditMailAddress") ? new TextFilter() : null)
+                ->filter(WCF::getSession()->getPermission("admin.user.canEditMailAddress") ? TextFilter::class : null)
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -87,7 +88,7 @@ final class EmailLogGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('recipientID')
                 ->label('wcf.user.username')
-                ->filter(new UserFilter())
+                ->filter(UserFilter::class)
                 ->sortable(sortByDatabaseColumn: 'user_table.username')
                 ->renderer(
                     new class extends AbstractColumnRenderer {
@@ -119,19 +120,21 @@ final class EmailLogGridView extends AbstractGridView
             GridViewColumn::for('time')
                 ->label('wcf.acp.email.log.time')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
             GridViewColumn::for('status')
                 ->label('wcf.acp.email.log.status')
-                ->filter(
-                    new SelectFilter([
+                ->filter(new SelectFilter(
+                    [
                         EmailLogEntry::STATUS_NEW => 'wcf.acp.email.log.status.new',
                         EmailLogEntry::STATUS_SUCCESS => 'wcf.acp.email.log.status.success',
                         EmailLogEntry::STATUS_TRANSIENT_FAILURE => 'wcf.acp.email.log.status.transient_failure',
                         EmailLogEntry::STATUS_PERMANENT_FAILURE => 'wcf.acp.email.log.status.permanent_failure',
                         EmailLogEntry::STATUS_DISCARDED => 'wcf.acp.email.log.status.discarded',
-                    ])
-                )
+                    ],
+                    'status',
+                    'wcf.acp.email.log.status'
+                ))
                 ->renderer(
                     new class extends DefaultColumnRenderer {
                         #[\Override]

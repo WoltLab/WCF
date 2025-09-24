@@ -1,32 +1,26 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\option\IFormOption;
-use wcf\system\listView\filter\AbstractFilter;
-use wcf\system\WCF;
+use wcf\system\form\builder\field\CheckboxFormField;
 
 /**
- * Filter for columns that contain form option values.
+ * Filter for boolean columns.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class FormOptionFilter extends AbstractFilter
+class BooleanFilter extends AbstractFilter
 {
-    /**
-     * @param array<string, mixed> $configuration
-     */
     public function __construct(
-        private readonly IFormOption $option,
-        private readonly array $configuration,
         string $id,
         string $languageItem,
-        string $databaseColumn = ''
+        string $databaseColumn = '',
+        private readonly bool $reverseValue = false
     ) {
         parent::__construct($id, $languageItem, $databaseColumn);
     }
@@ -34,18 +28,24 @@ final class FormOptionFilter extends AbstractFilter
     #[\Override]
     public function getFormField(): AbstractFormField
     {
-        return $this->option->getFilterFormField($this->id, $this->configuration)->label($this->languageItem);
+        return CheckboxFormField::create($this->id)
+            ->label($this->languageItem)
+            ->nullable();
     }
 
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
-        $this->option->applyFilter($list, $this->getDatabaseColumnName($list), $value);
+        $columnName = $this->getDatabaseColumnName($list);
+
+        $list->getConditionBuilder()->add("{$columnName} = ?", [
+            $this->reverseValue ? 0 : 1,
+        ]);
     }
 
     #[\Override]
     public function renderValue(string $value): string
     {
-        return $this->option->renderFilterValue($value, $this->configuration);
+        return '';
     }
 }

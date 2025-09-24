@@ -22,7 +22,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}{if $gridView->countRows()} <span class="badge badgeInverse">{#$gridView->countRows()}</span>{/if}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}</h1>
 	</div>
 	
 	{hascontent}

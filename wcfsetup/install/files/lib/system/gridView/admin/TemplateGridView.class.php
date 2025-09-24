@@ -17,10 +17,6 @@ use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\AbstractFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -29,6 +25,10 @@ use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\interaction\admin\TemplateInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\AbstractFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 
 /**
@@ -53,7 +53,11 @@ final class TemplateGridView extends AbstractGridView
                 ->renderer(new ObjectIdColumnRenderer()),
             GridViewColumn::for("application")
                 ->label("wcf.acp.template.application")
-                ->filter(new SelectFilter($this->getApplications()))
+                ->filter(new SelectFilter(
+                    $this->getApplications(),
+                    'application',
+                    'wcf.acp.template.application'
+                ))
                 ->renderer(new DefaultColumnRenderer())
                 ->sortable(),
             GridViewColumn::for("templateGroupID")
@@ -64,10 +68,10 @@ final class TemplateGridView extends AbstractGridView
                 ->label("wcf.global.name")
                 ->titleColumn()
                 ->sortable()
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for("lastModificationTime")
                 ->label("wcf.acp.template.lastModificationTime")
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer())
                 ->sortable(),
         ]);
@@ -118,20 +122,20 @@ final class TemplateGridView extends AbstractGridView
 
     private function getTemplateGroupFilter(): AbstractFilter
     {
-        return new class extends AbstractFilter {
+        return new class('templateGroupID', 'wcf.acp.template.group') extends AbstractFilter {
             #[\Override]
-            public function getFormField(string $id, string $label): AbstractFormField
+            public function getFormField(): AbstractFormField
             {
-                return SingleSelectionFormField::create($id)
-                    ->label($label)
+                return SingleSelectionFormField::create($this->id)
+                    ->label($this->languageItem)
                     ->nullable()
                     ->options($this->getSelectOptions(), true);
             }
 
             #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+            public function applyFilter(DatabaseObjectList $list, string $value): void
             {
-                $columnName = $this->getDatabaseColumnName($list, $id);
+                $columnName = $this->getDatabaseColumnName($list);
 
                 if ($value == TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID) {
                     $list->getConditionBuilder()->add("{$columnName} IS NULL");

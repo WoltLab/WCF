@@ -6,15 +6,15 @@ use wcf\data\acp\session\access\log\ACPSessionAccessLog;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogList;
 use wcf\event\gridView\admin\ACPSessionGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\IpAddressFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\IpAddressColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
+use wcf\system\view\filter\IpAddressFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 
 /**
@@ -40,31 +40,36 @@ final class ACPSessionGridView extends AbstractGridView
                 ->label('wcf.user.ipAddress')
                 ->sortable()
                 ->renderer(new IpAddressColumnRenderer())
-                ->filter(new IpAddressFilter()),
+                ->filter(IpAddressFilter::class),
             GridViewColumn::for('time')
                 ->label('wcf.acp.sessionLog.time')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
+                ->filter(TimeFilter::class),
             GridViewColumn::for('className')
                 ->label('wcf.acp.sessionLog.className')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('requestURI')
                 ->label('wcf.acp.sessionLog.requestURI')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->valueEncoding(false)
+                ->filter(TextFilter::class)
                 ->renderer(new TruncatedTextColumnRenderer())
                 ->sortable(),
             GridViewColumn::for('requestMethod')
                 ->label('wcf.acp.sessionLog.requestMethod')
                 ->sortable()
                 ->filter(
-                    new SelectFilter([
-                        'GET' => 'GET',
-                        'POST' => 'POST',
-                        'DELETE' => 'DELETE',
-                    ])
+                    new SelectFilter(
+                        [
+                            'GET' => 'GET',
+                            'POST' => 'POST',
+                            'DELETE' => 'DELETE',
+                        ],
+                        'requestMethod',
+                        'wcf.acp.sessionLog.requestMethod'
+                    )
                 ),
         ]);
 

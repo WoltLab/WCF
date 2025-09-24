@@ -1,20 +1,20 @@
 <?php
 
-namespace wcf\system\listView\filter;
+namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
- * Abstract implementation for list view filters.
+ * Abstract implementation for view filters.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-abstract class AbstractFilter implements IListViewFilter
+abstract class AbstractFilter implements IViewFilter
 {
     public function __construct(
         protected readonly string $id,
