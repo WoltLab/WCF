@@ -64,13 +64,16 @@ final class ListViewFilterAction implements RequestHandlerInterface
             if ($response !== null) {
                 return $response;
             }
+
             $rawData = $form->getData();
             $data = $rawData['data'];
-            // This code is required to bypass the strange behavior of the LabelFormField.
-            if (!empty($rawData['labelIDs'])) {
-                foreach ($rawData['labelIDs'] as $groupID => $value) {
-                    $data['labelIDs' . $groupID] = $value;
+
+            foreach ($view->getAvailableFilters() as $filter) {
+                if (!isset($rawData[$filter->getFormDataId()])) {
+                    continue;
                 }
+
+                $data[$filter->getId()] = $filter->serializeValue($rawData[$filter->getFormDataId()]);
             }
 
             foreach ($data as $key => $value) {
@@ -102,7 +105,8 @@ final class ListViewFilterAction implements RequestHandlerInterface
             $formField = $filter->getFormField();
 
             if (isset($values[$filter->getID()])) {
-                $formField->value($values[$filter->getID()]);
+                $value = $filter->unserializeValue($values[$filter->getID()]);
+                $formField->value($value);
             }
 
             $form->appendChild($formField);

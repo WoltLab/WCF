@@ -68,4 +68,21 @@ class LabelFilter extends AbstractFilter
     {
         return $this->labelGroup->getLabel((int)$value)->getTitle();
     }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        if (\is_array($value) && isset($value[$this->labelGroup->groupID])) {
+            return $value[$this->labelGroup->groupID];
+        }
+
+        return '';
+    }
+
+    #[\Override]
+    public function getFormDataId(): string
+    {
+        // `LabelFormField` stores form data values always under the key `labelIDs`.
+        return 'labelIDs';
+    }
 }
