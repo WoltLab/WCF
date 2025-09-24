@@ -757,12 +757,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
 
 		-
-			message: '#^Call to function is_numeric\(\) with float\|int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractNumericFormField.class.php
-
-		-
 			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 2
@@ -797,12 +791,6 @@ parameters:
 			identifier: booleanAnd.alwaysFalse
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/RadioButtonFormField.class.php
-
-		-
-			message: '#^Call to function is_numeric\(\) with float\|int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/RatingFormField.class.php
 
 		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
@@ -850,12 +838,6 @@ parameters:
 			message: '#^Call to function is_array\(\) with array\<wcf\\system\\file\\upload\\UploadFile\> will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/UploadFormField.class.php
-
-		-
-			message: '#^Call to function is_numeric\(\) with float\|int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/UploadFormField.class.php
 
 		-

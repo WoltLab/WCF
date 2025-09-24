@@ -71,10 +71,8 @@ final class RatingFormField extends AbstractFormField implements
         return \range($this->minimum, $this->maximum);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function maximum($maximum = null)
+    #[\Override]
+    public function maximum(null|int|float $maximum = null): static
     {
         if ($maximum === null) {
             throw new \InvalidArgumentException("Cannot unset maximum value for field '{$this->getId()}'.");
@@ -83,10 +81,8 @@ final class RatingFormField extends AbstractFormField implements
         return $this->traitMaximum($maximum);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function minimum($minimum = null)
+    #[\Override]
+    public function minimum(null|int|float $minimum = null): static
     {
         if ($minimum === null) {
             throw new \InvalidArgumentException("Cannot unset minimum value for field '{$this->getId()}'.");
