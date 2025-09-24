@@ -65,7 +65,7 @@
 				class="contentInteractionButton button small jsOnly"
 				data-object-id="{$queue->queueID}"
 				data-object-name="{$queue->getTitle()}"
-				data-redirect-url="{link controller='ModerationList'}{/link}"
+				data-redirect-url="{link controller='ModerationList'}filters[status]=0{/link}"
 			>{icon name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
 		{/if}
 		<button
@@ -73,7 +73,7 @@
 			id="removeReport"
 			class="contentInteractionButton button small jsOnly"
 			data-object-id="{$queue->queueID}"
-			data-redirect-url="{link controller='ModerationList'}{/link}"
+			data-redirect-url="{link controller='ModerationList'}filters[status]=0{/link}"
 		>{icon name='square-check'} <span>{lang}wcf.moderation.report.removeReport{/lang}</span></button>
 	{/if}
 	{if $queue->canChangeJustifiedStatus()}

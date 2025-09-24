@@ -38,7 +38,7 @@ use wcf\util\StringUtil;
  */
 final class ModerationQueueGridView extends AbstractGridView
 {
-    public function __construct(?int $status = null)
+    public function __construct()
     {
         $this->addColumns([
             GridViewColumn::for('title')
@@ -216,12 +216,6 @@ final class ModerationQueueGridView extends AbstractGridView
         $this->setDefaultSortField("lastChangeTime");
         $this->setDefaultSortOrder("DESC");
         $this->addRowLink(new GridViewRowLink(isLinkableObject: true));
-
-        if ($status !== null) {
-            $this->setActiveFilters([
-                "status" => $status
-            ]);
-        }
     }
 
     private function getDefinitionFilter(): SelectFilter
