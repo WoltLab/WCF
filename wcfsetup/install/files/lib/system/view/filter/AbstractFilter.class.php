@@ -47,4 +47,22 @@ abstract class AbstractFilter implements IViewFilter
     {
         return ($this->databaseColumn ?: $list->getDatabaseTableAlias() . '.' . $this->id);
     }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        return (string)$value;
+    }
+
+    #[\Override]
+    public function unserializeValue(string $value): mixed
+    {
+        return $value;
+    }
+
+    #[\Override]
+    public function getFormDataId(): string
+    {
+        return $this->getId();
+    }
 }

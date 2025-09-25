@@ -65,9 +65,19 @@ final class GridViewFilterAction implements RequestHandlerInterface
                 return $response;
             }
 
-            $data = $form->getData()['data'];
+            $rawData = $form->getData();
+            $data = $rawData['data'];
+
+            foreach ($view->getAvailableFilters() as $filter) {
+                if (!isset($rawData[$filter->getFormDataId()])) {
+                    continue;
+                }
+
+                $data[$filter->getId()] = $filter->serializeValue($rawData[$filter->getFormDataId()]);
+            }
+
             foreach ($data as $key => $value) {
-                if ($value === '' || $value === null) {
+                if ($value === '' || $value === null || $value === 0) {
                     unset($data[$key]);
                 }
             }
@@ -95,7 +105,8 @@ final class GridViewFilterAction implements RequestHandlerInterface
             $formField = $filter->getFormField();
 
             if (isset($values[$filter->getID()])) {
-                $formField->value($values[$filter->getID()]);
+                $value = $filter->unserializeValue($values[$filter->getID()]);
+                $formField->value($value);
             }
 
             $form->appendChild($formField);

@@ -26,6 +26,7 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\CategoryFilter;
+use wcf\system\view\filter\MultipleSelectFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
@@ -192,7 +193,7 @@ final class ArticleGridView extends AbstractGridView
                     );
                 }
             },
-            new SelectFilter(
+            new MultipleSelectFilter(
                 [
                     0 => 'wcf.acp.article.publicationStatus.unpublished',
                     1 => 'wcf.acp.article.publicationStatus.published',
@@ -201,7 +202,7 @@ final class ArticleGridView extends AbstractGridView
                 'publicationStatus',
                 'wcf.acp.article.publicationStatus'
             ),
-            new BooleanFilter('isDeleted', 'wcf.acp.article.isDeleted')
+            new BooleanFilter('isDeleted', 'wcf.acp.article.isDeleted'),
         ]);
         $provider = new ArticleInteractions();
         $provider->addInteractions([
