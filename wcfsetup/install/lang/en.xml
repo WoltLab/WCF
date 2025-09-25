@@ -270,7 +270,7 @@
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid{if $language} for language “{$language}”{/if}.]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
-		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable captcha question]]></item>
+		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Question]]></item>
 		<item name="wcf.acp.captcha.question.views"><![CDATA[Views]]></item>
@@ -1198,7 +1198,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.item.action.description"><![CDATA[Menu: {$menu->getTitle()}]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
-		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable menu item]]></item>
+		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable Menu Item]]></item>
 		<item name="wcf.acp.menu.item.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.menu.item.link.external"><![CDATA[External link]]></item>
 		<item name="wcf.acp.menu.item.link.internal"><![CDATA[Internal link]]></item>
@@ -1792,7 +1792,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regular Expression]]></item>
 		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[You can provide a regular expression to validate the user input.]]></item>
 		<item name="wcf.acp.customOption.required"><![CDATA[This is a required field]]></item>
-		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Disable option]]></item>
+		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Disable Option]]></item>
 	</category>
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Apps]]></item>
@@ -3378,7 +3378,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Choose Category]]></item>
-		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
+		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML Code in the Description]]></item>
 	</category>
 	<category name="wcf.ckeditor">
 		<item name="wcf.ckeditor.code.fileName"><![CDATA[File Name]]></item>
