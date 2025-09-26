@@ -31,10 +31,9 @@
 				'wcf.acp.option.url_omit_index_php.test.status.success': '{jslang}wcf.acp.option.url_omit_index_php.test.status.success{/jslang}'
 			});
 			
-			const apps = new Map(Object.entries({
-				{* this bypasses the route system to force rewritten urls *}
-				{implode from=$rewriteTestApplications item=$rewriteTestApplication}'{unsafe:$rewriteTestApplication->getPackage()|encodeJS}': '{$__wcf->getPath($rewriteTestApplication->getAbbreviation())}core-rewrite-test/'{/implode}
-			}));
+			const apps = new Map(Object.entries(
+				{unsafe:$rewriteTestApplications|json}
+			));
 			
 			AcpUiOptionRewriteTest.init(apps);
 		});

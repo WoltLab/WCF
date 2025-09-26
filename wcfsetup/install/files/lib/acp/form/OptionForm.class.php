@@ -4,7 +4,9 @@ namespace wcf\acp\form;
 
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
+use wcf\event\acp\option\RewriteApplicationCollecting;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\option\OptionHandler;
@@ -110,10 +112,24 @@ class OptionForm extends AbstractOptionListForm
     {
         parent::assignVariables();
 
+        $event = new RewriteApplicationCollecting();
+        foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+            $event->register($application->getPackage()->getName(), WCF::getPath($application->getAbbreviation()));
+        }
+
+        EventHandler::getInstance()->fire($event);
+        $applications = $event->getApplications();
+
+        // Generate a static route to enforce URL rewriting.
+        $applications = \array_map(
+            static fn(string $path) => $path . 'core-rewrite-test/',
+            $applications
+        );
+
         WCF::getTPL()->assign([
             'category' => $this->category,
             'optionTree' => $this->optionTree,
-            'rewriteTestApplications' => ApplicationHandler::getInstance()->getApplications(),
+            'rewriteTestApplications' => $applications,
         ]);
     }
 
