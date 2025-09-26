@@ -80,11 +80,11 @@ final class PaidSubscriptionGridView extends AbstractGridView
                             }
 
                             return \sprintf(
-                                "%s %d",
+                                "%d %s",
+                                $row->subscriptionLength,
                                 WCF::getLanguage()->get(
                                     "wcf.acp.paidSubscription.subscriptionLengthUnit." . $row->subscriptionLengthUnit
-                                ),
-                                $row->subscriptionLength
+                                )
                             );
                         }
                     }
