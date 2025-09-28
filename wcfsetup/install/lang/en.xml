@@ -2773,7 +2773,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
-		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.updateServer.showErrorMessage"><![CDATA[Show Error Message]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Package Servers]]></item>
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occurred on last connection attempt:]]></item>
@@ -2789,9 +2788,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.serverURL.error.nonStandardPort"><![CDATA[The address must not use a non-standard port.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.userinfo"><![CDATA[The address may not contain credentials.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The entered server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The entered server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$duplicate->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last Access]]></item>
+		<item name="wcf.acp.updateServer.isDisabled"><![CDATA[Disable Server]]></item>
 	</category>
 	<category name="wcf.acp.sessionLog">
 		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Logged actions of session from “{$sessionLog->username}”]]></item>

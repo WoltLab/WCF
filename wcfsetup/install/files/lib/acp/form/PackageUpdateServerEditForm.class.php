@@ -2,12 +2,17 @@
 
 namespace wcf\acp\form;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\PackageUpdateServerListPage;
+use wcf\data\IStorableObject;
 use wcf\data\package\update\server\PackageUpdateServer;
-use wcf\data\package\update\server\PackageUpdateServerAction;
-use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\UrlFormField;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\interaction\admin\PackageUpdateServerInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -16,9 +21,9 @@ use wcf\system\WCF;
 /**
  * Shows the server edit form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
 {
@@ -28,102 +33,92 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
     public $activeMenuItem = 'wcf.acp.menu.link.package.server.list';
 
     /**
-     * update server id
-     * @var int
-     */
-    public $packageUpdateServerID = 0;
-
-    /**
-     * active package update server
-     * @var PackageUpdateServer
-     */
-    public $updateServer;
-
-    /**
      * @inheritDoc
      */
+    public $formAction = 'edit';
+
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->packageUpdateServerID = \intval($_REQUEST['id']);
-        }
-        $this->updateServer = new PackageUpdateServer($this->packageUpdateServerID);
-        if (!$this->updateServer->packageUpdateServerID) {
+        try {
+            $queryParameters = Helper::mapQueryParameters(
+                $_GET,
+                <<<'EOT'
+                    array {
+                        id: positive-int
+                    }
+                    EOT
+            );
+            $this->formObject = new PackageUpdateServer($queryParameters['id']);
+
+            if (!$this->formObject->getObjectID()) {
+                throw new IllegalLinkException();
+            }
+        } catch (MappingError) {
             throw new IllegalLinkException();
         }
 
-        if ($this->updateServer->isWoltLabUpdateServer() || $this->updateServer->isWoltLabStoreServer()) {
+        if ($this->formObject->isWoltLabUpdateServer() || $this->formObject->isWoltLabStoreServer()) {
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(LicenseEditForm::class),
             );
         }
     }
 
-    /**
-     * Does nothing.
-     *
-     * @since       5.3
-     */
-    public function validateServerURL()
+    #[\Override]
+    protected function createForm()
     {
+        parent::createForm();
+
+        $serverUrlField = $this->form->getFormField('serverURL');
+        \assert($serverUrlField instanceof UrlFormField);
+        $serverUrlField->immutable();
         // The server URL cannot be modified, thus we do not need to validate it.
+        $serverUrlField->removeValidator('serverUrlValidator');
+
+        if ($this->formObject->loginUsername) {
+            $passwordField = $this->form->getFormField('loginPassword');
+            \assert($passwordField instanceof PasswordFormField);
+            $passwordField->placeholder('wcf.acp.updateServer.loginPassword.noChange');
+        }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function save()
+    #[\Override]
+    public function finalizeForm()
     {
-        AbstractForm::save();
+        parent::finalizeForm();
 
-        $data = [];
-        if ($this->loginUsername != $this->updateServer->loginUsername || $this->loginPassword) {
-            $data['loginUsername'] = $this->loginUsername;
-            $data['loginPassword'] = $this->loginPassword;
-        }
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'editServerProcessor',
+                function (IFormDocument $document, array $parameters) {
+                    if ($parameters['data']['loginUsername'] === $this->formObject->loginUsername && !$parameters['data']['loginPassword']) {
+                        unset($parameters['data']['loginUsername']);
+                        unset($parameters['data']['loginPassword']);
+                    }
 
-        // save server
-        $this->objectAction = new PackageUpdateServerAction(
-            [$this->packageUpdateServerID],
-            'update',
-            ['data' => \array_merge($this->additionalFields, $data)]
+                    return $parameters;
+                },
+                function (IFormDocument $document, array $data, IStorableObject $object) {
+                    unset($data['loginPassword']);
+
+                    return $data;
+                }
+            )
         );
-        $this->objectAction->executeAction();
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        parent::readData();
-
-        $this->serverURL = $this->updateServer->serverURL;
-        if (empty($_POST)) {
-            $this->loginUsername = $this->updateServer->loginUsername;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'packageUpdateServerID' => $this->packageUpdateServerID,
-            'packageUpdateServer' => $this->updateServer,
-            'action' => 'edit',
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new PackageUpdateServerInteractions(),
-                $this->updateServer,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(PackageUpdateServerListPage::class)
             ),
         ]);
