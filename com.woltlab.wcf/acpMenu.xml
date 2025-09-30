@@ -2,21 +2,6 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
 	<import>
 		<!-- configuration -->
-		<acpmenuitem name="wcf.acp.menu.link.configuration">
-			<showorder>1</showorder>
-			<icon>wrench</icon>
-		</acpmenuitem>
-		<!-- option -->
-		<acpmenuitem name="wcf.acp.menu.link.option">
-			<parent>wcf.acp.menu.link.configuration</parent>
-			<permissions>admin.configuration.canEditOption</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.option.category">
-			<parent>wcf.acp.menu.link.option</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<!-- /option -->
 		<!-- package -->
 		<acpmenuitem name="wcf.acp.menu.link.package">
 			<parent>wcf.acp.menu.link.configuration</parent>
@@ -782,5 +767,8 @@
 	</import>
 	<delete>
 		<acpmenuitem name="wcf.acp.menu.link.contact.settings"/>
+		<acpmenuitem name="wcf.acp.menu.link.configuration"/>
+		<acpmenuitem name="wcf.acp.menu.link.option"/>
+		<acpmenuitem name="wcf.acp.menu.link.option.category"/>
 	</delete>
 </data>
