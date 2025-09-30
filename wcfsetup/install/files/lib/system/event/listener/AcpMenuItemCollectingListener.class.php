@@ -2,7 +2,6 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\data\option\category\OptionCategoryList;
 use wcf\event\acp\menu\item\ItemCollecting;
 use wcf\system\cache\eager\TopOptionCategoryCache;
 use wcf\system\menu\acp\AcpMenuItem;
@@ -23,9 +22,11 @@ final class AcpMenuItemCollectingListener
     public function __invoke(ItemCollecting $event): void
     {
         $this->addTopLevelItems($event);
+
         $this->addOptionItems($event);
         $this->addPackageItems($event);
-
+        $this->addOtherItems($event);
+        $this->addDevtoolsItems($event);
         $this->addContactFormItems($event);
     }
 
@@ -67,6 +68,44 @@ final class AcpMenuItemCollectingListener
     }
 
     private function addPackageItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.other',
+            parentMenuItem: 'wcf.acp.menu.link.configuration'
+        ));
+
+        if (WCF::getSession()->getPermission('admin.user.canEditActivityPoints')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.activityPoint',
+                parentMenuItem: 'wcf.acp.menu.link.other',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserActivityPointOptionForm::class)
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.user.canManageNotificationSettings')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.notificationPresetSettings',
+                parentMenuItem: 'wcf.acp.menu.link.other',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\NotificationPresetSettingsForm::class)
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.captcha.canManageCaptchaQuestion')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.captcha.question.list',
+                parentMenuItem: 'wcf.acp.menu.link.other',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\CaptchaQuestionListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.captcha.question.add',
+                parentMenuItem: 'wcf.acp.menu.link.captcha.question.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\CaptchaQuestionAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+    }
+
+    private function addOtherItems(ItemCollecting $event): void
     {
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.package',
@@ -120,6 +159,44 @@ final class AcpMenuItemCollectingListener
                 icon: FontAwesomeIcon::fromValues('plus')
             ));
         }
+    }
+
+    private function addDevtoolsItems(ItemCollecting $event): void
+    {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.devtools',
+            parentMenuItem: 'wcf.acp.menu.link.configuration'
+        ));
+
+        if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.devtools.project.list',
+            parentMenuItem: 'wcf.acp.menu.link.devtools',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\DevtoolsProjectListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.devtools.project.add',
+            parentMenuItem: 'wcf.acp.menu.link.devtools.project.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\DevtoolsProjectAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.devtools.missingLanguageItem.list',
+            parentMenuItem: 'wcf.acp.menu.link.devtools',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\DevtoolsMissingLanguageItemListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.devtools.notificationTest',
+            parentMenuItem: 'wcf.acp.menu.link.devtools',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\DevtoolsNotificationTestPage::class),
+        ));
     }
 
     private function addContactFormItems(ItemCollecting $event): void

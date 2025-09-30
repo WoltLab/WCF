@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
 	<import>
-		<!-- configuration -->
-		<!-- other -->
-		<acpmenuitem name="wcf.acp.menu.link.other">
-			<parent>wcf.acp.menu.link.configuration</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.activityPoint">
-			<controller>wcf\acp\form\UserActivityPointOptionForm</controller>
-			<parent>wcf.acp.menu.link.other</parent>
-			<permissions>admin.user.canEditActivityPoints</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
-			<controller>wcf\acp\form\NotificationPresetSettingsForm</controller>
-			<parent>wcf.acp.menu.link.other</parent>
-			<permissions>admin.user.canManageNotificationSettings</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
-			<controller>wcf\acp\page\CaptchaQuestionListPage</controller>
-			<parent>wcf.acp.menu.link.other</parent>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
-			<controller>wcf\acp\form\CaptchaQuestionAddForm</controller>
-			<parent>wcf.acp.menu.link.captcha.question.list</parent>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /other -->
-		<!-- devtools -->
-		<acpmenuitem name="wcf.acp.menu.link.devtools">
-			<parent>wcf.acp.menu.link.configuration</parent>
-			<options>enable_developer_tools</options>
-			<showorder>99</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.devtools.project.list">
-			<controller>wcf\acp\page\DevtoolsProjectListPage</controller>
-			<parent>wcf.acp.menu.link.devtools</parent>
-			<permissions>admin.configuration.package.canInstallPackage</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.devtools.project.add">
-			<controller>wcf\acp\form\DevtoolsProjectAddForm</controller>
-			<parent>wcf.acp.menu.link.devtools.project.list</parent>
-			<permissions>admin.configuration.package.canInstallPackage</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.devtools.missingLanguageItem.list">
-			<controller>wcf\acp\page\DevtoolsMissingLanguageItemListPage</controller>
-			<parent>wcf.acp.menu.link.devtools</parent>
-			<permissions>admin.configuration.package.canInstallPackage</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
-			<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
-			<parent>wcf.acp.menu.link.devtools</parent>
-			<permissions>admin.configuration.package.canInstallPackage</permissions>
-		</acpmenuitem>
-		<!-- /devtools -->
-		<!-- /configuration -->
 		<!-- user -->
 		<acpmenuitem name="wcf.acp.menu.link.user">
 			<showorder>2</showorder>
@@ -738,5 +681,15 @@
 		<acpmenuitem name="wcf.acp.menu.link.package.install"/>
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list"/>
 		<acpmenuitem name="wcf.acp.menu.link.package.server.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.other"/>
+		<acpmenuitem name="wcf.acp.menu.link.activityPoint"/>
+		<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings"/>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.devtools"/>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.project.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.project.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.missingLanguageItem.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest"/>
 	</delete>
 </data>
