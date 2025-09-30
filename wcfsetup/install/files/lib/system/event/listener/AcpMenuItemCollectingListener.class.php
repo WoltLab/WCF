@@ -24,6 +24,7 @@ final class AcpMenuItemCollectingListener
     {
         $this->addTopLevelItems($event);
         $this->addOptionItems($event);
+        $this->addPackageItems($event);
 
         $this->addContactFormItems($event);
     }
@@ -64,6 +65,76 @@ final class AcpMenuItemCollectingListener
                         \wcf\acp\form\OptionForm::class,
                         ['id' => $optionCategory->categoryID]
                     ),
+                )
+            );
+        }
+    }
+
+    private function addPackageItems(ItemCollecting $event): void
+    {
+        $event->register(
+            new AcpMenuItem(
+                'wcf.acp.menu.link.package',
+                parentMenuItem: 'wcf.acp.menu.link.configuration'
+            )
+        );
+
+        if (WCF::getSession()->getPermission('admin.configuration.canManageApplication')) {
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.application.management',
+                    parentMenuItem: 'wcf.acp.menu.link.package',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ApplicationManagementForm::class)
+                )
+            );
+        }
+
+        if (
+            WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')
+            || WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
+        ) {
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.package.list',
+                    parentMenuItem: 'wcf.acp.menu.link.package',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PackageListPage::class)
+                )
+            );
+        }
+
+        if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.package.license',
+                    parentMenuItem: 'wcf.acp.menu.link.package.list',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\LicensePage::class),
+                    icon: FontAwesomeIcon::fromValues('cart-arrow-down')
+                )
+            );
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.package.install',
+                    parentMenuItem: 'wcf.acp.menu.link.package.list',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\PackageStartInstallForm::class),
+                    icon: FontAwesomeIcon::fromValues('plus')
+                )
+            );
+        }
+
+        if (WCF::getSession()->getPermission('admin.configuration.package.canEditServer')) {
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.package.server.list',
+                    parentMenuItem: 'wcf.acp.menu.link.package',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PackageUpdateServerListPage::class),
+                )
+            );
+            $event->register(
+                new AcpMenuItem(
+                    'wcf.acp.menu.link.package.server.add',
+                    parentMenuItem: 'wcf.acp.menu.link.package.server.list',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\PackageUpdateServerAddForm::class),
+                    icon: FontAwesomeIcon::fromValues('plus')
                 )
             );
         }
