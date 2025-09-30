@@ -1,186 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
 	<import>
-		<!-- user -->
-		<!-- group -->
-		<acpmenuitem name="wcf.acp.menu.link.group">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.group.list">
-			<controller>wcf\acp\page\UserGroupListPage</controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.group.add">
-			<controller>wcf\acp\form\UserGroupAddForm</controller>
-			<parent>wcf.acp.menu.link.group.list</parent>
-			<permissions>admin.user.canAddGroup</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.group.mail">
-			<controller>wcf\acp\form\UserMailForm</controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<link>action=group</link>
-			<permissions>admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.group.assignment">
-			<controller>wcf\acp\page\UserGroupAssignmentListPage</controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canManageGroupAssignment</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.group.assignment.add">
-			<controller>wcf\acp\form\UserGroupAssignmentAddForm</controller>
-			<parent>wcf.acp.menu.link.group.assignment</parent>
-			<permissions>admin.user.canManageGroupAssignment</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /group -->
-		<!-- rank -->
-		<acpmenuitem name="wcf.acp.menu.link.user.rank">
-			<parent>wcf.acp.menu.link.user</parent>
-			<options>module_user_rank</options>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
-			<controller>wcf\acp\page\UserRankListPage</controller>
-			<parent>wcf.acp.menu.link.user.rank</parent>
-			<permissions>admin.user.rank.canManageRank</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
-			<controller>wcf\acp\form\UserRankAddForm</controller>
-			<parent>wcf.acp.menu.link.user.rank.list</parent>
-			<permissions>admin.user.rank.canManageRank</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /rank -->
-		<!-- option -->
-		<acpmenuitem name="wcf.acp.menu.link.user.option">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.list">
-			<controller>wcf\acp\page\UserOptionListPage</controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.add">
-			<controller>wcf\acp\form\UserOptionAddForm</controller>
-			<parent>wcf.acp.menu.link.user.option.list</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
-			<controller>wcf\acp\page\UserOptionCategoryListPage</controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
-			<controller>wcf\acp\form\UserOptionCategoryAddForm</controller>
-			<parent>wcf.acp.menu.link.user.option.category.list</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.userOptionDefaults">
-			<controller>wcf\acp\form\UserOptionSetDefaultsForm</controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<!-- /option -->
-		<!-- notice -->
-		<acpmenuitem name="wcf.acp.menu.link.notice">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.list">
-			<controller>wcf\acp\page\NoticeListPage</controller>
-			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.notice.canManageNotice</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.add">
-			<controller>wcf\acp\form\NoticeAddForm</controller>
-			<parent>wcf.acp.menu.link.notice.list</parent>
-			<permissions>admin.notice.canManageNotice</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /notice -->
-		<!-- paid subscription -->
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.list">
-			<controller>wcf\acp\page\PaidSubscriptionListPage</controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<options>module_paid_subscription</options>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.add">
-			<controller>wcf\acp\form\PaidSubscriptionAddForm</controller>
-			<parent>wcf.acp.menu.link.paidSubscription.list</parent>
-			<options>module_paid_subscription</options>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list">
-			<controller>wcf\acp\page\PaidSubscriptionUserListPage</controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<options>module_paid_subscription</options>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.transactionLog.list">
-			<controller>wcf\acp\page\PaidSubscriptionTransactionLogListPage</controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<options>module_paid_subscription</options>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-		</acpmenuitem>
-		<!-- /paid subscription -->
-		<!-- trophy -->
-		<acpmenuitem name="wcf.acp.menu.link.trophy">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>7</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.trophy.category.list">
-			<controller>wcf\acp\page\TrophyCategoryListPage</controller>
-			<parent>wcf.acp.menu.link.trophy</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canManageTrophy</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.trophy.category.add">
-			<controller>wcf\acp\form\TrophyCategoryAddForm</controller>
-			<parent>wcf.acp.menu.link.trophy.category.list</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canManageTrophy</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.trophy.list">
-			<controller>wcf\acp\page\TrophyListPage</controller>
-			<parent>wcf.acp.menu.link.trophy</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canManageTrophy</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.trophy.add">
-			<controller>wcf\acp\form\TrophyAddForm</controller>
-			<parent>wcf.acp.menu.link.trophy.list</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canManageTrophy</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.userTrophy.list">
-			<controller>wcf\acp\page\UserTrophyListPage</controller>
-			<parent>wcf.acp.menu.link.trophy</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canAwardTrophy</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.userTrophy.add">
-			<controller>wcf\acp\form\UserTrophyAddForm</controller>
-			<parent>wcf.acp.menu.link.userTrophy.list</parent>
-			<options>module_trophy</options>
-			<permissions>admin.trophy.canAwardTrophy</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /trophy -->
-		<!-- /user -->
 		<!-- content -->
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>3</showorder>
@@ -656,5 +476,35 @@
 		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing"/>
 		<acpmenuitem name="wcf.acp.menu.link.user.mail"/>
 		<acpmenuitem name="wcf.acp.menu.link.user.profileMenu"/>
+		<acpmenuitem name="wcf.acp.menu.link.group"/>
+		<acpmenuitem name="wcf.acp.menu.link.group.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.group.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.group.mail"/>
+		<acpmenuitem name="wcf.acp.menu.link.group.assignment"/>
+		<acpmenuitem name="wcf.acp.menu.link.group.assignment.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.rank"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.option"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.userOptionDefaults"/>
+		<acpmenuitem name="wcf.acp.menu.link.notice"/>
+		<acpmenuitem name="wcf.acp.menu.link.notice.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.notice.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription"/>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.transactionLog.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.trophy"/>
+		<acpmenuitem name="wcf.acp.menu.link.trophy.category.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.trophy.category.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.trophy.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.trophy.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.userTrophy.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.userTrophy.add"/>
 	</delete>
 </data>

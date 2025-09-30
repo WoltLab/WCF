@@ -30,6 +30,12 @@ final class AcpMenuItemCollectingListener
         $this->addContactFormItems($event);
 
         $this->addUserItems($event);
+        $this->addUserGroupItems($event);
+        $this->addUserRankItems($event);
+        $this->addUserOptionItems($event);
+        $this->addUserNoticeItems($event);
+        $this->addPaidSubscriptionItems($event);
+        $this->addTrophyItems($event);
     }
 
     private function addTopLevelItems(ItemCollecting $event): void
@@ -262,14 +268,14 @@ final class AcpMenuItemCollectingListener
                 'wcf.acp.menu.link.user.search',
                 parentMenuItem: 'wcf.acp.menu.link.user.list',
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserSearchForm::class),
-                icon: FontAwesomeIcon::fromValues('magnifying-glass'),
+                icon: FontAwesomeIcon::fromValues('magnifying-glass')
             ));
             if (WCF::getSession()->getPermission('admin.user.canAddUser')) {
                 $event->register(new AcpMenuItem(
                     'wcf.acp.menu.link.user.add',
                     parentMenuItem: 'wcf.acp.menu.link.user.list',
                     link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserAddForm::class),
-                    icon: FontAwesomeIcon::fromValues('plus'),
+                    icon: FontAwesomeIcon::fromValues('plus')
                 ));
             }
         }
@@ -299,5 +305,230 @@ final class AcpMenuItemCollectingListener
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserProfileMenuPage::class)
             ));
         }
+    }
+
+    private function addUserGroupItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.group',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+
+        if (
+            WCF::getSession()->getPermission('admin.user.canEditGroup')
+            || WCF::getSession()->getPermission('admin.user.canDeleteGroup')
+        ) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.group.list',
+                parentMenuItem: 'wcf.acp.menu.link.group',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserGroupListPage::class)
+            ));
+
+            if (WCF::getSession()->getPermission('admin.user.canAddGroup')) {
+                $event->register(new AcpMenuItem(
+                    'wcf.acp.menu.link.group.add',
+                    parentMenuItem: 'wcf.acp.menu.link.group.list',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserGroupAddForm::class),
+                    icon: FontAwesomeIcon::fromValues('plus')
+                ));
+            }
+        }
+
+        if (WCF::getSession()->getPermission('admin.user.canMailUser')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.group.mail',
+                parentMenuItem: 'wcf.acp.menu.link.group',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserMailForm::class),
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.user.canManageGroupAssignment')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.group.assignment',
+                parentMenuItem: 'wcf.acp.menu.link.group',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserGroupAssignmentListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.group.assignment.add',
+                parentMenuItem: 'wcf.acp.menu.link.group.assignment',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserGroupAssignmentAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+    }
+
+    private function addUserRankItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_USER_RANK) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.user.rank.canManageRank')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.rank',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.rank.list',
+            parentMenuItem: 'wcf.acp.menu.link.user.rank',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserRankListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.rank.add',
+            parentMenuItem: 'wcf.acp.menu.link.user.rank.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserRankAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addUserOptionItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.option',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.option.list',
+            parentMenuItem: 'wcf.acp.menu.link.user.option',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserOptionListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.option.add',
+            parentMenuItem: 'wcf.acp.menu.link.user.option.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserOptionAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.option.category.list',
+            parentMenuItem: 'wcf.acp.menu.link.user.option',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserOptionCategoryListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.option.category.add',
+            parentMenuItem: 'wcf.acp.menu.link.user.option.category.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserOptionCategoryAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.userOptionDefaults',
+            parentMenuItem: 'wcf.acp.menu.link.user.option',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserOptionSetDefaultsForm::class),
+        ));
+    }
+
+    private function addUserNoticeItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.notice.canManageNotice')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.notice',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.notice.list',
+            parentMenuItem: 'wcf.acp.menu.link.notice',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\NoticeListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.notice.add',
+            parentMenuItem: 'wcf.acp.menu.link.notice.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\NoticeAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addPaidSubscriptionItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_PAID_SUBSCRIPTION) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.paidSubscription.canManageSubscription')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.paidSubscription',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.paidSubscription.list',
+            parentMenuItem: 'wcf.acp.menu.link.paidSubscription',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PaidSubscriptionListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.paidSubscription.add',
+            parentMenuItem: 'wcf.acp.menu.link.paidSubscription.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\PaidSubscriptionAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.paidSubscription.user.list',
+            parentMenuItem: 'wcf.acp.menu.link.paidSubscription',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PaidSubscriptionUserListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.paidSubscription.transactionLog.list',
+            parentMenuItem: 'wcf.acp.menu.link.paidSubscription',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PaidSubscriptionTransactionLogListPage::class),
+        ));
+    }
+
+    private function addTrophyItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_TROPHY) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.trophy',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.trophy.category.list',
+            parentMenuItem: 'wcf.acp.menu.link.trophy',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TrophyCategoryListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.trophy.category.add',
+            parentMenuItem: 'wcf.acp.menu.link.trophy.category.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TrophyCategoryAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.trophy.list',
+            parentMenuItem: 'wcf.acp.menu.link.trophy',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TrophyListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.trophy.add',
+            parentMenuItem: 'wcf.acp.menu.link.trophy.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TrophyAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.userTrophy.list',
+            parentMenuItem: 'wcf.acp.menu.link.trophy',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserTrophyListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.userTrophy.add',
+            parentMenuItem: 'wcf.acp.menu.link.userTrophy.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserTrophyAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
     }
 }
