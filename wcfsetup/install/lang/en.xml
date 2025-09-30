@@ -712,7 +712,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit package servers]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Can install packages]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible User Groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Users of this user group have access to these user groups. Furthermore, you need to specify if these users are allowed to edit these user groups.]]></item>

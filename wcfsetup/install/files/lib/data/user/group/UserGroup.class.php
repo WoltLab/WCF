@@ -608,7 +608,6 @@ class UserGroup extends DatabaseObject implements ITitledObject
             'admin.configuration.canEditOption',
             'admin.configuration.canManageApplication',
             'admin.configuration.package.canInstallPackage',
-            'admin.configuration.package.canUninstallPackage',
             'admin.configuration.package.canUpdatePackage',
             'admin.general.canUseAcp',
             'admin.general.canViewPageDuringOfflineMode',

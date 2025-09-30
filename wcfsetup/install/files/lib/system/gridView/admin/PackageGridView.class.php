@@ -124,7 +124,7 @@ class PackageGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
-            || WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage');
+            || WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage');
     }
 
     #[\Override]

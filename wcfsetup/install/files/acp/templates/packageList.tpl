@@ -8,7 +8,7 @@
 			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
 		});
 		
-		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 		{/if}
 		
