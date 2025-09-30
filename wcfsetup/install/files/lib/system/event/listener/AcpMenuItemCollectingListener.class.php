@@ -28,6 +28,8 @@ final class AcpMenuItemCollectingListener
         $this->addOtherItems($event);
         $this->addDevtoolsItems($event);
         $this->addContactFormItems($event);
+
+        $this->addUserItems($event);
     }
 
     private function addTopLevelItems(ItemCollecting $event): void
@@ -35,6 +37,10 @@ final class AcpMenuItemCollectingListener
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.configuration',
             icon: FontAwesomeIcon::fromValues('wrench'),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user',
+            icon: FontAwesomeIcon::fromValues('users'),
         ));
     }
 
@@ -237,5 +243,61 @@ final class AcpMenuItemCollectingListener
             LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ContactRecipientAddForm::class),
             FontAwesomeIcon::fromValues('plus'),
         ));
+    }
+
+    private function addUserItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.user.management',
+            parentMenuItem: 'wcf.acp.menu.link.user'
+        ));
+
+        if (WCF::getSession()->getPermission('admin.user.canSearchUser')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.user.list',
+                parentMenuItem: 'wcf.acp.menu.link.user.management',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.user.search',
+                parentMenuItem: 'wcf.acp.menu.link.user.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserSearchForm::class),
+                icon: FontAwesomeIcon::fromValues('magnifying-glass'),
+            ));
+            if (WCF::getSession()->getPermission('admin.user.canAddUser')) {
+                $event->register(new AcpMenuItem(
+                    'wcf.acp.menu.link.user.add',
+                    parentMenuItem: 'wcf.acp.menu.link.user.list',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserAddForm::class),
+                    icon: FontAwesomeIcon::fromValues('plus'),
+                ));
+            }
+        }
+
+        if (
+            WCF::getSession()->getPermission('admin.user.canEditUser')
+            || WCF::getSession()->getPermission('admin.user.canDeleteUser')
+            || WCF::getSession()->getPermission('admin.user.canMailUser')
+        ) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.user.bulkProcessing',
+                parentMenuItem: 'wcf.acp.menu.link.user.management',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserBulkProcessingForm::class)
+            ));
+        }
+        if (WCF::getSession()->getPermission('admin.user.canMailUser')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.user.mail',
+                parentMenuItem: 'wcf.acp.menu.link.user.management',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserMailForm::class)
+            ));
+        }
+        if (WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.user.profileMenu',
+                parentMenuItem: 'wcf.acp.menu.link.user.management',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserProfileMenuPage::class)
+            ));
+        }
     }
 }

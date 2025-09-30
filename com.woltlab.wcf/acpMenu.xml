@@ -2,49 +2,6 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
 	<import>
 		<!-- user -->
-		<acpmenuitem name="wcf.acp.menu.link.user">
-			<showorder>2</showorder>
-			<icon>users</icon>
-		</acpmenuitem>
-		<!-- management -->
-		<acpmenuitem name="wcf.acp.menu.link.user.management">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.list">
-			<controller>wcf\acp\page\UserListPage</controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<controller>wcf\acp\form\UserSearchForm</controller>
-			<parent>wcf.acp.menu.link.user.list</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-			<icon>magnifying-glass</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.add">
-			<controller>wcf\acp\form\UserAddForm</controller>
-			<parent>wcf.acp.menu.link.user.list</parent>
-			<permissions>admin.user.canAddUser</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
-			<controller>wcf\acp\form\UserBulkProcessingForm</controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.mail">
-			<controller>wcf\acp\form\UserMailForm</controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<link>action=all</link>
-			<permissions>admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.profileMenu">
-			<controller>wcf\acp\page\UserProfileMenuPage</controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<!-- /management -->
 		<!-- group -->
 		<acpmenuitem name="wcf.acp.menu.link.group">
 			<parent>wcf.acp.menu.link.user</parent>
@@ -691,5 +648,13 @@
 		<acpmenuitem name="wcf.acp.menu.link.devtools.project.add"/>
 		<acpmenuitem name="wcf.acp.menu.link.devtools.missingLanguageItem.list"/>
 		<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest"/>
+		<acpmenuitem name="wcf.acp.menu.link.user"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.management"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.search"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.mail"/>
+		<acpmenuitem name="wcf.acp.menu.link.user.profileMenu"/>
 	</delete>
 </data>
