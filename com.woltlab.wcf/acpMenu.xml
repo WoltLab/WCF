@@ -1,166 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
 	<import>
-		<!-- customization -->
-		<acpmenuitem name="wcf.acp.menu.link.customization">
-			<showorder>5</showorder>
-			<icon>desktop</icon>
-		</acpmenuitem>
-		<!-- style -->
-		<acpmenuitem name="wcf.acp.menu.link.style">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.style.list">
-			<controller>wcf\acp\page\StyleListPage</controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.style.import">
-			<controller>wcf\acp\form\StyleImportForm</controller>
-			<parent>wcf.acp.menu.link.style.list</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-			<icon>upload</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.style.add">
-			<controller>wcf\acp\form\StyleAddForm</controller>
-			<parent>wcf.acp.menu.link.style.list</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.style.globalValues">
-			<controller>wcf\acp\form\StyleGlobalValuesForm</controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		<!-- /style -->
-		<!-- template -->
-		<acpmenuitem name="wcf.acp.menu.link.template">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.list">
-			<controller>wcf\acp\page\TemplateListPage</controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.add">
-			<controller>wcf\acp\form\TemplateAddForm</controller>
-			<parent>wcf.acp.menu.link.template.list</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.group.list">
-			<controller>wcf\acp\page\TemplateGroupListPage</controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.group.add">
-			<controller>wcf\acp\form\TemplateGroupAddForm</controller>
-			<parent>wcf.acp.menu.link.template.group.list</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /template -->
-		<!-- language -->
-		<acpmenuitem name="wcf.acp.menu.link.language">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.language.list">
-			<controller>wcf\acp\page\LanguageListPage</controller>
-			<parent>wcf.acp.menu.link.language</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.language.import">
-			<controller>wcf\acp\form\LanguageImportForm</controller>
-			<parent>wcf.acp.menu.link.language.list</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-			<icon>upload</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.language.item.list">
-			<controller>wcf\acp\page\LanguageItemListPage</controller>
-			<parent>wcf.acp.menu.link.language</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.language.item.add">
-			<controller>wcf\acp\form\LanguageItemAddForm</controller>
-			<parent>wcf.acp.menu.link.language.item.list</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
-			<controller>wcf\acp\form\LanguageMultilingualismForm</controller>
-			<parent>wcf.acp.menu.link.language</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		<!-- /language -->
-		<!-- smiley -->
-		<acpmenuitem name="wcf.acp.menu.link.smiley">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<options>module_smiley</options>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
-			<controller>wcf\acp\page\SmileyListPage</controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
-			<controller>wcf\acp\form\SmileyAddForm</controller>
-			<parent>wcf.acp.menu.link.smiley.list</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
-			<controller>wcf\acp\page\SmileyCategoryListPage</controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
-			<controller>wcf\acp\form\SmileyCategoryAddForm</controller>
-			<parent>wcf.acp.menu.link.smiley.category.list</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /smiley -->
-		<!-- ad -->
-		<acpmenuitem name="wcf.acp.menu.link.ad">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<options>module_wcf_ad</options>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.list">
-			<controller>wcf\acp\page\AdListPage</controller>
-			<parent>wcf.acp.menu.link.ad</parent>
-			<permissions>admin.ad.canManageAd</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.add">
-			<controller>wcf\acp\form\AdAddForm</controller>
-			<parent>wcf.acp.menu.link.ad.list</parent>
-			<permissions>admin.ad.canManageAd</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /ad -->
-		<!-- reactions -->
-		<acpmenuitem name="wcf.acp.menu.link.reactionType">
-			<parent>wcf.acp.menu.link.customization</parent>
-			<options>module_like</options>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.reactionType.list">
-			<controller>wcf\acp\page\ReactionTypeListPage</controller>
-			<parent>wcf.acp.menu.link.reactionType</parent>
-			<permissions>admin.content.reaction.canManageReactionType</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.reactionType.add">
-			<controller>wcf\acp\form\ReactionTypeAddForm</controller>
-			<parent>wcf.acp.menu.link.reactionType.list</parent>
-			<permissions>admin.content.reaction.canManageReactionType</permissions>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<!-- /reactions -->
-		<!-- /customization -->
 		<!-- management -->
 		<acpmenuitem name="wcf.acp.menu.link.management">
 			<showorder>6</showorder>
@@ -350,5 +190,33 @@
 		<acpmenuitem name="wcf.acp.menu.link.attachment"/>
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list"/>
 		<acpmenuitem name="wcf.acp.menu.link.application"/>
+		<acpmenuitem name="wcf.acp.menu.link.customization"/>
+		<acpmenuitem name="wcf.acp.menu.link.style"/>
+		<acpmenuitem name="wcf.acp.menu.link.style.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.style.import"/>
+		<acpmenuitem name="wcf.acp.menu.link.style.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.style.globalValues"/>
+		<acpmenuitem name="wcf.acp.menu.link.template"/>
+		<acpmenuitem name="wcf.acp.menu.link.template.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.template.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.language"/>
+		<acpmenuitem name="wcf.acp.menu.link.language.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.language.import"/>
+		<acpmenuitem name="wcf.acp.menu.link.language.item.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.language.item.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism"/>
+		<acpmenuitem name="wcf.acp.menu.link.smiley"/>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.ad"/>
+		<acpmenuitem name="wcf.acp.menu.link.ad.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.ad.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.reactionType"/>
+		<acpmenuitem name="wcf.acp.menu.link.reactionType.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.reactionType.add"/>
 	</delete>
 </data>

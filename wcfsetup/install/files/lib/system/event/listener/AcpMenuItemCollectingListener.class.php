@@ -44,6 +44,13 @@ final class AcpMenuItemCollectingListener
         $this->addBbcodeItems($event);
         $this->addTagItems($event);
         $this->addAttachmentItems($event);
+
+        $this->addStyleItems($event);
+        $this->addTemplateItems($event);
+        $this->addLanguageItems($event);
+        $this->addSmileyItems($event);
+        $this->addAdItems($event);
+        $this->addReactionItems($event);
     }
 
     private function addTopLevelItems(ItemCollecting $event): void
@@ -63,6 +70,10 @@ final class AcpMenuItemCollectingListener
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.application',
             icon: FontAwesomeIcon::fromValues('comments', true),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.customization',
+            icon: FontAwesomeIcon::fromValues('desktop'),
         ));
     }
 
@@ -782,6 +793,205 @@ final class AcpMenuItemCollectingListener
             'wcf.acp.menu.link.attachment.list',
             parentMenuItem: 'wcf.acp.menu.link.attachment',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\AttachmentListPage::class),
+        ));
+    }
+
+    private function addStyleItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.style',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.style.list',
+            parentMenuItem: 'wcf.acp.menu.link.style',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\StyleListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.style.import',
+            parentMenuItem: 'wcf.acp.menu.link.style.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\StyleImportForm::class),
+            icon: FontAwesomeIcon::fromValues('upload')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.style.add',
+            parentMenuItem: 'wcf.acp.menu.link.style.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\StyleAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.style.globalValues',
+            parentMenuItem: 'wcf.acp.menu.link.style',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\StyleGlobalValuesForm::class),
+        ));
+    }
+
+    private function addTemplateItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.template.canManageTemplate')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.template',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.template.list',
+            parentMenuItem: 'wcf.acp.menu.link.template',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TemplateListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.template.add',
+            parentMenuItem: 'wcf.acp.menu.link.template.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TemplateAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.template.group.list',
+            parentMenuItem: 'wcf.acp.menu.link.template',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TemplateGroupListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.template.group.add',
+            parentMenuItem: 'wcf.acp.menu.link.template.group.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TemplateGroupAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addLanguageItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language.list',
+            parentMenuItem: 'wcf.acp.menu.link.language',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\LanguageListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language.import',
+            parentMenuItem: 'wcf.acp.menu.link.language.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\LanguageImportForm::class),
+            icon: FontAwesomeIcon::fromValues('upload')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language.item.list',
+            parentMenuItem: 'wcf.acp.menu.link.language',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\LanguageItemListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language.item.add',
+            parentMenuItem: 'wcf.acp.menu.link.language.item.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\LanguageItemAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.language.multilingualism',
+            parentMenuItem: 'wcf.acp.menu.link.language',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\LanguageMultilingualismForm::class),
+        ));
+    }
+
+    private function addSmileyItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_SMILEY) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.smiley',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.smiley.list',
+            parentMenuItem: 'wcf.acp.menu.link.smiley',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\SmileyListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.smiley.add',
+            parentMenuItem: 'wcf.acp.menu.link.smiley.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\SmileyAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.smiley.category.list',
+            parentMenuItem: 'wcf.acp.menu.link.smiley',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\SmileyCategoryListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.smiley.category.add',
+            parentMenuItem: 'wcf.acp.menu.link.smiley.category.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\SmileyCategoryAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addAdItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_WCF_AD) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.ad.canManageAd')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.ad',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.ad.list',
+            parentMenuItem: 'wcf.acp.menu.link.ad',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\AdListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.ad.add',
+            parentMenuItem: 'wcf.acp.menu.link.ad.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\AdAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addReactionItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_LIKE) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.content.reaction.canManageReactionType')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.reactionType',
+            parentMenuItem: 'wcf.acp.menu.link.customization'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.reactionType.list',
+            parentMenuItem: 'wcf.acp.menu.link.reactionType',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ReactionTypeListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.reactionType.add',
+            parentMenuItem: 'wcf.acp.menu.link.reactionType.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ReactionTypeAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
         ));
     }
 }
