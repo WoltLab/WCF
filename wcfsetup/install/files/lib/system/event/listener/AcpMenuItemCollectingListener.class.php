@@ -36,6 +36,14 @@ final class AcpMenuItemCollectingListener
         $this->addUserNoticeItems($event);
         $this->addPaidSubscriptionItems($event);
         $this->addTrophyItems($event);
+
+        $this->addCmsItems($event);
+        $this->addMediaItems($event);
+        $this->addArticleItems($event);
+        $this->addLabelItems($event);
+        $this->addBbcodeItems($event);
+        $this->addTagItems($event);
+        $this->addAttachmentItems($event);
     }
 
     private function addTopLevelItems(ItemCollecting $event): void
@@ -47,6 +55,14 @@ final class AcpMenuItemCollectingListener
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.user',
             icon: FontAwesomeIcon::fromValues('users'),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.content',
+            icon: FontAwesomeIcon::fromValues('file-lines', true),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.application',
+            icon: FontAwesomeIcon::fromValues('comments', true),
         ));
     }
 
@@ -529,6 +545,243 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.userTrophy.list',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserTrophyAddForm::class),
             icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addCmsItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.cms',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+
+        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.page.list',
+                parentMenuItem: 'wcf.acp.menu.link.cms',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\PageListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.page.add',
+                parentMenuItem: 'wcf.acp.menu.link.cms.page.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\PageAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.menu.list',
+                parentMenuItem: 'wcf.acp.menu.link.cms',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\MenuListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.menu.add',
+                parentMenuItem: 'wcf.acp.menu.link.cms.menu.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\MenuAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.content.cms.canManageBox')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.box.list',
+                parentMenuItem: 'wcf.acp.menu.link.cms',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\BoxListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cms.box.add',
+                parentMenuItem: 'wcf.acp.menu.link.cms.box.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\BoxAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+    }
+
+    private function addMediaItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.media',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.media.list',
+            parentMenuItem: 'wcf.acp.menu.link.media',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\MediaListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.media.category.list',
+            parentMenuItem: 'wcf.acp.menu.link.media',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\MediaCategoryListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.media.category.add',
+            parentMenuItem: 'wcf.acp.menu.link.media.category.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\MediaCategoryAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addArticleItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_ARTICLE) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.article',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+
+        if (
+            WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+            || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
+            || WCF::getSession()->getPermission('admin.content.article.canContributeArticle')
+        ) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.article.list',
+                parentMenuItem: 'wcf.acp.menu.link.article',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ArticleListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.article.add',
+                parentMenuItem: 'wcf.acp.menu.link.article.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ArticleAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.content.article.canManageCategory')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.article.category.list',
+                parentMenuItem: 'wcf.acp.menu.link.article',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ArticleCategoryListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.article.category.add',
+                parentMenuItem: 'wcf.acp.menu.link.article.category.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ArticleCategoryAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+    }
+
+    private function addLabelItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.label',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.label.list',
+            parentMenuItem: 'wcf.acp.menu.link.label',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\LabelListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.label.add',
+            parentMenuItem: 'wcf.acp.menu.link.label.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\LabelAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.label.group.list',
+            parentMenuItem: 'wcf.acp.menu.link.label',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\LabelGroupListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.label.group.add',
+            parentMenuItem: 'wcf.acp.menu.link.label.group.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\LabelGroupAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addBbcodeItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.content.bbcode.canManageBBCode')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.bbcode',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.bbcode.list',
+            parentMenuItem: 'wcf.acp.menu.link.bbcode',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\BBCodeListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.bbcode.add',
+            parentMenuItem: 'wcf.acp.menu.link.bbcode.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\BBCodeAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.bbcode.mediaProvider.list',
+            parentMenuItem: 'wcf.acp.menu.link.bbcode',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\BBCodeMediaProviderListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.bbcode.mediaProvider.add',
+            parentMenuItem: 'wcf.acp.menu.link.bbcode.mediaProvider.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\BBCodeMediaProviderAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addTagItems(ItemCollecting $event): void
+    {
+        if (!\MODULE_TAGGING) {
+            return;
+        }
+
+        if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.tag',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.tag.list',
+            parentMenuItem: 'wcf.acp.menu.link.tag',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TagListPage::class),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.tag.add',
+            parentMenuItem: 'wcf.acp.menu.link.tag.list',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TagAddForm::class),
+            icon: FontAwesomeIcon::fromValues('plus')
+        ));
+    }
+
+    private function addAttachmentItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.attachment.canManageAttachment')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.attachment',
+            parentMenuItem: 'wcf.acp.menu.link.content'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.attachment.list',
+            parentMenuItem: 'wcf.acp.menu.link.attachment',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\AttachmentListPage::class),
         ));
     }
 }
