@@ -7,7 +7,6 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IconFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -39,6 +38,13 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         $returnValue['icon'] = $data['elements']['icon'] ?? '';
 
         return $returnValue;
+    }
+
+    #[\Override]
+    protected function validateImport(array $data)
+    {
+        // The parent method checks whether the parent menu item exists.
+        // Since menu items can now also be added at runtime, this check is no longer reliable.
     }
 
     /**
