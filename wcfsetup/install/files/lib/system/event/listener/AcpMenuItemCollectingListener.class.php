@@ -26,8 +26,8 @@ final class AcpMenuItemCollectingListener
         $this->addOptionItems($event);
         $this->addPackageItems($event);
         $this->addOtherItems($event);
-        $this->addDevtoolsItems($event);
         $this->addContactFormItems($event);
+        $this->addDevtoolsItems($event);
 
         $this->addUserItems($event);
         $this->addUserGroupItems($event);
@@ -97,7 +97,7 @@ final class AcpMenuItemCollectingListener
         ));
 
         foreach ((new TopOptionCategoryCache())->getCache() as $optionCategory) {
-            if (!$optionCategory->validateOptions() || $optionCategory->validatePermissions()) {
+            if (!$optionCategory->validateOptions() || !$optionCategory->validatePermissions()) {
                 continue;
             }
 
@@ -114,7 +114,7 @@ final class AcpMenuItemCollectingListener
         }
     }
 
-    private function addPackageItems(ItemCollecting $event): void
+    private function addOtherItems(ItemCollecting $event): void
     {
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.other',
@@ -152,7 +152,7 @@ final class AcpMenuItemCollectingListener
         }
     }
 
-    private function addOtherItems(ItemCollecting $event): void
+    private function addPackageItems(ItemCollecting $event): void
     {
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.package',
@@ -330,7 +330,10 @@ final class AcpMenuItemCollectingListener
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.user.mail',
                 parentMenuItem: 'wcf.acp.menu.link.user.management',
-                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserMailForm::class)
+                link: LinkHandler::getInstance()->getControllerLink(
+                    \wcf\acp\form\UserMailForm::class,
+                    ['action' => 'all']
+                )
             ));
         }
         if (WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
@@ -373,7 +376,10 @@ final class AcpMenuItemCollectingListener
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.group.mail',
                 parentMenuItem: 'wcf.acp.menu.link.group',
-                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserMailForm::class),
+                link: LinkHandler::getInstance()->getControllerLink(
+                    \wcf\acp\form\UserMailForm::class,
+                    ['action' => 'group']
+                ),
             ));
         }
 
