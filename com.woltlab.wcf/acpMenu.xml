@@ -1,104 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/acpMenu.xsd">
-	<import>
-		<!-- management -->
-		<acpmenuitem name="wcf.acp.menu.link.management">
-			<showorder>6</showorder>
-			<icon>gear</icon>
-		</acpmenuitem>
-		<!-- maintenance -->
-		<acpmenuitem name="wcf.acp.menu.link.maintenance">
-			<parent>wcf.acp.menu.link.management</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.systemCheck">
-			<controller>wcf\acp\page\SystemCheckPage</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.configuration.package.canInstallPackage</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
-			<controller>wcf\acp\page\CronjobListPage</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
-			<controller>wcf\acp\form\CronjobAddForm</controller>
-			<parent>wcf.acp.menu.link.cronjob.list</parent>
-			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>3</showorder>
-			<icon>plus</icon>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
-			<controller>wcf\acp\page\CacheListPage</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.management.canRebuildData</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData">
-			<controller>wcf\acp\page\RebuildDataPage</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.management.canRebuildData</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.import">
-			<controller>wcf\acp\form\DataImportForm</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.management.canImportData</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.sitemap">
-			<controller>wcf\acp\page\SitemapListPage</controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.management.canRebuildData</permissions>
-		</acpmenuitem>
-		<!-- /maintenance -->
-		<!-- stat -->
-		<acpmenuitem name="wcf.acp.menu.link.stat">
-			<parent>wcf.acp.menu.link.management</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.stat.list">
-			<controller>wcf\acp\page\StatPage</controller>
-			<parent>wcf.acp.menu.link.stat</parent>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-		<!-- /stat -->
-		<!-- log -->
-		<acpmenuitem name="wcf.acp.menu.link.log">
-			<parent>wcf.acp.menu.link.management</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.session">
-			<controller>wcf\acp\page\ACPSessionLogListPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
-			<controller>wcf\acp\page\CronjobLogListPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.management.canManageCronjob</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.email">
-			<controller>wcf\acp\page\EmailLogListPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.exception">
-			<controller>wcf\acp\page\ExceptionLogViewPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.authentication.failure">
-			<controller>wcf\acp\page\UserAuthenticationFailureListPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<options>enable_user_authentication_failure</options>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.log.modification">
-			<controller>wcf\acp\page\ModificationLogListPage</controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.management.canViewLog</permissions>
-		</acpmenuitem>
-	</import>
 	<delete>
 		<acpmenuitem name="wcf.acp.menu.link.contact.settings"/>
 		<acpmenuitem name="wcf.acp.menu.link.configuration"/>
@@ -218,5 +119,23 @@
 		<acpmenuitem name="wcf.acp.menu.link.reactionType"/>
 		<acpmenuitem name="wcf.acp.menu.link.reactionType.list"/>
 		<acpmenuitem name="wcf.acp.menu.link.reactionType.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.management"/>
+		<acpmenuitem name="wcf.acp.menu.link.maintenance"/>
+		<acpmenuitem name="wcf.acp.menu.link.systemCheck"/>
+		<acpmenuitem name="wcf.acp.menu.link.cronjob.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.cronjob.add"/>
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache"/>
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData"/>
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.import"/>
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.sitemap"/>
+		<acpmenuitem name="wcf.acp.menu.link.stat"/>
+		<acpmenuitem name="wcf.acp.menu.link.stat.list"/>
+		<acpmenuitem name="wcf.acp.menu.link.log"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.session"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.cronjob"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.email"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.exception"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.authentication.failure"/>
+		<acpmenuitem name="wcf.acp.menu.link.log.modification"/>
 	</delete>
 </data>

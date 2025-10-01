@@ -51,6 +51,10 @@ final class AcpMenuItemCollectingListener
         $this->addSmileyItems($event);
         $this->addAdItems($event);
         $this->addReactionItems($event);
+
+        $this->addMaintenanceItems($event);
+        $this->addStatItems($event);
+        $this->addLogItems($event);
     }
 
     private function addTopLevelItems(ItemCollecting $event): void
@@ -74,6 +78,10 @@ final class AcpMenuItemCollectingListener
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.customization',
             icon: FontAwesomeIcon::fromValues('desktop'),
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.management',
+            icon: FontAwesomeIcon::fromValues('gear'),
         ));
     }
 
@@ -993,5 +1001,127 @@ final class AcpMenuItemCollectingListener
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ReactionTypeAddForm::class),
             icon: FontAwesomeIcon::fromValues('plus')
         ));
+    }
+
+    private function addMaintenanceItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.maintenance',
+            parentMenuItem: 'wcf.acp.menu.link.management'
+        ));
+
+        if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.systemCheck',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\SystemCheckPage::class),
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cronjob.list',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\CronjobListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.cronjob.add',
+                parentMenuItem: 'wcf.acp.menu.link.cronjob.list',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\CronjobAddForm::class),
+                icon: FontAwesomeIcon::fromValues('plus')
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.management.canRebuildData')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.maintenance.cache',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\CacheListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.maintenance.rebuildData',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\RebuildDataPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.maintenance.sitemap',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\SitemapListPage::class),
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.management.canImportData')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.maintenance.import',
+                parentMenuItem: 'wcf.acp.menu.link.maintenance',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\DataImportForm::class),
+            ));
+        }
+    }
+
+    private function addStatItems(ItemCollecting $event): void
+    {
+        if (!WCF::getSession()->getPermission('admin.management.canViewLog')) {
+            return;
+        }
+
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.stat',
+            parentMenuItem: 'wcf.acp.menu.link.management'
+        ));
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.stat.list',
+            parentMenuItem: 'wcf.acp.menu.link.stat',
+            link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\StatPage::class),
+        ));
+    }
+
+    private function addLogItems(ItemCollecting $event): void
+    {
+        $event->register(new AcpMenuItem(
+            'wcf.acp.menu.link.log',
+            parentMenuItem: 'wcf.acp.menu.link.management'
+        ));
+
+        if (WCF::getSession()->getPermission('admin.management.canViewLog')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.log.session',
+                parentMenuItem: 'wcf.acp.menu.link.log',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ACPSessionLogListPage::class),
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.log.cronjob',
+                parentMenuItem: 'wcf.acp.menu.link.log',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\CronjobLogListPage::class),
+            ));
+        }
+
+        if (WCF::getSession()->getPermission('admin.management.canViewLog')) {
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.log.email',
+                parentMenuItem: 'wcf.acp.menu.link.log',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\EmailLogListPage::class),
+            ));
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.log.exception',
+                parentMenuItem: 'wcf.acp.menu.link.log',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ExceptionLogViewPage::class),
+            ));
+            if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
+                $event->register(new AcpMenuItem(
+                    'wcf.acp.menu.link.log.authentication.failure',
+                    parentMenuItem: 'wcf.acp.menu.link.log',
+                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserAuthenticationFailureListPage::class),
+                ));
+            }
+            $event->register(new AcpMenuItem(
+                'wcf.acp.menu.link.log.modification',
+                parentMenuItem: 'wcf.acp.menu.link.log',
+                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ModificationLogListPage::class),
+            ));
+        }
     }
 }
