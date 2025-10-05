@@ -92,7 +92,7 @@
 		{if $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
-				<dd title="{$user->getFormattedIPAddress()}">{unsafe:$user->getFormattedIPAddress()|ipSearch}</dd>
+				<dd title="{$user->getFormattedIPAddress()}">{unsafe:$user->getFormattedIPAddress()|ipSearch}{event name='sessionIpAddress'}</dd>
 
 				{if !$user->spiderIdentifier}
 					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>

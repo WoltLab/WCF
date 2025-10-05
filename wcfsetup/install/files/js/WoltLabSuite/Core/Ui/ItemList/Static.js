@@ -225,12 +225,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
      */
     function blur(event) {
         const input = event.currentTarget;
-        window.setTimeout(() => {
-            const value = input.value.trim();
-            if (value.length) {
-                addItem(input.id, { objectId: 0, value: value });
-            }
-        }, 100);
+        const focusedElement = event.relatedTarget;
+        if (focusedElement instanceof HTMLElement && focusedElement.closest(".dropdownMenu") !== null) {
+            return;
+        }
+        const value = input.value.trim();
+        if (value.length) {
+            addItem(input.id, { objectId: 0, value: value });
+        }
     }
     /**
      * Initializes an item list.
