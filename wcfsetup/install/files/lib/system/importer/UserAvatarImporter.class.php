@@ -28,7 +28,7 @@ class UserAvatarImporter extends AbstractFileImporter
             return 0;
         }
 
-        $file = $this->importFile($additionalData['fileLocation'], $data['avatarName']);
+        $file = $this->importFile($additionalData['fileLocation'], $data['avatarName'] ?? null);
         if ($file === null) {
             return 0;
         }
