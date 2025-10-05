@@ -7,8 +7,8 @@
  * @since 6.2
  */
 
-import { getRow } from "../Api/Gridviews/GetRow";
-import { getRows } from "../Api/Gridviews/GetRows";
+import { getRow } from "../Api/GridViews/GetRow";
+import { getRows } from "../Api/GridViews/GetRows";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
