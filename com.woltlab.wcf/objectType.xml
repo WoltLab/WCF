@@ -442,6 +442,11 @@
 			<classname>wcf\system\importer\UserAvatarImporter</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\UserCoverPhotoImporter</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user.comment</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\UserCommentImporter</classname>

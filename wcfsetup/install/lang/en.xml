@@ -355,6 +355,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Followers]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Ranks]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatars]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.coverPhoto"><![CDATA[User profile cover photos]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Replies to wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
