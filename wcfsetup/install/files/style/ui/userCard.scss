@@ -77,11 +77,12 @@
 
 .userCard__header__avatar {
 	align-self: start;
-	position: relative;
+	background-color: var(--wcfContentBackground);
 	border-radius: 50%;
 	border: 5px solid var(--wcfContentBackground);
 	margin-left: 15px;
 	margin-top: -37px;
+	position: relative;
 }
 
 .userCard__onlineIndicator {
