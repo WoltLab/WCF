@@ -55,7 +55,7 @@ final class ACPSessionLogGridView extends AbstractGridView
             GridViewColumn::for('userAgent')
                 ->label('wcf.user.userAgent')
                 ->sortable()
-                ->valueEncoding(false)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer(50))
                 ->filter(TextFilter::class),
             GridViewColumn::for('time')

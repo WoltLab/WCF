@@ -32,7 +32,7 @@ final class GridViewColumn
     private string $sortByDatabaseColumn = '';
     private ?IViewFilter $filter = null;
     private bool $hidden = false;
-    private bool $valueEncoding = true;
+    private bool $unsafeDisableEncoding = false;
     private bool $titleColumn = false;
 
     private function __construct(private readonly string $id) {}
@@ -258,11 +258,11 @@ final class GridViewColumn
     }
 
     /**
-     * Determines whether the value of this column should be encoded before rendering.
+     * Disables the encoding of the value of this column before rendering.
      */
-    public function valueEncoding(bool $valueEncoding = true): static
+    public function unsafeDisableEncoding(bool $unsafeDisableEncoding = true): static
     {
-        $this->valueEncoding = $valueEncoding;
+        $this->unsafeDisableEncoding = $unsafeDisableEncoding;
 
         return $this;
     }
@@ -272,7 +272,7 @@ final class GridViewColumn
      */
     public function encodeValue(): bool
     {
-        return $this->valueEncoding;
+        return !$this->unsafeDisableEncoding;
     }
 
     /**

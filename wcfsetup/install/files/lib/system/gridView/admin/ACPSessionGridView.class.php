@@ -53,9 +53,9 @@ final class ACPSessionGridView extends AbstractGridView
             GridViewColumn::for('requestURI')
                 ->label('wcf.acp.sessionLog.requestURI')
                 ->titleColumn()
-                ->valueEncoding(false)
-                ->filter(TextFilter::class)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('requestMethod')
                 ->label('wcf.acp.sessionLog.requestMethod')

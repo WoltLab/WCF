@@ -49,8 +49,8 @@ final class LabelGroupGridView extends AbstractGridView
             GridViewColumn::for('groupDescription')
                 ->label('wcf.global.description')
                 ->filter(TextFilter::class)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
-                ->valueEncoding(false)
                 ->sortable(),
             GridViewColumn::for('labels')
                 ->label('wcf.acp.label.list')

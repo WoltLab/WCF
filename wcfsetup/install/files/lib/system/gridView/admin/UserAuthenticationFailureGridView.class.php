@@ -110,9 +110,9 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for("userAgent")
                 ->label("wcf.user.userAgent")
-                ->renderer(new TruncatedTextColumnRenderer(75))
                 ->filter(TextFilter::class)
-                ->valueEncoding(false)
+                ->unsafeDisableEncoding()
+                ->renderer(new TruncatedTextColumnRenderer(75))
                 ->sortable(),
         ]);
 

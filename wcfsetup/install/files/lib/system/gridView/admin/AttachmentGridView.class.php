@@ -89,8 +89,8 @@ final class AttachmentGridView extends AbstractGridView
                 ->label('wcf.attachment.filename')
                 ->titleColumn()
                 ->filter(new TextFilter('filename', 'wcf.attachment.filename', 'file_table.filename'))
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
-                ->valueEncoding(false)
                 ->sortable(sortByDatabaseColumn: 'file_table.filename'),
             GridViewColumn::for('username')
                 ->label('wcf.user.username')

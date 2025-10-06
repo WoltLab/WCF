@@ -47,13 +47,13 @@ final class EmailLogGridView extends AbstractGridView
                 ->titleColumn()
                 ->filter(TextFilter::class)
                 ->sortable()
-                ->valueEncoding(false)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer()),
             GridViewColumn::for('messageID')
                 ->label('wcf.acp.email.log.messageId')
                 ->filter(TextFilter::class)
                 ->sortable()
-                ->valueEncoding(false)
+                ->unsafeDisableEncoding()
                 ->renderer(
                     new class(50) extends TruncatedTextColumnRenderer {
                         #[\Override]

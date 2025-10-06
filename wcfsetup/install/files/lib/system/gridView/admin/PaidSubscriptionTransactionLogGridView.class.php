@@ -56,8 +56,8 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                 ->label('wcf.acp.paidSubscription.transactionLog.logMessage')
                 ->titleColumn()
                 ->filter(TextFilter::class)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
-                ->valueEncoding(false)
                 ->sortable(),
             GridViewColumn::for('userID')
                 ->label('wcf.user.username')
